@@ -20,7 +20,9 @@
 Some current LLMs show **partial Weak-functional access-workspace hallmarks**. **Strong-GNW equivalence is not established.** **Unconstrained scale-strengthening is not established** (unsupported for ignition metrics; unproven for Weak-functional metrics). Access-only; no phenomenal attribution.
 
 Full text: `00_Working_Claim_Branch_A.md`  
-Full score: `02e_Gate_Scoring_Sheet_rescore_cycle4_narrowed.md`
+Full score: `02e_Gate_Scoring_Sheet_rescore_cycle4_narrowed.md`  
+Reading guide: `00_README.md`  
+Elevation / retired boundary: `elevation_roadmap.md`
 
 ---
 
@@ -37,6 +39,8 @@ Full score: `02e_Gate_Scoring_Sheet_rescore_cycle4_narrowed.md`
 ## Residual-Amb note
 
 Remaining Amb is low-severity only: which models count as “some,” exact hallmark recipe, replication breadth, and non-essential mapping detail. No high-impact free parameter of the live claim remains open.
+
+**Actionable elevation checklist:** see [`elevation_roadmap.md`](elevation_roadmap.md) (three items to push toward Admissible; stronger claims retired).
 
 ## Amb path (application)
 
