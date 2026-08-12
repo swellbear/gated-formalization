@@ -1,6 +1,6 @@
 # Tracker Residual Queue (Layer 3)
 
-**Last refreshed:** 2026-08-12 (Zitron Nvidia $500B **hard stop sealed**; residuals executed; CR **keep original wording**; UX + CX executed; newsletter+monologue primary; Squawk OUT)  
+**Last refreshed:** 2026-08-12 (FOMC June 2026 SEP **hard stop sealed**; Zitron/CoreWeave hard stops sealed)  
 **Last park-90d quarterly review:** none yet (next due ~2026-11-12)  
 **Disposition vocabulary:** `pursue` | `park-90d` | `park-until-trigger` | `drop`  
 Only **pursue** items stay in active bands. Parked/dropped listed below.
@@ -71,6 +71,9 @@ Only **pursue** items stay in active bands. Parked/dropped listed below.
 | **R-CONC-NOTES** · zitron-nvidia-500b | Matched bank notes vs CONC-BAR | Terminal WF / Barclays / UBS / DB notes; Google AI% | **park-until-trigger** | **Executed** L9a/L9b; three-name CONC-BAR **not** cleared; no Cloud%→AI% |
 | **R-SUSTAIN** · zitron-nvidia-500b | Diversified-demand evidence vs SUSTAIN-BAR | Non-lab AI-dollar census vs capex; Amazon AI mix | **park-until-trigger** | **Executed** L10a–L10d; SUSTAIN-BAR **not** cleared; share ≠ sustainability |
 | **R-REV** · zitron-nvidia-500b | Narrow to D-ANN + D-MOU (± “Zitron claims…”) | — | **executed (keep original wording)** | Operator pick recorded; unused CR ranks on file; CX listed same shapes as alts, **not adopted**; rewording ≠ bar clearance |
+| **R-REALIZE** · fomc-june-2026-sep | 2026–28 actuals vs L5 medians under L4 defs | 2026 Q4 prints exist | **park-until-trigger** | Realization ≠ F-ML met; July 29 OUT |
+| **R-FML-INDEP** · fomc-june-2026-sep | Non-SEP matched expected-path vs 2026 medians | Operator admits independent series under same locks | **park-until-trigger** | L13 reopen class; not Table 1 again |
+| **R-G8-SCOPE** · fomc-june-2026-sep | Freeze realization out of scope now | `authorize branch R-G8-SCOPE` / `lock G8 realization-later` | **park-until-trigger** | Offered; **not locked** at hard stop; Amb stays ≈ 1; ≠ clearance |
 
 ---
 
@@ -79,6 +82,8 @@ Only **pursue** items stay in active bands. Parked/dropped listed below.
 | Residual ID + app | Description | Revisit ~ | Disposition | Note |
 |-------------------|-------------|-----------|-------------|------|
 | **R-REVISION** · sell-in-may | Claim-Revision to descriptive / CX Alt | ~2026-11-12 | **park-90d** | Keep wording until then |
+| **R-FML-2027-28** · fomc-june-2026-sep | Test F-ML-BAR on 2027 and 2028 medians | ~2026-11-12 | **park-90d** | Diminishing returns after L13; G5 forbids auto-copy |
+| **R-REV** · fomc-june-2026-sep | Narrow SEP claim to supported census core | ~2026-11-12 | **park-90d** | Offered; overlaps `run CR`; rewording ≠ F-ML met |
 | **R-REVISION / R-REV** · several | Claim-Revision / narrowed successor | ~2026-11-12 | **park-90d** | Unless operator authorizes sooner |
 | **R-REV** · microservices | Narrow to descriptive failure-domain contrast | ~2026-11-12 | **park-90d** | Sibling of AV alone/preferability shape |
 | **R-REV** · serverless | Narrow to descriptive ops-model contrast | ~2026-11-12 | **park-90d** | Batch sibling |
@@ -118,7 +123,8 @@ Only **pursue** items stay in active bands. Parked/dropped listed below.
 | Debt Rank 1 soft “should” as pure ought | No empirical reopen | **drop** |
 | SpaceX M2 without L4e-class evidence | No realistic short path | **drop** |
 | MWI uniqueness via ordinary Phase 2 | Currently intractable for strong-(N) | **drop** |
-| **R-CLOSE** · VOO/TSLA | Process hygiene completed at hard stop | **drop** |
+| **R-JULY29** · fomc-june-2026-sep | July 29 statement OUT unless L₀ elevation | Explicit package change | **drop** | Not a residual to finish this package |
+| **R-FML-2026** · fomc-june-2026-sep | Test F-ML-BAR on 2026 medians | — | **drop** | Executed 2026-08-12 → L13; not established; not a refute |
 
 ---
 

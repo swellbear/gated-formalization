@@ -174,6 +174,90 @@ When the **same pattern tag** appears in **≥ 3 closed applications**, record a
 - **Rationale:** Established core is MoU announcement + present-tense status. Best-fit contrastive claim is announcement+MoU only (Alt A); financing-design facts (Alt B) add L7 without classification; attribution-preserving (Alt C) matches SHARE_PACK but keeps uncleared payload in-sentence. Distinct from CR (same shapes, not successors).
 - **Change made:** `CX_Contrastive_Recommendation.md`; optional-modes menu / STATUS / SHARE_PACK / brief / dissertation §8 / closeout log / portfolio; no Amb change; no new lock; **no successor app**
 
+### 2026-08-12 | FOMC June 2026 SEP — Cycle 0 opened (claim inventory)
+- **Apps:** `2026-08_fomc-june-2026-sep`
+- **Decision:** treat the **entire June 17 SEP** as the claim package (census + most-likely + appropriate-policy + longer-run); **do not** import the July 29 statement; **do not** admit cells as realized outcomes; proposed Amb ≈ **11**; no new lock
+- **Rationale:** Third real-claim intake, different shape from Zitron/CoreWeave: official projection tables. Load-bearing FD is median→Committee forecast→will happen. Document already distinguishes appropriate-policy dots from likeliest funds-rate outcomes and RMSE fans from current uncertainty judgments.
+- **Change made:** `CLAIM_INVENTORY.md` + Cycle 0 `01`/`02`/`03`/`STATUS`; portfolio / claim-graph `APP-FOMC-SEP`; **no material admissions; Cycle 0 not operator-confirmed**
+
+### 2026-08-12 | FOMC June 2026 SEP — Cycle 0 confirmed
+- **Apps:** `2026-08_fomc-june-2026-sep`
+- **Decision:** **lock** Cycle 0 Cons/Agree/Prod/Amb ≈ **11**; **do not** admit cells; **do not** silently pick object (census vs forecast vs commitment)
+- **Rationale:** Operator `confirm` maps to Cycle 0 scorecard only. Object freeze remains Gap 1. Amb≠clearance: 11 is under-specification of a mixed SEP package, not clearance of 3.6% PCE or 2% longer-run.
+- **Change made:** `01`/`02`/`03`/`STATUS` Cycle 0 confirmed; next ask = object freeze; no new lock; no admissions
+
+### 2026-08-12 | FOMC June 2026 SEP — L1 OBJECT-FORECAST
+- **Apps:** `2026-08_fomc-june-2026-sep`
+- **Decision:** **lock** object = **forecast**; **do not** treat as commitment or as F-ML clearance; Amb 11 → **9**; no new lock
+- **Rationale:** Operator `forecast`. SEP prose is “most likely outcomes.” Commitment (deliver 2% / July 29) was offered and not selected. Printed cells remain the census vehicle. Funds-rate dots stay appropriate-policy assessments (document’s own B15 split).
+- **Change made:** `04a` + `02b`; freeze register G1; STATUS / tracker / portfolio; F-ML modal bar next; no cell-as-outcome admits
+
+### 2026-08-12 | FOMC June 2026 SEP — L2 F-ML P-BaseCase
+- **Apps:** `2026-08_fomc-june-2026-sep`
+- **Decision:** **lock** F-ML-BAR = **P-BaseCase** for GDP/U/PCE/core PCE; **exclude** funds-rate dots from this bar (SEP B15); **do not** treat freeze as bar met; Amb 9 → **7**; no new lock
+- **Rationale:** Operator `basecase`. Matches SEP “most likely outcomes.” Stronger than P-NonNegligible; not a slide back to census. 17/18 higher PCE uncertainty is compatible with a well-posed uncleared base-case claim.
+- **Change made:** `04b` + `02c`; freeze register G2; STATUS / tracker / portfolio; next = D-DOC substrate or C-APPROP freeze
+
+### 2026-08-12 | FOMC June 2026 SEP — L3 D-DOC
+- **Apps:** `2026-08_fomc-june-2026-sep`
+- **Decision:** **admit** D-DOC process/identity; **do not** treat as F-ML-BAR met or as Table 1 clearance; Amb stays ≈ **7**; no new lock
+- **Rationale:** Operator asked for a recommendation and to execute it. Census substrate before C-APPROP or cell-level forecast tests. Official .gov SEP is the live primary for *what the document is*, not for 2026–28 outcomes.
+- **Change made:** `E_Package_Evidence_Intake_D_DOC` + `04c` + `02d`; STATUS / tracker / portfolio
+
+### 2026-08-12 | FOMC June 2026 SEP — L4 D-DEF
+- **Apps:** `2026-08_fomc-june-2026-sep`
+- **Decision:** **admit** D-DEF definitional census; **do not** treat as F-ML-BAR met or as Table 1 clearance; Amb stays ≈ **7**; no new lock
+- **Rationale:** Operator `admit.` after recommended D-DEF (C-APPROP offered, not selected). Official SEP footnotes define Q4/Q4, median/CT/range, funds-rate midpoint, core-PCE-no-LR, and RMSE/CPI conventions — how to *read* the tables, not that printed medians are P-BaseCase outcomes.
+- **Change made:** `E_Package_Evidence_Intake_D_DEF` + `04d` + `02e`; STATUS / tracker / portfolio; next = D-SEP submitted-not-bar-met (recommended) or C-APPROP freeze
+
+### 2026-08-12 | FOMC June 2026 SEP — L5–L12 remaining layers
+- **Apps:** `2026-08_fomc-june-2026-sep`
+- **Decision:** **admit** remaining D-* as submitted/printed (L5–L10); **lock** C-APPROP = individual-mandate (L11, vote/realized-path **not met**); **lock** F-LR = convergence + no further shocks (L12, dated/2026-on-target **not met**); **do not** meet F-ML-BAR; **do not** import July 29; Amb 7 → **4** (census no drop; L11 −2; L12 −1); G4/G5/G7/realization remain open; no new method lock
+- **Rationale:** Operator `admit all remaining layers in question` after D-SEP vs C-APPROP were both on offer. Remaining pre-classification layers were D-ACTUAL, D-SEP, D-REV, D-DOTS/D-HIST, D-UNCERT, D-RMSE, C-APPROP, F-LR. Census admits are L₀-already-hard. C-APPROP/F-LR mapped to meaning freezes (same pattern as L2), not bar-met. G4/G5/G7 not silently locked.
+- **Change made:** `E_Package_Evidence_Intake_D_CENSUS_REMAINING` + C_APPROP + F_LR; `04e`–`04l`; `02f`; STATUS / tracker / portfolio / claim-graph
+
+### 2026-08-12 | FOMC June 2026 SEP — L13 F-ML-BAR 2026 test
+- **Apps:** `2026-08_fomc-june-2026-sep`
+- **Decision:** **admit** test result: F-ML-BAR **not established** for 2026 GDP 2.2 / U 4.3 / PCE 3.6 / core PCE 3.3; **reject** bar-met; **do not** refute; funds-rate off bar; Amb stays ≈ **4**; G4 not locked; no new method lock
+- **Rationale:** Operator `test F-ML-BAR on 2026 medians`. Brochure circularity (LOCK-010/011; L2 already said printing ≠ clearance); L11 policy-mix (medians not a single-scenario expected path); PCE/core extra: L7 +0.9 vintage jump and L9 17/18 upside risk vs “expected.” Unemployment clustering is census representativeness, not an independent expected-path. Conservative calibration: not-established over brochure-met. No rival path admitted, so not a refute.
+- **Change made:** `E_Quantitative_Evidence_Rubric_F_ML_2026` + `E_Package_Evidence_Intake_F_ML_BAR_2026` + `04m` + `02g`; STATUS / tracker / portfolio / claim-graph
+
+### 2026-08-12 | FOMC June 2026 SEP — L14 G4 median-load-bearing
+- **Apps:** `2026-08_fomc-june-2026-sep`
+- **Decision:** **lock** G4 = median of 18 (17 for 2028) as load-bearing census statistic; CT/range/dots stay distributional; **do not** treat as Committee forecast or as F-ML met; Amb 4 → **3**; G5/G7/realization remain open; no new method lock
+- **Rationale:** Operator `whatever you recommend next` after L13. G4 was the remaining structural slot the census and L13 already used as default. 2027–28 F-ML would repeat L13’s brochure/policy-mix failure. Residual menu is closeout-shaped while G5/G7 still open.
+- **Change made:** `04n` + `02h`; STATUS / tracker / portfolio / claim-graph; next = G5 (recommended) or G7 or residual menu
+
+### 2026-08-12 | FOMC June 2026 SEP — L15 G5 year-slots
+- **Apps:** `2026-08_fomc-june-2026-sep`
+- **Decision:** **lock** G5 = 2026 / 2027 / 2028 / longer run as separate slots; LR 2.0 ≠ 2026 on-target; **do not** copy L13 onto 2027–28; **do not** treat 3.6→2.0 as established glide; Amb 3 → **2**; G7/realization remain open; no new method lock
+- **Rationale:** Operator `proceed with recommended` after L14. Four SEP columns stay four slots (not a 2027–28 bundle). L12 already blocked dated/2026-on-target; G5 makes the year-separation a freeze rather than a draft.
+- **Change made:** `04o` + `02i`; STATUS / tracker / portfolio / claim-graph; next = G7 (recommended) or residual menu
+
+### 2026-08-12 | FOMC June 2026 SEP — L16 G7 tallies ≠ RMSE
+- **Apps:** `2026-08_fomc-june-2026-sep`
+- **Decision:** **lock** G7 = D-UNCERT ≠ D-RMSE; 17/18 ≠ 70% interval; RMSE ≠ current FOMC uncertainty; CPI RMSE ≠ PCE; Amb 2 → **1**; Gap 8 realization remains open (later); no new method lock; **do not** auto-start closeout
+- **Rationale:** Operator `proceed with recommended` after L15. L9/L10 already displayed the split; this freeze makes it a lock. SEP’s own Figure 4 / Forecast Uncertainty box says historical fans may not match current judgments.
+- **Change made:** `04p` + `02j`; STATUS / tracker / portfolio / claim-graph; next = residual menu (recommended) or G8 realization-later
+
+### 2026-08-12 | Phase 1 autonomy split (operationalize existing rule)
+- **Apps:** live stress `2026-08_fomc-june-2026-sep` (one-lock-per-turn after Cycle 0) against written autonomous-continuation rule; also consistent with prior “stop for operator” on bar-met / closeout tools (Zitron, CoreWeave)
+- **Decision:** **keep** offering ≠ running, Amb≠clearance, no auto bar-met, no auto Phase 2/UX/CX/CR/QI/branch/successor; **tighten practice** to the written Phase 1 default: auto-continue census, draft-already-in-use structural locks, unmet/refute bar tests, and hygiene pack; **draft** residual + optional-mode menus at Phase 1 endpoint without waiting for the one-liner; **stop** for live-vs-stand-in, object/claim-type, modal-bar fork, scaffolding pick, bar-**established**, proxy, Phase 2/EG, revise/keep, hard stop, run-mode, branch. `one admit at a time` is an operator **override**, not the method. `proceed with recommended` covers only the auto-continue class.
+- **Rationale:** FOMC G4/G5/G7 were drafts already in use; extra turns did not change F-ML-BAR. Under-asking (silent bar-met) remains the failure mode to avoid. Over-asking on in-use drafts is the other drift. No new Amb math. No new lock.
+- **Change made:** `.cursor/rules/applications-gated-method.mdc` Phase 1 operational split + endpoint menu draft; `workflow.md` checklist + reminders; template README reply grammar; this log
+
+### 2026-08-12 | FOMC June 2026 SEP — residual + optional-mode menus offered
+- **Apps:** `2026-08_fomc-june-2026-sep`
+- **Decision:** **offer** residual menu (R-FML-2026 executed; R-G8-SCOPE / R-REALIZE / R-FML-INDEP / R-FML-2027-28 / R-REV open; R-JULY29 drop/OUT); **offer** optional modes UX/CX/CR (QI N/A); **do not** run any branch or mode; **do not** import July 29; **do not** auto-start closeout; Amb stays ≈ **1**
+- **Rationale:** Operator `residual menu`. Offering ≠ running. Optional-modes file drafted alongside (residual menu alone is not a substitute at this offer point).
+- **Change made:** `RESIDUAL_BRANCH_MENU.md` + `OPTIONAL_MODES_MENU.md`; STATUS / tracker / portfolio / Layer 3 queue
+
+### 2026-08-12 | FOMC June 2026 SEP — hard stop closeout
+- **Apps:** `2026-08_fomc-june-2026-sep` (live; ≥3 `forced-deviation` already calibrated)
+- **Decision:** **keep** LOCK-003 / 009–011 and conflicted-source rule; **keep** Amb weights; **no** new lock; close as **Stable Provisional (split)**; G8 **not** locked (Amb stays ≈ 1); CR/UX/CX offered not run; default keep original wording
+- **Rationale:** Official SEP posing medians as most-likely submissions does not meet P-BaseCase (brochure circularity + 18-way policy-mix). Same LOCK-010 lesson as Zitron claimed-table and CoreWeave announcement. Census of the brochure is established; elevations are frozen and unmet. Amb drop ≠ clearance. July 29 stayed OUT (cross-document contamination).
+- **Change made:** full 11-section `DISSERTATION.md` + `SHARE_PACK.md` + `EXECUTIVE_BRIEF.md` + `05` + `final_verdict.md`; STATUS hard stop; portfolio / residual queue / pattern map / claim-graph; this log; `logs/failure_mode_log.md` pressure-point entry
+
 ---
 
 *Standing rule: Calibration log → method change.*

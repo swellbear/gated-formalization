@@ -49,6 +49,8 @@ Also in force: locking-scaffolding; Amb ≠ clearance; accuracy-first Phase 2; c
 - [ ] **Full readout** if admit / Amb change / agenda shift
 - [ ] **Compact no-admit** otherwise (`Compact_No_Admit_Readout.md`) — mandatory; no padded narrative
 - [ ] Continue Phase 1 autonomously **or** stop for Phase 1 endpoint (agenda + claim-freeze + dependencies + Phase 2 class)
+- [ ] **Autonomy split (canonical rule):** auto-continue census / in-use structural drafts / unmet-or-refute bar tests / hygiene pack; **stop** for object, live-vs-stand-in, modal-bar fork, scaffolding pick, bar-**met**, Phase 2/EG, revise/keep, run-mode, branch, hard stop. One-lock-per-turn only if operator said `one admit at a time`.
+- [ ] At Phase 1 endpoint: **draft** residual-branch + optional-mode menus (offer; do not run; do not wait for the one-liner to start the files)
 
 ## 7. Phase 2 (only if authorized and domain-applicable)
 - [ ] **Accuracy posture** — improve established / not established / refuted; do not optimize for substantiating the slogan
@@ -68,7 +70,7 @@ Also in force: locking-scaffolding; Amb ≠ clearance; accuracy-first Phase 2; c
 ## Authorization asks (any phase)
 - [ ] Lead with **plain-language card** (doing / need from you / yes means / does not mean)
 - [ ] One ordinary-language choice set; Rank/Amb/IDs only in a **Details** block after
-- [ ] Prompt expected **one-liner**: `lock Rank N` / `authorize branch R-…` / `run UX` / `decline residual menu` / `endpoint only` / `hard stop` / …
+- [ ] Prompt expected **one-liner**: `lock Rank N` / `proceed with recommended` / `one admit at a time` / `authorize branch R-…` / `run UX` / `decline residual menu` / `endpoint only` / `hard stop` / …
 - [ ] Never require the reader to decode package codes before they can answer
 
 ## 8. Close the Run
@@ -81,7 +83,7 @@ Also in force: locking-scaffolding; Amb ≠ clearance; accuracy-first Phase 2; c
 - [ ] Final verdict; failure-mode cadence if useful
 - [ ] Complete **`STATUS.md` closeout checklist** — unchecked applicable items ⇒ **not closed**
 - [ ] Incomplete-record apps: run **`THIN_RECORD_RECOVERY.md`** before any elevation residual
-- [ ] **Residual-branch menu** (`RESIDUAL_BRANCH_MENU.md`) — classify residuals; offer empirically resolvable branches; **do not auto-run**
+- [ ] Produce / **draft at Phase 1 endpoint** `RESIDUAL_BRANCH_MENU.md` — classify residuals; offer empirically resolvable branches; **do not auto-run**; do not wait for the one-liner to start the file
 
 ## 8b. Claim-Revision Scaffolding (only if revision path authorized)
 - [ ] Follow canonical Claim-Revision Scaffolding in `.mdc` (`CR_Claim_Revision_Scaffolding.md`)
@@ -169,8 +171,9 @@ Also in force: locking-scaffolding; Amb ≠ clearance; accuracy-first Phase 2; c
 - Quantitative Implication & Counterfactual Benefit is authorization-gated after a failed numerical instance test; implications/counterfactuals ≠ proof of the claim.
 - Contrastive Recommendation is authorization-gated after an established core + failed elevation; proposes different better-fitting claims, not a silent rewrite.
 - **Use-Exploration** is authorization-gated after results exist; explores possible *uses* of findings guided by claim intent — **not** advice/forecasts and **not** a verdict change.
-- **Residual-branch offering** is mandatory at closeout when residuals remain; **clickable cards** required; offering ≠ running; no auto Phase 2.
-- **Optional-mode offering** is mandatory at endpoint/hard-stop closeout: offer applicable **UX / CX / CR / QI** (mark N/A explicitly); clickable cards + reply one-liners; offering ≠ running; residual menu alone is not sufficient.
+- **Residual-branch offering** is mandatory at closeout when residuals remain; **clickable cards** required; offering ≠ running; no auto Phase 2. **Draft the menu at Phase 1 endpoint** (do not wait for the one-liner).
+- **Optional-mode offering** is mandatory at endpoint/hard-stop closeout: offer applicable **UX / CX / CR / QI** (mark N/A explicitly); clickable cards + reply one-liners; offering ≠ running; residual menu alone is not sufficient. **Draft at Phase 1 endpoint.**
+- **Phase 1 autonomy split:** auto-continue census / in-use drafts / unmet bar tests / hygiene; stop for forks, bar-met, Phase 2, run-mode, branch, hard stop. `one admit at a time` is an override.
 - **Share pack** mandatory for sharing closure; **endpoint ≠ hard stop**.
 - Prefer operator reply grammar one-liners; show them in authorization asks.
 - **Live vs stand-in** badge on brief/share pack when prints/proxies used.

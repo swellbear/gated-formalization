@@ -23,6 +23,11 @@ For any work inside `applications/`:
 
 - Execute normal gated cycles: search → formal Material Admission Checks → re-score → notes.
 - **Autonomous continuation:** While Amb is still dropping meaningfully **or** remaining gaps are still primarily descriptive/structural, continue Phase 1 cycles **without waiting for operator authorization between cycles**.
+- **Operational split (do not under-ask or over-ask):**
+  - **Auto-continue (default):** remaining descriptive census / printed-source vehicle once object and live-vs-stand-in are set; **draft-already-in-use** structural freezes (the gap draft is exactly how admitted layers already quote); bar tests that conclude **not established** or **refute**; mechanical **hygiene pack** after every real admit/lock/test (`STATUS.md`, `PLAIN_LANGUAGE_CARD.md`, `admitted_layers.md`, `01`/`03` registers, gate rescore, `Thesis_Tracker.md`, portfolio / claim-graph / calibration stub as applicable); **draft** residual-branch and optional-mode menus at Phase 1 endpoint (offering ≠ running — do not wait for the operator to say `residual menu` before producing the files).
+  - **Stop for operator:** live vs stand-in / OUT of package; object or claim-type fork (census vs forecast vs commitment vs should; descriptive vs normative vs mixed); soft-modal bar fork; locking-scaffolding OR-slots / package pick; any recommendation that a locked bar, uniqueness, preferability, or should is **established**; stipulated proxy; Phase 2 / Experimental Generation; revise-vs-keep; endpoint vs hard stop; **run** UX/CX/CR/QI; **authorize** a residual branch; start a successor app. Meaning-forks with live rival readings (e.g. individual-mandate vs vote) stay stops even if a draft exists.
+  - **Bar tests:** after the bar is frozen and the evidence vehicle is in, **run** the rubric/`04`. Continue if the honest result is not-established or refute. **Stop** if the result would be **established**.
+  - **One-lock-per-turn** is an **operator override** (`one admit at a time`), not the default. Do not treat it as the method. `proceed with recommended` authorizes only the auto-continue class (structural drafts / remaining census / unmet tests), not bar-met or closeout tools.
 - After **every** cycle, still produce a readout:
   - **Full readout** if any material was admitted, Amb changed, or the agenda shifted.
   - **Compact no-admit form (mandatory)** if nothing was admitted and Amb is unchanged — use `templates/Compact_No_Admit_Readout.md` (or equivalent): (i) candidates examined + REJECT/HOLD, (ii) Amb unchanged, (iii) gaps unchanged, (iv) Phase 1 continuation Y/N + one-line reason. Do **not** write a full narrative re-score for no-admit cycles.
@@ -35,6 +40,7 @@ For any work inside `applications/`:
   - **Explicit domain classification:** Phase 2 applicable / not applicable / mixed (with justification)
   - Residual judgment points and higher-level review
   - Recommended next action
+  - **Drafted** `RESIDUAL_BRANCH_MENU.md` (if residuals remain) and `OPTIONAL_MODES_MENU.md` (Offer/N/A triage) — files on disk; branches/modes still not run
 - Do **not** enter Phase 2 without **new explicit operator authorization**.
 
 ### Soft-modal fork (early; when claim uses soft modal / evaluative verbs)
@@ -258,6 +264,8 @@ Prefer teaching these forms for external operators (natural-language equivalents
 | Quantitative Implication | `run QI` / `decline QI` |
 | Decline all optional modes | `decline optional modes` |
 | Optional modes (legacy shorthand) | `run QI` / `run CX` / `run CR` (when those modes apply) |
+| Continue auto-continue class as recommended | `proceed with recommended` |
+| Interactive Phase 1 override | `one admit at a time` |
 | Close examination only | `endpoint only` |
 | Full hygiene close | `closeout` / `hard stop` |
 
@@ -520,7 +528,7 @@ Core closeout / endpoint verdict must remain clearly separate from the explorati
 
 ## Optional-mode offering (mandatory at endpoint / hard-stop closeout)
 
-Residual menus alone are **not** enough. At every **endpoint** or **hard stop**, the method must **offer** (not auto-run) applicable optional modes so the operator can see that the options exist.
+Residual menus alone are **not** enough. At every **endpoint** or **hard stop**, the method must **offer** (not auto-run) applicable optional modes so the operator can see that the options exist. **Draft the file at Phase 1 endpoint** as part of the endpoint readout; do not wait for `residual menu` / `optional modes` as a one-liner before producing it. Running a mode still requires authorization.
 
 1. **Produce** `OPTIONAL_MODES_MENU.md` (template: `templates/OPTIONAL_MODES_MENU.md`) with:
    - Applicability triage: each of **UX / CX / CR / QI** marked **Offer** or **N/A** with a one-line why  
@@ -542,6 +550,8 @@ Residual menus alone are **not** enough. At every **endpoint** or **hard stop**,
 **Honesty:** Does not change parent verdicts. No advice. Distinct from residual-branch offering (scoped gap reopen vs post-closeout optional tools).
 
 ## Residual-branch offering (mandatory at closeout / hard stop when residuals remain)
+
+**Draft at Phase 1 endpoint** when residuals are already visible (do not wait for `residual menu` before producing the file). Offering ≠ running. Parent verdict unchanged.
 
 Whenever an application **closes** or reaches **Stable Provisional** (or equivalent hard stop) with **open residuals**:
 
