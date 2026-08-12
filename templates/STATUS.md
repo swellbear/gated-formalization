@@ -33,7 +33,7 @@
 Mark when complete. **Endpoint** may be reached with hygiene still open. **Hard stop** requires all applicable boxes.
 
 - [ ] `Original_Claim_Assessment` / closeout (or explicit incomplete-record closeout)
-- [ ] `DISSERTATION.md`
+- [ ] `DISSERTATION.md` — **all 11 required sections** present (stub/one-pager ≠ done; see `templates/DISSERTATION_Application_Findings.md`)
 - [ ] `EXECUTIVE_BRIEF.md` (plain verdict first; **Live vs stand-in** when applicable)
 - [ ] **`SHARE_PACK.md`** (partner front door — required for sharing closure)
 - [ ] Layer 2 `Thesis_Tracker.md` (tags + related apps)

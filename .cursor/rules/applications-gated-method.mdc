@@ -286,7 +286,7 @@ An app may show **endpoint reached / hard stop pending** without looking “full
 - **Next authorization needed** — one line (or “none — hard stop”)
 - **Related apps surfaced** — ≤2 IDs + reason, or “none”
 
-**Closeout checklist (mandatory in `STATUS.md`):** Before labeling a run **hard-stopped**, check off dissertation, executive brief, **`SHARE_PACK.md`**, Layer 2 tracker, portfolio row, residual dispositions, residual-branch menu (if residuals), **optional-modes menu (offer applicable UX/CX/CR/QI — offering ≠ running)**, pattern map / calibration if needed, and final verdict. **Unchecked applicable items ⇒ not hard-stopped** (may still be at **endpoint**). Template: `templates/STATUS.md`.
+**Closeout checklist (mandatory in `STATUS.md`):** Before labeling a run **hard-stopped**, check off **full 11-section `DISSERTATION.md`** (stubs ≠ done), executive brief, **`SHARE_PACK.md`**, Layer 2 tracker, portfolio row, residual dispositions, residual-branch menu (if residuals), **optional-modes menu (offer applicable UX/CX/CR/QI — offering ≠ running)**, pattern map / calibration if needed, and final verdict. **Unchecked applicable items ⇒ not hard-stopped** (may still be at **endpoint**). Template: `templates/STATUS.md`.
 
 ### Share pack (mandatory at closeout / for sharing)
 
@@ -341,7 +341,7 @@ Whenever a lock/metric/residual/process pattern is reused from a related app, pa
 
 When an application is closed (**Stable Provisional**, **Admissible**, hard stop, or equivalent endpoint that ends the run), produce a **comprehensive dissertation** in the application folder as `DISSERTATION.md` (or `DISSERTATION_<shortname>.md`) using `templates/DISSERTATION_Application_Findings.md`.
 
-**Required sections (fixed order):**
+**Required sections (fixed order) — all must appear as named headings:**
 1. Plain-language summary
 2. Original claim and context
 3. How it was examined
@@ -354,6 +354,8 @@ When an application is closed (**Stable Provisional**, **Admissible**, hard stop
 10. What would still be needed
 11. Technical appendix (layers, Amb path, key artifacts)
 
+**Hard rule — no stub dissertations:** A short plain+technical note, slogan one-pager, or “thin sibling” summary does **not** satisfy this deliverable. **Hard stop requires the full 11-section structure** (sections may be brief where content is truly N/A — e.g. §7 “None” — but the section must exist). Share pack / executive brief do **not** replace the dissertation.
+
 **Requirements**
 - Faithful to the application’s actual admitted layers, failures, locks, and closeout — **no silent softening** of negative results.
 - Main body readable by a **non-technical** audience; appendix may be technical.
@@ -361,6 +363,10 @@ When an application is closed (**Stable Provisional**, **Admissible**, hard stop
 - State **parent/successor** relationships when relevant (Claim-Revision lineage, etc.).
 - Distinct from worksheets: the dissertation **indexes and narrates**; it does not replace `04`s, closeout, or FD registers.
 - For a **claim family** (parent + successors), each closed application gets its own dissertation; parent/successor links must cross-reference.
+- In §8: if optional modes were **offered but not run**, say so and link `OPTIONAL_MODES_MENU.md` (do not invent UX/CX/CR content).
+- In §10: link clickable residual cards when residuals remain (`RESIDUAL_BRANCH_MENU.md`).
+
+**STATUS checklist:** Treat “`DISSERTATION.md`” as unchecked unless all 11 section headings are present.
 
 ### Executive brief (mandatory at closeout; default audit front door)
 

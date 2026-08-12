@@ -73,7 +73,7 @@ Also in force: locking-scaffolding; Amb ≠ clearance; accuracy-first Phase 2; c
 
 ## 8. Close the Run
 - [ ] Fill `05_Original_Claim_Assessment.md` (status + **Amb ≠ clearance** + locked-bar status + continuation options + **revision vs continuation fork** when required)
-- [ ] Produce **`DISSERTATION.md`**, **`EXECUTIVE_BRIEF.md`**, and **`SHARE_PACK.md`** (share pack = partner front door; **Live vs stand-in** when applicable)
+- [ ] Produce **`DISSERTATION.md`** with **all 11 template sections** (no stub/one-pager), **`EXECUTIVE_BRIEF.md`**, and **`SHARE_PACK.md`** (share pack = partner front door; **Live vs stand-in** when applicable)
 - [ ] Set **Closure state**: **endpoint** when examination done; **hard stop** only after hygiene + share pack
 - [ ] Produce / normalize **Layer 2** `Thesis_Tracker.md` (tags + related apps + residual dispositions)
 - [ ] Update **Layer 1** portfolio; refresh **Layer 3** queue (**pursue / park-90d / park-until-trigger / drop**)
@@ -154,7 +154,7 @@ Also in force: locking-scaffolding; Amb ≠ clearance; accuracy-first Phase 2; c
 - Locking-scaffolding must open with plain-language framing and include an objective claim-deviation assessment (fixed dimensions/labels) for every package.
 - If **no Minimal-deviation package** exists, run **forced-deviation extraction**: name the claim terms that force deviation; carry them as first-class agenda/freeze items and into the Original-Claim Assessment (non-derivative testing impossible — property of claim text, not mere missing data).
 - Closeout is not silent resolution of the original claim.
-- Every closed application needs a **`DISSERTATION.md`** (plain-language findings + technical appendix; faithful; no softening).
+- Every closed application needs a **full 11-section `DISSERTATION.md`** from `templates/DISSERTATION_Application_Findings.md` (faithful; no softening; **stubs ≠ hard stop**). Share pack / brief do not replace it.
 - **Low Amb ≠ claim cleared**; locked bars need established / not established / refuted.
 - Phase 2 defaults to **accuracy**, not substantiation-seeking.
 - Soft-modal fork early when potential/could/should/etc. carry claim strength.

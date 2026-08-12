@@ -33,7 +33,7 @@
 ## Closeout checklist (required before **hard stop**)
 
 - [x] `Original_Claim_Assessment` / closeout
-- [x] `DISSERTATION.md`
+- [x] `DISSERTATION.md` — **all 11 required sections** (backfilled; stubs ≠ hard stop)
 - [x] `EXECUTIVE_BRIEF.md` (plain verdict first; Live vs stand-in)
 - [x] **`SHARE_PACK.md`**
 - [x] Layer 2 `Thesis_Tracker.md`

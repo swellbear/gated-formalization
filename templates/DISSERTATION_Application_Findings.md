@@ -2,6 +2,8 @@
 
 **Mandatory closeout deliverable** for every closed application (or closed claim family). Faithful to admitted layers, failures, locks, and closeout. Main body readable by a non-technical audience; technically precise (no silent softening of negative results). Scoped vs unrestricted conclusions explicit. Parent/successor relationships stated when relevant.
 
+**Hard rule:** All **11 sections below must appear** as named headings. A short plain+technical note or “thin sibling” one-pager does **not** count. Empty-but-present is OK only where truly N/A (e.g. §7 “None”). **Hard stop requires this full structure.** Share pack / executive brief do **not** replace this file.
+
 **Date:**  
 **Application:**  
 **Claim family / parent (if any):**  
@@ -88,7 +90,7 @@
 
 ## 8. Revisions, implications, and alternatives
 
-*(Claim-Revision ranks, QI, Contrastive Recommendation, Experimental Generation — only if run. State that originals remain on record.)*
+*(Claim-Revision, QI, Contrastive Recommendation, Use-Exploration, Experimental Generation — only if **run**. If modes were **offered but not run**, say so and link `OPTIONAL_MODES_MENU.md`. Do not invent exhibit content. State that originals remain on record.)*
 
 
 
@@ -108,7 +110,7 @@
 
 ## 10. What would still be needed
 
-*(Concrete reopen conditions or next authorized work — not vague “more research.”)*
+*(Concrete reopen conditions or next authorized work — not vague “more research.” Link `RESIDUAL_BRANCH_MENU.md` cards when residuals remain.)*
 
 
 
@@ -138,4 +140,4 @@
 
 ---
 
-*Generated under standing rule: Application Dissertation Deliverable. See `.cursor/rules/applications-gated-method.mdc`.*
+*Generated under standing rule: Application Dissertation Deliverable. See `.cursor/rules/applications-gated-method.mdc`. Stubs ≠ hard stop.*

@@ -18,7 +18,8 @@ One-sentence definitions for non-technical partners. Full method: `.cursor/rules
 | **Optional mode** | Post-closeout tool (UX / CX / CR / QI) that may be **offered** at endpoint; runs only if you authorize it. |
 | **Optional-modes menu** | Clickable offer sheet (`OPTIONAL_MODES_MENU.md`) listing which modes apply, with `run …` / `decline …` one-liners. Offering ≠ running. |
 | **Claim revision** | Choosing a **new, clearer wording** of the claim (successor); the old wording stays on record. |
-| **Share pack** | The short partner front door (`SHARE_PACK.md`): plain verdict first, then established/not, stop/keep, residuals, UX, glossary. |
+| **Share pack** | The short partner front door (`SHARE_PACK.md`): plain verdict first, then established/not, stop/keep, residuals, optional modes, glossary. |
+| **Dissertation** | Full 11-section closeout narrative (`DISSERTATION.md`); required for hard stop — stubs/one-pagers do not count. |
 | **Endpoint** | Examination of this claim is done; the verdict is frozen as stated. Hygiene (portfolio, trackers, share pack) may still be open. |
 | **Hard stop** | Endpoint **plus** Layers 1–3 hygiene finished (including share pack / brief / dissertation checkboxes). |
 | **Live vs stand-in** | One-line badge when a number used a same-day print, proxy, or stand-in series — so readers do not treat it as live clearance. |
