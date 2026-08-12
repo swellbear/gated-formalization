@@ -221,6 +221,33 @@ When an application is closed (**Stable Provisional**, **Admissible**, or any ha
 
 Scoped results must remain clearly distinguished from unrestricted support for the original claim. Do **not** treat closeout as silent resolution of the original claim.
 
+## Application Dissertation Deliverable (mandatory at closeout)
+
+When an application is closed (**Stable Provisional**, **Admissible**, hard stop, or equivalent endpoint that ends the run), produce a **comprehensive dissertation** in the application folder as `DISSERTATION.md` (or `DISSERTATION_<shortname>.md`) using `templates/DISSERTATION_Application_Findings.md`.
+
+**Required sections (fixed order):**
+1. Plain-language summary
+2. Original claim and context
+3. How it was examined
+4. What was established
+5. What was not established
+6. Forced deviations and scope limits
+7. Quantitative results (if any)
+8. Revisions, implications, and alternatives
+9. Final status of the original claim
+10. What would still be needed
+11. Technical appendix (layers, Amb path, key artifacts)
+
+**Requirements**
+- Faithful to the application’s actual admitted layers, failures, locks, and closeout — **no silent softening** of negative results.
+- Main body readable by a **non-technical** audience; appendix may be technical.
+- Explicit about **scoped vs unrestricted** conclusions.
+- State **parent/successor** relationships when relevant (Claim-Revision lineage, etc.).
+- Distinct from worksheets: the dissertation **indexes and narrates**; it does not replace `04`s, closeout, or FD registers.
+- For a **claim family** (parent + successors), each closed application gets its own dissertation; parent/successor links must cross-reference.
+
+If records are too thin to complete a faithful dissertation, write a short `DISSERTATION.md` that states **incomplete for lack of records** and lists what is missing — do not invent layers.
+
 ## Claim-Revision Scaffolding (optional; authorization-gated)
 
 **When it may be offered**
@@ -285,6 +312,35 @@ Before any work begins, explain in ordinary terms (use `templates/QI_Quantitativ
 - Does **not** silently upgrade a failed instance into support for the original claim.
 - Stays **separate** from **Experimental Generation** and from **Claim-Revision Scaffolding** (which produce successor claims). This mode evaluates the *benefit implication* of meeting an **already-defined** numerical standard.
 
+## Contrastive Recommendation (optional; authorization-gated)
+
+**When it may be offered**
+After a closeout (or Phase 1 / Phase 2 endpoint) in which:
+- Some **descriptive or structural** content was **established**, and
+- The original claim’s stronger **recommendation**, uniqueness, or **“should” elevation** was **not** established,
+
+the method may offer this mode. It does **not** run automatically.
+
+**Plain-language framing (required before work)**
+Explain to the operator in ordinary terms (use `templates/CX_Contrastive_Recommendation.md` or equivalent):
+1. What was **established** vs what **failed**.
+2. This mode will use **only** the evidence and locks already in hand to propose a small number of **alternative** rules or claims that are more consistent with what actually cleared.
+3. Each alternative will receive a **minimal gated check** so it is not just an opinion.
+4. Results are **contrastive recommendations**, not a silent rewrite of the original claim. The original closeout / endpoint findings stay on the record.
+
+**Process when authorized**
+1. **Extract** the established core and the failed elevation(s).
+2. **Propose 1–3** alternative claims/rules that stay close to the established core and avoid the failed elevation.
+3. For **each** alternative, run a **minimal gated check**: claim-type; key free parameters; consistency with admitted layers / evidence already in hand; higher-level review.
+4. **Rank** them by fit to established evidence and by how little **new Amb** they introduce.
+5. **Report** in plain language: what each alternative says; why it fits better than the original elevation; what is still open; minimal gate result.
+
+**Constraints**
+- Authorization-gated; never automatic.
+- Uses **only** evidence and locks already developed in the application unless the operator authorizes new search.
+- Does **not** overwrite the original claim’s closeout, FD register, or admitted layers.
+- Distinct from **Claim-Revision Scaffolding** (successor wording of the *same* claim lineage), **Quantitative Implication** (scale a failed numerical standard), and **Experimental Generation** (close free parameters of the existing claim). This mode proposes **different** recommendations / claims that better match what was actually established.
+
 ## Application Thesis Tracker (optional; authorization-gated; per-application)
 
 **Intent**
@@ -310,10 +366,10 @@ A living file in the application folder (e.g. `Thesis_Tracker.md`) using `templa
 4. Baseline timeline entry (“tracker opened”).
 
 **Update triggers (append timeline row)**
-Amb re-score; lock/OR-slot change; locked-bar status change; material ADMIT/REJECT/HOLD that moves a watchlist item; Phase 2 attempt close; QI / Claim-Revision events; reopen condition met or explicitly declined.
+Amb re-score; lock/OR-slot change; locked-bar status change; material ADMIT/REJECT/HOLD that moves a watchlist item; Phase 2 attempt close; QI / Claim-Revision / Contrastive Recommendation events; reopen condition met or explicitly declined.
 
 **Constraints**
 - Authorization-gated; not automatic for every app.
 - **Application-attached** — not a repo-wide dashboard; design the watchlist for that claim’s needs.
 - Does not automate Amb scoring or admissions.
-- Distinct from Experimental Generation, Claim-Revision Scaffolding, and QI mode.
+- Distinct from Experimental Generation, Claim-Revision Scaffolding, QI mode, and Contrastive Recommendation.

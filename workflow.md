@@ -5,13 +5,13 @@ Use this checklist for every new claim, theory fragment, or argument you run thr
 **Canonical method (full rules):** `.cursor/rules/applications-gated-method.mdc`  
 Do not treat this file as a second full copy of the standing rule — checklist + pointers only.
 
-**Quick map:** Phase 1 (autonomous while Amb drops / gaps descriptive; **soft-modal fork** early when needed) → Phase 2 (authorized; **accuracy not substantiation**) → optional Experimental Generation → closeout with **Original-Claim Assessment** (**Amb ≠ clearance**) → optional **Claim-Revision Scaffolding** → optional **QI** → optional **Application Thesis Tracker** (per-app longitudinal watchlist).  
-Also in force when applicable: inter-parameter dependencies; locking-scaffolding (incl. **lock-time Amb warning**); scoped-result honesty; package evidence intake (**conflicted-source rule**); scenario passes (**already-included legs**); soft-modal fork; compact no-admit; revision-vs-continuation fork; Claim-Revision Scaffolding; QI mode; **Application Thesis Tracker** (app-attached; thesis watchlist over time).  
+**Quick map:** Phase 1 (autonomous while Amb drops / gaps descriptive; **soft-modal fork** early when needed) → Phase 2 (authorized; **accuracy not substantiation**) → optional Experimental Generation → closeout / endpoint (**Amb ≠ clearance**) → optional **Claim-Revision** / **QI** / **Contrastive Recommendation** / **Application Thesis Tracker**.  
+Also in force when applicable: inter-parameter dependencies; locking-scaffolding (incl. **lock-time Amb warning**); scoped-result honesty; package evidence intake (**conflicted-source rule**); scenario passes (**already-included legs**); soft-modal fork; compact no-admit; revision-vs-continuation fork; Claim-Revision; QI; **Contrastive Recommendation**; Thesis Tracker.  
 **Cons / Amb / redefinition** primary; **Agree / Prod** secondary. High Amb after serious search = Provisional, not false. **Low Amb ≠ claim cleared.**
 
 ## 1. Setup
 - [ ] Create folder `applications/YYYY-MM_short-name/`
-- [ ] Copy templates `01`–`05` (+ `R_Locking_Scaffolding`, `CR_Claim_Revision_Scaffolding`, `QI_Quantitative_Implication_Counterfactual_Benefit`, `T_Application_Thesis_Tracker`, `E_Package_Evidence_Intake`, `S_Scenario_Pass`, `Compact_No_Admit_Readout` as needed)
+- [ ] Copy templates `01`–`05` (+ `R_Locking_Scaffolding`, `CR_Claim_Revision_Scaffolding`, `QI_Quantitative_Implication_Counterfactual_Benefit`, `CX_Contrastive_Recommendation`, `DISSERTATION_Application_Findings`, `T_Application_Thesis_Tracker`, `E_Package_Evidence_Intake`, `S_Scenario_Pass`, `Compact_No_Admit_Readout` as needed)
 - [ ] Note the date and a short description of the source material
 
 ## 2. Anchors & Claim-Type Pre-Classification
@@ -55,6 +55,7 @@ Also in force when applicable: inter-parameter dependencies; locking-scaffolding
 
 ## 8. Close the Run
 - [ ] Fill `05_Original_Claim_Assessment.md` (status + **Amb ≠ clearance** + locked-bar status + continuation options + **revision vs continuation fork** when required)
+- [ ] Produce **`DISSERTATION.md`** from `DISSERTATION_Application_Findings.md` (mandatory; plain-language body + technical appendix; no silent softening)
 - [ ] Final verdict; phase status; scoped vs unrestricted distinction
 - [ ] Failure-mode cadence → `logs/failure_mode_log.md` if there is anything to learn
 
@@ -78,6 +79,13 @@ Also in force when applicable: inter-parameter dependencies; locking-scaffolding
 - [ ] Seed snapshot + baseline timeline; append on material status changes
 - [ ] Does **not** overwrite closeout; not a repo-wide dashboard
 
+## 8e. Contrastive Recommendation (only if authorized after established core + failed elevation)
+- [ ] Plain-language framing first (`CX_Contrastive_Recommendation.md`)
+- [ ] Extract established core vs failed recommendation / “should” / uniqueness elevation
+- [ ] Propose 1–3 alternatives; minimal gated check each; rank by fit and low new Amb
+- [ ] Does **not** overwrite original closeout; distinct from Claim-Revision and QI
+- [ ] Uses only in-hand evidence/locks unless new search is authorized
+
 ## Reminders
 - Canonical detail lives only in `.cursor/rules/applications-gated-method.mdc`.
 - Compact no-admit is mandatory for no-change cycles.
@@ -85,6 +93,7 @@ Also in force when applicable: inter-parameter dependencies; locking-scaffolding
 - Locking-scaffolding must open with plain-language framing and include an objective claim-deviation assessment (fixed dimensions/labels) for every package.
 - If **no Minimal-deviation package** exists, run **forced-deviation extraction**: name the claim terms that force deviation; carry them as first-class agenda/freeze items and into the Original-Claim Assessment (non-derivative testing impossible — property of claim text, not mere missing data).
 - Closeout is not silent resolution of the original claim.
+- Every closed application needs a **`DISSERTATION.md`** (plain-language findings + technical appendix; faithful; no softening).
 - **Low Amb ≠ claim cleared**; locked bars need established / not established / refuted.
 - Phase 2 defaults to **accuracy**, not substantiation-seeking.
 - Soft-modal fork early when potential/could/should/etc. carry claim strength.
@@ -94,3 +103,4 @@ Also in force when applicable: inter-parameter dependencies; locking-scaffolding
 - Application Thesis Tracker is per-app, authorization-gated, and thesis-watchlist shaped for that claim.
 - Claim-Revision Scaffolding is authorization-gated; does not silently replace the original claim.
 - Quantitative Implication & Counterfactual Benefit is authorization-gated after a failed numerical instance test; implications/counterfactuals ≠ proof of the claim.
+- Contrastive Recommendation is authorization-gated after an established core + failed elevation; proposes different better-fitting claims, not a silent rewrite.
