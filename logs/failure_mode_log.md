@@ -24,6 +24,14 @@ After every **closed application**, or after every **N ≥ 5** REJECT/HOLD decis
 
 ## Entries
 
+### 2026-08-11 | Public equity / SpaceX | “Potential” to become a $600 stock (SPCX)
+- **Gate outcome at the time:** Stable Provisional closeout (Amb ≈ 2) under Rank 1 (M2+S1+H2+X1). Well-posed ~$7.9T / $600-by-2036 target; M2 not established after scenario + deep evidence (accuracy-first). FD-M1/S1/H1 on bare wording.
+- **Later evidence:** n/a at closeout.
+- **Direction of error:** **method-pressure-point** — low Amb after locks can be misread as claim success; Amb≠M2 clearance. Per-share slogans force Moderate+ deviation to become testable.
+- **Which rule or judgment contributed:** Locking-scaffolding + forced-deviation; scoped Rank 1 honesty; accuracy-first Phase 2 (not substantiation-seeking).
+- **Adjustment made (if any):** None required beyond existing Amb-vs-clearance discipline; closeout states distinction explicitly.
+- **Notes:** Starlink already included as strongest demonstrated leg; does not close multi-trillion gap alone.
+
 ### 2026-08-11 | Federal fiscal / debt limit | Scorekept pairing recommendation (Rank 1 revision of equal-cuts claim)
 - **Gate outcome at the time:** Stable Provisional closeout (Amb ≈ 4). Descriptive well-posed scorekept pairing constrained; soft “should” open (normative); FRA 2023 fails C≥H under freeze; other episodes untested; parent FD1–FD5 remain on parent record.
 - **Later evidence:** Post-closeout QI full path: implication C* ≈ $4.7T (~3.6×); counterfactual stipulated balance only; G1 still open. Failed instance not upgraded.
