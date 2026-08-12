@@ -13,4 +13,5 @@
 **Claim:** “SpaceX has potential to become a $600 stock.”  
 **Freeze under Rank 1:** Non-negligible path to $600 by ~2036 on IPO-scale shares (≈$7.9T), no reverse-split-only.
 
-**Status:** **Hard stop closed.** Stable Provisional. M2 not established (accuracy-first). Starlink in mix; does not close ~$7.9T gap alone. FD-M1/S1/H1 on record.
+**Status:** **Hard stop closed.** Stable Provisional. M2 not established (accuracy-first). Starlink in mix; does not close ~$7.9T gap alone. FD-M1/S1/H1 on record.  
+**Thesis tracker:** `Thesis_Tracker.md` (app-attached longitudinal watchlist; does not reopen hard stop).

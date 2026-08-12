@@ -81,6 +81,9 @@ OR-slots (required if any alternatives remain):
 
 **Dependents may re-open only after selection + OR-slot resolution/acceptance.**
 
+**Lock-time Amb warning (mandatory):**  
+Selecting a package typically **drops Amb by fixing meanings**. That Amb drop does **not** establish the original claim or any locked upside/evaluative bar. **Low Amb after lock ≠ clearance.**
+
 ---
 
 ## 7. Forced-deviation extraction (mandatory if no Minimal-deviation package)

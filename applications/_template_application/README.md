@@ -8,13 +8,15 @@ Do not duplicate full standing-rule text here.
 
 Recommended contents after copying (from `templates/`):
 
-- `01`–`04` worksheets as needed
-- `05_Original_Claim_Assessment.md` at closeout
-- `R_Locking_Scaffolding.md` when a dominant blocker appears (plain-language framing + ranked packages + objective claim-deviation assessment; forced-deviation extraction if no Minimal-deviation package)
-- `CR_Claim_Revision_Scaffolding.md` when a post-closeout / forced-deviation **revision path** is authorized (ranked successor claims; non-silent; distinct from Experimental Generation)
-- `QI_Quantitative_Implication_Counterfactual_Benefit.md` when authorized after a **failed numerical instance** test (scale-factor implication + optional counterfactual benefit evaluation; does not upgrade the fail into claim support)
-- `E_Package_Evidence_Intake.md` before admitting package-scoped evidence
+- `01`–`04` worksheets as needed (soft-modal fork on `01` when potential/could/should/etc. carry strength)
+- `05_Original_Claim_Assessment.md` at closeout (**Amb ≠ clearance** + locked-bar status)
+- `R_Locking_Scaffolding.md` when a dominant blocker appears (incl. **lock-time Amb warning**; forced-deviation extraction if no Minimal-deviation package)
+- `CR_Claim_Revision_Scaffolding.md` when a post-closeout / forced-deviation **revision path** is authorized
+- `QI_Quantitative_Implication_Counterfactual_Benefit.md` when authorized after a **failed numerical instance** test
+- `E_Package_Evidence_Intake.md` before admitting package-scoped evidence (**conflicted-source flag**)
+- `S_Scenario_Pass.md` for bear/base/bull or multi-leg scenarios (**already-included legs**)
+- `T_Application_Thesis_Tracker.md` when authorized — **per-app** longitudinal thesis watchlist (not a repo dashboard)
 - `Compact_No_Admit_Readout.md` for no-admit Phase 1 cycles
 - `notes.md`, `final_verdict.md`, `admitted_layers.md` as useful
 
-Keep descriptive vs normative/strategic claims flagged. Cons/Amb/redefinition primary; Agree/Prod secondary.
+Keep descriptive vs normative/strategic claims flagged. Cons/Amb/redefinition primary; Agree/Prod secondary. Phase 2 = **accuracy**, not substantiation. **Low Amb ≠ claim cleared.**

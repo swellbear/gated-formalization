@@ -17,6 +17,7 @@ For any work inside `applications/`:
 5. Keep descriptive vs normative/strategic claims clearly separated. Never expand uniqueness **(N)** / preferability **(P)** (or analogues) beyond what admitted material strictly constrains.
 6. High residual Amb after serious search = **Provisional**, not false.
 7. **Gate priority:** **Cons**, **Amb**, and redefinition / meaning-shift checks are primary. **Agree** and **Prod** are secondary — score them, but only move the needle when the crisp rules below are met (do not invent productivity or stability gains).
+8. **Amb ≠ clearance (mandatory):** **Amb** measures under-specification (how many free parameters remain). **Clearance** means the locked bar or claim content is **established** by admitted material. Low Amb after locks means the question is well-posed; it does **not** mean the claim is true, Admissible, or that a modal bar (e.g. “non-negligible potential”) has been cleared. State this distinction in post-lock readouts and in the Original-Claim Assessment whenever Amb is low but substantive bars remain unmet.
 
 ## Phase 1 — Constraint Diagnosis (always runs)
 
@@ -36,6 +37,18 @@ For any work inside `applications/`:
   - Recommended next action
 - Do **not** enter Phase 2 without **new explicit operator authorization**.
 
+### Soft-modal fork (early; when claim uses soft modal / evaluative verbs)
+
+When the claim text uses soft modals or weak evaluatives such as **“potential,” “could,” “may,” “might,” “should,” “can,” “likely,”** or close analogues, and those terms carry load for the claim’s strength:
+
+1. **Flag them early** in `01` / first gap register — do not wait until Phase 1 endpoint if they dominate Amb.
+2. **Offer a standard modal bar fork** (plain language) before or as part of locking-scaffolding when they block dependents:
+   - **P-Logical** — not ruled out / mere possibility
+   - **P-NonNegligible** — live / real shot (non-vanishing chance); not a base case
+   - **P-BaseCase** — expected / central path
+3. Treat the fork as a **definitional lock** (often a dominant blocker). Unbounded **P-Logical** plus open horizon is often **near-vacuous** (low Prod); say so explicitly.
+4. Do **not** silently strengthen “potential” into P-BaseCase or weaken an operator-locked P-NonNegligible back to P-Logical.
+
 ## Phase 2 — Agenda-Driven Resolution (only when authorized and applicable)
 
 **Permitted domains:** scientific theories, mathematical claims, technical research programs, formal models, and similar cases where actively trying to solve remaining problems is appropriate.
@@ -44,11 +57,13 @@ For any work inside `applications/`:
 
 **Mixed cases:** operator decides which parts may enter Phase 2.
 
+**Default posture — accuracy, not substantiation:** Phase 2 exists to **improve the accuracy** of whether remaining free parameters / locked bars are established, refuted, or still open. A successful pass may equally **strengthen REJECT/HOLD**, leave a bar **not established**, or (when evidence warrants) support clearance. Do **not** optimize for clearing the original slogan or for “ranking success by substantiating claims.”
+
 When authorized:
 - Work the research agenda from Phase 1. Do **not** silently redefine or narrow the original claim. Quote the **claim-freeze** line for any free parameter you attempt to close.
-- Attempt to close or further constrain free parameters.
+- Attempt to close, refute, or further constrain free parameters **under the accuracy posture above**.
 - Continue until either (i) critical gaps are closed and the original claim is well-constrained, **or** (ii) remaining gaps are shown currently intractable under the **intractability checklist** below.
-- After each significant attempt, produce a readout: progress made, parameters newly closed or still open, whether a hard endpoint has been reached, and any **inter-parameter dependencies** discovered (rule below).
+- After each significant attempt, produce a readout: progress made, parameters newly closed or still open, whether a hard endpoint has been reached, and any **inter-parameter dependencies** discovered (rule below). Explicitly state whether any locked modal/evaluative bar was **established / not established / refuted**.
 - Wait for operator authorization before the next Phase 2 attempt.
 - If ordinary Phase 1 / Phase 2 resources on a free parameter are exhausted or declared currently intractable, the operator may separately authorize **Experimental Generation Mode** (below). That mode is not a substitute for Phase 1 or Phase 2 and does not run without its own authorization.
 
@@ -96,7 +111,9 @@ Whenever a free parameter is identified as a **dominant blocker** that must be l
 8. **Present the ranked, plain-language, deviation-annotated choice set** (use `templates/R_Locking_Scaffolding.md`). Do not silently pick defaults.
 9. **Package OR-slots:** If a package (or selection) leaves a decision point as an unresolved alternative, the lock is **incomplete** until the operator either (a) **picks a single option**, or (b) **formally accepts “either”** (record explicitly). Do not proceed as if a singleton were chosen when it was not.
 10. **Choice prompt:** End with a clear, minimal prompt (package name or à-la-carte picks). Avoid compressed expert labels as the primary explanation.
-11. **Only after the operator selects** (or authorizes a named package) **and OR-slots are resolved or formally accepted** may the dependent parameters be re-opened as scoped questions under that lock.
+11. **Lock-time Amb warning (mandatory in the choice prompt / lock record):** State in ordinary language that selecting a package will typically **drop Amb by fixing meanings** (share count, horizon, modal bar, metrics, etc.), and that **this Amb drop does not establish** the original claim or any locked upside/evaluative bar. Low Amb after lock ≠ clearance.
+12. **Only after the operator selects** (or authorizes a named package) **and OR-slots are resolved or formally accepted** may the dependent parameters be re-opened as scoped questions under that lock.
+13. After selection, the lock record and next readout must again note **Amb ≠ clearance** if Amb falls for definitional reasons.
 
 #### Forced-deviation extraction (mandatory)
 
@@ -128,6 +145,18 @@ Once work proceeds under a locked package:
 ### Package-satisfying evidence intake
 
 When the next step is to admit empirical or matched evidence under a locked package, use `templates/E_Package_Evidence_Intake.md` (or equivalent). Record: locked pair/ODD/metrics/matching; what the artifact claims; ADMIT vs HOLD vs REJECT criteria relative to the freeze; scoped-result honesty label. Do not invent results to fill the sheet.
+
+**Conflicted-source rule (mandatory):** Flag whether the artifact is **conflicted or interest-aligned** (e.g. underwriter / bookrunner research, issuer marketing, vendor white papers, advocacy or campaign materials, self-reported unaudited metrics used as sole proof). Conflicted artifacts may be admitted only as **scenario presence**, **design kinship**, or **conflicted pitch curves** — they must **not** be the sole support for affirming a locked modal bar (e.g. P-NonNegligible) or for claiming the original slogan is established. Prefer non-conflicted sources for affirmation; if only conflicted sources exist, HOLD affirmation and say so.
+
+### Scenario / multi-leg passes — already-included legs (mandatory when used)
+
+When running bear/base/bull or other multi-component scenario partitions (valuation SOTP, system architectures, stacked optionality, etc.):
+
+1. List **already-included legs / segments** that are inside the base (and bull) stories — so operators do not think a major demonstrated component was omitted.
+2. State which legs are **optionality / upside-only**.
+3. If asked “what about X?” and X is already listed, answer by pointing to that list rather than re-opening a false omission.
+
+Use `templates/S_Scenario_Pass.md` (or equivalent) when a dedicated scenario artifact is warranted.
 
 ### Agree / Prod — secondary (crisp needle rules)
 
@@ -176,6 +205,7 @@ When an application is closed (**Stable Provisional**, **Admissible**, or any ha
    - What parts are negatively constrained or shown false as originally stated.
    - What free parameters remain.
    - Explicit statement of how much of the original strong language (uniqueness, “alone,” structural impossibility, unrestricted preferability, etc.) remains unsupported.
+   - **Amb ≠ clearance line (mandatory):** State the Amb at closeout and whether any locked bar (modal, numerical, preferability, etc.) is **established / not established / refuted**. Do not imply that low Amb alone means the claim cleared.
 
 2. **Continuation options**
    - List the realistic next actions that could further assess or constrain the original claim (or a clearly marked revision of it).
@@ -254,3 +284,36 @@ Before any work begins, explain in ordinary terms (use `templates/QI_Quantitativ
 - Plain-language framing is **mandatory** so the operator understands the step and its limits.
 - Does **not** silently upgrade a failed instance into support for the original claim.
 - Stays **separate** from **Experimental Generation** and from **Claim-Revision Scaffolding** (which produce successor claims). This mode evaluates the *benefit implication* of meeting an **already-defined** numerical standard.
+
+## Application Thesis Tracker (optional; authorization-gated; per-application)
+
+**Intent**
+A **per-application** longitudinal register attached to one claim run. It is shaped by **that application’s** locks, bars, FD terms, reopen conditions, and implied use cases so the operator can refer back over time and see what changed relative to the **original thesis**. It indexes status; it does **not** replace worksheets, admissions, or closeout prose.
+
+**When it may be offered**
+- At Phase 1 endpoint (after claim-freeze), after a package lock, and/or at closeout — especially when Amb is low but a locked bar is “not established,” or FD / reopen conditions must be watched.
+- Only when the operator **authorizes** opening a tracker for that application.
+
+**What it produces**
+A living file in the application folder (e.g. `Thesis_Tracker.md`) using `templates/T_Application_Thesis_Tracker.md` (or equivalent), containing:
+
+1. **Thesis line** — original claim verbatim + governing freeze/scope (if any)
+2. **App-specific watchlist** — only items that matter for *this* thesis (derived from locks, modal/numerical bars, FD IDs, reopen conditions, key legs)
+3. **Current snapshot** — watchlist → status (locked value / established / not established / refuted / open)
+4. **Timeline log** — dated entries: what changed, which watchlist items moved, effect on thesis (supports / pressures / unchanged), pointer to the governing `04` / Phase readout
+5. **Non-silent rule** — tracker never overwrites closeout, FD register, or admitted layers; it points to them
+
+**Setup when authorized**
+1. Quote original claim + current freeze/scope.
+2. Derive watchlist from **this app only**.
+3. Seed snapshot from latest readout/closeout.
+4. Baseline timeline entry (“tracker opened”).
+
+**Update triggers (append timeline row)**
+Amb re-score; lock/OR-slot change; locked-bar status change; material ADMIT/REJECT/HOLD that moves a watchlist item; Phase 2 attempt close; QI / Claim-Revision events; reopen condition met or explicitly declined.
+
+**Constraints**
+- Authorization-gated; not automatic for every app.
+- **Application-attached** — not a repo-wide dashboard; design the watchlist for that claim’s needs.
+- Does not automate Amb scoring or admissions.
+- Distinct from Experimental Generation, Claim-Revision Scaffolding, and QI mode.

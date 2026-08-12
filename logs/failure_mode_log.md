@@ -24,6 +24,14 @@ After every **closed application**, or after every **N ≥ 5** REJECT/HOLD decis
 
 ## Entries
 
+### 2026-08-11 | Method hygiene | Amb≠clearance, Phase 2 accuracy, soft-modal, conflicted sources, scenario legs, lock-time Amb warning
+- **Gate outcome at the time:** n/a (standing-rule upgrade after debt-limit + SpaceX pressure points).
+- **Later evidence:** Operator authorized implementing recommendations 1–6 as domain-general methodology.
+- **Direction of error:** **method-pressure-point** — low Amb misread as success; Phase 2 could be read as substantiation-seeking; soft modals and conflicted pitch curves under-specified in templates; scenario “omission” confusion.
+- **Which rule or judgment contributed:** Practice ahead of explicit text on Amb≠clearance / accuracy posture.
+- **Adjustment made (if any):** Standing rule + templates/workflow updated: Amb≠clearance; Phase 2 accuracy default; soft-modal fork; conflicted-source rule; already-included legs (`S_Scenario_Pass`); lock-time Amb warning.
+- **Notes:** General methodology, not application-specific patches.
+
 ### 2026-08-11 | Public equity / SpaceX | “Potential” to become a $600 stock (SPCX)
 - **Gate outcome at the time:** Stable Provisional closeout (Amb ≈ 2) under Rank 1 (M2+S1+H2+X1). Well-posed ~$7.9T / $600-by-2036 target; M2 not established after scenario + deep evidence (accuracy-first). FD-M1/S1/H1 on bare wording.
 - **Later evidence:** n/a at closeout.

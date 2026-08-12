@@ -27,6 +27,18 @@
 **What it reports (concise):**  
 **Sample / setup limits:**  
 
+### Conflicted-source flag (mandatory)
+- [ ] **Non-conflicted** (independent research, audited filings, disinterested benchmarks, etc.)
+- [ ] **Conflicted / interest-aligned** — check all that apply:
+  - [ ] Underwriter / bookrunner / paid placement research
+  - [ ] Issuer / company marketing or pitch
+  - [ ] Vendor white paper
+  - [ ] Advocacy / campaign material
+  - [ ] Self-reported unaudited metrics as sole proof
+  - [ ] Other: ________
+
+**If conflicted:** May support **scenario presence / design kinship / pitch curves only**. Must **not** be the sole basis for affirming a locked modal bar (e.g. P-NonNegligible) or establishing the original slogan.
+
 ---
 
 ## 3. Provisional gate intent (before full `04`)

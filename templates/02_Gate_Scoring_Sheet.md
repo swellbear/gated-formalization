@@ -66,9 +66,11 @@
 **Weighted sum:** _______
 
 **Interpretation guide:**  
-- ≤ 2 → generally low enough for admission (if other gates pass)  
+- ≤ 2 → generally low enough for admission **(if other gates pass and any locked bar is established)**  
 - 3–5 → provisional / borderline  
 - ≥ 6 → high Amb — block expansion  
+
+**Amb ≠ clearance:** Low Amb means few free parameters remain (question is well-posed). It does **not** mean the claim or a locked modal bar (e.g. non-negligible “potential”) is established.
 
 **Notes:**
 
