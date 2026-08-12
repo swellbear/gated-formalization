@@ -8,40 +8,41 @@
 
 ### Plain status
 
-*(2–3 ordinary-language sentences: what’s going on · what’s needed · what this does not mean.)*
-
 
 
 ---
 
 | Field | Value |
 |-------|--------|
-| **Phase** | Phase 1 / Phase 1 endpoint / Phase 2 Attempt N / closeout / hard stop / optional mode: |
+| **Closure state** | open / **endpoint** / **endpoint + hard stop pending** / **hard stop** |
+| **Phase** | Phase 1 / Phase 2 Attempt N / optional mode / … |
 | **Amb** | |
 | **Locks in force** | none / package IDs: |
-| **Next authorization needed** | none — hard stop / … |
+| **Next authorization needed** | none — hard stop / `endpoint only` / `hard stop` / … |
 | **Related apps surfaced** | none / ≤2 IDs + reason: |
 
+**Endpoint** = examination done; verdict frozen. **Hard stop** = endpoint + Layers 1–3 hygiene + share pack complete.
+
 ---
 
-## Closeout checklist (required before calling the run “closed”)
+## Closeout checklist (required before **hard stop**)
 
-Mark when complete. An application is **not** closed until all applicable boxes are checked.
-
-- [ ] `Original_Claim_Assessment` / closeout (or explicit incomplete-record closeout)
+- [ ] `Original_Claim_Assessment` / closeout
 - [ ] `DISSERTATION.md`
-- [ ] `EXECUTIVE_BRIEF.md` (default share artifact; plain verdict first)
-- [ ] Layer 2 `Thesis_Tracker.md` (tags + related apps)
+- [ ] `EXECUTIVE_BRIEF.md` (Live vs stand-in when applicable)
+- [ ] **`SHARE_PACK.md`**
+- [ ] Layer 2 `Thesis_Tracker.md`
 - [ ] Layer 1 `TRACKER_PORTFOLIO.md` row updated
-- [ ] Layer 3 residual dispositions set (`pursue` / `park-90d` / `park-until-trigger` / `drop`)
-- [ ] `TRACKER_PATTERN_MAP.md` updated if new pattern observed
-- [ ] `logs/calibration_log.md` entry if a pattern now appears in ≥3 closed apps
-- [ ] `STATUS.md` set to hard stop / closeout (this file)
-- [ ] `final_verdict.md` (or equivalent)
-- [ ] Use-Exploration (if authorized) documented in brief + dissertation + tracker + `UX_Use_Exploration.md`
+- [ ] Layer 3 residual dispositions set
+- [ ] Residual-branch menu if residuals remain
+- [ ] `TRACKER_PATTERN_MAP.md` if needed
+- [ ] `logs/calibration_log.md` if needed
+- [ ] Use-Exploration (if authorized) documented
+- [ ] `STATUS.md` set to hard stop
+- [ ] `final_verdict.md`
 
-**Closeout gate:** All applicable items above = Yes → may label hard stop / closed. Any unchecked applicable item → still open for closeout hygiene.
+**Gates:** examination done → **endpoint**; hygiene + SHARE_PACK → **hard stop**. SHARE_PACK unchecked ⇒ not fully closed for sharing.
 
 ---
 
-*Mandatory under standing rule. Mirror a one-line pointer at top of `notes.md`.*
+*Mandatory under standing rule.*

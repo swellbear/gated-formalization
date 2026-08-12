@@ -109,6 +109,7 @@ Further Phase 2 only if L4e reopen condition is met; or a lock change / Claim-Re
 - Phase 2: `P2_Attempt1_Rank1_Scenario_Pass.md`, `P2_Attempt2_Deep_Evidence_Pass.md` (+ `02d` / `02e`)
 - Key pressure layers: Morningstar FV `04r_…L4a…`; moonshot gap `04s_…L4b…`; leases `04t_…L4c…`; Starship `$/kg` `04u_…L4d…`; L4e reopen `04v_…L4e…`
 - Parallel view only (not lock): `Rank3_5y_Parallel_View.md`
+- **Residual-branch menu:** `RESIDUAL_BRANCH_MENU.md` (no near-term empirically resolvable; no branch authorized)
 
 ---
 

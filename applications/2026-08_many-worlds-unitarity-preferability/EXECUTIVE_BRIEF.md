@@ -46,6 +46,8 @@ The uniqueness + preferability package **is not established**. Within a **named 
 
 **Test next (only if authorized):** Decisive new resources on the open forks; a preferability lock; a narrowed successor claim; or further experimental generation under new authorization.
 
+**Residual-branch menu:** Offered (`RESIDUAL_BRANCH_MENU.md`) — **no near-term empirically resolvable** residual. **No branch authorized.**
+
 ---
 
 ## For the record (technical)

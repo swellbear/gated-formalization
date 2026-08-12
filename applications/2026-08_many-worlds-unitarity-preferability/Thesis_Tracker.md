@@ -95,6 +95,7 @@ Until one of these is authorized and succeeds, remain Provisional and not well-c
 - Recurring failure pattern: redefinition of A1/A2, epistemic-bridge costs, Amb-net failure.
 - No QI / Contrastive Recommendation / Claim-Revision Scaffolding run.
 - Phase 2 progress: `02e_Phase2_Attempt1_progress.md`.
+- **Residual-branch menu:** `RESIDUAL_BRANCH_MENU.md` (no near-term empirically resolvable; no branch authorized).
 
 ---
 

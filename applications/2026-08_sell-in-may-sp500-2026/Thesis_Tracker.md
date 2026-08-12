@@ -85,6 +85,7 @@ FD1–FD5 on record (no Minimal-deviation package): automatic seasonality→shou
 - P2 readout: `P2_Attempt1_Rank1_H2_Readout.md`
 - Contrastive: `CX_Contrastive_Recommendation.md` (Alt A–C)
 - **Use-Exploration:** `UX_Use_Exploration.md` (retrofit; not advice; verdict unchanged)
+- **Residual-branch menu:** `RESIDUAL_BRANCH_MENU.md` (offered; no branch authorized)
 - Lock: `Lock_Rank1_Full_Claim_Strict.md`
 
 ---

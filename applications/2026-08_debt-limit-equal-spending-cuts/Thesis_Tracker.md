@@ -107,6 +107,7 @@ Specialized matched C and H for a named action under P-Score-Strict+R2; or an al
 - Evidence: `E1_Package_Evidence_Intake_Pass1.md`, `E2_Package_Evidence_Intake_Pass2.md`, `02d` / `02e`
 - Instance REJECT: `04l_…L4b…`, `04n_…L4d…`; analogues: `04m_…L4c…`
 - Revision → Rank 1: `Claim_Revision_Scaffolding.md`
+- **Residual-branch menu:** `RESIDUAL_BRANCH_MENU.md` (offered; no branch authorized)
 
 ---
 

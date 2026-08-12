@@ -8,18 +8,21 @@
 
 ### Plain status
 
-This run is **closed**. Under the agreed data lock, May–October averages are **substantially lower** than November–April (~3.5 pp) — a seasonal fact. “Should exit / beats buy-and-hold on Sharpe / must follow in 2026” is **not established**.
+This run is **closed** (**hard stop**). Seasonality holds; Sharpe/should do not. Share pack available.
 
 ---
 
 | Field | Value |
 |-------|--------|
+| **Closure state** | **hard stop** |
 | **Phase** | hard stop / closeout |
 | **Amb** | ≈ 2.5 |
 | **Locks in force** | Rank 1 — Full-Claim-Strict (H2+R1+F3+M1+S3+Y1); CX Alts A–C recorded, not selected |
 | **Next authorization needed** | none — hard stop |
 | **Related apps surfaced** | `2026-08_debt-limit-scorekept-pairing-recommendation` — numerical bar + soft should; `2026-08_debt-limit-equal-spending-cuts` — same package shape |
 | **Use-Exploration** | Run (retrofit) — `UX_Use_Exploration.md` (verdict unchanged) |
+| **Residual-branch menu** | Offered — `RESIDUAL_BRANCH_MENU.md`; no branch authorized |
+| **Share pack** | [`SHARE_PACK.md`](SHARE_PACK.md) |
 
 ---
 
@@ -28,6 +31,7 @@ This run is **closed**. Under the agreed data lock, May–October averages are *
 - [x] `Original_Claim_Assessment` / closeout
 - [x] `DISSERTATION.md`
 - [x] `EXECUTIVE_BRIEF.md`
+- [x] **`SHARE_PACK.md`**
 - [x] Layer 2 `Thesis_Tracker.md`
 - [x] Layer 1 `TRACKER_PORTFOLIO.md` row updated
 - [x] Layer 3 residual dispositions set

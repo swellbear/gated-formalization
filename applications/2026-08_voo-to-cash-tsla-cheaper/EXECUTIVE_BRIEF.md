@@ -5,6 +5,7 @@
 
 **Application:** `2026-08_voo-to-cash-tsla-cheaper`  
 **Date:** 2026-08-12  
+**Closure state:** endpoint + hard stop pending  
 
 ---
 
@@ -17,6 +18,8 @@ Someone sold some VOO after a large gain, is about half in cash, and may hold mo
 ## Plain verdict
 
 Under an agreed lock (−10% below ~$327 within 6 months, “serious path”): that **path is established** for Tesla’s usual volatility. That does **not** mean the dip will happen, is likely, or that anyone should buy Tesla or hold more cash. The VOO gain does not prove the Tesla idea.
+
+**Live vs stand-in:** same-day print ~$327.47 on 2026-08-12 (official close may differ slightly); −10% line ~$294.72.
 
 ---
 
@@ -47,6 +50,12 @@ Under an agreed lock (−10% below ~$327 within 6 months, “serious path”): t
 
 ---
 
+## Residual-branch menu
+
+Menu offered (`RESIDUAL_BRANCH_MENU.md`): time-gated **R-OUTCOME** after 2027-02-12; optional **R-D1** verify VOO numbers. **No branch authorized.**
+
+---
+
 ## Use-Exploration (authorized)
 
 Instance-specific uses (not advice; verdict unchanged): **watch-line checklist** (~$294.72 / 2027-02-12); **path-vs-prediction separator**; **concentration honesty note** (VOO→TSLA risk-type change); optional **outcome log** after the window.  
@@ -67,7 +76,7 @@ Full exhibit: [`UX_Use_Exploration.md`](UX_Use_Exploration.md).
 
 ## Full write-up
 
-→ [`DISSERTATION.md`](DISSERTATION.md)
+→ [`SHARE_PACK.md`](SHARE_PACK.md) · [`DISSERTATION.md`](DISSERTATION.md)
 
 ---
 

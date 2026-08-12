@@ -15,6 +15,10 @@ One-sentence definitions for non-technical partners. Full method: `.cursor/rules
 | **Forced deviation** | Strong wording in the claim that cannot be tested as written without changing the question. |
 | **Residual** | A leftover open item that could reopen work later if a stated trigger is met. |
 | **Claim revision** | Choosing a **new, clearer wording** of the claim (successor); the old wording stays on record. |
+| **Share pack** | The short partner front door (`SHARE_PACK.md`): plain verdict first, then established/not, stop/keep, residuals, UX, glossary. |
+| **Endpoint** | Examination of this claim is done; the verdict is frozen as stated. Hygiene (portfolio, trackers, share pack) may still be open. |
+| **Hard stop** | Endpoint **plus** Layers 1–3 hygiene finished (including share pack / brief / dissertation checkboxes). |
+| **Live vs stand-in** | One-line badge when a number used a same-day print, proxy, or stand-in series — so readers do not treat it as live clearance. |
 
 ---
 

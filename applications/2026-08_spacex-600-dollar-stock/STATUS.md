@@ -8,17 +8,19 @@
 
 ### Plain status
 
-This run is **closed**. Under the agreed reading (~$600 by ~2036 on IPO-scale shares ≈ ~$7.9T), a **non-negligible path is not established**. Independent valuations sit far below that target. Not an investment recommendation.
+This run is **closed** (**hard stop**). Non-negligible path to ~$600 not established. Share pack (minimal) available.
 
 ---
 
 | Field | Value |
 |-------|--------|
+| **Closure state** | **hard stop** |
 | **Phase** | hard stop / closeout |
 | **Amb** | ≈ 2 |
 | **Locks in force** | Rank 1 — M2+S1+H2+X1 (~$7.9T / ~2036 / IPO-scale; no reverse-split-only) |
 | **Next authorization needed** | none — hard stop (park reopen: R-L4e-BRIDGE — multi-year realized AI/Starship metrics or independent ~$7.9T model under same M2 bar) |
 | **Related apps surfaced** | `2026-08_sell-in-may-sp500-2026` — soft-modal + forward elevation under lock; `2026-08_av-e2e-vs-modular-preferability` — Amb≠clearance after lock |
+| **Share pack** | [`SHARE_PACK.md`](SHARE_PACK.md) (minimal → brief) |
 
 ---
 
@@ -27,6 +29,7 @@ This run is **closed**. Under the agreed reading (~$600 by ~2036 on IPO-scale sh
 - [x] `Original_Claim_Assessment` / closeout
 - [x] `DISSERTATION.md`
 - [x] `EXECUTIVE_BRIEF.md`
+- [x] **`SHARE_PACK.md`** (minimal)
 - [x] Layer 2 `Thesis_Tracker.md`
 - [x] Layer 1 `TRACKER_PORTFOLIO.md` row updated
 - [x] Layer 3 residual dispositions set

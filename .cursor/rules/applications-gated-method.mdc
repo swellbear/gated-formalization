@@ -236,11 +236,27 @@ No method jargon in layer 1 unless **immediately glossed in the same sentence**.
 
 **Layer 2 — Technical record (required second):** claim-freeze, Amb, package/layer IDs, artifact paths, method verdict labels.
 
-**Authorization asks** (claim revision, lock selection, stipulated proxy, closeout fork, optional modes): lead with the plain-language card; offer **at most one** clear ordinary-language choice set; put Rank/Amb/IDs in a short **Details** block after. The reader must never need to know what `PX1` or “Not admissible” means before they can answer.
+**Authorization asks** (claim revision, lock selection, stipulated proxy, closeout fork, optional modes): lead with the plain-language card; offer **at most one** clear ordinary-language choice set; put Rank/Amb/IDs in a short **Details** block after. The reader must never need to know what `PX1` or “Not admissible” means before they can answer. **Prompt with the expected one-liner** from the operator reply grammar (below); accept clear natural-language equivalents.
 
 **Templates:** `templates/PLAIN_LANGUAGE_CARD.md`; glossary: `docs/READER_GLOSSARY.md`.
 
 **Chat behavior (when this method is in force):** Same plain-first order in assistant messages. Do not dump worksheet vocabulary as the ask.
+
+### Operator reply grammar (standard one-liners)
+
+Prefer teaching these forms for external operators (natural-language equivalents OK if clear):
+
+| Intent | Preferred reply |
+|--------|-----------------|
+| Authorize a residual branch | `authorize branch R-…` |
+| Decline residual menu | `decline residual menu` |
+| Select a lock package | `lock Rank N` / `lock package …` |
+| Use-Exploration | `run UX` / `decline UX` |
+| Optional modes | `run QI` / `run CX` / `run CR` (when those modes apply) |
+| Close examination only | `endpoint only` |
+| Full hygiene close | `closeout` / `hard stop` |
+
+When the method needs authorization, **show the expected one-liner** in the ask.
 
 ## Operator status line (mandatory every cycle)
 
@@ -248,14 +264,42 @@ Maintain a short **`STATUS.md`** at the top of each application folder (also mir
 
 **Plain status (required first):** 2–3 ordinary-language sentences (what’s going on / what’s needed / what this does not mean). Then the technical table.
 
+### Endpoint vs hard stop (explicit states)
+
+| State | Meaning |
+|-------|---------|
+| **Endpoint** | Examination of the claim is done (gates/evidence/UX/residual menu as applicable finished). Verdict frozen for the claim as stated. |
+| **Hard stop** | Endpoint **plus** Layers 1–3 hygiene complete (portfolio row, Thesis Tracker, residual dispositions, share pack / brief / dissertation checkboxes done). |
+
+An app may show **endpoint reached / hard stop pending** without looking “fully closed.” Do not label **hard stop** until hygiene checkboxes are done.
+
 **Required fields (compact):**
-- **Phase** — Phase 1 / Phase 1 endpoint / Phase 2 Attempt N / closeout / hard stop / optional mode
+- **Closure state** — open / **endpoint** / **endpoint + hard stop pending** / **hard stop**
+- **Phase** — Phase 1 / Phase 1 endpoint / Phase 2 Attempt N / closeout / optional mode
 - **Amb** — current estimate
 - **Locks in force** — package IDs or “none”
 - **Next authorization needed** — one line (or “none — hard stop”)
 - **Related apps surfaced** — ≤2 IDs + reason, or “none”
 
-**Closeout checklist (mandatory in `STATUS.md`):** Before labeling a run closed / hard-stopped, check off dissertation, executive brief, Layer 2 tracker, portfolio row, residual dispositions, pattern map / calibration if needed, and final verdict. **Unchecked applicable items ⇒ not closed** (closeout hygiene still open). Template: `templates/STATUS.md`.
+**Closeout checklist (mandatory in `STATUS.md`):** Before labeling a run **hard-stopped**, check off dissertation, executive brief, **`SHARE_PACK.md`**, Layer 2 tracker, portfolio row, residual dispositions, residual-branch menu (if residuals), pattern map / calibration if needed, and final verdict. **Unchecked applicable items ⇒ not hard-stopped** (may still be at **endpoint**). Template: `templates/STATUS.md`.
+
+### Share pack (mandatory at closeout / for sharing)
+
+Produce **`SHARE_PACK.md`** using `templates/SHARE_PACK.md` (or a fixed top section of the executive brief that satisfies the **same contract**). Default partner share surface.
+
+**Fixed order (plain language first):**
+1. Plain verdict  
+2. Established / not established  
+3. Stop saying / keep saying  
+4. Residual-branch offer (one line + link)  
+5. Use-Exploration (if any; one line + link)  
+6. Glossary / how-to-read link  
+
+Then **For the record** (below): Amb, layer IDs, file pointers, parent/successor.  
+
+If a numerical bar used same-day prints, proxies, or stand-in series, include **Live vs stand-in** in the plain-verdict area (see below).
+
+**Unchecked SHARE_PACK ⇒ not fully closed for sharing purposes** (even if endpoint is reached).
 
 ## Quantitative evidence quality bar (domain-agnostic)
 
@@ -269,6 +313,15 @@ Before admitting material that would **establish or refute a numerical / risk-ad
 6. **Already-included legs** — list legs already in the base bar/workbook construction (seasonality in base, cash yield in sleeve, tax friction under F3, matched H&C, etc.) so “what about X?” does not reopen a settled mix  
 
 Do **not** treat a point estimate as bar clearance when the lock implied a matched or significance-bearing test. Use the same rubric across markets and fiscal apps so G4*/C≥H-style fails are comparable.
+
+### Live-data / proxy stamp (mandatory when applicable)
+
+Whenever a numerical bar uses **same-day prints**, **proxies**, or **stand-in** series (e.g. PX1-style audience proxy, intraday reference price, secondary total-return series):
+
+- Put a one-line **Live vs stand-in** badge in the plain-verdict area of the **executive brief** and **share pack**.  
+- Examples: `Live vs stand-in: same-day print ~$327.47 (official close may differ slightly)` · `Stand-in: stipulated multi-specialty proxy PX1 — not live platform data` · `Stand-in: secondary total-return series for H2 gap; primary workbook in appendix`.
+
+Do not let cold readers mistreat stand-in/proxy results as live-platform clearance.
 
 ## Thin-record recovery protocol
 
@@ -303,20 +356,19 @@ When an application is closed (**Stable Provisional**, **Admissible**, hard stop
 - Distinct from worksheets: the dissertation **indexes and narrates**; it does not replace `04`s, closeout, or FD registers.
 - For a **claim family** (parent + successors), each closed application gets its own dissertation; parent/successor links must cross-reference.
 
-### Executive brief (mandatory at closeout; default share artifact)
+### Executive brief (mandatory at closeout; default audit front door)
 
-Also produce **`EXECUTIVE_BRIEF.md`** (≤1 page) using `templates/EXECUTIVE_BRIEF.md`:
+Also produce **`EXECUTIVE_BRIEF.md`** (≤1 page) using `templates/EXECUTIVE_BRIEF.md`. Partner-facing **share order** lives in **`SHARE_PACK.md`** (required); the brief may remain the longer plain+technical front door and should include **Live vs stand-in** when applicable.
 
 1. **Claim** (ordinary language)  
-2. **Plain verdict** (what held / what failed — no jargon-first line)  
-3. Established / Not established (bullets)  
-4. Action implications (stop / keep / test next)  
-5. **For the record** — method verdict label, Amb, locks/proxy IDs (secondary)  
-6. Link to full `DISSERTATION.md` + glossary pointer (`docs/READER_GLOSSARY.md`)  
+2. **Plain verdict** (+ **Live vs stand-in** badge when applicable)  
+3. Established / Not established  
+4. Action implications  
+5. Residual-branch / Use-Exploration one-liners when present  
+6. **For the record**  
+7. Link to `DISSERTATION.md`, `SHARE_PACK.md`, glossary  
 
-Non-technical readers use the brief cold; the dissertation remains the audit trail. Do **not** put Amb / package codes / “Stable Provisional” in the opening verdict sentence unless glossed.
-
-If records are too thin to complete a faithful dissertation, write a short `DISSERTATION.md` that states **incomplete for lack of records** and lists what is missing — do not invent layers. Still produce a brief that flags incomplete records.
+Non-technical readers: prefer **share pack** cold; brief + dissertation remain the audit trail.
 
 ## Claim-Revision Scaffolding (optional; authorization-gated)
 
@@ -454,6 +506,35 @@ Core closeout / endpoint verdict must remain clearly separate from the explorati
 
 **Honesty constraint:** Use-Exploration must **not** upgrade not-established items into recommendations, predictions, or “should.” Distinct from Claim-Revision, QI, Contrastive Recommendation, and Experimental Generation.
 
+## Residual-branch offering (mandatory at closeout / hard stop when residuals remain)
+
+Whenever an application **closes** or reaches **Stable Provisional** (or equivalent hard stop) with **open residuals**:
+
+1. **Classify each residual** (record in `RESIDUAL_BRANCH_MENU.md`):
+   - **Empirically resolvable** — lockable and testable with public data / defined rules already in hand or clearly obtainable  
+   - **Definition-blocked** — needs operator locks before any test  
+   - **Normative / preference** — method will not resolve  
+   - **Parked / no near-term path** — drop or park-until-trigger  
+
+2. For **empirically resolvable** residuals, present a plain-language **branch menu**:
+   - Residual ID + one line  
+   - What a branch would do  
+   - What success/failure would change  
+   - Effort (low / medium / high)  
+
+3. **Definition-blocked** → offer only as “lock definitions first, then branch.”  
+4. **Normative / preference** → list as **not branchable by the method**.  
+5. **No automatic branch.** Operator must authorize.  
+6. Authorized branch → marked successor or scoped continuation; **parent closeout stays intact**; link residual ID.
+
+Template: `templates/RESIDUAL_BRANCH_MENU.md`.  
+
+**Documentation (every time a menu is produced):** `STATUS.md`; Original-Claim Assessment / closeout; `Thesis_Tracker.md` (exhibits); executive brief (one line: menu offered / what was authorized or declined).
+
+**Honesty:** Offering ≠ running. Does not change parent verdicts. No advice. No auto Phase 2.
+
+If there are **no** empirically resolvable residuals, still produce the file with an explicit **“no empirically resolvable residuals”** note and classify the rest.
+
 ## Application Tracking System (Layers 1–3; mandatory at closeout)
 
 Trackers **index** status; they do **not** replace worksheets, admissions, closeout, or `DISSERTATION.md`. Prefer dissertation + closeout as sources of truth. Do not invent findings.
@@ -472,7 +553,7 @@ Every closed application (or closed claim-family member) must have `Thesis_Track
 5. **Forced deviations** — over-strong terms that could not be tested cleanly (if any)
 6. **Residuals that would reopen the case** — each residual ID + **concrete reopen condition** (if none realistic, say so explicitly)
 7. **Action implications** — plain language: stop / keep / test next (**mandatory** even for Stable Provisional)
-8. **Exhibits** — short pointers to QI, Contrastive Recommendation, Use-Exploration, key evidence
+8. **Exhibits** — short pointers to QI, Contrastive Recommendation, Use-Exploration, Residual-branch menu, key evidence
 9. **Pointers** — dissertation, parent/successor, key admission/closeout files
 10. **Tags** — domain / claim-shape / pattern (from taxonomy)
 11. **Related applications** — 0–4 IDs, each with one-line reason (shared shape, pattern, parent/successor, or failure-mode kinship)
@@ -521,7 +602,7 @@ When running a **live** application, if the portfolio map flags other applicatio
 1. Claim-type / early Amb pass  
 2. Locking scaffolding  
 3. Intractability or forced-deviation declaration  
-4. Closeout, Claim-Revision, QI, Contrastive Recommendation, or Use-Exploration
+4. Closeout, Claim-Revision, QI, Contrastive Recommendation, Use-Exploration, or Residual-branch offering
 
 **Surfacing budget (hard cap):** at most **2** critically relevant apps per checkpoint. Prefer parent/successor and exact pattern match over loose claim-shape adjacency.
 

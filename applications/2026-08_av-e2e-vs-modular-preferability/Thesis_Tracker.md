@@ -90,6 +90,7 @@ Absent those authorizations, remain closed Stable Provisional with original word
 - Governing lock: `R4_Lock_P-Strong-Both.md`; scaffolding: `R4_Locking_Scaffolding_Choice_Set.md`.
 - Inter-parameter corrective: `02e_Corrective_Closeout_Interparam_Dependency.md`.
 - Phase 2 under package: `02f_Phase2_Attempt2_P-Strong-Both.md`.
+- **Residual-branch menu:** `RESIDUAL_BRANCH_MENU.md` (R-EVID blocked on OR-slots; no branch authorized).
 
 ---
 

@@ -107,6 +107,7 @@ Items R-SOME / R-RECIPE / R-REPL are the elevation path Amb ≈ 2.5 → Admissib
 - Reading guide: `00_README.md`; elevation vs retired boundary: `elevation_roadmap.md`.
 - Cycle 4 gate: `02e_Gate_Scoring_Sheet_rescore_cycle4_narrowed.md`; Cycle 3 parallel: `02d_Gate_Scoring_Sheet_rescore_cycle3_parallel.md`.
 - No QI / Contrastive Recommendation / Experimental Generation / separate Claim-Revision Scaffolding run (Cycle 4 narrowing is in-application live-claim lock).
+- **Residual-branch menu:** `RESIDUAL_BRANCH_MENU.md` (R-REPL after R-SOME/R-RECIPE; no branch authorized).
 
 ---
 

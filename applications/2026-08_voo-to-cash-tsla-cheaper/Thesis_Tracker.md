@@ -76,6 +76,7 @@ Bare cheaper/soon/idea under-specified pre-lock.
 
 - Lock/evidence: `LOCK_RECORD_DipPlan_6m.md`, `E_Package_Evidence_Intake_DipPlan_6m.md`, `04a`/`04b`  
 - **Use-Exploration:** `UX_Use_Exploration.md`  
+- **Residual-branch menu:** `RESIDUAL_BRANCH_MENU.md` (offered; no branch authorized)  
 
 ---
 

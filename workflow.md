@@ -6,14 +6,14 @@ Use this checklist for every new claim, theory fragment, or argument you run thr
 Do not treat this file as a second full copy of the standing rule — checklist + pointers only.
 
 **Quick map:** Phase 1 → Phase 2 → optional Experimental Generation → closeout (**`DISSERTATION.md` + Layer 2 `Thesis_Tracker.md` + update Layer 1 portfolio + Layer 3 residual queue**) → optional Claim-Revision / QI / Contrastive Recommendation.  
-Also in force: locking-scaffolding; Amb ≠ clearance; accuracy-first Phase 2; conflicted-source; already-included legs (scenario **and** numerical bars); soft-modal fork; Tracking Layers 1–3; thin-record recovery; imported-pattern stamp; quarterly `park-90d` review; **dual-audience plain-first**; **Use-Exploration** (optional, authorization-gated).  
+Also in force: locking-scaffolding; Amb ≠ clearance; accuracy-first Phase 2; conflicted-source; already-included legs; soft-modal fork; Tracking Layers 1–3; thin-record recovery; imported-pattern stamp; quarterly `park-90d` review; **dual-audience plain-first**; **Use-Exploration**; **Residual-branch offering**; **Share pack**; **endpoint vs hard stop**; **Live vs stand-in** badge; **operator reply grammar**.  
 **Cons / Amb / redefinition** primary. **Low Amb ≠ claim cleared.**  
 **Glossary:** `docs/READER_GLOSSARY.md`
 
 ## 1. Setup
 - [ ] Create folder `applications/YYYY-MM_short-name/`
-- [ ] Copy templates as needed (+ `STATUS`, `EXECUTIVE_BRIEF`, `PLAIN_LANGUAGE_CARD`, `E_Quantitative_Evidence_Rubric`, dissertation, thesis tracker, `IMPORTED_PATTERN_STAMP`, `THIN_RECORD_RECOVERY` if needed, …)
-- [ ] Create `STATUS.md` with **Plain status** first, then technical table; update every cycle (includes **closeout checklist**)
+- [ ] Copy templates as needed (+ `STATUS`, `EXECUTIVE_BRIEF`, `SHARE_PACK`, `PLAIN_LANGUAGE_CARD`, `RESIDUAL_BRANCH_MENU`, …)
+- [ ] Create `STATUS.md` with **Plain status**, **Closure state** (open/endpoint/hard stop), technical table
 - [ ] Note the date and a short description of the source material
 
 ## 2. Anchors & Claim-Type Pre-Classification
@@ -61,17 +61,20 @@ Also in force: locking-scaffolding; Amb ≠ clearance; accuracy-first Phase 2; c
 ## Authorization asks (any phase)
 - [ ] Lead with **plain-language card** (doing / need from you / yes means / does not mean)
 - [ ] One ordinary-language choice set; Rank/Amb/IDs only in a **Details** block after
-- [ ] Never require the reader to decode `PX1` / “Not admissible” / package codes before they can answer
+- [ ] Prompt expected **one-liner**: `lock Rank N` / `authorize branch R-…` / `run UX` / `decline residual menu` / `endpoint only` / `hard stop` / …
+- [ ] Never require the reader to decode package codes before they can answer
 
 ## 8. Close the Run
 - [ ] Fill `05_Original_Claim_Assessment.md` (status + **Amb ≠ clearance** + locked-bar status + continuation options + **revision vs continuation fork** when required)
-- [ ] Produce **`DISSERTATION.md`** and **`EXECUTIVE_BRIEF.md`** (brief = default share; **plain verdict first**, method labels in **For the record**)
+- [ ] Produce **`DISSERTATION.md`**, **`EXECUTIVE_BRIEF.md`**, and **`SHARE_PACK.md`** (share pack = partner front door; **Live vs stand-in** when applicable)
+- [ ] Set **Closure state**: **endpoint** when examination done; **hard stop** only after hygiene + share pack
 - [ ] Produce / normalize **Layer 2** `Thesis_Tracker.md` (tags + related apps + residual dispositions)
 - [ ] Update **Layer 1** portfolio; refresh **Layer 3** queue (**pursue / park-90d / park-until-trigger / drop**)
 - [ ] Update `TRACKER_PATTERN_MAP.md` if new pattern; if pattern now in ≥3 apps → `logs/calibration_log.md`
 - [ ] Final verdict; failure-mode cadence if useful
 - [ ] Complete **`STATUS.md` closeout checklist** — unchecked applicable items ⇒ **not closed**
 - [ ] Incomplete-record apps: run **`THIN_RECORD_RECOVERY.md`** before any elevation residual
+- [ ] **Residual-branch menu** (`RESIDUAL_BRANCH_MENU.md`) — classify residuals; offer empirically resolvable branches; **do not auto-run**
 
 ## 8b. Claim-Revision Scaffolding (only if revision path authorized)
 - [ ] Follow canonical Claim-Revision Scaffolding in `.mdc` (`CR_Claim_Revision_Scaffolding.md`)
@@ -116,6 +119,13 @@ Also in force: locking-scaffolding; Amb ≠ clearance; accuracy-first Phase 2; c
 - [ ] Document in STATUS, brief, dissertation, Thesis Tracker + exhibit file
 - [ ] Does **not** change verdicts, Amb, or what is established
 
+## 8g. Residual-branch offering (mandatory at closeout when residuals remain)
+- [ ] Classify each residual: empirically resolvable / definition-blocked / normative-preference / parked
+- [ ] Produce `RESIDUAL_BRANCH_MENU.md` (or explicit “no empirically resolvable residuals”)
+- [ ] Plain-language menu for empirically resolvable only; definition-blocked = lock first; normative = not branchable
+- [ ] Document in STATUS, closeout, tracker, brief one-liner
+- [ ] **No automatic branch** — await operator authorization; parent closeout intact
+
 ## Reminders
 - Canonical detail lives only in `.cursor/rules/applications-gated-method.mdc`.
 - **Dual-audience plain-first** on every ask and share artifact; glossary in `docs/READER_GLOSSARY.md`.
@@ -140,3 +150,7 @@ Also in force: locking-scaffolding; Amb ≠ clearance; accuracy-first Phase 2; c
 - Quantitative Implication & Counterfactual Benefit is authorization-gated after a failed numerical instance test; implications/counterfactuals ≠ proof of the claim.
 - Contrastive Recommendation is authorization-gated after an established core + failed elevation; proposes different better-fitting claims, not a silent rewrite.
 - **Use-Exploration** is authorization-gated after results exist; explores possible *uses* of findings guided by claim intent — **not** advice/forecasts and **not** a verdict change.
+- **Residual-branch offering** is mandatory at closeout when residuals remain; offering ≠ running; no auto Phase 2.
+- **Share pack** mandatory for sharing closure; **endpoint ≠ hard stop**.
+- Prefer operator reply grammar one-liners; show them in authorization asks.
+- **Live vs stand-in** badge on brief/share pack when prints/proxies used.

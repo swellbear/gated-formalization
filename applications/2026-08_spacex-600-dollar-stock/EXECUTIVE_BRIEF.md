@@ -48,6 +48,8 @@ Under that agreed reading, the question is **clear**, and a **non-negligible pat
 
 **Test next (only if authorized):** Further work only if multi-year realized metrics or an independent ~$7.9T-class model appear under the same bar; or change the lock / revise the claim — else leave closed.
 
+**Residual-branch menu:** Offered (`RESIDUAL_BRANCH_MENU.md`) — **no near-term empirically resolvable** residual; R-L4e park-until-trigger. **No branch authorized.**
+
 ---
 
 ## For the record (technical)

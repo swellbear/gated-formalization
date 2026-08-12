@@ -22,6 +22,8 @@ We also tested a clearer, weaker version: is procedure-focused medical device a 
 
 **Under an explicit stand-in for a multi-specialty, procedure-heavy CDS**, procedure-focused medical device **does** qualify as a **high-priority pilot candidate**. That stand-in is **not** proof about your live product until real audience, pipeline, and compliance facts replace it. We did **not** show that a pilot would succeed, or that device beats every other category.
 
+**Live vs stand-in:** Stand-in: stipulated multi-specialty proxy **PX1** — not live platform data.
+
 ---
 
 ## Established

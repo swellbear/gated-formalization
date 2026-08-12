@@ -48,6 +48,8 @@ The strong package **does not hold**. Architecture choice is a **spectrum** (mod
 
 **Test next (only if authorized):** Matching evidence under the agreed lock after settling remaining either/or choices; or a different lock / revised claim.
 
+**Residual-branch menu:** Offered (`RESIDUAL_BRANCH_MENU.md`) — R-EVID needs OR-slots first. **No branch authorized.**
+
 ---
 
 ## For the record (technical)

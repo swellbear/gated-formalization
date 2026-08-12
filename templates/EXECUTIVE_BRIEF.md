@@ -1,10 +1,11 @@
 # Executive Brief (≤1 page)
 
-**Default share artifact.** Full audit trail: `DISSERTATION.md`.  
+**Audit front door.** Partner cold-read: prefer [`SHARE_PACK.md`](SHARE_PACK.md).  
 **Glossary:** [`docs/READER_GLOSSARY.md`](../docs/READER_GLOSSARY.md)
 
 **Application:**  
 **Date:**  
+**Closure state:** endpoint / hard stop pending / hard stop  
 
 ---
 
@@ -18,7 +19,11 @@
 
 ## Plain verdict
 
-*(What held and what failed — write so a non-technical partner can read cold. Do not lead with Amb, package codes, or method labels.)*
+*(What held and what failed — non-technical cold read.)*
+
+
+
+**Live vs stand-in:** *(required when numerical bars used prints/proxies/stand-ins; else `N/A`)*  
 
 
 
@@ -46,11 +51,19 @@
 
 ---
 
+## Residual-branch menu (at closeout)
+
+*(One line + link `RESIDUAL_BRANCH_MENU.md`.)*
+
+
+
+---
+
 ## Use-Exploration (only if authorized)
 
-*(Optional. Does not change the method verdict. Link to `UX_Use_Exploration.md`. Labels: not method-established; not forecast/advice/should.)*
+*(One line + link, or none.)*
 
--  
+
 
 ---
 
@@ -58,17 +71,17 @@
 
 | Item | Value |
 |------|--------|
-| Method verdict | e.g. Stable Provisional / Not admissible / hard stop — |
+| Method verdict | |
 | Amb | |
 | Locks / proxy IDs | |
-| Scope label | unrestricted / under package __ / proxy-scoped |
+| Scope label | |
 
 ---
 
 ## Full write-up
 
-→ [`DISSERTATION.md`](DISSERTATION.md)
+→ [`SHARE_PACK.md`](SHARE_PACK.md) · [`DISSERTATION.md`](DISSERTATION.md)
 
 ---
 
-*Mandatory at closeout. Plain verdict first; method labels secondary. No silent softening.*
+*Plain verdict first; Live vs stand-in when applicable; no silent softening.*

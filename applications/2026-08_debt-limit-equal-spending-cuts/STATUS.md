@@ -8,17 +8,19 @@
 
 ### Plain status
 
-This run is **closed**. The strong “must pair debt-limit raises with equal cuts or it’s irresponsible / shouldn’t pass” slogan **does not hold as stated**. A clearer successor lives in a separate folder; it does **not** silently fix this parent. No further work unless newly authorized.
+This run is **closed** (**hard stop**). Strong slogan fails as stated; successor is separate. Share pack (minimal) available.
 
 ---
 
 | Field | Value |
 |-------|--------|
+| **Closure state** | **hard stop** |
 | **Phase** | hard stop / closeout |
 | **Amb** | ≈ 4 |
 | **Locks in force** | P-Score-Strict+R2 (Moderate deviation); Rank 1 successor already taken |
 | **Next authorization needed** | none — hard stop |
 | **Related apps surfaced** | `2026-08_debt-limit-scorekept-pairing-recommendation` — parent/successor family; `2026-08_sell-in-may-sp500-2026` — numerical-standard-plus-should package |
+| **Share pack** | [`SHARE_PACK.md`](SHARE_PACK.md) (minimal → brief + successor pack) |
 
 ---
 
@@ -27,6 +29,7 @@ This run is **closed**. The strong “must pair debt-limit raises with equal cut
 - [x] `Original_Claim_Assessment` / closeout
 - [x] `DISSERTATION.md`
 - [x] `EXECUTIVE_BRIEF.md`
+- [x] **`SHARE_PACK.md`** (minimal)
 - [x] Layer 2 `Thesis_Tracker.md`
 - [x] Layer 1 `TRACKER_PORTFOLIO.md` row updated
 - [x] Layer 3 residual dispositions set

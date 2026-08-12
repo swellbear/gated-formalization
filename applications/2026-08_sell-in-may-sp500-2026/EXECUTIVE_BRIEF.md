@@ -18,6 +18,8 @@ Because the S&P 500 has historically delivered substantially lower average retur
 
 **Seasonality is real under the agreed data lock** — average May–October returns have been substantially lower than November–April (about **3.5 percentage points** in the workbook). That fact does **not** mean investors should exit, that the rule beats buy-and-hold on risk-adjusted returns after costs/taxes, or that it must be followed in 2026. The Sharpe / “should” elevations **fail**.
 
+**Live vs stand-in:** Locked ^SP500TR (H2) workbook with F3 tax **proxy** and ^IRX cash transform — not full Form-8949; already-included legs in workbook.
+
 ---
 
 ## Established
@@ -51,6 +53,8 @@ Because the S&P 500 has historically delivered substantially lower average retur
 ## Use-Exploration (authorized retrofit)
 
 Possible *uses* of the findings (not advice; verdict unchanged): **descriptive seasonality fact card**; **edge-vs-fact separator**; pointer to Contrastive Alt A as a possible later successor shape. Full exhibit: [`UX_Use_Exploration.md`](UX_Use_Exploration.md).
+
+**Residual-branch menu:** Offered (`RESIDUAL_BRANCH_MENU.md`) — G4* optional Attempt 2 (unlikely); G5*/G6* not branchable. **No branch authorized.**
 
 ---
 

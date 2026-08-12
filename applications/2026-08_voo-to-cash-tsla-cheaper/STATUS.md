@@ -8,36 +8,41 @@
 
 ### Plain status
 
-**Method result unchanged:** serious path to Tesla −10% within 6 months **established**; will/likely/should buy **not**. **Use-Exploration** was run — possible *uses* of that finding (watch-line, path-vs-prediction separator, etc.) are in `UX_Use_Exploration.md`. Those uses are **not** advice and do **not** change the verdict.
+**Endpoint reached** — claim examination finished (path established; prediction/advice not; UX + residual menu done). **Hard stop pending** — portfolio/queue hygiene and full checklist not finished. Partner share: `SHARE_PACK.md`.
 
 ---
 
 | Field | Value |
 |-------|--------|
-| **Phase** | Post-evidence + **Use-Exploration run**; verdict unchanged |
+| **Closure state** | **endpoint + hard stop pending** |
+| **Phase** | Post-evidence + UX + residual menu |
 | **Amb** | ≈ 2 |
 | **Locks in force** | Dip Plan-6m R2+H-6m+M3 |
-| **Next authorization needed** | optional full closeout / portfolio row — or stop |
+| **Next authorization needed** | `hard stop` (hygiene) or `authorize branch R-…` / `decline residual menu` |
 | **Related apps surfaced** | sell-in-may; spacex-600 |
-| **Use-Exploration** | **Run** — [`UX_Use_Exploration.md`](UX_Use_Exploration.md) |
+| **Use-Exploration** | Run — `UX_Use_Exploration.md` |
+| **Residual-branch menu** | Offered — `RESIDUAL_BRANCH_MENU.md`; no branch authorized |
+| **Share pack** | [`SHARE_PACK.md`](SHARE_PACK.md) |
 
 ---
 
-## Closeout checklist
+## Closeout checklist (required before **hard stop**)
 
 - [ ] `Original_Claim_Assessment` / closeout
-- [x] `DISSERTATION.md` (endpoint draft + UX section)
-- [x] `EXECUTIVE_BRIEF.md`
+- [x] `DISSERTATION.md`
+- [x] `EXECUTIVE_BRIEF.md` (Live vs stand-in present)
+- [x] **`SHARE_PACK.md`**
 - [x] Layer 2 `Thesis_Tracker.md`
 - [ ] Layer 1 `TRACKER_PORTFOLIO.md` row updated
 - [ ] Layer 3 residual dispositions set
+- [x] Residual-branch menu
 - [ ] `TRACKER_PATTERN_MAP.md` if needed
 - [ ] `logs/calibration_log.md` if needed
-- [ ] `STATUS.md` hard stop
+- [x] Use-Exploration documented
+- [ ] `STATUS.md` set to hard stop
 - [ ] `final_verdict.md`
-- [x] Use-Exploration documented (brief + dissertation + tracker + exhibit)
 
-**Closeout gate:** Not fully closed — UX complete; optional hard-stop hygiene remains.
+**Gates:** **Endpoint** = yes. **Hard stop** = pending hygiene. SHARE_PACK present for sharing.
 
 ---
 

@@ -46,6 +46,8 @@ The strong slogan **does not hold as stated**. Raising the debt limit is not the
 
 **Test next (only if authorized):** Matched cuts vs headroom for a named action under the same package; alternate package; or further claim revision — else leave closed.
 
+**Residual-branch menu:** Offered (`RESIDUAL_BRANCH_MENU.md`) — **R-INSTANCE** empirically resolvable; **no branch authorized.**
+
 ---
 
 ## For the record (technical)

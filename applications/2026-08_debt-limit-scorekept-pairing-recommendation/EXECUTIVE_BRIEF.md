@@ -20,6 +20,8 @@ When Congress raises or suspends the debt limit, that action **should** be paire
 
 The **pairing rule itself is clear enough to test**. On the 2023 Fiscal Responsibility Act episode, scored cuts were **far smaller** than the headroom created — the episode **fails** that balance test. That failure does **not** by itself prove Congress “should” adopt the rule forever, or that the Act was unrestrictedly “fiscally irresponsible.” Soft “should” was left open and not pursued further. The parent claim’s strong failures stay on the parent record.
 
+**Live vs stand-in:** N/A — CBO/CRS-style episode figures under freeze (not a market print/proxy bar).
+
 ---
 
 ## Established
@@ -54,6 +56,8 @@ The **pairing rule itself is clear enough to test**. On the 2023 Fiscal Responsi
 ## Use-Exploration (authorized retrofit)
 
 Possible *uses* of the findings (not advice; verdict unchanged): episode **scorecard**; QI **scale-factor honesty**; separate design-kinship from C≥H. Full exhibit: [`UX_Use_Exploration.md`](UX_Use_Exploration.md).
+
+**Residual-branch menu:** Offered (`RESIDUAL_BRANCH_MENU.md`) — empirically resolvable **R-EPISODE-2**; soft should not branchable. **No branch authorized.**
 
 ---
 
