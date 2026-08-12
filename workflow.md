@@ -6,13 +6,20 @@ Use this checklist for every new claim, theory fragment, or argument you run thr
 Do not treat this file as a second full copy of the standing rule — checklist + pointers only.
 
 **Quick map:** Phase 1 → Phase 2 → optional Experimental Generation → closeout (**`DISSERTATION.md` + Layer 2 `Thesis_Tracker.md` + update Layer 1 portfolio + Layer 3 residual queue**) → optional Claim-Revision / QI / Contrastive Recommendation.  
-Also in force: locking-scaffolding; Amb ≠ clearance; accuracy-first Phase 2; conflicted-source; already-included legs; soft-modal fork; Tracking Layers 1–3; thin-record recovery; imported-pattern stamp; quarterly `park-90d` review; **dual-audience plain-first**; **Use-Exploration**; **Residual-branch offering**; **Share pack**; **endpoint vs hard stop**; **Live vs stand-in** badge; **operator reply grammar**.  
+Also in force: locking-scaffolding; Amb ≠ clearance; accuracy-first Phase 2; conflicted-source; already-included legs; soft-modal fork; Tracking Layers 1–3; thin-record recovery; imported-pattern stamp; quarterly `park-90d` review; **dual-audience plain-first**; **Use-Exploration**; **Residual-branch offering**; **Share pack**; **endpoint vs hard stop**; **Live vs stand-in** badge; **operator reply grammar**; **Training Ladder** (`templates/TRAINING_LADDER.md`).  
 **Cons / Amb / redefinition** primary. **Low Amb ≠ claim cleared.**  
 **Glossary:** `docs/READER_GLOSSARY.md`
 
+## Training Ladder (onboarding — path complete for Stages 0–8)
+- [ ] Read `templates/TRAINING_LADDER.md` (stages 0–8; **Learning loop**: ladder → live apps → pattern map → calibration ≥3 → standing-rule updates)
+- [ ] Tags: `training` / `training-ladder` / `training-stage-N` (Stage 0 also `training-smoke`); prefer `applications/training/`
+- [ ] Stage N for certification only after stages 0–(N−1) have closed **SHARE_PACK**s
+- [ ] Same standing method — no weaker training mode; do not auto-run QI/CX/UX/CR
+- [ ] **Seeded path:** Stages 0–8 closed under `applications/training/` — do not re-run unless newly authorized; further seeds need explicit authorization
+
 ## 1. Setup
-- [ ] Create folder `applications/YYYY-MM_short-name/`
-- [ ] Copy templates as needed (+ `STATUS`, `EXECUTIVE_BRIEF`, `SHARE_PACK`, `PLAIN_LANGUAGE_CARD`, `RESIDUAL_BRANCH_MENU`, …)
+- [ ] Create folder `applications/YYYY-MM_short-name/` (training: prefer `applications/training/YYYY-MM_stage-N_short-name/`)
+- [ ] Copy templates as needed (+ `STATUS`, `EXECUTIVE_BRIEF`, `SHARE_PACK`, `PLAIN_LANGUAGE_CARD`, `RESIDUAL_BRANCH_MENU`, `TRAINING_LADDER` pointer, …)
 - [ ] Create `STATUS.md` with **Plain status**, **Closure state** (open/endpoint/hard stop), technical table
 - [ ] Note the date and a short description of the source material
 
@@ -70,7 +77,7 @@ Also in force: locking-scaffolding; Amb ≠ clearance; accuracy-first Phase 2; c
 - [ ] Set **Closure state**: **endpoint** when examination done; **hard stop** only after hygiene + share pack
 - [ ] Produce / normalize **Layer 2** `Thesis_Tracker.md` (tags + related apps + residual dispositions)
 - [ ] Update **Layer 1** portfolio; refresh **Layer 3** queue (**pursue / park-90d / park-until-trigger / drop**)
-- [ ] Update `TRACKER_PATTERN_MAP.md` if new pattern; if pattern now in ≥3 apps → `logs/calibration_log.md`
+- [ ] Update `TRACKER_PATTERN_MAP.md` if new pattern; if pattern now in ≥3 **live (non-training)** apps → `logs/calibration_log.md` (training fixtures do not count unless entry marked **training-only**)
 - [ ] Final verdict; failure-mode cadence if useful
 - [ ] Complete **`STATUS.md` closeout checklist** — unchecked applicable items ⇒ **not closed**
 - [ ] Incomplete-record apps: run **`THIN_RECORD_RECOVERY.md`** before any elevation residual
@@ -154,3 +161,4 @@ Also in force: locking-scaffolding; Amb ≠ clearance; accuracy-first Phase 2; c
 - **Share pack** mandatory for sharing closure; **endpoint ≠ hard stop**.
 - Prefer operator reply grammar one-liners; show them in authorization asks.
 - **Live vs stand-in** badge on brief/share pack when prints/proxies used.
+- **Training Ladder** (`templates/TRAINING_LADDER.md`): Stages 0–8 path **complete** under `applications/training/`; Learning loop = ladder fixtures → live stress → pattern map → calibration (≥3 **live** apps) → standing-rule updates. Training apps excluded from ≥3 trigger unless **training-only**.

@@ -6,6 +6,8 @@ Copy this entire folder to `applications/YYYY-MM_short-name/` for each new run.
 **Operator checklist:** root `workflow.md`  
 Do not duplicate full standing-rule text here.
 
+**Training Ladder (onboarding):** `templates/TRAINING_LADDER.md` — stages 0–8; prefer `applications/training/`; tags `training` / `training-ladder` / `training-stage-N`; Stage N after prior SHARE_PACKs; **no** weaker training mode. Do not seed training apps from this README alone.
+
 Recommended contents after copying (from `templates/`):
 
 - `01`–`04` worksheets as needed (soft-modal fork on `01` when potential/could/should/etc. carry strength)

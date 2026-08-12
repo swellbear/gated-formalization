@@ -5,7 +5,7 @@
 
 **Application:** `2026-08_voo-to-cash-tsla-cheaper`  
 **Date:** 2026-08-12  
-**Closure state:** endpoint + hard stop pending  
+**Closure state:** **hard stop**  
 
 ---
 

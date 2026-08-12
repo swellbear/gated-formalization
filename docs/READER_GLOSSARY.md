@@ -19,6 +19,7 @@ One-sentence definitions for non-technical partners. Full method: `.cursor/rules
 | **Endpoint** | Examination of this claim is done; the verdict is frozen as stated. Hygiene (portfolio, trackers, share pack) may still be open. |
 | **Hard stop** | Endpoint **plus** Layers 1–3 hygiene finished (including share pack / brief / dissertation checkboxes). |
 | **Live vs stand-in** | One-line badge when a number used a same-day print, proxy, or stand-in series — so readers do not treat it as live clearance. |
+| **Training Ladder** | Fixed stages 0–8 for operator onboarding (well-posed → under-specified; descriptive → elevated). Path complete under `applications/training/`. Learning loop: ladder → live apps → pattern map → calibration (≥3) → standing-rule updates. See `templates/TRAINING_LADDER.md`. |
 
 ---
 

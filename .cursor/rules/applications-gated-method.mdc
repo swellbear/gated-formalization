@@ -593,6 +593,8 @@ When the **same pattern tag** appears in **≥ 3 closed applications**, add a sh
 - One-paragraph rationale  
 - Pointer to any template/rule change  
 
+**Calibration counting rule (mandatory):** Default — only **live (non-training)** applications count toward the ≥3 trigger. Apps under `applications/training/` (portfolio tags `training`, `training-ladder`, `training-smoke`, `training-stage-N`) do **not** count unless a calibration entry is explicitly marked **training-only**. This stops ladder fixtures from inflating tags such as `forced-deviation` / `comparison-class-unset`.
+
 This turns the pattern map into method learning, not only documentation.
 
 ### Critically relevant application surfacing
@@ -615,3 +617,45 @@ Surfacing is automatic when critical relevance is tagged (within budget); **bind
 ### Relation to older optional tracker mode
 
 Older authorization-gated longitudinal watchlists are **superseded** by this mandatory Layer 1–3 + map system.
+
+## Training Ladder (operator onboarding; permanent)
+
+**Purpose:** Onboard operators from undeniable, well-posed claims outward to mixed/high-Amb claims. Difficulty axis: **well-posed → under-specified**, and **descriptive → elevated** — not only objective → subjective.
+
+**Template:** `templates/TRAINING_LADDER.md` (canonical stage table, pass criteria, learning loop).
+
+**Path status:** Stages **0–8 complete** under `applications/training/` (each hard-stopped with closed `SHARE_PACK.md`). Do not re-run stages for credit unless newly authorized. Further training seeds (e.g. Stage 9 or alternate fixtures) require explicit authorization.
+
+**Fixed stages (0–8):**
+
+| Stage | Name | Claim shape | Pass criterion |
+|-------|------|-------------|----------------|
+| 0 | Smoke / tautology | Definitional identity | Admissible; Amb ≈ 0; full closeout hygiene |
+| 1 | Simple descriptive fact | Public, low-dispute fact | Admissible or Stable Provisional with clear anchors |
+| 2 | Descriptive + scope lock | Fact restricted by time/place/population | Locks used correctly; no silent universalizing |
+| 3 | Numerical standard (pass) | Metric with clean public data expected to clear | Bar established under evidence rubric |
+| 4 | Numerical standard (fail) | Metric expected to fail or partially fail | Not-established honest; optional QI; no upgrade to “should” |
+| 5 | Core + soft “should” | Descriptive core + mild recommendation | Claim-type split; “should” not forced |
+| 6 | Uniqueness / preferability | “Alone / only / therefore preferable” | Forced-deviation handling; revision optional |
+| 7 | Forecast / this-period extension | Historical pattern → “do it now” | Path vs prediction; UX optional |
+| 8 | Contested mixed theory | Foundations / design / policy mix | Full residual menu; no false clearance |
+
+**Rules:**
+- Training apps live under `applications/training/` and/or carry portfolio tags `training`, `training-smoke`, `training-ladder`, plus **stage number** (e.g. `training-stage-0`).
+- **Sequencing:** Stage **N** is not to be run for certification until stages **0–(N−1)** have closed **SHARE_PACK**s.
+- **Same standing method** applies — no weaker “training mode” that skips gates, Amb≠clearance, share pack, endpoint/hard stop, or residual-branch offering.
+- Optional modes (**QI**, **CX**, **UX**, **CR**) only when the stage’s pass criterion calls for them **or** the operator authorizes — never auto-run for training credit.
+- Training apps do **not** count toward the ≥3 calibration trigger by default (see Calibration counting rule above).
+
+### Learning loop
+
+| Layer | Role |
+|-------|------|
+| **Ladder** | Fixtures / onboarding / pass–fail baseline |
+| **Live apps** | Stress patterns |
+| **Pattern map** (`TRACKER_PATTERN_MAP.md`) | Recurring tags |
+| **Calibration log** (`logs/calibration_log.md`, ≥3 **live** apps) | Deliberate method keep / tighten / loosen |
+| **Standing rule updates** (this file) | Actual method learning |
+
+The ladder does **not** auto-rewrite the standing rule. Learning moves through observed live patterns → calibration (≥3 live apps) → explicit rule/template change when decided.
+

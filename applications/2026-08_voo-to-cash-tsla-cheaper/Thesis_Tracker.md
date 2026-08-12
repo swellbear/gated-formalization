@@ -2,7 +2,7 @@
 
 **Application:** `2026-08_voo-to-cash-tsla-cheaper`  
 **Last reviewed:** 2026-08-12  
-**Status:** Provisional under Dip Plan-6m — M3 established; prediction/advice not; UX run  
+**Status:** **Stable Provisional** under Dip Plan-6m — hard stop — M3 established; prediction/advice not; UX run  
 
 **Tags:**  
 - Domain: `markets`  
@@ -56,7 +56,6 @@ Bare cheaper/soon/idea under-specified pre-lock.
 
 | ID | Residual | Concrete reopen condition |
 |----|----------|---------------------------|
-| R-CLOSE | Full hard-stop hygiene | Operator authorizes closeout + portfolio/queue |
 | R-OUTCOME | Post-window print log | After 2027-02-12; optional UX Rank 4 |
 | R-D1 | Verify VOO numbers | Broker/print authorization |
 
@@ -68,7 +67,7 @@ Bare cheaper/soon/idea under-specified pre-lock.
 
 **Keep saying:** Serious path to ~$295 within 6 months established under lock; prediction/advice not.  
 
-**Test next (only if authorized):** Closeout; or outcome log after window.  
+**Test next (only if authorized):** `authorize branch R-OUTCOME` after 2027-02-12; or `authorize branch R-D1`.  
 
 ---
 

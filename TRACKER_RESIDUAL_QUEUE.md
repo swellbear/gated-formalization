@@ -1,11 +1,14 @@
 # Tracker Residual Queue (Layer 3)
 
-**Last refreshed:** 2026-08-12 (CDS med-device closeout)  
+**Last refreshed:** 2026-08-12 (VOO/TSLA hard-stop: R-OUTCOME / R-D1 parked; R-CLOSE dropped)  
 **Last park-90d quarterly review:** none yet (next due ~2026-11-12)  
 **Disposition vocabulary:** `pursue` | `park-90d` | `park-until-trigger` | `drop`  
 Only **pursue** items stay in active bands. Parked/dropped listed below.
 
 **Cadence:** About once per quarter, review **`park-90d` only** — promote, extend park, convert to `park-until-trigger`, or `drop`. Do not weekly-churn `park-until-trigger` unless the trigger fires.
+
+**Note:** **Training Ladder Stages 0–8 complete**. Live: **VOO/TSLA hard-stopped**. Stage 6 **R-C0**, Stage 7 **R-STATEHOOD**, Stage 8 **R-COHERE**, VOO **R-OUTCOME** / **R-D1** parked below.
+
 
 ---
 
@@ -33,6 +36,11 @@ Only **pursue** items stay in active bands. Parked/dropped listed below.
 | **R-LIVE** · CDS med-device | Replace PX1 with real H1a/b/c | Operator supplies specialty mix / pipeline / compliance → re-score L-HP | **park-until-trigger** | Proxy closeout |
 | **R-P1** · CDS med-device | 90-day pilot design/launch | Authorize P1 under H1+S1+P1 | **park-until-trigger** | Candidate ≠ successful pilot |
 | **R-BEST** · CDS med-device | Revive “best next” | New CR + locked C₀ + V + comparative evidence | **park-until-trigger** | FD-Best on parent record |
+| **R-C0** · training stage6 | Lock comparison class + “state” crosswalk; re-test uniqueness | Operator locks C₀ + unit definition → uniqueness re-test | **park-until-trigger** | FD-ONLY; offering ≠ running |
+| **R-STATEHOOD** · training stage7 | Re-open 2026–27 quiz-key claim if statehood changes | 51st state admitted before/during 2026–27 | **park-until-trigger** | Continuity ≠ pedagogy mandate |
+| **R-COHERE** · training stage8 | Lock V-COHERE + compare teaching frameworks | Operator locks coherence criteria + alternatives → re-test only-coherent | **park-until-trigger** | FD-ONLY-COHERENT |
+| **R-OUTCOME** · VOO/TSLA | Post-window print ≤ $294.72? | After 2027-02-12; authorize outcome log | **park-until-trigger** | Path ≠ guaranteed outcome; not advice |
+| **R-D1** · VOO/TSLA | Verify speaker VOO +47% / $708 / 50% cash | Broker/print authorization | **park-until-trigger** | Optional; does not change M3 |
 
 ---
 
@@ -64,6 +72,7 @@ Only **pursue** items stay in active bands. Parked/dropped listed below.
 | Debt Rank 1 soft “should” as pure ought | No empirical reopen | **drop** |
 | SpaceX M2 without L4e-class evidence | No realistic short path | **drop** |
 | MWI uniqueness via ordinary Phase 2 | Currently intractable for strong-(N) | **drop** |
+| **R-CLOSE** · VOO/TSLA | Process hygiene completed at hard stop | **drop** |
 
 ---
 

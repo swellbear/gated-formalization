@@ -3,8 +3,8 @@
 **Date:** 2026-08-12  
 **Application:** `2026-08_voo-to-cash-tsla-cheaper`  
 **Claim family / parent:** none  
-**Closeout verdict:** Endpoint Provisional under Dip Plan-6m (not full hard-stop closeout checklist complete) — M3 established; prediction/advice not  
-**Amb at closeout / endpoint:** ≈ 2  
+**Closeout verdict:** **Stable Provisional** under Dip Plan-6m (**hard stop**) — M3 established; prediction/advice not  
+**Amb at closeout:** ≈ 2  
 
 **Tags:** Domain `markets` · Claim-shape `forecast-extension` · Pattern `R-dependence` (timing dependents ← R/H/M lock)  
 

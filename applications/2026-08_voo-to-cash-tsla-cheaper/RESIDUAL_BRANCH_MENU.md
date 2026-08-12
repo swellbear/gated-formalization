@@ -26,7 +26,7 @@
 |-------------|----------|-------|-------|
 | R-OUTCOME | After window: did TSLA print ≤ $294.72? | Empirically resolvable *(time-gated)* | Available after 2027-02-12 |
 | R-D1 | Verify speaker’s VOO +47% / $708 / 50% cash | Empirically resolvable *(if data authorized)* | Broker/print; optional |
-| R-CLOSE | Full hard-stop hygiene (portfolio/queue) | Parked / process | Not a claim-test branch |
+| R-CLOSE | Full hard-stop hygiene (portfolio/queue) | Process | **Completed** this closeout — disposition **drop** |
 
 ---
 

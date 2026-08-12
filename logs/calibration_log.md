@@ -2,14 +2,17 @@
 
 When the **same pattern tag** appears in **≥ 3 closed applications**, record a calibration decision here. Turns `TRACKER_PATTERN_MAP.md` into method learning.
 
+**Counting rule:** Default — only **live (non-training)** apps count toward ≥3. `applications/training/*` (tags `training` / `training-ladder` / `training-smoke` / `training-stage-N`) do **not** count unless the entry is explicitly marked **training-only**.
+
 ## Entry format
 
 ```
 ### YYYY-MM-DD | pattern-tag
-- **Apps (≥3):** 
+- **Apps (≥3 live):** 
 - **Decision:** keep rule / tighten / loosen / add checklist
 - **Rationale:** 
 - **Change made:** none / pointer to .mdc or template edit
+- **training-only:** (omit unless this entry deliberately uses training fixtures)
 ```
 
 ## Entries

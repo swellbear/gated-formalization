@@ -51,6 +51,19 @@ Standing rule: `.cursor/rules/applications-gated-method.mdc`. Do not invent ad-h
 
 ---
 
+## Program / training tags (when applicable)
+
+| Tag | Use for |
+|-----|---------|
+| `training` | Any Training Ladder application |
+| `training-ladder` | Explicitly part of the staged ladder path |
+| `training-smoke` | Stage 0 smoke / tautology |
+| `training-stage-N` | Ladder stage number (`training-stage-0` … `training-stage-8`) |
+
+See `templates/TRAINING_LADDER.md`. Training apps prefer `applications/training/`.
+
+---
+
 ## Relatedness (max 4)
 
 Link only with a clear basis in: shared claim-shape, shared pattern, parent/successor, or failure-mode kinship. One-line reason each. **No conclusion inheritance.**
