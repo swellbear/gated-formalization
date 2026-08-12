@@ -26,10 +26,12 @@ See `workflow.md` for the operator checklist.
 
 ```
 docs/               Core method + operational upgrade (living markdown + archival PDFs)
-templates/          Blank worksheets
+templates/          Blank worksheets (core cycle + optional toolbox)
 exemplars/          Classical sound-argument starters (to be expanded)
 applications/       One folder per live run + a copyable template
+locks/              Lock Library entries (filled from templates/08_…; often empty early)
 logs/               Failure-mode log
+TRACKER_*.md        Portfolio / residual / pattern / claim-graph trackers (repo root)
 .cursor/rules/      Canonical standing rule (applications-gated-method.mdc)
 workflow.md         Operator checklist (pointer + steps; not a second full rule copy)
 README.md           This file
@@ -43,7 +45,9 @@ Start from hard-to-dispute anchors. Admit new formal layers only when they pass 
 
 - `.cursor/rules/applications-gated-method.mdc` — canonical standing rule
 - `docs/00_method_overview.md` — living core method
-- `docs/01_operational_upgrade.md` — sharpened gates, claim-type pre-classification, checklists, calibration
+- `docs/01_operational_upgrade.md` — sharpened gates, claim-type, checklists, calibration, optional toolbox (§§9–14)
+- `workflow.md` — operator checklist (pointer to optional toolbox in Reminders)
+- `TRACKER_CLAIM_GRAPH.md` — portfolio claim-graph instance (optional overview)
 - `docs/thesis_final.pdf` — archival frozen Complete Thesis (vFinal consolidated working paper)
 - `docs/operational_upgrade.pdf` — archival frozen operational upgrade
 

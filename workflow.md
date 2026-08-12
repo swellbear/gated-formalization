@@ -135,6 +135,7 @@ Also in force: locking-scaffolding; Amb ≠ clearance; accuracy-first Phase 2; c
 
 ## Reminders
 - Canonical detail lives only in `.cursor/rules/applications-gated-method.mdc`.
+- **Optional toolbox** (calibration / time-triggered residual / FD index / lock library / machine JSON / claim graph): `docs/01_operational_upgrade.md` §§9–14 and `templates/05_Calibration_and_Rule_Diff.md`–`10_Claim_Graph.md` — instance-triggered; never mandatory.
 - **Dual-audience plain-first** on every ask and share artifact; glossary in `docs/READER_GLOSSARY.md`.
 - Compact no-admit is mandatory for no-change cycles.
 

@@ -96,13 +96,56 @@ Populate whenever a run later reveals mis-calibration.
 
 ## 8. Templates
 
-Use the four worksheets in `/templates`:
+**Core cycle** (copy into each new application folder as needed):
 - `01_Anchor_and_ClaimType_Template.md`
 - `02_Gate_Scoring_Sheet.md`
 - `03_Gap_Extraction_and_Ranking.md`
 - `04_Material_Admission_Check.md`
+- `05_Original_Claim_Assessment.md` (closeout)
 
-Copy them into each new application folder.
+**Optional toolbox** (instance-triggered; never mandatory for every run — see §§9–14):
+- `05_Calibration_and_Rule_Diff.md` (learning loop)
+- `06_Time_Triggered_Residual.md`
+- `07_FD_Index.md`
+- `08_Lock_Library_Entry.md`
+- `09_Machine_JSON_Block.md` (schema + example; usually not copied per app)
+- `10_Claim_Graph.md`
+
+**Note on `05_`:** Two different worksheets share the `05_` prefix — `05_Original_Claim_Assessment.md` (closeout) and `05_Calibration_and_Rule_Diff.md` (post-run learning). Do not conflate them; rename later only if confusion persists across more runs.
+
+## 9. Calibration & Rule Diff (Learning Loop)
+
+After one or more application runs, the operator converts observations and any failure-mode entries into an explicit, versioned **rule diff**. The diff is a learning signal only; it is **never** applied automatically. Use the worksheet `templates/05_Calibration_and_Rule_Diff.md`.
+
+Minimal process:
+
+1. Fill the header (date, cycle ID, applications reviewed, failure-mode entries considered).
+2. Record observed frictions/surprises and what worked cleanly.
+3. Write concrete “Change X to Y because Z” or “No change …” proposals — only for rules that actually surfaced.
+4. Later, fill the Operator decision log (Accept / Modify / Reject).
+5. Only after decisions are recorded, fold accepted changes into this living document (or hold / discard).
+
+**Constraints:** Do not invent speculative improvements. Residual judgment about whether a friction is real enough to change a rule remains explicit and is recorded in the decision log.
+
+## 10. Time-Triggered Residuals
+
+Record free parameters that keep a claim provisional because they can only be constrained by future data or observation. Worksheet: `templates/06_Time_Triggered_Residual.md`. Instance-triggered only — never mandatory. Especially natural for market residuals, experimental outcomes still in progress, longitudinal results, and similar future-data gaps. When constraining material arrives, it must still pass the normal Material Admission Check (`templates/04_Material_Admission_Check.md`) before any re-scoring.
+
+## 11. Formalization Degree (FD) Index
+
+A lightweight, comparable index of how constrained / formalized a claim currently is, derived from existing gate scores. Worksheet: `templates/07_FD_Index.md`. Optional summary heuristic only — never replaces the full gate scoring sheet; residual judgment stays explicit (including required override space on the worksheet). Useful for portfolio overview and tracking progress across cycles.
+
+## 12. Lock Library
+
+Record tightly constrained free parameters or admitted layers stable enough to reuse as starting constraints in related future applications. Entry template: `templates/08_Lock_Library_Entry.md`. Store each filled entry as `locks/LOCK-YYYY-MM-NNN.md` (one file per lock). Locks are created only after residual judgment decides something is lock-worthy — never automatic. The library becomes useful only after repeated locks accumulate; early applications may have zero entries. Importing a lock into a new application still requires ordinary consistency checking with that application’s anchors.
+
+## 13. Machine JSON Block
+
+Emit an optional machine-readable status summary when an external consumer needs one. Schema and worked example: `templates/09_Machine_JSON_Block.md`. Optional only — use only when an external tool requires it. Summary heuristic; never replaces residual judgment or the full human worksheets.
+
+## 14. Claim Graph
+
+Maintain a lightweight graph of dependencies among applications, locks, shared anchors, or prior layers when portfolio lineage becomes hard to track by hand. Worksheet: `templates/10_Claim_Graph.md`. Live portfolio instance: `TRACKER_CLAIM_GRAPH.md` (repo root, with the other `TRACKER_*` files). Optional — most single applications never need it. Individual application worksheets remain the source of truth; the graph is a secondary overview. Residual judgment about which dependencies matter stays explicit.
 
 ---
 *This upgrade implements the highest-leverage improvements identified after the first two live applications. New runs should follow these rules and contribute further calibration data.*
