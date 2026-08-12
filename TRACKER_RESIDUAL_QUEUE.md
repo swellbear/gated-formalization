@@ -1,13 +1,13 @@
 # Tracker Residual Queue (Layer 3)
 
-**Last refreshed:** 2026-08-12 (term-limits probe #2; LOCK-004 Active broadened)  
+**Last refreshed:** 2026-08-12 (numerical+should cluster LOCK-005–008; emergency-fund + NPS hard-stop)  
 **Last park-90d quarterly review:** none yet (next due ~2026-11-12)  
 **Disposition vocabulary:** `pursue` | `park-90d` | `park-until-trigger` | `drop`  
 Only **pursue** items stay in active bands. Parked/dropped listed below.
 
 **Cadence:** About once per quarter, review **`park-90d` only** — promote, extend park, convert to `park-until-trigger`, or `drop`. Do not weekly-churn `park-until-trigger` unless the trigger fires.
 
-**Note:** Uniqueness+preferability lock transfer validated across engineering · payments · civic. LOCK-004 folded Active.
+**Note:** Uniqueness+preferability transfer saturated earlier. Numerical-standard-plus-should: LOCK-005–008 harvested; two thin siblings hard-stopped (early pause).
 
 
 
@@ -53,6 +53,10 @@ Only **pursue** items stay in active bands. Parked/dropped listed below.
 | **R-EVID** · cash-privacy | Privacy uniqueness evidence under C₀ | Matched evidence under C₀ | **park-until-trigger** | |
 | **R-V** · term-limits | Lock V; re-score P | Operator locks V | **park-until-trigger** | Cross-domain #2 |
 | **R-EVID** · term-limits | Accountability uniqueness under C₀ | Matched evidence under C₀ | **park-until-trigger** | |
+| **R-V** · emergency-fund | Lock should-criteria V | Operator locks V | **park-until-trigger** | numerical+should |
+| **R-PRINT** · emergency-fund | Live C under freeze | Supply snapshot | **park-until-trigger** | |
+| **R-V** · nps-50 | Lock should-not-expand criteria | Operator locks V | **park-until-trigger** | |
+| **R-PRINT** · nps-50 | Live NPS under freeze | Supply print | **park-until-trigger** | |
 
 ---
 
@@ -67,6 +71,8 @@ Only **pursue** items stay in active bands. Parked/dropped listed below.
 | **R-REV** · graphql | Narrow to descriptive fetch-shape contrast | ~2026-11-12 | **park-90d** | Batch sibling |
 | **R-REV** · cash-privacy | Narrow to descriptive privacy-contrast | ~2026-11-12 | **park-90d** | Cross-domain probe |
 | **R-REV** · term-limits | Narrow to descriptive multi-channel accountability | ~2026-11-12 | **park-90d** | Cross-domain #2 |
+| **R-REV** · emergency-fund | Narrow to descriptive reserve metric only | ~2026-11-12 | **park-90d** | |
+| **R-REV** · nps-50 | Narrow to descriptive NPS metric only | ~2026-11-12 | **park-90d** | |
 
 ---
 

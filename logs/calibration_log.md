@@ -53,6 +53,12 @@ When the **same pattern tag** appears in **≥ 3 closed applications**, record a
 - **Rationale:** Civic probe imported 001–004 cleanly after fold; no new FP shape. Method learning now higher on a *different* claim-shape cluster.
 - **Change made:** LOCK-004 Active broadened; `logs/2026-08-C4_Lock004_Fold_and_Civic_Probe.md`
 
+### 2026-08-12 | `numerical-standard-plus-should` lock harvest + transfer
+- **Apps:** sell-in-may · scorekept (sources); emergency-fund-6mo-should · nps-50-should-expand (importers)
+- **Decision:** **keep** new LOCK-005…008; **keep** Amb weights; early-pause after 2 keep-rule siblings
+- **Rationale:** Freeze-first + should-not-from-bar-alone transferred cleanly; descriptive freeze ≠ should clearance (LOCK-006/007). Diminishing returns on third twin.
+- **Change made:** locks 005–008; `logs/2026-08-C5_Numerical_Should_Cluster.md`; portfolio/claim-graph updates
+
 ---
 
 *Standing rule: Calibration log → method change.*
