@@ -62,11 +62,19 @@
 | G4 | Under which criteria unpaired debt-limit action is “fiscally irresponsible.” |
 | G5 | Whether “should not be enacted” follows from constrained premises or is free normative choice. |
 | G6 | Whether responsibility evaluation must include default/disruption risks from blocking timely limit action. |
+| **FD1** | Unrestricted “must be accompanied” — over-strong; not non-derivatively testable (forced-deviation extraction). |
+| **FD2** | Bare “equal” — under-specified; forces Moderate+ lock deviation. |
+| **FD3** | Bare “spending cuts” — under-specified; forces Moderate+ lock deviation. |
+| **FD4** | Unrestricted “fiscally irresponsible” — over-strong/under-specified; not non-derivatively testable. |
+| **FD5** | “Should not be enacted” — over-strong normative; not non-derivatively testable via scorekeeping locks. |
+
+**Forced-deviation trigger:** G2+G3 scaffolding — no Minimal-deviation package (`Forced_Deviation_Extraction_G2G3.md`). These terms could not be tested in non-derivative form (property of claim text vs anchors/tools, not mere missing data).
 
 ---
 
 ## Priority Order
-1. G1  2. G2  3. G3  4. G4  5. G5  6. G6
+1. G1  2. G2  3. G3  4. G4  5. G5  6. G6  
+**Plus first-class FD1–FD5** (carry to closeout assessment).
 
 ## Search Plan
-Admit institutional distinction (G1), scorekeeping/definition forks (G2–G3), irresponsibility and normative forks (G4–G5), tradeoff acknowledgment (G6). Stop when remaining gaps are predominantly normative/definitional locks for the operator.
+Admit institutional distinction (G1), scorekeeping/definition forks (G2–G3), irresponsibility and normative forks (G4–G5), tradeoff acknowledgment (G6). Forced-deviation extraction completed for G2+G3. Stop for operator before package selection.

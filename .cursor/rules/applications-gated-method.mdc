@@ -75,14 +75,42 @@ This rule applies at **Phase 1 endpoint**, after **Phase 2 attempts**, and in **
 
 Whenever a free parameter is identified as a **dominant blocker** that must be locked before dependent parameters can proceed:
 
-1. **Decompose the blocker** into its explicit decision points.
-2. For each decision point, **list realistic options** (prefer options grounded in public literature, benchmarks, or deployed systems).
-3. **Form coherent packages** from those options (and mark incoherent or confounded combinations).
-4. **Rank the coherent packages from most to least powerful** for resolving the dependent free parameters. Give a short justification for the ranking (e.g. tighter matching, more direct metric, better public anchors, lower confounding).
-5. **Relevance warning (mandatory):** If any package (especially top-ranked ones) has only **partial or weak overlap** with the original claim’s core assertions, state this explicitly in the scaffolding. Do **not** present a more tractable but only loosely related package as if it fully addresses the original claim.
-6. **Present the ranked, relevance-annotated choice set to the operator** (use `templates/R_Locking_Scaffolding.md`). Do not silently pick defaults.
-7. **Package OR-slots:** If a package (or selection) leaves a decision point as an unresolved alternative (e.g. `B1|B2`, `D5|D1`), the lock is **incomplete** until the operator either (a) **picks a single option** for that slot, or (b) **formally accepts “either”** as the lock (record: “OR-slot accepted: B ∈ {B1,B2}”). Do not proceed as if a singleton were chosen when it was not.
-8. **Only after the operator selects** (or authorizes a named package) **and OR-slots are resolved or formally accepted** may the dependent parameters be re-opened as scoped questions under that lock.
+1. **Plain-language framing (required at the top of the scaffolding output).** In ordinary terms, state:
+   - What decision is being made right now
+   - Why this decision is required before further work
+   - What becomes testable once the decision is made
+   - What still cannot be settled by this decision alone
+2. **Decompose the blocker** into its explicit decision points.
+3. For each decision point, **list realistic options** (prefer options grounded in public literature, benchmarks, or deployed systems). Prefer plain-language option descriptions over compressed expert labels as the primary explanation.
+4. **Form coherent packages** from those options (and mark incoherent or confounded combinations).
+5. **Rank the coherent packages from most to least powerful** for resolving the dependent free parameters. For **each** ranked package, in ordinary language, include:
+   - What the package concretely means (baseline, what counts, how strict or gameable it is)
+   - What the next phase will be able to check if this package is chosen
+   - What it still cannot settle relative to the original claim
+6. **Objective claim-deviation assessment (mandatory for every package).** Compare package mechanics to the **original claim wording** (not preference or political desirability). Use **only** these fixed dimensions and **only** these summary labels:
+   - **Strong-language preservation** — which of the original claim’s strong terms remain enforceable, which are weakened, and which are dropped
+   - **Problem-identity check** — does the package still test the same proposition, or does it substitute a different question? State any substitution explicitly
+   - **Scope / baseline / metric shift** — any change to comparison class, baseline, time window, or metric not already licensed by the original claim
+   - **Deviation summary** — exactly one of: **Minimal deviation** | **Moderate deviation** | **Substantial deviation** | **Problem substitution**
+7. **Relevance warning (mandatory):** If any package (especially top-ranked ones) has only **partial or weak overlap** with the original claim’s core assertions, state this explicitly. Do **not** present a more tractable but only loosely related package as if it fully addresses the original claim.
+8. **Present the ranked, plain-language, deviation-annotated choice set** (use `templates/R_Locking_Scaffolding.md`). Do not silently pick defaults.
+9. **Package OR-slots:** If a package (or selection) leaves a decision point as an unresolved alternative, the lock is **incomplete** until the operator either (a) **picks a single option**, or (b) **formally accepts “either”** (record explicitly). Do not proceed as if a singleton were chosen when it was not.
+10. **Choice prompt:** End with a clear, minimal prompt (package name or à-la-carte picks). Avoid compressed expert labels as the primary explanation.
+11. **Only after the operator selects** (or authorizes a named package) **and OR-slots are resolved or formally accepted** may the dependent parameters be re-opened as scoped questions under that lock.
+
+#### Forced-deviation extraction (mandatory)
+
+When a locking decision is required and **every** realistic package shows **Moderate deviation or higher** (i.e., no **Minimal deviation** package exists):
+
+1. **Extract** the specific terms or clauses in the original claim wording that force the deviation (e.g. unrestricted “must,” “equal,” “alone,” “structurally cannot,” “fiscally irresponsible,” “should not be enacted”).
+2. **Record** those extracted terms as under-specified or over-strong elements of the claim *as written*.
+3. **Carry them forward** as first-class items in:
+   - the claim-freeze / research agenda, and
+   - the final Original-Claim Assessment at closeout.
+
+The final assessment must state clearly that these terms **could not be tested in non-derivative form** and that this is a property of the **claim text** relative to available anchors and institutional tools, **not** merely a temporary lack of data.
+
+This does **not** replace per-package deviation labels; it adds required extraction and carry-forward when non-derivative testing is impossible. Domain-general; apply in every application where the condition holds.
 
 This rule is **domain-general** (not application-specific). Scaffolding is part of rectification; selecting among options remains an operator act. Dependent Phase 2 / Experimental Generation must not proceed on dependents until the lock is selected.
 

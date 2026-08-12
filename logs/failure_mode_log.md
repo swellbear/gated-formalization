@@ -24,6 +24,14 @@ After every **closed application**, or after every **N ≥ 5** REJECT/HOLD decis
 
 ## Entries
 
+### 2026-08-11 | Federal fiscal / debt limit | Equal spending cuts with any debt-limit increase (H.R.10078-aligned)
+- **Gate outcome at the time:** Stable Provisional closeout (Amb ≈ 4). Strong must/equal/irresponsible/should-not package not well-constrained; FD1–FD5 forced-deviation; P-Score-Strict+R2 well-posed but no public C≥H instance; FRA/BCA analogues only.
+- **Later evidence:** n/a at closeout.
+- **Direction of error:** **method-pressure-point** — claim text forces Moderate+ lock deviation on every realistic package; non-derivative testing impossible.
+- **Which rule or judgment contributed:** Forced-deviation extraction after G2+G3 scaffolding; scoped-result honesty under package lock.
+- **Adjustment made (if any):** Standing rule already includes forced-deviation carry-forward into Original-Claim Assessment (applied here).
+- **Notes:** Keep original wording by default; optional later specialized headroom evidence or explicit claim revision.
+
 ### 2026-08-11 | AV architectures | E2E vs modular preferability (R1/R2 vs R4)
 - **Gate outcome at the time:** Phase 2 Attempt 1 marked general R1/R2 currently intractable; reopen mentioned R4/matching but dependency was easy to read as ordinary evidence-gap rather than **dominant blocker**.
 - **Later evidence:** Corrective pass showed R1/R2 were blocked primarily by unset R4; locking-scaffolding + package selection made dependents well-posed without answering them empirically.
