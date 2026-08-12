@@ -78,8 +78,10 @@ Essentially the full persuasive package as unrestricted claim: **must** + bare *
 
 Strong original language is mostly negatively constrained / forced-deviation / unsupported.
 
-- [ ] **Revise claim** — e.g. “Debt-limit increases/suspensions should be procedurally paired with CBO-scored non-interest spending reductions at least equal to estimated borrowing headroom under current-law baseline (P-Score-Strict+R2).” New or marked-revised application.  
-- [x] **Keep original wording** — default absent further authorization; research agenda = optional specialized C≥H evidence or later revision.
+- [ ] **Revise claim** — then run **Claim-Revision Scaffolding** before selecting/starting a successor.  
+- [x] **Keep original wording** — default at closeout; research agenda = optional specialized C≥H evidence or later revision.
+
+**Post-closeout update (2026-08-11):** Operator authorized a **revision path**. Scaffolding in `Claim_Revision_Scaffolding.md`. **Rank 1 selected** → successor `applications/2026-08_debt-limit-scorekept-pairing-recommendation/`. Parent closeout / FD1–FD5 unchanged.
 
 ---
 

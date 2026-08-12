@@ -24,13 +24,29 @@ After every **closed application**, or after every **N ≥ 5** REJECT/HOLD decis
 
 ## Entries
 
+### 2026-08-11 | Public equity / SpaceX | “Potential” to become a $600 stock (SPCX)
+- **Gate outcome at the time:** Stable Provisional closeout (Amb ≈ 2) under Rank 1 (M2+S1+H2+X1). Well-posed ~$7.9T / $600-by-2036 target; M2 not established after scenario + deep evidence (accuracy-first). FD-M1/S1/H1 on bare wording.
+- **Later evidence:** n/a at closeout.
+- **Direction of error:** **method-pressure-point** — low Amb after locks can be misread as claim success; Amb≠M2 clearance. Per-share slogans force Moderate+ deviation to become testable.
+- **Which rule or judgment contributed:** Locking-scaffolding + forced-deviation; scoped Rank 1 honesty; accuracy-first Phase 2 (not substantiation-seeking).
+- **Adjustment made (if any):** None required beyond existing Amb-vs-clearance discipline; closeout states distinction explicitly.
+- **Notes:** Starlink already included as strongest demonstrated leg; does not close multi-trillion gap alone.
+
+### 2026-08-11 | Federal fiscal / debt limit | Scorekept pairing recommendation (Rank 1 revision of equal-cuts claim)
+- **Gate outcome at the time:** Stable Provisional closeout (Amb ≈ 4). Descriptive well-posed scorekept pairing constrained; soft “should” open (normative); FRA 2023 fails C≥H under freeze; other episodes untested; parent FD1–FD5 remain on parent record.
+- **Later evidence:** Post-closeout QI full path: implication C* ≈ $4.7T (~3.6×); counterfactual stipulated balance only; G1 still open. Failed instance not upgraded.
+- **Direction of error:** **method-pressure-point** (positive) — Claim-Revision Scaffolding Rank 1 removed forced-deviation blockers for the *successor* claim; instance evidence then cleanly failed C≥H without settling N1; QI mode separates implication/counterfactual from claim support.
+- **Which rule or judgment contributed:** Claim-Revision Scaffolding (authorization-gated); scoped-result honesty on FRA episode; soft “should” kept Normative (L1c); Quantitative Implication & Counterfactual Benefit mode (new).
+- **Adjustment made (if any):** Claim-Revision Scaffolding and QI modes added to standing rule; applied end-to-end on successor.
+- **Notes:** No second episode required for clean closeout; G1 optional / lower priority.
+
 ### 2026-08-11 | Federal fiscal / debt limit | Equal spending cuts with any debt-limit increase (H.R.10078-aligned)
 - **Gate outcome at the time:** Stable Provisional closeout (Amb ≈ 4). Strong must/equal/irresponsible/should-not package not well-constrained; FD1–FD5 forced-deviation; P-Score-Strict+R2 well-posed but no public C≥H instance; FRA/BCA analogues only.
-- **Later evidence:** n/a at closeout.
+- **Later evidence:** Authorized Rank 1 revision application closed Stable Provisional separately; parent FD1–FD5 unchanged. FRA under revision freeze fails C≥H (does not salvage parent original wording).
 - **Direction of error:** **method-pressure-point** — claim text forces Moderate+ lock deviation on every realistic package; non-derivative testing impossible.
 - **Which rule or judgment contributed:** Forced-deviation extraction after G2+G3 scaffolding; scoped-result honesty under package lock.
-- **Adjustment made (if any):** Standing rule already includes forced-deviation carry-forward into Original-Claim Assessment (applied here).
-- **Notes:** Keep original wording by default; optional later specialized headroom evidence or explicit claim revision.
+- **Adjustment made (if any):** Standing rule already includes forced-deviation carry-forward into Original-Claim Assessment (applied here). Later: Claim-Revision Scaffolding mode added and used for Rank 1 successor.
+- **Notes:** Keep original wording on parent; successor is a marked revision, not a silent rewrite.
 
 ### 2026-08-11 | AV architectures | E2E vs modular preferability (R1/R2 vs R4)
 - **Gate outcome at the time:** Phase 2 Attempt 1 marked general R1/R2 currently intractable; reopen mentioned R4/matching but dependency was easy to read as ordinary evidence-gap rather than **dominant blocker**.
