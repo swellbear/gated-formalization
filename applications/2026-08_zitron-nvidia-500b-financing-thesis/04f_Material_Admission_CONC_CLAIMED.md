@@ -62,4 +62,6 @@ These are **what the thesis cites**. They are **not** matched primary bank notes
 
 ## Residual Judgment Notes
 
-Quantitative rubric: advocacy paraphrase of bank notes cannot clear CONC-BAR. Independent note pull remains a leftover, not run here.
+Quantitative rubric: advocacy paraphrase of bank notes cannot clear CONC-BAR.
+
+**Later residual:** [R-CONC-NOTES](04i_Material_Admission_R_CONC.md) **executed** 2026-08-12 → L9a/L9b (Microsoft OpenAI $24.1B 10-K + Bloomberg MSFT-AI-share estimate). Three-name CONC-BAR remains **not established**. This L6 worksheet is unchanged (claimed-only attribution).

@@ -28,17 +28,17 @@ Zitron’s Aug 11–12 thesis: Nvidia’s ~$500B Wall Street financing push is e
 |--------------------------|--------|
 | “Effectively vendor/circular” as cleared classification | **Not established** (not refuted) |
 | “Entirely theoretical” as forever-impossible | **Not established** as unrestricted; present-tense MoU **is** established |
-| Consensus ~$1.6T / FY path as fact | **Not established** |
-| ≥70% AI-revenue concentration as fact | **Not established** |
-| Demand bubble / unsustainable as cleared elevation | **Not established** |
+| Consensus ~$1.6T / FY path as fact | **Not established** as GPU $1.6T / debt; Street **total-revenue** FY path **constrained** (L8) |
+| ≥70% AI-revenue concentration as fact | **Not established** as three-name CONC-BAR; Microsoft OpenAI **$24.1B** constrained (L9a) |
+| Demand bubble / unsustainable as cleared elevation | **Not established**; capex scale + non-lab **presence** constrained (L10); SUSTAIN-BAR not met |
 
 ### Free parameters remaining
 | ID | Status / freeze |
 |----|-----------------|
-| Package meets VF-BAR? | Open — R-VENDOR-CRITERION |
-| Independent Nvidia consensus | Open — R-VERIFY-CONSENSUS |
-| CONC-BAR met? | Open — R-CONC-NOTES |
-| SUSTAIN-BAR met? | Open — R-SUSTAIN |
+| Package meets VF-BAR? | Open — R-VENDOR-CRITERION *(executed; C-VENDOR still not established)* |
+| Independent Nvidia consensus | **Constrained** — R-VERIFY executed (Street FY total-revenue); GPU $1.6T / debt still open |
+| CONC-BAR met? | **Not established** — R-CONC executed (L9a/L9b Microsoft-only); Google/Amazon AI% still open |
+| SUSTAIN-BAR met? | **Not established** — R-SUSTAIN executed (L10a–L10d); presence ≠ scale |
 | Debt / customer class; residual-value evidence | Open (inside vendor residual) |
 
 ### Forced-deviation terms
@@ -58,28 +58,42 @@ Zitron’s Aug 11–12 thesis: Nvidia’s ~$500B Wall Street financing push is e
 
 | Option | Expected buy | Still leaves open |
 |--------|--------------|-------------------|
-| R-VENDOR-CRITERION | Deal terms vs VF-BAR | Other elevations |
-| R-VERIFY-CONSENSUS | FY table vs independent prints | C-VENDOR / CONC |
-| R-CONC-NOTES | Matched notes vs CONC-BAR | SUSTAIN-BAR |
-| R-SUSTAIN | Diversified-demand evidence | CONC-BAR |
-| R-REV / `run CR` | Cleaner slogan | Parent record unchanged |
+| R-VENDOR-CRITERION | Deal terms vs VF-BAR | **Executed** — C-VENDOR still not established |
+| R-VERIFY-CONSENSUS | FY table vs independent prints | **Executed** — Street FY constrained; GPU $1.6T / debt leftover |
+| R-CONC-NOTES | Matched notes vs CONC-BAR | **Executed** — three-name CONC-BAR still not established |
+| R-SUSTAIN | Diversified-demand evidence | **Executed** — SUSTAIN-BAR still not established |
+| R-REV / `run CR` | Cleaner slogan | **Closed** — operator selected **keep original wording**; unused ranks on file |
 | Stay stopped | Hygiene complete | All uncleared bars |
 
 ---
 
 ## 3. Revision vs continuation fork
 
-- [ ] **Revise claim** — then `run CR` / [R-REV](RESIDUAL_BRANCH_MENU.md#r-rev)  
-- [x] **Keep original wording** — research agenda / scoped dependents only *(default at this hard stop)*
+- [ ] **Revise claim** — unused CR Ranks 1–3 remain in [`CR_Claim_Revision_Scaffolding.md`](CR_Claim_Revision_Scaffolding.md)  
+- [x] **Keep original wording** — operator selected 2026-08-12; research agenda / scoped dependents only
 
-**Default if no further authorization:** keep original wording + hard stop with agenda / this assessment.
+**Default if no further authorization:** keep original wording + hard stop with agenda / this assessment. Pick is recorded.
 
 ---
 
 ## Closeout statement
 
-Application **closed** as **Stable Provisional (split) — hard stop**. Original claim **not** silently resolved. Awaiting further authorization only if continuing (`run UX` / `run CX` / `run CR` / `authorize branch R-…`).
+Application **closed** as **Stable Provisional (split) — hard stop**. Original claim **not** silently resolved. Operator selected **keep original wording**. UX and CX **executed** as documentation; contrastive alternatives **not adopted**. Optional `decline optional modes`.
 
 ---
 
 *Required at closeout under standing rule.*
+
+---
+
+## Post-closeout residual log (parent seal intact)
+
+| Date | Residual | Outcome |
+|------|----------|---------|
+| 2026-08-12 | R-VENDOR-CRITERION | L7a/L7b admitted; C-VENDOR **not established** |
+| 2026-08-12 | R-VERIFY-CONSENSUS | L8a/L8b admitted; Street FY **near Zitron**; GPU $1.6T and debt **not established** |
+| 2026-08-12 | R-CONC-NOTES | L9a/L9b admitted; MSFT OpenAI **$24.1B** + Bloomberg MSFT-AI-share est.; CONC-BAR **not established** |
+| 2026-08-12 | R-SUSTAIN | L10a–L10d admitted; capex scale + Cloud mix + non-lab presence; SUSTAIN-BAR **not established** |
+| 2026-08-12 | R-REV | CR scaffolding; operator selected **keep original wording**; unused ranks on file; rewording does **not** clear VF/CONC/SUSTAIN |
+| 2026-08-12 | UX | [`UX_Use_Exploration.md`](UX_Use_Exploration.md) — four talking-point uses; verdict unchanged |
+| 2026-08-12 | CX | [`CX_Contrastive_Recommendation.md`](CX_Contrastive_Recommendation.md) — Alt A–C listed, **not adopted** |

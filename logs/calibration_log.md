@@ -132,6 +132,48 @@ When the **same pattern tag** appears in **≥ 3 closed applications**, record a
 - **Rationale:** Operator-gated admits L1–L6. Descriptive MoU core established. Elevations well-posed and not cleared. Elevating ELEV-CONC raised Amb (≈9 → 11) by splitting one parked slogan into two live bars — freeze ≠ clearance. Conflicted advocacy citations insufficient for CONC-BAR or consensus FY.
 - **Change made:** Full 11-section dissertation + share pack + residual/optional offers; portfolio/queue/claim-graph/pattern map refreshed; no new lock
 
+### 2026-08-12 | Zitron Nvidia $500B — R-VERIFY-CONSENSUS executed
+- **Apps:** `2026-08_zitron-nvidia-500b-financing-thesis`
+- **Decision:** **keep** Amb≠clearance; **admit** L8a FY26 actual + L8b Street **total-revenue** avgs; **do not** treat FY27–29 Street sum as GPU $1.6T or as customer-debt consensus; parent hard stop intact
+- **Rationale:** Independent aggregator pull (2026-08-12) shows Zitron’s FY table near Street average **company revenue**. That constrains “Zitron invented the FY path” but is a category error if promoted to GPU-only sales or realized demand. Sell-side estimates ≠ actuals. No matched debt print.
+- **Change made:** `E_Package_Evidence_Intake_R_VERIFY` + quantitative rubric + `04h` + `02i`; L8a/L8b; package Amb ≈ 11 → **10**; residual menu / STATUS / share pack / FD index / portfolio / queue updated; no new lock
+
+### 2026-08-12 | Zitron Nvidia $500B — R-CONC-NOTES executed
+- **Apps:** `2026-08_zitron-nvidia-500b-financing-thesis`
+- **Decision:** **keep** Amb≠clearance; **keep** Cloud% ≠ AI%; **admit** L9a Microsoft OpenAI related-party **$24.1B** (10-K) + L9b Bloomberg MSFT-AI-share **estimate**; **do not** treat Microsoft-only ~70% or UBS Google Cloud 48% as three-name CONC-BAR; LOCK-011 — do not auto-clear SUSTAIN-BAR; parent hard stop intact
+- **Rationale:** CONC-BAR is a three-name **AND** on **AI-attributed** revenue. Issuer filing establishes OpenAI dollars at Microsoft, not an AI total or Google/Amazon legs. Bloomberg’s ~70% uses an extrapolated denominator. Unmatched sell-side PDFs cannot clear Amazon 73% (and Zitron’s own editor note cites UBS AWS AI at 59%). UBS 48% remains Cloud%.
+- **Change made:** `E_Package_Evidence_Intake_R_CONC` + quantitative rubric + `04i` + `02j`; L9a/L9b; package Amb stays ≈ **10**; residual menu / STATUS / share pack / FD index / portfolio / queue updated; no new lock
+
+### 2026-08-12 | Zitron Nvidia $500B — R-SUSTAIN executed
+- **Apps:** `2026-08_zitron-nvidia-500b-financing-thesis`
+- **Decision:** **keep** LOCK-011 (share ≠ sustainability; history/presence ≠ elevation); **admit** L10a capex scale + L10b Microsoft Cloud ~90% non-frontier + L10c non-lab AI **presence** + L10d OpenAI $50B compute testimony; **do not** treat Cloud mix, Copilot seats, or capex-vs-$24.1B as SUSTAIN-BAR met or refuted; parent hard stop intact
+- **Rationale:** SUSTAIN-BAR needs diversified **AI** demand not established **at implied capex/consensus scale**, plus contingency on two labs. Issuer prints establish large capex and some non-lab product presence. 90% non-frontier is **Cloud**, not AI. Seat counts and an undisclosed-mix AWS AI run rate are not a demand census. Negative existential (“not established at scale”) is not proved by a dollar gap alone; forward contingency is not proved by issuer “demand exceeds capacity” color.
+- **Change made:** `E_Package_Evidence_Intake_R_SUSTAIN` + quantitative rubric + `04j` + `02k`; L10a–L10d; package Amb stays ≈ **10**; residual menu / STATUS / share pack / FD index / portfolio / queue updated; no new lock
+
+### 2026-08-12 | Zitron Nvidia $500B — R-REV executed (CR scaffolding)
+- **Apps:** `2026-08_zitron-nvidia-500b-financing-thesis`
+- **Decision:** **keep** original wording as default until operator pick; **do not** auto-start a successor app; **do not** treat rewording as VF-BAR / CONC-BAR / SUSTAIN-BAR clearance; parent hard stop intact
+- **Rationale:** Descriptive MoU core is established; the indictment is well-posed and not cleared. Partner-facing slogan collapse is the remaining FD. Three ranked successors (attribution-preserving → descriptive financing core → announcement+MoU only) preserve the parent record. Selection is operator-owned.
+- **Change made:** `CR_Claim_Revision_Scaffolding.md`; residual/optional menus; STATUS / SHARE_PACK / dissertation §8 / closeout residual log / portfolio / queue / FD index; no new lock; no Amb change; **no rank selected**
+
+### 2026-08-12 | Zitron Nvidia $500B — CR pick: keep original wording
+- **Apps:** `2026-08_zitron-nvidia-500b-financing-thesis`
+- **Decision:** **keep** original wording as the parent claim; **do not** start a successor app; unused CR Ranks 1–3 stay on file; parent hard stop intact
+- **Rationale:** Operator-owned fork. Descriptive core remains established; indictment remains well-posed and not cleared. Partner-facing SHARE_PACK split is documentation, not a silent rewrite.
+- **Change made:** CR choice prompt filled; no Amb change; no new lock
+
+### 2026-08-12 | Zitron Nvidia $500B — UX executed
+- **Apps:** `2026-08_zitron-nvidia-500b-financing-thesis`
+- **Decision:** **keep** verdict unchanged; **do not** treat talking-point uses as advice, forecasts, or bar clearance
+- **Rationale:** Four instance-specific uses of D-ANN/D-MOU (headline vs closed capital; quantity-category separator; vendor-financing debate hygiene; attribution-preserving discussion card) match original intent without upgrading not-established items.
+- **Change made:** `UX_Use_Exploration.md`; STATUS / SHARE_PACK §6 / EXECUTIVE_BRIEF subsection / dissertation §8 / Thesis Tracker; no Amb change; no new lock
+
+### 2026-08-12 | Zitron Nvidia $500B — CX executed
+- **Apps:** `2026-08_zitron-nvidia-500b-financing-thesis`
+- **Decision:** **list** contrastive Alt A–C; **do not** adopt them; **do not** reverse keep-original-wording; **do not** treat alternatives as VF/CONC/SUSTAIN clearance
+- **Rationale:** Established core is MoU announcement + present-tense status. Best-fit contrastive claim is announcement+MoU only (Alt A); financing-design facts (Alt B) add L7 without classification; attribution-preserving (Alt C) matches SHARE_PACK but keeps uncleared payload in-sentence. Distinct from CR (same shapes, not successors).
+- **Change made:** `CX_Contrastive_Recommendation.md`; optional-modes menu / STATUS / SHARE_PACK / brief / dissertation §8 / closeout log / portfolio; no Amb change; no new lock; **no successor app**
+
 ---
 
 *Standing rule: Calibration log → method change.*

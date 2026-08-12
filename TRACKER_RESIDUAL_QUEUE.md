@@ -1,6 +1,6 @@
 # Tracker Residual Queue (Layer 3)
 
-**Last refreshed:** 2026-08-12 (Zitron Nvidia $500B **hard stop sealed** — newsletter+monologue primary; Squawk OUT)  
+**Last refreshed:** 2026-08-12 (Zitron Nvidia $500B **hard stop sealed**; residuals executed; CR **keep original wording**; UX + CX executed; newsletter+monologue primary; Squawk OUT)  
 **Last park-90d quarterly review:** none yet (next due ~2026-11-12)  
 **Disposition vocabulary:** `pursue` | `park-90d` | `park-until-trigger` | `drop`  
 Only **pursue** items stay in active bands. Parked/dropped listed below.
@@ -66,10 +66,11 @@ Only **pursue** items stay in active bands. Parked/dropped listed below.
 | **R-2ND-S** · coreweave-gpu | Second named-gen hard S or fleet metric | New disclosure meeting C_SCOPE | **park-until-trigger** | Toward full F-LIFE |
 | **R-TX-UPGRADE** · coreweave-gpu | Official CNBC/CC PDF to replace caption L7 | Higher-grade transcript | **park-until-trigger** | Optional hygiene |
 | **R-TRANSCRIPT** · zitron-nvidia-500b | Squawk captions / interview body | — | **drop** | Squawk **OUT** of claim package |
-| **R-VERIFY-CONSENSUS** · zitron-nvidia-500b | Verify monologue FY / ~$1.6T path | Consensus pull authorized | **park-until-trigger** | L4 claimed-only |
-| **R-VENDOR-CRITERION** · zitron-nvidia-500b | Deal structure under VF-BAR | Final agreements / project terms public | **park-until-trigger** | C-VENDOR not cleared |
-| **R-CONC-NOTES** · zitron-nvidia-500b | Matched bank notes vs CONC-BAR | Primary notes in hand | **park-until-trigger** | L6 claimed-only; no Cloud%→AI% |
-| **R-SUSTAIN** · zitron-nvidia-500b | Diversified-demand evidence vs SUSTAIN-BAR | Demand/capex package authorized | **park-until-trigger** | Share ≠ sustainability |
+| **R-VERIFY-CONSENSUS** · zitron-nvidia-500b | Verify monologue FY / ~$1.6T path | Tighter IBES vintage / GPU-only series | **park-until-trigger** | **Executed** L8a/L8b; Street FY near Zitron; GPU $1.6T and debt **not** established |
+| **R-VENDOR-CRITERION** · zitron-nvidia-500b | Deal structure under VF-BAR | New final agreements / project terms | **park-until-trigger** | **Executed** L7a/L7b; C-VENDOR still not cleared |
+| **R-CONC-NOTES** · zitron-nvidia-500b | Matched bank notes vs CONC-BAR | Terminal WF / Barclays / UBS / DB notes; Google AI% | **park-until-trigger** | **Executed** L9a/L9b; three-name CONC-BAR **not** cleared; no Cloud%→AI% |
+| **R-SUSTAIN** · zitron-nvidia-500b | Diversified-demand evidence vs SUSTAIN-BAR | Non-lab AI-dollar census vs capex; Amazon AI mix | **park-until-trigger** | **Executed** L10a–L10d; SUSTAIN-BAR **not** cleared; share ≠ sustainability |
+| **R-REV** · zitron-nvidia-500b | Narrow to D-ANN + D-MOU (± “Zitron claims…”) | — | **executed (keep original wording)** | Operator pick recorded; unused CR ranks on file; CX listed same shapes as alts, **not adopted**; rewording ≠ bar clearance |
 
 ---
 
@@ -90,7 +91,6 @@ Only **pursue** items stay in active bands. Parked/dropped listed below.
 | **R-REV** · heatwave | Narrow to descriptive seasonal risk | ~2026-11-12 | **park-90d** | |
 | **R-REV** · holiday-sales | Narrow to descriptive seasonality | ~2026-11-12 | **park-90d** | |
 | **R-REV** · coreweave-gpu | Narrow to attribution-only claim | ~2026-11-12 | **park-90d** | Real-claim intake |
-| **R-REV** · zitron-nvidia-500b | Narrow to D-ANN + D-MOU (± “Zitron claims…”) | ~2026-11-12 | **park-90d** | Restart seal; Squawk OUT |
 
 ---
 

@@ -77,3 +77,5 @@ Imported pattern from LOCK-003 + LOCK-010 + LOCK-011, re-validated here.
 ## Residual Judgment Notes
 
 UBS “48% of Google Cloud” is **not** the same metric as “70% of Google AI revenue” — CONC-BAR forbids silent swap. Bloomberg Microsoft-only color does not by itself clear three-hyperscaler CONC-BAR.
+
+**Later residual:** [R-SUSTAIN](04j_Material_Admission_R_SUSTAIN.md) **executed** 2026-08-12 → L10a–L10d. SUSTAIN-BAR remains **not established**. This L5 worksheet is unchanged (evaluation freeze only).

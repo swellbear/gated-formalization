@@ -47,7 +47,9 @@ These figures are what **the thesis asserts**. They are **not** independently ve
 - [ ] **REJECT** as established consensus fact  
 - [ ] **HOLD**
 
-**Locked as:** **L4 F-REVPATH-CLAIMED**. Consensus truth **not established**.
+**Locked as:** **L4 F-REVPATH-CLAIMED**. Consensus truth **not established** at this layer.
+
+**Later residual:** [R-VERIFY-CONSENSUS](04h_Material_Admission_R_VERIFY.md) **executed** 2026-08-12 → L8a/L8b (FY26 actual + Street **total-revenue** avgs). GPU $1.6T and customer-debt slogans remain **not established**. This L4 worksheet is unchanged (claimed-only attribution).
 
 **Amb effect (locked):** “Which numbers the thesis uses” closed. Independent consensus-path FP **still open** (W=2). Package Amb stays ≈ **9**. No clearance of consensus truth.
 
