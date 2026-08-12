@@ -1,13 +1,14 @@
 # Tracker Residual Queue (Layer 3)
 
-**Last refreshed:** 2026-08-12 (VOO/TSLA hard-stop: R-OUTCOME / R-D1 parked; R-CLOSE dropped)  
+**Last refreshed:** 2026-08-12 (cash-alone-privacy cross-domain probe)  
 **Last park-90d quarterly review:** none yet (next due ~2026-11-12)  
 **Disposition vocabulary:** `pursue` | `park-90d` | `park-until-trigger` | `drop`  
 Only **pursue** items stay in active bands. Parked/dropped listed below.
 
 **Cadence:** About once per quarter, review **`park-90d` only** — promote, extend park, convert to `park-until-trigger`, or `drop`. Do not weekly-churn `park-until-trigger` unless the trigger fires.
 
-**Note:** **Training Ladder Stages 0–8 complete**. Live: **VOO/TSLA hard-stopped**. Stage 6 **R-C0**, Stage 7 **R-STATEHOOD**, Stage 8 **R-COHERE**, VOO **R-OUTCOME** / **R-D1** parked below.
+**Note:** Engineering alone/preferability batch closed; **cash-alone-privacy** cross-domain probe hard-stopped (LOCK-001…003 clean; LOCK-004 analogue caveat).
+
 
 
 ---
@@ -41,6 +42,14 @@ Only **pursue** items stay in active bands. Parked/dropped listed below.
 | **R-COHERE** · training stage8 | Lock V-COHERE + compare teaching frameworks | Operator locks coherence criteria + alternatives → re-test only-coherent | **park-until-trigger** | FD-ONLY-COHERENT |
 | **R-OUTCOME** · VOO/TSLA | Post-window print ≤ $294.72? | After 2027-02-12; authorize outcome log | **park-until-trigger** | Path ≠ guaranteed outcome; not advice |
 | **R-D1** · VOO/TSLA | Verify speaker VOO +47% / $708 / 50% cash | Broker/print authorization | **park-until-trigger** | Optional; does not change M3 |
+| **R-V** · microservices | Lock preferability virtues V; re-score P | Operator locks V → re-score preferability only | **park-until-trigger** | LOCK-002; does not clear alone-uniqueness |
+| **R-EVID** · microservices | Cascading isolation evidence under C₀ | Matched evidence under locked C₀ | **park-until-trigger** | Eval lock ≠ uniqueness clearance |
+| **R-V** · serverless | Lock V; re-score P | Operator locks V | **park-until-trigger** | Same shape as microservices |
+| **R-EVID** · serverless | Ops-burden evidence under C₀ | Matched evidence under C₀ | **park-until-trigger** | |
+| **R-V** · graphql | Lock V; re-score P | Operator locks V | **park-until-trigger** | |
+| **R-EVID** · graphql | Over-fetch evidence under C₀ | Matched evidence under C₀ | **park-until-trigger** | |
+| **R-V** · cash-privacy | Lock V; re-score P | Operator locks V | **park-until-trigger** | Cross-domain probe |
+| **R-EVID** · cash-privacy | Privacy uniqueness evidence under C₀ | Matched evidence under C₀ | **park-until-trigger** | |
 
 ---
 
@@ -50,6 +59,10 @@ Only **pursue** items stay in active bands. Parked/dropped listed below.
 |-------------------|-------------|-----------|-------------|------|
 | **R-REVISION** · sell-in-may | Claim-Revision to descriptive / CX Alt | ~2026-11-12 | **park-90d** | Keep wording until then |
 | **R-REVISION / R-REV** · several | Claim-Revision / narrowed successor | ~2026-11-12 | **park-90d** | Unless operator authorizes sooner |
+| **R-REV** · microservices | Narrow to descriptive failure-domain contrast | ~2026-11-12 | **park-90d** | Sibling of AV alone/preferability shape |
+| **R-REV** · serverless | Narrow to descriptive ops-model contrast | ~2026-11-12 | **park-90d** | Batch sibling |
+| **R-REV** · graphql | Narrow to descriptive fetch-shape contrast | ~2026-11-12 | **park-90d** | Batch sibling |
+| **R-REV** · cash-privacy | Narrow to descriptive privacy-contrast | ~2026-11-12 | **park-90d** | Cross-domain probe |
 
 ---
 
