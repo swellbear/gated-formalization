@@ -1,6 +1,6 @@
 # Tracker Residual Queue (Layer 3)
 
-**Last refreshed:** 2026-08-12  
+**Last refreshed:** 2026-08-12 (CDS med-device closeout)  
 **Last park-90d quarterly review:** none yet (next due ~2026-11-12)  
 **Disposition vocabulary:** `pursue` | `park-90d` | `park-until-trigger` | `drop`  
 Only **pursue** items stay in active bands. Parked/dropped listed below.
@@ -30,6 +30,9 @@ Only **pursue** items stay in active bands. Parked/dropped listed below.
 | **R-A1 / R-A2** · many-worlds | Preferred-basis / Born for strong-(N) | Decisive non-redefining resources | **park-until-trigger** | Phase 2 marked intractable |
 | **ELEV-*** · foxnews | Strong interpretive elevations | After WS-MISSING + CLAIM-TEXT | **park-until-trigger** | Incomplete record first |
 | **FP-*** · conscience | Free forms f, Pi, R, G-vs-E | After WS-MISSING | **park-until-trigger** | Incomplete record first |
+| **R-LIVE** · CDS med-device | Replace PX1 with real H1a/b/c | Operator supplies specialty mix / pipeline / compliance → re-score L-HP | **park-until-trigger** | Proxy closeout |
+| **R-P1** · CDS med-device | 90-day pilot design/launch | Authorize P1 under H1+S1+P1 | **park-until-trigger** | Candidate ≠ successful pilot |
+| **R-BEST** · CDS med-device | Revive “best next” | New CR + locked C₀ + V + comparative evidence | **park-until-trigger** | FD-Best on parent record |
 
 ---
 

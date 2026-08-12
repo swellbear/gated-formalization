@@ -15,6 +15,7 @@ Standing rule: `.cursor/rules/applications-gated-method.mdc`. Do not invent ad-h
 | `markets` | Equities, valuation, investment rules, seasonality |
 | `opinion-advocacy` | Opinion pieces, political framing, advocacy packages |
 | `AI-systems` | LLMs, computational cognition sketches, AI architecture claims |
+| `commercial-health` | HCP media, CDS/point-of-care commercial strategy, advertiser-segment expansion |
 | `other` | Does not fit above |
 
 ---
@@ -46,6 +47,7 @@ Standing rule: `.cursor/rules/applications-gated-method.mdc`. Do not invent ad-h
 | `contrastive-alternatives` | Contrastive Recommendation mode run |
 | `parent-successor-family` | Claim-Revision parent/successor lineage |
 | `incomplete-record` | Worksheets/closeout missing; verdict-only reconstruction |
+| `stipulated-proxy` | Operator-authorized stand-in used to score locked bars without live data |
 
 ---
 

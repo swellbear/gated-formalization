@@ -21,7 +21,7 @@ Only patterns **evidenced** in current applications. Sparse by design.
 
 **Definition:** Dependent questions blocked primarily by an unset lock or free parameter (inter-parameter dependency).
 
-**Applications:** AV E2E (R1/R2 ← R4/OR-slots) · many-worlds (A3–A4 ← A1/A2) · SpaceX (M2 ← Rank 1 locks) · conscience (expansion ← free f/Pi/R)
+**Applications:** AV E2E (R1/R2 ← R4/OR-slots) · many-worlds (A3–A4 ← A1/A2) · SpaceX (M2 ← Rank 1 locks) · conscience (expansion ← free f/Pi/R) · CDS med-device (R4/R5 ← unset H/S/P before lock)
 
 **Lesson:** State dependency explicitly; locking-scaffolding before pretending empirical closure.
 
@@ -31,7 +31,7 @@ Only patterns **evidenced** in current applications. Sparse by design.
 
 **Definition:** Uniqueness or preferability blocked because comparison class / metrics / ODD unset.
 
-**Applications:** AV E2E · many-worlds
+**Applications:** AV E2E · many-worlds · CDS med-device parent “best next” (pre-revision)
 
 **Lesson:** Preferability/uniqueness without a locked comparison class is not well-posed.
 
@@ -81,7 +81,7 @@ Only patterns **evidenced** in current applications. Sparse by design.
 
 **Definition:** Claim-Revision lineage across folders.
 
-**Applications:** debt-limit equal-spending-cuts → scorekept-pairing-recommendation
+**Applications:** debt-limit equal-spending-cuts → scorekept-pairing-recommendation · CDS med-device (in-folder CR Rank 1 successor)
 
 **Lesson:** Successor findings do not overwrite parent FD/closeout.
 
@@ -94,6 +94,16 @@ Only patterns **evidenced** in current applications. Sparse by design.
 **Applications:** foxnews-socialism-article · conscience-sketch
 
 **Lesson:** Mark incomplete honestly; recover records before elevating residuals.
+
+---
+
+## `stipulated-proxy`
+
+**Definition:** Operator authorizes an explicit stand-in (audience/ops/buyer assumptions) so locked bars can be scored without live internal data.
+
+**Applications:** CDS med-device Rank 1 (PX1)
+
+**Lesson:** Proxy-scoped establishment ≠ live-platform clearance; label every share-out; real inputs can overturn admits.
 
 ---
 
