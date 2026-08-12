@@ -40,6 +40,16 @@ Select one (or split mixed claims):
 
 
 
+### Soft-modal fork (when claim uses potential / could / may / should / etc.)
+
+If soft modals carry claim strength, flag early (do not wait for endpoint):
+
+| Term in claim | Candidate bar (circle one when locking) |
+|---------------|----------------------------------------|
+|               | P-Logical / P-NonNegligible / P-BaseCase / other: |
+
+**Near-vacuity warning:** Unbounded P-Logical + open horizon is often near-vacuous — state if applicable.
+
 ---
 
 ## Ready for Gate Scoring?

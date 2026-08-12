@@ -5,6 +5,9 @@
 **Closeout verdict:** Admissible / Stable Provisional / Not admissible / other hard stop:  
 **Amb at closeout:**  
 
+**Amb ≠ clearance (mandatory):** Amb measures under-specification. Low Amb does **not** mean the claim or any locked bar is established.  
+**Locked bar status (if any):** established / not established / refuted / n/a — ________
+
 **Original claim (verbatim):**
 
 
