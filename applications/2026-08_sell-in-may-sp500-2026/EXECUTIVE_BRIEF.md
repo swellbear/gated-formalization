@@ -48,6 +48,12 @@ Because the S&P 500 has historically delivered substantially lower average retur
 
 ---
 
+## Use-Exploration (authorized retrofit)
+
+Possible *uses* of the findings (not advice; verdict unchanged): **descriptive seasonality fact card**; **edge-vs-fact separator**; pointer to Contrastive Alt A as a possible later successor shape. Full exhibit: [`UX_Use_Exploration.md`](UX_Use_Exploration.md).
+
+---
+
 ## For the record (technical)
 
 | Item | Value |

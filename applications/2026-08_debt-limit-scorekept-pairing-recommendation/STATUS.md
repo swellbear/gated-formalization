@@ -19,6 +19,7 @@ This run is **closed**. The scorekept pairing rule is **clear enough to test**; 
 | **Locks in force** | Embedded scorekeeping freeze in claim text (Rank 1 of parent; no separate Moderate-deviation external lock) |
 | **Next authorization needed** | none — hard stop |
 | **Related apps surfaced** | `2026-08_debt-limit-equal-spending-cuts` — parent; `2026-08_sell-in-may-sp500-2026` — numerical bar + soft should |
+| **Use-Exploration** | Run (retrofit) — `UX_Use_Exploration.md` (verdict unchanged) |
 
 ---
 

@@ -46,6 +46,14 @@
 
 ---
 
+## Use-Exploration (only if authorized)
+
+*(Optional. Does not change the method verdict. Link to `UX_Use_Exploration.md`.)*
+
+-  
+
+---
+
 ## For the record (technical)
 
 | Item | Value |

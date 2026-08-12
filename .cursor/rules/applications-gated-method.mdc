@@ -411,6 +411,49 @@ Explain to the operator in ordinary terms (use `templates/CX_Contrastive_Recomme
 - Does **not** overwrite the original claim’s closeout, FD register, or admitted layers.
 - Distinct from **Claim-Revision Scaffolding** (successor wording of the *same* claim lineage), **Quantitative Implication** (scale a failed numerical standard), and **Experimental Generation** (close free parameters of the existing claim). This mode proposes **different** recommendations / claims that better match what was actually established.
 
+## Use-Exploration (optional; authorization-gated)
+
+**Purpose**  
+After method results exist, optionally explore **how the findings could be used**, guided by the original claim’s intent. Options are always **instance-specific** — generated from *this* claim and *this* application’s established / not-established results. Not a fixed menu across apps.
+
+**Does not alter** verdicts, Amb, admitted layers, or what is established / not established. Exploration is **not** method-established truth.
+
+**When it may run**
+- Only with **explicit operator authorization**
+- Typically after a Phase 1 endpoint, evidence pass, or closeout
+- **Never automatic**
+
+**Plain-language framing (required before generating options)**  
+State in ordinary terms (use `templates/UX_Use_Exploration.md`):
+1. What the method **established** and what it **blocked**
+2. That this step explores possible *uses* of those findings, guided by what the original claim was trying to do
+3. That options are **not** forecasts, advice, or method-established truth
+4. That the **core verdict is unchanged**
+
+**Process when authorized**
+1. Restate original claim intent in one or two lines.
+2. Restate established vs not-established (**this app only**).
+3. Generate **2–4 instance-specific** use options that are realistic given those results and the claim’s domain.
+4. For each option: what it is; how it relates to the original intent; what it still cannot justify; mandatory labels.
+5. Rank by fit to established findings (most constrained by evidence first).
+
+**Mandatory labels on every option**
+- Chosen exploration (authorized)
+- Supportive / informative relative to original claim intent
+- **Not** method-established
+- **Not** forecast / prediction / advice / “should”
+
+**Documentation (mandatory if run)**
+- `STATUS.md` — that UX was run; link to exhibit
+- `EXECUTIVE_BRIEF.md` — short Use-Exploration subsection
+- `DISSERTATION.md` — full exhibit section (or pointer + summary if brief)
+- `Thesis_Tracker.md` — exhibits / action-implications pointer
+- Dedicated exhibit: `UX_Use_Exploration.md`
+
+Core closeout / endpoint verdict must remain clearly separate from the exploration exhibit.
+
+**Honesty constraint:** Use-Exploration must **not** upgrade not-established items into recommendations, predictions, or “should.” Distinct from Claim-Revision, QI, Contrastive Recommendation, and Experimental Generation.
+
 ## Application Tracking System (Layers 1–3; mandatory at closeout)
 
 Trackers **index** status; they do **not** replace worksheets, admissions, closeout, or `DISSERTATION.md`. Prefer dissertation + closeout as sources of truth. Do not invent findings.
@@ -429,7 +472,7 @@ Every closed application (or closed claim-family member) must have `Thesis_Track
 5. **Forced deviations** — over-strong terms that could not be tested cleanly (if any)
 6. **Residuals that would reopen the case** — each residual ID + **concrete reopen condition** (if none realistic, say so explicitly)
 7. **Action implications** — plain language: stop / keep / test next (**mandatory** even for Stable Provisional)
-8. **Exhibits** — short pointers to QI, Contrastive Recommendation, key evidence
+8. **Exhibits** — short pointers to QI, Contrastive Recommendation, Use-Exploration, key evidence
 9. **Pointers** — dissertation, parent/successor, key admission/closeout files
 10. **Tags** — domain / claim-shape / pattern (from taxonomy)
 11. **Related applications** — 0–4 IDs, each with one-line reason (shared shape, pattern, parent/successor, or failure-mode kinship)
@@ -478,7 +521,7 @@ When running a **live** application, if the portfolio map flags other applicatio
 1. Claim-type / early Amb pass  
 2. Locking scaffolding  
 3. Intractability or forced-deviation declaration  
-4. Closeout, Claim-Revision, QI, or Contrastive Recommendation  
+4. Closeout, Claim-Revision, QI, Contrastive Recommendation, or Use-Exploration
 
 **Surfacing budget (hard cap):** at most **2** critically relevant apps per checkpoint. Prefer parent/successor and exact pattern match over loose claim-shape adjacency.
 

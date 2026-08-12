@@ -19,6 +19,7 @@ This run is **closed**. Under the agreed data lock, May–October averages are *
 | **Locks in force** | Rank 1 — Full-Claim-Strict (H2+R1+F3+M1+S3+Y1); CX Alts A–C recorded, not selected |
 | **Next authorization needed** | none — hard stop |
 | **Related apps surfaced** | `2026-08_debt-limit-scorekept-pairing-recommendation` — numerical bar + soft should; `2026-08_debt-limit-equal-spending-cuts` — same package shape |
+| **Use-Exploration** | Run (retrofit) — `UX_Use_Exploration.md` (verdict unchanged) |
 
 ---
 

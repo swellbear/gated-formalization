@@ -38,6 +38,7 @@ Mark when complete. An application is **not** closed until all applicable boxes 
 - [ ] `logs/calibration_log.md` entry if a pattern now appears in ≥3 closed apps
 - [ ] `STATUS.md` set to hard stop / closeout (this file)
 - [ ] `final_verdict.md` (or equivalent)
+- [ ] Use-Exploration (if authorized) documented in brief + dissertation + tracker + `UX_Use_Exploration.md`
 
 **Closeout gate:** All applicable items above = Yes → may label hard stop / closed. Any unchecked applicable item → still open for closeout hygiene.
 

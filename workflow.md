@@ -6,7 +6,7 @@ Use this checklist for every new claim, theory fragment, or argument you run thr
 Do not treat this file as a second full copy of the standing rule — checklist + pointers only.
 
 **Quick map:** Phase 1 → Phase 2 → optional Experimental Generation → closeout (**`DISSERTATION.md` + Layer 2 `Thesis_Tracker.md` + update Layer 1 portfolio + Layer 3 residual queue**) → optional Claim-Revision / QI / Contrastive Recommendation.  
-Also in force: locking-scaffolding; Amb ≠ clearance; accuracy-first Phase 2; conflicted-source; already-included legs (scenario **and** numerical bars); soft-modal fork; Tracking Layers 1–3; thin-record recovery; imported-pattern stamp; quarterly `park-90d` review; **dual-audience plain-first**.  
+Also in force: locking-scaffolding; Amb ≠ clearance; accuracy-first Phase 2; conflicted-source; already-included legs (scenario **and** numerical bars); soft-modal fork; Tracking Layers 1–3; thin-record recovery; imported-pattern stamp; quarterly `park-90d` review; **dual-audience plain-first**; **Use-Exploration** (optional, authorization-gated).  
 **Cons / Amb / redefinition** primary. **Low Amb ≠ claim cleared.**  
 **Glossary:** `docs/READER_GLOSSARY.md`
 
@@ -108,6 +108,14 @@ Also in force: locking-scaffolding; Amb ≠ clearance; accuracy-first Phase 2; c
 - [ ] Does **not** overwrite original closeout; distinct from Claim-Revision and QI
 - [ ] Uses only in-hand evidence/locks unless new search is authorized
 
+## 8f. Use-Exploration (only if authorized after results exist)
+- [ ] Plain-language framing first (`UX_Use_Exploration.md`)
+- [ ] Restate intent + established / not-established (this app only)
+- [ ] Generate 2–4 **instance-specific** use options; rank by fit to established findings
+- [ ] Mandatory labels on every option: authorized exploration; supportive/informative; **not** method-established; **not** forecast/advice/should
+- [ ] Document in STATUS, brief, dissertation, Thesis Tracker + exhibit file
+- [ ] Does **not** change verdicts, Amb, or what is established
+
 ## Reminders
 - Canonical detail lives only in `.cursor/rules/applications-gated-method.mdc`.
 - **Dual-audience plain-first** on every ask and share artifact; glossary in `docs/READER_GLOSSARY.md`.
@@ -131,3 +139,4 @@ Also in force: locking-scaffolding; Amb ≠ clearance; accuracy-first Phase 2; c
 - Claim-Revision Scaffolding is authorization-gated; does not silently replace the original claim.
 - Quantitative Implication & Counterfactual Benefit is authorization-gated after a failed numerical instance test; implications/counterfactuals ≠ proof of the claim.
 - Contrastive Recommendation is authorization-gated after an established core + failed elevation; proposes different better-fitting claims, not a silent rewrite.
+- **Use-Exploration** is authorization-gated after results exist; explores possible *uses* of findings guided by claim intent — **not** advice/forecasts and **not** a verdict change.

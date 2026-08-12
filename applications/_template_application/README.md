@@ -22,6 +22,7 @@ Recommended contents after copying (from `templates/`):
 - `CR_Claim_Revision_Scaffolding.md` when a post-closeout / forced-deviation **revision path** is authorized
 - `QI_Quantitative_Implication_Counterfactual_Benefit.md` when authorized after a **failed numerical instance** test
 - `CX_Contrastive_Recommendation.md` when authorized after an **established core + failed elevation** (alternative better-fitting claims; not a silent rewrite)
+- `UX_Use_Exploration.md` when authorized to explore **uses** of findings (instance-specific; not advice; does not change verdict)
 - `E_Package_Evidence_Intake.md` before admitting package-scoped evidence (**conflicted-source flag**)
 - `S_Scenario_Pass.md` for bear/base/bull or multi-leg scenarios (**already-included legs**)
 - `T_Application_Thesis_Tracker.md` / `THESIS_TRACKER.md` — use **`THESIS_TRACKER.md`** (Layer 2 nine-card); older T_ template superseded

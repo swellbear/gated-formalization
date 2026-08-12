@@ -98,6 +98,7 @@ Second scored episode under the same freeze; or G1 normative work; or parent-onl
 
 - FRA evidence: `E1_Evidence_Intake_FRA_2023.md`, `02c_Evidence_Pass_FRA_Readout.md`
 - QI: `QI_FRA_2023_Implication_Counterfactual.md` (implication C* ≈ $4.7T / ~3.6×; CF stipulated benefit only)
+- **Use-Exploration:** `UX_Use_Exploration.md` (retrofit; not advice; verdict unchanged)
 - Key layers: L2a–c FRA fail (`04f`–`04h`); L3a–d CF (`04i`–`04l`)
 - Compact no-admit (if used): `Compact_No_Admit_Readout.md`
 

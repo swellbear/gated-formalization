@@ -133,6 +133,8 @@ This application **is** the selected Rank 1 revision of the parent. Parent origi
 
 Further Claim-Revision Scaffolding was **not** indicated at closeout. No Contrastive Recommendation mode was run. Soft “should” (G1) was left open as optional/lower priority and **declined**.
 
+**Use-Exploration** (authorized 2026-08-12 retrofit): see `UX_Use_Exploration.md` — instance-specific uses of the FRA fail + QI scale factor (scorecard; scale-factor honesty; design-kinship separator). **Not** method-established; **not** advice/should. Core hard-stop verdict **unchanged**.
+
 ---
 
 ## 9. Final status of the original claim

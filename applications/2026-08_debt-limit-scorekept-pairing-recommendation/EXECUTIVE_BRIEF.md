@@ -51,6 +51,12 @@ The **pairing rule itself is clear enough to test**. On the 2023 Fiscal Responsi
 
 ---
 
+## Use-Exploration (authorized retrofit)
+
+Possible *uses* of the findings (not advice; verdict unchanged): episode **scorecard**; QI **scale-factor honesty**; separate design-kinship from C≥H. Full exhibit: [`UX_Use_Exploration.md`](UX_Use_Exploration.md).
+
+---
+
 ## For the record (technical)
 
 | Item | Value |

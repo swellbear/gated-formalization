@@ -84,6 +84,7 @@ FD1–FD5 on record (no Minimal-deviation package): automatic seasonality→shou
 - H2 workbook: `P2_Attempt1_H2_Workbook_Numbers.md`, `P2_Attempt1_seasonality_by_year.csv`
 - P2 readout: `P2_Attempt1_Rank1_H2_Readout.md`
 - Contrastive: `CX_Contrastive_Recommendation.md` (Alt A–C)
+- **Use-Exploration:** `UX_Use_Exploration.md` (retrofit; not advice; verdict unchanged)
 - Lock: `Lock_Rank1_Full_Claim_Strict.md`
 
 ---

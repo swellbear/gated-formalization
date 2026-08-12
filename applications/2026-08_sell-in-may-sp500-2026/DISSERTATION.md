@@ -154,6 +154,8 @@ Locking meanings dropped Amb by fixing sample, switch, frictions, metric, and sh
 
 All three were minimal-gated as better-fit provisional relative to the failed elevations. **Original Rank 1 endpoint findings and FD1–FD5 stay on the record.** Alternatives are contrastive options, not a silent rewrite and not an automatic Claim-Revision selection.
 
+**Use-Exploration** (authorized 2026-08-12 retrofit): see `UX_Use_Exploration.md` — uses of seasonality-without-Sharpe/should (fact card; edge-vs-fact separator; Alt A pointer). **Not** method-established; **not** advice/should. Core hard-stop verdict **unchanged**.
+
 ---
 
 ## 9. Final status of the original claim
