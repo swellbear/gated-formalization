@@ -11,6 +11,7 @@ Recommended contents after copying (from `templates/`):
 - `01`–`04` worksheets as needed
 - `05_Original_Claim_Assessment.md` at closeout
 - `R_Locking_Scaffolding.md` when a dominant blocker appears (plain-language framing + ranked packages + objective claim-deviation assessment; forced-deviation extraction if no Minimal-deviation package)
+- `CR_Claim_Revision_Scaffolding.md` when a post-closeout / forced-deviation **revision path** is authorized (ranked successor claims; non-silent; distinct from Experimental Generation)
 - `E_Package_Evidence_Intake.md` before admitting package-scoped evidence
 - `Compact_No_Admit_Readout.md` for no-admit Phase 1 cycles
 - `notes.md`, `final_verdict.md`, `admitted_layers.md` as useful

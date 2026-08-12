@@ -58,7 +58,7 @@
 
 Operator-facing choice (do not leave implicit):
 
-- [ ] **Revise claim** — rewritten claim (mark new application or clearly marked revision):  
+- [ ] **Revise claim** — then run **Claim-Revision Scaffolding** (`CR_Claim_Revision_Scaffolding.md`) before selecting/starting a successor:  
 - [ ] **Keep original wording** — research agenda / scoped dependents only:  
 
 **Default if no further authorization:** keep original wording + hard stop with agenda / this assessment.

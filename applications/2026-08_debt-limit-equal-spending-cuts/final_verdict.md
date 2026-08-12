@@ -15,4 +15,5 @@
 Debt-limit pairing is procedural (not spending identity); bare must/equal/cuts/irresponsible/should-not cannot be tested non-derivatively (FD1–FD5); under **P-Score-Strict+R2** a stipulated balance test is well-posed but no public instance clears headroom equality; FRA/BCA are analogues only.
 
 ## Phase status
-**Closed.** Keep original wording by default. Optional later: specialized C≥H evidence or explicit claim revision.
+**Closed.** Keep original wording by default. Optional later: specialized C≥H evidence or explicit claim revision via Claim-Revision Scaffolding.  
+**Post-closeout:** Revision path → Rank 1 selected → `applications/2026-08_debt-limit-scorekept-pairing-recommendation/`. Parent record unchanged.
