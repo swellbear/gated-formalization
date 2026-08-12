@@ -20,7 +20,7 @@
 
 ---
 
-## 2. Agree (Agreement / Stability)
+## 2. Agree (Agreement / Stability) — secondary
 
 **Score:** _______ (High / Moderately high / Moderate / Low)
 
@@ -28,9 +28,11 @@
 
 
 
+**Needle rule:** Change Agree only when independent careful readings (or distinct careful passes) actually converge or diverge on the *same* constrained claim. Do not treat rhetorical fluency or single-pass confidence as Agree.
+
 ---
 
-## 3. Prod (Productivity)
+## 3. Prod (Productivity) — secondary
 
 **Number of new, non-trivial, checkable consequences:** _______
 
@@ -43,6 +45,10 @@
 - 0 → fails Prod  
 - 1 → minimum pass  
 - 2+ → strong Prod  
+
+**Needle rule:** Count only new, non-trivial, *checkable* consequences not already licensed. Do not invent Prod by restating the claim, listing hoped-for implications, or counting consequences that presuppose still-open free parameters.
+
+**Primary gates reminder:** Cons, Amb, and redefinition / meaning-shift checks carry the run; Agree and Prod are secondary.  
 
 ---
 

@@ -1,0 +1,163 @@
+---
+description: Mandatory gated formalization method for all work under applications/
+globs: applications/**
+alwaysApply: false
+---
+
+# Applications Standing Rule (Two-Phase)
+
+**Canonical source of truth for the method.** `workflow.md` and `applications/_template_application/README.md` are short operator pointers only — do not duplicate full rule text there.
+
+For any work inside `applications/`:
+
+1. Follow `workflow.md` (checklist) and worksheets `01`–`05` plus locking/evidence templates as applicable. Use existing templates; do not invent formats or procedures.
+2. Before scoring or admitting any layer, flag **Descriptive**, **Normative/Strategic**, or **Mixed** (split Mixed).
+3. Every candidate material needs its own `04` Material Admission Check — never admit silently.
+4. **Conservative calibration:** Prefer leaving free parameters open; prefer REJECT/HOLD over ADMIT when borderline; never treat uniqueness/preferability (or analogues) as constrained unless newly admitted material directly and tightly forces it. Do not redesign Amb metrics or the Material Admission Check without evidence of systematic mis-use.
+5. Keep descriptive vs normative/strategic claims clearly separated. Never expand uniqueness **(N)** / preferability **(P)** (or analogues) beyond what admitted material strictly constrains.
+6. High residual Amb after serious search = **Provisional**, not false.
+7. **Gate priority:** **Cons**, **Amb**, and redefinition / meaning-shift checks are primary. **Agree** and **Prod** are secondary — score them, but only move the needle when the crisp rules below are met (do not invent productivity or stability gains).
+
+## Phase 1 — Constraint Diagnosis (always runs)
+
+- Execute normal gated cycles: search → formal Material Admission Checks → re-score → notes.
+- **Autonomous continuation:** While Amb is still dropping meaningfully **or** remaining gaps are still primarily descriptive/structural, continue Phase 1 cycles **without waiting for operator authorization between cycles**.
+- After **every** cycle, still produce a readout:
+  - **Full readout** if any material was admitted, Amb changed, or the agenda shifted.
+  - **Compact no-admit form (mandatory)** if nothing was admitted and Amb is unchanged — use `templates/Compact_No_Admit_Readout.md` (or equivalent): (i) candidates examined + REJECT/HOLD, (ii) Amb unchanged, (iii) gaps unchanged, (iv) Phase 1 continuation Y/N + one-line reason. Do **not** write a full narrative re-score for no-admit cycles.
+- When Amb stops falling and remaining gaps are predominantly normative/strategic (or otherwise resistant), **stop Phase 1**.
+- At the Phase 1 endpoint, produce a full readout including:
+  - Final Amb and verdict
+  - Explicit research agenda (open free parameters)
+  - **Claim-freeze:** for each open free parameter, a **one-sentence lock** of what the parameter *is* (the problem statement that later candidates must quote)
+  - **Inter-parameter dependencies** (if any) per the rule below — explicit statement, dependent marking, rectification path, prominent reopen condition
+  - **Explicit domain classification:** Phase 2 applicable / not applicable / mixed (with justification)
+  - Residual judgment points and higher-level review
+  - Recommended next action
+- Do **not** enter Phase 2 without **new explicit operator authorization**.
+
+## Phase 2 — Agenda-Driven Resolution (only when authorized and applicable)
+
+**Permitted domains:** scientific theories, mathematical claims, technical research programs, formal models, and similar cases where actively trying to solve remaining problems is appropriate.
+
+**Not permitted:** pure opinion, advocacy, or value-framing pieces.
+
+**Mixed cases:** operator decides which parts may enter Phase 2.
+
+When authorized:
+- Work the research agenda from Phase 1. Do **not** silently redefine or narrow the original claim. Quote the **claim-freeze** line for any free parameter you attempt to close.
+- Attempt to close or further constrain free parameters.
+- Continue until either (i) critical gaps are closed and the original claim is well-constrained, **or** (ii) remaining gaps are shown currently intractable under the **intractability checklist** below.
+- After each significant attempt, produce a readout: progress made, parameters newly closed or still open, whether a hard endpoint has been reached, and any **inter-parameter dependencies** discovered (rule below).
+- Wait for operator authorization before the next Phase 2 attempt.
+- If ordinary Phase 1 / Phase 2 resources on a free parameter are exhausted or declared currently intractable, the operator may separately authorize **Experimental Generation Mode** (below). That mode is not a substitute for Phase 1 or Phase 2 and does not run without its own authorization.
+
+### Intractability checklist (required before “currently intractable”)
+
+Record all of:
+1. **Literature / source classes searched**
+2. **Candidate classes tried**
+3. **Recurring failure pattern named** (e.g. redefinition, circularity with the target parameter, large inherent Amb cost)
+4. **What would reopen the gap** (concrete condition under which search resumes) — **prominent**, not a trailing aside; if blockage is primarily another unset parameter, state that dependency here and in the research agenda (see inter-parameter dependency rule)
+
+### Explicit inter-parameter dependency rule
+
+When analysis shows that one or more free parameters are blocked primarily because another free parameter remains unset or under-specified:
+
+1. **State the dependency explicitly** in the readout and in the research agenda. Do not leave it implicit. Use clear language of the form: “R1 and R2 are currently blocked primarily by the unset status of R4. Their general forms remain under-determined largely because R4 is free.”
+2. **Elevate the dependency to first-class status** in the claim-freeze / research agenda. Mark dependent parameters as such (e.g. “R1 (R4-dependent)”).
+3. **Provide a realistic rectification path.** State the concrete operator or process action that would make the dependent parameters well-posed again. Typical form: “Rectification: lock a concrete R4 (architecture pair + ODD + metrics + matching conditions), then re-open R1 and R2 as scoped technical questions under that freeze.” When the blocker is a dominant lock-parameter, rectification includes **locking-scaffolding** (below) before dependents may re-open.
+4. **Make the reopen condition prominent.** It must appear in the research agenda and in any intractability declaration, not only as a trailing note.
+
+This rule applies at **Phase 1 endpoint**, after **Phase 2 attempts**, and in **Experimental Generation** readouts whenever a dominant inter-parameter dependency is discovered.
+
+### Locking-scaffolding requirement (dominant blockers)
+
+Whenever a free parameter is identified as a **dominant blocker** that must be locked before dependent parameters can proceed:
+
+1. **Decompose the blocker** into its explicit decision points.
+2. For each decision point, **list realistic options** (prefer options grounded in public literature, benchmarks, or deployed systems).
+3. **Form coherent packages** from those options (and mark incoherent or confounded combinations).
+4. **Rank the coherent packages from most to least powerful** for resolving the dependent free parameters. Give a short justification for the ranking (e.g. tighter matching, more direct metric, better public anchors, lower confounding).
+5. **Relevance warning (mandatory):** If any package (especially top-ranked ones) has only **partial or weak overlap** with the original claim’s core assertions, state this explicitly in the scaffolding. Do **not** present a more tractable but only loosely related package as if it fully addresses the original claim.
+6. **Present the ranked, relevance-annotated choice set to the operator** (use `templates/R_Locking_Scaffolding.md`). Do not silently pick defaults.
+7. **Package OR-slots:** If a package (or selection) leaves a decision point as an unresolved alternative (e.g. `B1|B2`, `D5|D1`), the lock is **incomplete** until the operator either (a) **picks a single option** for that slot, or (b) **formally accepts “either”** as the lock (record: “OR-slot accepted: B ∈ {B1,B2}”). Do not proceed as if a singleton were chosen when it was not.
+8. **Only after the operator selects** (or authorizes a named package) **and OR-slots are resolved or formally accepted** may the dependent parameters be re-opened as scoped questions under that lock.
+
+This rule is **domain-general** (not application-specific). Scaffolding is part of rectification; selecting among options remains an operator act. Dependent Phase 2 / Experimental Generation must not proceed on dependents until the lock is selected.
+
+### Scoped-result honesty (after a package is locked)
+
+Once work proceeds under a locked package:
+
+1. All findings must be explicitly labeled as holding **under the chosen package / scope**, not as unrestricted results about the original claim.
+2. If findings only constrain **part** of the original claim, or only a **claim-adjacent** technical question, that partial or adjacent status must be stated in the readout and in any closeout.
+3. Final assessments must distinguish:
+   - what is now constrained **under the locked scope**, versus
+   - what remains **unaddressed** or only **weakly related** to the original claim’s strong assertions.
+4. Do **not** silently promote scoped results into general support for the original claim.
+
+### Package-satisfying evidence intake
+
+When the next step is to admit empirical or matched evidence under a locked package, use `templates/E_Package_Evidence_Intake.md` (or equivalent). Record: locked pair/ODD/metrics/matching; what the artifact claims; ADMIT vs HOLD vs REJECT criteria relative to the freeze; scoped-result honesty label. Do not invent results to fill the sheet.
+
+### Agree / Prod — secondary (crisp needle rules)
+
+- **Agree:** Raise or lower the Agree score only when independent careful readings (or distinct careful passes) actually converge or diverge on the *same* constrained claim. Do not treat rhetorical fluency or single-pass confidence as Agree.
+- **Prod:** Count only new, non-trivial, *checkable* consequences that were not already licensed. Do not invent Prod by restating the claim, listing hoped-for implications, or counting consequences that presuppose still-open free parameters.
+
+## Experimental Generation Mode (optional; restricted)
+
+**When it may be used**
+- Only after ordinary Phase 1 / Phase 2 resources on a free parameter have been exhausted or declared currently intractable (checklist above).
+- Only in domains where original formal work is appropriate (scientific, mathematical, technical). Not for pure opinion or advocacy claims.
+- Requires **explicit operator authorization for each batch**.
+
+**Hard limits and process**
+- Default batch size ≤ **3** candidates. Operator may raise the limit for a specific run if justified.
+- Before the batch: restate the **claim-freeze** one-sentence lock for each targeted free parameter.
+- Every candidate must **quote** that freeze line, then use the rigid separation template:
+  - *Already-licensed consequences*
+  - *Added structure or idealizations*
+- Full assumption audit required: list every assumption, mark licensed vs new/contested, assign Amb severity (2 / 1 / 0.5), sum the **new Amb cost of the candidate itself**.
+- Mandatory **red-team pass** before the admission check (circularity, hidden structure, redefinition, silent posits).
+- Formal Material Admission Check + higher-level review. Conservative calibration is strict.
+- A candidate that introduces **more new Amb than it removes** cannot be admitted as a closer.
+
+**Near-miss rule (operational)**
+- A near-miss justifies a further targeted attempt **only if** the agent names the **exact contested assumption** whose repair would change the admission outcome, and that failure is specific, isolatable, and looks repairable.
+- Structural or recurring failure patterns (redefinition of the problem, persistent circularity with the target free parameter, large inherent Amb cost) do **not** justify open-ended continuation. Stop and report.
+
+**After every batch**
+- Stop.
+- Produce a structured readout covering each candidate (quoted freeze line, separation, audit + Amb cost, red-team, admission decision, net Amb effect).
+- If a dominant inter-parameter dependency is discovered, apply the **inter-parameter dependency rule** in the batch readout (explicit dependency, dependent marking, rectification path, prominent reopen condition).
+- Clearing the generation filters for a specific argument does not by itself move the overall claim from Provisional to Admissible.
+- No further generation without new authorization.
+
+## Failure-mode cadence
+
+After every **closed application**, or after every **N ≥ 5** REJECT/HOLD decisions that share a recurring pattern (whichever comes first), add or update an entry in `logs/failure_mode_log.md` when there is anything to learn (blocked-but-later-supported, allowed-but-later-collapsed, or a clearly identified method pressure point). Lightweight; skip empty ceremony.
+
+## Original-Claim Assessment readout (required at closeout)
+
+When an application is closed (**Stable Provisional**, **Admissible**, or any hard stop), produce an **Original-Claim Assessment** using `templates/05_Original_Claim_Assessment.md` (or equivalent) that includes:
+
+1. **Status of the original claim**
+   - What parts are now constrained (and under what scope, if scoped).
+   - What parts are negatively constrained or shown false as originally stated.
+   - What free parameters remain.
+   - Explicit statement of how much of the original strong language (uniqueness, “alone,” structural impossibility, unrestricted preferability, etc.) remains unsupported.
+
+2. **Continuation options**
+   - List the realistic next actions that could further assess or constrain the original claim (or a clearly marked revision of it).
+   - For each option, state briefly what it would be expected to buy and what it would still leave open.
+   - Typical options may include: tighter or alternative locking package, new matched evidence pass, Experimental Generation under better anchors, explicit claim revision, or hard stop with research agenda only.
+
+3. **Revision vs continuation fork (mandatory when strong language is mostly negatively constrained)**
+   - Force an explicit operator-facing choice in the closeout:
+     - **Revise claim** — mark a rewritten claim (new or clearly marked revision) that drops unsupported strong language; or
+     - **Keep original wording** — retain the original claim text and carry only a research agenda / scoped dependents.
+   - Do not leave this fork implicit.
+
+Scoped results must remain clearly distinguished from unrestricted support for the original claim. Do **not** treat closeout as silent resolution of the original claim.

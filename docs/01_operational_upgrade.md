@@ -32,7 +32,7 @@ Count each distinct free parameter once.
 - Sum 3–5 → provisional / borderline
 - Sum ≥ 6 → high Amb — block expansion of the formal layer
 
-## 3. Sharper Prod (Productivity)
+## 3. Sharper Prod (Productivity) — secondary gate
 
 A consequence counts only if it is:
 1. New relative to anchors and prior layers
@@ -43,6 +43,20 @@ A consequence counts only if it is:
 - 0 productive consequences → fails Prod
 - 1 → minimum pass
 - 2+ independent productive consequences → strong Prod
+
+**Needle rule:** Do not invent Prod by restating the claim, listing hoped-for implications, or counting consequences that presuppose still-open free parameters.
+
+**Agree (secondary):** Change Agree only when independent careful readings (or distinct careful passes) actually converge or diverge on the *same* constrained claim. Do not treat rhetorical fluency or single-pass confidence as Agree.
+
+**Primary vs secondary:** Cons, Amb, and redefinition / meaning-shift checks carry the run. Agree and Prod are scored but secondary.
+
+## 3b. Claim-freeze
+
+At Phase 1 endpoint (and before Phase 2 or Experimental Generation on a gap), lock each open free parameter in **one sentence** stating what the parameter *is*. Candidates that claim to close a gap must **quote** that sentence. Changing the freeze line is a claim change, not Amb reduction.
+
+## 3c. Intractability checklist
+
+Before declaring a gap currently intractable, record: literature/source classes searched; candidate classes tried; recurring failure pattern named; what would reopen the gap.
 
 ## 4. Scored Gap-Ranking Checklist
 

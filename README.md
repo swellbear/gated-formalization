@@ -7,16 +7,20 @@ This repository is an **operator toolkit**: documentation + reusable worksheets 
 ## Quick Start — Running a New Application
 
 1. Copy `applications/_template_application/` to a new folder named `YYYY-MM_short-name/`.
-2. Fill the worksheets in order:
+2. **Canonical method rules:** `.cursor/rules/applications-gated-method.mdc` (sole full standing-rule text). Checklist: `workflow.md`.
+3. Fill worksheets in order (`templates/`):
    - `01_Anchor_and_ClaimType_Template.md`
    - `02_Gate_Scoring_Sheet.md`
    - (If Amb is high) `03_Gap_Extraction_and_Ranking.md`
    - (For each candidate material) `04_Material_Admission_Check.md`
-3. Re-score after any incorporation of new material.
-4. Record the final verdict and any residual judgment notes.
-5. If the run reveals a failure mode (blocked something later supported, or allowed something later collapsed), add an entry to `logs/failure_mode_log.md`.
+   - (No-admit cycles) `Compact_No_Admit_Readout.md`
+   - (Dominant blocker) `R_Locking_Scaffolding.md`
+   - (Package evidence) `E_Package_Evidence_Intake.md`
+   - (Closeout) `05_Original_Claim_Assessment.md`
+4. Re-score after incorporation; use **compact no-admit** when Amb is unchanged.
+5. Record final verdict + Original-Claim Assessment; log failure modes in `logs/failure_mode_log.md`.
 
-See `workflow.md` for the full repeatable checklist.
+See `workflow.md` for the operator checklist.
 
 ## Repository Structure
 
@@ -26,7 +30,8 @@ templates/          Blank worksheets
 exemplars/          Classical sound-argument starters (to be expanded)
 applications/       One folder per live run + a copyable template
 logs/               Failure-mode log
-workflow.md         Step-by-step operator checklist
+.cursor/rules/      Canonical standing rule (applications-gated-method.mdc)
+workflow.md         Operator checklist (pointer + steps; not a second full rule copy)
 README.md           This file
 ```
 
@@ -36,6 +41,7 @@ Start from hard-to-dispute anchors. Admit new formal layers only when they pass 
 
 ## Key Documents
 
+- `.cursor/rules/applications-gated-method.mdc` — canonical standing rule
 - `docs/00_method_overview.md` — living core method
 - `docs/01_operational_upgrade.md` — sharpened gates, claim-type pre-classification, checklists, calibration
 - `docs/thesis_final.pdf` — archival frozen Complete Thesis (vFinal consolidated working paper)
@@ -43,7 +49,7 @@ Start from hard-to-dispute anchors. Admit new formal layers only when they pass 
 
 ## Status
 
-Method is operational. Two live applications have been completed (computational sketch of conscience; opinion article on democratic socialism). Templates and scoring rules were upgraded after those runs. Further applications should use the current worksheets and contribute calibration + failure-mode data.
+Method is operational. Live applications include computational sketch of conscience, opinion-article run, Many-Worlds preferability, and AV E2E-vs-modular preferability. Further applications should use current worksheets and contribute calibration + failure-mode data.
 
 ## License / Use
 

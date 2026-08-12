@@ -13,6 +13,8 @@ List each distinct free parameter that contributed to high Amb or blocked admiss
 ### Gap 1
 **Description:**  
 
+**Claim-freeze (one sentence — lock what this free parameter *is*):**  
+
 **Impact (0–2):** _____ (how many other parameters / core predictions affected)  
 **Anchor connection (0–2):** _____ (directness of link to existing anchors)  
 **Measurability (0–2):** _____ (feasibility of finding constraining material)  
@@ -20,6 +22,8 @@ List each distinct free parameter that contributed to high Amb or blocked admiss
 
 ### Gap 2
 **Description:**  
+
+**Claim-freeze (one sentence):**  
 
 **Impact (0–2):** _____  
 **Anchor connection (0–2):** _____  
@@ -29,6 +33,8 @@ List each distinct free parameter that contributed to high Amb or blocked admiss
 ### Gap 3
 **Description:**  
 
+**Claim-freeze (one sentence):**  
+
 **Impact (0–2):** _____  
 **Anchor connection (0–2):** _____  
 **Measurability (0–2):** _____  
@@ -37,10 +43,23 @@ List each distinct free parameter that contributed to high Amb or blocked admiss
 ### Gap 4 (add more as needed)
 **Description:**  
 
+**Claim-freeze (one sentence):**  
+
 **Impact (0–2):** _____  
 **Anchor connection (0–2):** _____  
 **Measurability (0–2):** _____  
 **Sum:** _____  
+
+---
+
+## Claim-freeze register (required at Phase 1 endpoint; quote before Phase 2 / Experimental Generation)
+
+| Gap ID | One-sentence freeze lock |
+|--------|--------------------------|
+|        |                          |
+|        |                          |
+
+*Later candidates must quote the freeze line for any parameter they claim to close. Changing the freeze line is a claim change, not progress.*
 
 ---
 
@@ -66,4 +85,3 @@ List each distinct free parameter that contributed to high Amb or blocked admiss
 
 - [ ] Yes  
 - [ ] Need to refine gap definitions first
-
