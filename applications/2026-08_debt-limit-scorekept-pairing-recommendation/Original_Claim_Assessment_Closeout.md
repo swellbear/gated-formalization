@@ -1,9 +1,10 @@
-# Original-Claim Assessment — Closeout
+# Original-Claim Assessment — Closeout (final)
 
 **Date:** 2026-08-11  
 **Application:** `2026-08_debt-limit-scorekept-pairing-recommendation`  
 **Closeout verdict:** **Stable Provisional**  
-**Amb at closeout:** ≈ **4**
+**Amb at closeout:** ≈ **4**  
+**QI mode:** Completed full path (A+B) on FRA 2023 — **closed with this assessment**
 
 **Claim under assessment (Rank 1 revision, verbatim):**  
 “Debt-limit increases or suspensions should be procedurally paired with official (CBO-style) scored reductions in non-interest discretionary and mandatory outlays, measured against a current-law baseline over the budget window, with anti-gimmick constraints, at least equal to the estimated borrowing headroom created by the increase or suspension.”
@@ -20,74 +21,69 @@ Successor to `2026-08_debt-limit-equal-spending-cuts` via Claim-Revision Scaffol
 | Content | Scope |
 |---------|--------|
 | Debt-limit action ≠ new spending appropriation; claim is procedural pairing | Under this revision (L1a) |
-| **Descriptive core:** embedded scorekept pairing criterion is **well-posed** (CBO-style; non-interest disc+mandatory; current-law; anti-gimmick; ≥ headroom) | Under this revision (L1b) — Minimal deviation vs *this* claim text |
+| **Descriptive core:** embedded scorekept pairing criterion is **well-posed** | Under this revision (L1b) |
 | Well-posedness does **not** force soft “should” | Under this revision (L1c) |
 | Default/disruption tradeoffs relevant to soft “should” (magnitudes open) | Under this revision (L1d) |
 | H.R.10078-as-described: partial design kinship only | Narrow (L1e) |
-| **G5 instance:** FRA 2023 operational H ≈ $4.7T; C ≈ $1.31T non-interest outlays; **fails C ≥ H** | **FRA 2023 episode only** (L2a–c) |
+| **G5 instance:** FRA 2023 **fails C ≥ H** (C ≈ $1.31T; H ≈ $4.7T) | **FRA 2023 only** (L2a–c) |
+| **QI implication:** meet standard for FRA ⇒ C* ≈ $4.7T (~3.6×; shortfall ≈ $3.39T) | Implication only |
+| **QI counterfactual:** if C* ≥ H, **stipulated** balance follows by construction | Counterfactual (L3a); not substantive fiscal responsibility (L3b–d) |
 
 ### Negatively constrained / false as over-read
 
 | Over-reading | Status |
 |--------------|--------|
-| Treating soft “should” as forced by the well-posed criterion | Negatively constrained (L1c) |
-| Treating FRA fail as unrestricted “fiscally irresponsible” / “should not have been enacted” | Not licensed (scoped instance fail of balance test only) |
-| Restoring parent FD1–FD5 as content of this revision | Not asserted; parent findings stay on **parent** record |
+| Soft “should” forced by well-posedness or by QI counterfactual meet | Negatively constrained (L1c, L3c) |
+| FRA fail ⇒ unrestricted “fiscally irresponsible” / “should not have been enacted” | Not licensed |
+| QI implication / CF stipulated balance ⇒ Rank 1 or parent claim true | Not licensed |
+| Parent FD1–FD5 restored as this revision’s content | Parent record only |
 
-### Free parameters remaining
+### Free parameters remaining (agenda only; not blocking closeout)
 
 | ID | Status |
 |----|--------|
-| **G1** Soft “should” warrant | **Open (normative)** — optional / lower priority |
-| G2 / G5 for **other** episodes | Untested (no second episode required for clean closeout) |
-| G3–G4 edge anti-gimmick / window | Thin non-blocking residuals |
-| G1 magnitudes of default tradeoffs | Open |
+| **G1** Soft “should” warrant | Open (normative) — optional / lower priority; **not pursued** |
+| Other episodes G2/G5 | Untested — **not required** |
+| G3–G4 edge residuals | Thin; non-blocking |
 
 ### Forced-deviation terms
 
-**None triggered for this revision claim** (embedded scorekeeping made a Minimal-deviation descriptive core available).  
-
-**Parent carry-forward (record pointer, not re-litigated here):** Parent application’s **FD1–FD5** (unrestricted must / bare equal / bare spending cuts / unrestricted fiscally irresponsible / should not be enacted) remain first-class on `2026-08_debt-limit-equal-spending-cuts` — property of that claim text vs tools; **stay on the record**.
+**None** for this revision. Parent **FD1–FD5** stay on the parent record.
 
 ### Strong language still unsupported
 
-Soft **“should be procedurally paired”** remains **normative and open** (G1). No uniqueness, enactment ban, or unrestricted irresponsibility language is claimed here.
+Soft **“should be procedurally paired”** remains open (G1).
 
-**Scoped vs unrestricted:** FRA C≥H fail and design kinship are **not** unrestricted support for soft “should,” and are **not** support for the parent original claim.
+**Scoped vs unrestricted:** FRA fail, QI implication, and CF stipulated benefit are **not** unrestricted support for soft “should” or the parent original claim.
 
 ---
 
 ## 2. Continuation options
 
-| Option | Expected buy | Still leaves open |
-|--------|--------------|-------------------|
-| **A. Hard stop (this closeout)** | Honest Stable Provisional; descriptive core + one instance on record | G1; other episodes |
-| **B. Optional second episode** (e.g. document 2025 $5T as non-comparable / trivial) | Extra data point only | G1; not required for clean closeout |
-| **C. Optional G1 / normative work** | Might clarify warrant for soft “should” | Lower priority; Mixed Phase-2 caution |
-| **D. Return to parent wording / further parent evidence** | Parent agenda only | Does not alter this revision closeout |
+| Option | Status at this closeout |
+|--------|-------------------------|
+| **A. Hard stop** | **Selected** |
+| B. Second episode | Declined / not required |
+| C. G1 normative work | Declined / lower priority; not authorized |
+| D. Parent-only continuation | Separate; parent unchanged |
 
 ---
 
 ## 3. Revision vs continuation fork
 
-This application **is already** the authorized Rank 1 revision of the parent.
-
-- [x] **Keep this revision wording** — default; research agenda = optional G1 or further episodes only if newly authorized.  
-- [ ] Further Claim-Revision Scaffolding — not indicated (descriptive core already well-posed).
-
-Parent fork / FD1–FD5: unchanged on parent application.
+- [x] **Keep this revision wording** — closed.  
+- [ ] Further Claim-Revision Scaffolding — not indicated.
 
 ---
 
 ## Closeout statement
 
-Application **closed** as **Stable Provisional** (Amb ≈ **4**).
+Application **closed** as **Stable Provisional** (Amb ≈ **4**), including completed QI full path on FRA.
 
-- Descriptive core (well-posed scorekept pairing) **constrained**.  
-- Soft “should” still **open** (normative).  
-- G5 instance test: **2023 FRA fails C ≥ H** under the locked rules; **other episodes remain untested** (second episode not required for clean closeout).  
-- Parent claim’s **forced-deviation findings stay on the record**.
+1. Descriptive core (well-posed scorekept pairing) **constrained**.  
+2. Soft “should” still **open** (normative) — not pursued further.  
+3. G5: **2023 FRA fails C ≥ H**; other episodes untested (not required).  
+4. QI: implication C* ≈ **$4.7T** (~**3.6×**); counterfactual **stipulated** balance only if met — **not** claim support.  
+5. Parent **FD1–FD5** stay on the record.
 
-G1 work optional and lower priority. No further episode required unless specifically authorized. Claim **not** silently resolved beyond what is scoped above.
-
-Await further authorization only if continuing (B–D).
+**Hard stop.** No further work on this application without new authorization. Claim **not** silently resolved beyond the scoped findings above.

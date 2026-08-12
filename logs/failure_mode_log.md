@@ -26,10 +26,10 @@ After every **closed application**, or after every **N ≥ 5** REJECT/HOLD decis
 
 ### 2026-08-11 | Federal fiscal / debt limit | Scorekept pairing recommendation (Rank 1 revision of equal-cuts claim)
 - **Gate outcome at the time:** Stable Provisional closeout (Amb ≈ 4). Descriptive well-posed scorekept pairing constrained; soft “should” open (normative); FRA 2023 fails C≥H under freeze; other episodes untested; parent FD1–FD5 remain on parent record.
-- **Later evidence:** n/a at closeout.
-- **Direction of error:** **method-pressure-point** (positive) — Claim-Revision Scaffolding Rank 1 removed forced-deviation blockers for the *successor* claim; instance evidence then cleanly failed C≥H without settling N1.
-- **Which rule or judgment contributed:** Claim-Revision Scaffolding (authorization-gated); scoped-result honesty on FRA episode; soft “should” kept Normative (L1c).
-- **Adjustment made (if any):** Mode already added to standing rule this session; applied here end-to-end.
+- **Later evidence:** Post-closeout QI full path: implication C* ≈ $4.7T (~3.6×); counterfactual stipulated balance only; G1 still open. Failed instance not upgraded.
+- **Direction of error:** **method-pressure-point** (positive) — Claim-Revision Scaffolding Rank 1 removed forced-deviation blockers for the *successor* claim; instance evidence then cleanly failed C≥H without settling N1; QI mode separates implication/counterfactual from claim support.
+- **Which rule or judgment contributed:** Claim-Revision Scaffolding (authorization-gated); scoped-result honesty on FRA episode; soft “should” kept Normative (L1c); Quantitative Implication & Counterfactual Benefit mode (new).
+- **Adjustment made (if any):** Claim-Revision Scaffolding and QI modes added to standing rule; applied end-to-end on successor.
 - **Notes:** No second episode required for clean closeout; G1 optional / lower priority.
 
 ### 2026-08-11 | Federal fiscal / debt limit | Equal spending cuts with any debt-limit increase (H.R.10078-aligned)

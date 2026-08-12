@@ -226,3 +226,31 @@ A structured choice set of **successor claims** that could pass through the meth
 - Does **not** silently narrow or replace the original claim.
 - More appropriate for technical, legislative, design, or scientific claims; use caution or **skip** for pure advocacy/opinion pieces unless the operator explicitly wants a cleaned successor.
 - **Experimental Generation** remains a separate mode (closing free parameters of an *existing* claim). Claim-Revision Scaffolding produces **successor claims**.
+
+## Quantitative Implication & Counterfactual Benefit (optional; authorization-gated)
+
+**When it may be offered**
+After a clean evidence pass in which a **numerical standard** set by the claim (or a well-posed revision) is tested against a real instance and **fails** (e.g. C < H), the method may offer this mode. It does **not** run automatically. Primarily for quantitative, legislative, fiscal, or technical claims that use a numerical standard; skip when no failed numerical instance exists.
+
+**What the operator is told (plain language, required)**
+Before any work begins, explain in ordinary terms (use `templates/QI_Quantitative_Implication_Counterfactual_Benefit.md` or equivalent):
+
+1. The numerical test **failed** for the examined instance.
+2. This mode will do two further things, **if** authorized:
+   - **(A) Scale-factor implication:** Calculate what would have been required to **meet** the standard for that same instance (scale factor and counterfactual quantity).
+   - **(B) Counterfactual benefit evaluation:** Extract the **benefit** the claim was asserting or implying would follow from meeting the standard, and run that benefit claim through the method as a **conditioned** claim: “If the standard had been met, would the claimed benefit actually follow?”
+3. Results will be clearly marked as **implications** and **counterfactual evaluation**, not as proof that the original (or revision) claim was true.
+4. The operator chooses: **full path (A+B)**, **scale-factor only (A)**, or **neither**.
+
+**Process when authorized**
+
+1. **Implication (A):** Compute and report the scale factor / shortfall and the counterfactual quantity that would have satisfied the standard under the **same locks**. Label as implication only.
+2. **Benefit extract (B, if authorized):** Extract and **claim-freeze** the benefit assertion (what good was supposed to follow from meeting the standard). State it as a counterfactual conditioned on the standard having been met for the examined instance.
+3. **Gated evaluation (B):** Run that conditioned benefit claim through ordinary gated steps (claim-type split, free parameters, Phase 1 / Phase 2 as needed and authorized).
+4. **Report** with explicit labels: implication; counterfactual; what is supported; what remains open. Do **not** silently upgrade the failed instance into support for the original claim.
+
+**Constraints**
+- Authorization-gated; never automatic.
+- Plain-language framing is **mandatory** so the operator understands the step and its limits.
+- Does **not** silently upgrade a failed instance into support for the original claim.
+- Stays **separate** from **Experimental Generation** and from **Claim-Revision Scaffolding** (which produce successor claims). This mode evaluates the *benefit implication* of meeting an **already-defined** numerical standard.
