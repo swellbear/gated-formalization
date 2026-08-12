@@ -1,13 +1,14 @@
 # Tracker Residual Queue (Layer 3)
 
-**Last refreshed:** 2026-08-12 (cash-alone-privacy cross-domain probe)  
+**Last refreshed:** 2026-08-12 (term-limits probe #2; LOCK-004 Active broadened)  
 **Last park-90d quarterly review:** none yet (next due ~2026-11-12)  
 **Disposition vocabulary:** `pursue` | `park-90d` | `park-until-trigger` | `drop`  
 Only **pursue** items stay in active bands. Parked/dropped listed below.
 
 **Cadence:** About once per quarter, review **`park-90d` only** — promote, extend park, convert to `park-until-trigger`, or `drop`. Do not weekly-churn `park-until-trigger` unless the trigger fires.
 
-**Note:** Engineering alone/preferability batch closed; **cash-alone-privacy** cross-domain probe hard-stopped (LOCK-001…003 clean; LOCK-004 analogue caveat).
+**Note:** Uniqueness+preferability lock transfer validated across engineering · payments · civic. LOCK-004 folded Active.
+
 
 
 
@@ -50,6 +51,8 @@ Only **pursue** items stay in active bands. Parked/dropped listed below.
 | **R-EVID** · graphql | Over-fetch evidence under C₀ | Matched evidence under C₀ | **park-until-trigger** | |
 | **R-V** · cash-privacy | Lock V; re-score P | Operator locks V | **park-until-trigger** | Cross-domain probe |
 | **R-EVID** · cash-privacy | Privacy uniqueness evidence under C₀ | Matched evidence under C₀ | **park-until-trigger** | |
+| **R-V** · term-limits | Lock V; re-score P | Operator locks V | **park-until-trigger** | Cross-domain #2 |
+| **R-EVID** · term-limits | Accountability uniqueness under C₀ | Matched evidence under C₀ | **park-until-trigger** | |
 
 ---
 
@@ -63,6 +66,7 @@ Only **pursue** items stay in active bands. Parked/dropped listed below.
 | **R-REV** · serverless | Narrow to descriptive ops-model contrast | ~2026-11-12 | **park-90d** | Batch sibling |
 | **R-REV** · graphql | Narrow to descriptive fetch-shape contrast | ~2026-11-12 | **park-90d** | Batch sibling |
 | **R-REV** · cash-privacy | Narrow to descriptive privacy-contrast | ~2026-11-12 | **park-90d** | Cross-domain probe |
+| **R-REV** · term-limits | Narrow to descriptive multi-channel accountability | ~2026-11-12 | **park-90d** | Cross-domain #2 |
 
 ---
 

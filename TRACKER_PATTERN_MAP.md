@@ -11,7 +11,7 @@ Only patterns **evidenced** in current applications. Sparse by design.
 
 **Definition:** No Minimal-deviation lock package; over-strong / under-specified claim terms cannot be tested in non-derivative form.
 
-**Applications:** debt-limit parent · SpaceX · AV E2E · many-worlds · sell-in-May · llm-gwt (sufficiency/scale as over-strong elevations) · microservices alone/cascading · serverless alone/ops · graphql alone/overfetch · cash alone/privacy (FD-ALONE / FD-PREF)
+**Applications:** debt-limit parent · SpaceX · AV E2E · many-worlds · sell-in-May · llm-gwt (sufficiency/scale as over-strong elevations) · microservices alone/cascading · serverless alone/ops · graphql alone/overfetch · cash alone/privacy · term-limits alone/accountability (FD-ALONE / FD-PREF)
 
 **Lesson:** Extract FD terms early; Amb drop from locks ≠ salvage of bare slogan.
 
@@ -31,7 +31,7 @@ Only patterns **evidenced** in current applications. Sparse by design.
 
 **Definition:** Uniqueness or preferability blocked because comparison class / metrics / ODD unset.
 
-**Applications:** AV E2E · many-worlds · CDS med-device parent “best next” (pre-revision) · microservices alone/cascading · serverless alone/ops · graphql alone/overfetch · cash alone/privacy (C₀ named for **evaluation** only — elevation still not cleared)
+**Applications:** AV E2E · many-worlds · CDS med-device parent “best next” (pre-revision) · microservices alone/cascading · serverless alone/ops · graphql alone/overfetch · cash alone/privacy · term-limits alone/accountability (C₀ named for **evaluation** only — elevation still not cleared)
 
 **Lesson:** Preferability/uniqueness without a locked comparison class is not well-posed. Naming C₀ reduces Amb on well-posedness; Amb drop ≠ uniqueness/preferability clearance (see LOCK-2026-08-001…003; calibration 2026-08-12).
 

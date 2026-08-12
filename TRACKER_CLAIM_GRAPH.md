@@ -20,10 +20,11 @@
 | APP-SVL | Application | `2026-08_serverless-alone-ops-preferability` | Stable Provisional; Amb ≈ 8; FD 1 |
 | APP-GQL | Application | `2026-08_graphql-alone-overfetch-preferability` | Stable Provisional; Amb ≈ 8; FD 1 |
 | APP-CASH | Application | `2026-08_cash-alone-privacy-preferability` | Stable Provisional; Amb ≈ 8; FD 1 (cross-domain) |
+| APP-TERM | Application | `2026-08_term-limits-alone-accountability-preferability` | Stable Provisional; Amb ≈ 8; FD 1 (cross-domain #2) |
 | LOCK-2026-08-001 | Lock | Comparison class before uniqueness (O) | Active |
 | LOCK-2026-08-002 | Lock | Preferability needs named virtues/metrics | Active |
 | LOCK-2026-08-003 | Lock | Amb drop / scope lock ≠ clearance | Active |
-| LOCK-2026-08-004 | Lock | Design/spectra FD early | **Under review** (broaden beyond architecture?) |
+| LOCK-2026-08-004 | Lock | Hybrid/spectrum FD on “alone” | **Active** (broadened) |
 
 ---
 
@@ -51,7 +52,11 @@
 | APP-CASH | LOCK-2026-08-001 | imports_lock | cross-domain clean |
 | APP-CASH | LOCK-2026-08-002 | imports_lock | cross-domain clean |
 | APP-CASH | LOCK-2026-08-003 | imports_lock | cross-domain clean |
-| APP-CASH | LOCK-2026-08-004 | imports_lock | analogue + caveat → Under review |
+| APP-CASH | LOCK-2026-08-004 | imports_lock | analogue then 004 folded |
+| APP-TERM | LOCK-2026-08-001 | imports_lock | cross-domain #2 clean |
+| APP-TERM | LOCK-2026-08-002 | imports_lock | |
+| APP-TERM | LOCK-2026-08-003 | imports_lock | |
+| APP-TERM | LOCK-2026-08-004 | imports_lock | Active broadened — clean |
 
 ---
 

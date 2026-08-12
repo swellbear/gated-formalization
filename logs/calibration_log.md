@@ -47,6 +47,12 @@ When the **same pattern tag** appears in **≥ 3 closed applications**, record a
 - **Rationale:** 001–003 transferred cleanly. LOCK-004’s discipline applied but required an explicit analogue caveat — useful signal to widen reuse guidance without changing Amb math.
 - **Change made:** LOCK-004 status → Under review; calibration worksheet `logs/2026-08-C3_Cross_Domain_Calibration_and_Rule_Diff.md`; no `.mdc` Amb edit.
 
+### 2026-08-12 | LOCK-004 fold + civic cross-domain #2
+- **Apps:** term-limits-alone-accountability; LOCK-004 wording fold
+- **Decision:** **Accept** broaden LOCK-004 to hybrid/spectrum domains → **Active**; **keep** Amb weights; **declare** uniqueness+preferability transfer cluster **saturated** for further same-shape volume
+- **Rationale:** Civic probe imported 001–004 cleanly after fold; no new FP shape. Method learning now higher on a *different* claim-shape cluster.
+- **Change made:** LOCK-004 Active broadened; `logs/2026-08-C4_Lock004_Fold_and_Civic_Probe.md`
+
 ---
 
 *Standing rule: Calibration log → method change.*
