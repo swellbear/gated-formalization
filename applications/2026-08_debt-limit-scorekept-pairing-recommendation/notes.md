@@ -16,3 +16,5 @@
 “Debt-limit increases or suspensions should be procedurally paired with official (CBO-style) scored reductions in non-interest discretionary and mandatory outlays, measured against a current-law baseline over the budget window, with anti-gimmick constraints, at least equal to the estimated borrowing headroom created by the increase or suspension.”
 
 **Status:** **Hard stop closed.** Stable Provisional. Descriptive core constrained; FRA fails C≥H; QI implication/counterfactual recorded (stipulated CF only); soft “should” open unused; parent FD1–FD5 on parent record. No further work without new authorization.
+
+**Thesis tracker:** `Thesis_Tracker.md` (seeded 2026-08-12; indexes closeout; does not reopen hard stop).

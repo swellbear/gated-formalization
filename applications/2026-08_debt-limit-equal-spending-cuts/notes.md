@@ -12,3 +12,5 @@
 | **Closeout** | **≈ 4** | Stable Provisional; keep original wording by default |
 
 Revision-vs-continuation: closeout default was keep original wording; operator requested revision path → scaffolding offered → **Rank 1 selected** → successor `2026-08_debt-limit-scorekept-pairing-recommendation` **closed Stable Provisional** (descriptive core constrained; soft should open; FRA fails C≥H). Parent FD1–FD5 unchanged.
+
+**Thesis tracker:** `Thesis_Tracker.md` (seeded 2026-08-12; indexes closeout; does not reopen).
