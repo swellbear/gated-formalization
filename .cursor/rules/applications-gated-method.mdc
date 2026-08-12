@@ -341,35 +341,60 @@ Explain to the operator in ordinary terms (use `templates/CX_Contrastive_Recomme
 - Does **not** overwrite the original claim’s closeout, FD register, or admitted layers.
 - Distinct from **Claim-Revision Scaffolding** (successor wording of the *same* claim lineage), **Quantitative Implication** (scale a failed numerical standard), and **Experimental Generation** (close free parameters of the existing claim). This mode proposes **different** recommendations / claims that better match what was actually established.
 
-## Application Thesis Tracker (optional; authorization-gated; per-application)
+## Application Tracking System (Layers 1–3; mandatory at closeout)
 
-**Intent**
-A **per-application** longitudinal register attached to one claim run. It is shaped by **that application’s** locks, bars, FD terms, reopen conditions, and implied use cases so the operator can refer back over time and see what changed relative to the **original thesis**. It indexes status; it does **not** replace worksheets, admissions, or closeout prose.
+Trackers **index** status; they do **not** replace worksheets, admissions, closeout, or `DISSERTATION.md`. Prefer dissertation + closeout as sources of truth. Do not invent findings.
 
-**When it may be offered**
-- At Phase 1 endpoint (after claim-freeze), after a package lock, and/or at closeout — especially when Amb is low but a locked bar is “not established,” or FD / reopen conditions must be watched.
-- Only when the operator **authorizes** opening a tracker for that application.
+**Controlled vocabulary:** `docs/TRACKER_TAXONOMY.md` — primary **domain** tag; **claim-shape** tag(s); **pattern** tag(s) only when evidenced. At closeout, assign/update tags and refresh portfolio relatedness + `TRACKER_PATTERN_MAP.md` when a new pattern is observed.
 
-**What it produces**
-A living file in the application folder (e.g. `Thesis_Tracker.md`) using `templates/T_Application_Thesis_Tracker.md` (or equivalent), containing:
+### Layer 2 — Per-application Thesis Tracker (mandatory at closeout)
 
-1. **Thesis line** — original claim verbatim + governing freeze/scope (if any)
-2. **App-specific watchlist** — only items that matter for *this* thesis (derived from locks, modal/numerical bars, FD IDs, reopen conditions, key legs)
-3. **Current snapshot** — watchlist → status (locked value / established / not established / refuted / open)
-4. **Timeline log** — dated entries: what changed, which watchlist items moved, effect on thesis (supports / pressures / unchanged), pointer to the governing `04` / Phase readout
-5. **Non-silent rule** — tracker never overwrites closeout, FD register, or admitted layers; it points to them
+Every closed application (or closed claim-family member) must have `Thesis_Tracker.md` in its folder using `templates/THESIS_TRACKER.md`.
 
-**Setup when authorized**
-1. Quote original claim + current freeze/scope.
-2. Derive watchlist from **this app only**.
-3. Seed snapshot from latest readout/closeout.
-4. Baseline timeline entry (“tracker opened”).
+**Exact card structure:**
+1. **Claim** — original wording; Rank-1 / successor wording if any; parent/successor relationship
+2. **Verdict and Amb path** — final verdict; brief Amb path if recorded
+3. **Established** — bullets only
+4. **Not established / negatively constrained** — bullets only
+5. **Forced deviations** — over-strong terms that could not be tested cleanly (if any)
+6. **Residuals that would reopen the case** — each residual ID + **concrete reopen condition** (if none realistic, say so explicitly)
+7. **Action implications** — plain language: stop / keep / test next (**mandatory** even for Stable Provisional)
+8. **Exhibits** — short pointers to QI, Contrastive Recommendation, key evidence
+9. **Pointers** — dissertation, parent/successor, key admission/closeout files
+10. **Tags** — domain / claim-shape / pattern (from taxonomy)
+11. **Related applications** — 0–4 IDs, each with one-line reason (shared shape, pattern, parent/successor, or failure-mode kinship)
 
-**Update triggers (append timeline row)**
-Amb re-score; lock/OR-slot change; locked-bar status change; material ADMIT/REJECT/HOLD that moves a watchlist item; Phase 2 attempt close; QI / Claim-Revision / Contrastive Recommendation events; reopen condition met or explicitly declined.
+**Rules:** Do not paste full worksheets. Do not invent related links without a clear basis.
 
-**Constraints**
-- Authorization-gated; not automatic for every app.
-- **Application-attached** — not a repo-wide dashboard; design the watchlist for that claim’s needs.
-- Does not automate Amb scoring or admissions.
-- Distinct from Experimental Generation, Claim-Revision Scaffolding, QI mode, and Contrastive Recommendation.
+### Layer 1 — Portfolio dashboard (mandatory maintain)
+
+Root file `TRACKER_PORTFOLIO.md` lists **every** application with prior fields **plus**: primary domain tag, claim-shape tag(s), pattern tag(s), related applications (IDs, max 4, one-line reason each).
+
+**Update** at closeout and on material status change. Incomplete-record apps must be marked honestly.
+
+### Layer 3 — Residual queue (mandatory maintain)
+
+Root file `TRACKER_RESIDUAL_QUEUE.md` — as before. **Refresh** when residuals are added, closed, or explicitly deferred.
+
+### Pattern map (mandatory maintain)
+
+Root file `TRACKER_PATTERN_MAP.md`: one section per pattern tag that **actually appears**; short definition; apps that instantiate it; one-line lesson. Keep sparse; do not force unevidenced patterns.
+
+### Critically relevant application surfacing
+
+When running a **live** application, if the portfolio map flags other applications as critically relevant (shared claim-shape, shared pattern, or parent/successor), the method **may surface them** at these checkpoints **only**:
+
+1. Claim-type / early Amb pass  
+2. Locking scaffolding  
+3. Intractability or forced-deviation declaration  
+4. Closeout, Claim-Revision, QI, or Contrastive Recommendation  
+
+At each surfacing: name the related app(s); one-line relevance reason; **offer** (do not force) inspection or reuse of a **process pattern** (lock style, deviation lesson, residual reopen condition).
+
+**Honesty constraint (mandatory):** Related applications inform **process and hypotheses only**. They do **not** inherit conclusions. No verdict, admitted layer, or Amb score may be copied across applications. Any reused lock/metric/residual definition must be re-validated under the current claim and labeled **“imported pattern from [app], re-validated here.”**
+
+Surfacing is automatic when critical relevance is tagged; **binding reuse is never automatic**.
+
+### Relation to older optional tracker mode
+
+Older authorization-gated longitudinal watchlists are **superseded** by this mandatory Layer 1–3 + map system.

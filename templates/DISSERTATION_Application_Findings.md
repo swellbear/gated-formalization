@@ -8,6 +8,10 @@
 **Closeout verdict:**  
 **Amb at closeout:**  
 
+**Tags** (see `docs/TRACKER_TAXONOMY.md`): Domain · Claim-shape · Pattern  
+
+**Related applications (max 4):**  
+
 ---
 
 ## 1. Plain-language summary

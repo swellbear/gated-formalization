@@ -1,86 +1,145 @@
-# Application Thesis Tracker — SpaceX $600 potential
+# Thesis Tracker (Layer 2)
 
-**Date opened:** 2026-08-11  
+*Older longitudinal watchlist seed superseded by this mandatory nine-card structure.*
+
+**Per-application status card.** Mandatory at closeout. Indexes dissertation/closeout; does **not** replace them. Do not paste full worksheets.
+
 **Application:** `2026-08_spacex-600-dollar-stock`  
-**Authorization:** Operator authorized tracker for this application — **Yes** (seeded at method adoption / post-closeout)  
-**App status:** **Stable Provisional — hard stop**
+**Last reviewed:** 2026-08-12  
+**Status:** Stable Provisional — hard stop
+
+**Tags:** `markets` / `forecast-extension` / `forced-deviation`, `R-dependence`
 
 ---
 
-## 1. Thesis line
+## 1. Claim
 
-**Original claim (verbatim):**  
+**Original (verbatim):**  
 “SpaceX has potential to become a $600 stock.”
 
-**Governing freeze / scope:**  
-**Under Rank 1 (M2+S1+H2+X1) only** — non-negligible path to **$600/share by ~2036** on **IPO-scale** shares (≈**$7.9T** equity value); reverse-split-only excluded.
+**Successor / Rank lock (if any):**  
+**Rank 1 — M2+S1+H2+X1** (Moderate deviation vs bare text): non-negligible (live, not vanishing) path for SPCX at **$600/share by ~2036** on **IPO-scale** share base (≈ **$7.9T** equity value); **not** via reverse-split-only. Rank 1 is a **lock package**, not a Claim-Revision successor folder. Rank 3 (5-year parallel) viewed only — **not** an official lock.
 
-**Amb ≠ clearance reminder:** Amb ≈ 2 means the Rank 1 question is well-posed; it does **not** mean M2 is established.
-
----
-
-## 2. App-specific watchlist
-
-| ID | What we watch | Why it matters to this thesis |
-|----|---------------|-------------------------------|
-| **W-M2** | P-NonNegligible bar for $600 by ~2036 / ~$7.9T | Locked meaning of “potential” under Rank 1 |
-| **W-LOCK** | Rank 1 package intact (M2+S1+H2+X1) | Scope of all later findings |
-| **W-AMB** | Ambiguity score | Under-specification only — not clearance |
-| **W-TARGET** | Equity-value target ~$7.9T at $600 on IPO-scale shares | Economic content of the per-share claim |
-| **W-FD** | FD-M1 / FD-S1 / FD-H1 | Bare-text under-specification carry-forward |
-| **W-STARLINK** | Starlink as demonstrated cash engine (already in mix) | Strongest leg; still does not alone close ~$7.9T |
-| **W-AI** | AI / compute lease durability + independent FV weights | Main optionality / fragility for bull corridor |
-| **W-STARSHIP** | Starship marketed $/kg verification | Enabler for orbital-compute bull stories |
-| **W-REOPEN** | L4e reopen condition | What would justify another affirmation search |
+**Parent / successor relationship:**  
+Standalone. Closeout kept original wording on record and assessed it **under Rank 1 scope**. No Claim-Revision successor folder opened.
 
 ---
 
-## 3. Current snapshot
+## 2. Verdict and Amb path
 
-| ID | Current status | Notes / pointer |
-|----|----------------|-----------------|
-| W-M2 | **not established** | L2f, L3d, L4e; thin bull corridor on paper only |
-| W-LOCK | **locked** Rank 1 | `Lock_Rank1_M2S1H2X1.md` |
-| W-AMB | ≈ **2** | Low Amb ≠ M2 cleared |
-| W-TARGET | ~**$7.9T** / $600 by ~2036 | L1f, L2b |
-| W-FD | **on record** | FD-M1, FD-S1, FD-H1 in closeout |
-| W-STARLINK | **in base mix**; gap remains | Closeout clarification; does not close multi-trillion gap alone |
-| W-AI | **pressures M2** | Morningstar ~$780B; leases fragile (L4a, L4c) |
-| W-STARSHIP | **unverified at marketed $/kg** | L4d |
-| W-REOPEN | **active** | Non-conflicted bridge to ~$7.9T or milestone compression (L4e) |
+**Verdict:** Stable Provisional — hard stop. Claim **not** silently resolved.
 
-**Last snapshot date:** 2026-08-11 (closeout seed)
+**Amb path (brief):** Cycle 0 ≈9.5 → after L1a–g ≈7.5 → after L2a–f ≈2.5 → P2 scenario ≈2–2.5 → P2 deep evidence / closeout ≈ **2**.
+
+**Amb ≠ clearance:** Amb ≈ 2 means the Rank 1 question is well-posed; it does **not** mean M2 is established, Admissible, or that the bare slogan cleared.
 
 ---
 
-## 4. Timeline log
+## 3. Established
 
-| Date | Event | Watchlist items moved | Effect on thesis | Artifact pointer |
-|------|-------|----------------------|------------------|------------------|
-| 2026-08-11 | Cycle 0 / Phase 1 structural admits | W-TARGET, W-FD nascent | Pressures bare slogan; defines ~$8T content | `02`, `04a`–`04g` |
-| 2026-08-11 | Rank 1 lock selected | W-LOCK, W-M2 defined, W-AMB ↓ | Thesis well-posed under M2; Amb≠clearance | `Lock_Rank1_M2S1H2X1.md` |
-| 2026-08-11 | G4 pressure pass (L2) | W-M2 → not established | Pressures | `02c`, `04h`–`04m` |
-| 2026-08-11 | Phase 2 Attempt 1 scenario | W-M2 still not established; bull corridor noted | Unchanged (not established) | `P2_Attempt1_Rank1_Scenario_Pass.md` |
-| 2026-08-11 | Phase 2 Attempt 2 deep evidence | W-AI, W-STARSHIP, W-M2 clearer not established | Pressures | `P2_Attempt2_Deep_Evidence_Pass.md` |
-| 2026-08-11 | Stable Provisional hard-stop closeout | Snapshot seeded | Unchanged — hard stop | `Original_Claim_Assessment_Closeout.md` |
-| 2026-08-11 | **Tracker opened (baseline)** | — | Indexes closeout; does not reopen | this file |
-
----
-
-## 5. Non-silent rule (affirm)
-
-- [x] Tracker does **not** overwrite closeout, FD register, or admitted layers.
-- [x] Watchlist is specific to **this** application’s thesis and use cases.
-- [x] Updates append; they do not silently rewrite prior timeline meaning.
+- SPCX public; IPO ~$135 / ~$1.77T; day-one ~$161 / ~$2.1T (L1a).
+- $600/share ⇔ equity value / shares; IPO-scale ⇒ ~**$7.9T** (L1b/L1f); reverse-split-only excluded (L1e / X1).
+- IPO/early prices do not entail $600 (L1c); unbounded open-horizon P-Logical near-vacuous (L1g); “potential” under-specified until locked to M2 (L1d).
+- Under Rank 1: G4 well-posed; ~4× / ~14–16% 10y CAGR arithmetic (L2a–b).
+- Trailing FY2025 (~$18.7B; Starlink profitable; AI losses) insufficient alone (L2c).
+- Independent FV marks << ~$7.9T; Morningstar weighted ~**$780B** (~10× below) (L2d, L4a).
+- Path optionality-dependent (Starship / orbital AI / xAI) (L2e); thin bull corridor on paper; bear/base miss; bull = conjunctive stack (L3a–b).
+- MS ~$600 bull = scenario presence only (L3c); compute leases fragile; Starship marketed $/kg unverified (L4c–d).
+- Independent moonshot ~$225B rev sketch still needs extreme multiple (L4b).
+- Starlink already in mix as strongest demonstrated leg; does not close ~$7.9T gap alone.
+- **P-NonNegligible (M2) not established** — more clearly after Attempt 2 (L2f, L3d, L4e).
 
 ---
 
-## 6. Reopen / next watch
+## 4. Not established / negatively constrained
 
-**Active reopen conditions:** L4e — multi-year realized AI/Starship metrics compressing toward levels that support ~$7.9T under sober multiples **with** non-conflicted scenario weights; or a transparent independent model centering near ~$7.9T without bookrunner dependence.
-
-**Next update expected when:** L4e condition met, operator authorizes further Phase 2, Rank lock changes, or Claim-Revision path — else remain at hard-stop snapshot.
+- “Has potential” as **P-NonNegligible (M2)** for $600 by ~2036 / ~$7.9T — **not established**.
+- Bare “potential” = proven real shot at $600 without locks — negatively constrained under Rank 1 M2.
+- IPO / day-one price ⇒ path to $600 — negatively constrained (L1c).
+- Trailing Starlink success ⇒ ~$8T — negatively constrained.
+- Conflicted bank mega-curves establish M2 — not licensed.
+- Rank 1 results = unrestricted support for bare slogan without locks — not licensed.
+- Affirming M2 with current non-conflicted bridge — open / **partially intractable** (L4e).
+- Dilution vs S1 freeze — residual (S2 would make $600 harder).
+- $600 impossible — **not** claimed / not admitted.
+- Investment recommendation — **not** admitted.
 
 ---
 
-*Application Thesis Tracker. Hard stop unchanged unless newly authorized.*
+## 5. Forced deviations
+
+| ID | Term | Class |
+|----|------|-------|
+| **FD-M1** | bare “potential” | Under-specified |
+| **FD-S1** | “$600 stock” without share count | Under-specified |
+| **FD-H1** | silent horizon | Under-specified |
+
+Extraction triggered because no Minimal-deviation lock both stayed faithful to bare text **and** well-posed G4. These terms could not be tested in non-derivative form without locks.
+
+---
+
+## 6. Residuals that would reopen the case
+
+| ID | Residual | Concrete reopen condition |
+|----|----------|---------------------------|
+| R-L4e-BRIDGE | Affirming M2 with non-conflicted bridge partially intractable | **L4e:** multi-year realized AI/Starship (or equivalent) metrics compressing toward levels that support ~$7.9T under sober multiples **with** non-conflicted scenario weights; **or** a transparent independent model centering near ~$7.9T without bookrunner dependence — then new authorization for further Phase 2 under the **same** M2 bar. |
+| R-LOCK-CHANGE | Other modal/horizon readings of bare “potential” | New authorization to switch lock (e.g. M1 / open horizon or another package) — changes claim strength; does **not** silently rewrite Rank 1 findings. |
+| R-REVISION | Cleaner successor wording desired | New authorization for Claim-Revision Scaffolding → new application; original wording and Rank 1 closeout stay on record. |
+
+Absent those, remain hard-closed. Dilution beyond S1 would make $600 harder, not easier.
+
+---
+
+## 7. Action implications
+
+**Stop saying:**  
+That SpaceX “has potential” to be a $600 stock in the locked **non-negligible** sense without caveat; that IPO/day-one prices or Starlink trailing success entail a live path to ~$7.9T / $600 by ~2036; that conflicted mega-curves or an MS ~$600 bull scenario clear M2; that low Amb means the slogan is cleared; that this is investment advice or a proof $600 is impossible.
+
+**Keep saying:**  
+Under Rank 1, the question is well-posed and **M2 is not established** (clearer after deep evidence). Target is ~$7.9T on IPO-scale shares by ~2036; independent FV (~$780B Morningstar weighted) sits roughly an order of magnitude below; thin conjunctive bull corridor on paper is not clearance. Starlink is already counted and still leaves a multi-trillion gap. FD-M1 / FD-S1 / FD-H1 remain on record for bare text. Stable Provisional hard stop.
+
+**Test next (only if authorized):**  
+Further Phase 2 only if L4e reopen condition is met; or a lock change / Claim-Revision path — else leave hard-closed.
+
+---
+
+## 8. Exhibits
+
+- Lock: `Lock_Rank1_M2S1H2X1.md`; scaffolding: `R_Locking_Scaffolding_G1G2G3.md`
+- Phase 2: `P2_Attempt1_Rank1_Scenario_Pass.md`, `P2_Attempt2_Deep_Evidence_Pass.md` (+ `02d` / `02e`)
+- Key pressure layers: Morningstar FV `04r_…L4a…`; moonshot gap `04s_…L4b…`; leases `04t_…L4c…`; Starship `$/kg` `04u_…L4d…`; L4e reopen `04v_…L4e…`
+- Parallel view only (not lock): `Rank3_5y_Parallel_View.md`
+
+---
+
+## 9. Pointers
+
+- Dissertation: `DISSERTATION.md`
+- Closeout / verdict: `Original_Claim_Assessment_Closeout.md`; `final_verdict.md`
+- Parent / successor: None (standalone; Rank 1 = lock package only)
+- Key admissions / locks: `admitted_layers.md`; L1a–L4e (`04a`–`04v`); `Lock_Rank1_M2S1H2X1.md`; FD-M1 / FD-S1 / FD-H1
+
+---
+
+## 10. Tags (detail)
+
+| Kind | Tags |
+|------|------|
+| Domain | `markets` |
+| Claim-shape | `forecast-extension` |
+| Pattern | `forced-deviation`, `R-dependence` |
+
+---
+
+## 11. Related applications (0–4)
+
+| App ID | One-line reason |
+|--------|-----------------|
+| `2026-08_sell-in-may-sp500-2026` | soft-modal + forward elevation under lock |
+| `2026-08_av-e2e-vs-modular-preferability` | Amb≠clearance after lock |
+
+*Related apps inform process only — no conclusion inheritance.*
+
+---
+
+*Layer 2. See `TRACKER_PORTFOLIO.md`, `TRACKER_RESIDUAL_QUEUE.md`, `TRACKER_PATTERN_MAP.md`.*

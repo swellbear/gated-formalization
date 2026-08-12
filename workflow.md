@@ -5,9 +5,9 @@ Use this checklist for every new claim, theory fragment, or argument you run thr
 **Canonical method (full rules):** `.cursor/rules/applications-gated-method.mdc`  
 Do not treat this file as a second full copy of the standing rule — checklist + pointers only.
 
-**Quick map:** Phase 1 (autonomous while Amb drops / gaps descriptive; **soft-modal fork** early when needed) → Phase 2 (authorized; **accuracy not substantiation**) → optional Experimental Generation → closeout / endpoint (**Amb ≠ clearance**) → optional **Claim-Revision** / **QI** / **Contrastive Recommendation** / **Application Thesis Tracker**.  
-Also in force when applicable: inter-parameter dependencies; locking-scaffolding (incl. **lock-time Amb warning**); scoped-result honesty; package evidence intake (**conflicted-source rule**); scenario passes (**already-included legs**); soft-modal fork; compact no-admit; revision-vs-continuation fork; Claim-Revision; QI; **Contrastive Recommendation**; Thesis Tracker.  
-**Cons / Amb / redefinition** primary; **Agree / Prod** secondary. High Amb after serious search = Provisional, not false. **Low Amb ≠ claim cleared.**
+**Quick map:** Phase 1 → Phase 2 → optional Experimental Generation → closeout (**`DISSERTATION.md` + Layer 2 `Thesis_Tracker.md` + update Layer 1 portfolio + Layer 3 residual queue**) → optional Claim-Revision / QI / Contrastive Recommendation.  
+Also in force: locking-scaffolding; Amb ≠ clearance; accuracy-first Phase 2; conflicted-source; already-included legs; soft-modal fork; Tracking Layers 1–3.  
+**Cons / Amb / redefinition** primary. **Low Amb ≠ claim cleared.**
 
 ## 1. Setup
 - [ ] Create folder `applications/YYYY-MM_short-name/`
@@ -55,7 +55,10 @@ Also in force when applicable: inter-parameter dependencies; locking-scaffolding
 
 ## 8. Close the Run
 - [ ] Fill `05_Original_Claim_Assessment.md` (status + **Amb ≠ clearance** + locked-bar status + continuation options + **revision vs continuation fork** when required)
-- [ ] Produce **`DISSERTATION.md`** from `DISSERTATION_Application_Findings.md` (mandatory; plain-language body + technical appendix; no silent softening)
+- [ ] Produce **`DISSERTATION.md`** from `DISSERTATION_Application_Findings.md` (mandatory)
+- [ ] Produce / normalize **Layer 2** `Thesis_Tracker.md` from `THESIS_TRACKER.md` (mandatory nine-card structure)
+- [ ] Update **Layer 1** row in root `TRACKER_PORTFOLIO.md`
+- [ ] Refresh **Layer 3** `TRACKER_RESIDUAL_QUEUE.md` for new/closed/deferred residuals
 - [ ] Final verdict; phase status; scoped vs unrestricted distinction
 - [ ] Failure-mode cadence → `logs/failure_mode_log.md` if there is anything to learn
 
@@ -73,11 +76,17 @@ Also in force when applicable: inter-parameter dependencies; locking-scaffolding
 - [ ] Do **not** upgrade failed instance into support for the original/revision claim
 - [ ] Distinct from Experimental Generation and Claim-Revision Scaffolding
 
-## 8d. Application Thesis Tracker (only if authorized for that app)
-- [ ] Open `Thesis_Tracker.md` from `T_Application_Thesis_Tracker.md` in the **application folder**
-- [ ] Derive **app-specific** watchlist from that claim’s locks / bars / FD / reopen / legs
-- [ ] Seed snapshot + baseline timeline; append on material status changes
-- [ ] Does **not** overwrite closeout; not a repo-wide dashboard
+## 8d. Application Tracking (Layers 1–3 + map)
+- [ ] Layer 2 `Thesis_Tracker.md` (cards 1–11: include **tags** + **related applications**)
+- [ ] Layer 1 `TRACKER_PORTFOLIO.md` row updated (domain / claim-shape / pattern tags + related apps)
+- [ ] Layer 3 `TRACKER_RESIDUAL_QUEUE.md` refreshed
+- [ ] `TRACKER_PATTERN_MAP.md` updated if a new evidenced pattern appears
+- [ ] Tags from `docs/TRACKER_TAXONOMY.md` only
+- [ ] Trackers point to worksheets/dissertation; no conclusion inheritance across apps
+
+## Critically relevant surfacing (live runs)
+- [ ] At claim-type / locking / forced-deviation / closeout-or-optional-modes: if portfolio tags critical relatedness, **surface** related apps (name + one-line reason + offer process-pattern reuse)
+- [ ] Binding reuse never automatic; label any reuse “imported pattern from [app], re-validated here”
 
 ## 8e. Contrastive Recommendation (only if authorized after established core + failed elevation)
 - [ ] Plain-language framing first (`CX_Contrastive_Recommendation.md`)
@@ -101,6 +110,7 @@ Also in force when applicable: inter-parameter dependencies; locking-scaffolding
 - Scenario passes must list **already-included legs**.
 - Lock selection: Amb drop from fixing meanings ≠ clearance (lock-time warning).
 - Application Thesis Tracker is per-app, authorization-gated, and thesis-watchlist shaped for that claim.
+- **Tracking Layers 1–3 + pattern map** mandatory at closeout; taxonomy in `docs/TRACKER_TAXONOMY.md`; critically relevant apps may be **surfaced** (process only; no conclusion inheritance).
 - Claim-Revision Scaffolding is authorization-gated; does not silently replace the original claim.
 - Quantitative Implication & Counterfactual Benefit is authorization-gated after a failed numerical instance test; implications/counterfactuals ≠ proof of the claim.
 - Contrastive Recommendation is authorization-gated after an established core + failed elevation; proposes different better-fitting claims, not a silent rewrite.

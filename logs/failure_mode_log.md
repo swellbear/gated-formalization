@@ -24,6 +24,14 @@ After every **closed application**, or after every **N ≥ 5** REJECT/HOLD decis
 
 ## Entries
 
+### 2026-08-12 | Equity seasonality | Sell in May / S&P / May–Oct 2026
+- **Gate outcome at the time:** Stable Provisional hard stop (Amb ≈ 2.5) under Rank 1. G1* seasonality **established** (~3.52 pp); G4* Sharpe vs B&H **fails**; G5*/G6* “should” **not established**. FD1–FD5 on record. Contrastive Alt A–C recorded, not selected.
+- **Later evidence:** n/a (closeout).
+- **Direction of error:** **method-pressure-point** — folklore “because seasonality → should exit / improves risk-adjusted / do it this year” packages easily over-read once Amb falls from locks + one established descriptive leg.
+- **Which rule or judgment contributed:** Soft-modal fork + Amb≠clearance + accuracy-first Phase 2 (workbook) prevented slogan clearance; Contrastive Recommendation separated descriptive core from failed elevation.
+- **Adjustment made (if any):** None new; reinforces existing hygiene (Amb≠clearance; already-included seasonality leg does not rescue Sharpe/should).
+- **Notes:** Keep saying seasonal gap; stop saying obligatory exit / Sharpe edge / 2026 mandate under Rank 1.
+
 ### 2026-08-11 | Method hygiene | Amb≠clearance, Phase 2 accuracy, soft-modal, conflicted sources, scenario legs, lock-time Amb warning
 - **Gate outcome at the time:** n/a (standing-rule upgrade after debt-limit + SpaceX pressure points).
 - **Later evidence:** Operator authorized implementing recommendations 1–6 as domain-general methodology.

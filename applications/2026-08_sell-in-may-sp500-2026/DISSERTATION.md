@@ -2,13 +2,13 @@
 
 **Mandatory closeout deliverable** for every closed application (or closed claim family). Faithful to admitted layers, failures, locks, and closeout. Main body readable by a non-technical audience; technically precise (no silent softening of negative results). Scoped vs unrestricted conclusions explicit. Parent/successor relationships stated when relevant.
 
-**Status label:** **Pre-formal-closeout endpoint dissertation.** Written from available Phase 1 / Phase 2 Attempt 1 / Rank 1 lock / Contrastive Recommendation records. **No formal `05_Original_Claim_Assessment` exists yet.** This document is **not** a formal closeout substitute.
+**Status label:** Formal closeout dissertation (Stable Provisional hard stop). Supersedes the pre-formal-closeout draft labeling.
 
 **Date:** 2026-08-12  
 **Application:** `2026-08_sell-in-may-sp500-2026`  
 **Claim family / parent (if any):** None (standalone Mixed investor-strategy claim)  
-**Closeout verdict:** **Not formally closed.** Phase 2 Attempt 1 endpoint: **Provisional** under Rank 1 — seasonality premise established under lock; packaged “improves risk-adjusted + should + should for 2026” **not established**.  
-**Amb at closeout:** **N/A (no formal closeout).** Amb at Phase 2 Attempt 1 endpoint ≈ **2.5** (informal). Amb ≠ clearance.
+**Closeout verdict:** **Stable Provisional** (hard stop)  
+**Amb at closeout:** ≈ **2.5**
 
 ---
 
@@ -16,7 +16,9 @@
 
 The claim said that because the S&P 500 has historically done worse from May through October than from November through April, an investor should sit in cash or T-bills in that window; that this improves risk-adjusted results versus buy-and-hold over the long run; and that the rule should be followed for May–October 2026.
 
-Under a strict Rank 1 lock and an exact H2 total-return workbook, the **historical seasonality gap held** (about 3.5 percentage points, above the locked 2.0 pp bar). The **performance and obligation package did not**: strategy Sharpe failed to beat buy-and-hold both pre-tax and under an after-tax proxy; the default “should” was not established; and the 2026 “should” was not established. A Contrastive Recommendation run offered descriptive / awareness / preference alternatives that fit the evidence better; those do **not** rewrite the original claim. Formal closeout and Original-Claim Assessment remain pending.
+Under a strict Rank 1 lock and an exact H2 total-return workbook, the **historical seasonality gap held** (about 3.5 percentage points, above the locked 2.0 pp bar). The **performance and obligation package did not**: strategy Sharpe failed to beat buy-and-hold both pre-tax and under an after-tax proxy; the default “should” was not established; and the 2026 “should” was not established. A Contrastive Recommendation run offered descriptive / awareness / preference alternatives that fit the evidence better; those do **not** rewrite the original claim.
+
+**Bottom line:** Seasonality premise established under Rank 1; packaged exit / Sharpe-improvement / 2026 obligation **not established**. Closed **Stable Provisional** (hard stop). Keep original wording on record.
 
 ---
 
@@ -156,9 +158,9 @@ All three were minimal-gated as better-fit provisional relative to the failed el
 
 ## 9. Final status of the original claim
 
-**Verdict:** **Provisional** at Phase 2 Attempt 1 endpoint under Rank 1. Seasonality premise **established under lock**; packaged “improves + should + 2026” **not established**. **Formal closeout and Original-Claim Assessment not yet produced.**
+**Verdict:** **Stable Provisional** — hard stop. Seasonality premise **established under Rank 1**; packaged “improves + should + 2026” **not established**. Formal closeout: `Original_Claim_Assessment_Closeout.md`.
 
-**Amb ≠ clearance:** Amb ≈ **2.5** at Attempt 1 endpoint. Low Amb after definitional locks and G1* measurement does **not** mean the original claim cleared. Locked bars G4*/G5*/G6* are **not established**.
+**Amb ≠ clearance:** Amb ≈ **2.5**. Low Amb after locks and G1* measurement does **not** mean the original claim cleared. G4*/G5*/G6* are **not established**.
 
 **Locked-bar status summary:**
 
@@ -169,19 +171,17 @@ All three were minimal-gated as better-fit provisional relative to the failed el
 | G5* S3 default “should” | **Not established** |
 | G6* should for May–Oct 2026 | **Not established** |
 
-**Continuation / hard-stop note:** Stop for authorization. Recommended paths in Attempt 1 readout: (1) closeout as Stable Provisional under Rank 1; (2) Phase 2 Attempt 2 only if authorizing a different F3 tax engine or cash proxy (not expected to flip G4* given pre-tax Sharpe already fails); (3) Claim-Revision Scaffolding (e.g. descriptive-only seasonality). Thesis Tracker optional if authorized.
+**Continuation / hard-stop note:** Hard stop. Keep original wording. Contrastive Alt A–C not selected successors. Await new authorization only for Attempt 2 / Claim-Revision / tracker updates.
 
 ---
 
 ## 10. What would still be needed
 
-Concrete next authorized work (not vague “more research”):
+Concrete reopen / continuation (not vague “more research”):
 
-1. **Formal closeout** — produce `05_Original_Claim_Assessment.md` (or equivalent) stating Stable Provisional (or other authorized verdict), Amb ≠ clearance, FD carry-forward, and revise-vs-keep fork.  
-2. **Optional Phase 2 Attempt 2** — only if operator authorizes a *different* F3 tax engine or alternate cash proxy; residuals today are refinement, not declared intractable.  
-3. **Optional Claim-Revision Scaffolding** — if operator chooses revise-claim path (e.g. descriptive-only successor).  
-4. **Optional Thesis Tracker** — if authorized for longitudinal watch of G1*/G4*/G5*/G6* and FD1–FD5.  
-5. **Do not** treat Contrastive Recommendation Alt A–C as selected successors until Claim-Revision (or a new application) is explicitly authorized.
+1. **Phase 2 Attempt 2** — only if operator authorizes a *different* F3 tax engine or cash proxy (unlikely to flip G4*).  
+2. **Claim-Revision Scaffolding** — if operator chooses revise-claim (e.g. descriptive-only / CX Alt A as marked successor).  
+3. **Do not** treat Contrastive Recommendation Alt A–C as selected successors until Claim-Revision is explicitly authorized.
 
 ---
 
@@ -194,9 +194,9 @@ Concrete next authorized work (not vague “more research”):
 | Cycle 0 | ≈ 15 | Mixed; soft should ×2 |
 | After L1a–e | ≈ 14 | Structural separations |
 | Rank 1 lock | — | H2+R1+F3+M1+S3+Y1; Amb drop ≠ clearance |
-| After L2a–d / Phase 1 endpoint | ≈ 4 | Pre-workbook; G1* provisional secondary; G4*/G5*/G6* not established |
+| After L2a–d / Phase 1 endpoint | ≈ 4 | Pre-workbook |
 | P2 Attempt 1 (H2 workbook) | ≈ 2.5 | G1* established; G4*/G5*/G6* not established |
-| Formal closeout | — | **Not yet** |
+| **Closeout** | ≈ **2.5** | Stable Provisional hard stop |
 
 ### Admitted layers (index)
 

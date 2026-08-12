@@ -1,85 +1,143 @@
-# Application Thesis Tracker — Debt-limit equal spending cuts (parent)
+# Thesis Tracker (Layer 2)
 
-**Date opened:** 2026-08-12  
+*Older longitudinal watchlist seed superseded by this mandatory nine-card structure.*
+
+**Per-application status card.** Mandatory at closeout. Indexes dissertation/closeout; does **not** replace them. Do not paste full worksheets.
+
 **Application:** `2026-08_debt-limit-equal-spending-cuts`  
-**Authorization:** Operator authorized tracker for this application — **Yes** (morning plan default B / post-merge seed)  
-**App status:** **Stable Provisional — closed** (revision path already taken; parent wording kept on record)
+**Last reviewed:** 2026-08-12  
+**Status:** Stable Provisional — closed (parent; Rank 1 successor already taken)
+
+**Tags:** `fiscal-legislative` / `numerical-standard-plus-should`, `procedural-rule` / `forced-deviation`, `parent-successor-family`, `C-lt-H-fail`
 
 ---
 
-## 1. Thesis line
+## 1. Claim
 
-**Original claim (verbatim):**  
+**Original (verbatim):**  
 “Any increase or suspension of the federal debt limit must be accompanied by equal spending cuts over the following decade. Without that balance, debt-limit increases are fiscally irresponsible and should not be enacted.”
 
-**Governing freeze / scope:**  
-No Minimal-deviation package for original wording. Scoped work used **P-Score-Strict+R2** (well-posed balance test + stipulated irresponsible-*under-package* label only). Unrestricted original package remains not well-constrained.
+**Successor / Rank lock (if any):**  
+Scoped work under **P-Score-Strict + R2** (Moderate deviation). Post-closeout Claim-Revision **Rank 1** → successor `2026-08_debt-limit-scorekept-pairing-recommendation`. Parent wording and FD1–FD5 remain on this record.
 
-**Amb ≠ clearance reminder:** Amb ≈ 4 means under-specification / residual agenda, not clearance of must / equal / irresponsible / should-not.
-
----
-
-## 2. App-specific watchlist
-
-| ID | What we watch | Why it matters to this thesis |
-|----|---------------|-------------------------------|
-| **W-ORIG** | Unrestricted original package (must + equal + irresponsible + should-not) | Thesis as stated; not silently salvaged |
-| **W-FD** | FD1–FD5 forced-deviation terms | Non-derivative testing impossible for bare claim text |
-| **W-LOCK** | P-Score-Strict+R2 scoped findings only | What *was* well-posed — not unrestricted support |
-| **W-AMB** | Ambiguity score | Under-specification only |
-| **W-INSTANCE** | Empirical C ≥ H under P-Score-Strict+R2 for a named action | Open / intractable on parent; instance fail on passes |
-| **W-ANALOGUE** | FRA 2023 / BCA 2011 as analogues | Analogue only — not full lock equality |
-| **W-SUCCESSOR** | Rank 1 revision application status | Lineage; does not overwrite parent FD/closeout |
-| **W-REOPEN** | Options A–C (instance evidence / alt package / further revision) | What would justify new parent-side work |
+**Parent / successor relationship:**  
+This is the **parent**. Successor closed Stable Provisional on its own terms; it does **not** salvage or overwrite this parent claim.
 
 ---
 
-## 3. Current snapshot
+## 2. Verdict and Amb path
 
-| ID | Current status | Notes / pointer |
-|----|----------------|-----------------|
-| W-ORIG | **not well-constrained** | Closeout §1; strong language unsupported |
-| W-FD | **on record** FD1–FD5 | `Forced_Deviation_Extraction_G2G3.md`; closeout |
-| W-LOCK | **scoped only** P-Score-Strict+R2 | `G2G3_Lock_P-Score-Strict.md`; L3a–b |
-| W-AMB | ≈ **4** | Closeout |
-| W-INSTANCE | **open / fail on tested passes** | L3c, L4b, L4d; no public C≥H instance |
-| W-ANALOGUE | **analogue only** | L4c |
-| W-SUCCESSOR | **closed** Stable Provisional | `2026-08_debt-limit-scorekept-pairing-recommendation` |
-| W-REOPEN | **idle** unless newly authorized | Closeout §2 A–C |
+**Verdict:** Stable Provisional — original claim **not** well-constrained; closeout is **not** resolution of the original claim.
 
-**Last snapshot date:** 2026-08-12 (closeout seed)
+**Amb path (brief):** Cycle 0: 13 → Phase 1 endpoint ≈8 → FD + scaffolding ≈8 → P-Score-Strict+R2 / evidence / closeout ≈ **4**.
+
+**Amb ≠ clearance:** Amb ≈ 4 measures residual under-specification / agenda, **not** clearance of must / equal / irresponsible / should-not.
 
 ---
 
-## 4. Timeline log
+## 3. Established
 
-| Date | Event | Watchlist items moved | Effect on thesis | Artifact pointer |
-|------|-------|----------------------|------------------|------------------|
-| 2026-08-11 | Phase 1 → forced-deviation extraction | W-FD, W-ORIG | Pressures bare package | `Forced_Deviation_Extraction_G2G3.md` |
-| 2026-08-11 | P-Score-Strict+R2 lock | W-LOCK, W-AMB ↓ | Scoped well-posedness only | `G2G3_Lock_P-Score-Strict.md` |
-| 2026-08-11 | Evidence passes 1–2 | W-INSTANCE fail; W-ANALOGUE | Pressures unrestricted claim | `02d`–`02e`, `04k`–`04n` |
-| 2026-08-11 | Stable Provisional closeout | Snapshot baseline | Unchanged — not well-constrained | `Original_Claim_Assessment_Closeout.md` |
-| 2026-08-11 | Claim-Revision → Rank 1 selected | W-SUCCESSOR opened | Does not salvage parent wording | `Claim_Revision_Scaffolding.md` |
-| 2026-08-11 | Successor closed Stable Provisional | W-SUCCESSOR closed | Parent FD1–FD5 unchanged | successor closeout |
-| 2026-08-12 | **Tracker opened (baseline)** | — | Indexes closeout; does not reopen | this file |
+- Debt-limit increase/suspension ≠ new spending appropriation; pairing is procedural/political (L1a; unrestricted).
+- “Equal,” “spending cuts,” and “fiscally irresponsible” are under-determined without locks (L1b–d).
+- “Should not be enacted” not forced by descriptive layers (L2a, L3d).
+- Default/disruption tradeoffs relevant if pairing is binding; magnitudes open (L2b).
+- Under **P-Score-Strict+R2 only**: stipulated balance test well-posed (L3a); stipulated “irresponsible-*under-package*” label available (L3b) — not unrestricted FD4.
+- H.R.10078-as-described: narrow design overlap only (L4a).
+- FRA 2023 / BCA 2011: historical analogues of limit action + CBO-scored discretionary savings — analogues only, not full lock equality (L4c).
 
 ---
 
-## 5. Non-silent rule (affirm)
+## 4. Not established / negatively constrained
 
-- [x] Tracker does **not** overwrite closeout, FD register, or admitted layers.
-- [x] Watchlist is specific to **this** application’s thesis and use cases.
-- [x] Updates append; they do not silently rewrite prior timeline meaning.
-- [x] Successor findings do **not** silently resolve this original claim.
-
----
-
-## 6. Reopen / next watch
-
-**Active reopen conditions:** New authorization for (A) specialized C≥H instance under P-Score-Strict+R2, (B) alternate scorekeeping package, or (C) further Claim-Revision — else remain closed.
-
-**Next update expected when:** Operator authorizes parent-side continuation, or material episode evidence moves W-INSTANCE under the existing lock — else hard-stop/closeout snapshot.
+- Unrestricted “must be accompanied” (FD1) — not established; non-derivative testing impossible.
+- Bare “equal” (FD2) and bare “spending cuts” (FD3) — not established as written; under-specified.
+- Unrestricted “fiscally irresponsible” as unique consequence of unpaired limit action (FD4) — not established; only stipulated package-label admitted.
+- “Should not be enacted” (FD5) — not established / negatively constrained as forced by descriptive layers.
+- Treating debt-limit vote as itself the spending decision that “must” be balanced as a matter of identity — negatively constrained (L1a).
+- Empirical **C ≥ H** under P-Score-Strict+R2 for a named public action — open / currently intractable; full instance REJECT on passes (L3c, L4b, L4d).
+- Preferability of enacting H.R.10078 itself — not entered.
+- Unrestricted original persuasive package as a whole — not well-constrained.
+- Successor findings do **not** silently resolve this parent claim.
 
 ---
 
-*Application Thesis Tracker. Parent closeout and FD1–FD5 unchanged unless newly authorized.*
+## 5. Forced deviations
+
+| ID | Term | Class |
+|----|------|-------|
+| **FD1** | unrestricted “must be accompanied” | Over-strong |
+| **FD2** | bare “equal” | Under-specified |
+| **FD3** | bare “spending cuts” | Under-specified |
+| **FD4** | unrestricted “fiscally irresponsible” | Over-strong / under-specified |
+| **FD5** | “should not be enacted” | Over-strong (normative) |
+
+Triggered because every realistic G2+G3 package scored Moderate deviation or higher (no Minimal-deviation package). These terms could not be tested in non-derivative form.
+
+---
+
+## 6. Residuals that would reopen the case
+
+| ID | Residual | Concrete reopen condition |
+|----|----------|---------------------------|
+| R-INSTANCE | Empirical C ≥ H under P-Score-Strict+R2 for a named public action | New authorization for specialized instance evidence: Treasury headroom H plus CBO non-interest cuts C for the **same** named action under P-Score-Strict+R2; test C ≥ H. Pass/fail is for the **stipulated** lock test on that episode only — does **not** clear FD1–FD5. |
+| R-ALT-PKG | Alternate scorekeeping package | New authorization to lock a different well-posed package; same forced-deviation problem relative to bare original wording; possible worse deviation. |
+| R-REVISION | Further Claim-Revision beyond Rank 1 | New scaffolding + marked successor folder; parent wording and FD1–FD5 stay on record. |
+
+Without new authorization, parent remains hard-closed as Stable Provisional. Preferability/advocacy on H.R.10078 is **not** a reopen condition.
+
+---
+
+## 7. Action implications
+
+**Stop saying:**  
+That debt-limit increases/suspensions **must** come with “equal spending cuts”; that unpaired limit action is unrestrictedly “fiscally irresponsible”; that such measures **should not be enacted** as forced by the admitted descriptive layers; that FRA/BCA or H.R.10078 design overlap prove the original slogan; that the Rank 1 successor salvages this parent claim.
+
+**Keep saying:**  
+Raising/suspending the debt limit is financing permission, not a new spending appropriation; pairing cuts is a procedural/political choice. Under P-Score-Strict+R2 only, a stipulated balance test is well-posed and a package-scoped irresponsibility label is available — without clearing FD1–FD5. No public instance cleared C ≥ H under the lock here; FRA/BCA are analogues only. Original claim remains not well-constrained (Stable Provisional).
+
+**Test next (only if authorized):**  
+Specialized matched C and H for a named action under P-Score-Strict+R2; or an alternate package; or further Claim-Revision — else leave closed.
+
+---
+
+## 8. Exhibits
+
+- Forced-deviation register: `Forced_Deviation_Extraction_G2G3.md`
+- Lock: `G2G3_Lock_P-Score-Strict.md`; choice set: `G2G3_Locking_Scaffolding_Choice_Set.md`
+- Evidence: `E1_Package_Evidence_Intake_Pass1.md`, `E2_Package_Evidence_Intake_Pass2.md`, `02d` / `02e`
+- Instance REJECT: `04l_…L4b…`, `04n_…L4d…`; analogues: `04m_…L4c…`
+- Revision → Rank 1: `Claim_Revision_Scaffolding.md`
+
+---
+
+## 9. Pointers
+
+- Dissertation: `DISSERTATION.md`
+- Closeout / verdict: `Original_Claim_Assessment_Closeout.md`; `final_verdict.md`
+- Parent / successor: Parent of `applications/2026-08_debt-limit-scorekept-pairing-recommendation/`
+- Key admissions / locks: `admitted_layers.md`; L1a–L4d (`04a`–`04n`); FD1–FD5; `G2G3_Lock_P-Score-Strict.md`
+
+---
+
+## 10. Tags (detail)
+
+| Kind | Tags |
+|------|------|
+| Domain | `fiscal-legislative` |
+| Claim-shape | `numerical-standard-plus-should`, `procedural-rule` |
+| Pattern | `forced-deviation`, `parent-successor-family`, `C-lt-H-fail` |
+
+---
+
+## 11. Related applications (0–4)
+
+| App ID | One-line reason |
+|--------|-----------------|
+| `2026-08_debt-limit-scorekept-pairing-recommendation` | parent/successor family |
+| `2026-08_sell-in-may-sp500-2026` | numerical-standard-plus-should package |
+
+*Related apps inform process only — no conclusion inheritance.*
+
+---
+
+*Layer 2. See `TRACKER_PORTFOLIO.md`, `TRACKER_RESIDUAL_QUEUE.md`, `TRACKER_PATTERN_MAP.md`.*
