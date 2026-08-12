@@ -1,6 +1,6 @@
 # Tracker Pattern Map
 
-**Last refreshed:** 2026-08-12  
+**Last refreshed:** 2026-08-12 (Zitron Nvidia $500B hard stop sealed)  
 **Taxonomy:** [`docs/TRACKER_TAXONOMY.md`](docs/TRACKER_TAXONOMY.md)  
 **Calibration:** When a pattern appears in ≥3 closed apps → [`logs/calibration_log.md`](logs/calibration_log.md)  
 Only patterns **evidenced** in current applications. Sparse by design.
@@ -11,7 +11,7 @@ Only patterns **evidenced** in current applications. Sparse by design.
 
 **Definition:** No Minimal-deviation lock package; over-strong / under-specified claim terms cannot be tested in non-derivative form.
 
-**Applications:** debt-limit parent · SpaceX · AV E2E · many-worlds · sell-in-May · llm-gwt (sufficiency/scale as over-strong elevations) · microservices alone/cascading · serverless alone/ops · graphql alone/overfetch · cash alone/privacy · term-limits alone/accountability (FD-ALONE / FD-PREF) · **coreweave-ceo-gpu-longer-life** (FD attr/N-INSTANCE/color → fleet F-LIFE smuggle)
+**Applications:** debt-limit parent · SpaceX · AV E2E · many-worlds · sell-in-May · llm-gwt (sufficiency/scale as over-strong elevations) · microservices alone/cascading · serverless alone/ops · graphql alone/overfetch · cash alone/privacy · term-limits alone/accountability (FD-ALONE / FD-PREF) · **coreweave-ceo-gpu-longer-life** (FD attr/N-INSTANCE/color → fleet F-LIFE smuggle) · **zitron-nvidia-500b-financing-thesis** (FD announcement/freeze/claimed table → vendor/70%/bubble/consensus clearance; Cloud% → AI%; Squawk OUT)
 
 **Lesson:** Extract FD terms early; Amb drop from locks ≠ salvage of bare slogan.
 

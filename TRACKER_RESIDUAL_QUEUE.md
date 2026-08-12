@@ -1,13 +1,13 @@
 # Tracker Residual Queue (Layer 3)
 
-**Last refreshed:** 2026-08-12 (CoreWeave hard stop sealed)  
+**Last refreshed:** 2026-08-12 (Zitron Nvidia $500B **hard stop sealed** — newsletter+monologue primary; Squawk OUT)  
 **Last park-90d quarterly review:** none yet (next due ~2026-11-12)  
 **Disposition vocabulary:** `pursue` | `park-90d` | `park-until-trigger` | `drop`  
 Only **pursue** items stay in active bands. Parked/dropped listed below.
 
 **Cadence:** About once per quarter, review **`park-90d` only**.
 
-**Note:** CoreWeave **hard stop sealed**; A-ATTR established; N-INSTANCE + M-SCOPE-COLOR supported; full F-LIFE fails C_SCOPE; R-2ND-S / R-REV / R-TX-UPGRADE parked.
+**Note:** CoreWeave **hard stop sealed**; Zitron Nvidia $500B **hard stop sealed** (restart frame; Squawk/D-APPEAR OUT). Prior Squawk-stand-in R-* rows remain historical/drop.
 
 
 
@@ -65,6 +65,11 @@ Only **pursue** items stay in active bands. Parked/dropped listed below.
 | **R-PROB** · holiday-sales | Lock “will be up” bar | Operator locks bar | **park-until-trigger** | |
 | **R-2ND-S** · coreweave-gpu | Second named-gen hard S or fleet metric | New disclosure meeting C_SCOPE | **park-until-trigger** | Toward full F-LIFE |
 | **R-TX-UPGRADE** · coreweave-gpu | Official CNBC/CC PDF to replace caption L7 | Higher-grade transcript | **park-until-trigger** | Optional hygiene |
+| **R-TRANSCRIPT** · zitron-nvidia-500b | Squawk captions / interview body | — | **drop** | Squawk **OUT** of claim package |
+| **R-VERIFY-CONSENSUS** · zitron-nvidia-500b | Verify monologue FY / ~$1.6T path | Consensus pull authorized | **park-until-trigger** | L4 claimed-only |
+| **R-VENDOR-CRITERION** · zitron-nvidia-500b | Deal structure under VF-BAR | Final agreements / project terms public | **park-until-trigger** | C-VENDOR not cleared |
+| **R-CONC-NOTES** · zitron-nvidia-500b | Matched bank notes vs CONC-BAR | Primary notes in hand | **park-until-trigger** | L6 claimed-only; no Cloud%→AI% |
+| **R-SUSTAIN** · zitron-nvidia-500b | Diversified-demand evidence vs SUSTAIN-BAR | Demand/capex package authorized | **park-until-trigger** | Share ≠ sustainability |
 
 ---
 
@@ -85,6 +90,7 @@ Only **pursue** items stay in active bands. Parked/dropped listed below.
 | **R-REV** · heatwave | Narrow to descriptive seasonal risk | ~2026-11-12 | **park-90d** | |
 | **R-REV** · holiday-sales | Narrow to descriptive seasonality | ~2026-11-12 | **park-90d** | |
 | **R-REV** · coreweave-gpu | Narrow to attribution-only claim | ~2026-11-12 | **park-90d** | Real-claim intake |
+| **R-REV** · zitron-nvidia-500b | Narrow to D-ANN + D-MOU (± “Zitron claims…”) | ~2026-11-12 | **park-90d** | Restart seal; Squawk OUT |
 
 ---
 

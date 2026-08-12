@@ -1,8 +1,8 @@
 # Claim Graph
 
 **Date:** 2026-08-12  
-**Scope:** portfolio-wide + first real-claim intake after forecast locks  
-**Maintainer note:** Three claim-shape lock clusters Active (001–004 uniqueness+preferability; 005–008 numerical+should; 009–011 forecast-extension). Real-claim intake started (`APP-CRWV`); synthetic twin scaling still saturated.
+**Scope:** portfolio-wide + real-claim intakes (CoreWeave + Zitron Nvidia $500B)  
+**Maintainer note:** Three claim-shape lock clusters Active (001–004 uniqueness+preferability; 005–008 numerical+should; 009–011 forecast-extension). Real-claim intakes: `APP-CRWV`, `APP-ZITRON`; synthetic twin scaling still saturated.
 
 *Optional overview. Individual worksheets remain the source of truth.*
 
@@ -27,6 +27,7 @@
 | APP-HEAT | Application | `2026-08_heatwave-next-summer-should-prepare` | Stable Provisional; Amb ≈ 7; FD 1 |
 | APP-HOL | Application | `2026-08_holiday-sales-up-should-hire` | Stable Provisional; Amb ≈ 7; FD 1 |
 | APP-CRWV | Application | `2026-08_coreweave-ceo-gpu-longer-life` | **Hard stop sealed**; A-ATTR L7; N-INSTANCE + color; F-LIFE fails C_SCOPE |
+| APP-ZITRON | Application | `2026-08_zitron-nvidia-500b-financing-thesis` | **Hard stop sealed**; D-ANN+D-MOU; VF/CONC/SUSTAIN frozen not met; claimed FY/70%; Squawk OUT |
 | LOCK-2026-08-001 | Lock | Comparison class before uniqueness (O) | Active |
 | LOCK-2026-08-002 | Lock | Preferability needs named virtues/metrics | Active |
 | LOCK-2026-08-003 | Lock | Amb drop / scope lock ≠ clearance | Active |
@@ -101,13 +102,19 @@
 | APP-CRWV | LOCK-2026-08-011 | imports_lock | contract/history ≠ full elevation |
 | APP-CRWV | APP-HEAT | shares_anchor_class | forecast-extension (process) |
 | APP-CRWV | APP-HOL | shares_anchor_class | forecast-extension (process) |
+| APP-ZITRON | LOCK-2026-08-003 | imports_lock | Amb≠clearance; VF-BAR freeze ≠ C-VENDOR clearance |
+| APP-ZITRON | LOCK-2026-08-009 | imports_lock | soft evaluative / forward path |
+| APP-ZITRON | LOCK-2026-08-010 | imports_lock | posed ≠ clearance |
+| APP-ZITRON | LOCK-2026-08-011 | imports_lock | announcement/anecdote ≠ full elevation |
+| APP-ZITRON | APP-CRWV | shares_anchor_class | markets Amb≠clearance process kinship (Zitron Squawk OUT under restart; CoreWeave still Squawk-primary) |
 
 ---
 
 ## Residual judgment / known missing edges
 
 - Cross-domain probe succeeded for 001–003; LOCK-004 folded Active for hybrid/spectrum domains.  
-- Real-claim `APP-CRWV` validates forecast locks on live markets commentary; attribution≠life clearance.
+- Real-claim `APP-CRWV` validates forecast locks on live markets commentary; attribution≠life clearance.  
+- Real-claim `APP-ZITRON` hard-stopped under newsletter+monologue primary (Squawk OUT); MoU≠vendor/circular/70%/bubble clearance; claimed citations ≠ bar met.
 
 ---
 

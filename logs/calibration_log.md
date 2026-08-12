@@ -113,6 +113,25 @@ When the **same pattern tag** appears in **≥ 3 closed applications**, record a
 - **Rationale:** Operators otherwise may not know UX/CX/CR exist. Heuristics: UX almost always; CX when core+failed elevation; CR when revise-vs-keep; QI only after failed numerical instance.
 - **Change made:** `templates/OPTIONAL_MODES_MENU.md`; method § optional-mode offering; workflow §8h; STATUS/SHARE_PACK/EXECUTIVE_BRIEF templates; CoreWeave instance offer (UX/CX/CR; QI N/A)
 
+### 2026-08-12 | real-claim intake `descriptive-census` + soft classification (Zitron Nvidia $500B)
+- **Apps:** `2026-08_zitron-nvidia-500b-financing-thesis` (live markets commentary; imports LOCK-003, 009–011)
+- **Decision:** **keep** Amb≠clearance after VF-BAR freeze; **keep** Live vs stand-in badge when Squawk body lacks transcript; **keep** Amb weights; no new lock
+- **Rationale:** Same-day Squawk appearance can be established at video-page grade while interview body remains stand-in (adjacent newsletter/monologue). MoU announcement + present-tense MoU status clear without clearing “just vendor financing.” Claimed monologue FY/~$1.6T path admitted only as claimed — conflicted advocacy source insufficient for consensus-fact clearance. Reinforces LOCK-003/010/011 on financing-classification slogans; FD on headline/MoU/claimed-path → clearance smuggle.
+- **Change made:** app closeout L1–L6; portfolio / residual queue / claim-graph `APP-ZITRON`; pattern map `forced-deviation` instantiation; no Amb math or new lock
+- **Superseded:** See next entry — operator frame restart VOID’d this seal.
+
+### 2026-08-12 | Zitron Nvidia $500B — Cycle 0 restart (prior seal VOID)
+- **Apps:** `2026-08_zitron-nvidia-500b-financing-thesis`
+- **Decision:** **Void prior hard-stop seal**; restart at **Cycle 0** under operator-approved frame (PRIMARY = Aug 11 newsletter + Aug 12 monologue + MoU announcement; Squawk/D-APPEAR **OUT** of claim package)
+- **Rationale:** Operator rejected Squawk-stand-in packaging for thesis body; approved newsletter+monologue primary. Prior admissions/closeout not current truth. No new lock; no Amb math change yet — agent-proposed Cycle 0 Amb ≈ 10.5 awaiting operator confirm.
+- **Change made:** Rewrote `01`/`02`/`03`/`STATUS`/`notes`; VOID banners on prior closeout + Squawk-scoped admissions; portfolio / residual queue / claim-graph / pattern map updated to Cycle 0 in progress; **no new material admissions; no hard stop; no commit**
+
+### 2026-08-12 | Zitron Nvidia $500B — hard stop sealed (restart frame)
+- **Apps:** `2026-08_zitron-nvidia-500b-financing-thesis`
+- **Decision:** **seal hard stop** under newsletter+monologue primary (Squawk OUT); **keep** Amb≠clearance after VF-BAR / CONC-BAR / SUSTAIN-BAR freezes; **keep** claimed-only layers (L4/L6) distinct from bar met; **keep** Cloud% ≠ AI%
+- **Rationale:** Operator-gated admits L1–L6. Descriptive MoU core established. Elevations well-posed and not cleared. Elevating ELEV-CONC raised Amb (≈9 → 11) by splitting one parked slogan into two live bars — freeze ≠ clearance. Conflicted advocacy citations insufficient for CONC-BAR or consensus FY.
+- **Change made:** Full 11-section dissertation + share pack + residual/optional offers; portfolio/queue/claim-graph/pattern map refreshed; no new lock
+
 ---
 
 *Standing rule: Calibration log → method change.*
