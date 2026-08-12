@@ -1,48 +1,62 @@
 # Executive Brief (≤1 page)
 
-**Default share artifact.** Full audit trail: `DISSERTATION.md`.
+**Default share artifact.** Full audit trail: `DISSERTATION.md`.  
+**Glossary:** [`docs/READER_GLOSSARY.md`](../../docs/READER_GLOSSARY.md)
 
 **Application:** `2026-08_llm-global-workspace-consciousness`  
 **Date:** 2026-08-12  
-**Verdict:** Live narrowed A-Weak remnant — Provisional (stable); A-Strong Not admissible; original not established  
-**Amb:** ≈ 2.5 (remnant)  
 
 ---
 
 ## Claim
 
-Current large language models already implement a functional equivalent of a global workspace / cognitive bottleneck sufficient to support a weak form of machine consciousness under Global Workspace Theory, and further scaling will strengthen rather than undermine this correspondence.
+**Original:** Today’s large language models already implement a functional global workspace / bottleneck **enough** for a weak form of machine consciousness under Global Workspace Theory, and further scaling will strengthen that correspondence.
 
-*(Live claim is the **narrowed A-Weak remnant** in the same folder: partial Weak-functional access hallmarks in some current LLMs; Branch A only; does not assert sufficiency or unconstrained scale-strengthening.)*
+**Live claim (narrower):** Some current LLMs show **partial** weak-functional access/reportability hallmarks — **not** a claim that they are sufficient for weak consciousness, and **not** a claim that unconstrained scaling strengthens the match.
+
+---
+
+## Plain verdict
+
+The **strong original package is not established** (and the strong “sufficient + Strong-GNW + scaling strengthens” reading is **not admissible**). What remains live is weaker: **some** models show **partial** weak-functional hallmarks under a narrow reading. That does **not** mean LLMs are conscious, or that more scale will fix the gaps.
 
 ---
 
 ## Established
 
-- A/D/P consciousness-scope fork is mandatory; Dehaene/GNW identification = Branch D option, not automatic with Branch A.
-- Partial Weak-functional access-workspace hallmarks appear in evidence for **some** models under live Branch A / Weak lock — “some / partial,” not full equivalence.
-- Strong-GNW checklist can be stated; ignition / autonomous recurrence material for Strong reading is missing / incomplete.
-- Unconstrained “scaling strengthens correspondence” not admissible; ignition-style scale-monotonicity undercut.
-- Live remnant lock: partial Weak hallmarks; Strong not established; scale-strengthening not established; Branch A only.
+- You must separate access-style, Dehaene/GNW-style, and phenomenal readings — they are not automatic.  
+- Partial weak-functional access-workspace hallmarks appear for **some** models under the live narrow lock — “some / partial,” not full equivalence.  
+- A Strong-GNW checklist can be stated; key Strong materials (e.g. ignition / autonomous recurrence) are missing or incomplete.  
+- Unconstrained “scaling strengthens the correspondence” is not admissible.  
 
 ---
 
 ## Not established
 
-- Original full claim (A)+(B)+(C) as packaged — not established (parked / superseded).
-- Sufficiency for weak machine consciousness; **A-Strong** sufficiency + Strong-GNW + (C′) — **Not admissible**.
-- Strong-GNW equivalence; unconstrained further-scaling strengthening; phenomenal consciousness (Branch P parked).
-- Live remnant elevated to **Admissible** — not done (Amb ≈ 2.5 left as stable Provisional).
+- Original full package (already equivalent + scaling strengthens).  
+- Sufficiency for weak machine consciousness; Strong-GNW equivalence; unconstrained scale-strengthening; phenomenal consciousness.  
+- Elevating the live remnant to a fully cleared “admissible” band — not done.  
 
 ---
 
 ## Action implications
 
-**Stop saying:** Current LLMs implement a functional equivalent of a global workspace **sufficient** for weak machine consciousness under GWT; that further scaling will strengthen that correspondence; that Amb ≈ 2.5 clears the original packaged claim; that Strong-GNW or phenomenal consciousness is established.
+**Stop saying:** Current LLMs implement a functional global workspace **sufficient** for weak machine consciousness under GWT; that further scaling will strengthen that correspondence; that “the remnant got clearer” clears the original package; that Strong-GNW or phenomenal consciousness is established.
 
-**Keep saying:** Some current LLMs show **partial** Weak-functional access/reportability hallmarks under Branch A; Strong-GNW equivalence and unconstrained scale-strengthening are **not** established; live claim does **not** assert sufficiency.
+**Keep saying:** Some current LLMs show **partial** weak-functional access/reportability hallmarks under a narrow reading; Strong-GNW equivalence and unconstrained scale-strengthening are **not** established; the live claim does **not** assert sufficiency.
 
-**Test next (only if authorized):** Pin model set + hallmark recipe + broader replication for the live remnant only. Retired elevations require a **new** application.
+**Test next (only if authorized):** Name the model set, hallmark recipe, and broader replication for the live remnant only. Retired strong elevations need a **new** application.
+
+---
+
+## For the record (technical)
+
+| Item | Value |
+|------|--------|
+| Method verdict | Live A-Weak remnant Provisional-stable; A-Strong Not admissible; original parked |
+| Amb | ≈ 2.5 (remnant) |
+| Locks / proxy IDs | Narrowed Branch A remnant; Strong-GNW / sufficiency / unconstrained scale denied |
+| Scope label | Remnant live; strong elevations closed |
 
 ---
 
@@ -52,4 +66,4 @@ Current large language models already implement a functional equivalent of a glo
 
 ---
 
-*Mandatory at closeout. Non-technical front door; no silent softening.*
+*Mandatory at closeout. Plain verdict first; method labels secondary. No silent softening.*

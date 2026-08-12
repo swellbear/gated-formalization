@@ -1,9 +1,16 @@
 # STATUS — Operator “where am I?”
 
-**Update every cycle.** Keep short. Full narrative stays in notes / worksheets.
+**Update every cycle.** Keep short. Full narrative stays in notes / worksheets.  
+**Glossary:** `docs/READER_GLOSSARY.md`
 
 **Application:** `2026-08_cds-med-device-ad-segment-preferability`  
 **Updated:** 2026-08-12  
+
+### Plain status
+
+This run is **closed**. “Best next ad segment” was **not** supported. Under an authorized **stand-in** for a multi-specialty procedural CDS, procedure-focused med device **is** a high-priority **pilot candidate** — that is **not** live-platform proof. No further authorization needed unless you reopen with real data, a pilot design, or a new “best” comparison.
+
+---
 
 | Field | Value |
 |-------|--------|
@@ -19,7 +26,7 @@
 
 - [x] `Original_Claim_Assessment` / closeout
 - [x] `DISSERTATION.md`
-- [x] `EXECUTIVE_BRIEF.md`
+- [x] `EXECUTIVE_BRIEF.md` (plain verdict first)
 - [x] Layer 2 `Thesis_Tracker.md`
 - [x] Layer 1 `TRACKER_PORTFOLIO.md` row updated
 - [x] Layer 3 residual dispositions set

@@ -4,6 +4,13 @@
 
 **Application:** `2026-08_foxnews-socialism-article`  
 **Updated:** 2026-08-12  
+**Glossary:** `docs/READER_GLOSSARY.md`
+
+### Plain status
+
+**Incomplete record** (archival). A modest factual core looks provisionally supportable; strongest interpretive leaps were not tightly constrained. Recover worksheets + exact claim text before any elevation work.
+
+---
 
 | Field | Value |
 |-------|--------|

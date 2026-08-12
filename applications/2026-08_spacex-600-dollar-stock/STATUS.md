@@ -4,6 +4,13 @@
 
 **Application:** `2026-08_spacex-600-dollar-stock`  
 **Updated:** 2026-08-12  
+**Glossary:** `docs/READER_GLOSSARY.md`
+
+### Plain status
+
+This run is **closed**. Under the agreed reading (~$600 by ~2036 on IPO-scale shares ≈ ~$7.9T), a **non-negligible path is not established**. Independent valuations sit far below that target. Not an investment recommendation.
+
+---
 
 | Field | Value |
 |-------|--------|

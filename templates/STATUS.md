@@ -1,9 +1,18 @@
 # STATUS — Operator “where am I?”
 
-**Update every cycle.** Keep short. Full narrative stays in notes / worksheets.
+**Update every cycle.** Keep short. Full narrative stays in notes / worksheets.  
+**Glossary:** `docs/READER_GLOSSARY.md`
 
 **Application:**  
 **Updated:**  
+
+### Plain status
+
+*(2–3 ordinary-language sentences: what’s going on · what’s needed · what this does not mean.)*
+
+
+
+---
 
 | Field | Value |
 |-------|--------|
@@ -21,7 +30,7 @@ Mark when complete. An application is **not** closed until all applicable boxes 
 
 - [ ] `Original_Claim_Assessment` / closeout (or explicit incomplete-record closeout)
 - [ ] `DISSERTATION.md`
-- [ ] `EXECUTIVE_BRIEF.md` (default share artifact)
+- [ ] `EXECUTIVE_BRIEF.md` (default share artifact; plain verdict first)
 - [ ] Layer 2 `Thesis_Tracker.md` (tags + related apps)
 - [ ] Layer 1 `TRACKER_PORTFOLIO.md` row updated
 - [ ] Layer 3 residual dispositions set (`pursue` / `park-90d` / `park-until-trigger` / `drop`)

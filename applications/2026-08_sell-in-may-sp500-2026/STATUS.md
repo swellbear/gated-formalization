@@ -4,6 +4,13 @@
 
 **Application:** `2026-08_sell-in-may-sp500-2026`  
 **Updated:** 2026-08-12  
+**Glossary:** `docs/READER_GLOSSARY.md`
+
+### Plain status
+
+This run is **closed**. Under the agreed data lock, May–October averages are **substantially lower** than November–April (~3.5 pp) — a seasonal fact. “Should exit / beats buy-and-hold on Sharpe / must follow in 2026” is **not established**.
+
+---
 
 | Field | Value |
 |-------|--------|

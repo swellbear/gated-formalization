@@ -4,6 +4,13 @@
 
 **Application:** `2026-08_llm-global-workspace-consciousness`  
 **Updated:** 2026-08-12  
+**Glossary:** `docs/READER_GLOSSARY.md`
+
+### Plain status
+
+Strong “LLMs are already sufficient for weak consciousness / scaling strengthens that” is **closed as not admissible**. A **narrower live remnant** remains: some models show **partial** weak-functional hallmarks — **not** sufficiency. Further elevation only if newly authorized.
+
+---
 
 | Field | Value |
 |-------|--------|

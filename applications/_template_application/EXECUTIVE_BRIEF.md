@@ -1,15 +1,24 @@
 # Executive Brief (≤1 page)
 
-**Default share artifact.** Full audit trail: `DISSERTATION.md`.
+**Default share artifact.** Full audit trail: `DISSERTATION.md`.  
+**Glossary:** [`docs/READER_GLOSSARY.md`](../../docs/READER_GLOSSARY.md)
 
 **Application:**  
 **Date:**  
-**Verdict:**  
-**Amb:**  
 
 ---
 
 ## Claim
+
+*(Ordinary language.)*
+
+
+
+---
+
+## Plain verdict
+
+*(What held and what failed — write so a non-technical partner can read cold. Do not lead with Amb, package codes, or method labels.)*
 
 
 
@@ -37,10 +46,21 @@
 
 ---
 
+## For the record (technical)
+
+| Item | Value |
+|------|--------|
+| Method verdict | e.g. Stable Provisional / Not admissible / hard stop — |
+| Amb | |
+| Locks / proxy IDs | |
+| Scope label | unrestricted / under package __ / proxy-scoped |
+
+---
+
 ## Full write-up
 
 → [`DISSERTATION.md`](DISSERTATION.md)
 
 ---
 
-*Mandatory at closeout. Non-technical front door; no silent softening.*
+*Mandatory at closeout. Plain verdict first; method labels secondary. No silent softening.*

@@ -4,6 +4,13 @@
 
 **Application:** `2026-08_debt-limit-scorekept-pairing-recommendation`  
 **Updated:** 2026-08-12  
+**Glossary:** `docs/READER_GLOSSARY.md`
+
+### Plain status
+
+This run is **closed**. The scorekept pairing rule is **clear enough to test**; the 2023 FRA episode **fails** that balance test. Soft “should adopt this rule” was left open and not pursued. Parent slogan failures stay on the parent record.
+
+---
 
 | Field | Value |
 |-------|--------|

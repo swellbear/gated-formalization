@@ -78,6 +78,13 @@ Revising the claim so a successor becomes well-posed / testable under the method
 
 ## 4. Choice prompt
 
+**Plain-language card (fill before the code block):**
+
+- **What we’re doing:** Choosing a clearer successor wording of the claim (the original stays on record).  
+- **What we need from you:** Pick **one** revision option by ordinary name / rank.  
+- **What a “yes” means:** We restart examination on that successor wording only.  
+- **What this does *not* mean:** The original slogan is not silently rewritten or “fixed.”
+
 Pick **one** revision option by rank/name. Do **not** start a successor application until authorized.
 
 ```
@@ -85,6 +92,8 @@ Revision option: Rank __ / ________
 
 Placement override (if any): new folder / marked register
 ```
+
+**Details (secondary):** Rank IDs and artifact paths.
 
 **Status:** Awaiting operator selection — no revision selected; no new application started.
 

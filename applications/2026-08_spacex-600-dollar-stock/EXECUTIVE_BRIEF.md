@@ -1,11 +1,10 @@
 # Executive Brief (≤1 page)
 
-**Default share artifact.** Full audit trail: `DISSERTATION.md`.
+**Default share artifact.** Full audit trail: `DISSERTATION.md`.  
+**Glossary:** [`docs/READER_GLOSSARY.md`](../../docs/READER_GLOSSARY.md)
 
 **Application:** `2026-08_spacex-600-dollar-stock`  
 **Date:** 2026-08-12  
-**Verdict:** Stable Provisional — hard stop  
-**Amb:** ≈ 2  
 
 ---
 
@@ -13,37 +12,52 @@
 
 “SpaceX has potential to become a $600 stock.”
 
-*(Assessed under Rank 1 lock: non-negligible path to $600/share by ~2036 on IPO-scale shares ≈ $7.9T equity value; not via reverse-split-only.)*
+*(Tested under an agreed reading: a non-negligible path to about $600 per share by about 2036 on IPO-scale share count — roughly ~$7.9T equity value — not via reverse-split-only.)*
+
+---
+
+## Plain verdict
+
+Under that agreed reading, the question is **clear**, and a **non-negligible path to ~$600 by ~2036 is not established**. Independent fair-value marks sit roughly an order of magnitude below the implied ~$7.9T target. IPO/day-one prices and trailing Starlink success do **not** by themselves prove that path. This is not an investment recommendation, and it does not claim “$600 is impossible.”
 
 ---
 
 ## Established
 
-- SPCX public; IPO ~$135 / ~$1.77T; day-one ~$161 / ~$2.1T.
-- Under Rank 1: G4 well-posed; ~4× / ~14–16% 10y CAGR arithmetic; reverse-split-only excluded.
-- Independent FV marks << ~$7.9T; Morningstar weighted ~$780B (~10× below).
-- Path optionality-dependent (Starship / orbital AI / xAI); thin bull corridor on paper; MS ~$600 bull = scenario presence only.
-- **P-NonNegligible (M2) not established** — clearer after Attempt 2.
-- FD-M1 / FD-S1 / FD-H1 remain on record for bare text.
+- Public SPCX context: IPO around $135 / ~$1.77T; day-one around $161 / ~$2.1T.  
+- Under the agreed lock: the $600 question is well-posed; reverse-split-only paths are excluded.  
+- Independent fair-value marks sit well below ~$7.9T (e.g. Morningstar weighted on the order of ~$780B).  
+- Bull cases depend on large optional upsides (Starship / orbital AI / xAI); thin on paper; conflicted bank mega-curves do not clear the bar.  
+- Forced-deviation terms for the bare slogan remain on record.  
 
 ---
 
 ## Not established
 
-- “Has potential” as **P-NonNegligible (M2)** for $600 by ~2036 / ~$7.9T.
-- Bare “potential” without locks; IPO/day-one ⇒ path to $600; trailing Starlink ⇒ ~$8T.
-- Conflicted bank mega-curves clearing M2; Rank 1 results as unrestricted support for bare slogan.
-- Investment recommendation — not admitted; “$600 impossible” — not claimed.
+- “Has potential” in the locked **non-negligible** sense for $600 by ~2036 / ~$7.9T.  
+- Bare “potential” without locks; IPO/day-one or trailing Starlink as proof of that path.  
+- Conflicted mega-curves or a scenario bull case as sole clearance of the bar.  
 
 ---
 
 ## Action implications
 
-**Stop saying:** That SpaceX “has potential” to be a $600 stock in the locked non-negligible sense without caveat; that IPO/day-one or Starlink trailing success entail a live path to ~$7.9T by ~2036; that conflicted mega-curves or an MS ~$600 bull clear M2; that low Amb clears the slogan.
+**Stop saying:** SpaceX “has potential” to be a $600 stock in the locked non-negligible sense without caveat; that IPO/day-one or Starlink trailing success entail a live path to ~$7.9T by ~2036; that bank mega-curves clear the bar; that “the question got clearer” means the slogan cleared.
 
-**Keep saying:** Under Rank 1 the question is well-posed and **M2 is not established**. Target is ~$7.9T on IPO-scale shares by ~2036; independent FV sits roughly an order of magnitude below. Stable Provisional hard stop.
+**Keep saying:** Under the agreed lock the question is well-posed and the non-negligible path is **not established**. Target is ~$7.9T on IPO-scale shares by ~2036; independent FV sits roughly an order of magnitude below.
 
-**Test next (only if authorized):** Further Phase 2 only if L4e reopen condition is met; or lock change / Claim-Revision — else leave hard-closed.
+**Test next (only if authorized):** Further work only if multi-year realized metrics or an independent ~$7.9T-class model appear under the same bar; or change the lock / revise the claim — else leave closed.
+
+---
+
+## For the record (technical)
+
+| Item | Value |
+|------|--------|
+| Method verdict | Stable Provisional — hard stop |
+| Amb | ≈ 2 |
+| Locks / proxy IDs | Rank 1 M2+S1+H2+X1; M2 P-NonNegligible **not established** |
+| Scope label | Under Rank 1 only; bare slogan not cleared |
 
 ---
 
@@ -53,4 +67,4 @@
 
 ---
 
-*Mandatory at closeout. Non-technical front door; no silent softening.*
+*Mandatory at closeout. Plain verdict first; method labels secondary. No silent softening.*

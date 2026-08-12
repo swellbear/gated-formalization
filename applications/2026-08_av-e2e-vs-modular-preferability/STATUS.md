@@ -4,6 +4,13 @@
 
 **Application:** `2026-08_av-e2e-vs-modular-preferability`  
 **Updated:** 2026-08-12  
+**Glossary:** `docs/READER_GLOSSARY.md`
+
+### Plain status
+
+This run is **closed**. The strong “end-to-end alone is preferable / modular structurally cannot improve” package **fails**. Architecture is a spectrum; modular stacks can learn from data. Some locked technical questions remain empirically open.
+
+---
 
 | Field | Value |
 |-------|--------|

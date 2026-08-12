@@ -4,6 +4,13 @@
 
 **Application:** `2026-08_conscience-sketch`  
 **Updated:** 2026-08-12  
+**Glossary:** `docs/READER_GLOSSARY.md`
+
+### Plain status
+
+**Incomplete record** (archival). Sketch treated as provisionally acceptable under modest anchors and a three-part seed (harm, fairness, social sensitivity); free pieces still open. Recover records before expanding.
+
+---
 
 | Field | Value |
 |-------|--------|

@@ -1,48 +1,64 @@
 # Executive Brief (≤1 page)
 
-**Default share artifact.** Full audit trail: `DISSERTATION.md`.
+**Default share artifact.** Full audit trail: `DISSERTATION.md`.  
+**Glossary:** [`docs/READER_GLOSSARY.md`](../../docs/READER_GLOSSARY.md)
 
 **Application:** `2026-08_debt-limit-scorekept-pairing-recommendation`  
 **Date:** 2026-08-12  
-**Verdict:** Stable Provisional — hard stop  
-**Amb:** ≈ 4  
 
 ---
 
 ## Claim
 
-“Debt-limit increases or suspensions should be procedurally paired with official (CBO-style) scored reductions in non-interest discretionary and mandatory outlays, measured against a current-law baseline over the budget window, with anti-gimmick constraints, at least equal to the estimated borrowing headroom created by the increase or suspension.”
+When Congress raises or suspends the debt limit, that action **should** be paired with official (CBO-style) scored cuts in non-interest spending, over the budget window, with anti-gimmick rules, at least as large as the borrowing room the raise creates.
 
-*(Claim-Revision Rank 1 of parent `2026-08_debt-limit-equal-spending-cuts`; does not overwrite parent FD1–FD5.)*
+*(Clearer successor to the parent “equal cuts / irresponsible” claim; does not erase the parent’s failed strong wording.)*
+
+---
+
+## Plain verdict
+
+The **pairing rule itself is clear enough to test**. On the 2023 Fiscal Responsibility Act episode, scored cuts were **far smaller** than the headroom created — the episode **fails** that balance test. That failure does **not** by itself prove Congress “should” adopt the rule forever, or that the Act was unrestrictedly “fiscally irresponsible.” Soft “should” was left open and not pursued further. The parent claim’s strong failures stay on the parent record.
 
 ---
 
 ## Established
 
-- Debt-limit action ≠ new spending appropriation; claim is procedural pairing.
-- Embedded scorekept pairing criterion is **well-posed** under this revision.
-- FRA 2023 **fails C ≥ H** (C ≈ $1.31T; H ≈ $4.7T) — FRA 2023 only.
-- QI implication: meet standard for FRA ⇒ C* ≈ $4.7T (~3.6×; shortfall ≈ $3.39T) — implication only; stipulated CF balance if C* ≥ H, not unrestricted fiscal responsibility.
-- H.R.10078-as-described: partial design kinship only.
+- Debt-limit action ≠ new spending appropriation; this is a procedural pairing idea.  
+- The embedded scorekept pairing criterion is **well-posed**.  
+- FRA 2023 **fails** cuts ≥ headroom (about $1.31T vs about $4.7T) — that episode only.  
+- Scale implication: meeting the bar for FRA would have needed roughly ~3.6× the cuts (~$4.7T) — an implication / counterfactual scale, not proof of soft “should.”  
+- H.R.10078-as-described: partial design kinship only.  
 
 ---
 
 ## Not established
 
-- Soft “should be procedurally paired” (G1) — open; not pursued further at hard stop.
-- Soft “should” forced by well-posedness or QI counterfactual — negatively constrained.
-- FRA fail ⇒ unrestricted “fiscally irresponsible” / “should not have been enacted” — not licensed.
-- Other debt-limit episodes — untested; parent FD1–FD5 not restored as this claim’s content.
+- Soft “should be procedurally paired” as a settled obligation.  
+- That well-posedness or the scale counterfactual forces Congress to adopt the rule.  
+- That FRA’s fail means unrestricted “fiscally irresponsible” / “should not have been enacted.”  
+- Other debt-limit episodes (untested here).  
 
 ---
 
 ## Action implications
 
-**Stop saying:** That well-posedness or the QI counterfactual proves Congress **should** adopt this pairing rule; that FRA’s fail means unrestricted “fiscally irresponsible”; that meeting C* would clear Rank 1 or the parent claim.
+**Stop saying:** The clear test or the “what if cuts were larger” math proves Congress **should** adopt this rule; FRA’s fail equals unrestricted fiscal irresponsibility; meeting the larger cut figure would clear this claim or the parent slogan.
 
-**Keep saying:** The embedded scorekept pairing criterion is a well-posed descriptive balance test. FRA 2023 fails it. Soft “should” remains open and was declined at hard stop. Parent FD1–FD5 unchanged on the parent record.
+**Keep saying:** The scorekept pairing criterion is a well-posed descriptive balance test. FRA 2023 fails it. Soft “should” remains open. Parent forced-deviation terms unchanged on the parent record.
 
-**Test next (only if authorized):** Second scored episode under the same freeze; G1 normative work; or parent-only continuation in the parent folder — else leave hard-closed.
+**Test next (only if authorized):** Score another episode the same way; work the soft “should”; or continue only in the parent folder — else leave closed.
+
+---
+
+## For the record (technical)
+
+| Item | Value |
+|------|--------|
+| Method verdict | Stable Provisional — hard stop |
+| Amb | ≈ 4 |
+| Locks / proxy IDs | Embedded Rank 1 freeze; L2c FRA fail; QI ~3.6× implication |
+| Scope label | Episode-scoped fail; soft should open; parent FD1–FD5 untouched |
 
 ---
 
@@ -52,4 +68,4 @@
 
 ---
 
-*Mandatory at closeout. Non-technical front door; no silent softening.*
+*Mandatory at closeout. Plain verdict first; method labels secondary. No silent softening.*

@@ -10,9 +10,11 @@ Recommended contents after copying (from `templates/`):
 
 - `01`–`04` worksheets as needed (soft-modal fork on `01` when potential/could/should/etc. carry strength)
 - `05_Original_Claim_Assessment.md` at closeout (**Amb ≠ clearance** + locked-bar status)
-- `DISSERTATION.md` + **`EXECUTIVE_BRIEF.md`** — mandatory at closeout (brief = default share)
-- **`STATUS.md`** — update every cycle (“where am I?”); **closeout checklist** before labeling closed
+- `DISSERTATION.md` + **`EXECUTIVE_BRIEF.md`** — mandatory at closeout (brief = default share; **plain verdict first**)
+- **`STATUS.md`** — **Plain status** first, then technical table; **closeout checklist** before labeling closed
+- **`PLAIN_LANGUAGE_CARD.md`** — use on every authorization ask / cycle readout (dual-audience)
 - `E_Quantitative_Evidence_Rubric.md` before numerical-bar establish/refute admits (**already-included legs**)
+- Glossary for partners: `docs/READER_GLOSSARY.md`
 - `IMPORTED_PATTERN_STAMP.md` when reusing a lock/metric/pattern from a related app
 - `THIN_RECORD_RECOVERY.md` if `incomplete-record` before any elevation residual
 - `Thesis_Tracker.md` — Layer 2; update portfolio / residual queue (**dispositions**; quarterly `park-90d` review) / pattern map / calibration log (≥3 apps)

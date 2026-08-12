@@ -4,6 +4,13 @@
 
 **Application:** `2026-08_many-worlds-unitarity-preferability`  
 **Updated:** 2026-08-12  
+**Glossary:** `docs/READER_GLOSSARY.md`
+
+### Plain status
+
+This run is **closed**. “Many-Worlds is the only / therefore preferable” package is **not established**. Within a named comparison set, Bohmian theories add structure; strong uniqueness and preferability do not clear.
+
+---
 
 | Field | Value |
 |-------|--------|

@@ -1,49 +1,61 @@
 # Executive Brief (≤1 page)
 
-**Default share artifact.** Full audit trail: `DISSERTATION.md`.
+**Default share artifact.** Full audit trail: `DISSERTATION.md`.  
+**Glossary:** [`docs/READER_GLOSSARY.md`](../../docs/READER_GLOSSARY.md)
 
 **Application:** `2026-08_many-worlds-unitarity-preferability`  
 **Date:** 2026-08-12  
-**Verdict:** Provisional — uniqueness + preferability package not well-constrained  
-**Amb:** ≈ 5.5  
 
 ---
 
 ## Claim
 
-The Many-Worlds Interpretation is the only interpretation of quantum mechanics that preserves full unitarity and introduces no extra dynamical or epistemic postulates beyond the Schrödinger equation; therefore it is theoretically preferable to collapse theories and hidden-variable theories on grounds of consistency and simplicity.
+Many-Worlds is the **only** interpretation of quantum mechanics that keeps full unitarity and adds no extra dynamical or knowledge postulates beyond the Schrödinger equation — and is therefore theoretically preferable to collapse and hidden-variable theories on consistency and simplicity.
 
-*(Sub-parts: (U) unitarity; (N) no extras; (O) uniqueness; (P) preferability.)*
+---
+
+## Plain verdict
+
+The uniqueness + preferability package **is not established**. Within a **named comparison set** (Everett / collapse / Bohmian), Bohmian packages do add structure beyond unitary Schrödinger dynamics, and Everett can be described at a program level as not adding a new collapse/guidance **law** — but that is weaker than “no extras whatsoever,” and it does **not** prove Many-Worlds is the only viable option or that it is preferable. Hard open forks (preferred basis / Born rule) still block the strong “no extras” reading.
 
 ---
 
 ## Established
 
-- Minimal claim-relative comparison class **C₀** locked for uniqueness scoring — not global uniqueness.
-- Bohmian packages add ontology/dynamics beyond unitary Schrödinger ψ-dynamics.
-- Everett program characterization: no new dynamical **law** of collapse/guidance type — weak / program-level, not “no extras whatsoever.”
-- Preferred-basis / decoherence and Born-rule / epistemic recovery remain live expert forks.
-- Domain locked to NRQM measurement-problem framing; uniqueness if scored here is **C₀-relative evaluation** (does not admit (O) as true).
-- A1 and A2 currently intractable to close for strong-(N); Experimental Generation E1–E5 all REJECT.
+- A minimal comparison set was locked for uniqueness scoring — not “unique in all of physics.”  
+- Bohmian packages add ontology/dynamics beyond unitary Schrödinger ψ-dynamics.  
+- Everett program-level characterization: no new dynamical **law** of collapse/guidance type — weak / program-level only.  
+- Preferred-basis / decoherence and Born-rule recovery remain live expert forks.  
+- Domain locked to ordinary non-relativistic measurement-problem framing.  
 
 ---
 
 ## Not established
 
-- Strong **(N)** — no extra dynamical or epistemic postulates beyond Schrödinger.
-- Uniqueness **(O)**; preferability **(P)** on consistency and simplicity (A3–A4 never entered).
-- Which horn of A1 / A2 is correct; strong (N-all-posits).
-- Original uniqueness + preferability package — not well-constrained.
+- Strong “no extra dynamical or epistemic postulates beyond Schrödinger.”  
+- Uniqueness (“the only interpretation…”) and preferability on consistency/simplicity.  
+- Which way the open forks resolve; the original uniqueness + preferability package as a whole.  
 
 ---
 
 ## Action implications
 
-**Stop saying:** MWI is the only interpretation that preserves full unitarity with no extra dynamical or epistemic postulates; that this therefore makes MWI theoretically preferable; that C₀ locks or Amb ≈ 5.5 clear uniqueness or preferability; that rejected E1–E5 established A1/A2.
+**Stop saying:** Many-Worlds is the only interpretation that preserves full unitarity with no extra postulates; that this therefore makes it theoretically preferable; that locking a comparison set clears uniqueness or preferability.
 
-**Keep saying:** Under C₀, Bohmian packages add structure beyond unitary Schrödinger dynamics; Everett can be characterized at program level as adding no new dynamical law of the collapse/guidance type; preferred-basis and Born-rule recovery remain open forks; preferability agenda A3–A4 was never entered.
+**Keep saying:** In the named comparison set, Bohmian packages add structure beyond unitary Schrödinger dynamics; Everett can be characterized at program level as adding no new collapse/guidance law; preferred-basis and Born-rule recovery remain open; preferability was never fully entered.
 
-**Test next (only if authorized):** Decisive new A1/A2 resources; A3–A4 preferability lock; narrowed successor claim; or further Experimental Generation under new authorization.
+**Test next (only if authorized):** Decisive new resources on the open forks; a preferability lock; a narrowed successor claim; or further experimental generation under new authorization.
+
+---
+
+## For the record (technical)
+
+| Item | Value |
+|------|--------|
+| Method verdict | Provisional — uniqueness + preferability not well-constrained |
+| Amb | ≈ 5.5 |
+| Locks / proxy IDs | C₀ = {Everett/MWI, collapse, Bohmian}; NRQM scope; A1/A2 open |
+| Scope label | C₀-relative only; strong (O)/(N)/(P) not established |
 
 ---
 
@@ -53,4 +65,4 @@ The Many-Worlds Interpretation is the only interpretation of quantum mechanics t
 
 ---
 
-*Mandatory at closeout. Non-technical front door; no silent softening.*
+*Mandatory at closeout. Plain verdict first; method labels secondary. No silent softening.*

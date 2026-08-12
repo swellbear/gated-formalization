@@ -221,9 +221,32 @@ When an application is closed (**Stable Provisional**, **Admissible**, or any ha
 
 Scoped results must remain clearly distinguished from unrestricted support for the original claim. Do **not** treat closeout as silent resolution of the original claim.
 
+## Dual-audience communication (mandatory)
+
+Technical and non-technical readers must both be able to follow the run. Use **dual-layer, plain-first** — not two contradictory products.
+
+**Layer 1 — Plain-language card (required first)** on every operator-facing surface (chat readouts, authorization asks, `STATUS.md`, `EXECUTIVE_BRIEF.md`, lock/CR/QI/CX choice prompts):
+
+1. **What we’re doing**  
+2. **What we need from you** (or “none — informing only”)  
+3. **What a “yes” / this update means**  
+4. **What this does *not* mean**  
+
+No method jargon in layer 1 unless **immediately glossed in the same sentence**. Compressed IDs (`H1+S1+P1`, `PX1`, `L-HP`, Amb scores, verdict labels like “Not admissible”) are **secondary labels** — never the primary sentence a non-technical reader must decode to answer.
+
+**Layer 2 — Technical record (required second):** claim-freeze, Amb, package/layer IDs, artifact paths, method verdict labels.
+
+**Authorization asks** (claim revision, lock selection, stipulated proxy, closeout fork, optional modes): lead with the plain-language card; offer **at most one** clear ordinary-language choice set; put Rank/Amb/IDs in a short **Details** block after. The reader must never need to know what `PX1` or “Not admissible” means before they can answer.
+
+**Templates:** `templates/PLAIN_LANGUAGE_CARD.md`; glossary: `docs/READER_GLOSSARY.md`.
+
+**Chat behavior (when this method is in force):** Same plain-first order in assistant messages. Do not dump worksheet vocabulary as the ask.
+
 ## Operator status line (mandatory every cycle)
 
 Maintain a short **`STATUS.md`** at the top of each application folder (also mirror a one-line pointer at the top of `notes.md`). Update **every** Phase 1 cycle, Phase 2 attempt, lock change, and closeout.
+
+**Plain status (required first):** 2–3 ordinary-language sentences (what’s going on / what’s needed / what this does not mean). Then the technical table.
 
 **Required fields (compact):**
 - **Phase** — Phase 1 / Phase 1 endpoint / Phase 2 Attempt N / closeout / hard stop / optional mode
@@ -284,13 +307,14 @@ When an application is closed (**Stable Provisional**, **Admissible**, hard stop
 
 Also produce **`EXECUTIVE_BRIEF.md`** (≤1 page) using `templates/EXECUTIVE_BRIEF.md`:
 
-1. Claim (compressed)  
-2. Established (bullets)  
-3. Not established (bullets)  
+1. **Claim** (ordinary language)  
+2. **Plain verdict** (what held / what failed — no jargon-first line)  
+3. Established / Not established (bullets)  
 4. Action implications (stop / keep / test next)  
-5. Link to full `DISSERTATION.md`  
+5. **For the record** — method verdict label, Amb, locks/proxy IDs (secondary)  
+6. Link to full `DISSERTATION.md` + glossary pointer (`docs/READER_GLOSSARY.md`)  
 
-Non-technical readers use the brief; the dissertation remains the audit trail.
+Non-technical readers use the brief cold; the dissertation remains the audit trail. Do **not** put Amb / package codes / “Stable Provisional” in the opening verdict sentence unless glossed.
 
 If records are too thin to complete a faithful dissertation, write a short `DISSERTATION.md` that states **incomplete for lack of records** and lists what is missing — do not invent layers. Still produce a brief that flags incomplete records.
 

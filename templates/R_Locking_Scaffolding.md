@@ -65,7 +65,14 @@
 
 ## 6. Choice prompt
 
-Pick **one** package by name, **or** list à-la-carte option IDs.
+**Plain-language card (fill before the code block):**
+
+- **What we’re doing:** Choosing how to fix meanings so the next tests are fair and clear.  
+- **What we need from you:** Pick **one** package (or list à-la-carte options).  
+- **What a “yes” means:** We freeze those definitions and only then check evidence under them.  
+- **What this does *not* mean:** Picking a package does **not** prove the original claim; it only sets the grading rules. (Lower ambiguity after a lock ≠ clearance.)
+
+Pick **one** package by **ordinary name**, **or** list à-la-carte option IDs.
 
 ```
 Package: ________
@@ -78,6 +85,8 @@ OR-slots (required if any alternatives remain):
   - [ ] Pick single: ____
   - [ ] Formally accept either: { ____ , ____ }
 ```
+
+**Details (secondary):** package IDs / option codes as listed above.
 
 **Dependents may re-open only after selection + OR-slot resolution/acceptance.**
 

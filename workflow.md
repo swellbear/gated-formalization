@@ -6,13 +6,14 @@ Use this checklist for every new claim, theory fragment, or argument you run thr
 Do not treat this file as a second full copy of the standing rule — checklist + pointers only.
 
 **Quick map:** Phase 1 → Phase 2 → optional Experimental Generation → closeout (**`DISSERTATION.md` + Layer 2 `Thesis_Tracker.md` + update Layer 1 portfolio + Layer 3 residual queue**) → optional Claim-Revision / QI / Contrastive Recommendation.  
-Also in force: locking-scaffolding; Amb ≠ clearance; accuracy-first Phase 2; conflicted-source; already-included legs (scenario **and** numerical bars); soft-modal fork; Tracking Layers 1–3; thin-record recovery; imported-pattern stamp; quarterly `park-90d` review.  
-**Cons / Amb / redefinition** primary. **Low Amb ≠ claim cleared.**
+Also in force: locking-scaffolding; Amb ≠ clearance; accuracy-first Phase 2; conflicted-source; already-included legs (scenario **and** numerical bars); soft-modal fork; Tracking Layers 1–3; thin-record recovery; imported-pattern stamp; quarterly `park-90d` review; **dual-audience plain-first**.  
+**Cons / Amb / redefinition** primary. **Low Amb ≠ claim cleared.**  
+**Glossary:** `docs/READER_GLOSSARY.md`
 
 ## 1. Setup
 - [ ] Create folder `applications/YYYY-MM_short-name/`
-- [ ] Copy templates as needed (+ `STATUS`, `EXECUTIVE_BRIEF`, `E_Quantitative_Evidence_Rubric`, dissertation, thesis tracker, `IMPORTED_PATTERN_STAMP`, `THIN_RECORD_RECOVERY` if needed, …)
-- [ ] Create `STATUS.md` (“where am I?”) and keep it updated every cycle (includes **closeout checklist**)
+- [ ] Copy templates as needed (+ `STATUS`, `EXECUTIVE_BRIEF`, `PLAIN_LANGUAGE_CARD`, `E_Quantitative_Evidence_Rubric`, dissertation, thesis tracker, `IMPORTED_PATTERN_STAMP`, `THIN_RECORD_RECOVERY` if needed, …)
+- [ ] Create `STATUS.md` with **Plain status** first, then technical table; update every cycle (includes **closeout checklist**)
 - [ ] Note the date and a short description of the source material
 
 ## 2. Anchors & Claim-Type Pre-Classification
@@ -27,7 +28,8 @@ Also in force: locking-scaffolding; Amb ≠ clearance; accuracy-first Phase 2; c
 - [ ] Fill `02_Gate_Scoring_Sheet.md` (Cons/Amb primary; Agree/Prod secondary — crisp needle rules)
 - [ ] Higher-level review
 - [ ] Verdict + reliability estimate
-- [ ] Readout; if continuation criteria hold, proceed to gap ranking / Cycle 1
+- [ ] Readout **plain-first** (`PLAIN_LANGUAGE_CARD` beats); technical IDs second
+- [ ] If continuation criteria hold, proceed to gap ranking / Cycle 1
 
 ## 4. If Amb High or Provisional / Not Admissible
 - [ ] Fill `03_Gap_Extraction_and_Ranking.md` (include claim-freeze lines)
@@ -56,9 +58,14 @@ Also in force: locking-scaffolding; Amb ≠ clearance; accuracy-first Phase 2; c
 ## 7b. Experimental Generation (only if batch-authorized)
 - [ ] Follow canonical Experimental Generation Mode in `.mdc` (≤3 default; separation; audit; red-team; Amb-net; near-miss)
 
+## Authorization asks (any phase)
+- [ ] Lead with **plain-language card** (doing / need from you / yes means / does not mean)
+- [ ] One ordinary-language choice set; Rank/Amb/IDs only in a **Details** block after
+- [ ] Never require the reader to decode `PX1` / “Not admissible” / package codes before they can answer
+
 ## 8. Close the Run
 - [ ] Fill `05_Original_Claim_Assessment.md` (status + **Amb ≠ clearance** + locked-bar status + continuation options + **revision vs continuation fork** when required)
-- [ ] Produce **`DISSERTATION.md`** and **`EXECUTIVE_BRIEF.md`** (brief = default share artifact)
+- [ ] Produce **`DISSERTATION.md`** and **`EXECUTIVE_BRIEF.md`** (brief = default share; **plain verdict first**, method labels in **For the record**)
 - [ ] Produce / normalize **Layer 2** `Thesis_Tracker.md` (tags + related apps + residual dispositions)
 - [ ] Update **Layer 1** portfolio; refresh **Layer 3** queue (**pursue / park-90d / park-until-trigger / drop**)
 - [ ] Update `TRACKER_PATTERN_MAP.md` if new pattern; if pattern now in ≥3 apps → `logs/calibration_log.md`
@@ -103,7 +110,9 @@ Also in force: locking-scaffolding; Amb ≠ clearance; accuracy-first Phase 2; c
 
 ## Reminders
 - Canonical detail lives only in `.cursor/rules/applications-gated-method.mdc`.
+- **Dual-audience plain-first** on every ask and share artifact; glossary in `docs/READER_GLOSSARY.md`.
 - Compact no-admit is mandatory for no-change cycles.
+
 - Package OR-slots must be singled or formally “either”-accepted before dependents proceed.
 - Locking-scaffolding must open with plain-language framing and include an objective claim-deviation assessment (fixed dimensions/labels) for every package.
 - If **no Minimal-deviation package** exists, run **forced-deviation extraction**: name the claim terms that force deviation; carry them as first-class agenda/freeze items and into the Original-Claim Assessment (non-derivative testing impossible — property of claim text, not mere missing data).

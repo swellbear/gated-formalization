@@ -1,52 +1,68 @@
 # Executive Brief (≤1 page)
 
-**Default share artifact.** Full audit trail: `DISSERTATION.md`.
+**Default share artifact.** Full audit trail: `DISSERTATION.md`.  
+**Glossary:** [`docs/READER_GLOSSARY.md`](../../docs/READER_GLOSSARY.md)
 
 **Application:** `2026-08_conscience-sketch`  
 **Date:** 2026-08-12  
-**Verdict:** Incomplete record — Admissible but provisional  
-**Amb:** not recorded  
 
 ---
 
 ## Incomplete-record flag
 
-**Record is incomplete.** Worksheets `01`–`05`, Material Admission Checks, gate sheets, admitted-layers register, named four-anchor list, and formal closeout package were **not recovered**. Verbatim original claim line is **missing**. Findings below are from archival `final_verdict.md` + reconstructed `DISSERTATION.md` only — do not invent layers or Amb numbers.
+**This file’s audit trail is incomplete.** Original worksheets, named anchors, and the exact claim line were not recovered. What follows comes from an archival verdict plus a reconstructed dissertation — do not invent missing layers or Amb numbers.
 
 ---
 
 ## Claim
 
-**Not preserved** as a single quoted claim line. Source described as: informal metaphors of conscience → computational sketch (Complete Thesis §6; Operational Upgrade calibration). Metaphors noted in verdict: recursive loop, innate seed, partial privacy/writability, relational growth.
+**Exact original wording was not preserved.** Source described as informal “conscience” metaphors turned into a computational sketch (recursive loop, innate seed, partial privacy/writability, relational growth).
+
+---
+
+## Plain verdict
+
+The sketch was treated as **provisionally acceptable** under modest developmental anchors and a three-part innate seed (harm, fairness, social sensitivity) — with leftover ambiguity still binding. Remaining free pieces (how the functions work, how self-relationship evolves, how innate seed vs experience is weighted) are **open**. Further unconstrained expansion is **blocked** until those are constrained. Recover records before elevating.
 
 ---
 
 ## Established
 
-*(Archival verdict narrative only — no formal layer IDs.)*
+*(Archival narrative only — no formal layer IDs.)*
 
-- Computational sketch consistent with locked modest developmental anchors.
-- Innate seed `G` as minimal three-component structure: harm, fairness, social sensitivity (controlled tightening).
-- Cons high; Agree moderately high; Prod passes (more specific checkable expectations) — gate re-score narrative only.
-- One controlled improvement (`G` tightening) permitted; further unconstrained expansion correctly blocked.
+- Computational sketch consistent with locked modest developmental anchors.  
+- Innate seed as a minimal three-component structure: harm, fairness, social sensitivity.  
+- Gate narrative: consistency high; agreement moderately high; productivity passes.  
+- One controlled improvement (tightening the seed) permitted; further unconstrained expansion blocked.  
 
 ---
 
 ## Not established
 
-- Functional forms of `f` and `Pi`; dynamics of self-relationship `R`; weighting of `G` vs relational input `E` — **open**.
-- Further unconstrained expansion of the sketch — **blocked** until Amb further constrained.
-- Exact original claim wording; Amb numeric path; named admitted-layer IDs; named four-anchor list — **missing from records**.
+- Functional forms of the sketch’s free pieces; dynamics of self-relationship; weighting of innate seed vs relational input.  
+- Further unconstrained expansion of the sketch.  
+- Exact original claim wording; Amb path; named admitted-layer IDs; named four-anchor list — **missing from records**.  
 
 ---
 
 ## Action implications
 
-**Stop saying:** That the sketch is fully cleared or that remaining free parameters (`f`, `Pi`, `R`, `G` vs `E`) are settled; do not expand unconstrained beyond the locked anchors and tightened `G`.
+**Stop saying:** The sketch is fully cleared or that remaining free pieces are settled; do not expand unconstrained beyond the locked anchors and tightened seed.
 
-**Keep saying:** Admissible but provisional under modest developmental anchors and three-component `G` (harm, fairness, social sensitivity); Amb still binding; further expansion blocked until free parameters are constrained. Record is incomplete.
+**Keep saying:** Provisionally acceptable under modest developmental anchors and three-component seed (harm, fairness, social sensitivity); leftover ambiguity still binding; further expansion blocked until free pieces are constrained. Record is incomplete.
 
-**Test next (only if authorized):** Recover or backfill worksheets, verbatim sketch statement, and named anchors; then authorize constrained passes on `f`, `Pi`, `R`, and `G` vs `E` weighting.
+**Test next (only if authorized):** Recover or backfill worksheets, verbatim sketch, and named anchors; then authorize constrained passes on the open free pieces.
+
+---
+
+## For the record (technical)
+
+| Item | Value |
+|------|--------|
+| Method verdict | Incomplete record — Admissible but provisional (archival) |
+| Amb | not recorded (binding per verdict) |
+| Locks / proxy IDs | none named in-repo; G → {harm, fairness, social sensitivity}; thin-record recovery open |
+| Scope label | Archival narrative only |
 
 ---
 
@@ -56,4 +72,4 @@
 
 ---
 
-*Mandatory at closeout. Non-technical front door; no silent softening.*
+*Mandatory at closeout. Plain verdict first; method labels secondary. No silent softening.*

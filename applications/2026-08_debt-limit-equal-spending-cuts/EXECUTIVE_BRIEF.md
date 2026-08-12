@@ -1,46 +1,61 @@
 # Executive Brief (≤1 page)
 
-**Default share artifact.** Full audit trail: `DISSERTATION.md`.
+**Default share artifact.** Full audit trail: `DISSERTATION.md`.  
+**Glossary:** [`docs/READER_GLOSSARY.md`](../../docs/READER_GLOSSARY.md)
 
 **Application:** `2026-08_debt-limit-equal-spending-cuts`  
 **Date:** 2026-08-12  
-**Verdict:** Stable Provisional — original claim not well-constrained (hard-closed)  
-**Amb:** ≈ 4  
 
 ---
 
 ## Claim
 
-“Any increase or suspension of the federal debt limit must be accompanied by equal spending cuts over the following decade. Without that balance, debt-limit increases are fiscally irresponsible and should not be enacted.”
+Any time Congress raises or suspends the federal debt limit, that move must come with “equal” spending cuts over the next decade — otherwise the raise is fiscally irresponsible and should not be enacted.
+
+---
+
+## Plain verdict
+
+The strong slogan **does not hold as stated**. Raising the debt limit is not the same as passing new spending, and words like “equal,” “spending cuts,” and “fiscally irresponsible” stay too vague without clear definitions. Under one agreed scoring package, a balance *test* can be well-posed — but that does **not** prove Congress must always pair raises with equal cuts, or that unpaired raises are unrestrictedly irresponsible. A clearer successor claim was opened in a separate application; it does **not** quietly fix this parent claim.
 
 ---
 
 ## Established
 
-- Debt-limit increase/suspension ≠ new spending appropriation; pairing is procedural/political.
-- “Equal,” “spending cuts,” and “fiscally irresponsible” are under-determined without locks.
-- Under **P-Score-Strict+R2 only**: stipulated balance test well-posed; package-scoped “irresponsible-*under-package*” label available — not unrestricted FD4.
-- FRA 2023 / BCA 2011 are historical analogues only, not full lock equality; H.R.10078-as-described shows narrow design overlap only.
-- Rank 1 successor opened separately; parent FD1–FD5 remain on this record.
+- Debt-limit increase/suspension ≠ new spending appropriation; pairing is procedural/political.  
+- “Equal,” “spending cuts,” and “fiscally irresponsible” need locks to be testable.  
+- Under one locked scoring package only: a stipulated balance test is well-posed; a package-scoped “irresponsible-*under-package*” label is available — not the unrestricted slogan.  
+- Historical analogues (FRA 2023 / BCA 2011) and H.R.10078-as-described are kinship/history only, not proof of the full slogan.  
+- Parent forced-deviation terms (must / equal / irresponsible / should-not) remain on this record.  
 
 ---
 
 ## Not established
 
-- Unrestricted “must be accompanied,” bare “equal” / “spending cuts,” unrestricted “fiscally irresponsible,” and “should not be enacted” (FD1–FD5).
-- Empirical **C ≥ H** under the lock for a named public action — open / intractable here.
-- Preferability of enacting H.R.10078; unrestricted original package as a whole.
-- Successor findings do not silently resolve this parent claim.
+- Unrestricted “must be accompanied,” bare “equal” / “spending cuts,” unrestricted “fiscally irresponsible,” and “should not be enacted.”  
+- A public example where measured cuts clearly met headroom under the lock.  
+- That enacting H.R.10078 (or the Rank 1 successor) salvages this parent claim.  
 
 ---
 
 ## Action implications
 
-**Stop saying:** That debt-limit increases/suspensions **must** come with “equal spending cuts”; that unpaired limit action is unrestrictedly “fiscally irresponsible”; that such measures **should not be enacted** as forced by the admitted layers; that FRA/BCA or H.R.10078 prove the slogan; that the Rank 1 successor salvages this parent.
+**Stop saying:** Debt-limit raises **must** come with equal spending cuts; unpaired raises are unrestrictedly “fiscally irresponsible” / “should not be enacted”; history or a bill draft proves the slogan; the successor quietly clears the parent.
 
-**Keep saying:** Raising/suspending the debt limit is financing permission, not a new spending appropriation. Under P-Score-Strict+R2 only, a stipulated balance test is well-posed without clearing FD1–FD5. No public instance cleared C ≥ H under the lock here. Original claim remains not well-constrained (Stable Provisional).
+**Keep saying:** Raising/suspending the debt limit is financing permission, not a new appropriation. Under the locked scoring package only, a stipulated balance test is well-posed without clearing the strong slogan terms. No public instance cleared the balance bar here.
 
-**Test next (only if authorized):** Specialized matched C and H for a named action under P-Score-Strict+R2; alternate package; or further Claim-Revision — else leave closed.
+**Test next (only if authorized):** Matched cuts vs headroom for a named action under the same package; alternate package; or further claim revision — else leave closed.
+
+---
+
+## For the record (technical)
+
+| Item | Value |
+|------|--------|
+| Method verdict | Stable Provisional — original not well-constrained (hard-closed) |
+| Amb | ≈ 4 |
+| Locks / proxy IDs | P-Score-Strict+R2 (Moderate deviation); FD1–FD5 on record; Rank 1 successor separate |
+| Scope label | Package-scoped well-posedness only; unrestricted slogan fail |
 
 ---
 
@@ -50,4 +65,4 @@
 
 ---
 
-*Mandatory at closeout. Non-technical front door; no silent softening.*
+*Mandatory at closeout. Plain verdict first; method labels secondary. No silent softening.*

@@ -4,6 +4,13 @@
 
 **Application:** `2026-08_debt-limit-equal-spending-cuts`  
 **Updated:** 2026-08-12  
+**Glossary:** `docs/READER_GLOSSARY.md`
+
+### Plain status
+
+This run is **closed**. The strong “must pair debt-limit raises with equal cuts or it’s irresponsible / shouldn’t pass” slogan **does not hold as stated**. A clearer successor lives in a separate folder; it does **not** silently fix this parent. No further work unless newly authorized.
+
+---
 
 | Field | Value |
 |-------|--------|
