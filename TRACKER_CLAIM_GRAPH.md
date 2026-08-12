@@ -2,7 +2,7 @@
 
 **Date:** 2026-08-12  
 **Scope:** portfolio-wide (engineering batch + cash-privacy cross-domain probe)  
-**Maintainer note:** Numerical-standard-plus-should cluster added (LOCK-005–008; APP-EFUND; APP-NPS). APP-SIM = sell-in-may/scorekept source kinship (not a new node).
+**Maintainer note:** Three claim-shape lock clusters Active (001–004 uniqueness+preferability; 005–008 numerical+should; 009–011 forecast-extension). Synthetic twin scaling saturating — prefer real-claim intake next.
 
 *Optional overview. Individual worksheets remain the source of truth.*
 
@@ -26,6 +26,10 @@
 | APP-BRIDGE | Application | `2026-08_bridge-rating-should-close` | Stable Provisional; Amb ≈ 7; FD 1 (NS cross-domain) |
 | APP-HEAT | Application | `2026-08_heatwave-next-summer-should-prepare` | Stable Provisional; Amb ≈ 7; FD 1 |
 | APP-HOL | Application | `2026-08_holiday-sales-up-should-hire` | Stable Provisional; Amb ≈ 7; FD 1 |
+| LOCK-2026-08-001 | Lock | Comparison class before uniqueness (O) | Active |
+| LOCK-2026-08-002 | Lock | Preferability needs named virtues/metrics | Active |
+| LOCK-2026-08-003 | Lock | Amb drop / scope lock ≠ clearance | Active |
+| LOCK-2026-08-004 | Lock | Hybrid/spectrum FD on “alone” | Active (broadened) |
 | LOCK-2026-08-005 | Lock | Numerical bar freeze (C/H/legs) | Active |
 | LOCK-2026-08-006 | Lock | Should not entailed by bar alone | Active |
 | LOCK-2026-08-007 | Lock | Descriptive/bar ≠ elevation clearance | Active |
