@@ -1,13 +1,13 @@
 # Tracker Residual Queue (Layer 3)
 
-**Last refreshed:** 2026-08-12 (bridge NS probe; forecast-extension LOCK-009–011 + heatwave/holiday)  
+**Last refreshed:** 2026-08-12 (CoreWeave hard stop sealed)  
 **Last park-90d quarterly review:** none yet (next due ~2026-11-12)  
 **Disposition vocabulary:** `pursue` | `park-90d` | `park-until-trigger` | `drop`  
 Only **pursue** items stay in active bands. Parked/dropped listed below.
 
 **Cadence:** About once per quarter, review **`park-90d` only**.
 
-**Note:** Numerical+should transfer validated (incl. infrastructure). Forecast-extension locks 009–011 harvested; two thin siblings hard-stopped (early pause).
+**Note:** CoreWeave **hard stop sealed**; A-ATTR established; N-INSTANCE + M-SCOPE-COLOR supported; full F-LIFE fails C_SCOPE; R-2ND-S / R-REV / R-TX-UPGRADE parked.
 
 
 
@@ -63,6 +63,8 @@ Only **pursue** items stay in active bands. Parked/dropped listed below.
 | **R-PROB** · heatwave | Lock “likely” bar | Operator locks probability bar | **park-until-trigger** | |
 | **R-V** · holiday-sales | Lock should-hire criteria | Operator locks V | **park-until-trigger** | |
 | **R-PROB** · holiday-sales | Lock “will be up” bar | Operator locks bar | **park-until-trigger** | |
+| **R-2ND-S** · coreweave-gpu | Second named-gen hard S or fleet metric | New disclosure meeting C_SCOPE | **park-until-trigger** | Toward full F-LIFE |
+| **R-TX-UPGRADE** · coreweave-gpu | Official CNBC/CC PDF to replace caption L7 | Higher-grade transcript | **park-until-trigger** | Optional hygiene |
 
 ---
 
@@ -82,6 +84,7 @@ Only **pursue** items stay in active bands. Parked/dropped listed below.
 | **R-REV** · bridge-rating | Narrow to descriptive rating metric | ~2026-11-12 | **park-90d** | |
 | **R-REV** · heatwave | Narrow to descriptive seasonal risk | ~2026-11-12 | **park-90d** | |
 | **R-REV** · holiday-sales | Narrow to descriptive seasonality | ~2026-11-12 | **park-90d** | |
+| **R-REV** · coreweave-gpu | Narrow to attribution-only claim | ~2026-11-12 | **park-90d** | Real-claim intake |
 
 ---
 
@@ -89,6 +92,11 @@ Only **pursue** items stay in active bands. Parked/dropped listed below.
 
 | Residual ID + app | Why dropped | Disposition |
 |-------------------|-------------|-------------|
+| **R-TRANSCRIPT** · coreweave-gpu | Executed 2026-08-12 → L7 caption-grade verbatim; ≠ F-LIFE clearance | **drop** |
+| **R-SCOPE** · coreweave-gpu | Executed 2026-08-12 → L6 C_SCOPE bar + M-SCOPE-COLOR; full F-LIFE still fails bar | **drop** |
+| **R-EVID-S** · coreweave-gpu | Executed 2026-08-12 → L5 N-INSTANCE (A100 S met); ≠ fleet F-LIFE | **drop** |
+| **R-WINDOW** · coreweave-gpu | Executed 2026-08-12 → L4 W→2029-12-31 + S; Amb drop ≠ fleet F-LIFE clearance | **drop** |
+| **R-BASELINE** · coreweave-gpu | Executed 2026-08-12 → L3 B₀ ≤ 4y; Amb drop ≠ F-LIFE clearance | **drop** |
 | **G4*** · sell-in-may | Pre-tax Sharpe already fails; Attempt 2 unlikely flip | **drop** |
 | **G5* / G6*** · sell-in-may | Tracks failed elevation; hard-stopped | **drop** |
 | **REFINE** · sell-in-may | Polish only; not expected to reverse G4* | **drop** |

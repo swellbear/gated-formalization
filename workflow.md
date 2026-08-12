@@ -5,8 +5,8 @@ Use this checklist for every new claim, theory fragment, or argument you run thr
 **Canonical method (full rules):** `.cursor/rules/applications-gated-method.mdc`  
 Do not treat this file as a second full copy of the standing rule — checklist + pointers only.
 
-**Quick map:** Phase 1 → Phase 2 → optional Experimental Generation → closeout (**`DISSERTATION.md` + Layer 2 `Thesis_Tracker.md` + update Layer 1 portfolio + Layer 3 residual queue**) → optional Claim-Revision / QI / Contrastive Recommendation.  
-Also in force: locking-scaffolding; Amb ≠ clearance; accuracy-first Phase 2; conflicted-source; already-included legs; soft-modal fork; Tracking Layers 1–3; thin-record recovery; imported-pattern stamp; quarterly `park-90d` review; **dual-audience plain-first**; **Use-Exploration**; **Residual-branch offering**; **Share pack**; **endpoint vs hard stop**; **Live vs stand-in** badge; **operator reply grammar**; **Training Ladder** (`templates/TRAINING_LADDER.md`).  
+**Quick map:** Phase 1 → Phase 2 → optional Experimental Generation → closeout (**`DISSERTATION.md` + Layer 2 `Thesis_Tracker.md` + update Layer 1 portfolio + Layer 3 residual queue**) → **offer** optional Claim-Revision / QI / Contrastive Recommendation / Use-Exploration (**offering ≠ running**).  
+Also in force: locking-scaffolding; Amb ≠ clearance; accuracy-first Phase 2; conflicted-source; already-included legs; soft-modal fork; Tracking Layers 1–3; thin-record recovery; imported-pattern stamp; quarterly `park-90d` review; **dual-audience plain-first**; **Use-Exploration**; **Residual-branch offering**; **Optional-mode offering**; **Share pack**; **endpoint vs hard stop**; **Live vs stand-in** badge; **operator reply grammar**; **Training Ladder** (`templates/TRAINING_LADDER.md`).  
 **Cons / Amb / redefinition** primary. **Low Amb ≠ claim cleared.**  
 **Glossary:** `docs/READER_GLOSSARY.md`
 
@@ -128,10 +128,21 @@ Also in force: locking-scaffolding; Amb ≠ clearance; accuracy-first Phase 2; c
 
 ## 8g. Residual-branch offering (mandatory at closeout when residuals remain)
 - [ ] Classify each residual: empirically resolvable / definition-blocked / normative-preference / parked
-- [ ] Produce `RESIDUAL_BRANCH_MENU.md` (or explicit “no empirically resolvable residuals”)
-- [ ] Plain-language menu for empirically resolvable only; definition-blocked = lock first; normative = not branchable
+- [ ] Produce `RESIDUAL_BRANCH_MENU.md` with **clickable index + anchored cards** (or explicit “no empirically resolvable residuals”)
+- [ ] Each card: what it is · why here · what authorizing does · success/failure · what it does *not* · effort · disposition · authorize one-liner
+- [ ] Link residual IDs from STATUS / EXECUTIVE_BRIEF / SHARE_PACK / Thesis_Tracker to `#r-…` anchors
+- [ ] Keep executed residuals carded (audit trail), not ID-only tables
 - [ ] Document in STATUS, closeout, tracker, brief one-liner
 - [ ] **No automatic branch** — await operator authorization; parent closeout intact
+
+## 8h. Optional-mode offering (mandatory at endpoint / hard-stop closeout)
+- [ ] Produce `OPTIONAL_MODES_MENU.md` (template: `templates/OPTIONAL_MODES_MENU.md`)
+- [ ] Triage **UX / CX / CR / QI** each as **Offer** or **N/A** with one-line why (do not omit applicable modes)
+- [ ] Clickable cards + reply grammar: `run UX` / `decline UX` · `run CX` / `decline CX` · `run CR` / `decline CR` · `run QI` / `decline QI`
+- [ ] Link from STATUS / EXECUTIVE_BRIEF / SHARE_PACK / Thesis_Tracker
+- [ ] Heuristics: UX almost always Offer; CX when core established + elevation failed; CR when revise-vs-keep / cleaner successor; QI only after failed numerical instance
+- [ ] **Offering ≠ running** — do not auto-run; residual menu alone is **not** a substitute
+- [ ] If UX/CX/CR/QI later authorized, document exhibits per mode templates
 
 ## Reminders
 - Canonical detail lives only in `.cursor/rules/applications-gated-method.mdc`.
@@ -158,7 +169,8 @@ Also in force: locking-scaffolding; Amb ≠ clearance; accuracy-first Phase 2; c
 - Quantitative Implication & Counterfactual Benefit is authorization-gated after a failed numerical instance test; implications/counterfactuals ≠ proof of the claim.
 - Contrastive Recommendation is authorization-gated after an established core + failed elevation; proposes different better-fitting claims, not a silent rewrite.
 - **Use-Exploration** is authorization-gated after results exist; explores possible *uses* of findings guided by claim intent — **not** advice/forecasts and **not** a verdict change.
-- **Residual-branch offering** is mandatory at closeout when residuals remain; offering ≠ running; no auto Phase 2.
+- **Residual-branch offering** is mandatory at closeout when residuals remain; **clickable cards** required; offering ≠ running; no auto Phase 2.
+- **Optional-mode offering** is mandatory at endpoint/hard-stop closeout: offer applicable **UX / CX / CR / QI** (mark N/A explicitly); clickable cards + reply one-liners; offering ≠ running; residual menu alone is not sufficient.
 - **Share pack** mandatory for sharing closure; **endpoint ≠ hard stop**.
 - Prefer operator reply grammar one-liners; show them in authorization asks.
 - **Live vs stand-in** badge on brief/share pack when prints/proxies used.

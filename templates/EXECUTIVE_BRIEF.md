@@ -59,9 +59,19 @@
 
 ---
 
-## Use-Exploration (only if authorized)
+## Optional modes (offer ≠ run)
 
-*(One line + link, or none.)*
+*(Link `OPTIONAL_MODES_MENU.md`. Show which of UX/CX/CR/QI are **Offered** vs **N/A**. Include reply one-liners.)*
+
+**Reply:** `run UX` / `decline UX` · `run CX` / `decline CX` · `run CR` / `decline CR` · `run QI` / `decline QI` · `decline optional modes`
+
+
+
+---
+
+## Use-Exploration exhibit (only if authorized and run)
+
+*(One line + link, or `offered — not run`.)*
 
 
 
@@ -80,7 +90,7 @@
 
 ## Full write-up
 
-→ [`SHARE_PACK.md`](SHARE_PACK.md) · [`DISSERTATION.md`](DISSERTATION.md)
+→ [`SHARE_PACK.md`](SHARE_PACK.md) · [`DISSERTATION.md`](DISSERTATION.md) · [`OPTIONAL_MODES_MENU.md`](OPTIONAL_MODES_MENU.md)
 
 ---
 

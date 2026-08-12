@@ -65,6 +65,54 @@ When the **same pattern tag** appears in **≥ 3 closed applications**, record a
 - **Rationale:** Infrastructure NS probe clean; forecast locks transfer on two domains; synthetic claim-shape scaling saturating across three shapes.
 - **Change made:** `logs/2026-08-C6_NS_Probe_and_Forecast_Cluster.md`; locks 009–011
 
+### 2026-08-12 | real-claim intake `forecast-extension` (CoreWeave CNBC)
+- **Apps:** `2026-08_coreweave-ceo-gpu-longer-life` (live markets; imports LOCK-003, 009–011)
+- **Decision:** **keep** LOCK-009–011 on live commentary; **keep** attribution/forecast split; **keep** Amb weights
+- **Rationale:** Soft-modal “going to / longer than anticipated” + useful-life metric + anticipation baseline behaved as forecast locks predict. CNBC-framed attribution can be scoped without clearing F-LIFE. No new FP shape; contract anecdote ≠ forward clearance (LOCK-011).
+- **Change made:** app closeout; portfolio / residual queue / claim-graph `APP-CRWV`; no Amb math or new lock
+
+### 2026-08-12 | CoreWeave `R-BASELINE` residual
+- **Apps:** `2026-08_coreweave-ceo-gpu-longer-life`
+- **Decision:** **keep** Amb≠clearance after baseline freeze; **keep** Amb weights; no new lock
+- **Rationale:** Naming B₀ ≤ 4y (pre-2023 CRWV + short-obsolescence contrast; book 6y ≠ B₀) dropped Amb ~2 and made F-LIFE scoreable without establishing it. Confirms LOCK-010 on live residual reopen.
+- **Change made:** L3 admission `04c`; re-score `02c`; residual queue R-BASELINE → drop (executed)
+
+### 2026-08-12 | CoreWeave `R-WINDOW` residual
+- **Apps:** `2026-08_coreweave-ceo-gpu-longer-life`
+- **Decision:** **keep** LOCK-009 discipline; **keep** Amb≠clearance; no new lock
+- **Rationale:** W through 2029-12-31 + S (attractive contract past B₀ for named older gen) completed soft-modal scoreability. One-SKU S explicitly ≠ fleet clearance (LOCK-011). Amb ≈ 3–3.5; still Stable Provisional.
+- **Change made:** L4 `04d`; re-score `02d`; R-WINDOW → drop (executed); R-SCOPE / R-EVID-S parked
+
+### 2026-08-12 | CoreWeave `R-EVID-S` residual
+- **Apps:** `2026-08_coreweave-ceo-gpu-longer-life`
+- **Decision:** **keep** LOCK-011 (history/contract ≠ full elevation); **keep** Amb≠clearance; split verdict mandatory
+- **Rationale:** Q2 FY2026 management statements meet S for A100-class (N-INSTANCE supported). Fleet F-LIFE remains uncleared. Confirms evidence can clear a *narrow* criterion without slogan clearance.
+- **Change made:** L5 `04e`; re-score `02e`; R-EVID-S → drop (executed)
+
+### 2026-08-12 | CoreWeave `R-SCOPE` residual
+- **Apps:** `2026-08_coreweave-ceo-gpu-longer-life`
+- **Decision:** **keep** LOCK-011; lock C_SCOPE (≥2 named S or fleet metric); admit M-SCOPE-COLOR only as descriptive
+- **Rationale:** Prior-gen sold-out/pricing color supported; does not equal second hard S. Full F-LIFE fails C_SCOPE. Prevents soft multi-gen color from clearing the slogan.
+- **Change made:** L6 `04f`; re-score `02f`; R-SCOPE → drop; R-2ND-S parked
+
+### 2026-08-12 | CoreWeave `R-TRANSCRIPT` residual
+- **Apps:** `2026-08_coreweave-ceo-gpu-longer-life`
+- **Decision:** **keep** Amb≠clearance; upgrade A-ATTR only; no forecast clearance from speech act
+- **Rationale:** Media caption of Squawk yields near-verbatim “longer useful life than anyone anticipated.” Attribution established at caption grade; saying ≠ proving under C_SCOPE.
+- **Change made:** L7 `04g`; re-score `02g`; R-TRANSCRIPT → drop; R-TX-UPGRADE parked
+
+### 2026-08-12 | CoreWeave hard stop sealed
+- **Apps:** `2026-08_coreweave-ceo-gpu-longer-life`
+- **Decision:** **seal hard stop**; leave R-REV / R-2ND-S / R-TX-UPGRADE parked; no further auto work
+- **Rationale:** Examination complete; hygiene + share pack + clickable residual cards done. Offering stands; running does not.
+- **Change made:** STATUS checklist complete; SHARE_PACK / brief / final_verdict sealed; pattern map + portfolio/queue refreshed
+
+### 2026-08-12 | Optional-mode offering (standing + CoreWeave example)
+- **Apps / docs:** standing method + `2026-08_coreweave-ceo-gpu-longer-life`
+- **Decision:** **Accept** mandatory optional-mode **offer** at endpoint/hard-stop closeout (UX/CX/CR/QI triage); offering ≠ running; residual menu alone insufficient
+- **Rationale:** Operators otherwise may not know UX/CX/CR exist. Heuristics: UX almost always; CX when core+failed elevation; CR when revise-vs-keep; QI only after failed numerical instance.
+- **Change made:** `templates/OPTIONAL_MODES_MENU.md`; method § optional-mode offering; workflow §8h; STATUS/SHARE_PACK/EXECUTIVE_BRIEF templates; CoreWeave instance offer (UX/CX/CR; QI N/A)
+
 ---
 
 *Standing rule: Calibration log → method change.*

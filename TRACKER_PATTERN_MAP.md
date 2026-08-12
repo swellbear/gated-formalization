@@ -11,7 +11,7 @@ Only patterns **evidenced** in current applications. Sparse by design.
 
 **Definition:** No Minimal-deviation lock package; over-strong / under-specified claim terms cannot be tested in non-derivative form.
 
-**Applications:** debt-limit parent · SpaceX · AV E2E · many-worlds · sell-in-May · llm-gwt (sufficiency/scale as over-strong elevations) · microservices alone/cascading · serverless alone/ops · graphql alone/overfetch · cash alone/privacy · term-limits alone/accountability (FD-ALONE / FD-PREF)
+**Applications:** debt-limit parent · SpaceX · AV E2E · many-worlds · sell-in-May · llm-gwt (sufficiency/scale as over-strong elevations) · microservices alone/cascading · serverless alone/ops · graphql alone/overfetch · cash alone/privacy · term-limits alone/accountability (FD-ALONE / FD-PREF) · **coreweave-ceo-gpu-longer-life** (FD attr/N-INSTANCE/color → fleet F-LIFE smuggle)
 
 **Lesson:** Extract FD terms early; Amb drop from locks ≠ salvage of bare slogan.
 

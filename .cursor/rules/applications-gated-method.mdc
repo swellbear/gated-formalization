@@ -217,6 +217,7 @@ When an application is closed (**Stable Provisional**, **Admissible**, or any ha
      - **Revise claim** — mark a rewritten claim (new or clearly marked revision) that drops unsupported strong language; or
      - **Keep original wording** — retain the original claim text and carry only a research agenda / scoped dependents.
    - Do not leave this fork implicit.
+   - Surface the fork in `OPTIONAL_MODES_MENU.md` via **CR** (and residual `R-REV` if present) with `run CR` / `decline CR` one-liners.
    - If the operator chooses **Revise claim** (or separately authorizes a revision path), run **Claim-Revision Scaffolding** (below) before selecting or starting a successor claim. Do not invent a single revised claim silently.
 
 Scoped results must remain clearly distinguished from unrestricted support for the original claim. Do **not** treat closeout as silent resolution of the original claim.
@@ -252,7 +253,11 @@ Prefer teaching these forms for external operators (natural-language equivalents
 | Decline residual menu | `decline residual menu` |
 | Select a lock package | `lock Rank N` / `lock package …` |
 | Use-Exploration | `run UX` / `decline UX` |
-| Optional modes | `run QI` / `run CX` / `run CR` (when those modes apply) |
+| Contrastive Recommendation | `run CX` / `decline CX` |
+| Claim-Revision | `run CR` / `decline CR` |
+| Quantitative Implication | `run QI` / `decline QI` |
+| Decline all optional modes | `decline optional modes` |
+| Optional modes (legacy shorthand) | `run QI` / `run CX` / `run CR` (when those modes apply) |
 | Close examination only | `endpoint only` |
 | Full hygiene close | `closeout` / `hard stop` |
 
@@ -281,7 +286,7 @@ An app may show **endpoint reached / hard stop pending** without looking “full
 - **Next authorization needed** — one line (or “none — hard stop”)
 - **Related apps surfaced** — ≤2 IDs + reason, or “none”
 
-**Closeout checklist (mandatory in `STATUS.md`):** Before labeling a run **hard-stopped**, check off dissertation, executive brief, **`SHARE_PACK.md`**, Layer 2 tracker, portfolio row, residual dispositions, residual-branch menu (if residuals), pattern map / calibration if needed, and final verdict. **Unchecked applicable items ⇒ not hard-stopped** (may still be at **endpoint**). Template: `templates/STATUS.md`.
+**Closeout checklist (mandatory in `STATUS.md`):** Before labeling a run **hard-stopped**, check off dissertation, executive brief, **`SHARE_PACK.md`**, Layer 2 tracker, portfolio row, residual dispositions, residual-branch menu (if residuals), **optional-modes menu (offer applicable UX/CX/CR/QI — offering ≠ running)**, pattern map / calibration if needed, and final verdict. **Unchecked applicable items ⇒ not hard-stopped** (may still be at **endpoint**). Template: `templates/STATUS.md`.
 
 ### Share pack (mandatory at closeout / for sharing)
 
@@ -292,8 +297,9 @@ Produce **`SHARE_PACK.md`** using `templates/SHARE_PACK.md` (or a fixed top sect
 2. Established / not established  
 3. Stop saying / keep saying  
 4. Residual-branch offer (one line + link)  
-5. Use-Exploration (if any; one line + link)  
-6. Glossary / how-to-read link  
+5. **Optional-modes offer** (UX / CX / CR / QI as applicable — one line + link to `OPTIONAL_MODES_MENU.md`; show reply one-liners; **offering ≠ running**)  
+6. Use-Exploration exhibit link only if UX was **authorized and run** (else point at the offer, not “none”)  
+7. Glossary / how-to-read link  
 
 Then **For the record** (below): Amb, layer IDs, file pointers, parent/successor.  
 
@@ -506,6 +512,29 @@ Core closeout / endpoint verdict must remain clearly separate from the explorati
 
 **Honesty constraint:** Use-Exploration must **not** upgrade not-established items into recommendations, predictions, or “should.” Distinct from Claim-Revision, QI, Contrastive Recommendation, and Experimental Generation.
 
+## Optional-mode offering (mandatory at endpoint / hard-stop closeout)
+
+Residual menus alone are **not** enough. At every **endpoint** or **hard stop**, the method must **offer** (not auto-run) applicable optional modes so the operator can see that the options exist.
+
+1. **Produce** `OPTIONAL_MODES_MENU.md` (template: `templates/OPTIONAL_MODES_MENU.md`) with:
+   - Applicability triage: each of **UX / CX / CR / QI** marked **Offer** or **N/A** with a one-line why  
+   - Clickable index + anchored cards (same hygiene as residual cards)  
+   - Visible reply grammar: `run UX` / `decline UX` · `run CX` / `decline CX` · `run CR` / `decline CR` · `run QI` / `decline QI` · `decline optional modes`
+
+2. **When to Offer (default heuristics):**
+   - **UX** — Offer whenever method results exist at endpoint/closeout (almost always).  
+   - **CX** — Offer when some descriptive/structural **core was established** and a stronger recommendation / uniqueness / “should” / broad elevation was **not** established.  
+   - **CR** — Offer when the revise-vs-keep fork applies (strong language mostly unsupported) **or** a cleaner successor wording would reduce FD-smuggle risk; may coexist with residual `R-REV`.  
+   - **QI** — Offer **only** after a **failed numerical instance** bar (C≥H, Sharpe-after-cost, etc.); otherwise mark **N/A** (do not hide the row — show N/A).
+
+3. **Link** mode IDs from `STATUS.md`, `EXECUTIVE_BRIEF.md`, `SHARE_PACK.md`, and `Thesis_Tracker.md` into the menu anchors.
+
+4. **No automatic run.** Offering ≠ running. Parent closeout stays intact until the operator authorizes a mode.
+
+5. If **all** modes are N/A (rare), still produce the file with explicit N/A triage so the operator sees the check was done.
+
+**Honesty:** Does not change parent verdicts. No advice. Distinct from residual-branch offering (scoped gap reopen vs post-closeout optional tools).
+
 ## Residual-branch offering (mandatory at closeout / hard stop when residuals remain)
 
 Whenever an application **closes** or reaches **Stable Provisional** (or equivalent hard stop) with **open residuals**:
@@ -516,24 +545,26 @@ Whenever an application **closes** or reaches **Stable Provisional** (or equival
    - **Normative / preference** — method will not resolve  
    - **Parked / no near-term path** — drop or park-until-trigger  
 
-2. For **empirically resolvable** residuals, present a plain-language **branch menu**:
-   - Residual ID + one line  
-   - What a branch would do  
-   - What success/failure would change  
-   - Effort (low / medium / high)  
+2. **Clickable cards (mandatory):** For **every** residual ID (open *and* executed in that app):
+   - Index table row linking to an in-file anchor (`#r-…` via `<a id="r-…"></a>`)
+   - Card fields: **What it is** · **Why offered here** (instance-specific) · **What authorizing does** · **What success / failure changes** · **What it does *not* do** · **Effort** · **Disposition** · **How to authorize**
+   - Mentions of residual IDs in `STATUS.md`, `EXECUTIVE_BRIEF.md`, `SHARE_PACK.md`, and `Thesis_Tracker.md` **must link** to those anchors
+   - Do **not** ship ID-only tables without cards — operators need explainers before authorizing
 
-3. **Definition-blocked** → offer only as “lock definitions first, then branch.”  
-4. **Normative / preference** → list as **not branchable by the method**.  
-5. **No automatic branch.** Operator must authorize.  
-6. Authorized branch → marked successor or scoped continuation; **parent closeout stays intact**; link residual ID.
+3. For **empirically resolvable** residuals, the card *is* the plain-language **branch menu** entry (fields above).  
+
+4. **Definition-blocked** → Class on card = lock definitions first, then branch.  
+5. **Normative / preference** → list as **not branchable by the method**.  
+6. **No automatic branch.** Operator must authorize.  
+7. Authorized branch → marked successor or scoped continuation; **parent closeout stays intact**; link residual ID; update the card’s Disposition / decision log.
 
 Template: `templates/RESIDUAL_BRANCH_MENU.md`.  
 
-**Documentation (every time a menu is produced):** `STATUS.md`; Original-Claim Assessment / closeout; `Thesis_Tracker.md` (exhibits); executive brief (one line: menu offered / what was authorized or declined).
+**Documentation (every time a menu is produced):** `STATUS.md`; Original-Claim Assessment / closeout; `Thesis_Tracker.md` (exhibits); executive brief (one line: menu offered / what was authorized or declined) — with **clickable residual links**.
 
 **Honesty:** Offering ≠ running. Does not change parent verdicts. No advice. No auto Phase 2.
 
-If there are **no** empirically resolvable residuals, still produce the file with an explicit **“no empirically resolvable residuals”** note and classify the rest.
+If there are **no** empirically resolvable residuals, still produce the file with an explicit **“no empirically resolvable residuals”** note and classify/card the rest.
 
 ## Application Tracking System (Layers 1–3; mandatory at closeout)
 

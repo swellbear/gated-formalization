@@ -46,19 +46,31 @@ Does **not** replace `DISSERTATION.md` (audit) or change verdicts.
 
 ---
 
-## 5. Use-Exploration
+## 5. Optional-modes offer (mandatory at closeout)
 
-*(One line + link, or `none`.)*
+*(Link `OPTIONAL_MODES_MENU.md`. List Offer vs N/A for UX / CX / CR / QI. Show reply one-liners. **Offering ≠ running.** Residual menu alone is not enough.)*
+
+**Offered:** `run UX` / `run CX` / `run CR` / `run QI` as applicable · `decline optional modes`  
+**N/A:** *(list with one-line why)*  
 
 
 
 ---
 
-## 6. How to read
+## 6. Use-Exploration exhibit
+
+*(Link exhibit **only if UX was authorized and run**; otherwise say `offered — not run` and point to §5.)*
+
+
+
+---
+
+## 7. How to read
 
 - Glossary: [`docs/READER_GLOSSARY.md`](../docs/READER_GLOSSARY.md)  
 - Full narrative: [`DISSERTATION.md`](DISSERTATION.md)  
 - Longer brief: [`EXECUTIVE_BRIEF.md`](EXECUTIVE_BRIEF.md)  
+- Optional modes: [`OPTIONAL_MODES_MENU.md`](OPTIONAL_MODES_MENU.md)  
 
 ---
 

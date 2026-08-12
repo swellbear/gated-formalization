@@ -102,6 +102,8 @@ Populate whenever a run later reveals mis-calibration.
 - `03_Gap_Extraction_and_Ranking.md`
 - `04_Material_Admission_Check.md`
 - `05_Original_Claim_Assessment.md` (closeout)
+- `STATUS.md` · `EXECUTIVE_BRIEF.md` · `SHARE_PACK.md` · `RESIDUAL_BRANCH_MENU.md` (closeout hygiene)
+- `OPTIONAL_MODES_MENU.md` (**mandatory offer** at endpoint/hard-stop closeout — UX/CX/CR/QI triage; offering ≠ running)
 
 **Optional toolbox** (instance-triggered; never mandatory for every run — see §§9–14):
 - `05_Calibration_and_Rule_Diff.md` (learning loop)

@@ -20,8 +20,9 @@
 | **Phase** | Phase 1 / Phase 2 Attempt N / optional mode / … |
 | **Amb** | |
 | **Locks in force** | none / package IDs: |
-| **Next authorization needed** | none — hard stop / `endpoint only` / `hard stop` / … |
+| **Next authorization needed** | none — hard stop / `endpoint only` / `hard stop` / `run UX` / … |
 | **Related apps surfaced** | none / ≤2 IDs + reason: |
+| **Optional modes** | link `OPTIONAL_MODES_MENU.md` (offer ≠ run) / none yet |
 
 **Endpoint** = examination done; verdict frozen. **Hard stop** = endpoint + Layers 1–3 hygiene + share pack complete.
 
@@ -38,16 +39,17 @@ Mark when complete. **Endpoint** may be reached with hygiene still open. **Hard 
 - [ ] Layer 2 `Thesis_Tracker.md` (tags + related apps)
 - [ ] Layer 1 `TRACKER_PORTFOLIO.md` row updated
 - [ ] Layer 3 residual dispositions set (`pursue` / `park-90d` / `park-until-trigger` / `drop`)
-- [ ] Residual-branch menu (`RESIDUAL_BRANCH_MENU.md`) if residuals remain — offering ≠ running
+- [ ] Residual-branch menu (`RESIDUAL_BRANCH_MENU.md`) if residuals remain — **clickable cards** + links from this STATUS; offering ≠ running
+- [ ] **Optional-modes menu** (`OPTIONAL_MODES_MENU.md`) — triage UX/CX/CR/QI Offer or N/A; **clickable cards** + reply one-liners; offering ≠ running (**required at endpoint/hard stop**; residual menu alone is not enough)
 - [ ] `TRACKER_PATTERN_MAP.md` updated if new pattern observed
 - [ ] `logs/calibration_log.md` entry if a pattern now appears in ≥3 closed apps
-- [ ] Use-Exploration (if authorized) documented
+- [ ] Use-Exploration / CX / CR / QI **exhibits** only if authorized and run
 - [ ] `STATUS.md` set to hard stop (this file)
 - [ ] `final_verdict.md` (or equivalent)
 
 **Gates:**  
-- Applicable examination items done → may label **endpoint**.  
-- All applicable hygiene + **SHARE_PACK** done → may label **hard stop**.  
+- Applicable examination items done → may label **endpoint** (still **offer** optional modes).  
+- All applicable hygiene + **SHARE_PACK** + optional-modes **offer** done → may label **hard stop**.  
 - SHARE_PACK unchecked ⇒ **not fully closed for sharing**.
 
 ---

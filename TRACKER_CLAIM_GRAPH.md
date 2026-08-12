@@ -1,8 +1,8 @@
 # Claim Graph
 
 **Date:** 2026-08-12  
-**Scope:** portfolio-wide (engineering batch + cash-privacy cross-domain probe)  
-**Maintainer note:** Three claim-shape lock clusters Active (001–004 uniqueness+preferability; 005–008 numerical+should; 009–011 forecast-extension). Synthetic twin scaling saturating — prefer real-claim intake next.
+**Scope:** portfolio-wide + first real-claim intake after forecast locks  
+**Maintainer note:** Three claim-shape lock clusters Active (001–004 uniqueness+preferability; 005–008 numerical+should; 009–011 forecast-extension). Real-claim intake started (`APP-CRWV`); synthetic twin scaling still saturated.
 
 *Optional overview. Individual worksheets remain the source of truth.*
 
@@ -26,6 +26,7 @@
 | APP-BRIDGE | Application | `2026-08_bridge-rating-should-close` | Stable Provisional; Amb ≈ 7; FD 1 (NS cross-domain) |
 | APP-HEAT | Application | `2026-08_heatwave-next-summer-should-prepare` | Stable Provisional; Amb ≈ 7; FD 1 |
 | APP-HOL | Application | `2026-08_holiday-sales-up-should-hire` | Stable Provisional; Amb ≈ 7; FD 1 |
+| APP-CRWV | Application | `2026-08_coreweave-ceo-gpu-longer-life` | **Hard stop sealed**; A-ATTR L7; N-INSTANCE + color; F-LIFE fails C_SCOPE |
 | LOCK-2026-08-001 | Lock | Comparison class before uniqueness (O) | Active |
 | LOCK-2026-08-002 | Lock | Preferability needs named virtues/metrics | Active |
 | LOCK-2026-08-003 | Lock | Amb drop / scope lock ≠ clearance | Active |
@@ -94,13 +95,19 @@
 | APP-HOL | LOCK-2026-08-010 | imports_lock | |
 | APP-HOL | LOCK-2026-08-011 | imports_lock | |
 | APP-HOL | APP-HEAT | shares_anchor_class | forecast-extension batch |
+| APP-CRWV | LOCK-2026-08-003 | imports_lock | real-claim; Amb≠clearance |
+| APP-CRWV | LOCK-2026-08-009 | imports_lock | soft-modal + window |
+| APP-CRWV | LOCK-2026-08-010 | imports_lock | forecast Amb≠clearance |
+| APP-CRWV | LOCK-2026-08-011 | imports_lock | contract/history ≠ full elevation |
+| APP-CRWV | APP-HEAT | shares_anchor_class | forecast-extension (process) |
+| APP-CRWV | APP-HOL | shares_anchor_class | forecast-extension (process) |
 
 ---
 
 ## Residual judgment / known missing edges
 
-- Cross-domain probe succeeded for 001–003; LOCK-004 needs wording review for non-architecture hybrids.  
-- No further engineering same-shape siblings recommended until LOCK-004 decision.
+- Cross-domain probe succeeded for 001–003; LOCK-004 folded Active for hybrid/spectrum domains.  
+- Real-claim `APP-CRWV` validates forecast locks on live markets commentary; attribution≠life clearance.
 
 ---
 

@@ -14,6 +14,9 @@ One-sentence definitions for non-technical partners. Full method: `.cursor/rules
 | **Proxy** | An explicit stand-in for missing real data, used only when authorized; results hold **under the stand-in**, not automatically for the live case. |
 | **Forced deviation** | Strong wording in the claim that cannot be tested as written without changing the question. |
 | **Residual** | A leftover open item that could reopen work later if a stated trigger is met. |
+| **Residual card** | Clickable explainer for one residual in that app’s `RESIDUAL_BRANCH_MENU.md` (what it is, what authorizing does, what it does not clear). |
+| **Optional mode** | Post-closeout tool (UX / CX / CR / QI) that may be **offered** at endpoint; runs only if you authorize it. |
+| **Optional-modes menu** | Clickable offer sheet (`OPTIONAL_MODES_MENU.md`) listing which modes apply, with `run …` / `decline …` one-liners. Offering ≠ running. |
 | **Claim revision** | Choosing a **new, clearer wording** of the claim (successor); the old wording stays on record. |
 | **Share pack** | The short partner front door (`SHARE_PACK.md`): plain verdict first, then established/not, stop/keep, residuals, UX, glossary. |
 | **Endpoint** | Examination of this claim is done; the verdict is frozen as stated. Hygiene (portfolio, trackers, share pack) may still be open. |

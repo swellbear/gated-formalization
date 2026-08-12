@@ -23,8 +23,7 @@ Recommended contents after copying (from `templates/`):
 
 - `authorize branch R-…` · `decline residual menu`
 - `lock Rank N` / `lock package …`
-- `run UX` / `decline UX`
-- `run QI` / `run CX` / `run CR` (when those modes apply)
+- `run UX` / `decline UX` · `run CX` / `decline CX` · `run CR` / `decline CR` · `run QI` / `decline QI` · `decline optional modes`
 - `endpoint only` · `closeout` / `hard stop`
 - `IMPORTED_PATTERN_STAMP.md` when reusing a lock/metric/pattern from a related app
 - `THIN_RECORD_RECOVERY.md` if `incomplete-record` before any elevation residual
@@ -34,7 +33,8 @@ Recommended contents after copying (from `templates/`):
 - `QI_Quantitative_Implication_Counterfactual_Benefit.md` when authorized after a **failed numerical instance** test
 - `CX_Contrastive_Recommendation.md` when authorized after an **established core + failed elevation** (alternative better-fitting claims; not a silent rewrite)
 - `UX_Use_Exploration.md` when authorized to explore **uses** of findings (instance-specific; not advice; does not change verdict)
-- `RESIDUAL_BRANCH_MENU.md` at closeout when residuals remain (offering ≠ running; classify + menu)
+- `RESIDUAL_BRANCH_MENU.md` at closeout when residuals remain (offering ≠ running; classify + clickable cards)
+- **`OPTIONAL_MODES_MENU.md` at endpoint/hard-stop closeout** — triage UX/CX/CR/QI Offer or N/A; clickable cards; offering ≠ running (**required**; residual menu alone is not enough)
 - `E_Package_Evidence_Intake.md` before admitting package-scoped evidence (**conflicted-source flag**)
 - `S_Scenario_Pass.md` for bear/base/bull or multi-leg scenarios (**already-included legs**)
 - `T_Application_Thesis_Tracker.md` / `THESIS_TRACKER.md` — use **`THESIS_TRACKER.md`** (Layer 2 nine-card); older T_ template superseded
