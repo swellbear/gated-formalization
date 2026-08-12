@@ -59,6 +59,12 @@ When the **same pattern tag** appears in **≥ 3 closed applications**, record a
 - **Rationale:** Freeze-first + should-not-from-bar-alone transferred cleanly; descriptive freeze ≠ should clearance (LOCK-006/007). Diminishing returns on third twin.
 - **Change made:** locks 005–008; `logs/2026-08-C5_Numerical_Should_Cluster.md`; portfolio/claim-graph updates
 
+### 2026-08-12 | NS cross-domain + forecast-extension cluster
+- **Apps:** bridge-rating-should-close; heatwave-next-summer-should-prepare; holiday-sales-up-should-hire
+- **Decision:** **keep** LOCK-005–008 transfer; **Accept** LOCK-009–011; early-pause forecast twins; **recommend** real-claim intake next
+- **Rationale:** Infrastructure NS probe clean; forecast locks transfer on two domains; synthetic claim-shape scaling saturating across three shapes.
+- **Change made:** `logs/2026-08-C6_NS_Probe_and_Forecast_Cluster.md`; locks 009–011
+
 ---
 
 *Standing rule: Calibration log → method change.*

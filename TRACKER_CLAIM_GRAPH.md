@@ -23,14 +23,16 @@
 | APP-TERM | Application | `2026-08_term-limits-alone-accountability-preferability` | Stable Provisional; Amb ≈ 8; FD 1 (cross-domain #2) |
 | APP-EFUND | Application | `2026-08_emergency-fund-6mo-should` | Stable Provisional; Amb ≈ 7; FD 1 |
 | APP-NPS | Application | `2026-08_nps-50-should-expand` | Stable Provisional; Amb ≈ 7; FD 1 |
-| LOCK-2026-08-001 | Lock | Comparison class before uniqueness (O) | Active |
-| LOCK-2026-08-002 | Lock | Preferability needs named virtues/metrics | Active |
-| LOCK-2026-08-003 | Lock | Amb drop / scope lock ≠ clearance | Active |
-| LOCK-2026-08-004 | Lock | Hybrid/spectrum FD on “alone” | **Active** (broadened) |
+| APP-BRIDGE | Application | `2026-08_bridge-rating-should-close` | Stable Provisional; Amb ≈ 7; FD 1 (NS cross-domain) |
+| APP-HEAT | Application | `2026-08_heatwave-next-summer-should-prepare` | Stable Provisional; Amb ≈ 7; FD 1 |
+| APP-HOL | Application | `2026-08_holiday-sales-up-should-hire` | Stable Provisional; Amb ≈ 7; FD 1 |
 | LOCK-2026-08-005 | Lock | Numerical bar freeze (C/H/legs) | Active |
 | LOCK-2026-08-006 | Lock | Should not entailed by bar alone | Active |
 | LOCK-2026-08-007 | Lock | Descriptive/bar ≠ elevation clearance | Active |
 | LOCK-2026-08-008 | Lock | QI/scale-factor ≠ should proof | Active |
+| LOCK-2026-08-009 | Lock | Forecast soft-modal + window freeze | Active |
+| LOCK-2026-08-010 | Lock | Forecast Amb drop ≠ clearance | Active |
+| LOCK-2026-08-011 | Lock | History ≠ forward should/potential | Active |
 
 ---
 
@@ -78,6 +80,16 @@
 | APP-NPS | LOCK-2026-08-007 | imports_lock | |
 | APP-NPS | LOCK-2026-08-008 | imports_lock | |
 | APP-NPS | APP-EFUND | shares_anchor_class | numerical+should batch |
+| APP-BRIDGE | LOCK-2026-08-005 | imports_lock | NS cross-domain |
+| APP-BRIDGE | LOCK-2026-08-006 | imports_lock | |
+| APP-BRIDGE | LOCK-2026-08-007 | imports_lock | |
+| APP-HEAT | LOCK-2026-08-009 | imports_lock | forecast-extension |
+| APP-HEAT | LOCK-2026-08-010 | imports_lock | |
+| APP-HEAT | LOCK-2026-08-011 | imports_lock | |
+| APP-HOL | LOCK-2026-08-009 | imports_lock | |
+| APP-HOL | LOCK-2026-08-010 | imports_lock | |
+| APP-HOL | LOCK-2026-08-011 | imports_lock | |
+| APP-HOL | APP-HEAT | shares_anchor_class | forecast-extension batch |
 
 ---
 
