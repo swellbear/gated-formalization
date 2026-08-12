@@ -2,6 +2,7 @@
 
 **Last refreshed:** 2026-08-12  
 **Taxonomy:** [`docs/TRACKER_TAXONOMY.md`](docs/TRACKER_TAXONOMY.md)  
+**Calibration:** When a pattern appears in ≥3 closed apps → [`logs/calibration_log.md`](logs/calibration_log.md)  
 Only patterns **evidenced** in current applications. Sparse by design.
 
 ---

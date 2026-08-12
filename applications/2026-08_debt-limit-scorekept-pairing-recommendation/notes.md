@@ -1,5 +1,7 @@
 # Notes — Scorekept pairing recommendation (Rank 1 revision)
 
+**Status:** see `STATUS.md`.
+
 **Parent:** `2026-08_debt-limit-equal-spending-cuts` (Stable Provisional; FD1–FD5 on record)  
 **Selected revision:** Rank 1 — Soft pairing recommendation  
 

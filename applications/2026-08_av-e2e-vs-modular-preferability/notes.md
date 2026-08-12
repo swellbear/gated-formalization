@@ -1,5 +1,7 @@
 # Notes
 
+**Status:** see `STATUS.md`.
+
 **Application:** `2026-08_av-e2e-vs-modular-preferability`  
 
 | Stage | Amb | Notes |

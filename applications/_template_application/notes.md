@@ -1,5 +1,7 @@
 # Notes
 
+**Status:** see `STATUS.md`.
+
 Optional free-form observations, residual judgment log, and links to sources.
 
 **Application:**  

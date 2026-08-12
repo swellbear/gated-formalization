@@ -221,6 +221,40 @@ When an application is closed (**Stable Provisional**, **Admissible**, or any ha
 
 Scoped results must remain clearly distinguished from unrestricted support for the original claim. Do **not** treat closeout as silent resolution of the original claim.
 
+## Operator status line (mandatory every cycle)
+
+Maintain a short **`STATUS.md`** at the top of each application folder (also mirror a one-line pointer at the top of `notes.md`). Update **every** Phase 1 cycle, Phase 2 attempt, lock change, and closeout.
+
+**Required fields (compact):**
+- **Phase** — Phase 1 / Phase 1 endpoint / Phase 2 Attempt N / closeout / hard stop / optional mode
+- **Amb** — current estimate
+- **Locks in force** — package IDs or “none”
+- **Next authorization needed** — one line (or “none — hard stop”)
+- **Related apps surfaced** — ≤2 IDs + reason, or “none”
+
+**Closeout checklist (mandatory in `STATUS.md`):** Before labeling a run closed / hard-stopped, check off dissertation, executive brief, Layer 2 tracker, portfolio row, residual dispositions, pattern map / calibration if needed, and final verdict. **Unchecked applicable items ⇒ not closed** (closeout hygiene still open). Template: `templates/STATUS.md`.
+
+## Quantitative evidence quality bar (domain-agnostic)
+
+Before admitting material that would **establish or refute a numerical / risk-adjusted bar** (e.g. C≥H, Sharpe vs B&H, seasonality gap threshold), complete the light rubric in `templates/E_Quantitative_Evidence_Rubric.md` (or the quantitative section of evidence intake):
+
+1. **Sample definition** — series, window, return concept  
+2. **Costs / taxes / frictions** — included, excluded, or N/A (state which)  
+3. **Significance vs point estimate** — point estimate only, or test/interval?  
+4. **Matched comparison** — same locks / same instance for both sides of the bar?  
+5. **Sensitivity to sample window** — noted or untested  
+6. **Already-included legs** — list legs already in the base bar/workbook construction (seasonality in base, cash yield in sleeve, tax friction under F3, matched H&C, etc.) so “what about X?” does not reopen a settled mix  
+
+Do **not** treat a point estimate as bar clearance when the lock implied a matched or significance-bearing test. Use the same rubric across markets and fiscal apps so G4*/C≥H-style fails are comparable.
+
+## Thin-record recovery protocol
+
+When an application is tagged `incomplete-record`, follow `templates/THIN_RECORD_RECOVERY.md` **in order**: recover claim text → recover/backfill worksheets → rebuild STATUS/tracker → **only then** authorize elevation residuals. Do not reopen ELEV-*/FP-* half-blind.
+
+## Imported-pattern stamp
+
+Whenever a lock/metric/residual/process pattern is reused from a related app, paste `templates/IMPORTED_PATTERN_STAMP.md` (or equivalent) at the reuse site: **“Imported pattern from [app], re-validated here”** plus what was imported and how it was re-validated. Verdicts, admitted layers, and Amb scores are **never** inherited.
+
 ## Application Dissertation Deliverable (mandatory at closeout)
 
 When an application is closed (**Stable Provisional**, **Admissible**, hard stop, or equivalent endpoint that ends the run), produce a **comprehensive dissertation** in the application folder as `DISSERTATION.md` (or `DISSERTATION_<shortname>.md`) using `templates/DISSERTATION_Application_Findings.md`.
@@ -246,7 +280,19 @@ When an application is closed (**Stable Provisional**, **Admissible**, hard stop
 - Distinct from worksheets: the dissertation **indexes and narrates**; it does not replace `04`s, closeout, or FD registers.
 - For a **claim family** (parent + successors), each closed application gets its own dissertation; parent/successor links must cross-reference.
 
-If records are too thin to complete a faithful dissertation, write a short `DISSERTATION.md` that states **incomplete for lack of records** and lists what is missing — do not invent layers.
+### Executive brief (mandatory at closeout; default share artifact)
+
+Also produce **`EXECUTIVE_BRIEF.md`** (≤1 page) using `templates/EXECUTIVE_BRIEF.md`:
+
+1. Claim (compressed)  
+2. Established (bullets)  
+3. Not established (bullets)  
+4. Action implications (stop / keep / test next)  
+5. Link to full `DISSERTATION.md`  
+
+Non-technical readers use the brief; the dissertation remains the audit trail.
+
+If records are too thin to complete a faithful dissertation, write a short `DISSERTATION.md` that states **incomplete for lack of records** and lists what is missing — do not invent layers. Still produce a brief that flags incomplete records.
 
 ## Claim-Revision Scaffolding (optional; authorization-gated)
 
@@ -374,26 +420,49 @@ Root file `TRACKER_PORTFOLIO.md` lists **every** application with prior fields *
 
 ### Layer 3 — Residual queue (mandatory maintain)
 
-Root file `TRACKER_RESIDUAL_QUEUE.md` — as before. **Refresh** when residuals are added, closed, or explicitly deferred.
+Root file `TRACKER_RESIDUAL_QUEUE.md`.
+
+**Disposition (mandatory for every residual):** exactly one of:
+- **pursue** — active queue  
+- **park-90d** — revisit after ~90 days  
+- **park-until-trigger** — parked until the stated reopen condition exists  
+- **drop** — will not pursue; remove from active queue  
+
+Only **pursue** items stay in the active priority bands. Parked/dropped items move to a **Parked / dropped** section with disposition + date. Refresh when residuals are added, closed, or dispositions change.
+
+**Parked residual review cadence:** About **once per quarter**, review only **`park-90d`** items (not the whole queue). For each: promote to `pursue`, extend park, convert to `park-until-trigger`, or `drop`. Record the review date at the top of `TRACKER_RESIDUAL_QUEUE.md`. Do **not** weekly-churn `park-until-trigger` items unless their trigger fires.
 
 ### Pattern map (mandatory maintain)
 
 Root file `TRACKER_PATTERN_MAP.md`: one section per pattern tag that **actually appears**; short definition; apps that instantiate it; one-line lesson. Keep sparse; do not force unevidenced patterns.
 
+### Calibration log → method change (mandatory when pattern repeats)
+
+When the **same pattern tag** appears in **≥ 3 closed applications**, add a short entry to `logs/calibration_log.md`:
+
+- Pattern tag + apps  
+- Decision: **keep rule** / **tighten** / **loosen** / **add checklist**  
+- One-paragraph rationale  
+- Pointer to any template/rule change  
+
+This turns the pattern map into method learning, not only documentation.
+
 ### Critically relevant application surfacing
 
-When running a **live** application, if the portfolio map flags other applications as critically relevant (shared claim-shape, shared pattern, or parent/successor), the method **may surface them** at these checkpoints **only**:
+When running a **live** application, if the portfolio map flags other applications as **critically** relevant (shared claim-shape **and/or** shared pattern **and/or** parent/successor — not weak adjacency alone), the method **may surface them** at these checkpoints **only**:
 
 1. Claim-type / early Amb pass  
 2. Locking scaffolding  
 3. Intractability or forced-deviation declaration  
 4. Closeout, Claim-Revision, QI, or Contrastive Recommendation  
 
+**Surfacing budget (hard cap):** at most **2** critically relevant apps per checkpoint. Prefer parent/successor and exact pattern match over loose claim-shape adjacency.
+
 At each surfacing: name the related app(s); one-line relevance reason; **offer** (do not force) inspection or reuse of a **process pattern** (lock style, deviation lesson, residual reopen condition).
 
-**Honesty constraint (mandatory):** Related applications inform **process and hypotheses only**. They do **not** inherit conclusions. No verdict, admitted layer, or Amb score may be copied across applications. Any reused lock/metric/residual definition must be re-validated under the current claim and labeled **“imported pattern from [app], re-validated here.”**
+**Honesty constraint (mandatory):** Related applications inform **process and hypotheses only**. They do **not** inherit conclusions. No verdict, admitted layer, or Amb score may be copied across applications. Any reused lock/metric/residual definition must be re-validated under the current claim and labeled with `templates/IMPORTED_PATTERN_STAMP.md` (**“imported pattern from [app], re-validated here.”**).
 
-Surfacing is automatic when critical relevance is tagged; **binding reuse is never automatic**.
+Surfacing is automatic when critical relevance is tagged (within budget); **binding reuse is never automatic**.
 
 ### Relation to older optional tracker mode
 

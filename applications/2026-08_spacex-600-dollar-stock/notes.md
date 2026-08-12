@@ -1,5 +1,7 @@
 # Notes — SpaceX $600 stock claim
 
+**Status:** see `STATUS.md`.
+
 | Milestone | Amb | Note |
 |-----------|-----|------|
 | Cycle 0 | ≈ 9.5 | Per-share slogan; heavy G1–G4 |

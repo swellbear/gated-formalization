@@ -22,6 +22,16 @@ Under Rank 1 freeze, FRA 2023 episode:
 
 This is an **instance fail of the balance test**, not a verdict that soft “should” is true or false, and not parent FD language.
 
+### Already-included legs (numerical bar)
+
+| Leg | In base bar test? | Notes |
+|-----|-------------------|-------|
+| C = CBO non-interest outlay reductions (episode) | Y | L2a |
+| H = CRS suspension headroom (episode) | Y | L2b |
+| Interest excluded from C | Y | Embedded freeze |
+| Matched same FRA 2023 action for C and H | Y | Episode-scoped |
+| Soft “should” / parent FD1–FD5 | N | Not part of C≥H arithmetic |
+
 ---
 
 ## Admission Criteria

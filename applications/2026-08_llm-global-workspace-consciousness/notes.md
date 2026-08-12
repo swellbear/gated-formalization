@@ -1,5 +1,7 @@
 # Notes
 
+**Status:** see `STATUS.md`.
+
 **Application:** 2026-08_llm-global-workspace-consciousness  
 **Date:** 2026-08-11  
 

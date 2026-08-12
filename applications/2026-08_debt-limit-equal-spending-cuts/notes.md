@@ -1,5 +1,7 @@
 # Notes
 
+**Status:** see `STATUS.md`.
+
 **Application:** `2026-08_debt-limit-equal-spending-cuts`
 
 | Stage | Amb | Notes |

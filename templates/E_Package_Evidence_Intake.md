@@ -39,6 +39,9 @@
 
 **If conflicted:** May support **scenario presence / design kinship / pitch curves only**. Must **not** be the sole basis for affirming a locked modal bar (e.g. P-NonNegligible) or establishing the original slogan.
 
+### Quantitative bar?
+If this evidence would establish/refute a **numerical / risk-adjusted bar**, also complete `E_Quantitative_Evidence_Rubric.md` (sample, costs/taxes, significance vs point estimate, matched comparison, window sensitivity).
+
 ---
 
 ## 3. Provisional gate intent (before full `04`)

@@ -1,5 +1,7 @@
 # Notes
 
+**Status:** see `STATUS.md`.
+
 **Application:** `2026-08_sell-in-may-sp500-2026`  
 **Date opened:** 2026-08-12  
 **Claim (verbatim):**  

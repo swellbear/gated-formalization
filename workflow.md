@@ -6,12 +6,13 @@ Use this checklist for every new claim, theory fragment, or argument you run thr
 Do not treat this file as a second full copy of the standing rule — checklist + pointers only.
 
 **Quick map:** Phase 1 → Phase 2 → optional Experimental Generation → closeout (**`DISSERTATION.md` + Layer 2 `Thesis_Tracker.md` + update Layer 1 portfolio + Layer 3 residual queue**) → optional Claim-Revision / QI / Contrastive Recommendation.  
-Also in force: locking-scaffolding; Amb ≠ clearance; accuracy-first Phase 2; conflicted-source; already-included legs; soft-modal fork; Tracking Layers 1–3.  
+Also in force: locking-scaffolding; Amb ≠ clearance; accuracy-first Phase 2; conflicted-source; already-included legs (scenario **and** numerical bars); soft-modal fork; Tracking Layers 1–3; thin-record recovery; imported-pattern stamp; quarterly `park-90d` review.  
 **Cons / Amb / redefinition** primary. **Low Amb ≠ claim cleared.**
 
 ## 1. Setup
 - [ ] Create folder `applications/YYYY-MM_short-name/`
-- [ ] Copy templates `01`–`05` (+ `R_Locking_Scaffolding`, `CR_Claim_Revision_Scaffolding`, `QI_Quantitative_Implication_Counterfactual_Benefit`, `CX_Contrastive_Recommendation`, `DISSERTATION_Application_Findings`, `T_Application_Thesis_Tracker`, `E_Package_Evidence_Intake`, `S_Scenario_Pass`, `Compact_No_Admit_Readout` as needed)
+- [ ] Copy templates as needed (+ `STATUS`, `EXECUTIVE_BRIEF`, `E_Quantitative_Evidence_Rubric`, dissertation, thesis tracker, `IMPORTED_PATTERN_STAMP`, `THIN_RECORD_RECOVERY` if needed, …)
+- [ ] Create `STATUS.md` (“where am I?”) and keep it updated every cycle (includes **closeout checklist**)
 - [ ] Note the date and a short description of the source material
 
 ## 2. Anchors & Claim-Type Pre-Classification
@@ -46,6 +47,8 @@ Also in force: locking-scaffolding; Amb ≠ clearance; accuracy-first Phase 2; c
 - [ ] Dependencies / locking-scaffolding / OR-slots / scoped honesty as required by canonical rule
 - [ ] Package evidence → `E_Package_Evidence_Intake.md` (incl. **conflicted-source flag**) then `04`
 - [ ] Scenario / multi-leg passes → list **already-included legs** (`S_Scenario_Pass.md`)
+- [ ] Numerical / workbook bars → complete `E_Quantitative_Evidence_Rubric.md` incl. **already-included legs**
+- [ ] Reused lock/metric/pattern from another app → paste **imported-pattern stamp** (`IMPORTED_PATTERN_STAMP.md`)
 - [ ] Intractability checklist before “currently intractable”
 - [ ] Stop for authorization between significant attempts
 - [ ] State locked-bar status explicitly; remember **Amb ≠ clearance**
@@ -55,12 +58,13 @@ Also in force: locking-scaffolding; Amb ≠ clearance; accuracy-first Phase 2; c
 
 ## 8. Close the Run
 - [ ] Fill `05_Original_Claim_Assessment.md` (status + **Amb ≠ clearance** + locked-bar status + continuation options + **revision vs continuation fork** when required)
-- [ ] Produce **`DISSERTATION.md`** from `DISSERTATION_Application_Findings.md` (mandatory)
-- [ ] Produce / normalize **Layer 2** `Thesis_Tracker.md` from `THESIS_TRACKER.md` (mandatory nine-card structure)
-- [ ] Update **Layer 1** row in root `TRACKER_PORTFOLIO.md`
-- [ ] Refresh **Layer 3** `TRACKER_RESIDUAL_QUEUE.md` for new/closed/deferred residuals
-- [ ] Final verdict; phase status; scoped vs unrestricted distinction
-- [ ] Failure-mode cadence → `logs/failure_mode_log.md` if there is anything to learn
+- [ ] Produce **`DISSERTATION.md`** and **`EXECUTIVE_BRIEF.md`** (brief = default share artifact)
+- [ ] Produce / normalize **Layer 2** `Thesis_Tracker.md` (tags + related apps + residual dispositions)
+- [ ] Update **Layer 1** portfolio; refresh **Layer 3** queue (**pursue / park-90d / park-until-trigger / drop**)
+- [ ] Update `TRACKER_PATTERN_MAP.md` if new pattern; if pattern now in ≥3 apps → `logs/calibration_log.md`
+- [ ] Final verdict; failure-mode cadence if useful
+- [ ] Complete **`STATUS.md` closeout checklist** — unchecked applicable items ⇒ **not closed**
+- [ ] Incomplete-record apps: run **`THIN_RECORD_RECOVERY.md`** before any elevation residual
 
 ## 8b. Claim-Revision Scaffolding (only if revision path authorized)
 - [ ] Follow canonical Claim-Revision Scaffolding in `.mdc` (`CR_Claim_Revision_Scaffolding.md`)
@@ -80,13 +84,15 @@ Also in force: locking-scaffolding; Amb ≠ clearance; accuracy-first Phase 2; c
 - [ ] Layer 2 `Thesis_Tracker.md` (cards 1–11: include **tags** + **related applications**)
 - [ ] Layer 1 `TRACKER_PORTFOLIO.md` row updated (domain / claim-shape / pattern tags + related apps)
 - [ ] Layer 3 `TRACKER_RESIDUAL_QUEUE.md` refreshed
+- [ ] Quarterly: review **`park-90d` only**; record review date on queue header
 - [ ] `TRACKER_PATTERN_MAP.md` updated if a new evidenced pattern appears
 - [ ] Tags from `docs/TRACKER_TAXONOMY.md` only
 - [ ] Trackers point to worksheets/dissertation; no conclusion inheritance across apps
 
 ## Critically relevant surfacing (live runs)
-- [ ] At claim-type / locking / forced-deviation / closeout-or-optional-modes: if portfolio tags critical relatedness, **surface** related apps (name + one-line reason + offer process-pattern reuse)
-- [ ] Binding reuse never automatic; label any reuse “imported pattern from [app], re-validated here”
+- [ ] At claim-type / locking / forced-deviation / closeout-or-optional-modes: surface **≤2** critically related apps (shared shape/pattern/parent-successor — not weak adjacency)
+- [ ] Binding reuse never automatic; use **`IMPORTED_PATTERN_STAMP.md`** (“imported pattern from [app], re-validated here”)
+- [ ] Numerical bars: complete `E_Quantitative_Evidence_Rubric.md` (incl. already-included legs) before establish/refute admits
 
 ## 8e. Contrastive Recommendation (only if authorized after established core + failed elevation)
 - [ ] Plain-language framing first (`CX_Contrastive_Recommendation.md`)
@@ -107,7 +113,9 @@ Also in force: locking-scaffolding; Amb ≠ clearance; accuracy-first Phase 2; c
 - Phase 2 defaults to **accuracy**, not substantiation-seeking.
 - Soft-modal fork early when potential/could/should/etc. carry claim strength.
 - Conflicted sources cannot solely affirm locked modal bars.
-- Scenario passes must list **already-included legs**.
+- Scenario passes **and** numerical/workbook bars must list **already-included legs**.
+- Incomplete-record apps: thin-record recovery **before** elevations.
+- Quarterly scan **`park-90d`** only (not the whole queue).
 - Lock selection: Amb drop from fixing meanings ≠ clearance (lock-time warning).
 - Application Thesis Tracker is per-app, authorization-gated, and thesis-watchlist shaped for that claim.
 - **Tracking Layers 1–3 + pattern map** mandatory at closeout; taxonomy in `docs/TRACKER_TAXONOMY.md`; critically relevant apps may be **surfaced** (process only; no conclusion inheritance).

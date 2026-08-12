@@ -10,10 +10,12 @@ Recommended contents after copying (from `templates/`):
 
 - `01`–`04` worksheets as needed (soft-modal fork on `01` when potential/could/should/etc. carry strength)
 - `05_Original_Claim_Assessment.md` at closeout (**Amb ≠ clearance** + locked-bar status)
-- `DISSERTATION.md` from `DISSERTATION_Application_Findings.md` — **mandatory** at closeout
-- `Thesis_Tracker.md` from `THESIS_TRACKER.md` — **mandatory** Layer 2 (include taxonomy tags + related apps)
-- Update root `TRACKER_PORTFOLIO.md`, `TRACKER_RESIDUAL_QUEUE.md`, and `TRACKER_PATTERN_MAP.md` at closeout
-- Taxonomy: `docs/TRACKER_TAXONOMY.md`
+- `DISSERTATION.md` + **`EXECUTIVE_BRIEF.md`** — mandatory at closeout (brief = default share)
+- **`STATUS.md`** — update every cycle (“where am I?”); **closeout checklist** before labeling closed
+- `E_Quantitative_Evidence_Rubric.md` before numerical-bar establish/refute admits (**already-included legs**)
+- `IMPORTED_PATTERN_STAMP.md` when reusing a lock/metric/pattern from a related app
+- `THIN_RECORD_RECOVERY.md` if `incomplete-record` before any elevation residual
+- `Thesis_Tracker.md` — Layer 2; update portfolio / residual queue (**dispositions**; quarterly `park-90d` review) / pattern map / calibration log (≥3 apps)
 - `R_Locking_Scaffolding.md` when a dominant blocker appears (incl. **lock-time Amb warning**; forced-deviation extraction if no Minimal-deviation package)
 - `CR_Claim_Revision_Scaffolding.md` when a post-closeout / forced-deviation **revision path** is authorized
 - `QI_Quantitative_Implication_Counterfactual_Benefit.md` when authorized after a **failed numerical instance** test

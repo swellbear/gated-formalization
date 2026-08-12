@@ -172,6 +172,13 @@ Require separate evidence that May–Oct 2026 specifically should be skipped (ma
 | **FD4** | Bare “substantially lower” without ops | Under-specified | G1 |
 | **FD5** | Dual soft “should” as obligation-grade without S-bar lock | Over-strong / under-specified | G5/G6 |
 
+```
+Imported pattern from `2026-08_debt-limit-scorekept-pairing-recommendation` (+ parent FD style), re-validated here.
+- What was imported: numerical-bar + soft-should package shape; FD extraction when no Minimal-deviation package
+- Re-validation under current claim: Rank 1 rebuilt as H2+R1+F3+M1+S3+Y1; G1*/G4* bars defined on market series — not fiscal C≥H; soft should remains open/not selected
+- Not inherited: FRA fail, QI ~3.6×, Amb scores, admitted layers from debt apps
+```
+
 ---
 
 ## 6. OR-slots

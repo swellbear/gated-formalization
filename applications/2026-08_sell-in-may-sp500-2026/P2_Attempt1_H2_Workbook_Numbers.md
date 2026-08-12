@@ -37,6 +37,20 @@
 
 **G4* (strategy Sharpe > B&H Sharpe under F3 spirit)?** Strategy AT Sharpe 0.291 vs B&H Sharpe 0.539 → **NO** on this proxy.
 
+## Already-included legs (numerical bar)
+
+| Leg | In base bar test? | Notes |
+|-----|-------------------|-------|
+| G1* winter−summer gap on H2 windows | Y | Seasonality already in G1*; not a separate reopen |
+| R1 switch calendar (May/Oct) | Y | Strategy sleeve definition |
+| T-bill / ^IRX cash sleeve yield | Y | In strategy cash periods; approximate transform |
+| Costs 5 bps/side on switch days | Y | After-tax / F3 proxy block |
+| F3 tax proxy (τ_ST on April exit; τ_LT terminal on B&H CAGR) | Y | Proxy only — not Form-8949 |
+| Matched H2 series / window for strategy vs B&H | Y | Same ^SP500TR span |
+| Lots / wash sales / state tax / Medicare surtax | N | Explicitly **out** of F3 proxy |
+
+**If asked “what about X?”:** Point here if X is Y — do not treat as an omission of the Rank 1 mix.
+
 ## Method notes / limitations
 
 - T-bill daily return from ^IRX discount yield transformed to effective daily — approximate.
