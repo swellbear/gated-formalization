@@ -1,28 +1,27 @@
 # Admitted Layers / Constraints
 
 **Application:** `2026-08_debt-limit-equal-spending-cuts`  
-**Last updated:** 2026-08-11 (Phase 1 endpoint)
+**Last updated:** 2026-08-11 (**Stable Provisional closeout**)
 
 ---
 
-## L1
-- **L1a** (`04a`): Debt-limit increase/suspension ≠ new spending appropriation; pairing is procedural/political, not identity.
-- **L1b** (`04b`): “Equal” undefined — **fork** (metric unset).
-- **L1c** (`04c`): “Spending cuts” / baseline undefined — **fork**.
-- **L1d** (`04d`): “Fiscally irresponsible” — **criteria fork**; not unique consequence of unpaired limit action.
+## Phase 1
+- **L1a** Debt-limit ≠ spending appropriation identity  
+- **L1b–d** Equal / cuts / irresponsibility forks  
+- **L2a** Enactment bar not forced  
+- **L2b** Default/disruption tradeoff class relevant  
 
-## L2
-- **L2a** (`04e`): “Should not be enacted” **not forced** by admitted descriptive layers.
-- **L2b** (`04f`): Default/disruption tradeoffs are relevant to responsibility talk; magnitudes not ranked.
+## Lock
+- **P-Score-Strict + R2** (Moderate deviation)  
 
-## Dependencies
-- **G4 (G2/G3-dependent):** descriptive irresponsibility verdict blocked primarily by unset equality + cuts scorekeeping.
-- **Rectification:** lock G2+G3 package, then scoped G4; G5 remains normative.
+## Under package
+- **L3a–d** Well-posed stipulated test; package-label only; instance intractable; enactment still not forced  
+- **L4a** H.R.10078 design overlap (narrow)  
+- **L4b / L4d** Full instance REJECT  
+- **L4c** FRA 2023 / BCA 2011 historical analogues only  
 
-## Explicitly NOT constrained
-- That the Steube/H.R.10078 rule is required
-- That unpaired debt-limit actions are fiscally irresponsible
-- That they should not be enacted
+## Forced-deviation (first-class; closeout)
+**FD1–FD5** — could not be tested in non-derivative form (property of claim text vs tools, not mere missing data).
 
-## Original claim status
-**Provisional** (Amb ≈ **8**). Packaged necessity + unique irresponsibility + forced ought **not** well-constrained.
+## Amb / verdict
+≈ **4** / **Stable Provisional** — original unrestricted claim not well-constrained.

@@ -2,51 +2,79 @@
 
 **Date:**  
 **Application:**  
-**Dominant blocker ID (e.g. R4):**  
-**Dependents blocked (e.g. R1, R2):**  
+**Dominant blocker ID(s):**  
+**Dependents blocked:**  
 
 **Explicit dependency statement:**  
-*(e.g. “R1 and R2 are currently blocked primarily by the unset status of R4…”)*  
+
+**Original claim (verbatim, for deviation comparison):**
+
+
+
+---
+
+## 0. Plain-language framing (required)
+
+**What decision is being made right now:**  
+
+**Why this decision is required before further work:**  
+
+**What becomes testable once the decision is made:**  
+
+**What still cannot be settled by this decision alone:**  
 
 ---
 
 ## 1. Decision points
-| Point ID | Question |
-|----------|----------|
-|          |          |
+| Point ID | Question (plain language) |
+|----------|---------------------------|
+|          |                           |
 
 ## 2. Options per decision point
-*(Prefer literature / benchmarks / deployed systems.)*
+*(Prefer literature / benchmarks / deployed systems. Plain language first.)*
 
 ### Point __
-| Option ID | Option | Provenance note |
-|-----------|--------|-----------------|
-|           |        |                 |
+| Option ID | What it means in ordinary terms | Provenance |
+|-----------|---------------------------------|------------|
+|           |                                 |            |
 
-*(Repeat per point.)*
+---
 
-## 3. Coherent packages
-| Package ID | Composition | Coherent? | Notes |
-|------------|-------------|-----------|-------|
-|            |             |           |       |
+## 3–5. Ranked packages (most → least powerful)
 
-## 4. Rank packages (most → least powerful for dependents)
-| Rank | Package | Short justification |
-|------|---------|---------------------|
-| 1    |         |                     |
-| 2    |         |                     |
+### Rank __ — Package name: ________
 
-## 5. Relevance warnings (mandatory)
-| Package | Overlap with original claim core (full / partial / weak) | Warning text |
-|---------|----------------------------------------------------------|--------------|
-|         |                                                          |              |
+**What this package concretely means:**  
+*(baseline, what counts, how strict / how gameable)*  
 
-## 6. Operator selection
+**If chosen, the next phase can check:**  
+
+**It still cannot settle (vs original claim):**  
+
+**Relevance warning (if partial/weak overlap):**  
+
+**Objective claim-deviation assessment** *(compare to original claim wording only)*  
+1. **Strong-language preservation:**  
+2. **Problem-identity check:**  
+3. **Scope / baseline / metric shift:**  
+4. **Deviation summary:** Minimal deviation / Moderate deviation / Substantial deviation / Problem substitution  
+
+*(Repeat for each ranked package.)*
+
+---
+
+## 6. Choice prompt
+
+Pick **one** package by name, **or** list à-la-carte option IDs.
+
 ```
-Package: ____
-OR à-la-carte: (list point = option)
+Package: ________
 
-OR-slots: for each unresolved alternative (e.g. B1|B2):
+OR à-la-carte:
+- Point __ = Option __
+- ...
+
+OR-slots (required if any alternatives remain):
   - [ ] Pick single: ____
   - [ ] Formally accept either: { ____ , ____ }
 ```
@@ -55,4 +83,16 @@ OR-slots: for each unresolved alternative (e.g. B1|B2):
 
 ---
 
-*Template for standing-rule locking-scaffolding. Domain-general.*
+## 7. Forced-deviation extraction (mandatory if no Minimal-deviation package)
+
+**Condition met?** Every realistic package is Moderate deviation or higher (no Minimal deviation): Yes / No  
+
+If **Yes**:
+1. **Extracted terms/clauses that force deviation:**  
+2. **Record as under-specified or over-strong in the claim as written:**  
+3. **Carry forward IDs for claim-freeze / research agenda:**  
+4. **Closeout note (draft):** these terms could not be tested in non-derivative form; that is a property of the claim text relative to available anchors/tools, not merely temporary lack of data.
+
+---
+
+*Domain-general template. See `.cursor/rules/applications-gated-method.mdc`.*

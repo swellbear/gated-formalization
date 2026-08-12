@@ -6,7 +6,7 @@ Use this checklist for every new claim, theory fragment, or argument you run thr
 Do not treat this file as a second full copy of the standing rule — checklist + pointers only.
 
 **Quick map:** Phase 1 (autonomous while Amb drops / gaps descriptive) → Phase 2 (authorized; scientific/math/technical) → optional Experimental Generation (batch-authorized) → closeout with **Original-Claim Assessment**.  
-Also in force when applicable: inter-parameter dependencies, locking-scaffolding (ranked + relevance warnings + **OR-slot resolution**), scoped-result honesty, package evidence intake, compact no-admit readouts, revision-vs-continuation fork at closeout.  
+Also in force when applicable: inter-parameter dependencies; locking-scaffolding (plain-language framing; ranked packages; **objective claim-deviation assessment**; **forced-deviation extraction** when no Minimal-deviation package exists; relevance warnings; **OR-slot resolution**; minimal choice prompt); scoped-result honesty; package evidence intake; compact no-admit readouts; revision-vs-continuation fork at closeout.  
 **Cons / Amb / redefinition** primary; **Agree / Prod** secondary. High Amb after serious search = Provisional, not false.
 
 ## 1. Setup
@@ -58,4 +58,6 @@ Also in force when applicable: inter-parameter dependencies, locking-scaffolding
 - Canonical detail lives only in `.cursor/rules/applications-gated-method.mdc`.
 - Compact no-admit is mandatory for no-change cycles.
 - Package OR-slots must be singled or formally “either”-accepted before dependents proceed.
+- Locking-scaffolding must open with plain-language framing and include an objective claim-deviation assessment (fixed dimensions/labels) for every package.
+- If **no Minimal-deviation package** exists, run **forced-deviation extraction**: name the claim terms that force deviation; carry them as first-class agenda/freeze items and into the Original-Claim Assessment (non-derivative testing impossible — property of claim text, not mere missing data).
 - Closeout is not silent resolution of the original claim.

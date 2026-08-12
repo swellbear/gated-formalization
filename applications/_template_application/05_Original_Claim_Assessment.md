@@ -28,6 +28,13 @@
 |----|-----------------|
 |    |                 |
 
+### Forced-deviation terms (if extraction was triggered)
+*(Every realistic lock package was Moderate+; these terms could not be tested in non-derivative form — property of claim text vs anchors/tools, not mere missing data.)*
+
+| ID / term | Under-specified or over-strong? | Notes |
+|-----------|----------------------------------|-------|
+|           |                                  |       |
+
 ### Strong language still unsupported
 *(uniqueness, “alone,” structural impossibility, unrestricted preferability, etc.)*
 
