@@ -6,7 +6,7 @@ Use this checklist for every new claim, theory fragment, or argument you run thr
 Do not treat this file as a second full copy of the standing rule — checklist + pointers only.
 
 **Quick map:** Phase 1 → Phase 2 → optional Experimental Generation → closeout (**`DISSERTATION.md` + Layer 2 `Thesis_Tracker.md` + update Layer 1 portfolio + Layer 3 residual queue**) → **offer** optional Claim-Revision / QI / Contrastive Recommendation / Use-Exploration (**offering ≠ running**).  
-Also in force: locking-scaffolding; Amb ≠ clearance; accuracy-first Phase 2; conflicted-source; already-included legs; soft-modal fork; Tracking Layers 1–3; thin-record recovery; imported-pattern stamp; quarterly `park-90d` review; **dual-audience plain-first**; **Use-Exploration**; **Residual-branch offering**; **Optional-mode offering**; **Share pack**; **endpoint vs hard stop**; **Live vs stand-in** badge; **operator reply grammar**; **Training Ladder** (`templates/TRAINING_LADDER.md`).  
+Also in force: locking-scaffolding; Amb ≠ clearance; **print-match ≠ clearance**; accuracy-first Phase 2; **named-class pulse** (**named enough**; establishment-stop drill); conflicted-source; already-included legs; soft-modal fork; Tracking Layers 1–3; thin-record recovery; imported-pattern stamp; quarterly `park-90d` review (**session trigger** if last review **never** or >~90d; first card = cadence-existence, not quarterly proof); **dual-audience plain-first**; **Use-Exploration**; **Residual-branch offering**; **Optional-mode offering**; **Share pack**; **endpoint vs hard stop** (incl. **hard stop (residuals live)**); **Live vs stand-in** badge; **operator reply grammar**; **Training Ladder** (`templates/TRAINING_LADDER.md`).  
 **Cons / Amb / redefinition** primary. **Low Amb ≠ claim cleared.**  
 **Glossary:** `docs/READER_GLOSSARY.md`
 
@@ -48,15 +48,17 @@ Also in force: locking-scaffolding; Amb ≠ clearance; accuracy-first Phase 2; c
 - [ ] Update gate sheet if anything admitted / Amb changed
 - [ ] **Full readout** if admit / Amb change / agenda shift
 - [ ] **Compact no-admit** otherwise (`Compact_No_Admit_Readout.md`) — mandatory; no padded narrative
-- [ ] Continue Phase 1 autonomously **or** stop for Phase 1 endpoint (agenda + claim-freeze + dependencies + Phase 2 class)
-- [ ] **Autonomy split (canonical rule):** auto-continue census / in-use structural drafts / unmet-or-refute bar tests / hygiene pack; **stop** for object, live-vs-stand-in, modal-bar fork, scaffolding pick, bar-**met**, Phase 2/EG, revise/keep, run-mode, branch, hard stop. One-lock-per-turn only if operator said `one admit at a time`.
+- [ ] Continue Phase 1 autonomously **or** stop for Phase 1 endpoint (agenda + claim-freeze + dependencies + Phase 2 class **per leftover**)
+- [ ] **Autonomy split (canonical rule):** auto-continue census / in-use structural drafts / unmet-or-refute bar tests / **named-class pulse** (named enough + freeze quoted + non-circular; establishment-stop drill) / hygiene pack; **stop** for object, live-vs-stand-in, unnamed source class (`name source class …`), modal-bar fork, scaffolding pick, bar-**met**, Phase 2/EG, revise/keep, run-mode, non-pulse branch, hard stop. One-lock-per-turn only if operator said `one admit at a time`.
 - [ ] At Phase 1 endpoint: **draft** residual-branch + optional-mode menus (offer; do not run; do not wait for the one-liner to start the files)
 
-## 7. Phase 2 (only if authorized and domain-applicable)
+## 7. Phase 2 (only if authorized and leftover-applicable)
+- [ ] Classify Phase 2 **per leftover**, not per slogan (empirical/numerical/modal bar may apply even if parent is mixed markets/outlook)
+- [ ] **Named-class pulse** may run without entering Phase 2 (`E_Package_Evidence_Intake` + rubric + `04`; stop if established)
 - [ ] **Accuracy posture** — improve established / not established / refuted; do not optimize for substantiating the slogan
 - [ ] Quote claim-freeze; formal `04`s; no silent claim narrowing
 - [ ] Dependencies / locking-scaffolding / OR-slots / scoped honesty as required by canonical rule
-- [ ] Package evidence → `E_Package_Evidence_Intake.md` (incl. **conflicted-source flag**) then `04`
+- [ ] Package evidence → `E_Package_Evidence_Intake.md` (incl. **conflicted-source flag** + **named-class pulse** block when applicable) then `04`
 - [ ] Scenario / multi-leg passes → list **already-included legs** (`S_Scenario_Pass.md`)
 - [ ] Numerical / workbook bars → complete `E_Quantitative_Evidence_Rubric.md` incl. **already-included legs**
 - [ ] Reused lock/metric/pattern from another app → paste **imported-pattern stamp** (`IMPORTED_PATTERN_STAMP.md`)
@@ -70,15 +72,15 @@ Also in force: locking-scaffolding; Amb ≠ clearance; accuracy-first Phase 2; c
 ## Authorization asks (any phase)
 - [ ] Lead with **plain-language card** (doing / need from you / yes means / does not mean)
 - [ ] One ordinary-language choice set; Rank/Amb/IDs only in a **Details** block after
-- [ ] Prompt expected **one-liner**: `lock Rank N` / `proceed with recommended` / `one admit at a time` / `authorize branch R-…` / `run UX` / `decline residual menu` / `endpoint only` / `hard stop` / …
+- [ ] Prompt expected **one-liner**: `lock Rank N` / `proceed with recommended` / `one admit at a time` / `name source class …` / `authorize branch R-…` / `run UX` / `decline residual menu` / `endpoint only` / `hard stop` / …
 - [ ] Never require the reader to decode package codes before they can answer
 
 ## 8. Close the Run
 - [ ] Fill `05_Original_Claim_Assessment.md` (status + **Amb ≠ clearance** + locked-bar status + continuation options + **revision vs continuation fork** when required)
 - [ ] Produce **`DISSERTATION.md`** with **all 11 template sections** (no stub/one-pager), **`EXECUTIVE_BRIEF.md`**, and **`SHARE_PACK.md`** (share pack = partner front door; **Live vs stand-in** when applicable)
-- [ ] Set **Closure state**: **endpoint** when examination done; **hard stop** only after hygiene + share pack
+- [ ] Set **Closure state**: **endpoint** when examination done; **hard stop** only after hygiene + share pack; **hard stop (residuals live)** if `pursue` items remain (`Next authorization` must not be `none`)
 - [ ] Produce / normalize **Layer 2** `Thesis_Tracker.md` (tags + related apps + residual dispositions)
-- [ ] Update **Layer 1** portfolio; refresh **Layer 3** queue (**pursue / park-90d / park-until-trigger / drop**)
+- [ ] Update **Layer 1** portfolio; refresh **Layer 3** queue (**pursue / park-90d / park-until-trigger / drop**; closeout defaults: named-enough obtainable → pursue; do not park for “operator admits a series”)
 - [ ] Update `TRACKER_PATTERN_MAP.md` if new pattern; if pattern now in ≥3 **live (non-training)** apps → `logs/calibration_log.md` (training fixtures do not count unless entry marked **training-only**)
 - [ ] Final verdict; failure-mode cadence if useful
 - [ ] Complete **`STATUS.md` closeout checklist** — unchecked applicable items ⇒ **not closed**
@@ -103,7 +105,7 @@ Also in force: locking-scaffolding; Amb ≠ clearance; accuracy-first Phase 2; c
 - [ ] Layer 2 `Thesis_Tracker.md` (cards 1–11: include **tags** + **related applications**)
 - [ ] Layer 1 `TRACKER_PORTFOLIO.md` row updated (domain / claim-shape / pattern tags + related apps)
 - [ ] Layer 3 `TRACKER_RESIDUAL_QUEUE.md` refreshed
-- [ ] Quarterly: review **`park-90d` only**; record review date on queue header
+- [ ] Quarterly: review **`park-90d` only**; record review date on queue header; **if last review never or >~90d at session start, review card first** (first/never card = cadence-existence; quarterly proof = next due ~90d later)
 - [ ] `TRACKER_PATTERN_MAP.md` updated if a new evidenced pattern appears
 - [ ] Tags from `docs/TRACKER_TAXONOMY.md` only
 - [ ] Trackers point to worksheets/dissertation; no conclusion inheritance across apps
@@ -130,12 +132,13 @@ Also in force: locking-scaffolding; Amb ≠ clearance; accuracy-first Phase 2; c
 
 ## 8g. Residual-branch offering (mandatory at closeout when residuals remain)
 - [ ] Classify each residual: empirically resolvable / definition-blocked / normative-preference / parked
+- [ ] Record **named source class** (specific / unnamed) on each empirically resolvable card
 - [ ] Produce `RESIDUAL_BRANCH_MENU.md` with **clickable index + anchored cards** (or explicit “no empirically resolvable residuals”)
-- [ ] Each card: what it is · why here · what authorizing does · success/failure · what it does *not* · effort · disposition · authorize one-liner
+- [ ] Each card: what it is · why here · named source class · what authorizing does · success/failure · what it does *not* · effort · disposition · authorize one-liner
 - [ ] Link residual IDs from STATUS / EXECUTIVE_BRIEF / SHARE_PACK / Thesis_Tracker to `#r-…` anchors
 - [ ] Keep executed residuals carded (audit trail), not ID-only tables
 - [ ] Document in STATUS, closeout, tracker, brief one-liner
-- [ ] **No automatic branch** — await operator authorization; parent closeout intact
+- [ ] **Named-class pulse** auto-continues when class is **named enough** + non-circular (stop if established; print-match ≠ met; partial match: do not collapse the bar). Unnamed → `name source class …`. Other branches still need `authorize branch R-…`. No auto Phase 2. Parent closeout intact.
 
 ## 8h. Optional-mode offering (mandatory at endpoint / hard-stop closeout)
 - [ ] Produce `OPTIONAL_MODES_MENU.md` (template: `templates/OPTIONAL_MODES_MENU.md`)
@@ -163,7 +166,10 @@ Also in force: locking-scaffolding; Amb ≠ clearance; accuracy-first Phase 2; c
 - Conflicted sources cannot solely affirm locked modal bars.
 - Scenario passes **and** numerical/workbook bars must list **already-included legs**.
 - Incomplete-record apps: thin-record recovery **before** elevations.
-- Quarterly scan **`park-90d`** only (not the whole queue).
+- Quarterly scan **`park-90d`** only (not the whole queue); **session trigger** if last review **never** or >~90d (first card ≠ quarterly proof).
+- Phase 2 classified **per leftover**; **named-class pulse** (named-enough non-circular fetch) auto-continues; bar-met still stops; print-match ≠ clearance.
+- **Phase 1 autonomy split:** auto-continue census / in-use drafts / unmet bar tests / named-class pulse / hygiene; stop for forks, unnamed class, bar-met, Phase 2, run-mode, non-pulse branch, hard stop. `one admit at a time` is an override.
+- **Share pack** mandatory for sharing closure; **endpoint ≠ hard stop**; **hard stop (residuals live)** when `pursue` remains.
 - Lock selection: Amb drop from fixing meanings ≠ clearance (lock-time warning).
 - Application Thesis Tracker is per-app, authorization-gated, and thesis-watchlist shaped for that claim.
 - **Tracking Layers 1–3 + pattern map** mandatory at closeout; taxonomy in `docs/TRACKER_TAXONOMY.md`; critically relevant apps may be **surfaced** (process only; no conclusion inheritance).
@@ -171,10 +177,8 @@ Also in force: locking-scaffolding; Amb ≠ clearance; accuracy-first Phase 2; c
 - Quantitative Implication & Counterfactual Benefit is authorization-gated after a failed numerical instance test; implications/counterfactuals ≠ proof of the claim.
 - Contrastive Recommendation is authorization-gated after an established core + failed elevation; proposes different better-fitting claims, not a silent rewrite.
 - **Use-Exploration** is authorization-gated after results exist; explores possible *uses* of findings guided by claim intent — **not** advice/forecasts and **not** a verdict change.
-- **Residual-branch offering** is mandatory at closeout when residuals remain; **clickable cards** required; offering ≠ running; no auto Phase 2. **Draft the menu at Phase 1 endpoint** (do not wait for the one-liner).
+- **Residual-branch offering** is mandatory at closeout when residuals remain; **clickable cards** required; offering ≠ running; named-class pulse ≠ auto Phase 2. **Draft the menu at Phase 1 endpoint** (do not wait for the one-liner).
 - **Optional-mode offering** is mandatory at endpoint/hard-stop closeout: offer applicable **UX / CX / CR / QI** (mark N/A explicitly); clickable cards + reply one-liners; offering ≠ running; residual menu alone is not sufficient. **Draft at Phase 1 endpoint.**
-- **Phase 1 autonomy split:** auto-continue census / in-use drafts / unmet bar tests / hygiene; stop for forks, bar-met, Phase 2, run-mode, branch, hard stop. `one admit at a time` is an override.
-- **Share pack** mandatory for sharing closure; **endpoint ≠ hard stop**.
 - Prefer operator reply grammar one-liners; show them in authorization asks.
 - **Live vs stand-in** badge on brief/share pack when prints/proxies used.
 - **Training Ladder** (`templates/TRAINING_LADDER.md`): Stages 0–8 path **complete** under `applications/training/`; Learning loop = ladder fixtures → live stress → pattern map → calibration (≥3 **live** apps) → standing-rule updates. Training apps excluded from ≥3 trigger unless **training-only**.

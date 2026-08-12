@@ -6,6 +6,25 @@
 **Application:**  
 **Locked package / scope label:**  
 **Target dependent(s) (e.g. R1, R2):**  
+**Named-class pulse?** Yes / No  
+
+---
+
+## 0. Named-class pulse (complete when this intake is an auto-continue pulse)
+
+Quote freeze; name the public class; confirm this is not the brochure that posed the bar and not a substituted question. **Stop** if the honest `04` result would be **established**. Continue if not-established or refute. Effort ≠ clearance. Print-match ≠ clearance.
+
+| Check | Value |
+|-------|--------|
+| Freeze line (quoted) | |
+| Named source class (specific series + matching locks) | |
+| Named enough? (on residual card **or** standing-rule example; published central statistic; rival series ≠ unnamed) | Yes / No — if No, **stop** (`name source class …`) |
+| Non-circular? (not same brochure / not problem substitution) | Yes / No — explain |
+| Schema match | Yes / Partial / No — if Partial, score **every** locked slot; do **not** collapse the bar to the matching subset |
+| Conflicted-source flag completed (§2)? | Yes / No |
+| **Establishment-stop drill:** Would honest `04` declare **established**? | Yes / No — if **Yes, stop** (do not auto-declare bar-met). Score the honest `04`, not “numbers lined up.” |
+
+If **Named source class** is unnamed or is a vehicle fork (which series?): **stop** — `name source class …`. Do not invent a class to make the leftover tractable. Do not treat a named series as unnamed because a rival class exists.
 
 ---
 

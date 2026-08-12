@@ -15,7 +15,7 @@
 
 *(Or: none — informing only.)*
 
-**Preferred reply (one-liner):** `authorize branch R-…` · `decline residual menu` · `lock Rank N` / `lock package …` · `run UX` / `decline UX` · `run QI` / `run CX` / `run CR` · `endpoint only` · `closeout` / `hard stop`  
+**Preferred reply (one-liner):** `authorize branch R-…` · `name source class …` · `decline residual menu` · `lock Rank N` / `lock package …` · `run UX` / `decline UX` · `run QI` / `run CX` / `run CR` · `endpoint only` · `closeout` / `hard stop`  
 *(Show only the forms that apply to this ask. Natural-language equivalents are OK if clear.)*
 
 ## What a “yes” / this update means

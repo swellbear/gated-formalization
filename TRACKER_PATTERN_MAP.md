@@ -1,6 +1,6 @@
 # Tracker Pattern Map
 
-**Last refreshed:** 2026-08-12 (Zitron Nvidia $500B hard stop sealed; FOMC June 2026 SEP hard stop sealed; R-VERIFY: Street total-revenue ≠ GPU $1.6T; R-REV: rewording ≠ bar clearance)  
+**Last refreshed:** 2026-08-12 (Zitron Nvidia $500B hard stop sealed; FOMC June 2026 SEP hard stop sealed + L17 SPF pulse not established; R-VERIFY: Street total-revenue ≠ GPU $1.6T; R-REV: rewording ≠ bar clearance)  
 **Taxonomy:** [`docs/TRACKER_TAXONOMY.md`](docs/TRACKER_TAXONOMY.md)  
 **Calibration:** When a pattern appears in ≥3 closed apps → [`logs/calibration_log.md`](logs/calibration_log.md)  
 Only patterns **evidenced** in current applications. Sparse by design.
@@ -11,7 +11,7 @@ Only patterns **evidenced** in current applications. Sparse by design.
 
 **Definition:** No Minimal-deviation lock package; over-strong / under-specified claim terms cannot be tested in non-derivative form.
 
-**Applications:** debt-limit parent · SpaceX · AV E2E · many-worlds · sell-in-May · llm-gwt (sufficiency/scale as over-strong elevations) · microservices alone/cascading · serverless alone/ops · graphql alone/overfetch · cash alone/privacy · term-limits alone/accountability (FD-ALONE / FD-PREF) · **coreweave-ceo-gpu-longer-life** (FD attr/N-INSTANCE/color → fleet F-LIFE smuggle) · **zitron-nvidia-500b-financing-thesis** (FD announcement/freeze/claimed table → vendor/70%/bubble/consensus clearance; Street **total-revenue** sum ≠ GPU $1.6T; Cloud% → AI%; CR rewording ≠ bar clearance; Squawk OUT) · **fomc-june-2026-sep** (FD median→Committee / pose→P-BaseCase met / freeze→met / LR 2%→2026-on-target / RMSE fan→current uncertainty / Amb 1→clearance; July 29 OUT; brochure cannot clear itself)
+**Applications:** debt-limit parent · SpaceX · AV E2E · many-worlds · sell-in-May · llm-gwt (sufficiency/scale as over-strong elevations) · microservices alone/cascading · serverless alone/ops · graphql alone/overfetch · cash alone/privacy · term-limits alone/accountability (FD-ALONE / FD-PREF) · **coreweave-ceo-gpu-longer-life** (FD attr/N-INSTANCE/color → fleet F-LIFE smuggle) · **zitron-nvidia-500b-financing-thesis** (FD announcement/freeze/claimed table → vendor/70%/bubble/consensus clearance; Street **total-revenue** sum ≠ GPU $1.6T; Cloud% → AI%; CR rewording ≠ bar clearance; Squawk OUT) · **fomc-june-2026-sep** (FD median→Committee / pose→P-BaseCase met / freeze→met / SPF print-match→met / annual-avg GDP→Q4/Q4 / LR 2%→2026-on-target / RMSE fan→current uncertainty / Amb 1→clearance; July 29 OUT; brochure cannot clear itself; independent survey kinship ≠ clearance)
 
 **Lesson:** Extract FD terms early; Amb drop from locks ≠ salvage of bare slogan. Official tables posing “most likely” do not meet P-BaseCase.
 

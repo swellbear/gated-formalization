@@ -21,25 +21,25 @@ Recommended contents after copying (from `templates/`):
 
 **Operator reply grammar** (prompt these one-liners when auth is needed; natural-language equivalents OK):
 
-- `authorize branch R-…` · `decline residual menu`
+- `authorize branch R-…` · `name source class …` · `decline residual menu`
 - `lock Rank N` / `lock package …` · `proceed with recommended` · `one admit at a time`
 - `run UX` / `decline UX` · `run CX` / `decline CX` · `run CR` / `decline CR` · `run QI` / `decline QI` · `decline optional modes`
 - `endpoint only` · `closeout` / `hard stop`
 - `IMPORTED_PATTERN_STAMP.md` when reusing a lock/metric/pattern from a related app
 - `THIN_RECORD_RECOVERY.md` if `incomplete-record` before any elevation residual
-- `Thesis_Tracker.md` — Layer 2; update portfolio / residual queue (**dispositions**; quarterly `park-90d` review) / pattern map / calibration log (≥3 apps)
+- `Thesis_Tracker.md` — Layer 2; update portfolio / residual queue (**dispositions**; quarterly `park-90d` review with **session trigger** if last review **never** or >~90d) / pattern map / calibration log (≥3 apps)
 - `R_Locking_Scaffolding.md` when a dominant blocker appears (incl. **lock-time Amb warning**; forced-deviation extraction if no Minimal-deviation package)
 - `CR_Claim_Revision_Scaffolding.md` when a post-closeout / forced-deviation **revision path** is authorized
 - `QI_Quantitative_Implication_Counterfactual_Benefit.md` when authorized after a **failed numerical instance** test
 - `CX_Contrastive_Recommendation.md` when authorized after an **established core + failed elevation** (alternative better-fitting claims; not a silent rewrite)
 - `UX_Use_Exploration.md` when authorized to explore **uses** of findings (instance-specific; not advice; does not change verdict)
-- `RESIDUAL_BRANCH_MENU.md` — **draft at Phase 1 endpoint** when residuals remain (offering ≠ running; classify + clickable cards); do not wait for the one-liner to start the file
+- `RESIDUAL_BRANCH_MENU.md` — **draft at Phase 1 endpoint** when residuals remain (offering ≠ running; classify + clickable cards + **named source class**); do not wait for the one-liner to start the file; named-class pulse ≠ auto Phase 2
 - **`OPTIONAL_MODES_MENU.md` — draft at Phase 1 endpoint / required at hard stop** — triage UX/CX/CR/QI Offer or N/A; clickable cards; offering ≠ running (**required**; residual menu alone is not enough)
-- `E_Package_Evidence_Intake.md` before admitting package-scoped evidence (**conflicted-source flag**)
+- `E_Package_Evidence_Intake.md` before admitting package-scoped evidence (**conflicted-source flag**; **named-class pulse** block when the source class is already specific)
 - `S_Scenario_Pass.md` for bear/base/bull or multi-leg scenarios (**already-included legs**)
 - `T_Application_Thesis_Tracker.md` / `THESIS_TRACKER.md` — use **`THESIS_TRACKER.md`** (Layer 2 nine-card); older T_ template superseded
 - Root portfolio / queue: `TRACKER_PORTFOLIO.md`, `TRACKER_RESIDUAL_QUEUE.md` (not copied per app)
 - `Compact_No_Admit_Readout.md` for no-admit Phase 1 cycles
 - `notes.md`, `final_verdict.md`, `admitted_layers.md` as useful
 
-Keep descriptive vs normative/strategic claims flagged. Cons/Amb/redefinition primary; Agree/Prod secondary. Phase 2 = **accuracy**, not substantiation. **Low Amb ≠ claim cleared.**
+Keep descriptive vs normative/strategic claims flagged. Cons/Amb/redefinition primary; Agree/Prod secondary. Phase 2 = **accuracy**, not substantiation; classify **per leftover**. **Named-class pulse** auto-continues freeze-named non-circular fetch; bar-met still stops. **Low Amb ≠ claim cleared.** **Hard stop (residuals live)** when `pursue` remains.

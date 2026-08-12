@@ -2,7 +2,7 @@
 
 **Application:** `2026-08_fomc-june-2026-sep`  
 **Last reviewed:** 2026-08-12  
-**Status:** Stable Provisional (split) — **hard stop sealed**
+**Status:** Stable Provisional (split) — **hard stop sealed** (L17 named-class pulse executed; bar still not met)
 
 **Tags** (see `docs/TRACKER_TAXONOMY.md`):  
 - Domain: `markets`  
@@ -26,7 +26,7 @@ The June 17, 2026 SEP is a published package of FOMC participants’ projections
 
 **Verdict:** Stable Provisional (split) — hard stop.
 
-**Amb path (brief):** Cycle 0 ≈ 11 → L1 9 → L2 7 → L3–L10 stay 7 → L11 5 → L12 4 → L13 stay 4 → L14 3 → L15 2 → L16 **1**. G8 not locked at closeout.
+**Amb path (brief):** Cycle 0 ≈ 11 → L1 9 → L2 7 → L3–L10 stay 7 → L11 5 → L12 4 → L13 stay 4 → L14 3 → L15 2 → L16 **1** → L17 stay **1**. G8 not locked at closeout.
 
 **Amb ≠ clearance:** Amb ≈ 1 is Gap 8 still open plus unmet bars, not a finding that 2026 PCE 3.6 is the expected path.
 
@@ -38,13 +38,14 @@ The June 17, 2026 SEP is a published package of FOMC participants’ projections
 - L3–L10 census vehicle (identity, definitions, submitted cells, 2021–25 actuals, revisions, dots/hists, uncertainty tallies, RMSE fans with caveats)  
 - L11 C-APPROP individual-mandate **meaning**; L12 F-LR **meaning**  
 - L13 2026 F-ML-BAR **test executed**  
-- L14 median of 18 (17 for 2028); L15 year-slots; L16 D-UNCERT ≠ D-RMSE
+- L14 median of 18 (17 for 2028); L15 year-slots; L16 D-UNCERT ≠ D-RMSE  
+- L17 SPF Q2 2026 **comparison executed** (non-SEP series on the record; bar still not met)
 
 ---
 
 ## 4. Not established / negatively constrained
 
-- F-ML-BAR met (2026 tested, not established, not a refute; 2027–28 untested)  
+- F-ML-BAR met (2026 tested L13 + L17 SPF, not established, not a refute; 2027–28 untested)  
 - C-APPROP as vote or realized path  
 - F-LR as dated unconditional or 2026-on-target  
 - Median as Committee forecast  
@@ -55,7 +56,7 @@ The June 17, 2026 SEP is a published package of FOMC participants’ projections
 
 ## 5. Forced deviations
 
-Median → Committee forecast; SEP → will happen; P-BaseCase freeze → bar met; L13 not-established → 2026 medians refuted; LR 2% → 2026 on-target; RMSE fan → current FOMC uncertainty; 17/18 → 70% interval; CPI RMSE → PCE; Amb 1 → clearance; July 29 on residual menu → in-package.
+Median → Committee forecast; SEP → will happen; P-BaseCase freeze → bar met; L13/L17 not-established → 2026 medians refuted; SPF PCE print-match → F-ML met; SPF annual-average GDP 2.2 → Q4/Q4; LR 2% → 2026 on-target; RMSE fan → current FOMC uncertainty; 17/18 → 70% interval; CPI RMSE → PCE; Amb 1 → clearance; July 29 on residual menu → in-package.
 
 ---
 
@@ -63,11 +64,11 @@ Median → Committee forecast; SEP → will happen; P-BaseCase freeze → bar me
 
 | ID | Residual | Concrete reopen condition |
 |----|----------|---------------------------|
-| [R-FML-2026](RESIDUAL_BRANCH_MENU.md#r-fml-2026) | 2026 F-ML-BAR test | **Executed** — not established; re-open only via R-FML-INDEP |
+| [R-FML-2026](RESIDUAL_BRANCH_MENU.md#r-fml-2026) | 2026 F-ML-BAR test | **Executed** — not established |
+| [R-FML-INDEP](RESIDUAL_BRANCH_MENU.md#r-fml-indep) | Non-SEP matched expected-path | **Executed L17** — SPF Q2 2026; not established; later vintage not auto-run |
 | [R-G8-SCOPE](RESIDUAL_BRANCH_MENU.md#r-g8-scope) | Freeze realization out of scope now | `lock G8 realization-later` (Amb 1→0; ≠ clearance) |
 | [R-REALIZE](RESIDUAL_BRANCH_MENU.md#r-realize) | 2026–28 actuals vs L5 medians | 2026 Q4 prints under L4 defs; hit ≠ F-ML met |
-| [R-FML-INDEP](RESIDUAL_BRANCH_MENU.md#r-fml-indep) | Non-SEP matched expected-path | Operator admits independent series under same locks |
-| [R-FML-2027-28](RESIDUAL_BRANCH_MENU.md#r-fml-2027-28) | F-ML-BAR on 2027 and 2028 | Authorize; diminishing returns |
+| [R-FML-2027-28](RESIDUAL_BRANCH_MENU.md#r-fml-2027-28) | F-ML-BAR on 2027 and 2028 | Authorize; diminishing returns; G5 forbids copy from 2026 |
 | [R-REV](RESIDUAL_BRANCH_MENU.md#r-rev) | Narrow to census core | `run CR`; rewording ≠ bar clearance |
 | [R-JULY29](RESIDUAL_BRANCH_MENU.md#r-july29) | Elevate July 29 into L₀ | Explicit package change; else **drop** |
 
@@ -79,14 +80,14 @@ Median → Committee forecast; SEP → will happen; P-BaseCase freeze → bar me
 
 **Keep saying:** Eighteen submissions; median of those submissions; census ≠ expected-path clearance; 17/18 flagged upside PCE risk.
 
-**Test next (only if authorized):** R-FML-INDEP or R-REALIZE after 2026 Q4 prints. Optional: `run UX` / `run CX` / `run CR`.
+**Test next (only if authorized):** R-REALIZE after 2026 Q4 prints, or `lock G8 realization-later`. Optional: `run UX` / `run CX` / `run CR`.
 
 ---
 
 ## 8. Exhibits
 
-- [`CLAIM_INVENTORY.md`](CLAIM_INVENTORY.md) · [`04a`](04a_Material_Admission_OBJECT_FORECAST.md)–[`04p`](04p_Material_Admission_G7_Tallies_Neq_RMSE.md)  
-- [`E_Quantitative_Evidence_Rubric_F_ML_2026.md`](E_Quantitative_Evidence_Rubric_F_ML_2026.md)  
+- [`CLAIM_INVENTORY.md`](CLAIM_INVENTORY.md) · [`04a`](04a_Material_Admission_OBJECT_FORECAST.md)–[`04q`](04q_Material_Admission_F_ML_INDEP_SPF_Q2_2026.md)  
+- [`E_Quantitative_Evidence_Rubric_F_ML_2026.md`](E_Quantitative_Evidence_Rubric_F_ML_2026.md) · [`E_Quantitative_Evidence_Rubric_F_ML_INDEP_SPF_Q2_2026.md`](E_Quantitative_Evidence_Rubric_F_ML_INDEP_SPF_Q2_2026.md)  
 - [`RESIDUAL_BRANCH_MENU.md`](RESIDUAL_BRANCH_MENU.md) · [`OPTIONAL_MODES_MENU.md`](OPTIONAL_MODES_MENU.md)  
 - UX/CX/CR **offered, not run**; QI **N/A**
 

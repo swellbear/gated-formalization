@@ -17,7 +17,7 @@ The June 17, 2026 FOMC Summary of Economic Projections is the whole package: wha
 
 ## Plain verdict
 
-What they **printed** is established. That those prints **are** the economy’s expected path, a Committee forecast, a vote, or 2026-on-target is **not**. 2026 medians were tested as a base case and did not clear. Low leftover ambiguity does not clear the path.
+What they **printed** is established. That those prints **are** the economy’s expected path, a Committee forecast, a vote, or 2026-on-target is **not**. 2026 medians were tested as a base case against the brochure and against SPF Q2 2026 and did not clear. An inflation print-match with SPF is not clearance. Low leftover ambiguity does not clear the path.
 
 **Live vs stand-in:** **Live:** June 17 SEP PDF/HTML. **OUT:** July 29 FOMC statement.
 
@@ -37,7 +37,7 @@ What they **printed** is established. That those prints **are** the economy’s 
 
 ## Not established
 
-- F-ML-BAR met (2026 tested, not a refute; 2027–28 untested)  
+- F-ML-BAR met (2026 tested L13 + L17 SPF, not a refute; 2027–28 untested)  
 - Median as Committee forecast  
 - Appropriate path as vote or realized funds  
 - LR 2.0 as 2026 on-target  
@@ -53,13 +53,13 @@ What they **printed** is established. That those prints **are** the economy’s 
 
 **Keep saying:** Eighteen submissions; median of those submissions; census ≠ expected-path clearance; 17/18 flagged upside inflation risk.
 
-**Test next (only if authorized):** [R-FML-INDEP](RESIDUAL_BRANCH_MENU.md#r-fml-indep) (non-SEP expected path) or [R-REALIZE](RESIDUAL_BRANCH_MENU.md#r-realize) after 2026 Q4 prints.
+**Test next (only if authorized):** [R-REALIZE](RESIDUAL_BRANCH_MENU.md#r-realize) after 2026 Q4 prints, or [R-G8-SCOPE](RESIDUAL_BRANCH_MENU.md#r-g8-scope).
 
 ---
 
 ## Residual-branch menu (at closeout)
 
-[`RESIDUAL_BRANCH_MENU.md`](RESIDUAL_BRANCH_MENU.md) — R-FML-2026 executed (not established). Other branches parked / drop. Offering ≠ running.
+[`RESIDUAL_BRANCH_MENU.md`](RESIDUAL_BRANCH_MENU.md) — R-FML-2026 and R-FML-INDEP executed (not established). Other branches parked / drop. Offering ≠ running.
 
 ---
 
@@ -83,7 +83,7 @@ What they **printed** is established. That those prints **are** the economy’s 
 |------|--------|
 | Method verdict | Stable Provisional (split) — hard stop |
 | Amb | ≈ **1** |
-| Locks / proxy IDs | L1–L16; LOCK-003, 009–011 |
+| Locks / proxy IDs | L1–L17; LOCK-003, 009–011 |
 | Scope label | June 17 SEP only; July 29 OUT |
 
 ---

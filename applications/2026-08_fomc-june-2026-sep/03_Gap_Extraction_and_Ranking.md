@@ -14,7 +14,7 @@
 
 ### Gap 2 — “Most likely” modal (F-ML)
 **Description:** What bar “most likely outcomes” must meet.  
-**Claim-freeze:** F-ML-BAR = **P-BaseCase** (expected / central path) for GDP, unemployment, PCE, core PCE. Funds-rate dots not under this bar. Printing Table 1 does not meet the bar. **L13:** 2026 medians tested — **not established** (not a refute).  
+**Claim-freeze:** F-ML-BAR = **P-BaseCase** (expected / central path) for GDP, unemployment, PCE, core PCE. Funds-rate dots not under this bar. Printing Table 1 does not meet the bar. **L13:** 2026 medians tested — **not established** (not a refute). **L17:** SPF Q2 2026 comparison — **not established** (PCE/core print-match ≠ clearance).  
 **Impact 2 · Anchor 2 · Measurability 1 · Sum 5**
 
 ### Gap 3 — Appropriate policy (C-APPROP)
@@ -52,7 +52,7 @@
 | Gap ID | One-sentence freeze lock |
 |--------|--------------------------|
 | G1 | **Locked L1:** object = forecast (most-likely outcomes); not census-only; not delivery commitment. |
-| G2 | **Locked L2:** F-ML-BAR = P-BaseCase for GDP/U/PCE/core PCE; funds-rate dots excluded; **bar not met**. **L13:** 2026 medians **not established**. |
+| G2 | **Locked L2:** F-ML-BAR = P-BaseCase for GDP/U/PCE/core PCE; funds-rate dots excluded; **bar not met**. **L13:** 2026 medians **not established**. **L17:** SPF Q2 2026 **not established**. |
 | G3 | **Locked L11:** C-APPROP = individual appropriate-policy path, not a vote, not a realized path; **vote/realized-path not met**. |
 | G4 | **Locked L14:** load-bearing census statistic = median of 18 (17 for 2028); CT/range/dots distributional; **not** Committee forecast; **not** F-ML met. |
 | G5 | **Locked L15:** 2026 / 2027 / 2028 / longer run are separate slots; LR 2.0 ≠ 2026 on-target; 2027–28 F-ML untested. |
@@ -92,7 +92,7 @@
 **Residual + optional-mode menus offered** (2026-08-12). No branch/mode run.  
 **Hard stop sealed** (operator `closeout` 2026-08-12). Default keep original wording. G8 not locked. Amb stays ≈ 1. July 29 still OUT.
 
-**Next (optional):** `authorize branch R-G8-SCOPE` / `lock G8 realization-later` · `authorize branch R-REALIZE` · `authorize branch R-FML-INDEP` · `run CR` · `run UX` · `run CX` · `decline optional modes`.
+**Next (optional):** `authorize branch R-G8-SCOPE` / `lock G8 realization-later` · `authorize branch R-REALIZE` · `run CR` · `run UX` · `run CX` · `decline optional modes`.
 
 
 

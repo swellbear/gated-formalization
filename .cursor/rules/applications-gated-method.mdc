@@ -18,16 +18,22 @@ For any work inside `applications/`:
 6. High residual Amb after serious search = **Provisional**, not false.
 7. **Gate priority:** **Cons**, **Amb**, and redefinition / meaning-shift checks are primary. **Agree** and **Prod** are secondary — score them, but only move the needle when the crisp rules below are met (do not invent productivity or stability gains).
 8. **Amb ≠ clearance (mandatory):** **Amb** measures under-specification (how many free parameters remain). **Clearance** means the locked bar or claim content is **established** by admitted material. Low Amb after locks means the question is well-posed; it does **not** mean the claim is true, Admissible, or that a modal bar (e.g. “non-negligible potential”) has been cleared. State this distinction in post-lock readouts and in the Original-Claim Assessment whenever Amb is low but substantive bars remain unmet.
+9. **Print-match ≠ clearance (mandatory):** Another source printing the **same number** (or a subset of numbers) is **kinship**, not bar-met. Posed ≠ met (brochure) and print-match ≠ met (independent series) are the same smuggle in two costumes. Do **not** collapse a multi-slot bar to the matching subset.
+
+**Park-90d session trigger:** Before other `applications/` work, if `TRACKER_RESIDUAL_QUEUE.md` last **`park-90d`** review is **never** *or* older than ~90 days, produce a **compact review card first** (only `park-90d` rows; for each: promote to `pursue` / extend park / convert to `park-until-trigger` / `drop`). Record the review date on the queue header. Do **not** churn `park-until-trigger` unless the trigger has fired. **Cadence-existence** (first/never review, including same-day extend-all) is not the **quarterly proof** — next due remains ~90 days later. A written quarterly scan that never runs is not the method.
 
 ## Phase 1 — Constraint Diagnosis (always runs)
 
 - Execute normal gated cycles: search → formal Material Admission Checks → re-score → notes.
 - **Autonomous continuation:** While Amb is still dropping meaningfully **or** remaining gaps are still primarily descriptive/structural, continue Phase 1 cycles **without waiting for operator authorization between cycles**.
 - **Operational split (do not under-ask or over-ask):**
-  - **Auto-continue (default):** remaining descriptive census / printed-source vehicle once object and live-vs-stand-in are set; **draft-already-in-use** structural freezes (the gap draft is exactly how admitted layers already quote); bar tests that conclude **not established** or **refute**; mechanical **hygiene pack** after every real admit/lock/test (`STATUS.md`, `PLAIN_LANGUAGE_CARD.md`, `admitted_layers.md`, `01`/`03` registers, gate rescore, `Thesis_Tracker.md`, portfolio / claim-graph / calibration stub as applicable); **draft** residual-branch and optional-mode menus at Phase 1 endpoint (offering ≠ running — do not wait for the operator to say `residual menu` before producing the files).
-  - **Stop for operator:** live vs stand-in / OUT of package; object or claim-type fork (census vs forecast vs commitment vs should; descriptive vs normative vs mixed); soft-modal bar fork; locking-scaffolding OR-slots / package pick; any recommendation that a locked bar, uniqueness, preferability, or should is **established**; stipulated proxy; Phase 2 / Experimental Generation; revise-vs-keep; endpoint vs hard stop; **run** UX/CX/CR/QI; **authorize** a residual branch; start a successor app. Meaning-forks with live rival readings (e.g. individual-mandate vs vote) stay stops even if a draft exists.
-  - **Bar tests:** after the bar is frozen and the evidence vehicle is in, **run** the rubric/`04`. Continue if the honest result is not-established or refute. **Stop** if the result would be **established**.
-  - **One-lock-per-turn** is an **operator override** (`one admit at a time`), not the default. Do not treat it as the method. `proceed with recommended` authorizes only the auto-continue class (structural drafts / remaining census / unmet tests), not bar-met or closeout tools.
+  - **Auto-continue (default):** remaining descriptive census / printed-source vehicle once object and live-vs-stand-in are set; **draft-already-in-use** structural freezes (the gap draft is exactly how admitted layers already quote); bar tests that conclude **not established** or **refute**; **named-class pulse** (below) when all pulse gates pass; mechanical **hygiene pack** after every real admit/lock/test (`STATUS.md`, `PLAIN_LANGUAGE_CARD.md`, `admitted_layers.md`, `01`/`03` registers, gate rescore, `Thesis_Tracker.md`, portfolio / claim-graph / calibration stub as applicable); **draft** residual-branch and optional-mode menus at Phase 1 endpoint (offering ≠ running — do not wait for the operator to say `residual menu` before producing the files).
+  - **Stop for operator:** live vs stand-in / OUT of package; object or claim-type fork (census vs forecast vs commitment vs should; descriptive vs normative vs mixed); soft-modal bar fork; locking-scaffolding OR-slots / package pick; **unnamed** empirical source class (`name source class …`); any recommendation that a locked bar, uniqueness, preferability, or should is **established**; stipulated proxy; Phase 2 / Experimental Generation; revise-vs-keep; endpoint vs hard stop; **run** UX/CX/CR/QI; **authorize** a residual branch that is *not* a named-class pulse; start a successor app. Meaning-forks with live rival readings (e.g. individual-mandate vs vote) stay stops even if a draft exists.
+  - **Bar tests:** after the bar is frozen and the evidence vehicle is in, **run** the rubric/`04`. Continue if the honest result is not-established or refute. **Stop** if the result would be **established**. Same stop applies to a named-class pulse: the test **runs**; establishment still requires an operator checkpoint.
+  - **One-lock-per-turn** is an **operator override** (`one admit at a time`), not the default. Do not treat it as the method. `proceed with recommended` authorizes only the auto-continue class (structural drafts / remaining census / unmet tests / named-class pulse), not bar-met or closeout tools.
+- **Named-class pulse (matched evidence; not Phase 2):** When a leftover is empirically resolvable, the freeze is quoted, a **specific public source class** is already **named enough**, the fetch is **non-circular** (not the same brochure / not problem substitution), and the conflicted-source flag will be completed, **auto-continue** `E_Package_Evidence_Intake` + quantitative rubric if applicable + `04`. This is **not** inventing a new question, **not** a silent `authorize branch`, and **not** Phase 2. Unnamed class → stop (`name source class …`). Circular / freeze-swap → stop. Honest **established** → stop. Effort / intractability ≠ clearance. Print-match ≠ clearance. Mixed/partial matching is allowed; do **not** shrink the bar to the matching slots.
+- **Named enough (pulse / residual card):** The class is named if a **public series + matching locks** is already on the residual card **or** in this rule’s example line. Use the **published central statistic** of that series (do not invent mean vs median). Rival series (e.g. Tealbook vs SPF vs nowcast) are **different classes**, not a reason to treat the named one as unnamed. “Some independent forecast” / “operator admits a series” is **unnamed**. Example of named enough: “Philadelphia Fed SPF, published central statistic (median), same Q4/Q4 2026 GDP/U/PCE/core defs where SPF publishes them.”
+- **Establishment-stop drill (mandatory on every pulse `04`):** Score **Would honest `04` declare established? Yes / No** even when the answer is No. If **Yes → stop** (do not auto-declare bar-met). Score the honest `04`, not “numbers lined up.” A full or partial print-match can still be not-established (policy-mix, vintage, uniqueness, matching-conditions fail). This drill is required; skipping it because the miss looks obvious is not the method. The **hit** case (honest `04` would say established) still stops for operator — do not treat an easy miss as proof that the stop holds.
 - After **every** cycle, still produce a readout:
   - **Full readout** if any material was admitted, Amb changed, or the agenda shifted.
   - **Compact no-admit form (mandatory)** if nothing was admitted and Amb is unchanged — use `templates/Compact_No_Admit_Readout.md` (or equivalent): (i) candidates examined + REJECT/HOLD, (ii) Amb unchanged, (iii) gaps unchanged, (iv) Phase 1 continuation Y/N + one-line reason. Do **not** write a full narrative re-score for no-admit cycles.
@@ -37,7 +43,7 @@ For any work inside `applications/`:
   - Explicit research agenda (open free parameters)
   - **Claim-freeze:** for each open free parameter, a **one-sentence lock** of what the parameter *is* (the problem statement that later candidates must quote)
   - **Inter-parameter dependencies** (if any) per the rule below — explicit statement, dependent marking, rectification path, prominent reopen condition
-  - **Explicit domain classification:** Phase 2 applicable / not applicable / mixed (with justification)
+  - **Explicit domain classification (per leftover, not per slogan):** for each remaining free parameter / locked bar, Phase 2 applicable / not applicable / mixed (with justification). A frozen empirical, numerical, or modal bar may be Phase 2-applicable even if the parent claim is mixed markets/outlook. Normative should / preferability leftovers stay not applicable unless the operator carves them in. A **named-class pulse** may run **without** entering Phase 2.
   - Residual judgment points and higher-level review
   - Recommended next action
   - **Drafted** `RESIDUAL_BRANCH_MENU.md` (if residuals remain) and `OPTIONAL_MODES_MENU.md` (Offer/N/A triage) — files on disk; branches/modes still not run
@@ -59,9 +65,9 @@ When the claim text uses soft modals or weak evaluatives such as **“potential,
 
 **Permitted domains:** scientific theories, mathematical claims, technical research programs, formal models, and similar cases where actively trying to solve remaining problems is appropriate.
 
-**Not permitted:** pure opinion, advocacy, or value-framing pieces.
+**Not permitted:** pure opinion, advocacy, or value-framing pieces **as leftovers**. Do not treat a mixed official-outlook or markets *slogan* as Phase 2 N/A when the leftover is a frozen empirical / numerical / modal bar.
 
-**Mixed cases:** operator decides which parts may enter Phase 2.
+**Mixed cases:** classify **per leftover**, not per parent slogan. Frozen empirical/numerical/modal bars may enter Phase 2 (accuracy posture) if authorized. Normative should / preferability / value-framing leftovers stay out unless the operator carves them in. Operator still authorizes Phase 2 entry. A **named-class pulse** does not require Phase 2.
 
 **Default posture — accuracy, not substantiation:** Phase 2 exists to **improve the accuracy** of whether remaining free parameters / locked bars are established, refuted, or still open. A successful pass may equally **strengthen REJECT/HOLD**, leave a bar **not established**, or (when evidence warrants) support clearance. Do **not** optimize for clearing the original slogan or for “ranking success by substantiating claims.”
 
@@ -151,6 +157,8 @@ Once work proceeds under a locked package:
 ### Package-satisfying evidence intake
 
 When the next step is to admit empirical or matched evidence under a locked package, use `templates/E_Package_Evidence_Intake.md` (or equivalent). Record: locked pair/ODD/metrics/matching; what the artifact claims; ADMIT vs HOLD vs REJECT criteria relative to the freeze; scoped-result honesty label. Do not invent results to fill the sheet.
+
+**Named-class pulse block (mandatory when this intake is an auto-continue pulse):** Quote the freeze line; state the **named source class** (named-enough test above); confirm **non-circular**; complete the conflicted-source flag; record **schema match Yes / Partial / No**; then `04`. **Establishment-stop drill:** Would honest `04` declare established? Yes / No — if Yes, **stop**. Continue if not-established or refute. Print-match ≠ clearance. Partial match: score every locked slot; do **not** collapse the bar to the matching subset.
 
 **Conflicted-source rule (mandatory):** Flag whether the artifact is **conflicted or interest-aligned** (e.g. underwriter / bookrunner research, issuer marketing, vendor white papers, advocacy or campaign materials, self-reported unaudited metrics used as sole proof). Conflicted artifacts may be admitted only as **scenario presence**, **design kinship**, or **conflicted pitch curves** — they must **not** be the sole support for affirming a locked modal bar (e.g. P-NonNegligible) or for claiming the original slogan is established. Prefer non-conflicted sources for affirmation; if only conflicted sources exist, HOLD affirmation and say so.
 
@@ -266,6 +274,7 @@ Prefer teaching these forms for external operators (natural-language equivalents
 | Optional modes (legacy shorthand) | `run QI` / `run CX` / `run CR` (when those modes apply) |
 | Continue auto-continue class as recommended | `proceed with recommended` |
 | Interactive Phase 1 override | `one admit at a time` |
+| Name a specific public source class for an empirical leftover | `name source class …` |
 | Close examination only | `endpoint only` |
 | Full hygiene close | `closeout` / `hard stop` |
 
@@ -283,18 +292,19 @@ Maintain a short **`STATUS.md`** at the top of each application folder (also mir
 |-------|---------|
 | **Endpoint** | Examination of the claim is done (gates/evidence/UX/residual menu as applicable finished). Verdict frozen for the claim as stated. |
 | **Hard stop** | Endpoint **plus** Layers 1–3 hygiene complete (portfolio row, Thesis Tracker, residual dispositions, share pack / brief / dissertation checkboxes done). |
+| **Hard stop (residuals live)** | Hard-stop hygiene complete **and** one or more residuals remain **`pursue`**. Parent examination is sealed; leftovers are not abandoned. |
 
-An app may show **endpoint reached / hard stop pending** without looking “fully closed.” Do not label **hard stop** until hygiene checkboxes are done.
+An app may show **endpoint reached / hard stop pending** without looking “fully closed.” Do not label **hard stop** until hygiene checkboxes are done. Do **not** label plain **hard stop** (with `Next authorization needed` = `none — hard stop`) while `pursue` items exist — use **hard stop (residuals live)** and name the live residual / `name source class …` / named-class pulse status.
 
 **Required fields (compact):**
-- **Closure state** — open / **endpoint** / **endpoint + hard stop pending** / **hard stop**
-- **Phase** — Phase 1 / Phase 1 endpoint / Phase 2 Attempt N / closeout / optional mode
+- **Closure state** — open / **endpoint** / **endpoint + hard stop pending** / **hard stop** / **hard stop (residuals live)**
+- **Phase** — Phase 1 / Phase 1 endpoint / Phase 2 Attempt N / named-class pulse / closeout / optional mode
 - **Amb** — current estimate
 - **Locks in force** — package IDs or “none”
-- **Next authorization needed** — one line (or “none — hard stop”)
+- **Next authorization needed** — one line (or “none — hard stop” **only if** no `pursue` residuals remain)
 - **Related apps surfaced** — ≤2 IDs + reason, or “none”
 
-**Closeout checklist (mandatory in `STATUS.md`):** Before labeling a run **hard-stopped**, check off **full 11-section `DISSERTATION.md`** (stubs ≠ done), executive brief, **`SHARE_PACK.md`**, Layer 2 tracker, portfolio row, residual dispositions, residual-branch menu (if residuals), **optional-modes menu (offer applicable UX/CX/CR/QI — offering ≠ running)**, pattern map / calibration if needed, and final verdict. **Unchecked applicable items ⇒ not hard-stopped** (may still be at **endpoint**). Template: `templates/STATUS.md`.
+**Closeout checklist (mandatory in `STATUS.md`):** Before labeling a run **hard-stopped**, check off **full 11-section `DISSERTATION.md`** (stubs ≠ done), executive brief, **`SHARE_PACK.md`**, Layer 2 tracker, portfolio row, residual dispositions, residual-branch menu (if residuals), **optional-modes menu (offer applicable UX/CX/CR/QI — offering ≠ running)**, pattern map / calibration if needed, and final verdict. **Unchecked applicable items ⇒ not hard-stopped** (may still be at **endpoint**). `closeout` / `hard stop` does **not** convert named-class obtainable residuals to park/drop. Template: `templates/STATUS.md`.
 
 ### Share pack (mandatory at closeout / for sharing)
 
@@ -563,22 +573,30 @@ Whenever an application **closes** or reaches **Stable Provisional** (or equival
 
 2. **Clickable cards (mandatory):** For **every** residual ID (open *and* executed in that app):
    - Index table row linking to an in-file anchor (`#r-…` via `<a id="r-…"></a>`)
-   - Card fields: **What it is** · **Why offered here** (instance-specific) · **What authorizing does** · **What success / failure changes** · **What it does *not* do** · **Effort** · **Disposition** · **How to authorize**
+   - Card fields: **What it is** · **Why offered here** (instance-specific) · **Named source class** (specific public series + matching locks, or **unnamed**) · **What authorizing does** · **What success / failure changes** · **What it does *not* do** · **Effort** · **Disposition** · **How to authorize**
    - Mentions of residual IDs in `STATUS.md`, `EXECUTIVE_BRIEF.md`, `SHARE_PACK.md`, and `Thesis_Tracker.md` **must link** to those anchors
    - Do **not** ship ID-only tables without cards — operators need explainers before authorizing
 
-3. For **empirically resolvable** residuals, the card *is* the plain-language **branch menu** entry (fields above).  
+3. For **empirically resolvable** residuals, the card *is* the plain-language **branch menu** entry (fields above). Fill **Named source class** at closeout (specific or **unnamed**). **Named enough:** public series + matching locks already on the card **or** in this rule’s example — e.g. “Philadelphia Fed SPF, published central statistic (median), same Q4/Q4 2026 GDP/U/PCE/core defs where SPF publishes them.” Not “some independent forecast.” Unnamed → stop until `name source class …`. Do **not** park a named-enough obtainable leftover as `park-until-trigger` for “operator admits a series.”
 
-4. **Definition-blocked** → Class on card = lock definitions first, then branch.  
+4. **Definition-blocked** → Class on card = lock definitions first **or** name the source class, then branch / pulse.  
 5. **Normative / preference** → list as **not branchable by the method**.  
-6. **No automatic branch.** Operator must authorize.  
+6. **No automatic branch** for definition-blocked, normative, unnamed-class, or parked items — operator must `authorize branch R-…` or `name source class …`. A **named-class pulse** (empirically resolvable + source class already specific + non-circular) is **not** a branch authorize: auto-continue intake + rubric + `04` under the freeze. Still **stop** if the result would be established. Still not auto Phase 2.  
 7. Authorized branch → marked successor or scoped continuation; **parent closeout stays intact**; link residual ID; update the card’s Disposition / decision log.
+
+**Closeout Layer 3 defaults (do not kill leftovers by sealing hygiene):**
+- Named enough + data obtainable now → **`pursue`** (named-class pulse may auto-continue; STATUS = **hard stop (residuals live)** if that `pursue` remains)
+- Data does not exist yet → **`park-until-trigger`** (the class may already be named; the trigger is the missing print, not “name a series”)
+- Same identification block / diminishing returns → **`park-90d`**
+- Normative / OUT-of-package → **drop** or not-branchable as now
+
+`closeout` / `hard stop` does **not** convert named-enough obtainable residuals to park/drop. Do not wait for a later “optimal working system” pass to fetch a class that was already named at seal.
 
 Template: `templates/RESIDUAL_BRANCH_MENU.md`.  
 
 **Documentation (every time a menu is produced):** `STATUS.md`; Original-Claim Assessment / closeout; `Thesis_Tracker.md` (exhibits); executive brief (one line: menu offered / what was authorized or declined) — with **clickable residual links**.
 
-**Honesty:** Offering ≠ running. Does not change parent verdicts. No advice. No auto Phase 2.
+**Honesty:** Offering ≠ running. Does not change parent verdicts. No advice. No auto Phase 2. Named-class pulse ≠ automatic Phase 2 and ≠ bar-met.
 
 If there are **no** empirically resolvable residuals, still produce the file with an explicit **“no empirically resolvable residuals”** note and classify/card the rest.
 
@@ -625,7 +643,9 @@ Root file `TRACKER_RESIDUAL_QUEUE.md`.
 
 Only **pursue** items stay in the active priority bands. Parked/dropped items move to a **Parked / dropped** section with disposition + date. Refresh when residuals are added, closed, or dispositions change.
 
-**Parked residual review cadence:** About **once per quarter**, review only **`park-90d`** items (not the whole queue). For each: promote to `pursue`, extend park, convert to `park-until-trigger`, or `drop`. Record the review date at the top of `TRACKER_RESIDUAL_QUEUE.md`. Do **not** weekly-churn `park-until-trigger` items unless their trigger fires.
+**Closeout defaults (Layer 3):** named enough + data obtainable now → `pursue`; data not yet existent → `park-until-trigger`; same identification block / diminishing returns → `park-90d`; normative / OUT → `drop` or not-branchable. Do not backfill old parked rows into `pursue` except via a due `park-90d` review.
+
+**Parked residual review cadence:** About **once per quarter**, review only **`park-90d`** items (not the whole queue). For each: promote to `pursue`, extend park, convert to `park-until-trigger`, or `drop`. Record the review date at the top of `TRACKER_RESIDUAL_QUEUE.md`. Do **not** weekly-churn `park-until-trigger` items unless their trigger fires. **Session trigger:** if the last review is **never** or older than ~90 days when `applications/` work starts, produce the compact review card **before** other work. A never/same-day first card is **cadence-existence**; the **quarterly proof** is the next due date (~90 days later).
 
 ### Pattern map (mandatory maintain)
 

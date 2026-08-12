@@ -9,7 +9,7 @@
 
 ## 1. Plain verdict
 
-The June 17, 2026 SEP is a published set of **18 participants’ submissions** (17 for 2028) of most-likely GDP, unemployment, and inflation, each under that person’s own appropriate-policy path. What they **wrote down** is established. That those figures **are** the economy’s expected path, the Committee’s forecast, a vote, or 2026-on-target is **not** established. 2026 medians were tested as a base case and **did not clear**.
+The June 17, 2026 SEP is a published set of **18 participants’ submissions** (17 for 2028) of most-likely GDP, unemployment, and inflation, each under that person’s own appropriate-policy path. What they **wrote down** is established. That those figures **are** the economy’s expected path, the Committee’s forecast, a vote, or 2026-on-target is **not** established. 2026 medians were tested as a base case against the brochure **and** against the May 2026 Survey of Professional Forecasters and **did not clear**.
 
 **Live vs stand-in:** **Live:** June 17, 2026 SEP [PDF](https://www.federalreserve.gov/monetarypolicy/files/fomcprojtabl20260617.pdf) / [HTML](https://www.federalreserve.gov/monetarypolicy/fomcprojtabl20260617.htm). **OUT:** July 29, 2026 FOMC statement (not used as a stand-in for this package).
 
@@ -28,7 +28,7 @@ The June 17, 2026 SEP is a published set of **18 participants’ submissions** (
 
 ## Not established
 
-- 2026 medians **are** the economy’s expected / central path (F-ML-BAR; tested, not a refute)  
+- 2026 medians **are** the economy’s expected / central path (F-ML-BAR; L13 brochure test + L17 SPF Q2 2026; not a refute). SPF PCE/core Q4/Q4 printed **3.6 / 3.3** (same prints); SPF GDP 2.2 is **annual-average**, not Q4/Q4; SPF unemployment 2026Q4 **4.5** vs SEP **4.3**. Print-match ≠ clearance.  
 - 2027–28 medians as expected path (untested; same identification blockers likely)  
 - Median = Committee forecast  
 - Appropriate-policy dots = a vote or the realized funds path  
@@ -41,7 +41,7 @@ The June 17, 2026 SEP is a published set of **18 participants’ submissions** (
 
 ## 3. Action implications
 
-**Stop saying:** “The Fed forecasts 3.6% PCE in 2026”; “the Committee’s outlook is 2.2% GDP”; “dots are the July decision”; “they’re on track to 2% this year”; “the 70% bands are what the FOMC currently believes”; “Amb is 1 so the path is cleared”; “the July statement finishes this package.”
+**Stop saying:** “The Fed forecasts 3.6% PCE in 2026”; “the Committee’s outlook is 2.2% GDP”; “dots are the July decision”; “they’re on track to 2% this year”; “the 70% bands are what the FOMC currently believes”; “Amb is 1 so the path is cleared”; “SPF also printed 3.6 so the SEP path is cleared”; “the July statement finishes this package.”
 
 **Keep saying:** Eighteen people submitted June projections of most-likely outcomes under their own appropriate-policy readings; the median of those submissions is the table above; that is a census of a document, not a cleared base case for the economy; 17/18 flagged higher-than-average PCE uncertainty with upside risk; historical error bands are a different object from those tallies.
 
@@ -49,7 +49,7 @@ The June 17, 2026 SEP is a published set of **18 participants’ submissions** (
 
 ## 4. Residual-branch offer
 
-Menu: [`RESIDUAL_BRANCH_MENU.md`](RESIDUAL_BRANCH_MENU.md) — **executed:** [R-FML-2026](RESIDUAL_BRANCH_MENU.md#r-fml-2026) (not established). **Parked:** [R-REALIZE](RESIDUAL_BRANCH_MENU.md#r-realize) · [R-FML-INDEP](RESIDUAL_BRANCH_MENU.md#r-fml-indep) · [R-FML-2027-28](RESIDUAL_BRANCH_MENU.md#r-fml-2027-28) · [R-G8-SCOPE](RESIDUAL_BRANCH_MENU.md#r-g8-scope) · [R-REV](RESIDUAL_BRANCH_MENU.md#r-rev). **Drop/OUT:** [R-JULY29](RESIDUAL_BRANCH_MENU.md#r-july29). Offering ≠ running.
+Menu: [`RESIDUAL_BRANCH_MENU.md`](RESIDUAL_BRANCH_MENU.md) — **executed:** [R-FML-2026](RESIDUAL_BRANCH_MENU.md#r-fml-2026) (not established) · [R-FML-INDEP](RESIDUAL_BRANCH_MENU.md#r-fml-indep) (L17 SPF Q2 2026; not established). **Parked:** [R-REALIZE](RESIDUAL_BRANCH_MENU.md#r-realize) · [R-FML-2027-28](RESIDUAL_BRANCH_MENU.md#r-fml-2027-28) · [R-G8-SCOPE](RESIDUAL_BRANCH_MENU.md#r-g8-scope) · [R-REV](RESIDUAL_BRANCH_MENU.md#r-rev). **Drop/OUT:** [R-JULY29](RESIDUAL_BRANCH_MENU.md#r-july29). Offering ≠ running.
 
 ---
 
@@ -84,7 +84,7 @@ Menu: [`RESIDUAL_BRANCH_MENU.md`](RESIDUAL_BRANCH_MENU.md) — **executed:** [R-
 |------|--------|
 | Method verdict | Stable Provisional (split) — hard stop |
 | Amb | ≈ **1** (Gap 8 open; G8 not locked) |
-| Locks / layers | L1–L16; LOCK-003, 009–011; F-ML-BAR frozen, not met |
+| Locks / layers | L1–L17; LOCK-003, 009–011; F-ML-BAR frozen, not met |
 | Parent / successor | None; CR **offered, not run**; default **keep original wording** |
 | Key files | `DISSERTATION.md` · `STATUS.md` · `05_Original_Claim_Assessment_Closeout.md` · residual + optional menus |
 

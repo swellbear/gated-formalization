@@ -1,6 +1,6 @@
 # Admitted layers
 **Frame:** June 17, 2026 SEP. **OUT:** July 29 statement.  
-**Object:** **forecast** (L1). **F-ML-BAR:** P-BaseCase (L2) — **not met**. **L13:** 2026 medians tested, **not established**.  
+**Object:** **forecast** (L1). **F-ML-BAR:** P-BaseCase (L2) — **not met**. **L13:** 2026 medians tested, **not established**. **L17:** SPF Q2 2026 comparison, **not established**.  
 **C-APPROP:** individual-mandate (L11) — vote/realized-path **not met**.  
 **F-LR:** convergence + no further shocks (L12) — dated/2026-on-target **not met**.
 
@@ -22,7 +22,8 @@
 | **L14** | **G4 median-load-bearing** ([04n](04n_Material_Admission_G4_Median_Load_Bearing.md)) | Census claim statistic = median of 18 (17 for 2028); CT/range/dots stay distributional; **not** Committee forecast; **not** F-ML met |
 | **L15** | **G5 year-slots** ([04o](04o_Material_Admission_G5_Year_Slots.md)) | 2026 / 2027 / 2028 / longer run are separate slots; LR 2.0 ≠ 2026 on-target; 2027–28 F-ML untested |
 | **L16** | **G7 tallies ≠ RMSE** ([04p](04p_Material_Admission_G7_Tallies_Neq_RMSE.md)) | D-UNCERT ≠ D-RMSE; 17/18 ≠ 70% interval; RMSE ≠ current FOMC uncertainty; CPI ≠ PCE |
+| **L17** | **F-ML-INDEP SPF Q2 2026** ([04q](04q_Material_Admission_F_ML_INDEP_SPF_Q2_2026.md)) | Non-SEP comparison series; PCE/core Q4/Q4 print-match; GDP concept mismatch; U 4.5 vs 4.3; **not established**; not a refute |
 
-**Package Amb ≈ 1.** Hard stop sealed 2026-08-12. G8 not locked. Menus offered, not run.
+**Package Amb ≈ 1.** Hard stop sealed 2026-08-12. Named-class pulse L17 executed. G8 not locked. Menus offered, not run (except executed pulses).
 
-**Not admitted / not met:** F-ML-BAR **met** (2026 test executed, not established) · C-APPROP as vote or realized path · F-LR as dated unconditional or 2026-on-target · 2026–28 realization · July 29 · median as Committee forecast · RMSE fan as current FOMC uncertainty · CPI RMSE as PCE
+**Not admitted / not met:** F-ML-BAR **met** (2026 brochure test + SPF comparison executed, not established) · C-APPROP as vote or realized path · F-LR as dated unconditional or 2026-on-target · 2026–28 realization · July 29 · median as Committee forecast · RMSE fan as current FOMC uncertainty · CPI RMSE as PCE · SPF print-match as clearance

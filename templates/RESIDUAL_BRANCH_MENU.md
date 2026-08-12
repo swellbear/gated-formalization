@@ -1,6 +1,6 @@
 # Residual-Branch Menu
 
-**Mandatory at closeout / hard stop when residuals remain.** Offering ≠ running. Parent verdict unchanged.
+**Mandatory at closeout / hard stop when residuals remain.** Offering ≠ running. Parent verdict unchanged. Hygiene seal may leave **`pursue`** live (**hard stop (residuals live)**). A **named-class pulse** (specific public source class already on the card, freeze quoted, non-circular) auto-continues intake + rubric + `04` — it is **not** automatic Phase 2 and **not** bar-met.
 
 **Clickable cards (mandatory):** Every residual ID must have (1) an index-table link and (2) an anchored card with instance-specific explainers. Mentions in `STATUS.md`, `EXECUTIVE_BRIEF.md`, `SHARE_PACK.md`, and `Thesis_Tracker.md` should link to those anchors (`RESIDUAL_BRANCH_MENU.md#r-…`).
 
@@ -14,23 +14,25 @@
 
 ## 0. Plain-language framing
 
-**What we’re doing:** Listing leftover open items and which ones *could* be branched later if you authorize.  
+**What we’re doing:** Listing leftover open items. Some with a **named source class** may be fetched under the freeze without a new branch authorize. Others wait for you.
 
-**What we need from you:** Nothing unless you want to authorize a branch. Click an ID below for what that residual means *in this app*.  
+**What we need from you:** Nothing unless the source class is unnamed (`name source class …`) or you want a non-pulse branch. Click an ID below for what that residual means *in this app*.
 
-**What authorizing a branch means:** A scoped continuation or marked successor linked to that residual ID — not a rewrite of this closeout.  
+**What authorizing a branch means:** A scoped continuation or marked successor linked to that residual ID — not a rewrite of this closeout.
 
-**What this does *not* mean:** Automatic Phase 2; advice; changing what was already established / not established.
+**What this does *not* mean:** Automatic Phase 2; that a named-class pulse **establishes** the bar; advice; changing what was already established / not established.
 
 ---
 
 ## 1. Index (clickable)
 
-| Residual ID | One-line | Class | Disposition |
-|-------------|----------|-------|-------------|
-| [R-EXAMPLE](#r-example) | … | Empirically resolvable / Definition-blocked / Normative-preference / Parked | park-until-trigger / park-90d / drop / executed |
+| Residual ID | One-line | Class | Named source class | Disposition |
+|-------------|----------|-------|--------------------|-------------|
+| [R-EXAMPLE](#r-example) | … | Empirically resolvable / Definition-blocked / Normative-preference / Parked | specific / **unnamed** | pursue / park-until-trigger / park-90d / drop / executed |
 
-**Authorize grammar:** `authorize branch R-…` / `decline residual menu`
+**Authorize grammar:** `authorize branch R-…` / `name source class …` / `decline residual menu`
+
+**Closeout disposition defaults:** named enough + data obtainable now → `pursue` (**hard stop (residuals live)** if that remains); data not yet existent → `park-until-trigger` (class may already be named); same identification block / diminishing returns → `park-90d`; normative / OUT → drop or not-branchable. `closeout` does **not** park a named-enough obtainable leftover for “operator admits a series.”
 
 ---
 
@@ -44,15 +46,16 @@ Use explicit HTML anchors so links work reliably: `<a id="r-example"></a>`.
 | Field | Content |
 |-------|---------|
 | **Class** | Empirically resolvable / Definition-blocked / Normative-preference / Parked |
+| **Named source class** | Specific public series + matching locks (published central statistic), **or unnamed** (then `name source class …`) |
 | **What it is** | Gap / free parameter this residual targets **in this application** |
 | **Why offered here** | Why it matters for *this* claim now (not generic glossary text) |
-| **What authorizing does** | Freeze / evidence admit / CR / scoped continuation |
+| **What authorizing does** | Freeze / evidence admit / CR / scoped continuation / named-class pulse |
 | **What success changes** | Amb, verdict piece, established / not established |
 | **What failure / absence changes** | What stays provisional or not established |
-| **What it does *not* do** | Amb≠clearance; no slogan smuggle; no advice |
+| **What it does *not* do** | Amb≠clearance; no slogan smuggle; no advice; pulse ≠ bar-met |
 | **Effort** | low / medium / high |
-| **Disposition** | Not authorized (default) / Authorized as: … / executed → … / park-… |
-| **How to authorize** | `authorize branch R-EXAMPLE` |
+| **Disposition** | pursue / park-until-trigger / park-90d / drop / executed |
+| **How to authorize** | `authorize branch R-EXAMPLE` · or `name source class …` if unnamed |
 
 *(Repeat per residual, including executed ones — keep cards as the audit trail.)*
 

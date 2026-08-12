@@ -1,13 +1,47 @@
 # Tracker Residual Queue (Layer 3)
 
-**Last refreshed:** 2026-08-12 (FOMC June 2026 SEP **hard stop sealed**; Zitron/CoreWeave hard stops sealed)  
-**Last park-90d quarterly review:** none yet (next due ~2026-11-12)  
+**Last refreshed:** 2026-08-12 (FOMC L17 post-rule review; park-90d addendum still **extend-all**; next due ~2026-11-12)  
+**Last park-90d quarterly review:** **2026-08-12** (inaugural = **cadence-existence**, not quarterly proof; next due ~2026-11-12; post-rule addendum same day — still extend-all)  
 **Disposition vocabulary:** `pursue` | `park-90d` | `park-until-trigger` | `drop`  
 Only **pursue** items stay in active bands. Parked/dropped listed below.
 
 **Cadence:** About once per quarter, review **`park-90d` only**.
 
-**Note:** CoreWeave **hard stop sealed**; Zitron Nvidia $500B **hard stop sealed** (restart frame; Squawk/D-APPEAR OUT). Prior Squawk-stand-in R-* rows remain historical/drop.
+**Note:** CoreWeave **hard stop sealed**; Zitron Nvidia $500B **hard stop sealed** (restart frame; Squawk/D-APPEAR OUT). Prior Squawk-stand-in R-* rows remain historical/drop. FOMC parent closeout intact; R-FML-INDEP **executed** (SPF Q2 2026; not established; not a refute).
+
+---
+
+## Park-90d compact review card — 2026-08-12 (inaugural)
+
+**Trigger:** Last review was **never**. Cadence must actually fire. Items were parked **2026-08-12** with revisit ~2026-11-12 — honest move is **extend**, not promote. Do **not** churn `park-until-trigger` in this card (R-FML-INDEP moved by named-class pulse, not by this review). Do **not** backfill uniqueness / CR twins into `pursue`.
+
+| Residual ID + app | Decision | Why |
+|-------------------|----------|-----|
+| **R-REVISION** · sell-in-may | **extend** park-90d (~2026-11-12) | Keep-wording default still in force; CR not newly authorized |
+| **R-FML-2027-28** · fomc-june-2026-sep | **extend** park-90d (~2026-11-12) | Diminishing returns after L13; L17 SPF pulse does not license copying 2026 onto 2027–28 (G5) |
+| **R-REV** · fomc-june-2026-sep | **extend** park-90d (~2026-11-12) | CR still offered, not run; rewording ≠ F-ML met |
+| **R-REVISION / R-REV** · several | **extend** park-90d (~2026-11-12) | Batch CR twins; no new authorization |
+| **R-REV** · microservices | **extend** | Same |
+| **R-REV** · serverless | **extend** | Same |
+| **R-REV** · graphql | **extend** | Same |
+| **R-REV** · cash-privacy | **extend** | Same |
+| **R-REV** · term-limits | **extend** | Same |
+| **R-REV** · emergency-fund | **extend** | Same |
+| **R-REV** · nps-50 | **extend** | Same |
+| **R-REV** · bridge-rating | **extend** | Same |
+| **R-REV** · heatwave | **extend** | Same |
+| **R-REV** · holiday-sales | **extend** | Same |
+| **R-REV** · coreweave-gpu | **extend** | Same |
+
+**Promoted to pursue:** none. **Converted to park-until-trigger:** none. **Dropped in this review:** none.
+
+### Post-rule addendum — 2026-08-12 (gates 1–7; not a new quarterly cycle)
+
+**Trigger language now:** last review **never** *or* older than ~90 days. Inaugural “never” was a valid fire. This card is **cadence-existence**, not the **quarterly proof**. Next due remains **~2026-11-12**. Same-day extend-all does not reset that.
+
+**Re-score (only `park-90d` rows):** all **extend**. Do **not** promote uniqueness/CR twins. Do **not** promote FOMC `R-FML-2027-28` (diminishing returns / G5; not a named-enough *new* obtainable class). Do **not** churn `park-until-trigger`. FOMC `R-FML-INDEP` is **executed/drop** (pulse), not a park-90d row.
+
+**Closeout-default check:** no `park-90d` row is a named-enough obtainable leftover wrongly parked for “operator admits a series.” The historical miss was `R-FML-INDEP` at seal (already executed).
 
 
 
@@ -72,7 +106,6 @@ Only **pursue** items stay in active bands. Parked/dropped listed below.
 | **R-SUSTAIN** · zitron-nvidia-500b | Diversified-demand evidence vs SUSTAIN-BAR | Non-lab AI-dollar census vs capex; Amazon AI mix | **park-until-trigger** | **Executed** L10a–L10d; SUSTAIN-BAR **not** cleared; share ≠ sustainability |
 | **R-REV** · zitron-nvidia-500b | Narrow to D-ANN + D-MOU (± “Zitron claims…”) | — | **executed (keep original wording)** | Operator pick recorded; unused CR ranks on file; CX listed same shapes as alts, **not adopted**; rewording ≠ bar clearance |
 | **R-REALIZE** · fomc-june-2026-sep | 2026–28 actuals vs L5 medians under L4 defs | 2026 Q4 prints exist | **park-until-trigger** | Realization ≠ F-ML met; July 29 OUT |
-| **R-FML-INDEP** · fomc-june-2026-sep | Non-SEP matched expected-path vs 2026 medians | Operator admits independent series under same locks | **park-until-trigger** | L13 reopen class; not Table 1 again |
 | **R-G8-SCOPE** · fomc-june-2026-sep | Freeze realization out of scope now | `authorize branch R-G8-SCOPE` / `lock G8 realization-later` | **park-until-trigger** | Offered; **not locked** at hard stop; Amb stays ≈ 1; ≠ clearance |
 
 ---
@@ -125,6 +158,7 @@ Only **pursue** items stay in active bands. Parked/dropped listed below.
 | MWI uniqueness via ordinary Phase 2 | Currently intractable for strong-(N) | **drop** |
 | **R-JULY29** · fomc-june-2026-sep | July 29 statement OUT unless L₀ elevation | Explicit package change | **drop** | Not a residual to finish this package |
 | **R-FML-2026** · fomc-june-2026-sep | Test F-ML-BAR on 2026 medians | — | **drop** | Executed 2026-08-12 → L13; not established; not a refute |
+| **R-FML-INDEP** · fomc-june-2026-sep | Non-SEP matched expected-path vs 2026 medians | — | **drop** | Named-class pulse 2026-08-12 → L17 SPF Q2 2026 medians; PCE/core print-match; GDP concept mismatch; U 4.5 vs 4.3; **not established**; not a refute. Later SPF vintage not auto-run. |
 
 ---
 

@@ -37,7 +37,7 @@ The June 17, 2026 SEP is a published package of FOMC participants’ projections
 
 | Term | Candidate bar |
 |------|----------------|
-| most likely outcomes | **Locked L2: P-BaseCase** (expected / central path). Bar **not met**. Funds-rate dots not under this bar. |
+| most likely outcomes | **Locked L2: P-BaseCase** (expected / central path). Bar **not met**. **L13 + L17** not established. Funds-rate dots not under this bar. |
 | appropriate monetary policy | Individual mandate reading vs Committee decision vs realized path |
 | longer run / no further shocks | Open horizon + ceteris paribus (near-vacuity risk if unbounded) |
 | 70% confidence | Historical RMSE convention vs participants’ current uncertainty judgments |

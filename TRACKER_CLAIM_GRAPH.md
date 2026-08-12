@@ -28,7 +28,7 @@
 | APP-HOL | Application | `2026-08_holiday-sales-up-should-hire` | Stable Provisional; Amb ≈ 7; FD 1 |
 | APP-CRWV | Application | `2026-08_coreweave-ceo-gpu-longer-life` | **Hard stop sealed**; A-ATTR L7; N-INSTANCE + color; F-LIFE fails C_SCOPE |
 | APP-ZITRON | Application | `2026-08_zitron-nvidia-500b-financing-thesis` | **Hard stop sealed**; D-ANN+D-MOU; VF/CONC/SUSTAIN frozen not met; L8 Street FY; L9 MSFT OpenAI $24.1B; L10 capex scale + Cloud mix + non-lab presence; bubble not cleared; CR **keep original wording**; UX+CX executed (alts not adopted); Squawk OUT |
-| APP-FOMC-SEP | Application | `2026-08_fomc-june-2026-sep` | **Hard stop sealed**; L1–L16; Amb ≈ 1; 2026 F-ML not established; July 29 OUT; CR offered not run (keep original default); UX/CX offered not run |
+| APP-FOMC-SEP | Application | `2026-08_fomc-june-2026-sep` | **Hard stop sealed**; L1–L17; Amb ≈ 1; 2026 F-ML not established (L13 + L17 SPF); July 29 OUT; CR offered not run (keep original default); UX/CX offered not run |
 | LOCK-2026-08-001 | Lock | Comparison class before uniqueness (O) | Active |
 | LOCK-2026-08-002 | Lock | Preferability needs named virtues/metrics | Active |
 | LOCK-2026-08-003 | Lock | Amb drop / scope lock ≠ clearance | Active |
@@ -121,7 +121,7 @@
 - Cross-domain probe succeeded for 001–003; LOCK-004 folded Active for hybrid/spectrum domains.  
 - Real-claim `APP-CRWV` validates forecast locks on live markets commentary; attribution≠life clearance.  
 - Real-claim `APP-ZITRON` hard-stopped under newsletter+monologue primary (Squawk OUT); MoU≠vendor/circular/70%/bubble clearance; claimed citations ≠ bar met; CR **keep original wording**; UX+CX executed (alts not adopted).  
-- Real-claim `APP-FOMC-SEP` **hard stop sealed** (2026 F-ML test **not established**; Amb ≈ 1; G8 not locked); July 29 OUT; CR/UX/CX offered not run; default keep original wording.
+- Real-claim `APP-FOMC-SEP` **hard stop sealed** (2026 F-ML test **not established** after L13 brochure + L17 SPF Q2 2026; Amb ≈ 1; G8 not locked); July 29 OUT; CR/UX/CX offered not run; default keep original wording; print-match ≠ clearance.
 
 ---
 

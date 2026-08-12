@@ -6,7 +6,7 @@
 **Amb at closeout:** ≈ **1** (Gap 8 realization still open; G8 not locked)
 
 **Amb ≠ clearance (mandatory):** Amb measures under-specification. Amb ≈ 1 means the remaining free parameter is whether 2026–28 realization is in scope *now* (it is not, as a draft). It does **not** mean the June medians are the economy’s expected path, that the Committee voted those paths, or that 2026 PCE is on target.  
-**Locked bar status:** F-ML-BAR (P-BaseCase) — **not established** (2026 tested at L13; 2027–28 untested). C-APPROP as vote / realized path — **not met**. F-LR as dated unconditional / 2026-on-target — **not met**.
+**Locked bar status:** F-ML-BAR (P-BaseCase) — **not established** (2026 tested at L13 and L17 SPF; 2027–28 untested). C-APPROP as vote / realized path — **not met**. F-LR as dated unconditional / 2026-on-target — **not met**.
 
 **Original claim (verbatim):**  
 The June 17, 2026 SEP is a published package of FOMC participants’ projections of **most likely** GDP, unemployment, inflation, and **appropriate** federal-funds paths for 2026–2028 and the longer run. The document’s claims are the inventory in [`CLAIM_INVENTORY.md`](CLAIM_INVENTORY.md): process/definitions, printed actuals, June Table 1 medians/CT/ranges, March-to-June revisions, the dot plot and histograms, uncertainty/risk judgments, RMSE-based 70% fans, and the prose elevations (most likely; appropriate policy; longer-run convergence under no further shocks).
@@ -34,11 +34,12 @@ The June 17, 2026 SEP is a published package of FOMC participants’ projections
 | L14 G4 — load-bearing census statistic = median of 18 (17 for 2028) | Census; **not** Committee forecast; **not** F-ML met |
 | L15 G5 — 2026 / 2027 / 2028 / longer run are separate slots | Structural; LR 2.0 ≠ 2026 on-target |
 | L16 G7 — D-UNCERT ≠ D-RMSE | Structural; 17/18 ≠ 70% interval; CPI ≠ PCE |
+| L17 SPF Q2 2026 comparison **executed** | Evaluation; bar **not established**; PCE/core print-match ≠ clearance; **not** a refute |
 
 ### Negatively constrained / false as originally stated
 | Original strong language | Status |
 |--------------------------|--------|
-| Submitted figures **are** most-likely / expected / central-path outcomes (P-BaseCase) | **Not established** (2026 tested; not a refute) |
+| Submitted figures **are** most-likely / expected / central-path outcomes (P-BaseCase) | **Not established** (2026 tested L13 + L17; not a refute) |
 | Median = the Committee’s forecast | **Blocked** (L14); over-strong smuggle |
 | Appropriate-policy path = FOMC vote or realized funds path | **Not met** (L11); July 29 **OUT** |
 | Longer-run PCE 2.0 = 2026 on-target / dated unconditional forecast | **Not met** (L12 + L15) |
@@ -52,7 +53,7 @@ The June 17, 2026 SEP is a published package of FOMC participants’ projections
 | ID | Status / freeze |
 |----|-----------------|
 | Gap 8 realization | **Open** — draft freeze “later / not now”; G8 **not locked** at closeout |
-| F-ML-BAR met? (2026) | **Not established** — L13 executed; reopen only via [R-FML-INDEP](RESIDUAL_BRANCH_MENU.md#r-fml-indep) |
+| F-ML-BAR met? (2026) | **Not established** — L13 + L17 executed; later SPF vintage not auto-run |
 | F-ML-BAR met? (2027–28) | **Untested** — [R-FML-2027-28](RESIDUAL_BRANCH_MENU.md#r-fml-2027-28) park-90d |
 | C-APPROP as vote | **Not met** while July 29 (or another vote record) is OUT |
 | F-LR as dated year | **Not met**; needs a dated horizon (substantial vs SEP A6) |
@@ -62,7 +63,8 @@ The June 17, 2026 SEP is a published package of FOMC participants’ projections
 
 | ID / term | Under-specified or over-strong? | Notes |
 |-----------|----------------------------------|-------|
-| SEP cell / “most likely” pose → P-BaseCase **met** | Over-strong smuggle | LOCK-010; L2 + L13 |
+| SEP cell / “most likely” pose → P-BaseCase **met** | Over-strong smuggle | LOCK-010; L2 + L13 + L17 |
+| SPF PCE/core print-match → F-ML met; SPF annual-avg GDP → Q4/Q4 | Over-strong / concept swap | L17 |
 | Median → Committee forecast | Over-strong | L14 |
 | Appropriate path → vote / realized funds | Over-strong | L11; July 29 OUT |
 | LR 2.0 → 2026 on-target | Over-strong | L12 + L15 |
@@ -85,7 +87,7 @@ Unrestricted “these medians **are** the expected path”; “the Committee for
 |--------|--------------|-------------------|
 | [R-G8-SCOPE](RESIDUAL_BRANCH_MENU.md#r-g8-scope) / `lock G8 realization-later` | Amb 1 → 0 by freezing realization out of scope *now* | ≠ F-ML met; ≠ skip [R-REALIZE](RESIDUAL_BRANCH_MENU.md#r-realize) forever |
 | [R-REALIZE](RESIDUAL_BRANCH_MENU.md#r-realize) | Later hit/miss vs L5 medians under L4 defs | Hit ≠ F-ML met on June 17 |
-| [R-FML-INDEP](RESIDUAL_BRANCH_MENU.md#r-fml-indep) | Independent matched expected-path vs 2026 medians | Conflicted-source still applies; funds-rate still off bar |
+| [R-FML-INDEP](RESIDUAL_BRANCH_MENU.md#r-fml-indep) | **Executed L17** (SPF Q2 2026; not established) | Later SPF vintage not auto-run; funds-rate still off bar |
 | [R-FML-2027-28](RESIDUAL_BRANCH_MENU.md#r-fml-2027-28) | Same test on later years | Likely same brochure/policy-mix block |
 | [R-REV](RESIDUAL_BRANCH_MENU.md#r-rev) / `run CR` | Cleaner census-core wording | Rewording ≠ bar clearance |
 | Stay stopped | Hygiene complete | All uncleared bars; Gap 8 open |
@@ -107,7 +109,7 @@ Operator-facing choice (do not leave implicit):
 
 ## Closeout statement
 
-Application **closed** as **Stable Provisional (split) — hard stop**. Original claim **not** silently resolved. Census vehicle and meaning freezes are on the record. F-ML-BAR, vote, and 2026-on-target remain **not established / not met**. Optional modes **offered, not run**. July 29 remains **OUT**. Awaiting further authorization only if continuing via a named residual or `run UX` / `run CX` / `run CR`.
+Application **closed** as **Stable Provisional (split) — hard stop**. Original claim **not** silently resolved. Census vehicle and meaning freezes are on the record. F-ML-BAR, vote, and 2026-on-target remain **not established / not met** after L13 and L17. Optional modes **offered, not run**. July 29 remains **OUT**. Named-class pulse did not reopen closeout. Awaiting further authorization only if continuing via a named residual or `run UX` / `run CX` / `run CR`.
 
 ---
 

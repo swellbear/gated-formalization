@@ -1,7 +1,7 @@
 # Notes
-**STATUS:** [`STATUS.md`](STATUS.md) — **hard stop sealed** 2026-08-12  
+**STATUS:** [`STATUS.md`](STATUS.md) — **hard stop sealed** 2026-08-12; named-class pulse **L17** executed  
 **Frame:** June 17, 2026 FOMC SEP as the whole claim package. **OUT:** July 29 statement.  
-**Stage:** Closeout. L1–L16 + residual/optional menus **offered, not run**. Amb ≈ 1. F-ML-BAR 2026 **not established**. Default keep original wording.
+**Stage:** Closeout + L17 SPF pulse. L1–L17. Amb ≈ 1. F-ML-BAR 2026 **not established** (brochure + SPF). Default keep original wording.
 
 | Stage | Amb | Notes |
 |-------|-----|-------|
@@ -18,5 +18,7 @@
 | After L15 G5 year-slots | ~2 | 2026 / 2027 / 2028 / LR separate; LR 2% ≠ 2026 on-target |
 | After L16 G7 tallies ≠ RMSE | ~1 | D-UNCERT ≠ D-RMSE; RMSE ≠ current FOMC uncertainty |
 | Closeout (hard stop) | ~1 | G8 not locked; menus offered not run |
+| After L17 SPF Q2 2026 pulse | ~1 | R-FML-INDEP executed; PCE/core print-match ≠ clearance; no fake Amb drop |
+| Post-rule review (gates 1–7) | ~1 | named-enough / no-collapse / establishment-stop **No**; no new layer |
 
 Inventory: [`CLAIM_INVENTORY.md`](CLAIM_INVENTORY.md). Share: [`SHARE_PACK.md`](SHARE_PACK.md). Dissertation: [`DISSERTATION.md`](DISSERTATION.md).

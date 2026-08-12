@@ -16,15 +16,15 @@
 
 | Field | Value |
 |-------|--------|
-| **Closure state** | open / **endpoint** / **endpoint + hard stop pending** / **hard stop** |
-| **Phase** | Phase 1 / Phase 2 Attempt N / optional mode / … |
+| **Closure state** | open / **endpoint** / **endpoint + hard stop pending** / **hard stop** / **hard stop (residuals live)** |
+| **Phase** | Phase 1 / Phase 2 Attempt N / named-class pulse / optional mode / … |
 | **Amb** | |
 | **Locks in force** | none / package IDs: |
-| **Next authorization needed** | none — hard stop / `endpoint only` / `hard stop` / `run UX` / … |
+| **Next authorization needed** | none — hard stop *(only if no pursue)* / `name source class …` / `endpoint only` / `hard stop` / `run UX` / … |
 | **Related apps surfaced** | none / ≤2 IDs + reason: |
 | **Optional modes** | link `OPTIONAL_MODES_MENU.md` (offer ≠ run) / none yet |
 
-**Endpoint** = examination done; verdict frozen. **Hard stop** = endpoint + Layers 1–3 hygiene + share pack complete.
+**Endpoint** = examination done; verdict frozen. **Hard stop** = endpoint + Layers 1–3 hygiene + share pack complete. **Hard stop (residuals live)** = hygiene complete **and** `pursue` leftovers remain — `Next authorization needed` must not be `none — hard stop`.
 
 ---
 
@@ -38,18 +38,18 @@ Mark when complete. **Endpoint** may be reached with hygiene still open. **Hard 
 - [ ] **`SHARE_PACK.md`** (partner front door — required for sharing closure)
 - [ ] Layer 2 `Thesis_Tracker.md` (tags + related apps)
 - [ ] Layer 1 `TRACKER_PORTFOLIO.md` row updated
-- [ ] Layer 3 residual dispositions set (`pursue` / `park-90d` / `park-until-trigger` / `drop`)
+- [ ] Layer 3 residual dispositions set (`pursue` / `park-90d` / `park-until-trigger` / `drop`) — **named enough** + obtainable → `pursue`; fill **Named source class** on each empirically resolvable card at closeout; `closeout` does **not** convert those to park/drop for “operator admits a series”
 - [ ] Residual-branch menu (`RESIDUAL_BRANCH_MENU.md`) if residuals remain — **clickable cards** + links from this STATUS; offering ≠ running
 - [ ] **Optional-modes menu** (`OPTIONAL_MODES_MENU.md`) — triage UX/CX/CR/QI Offer or N/A; **clickable cards** + reply one-liners; offering ≠ running (**required at endpoint/hard stop**; residual menu alone is not enough)
 - [ ] `TRACKER_PATTERN_MAP.md` updated if new pattern observed
 - [ ] `logs/calibration_log.md` entry if a pattern now appears in ≥3 closed apps
 - [ ] Use-Exploration / CX / CR / QI **exhibits** only if authorized and run
-- [ ] `STATUS.md` set to hard stop (this file)
+- [ ] `STATUS.md` set to hard stop (this file) — **hard stop (residuals live)** if `pursue` remains
 - [ ] `final_verdict.md` (or equivalent)
 
 **Gates:**  
 - Applicable examination items done → may label **endpoint** (still **offer** optional modes).  
-- All applicable hygiene + **SHARE_PACK** + optional-modes **offer** done → may label **hard stop**.  
+- All applicable hygiene + **SHARE_PACK** + optional-modes **offer** done → may label **hard stop** (use **hard stop (residuals live)** if `pursue` remains).  
 - SHARE_PACK unchecked ⇒ **not fully closed for sharing**.
 
 ---

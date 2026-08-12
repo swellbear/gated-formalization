@@ -26,11 +26,11 @@ After every **closed application**, or after every **N ≥ 5** REJECT/HOLD decis
 
 ### 2026-08-12 | Official outlook / FOMC June 2026 SEP | Brochure cannot clear P-BaseCase
 - **Gate outcome at the time:** Stable Provisional (split) hard stop (Amb ≈ 1). Census vehicle L3–L10 + G4/G5/G7 **established**. F-ML-BAR on 2026 medians **not established** (L13; not a refute). C-APPROP as vote and F-LR as 2026-on-target **not met**. July 29 **OUT**.
-- **Later evidence:** n/a (closeout).
-- **Direction of error:** **method-pressure-point** — an official table that *poses* figures as “most likely” is easy to misread as the economy’s expected path once Amb falls from census and meaning freezes.
-- **Which rule or judgment contributed:** LOCK-010 posed≠clearance; conflicted-source (SEP may census itself, may not solely meet F-ML-BAR); L11 policy-mix (18 conditionings ≠ one expected path); Amb≠clearance; live vs stand-in (July 29 kept out).
-- **Adjustment made (if any):** None new to Amb math. Pattern map + calibration record the official-table case as the same FD/LOCK-010 lesson, not a new tag.
-- **Notes:** Keep saying what 18 people submitted. Stop saying “the Fed forecasts 3.6%.” Hit vs later actuals still would not, by itself, mean the June median *was* the expected path on June 17.
+- **Later evidence:** Named-class pulse L17 (SPF Q2 2026): PCE/core Q4/Q4 **print-match** 3.6 / 3.3; GDP concept mismatch; U 4.5 vs 4.3; bar still **not established**.
+- **Direction of error:** **method-pressure-point** — an official table that *poses* figures as “most likely” is easy to misread as the economy’s expected path once Amb falls from census and meaning freezes. A later independent survey printing the same inflation numbers is a second pressure point (kinship ≠ clearance).
+- **Which rule or judgment contributed:** LOCK-010 posed≠clearance; conflicted-source (SEP may census itself, may not solely meet F-ML-BAR); L11 policy-mix (18 conditionings ≠ one expected path); Amb≠clearance; live vs stand-in (July 29 kept out); named-class pulse (test runs; establishment still stops).
+- **Adjustment made (if any):** None new to Amb math. Pattern map + calibration record the official-table case as the same FD/LOCK-010 lesson, not a new tag. Print-match ≠ met recorded at L17.
+- **Notes:** Keep saying what 18 people submitted. Stop saying “the Fed forecasts 3.6%” and “SPF also printed 3.6 so the path is cleared.” Hit vs later actuals still would not, by itself, mean the June median *was* the expected path on June 17.
 
 ### 2026-08-12 | Equity seasonality | Sell in May / S&P / May–Oct 2026
 - **Gate outcome at the time:** Stable Provisional hard stop (Amb ≈ 2.5) under Rank 1. G1* seasonality **established** (~3.52 pp); G4* Sharpe vs B&H **fails**; G5*/G6* “should” **not established**. FD1–FD5 on record. Contrastive Alt A–C recorded, not selected.
