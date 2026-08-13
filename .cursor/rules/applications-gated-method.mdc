@@ -251,7 +251,7 @@ No method jargon in layer 1 unless **immediately glossed in the same sentence**.
 
 **Layer 2 — Technical record (required second):** claim-freeze, Amb, package/layer IDs, artifact paths, method verdict labels.
 
-**Authorization asks** (claim revision, lock selection, stipulated proxy, closeout fork, optional modes): lead with the plain-language card; offer **at most one** clear ordinary-language choice set; put Rank/Amb/IDs in a short **Details** block after. The reader must never need to know what `PX1` or “Not admissible” means before they can answer. **Prompt with the expected one-liner** from the operator reply grammar (below); accept clear natural-language equivalents.
+**Authorization asks** (claim revision, lock selection, stipulated proxy, closeout fork, optional modes, and **every other method decision**): lead with the plain-language card; offer **at most one** choice set using the **Choice Presentation Standard** — Cursor’s **in-chat clickable picker** (`AskQuestion`). Each option’s label includes the short name **and** the one-sentence everyday meaning. **A click is the reply.** Put Rank/Amb/IDs and mapped one-liners in a short **Details** block after (or as parentheticals) — not as the only way to answer. The reader must never need to know what `PX1` or “Not admissible” means before they can answer. Accept clicks, letter replies, one-liners, and clear natural-language / Other-text equivalents. **Do not** send the user to a canvas, browser page, or other pane to complete the decision.
 
 **Templates:** `templates/PLAIN_LANGUAGE_CARD.md`; glossary: `docs/READER_GLOSSARY.md`.
 
@@ -278,7 +278,50 @@ Prefer teaching these forms for external operators (natural-language equivalents
 | Close examination only | `endpoint only` |
 | Full hygiene close | `closeout` / `hard stop` |
 
-When the method needs authorization, **show the expected one-liner** in the ask.
+When the method needs authorization, present the choice with the **Choice Presentation Standard** (in-chat clickable picker; a click is the reply). Mapped one-liners may appear in a Details block or as parentheticals; they are not the only way to answer.
+
+## Language and Accessibility (mandatory)
+
+Accessibility is **standard practice**, not an optional extra. Precision and residual judgment stay intact.
+
+- **Speak first in accessible language.** Lead with everyday words. Technical terms may follow; they must not be the first thing a new reader has to decode.
+- **Gloss technical terms.** The first time a technical term appears in a conversation — and whenever a new user is present — accompany it with a short plain-language gloss in the same sentence or the next sentence.
+- **Name the human decision in everyday words first.** When drafting worksheets or explaining next steps, briefly say what the user is being asked to decide in ordinary language **before** using the precise internal terms (package IDs, gate names, verdict labels).
+- **Present every method decision as in-chat clickable options** (Choice Presentation Standard). A click is the reply. Do not send the user to another pane to decide.
+- **Point new users to the front door at the start of a new application:** [`docs/PLAIN_LANGUAGE_OVERVIEW.md`](docs/PLAIN_LANGUAGE_OVERVIEW.md) and [`docs/GLOSSARY.md`](docs/GLOSSARY.md). The first-run walkthrough is [`docs/FIRST_RUN_GUIDE.md`](docs/FIRST_RUN_GUIDE.md).
+
+This section does **not** relax scoring, Amb weights, thresholds, clearance rules, or lock semantics. Dual-audience plain-first cards remain in force.
+
+## Choice Presentation Standard (mandatory)
+
+**Operating model:** in-chat clickable options. **A click is the reply.** Do not send the user outside this conversation to complete a method decision.
+
+Whenever the method or agent needs a human decision, present **exactly one** choice set with Cursor’s in-chat structured picker (`AskQuestion`). This is mandatory for **every** decision point in the workflow (claim-type, gate verdict, hard-stop vs continue, residual park, lock selection, material admission, optional-mode offers, and similar forks). No exceptions.
+
+**Do not skip the picker** because hygiene/`SHARE_PACK.md` is already written, because typed one-liners already appear in a menu file, because a prior picker was cancelled, or because the remaining work looks like “informing only.” Optional-mode offers at hard stop still require `AskQuestion` in the same turn as the closeout readout. Typed `run UX` / `run CX` lines in markdown are **not** the picker.
+
+**How to build each option**
+
+- **id** = the letter (`A`, `B`, `C`, …).
+- **label** = short name, then the one-sentence everyday meaning (plain language in the label so a second pane / hover window is unnecessary).
+- **prompt** = what the user is being asked, in ordinary words.
+- Pull wording from [`ui/choice-presenter/catalog.json`](ui/choice-presenter/catalog.json) when a `decision_id` matches. Live-only options (named lock ranks, specific `R-…` ids) use the same schema.
+
+Shape the picker so it reads like:
+
+**A. [Short label]** — One clear sentence explaining what this choice means in everyday words.  
+**B. [Short label]** — One clear sentence explaining what this choice means in everyday words.  
+**C. [Short label]** — One clear sentence explaining what this choice means in everyday words.
+
+Use as many letters as there are real options. Do not collapse a core decision into a yes/no jargon prompt.
+
+The user’s click **is** the authorization (map the selected id to the letter / mapped one-liner). Do not ask them to type the letter again. Typed letters, one-liners, and Other/custom text remain accepted equivalents if they skip the picker.
+
+**Do not** require a canvas, `ui/choice-presenter/index.html`, or any other pane. Those files are an **optional catalog demo** only. A click on the demo does **not** authorize.
+
+If the in-chat picker cannot be shown (unsupported surface), fall back to the same lettered block as markdown in chat. Still do not require an external UI.
+
+This section does **not** relax scoring, Amb weights, thresholds, clearance rules, or lock semantics. It does not change which options exist or what they mean — only how they are presented. A picker click still does not auto-admit material or auto-run UX/CX/CR/QI; it only records which option the operator chose.
 
 ## Operator status line (mandatory every cycle)
 
@@ -322,6 +365,14 @@ Produce **`SHARE_PACK.md`** using `templates/SHARE_PACK.md` (or a fixed top sect
 Then **For the record** (below): Amb, layer IDs, file pointers, parent/successor.  
 
 If a numerical bar used same-day prints, proxies, or stand-in series, include **Live vs stand-in** in the plain-verdict area (see below).
+
+**Partner front door (mandatory on the pack — presentation only; does not change scoring):**
+
+- **Bar height in everyday words.** If a modal bar is in force, say merely possible / real shot (not the expected path) / expected path in the plain verdict. Lock IDs (`P-Logical`, `P-NonNegligible`, `P-BaseCase`) belong in **For the record**, not the first plain sentence. Partners must not hear those IDs as “the probability.”
+- **Amb is not a score.** Amb may appear only in **For the record** (and the operator STATUS technical table). The plain verdict must not lead with an Amb number or read as “Amb is low, so it is probably true.”
+- **Reliability of this scoring pass.** One plain line: high / medium / low + why (one question or not; thin / stand-in / conflicted evidence or not; single pass or not). Not a 0–100. Not a substitute for established / not established. If never recorded on the original gate sheet, write **not recorded at original scoring** — do not invent High.
+- **Prints and ¢ after the honesty line.** If ¢, prints, or proxies appear, the pack must already have said they do **not** clear a live-shot / expected-path / slogan bar (or Live vs stand-in must say stand-in). Do not open the plain verdict with a price that can be read as a probability.
+- **Probability-object pilot is not method.** Do not add percents, odds, or a probability field. [`docs/PROBABILITY_OBJECT_PILOT.md`](docs/PROBABILITY_OBJECT_PILOT.md) is brainstorming only.
 
 **Unchecked SHARE_PACK ⇒ not fully closed for sharing purposes** (even if endpoint is reached).
 

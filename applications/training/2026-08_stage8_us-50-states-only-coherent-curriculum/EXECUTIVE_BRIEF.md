@@ -21,7 +21,7 @@
 **Held:** 50 states since 1959.  
 **Still contested / not established:** uniqueness, “only coherent” curricula, should-standardize for 2026–27, and preferred/sufficient framework.
 
-Verdict: **Stable Provisional**. Amb ≈ 7. No false clearance.
+Verdict: **Stable Provisional**. No false clearance.
 
 **Live vs stand-in:** N/A.
 

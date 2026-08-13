@@ -8,3 +8,5 @@
 **Minimal:** Partner order (plain verdict → established/not → stop/keep → residual → glossary) is satisfied by the executive brief. Full narrative: [`DISSERTATION.md`](DISSERTATION.md).
 
 **Live vs stand-in:** N/A
+
+**Reliability of this scoring pass:** medium — gate sheet recorded Moderate (single-operator short pass; engineering literature large and partisan).

@@ -10,7 +10,11 @@
 
 ## 1. Plain verdict
 
-Under the agreed reading, a **non-negligible path to ~$600 by ~2036 is not established**. This is not investment advice and does not claim “$600 is impossible.”
+Under the agreed reading, a **real shot** (not the expected path) **to ~$600 by ~2036 is not established**. This is not investment advice and does not claim “$600 is impossible.”
+
+**Bar height:** real shot (not the expected path) — **not established**.
+
+**Reliability of this scoring pass:** medium — Cycle 0 and endpoint sheets recorded Moderate.
 
 **Live vs stand-in:** N/A — lock used public IPO context + independent fair-value marks (not a same-day print / secondary TR proxy bar).
 

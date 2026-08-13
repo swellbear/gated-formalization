@@ -14,11 +14,15 @@ Does **not** replace `DISSERTATION.md` (audit) or change verdicts.
 
 The intake was a market **contract**: it pays on how much the **upper bound** of the Fed funds target range **changes** at the September 2026 meeting.
 
-The named Polymarket page listed five brackets. At fetch it showed about **67¢ no change** and **33¢ +25 bp**. Those prices were read as **live-shot sizes**, not as the expected path.
-
 **A trading market cannot be the only proof that a bracket is a real shot.** That bar is **not established**. You left a second series unnamed. Untested independent affirmation is **not** “unlikely.”
 
+**Bar height:** real shot (not the expected path) — **not established** for any bracket. (Not the expected path; that bar was not the freeze.)
+
+The named Polymarket page listed five brackets. At fetch it showed about **67¢ no change** and **33¢ +25 bp**. Those prices were read as **live-shot sizes**, not as the expected path. They do **not** clear the real-shot bar.
+
 **The September FOMC statement has not printed.** That print is a separate leftover.
+
+**Reliability of this scoring pass:** high — Cycle 0 recorded this as a structural finding (under-specification), not a forecast score.
 
 **Live vs stand-in:** **Live** for the print = FOMC statement after Sep 15–16 2026. **OUT** for the print: this page; June SEP. **N/A** for live-shot **met** — conflicted ¢ were not used to clear that bar.
 

@@ -11,7 +11,9 @@
 
 ## 1. Plain verdict
 
-**The chemical formula for water is H₂O** — standard public chemistry fact. Verdict: **Admissible**. Amb ≈ 0.5.
+**The chemical formula for water is H₂O** — standard public chemistry fact. Verdict: **Admissible**.
+
+**Reliability of this scoring pass:** not recorded at original scoring.
 
 **Live vs stand-in:** N/A — no print/proxy bar.
 

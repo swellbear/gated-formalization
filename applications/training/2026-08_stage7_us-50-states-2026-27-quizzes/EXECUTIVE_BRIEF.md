@@ -21,7 +21,7 @@
 **Held:** 50 states since 1959.  
 **Not held:** That 2026–27 quizzes **should** treat “50” as the **only** correct answer. Continuity is not a pedagogy mandate.
 
-Verdict: **Stable Provisional**. Amb ≈ 3.5.
+Verdict: **Stable Provisional**.
 
 **Live vs stand-in:** N/A.
 

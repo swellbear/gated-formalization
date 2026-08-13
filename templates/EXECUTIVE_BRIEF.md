@@ -19,7 +19,11 @@
 
 ## Plain verdict
 
-*(What held and what failed — non-technical cold read.)*
+*(What held and what failed — non-technical cold read. Partner cold-read still prefers the pack.)*
+
+**Do not:** lead with an Amb number or read as “Amb is low, so it is probably true”; use `P-Logical` / `P-NonNegligible` / `P-BaseCase` as partner language (everyday bar height instead: merely possible / real shot / expected path); open with a ¢ or print that can be read as a probability before the honesty line (not a live shot / not expected path / print-match ≠ clearance).
+
+**Reliability of this scoring pass:** high / medium / low + why *(or **not recorded at original scoring**). Not a substitute for established / not established.*
 
 
 

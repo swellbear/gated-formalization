@@ -18,7 +18,7 @@
 
 ## Plain verdict
 
-**Under the locked US + secondary/intro-college instruction scope: yes — water is taught as H₂O.** Verdict: **Admissible** under that lock. Amb ≈ 1.5. This does **not** mean “everywhere” or “all of science.”
+**Under the locked US + secondary/intro-college instruction scope: yes — water is taught as H₂O.** Verdict: **Admissible** under that lock. This does **not** mean “everywhere” or “all of science.”
 
 **Live vs stand-in:** N/A.
 

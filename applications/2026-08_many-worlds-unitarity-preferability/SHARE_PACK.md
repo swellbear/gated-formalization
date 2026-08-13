@@ -9,4 +9,6 @@
 
 **Live vs stand-in:** N/A — no market print/proxy bar.
 
+**Reliability of this scoring pass:** medium — Cycle 0 recorded Moderate (single-operator; partisan literature); later rescore Moderate–high for fork documentation.
+
 *Add a full SHARE_PACK only if partner share needs a dedicated file beyond the brief.*

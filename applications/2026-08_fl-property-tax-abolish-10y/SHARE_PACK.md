@@ -18,6 +18,10 @@ The question was whether Florida property taxes are **likely** to be **abolished
 
 **We did not test “likely.”** You left the forecast series unnamed. Nearby Florida fights (homestead / Amendment 3, polls, betting markets, official taxable-value forecasts) are **different** questions. Untested is **not** unlikely.
 
+**Bar height:** expected path — **not tested**.
+
+**Reliability of this scoring pass:** high — Rank 1 freeze recorded high for the definitional Amb drop; Cycle 0 also recorded structural high (under-specification is the finding).
+
 **Live vs stand-in:** **Live** for current law = official Florida Constitution and statutes (Senate Laws pages). **N/A** for likely — no print or proxy scored that bar.
 
 ---

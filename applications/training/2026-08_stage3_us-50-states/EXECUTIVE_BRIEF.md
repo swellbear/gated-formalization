@@ -18,7 +18,7 @@
 
 ## Plain verdict
 
-**Yes — the count is 50.** Numerical bar **passes**. Verdict: **Admissible**. Amb ≈ 0.5. Territories/DC are not states under this claim.
+**Yes — the count is 50.** Numerical bar **passes**. Verdict: **Admissible**. Territories/DC are not states under this claim.
 
 **Live vs stand-in:** N/A — standard public federal/constitutional reference (not a same-day print or proxy series).
 

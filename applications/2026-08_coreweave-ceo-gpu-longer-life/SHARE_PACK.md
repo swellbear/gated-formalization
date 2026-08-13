@@ -21,4 +21,6 @@
 | **Residuals (parked)** | [R-REV](RESIDUAL_BRANCH_MENU.md#r-rev) · [R-2ND-S](RESIDUAL_BRANCH_MENU.md#r-2nd-s) · [R-TX-UPGRADE](RESIDUAL_BRANCH_MENU.md#r-tx-upgrade) |
 | **Optional modes** | **Offered:** [UX](OPTIONAL_MODES_MENU.md#ux) · [CX](OPTIONAL_MODES_MENU.md#cx) · [CR](OPTIONAL_MODES_MENU.md#cr) · **N/A:** [QI](OPTIONAL_MODES_MENU.md#qi) |
 
+**Reliability of this scoring pass:** not recorded at original scoring.
+
 **Reply:** `run UX` · `decline UX` · `run CX` · `decline CX` · `run CR` · `decline CR` · `decline optional modes`

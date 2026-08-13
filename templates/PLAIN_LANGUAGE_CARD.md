@@ -15,8 +15,8 @@
 
 *(Or: none — informing only.)*
 
-**Preferred reply (one-liner):** `authorize branch R-…` · `name source class …` · `decline residual menu` · `lock Rank N` / `lock package …` · `run UX` / `decline UX` · `run QI` / `run CX` / `run CR` · `endpoint only` · `closeout` / `hard stop`  
-*(Show only the forms that apply to this ask. Natural-language equivalents are OK if clear.)*
+**Preferred reply:** click the in-chat A / B / C option (Choice Presentation Standard). That click is the authorization. Typed letters and one-liners remain accepted equivalents: `authorize branch R-…` · `name source class …` · `decline residual menu` · `lock Rank N` / `lock package …` · `run UX` / `decline UX` · `run QI` / `run CX` / `run CR` · `endpoint only` · `closeout` / `hard stop`  
+*(Show only the forms that apply to this ask. Do not send the operator to a canvas or HTML page to decide.)*
 
 ## What a “yes” / this update means
 

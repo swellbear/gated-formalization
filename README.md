@@ -2,7 +2,9 @@
 
 A disciplined method for converting messy conceptual material (informal theories, advocacy arguments, metaphors, design rationales, etc.) into better-constrained models.
 
-This repository is an **operator toolkit**: documentation + reusable worksheets + application logs. It is not yet software. Residual evaluative judgment remains essential and is kept explicit.
+**New here? Start with the [Plain-Language Overview](docs/PLAIN_LANGUAGE_OVERVIEW.md), [Glossary](docs/GLOSSARY.md), and [First Run Guide](docs/FIRST_RUN_GUIDE.md).** Accessibility is standard practice.
+
+This repository is an **operator toolkit**: documentation + reusable worksheets + application logs. Live decisions use an **in-chat clickable picker** (a click is the reply). Residual evaluative judgment remains essential and is kept explicit.
 
 ## Quick Start — Running a New Application
 
@@ -27,6 +29,7 @@ See `workflow.md` for the operator checklist.
 ```
 docs/               Core method + operational upgrade (living markdown + archival PDFs)
 templates/          Blank worksheets (core cycle + optional toolbox)
+ui/                 Optional catalog demo for choice wording (`catalog.json`); not the live decision UI
 exemplars/          Classical sound-argument starters (to be expanded)
 applications/       One folder per live run + a copyable template
 locks/              Lock Library entries (filled from templates/08_…; often empty early)
@@ -47,9 +50,11 @@ Start from hard-to-dispute anchors. Admit new formal layers only when they pass 
 - `docs/00_method_overview.md` — living core method
 - `docs/01_operational_upgrade.md` — sharpened gates, claim-type, checklists, calibration, optional toolbox (§§9–14)
 - `workflow.md` — operator checklist (pointer to optional toolbox in Reminders)
+- `ui/choice-presenter/catalog.json` — wording catalog for in-chat choices (HTML/canvas demo is optional; does not score)
 - `TRACKER_CLAIM_GRAPH.md` — portfolio claim-graph instance (optional overview)
 - `docs/thesis_final.pdf` — archival frozen Complete Thesis (vFinal consolidated working paper)
 - `docs/operational_upgrade.pdf` — archival frozen operational upgrade
+- `docs/PROBABILITY_OBJECT_PILOT.md` — probability-object **pilot** (**not canon**; not standing rule)
 
 ## Status
 

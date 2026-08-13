@@ -6,6 +6,7 @@
 | Field | Value |
 |-------|--------|
 | Verdict | Stable Provisional (hard stop) |
-| Amb | ≈ 8 |
 | FD | 1 |
 | Residuals | R-V, R-EVID, R-REV — not authorized |
+
+*For the record:* Amb ≈ 8 (not a confidence score).

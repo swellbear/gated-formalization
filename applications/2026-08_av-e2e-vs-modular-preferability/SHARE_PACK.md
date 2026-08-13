@@ -9,4 +9,6 @@
 
 **Live vs stand-in:** N/A unless a numerical print/proxy bar appears on reopen.
 
+**Reliability of this scoring pass:** medium — Cycle 0 recorded Moderate (definitions still open); later rescore Moderate–high for negative constraints.
+
 *Add a full SHARE_PACK only if partner share needs a dedicated file beyond the brief.*

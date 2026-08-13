@@ -13,6 +13,8 @@
 
 **The claim fails.** The United States does **not** have 52 states under ordinary public federal reference — it has **50**. The numerical bar **52** is **not established**.
 
+**Reliability of this scoring pass:** not recorded at original scoring.
+
 **Live vs stand-in:** N/A — same public federal/constitutional reference class as Stage 3 (not a market print/proxy).
 
 ---

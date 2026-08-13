@@ -12,6 +12,8 @@
 
 **“Best next” ad segment is not supported.** Under stand-in **PX1**, procedure-focused med device is a **high-priority pilot candidate** — not live-platform proof, not pilot success, not “beats every category.”
 
+**Reliability of this scoring pass:** medium — gate sheets recorded Medium-high (method pattern clear; market evidence not yet admitted).
+
 **Live vs stand-in:** Stand-in: stipulated multi-specialty proxy **PX1** — not live platform data.
 
 ---

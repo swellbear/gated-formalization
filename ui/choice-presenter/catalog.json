@@ -1,0 +1,587 @@
+{
+  "schema": "gated-formalization.choice-ask.v1",
+  "note": "Wording source for the in-chat clickable picker. Live asks reuse this schema; extra options (lock ranks, R-… ids) are filled at ask time. A click in chat is the reply. The HTML demo does not authorize.",
+  "decisions": [
+    {
+      "decision_id": "claim-type",
+      "phase": "intake",
+      "title": "What kind of claim is this?",
+      "prompt_plain": "Say what this sentence is doing before anyone scores it.",
+      "options": [
+        {
+          "letter": "A",
+          "label": "Descriptive",
+          "plain_language": "This is a claim about how the world is — facts, causes, or structure.",
+          "does_not_mean": "That the facts have been proved. You are only labeling the job.",
+          "one_liner": "claim-type descriptive"
+        },
+        {
+          "letter": "B",
+          "label": "Normative / Strategic",
+          "plain_language": "This is a claim about values, “should,” advocacy, or what to do.",
+          "does_not_mean": "That the recommendation is established. A should-claim still has to be constrained.",
+          "one_liner": "claim-type normative"
+        },
+        {
+          "letter": "C",
+          "label": "Mixed — split the parts",
+          "plain_language": "This sentence mixes facts and “should.” Split them so they are not scored as one blob.",
+          "does_not_mean": "That you can score the mix as a single yes/no.",
+          "one_liner": "claim-type mixed"
+        }
+      ]
+    },
+    {
+      "decision_id": "soft-modal-bar",
+      "phase": "intake",
+      "title": "How strong do you mean?",
+      "prompt_plain": "Words like “could,” “likely,” or “should” need a height before you hunt for evidence. Choosing the height is not meeting it.",
+      "options": [
+        {
+          "letter": "A",
+          "label": "P-Logical (merely possible)",
+          "plain_language": "You only mean it is not a contradiction — a very low bar, often near-empty if unbounded.",
+          "does_not_mean": "That the claim is realistic or expected.",
+          "one_liner": "lock bar P-Logical"
+        },
+        {
+          "letter": "B",
+          "label": "P-NonNegligible",
+          "plain_language": "You mean there is a real, not-tiny chance — still not “this is the base case.”",
+          "does_not_mean": "That a price, print, or slogan has cleared the bar.",
+          "one_liner": "lock bar P-NonNegligible"
+        },
+        {
+          "letter": "C",
+          "label": "P-BaseCase",
+          "plain_language": "You mean this is the expected or central path, not merely possible.",
+          "does_not_mean": "That a nearby “potential” reading is enough.",
+          "one_liner": "lock bar P-BaseCase"
+        },
+        {
+          "letter": "D",
+          "label": "Other bar (name it)",
+          "plain_language": "You want a different named height. Say it in ordinary words before testing.",
+          "does_not_mean": "That you can leave the strength vague and still score.",
+          "one_liner": "lock bar other"
+        }
+      ]
+    },
+    {
+      "decision_id": "keep-vs-revise",
+      "phase": "intake",
+      "title": "Keep the original wording?",
+      "prompt_plain": "Decide whether the sentence on the record stays as written, or you authorize a revision path.",
+      "options": [
+        {
+          "letter": "A",
+          "label": "Keep original wording",
+          "plain_language": "Leave the claim as stated. Later work tests this wording, not a quieter rewrite.",
+          "does_not_mean": "That the slogan is true.",
+          "one_liner": "keep original wording"
+        },
+        {
+          "letter": "B",
+          "label": "Revise claim",
+          "plain_language": "Authorize Claim-Revision Scaffolding before anyone invents a successor sentence.",
+          "does_not_mean": "That the agent may silently swap in a new claim.",
+          "one_liner": "run CR"
+        }
+      ]
+    },
+    {
+      "decision_id": "import-locks",
+      "phase": "intake",
+      "title": "Bring in earlier frozen meanings?",
+      "prompt_plain": "If this toolkit already froze a meaning that applies here, import it and check it against these facts — before the first full scoring pass.",
+      "options": [
+        {
+          "letter": "A",
+          "label": "Import named locks",
+          "plain_language": "Use the named earlier freeze(s) as starting constraints, then check they do not clash with this claim’s facts.",
+          "does_not_mean": "That those locks apply automatically or that the claim is proved.",
+          "one_liner": "import locks"
+        },
+        {
+          "letter": "B",
+          "label": "None — do not import",
+          "plain_language": "No earlier freeze fits this run honestly. Record “none imported.”",
+          "does_not_mean": "That locks are banned forever; only that none apply now.",
+          "one_liner": "no locks imported"
+        }
+      ]
+    },
+    {
+      "decision_id": "gate-verdict",
+      "phase": "scoring",
+      "title": "Gate verdict for this layer",
+      "prompt_plain": "This is a gate verdict for the layer as constrained — not a press-release “yes” to the original slogan.",
+      "options": [
+        {
+          "letter": "A",
+          "label": "Admissible",
+          "plain_language": "This layer can be carried forward as stated, given the gates and what has been admitted.",
+          "does_not_mean": "That the original slogan is fully established in everyday speech.",
+          "one_liner": "verdict admissible"
+        },
+        {
+          "letter": "B",
+          "label": "Provisional",
+          "plain_language": "Well-posed enough to continue or close with limits — not a full unrestricted yes.",
+          "does_not_mean": "A polite word for “true.”",
+          "one_liner": "verdict provisional"
+        },
+        {
+          "letter": "C",
+          "label": "Not admissible",
+          "plain_language": "Do not carry this layer forward as stated.",
+          "does_not_mean": "That every nearby question is closed, or that a quieter rewrite is automatically true.",
+          "one_liner": "verdict not admissible"
+        }
+      ]
+    },
+    {
+      "decision_id": "after-scoring",
+      "phase": "scoring",
+      "title": "What next after this scoring pass?",
+      "prompt_plain": "Decide whether to stop here or name leftover choices that still block a fair test.",
+      "options": [
+        {
+          "letter": "A",
+          "label": "Stop / remain provisional",
+          "plain_language": "Do not open more search. Record the verdict and park leftovers if needed.",
+          "does_not_mean": "That the slogan is cleared.",
+          "one_liner": "stop provisional"
+        },
+        {
+          "letter": "B",
+          "label": "Extract gaps",
+          "plain_language": "Name and rank the leftover choices, then (on the Lean Default Path) attack only the top one or two.",
+          "does_not_mean": "That you should open every nearby side question.",
+          "one_liner": "extract gaps"
+        }
+      ]
+    },
+    {
+      "decision_id": "material-admission",
+      "phase": "admission",
+      "title": "Allow this source in?",
+      "prompt_plain": "Does this candidate actually speak to the leftover you named, and does it clash with the starting facts?",
+      "options": [
+        {
+          "letter": "A",
+          "label": "Admit",
+          "plain_language": "Allow this source in: it constrains the targeted leftover and stays consistent with the facts already on the table.",
+          "does_not_mean": "That the original slogan is now true.",
+          "one_liner": "admit material"
+        },
+        {
+          "letter": "B",
+          "label": "Reject",
+          "plain_language": "Do not allow it in. It fails relevance, consistency, or both.",
+          "does_not_mean": "That Ambiguity magically fell anyway.",
+          "one_liner": "reject material"
+        },
+        {
+          "letter": "C",
+          "label": "Hold",
+          "plain_language": "Park it. It needs more context or splitting before a yes or no.",
+          "does_not_mean": "A hidden admit.",
+          "one_liner": "hold material"
+        }
+      ]
+    },
+    {
+      "decision_id": "live-vs-standin",
+      "phase": "admission",
+      "title": "Live shot or stand-in?",
+      "prompt_plain": "Say whether the number or print in front of you is the live object the claim named, or a proxy / stand-in.",
+      "options": [
+        {
+          "letter": "A",
+          "label": "Live",
+          "plain_language": "This is the actual live print or object the freeze named.",
+          "does_not_mean": "That matching a print clears a locked bar by itself.",
+          "one_liner": "badge live"
+        },
+        {
+          "letter": "B",
+          "label": "Stand-in / proxy",
+          "plain_language": "This is a substitute or same-day stand-in, not the live object itself. Badge it that way.",
+          "does_not_mean": "That a proxy may silently pose as the live shot.",
+          "one_liner": "badge stand-in"
+        },
+        {
+          "letter": "C",
+          "label": "Out of package",
+          "plain_language": "This material is outside the locked package. Do not treat it as in-package evidence.",
+          "does_not_mean": "That it can be smuggled in because it is interesting.",
+          "one_liner": "out of package"
+        }
+      ]
+    },
+    {
+      "decision_id": "lock-package-pick",
+      "phase": "locks",
+      "title": "Which lock package?",
+      "prompt_plain": "Pick one explicit freeze package. Live asks replace these slots with the actual Rank / package IDs on the table. Locks are never automatic.",
+      "options": [
+        {
+          "letter": "A",
+          "label": "Rank 1 / first package",
+          "plain_language": "Use the first named package (live ask will show its real ID and what it freezes).",
+          "does_not_mean": "That freezing a meaning proves the claim.",
+          "one_liner": "lock Rank 1"
+        },
+        {
+          "letter": "B",
+          "label": "Rank 2 / second package",
+          "plain_language": "Use the second named package.",
+          "does_not_mean": "That a lower Rank is a weaker truth-claim; it is a different freeze.",
+          "one_liner": "lock Rank 2"
+        },
+        {
+          "letter": "C",
+          "label": "Rank 3 / third package",
+          "plain_language": "Use the third named package.",
+          "does_not_mean": "Automatic application to later claims.",
+          "one_liner": "lock Rank 3"
+        },
+        {
+          "letter": "D",
+          "label": "Do not lock yet",
+          "plain_language": "Leave meanings unfrozen for now. Scoring stays on the current reading.",
+          "does_not_mean": "That the agent may pick a package for you.",
+          "one_liner": "no lock yet"
+        }
+      ]
+    },
+    {
+      "decision_id": "phase-2-authorize",
+      "phase": "process",
+      "title": "Authorize Phase 2?",
+      "prompt_plain": "Phase 2 does not start unless you say so. It is a deeper evidence pass, not a second slogan.",
+      "options": [
+        {
+          "letter": "A",
+          "label": "Authorize Phase 2",
+          "plain_language": "Allow one Phase 2 attempt on the frozen leftover, under the current anchors and locks.",
+          "does_not_mean": "That the bar is already met, or that Phase 2 runs forever.",
+          "one_liner": "authorize Phase 2"
+        },
+        {
+          "letter": "B",
+          "label": "Do not enter Phase 2",
+          "plain_language": "Stay at Phase 1 / closeout. No deeper pass this turn.",
+          "does_not_mean": "That leftovers vanish.",
+          "one_liner": "decline Phase 2"
+        }
+      ]
+    },
+    {
+      "decision_id": "experimental-generation",
+      "phase": "process",
+      "title": "Authorize Experimental Generation?",
+      "prompt_plain": "This mode is not a substitute for Phase 1 or Phase 2. It needs its own yes.",
+      "options": [
+        {
+          "letter": "A",
+          "label": "Authorize Experimental Generation",
+          "plain_language": "Allow one experimental batch to try generating constraints that ordinary search could not.",
+          "does_not_mean": "That generated text is admitted evidence, or that it proves the claim.",
+          "one_liner": "authorize Experimental Generation"
+        },
+        {
+          "letter": "B",
+          "label": "Do not run it",
+          "plain_language": "Skip this mode. Ordinary gated steps remain the path.",
+          "does_not_mean": "That the leftover is solved.",
+          "one_liner": "decline Experimental Generation"
+        }
+      ]
+    },
+    {
+      "decision_id": "endpoint-vs-closeout",
+      "phase": "closeout",
+      "title": "Stop examination, or seal the file?",
+      "prompt_plain": "Endpoint means examination of this wording is done. Hard stop means the write-up hygiene is done too.",
+      "options": [
+        {
+          "letter": "A",
+          "label": "Endpoint only",
+          "plain_language": "Freeze the verdict for the claim as stated, but do not finish the closeout paperwork yet.",
+          "does_not_mean": "That leftovers are abandoned, or that the slogan is proved.",
+          "one_liner": "endpoint only"
+        },
+        {
+          "letter": "B",
+          "label": "Closeout / hard stop",
+          "plain_language": "Finish the write-up and seal the record for this wording.",
+          "does_not_mean": "That pursue leftovers must be parked or dropped.",
+          "one_liner": "closeout"
+        }
+      ]
+    },
+    {
+      "decision_id": "residual-menu",
+      "phase": "residuals",
+      "title": "What to do with leftover questions?",
+      "prompt_plain": "Offering a leftover menu is not running a leftover. Pick how to treat the menu.",
+      "options": [
+        {
+          "letter": "A",
+          "label": "Authorize a residual branch",
+          "plain_language": "Open work on a named leftover (live ask will show which R-…).",
+          "does_not_mean": "Automatic Phase 2, or that the parent verdict changed.",
+          "one_liner": "authorize branch R-…"
+        },
+        {
+          "letter": "B",
+          "label": "Decline residual menu",
+          "plain_language": "Do not open a leftover branch from this menu right now.",
+          "does_not_mean": "That the leftovers were solved.",
+          "one_liner": "decline residual menu"
+        },
+        {
+          "letter": "C",
+          "label": "Name a source class",
+          "plain_language": "Name the public source class for an empirical leftover so it can be tested fairly.",
+          "does_not_mean": "That naming a class meets a locked bar.",
+          "one_liner": "name source class …"
+        }
+      ]
+    },
+    {
+      "decision_id": "residual-disposition",
+      "phase": "residuals",
+      "title": "How should this leftover sit?",
+      "prompt_plain": "Park only when that is honest. Named, obtainable leftovers are not “wait for a better system.”",
+      "options": [
+        {
+          "letter": "A",
+          "label": "Pursue",
+          "plain_language": "This leftover can be worked now (data or a named class is obtainable).",
+          "does_not_mean": "That the parent claim is reopened, or that Phase 2 auto-starts.",
+          "one_liner": "disposition pursue"
+        },
+        {
+          "letter": "B",
+          "label": "Park until trigger",
+          "plain_language": "Wait for a named future event (for example a missing print). Say the trigger.",
+          "does_not_mean": "A hidden “therefore yes.”",
+          "one_liner": "disposition park-until-trigger"
+        },
+        {
+          "letter": "C",
+          "label": "Park 90 days",
+          "plain_language": "Same identification block or diminishing returns — review again on the quarterly cadence.",
+          "does_not_mean": "Drop, or a proof that the leftover is unimportant.",
+          "one_liner": "disposition park-90d"
+        },
+        {
+          "letter": "D",
+          "label": "Drop",
+          "plain_language": "Do not keep this leftover on the queue. Say why.",
+          "does_not_mean": "That the parent slogan is established.",
+          "one_liner": "disposition drop"
+        }
+      ]
+    },
+    {
+      "decision_id": "park-90d-review",
+      "phase": "residuals",
+      "title": "Quarterly parked-leftover review",
+      "prompt_plain": "For each park-90d row: promote, extend, convert, or drop. Do not churn park-until-trigger unless its trigger has fired.",
+      "options": [
+        {
+          "letter": "A",
+          "label": "Promote to pursue",
+          "plain_language": "This parked item can be worked now. Move it to pursue.",
+          "does_not_mean": "Silent Phase 2 or a verdict change.",
+          "one_liner": "park-90d promote"
+        },
+        {
+          "letter": "B",
+          "label": "Extend park",
+          "plain_language": "Keep it parked ~90 more days. Cadence-existence is not quarterly proof.",
+          "does_not_mean": "That the leftover was examined in depth this session.",
+          "one_liner": "park-90d extend"
+        },
+        {
+          "letter": "C",
+          "label": "Convert to park-until-trigger",
+          "plain_language": "Replace the 90-day park with a named future trigger.",
+          "does_not_mean": "That the trigger already fired.",
+          "one_liner": "park-90d convert"
+        },
+        {
+          "letter": "D",
+          "label": "Drop",
+          "plain_language": "Remove it from the 90-day queue. Record why.",
+          "does_not_mean": "Parent clearance.",
+          "one_liner": "park-90d drop"
+        }
+      ]
+    },
+    {
+      "decision_id": "optional-modes",
+      "phase": "optional",
+      "title": "Optional tools after results exist",
+      "prompt_plain": "These tools are offered, not auto-run. Running one still needs a letter. Declining is a real choice.",
+      "options": [
+        {
+          "letter": "A",
+          "label": "Run Use-Exploration (UX)",
+          "plain_language": "Explore possible uses of the findings, guided by the claim’s intent — not advice and not a verdict change.",
+          "does_not_mean": "That uses are established truth.",
+          "one_liner": "run UX"
+        },
+        {
+          "letter": "B",
+          "label": "Run Contrastive Recommendation (CX)",
+          "plain_language": "Ask what different claims would fit the evidence better. That is not a silent rewrite of this claim.",
+          "does_not_mean": "That the parent verdict is replaced.",
+          "one_liner": "run CX"
+        },
+        {
+          "letter": "C",
+          "label": "Run Claim-Revision (CR)",
+          "plain_language": "Open the revision scaffolding instead of inventing a new sentence in place.",
+          "does_not_mean": "A quiet swap of the original wording.",
+          "one_liner": "run CR"
+        },
+        {
+          "letter": "D",
+          "label": "Run Quantitative Implication (QI)",
+          "plain_language": "Work a numerical implication or counterfactual. Implications are not proof of the claim.",
+          "does_not_mean": "That a number in a table meets a locked bar.",
+          "one_liner": "run QI"
+        },
+        {
+          "letter": "E",
+          "label": "Decline all optional modes",
+          "plain_language": "Do not run UX, CX, CR, or QI. The offer still happened; the runs did not.",
+          "does_not_mean": "That the tools were unavailable.",
+          "one_liner": "decline optional modes"
+        }
+      ]
+    },
+    {
+      "decision_id": "qi-path",
+      "phase": "optional",
+      "title": "Which Quantitative Implication path?",
+      "prompt_plain": "If QI is in play, choose how far it goes. None of these paths prove the original slogan.",
+      "options": [
+        {
+          "letter": "A",
+          "label": "Full path (A + B)",
+          "plain_language": "Run the scale-factor sketch and then gate the conditioned benefit claim.",
+          "does_not_mean": "Proof of the parent claim.",
+          "one_liner": "QI full path"
+        },
+        {
+          "letter": "B",
+          "label": "Scale-factor only (A)",
+          "plain_language": "Run only the numerical scale sketch, not the gated benefit claim.",
+          "does_not_mean": "That the benefit is established.",
+          "one_liner": "QI scale-factor only"
+        },
+        {
+          "letter": "C",
+          "label": "Neither",
+          "plain_language": "Do not run QI paths.",
+          "does_not_mean": "That numbers already on the table are a QI result.",
+          "one_liner": "decline QI"
+        }
+      ]
+    },
+    {
+      "decision_id": "stipulated-proxy",
+      "phase": "process",
+      "title": "Allow a stipulated proxy?",
+      "prompt_plain": "A stand-in used on purpose still has to be named as a stand-in.",
+      "options": [
+        {
+          "letter": "A",
+          "label": "Stipulate this proxy",
+          "plain_language": "Yes: use this named stand-in, and badge it as a stand-in — not as the live object.",
+          "does_not_mean": "Print-match clearance, or that the proxy is the thing itself.",
+          "one_liner": "stipulate proxy"
+        },
+        {
+          "letter": "B",
+          "label": "Do not stipulate",
+          "plain_language": "Do not treat this as an allowed stand-in.",
+          "does_not_mean": "That a live shot has been found.",
+          "one_liner": "decline proxy"
+        }
+      ]
+    },
+    {
+      "decision_id": "successor-app",
+      "phase": "closeout",
+      "title": "Start a successor application?",
+      "prompt_plain": "A new folder is a new claim. It does not inherit this verdict.",
+      "options": [
+        {
+          "letter": "A",
+          "label": "Start successor app",
+          "plain_language": "Open a new application for a different wording or leftover. No conclusion inheritance.",
+          "does_not_mean": "That this file’s verdict transfers.",
+          "one_liner": "start successor app"
+        },
+        {
+          "letter": "B",
+          "label": "Do not start a successor",
+          "plain_language": "Stay on this application. Do not open a new claim folder.",
+          "does_not_mean": "That leftovers cannot be parked here.",
+          "one_liner": "no successor"
+        }
+      ]
+    },
+    {
+      "decision_id": "continue-vs-one-admit",
+      "phase": "process",
+      "title": "How should Phase 1 continue?",
+      "prompt_plain": "While leftover unclarity is still mainly descriptive, the method may continue cycles. You can slow that to one admit at a time.",
+      "options": [
+        {
+          "letter": "A",
+          "label": "Proceed as recommended",
+          "plain_language": "Continue the auto-continue class as the method recommends (still stopping on meaning-forks and establishment calls).",
+          "does_not_mean": "That bars may be marked met without a stop.",
+          "one_liner": "proceed with recommended"
+        },
+        {
+          "letter": "B",
+          "label": "One admit at a time",
+          "plain_language": "Pause between admission cycles so you can see each source before the next.",
+          "does_not_mean": "A weaker method, or skipped consistency checks.",
+          "one_liner": "one admit at a time"
+        }
+      ]
+    },
+    {
+      "decision_id": "unnamed-source-class",
+      "phase": "residuals",
+      "title": "Name the source class, or leave it unnamed?",
+      "prompt_plain": "An empirical leftover needs a specific public class before it can be tested. “Some independent forecast” is not named enough.",
+      "options": [
+        {
+          "letter": "A",
+          "label": "Name a source class",
+          "plain_language": "You will name a specific public series or class (live ask will record the words).",
+          "does_not_mean": "That the class has already met a locked bar.",
+          "one_liner": "name source class …"
+        },
+        {
+          "letter": "B",
+          "label": "Leave unnamed",
+          "plain_language": "Do not invent a class. The leftover stays blocked until a real name is given.",
+          "does_not_mean": "That the agent may invent Kalshi, CME, or similar for you.",
+          "one_liner": "leave unnamed"
+        }
+      ]
+    }
+  ]
+}

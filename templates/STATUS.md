@@ -8,7 +8,7 @@
 
 ### Plain status
 
-*(2–3 ordinary-language sentences: what’s going on · what’s needed · what this does not mean.)*
+*(2–3 ordinary-language sentences: what’s going on · what’s needed · what this does not mean. Do **not** lead with Amb as a confidence score. Amb stays in the technical table below.)*
 
 
 

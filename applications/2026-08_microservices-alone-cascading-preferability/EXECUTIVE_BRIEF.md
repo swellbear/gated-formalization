@@ -8,9 +8,10 @@ This run is **closed**. “Microservices alone avoid cascading failures; therefo
 | Field | Value |
 |-------|--------|
 | Method verdict | Stable Provisional (hard stop) |
-| Amb | ≈ 8 |
 | FD | 1 (low formalization) |
 | Live vs stand-in | N/A |
+
+*For the record:* Amb ≈ 8 (not a confidence score).
 
 **Established:** C₀ evaluation lock; spectrum/FD descriptive layer.  
 **Not established:** Alone-uniqueness; preferability / should.  

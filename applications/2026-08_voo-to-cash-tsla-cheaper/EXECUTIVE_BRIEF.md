@@ -17,7 +17,7 @@ Someone sold some VOO after a large gain, is about half in cash, and may hold mo
 
 ## Plain verdict
 
-Under an agreed lock (−10% below ~$327 within 6 months, “serious path”): that **path is established** for Tesla’s usual volatility. That does **not** mean the dip will happen, is likely, or that anyone should buy Tesla or hold more cash. The VOO gain does not prove the Tesla idea.
+That path is **not** a finding that the dip will happen, is likely, or that anyone should buy Tesla or hold more cash. Under an agreed lock (−10% below ~$327 within 6 months, “real shot”): that **path is established** for Tesla’s usual volatility. The VOO gain does not prove the Tesla idea.
 
 **Live vs stand-in:** same-day print ~$327.47 on 2026-08-12 (official close may differ slightly); −10% line ~$294.72.
 

@@ -1,5 +1,7 @@
 # Operator Workflow — New Application Checklist
 
+**New here?** Start with [`docs/PLAIN_LANGUAGE_OVERVIEW.md`](docs/PLAIN_LANGUAGE_OVERVIEW.md), [`docs/GLOSSARY.md`](docs/GLOSSARY.md), and [`docs/FIRST_RUN_GUIDE.md`](docs/FIRST_RUN_GUIDE.md). Accessibility is now standard practice: speak in everyday language first; technical terms stay precise and should be glossed.
+
 Use this checklist for every new claim, theory fragment, or argument you run through the method.
 
 **Canonical method (full rules):** `.cursor/rules/applications-gated-method.mdc`  
@@ -9,6 +11,24 @@ Do not treat this file as a second full copy of the standing rule — checklist 
 Also in force: locking-scaffolding; Amb ≠ clearance; **print-match ≠ clearance**; accuracy-first Phase 2; **named-class pulse** (**named enough**; establishment-stop drill); conflicted-source; already-included legs; soft-modal fork; Tracking Layers 1–3; thin-record recovery; imported-pattern stamp; quarterly `park-90d` review (**session trigger** if last review **never** or >~90d; first card = cadence-existence, not quarterly proof); **dual-audience plain-first**; **Use-Exploration**; **Residual-branch offering**; **Optional-mode offering**; **Share pack**; **endpoint vs hard stop** (incl. **hard stop (residuals live)**); **Live vs stand-in** badge; **operator reply grammar**; **Training Ladder** (`templates/TRAINING_LADDER.md`).  
 **Cons / Amb / redefinition** primary. **Low Amb ≠ claim cleared.**  
 **Glossary:** `docs/READER_GLOSSARY.md`
+
+## Lean Default Path (recommended for most new applications)
+
+Most new applications should follow this lighter sequence unless the claim is unusually high-stakes or Amb stays high after the first cycle:
+
+1. Anchors + claim-type pre-classification (unchanged).
+2. Import relevant Active locks and perform a Cons check against the new anchors. Record which locks were imported and any Cons notes. Do this *before* the first full gate scoring.
+3. First gate scoring (now informed by the imported locks).
+4. If Amb is still high, extract/rank gaps but attack only the top 1–2.
+5. At most 1–2 material admission cycles.
+6. Default endpoint: Stable Provisional hard stop, or compact residual park with explicit trigger.
+7. Escalate to full residual branching / multi-sheet depth only when Amb remains high *and* a high-impact free parameter looks realistically constrainable, or the claim is unusually high-stakes.
+
+Protections that are never relaxed: no soft clearances; Amb drop or scope lock ≠ clearance; residual judgment stays explicit; locks remain never-automatic.
+
+## How choices are presented
+
+Whenever you are asked to choose, options appear **in this chat** as clickable A / B / C choices. Each option shows a short label and one everyday sentence. **Click the option — that click is the reply.** You do not leave the conversation. Canonical rule: **Choice Presentation Standard** in `.cursor/rules/applications-gated-method.mdc`. Typed letters and one-liners remain accepted equivalents. Wording source: [`ui/choice-presenter/catalog.json`](ui/choice-presenter/catalog.json). The HTML/canvas files are an optional demo only; they are not how a live run decides.
 
 ## Training Ladder (onboarding — path complete for Stages 0–8)
 - [ ] Read `templates/TRAINING_LADDER.md` (stages 0–8; **Learning loop**: ladder → live apps → pattern map → calibration ≥3 → standing-rule updates)
@@ -77,7 +97,7 @@ Also in force: locking-scaffolding; Amb ≠ clearance; **print-match ≠ clearan
 
 ## 8. Close the Run
 - [ ] Fill `05_Original_Claim_Assessment.md` (status + **Amb ≠ clearance** + locked-bar status + continuation options + **revision vs continuation fork** when required)
-- [ ] Produce **`DISSERTATION.md`** with **all 11 template sections** (no stub/one-pager), **`EXECUTIVE_BRIEF.md`**, and **`SHARE_PACK.md`** (share pack = partner front door; **Live vs stand-in** when applicable)
+- [ ] Produce **`DISSERTATION.md`** with **all 11 template sections** (no stub/one-pager), **`EXECUTIVE_BRIEF.md`**, and **`SHARE_PACK.md`** (share pack = partner front door; **Live vs stand-in** when applicable; **Partner front door** habits: everyday bar height, Amb not in the lede, reliability line, ¢ after honesty)
 - [ ] Set **Closure state**: **endpoint** when examination done; **hard stop** only after hygiene + share pack; **hard stop (residuals live)** if `pursue` items remain (`Next authorization` must not be `none`)
 - [ ] Produce / normalize **Layer 2** `Thesis_Tracker.md` (tags + related apps + residual dispositions)
 - [ ] Update **Layer 1** portfolio; refresh **Layer 3** queue (**pursue / park-90d / park-until-trigger / drop**; closeout defaults: named-enough obtainable → pursue; do not park for “operator admits a series”)
@@ -169,7 +189,7 @@ Also in force: locking-scaffolding; Amb ≠ clearance; **print-match ≠ clearan
 - Quarterly scan **`park-90d`** only (not the whole queue); **session trigger** if last review **never** or >~90d (first card ≠ quarterly proof).
 - Phase 2 classified **per leftover**; **named-class pulse** (named-enough non-circular fetch) auto-continues; bar-met still stops; print-match ≠ clearance.
 - **Phase 1 autonomy split:** auto-continue census / in-use drafts / unmet bar tests / named-class pulse / hygiene; stop for forks, unnamed class, bar-met, Phase 2, run-mode, non-pulse branch, hard stop. `one admit at a time` is an override.
-- **Share pack** mandatory for sharing closure; **endpoint ≠ hard stop**; **hard stop (residuals live)** when `pursue` remains.
+- **Share pack** mandatory for sharing closure; **endpoint ≠ hard stop**; **hard stop (residuals live)** when `pursue` remains. Partner front door: bar height in everyday words; Amb only in For the record; reliability line; ¢/prints after the honesty line. Probability-object pilot is not method.
 - Lock selection: Amb drop from fixing meanings ≠ clearance (lock-time warning).
 - Application Thesis Tracker is per-app, authorization-gated, and thesis-watchlist shaped for that claim.
 - **Tracking Layers 1–3 + pattern map** mandatory at closeout; taxonomy in `docs/TRACKER_TAXONOMY.md`; critically relevant apps may be **surfaced** (process only; no conclusion inheritance).
@@ -179,6 +199,6 @@ Also in force: locking-scaffolding; Amb ≠ clearance; **print-match ≠ clearan
 - **Use-Exploration** is authorization-gated after results exist; explores possible *uses* of findings guided by claim intent — **not** advice/forecasts and **not** a verdict change.
 - **Residual-branch offering** is mandatory at closeout when residuals remain; **clickable cards** required; offering ≠ running; named-class pulse ≠ auto Phase 2. **Draft the menu at Phase 1 endpoint** (do not wait for the one-liner).
 - **Optional-mode offering** is mandatory at endpoint/hard-stop closeout: offer applicable **UX / CX / CR / QI** (mark N/A explicitly); clickable cards + reply one-liners; offering ≠ running; residual menu alone is not sufficient. **Draft at Phase 1 endpoint.**
-- Prefer operator reply grammar one-liners; show them in authorization asks.
+- Presentation of choices follows **How choices are presented** (in-chat clickable picker; a click is the reply). Typed letters and one-liners remain accepted equivalents.
 - **Live vs stand-in** badge on brief/share pack when prints/proxies used.
 - **Training Ladder** (`templates/TRAINING_LADDER.md`): Stages 0–8 path **complete** under `applications/training/`; Learning loop = ladder fixtures → live stress → pattern map → calibration (≥3 **live** apps) → standing-rule updates. Training apps excluded from ≥3 trigger unless **training-only**.

@@ -11,7 +11,9 @@
 
 ## 1. Plain verdict
 
-**`1 = 1` holds** as ordinary integer identity. Verdict: **Admissible**. Amb ≈ 0. Training smoke only — not a weaker method for later stages.
+**`1 = 1` holds** as ordinary integer identity. Verdict: **Admissible**. Training smoke only — not a weaker method for later stages.
+
+**Reliability of this scoring pass:** high — gate sheet recorded High for this constrained claim.
 
 **Live vs stand-in:** N/A — no print/proxy bar.
 

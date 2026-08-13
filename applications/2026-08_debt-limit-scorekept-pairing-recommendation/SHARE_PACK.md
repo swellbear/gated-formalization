@@ -12,6 +12,8 @@
 
 The scorekept pairing rule is **clear enough to test**. On the 2023 Fiscal Responsibility Act episode, scored cuts were **far smaller** than the headroom created — the episode **fails** that balance test. That does **not** prove Congress should adopt the rule, or that the Act was unrestrictedly “fiscally irresponsible.” Soft “should” was left open and not pursued.
 
+**Reliability of this scoring pass:** medium — gate sheet recorded Moderate–High.
+
 **Live vs stand-in:** N/A — episode magnitudes from CBO/CRS-style public figures under freeze (not a market print/proxy bar).
 
 ---

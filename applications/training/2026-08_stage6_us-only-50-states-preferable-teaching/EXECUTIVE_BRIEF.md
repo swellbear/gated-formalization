@@ -21,7 +21,7 @@
 **Held:** The US has 50 states.  
 **Not held:** That it is the **only** such country, or that listing “50 states” is the **preferable** teaching method. “Therefore” does not bridge those gaps.
 
-Verdict: **Stable Provisional**. Amb ≈ 5.
+Verdict: **Stable Provisional**.
 
 **Live vs stand-in:** N/A.
 

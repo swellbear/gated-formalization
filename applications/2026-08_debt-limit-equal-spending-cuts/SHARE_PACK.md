@@ -12,6 +12,8 @@
 
 The strong “must pair debt-limit raises with equal cuts or it’s irresponsible / shouldn’t pass” slogan **does not hold as stated**. A clearer successor is in a separate folder and does **not** silently fix this parent.
 
+**Reliability of this scoring pass:** medium — Cycle 0 sheet recorded Moderate.
+
 **Live vs stand-in:** N/A — no market print/proxy bar on this parent run.
 
 ---

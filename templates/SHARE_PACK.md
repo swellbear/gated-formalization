@@ -12,6 +12,14 @@ Does **not** replace `DISSERTATION.md` (audit) or change verdicts.
 
 ## 1. Plain verdict
 
+*(Partner cold-read. Do **not** lead with an Amb number, a `P-*` lock ID, or a ¢/print that can be read as a probability. Amb and lock IDs stay in **For the record**.)*
+
+**Bar height (everyday words, if a modal bar is in force):** merely possible / real shot (not the expected path) / expected path — *not* `P-Logical` / `P-NonNegligible` / `P-BaseCase` in this paragraph.
+
+**Reliability of this scoring pass:** high / medium / low + why *(one question or not; thin / stand-in / conflicted evidence or not; single pass or not). Not a 0–100. Not a substitute for established / not established. If never recorded on the original gate sheet, write **not recorded at original scoring** — do not invent High.*
+
+*(If ¢, prints, or proxies appear, the honesty line must already have said they do **not** clear a live-shot / expected-path / slogan bar, or Live vs stand-in must say stand-in.)*
+
 
 
 **Live vs stand-in:** *(required when numerical bars used prints/proxies/stand-ins; else `N/A — no print/proxy bar`)*  

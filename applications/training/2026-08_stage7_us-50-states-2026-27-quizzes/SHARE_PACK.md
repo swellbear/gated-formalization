@@ -14,7 +14,9 @@
 **Established fact:** The United States has had **50** states since **1959**.  
 **Not established:** That geography quizzes in the **2026–2027** school year **should** treat “50” as the **only** correct answer.
 
-Verdict: **Stable Provisional**. Amb ≈ 3.5.
+Verdict: **Stable Provisional**.
+
+**Reliability of this scoring pass:** not recorded at original scoring.
 
 **Live vs stand-in:** N/A.
 

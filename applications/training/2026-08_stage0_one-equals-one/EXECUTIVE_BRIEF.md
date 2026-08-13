@@ -18,7 +18,7 @@
 
 ## Plain verdict
 
-**Yes — as ordinary integer identity, one equals itself.** The claim is **Admissible**, Amb ≈ 0. This is a Training Ladder smoke run, not a substantive research finding about the world beyond definitional identity.
+**Yes — as ordinary integer identity, one equals itself.** The claim is **Admissible**. This is a Training Ladder smoke run, not a substantive research finding about the world beyond definitional identity.
 
 **Live vs stand-in:** N/A — no print/proxy bar.
 

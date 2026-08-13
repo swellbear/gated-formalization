@@ -14,7 +14,9 @@
 **What held:** The United States has **50** states.  
 **What did not:** That the US is the **only** country with exactly 50 states, or that listing “50 states” is the **preferable** way to teach US structure in intro geography.
 
-Verdict: **Stable Provisional**. Amb ≈ 5.
+Verdict: **Stable Provisional**.
+
+**Reliability of this scoring pass:** not recorded at original scoring.
 
 **Live vs stand-in:** N/A.
 

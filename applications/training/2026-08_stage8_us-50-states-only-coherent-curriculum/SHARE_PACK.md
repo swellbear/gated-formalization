@@ -15,7 +15,9 @@
 
 **What remains contested:** That this is **unique**, that standard US geography curricula are the **only coherent** way to teach national political structure, that schools **should standardize** on “50 states” for 2026–2027 intro civic education, or that this is a **preferred, sufficient** framework.
 
-Verdict: **Stable Provisional**. Amb ≈ 7. No false clearance of the full package.
+Verdict: **Stable Provisional**. No false clearance of the full package.
+
+**Reliability of this scoring pass:** not recorded at original scoring.
 
 **Live vs stand-in:** N/A.
 

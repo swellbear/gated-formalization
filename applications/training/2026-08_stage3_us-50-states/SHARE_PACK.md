@@ -11,7 +11,9 @@
 
 ## 1. Plain verdict
 
-**The United States has 50 states.** Numerical bar **50** **passes**. Verdict: **Admissible**. Amb ≈ 0.5.
+**The United States has 50 states.** Numerical bar **50** **passes**. Verdict: **Admissible**.
+
+**Reliability of this scoring pass:** not recorded at original scoring.
 
 **Live vs stand-in:** N/A — standard public federal/constitutional reference count (not a market print/proxy).
 

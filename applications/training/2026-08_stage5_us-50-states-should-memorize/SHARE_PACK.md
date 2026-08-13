@@ -14,7 +14,9 @@
 **What held:** The United States has **50** states.  
 **What did not:** That students learning basic US geography **should** memorize that fact — **not established** as a method output (not forced; not admitted policy/pedagogy).
 
-Verdict: **Stable Provisional**. Amb ≈ 2.5.
+Verdict: **Stable Provisional**.
+
+**Reliability of this scoring pass:** not recorded at original scoring.
 
 **Live vs stand-in:** N/A.
 

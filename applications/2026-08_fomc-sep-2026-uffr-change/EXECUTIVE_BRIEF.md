@@ -17,7 +17,9 @@ Market contract: resolve to the **change** in the upper bound of the target fede
 
 ## Plain verdict
 
-Under a freeze that treats the named Polymarket prices as **live-shot sizes** (not the expected path): the page printed about **67¢ no change** and **33¢ +25 bp**. That snapshot does **not** prove a hike or a hold is a real shot. A second series was left unnamed. The September statement has not printed. Leave-unnamed is not “unlikely.”
+**A trading market cannot be the only proof that a bracket is a real shot.** That bar is **not established**. Under a freeze that treats the named Polymarket prices as **live-shot sizes** (not the expected path), the page printed about **67¢ no change** and **33¢ +25 bp**. That snapshot does **not** prove a hike or a hold is a real shot. A second series was left unnamed. The September statement has not printed. Leave-unnamed is not “unlikely.”
+
+**Reliability of this scoring pass:** high — Cycle 0 recorded this as a structural finding (under-specification), not a forecast score.
 
 **Live vs stand-in:** **Live** for the print = FOMC statement after Sep 15–16 2026. **OUT:** this page; June SEP. Conflicted ¢ = pitch curve, not bar-met.
 

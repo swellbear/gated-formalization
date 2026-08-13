@@ -115,6 +115,8 @@ Populate whenever a run later reveals mis-calibration.
 
 **Note on `05_`:** Two different worksheets share the `05_` prefix — `05_Original_Claim_Assessment.md` (closeout) and `05_Calibration_and_Rule_Diff.md` (post-run learning). Do not conflate them; rename later only if confusion persists across more runs.
 
+The **Lean Default Path** in `workflow.md` is the recommended starting posture for ordinary applications. The full high-resolution path remains available when needed (Amb still high after the first cycle *and* a high-impact free parameter looks realistically constrainable, or the claim is unusually high-stakes).
+
 ## 9. Calibration & Rule Diff (Learning Loop)
 
 After one or more application runs, the operator converts observations and any failure-mode entries into an explicit, versioned **rule diff**. The diff is a learning signal only; it is **never** applied automatically. Use the worksheet `templates/05_Calibration_and_Rule_Diff.md`.
@@ -139,7 +141,7 @@ A lightweight, comparable index of how constrained / formalized a claim currentl
 
 ## 12. Lock Library
 
-Record tightly constrained free parameters or admitted layers stable enough to reuse as starting constraints in related future applications. Entry template: `templates/08_Lock_Library_Entry.md`. Store each filled entry as `locks/LOCK-YYYY-MM-NNN.md` (one file per lock). Locks are created only after residual judgment decides something is lock-worthy — never automatic. The library becomes useful only after repeated locks accumulate; early applications may have zero entries. Importing a lock into a new application still requires ordinary consistency checking with that application’s anchors.
+Record tightly constrained free parameters or admitted layers stable enough to reuse as starting constraints in related future applications. Entry template: `templates/08_Lock_Library_Entry.md`. Store each filled entry as `locks/LOCK-YYYY-MM-NNN.md` (one file per lock). Locks are created only after residual judgment decides something is lock-worthy — never automatic. The library becomes useful only after repeated locks accumulate; early applications may have zero entries. Importing a lock into a new application still requires ordinary consistency checking with that application’s anchors. Import of relevant Active locks and a Cons check should normally occur before the first gate scoring on new applications (see Lean Default Path in workflow.md).
 
 ## 13. Machine JSON Block
 

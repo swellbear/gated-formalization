@@ -19,7 +19,9 @@ Are property taxes in Florida likely to be abolished in the next 10 years?
 
 Under a freeze that treats “abolished” as **levy authority gone statewide** and “likely” as the **expected path** through **12 Aug 2036**: today’s official law still **authorizes** local property tax. Whether abolition is likely was **not tested**. That is not a finding that it is unlikely.
 
-**Live vs stand-in:** **Live** for current-law census = official Florida Constitution Art. VII + F.S. 200.001 (Florida Senate Laws pages, fetched 2026-08-12). **N/A** for the likely-bar — no print/proxy was used to score P-BaseCase (class left unnamed).
+**Live vs stand-in:** **Live** for current-law census = official Florida Constitution Art. VII + F.S. 200.001 (Florida Senate Laws pages, fetched 2026-08-12). **N/A** for the likely-bar — no print/proxy was used to score the expected-path bar (class left unnamed).
+
+**Reliability of this scoring pass:** high — Rank 1 freeze recorded high for the definitional Amb drop; Cycle 0 also recorded structural high.
 
 ---
 

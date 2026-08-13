@@ -18,7 +18,7 @@
 
 ## Plain verdict
 
-**No — not under ordinary public federal reference.** The United States has **50** states, not 52. The numerical bar **fails**. Verdict: **Stable Provisional** (well-posed; bar not established). Amb ≈ 0.5. This is not a “should,” a moral, or a joke.
+**No — not under ordinary public federal reference.** The United States has **50** states, not 52. The numerical bar **fails**. Verdict: **Stable Provisional** (well-posed; bar not established). This is not a “should,” a moral, or a joke.
 
 **Live vs stand-in:** N/A.
 

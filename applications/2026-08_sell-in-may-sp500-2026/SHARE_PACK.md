@@ -12,6 +12,8 @@
 
 Under the agreed data lock, average May–October S&P returns have been **substantially lower** than November–April (~**3.5 percentage points**). That seasonal fact does **not** mean investors should exit, that the rule beats buy-and-hold on Sharpe after costs/taxes, or that it must be followed in 2026.
 
+**Reliability of this scoring pass:** medium for Amb diagnosis; low for claim clearance (none attempted). Cycle 0 sheet: moderately high for diagnosis; L1 rescore recorded high for diagnosis.
+
 **Live vs stand-in:** Locked workbook on ^SP500TR (H2) with stated F3 tax **proxy** and ^IRX cash transform — not a full Form-8949 simulation; see workbook already-included legs.
 
 ---

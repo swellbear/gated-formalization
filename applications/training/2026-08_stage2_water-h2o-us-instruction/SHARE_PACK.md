@@ -11,7 +11,9 @@
 
 ## 1. Plain verdict
 
-**In standard US secondary and intro-college chemistry instruction, water is taught as H₂O** — under an explicit scope lock. Verdict: **Admissible** under that lock. Amb ≈ 1.5. Not a claim about all countries or all of science.
+**In standard US secondary and intro-college chemistry instruction, water is taught as H₂O** — under an explicit scope lock. Verdict: **Admissible** under that lock. Not a claim about all countries or all of science.
+
+**Reliability of this scoring pass:** not recorded at original scoring.
 
 **Live vs stand-in:** N/A.
 

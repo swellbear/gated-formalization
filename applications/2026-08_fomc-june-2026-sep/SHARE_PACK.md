@@ -11,6 +11,10 @@
 
 The June 17, 2026 SEP is a published set of **18 participants’ submissions** (17 for 2028) of most-likely GDP, unemployment, and inflation, each under that person’s own appropriate-policy path. What they **wrote down** is established. That those figures **are** the economy’s expected path, the Committee’s forecast, a vote, or 2026-on-target is **not** established. 2026 medians were tested as a base case against the brochure **and** against the May 2026 Survey of Professional Forecasters and **did not clear**.
 
+**Bar height:** expected path — **not established** for the 2026 medians (print-match ≠ clearance).
+
+**Reliability of this scoring pass:** not recorded at original scoring.
+
 **Live vs stand-in:** **Live:** June 17, 2026 SEP [PDF](https://www.federalreserve.gov/monetarypolicy/files/fomcprojtabl20260617.pdf) / [HTML](https://www.federalreserve.gov/monetarypolicy/fomcprojtabl20260617.htm). **OUT:** July 29, 2026 FOMC statement (not used as a stand-in for this package).
 
 ---
@@ -58,7 +62,7 @@ Menu: [`RESIDUAL_BRANCH_MENU.md`](RESIDUAL_BRANCH_MENU.md) — **executed:** [R-
 [`OPTIONAL_MODES_MENU.md`](OPTIONAL_MODES_MENU.md) — **Offering ≠ running.**
 
 **Offered (not run):** `run UX` · `run CX` · `run CR` · `decline optional modes`  
-**N/A:** QI — no failed C≥H / Sharpe-style numerical *instance* bar (unmet P-BaseCase is a modal bar)
+**N/A:** QI — no failed C≥H / Sharpe-style numerical *instance* bar (unmet expected-path bar is a modal bar)
 
 ---
 

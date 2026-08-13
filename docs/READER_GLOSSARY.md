@@ -8,6 +8,7 @@ One-sentence definitions for non-technical partners. Full method: `.cursor/rules
 | **Not established** | The run did **not** find enough support; the point remains unproven (not the same as “proven false”). |
 | **Amb (ambiguity)** | How under-specified the claim still is. **Lower Amb ≠ the claim is true** — it only means meanings are clearer. |
 | **Lock** | An explicit decision that fixes meanings (what counts, what we’re measuring) before further testing. |
+| **Bar height** | How strong the claim *means* under the freeze: **merely possible**, **real shot** (not the expected path), or **expected path**. It is **not** a probability that the slogan is true. Operator IDs (`P-Logical`, `P-NonNegligible`, `P-BaseCase`) may follow in parentheses on the technical table — they are not “the probability.” |
 | **Provisional** | Well-posed enough to continue or close with limits; not a full unrestricted clearance of the slogan. |
 | **Admissible** | Passes the gates to be carried forward as a constrained claim/layer under the method. |
 | **Not admissible** | As stated, the claim/layer cannot be carried forward (usually too vague or over-strong). |

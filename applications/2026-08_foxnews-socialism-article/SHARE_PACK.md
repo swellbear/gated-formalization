@@ -9,4 +9,6 @@
 
 **Live vs stand-in:** N/A.
 
+**Reliability of this scoring pass:** not recorded at original scoring.
+
 *Add a full SHARE_PACK only after thin-record recovery if partner share needs it.*

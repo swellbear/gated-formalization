@@ -9,4 +9,6 @@
 
 **Live vs stand-in:** N/A — no market print/proxy bar.
 
+**Reliability of this scoring pass:** high for the single-operator closeout relative to prior cycles (limited by still-new J-space / Ignition Index literatures). Earlier sheets recorded Moderate, then Moderate–high.
+
 *Add a full SHARE_PACK only if partner share needs a dedicated file beyond the brief.*

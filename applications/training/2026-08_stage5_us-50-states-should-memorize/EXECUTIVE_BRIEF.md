@@ -18,7 +18,7 @@
 
 ## Plain verdict
 
-**The “50 states” part is true. The “should memorize” part is not established as a method requirement.** Knowing the count does not, by itself, prove what students ought to memorize. Verdict: **Stable Provisional**. Amb ≈ 2.5.
+**The “50 states” part is true. The “should memorize” part is not established as a method requirement.** Knowing the count does not, by itself, prove what students ought to memorize. Verdict: **Stable Provisional**.
 
 **Live vs stand-in:** N/A.
 

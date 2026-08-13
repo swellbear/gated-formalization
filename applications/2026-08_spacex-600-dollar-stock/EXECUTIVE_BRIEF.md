@@ -18,7 +18,7 @@
 
 ## Plain verdict
 
-Under that agreed reading, the question is **clear**, and a **non-negligible path to ~$600 by ~2036 is not established**. Independent fair-value marks sit roughly an order of magnitude below the implied ~$7.9T target. IPO/day-one prices and trailing Starlink success do **not** by themselves prove that path. This is not an investment recommendation, and it does not claim “$600 is impossible.”
+Under that agreed reading, a **real shot** (not the expected path) **to ~$600 by ~2036 is not established**. Independent fair-value marks sit roughly an order of magnitude below the implied ~$7.9T target. IPO/day-one prices and trailing Starlink success do **not** by themselves prove that path. This is not an investment recommendation, and it does not claim “$600 is impossible.”
 
 ---
 

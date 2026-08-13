@@ -1,5 +1,7 @@
 # Gate Scoring Sheet
 
+> **Plain language.** This sheet is a first structured pass on how well-posed and how consistent the claim is. You are being asked to score a few gates and record a verdict — not to declare the original slogan true. A clearer question (lower Ambiguity) is not the same as a proven claim.
+
 **Date:**  
 **Application / Claim being scored:**  
 **Linked Anchor & Claim-Type sheet:**  
@@ -7,6 +9,8 @@
 ---
 
 ## 1. Cons (Consistency)
+
+**In plain language:** Does this reading clash with the starting facts or with layers you have already allowed in?
 
 **Score:** _______ (compatibility rate or qualitative: High / Moderate / Low)
 
@@ -22,6 +26,8 @@
 
 ## 2. Agree (Agreement / Stability) — secondary
 
+**In plain language:** Would careful re-readings of the *same* constrained sentence settle on the same meaning, or only sound fluent?
+
 **Score:** _______ (High / Moderately high / Moderate / Low)
 
 **Notes on stability of reading across careful passes or reviewers:**
@@ -33,6 +39,8 @@
 ---
 
 ## 3. Prod (Productivity) — secondary
+
+**In plain language:** Does this claim add new consequences you could actually check, beyond repeating the slogan or listing hopes?
 
 **Number of new, non-trivial, checkable consequences:** _______
 
@@ -53,6 +61,8 @@
 ---
 
 ## 4. Amb (Ambiguity / Under-determination)
+
+**In plain language:** What important leftover choices are still unset, and how much do they matter? A smaller total means the question is clearer — not that the claim is true.
 
 **Free-parameter list with severity weights:**
 
@@ -80,6 +90,8 @@
 
 ## 5. Higher-Level Review
 
+**In plain language:** Step back: is the claim quietly changing meaning, overclaiming, or mixing up kinds of question?
+
 **Result:**  
 - [ ] Pass  
 - [ ] Pass with caution  
@@ -93,6 +105,8 @@
 
 ## Final Verdict
 
+**In plain language:** Record whether this layer can be carried forward as stated, only with limits, or not at all. This is a gate verdict, not a press-release “yes.”
+
 - [ ] **Admissible**
 - [ ] **Provisional** (record why)
 - [ ] **Not admissible**
@@ -103,6 +117,8 @@
 ---
 
 ## Next Action
+
+**In plain language:** Decide whether to stop here or name the leftover choices that are blocking a fair test.
 
 - [ ] Stop / remain provisional  
 - [ ] Extract gaps and proceed to Gap Extraction & Ranking Sheet  

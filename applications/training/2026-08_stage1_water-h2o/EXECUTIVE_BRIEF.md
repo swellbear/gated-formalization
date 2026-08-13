@@ -18,7 +18,7 @@
 
 ## Plain verdict
 
-**Yes.** Under ordinary chemistry nomenclature, water’s formula is **H₂O**. Verdict: **Admissible**. Amb ≈ 0.5. Training Stage 1 only — no policy or market content.
+**Yes.** Under ordinary chemistry nomenclature, water’s formula is **H₂O**. Verdict: **Admissible**. Training Stage 1 only — no policy or market content.
 
 **Live vs stand-in:** N/A — no print/proxy bar.
 

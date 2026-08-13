@@ -11,6 +11,8 @@
 
 Nvidia **announced** MoUs aiming to mobilize >$500B. **Right now** that is MoU/aim, not closed capital or booked Nvidia revenue. Zitron’s charges — vendor/circular financing, a ~$1.6T GPU path, ~70% lab concentration, unsustainable demand — are **well-posed and not proven** on this record.
 
+**Reliability of this scoring pass:** not recorded at original scoring.
+
 **Live vs stand-in:** **Live** primary = Aug 11 newsletter + Aug 12 monologue + Nvidia MoU announcement. **OUT:** CNBC Squawk interview (not used as stand-in for thesis body).
 
 ---
