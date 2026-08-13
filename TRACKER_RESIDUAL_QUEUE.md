@@ -1,6 +1,6 @@
 # Tracker Residual Queue (Layer 3)
 
-**Last refreshed:** 2026-08-12 (FOMC L17 post-rule review; park-90d addendum still **extend-all**; next due ~2026-11-12)  
+**Last refreshed:** 2026-08-12 (FL property-tax hard stop: `leave unnamed`, R-F-FORWARD **park-until-trigger**; FOMC L17; park-90d **extend-all**; next due ~2026-11-12)  
 **Last park-90d quarterly review:** **2026-08-12** (inaugural = **cadence-existence**, not quarterly proof; next due ~2026-11-12; post-rule addendum same day — still extend-all)  
 **Disposition vocabulary:** `pursue` | `park-90d` | `park-until-trigger` | `drop`  
 Only **pursue** items stay in active bands. Parked/dropped listed below.
@@ -107,6 +107,7 @@ Only **pursue** items stay in active bands. Parked/dropped listed below.
 | **R-REV** · zitron-nvidia-500b | Narrow to D-ANN + D-MOU (± “Zitron claims…”) | — | **executed (keep original wording)** | Operator pick recorded; unused CR ranks on file; CX listed same shapes as alts, **not adopted**; rewording ≠ bar clearance |
 | **R-REALIZE** · fomc-june-2026-sep | 2026–28 actuals vs L5 medians under L4 defs | 2026 Q4 prints exist | **park-until-trigger** | Realization ≠ F-ML met; July 29 OUT |
 | **R-G8-SCOPE** · fomc-june-2026-sep | Freeze realization out of scope now | `authorize branch R-G8-SCOPE` / `lock G8 realization-later` | **park-until-trigger** | Offered; **not locked** at hard stop; Amb stays ≈ 1; ≠ clearance |
+| **R-F-FORWARD** · fl-property-tax-abolish-10y | Rank 1 P-BaseCase repeal-as-class by 2036-08-12 | Matching public series named (`name source class C5`); C1–C4 do **not** fire | **park-until-trigger** | Operator `leave unnamed`; untested ≠ unlikely; D-LAW admitted separately |
 
 ---
 

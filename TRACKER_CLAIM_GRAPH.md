@@ -1,7 +1,7 @@
 # Claim Graph
 
 **Date:** 2026-08-12  
-**Scope:** portfolio-wide + real-claim intakes (CoreWeave + Zitron Nvidia $500B + FOMC June 2026 SEP **hard stop**)  
+**Scope:** portfolio-wide + real-claim intakes (CoreWeave + Zitron Nvidia $500B + FOMC June 2026 SEP **hard stop**) + open question intake (FL property-tax abolish-10y Cycle 0)  
 **Maintainer note:** Three claim-shape lock clusters Active (001–004 uniqueness+preferability; 005–008 numerical+should; 009–011 forecast-extension). Real-claim intakes: `APP-CRWV`, `APP-ZITRON`; synthetic twin scaling still saturated.
 
 *Optional overview. Individual worksheets remain the source of truth.*
@@ -29,6 +29,7 @@
 | APP-CRWV | Application | `2026-08_coreweave-ceo-gpu-longer-life` | **Hard stop sealed**; A-ATTR L7; N-INSTANCE + color; F-LIFE fails C_SCOPE |
 | APP-ZITRON | Application | `2026-08_zitron-nvidia-500b-financing-thesis` | **Hard stop sealed**; D-ANN+D-MOU; VF/CONC/SUSTAIN frozen not met; L8 Street FY; L9 MSFT OpenAI $24.1B; L10 capex scale + Cloud mix + non-lab presence; bubble not cleared; CR **keep original wording**; UX+CX executed (alts not adopted); Squawk OUT |
 | APP-FOMC-SEP | Application | `2026-08_fomc-june-2026-sep` | **Hard stop sealed**; L1–L17; Amb ≈ 1; 2026 F-ML not established (L13 + L17 SPF); July 29 OUT; CR offered not run (keep original default); UX/CX offered not run |
+| APP-FL-PTAX | Application | `2026-08_fl-property-tax-abolish-10y` | **Hard stop sealed**; Rank 1 + live official law; D-LAW admitted; Amb 2; P-BaseCase untested (`leave unnamed`); CR offered not run |
 | LOCK-2026-08-001 | Lock | Comparison class before uniqueness (O) | Active |
 | LOCK-2026-08-002 | Lock | Preferability needs named virtues/metrics | Active |
 | LOCK-2026-08-003 | Lock | Amb drop / scope lock ≠ clearance | Active |
@@ -113,6 +114,12 @@
 | APP-FOMC-SEP | LOCK-2026-08-010 | imports_lock | posed ≠ clearance |
 | APP-FOMC-SEP | LOCK-2026-08-011 | imports_lock | printed SEP ≠ realized path / Committee vote |
 | APP-FOMC-SEP | APP-ZITRON | shares_anchor_class | real-claim markets; claimed-table vs elevation |
+| APP-FL-PTAX | LOCK-2026-08-003 | imports_lock | Amb≠clearance; question recorded ≠ answer established |
+| APP-FL-PTAX | LOCK-2026-08-009 | imports_lock | likely + 10y window freeze (offered) |
+| APP-FL-PTAX | LOCK-2026-08-010 | imports_lock | posed ≠ clearance |
+| APP-FL-PTAX | LOCK-2026-08-011 | imports_lock | current-law census ≠ forward likely |
+| APP-FL-PTAX | APP-HEAT | shares_anchor_class | “likely” + window (process; no should here) |
+| APP-FL-PTAX | APP-FOMC-SEP | shares_anchor_class | forecast Amb≠clearance; named-class leftover after lock |
 
 ---
 
