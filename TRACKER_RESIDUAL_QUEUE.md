@@ -1,6 +1,6 @@
 # Tracker Residual Queue (Layer 3)
 
-**Last refreshed:** 2026-08-12 (FOMC Sep UFFR-change hard stop: `leave unnamed`, R-P-NN + R-F-PRINT **park-until-trigger**; FL property-tax hard stop; FOMC L17; park-90d **extend-all**; next due ~2026-11-12)  
+**Last refreshed:** 2026-08-13 (India heat-mortality: R-CITY / R-POL / R-INDEP **park-until-trigger**; R-REV **park-90d**; R-DOC executed. Park-90d quarterly still due ~2026-11-12 — this refresh does **not** re-churn that card.)  
 **Last park-90d quarterly review:** **2026-08-12** (inaugural = **cadence-existence**, not quarterly proof; next due ~2026-11-12; post-rule addendum same day — still extend-all)  
 **Disposition vocabulary:** `pursue` | `park-90d` | `park-until-trigger` | `drop`  
 Only **pursue** items stay in active bands. Parked/dropped listed below.
@@ -110,6 +110,9 @@ Only **pursue** items stay in active bands. Parked/dropped listed below.
 | **R-F-FORWARD** · fl-property-tax-abolish-10y | Rank 1 P-BaseCase repeal-as-class by 2036-08-12 | Matching public series named (`name source class C5`); C1–C4 do **not** fire | **park-until-trigger** | Operator `leave unnamed`; untested ≠ unlikely; D-LAW admitted separately |
 | **R-P-NN** · fomc-sep-2026-uffr-change | Independent P-NonNegligible affirmation | Matching public series named (`name source class C2`); C1 does **not** fire as sole affirmation | **park-until-trigger** | Operator `leave unnamed`; 33¢ ≠ live shot met; conflicted C1 |
 | **R-F-PRINT** · fomc-sep-2026-uffr-change | Sep 2026 upper-bound **change** vs pre-meeting | FOMC statement after Sep 15–16 2026 (or contract fallback clock) | **park-until-trigger** | Named class; data not yet existent; page ≠ print |
+| **R-CITY** · india-heat-mortality | City/district heat-death series vs national+city-SMT proxy | `name source class C-CITY: …` | **park-until-trigger** | Unnamed; does not auto-meet E-DEM |
+| **R-POL** · india-heat-mortality | Real mitigation / HAP evaluation (not SSP labels) | `name source class C-POL: …` | **park-until-trigger** | Unnamed |
+| **R-INDEP** · india-heat-mortality | Independent CMIP6/ARIMAX rerun | Named public input stack | **park-until-trigger** | Artifact check ≠ demonstrate-mitigation |
 
 ---
 
@@ -132,6 +135,7 @@ Only **pursue** items stay in active bands. Parked/dropped listed below.
 | **R-REV** · heatwave | Narrow to descriptive seasonal risk | ~2026-11-12 | **park-90d** | |
 | **R-REV** · holiday-sales | Narrow to descriptive seasonality | ~2026-11-12 | **park-90d** | |
 | **R-REV** · coreweave-gpu | Narrow to attribution-only claim | ~2026-11-12 | **park-90d** | Real-claim intake |
+| **R-REV** · india-heat-mortality | Narrow abstract to §4/§5 “could” / scenario contrast | ~2026-11-12 | **park-90d** | CR offered, not run; rewording ≠ E-DEM |
 
 ---
 
@@ -162,6 +166,7 @@ Only **pursue** items stay in active bands. Parked/dropped listed below.
 | **R-JULY29** · fomc-june-2026-sep | July 29 statement OUT unless L₀ elevation | Explicit package change | **drop** | Not a residual to finish this package |
 | **R-FML-2026** · fomc-june-2026-sep | Test F-ML-BAR on 2026 medians | — | **drop** | Executed 2026-08-12 → L13; not established; not a refute |
 | **R-FML-INDEP** · fomc-june-2026-sep | Non-SEP matched expected-path vs 2026 medians | — | **drop** | Named-class pulse 2026-08-12 → L17 SPF Q2 2026 medians; PCE/core print-match; GDP concept mismatch; U 4.5 vs 4.3; **not established**; not a refute. Later SPF vintage not auto-run. |
+| **R-DOC** · india-heat-mortality | Census of arXiv:2603.24244 HTML | — | **drop** | Executed 2026-08-13 → D-DOC admitted; E-DEM still not established |
 
 ---
 
