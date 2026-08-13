@@ -1,7 +1,7 @@
 # Claim Graph
 
 **Date:** 2026-08-12  
-**Scope:** portfolio-wide + real-claim intakes (CoreWeave + Zitron Nvidia $500B + FOMC June 2026 SEP **hard stop**) + open question intake (FL property-tax abolish-10y Cycle 0)  
+**Scope:** portfolio-wide + real-claim intakes (CoreWeave + Zitron Nvidia $500B + FOMC June 2026 SEP **hard stop**) + FL property-tax **hard stop** + FOMC Sep 2026 UFFR-change **hard stop** (`leave unnamed`)  
 **Maintainer note:** Three claim-shape lock clusters Active (001–004 uniqueness+preferability; 005–008 numerical+should; 009–011 forecast-extension). Real-claim intakes: `APP-CRWV`, `APP-ZITRON`; synthetic twin scaling still saturated.
 
 *Optional overview. Individual worksheets remain the source of truth.*
@@ -30,6 +30,7 @@
 | APP-ZITRON | Application | `2026-08_zitron-nvidia-500b-financing-thesis` | **Hard stop sealed**; D-ANN+D-MOU; VF/CONC/SUSTAIN frozen not met; L8 Street FY; L9 MSFT OpenAI $24.1B; L10 capex scale + Cloud mix + non-lab presence; bubble not cleared; CR **keep original wording**; UX+CX executed (alts not adopted); Squawk OUT |
 | APP-FOMC-SEP | Application | `2026-08_fomc-june-2026-sep` | **Hard stop sealed**; L1–L17; Amb ≈ 1; 2026 F-ML not established (L13 + L17 SPF); July 29 OUT; CR offered not run (keep original default); UX/CX offered not run |
 | APP-FL-PTAX | Application | `2026-08_fl-property-tax-abolish-10y` | **Hard stop sealed**; Rank 1 + live official law; D-LAW admitted; Amb 2; P-BaseCase untested (`leave unnamed`); CR offered not run |
+| APP-FOMC-UFFR | Application | `2026-08_fomc-sep-2026-uffr-change` | **Hard stop sealed**; Rank 3 `Q3+O2+L1+M3+B1`; Amb 2.5; P-NN-TEST **not established**; C2 `leave unnamed`; F-PRINT parked; CR offered not run |
 | LOCK-2026-08-001 | Lock | Comparison class before uniqueness (O) | Active |
 | LOCK-2026-08-002 | Lock | Preferability needs named virtues/metrics | Active |
 | LOCK-2026-08-003 | Lock | Amb drop / scope lock ≠ clearance | Active |
@@ -120,6 +121,12 @@
 | APP-FL-PTAX | LOCK-2026-08-011 | imports_lock | current-law census ≠ forward likely |
 | APP-FL-PTAX | APP-HEAT | shares_anchor_class | “likely” + window (process; no should here) |
 | APP-FL-PTAX | APP-FOMC-SEP | shares_anchor_class | forecast Amb≠clearance; named-class leftover after lock |
+| APP-FOMC-UFFR | LOCK-2026-08-003 | imports_lock | Amb≠clearance; 33¢ print ≠ P-NonNegligible met; conflicted venue ≠ sole modal affirmation |
+| APP-FOMC-UFFR | LOCK-2026-08-009 | imports_lock | forward window (Sep 15–16 2026 statement) |
+| APP-FOMC-UFFR | LOCK-2026-08-010 | imports_lock | posed rules ≠ clearance |
+| APP-FOMC-UFFR | LOCK-2026-08-011 | imports_lock | June SEP / prior statement ≠ Sep upper-bound change |
+| APP-FOMC-UFFR | APP-FOMC-SEP | shares_anchor_class | FOMC process kinship; **different object** (UFFR change vs SEP inventory; funds-rate was off June F-ML) |
+| APP-FOMC-UFFR | APP-FL-PTAX | shares_anchor_class | contract/question intake; unnamed class / wait-for-print |
 
 ---
 

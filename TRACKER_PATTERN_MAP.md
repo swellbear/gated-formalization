@@ -1,6 +1,6 @@
 # Tracker Pattern Map
 
-**Last refreshed:** 2026-08-12 (FL property-tax hard stop sealed, P-BaseCase untested; Zitron Nvidia $500B hard stop sealed; FOMC June 2026 SEP hard stop sealed + L17 SPF pulse not established; R-VERIFY: Street total-revenue ≠ GPU $1.6T; R-REV: rewording ≠ bar clearance)  
+**Last refreshed:** 2026-08-12 (FOMC Sep 2026 UFFR-change **hard stop sealed**, P-NN untested on C2 / not established on C1; FL property-tax hard stop sealed, P-BaseCase untested; Zitron Nvidia $500B hard stop sealed; FOMC June 2026 SEP hard stop sealed + L17 SPF pulse not established; R-VERIFY: Street total-revenue ≠ GPU $1.6T; R-REV: rewording ≠ bar clearance)  
 **Taxonomy:** [`docs/TRACKER_TAXONOMY.md`](docs/TRACKER_TAXONOMY.md)  
 **Calibration:** When a pattern appears in ≥3 closed apps → [`logs/calibration_log.md`](logs/calibration_log.md)  
 Only patterns **evidenced** in current applications. Sparse by design.
