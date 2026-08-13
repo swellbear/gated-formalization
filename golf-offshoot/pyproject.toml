@@ -1,0 +1,27 @@
+[project]
+name = "golf-offshoot"
+version = "0.2.0"
+description = "Uncertainty-aware golf analysis and betting-decision support. Separate from Gated Progressive Formalization."
+readme = "README.md"
+requires-python = ">=3.10"
+dependencies = [
+  "numpy>=1.26",
+  "pydantic>=2.5",
+]
+
+[project.optional-dependencies]
+dev = ["pytest>=8.0"]
+
+[project.scripts]
+golf-offshoot = "golf_offshoot.__main__:main"
+
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["src"]
