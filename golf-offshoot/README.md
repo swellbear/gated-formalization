@@ -22,6 +22,9 @@ pip install -e ".[dev]"
 pytest
 python -m golf_offshoot demo --sims 1500
 python -m golf_offshoot explain --player p01
+python -m golf_offshoot paper
+python -m golf_offshoot paper --paper-file path/to/book.json
+python -m golf_offshoot paper --live --json
 python -m golf_offshoot strategy --bankroll 2000 --mode stay_selective
 python -m golf_offshoot strategy --live --mode protect_profits
 ```
@@ -59,6 +62,8 @@ golf-offshoot/
 ## What a ranked row always shows
 
 For every player: **probability range** (central + low/high), **reliability** (separate from the range), **market edge** when odds exist, **open questions**, **bias flags**, and a one-call **explainability** narrative.
+
+`python -m golf_offshoot paper` prints that **full card for each player currently in the paper book** (user-recorded positions), including stake, entry vs live edge, mark-to-market, and the advisory strategy action. Default is the demo book; pass `--paper-file` for your recorded `PortfolioState` JSON. `--json` dumps the same payload. The engine still **never auto-bets**.
 
 ## Non-negotiables
 

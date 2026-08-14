@@ -12,6 +12,8 @@ Reliability is **not** the interval width. A tight interval with sparse data is 
 
 CLI table columns: rank, name, Win range, T10, Cut, Win edge, reliability, flags.
 
+Full card: `format_player_report` / `python -m golf_offshoot explain --player p01`. Paper-scoped cards (only names in the current book): `python -m golf_offshoot paper`. See [Strategy layer](STRATEGY_LAYER.md#h-full-reports-on-the-current-paper).
+
 ## Market
 
 - American → decimal → raw implied

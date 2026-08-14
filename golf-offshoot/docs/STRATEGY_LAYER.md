@@ -86,3 +86,24 @@ Risk preference (conservative / normal / aggressive) scales size and exposure ca
 4. Fitted finish copula vs current θ / SG / cut-risk slices.
 
 CLI: `python -m golf_offshoot strategy --bankroll 2000 --mode press_edges --live`
+
+## H. Full reports on the current paper
+
+`explain --player p01` is one name. To report **everyone currently in the paper**:
+
+```bash
+# demo paper (top names from the toy run, user-recorded — not placed by the engine)
+python -m golf_offshoot paper
+
+# your book
+python -m golf_offshoot paper --paper-file path/to/book.json
+python -m golf_offshoot paper --paper-file path/to/book.json --live
+python -m golf_offshoot paper --paper-file path/to/book.json --json
+python -m golf_offshoot paper --paper-file path/to/book.json --player p01
+python -m golf_offshoot paper --include-proposed   # also cards for NEW_BET suggestions
+python -m golf_offshoot paper --write-paper path/to/book.json   # save the demo book to edit
+```
+
+`--paper-file` is a `PortfolioState` JSON (bankroll + `positions[]` with `player_id`, `bet_type`, `stake`, `decimal_odds`, `entry_edge`, `entry_model_p`, …). Positions must be **user-recorded**. Proposed strategy names are excluded unless `--include-proposed`.
+
+Each card includes: all five horizon ranges, θ, reliability, market implied/edge, flags, open questions, raw inputs (SG / form / live), explainability contributions, decision screen, and paper mark (entry vs live edge, MTM, path, advisory action). Compact ranking of **only** paper names sits above the cards.
