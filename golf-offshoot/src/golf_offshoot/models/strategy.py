@@ -54,7 +54,13 @@ class StrategyConfig(BaseModel):
     risk: RiskPreference = RiskPreference.CONSERVATIVE
     bankroll: float = 1000.0
     allowed_bet_types: list[BetType] = Field(
-        default_factory=lambda: [BetType.WIN, BetType.TOP_10, BetType.MAKE_CUT]
+        default_factory=lambda: [
+            BetType.WIN,
+            BetType.TOP_5,
+            BetType.TOP_10,
+            BetType.TOP_20,
+            BetType.MAKE_CUT,
+        ]
     )
     controls: DrawdownControls = Field(default_factory=DrawdownControls)
     never_auto_bet: bool = True

@@ -7,8 +7,9 @@ but is not required to run a tournament.
 
 from __future__ import annotations
 
-MODEL_VERSION = "golf-offshoot-0.2.0"
+MODEL_VERSION = "golf-offshoot-0.7.0"
 MODEL_FAMILY = "latent-skill-plackett-mc"
+CALIBRATED_WEIGHTS_VERSION = "calib-v3"
 
 # Tournament structure
 DEFAULT_ROUNDS = 4
@@ -55,6 +56,26 @@ STRATEGY_LOW_RELIABILITY_BLOCK = 0.40
 
 # Market
 DEFAULT_OVERROUND_METHOD = "proportional"
+ODDS_TTL_PRE_SECONDS = 600.0  # 10 min — pre-tournament coupon
+ODDS_TTL_LIVE_SECONDS = 45.0  # live pass must not reuse a stale Winner coupon
+ODDS_LIVE_MAX_STALE_SECONDS = 900.0  # 15 min: older than this → edges suppressed
 
-# Live
-LIVE_POSITION_WEIGHT = 1.0  # remaining-round MC still uses residual σ
+# Live: remaining-holes MC banks observed to-par; live_position evidence is
+# hole-dampened so Round-1 boards cannot dominate θ.
+LIVE_POSITION_WEIGHT = 1.0
+
+# True as-of recent SG: mean of PGA EVENT_ONLY tables for the last N completed
+# events before the tournament start. Not inferred from season-to-date.
+# Missing weeks are skipped, not zero-filled; N is a request, not a guarantee.
+RECENT_SG_EVENTS = 16
+RECENT_SG_MIN_EVENTS = 1
+RECENT_SG_PILL_YEARS = 3  # StatDetails pills for year, year-1, year-2
+HISTORY_YEARS = (2025, 2026)
+CALIB_HISTORY_YEARS = (2024, 2025, 2026)
+
+# Recalibrate only if the as-of panel is materially stronger than calib-v2
+# (median 3 measured EVENT_ONLY events/player on the 8-week window).
+PREV_CALIB_MEDIAN_RECENT_EVENTS = 3
+PREV_CALIB_RECENT_COVERAGE = 0.742
+CALIB_MATERIAL_MEDIAN_EVENTS = 5
+CALIB_MATERIAL_COVERAGE = 0.85

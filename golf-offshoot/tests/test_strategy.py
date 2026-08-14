@@ -94,6 +94,27 @@ def test_conservative_sizes_smaller_than_aggressive():
     assert agg > cons > 0
 
 
+def test_tiny_kelly_still_emits_minimum_advisory_unit():
+    cfg = StrategyConfig(
+        enabled=True,
+        mode=StrategyMode.STAY_SELECTIVE,
+        risk=RiskPreference.CONSERVATIVE,
+        bankroll=2000,
+    )
+    stake, warn = suggested_stake(
+        bankroll=2000,
+        model_p=0.0975,
+        low_p=0.070,
+        decimal_odds=17.0,
+        range_width=0.054,
+        reliability=0.81,
+        config=cfg,
+        remaining_capacity=400,
+    )
+    assert stake == 4.0
+    assert warn and "minimum advisory" in warn.lower()
+
+
 def test_protect_vs_press_on_runner():
     f = demo_field()
     pipe = _pipe()

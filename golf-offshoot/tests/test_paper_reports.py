@@ -14,11 +14,11 @@ from golf_offshoot.ranking.report import format_player_report
 from golf_offshoot.strategy.engine import run_strategy
 from golf_offshoot.strategy.paper_reports import (
     format_paper_reports,
-    load_paper_book,
+    load_portfolio_json,
     paper_reports_payload,
     paper_rows,
     recorded_positions,
-    save_paper_book,
+    save_portfolio_json,
 )
 
 
@@ -73,7 +73,7 @@ def test_empty_paper_explains_how_to_load():
     empty = PortfolioState(bankroll=2000, session_label="empty")
     text = format_paper_reports(result, empty, field=f)
     assert "No players in the current paper" in text
-    assert "--paper-file" in text
+    assert "--paper-file" in text or "--lock-paper" in text or "--demo-paper" in text
 
 
 def test_roundtrip_paper_file(tmp_path: Path):
@@ -82,8 +82,8 @@ def test_roundtrip_paper_file(tmp_path: Path):
     result = pipe.run(demo_tournament(), f, market_quotes=demo_odds(f), persist=False)
     book = demo_open_book(result, bankroll=1500, n=1)
     path = tmp_path / "book.json"
-    save_paper_book(book, path)
-    loaded = load_paper_book(path)
+    save_portfolio_json(book, path)
+    loaded = load_portfolio_json(path)
     assert loaded.bankroll == 1500
     assert len(recorded_positions(loaded)) == 1
     assert loaded.positions[0].player_id == book.positions[0].player_id
@@ -91,7 +91,7 @@ def test_roundtrip_paper_file(tmp_path: Path):
 
 
 def test_cli_paper_prints_recorded_players(capsys, tmp_path: Path):
-    rc = main(["paper", "--sims", "400", "--write-paper", str(tmp_path / "demo.json")])
+    rc = main(["paper", "--demo-paper", "--sims", "400", "--write-paper", str(tmp_path / "demo.json")])
     assert rc == 0
     out = capsys.readouterr().out
     assert "Paper reports" in out
@@ -100,7 +100,7 @@ def test_cli_paper_prints_recorded_players(capsys, tmp_path: Path):
     assert "Probabilities" in out
     saved = json.loads((tmp_path / "demo.json").read_text())
     assert saved["positions"]
-    rc = main(["paper", "--sims", "400", "--paper-file", str(tmp_path / "demo.json"), "--json"])
+    rc = main(["paper", "--demo-paper", "--sims", "400", "--paper-file", str(tmp_path / "demo.json"), "--json"])
     assert rc == 0
     payload = json.loads(capsys.readouterr().out)
     assert payload["players"]

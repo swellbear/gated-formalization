@@ -20,12 +20,13 @@ from golf_offshoot.strategy.engine import format_recommendation
 from golf_offshoot.strategy.path import mark_position
 
 
-def load_paper_book(path: str | Path) -> PortfolioState:
+def load_portfolio_json(path: str | Path) -> PortfolioState:
+    """Load a raw PortfolioState JSON. Not the locked PaperBookFile on disk."""
     raw = Path(path).read_text(encoding="utf-8")
     return PortfolioState.model_validate_json(raw)
 
 
-def save_paper_book(book: PortfolioState, path: str | Path) -> Path:
+def save_portfolio_json(book: PortfolioState, path: str | Path) -> Path:
     dest = Path(path)
     dest.parent.mkdir(parents=True, exist_ok=True)
     dest.write_text(book.model_dump_json(indent=2), encoding="utf-8")
@@ -141,7 +142,7 @@ def format_paper_reports(
     if not recorded and not extra:
         sections.append(
             "No players in the current paper. "
-            "Pass --paper-file with a PortfolioState JSON, or use the demo book."
+            "Lock a book with live --lock-paper, pass --paper-file, or use --demo-paper."
         )
         return "\n\n".join(sections)
 

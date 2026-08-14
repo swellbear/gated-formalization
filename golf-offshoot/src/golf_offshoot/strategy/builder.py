@@ -29,6 +29,9 @@ _H = {
 
 
 def _odds(row: PlayerOutput, bet: BetType) -> float | None:
+    posted = row.posted_odds_by_bet.get(bet.value)
+    if posted and posted > 1.0:
+        return posted
     imp = row.market_implied_by_bet.get(bet.value)
     if imp and imp > 0:
         return 1.0 / imp

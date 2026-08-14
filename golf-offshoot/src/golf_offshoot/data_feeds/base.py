@@ -12,7 +12,7 @@ from abc import ABC, abstractmethod
 from datetime import datetime, timezone
 from typing import Any, Generic, TypeVar
 
-from golf_offshoot.models.enums import DataRole
+from golf_offshoot.models.enums import DataRole, SourceKind
 from golf_offshoot.models.schemas import DataQuality
 
 T = TypeVar("T")
@@ -23,6 +23,34 @@ STALE_HOURS = 36.0
 
 class FeedError(RuntimeError):
     pass
+
+
+class MockOnOperatingPathError(FeedError):
+    """Raised if mock-labeled data reaches rankings, calibration, or pressure tests."""
+
+
+def assert_operating_quality(q: DataQuality, *, context: str = "") -> None:
+    if q.source_kind == SourceKind.MOCK or q.role == DataRole.MOCK:
+        raise MockOnOperatingPathError(
+            f"mock data is forbidden on the operating path ({context or q.source_name})"
+        )
+
+
+def unavailable_quality(
+    source_name: str,
+    notes: str,
+    *,
+    role: DataRole = DataRole.PRIMARY,
+) -> DataQuality:
+    return DataQuality(
+        score=0.0,
+        role=role,
+        source_name=source_name,
+        as_of=datetime.now(timezone.utc),
+        missing=True,
+        source_kind=SourceKind.UNAVAILABLE,
+        notes=notes,
+    )
 
 
 class DataFeed(ABC, Generic[T]):
@@ -44,6 +72,7 @@ class DataFeed(ABC, Generic[T]):
                 as_of=datetime.now(timezone.utc),
                 missing=True,
                 notes=f"fetch failed: {exc}",
+                source_kind=SourceKind.UNAVAILABLE,
             )
             return None, q
         if q.lag_hours > STALE_HOURS:

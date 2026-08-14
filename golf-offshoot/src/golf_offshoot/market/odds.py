@@ -30,8 +30,21 @@ def fill_quote(q: MarketQuote) -> MarketQuote:
     return q.model_copy(update={"decimal_odds": dec, "implied_raw": implied})
 
 
+def is_current_quote(q: MarketQuote) -> bool:
+    return str(getattr(q, "line_role", "current") or "current") != "opening"
+
+
 def remove_overround(quotes: list[MarketQuote], bet_type: BetType) -> tuple[list[MarketQuote], float]:
-    filled = [fill_quote(q) for q in quotes if q.bet_type == bet_type]
+    """Proportional de-juice.
+
+    implied_fair_i = implied_raw_i / Σ_j implied_raw_j
+
+    This forces the book to a probability simplex. It does **not** create a
+    price. Betting +EV still requires model_p > 1/decimal (the posted number).
+    Live golf winner coupons often carry a large overround; fair probs then
+    shrink longshots a lot — do not treat fair-minus-model as a ticket.
+    """
+    filled = [fill_quote(q) for q in quotes if q.bet_type == bet_type and is_current_quote(q)]
     subset = [q for q in filled if q.implied_raw]
     total = sum(q.implied_raw or 0.0 for q in subset)
     if total <= 0:
@@ -48,30 +61,36 @@ def build_market_snapshot(
     previous: MarketSnapshot | None = None,
 ) -> MarketSnapshot:
     filled = [fill_quote(q) for q in quotes]
+    current = [q for q in filled if is_current_quote(q)]
+    opening = [q for q in filled if not is_current_quote(q)]
     overround: dict[str, float] = {}
     fair_all: list[MarketQuote] = []
     for bt in BetType:
-        fair, tot = remove_overround(filled, bt)
+        fair, tot = remove_overround(current, bt)
         if tot:
             overround[bt.value] = tot
-            # replace matching
             ids = {q.player_id for q in fair}
             fair_all.extend(fair)
-            fair_all.extend([q for q in filled if q.bet_type == bt and q.player_id not in ids])
+            fair_all.extend([q for q in current if q.bet_type == bt and q.player_id not in ids])
         else:
-            fair_all.extend([q for q in filled if q.bet_type == bt])
+            fair_all.extend([q for q in current if q.bet_type == bt])
     movement: dict[str, float] = {}
+    open_map = {(q.player_id, q.bet_type.value): q.implied_raw for q in opening if q.implied_raw}
     if previous:
-        prev_map = {(q.player_id, q.bet_type.value): q.implied_fair or q.implied_raw for q in previous.quotes}
-        for q in fair_all:
+        for q in previous.quotes:
+            if not is_current_quote(q):
+                continue
             key = (q.player_id, q.bet_type.value)
-            old = prev_map.get(key)
-            new = q.implied_fair or q.implied_raw
-            if old is not None and new is not None:
-                movement[f"{q.player_id}:{q.bet_type.value}"] = float(new - old)
+            open_map.setdefault(key, q.implied_fair or q.implied_raw)
+    for q in fair_all:
+        key = (q.player_id, q.bet_type.value)
+        old = open_map.get(key)
+        new = q.implied_raw
+        if old is not None and new is not None:
+            movement[f"{q.player_id}:{q.bet_type.value}"] = float(new - old)
     return MarketSnapshot(
         tournament_id=tournament_id,
-        quotes=fair_all,
+        quotes=opening + fair_all,
         overround=overround,
         movement_vs_open=movement,
     )
@@ -89,12 +108,19 @@ _BT_TO_H = {
 def edges_for_player(
     bundle: ProbabilityBundle,
     market: MarketSnapshot,
-) -> tuple[dict[str, float], dict[str, float]]:
-    """model_p - fair implied. Positive = model longer than market (model likes more)."""
+) -> tuple[dict[str, float], dict[str, float], dict[str, float]]:
+    """Return (edge_vs_fair, implied_fair, posted_decimal).
+
+    Display edge is model − de-juiced market. Actionable +EV is model vs posted
+    1/decimal, enforced in the decision layer.
+    """
     edge: dict[str, float] = {}
     implied: dict[str, float] = {}
+    posted: dict[str, float] = {}
     for q in market.quotes:
         if q.player_id != bundle.player_id:
+            continue
+        if not is_current_quote(q):
             continue
         h = _BT_TO_H.get(q.bet_type)
         if h is None:
@@ -105,4 +131,6 @@ def edges_for_player(
         model_p = bundle.p(h).central
         implied[q.bet_type.value] = float(mkt)
         edge[q.bet_type.value] = float(model_p - mkt)
-    return edge, implied
+        if q.decimal_odds and q.decimal_odds > 1.0:
+            posted[q.bet_type.value] = float(q.decimal_odds)
+    return edge, implied, posted

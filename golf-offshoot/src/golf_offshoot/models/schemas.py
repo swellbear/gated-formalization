@@ -15,6 +15,7 @@ from golf_offshoot.models.enums import (
     FactorStatus,
     Horizon,
     RunMode,
+    SourceKind,
 )
 from golf_offshoot.models.strategy import StrategyRecommendation, UserStrategyDecision
 
@@ -34,6 +35,7 @@ class DataQuality(BaseModel):
     lag_hours: float = 0.0
     notes: str = ""
     missing: bool = False
+    source_kind: SourceKind = SourceKind.UNSPECIFIED
 
     @field_validator("score")
     @classmethod
@@ -75,8 +77,22 @@ class Tournament(BaseModel):
     n_rounds: int = 4
     cut_place: int = 65
     cut_after_round: int = 2
+    has_cut: bool = True
     is_major: bool = False
     purse_usd: float | None = None
+    espn_event_id: str | None = None
+
+
+class SourceInventoryItem(BaseModel):
+    """Provenance row for one important operating-path field."""
+
+    field_name: str
+    source_kind: SourceKind
+    source_name: str
+    quality_score: float | None = None
+    coverage: str = ""
+    notes: str = ""
+    impact_if_missing: str = ""
 
 
 class FreeParameterDef(BaseModel):
@@ -130,6 +146,7 @@ class PlayerInputs(BaseModel):
     talent_prior: float = 0.0
     talent_prior_sd: float = 1.0
     sg: StrokesGainedProfile = Field(default_factory=StrokesGainedProfile)
+    recent_sg: StrokesGainedProfile | None = None
     course_history_rounds: int = 0
     course_history_sg: float | None = None
     recent_form_sg: float | None = None
@@ -143,6 +160,8 @@ class PlayerInputs(BaseModel):
     live_holes_completed: int = 0
     live_made_cut: bool | None = None
     withdrawn: bool = False
+    source_qualities: dict[str, DataQuality] = Field(default_factory=dict)
+    course_fit_signal: float | None = None
 
 
 class FieldSnapshot(BaseModel):
@@ -152,6 +171,9 @@ class FieldSnapshot(BaseModel):
     players: list[PlayerInputs]
     weather_summary: str = ""
     notes: str = ""
+    inventory: list[SourceInventoryItem] = Field(default_factory=list)
+    operating: bool = False
+    extra: dict[str, Any] = Field(default_factory=dict)
 
 
 class HorizonProbability(BaseModel):
@@ -188,6 +210,7 @@ class MarketQuote(BaseModel):
     implied_fair: float | None = None
     book: str = "consensus"
     as_of: datetime = Field(default_factory=_utcnow)
+    line_role: str = "current"  # current | opening — opening never synthesized from winner
 
 
 class MarketSnapshot(BaseModel):
@@ -237,6 +260,7 @@ class PlayerOutput(BaseModel):
     reliability: ReliabilityScore
     edge_by_bet: dict[str, float] = Field(default_factory=dict)
     market_implied_by_bet: dict[str, float] = Field(default_factory=dict)
+    posted_odds_by_bet: dict[str, float] = Field(default_factory=dict)
     open_questions: list[str] = Field(default_factory=list)
     flags: list[str] = Field(default_factory=list)
     explain: ExplainabilityReport | None = None

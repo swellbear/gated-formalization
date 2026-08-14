@@ -13,11 +13,23 @@ from golf_offshoot.models.schemas import (
 )
 
 
-def _sg_vector(p: PlayerInputs) -> np.ndarray:
+def _player_vector(p: PlayerInputs) -> np.ndarray:
+    """Fixed 8-d vector so mixed SG coverage still cosine-compares."""
     sg = p.sg
-    dist = ((sg.driving_distance_yd or 295.0) - 295.0) / 15.0
-    acc = ((sg.driving_accuracy_pct or 60.0) - 60.0) / 10.0
-    return np.array([sg.ott, sg.app, sg.arg, sg.putt, dist, acc], dtype=float)
+    sg_ok = sg.quality is not None and not sg.quality.missing
+    dist = 0.0 if sg.driving_distance_yd is None else (sg.driving_distance_yd - 295.0) / 15.0
+    acc = 0.0 if sg.driving_accuracy_pct is None else (sg.driving_accuracy_pct - 60.0) / 10.0
+    if sg_ok:
+        ott, app, arg, putt = sg.ott, sg.app, sg.arg, sg.putt
+    else:
+        ott = app = arg = putt = 0.0
+    recent = p.recent_form_sg
+    if p.recent_sg is not None and p.recent_sg.quality is not None and not p.recent_sg.quality.missing:
+        recent = p.recent_sg.total
+    return np.array(
+        [p.talent_prior, float(recent or 0.0), dist, acc, ott, app, arg, putt],
+        dtype=float,
+    )
 
 
 def cosine(a: np.ndarray, b: np.ndarray) -> float:
@@ -32,7 +44,7 @@ def comparable_borrows(
     k: int = 6,
     min_sim: float = 0.15,
 ) -> dict[str, ComparableBorrow]:
-    vecs = [_sg_vector(p) for p in field]
+    vecs = [_player_vector(p) for p in field]
     out: dict[str, ComparableBorrow] = {}
     for i, p in enumerate(field):
         if p.course_history_rounds >= THIN_SAMPLE_N and not p.player.is_lesser_known:
@@ -59,7 +71,7 @@ def comparable_borrows(
             neighbor_ids=neighbor_ids,
             weights=[float(x) for x in w],
             shrinkage=min(0.75, shrink),
-            reason="thin own-sample; shrink toward similar SG profiles",
+            reason="thin own-sample; shrink toward similar talent/form (and SG when real)",
         )
     return out
 

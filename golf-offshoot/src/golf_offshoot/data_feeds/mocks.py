@@ -6,7 +6,7 @@ from datetime import datetime, timezone
 from typing import Any
 
 from golf_offshoot.data_feeds.base import DataFeed
-from golf_offshoot.models.enums import DataRole
+from golf_offshoot.models.enums import DataRole, SourceKind
 from golf_offshoot.models.schemas import DataQuality, MarketQuote, Player, StrokesGainedProfile
 from golf_offshoot.models.enums import BetType
 
@@ -18,6 +18,7 @@ def _q(name: str, score: float, n: int, role: DataRole = DataRole.MOCK) -> DataQ
         source_name=name,
         as_of=datetime.now(timezone.utc),
         n_observations=n,
+        source_kind=SourceKind.MOCK,
     )
 
 

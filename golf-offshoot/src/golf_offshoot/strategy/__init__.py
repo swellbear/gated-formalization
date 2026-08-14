@@ -11,20 +11,20 @@ from golf_offshoot.strategy.engine import (
 )
 from golf_offshoot.strategy.paper_reports import (
     format_paper_reports,
-    load_paper_book,
+    load_portfolio_json,
     paper_reports_payload,
     recorded_positions,
-    save_paper_book,
+    save_portfolio_json,
 )
 
 __all__ = [
     "disabled_recommendation",
     "format_paper_reports",
     "format_recommendation",
-    "load_paper_book",
+    "load_portfolio_json",
     "paper_reports_payload",
     "record_user_decision",
     "recorded_positions",
     "run_strategy",
-    "save_paper_book",
+    "save_portfolio_json",
 ]

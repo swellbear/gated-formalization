@@ -92,18 +92,17 @@ CLI: `python -m golf_offshoot strategy --bankroll 2000 --mode press_edges --live
 `explain --player p01` is one name. To report **everyone currently in the paper**:
 
 ```bash
-# demo paper (top names from the toy run, user-recorded — not placed by the engine)
+# locked operating paper (data/paper/{espn_id}.json from live --lock-paper)
 python -m golf_offshoot paper
+python -m golf_offshoot paper --event 401811962
+python -m golf_offshoot paper --json
 
-# your book
-python -m golf_offshoot paper --paper-file path/to/book.json
-python -m golf_offshoot paper --paper-file path/to/book.json --live
-python -m golf_offshoot paper --paper-file path/to/book.json --json
-python -m golf_offshoot paper --paper-file path/to/book.json --player p01
-python -m golf_offshoot paper --include-proposed   # also cards for NEW_BET suggestions
-python -m golf_offshoot paper --write-paper path/to/book.json   # save the demo book to edit
+# toy demo book only
+python -m golf_offshoot paper --demo-paper
+python -m golf_offshoot paper --demo-paper --paper-file path/to/book.json
+python -m golf_offshoot paper --demo-paper --write-paper path/to/book.json
 ```
 
-`--paper-file` is a `PortfolioState` JSON (bankroll + `positions[]` with `player_id`, `bet_type`, `stake`, `decimal_odds`, `entry_edge`, `entry_model_p`, …). Positions must be **user-recorded**. Proposed strategy names are excluded unless `--include-proposed`.
+Locked books are `PaperBookFile` JSON under `data/paper/` (gitignored). `--paper-file` is a raw `PortfolioState` JSON for demo/tests. Proposed strategy names are excluded unless `--include-proposed`.
 
 Each card includes: all five horizon ranges, θ, reliability, market implied/edge, flags, open questions, raw inputs (SG / form / live), explainability contributions, decision screen, and paper mark (entry vs live edge, MTM, path, advisory action). Compact ranking of **only** paper names sits above the cards.

@@ -70,11 +70,18 @@ class BayesianEngine:
                 live_score[i] = p.live_score_to_par
                 live_holes[i] = p.live_holes_completed
 
+        n = len(players)
+        if not tournament.has_cut:
+            cut_place = n
+            cut_after = 0
+        else:
+            cut_place = min(max(int(tournament.cut_place), 1), n)
+            cut_after = max(int(tournament.cut_after_round), 0)
         cfg = SimConfig(
             n_sims=self.sim.n_sims,
             n_rounds=tournament.n_rounds,
-            cut_place=min(tournament.cut_place, max(len(players) // 2, 1)),
-            cut_after=tournament.cut_after_round,
+            cut_place=cut_place,
+            cut_after=cut_after,
             round_sigma=self.sim.round_sigma,
             seed=self.sim.seed,
         )

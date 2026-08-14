@@ -11,6 +11,7 @@ from dataclasses import dataclass
 
 import numpy as np
 
+from golf_offshoot.bayesian_engine.live_dampen import remaining_totals
 from golf_offshoot.config import (
     DEFAULT_CUT_AFTER_ROUND,
     DEFAULT_CUT_PLACE,
@@ -77,11 +78,9 @@ def simulate_field(
     theta = rng.normal(theta_mean, np.maximum(theta_sd, 1e-4), size=(cfg.n_sims, n))
     theta[:, wd] = -1e9
 
-    remaining_frac = np.ones(n, dtype=float)
     current = np.zeros(n, dtype=float)
-    if live_holes is not None and live_score is not None:
-        total_holes = cfg.n_rounds * holes_per_round
-        remaining_frac = np.clip(1.0 - live_holes / max(total_holes, 1), 0.0, 1.0)
+    has_live_board = live_holes is not None and live_score is not None
+    if has_live_board:
         current = live_score.astype(float)
 
     # Round scores: lower (more negative vs par encoding) is better.
@@ -92,43 +91,53 @@ def simulate_field(
         noise = rng.normal(0.0, round_sigma, size=(cfg.n_sims, n))
         scores[:, :, r] = -theta + noise
 
-    # Blend live completed scoring: treat completed holes as observed.
-    if live_holes is not None:
-        # Approximate: freeze a fraction of expected remaining.
-        completed_equiv = current[None, :]  # already to-par
-        # Remaining rounds contribution scaled
-        remaining_scores = scores.sum(axis=2) * remaining_frac[None, :]
-        total = completed_equiv + remaining_scores
+    # Live: bank observed to-par; simulate only unplayed holes (√holes noise).
+    if has_live_board:
+        total = remaining_totals(
+            theta,
+            current,
+            live_holes,
+            cfg.n_rounds,
+            round_sigma,
+            rng,
+            holes_per_round=holes_per_round,
+        )
     else:
         total = scores.sum(axis=2)
 
-    # 36-hole cut
-    early = scores[:, :, : cfg.cut_after].sum(axis=2)
-    if live_holes is not None:
-        # If more than cut_after rounds equivalent holes played, use total-so-far proxy
-        early = np.where(
-            live_holes[None, :] >= cfg.cut_after * holes_per_round,
-            current[None, :],
-            early,
-        )
-
-    cut_rank = np.argsort(early, axis=1)
-    made = np.zeros((cfg.n_sims, n), dtype=bool)
-    k = min(cfg.cut_place, n)
-    take = cut_rank[:, :k]
-    rows = np.arange(cfg.n_sims)[:, None]
-    made[rows, take] = True
-    if k < n:
-        cutoff = early[np.arange(cfg.n_sims), cut_rank[:, k - 1]]
-        made |= early <= cutoff[:, None] + 1e-9
-    made[:, wd] = False
+    # 36-hole cut (skipped when cut_after<=0 or cut_place covers the field)
+    no_cut = cfg.cut_after <= 0 or cfg.cut_place >= n
+    if no_cut:
+        early = scores.sum(axis=2) * 0.0
+        made = np.ones((cfg.n_sims, n), dtype=bool)
+        made[:, wd] = False
+    else:
+        early = scores[:, :, : cfg.cut_after].sum(axis=2)
+        if live_holes is not None:
+            early = np.where(
+                live_holes[None, :] >= cfg.cut_after * holes_per_round,
+                current[None, :],
+                early,
+            )
+        cut_rank = np.argsort(early, axis=1)
+        made = np.zeros((cfg.n_sims, n), dtype=bool)
+        k = min(cfg.cut_place, n)
+        take = cut_rank[:, :k]
+        rows = np.arange(cfg.n_sims)[:, None]
+        made[rows, take] = True
+        if k < n:
+            cutoff = early[np.arange(cfg.n_sims), cut_rank[:, k - 1]]
+            made |= early <= cutoff[:, None] + 1e-9
+        made[:, wd] = False
 
     # Weekend: players who miss cut keep early total as final (no weekend scores)
-    weekend = scores[:, :, cfg.cut_after :].sum(axis=2)
-    final = early + np.where(made, weekend, 0.0)
+    if no_cut:
+        final = scores.sum(axis=2)
+    else:
+        weekend = scores[:, :, cfg.cut_after :].sum(axis=2)
+        final = early + np.where(made, weekend, 0.0)
     if live_holes is not None:
         final = total
-        # missed-cut players already flagged
         missed = ~made
         final = np.where(missed, np.maximum(final, early + 8.0), final)
 
