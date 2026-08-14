@@ -69,10 +69,14 @@ def bankroll_document(
         "In plain language: this is fake money that rolls from week to week. Wins add to "
         "the bankroll. Losses come out of it. Deposits you record are added. Withdrawals "
         "you record are subtracted. The system never places a real bet.",
-        "Technical: bankroll changes only on deposit, withdrawal, and settled ticket P/L "
-        "(payout minus stake). Open tickets sit at cost until the event is official. "
+        "Technical: bankroll changes only on deposit, withdrawal, settled ticket P/L "
+        "(payout minus stake), and applied cash-out P/L (typed quote or estimated "
+        "offer minus sold stake). Estimated sells keep 80% of the odds-ratio MTM gap "
+        "(20% haircut) and are labeled estimated; they are not scraped Open Bets. "
+        "Open tickets sit at cost until the event is official. "
         "live / paper-ledger / paper-export auto-settle when ESPN is clearly final with "
-        "exactly one winner. Mid-round sells return stake unless a live cash-out price exists.",
+        "exactly one winner. Mid-round sells without live posted odds return stake at cost. "
+        "A typed --cash-out quote still overrides the estimate.",
     ]
     if record:
         open_exp, cash, settled = _open_snapshot(ledger, record)
@@ -127,7 +131,7 @@ def bankroll_document(
             f"${ev.bankroll_before:.2f} -> ${ev.bankroll_after:.2f}  winner={ev.winner_name or 'n/a'}"
         )
     lines += ["", "Cash movements"]
-    cash_kinds = {"deposit", "withdrawal"}
+    cash_kinds = {"deposit", "withdrawal", "cashout"}
     cash_rows = [e for e in ledger.entries if e.kind in cash_kinds]
     if not cash_rows:
         lines.append("  (none)")
@@ -199,7 +203,7 @@ def render_bankroll_html(
                 f"<td>{html.escape(m.reason_plain)}</td></tr>"
             )
     cash_rows = ""
-    for i, e in enumerate(e for e in ledger.entries if e.kind in {"deposit", "withdrawal"}):
+    for i, e in enumerate(e for e in ledger.entries if e.kind in {"deposit", "withdrawal", "cashout"}):
         stripe = ' class="alt"' if i % 2 else ""
         cash_rows += (
             f"<tr{stripe}><td>{html.escape(e.at.strftime('%Y-%m-%d'))}</td>"
@@ -265,7 +269,9 @@ Bankroll ${week.bankroll_before:.2f} to ${week.bankroll_after:.2f}.</p>
 <p class="sub">{html.escape(subtitle)}</p>
 <p class="caption"><strong>Observation only.</strong> Fake money that rolls week to week.
 Wins add to the bankroll. Losses come out. Deposits you record are added. The system never places a real bet.</p>
-<p class="caption">Technical: bankroll changes on deposit, withdrawal, and settled ticket P/L (payout minus stake).
+<p class="caption">Technical: bankroll changes on deposit, withdrawal, settled ticket P/L (payout minus stake),
+and applied cash-out P/L (typed quote or estimated offer minus sold stake).
+Estimated sells haircut 20% of the odds-ratio MTM gap and are not scraped Open Bets.
 Open tickets sit at cost until ESPN is clearly final. live / paper-ledger / paper-export auto-settle then. Settled this event: {settled}.</p>
 {open_block}
 {moves_block}
@@ -273,7 +279,7 @@ Open tickets sit at cost until ESPN is clearly final. live / paper-ledger / pape
 <h2>Lifetime events</h2>
 <table><thead><tr><th>Event</th><th>Winner</th><th class="num">P/L</th><th class="num">Before</th><th class="num">After</th></tr></thead>
 <tbody>{event_rows or "<tr><td colspan='5'>None settled yet.</td></tr>"}</tbody></table>
-<h2>Deposits and withdrawals</h2>
+<h2>Deposits, withdrawals, and cash-outs</h2>
 <table><thead><tr><th>Date</th><th>Kind</th><th class="num">Amount</th><th class="num">Bankroll after</th><th>Note</th></tr></thead>
 <tbody>{cash_rows or "<tr><td colspan='5'>None.</td></tr>"}</tbody></table>
 <p class="foot">Paper / mock. Observation only. The system never auto-bets.</p>
@@ -359,8 +365,11 @@ def write_bankroll_pdf(
         "you record are subtracted. The system never places a real bet."
     )
     para(
-        "Technical: bankroll changes only on deposit, withdrawal, and settled ticket P/L "
-        "(payout minus stake). Open tickets sit at cost until ESPN is clearly final. "
+        "Technical: bankroll changes only on deposit, withdrawal, settled ticket P/L "
+        "(payout minus stake), and applied cash-out P/L (typed quote or estimated "
+        "offer minus sold stake). Estimated sells keep 80% of the odds-ratio MTM gap "
+        "(20% haircut) and are labeled estimated; they are not scraped Open Bets. "
+        "Open tickets sit at cost until ESPN is clearly final. "
         "live / paper-ledger / paper-export auto-settle then."
     )
     stats = (
@@ -493,8 +502,8 @@ def write_bankroll_pdf(
         ],
         "None settled yet.",
     )
-    section("Deposits and withdrawals")
-    cash = [e for e in ledger.entries if e.kind in {"deposit", "withdrawal"}]
+    section("Deposits, withdrawals, and cash-outs")
+    cash = [e for e in ledger.entries if e.kind in {"deposit", "withdrawal", "cashout"}]
     table(
         ("Date", "Kind", "Amount", "Bankroll after", "Note"),
         ("LEFT", "LEFT", "RIGHT", "RIGHT", "LEFT"),

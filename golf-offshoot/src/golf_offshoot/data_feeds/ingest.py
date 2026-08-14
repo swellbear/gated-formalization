@@ -18,6 +18,8 @@ from golf_offshoot.data_feeds.datagolf import DataGolfRecentSgFeed
 from golf_offshoot.data_feeds.espn import (
     EspnClient,
     EspnFieldFeed,
+    _finish_place,
+    _place_display,
     _score_to_par,
     _status_name,
     _thru_holes,
@@ -554,9 +556,13 @@ class RealIngestor:
         live_score = None
         live_holes = 0
         live_cut = None
+        live_place = None
+        live_place_disp = ""
         if mode == RunMode.LIVE:
             live_score = _score_to_par(comp)
             live_holes = _thru_holes(comp, tournament.n_rounds)
+            live_place = _finish_place(comp)
+            live_place_disp = _place_display(comp)
             if st_name == "STATUS_CUT":
                 live_cut = False
             elif st_name in ("STATUS_FINISH", "STATUS_FINAL") and not tournament.has_cut:
@@ -593,6 +599,9 @@ class RealIngestor:
             rest_days=feats.rest_days,
             live_score_to_par=live_score,
             live_holes_completed=live_holes,
+            live_place=live_place,
+            live_place_display=live_place_disp,
+            live_status_name=st_name,
             live_made_cut=live_cut,
             withdrawn=withdrawn,
             source_qualities=sq,

@@ -49,6 +49,20 @@ def hold_edge_intact() -> str:
     return "Original edge is still intact; no path reason to change size"
 
 
+def cashout_beats_hold() -> str:
+    return (
+        "Quoted cash-out beats remaining winner EV; take the quote rather than "
+        "ride for the full payout"
+    )
+
+
+def cashout_below_hold() -> str:
+    return (
+        "Quoted cash-out is below remaining winner EV; hold the ticket rather "
+        "than sell early"
+    )
+
+
 def selective_not_strong() -> str:
     return "Stay Selective: remaining edge is not strong enough to act"
 

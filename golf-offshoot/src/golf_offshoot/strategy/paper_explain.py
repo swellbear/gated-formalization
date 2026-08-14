@@ -16,11 +16,14 @@ from golf_offshoot.ranking.export_table import (
 from golf_offshoot.strategy.paper_book import (
     PaperBookFile,
     PaperMovement,
+    clocks_plain,
     observation_plain,
     observation_technical,
     sizing_plain,
     sizing_technical,
     ticket_rows,
+    _fmt_dec,
+    _fmt_pp,
 )
 
 
@@ -30,26 +33,44 @@ def write_bets_explained_files(
     directory: Path,
     advice: list[PaperMovement] | None = None,
     config: StrategyConfig | None = None,
+    live_outputs=None,
+    live_run_id: str = "",
 ) -> TableExportPaths:
     cfg = config or StrategyConfig(enabled=True, bankroll=record.bankroll)
     advice = advice if advice is not None else list(record.latest_advice)
+    tickets = ticket_rows(record, live_outputs, live_run_id=live_run_id)
     directory.mkdir(parents=True, exist_ok=True)
     title = f"Bets made — {record.tournament_name or record.tournament_id}"
     subtitle = (
         f"${record.bankroll:.0f} mock   {record.odds_book or 'book n/a'}   "
-        f"{record.mode}/{record.risk}   run={record.locked_from_run_id or 'n/a'}   "
-        f"model={MODEL_VERSION}"
+        f"{record.mode}/{record.risk}   lock_run={record.locked_from_run_id or 'n/a'}   "
+        f"live_run={live_run_id or 'n/a'}   model={MODEL_VERSION}"
     )
     txt = directory / "02_bets_explained.txt"
     html_path = directory / "02_bets_explained.html"
     pdf = directory / "02_bets_explained.pdf"
-    body = bets_explained_document(record, advice=advice, config=cfg)
+    body = bets_explained_document(record, advice=advice, config=cfg, tickets=tickets)
     txt.write_text(body, encoding="utf-8")
     html_path.write_text(
-        render_bets_explained_html(record, title=title, subtitle=subtitle, advice=advice, config=cfg),
+        render_bets_explained_html(
+            record,
+            title=title,
+            subtitle=subtitle,
+            advice=advice,
+            config=cfg,
+            tickets=tickets,
+        ),
         encoding="utf-8",
     )
-    write_bets_explained_pdf(pdf, record, title=title, subtitle=subtitle, advice=advice, config=cfg)
+    write_bets_explained_pdf(
+        pdf,
+        record,
+        title=title,
+        subtitle=subtitle,
+        advice=advice,
+        config=cfg,
+        tickets=tickets,
+    )
     return TableExportPaths(pdf=pdf, html=html_path, txt=txt)
 
 
@@ -58,8 +79,10 @@ def bets_explained_document(
     *,
     advice: list[PaperMovement],
     config: StrategyConfig,
+    tickets=None,
 ) -> str:
     cash = record.bankroll - record.book.open_exposure
+    rows = tickets if tickets is not None else ticket_rows(record)
     lines = [
         f"BETS MADE  {record.tournament_name or record.tournament_id}",
         f"${record.bankroll:.0f} mock  never_auto_bet=true  {record.mode}/{record.risk}",
@@ -68,6 +91,8 @@ def bets_explained_document(
         "Observation only",
         observation_plain(),
         observation_technical(),
+        "",
+        clocks_plain(),
         "",
         "Why the amounts",
         sizing_plain(config),
@@ -87,11 +112,13 @@ def bets_explained_document(
     for m in advice:
         lines.extend(_movement_lines(m))
     lines.append("")
-    lines.append("Current tickets")
-    for t in ticket_rows(record):
+    lines.append("Current tickets (at entry vs this live)")
+    for t in rows:
         lines.append(
-            f"  {t.player_name} {t.market} ${t.stake:.2f} @ {t.posted:.2f} "
-            f"EdgeW={t.edge_w:+.3f} vs_posted={t.posted_edge:+.3f}"
+            f"  {t.lane} {t.player_name} {t.market} ${t.stake:.2f} "
+            f"entry@{t.posted:.2f} EdgeW={t.edge_w:+.3f} vs={t.posted_edge:+.3f} "
+            f"live@{_fmt_dec(t.live_posted)} EdgeW={_fmt_pp(t.live_edge_w)} "
+            f"vs={_fmt_pp(t.live_posted_edge)}"
         )
         lines.append(f"    {t.screen}")
     lines.append("")
@@ -118,11 +145,13 @@ def render_bets_explained_html(
     subtitle: str,
     advice: list[PaperMovement],
     config: StrategyConfig,
+    tickets=None,
 ) -> str:
     applied_rows = _html_movement_rows([m for m in record.movements if m.status == "applied"])
     advice_rows = _html_movement_rows(advice)
+    rows = tickets if tickets is not None else ticket_rows(record)
     ticket_rows_html = []
-    for i, t in enumerate(ticket_rows(record)):
+    for i, t in enumerate(rows):
         stripe = ' class="alt"' if i % 2 else ""
         ticket_rows_html.append(
             f"<tr{stripe}><td class='txt'>{html.escape(t.player_name)}</td>"
@@ -131,7 +160,9 @@ def render_bets_explained_html(
             f"<td class='num'>{t.posted:.2f}</td>"
             f"<td class='num'>{t.edge_w * 100:+.1f}pp</td>"
             f"<td class='num'>{t.posted_edge * 100:+.1f}pp</td>"
-            f"<td class='txt'>{html.escape(t.screen)}</td></tr>"
+            f"<td class='num'>{html.escape(_fmt_dec(t.live_posted))}</td>"
+            f"<td class='num'>{html.escape(_fmt_pp(t.live_edge_w))}</td>"
+            f"<td class='num'>{html.escape(_fmt_pp(t.live_posted_edge))}</td></tr>"
         )
     cash = record.bankroll - record.book.open_exposure
     return f"""<!DOCTYPE html>
@@ -160,6 +191,7 @@ def render_bets_explained_html(
 <p class="caption"><strong>Observation only</strong></p>
 <p class="caption">{html.escape(observation_plain())}</p>
 <p class="caption">{html.escape(observation_technical())}</p>
+<p class="caption">{html.escape(clocks_plain())}</p>
 <h2>Why the amounts</h2>
 <p class="caption">{html.escape(sizing_plain(config))}</p>
 <p class="caption">{html.escape(sizing_technical(config))}</p>
@@ -179,9 +211,17 @@ Still mock. Still never a real bet.</p>
 </table>
 <h2>Current tickets</h2>
 <table>
-<thead><tr><th>Player</th><th>Market</th><th class="num">Stake</th><th class="num">Posted</th>
-<th class="num">EdgeW</th><th class="num">Vs posted</th><th>Screen</th></tr></thead>
-<tbody>{"".join(ticket_rows_html) or "<tr><td colspan='7'>No tickets.</td></tr>"}</tbody>
+<thead>
+<tr>
+<th rowspan="2">Player</th><th rowspan="2">Market</th><th class="num" rowspan="2">Stake</th>
+<th colspan="3">At entry</th><th colspan="3">This live</th>
+</tr>
+<tr>
+<th class="num">Posted</th><th class="num">EdgeW</th><th class="num">Vs posted</th>
+<th class="num">Posted</th><th class="num">EdgeW</th><th class="num">Vs posted</th>
+</tr>
+</thead>
+<tbody>{"".join(ticket_rows_html) or "<tr><td colspan='9'>No tickets.</td></tr>"}</tbody>
 </table>
 <p class="foot">Paper / mock bankroll. Observation only. The system never auto-bets.</p>
 </body>
@@ -216,6 +256,7 @@ def write_bets_explained_pdf(
     subtitle: str,
     advice: list[PaperMovement],
     config: StrategyConfig,
+    tickets=None,
 ) -> Path:
     from fpdf import FPDF
     from fpdf.fonts import FontFace
@@ -287,6 +328,7 @@ def write_bets_explained_pdf(
     section("Observation only")
     para(observation_plain())
     para(observation_technical())
+    para(clocks_plain())
     section("Why the amounts")
     para(sizing_plain(config))
     para(sizing_technical(config))
@@ -344,11 +386,21 @@ def write_bets_explained_pdf(
     movement_table(applied, "None recorded.")
     section("Live advice this snapshot (not applied unless --apply-paper)")
     movement_table(advice, "No hold/sell/add/reallocate advice on this snapshot.")
-    section("Current tickets")
-    pdf.set_font(face, size=8)
-    t_headers = ("Player", "Market", "Stake", "Posted", "EdgeW", "Vs posted", "Screen")
-    t_aligns = ("LEFT", "LEFT", "RIGHT", "RIGHT", "RIGHT", "RIGHT", "LEFT")
-    t_widths = [pdf.epw * w for w in (0.16, 0.08, 0.09, 0.09, 0.09, 0.10, 0.39)]
+    section("Current tickets (at entry vs this live)")
+    pdf.set_font(face, size=7)
+    t_headers = (
+        "Player",
+        "Market",
+        "Stake",
+        "Entry posted",
+        "Entry EdgeW",
+        "Entry vs",
+        "Live posted",
+        "Live EdgeW",
+        "Live vs",
+    )
+    t_aligns = ("LEFT", "LEFT", "RIGHT", "RIGHT", "RIGHT", "RIGHT", "RIGHT", "RIGHT", "RIGHT")
+    t_widths = [pdf.epw * w for w in (0.16, 0.08, 0.08, 0.10, 0.10, 0.10, 0.10, 0.09, 0.09)]
     with pdf.table(
         col_widths=t_widths,
         text_align=t_aligns,
@@ -365,11 +417,11 @@ def write_bets_explained_pdf(
         header_row = table.row()
         for h in t_headers:
             header_row.cell(_pdf_text(h, face))
-        rows = ticket_rows(record)
+        rows = tickets if tickets is not None else ticket_rows(record)
         if not rows:
             row = table.row()
             row.cell(_pdf_text("No tickets.", face))
-            for _ in range(6):
+            for _ in range(8):
                 row.cell("")
         else:
             for t in rows:
@@ -380,7 +432,9 @@ def write_bets_explained_pdf(
                 row.cell(_pdf_text(f"{t.posted:.2f}", face))
                 row.cell(_pdf_text(f"{t.edge_w * 100:+.1f}pp", face))
                 row.cell(_pdf_text(f"{t.posted_edge * 100:+.1f}pp", face))
-                row.cell(_pdf_text(t.screen, face))
+                row.cell(_pdf_text(_fmt_dec(t.live_posted), face))
+                row.cell(_pdf_text(_fmt_pp(t.live_edge_w), face))
+                row.cell(_pdf_text(_fmt_pp(t.live_posted_edge), face))
     pdf.set_x(pdf.l_margin)
     pdf.output(str(path))
     return path

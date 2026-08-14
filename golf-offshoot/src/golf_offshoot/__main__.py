@@ -15,6 +15,7 @@ from golf_offshoot.models.enums import CourseType, Horizon, RiskPreference, RunM
 from golf_offshoot.models.strategy import StrategyConfig
 from golf_offshoot.pipeline import GolfOffshootPipeline
 from golf_offshoot.ranking.display import format_table, movement_note
+from golf_offshoot.ranking.leaderboard import format_leaderboard
 from golf_offshoot.strategy.engine import format_recommendation
 
 DEMO_BANNER = (
@@ -64,6 +65,16 @@ def main(argv: list[str] | None = None) -> int:
     )
     parser.add_argument("--amount", type=float, default=0.0, help="paper-deposit / paper-withdraw amount")
     parser.add_argument("--note", default="", help="note for paper-deposit / paper-withdraw")
+    parser.add_argument(
+        "--cash-out",
+        action="append",
+        default=None,
+        dest="cash_out",
+        help=(
+            'live: user-typed sportsbook cash-out dollars for this snapshot, '
+            'e.g. "Kurt Kitayama=12.40,Tommy Fleetwood=7.10". Not scraped. Optional.'
+        ),
+    )
     args = parser.parse_args(argv)
 
     if args.command == "board":
@@ -188,7 +199,6 @@ def _cmd_calibrate(args) -> int:
 
 def _cmd_pressure(args) -> int:
     from golf_offshoot.calibration.artifacts import load_weights
-    from golf_offshoot.data_feeds.http import package_data_dir
     from golf_offshoot.models.schemas import SourceInventoryItem
     from golf_offshoot.operating import (
         run_operating,
@@ -197,6 +207,8 @@ def _cmd_pressure(args) -> int:
     )
 
     event_id = args.event or None
+    strat_mode = StrategyMode(args.mode)
+    strat_risk = RiskPreference(args.risk)
     pre = run_operating(
         event_id=event_id,
         mode=RunMode.PRE_TOURNAMENT,
@@ -206,11 +218,13 @@ def _cmd_pressure(args) -> int:
         refresh=args.refresh,
         bankroll=args.bankroll,
         odds_book=args.book,
+        strategy_mode=strat_mode,
+        risk=strat_risk,
     )
     print(f"PRE {pre.tournament.name} n={len(pre.ranked)} cut={pre.tournament.has_cut}")
     print(format_table(pre.ranked, n=12))
     _print_table_export(pre)
-    modes = run_strategy_modes(pre, bankroll=args.bankroll)
+    modes = run_strategy_modes(pre, bankroll=args.bankroll, risk=strat_risk)
     for k, v in modes.items():
         print(f"\n=== strategy {k} ===")
         print(v)
@@ -223,12 +237,14 @@ def _cmd_pressure(args) -> int:
         refresh=args.refresh,
         bankroll=args.bankroll,
         odds_book=args.book,
+        strategy_mode=strat_mode,
+        risk=strat_risk,
     )
     print("\n=== live top 8 (movement vs this pressure-test pre) ===")
     print(movement_note(pre.run_id))
     print(format_table(live.ranked, n=8, baseline=pre.ranked))
     _print_table_export(live)
-    live_modes = run_strategy_modes(live, bankroll=args.bankroll)
+    live_modes = run_strategy_modes(live, bankroll=args.bankroll, risk=strat_risk)
     for k, v in live_modes.items():
         print(f"\n=== live strategy {k} ===")
         print(v)
@@ -240,7 +256,6 @@ def _cmd_pressure(args) -> int:
         strategy_blocks=modes,
         live=live,
         calib_summary=load_weights(),
-        path=package_data_dir().parent / "docs" / "PRESSURE_TEST_2026_ST_JUDE.md",
         live_strategy_blocks=live_modes,
     )
     print(f"wrote {report}")
@@ -252,6 +267,7 @@ def _cmd_live(args) -> int:
     from golf_offshoot.strategy.paper_book import (
         advice_from_recommendation,
         apply_advice,
+        backfill_estimated_cashouts,
         format_paper_book,
         load_paper_book,
         load_paper_file,
@@ -269,6 +285,14 @@ def _cmd_live(args) -> int:
     event_hint = args.event or None
     settled_ids = _report_auto_settles(args.refresh)
     paper = load_paper_book(event_hint) if event_hint else None
+    from golf_offshoot.strategy.cashout import bind_cashout_quotes, parse_cashout_cli
+
+    cash_pairs, cash_warn = parse_cashout_cli(args.cash_out)
+    cash_bound, cash_bind_warn = bind_cashout_quotes(cash_pairs, paper.positions if paper else [])
+    for w in cash_warn + cash_bind_warn:
+        print(f"cash-out: {w}")
+    if cash_pairs and not cash_bound:
+        print("cash-out: no quotes attached; live MTM stays the odds-ratio proxy")
     led = load_ledger()
     if led.entries:
         reserved = other_open_exposure(except_event_id=event_hint)
@@ -284,6 +308,8 @@ def _cmd_live(args) -> int:
             )
     else:
         bankroll = args.bankroll
+    strat_mode = StrategyMode(args.mode)
+    strat_risk = RiskPreference(args.risk)
     result = run_operating(
         event_id=event_hint,
         mode=RunMode.LIVE,
@@ -294,6 +320,9 @@ def _cmd_live(args) -> int:
         bankroll=bankroll,
         odds_book=args.book,
         open_book=paper,
+        cashout_quotes=cash_bound or None,
+        strategy_mode=strat_mode,
+        risk=strat_risk,
     )
     from golf_offshoot.audit.journal import latest_pre_audit
     from golf_offshoot.data_feeds.http import package_data_dir
@@ -307,9 +336,24 @@ def _cmd_live(args) -> int:
         f"id={result.tournament.tournament_id} n={len(result.ranked)} run={result.run_id}"
     )
     print(movement_note(pre.run_id if pre else None))
+    tid = result.tournament.espn_event_id or result.tournament.tournament_id
+    if paper is None and tid:
+        paper = load_paper_book(tid)
+    held = {p.player_id for p in paper.positions} if paper else set()
+    print("live scoreboard (ESPN place / to-par / thru; not model Win%)")
+    print(
+        format_leaderboard(
+            result.ranked,
+            n_rounds=int(result.tournament.n_rounds or 4),
+            held_ids=held,
+        )
+    )
     print(format_table(result.ranked, n=len(result.ranked), baseline=pre.outputs if pre else None))
     _print_table_export(result)
     if result.strategy:
+        extra_notes = [w for w in cash_warn + cash_bind_warn if w]
+        if extra_notes:
+            result.strategy.notes = list(result.strategy.notes) + extra_notes
         print(format_recommendation(result.strategy))
     tid = result.tournament.espn_event_id or result.tournament.tournament_id
     extras = [
@@ -318,6 +362,9 @@ def _cmd_live(args) -> int:
             result.audit.extra.get("export_pdf"),
             result.audit.extra.get("export_html"),
             result.audit.extra.get("export_txt"),
+            result.audit.extra.get("export_leaderboard_pdf"),
+            result.audit.extra.get("export_leaderboard_html"),
+            result.audit.extra.get("export_leaderboard_txt"),
         )
         if p
     ]
@@ -332,8 +379,8 @@ def _cmd_live(args) -> int:
             return 0
         cfg = StrategyConfig(
             enabled=True,
-            mode=StrategyMode.STAY_SELECTIVE,
-            risk=RiskPreference.CONSERVATIVE,
+            mode=strat_mode,
+            risk=strat_risk,
             bankroll=bankroll,
         )
         record = lock_paper_positions(
@@ -348,6 +395,9 @@ def _cmd_live(args) -> int:
         print(format_paper_book(record))
         return 0
     record = load_paper_file(tid) if tid else None
+    if record:
+        record = backfill_estimated_cashouts(record)
+        save_paper_book(record)
     if record and result.strategy:
         advice = advice_from_recommendation(record, result.strategy, run_id=result.run_id)
         if args.apply_paper:
@@ -492,6 +542,15 @@ def _print_table_export(result) -> None:
         print(f"full-field table HTML: {html_path}")
     if txt:
         print(f"full-field table txt: {txt}")
+    board_pdf = result.audit.extra.get("export_leaderboard_pdf")
+    board_html = result.audit.extra.get("export_leaderboard_html")
+    board_txt = result.audit.extra.get("export_leaderboard_txt")
+    if board_pdf:
+        print(f"live leaderboard PDF: {board_pdf}")
+    if board_html:
+        print(f"live leaderboard HTML: {board_html}")
+    if board_txt:
+        print(f"live leaderboard txt: {board_txt}")
 
 
 def _cmd_shadow(_args) -> int:

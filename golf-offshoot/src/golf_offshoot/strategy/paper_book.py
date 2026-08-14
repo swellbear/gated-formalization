@@ -8,7 +8,11 @@ from pathlib import Path
 
 from pydantic import BaseModel, Field
 
-from golf_offshoot.config import MIN_EDGE_TO_CONSIDER
+from golf_offshoot.config import (
+    MIN_EDGE_TO_CONSIDER,
+    PAPER_ESTIMATED_CASHOUT_HAIRCUT,
+    PAPER_OBSERVATION_STAKE_FRAC,
+)
 from golf_offshoot.data_feeds.http import package_data_dir
 from golf_offshoot.models.enums import BetType, Horizon, StrategyActionKind
 from golf_offshoot.models.schemas import PlayerOutput
@@ -19,6 +23,7 @@ from golf_offshoot.models.strategy import (
     StrategyRecommendation,
     new_id,
 )
+from golf_offshoot.strategy.cashout import estimated_cashout_offer
 from golf_offshoot.strategy.sizing import (
     remaining_exposure_capacity,
     scaled_exposure_cap,
@@ -60,6 +65,10 @@ class PaperMovement(BaseModel):
     amount_plain: str = ""
     amount_technical: str = ""
     never_auto_bet: bool = True
+    cashout_quote: float | None = None
+    cashout_estimated: bool = False
+    hold_expected_payout: float | None = None
+    cashout_threshold: float | None = None
 
 
 class PaperBookFile(BaseModel):
@@ -98,6 +107,24 @@ class PaperTicketRow:
     if_wins: float
     screen: str
     cleared: bool
+    lane: str = "[observation]"
+    live_posted: float | None = None
+    live_model: float | None = None
+    live_edge_w: float | None = None
+    live_posted_edge: float | None = None
+    live_run_id: str = ""
+
+
+def _fmt_dec(value: float | None) -> str:
+    return f"{value:.2f}" if value is not None else "n/a"
+
+
+def _fmt_pct(value: float | None) -> str:
+    return f"{value * 100:.1f}%" if value is not None else "n/a"
+
+
+def _fmt_pp(value: float | None) -> str:
+    return f"{value * 100:+.1f}pp" if value is not None else "n/a"
 
 
 def observation_plain() -> str:
@@ -122,8 +149,13 @@ def observation_technical() -> str:
     )
 
 
-def juice_plain() -> str:
-    return observation_plain()
+def clocks_plain() -> str:
+    return (
+        "At entry is the booked ticket and is never rewritten. This live is this "
+        "pack's snapshot only - the numbers strategy used. n/a means that market "
+        "had no posted coupon on this run (Winner Live is not used as a place price). "
+        "Stake and If wins stay on the entry decimal."
+    )
 
 
 def posted_price_edge(model_p: float, decimal_odds: float) -> float:
@@ -134,6 +166,10 @@ def posted_price_edge(model_p: float, decimal_odds: float) -> float:
 
 def screen_cleared(edge_w: float, posted_edge: float) -> bool:
     return edge_w >= MIN_EDGE_TO_CONSIDER and posted_edge >= MIN_EDGE_TO_CONSIDER
+
+
+def lane_tag(cleared: bool) -> str:
+    return "[cleared]" if cleared else "[observation]"
 
 
 def screen_plain(edge_w: float, posted_edge: float) -> str:
@@ -147,10 +183,44 @@ def screen_plain(edge_w: float, posted_edge: float) -> str:
     return "Does not beat the posted price. The book is already shorter than the model."
 
 
-def ticket_rows(record: PaperBookFile) -> list[PaperTicketRow]:
+def ticket_rows(
+    record: PaperBookFile,
+    live_outputs: list[PlayerOutput] | None = None,
+    *,
+    live_run_id: str = "",
+) -> list[PaperTicketRow]:
+    """At-entry blotter plus optional this-live marks from one snapshot.
+
+    Live posted / EdgeW / vs-posted stay n/a unless that snapshot has a real
+    posted coupon for the ticket's market. Winner Live is never used as a
+    stand-in for Top 5 / 10 / 20. Entry decimals are never rewritten.
+    """
+    by_id = {r.player_id: r for r in (live_outputs or [])}
     rows: list[PaperTicketRow] = []
     for p in record.book.positions:
         posted_edge = posted_price_edge(p.entry_model_p, p.decimal_odds)
+        live_posted = None
+        live_model = None
+        live_edge_w = None
+        live_vs = None
+        row = by_id.get(p.player_id)
+        if row is not None:
+            horizon = _BET_HORIZON.get(p.bet_type)
+            if horizon is not None:
+                hp = row.probabilities.horizons.get(horizon)
+                if hp is not None:
+                    live_model = hp.central
+            raw = row.posted_odds_by_bet.get(p.bet_type.value)
+            try:
+                posted_f = float(raw) if raw is not None else None
+            except (TypeError, ValueError):
+                posted_f = None
+            if posted_f is not None and posted_f > 1.0 and live_model is not None:
+                live_posted = posted_f
+                live_vs = posted_price_edge(live_model, posted_f)
+                edge = row.edge_by_bet.get(p.bet_type.value)
+                if edge is not None:
+                    live_edge_w = float(edge)
         rows.append(
             PaperTicketRow(
                 player_name=p.player_name,
@@ -163,33 +233,61 @@ def ticket_rows(record: PaperBookFile) -> list[PaperTicketRow]:
                 if_wins=p.stake * p.decimal_odds,
                 screen=screen_plain(p.entry_edge, posted_edge),
                 cleared=screen_cleared(p.entry_edge, posted_edge),
+                lane=lane_tag(screen_cleared(p.entry_edge, posted_edge)),
+                live_posted=live_posted,
+                live_model=live_model,
+                live_edge_w=live_edge_w,
+                live_posted_edge=live_vs,
+                live_run_id=live_run_id,
             )
         )
     return rows
 
 
+def load_snapshot_outputs(run_id: str, *, directory: Path | None = None) -> list[PlayerOutput] | None:
+    """Outputs from one persisted run. Missing file is n/a, not invented."""
+    if not run_id:
+        return None
+    from golf_offshoot.audit.journal import load_audit
+    from pydantic import ValidationError
+
+    d = directory or (package_data_dir() / "snapshots")
+    safe = "".join(ch if ch.isalnum() or ch in "-_" else "-" for ch in str(run_id))
+    path = d / f"{safe}.json"
+    if not path.is_file():
+        return None
+    try:
+        rec = load_audit(path)
+    except (OSError, ValueError, KeyError, TypeError, ValidationError):
+        return None
+    return list(rec.outputs)
+
+
 def sizing_plain(config: StrategyConfig) -> str:
     unit = config.bankroll * scaled_single_cap(config)
+    obs = unit * PAPER_OBSERVATION_STAKE_FRAC
     total = config.bankroll * scaled_exposure_cap(config)
     return (
-        f"Each name is capped at {scaled_single_cap(config):.1%} of the "
+        f"Cleared names (EdgeW and vs-posted both at least {MIN_EDGE_TO_CONSIDER * 100:.0f}pp) "
+        f"are capped at {scaled_single_cap(config):.1%} of the "
         f"${config.bankroll:.0f} paper bankroll (${unit:.2f}). That is a 5% single-name "
-        "ceiling times a 70% conservative haircut. It is a concentration rule, not a "
-        "fitted Kelly size. Kelly after the uncertainty haircut is usually much smaller; "
-        "this paper lock uses the cap as the stake so the tickets are visible to track. "
-        "Two names can get the same dollar amount because both hit that per-name ceiling, "
-        "not because they have the same edge. Cash left is unused room under the "
+        "ceiling times the risk haircut. Observation names (positive vs-posted but short of "
+        f"the 3pp ticket screen) get {PAPER_OBSERVATION_STAKE_FRAC:.0%} of that unit "
+        f"(${obs:.2f}). It is a concentration rule, not a fitted Kelly size. "
+        "Two cleared names can get the same dollar amount because both hit the per-name "
+        "ceiling, not because they have the same edge. Cash left is unused room under the "
         f"{scaled_exposure_cap(config):.0%} total cap (${total:.2f}) plus everything above it."
     )
 
 
 def sizing_technical(config: StrategyConfig) -> str:
     return (
-        "scaled_single_cap = max_single_position_frac (0.05) * conservative risk 0.70 = 0.035. "
-        "scaled_exposure_cap = 0.20 * 0.70 = 0.14. Paper lock unit = bankroll * scaled_single_cap. "
-        "Advisory size is fractional Kelly (0.25) * range haircut * reliability * risk 0.40 * "
-        "stay_selective 0.70, then min(unit, remaining total cap). The paper lock does not use "
-        "that Kelly figure as the stake; it uses the unit cap."
+        "scaled_single_cap = max_single_position_frac (0.05) * risk haircut "
+        f"(conservative 0.70). Observation stake = unit * {PAPER_OBSERVATION_STAKE_FRAC}. "
+        "scaled_exposure_cap = 0.20 * risk haircut. "
+        "Advisory size is fractional Kelly (0.25) * range haircut * reliability * risk * "
+        "mode, then min(unit, remaining total cap). The paper lock does not use "
+        "that Kelly figure as the stake; cleared uses the unit cap, observation uses 25% of it."
     )
 
 
@@ -202,32 +300,39 @@ def lock_movement_for_ticket(
     run_id: str,
 ) -> PaperMovement:
     unit = config.bankroll * scaled_single_cap(config)
+    tag = lane_tag(ticket.cleared)
     why_name_plain = (
-        f"{ticket.player_name} is in the book because the winner quote was real and still "
-        f"beat the posted number (model {ticket.model_win * 100:.1f}% vs 1/odds "
+        f"{tag} {ticket.player_name} is in the book because the winner quote was real and "
+        f"still beat the posted number on a {'cleared' if ticket.cleared else 'tracking'} "
+        f"ticket (model {ticket.model_win * 100:.1f}% vs 1/odds "
         f"{(1.0 / ticket.posted) * 100:.1f}%, EdgeW {ticket.edge_w * 100:+.1f}pp, "
         f"vs posted {ticket.posted_edge * 100:+.1f}pp). {ticket.screen}"
     )
     why_name_tech = (
-        f"kind=lock status=applied bet=win posted={ticket.posted:.2f} "
+        f"kind=lock status=applied lane={tag} bet=win posted={ticket.posted:.2f} "
         f"model_p={ticket.model_win:.3f} EdgeW={ticket.edge_w:+.3f} "
         f"posted_edge={ticket.posted_edge:+.3f} screen_cleared={ticket.cleared}"
     )
-    hit_cap = abs(ticket.stake - unit) < 0.02
-    amount_plain = (
-        f"${ticket.stake:.2f} is the conservative single-name cap "
-        f"({scaled_single_cap(config):.1%} of ${config.bankroll:.0f})."
-        if hit_cap
-        else f"${ticket.stake:.2f} is what remained under the total exposure cap."
-    )
-    amount_plain += (
-        " Same dollars as another name means both hit the cap, not that the edges matched. "
-        "Kelly after the uncertainty haircut would usually be smaller."
-    )
+    obs_unit = unit * PAPER_OBSERVATION_STAKE_FRAC
+    if ticket.cleared:
+        hit_cap = abs(ticket.stake - unit) < 0.02
+        amount_plain = (
+            f"{tag} ${ticket.stake:.2f} is the single-name cap "
+            f"({scaled_single_cap(config):.1%} of ${config.bankroll:.0f})."
+            if hit_cap
+            else f"{tag} ${ticket.stake:.2f} is what remained under the total exposure cap."
+        )
+        amount_plain += " Kelly after the uncertainty haircut would usually be smaller."
+    else:
+        amount_plain = (
+            f"{tag} ${ticket.stake:.2f} is {PAPER_OBSERVATION_STAKE_FRAC:.0%} of the "
+            f"single-name unit (${unit:.2f} → ${obs_unit:.2f}) because the posted-price "
+            "screen is short of 3pp. Not the same dollars as a cleared name."
+        )
     amount_tech = (
         f"stake={ticket.stake:.2f} unit_cap={unit:.2f} "
         f"total_cap={config.bankroll * scaled_exposure_cap(config):.2f} "
-        f"mode={config.mode.value} risk={config.risk.value}"
+        f"mode={config.mode.value} risk={config.risk.value} lane={tag}"
     )
     return PaperMovement(
         movement_id=new_id("move"),
@@ -285,7 +390,9 @@ _ACTION_PLAIN = {
         "not a new Kelly from scratch."
     ),
     "exit": (
-        "Sell the whole paper ticket. The original edge has collapsed versus the live market."
+        "Sell the whole paper ticket. If you typed a cash-out quote that beats "
+        "remaining winner EV, this is taking that quote; otherwise the original "
+        "edge has collapsed versus the live market."
     ),
     "add": (
         "Add to this paper ticket, still under the single-name cap. This is still mock money."
@@ -312,6 +419,7 @@ def advice_from_recommendation(
         if act.kind == StrategyActionKind.NO_ACTION:
             continue
         pos = by_pos.get(act.position_id or "")
+        mark = next((m for m in rec.marks if m.position_id == act.position_id), None)
         before = pos.stake if pos else 0.0
         delta = float(act.suggested_stake_delta or 0.0)
         after = None
@@ -334,7 +442,31 @@ def advice_from_recommendation(
             plain = f"{plain} Strategy reason: {act.reason}."
         if details:
             plain = f"{plain} {details}."
-        amount_plain = _advice_amount_plain(kind, before, delta, after)
+        live_posted = (
+            mark.live_decimal_odds
+            if mark and mark.live_decimal_odds and mark.live_decimal_odds > 1.0
+            else None
+        )
+        if kind in {"reduce", "exit"}:
+            decimal_odds = live_posted
+        else:
+            decimal_odds = live_posted if live_posted is not None else (pos.decimal_odds if pos else None)
+        estimated_offer = None
+        if kind in {"reduce", "exit"} and pos and decimal_odds and act.cashout_quote is None:
+            estimated_offer = estimated_cashout_offer(
+                abs(delta),
+                pos.decimal_odds,
+                decimal_odds,
+            )
+        amount_plain = _advice_amount_plain(
+            kind,
+            before,
+            delta,
+            after,
+            cashout_quote=act.cashout_quote,
+            hold_expected_payout=act.hold_expected_payout,
+            estimated_offer=estimated_offer,
+        )
         out.append(
             PaperMovement(
                 movement_id=act.action_id or new_id("move"),
@@ -348,7 +480,10 @@ def advice_from_recommendation(
                 stake_before=before,
                 stake_delta=delta,
                 stake_after=after,
-                decimal_odds=pos.decimal_odds if pos else None,
+                decimal_odds=decimal_odds,
+                model_win=mark.live_model_p if mark else None,
+                edge_w=mark.live_edge if mark else None,
+                posted_edge=mark.live_posted_edge if mark else None,
                 run_id=run_id,
                 reason_plain=plain,
                 reason_technical=f"kind={kind} reason={act.reason}{warn} details={details}",
@@ -356,23 +491,71 @@ def advice_from_recommendation(
                 amount_technical=(
                     f"delta={delta:+.2f} unit={act.suggested_unit:.2f} "
                     f"before={before:.2f} after={after if after is not None else 'n/a'}"
+                    + (
+                        f" cashout={act.cashout_quote:.2f} hold_ev={act.hold_expected_payout:.2f}"
+                        if act.cashout_quote is not None and act.hold_expected_payout is not None
+                        else (
+                            f" estimated_cashout={estimated_offer:.2f}"
+                            if estimated_offer is not None
+                            else ""
+                        )
+                    )
                 ),
+                cashout_quote=act.cashout_quote,
+                cashout_estimated=False,
+                hold_expected_payout=act.hold_expected_payout,
+                cashout_threshold=act.cashout_threshold,
             )
         )
     return out
 
 
-def _advice_amount_plain(kind: str, before: float, delta: float, after: float | None) -> str:
+def _advice_amount_plain(
+    kind: str,
+    before: float,
+    delta: float,
+    after: float | None,
+    *,
+    cashout_quote: float | None = None,
+    hold_expected_payout: float | None = None,
+    estimated_offer: float | None = None,
+) -> str:
     if kind == "hold":
+        if cashout_quote is not None:
+            hold = f"${hold_expected_payout:.2f}" if hold_expected_payout is not None else "n/a"
+            return (
+                f"Stake stays ${before:.2f}. Typed cash-out ${cashout_quote:.2f} "
+                f"does not beat hold EV {hold}."
+            )
         return f"Stake stays ${before:.2f}. Hold is a size of zero change, not a new bet."
     if kind == "exit":
+        if cashout_quote is not None:
+            hold = f"${hold_expected_payout:.2f}" if hold_expected_payout is not None else "n/a"
+            return (
+                f"Take quoted cash-out ${cashout_quote:.2f} on the ${before:.2f} ticket "
+                f"(paper). Hold EV {hold}. After = $0.00."
+            )
+        if estimated_offer is not None:
+            return (
+                f"Sell ${before:.2f} back to cash (paper). "
+                f"Estimated cash-out ${estimated_offer:.2f} "
+                f"({PAPER_ESTIMATED_CASHOUT_HAIRCUT:.0%} haircut on MTM gap; "
+                "not scraped Open Bets). After = $0.00."
+            )
         return f"Sell ${before:.2f} back to cash (paper). After = $0.00."
     if kind == "reduce":
         after_s = f"${after:.2f}" if after is not None else "n/a"
-        return (
+        text = (
             f"Sell ${abs(delta):.2f} of the ${before:.2f} ticket "
             f"(after {after_s} if applied). Fraction of current stake, not a Kelly resize."
         )
+        if estimated_offer is not None:
+            text += (
+                f" Estimated paper cash-out ${estimated_offer:.2f} "
+                f"({PAPER_ESTIMATED_CASHOUT_HAIRCUT:.0%} haircut on MTM gap; "
+                "not scraped Open Bets)."
+            )
+        return text
     if kind == "add":
         after_s = f"${after:.2f}" if after is not None else "n/a"
         return (
@@ -389,18 +572,198 @@ def _advice_amount_plain(kind: str, before: float, delta: float, after: float | 
     return f"Suggested delta {delta:+.2f} from ${before:.2f}."
 
 
+def _sold_from_movement(mv: PaperMovement) -> float:
+    if mv.stake_before is not None and mv.stake_after is not None:
+        return round(max(0.0, float(mv.stake_before) - float(mv.stake_after)), 2)
+    return round(abs(float(mv.stake_delta or 0.0)), 2)
+
+
+def _estimated_amount_suffix(offer: float | None, estimated: bool, existing: str) -> str:
+    if not estimated or offer is None:
+        return ""
+    if existing and "Estimated paper cash-out" in existing:
+        return ""
+    return (
+        f" Estimated paper cash-out ${offer:.2f} "
+        f"({PAPER_ESTIMATED_CASHOUT_HAIRCUT:.0%} haircut on MTM gap; "
+        "not scraped Open Bets)."
+    )
+
+
+def _cashout_apply_update(
+    mv: PaperMovement,
+    offer: float | None,
+    estimated: bool,
+) -> dict:
+    if offer is None:
+        return {}
+    extra = _estimated_amount_suffix(offer, estimated, mv.amount_plain or "")
+    return {
+        "cashout_quote": offer,
+        "cashout_estimated": estimated,
+        "amount_plain": (mv.amount_plain or "") + extra,
+    }
+
+
+def _maybe_post_sell_cashout(
+    *,
+    record: PaperBookFile,
+    mv: PaperMovement,
+    sold: float,
+    entry_odds: float | None,
+    player_name: str,
+) -> tuple[float | None, bool, bool]:
+    """Returns (offer, estimated, posted_to_ledger). Missing live posted stays at cost."""
+    from golf_offshoot.strategy.cashout import (
+        estimated_cashout_ledger_token,
+        typed_cashout_ledger_token,
+    )
+    from golf_offshoot.strategy.paper_ledger import (
+        cashout_recorded_for,
+        load_ledger,
+        record_cashout,
+    )
+
+    sold_f = round(float(sold), 2)
+    if sold_f <= 0:
+        return None, False, False
+    typed = (
+        mv.cashout_quote is not None
+        and mv.cashout_quote > 0
+        and not mv.cashout_estimated
+    )
+    if typed:
+        offer = round(float(mv.cashout_quote), 2)
+        estimated = False
+    else:
+        offer = estimated_cashout_offer(sold_f, entry_odds, mv.decimal_odds)
+        if offer is None:
+            return None, False, False
+        if abs(offer - sold_f) < 0.005:
+            return None, False, False
+        estimated = True
+    if cashout_recorded_for(mv.movement_id):
+        return offer, estimated, False
+    led = load_ledger()
+    if not led.entries:
+        return offer, estimated, False
+    if estimated:
+        live = float(mv.decimal_odds or 0.0)
+        entry = float(entry_odds or 0.0)
+        token = estimated_cashout_ledger_token(mv.movement_id)
+        note = (
+            f"estimated paper cash-out ${offer:.2f} on sold ${sold_f:.2f} "
+            f"@ {entry:.2f} live {live:.2f} haircut={PAPER_ESTIMATED_CASHOUT_HAIRCUT:.0%} "
+            f"(not scraped Open Bets) {token}"
+        )
+    else:
+        token = typed_cashout_ledger_token(mv.movement_id)
+        entry = float(entry_odds or 0.0)
+        note = (
+            f"paper cash-out ${offer:.2f} on ${sold_f:.2f} "
+            f"@ {entry:.2f} {token}"
+        )
+    record_cashout(
+        stake=sold_f,
+        cashout=offer,
+        event_id=record.tournament_id,
+        event_name=record.tournament_name,
+        player_name=player_name,
+        note=note,
+    )
+    return offer, estimated, True
+
+
+def _entry_odds_for(record: PaperBookFile, position_id: str) -> float | None:
+    for pos in record.book.positions:
+        if pos.position_id == position_id and pos.decimal_odds and pos.decimal_odds > 1.0:
+            return float(pos.decimal_odds)
+    for mv in record.movements:
+        if mv.kind == "lock" and mv.position_id == position_id:
+            if mv.decimal_odds and mv.decimal_odds > 1.0:
+                return float(mv.decimal_odds)
+    return None
+
+
+def backfill_estimated_cashouts(record: PaperBookFile) -> PaperBookFile:
+    """Book estimated cash-out P/L for applied reduce/exit that never got a quote.
+
+    Idempotent via the movement token on the ledger note. Does not change remaining
+    ticket stakes. Typed quotes are left alone.
+    """
+    from golf_offshoot.strategy.paper_ledger import load_ledger
+
+    updated: list[PaperMovement] = []
+    posted_any = False
+    for mv in record.movements:
+        if mv.status != "applied" or mv.kind not in {"reduce", "exit"}:
+            updated.append(mv)
+            continue
+        if mv.cashout_quote is not None and mv.cashout_quote > 0 and not mv.cashout_estimated:
+            updated.append(mv)
+            continue
+        sold = _sold_from_movement(mv)
+        entry = _entry_odds_for(record, mv.position_id)
+        offer, estimated, posted = _maybe_post_sell_cashout(
+            record=record,
+            mv=mv,
+            sold=sold,
+            entry_odds=entry,
+            player_name=mv.player_name,
+        )
+        posted_any = posted_any or posted
+        if offer is None:
+            updated.append(mv)
+            continue
+        updated.append(mv.model_copy(update=_cashout_apply_update(mv, offer, estimated)))
+    record.movements = updated
+    if posted_any:
+        led = load_ledger()
+        if led.entries:
+            record.bankroll = led.bankroll
+            record.book = record.book.model_copy(update={"bankroll": led.bankroll})
+        note = (
+            "Backfilled estimated paper cash-out on applied sells "
+            f"({PAPER_ESTIMATED_CASHOUT_HAIRCUT:.0%} MTM-gap haircut; not scraped Open Bets)."
+        )
+        if note not in record.notes:
+            record.notes = list(record.notes) + [note]
+    return record
+
+
 def apply_advice(record: PaperBookFile, advice: list[PaperMovement]) -> PaperBookFile:
     """Apply advised sells/adds/reallocates to the mock book. Still never real money."""
+    from golf_offshoot.strategy.paper_ledger import load_ledger
+
     positions = list(record.book.positions)
     by_id = {p.position_id: i for i, p in enumerate(positions)}
     applied: list[PaperMovement] = []
+    booked_cashout = False
     for mv in advice:
         if mv.kind == "hold":
             continue
         if mv.kind == "exit" and mv.position_id in by_id:
             i = by_id[mv.position_id]
             pos = positions[i]
-            applied.append(mv.model_copy(update={"status": "applied", "stake_after": 0.0, "stake_delta": -pos.stake}))
+            sold = round(pos.stake, 2)
+            offer, estimated, posted = _maybe_post_sell_cashout(
+                record=record,
+                mv=mv,
+                sold=sold,
+                entry_odds=pos.decimal_odds,
+                player_name=pos.player_name,
+            )
+            booked_cashout = booked_cashout or posted
+            applied.append(
+                mv.model_copy(
+                    update={
+                        "status": "applied",
+                        "stake_after": 0.0,
+                        "stake_delta": -sold,
+                        **_cashout_apply_update(mv, offer, estimated),
+                    }
+                )
+            )
             positions.pop(i)
             by_id = {p.position_id: j for j, p in enumerate(positions)}
             continue
@@ -409,11 +772,31 @@ def apply_advice(record: PaperBookFile, advice: list[PaperMovement]) -> PaperBoo
             pos = positions[i]
             after = round(max(0.0, pos.stake + mv.stake_delta), 2)
             if after < 0.002 * record.bankroll:
-                applied.append(mv.model_copy(update={"status": "applied", "stake_after": 0.0, "stake_delta": -pos.stake}))
+                sold = round(pos.stake, 2)
+                after = 0.0
+                popped = True
+            else:
+                sold = round(pos.stake - after, 2)
+                popped = False
+            offer, estimated, posted = _maybe_post_sell_cashout(
+                record=record,
+                mv=mv,
+                sold=sold,
+                entry_odds=pos.decimal_odds,
+                player_name=pos.player_name,
+            )
+            booked_cashout = booked_cashout or posted
+            update = {
+                "status": "applied",
+                "stake_after": after,
+                **_cashout_apply_update(mv, offer, estimated),
+            }
+            if popped:
+                update["stake_delta"] = -sold
                 positions.pop(i)
             else:
                 positions[i] = pos.model_copy(update={"stake": after, "notes": f"{pos.notes}; paper reduce"})
-                applied.append(mv.model_copy(update={"status": "applied", "stake_after": after}))
+            applied.append(mv.model_copy(update=update))
             by_id = {p.position_id: j for j, p in enumerate(positions)}
             continue
         if mv.kind == "add" and mv.position_id in by_id:
@@ -481,7 +864,13 @@ def apply_advice(record: PaperBookFile, advice: list[PaperMovement]) -> PaperBoo
                 pos = positions[target]
                 positions[target] = pos.model_copy(update={"stake": round(pos.stake + take, 2)})
             applied.append(mv.model_copy(update={"status": "applied", "stake_delta": take}))
-    record.book = record.book.model_copy(update={"positions": positions})
+    book_update = {"positions": positions}
+    if booked_cashout:
+        led = load_ledger()
+        if led.entries:
+            record.bankroll = led.bankroll
+            book_update["bankroll"] = led.bankroll
+    record.book = record.book.model_copy(update=book_update)
     record.movements = list(record.movements) + applied
     return record
 
@@ -548,9 +937,19 @@ def _hard_pass(row: PlayerOutput) -> bool:
     return bool(_HARD_PASS.intersection(row.flags))
 
 
-def paper_candidates(rows: list[PlayerOutput], bet: BetType = BetType.WIN) -> list[PlayerOutput]:
-    """Clean names with a real quote that still beats the posted number."""
-    scored: list[tuple[float, PlayerOutput]] = []
+def paper_candidates(
+    rows: list[PlayerOutput],
+    bet: BetType = BetType.WIN,
+    *,
+    require_cleared: bool = False,
+) -> list[PlayerOutput]:
+    """Clean names with a real quote and positive posted-edge.
+
+    Cleared names (EdgeW and vs-posted both >= 3pp) come first, then observation.
+    require_cleared=True drops observation names (same screen as advise_bet).
+    """
+    cleared: list[tuple[float, PlayerOutput]] = []
+    observation: list[tuple[float, PlayerOutput]] = []
     for row in rows:
         if _hard_pass(row):
             continue
@@ -564,12 +963,13 @@ def paper_candidates(rows: list[PlayerOutput], bet: BetType = BetType.WIN) -> li
         posted_edge = hp.central - 1.0 / odds
         if posted_edge <= 0:
             continue
-        scored.append((edge, row))
-    scored.sort(key=lambda t: t[0], reverse=True)
-    preferred = [r for e, r in scored if e >= MIN_EDGE_TO_CONSIDER]
-    if preferred:
-        return preferred
-    return [r for _, r in scored]
+        bucket = cleared if screen_cleared(edge, posted_edge) else observation
+        bucket.append((edge, row))
+    cleared.sort(key=lambda t: t[0], reverse=True)
+    observation.sort(key=lambda t: t[0], reverse=True)
+    if require_cleared:
+        return [r for _, r in cleared]
+    return [r for _, r in cleared] + [r for _, r in observation]
 
 
 def lock_paper_positions(
@@ -581,6 +981,7 @@ def lock_paper_positions(
     run_id: str = "",
     odds_book: str = "",
     extra_export_files: list[Path] | None = None,
+    require_cleared: bool = False,
 ) -> PaperBookFile:
     """Accept a mock book at conservative caps. Does not place a real bet."""
     from golf_offshoot.strategy.paper_ledger import (
@@ -602,16 +1003,24 @@ def lock_paper_positions(
         "Locked so a later live run can suggest hold, sell, add, or reallocate.",
         observation_plain(),
         observation_technical(),
+        (
+            f"Cleared stake = full unit ${unit:.2f}. Observation stake = "
+            f"{PAPER_OBSERVATION_STAKE_FRAC:.0%} of unit "
+            f"${unit * PAPER_OBSERVATION_STAKE_FRAC:.2f}."
+        ),
     ]
-    for row in paper_candidates(rows):
+    for row in paper_candidates(rows, require_cleared=require_cleared):
         cap = remaining_exposure_capacity(open_exp, config.bankroll, config)
-        stake = min(unit, cap)
-        if stake < 0.002 * config.bankroll:
-            break
         odds = _posted(row) or 0.0
         hp = row.probabilities.p(Horizon.WIN)
         posted_edge = posted_price_edge(hp.central, odds)
         edge = row.edge_by_bet.get("win") or 0.0
+        cleared = screen_cleared(edge, posted_edge)
+        tag = lane_tag(cleared)
+        want = unit if cleared else unit * PAPER_OBSERVATION_STAKE_FRAC
+        stake = min(want, cap)
+        if stake < 0.002 * config.bankroll:
+            break
         screen = screen_plain(edge, posted_edge)
         positions.append(
             StrategyPosition(
@@ -624,14 +1033,14 @@ def lock_paper_positions(
                 entry_edge=edge,
                 entry_model_p=hp.central,
                 entry_market_p=row.market_implied_by_bet.get("win"),
-                notes=f"paper lock; {screen}",
+                notes=f"paper lock {tag}; {screen}",
                 user_recorded=True,
                 proposed=False,
             )
         )
         open_exp += stake
         notes.append(
-            f"{row.name} win stake={stake:.2f} @ {odds:.2f} EdgeW={edge:+.3f} "
+            f"{tag} {row.name} win stake={stake:.2f} @ {odds:.2f} EdgeW={edge:+.3f} "
             f"posted_edge={posted_edge:+.3f} ({screen})"
         )
     if not positions:
@@ -697,7 +1106,7 @@ def format_paper_book(record: PaperBookFile) -> str:
     ]
     for t in ticket_rows(record):
         lines.append(
-            f"  {t.player_name} {t.market} ${t.stake:.2f} @ {t.posted:.2f} "
+            f"  {t.lane} {t.player_name} {t.market} ${t.stake:.2f} @ {t.posted:.2f} "
             f"model={t.model_win:.3f} EdgeW={t.edge_w:+.3f} vs_posted={t.posted_edge:+.3f} "
             f"if_wins=${t.if_wins:.2f}"
         )

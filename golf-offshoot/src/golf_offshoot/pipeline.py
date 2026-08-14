@@ -86,6 +86,7 @@ class GolfOffshootPipeline:
         persist: bool = True,
         strategy_config: StrategyConfig | None = None,
         open_book: PortfolioState | None = None,
+        cashout_quotes: dict[str, float] | None = None,
     ) -> TournamentRunResult:
         field = self.prepare_field(tournament, field)
         if overrides:
@@ -148,6 +149,7 @@ class GolfOffshootPipeline:
             run_mode=field.mode,
             field=field,
             book=open_book,
+            cashout_quotes=cashout_quotes,
         )
 
         snap = {
@@ -245,6 +247,7 @@ class GolfOffshootPipeline:
         market_quotes=None,
         open_book: PortfolioState | None = None,
         strategy_config: StrategyConfig | None = None,
+        cashout_quotes: dict[str, float] | None = None,
     ) -> TournamentRunResult:
         field.mode = RunMode.LIVE
         return self.run(
@@ -254,6 +257,7 @@ class GolfOffshootPipeline:
             previous=previous,
             open_book=open_book,
             strategy_config=strategy_config,
+            cashout_quotes=cashout_quotes,
         )
 
 

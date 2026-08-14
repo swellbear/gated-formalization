@@ -60,6 +60,13 @@ def rank_field(
                 open_questions=expl.open_questions,
                 flags=flags.get(pid, []),
                 explain=expl,
+                live_score_to_par=p.live_score_to_par,
+                live_holes_completed=p.live_holes_completed,
+                live_place=p.live_place,
+                live_place_display=p.live_place_display,
+                live_status_name=p.live_status_name,
+                live_made_cut=p.live_made_cut,
+                withdrawn=p.withdrawn,
             )
         )
     rows.sort(key=lambda r: r.probabilities.p(Horizon.WIN).central, reverse=True)

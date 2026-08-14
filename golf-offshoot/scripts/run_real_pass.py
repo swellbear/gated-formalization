@@ -5,7 +5,6 @@ from __future__ import annotations
 import sys
 
 from golf_offshoot.calibration.artifacts import load_weights
-from golf_offshoot.data_feeds.http import package_data_dir
 from golf_offshoot.models.enums import RunMode
 from golf_offshoot.models.schemas import SourceInventoryItem
 from golf_offshoot.operating import run_operating, run_strategy_modes, write_pressure_report
@@ -66,7 +65,6 @@ def main() -> int:
         strategy_blocks=modes,
         live=live,
         calib_summary=load_weights(),
-        path=package_data_dir().parent / "docs" / "PRESSURE_TEST_2026_ST_JUDE.md",
         live_strategy_blocks=live_modes,
     )
     print(f"wrote {report}", flush=True)

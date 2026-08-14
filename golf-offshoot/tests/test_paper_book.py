@@ -1,14 +1,16 @@
 from pathlib import Path
 
-from golf_offshoot.models.enums import Horizon, RiskPreference, StrategyMode
+from golf_offshoot.models.enums import Horizon, RiskPreference, RunMode, StrategyMode
 from golf_offshoot.models.schemas import HorizonProbability, PlayerOutput, ProbabilityBundle, ReliabilityScore
 from golf_offshoot.models.strategy import StrategyConfig
 from golf_offshoot.strategy.paper_book import (
     PaperMovement,
+    advice_from_recommendation,
     apply_advice,
     load_paper_book,
     lock_paper_positions,
     paper_candidates,
+    ticket_rows,
 )
 
 
@@ -32,6 +34,7 @@ def _row(
         Horizon.WIN: _hp(Horizon.WIN, win),
         Horizon.TOP_5: _hp(Horizon.TOP_5, min(1.0, win * 3)),
         Horizon.TOP_10: _hp(Horizon.TOP_10, min(1.0, win * 5)),
+        Horizon.TOP_20: _hp(Horizon.TOP_20, min(1.0, win * 8)),
         Horizon.MAKE_CUT: _hp(Horizon.MAKE_CUT, 1.0),
     }
     bundle = ProbabilityBundle(player_id=pid, horizons=horizons, theta_mean=0.0, theta_sd=1.0)
@@ -67,6 +70,8 @@ def test_paper_candidates_skip_flags_and_negative_posted():
     assert "Adam Scott" not in names
     assert "Michael Thorbjornsen" not in names
     assert names[0] == "Kurt Kitayama"
+    cleared_only = [r.name for r in paper_candidates(rows, require_cleared=True)]
+    assert cleared_only == ["Kurt Kitayama"]
 
 
 def test_lock_paper_book_persists_and_never_auto_bets(tmp_path, monkeypatch):
@@ -131,6 +136,33 @@ def test_lock_paper_book_persists_and_never_auto_bets(tmp_path, monkeypatch):
     assert (pack / "04_movements.json").is_file()
 
 
+def test_lock_sizes_cleared_full_unit_observation_quarter(tmp_path, monkeypatch):
+    monkeypatch.setattr("golf_offshoot.strategy.paper_book.package_data_dir", lambda: tmp_path)
+    rows = [
+        _row("kita", "Kurt Kitayama", 0.089, edge=0.044, posted=17.0),
+        _row("fleet", "Tommy Fleetwood", 0.121, edge=0.041, posted=9.5),
+    ]
+    cfg = StrategyConfig(
+        enabled=True,
+        mode=StrategyMode.STAY_SELECTIVE,
+        risk=RiskPreference.CONSERVATIVE,
+        bankroll=250,
+    )
+    rec = lock_paper_positions(rows, cfg, event_id="401811962", run_id="run-a", odds_book="bovada")
+    by = {p.player_name: p for p in rec.book.positions}
+    assert abs(by["Kurt Kitayama"].stake - 8.75) < 1e-9
+    assert abs(by["Tommy Fleetwood"].stake - 2.19) < 0.02
+    assert "[cleared]" in by["Kurt Kitayama"].notes
+    assert "[observation]" in by["Tommy Fleetwood"].notes
+    kita_mv = next(m for m in rec.movements if m.player_name == "Kurt Kitayama")
+    fleet_mv = next(m for m in rec.movements if m.player_name == "Tommy Fleetwood")
+    assert "[cleared]" in kita_mv.reason_plain
+    assert "[observation]" in fleet_mv.reason_plain
+    html = Path(rec.export_html).read_text(encoding="utf-8")
+    assert "[cleared] Kurt Kitayama" in html
+    assert "[observation] Tommy Fleetwood" in html
+
+
 def test_lock_paper_book_writes_new_pdf_per_lock(tmp_path, monkeypatch):
     monkeypatch.setattr("golf_offshoot.strategy.paper_book.package_data_dir", lambda: tmp_path)
     rows = [_row("kita", "Kurt Kitayama", 0.089, edge=0.044, posted=17.0)]
@@ -185,6 +217,149 @@ def test_apply_paper_reduce_keeps_mock_and_never_auto_bets(tmp_path, monkeypatch
     assert rec.movements[-1].kind == "reduce"
 
 
+def test_pack_tickets_refresh_after_apply(tmp_path, monkeypatch):
+    monkeypatch.setattr("golf_offshoot.strategy.paper_book.package_data_dir", lambda: tmp_path)
+    from golf_offshoot.strategy.paper_pack import write_paper_pack
+
+    rows = [_row("kita", "Kurt Kitayama", 0.089, edge=0.044, posted=17.0)]
+    cfg = StrategyConfig(
+        enabled=True,
+        mode=StrategyMode.STAY_SELECTIVE,
+        risk=RiskPreference.CONSERVATIVE,
+        bankroll=250,
+    )
+    rec = lock_paper_positions(rows, cfg, event_id="401811962", run_id="run-a", odds_book="bovada")
+    pos = rec.book.positions[0]
+    lock_txt = (Path(rec.latest_pack) / "01_paper_tickets.txt").read_text(encoding="utf-8")
+    assert "Kurt Kitayama" in lock_txt
+    assert "Sungjae Im" not in lock_txt
+    rec = apply_advice(
+        rec,
+        [
+            PaperMovement(
+                movement_id="move-reduce-1",
+                kind="reduce",
+                status="advised",
+                player_id=pos.player_id,
+                player_name=pos.player_name,
+                position_id=pos.position_id,
+                stake_before=pos.stake,
+                stake_delta=-2.0,
+                reason_plain="Sell part of this paper ticket.",
+                amount_plain="Sell $2.00 of the ticket.",
+            ),
+            PaperMovement(
+                movement_id="move-new-1",
+                kind="new_bet",
+                status="advised",
+                player_id="im",
+                player_name="Sungjae Im",
+                bet_type="top_20",
+                stake_delta=2.47,
+                decimal_odds=1.54,
+                model_win=0.786,
+                edge_w=0.761,
+                posted_edge=0.137,
+                reason_plain="New paper ticket.",
+                amount_plain="New $2.47.",
+            ),
+        ],
+    )
+    pack = write_paper_pack(rec, run_id="live-b")
+    txt = (pack / "01_paper_tickets.txt").read_text(encoding="utf-8")
+    assert "Sungjae Im" in txt
+    assert "Top 20" in txt
+    assert "2.47" in txt
+    html = (pack / "01_paper_tickets.html").read_text(encoding="utf-8")
+    assert "Sungjae Im" in html
+    assert "$2.47" in html
+    assert f"${round(pos.stake - 2.0, 2):.2f}" in html
+    assert Path(rec.export_txt).read_text(encoding="utf-8") == txt
+
+
+def test_ticket_rows_live_mark_and_place_na_without_coupon(tmp_path, monkeypatch):
+    monkeypatch.setattr("golf_offshoot.strategy.paper_book.package_data_dir", lambda: tmp_path)
+    rows = [_row("kita", "Kurt Kitayama", 0.089, edge=0.044, posted=17.0)]
+    cfg = StrategyConfig(
+        enabled=True,
+        mode=StrategyMode.STAY_SELECTIVE,
+        risk=RiskPreference.CONSERVATIVE,
+        bankroll=250,
+    )
+    rec = lock_paper_positions(rows, cfg, event_id="401811962", run_id="run-a", odds_book="bovada")
+    rec = apply_advice(
+        rec,
+        [
+            PaperMovement(
+                movement_id="move-new-1",
+                kind="new_bet",
+                status="advised",
+                player_id="im",
+                player_name="Sungjae Im",
+                bet_type="top_20",
+                stake_delta=2.47,
+                decimal_odds=1.54,
+                model_win=0.786,
+                edge_w=0.761,
+                posted_edge=0.137,
+                reason_plain="New paper ticket.",
+                amount_plain="New $2.47.",
+            )
+        ],
+    )
+    live_kita = _row("kita", "Kurt Kitayama", 0.070, edge=0.021, posted=15.0)
+    live_im = _row("im", "Sungjae Im", 0.097, edge=0.070, posted=31.0)
+    tickets = ticket_rows(rec, [live_kita, live_im], live_run_id="live-b")
+    by = {(t.player_name, t.market): t for t in tickets}
+    kita = by[("Kurt Kitayama", "Win")]
+    assert kita.posted == 17.0
+    assert kita.live_posted == 15.0
+    assert kita.live_model == 0.070
+    assert abs(kita.live_edge_w - 0.021) < 1e-9
+    im = by[("Sungjae Im", "Top 20")]
+    assert im.posted == 1.54
+    assert im.live_model is not None
+    assert im.live_posted is None
+    assert im.live_posted_edge is None
+    assert im.live_edge_w is None
+
+
+def test_pack_tickets_fill_live_from_snapshot(tmp_path, monkeypatch):
+    monkeypatch.setattr("golf_offshoot.strategy.paper_book.package_data_dir", lambda: tmp_path)
+    from golf_offshoot.audit.journal import current_model_record, save_audit
+    from golf_offshoot.models.schemas import AuditRecord
+    from golf_offshoot.strategy.paper_pack import write_paper_pack
+
+    rows = [_row("kita", "Kurt Kitayama", 0.089, edge=0.044, posted=17.0)]
+    cfg = StrategyConfig(
+        enabled=True,
+        mode=StrategyMode.STAY_SELECTIVE,
+        risk=RiskPreference.CONSERVATIVE,
+        bankroll=250,
+    )
+    rec = lock_paper_positions(rows, cfg, event_id="401811962", run_id="run-a", odds_book="bovada")
+    audit = AuditRecord(
+        run_id="live-b",
+        tournament_id="401811962",
+        mode=RunMode.LIVE,
+        model=current_model_record(),
+        data_snapshot_hash="test",
+        outputs=[_row("kita", "Kurt Kitayama", 0.070, edge=0.021, posted=15.0)],
+    )
+    save_audit(audit, tmp_path / "snapshots")
+    pack = write_paper_pack(rec, run_id="live-b")
+    txt = (pack / "01_paper_tickets.txt").read_text(encoding="utf-8")
+    assert "This live" in txt or "Live post" in txt
+    assert "17.00" in txt
+    assert "15.00" in txt
+    html = (pack / "01_paper_tickets.html").read_text(encoding="utf-8")
+    assert "At entry" in html
+    assert "This live" in html
+    explained = (pack / "02_bets_explained.txt").read_text(encoding="utf-8")
+    assert "live@15.00" in explained
+    assert "entry@17.00" in explained
+
+
 def test_paper_pack_copies_field_table(tmp_path, monkeypatch):
     monkeypatch.setattr("golf_offshoot.strategy.paper_book.package_data_dir", lambda: tmp_path)
     rows = [_row("kita", "Kurt Kitayama", 0.089, edge=0.044, posted=17.0)]
@@ -212,3 +387,35 @@ def test_paper_pack_copies_field_table(tmp_path, monkeypatch):
     readme = (pack / "00_README.txt").read_text(encoding="utf-8")
     assert "03_field_live.pdf" in readme
     assert "02_bets_explained.pdf" in readme
+
+
+def test_advice_carries_live_model_and_posted_edge(tmp_path, monkeypatch):
+    monkeypatch.setattr("golf_offshoot.strategy.paper_book.package_data_dir", lambda: tmp_path)
+    from golf_offshoot.strategy.engine import run_strategy
+
+    rows = [_row("kita", "Kurt Kitayama", 0.089, edge=0.044, posted=17.0)]
+    cfg = StrategyConfig(
+        enabled=True,
+        mode=StrategyMode.STAY_SELECTIVE,
+        risk=RiskPreference.CONSERVATIVE,
+        bankroll=250,
+    )
+    locked = lock_paper_positions(rows, cfg, event_id="401811962", run_id="run-a", odds_book="bovada")
+    rec = run_strategy(rows, cfg, run_mode=RunMode.LIVE, book=locked.book)
+    advice = advice_from_recommendation(locked, rec, run_id="live-a")
+    assert advice
+    holdish = next(a for a in advice if a.kind in {"hold", "exit", "reduce", "add"})
+    assert holdish.model_win is not None
+    assert holdish.edge_w is not None
+    assert holdish.posted_edge is not None
+    assert holdish.decimal_odds == 17.0
+
+
+def test_pressure_report_path_is_per_event():
+    from golf_offshoot.operating import pressure_report_path
+
+    path = pressure_report_path("401811962")
+    assert path.name == "PRESSURE_TEST_401811962.md"
+    other = pressure_report_path("401703504")
+    assert other.name == "PRESSURE_TEST_401703504.md"
+    assert "ST_JUDE" not in other.name

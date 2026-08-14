@@ -23,6 +23,7 @@ COMBO_PDF = "00_full_readout.pdf"
 _PACK_PDF_SECTIONS = (
     ("01_paper_tickets.pdf", "Paper tickets"),
     ("02_bets_explained.pdf", "Bets explained"),
+    ("03_leaderboard.pdf", "Live leaderboard"),
     ("03_field_live.pdf", "Field live"),
     ("03_field_pre.pdf", "Field pre-tournament"),
     ("05_bankroll.pdf", "Bankroll"),
@@ -57,18 +58,30 @@ def write_paper_pack(
     root = (directory or packs_dir()) / pack_name
     root.mkdir(parents=True, exist_ok=True)
 
-    copied_tickets = _copy_if_exists(record.export_pdf, root / "01_paper_tickets.pdf")
-    _copy_if_exists(record.export_html, root / "01_paper_tickets.html")
-    _copy_if_exists(record.export_txt, root / "01_paper_tickets.txt")
-    if not copied_tickets:
-        saved = (record.export_pdf, record.export_html, record.export_txt)
-        ticket_paths = write_paper_book_files(record, directory=root, persist=False)
-        _rename(ticket_paths.pdf, root / "01_paper_tickets.pdf")
-        _rename(ticket_paths.html, root / "01_paper_tickets.html")
-        _rename(ticket_paths.txt, root / "01_paper_tickets.txt")
-        record.export_pdf, record.export_html, record.export_txt = saved
+    # Always render tickets from the current book. Copying export_pdf froze the
+    # lock-time sheet after apply/reduce/new_bet, so 01_paper_tickets lagged JSON.
+    from golf_offshoot.strategy.paper_book import load_snapshot_outputs, package_data_dir as data_dir
 
-    write_bets_explained_files(record, directory=root, advice=advice, config=cfg)
+    live_outputs = load_snapshot_outputs(run)
+    ticket_paths = write_paper_book_files(
+        record,
+        directory=data_dir() / "exports",
+        persist=False,
+        live_outputs=live_outputs,
+        live_run_id=run,
+    )
+    _copy_if_exists(ticket_paths.pdf, root / "01_paper_tickets.pdf")
+    _copy_if_exists(ticket_paths.html, root / "01_paper_tickets.html")
+    _copy_if_exists(ticket_paths.txt, root / "01_paper_tickets.txt")
+
+    write_bets_explained_files(
+        record,
+        directory=root,
+        advice=advice,
+        config=cfg,
+        live_outputs=live_outputs,
+        live_run_id=run,
+    )
     led = load_ledger()
     if not led.entries:
         led = ensure_opening_deposit(
@@ -133,6 +146,9 @@ def find_related_exports(event_id: str, run_id: str, *, export_dir: Path | None 
         path = d / f"{stem}{ext}"
         if path.is_file():
             found.append(path)
+        board = d / f"{stem}_leaderboard{ext}"
+        if board.is_file():
+            found.append(board)
     return found
 
 
@@ -195,11 +211,12 @@ def export_paper_pack(
     extra_files: list[Path] | None = None,
     directory: Path | None = None,
 ) -> Path:
-    from golf_offshoot.strategy.paper_book import load_paper_file
+    from golf_offshoot.strategy.paper_book import backfill_estimated_cashouts, load_paper_file
 
     record = load_paper_file(event_id)
     if record is None:
         raise FileNotFoundError(f"no paper book locked for event {event_id}")
+    record = backfill_estimated_cashouts(record)
     return write_paper_pack(record, extra_files=extra_files, directory=directory)
 
 
@@ -219,11 +236,12 @@ def _readme(
         "",
     ]
     if combo:
-        lines.append("00_full_readout.pdf     Combined tickets + explanation + field + bankroll")
+        lines.append("00_full_readout.pdf     Combined tickets + explanation + leaderboard + field + bankroll")
     lines += [
         "00_README.txt           This index",
-        "01_paper_tickets.pdf    Current paper tickets",
+        "01_paper_tickets.pdf    Current paper tickets (at entry vs this live snapshot)",
         "02_bets_explained.pdf   Why names were taken, why the amounts, sells/reallocates",
+        "03_leaderboard.pdf      ESPN place / to-par / thru at this live snapshot (not Win%)",
         "05_bankroll.pdf         Week moves, wins/losses, deposits, lifetime rollover",
         "04_movements.json       Machine ledger for this snapshot",
     ]
@@ -240,9 +258,14 @@ def _readme(
         f"Book {record.odds_book or 'n/a'}   lock run {record.locked_from_run_id or 'n/a'}",
         "",
         "00_full_readout.pdf is the one-file version of the numbered PDFs. The individual",
-        "files stay in the folder. 05_bankroll.pdf is the week + lifetime paper money readout.",
-        "Wins add, losses subtract, deposits you record are added. live auto-settles a finished",
-        "open week before the next lock so new caps use the rolled bankroll.",
+        "files stay in the folder. 03_leaderboard.pdf is the golf board at that live run;",
+        "03_field_live.pdf is the model Win% ranking. 05_bankroll.pdf is the week + lifetime",
+        "paper money readout. Wins add, losses subtract, deposits you record are added.",
+        "live auto-settles a finished open week before the next lock so new caps use the",
+        "rolled bankroll.",
+        "",
+        "01_paper_tickets.pdf splits At entry (booked ticket) from This live (this pack's",
+        "snapshot — the numbers strategy used). n/a means that market had no posted coupon.",
         "",
         "Live advice in 02_bets_explained is not applied unless you rerun live with --apply-paper.",
         "Each lock or live snapshot writes a NEW pack folder. Old packs are left in place.",
@@ -255,6 +278,8 @@ def _field_pack_name(path: Path) -> str:
     ext = path.suffix
     if "_paper_" in name:
         return f"01_paper_tickets_source{ext}"
+    if "leaderboard" in name:
+        return f"03_leaderboard{ext}"
     if "_live_" in name:
         return f"03_field_live{ext}"
     if "pre_tournament" in name or "_pre-" in name:
@@ -271,14 +296,6 @@ def _copy_if_exists(src: str | Path | None, dest: Path) -> bool:
     dest.parent.mkdir(parents=True, exist_ok=True)
     shutil.copy2(path, dest)
     return True
-
-
-def _rename(src: Path, dest: Path) -> None:
-    if src.resolve() == dest.resolve():
-        return
-    if dest.exists():
-        dest.unlink()
-    src.replace(dest)
 
 
 def _safe(value: str) -> str:

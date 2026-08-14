@@ -204,6 +204,14 @@ def _finish_place(comp: dict[str, Any]) -> int | None:
         return None
 
 
+def _place_display(comp: dict[str, Any]) -> str:
+    pos = (comp.get("status") or {}).get("position") or {}
+    raw = pos.get("displayName") or pos.get("id")
+    if raw in (None, "", "-"):
+        return ""
+    return str(raw)
+
+
 def _score_to_par(comp: dict[str, Any]) -> float | None:
     for st in comp.get("statistics") or []:
         if st.get("name") == "scoreToPar":

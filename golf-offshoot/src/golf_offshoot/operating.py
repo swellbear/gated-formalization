@@ -67,6 +67,8 @@ def run_operating(
     include_season_stats: bool = True,
     odds_book: str = "auto",
     open_book=None,
+    cashout_quotes: dict[str, float] | None = None,
+    risk: RiskPreference = RiskPreference.CONSERVATIVE,
 ) -> TournamentRunResult:
     ingestor = RealIngestor(refresh=refresh)
     tournament, field, quotes, _inv = ingestor.ingest(
@@ -86,7 +88,7 @@ def run_operating(
     strat = StrategyConfig(
         enabled=enable_strategy,
         mode=strategy_mode,
-        risk=RiskPreference.CONSERVATIVE,
+        risk=risk,
         bankroll=bankroll,
     )
     pipe = GolfOffshootPipeline(engine=engine, snapshot_dir=snap, strategy_config=strat)
@@ -103,6 +105,7 @@ def run_operating(
         persist=persist,
         previous=previous,
         open_book=open_book,
+        cashout_quotes=cashout_quotes,
     )
     result.audit.extra["weight_source"] = getattr(engine, "_weight_source", "")
     result.audit.extra["weather_summary"] = field.weather_summary
@@ -122,18 +125,33 @@ def run_operating(
         result.audit.extra["export_pdf"] = str(paths.pdf)
         result.audit.extra["export_html"] = str(paths.html)
         result.audit.extra["export_txt"] = str(paths.txt)
+        if result.mode == RunMode.LIVE:
+            from golf_offshoot.ranking.export_leaderboard import export_live_leaderboard
+
+            held = set()
+            if open_book is not None:
+                held = {p.player_id for p in open_book.positions}
+            lb = export_live_leaderboard(result, held_ids=held)
+            if lb:
+                result.audit.extra["export_leaderboard_pdf"] = str(lb.pdf)
+                result.audit.extra["export_leaderboard_html"] = str(lb.html)
+                result.audit.extra["export_leaderboard_txt"] = str(lb.txt)
         save_audit(result.audit, snap)
     return result
 
 
-def run_strategy_modes(result_base: TournamentRunResult, bankroll: float = 2000.0) -> dict[str, str]:
+def run_strategy_modes(
+    result_base: TournamentRunResult,
+    bankroll: float = 2000.0,
+    risk: RiskPreference = RiskPreference.CONSERVATIVE,
+) -> dict[str, str]:
     from golf_offshoot.audit.shadow import append_shadow_advises
     from golf_offshoot.strategy.engine import run_strategy
 
     out = {}
     operating = bool(result_base.audit.extra.get("operating"))
     for mode in (StrategyMode.PROTECT_PROFITS, StrategyMode.PRESS_EDGES, StrategyMode.STAY_SELECTIVE):
-        cfg = StrategyConfig(enabled=True, mode=mode, bankroll=bankroll, risk=RiskPreference.CONSERVATIVE)
+        cfg = StrategyConfig(enabled=True, mode=mode, bankroll=bankroll, risk=risk)
         rec = run_strategy(result_base.ranked, cfg, run_mode=result_base.mode)
         out[mode.value] = format_recommendation(rec)
         if operating:
@@ -174,6 +192,12 @@ def coherence_notes(result: TournamentRunResult) -> list[str]:
     return notes
 
 
+def pressure_report_path(event_id: str | None) -> Path:
+    """Per-event pressure artifact. Does not overwrite the named St. Jude file."""
+    safe = "".join(ch if ch.isalnum() or ch in "-_" else "-" for ch in str(event_id or "event"))
+    return package_data_dir().parent / "docs" / f"PRESSURE_TEST_{safe}.md"
+
+
 def write_pressure_report(
     result: TournamentRunResult,
     *,
@@ -184,7 +208,8 @@ def write_pressure_report(
     path: Path | None = None,
     live_strategy_blocks: dict[str, str] | None = None,
 ) -> Path:
-    path = path or (package_data_dir().parent / "docs" / "PRESSURE_TEST_2026_ST_JUDE.md")
+    tid = result.tournament.espn_event_id or result.tournament.tournament_id
+    path = path or pressure_report_path(tid)
     top = result.ranked[:12]
     explains = []
     for row in result.ranked[:5]:

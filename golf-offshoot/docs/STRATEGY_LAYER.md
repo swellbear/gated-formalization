@@ -13,6 +13,7 @@ golf-offshoot/src/golf_offshoot/
     engine.py        on/off facade, journal helper, formatter
     builder.py       pre-tournament construction
     live.py          Thursday→Sunday actions
+    cashout.py       optional user-typed cash-out vs remaining winner EV
     path.py          entry vs live edge, runners, collapse
     correlation.py   cut-risk / weather / style / talent-band
     sizing.py        Kelly × uncertainty × reliability × risk × mode
@@ -44,18 +45,23 @@ For each open position: mark entry vs live edge, then
 
 | Situation | Typical action |
 |-----------|----------------|
-| Original edge collapsed | EXIT (Press may REDUCE) |
+| User-typed cash-out ≥ remaining winner EV (plus mode buffer) | EXIT (take the quote) |
+| User-typed cash-out below remaining winner EV | HOLD (do not sell early); ADD still possible if live edge improved |
+| Original edge collapsed (no cash-out quote) | EXIT (Press may REDUCE) |
 | Cooling-off | HOLD / REDUCE only — no ADD / NEW_BET |
-| Runner + Protect Profits | REDUCE (lock) |
+| Runner + Protect Profits (no cash-out quote) | REDUCE (lock) |
 | Live edge improved + Press | ADD (unless range/reliability block) |
 | Better name not in book, at cap | REALLOCATE from worst live edge |
 | Fresh edge, capacity left | NEW_BET |
+
+`--cash-out "Name=12.40"` is optional and case-by-case. It is a number you copy from Open Bets, not a public coupon field. Without it, MTM stays `stake × entry_decimal / live_decimal`. Applied paper reduce/exit without a typed quote books an estimated cash-out (odds-ratio MTM on the sold slice, 20% haircut on the gap; labeled estimated). A cash-out EXIT does not auto-redeploy; new names still must clear screens.
 
 ## E. Path, realized vs unrealized, correlation
 
 - **Path:** a position that has already run (MTM ≥ 25% of stake) is not treated like a fresh edge of similar size.
 - **Edges:** `PositionMark.entry_edge` vs `live_edge`; collapse if live < 30% of entry or negative; improved if live ≥ entry + 1.5pp.
-- **Unrealized P/L:** MTM ≈ `stake × entry_decimal / live_decimal`.
+- **Unrealized P/L:** MTM ≈ `stake × entry_decimal / live_posted_decimal` when posted odds exist; otherwise `1 / implied_fair`. A typed cash-out quote for that snapshot replaces MTM with that dollar amount.
+- **Cash-out vs hold:** expected full payout ≈ live Win% × stake × lock decimal. Stay Selective sells only if the quote beats that EV by 10% **or** beats the high end of the Win interval, whichever is stricter (capped at max win payout). Protect Profits sells if quote ≥ central EV. Press requires a fatter quote. Missing quote: this comparison is skipped.
 - **Correlation:** share of book in high cut-risk / make-cut, weather-sensitive names, same-style SG cluster, talent band.
 
 ## F. How modes change behavior
@@ -73,16 +79,17 @@ Risk preference (conservative / normal / aggressive) scales size and exposure ca
 **Assumptions**
 
 - Open positions are **user-recorded**. The engine never writes a `BetRecord`.
-- MTM uses a simple decimal-odds ratio (not a full exchange cash-out model).
+- MTM uses live posted decimal when present, otherwise a de-juiced implied ratio, unless the operator types a cash-out quote for that live snapshot.
 - Style correlation is cosine similarity on the four SG categories, not a fitted copula.
 - Cooling-off uses realized P/L the user (or a future feed) puts on `PortfolioState`.
 - Default strategy layer is **off**.
 
 **Open**
 
-1. Exchange cash-out / lay prices vs book decimal for true MTM.
-2. Per-round “which round just finished” for the “after Round 1” wording (today: live mode).
-3. Whether make-cut and win books should have separate exposure caps.
-4. Fitted finish copula vs current θ / SG / cut-risk slices.
+1. Per-round “which round just finished” for the “after Round 1” wording (today: live mode).
+2. Whether make-cut and win books should have separate exposure caps.
+3. Fitted finish copula vs current θ / SG / cut-risk slices.
+4. Authenticated Open Bets scrape (not planned; type the quote instead).
+5. Leftover callout after live/strategy (used vs unconstrained vs held-ticket residual) — parked until after St. Jude 2026; see [PARKED_LEFTOVER_CALLOUT.md](PARKED_LEFTOVER_CALLOUT.md).
 
 CLI: `python -m golf_offshoot strategy --bankroll 2000 --mode press_edges --live`

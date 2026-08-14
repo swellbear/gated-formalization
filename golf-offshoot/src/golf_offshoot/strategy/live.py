@@ -20,6 +20,7 @@ from golf_offshoot.models.strategy import (
 from golf_offshoot.strategy import explanations as X
 from golf_offshoot.strategy.builder import build_pre_tournament
 from golf_offshoot.strategy.correlation import concentrations, would_raise_cut_stack
+from golf_offshoot.strategy.cashout import compare_cashout
 from golf_offshoot.strategy.path import mark_position
 from golf_offshoot.strategy.sizing import (
     remaining_exposure_capacity,
@@ -45,6 +46,14 @@ def _reduce_frac(config: StrategyConfig, mark: PositionMark) -> float:
     return 0.40
 
 
+def _cashout_fields(mark: PositionMark) -> dict:
+    return {
+        "cashout_quote": mark.cashout_quote,
+        "hold_expected_payout": mark.hold_expected_payout,
+        "cashout_threshold": mark.cashout_threshold,
+    }
+
+
 def _action_for_open(
     mark: PositionMark,
     pos: StrategyPosition,
@@ -57,6 +66,116 @@ def _action_for_open(
         f"live edge {mark.live_edge:+.3f}" if mark.live_edge is not None else "live edge n/a",
         f"unrealized {mark.unrealized_pnl:+.2f}",
     ]
+    if mark.cashout_quote is not None:
+        cmp = compare_cashout(
+            stake=pos.stake,
+            decimal_odds=pos.decimal_odds,
+            live_model_p=mark.live_model_p,
+            live_model_low=mark.live_model_low if mark.live_model_low is not None else mark.live_model_p,
+            live_model_high=mark.live_model_high if mark.live_model_high is not None else mark.live_model_p,
+            quote=mark.cashout_quote,
+            mode=config.mode,
+        )
+        details.extend(cmp.notes)
+        if mark.mtm_is_cashout:
+            details.append("MTM is the typed cash-out, not the odds-ratio proxy")
+        if cmp.beats_hold:
+            return StrategyAction(
+                action_id=new_id("act"),
+                kind=StrategyActionKind.EXIT,
+                player_id=pos.player_id,
+                player_name=name,
+                bet_type=pos.bet_type,
+                position_id=pos.position_id,
+                suggested_stake_delta=-pos.stake,
+                suggested_unit=pos.stake,
+                reason=X.cashout_beats_hold(),
+                reasons_detail=details,
+                uncertainty_warning=X.noisy_inputs(mark) if mark.reliability < 0.45 else None,
+                **_cashout_fields(mark),
+            )
+        # Real quote exists and loses to hold EV: do not invent a better sell.
+        if cooling:
+            return StrategyAction(
+                action_id=new_id("act"),
+                kind=StrategyActionKind.HOLD,
+                player_id=pos.player_id,
+                player_name=name,
+                bet_type=pos.bet_type,
+                position_id=pos.position_id,
+                reason=X.cooling_off(),
+                reasons_detail=details + [X.cashout_below_hold()],
+                **_cashout_fields(mark),
+            )
+        if mark.live_edge_improved and not cooling:
+            if config.mode == StrategyMode.STAY_SELECTIVE and (mark.live_edge or 0) < 0.05:
+                return StrategyAction(
+                    action_id=new_id("act"),
+                    kind=StrategyActionKind.HOLD,
+                    player_id=pos.player_id,
+                    player_name=name,
+                    bet_type=pos.bet_type,
+                    position_id=pos.position_id,
+                    reason=X.cashout_below_hold(),
+                    reasons_detail=details + [X.selective_not_strong()],
+                    **_cashout_fields(mark),
+                )
+            if config.mode == StrategyMode.PROTECT_PROFITS:
+                return StrategyAction(
+                    action_id=new_id("act"),
+                    kind=StrategyActionKind.HOLD,
+                    player_id=pos.player_id,
+                    player_name=name,
+                    bet_type=pos.bet_type,
+                    position_id=pos.position_id,
+                    reason=X.cashout_below_hold(),
+                    reasons_detail=details + ["Protect Profits: do not add into a live move"],
+                    **_cashout_fields(mark),
+                )
+            block = uncertainty_blocks_action(mark.range_width, mark.reliability)
+            if block and config.mode != StrategyMode.PRESS_EDGES:
+                return StrategyAction(
+                    action_id=new_id("act"),
+                    kind=StrategyActionKind.HOLD,
+                    player_id=pos.player_id,
+                    player_name=name,
+                    bet_type=pos.bet_type,
+                    position_id=pos.position_id,
+                    reason=X.cashout_below_hold(),
+                    uncertainty_warning=block,
+                    reasons_detail=details,
+                    **_cashout_fields(mark),
+                )
+            add = pos.stake * (0.40 if config.mode == StrategyMode.PRESS_EDGES else 0.20)
+            return StrategyAction(
+                action_id=new_id("act"),
+                kind=StrategyActionKind.ADD,
+                player_id=pos.player_id,
+                player_name=name,
+                bet_type=pos.bet_type,
+                position_id=pos.position_id,
+                suggested_stake_delta=add,
+                suggested_unit=add,
+                reason=X.live_improved(),
+                reasons_detail=details + [X.cashout_below_hold()],
+                uncertainty_warning=block,
+                **_cashout_fields(mark),
+            )
+        extra = []
+        if mark.original_edge_collapsed:
+            extra.append("live edge collapsed vs market, but the typed cash-out still loses to hold EV")
+        return StrategyAction(
+            action_id=new_id("act"),
+            kind=StrategyActionKind.HOLD,
+            player_id=pos.player_id,
+            player_name=name,
+            bet_type=pos.bet_type,
+            position_id=pos.position_id,
+            reason=X.cashout_below_hold(),
+            reasons_detail=details + extra,
+            uncertainty_warning=X.noisy_inputs(mark) if mark.reliability < 0.45 else None,
+            **_cashout_fields(mark),
+        )
 
     if mark.original_edge_collapsed:
         kind = StrategyActionKind.EXIT
@@ -243,9 +362,19 @@ def live_manage(
     config: StrategyConfig,
     field: FieldSnapshot | None,
     cooling: bool,
+    cashout_quotes: dict[str, float] | None = None,
 ) -> tuple[list[StrategyAction], list[StrategyPosition], list[PositionMark]]:
     by_id = {r.player_id: r for r in rows}
-    marks = [mark_position(p, by_id.get(p.player_id)) for p in book.positions]
+    quotes = cashout_quotes or {}
+    marks = [
+        mark_position(
+            p,
+            by_id.get(p.player_id),
+            cashout_quote=quotes.get(p.player_id),
+            mode=config.mode,
+        )
+        for p in book.positions
+    ]
     actions: list[StrategyAction] = []
 
     for pos, mark in zip(book.positions, marks):

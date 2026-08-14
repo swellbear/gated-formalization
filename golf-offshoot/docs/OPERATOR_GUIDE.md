@@ -72,7 +72,7 @@ It can also run a labeled **offline demo** so you can learn the table format wit
 - **Agronomy** (stimp, rough, firmness). Yards/par/name are real; setup is unconstrained.
 - **Vendor last-8 SG** unless `DATA_GOLF_API_KEY` is set **and** the payload actually contains last-8 fields. Without that, recent SG is PGA EVENT_ONLY mean of up to 16 completed weeks the player actually appears in — not 16 guaranteed measurements.
 - **OWGR.** ESPN rankings endpoint is empty; talent is finish-derived.
-- **True exchange MTM / limits / steam.** Strategy mark-to-market is a decimal-odds ratio on user-recorded positions.
+- **True exchange MTM / limits / steam.** Strategy mark-to-market uses live **posted** decimal on user-recorded positions (cash-out quote if you type one).
 
 ---
 
@@ -143,7 +143,7 @@ python -m golf_offshoot ingest --event <espn_id>
 python -m golf_offshoot pressure-test --event <espn_id> --bankroll 2000
 ```
 
-`ingest` is analysis-only (strategy off). `pressure-test` writes `docs/PRESSURE_TEST_2026_ST_JUDE.md` (filename is currently St. Jude-specific; treat it as the latest pressure artifact).
+`ingest` is analysis-only (strategy off). `pressure-test` writes `docs/PRESSURE_TEST_{espn_id}.md` so a later event does not overwrite the St. Jude 2026 artifact. `--mode` and `--risk` apply to the operating live/pre strategy config; the report still prints all three strategy modes for comparison.
 
 **Read the source inventory first**, then the table. Inventory tells you what is real vs missing this week.
 
@@ -161,7 +161,7 @@ Live tables add **dWin / Pre# / dRnk** when a pre-tournament `ingest` snapshot e
 
 ### Optional strategy construction
 
-Operating `live` and `pressure-test` enable strategy with default mode **stay_selective**, conservative risk, sample bankroll `$2000` unless you pass `--bankroll`.
+Operating `live` and `pressure-test` enable strategy. Default mode is **stay_selective** and risk **conservative** unless you pass `--mode` / `--risk`. `--bankroll` is the sample allocation unless a paper ledger exists.
 
 Compare modes without placing anything:
 
@@ -171,7 +171,7 @@ python -m golf_offshoot pressure-test --event <espn_id> --bankroll 2000 --mode s
 
 `pressure-test` already runs protect / press / selective on the same snapshot. Empty books and `no_action` are normal when screens fail (posted-price edge, range width, reliability, missing place coupon, live overround).
 
-There is no real-money ticket writer. `--lock-paper` on `live` writes a **mock / paper** book under `data/paper/{espn_id}.json` (gitignored), a paper-book PDF, **and a new batch pack** under `data/exports/packs/{espn_id}_{time}_{run}/`. That pack is the ticket sheet, a bets-made explanation page (why names, why amounts, later sells/reallocates), the full-field ranking table from that run when it exists, `05_bankroll.pdf`, `04_movements.json`, **and `00_full_readout.pdf`**, which concatenates the numbered PDFs into one file. Individual PDFs stay in the folder. Each lock or later `live` with that paper book writes a **new** pack. Do not reuse an old folder as if it were current.
+There is no real-money ticket writer. `--lock-paper` on `live` writes a **mock / paper** book under `data/paper/{espn_id}.json` (gitignored), a paper-book PDF, **and a new batch pack** under `data/exports/packs/{espn_id}_{time}_{run}/`. That pack is the ticket sheet, a bets-made explanation page (why names, why amounts, later sells/reallocates), the ESPN live leaderboard from that run, the full-field ranking table from that run when it exists, `05_bankroll.pdf`, `04_movements.json`, **and `00_full_readout.pdf`**, which concatenates the numbered PDFs into one file. Individual PDFs stay in the folder. Each lock or later `live` with that paper book writes a **new** pack. Do not reuse an old folder as if it were current.
 
 ```bash
 python -m golf_offshoot live --event 401811962 --book bovada --bankroll 250 --lock-paper
@@ -195,11 +195,11 @@ python -m golf_offshoot paper-settle --event 401811962 --refresh
 
 `live`, `paper-ledger`, and `paper-export` **auto-settle** any open paper book when ESPN marks that event **final** with exactly one official winner. They do not invent a winner or a playoff; those stay open. After a finished week is booked, the next `--lock-paper` sizes off the **rolled** bankroll (and subtracts any tickets still open on a not-yet-final event). `paper-settle` is still the explicit command that errors if the field is not official. After a lock exists, `live --bankroll` is ignored in favor of the working bankroll; use `paper-deposit` to add cash.
 
-Every batch pack includes `00_full_readout.pdf` (all numbered PDFs in one file) and `05_bankroll.pdf`: this week’s moves, ticket wins/losses once settled, deposits/withdrawals, and lifetime event P/L.
+Every batch pack includes `00_full_readout.pdf` (all numbered PDFs in one file), `03_leaderboard.pdf` on live snapshots (ESPN place / to-par / thru at that run, not model Win%), and `05_bankroll.pdf`: this week’s moves, ticket wins/losses once settled, deposits/withdrawals, and lifetime event P/L.
 
 `--book bovada` screens tickets against Bovada quotes only (Winner / Winner Live when listed). Use that for this week's FedEx St. Jude Championship: The Odds API has no weekly PGA outright and no Hard Rock golf coupon, so `--book hardrockbet` stays empty. Do not map Hard Rock, DraftKings, or major-winner futures onto this event. `--bankroll` is the sample allocation for conservative caps (20% total / 5% single-name, then risk haircut). It does not change who clears the 3pp screens. Empty strategy output is still the honest result when nobody clears.
 
-**Screens vs live juice, in plain language:** the sportsbook takes a cut on live winner odds, so the number you would actually buy is worse than a fair market. `EdgeW` looks at the fair market after that cut is stripped and can look good. The ticket screen asks whether the model is still at least 3 percentage points more optimistic than `1 / posted odds`. When live juice is heavy, that screen fails even if EdgeW is positive. That is expected. A paper lock still records the best remaining clean names so you can track fake money; it is not clearance to bet.
+**Screens vs live juice, in plain language:** the sportsbook takes a cut on live winner odds, so the number you would actually buy is worse than a fair market. `EdgeW` looks at the fair market after that cut is stripped and can look good. The ticket screen asks whether the model is still at least 3 percentage points more optimistic than `1 / posted odds`. When live juice is heavy, that screen fails even if EdgeW is positive. That is expected. A paper lock still records clean names so you can track fake money: **cleared** tickets get the full single-name unit; **observation** tickets (positive vs-posted but short of 3pp) get 25% of that unit. It is not clearance to bet. The current St. Jude mock book was locked before this split and was not re-sized.
 
 **Same point, technical:** `EdgeW = model_p − implied_fair`. Ticket screen = `model_p − 1/decimal` ≥ `MIN_EDGE_TO_CONSIDER` (0.03). Live winner overround on this event has been ~1.29–1.37.
 
@@ -221,6 +221,24 @@ Live mode:
 
 Rerun when the board or the coupon actually moved. Do not spam `--refresh` to manufacture activity.
 
+### Typed cash-out vs hold (optional)
+
+Bovada’s public Winner Live board is not a cash-out quote. If you have a real Open Bets number (or want to practice with a hypothetical), pass it on that live snapshot:
+
+```bash
+python -m golf_offshoot live --event 401811962 --book bovada --cash-out "Kurt Kitayama=12.40,Tommy Fleetwood=7.10"
+```
+
+Last name or ESPN id also works (`Fleetwood=7.10`). Repeat `--cash-out` for one name at a time. The quote is **not stored** as a standing price; type it again next run if you still have it.
+
+Live strategy then compares **take $X now** vs **hold for the winner payout**: remaining EV ≈ live Win% × stake × lock odds, with a Stay Selective buffer so a quote has to beat the interval, not just scrape past the central number. If the quote wins, advice is EXIT (still never auto-bet). If it loses, advice is HOLD — even if the odds-ratio MTM looks like a “runner.” Applying that EXIT with `--apply-paper` books paper P/L as quote minus stake.
+
+Without `--cash-out`, an applied paper reduce or exit still books an **estimated** cash-out when that snapshot has a live posted decimal: odds-ratio MTM on the sold slice, then a 20% haircut on the MTM gap (benefit if the price shortened, penalty if it lengthened). The ledger note is labeled estimated. It is not a scraped Open Bets number. No live posted coupon → stay at cost (0 P/L). A typed `--cash-out` quote always overrides the estimate.
+
+A cash-out sell does not automatically reallocate. Leftover cash stays cash unless another name clears live screens.
+
+This works on the mock book too. You do not need a live account to pass the flag.
+
 Open the latest PDF from `golf-offshoot/data/exports/` in Edge, Chrome, or Adobe (filename `{espn_id}_{mode}_{run_id}.pdf`). Cursor/VS Code will show `%PDF` binary if you open that file as text — that is not the report. The matching `.html` file is the same table and opens as a normal page.
 
 ### Shadow journaling
@@ -236,6 +254,7 @@ python -m golf_offshoot shadow
 1. Replay `shadow` against the actual finish. An advise that “would have won” is not validation by itself — note posted price, range, reliability, and whether the market even existed.
 2. Read the audit JSON in `data/snapshots/` for that `run_id`.
 3. Do **not** run `calibrate` every week. Recalibration is a research action when the as-of panel is materially stronger (see [CALIBRATION.md](CALIBRATION.md)). Finish-only refits are forbidden. Production stays expert until an artifact says `use_calibrated`.
+4. **After this event is official final (not mid-round):** implement the leftover callout in [PARKED_LEFTOVER_CALLOUT.md](PARKED_LEFTOVER_CALLOUT.md) before the next paper lock. Do not implement it during 401811962.
 
 ---
 
@@ -396,9 +415,8 @@ Consolidated, without softening:
 - Cut rule is ESPN `cutRound` (0 ⇒ no cut). Playoff and 36-hole exceptions are simplified.
 - Live model banks to-par and independent remaining rounds; hole-dampen prevents Round-1 board domination but is not shot-level.
 - Correlation screens are θ proximity / SG-style / cut-risk slices, not a fitted finish copula.
-- Strategy MTM is not an exchange cash-out. Open positions are user-recorded; weekly CLI starts empty.
+- Strategy MTM uses live posted decimal (not de-juiced implied) unless you type `--cash-out` for that snapshot. Open positions are user-recorded; weekly CLI starts empty.
 - HTTP cache under `data/cache/` is for reproducibility; `--refresh` when you need a new coupon, not to hide staleness.
-- `pressure-test` currently overwrites `docs/PRESSURE_TEST_2026_ST_JUDE.md` regardless of event name.
 
 The system will not: place bets, hide interval width, treat print-matching a book as clearance, or modify Gated Progressive Formalization.
 
@@ -430,6 +448,7 @@ The system will not: place bets, hide interval width, treat print-matching a boo
 3. Live rerun after meaningful board/price change.
 4. Shadow review on Monday against actual finishes and **logged** prices.
 5. Keep a personal note of what the feeds missed (WD rumor, pin sheets, weather delay). That note is part of residual judgment, not something to stuff into θ by hand unless you use a documented override and accept the audit trail.
+6. After St. Jude 2026 (`401811962`) is final: leftover callout is the next code change ([PARKED_LEFTOVER_CALLOUT.md](PARKED_LEFTOVER_CALLOUT.md)). Not during this event.
 
 Until opening lines, place markets, or a hold-out-beating freeze exist, the honest posture is **observation-only**.
 
@@ -451,6 +470,7 @@ All commands: `python -m golf_offshoot <command> ...` from `golf-offshoot/`.
 | Add / remove mock cash | `paper-deposit --amount 50` / `paper-withdraw --amount 20` |
 | Settle weekend tickets into the rollover | `live` / `paper-ledger` auto-settle when ESPN is final; or `paper-settle --event <id>` |
 | Apply mock sells/reallocates to the paper book | `python -m golf_offshoot live --event <id> --bankroll 250 --apply-paper` |
+| Live with typed cash-out vs hold | `python -m golf_offshoot live --event <id> --book bovada --cash-out "Name=12.40"` |
 | Pre + live + three strategy modes + markdown report | `python -m golf_offshoot pressure-test --event <id> --bankroll 2000` |
 | More Monte Carlo draws | add `--sims 2500` (pressure-test floors pre at 2000) |
 | Review paper advises | `python -m golf_offshoot shadow` |

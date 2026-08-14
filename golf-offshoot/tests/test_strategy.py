@@ -146,6 +146,35 @@ def test_protect_vs_press_on_runner():
     assert a_prot.kind != a_press.kind or a_prot.suggested_stake_delta != a_press.suggested_stake_delta
 
 
+def test_mark_position_prefers_posted_decimal():
+    f = demo_field()
+    pipe = _pipe()
+    result = pipe.run(demo_tournament(), f, market_quotes=demo_odds(f), persist=False)
+    row = result.ranked[0]
+    row = row.model_copy(
+        update={
+            "posted_odds_by_bet": {**dict(row.posted_odds_by_bet), "win": 8.0},
+            "market_implied_by_bet": {**dict(row.market_implied_by_bet), "win": 0.20},
+        }
+    )
+    pos = StrategyPosition(
+        position_id=new_id("pos"),
+        player_id=row.player_id,
+        player_name=row.name,
+        bet_type=BetType.WIN,
+        stake=8.0,
+        decimal_odds=16.0,
+        entry_edge=0.04,
+        entry_model_p=0.08,
+        user_recorded=True,
+    )
+    mark = mark_position(pos, row)
+    assert mark.live_decimal_odds == 8.0
+    assert abs(mark.mtm_value - 16.0) < 1e-9
+    assert mark.live_posted_edge is not None
+    assert abs(mark.live_posted_edge - (mark.live_model_p - 0.125)) < 1e-9
+
+
 def test_collapsed_edge_exits():
     f = demo_field()
     pipe = _pipe()

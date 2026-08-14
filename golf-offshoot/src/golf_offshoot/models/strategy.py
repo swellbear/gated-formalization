@@ -110,6 +110,7 @@ class PositionMark(BaseModel):
     entry_market_p: float | None
     live_market_p: float | None
     live_decimal_odds: float | None
+    live_posted_edge: float | None = None
     stake: float
     mtm_value: float
     unrealized_pnl: float
@@ -118,6 +119,15 @@ class PositionMark(BaseModel):
     is_runner: bool
     range_width: float
     reliability: float
+    live_model_low: float | None = None
+    live_model_high: float | None = None
+    cashout_quote: float | None = None
+    hold_expected_payout: float | None = None
+    hold_expected_payout_low: float | None = None
+    hold_expected_payout_high: float | None = None
+    cashout_threshold: float | None = None
+    cashout_beats_hold: bool | None = None
+    mtm_is_cashout: bool = False
 
 
 class ConcentrationSlice(BaseModel):
@@ -144,6 +154,9 @@ class StrategyAction(BaseModel):
     uncertainty_warning: str | None = None
     never_auto_bet: bool = True
     requires_user_confirmation: bool = True
+    cashout_quote: float | None = None
+    hold_expected_payout: float | None = None
+    cashout_threshold: float | None = None
 
 
 class StrategyStatusSummary(BaseModel):

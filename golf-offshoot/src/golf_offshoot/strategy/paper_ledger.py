@@ -164,6 +164,61 @@ def record_withdrawal(amount: float, *, note: str = "", event_id: str = "") -> P
     return ledger
 
 
+def cashout_recorded_for(movement_id: str) -> bool:
+    """True if this paper movement already posted a cash-out ledger row."""
+    if not movement_id:
+        return False
+    from golf_offshoot.strategy.cashout import (
+        estimated_cashout_ledger_token,
+        typed_cashout_ledger_token,
+    )
+
+    tokens = (
+        estimated_cashout_ledger_token(movement_id),
+        typed_cashout_ledger_token(movement_id),
+    )
+    ledger = load_ledger()
+    for entry in ledger.entries:
+        if entry.kind != "cashout":
+            continue
+        note = entry.note or ""
+        if any(token in note for token in tokens):
+            return True
+    return False
+
+
+def record_cashout(
+    *,
+    stake: float,
+    cashout: float,
+    event_id: str = "",
+    event_name: str = "",
+    player_name: str = "",
+    note: str = "",
+) -> PaperLedger:
+    """Book P/L from a cash-out. Stake was already inside ledger bankroll at cost.
+
+    `cashout` may be a typed Open Bets quote or an estimated offer. The note
+    should include a movement token so the same sell cannot post twice.
+    """
+    pnl = round(float(cashout) - float(stake), 2)
+    ledger = load_ledger()
+    if not ledger.entries:
+        return ledger
+    ledger.betting_pnl = round(ledger.betting_pnl + pnl, 2)
+    _post(
+        ledger,
+        "cashout",
+        pnl,
+        event_id=event_id,
+        event_name=event_name,
+        player_name=player_name,
+        note=note or f"paper cash-out ${float(cashout):.2f} vs stake ${float(stake):.2f}",
+    )
+    save_ledger(ledger)
+    return ledger
+
+
 def event_already_settled(ledger: PaperLedger, event_id: str) -> bool:
     return any(w.event_id == str(event_id) for w in ledger.events)
 

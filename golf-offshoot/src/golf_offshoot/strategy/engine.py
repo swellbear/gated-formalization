@@ -40,6 +40,7 @@ def run_strategy(
     run_mode: RunMode,
     field: FieldSnapshot | None = None,
     book: PortfolioState | None = None,
+    cashout_quotes: dict[str, float] | None = None,
 ) -> StrategyRecommendation:
     if not config.enabled:
         return disabled_recommendation(config, run_mode)
@@ -49,6 +50,11 @@ def run_strategy(
     notes: list[str] = []
     if cooling:
         notes.append("Cooling-off after sharp drawdown — no new risk")
+    if cashout_quotes:
+        notes.append(
+            "User-typed cash-out quotes used for this snapshot. Not scraped. "
+            "Not a standing price. Take vs hold uses remaining winner EV."
+        )
 
     if run_mode == RunMode.PRE_TOURNAMENT and not book.positions:
         actions, proposed = build_pre_tournament(rows, config, field)
@@ -71,7 +77,9 @@ def run_strategy(
             notes=notes,
         )
 
-    actions, proposed, marks = live_manage(rows, book, config, field, cooling)
+    actions, proposed, marks = live_manage(
+        rows, book, config, field, cooling, cashout_quotes=cashout_quotes
+    )
     conc = concentrations(book.positions, {r.player_id: r for r in rows}, field)
     st = status_summary(book, marks, conc, actions, config, cooling)
     return StrategyRecommendation(
@@ -121,9 +129,16 @@ def format_recommendation(rec: StrategyRecommendation) -> str:
             continue
         extra = f" d{a.suggested_stake_delta:+.2f}" if a.suggested_stake_delta else ""
         warn = f" warn: {a.uncertainty_warning}" if a.uncertainty_warning else ""
+        cash = ""
+        if a.cashout_quote is not None:
+            hold = f"{a.hold_expected_payout:.2f}" if a.hold_expected_payout is not None else "n/a"
+            bar = f"{a.cashout_threshold:.2f}" if a.cashout_threshold is not None else "n/a"
+            cash = f" cash-out ${a.cashout_quote:.2f} vs hold EV ${hold} sell-bar ${bar}"
         lines.append(
-            f"  {a.kind.value:11} {a.player_name or a.player_id} {a.bet_type.value}{extra} -- {a.reason}{warn}"
+            f"  {a.kind.value:11} {a.player_name or a.player_id} {a.bet_type.value}{extra} -- {a.reason}{cash}{warn}"
         )
     if rec.cooling_off:
         lines.append("  (cooling-off: ADD / NEW_BET suppressed)")
+    for n in rec.notes:
+        lines.append(f"  note: {n}")
     return "\n".join(lines)

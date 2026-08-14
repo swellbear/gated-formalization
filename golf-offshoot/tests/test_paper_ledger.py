@@ -71,7 +71,7 @@ def test_settle_win_and_loss_updates_lifetime(tmp_path, monkeypatch):
         bankroll=250,
     )
     rec = lock_paper_positions(rows, cfg, event_id="401811962", event_name="St Jude", run_id="run-a")
-    assert rec.book.open_exposure == 17.50
+    assert rec.book.open_exposure == 10.94  # cleared 8.75 + observation 2.19
     ledger = load_ledger()
     assert ledger.bankroll == 250
     finishes = {
@@ -85,9 +85,9 @@ def test_settle_win_and_loss_updates_lifetime(tmp_path, monkeypatch):
         winner_ids=["kita"],
         event_name="St Jude",
     )
-    # Kitayama 8.75 * 18 profit = 157.50; Fleetwood -8.75; net +148.75
-    assert week.betting_pnl == 148.75
-    assert ledger.bankroll == 398.75
+    # Kitayama 8.75 * 18 profit = 157.50; Fleetwood -2.19; net +155.31
+    assert week.betting_pnl == 155.31
+    assert ledger.bankroll == 405.31
     assert rec.settled_at is not None
     assert rec.book.positions == []
     assert any(t.won and t.player_name == "Kurt Kitayama" for t in week.tickets)
@@ -187,7 +187,7 @@ def _st_jude_lock(tmp_path, monkeypatch):
 
 def test_auto_settle_finished_then_next_lock_uses_rolled_caps(tmp_path, monkeypatch):
     rec = _st_jude_lock(tmp_path, monkeypatch)
-    assert rec.book.open_exposure == 17.50
+    assert rec.book.open_exposure == 10.94
     finished = EventInspect(
         completed=True,
         finishes={"kita": (1, "Kurt Kitayama"), "fleet": (12, "Tommy Fleetwood")},
@@ -200,8 +200,8 @@ def test_auto_settle_finished_then_next_lock_uses_rolled_caps(tmp_path, monkeypa
     )
     assert skipped == []
     assert len(settled) == 1
-    assert settled[0][0].bankroll == 398.75
-    assert working_bankroll(except_event_id="next-event") == 398.75
+    assert settled[0][0].bankroll == 405.31
+    assert working_bankroll(except_event_id="next-event") == 405.31
     nxt = lock_paper_positions(
         [_row("p2", "Next Name", 0.15, edge=0.05, posted=10.0)],
         _cfg(250),
@@ -209,8 +209,8 @@ def test_auto_settle_finished_then_next_lock_uses_rolled_caps(tmp_path, monkeypa
         event_name="Next Week",
         run_id="run-b",
     )
-    assert nxt.bankroll == 398.75
-    assert nxt.book.positions[0].stake == 13.96  # 3.5% of 398.75
+    assert nxt.bankroll == 405.31
+    assert nxt.book.positions[0].stake == 14.19  # 3.5% of 405.31
 
 
 def test_unfinished_open_book_reserves_cash_from_next_lock(tmp_path, monkeypatch):
@@ -227,7 +227,7 @@ def test_unfinished_open_book_reserves_cash_from_next_lock(tmp_path, monkeypatch
     )
     assert settled == []
     assert skipped
-    assert working_bankroll(except_event_id="next-event") == 232.50
+    assert working_bankroll(except_event_id="next-event") == 239.06
     nxt = lock_paper_positions(
         [_row("p2", "Next Name", 0.15, edge=0.05, posted=10.0)],
         _cfg(250),
@@ -235,8 +235,8 @@ def test_unfinished_open_book_reserves_cash_from_next_lock(tmp_path, monkeypatch
         event_name="Next Week",
         run_id="run-b",
     )
-    assert nxt.bankroll == 232.50
-    assert nxt.book.positions[0].stake == 8.14  # 3.5% of 232.50
+    assert nxt.bankroll == 239.06
+    assert nxt.book.positions[0].stake == 8.37  # 3.5% of 239.06
 
 
 def test_playoff_does_not_auto_settle(tmp_path, monkeypatch):
@@ -254,4 +254,4 @@ def test_playoff_does_not_auto_settle(tmp_path, monkeypatch):
     assert settled == []
     assert any("exactly one official winner" in why for _rec, why in skipped)
     assert load_ledger().bankroll == 250
-    assert working_bankroll(except_event_id="next-event") == 232.50
+    assert working_bankroll(except_event_id="next-event") == 239.06

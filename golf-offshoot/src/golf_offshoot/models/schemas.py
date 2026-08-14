@@ -158,6 +158,9 @@ class PlayerInputs(BaseModel):
     factors: dict[str, FreeParameterState] = Field(default_factory=dict)
     live_score_to_par: float | None = None
     live_holes_completed: int = 0
+    live_place: int | None = None
+    live_place_display: str = ""
+    live_status_name: str = ""
     live_made_cut: bool | None = None
     withdrawn: bool = False
     source_qualities: dict[str, DataQuality] = Field(default_factory=dict)
@@ -265,6 +268,13 @@ class PlayerOutput(BaseModel):
     flags: list[str] = Field(default_factory=list)
     explain: ExplainabilityReport | None = None
     decision: DecisionAdvice | None = None
+    live_score_to_par: float | None = None
+    live_holes_completed: int = 0
+    live_place: int | None = None
+    live_place_display: str = ""
+    live_status_name: str = ""
+    live_made_cut: bool | None = None
+    withdrawn: bool = False
 
 
 class DecisionAdvice(BaseModel):

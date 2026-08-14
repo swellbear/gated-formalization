@@ -53,6 +53,13 @@ STRATEGY_EDGE_COLLAPSE_RATIO = 0.30
 STRATEGY_EDGE_IMPROVE_ABS = 0.015
 STRATEGY_WIDE_RANGE_BLOCK = 0.18
 STRATEGY_LOW_RELIABILITY_BLOCK = 0.40
+# User-typed cash-out must beat remaining win EV by this fraction (Stay Selective).
+STRATEGY_CASHOUT_BUFFER_FRAC = 0.10
+# Paper lock: names that fail the 3pp posted screen but still have +posted_edge.
+PAPER_OBSERVATION_STAKE_FRAC = 0.25
+# Paper reduce/exit without a typed Open Bets quote: keep this fraction of the
+# odds-ratio MTM gap (benefit or penalty). Labeled estimated; never scraped.
+PAPER_ESTIMATED_CASHOUT_HAIRCUT = 0.20
 
 # Market
 DEFAULT_OVERROUND_METHOD = "proportional"
