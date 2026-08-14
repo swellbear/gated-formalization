@@ -1,12 +1,14 @@
 [project]
 name = "golf-offshoot"
-version = "0.2.0"
+version = "0.7.0"
 description = "Uncertainty-aware golf analysis and betting-decision support. Separate from Gated Progressive Formalization."
 readme = "README.md"
 requires-python = ">=3.10"
 dependencies = [
   "numpy>=1.26",
   "pydantic>=2.5",
+  "fpdf2>=2.8",
+  "pypdf>=4.0",
 ]
 
 [project.optional-dependencies]

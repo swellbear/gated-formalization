@@ -27,7 +27,7 @@ Catalog in `free_parameters/catalog.py` (required eight families plus structural
 
 ## E. Bayesian engine (ranges and evidence strength)
 
-`θ` prior from long-term talent. Updates: `α × quality × constrainingability × evidence × correlation-discount`. Weak quality cannot match strong quality (tested). Variance stays wide when data are thin. Same θ drives MC Make Cut / T20 / T10 / T5 / Win with percentile-style ranges, leave-one-factor decomposition, and optimistic/pessimistic scenarios on open majors. `α` is expert-initialized; learning exposes a BO/ARD hook.
+`θ` prior from long-term talent. Updates: `α × quality × constrainingability × evidence × correlation-discount`. Weak quality cannot match strong quality (tested). Variance stays wide when data are thin. Same θ drives MC Make Cut / T20 / T10 / T5 / Win with percentile-style ranges, leave-one-factor decomposition, and optimistic/pessimistic scenarios on open majors. `α` starts expert-initialized; `calibration/` fits a first-pass BO+ARD vector on pre-event ESPN history and freezes it under `data/calibration/`.
 
 ## F. Ranking + market edge + explainability
 

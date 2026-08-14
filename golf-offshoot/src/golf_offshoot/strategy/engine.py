@@ -119,9 +119,11 @@ def format_recommendation(rec: StrategyRecommendation) -> str:
     for a in rec.actions:
         if a.kind == StrategyActionKind.NO_ACTION:
             continue
-        extra = f" Δ{a.suggested_stake_delta:+.2f}" if a.suggested_stake_delta else ""
-        warn = f" ⚠ {a.uncertainty_warning}" if a.uncertainty_warning else ""
-        lines.append(f"  {a.kind.value:11} {a.player_name or a.player_id} {a.bet_type.value}{extra} — {a.reason}{warn}")
+        extra = f" d{a.suggested_stake_delta:+.2f}" if a.suggested_stake_delta else ""
+        warn = f" warn: {a.uncertainty_warning}" if a.uncertainty_warning else ""
+        lines.append(
+            f"  {a.kind.value:11} {a.player_name or a.player_id} {a.bet_type.value}{extra} -- {a.reason}{warn}"
+        )
     if rec.cooling_off:
         lines.append("  (cooling-off: ADD / NEW_BET suppressed)")
     return "\n".join(lines)

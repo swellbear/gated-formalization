@@ -20,7 +20,7 @@ See [`STRATEGY_LAYER.md`](STRATEGY_LAYER.md). Default **off**. When enabled, pre
 
 ## Live / in-tournament
 
-`pipeline.rerun_live` sets `RunMode.LIVE`, unparks `live_position`, and the simulator blends current to-par / holes completed into remaining-round noise. `diff_runs` writes what changed vs the previous audit.
+`pipeline.rerun_live` sets `RunMode.LIVE`, unparks `live_position` (hole-dampened evidence + quality), and the simulator banks current to-par while drawing remaining holes with `σ √remaining_rounds`. `diff_runs` writes what changed vs the previous audit.
 
 ## Learning
 

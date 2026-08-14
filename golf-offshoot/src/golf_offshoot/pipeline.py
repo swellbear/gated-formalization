@@ -8,6 +8,7 @@ from __future__ import annotations
 from pathlib import Path
 
 from golf_offshoot.audit.journal import build_audit, data_snapshot_hash, diff_runs, save_audit
+from golf_offshoot.audit.shadow import append_shadow_advises
 from golf_offshoot.bayesian_engine.engine import BayesianEngine
 from golf_offshoot.bayesian_engine.simulate import SimConfig
 from golf_offshoot.clustering.similars import apply_player_borrow, comparable_borrows
@@ -15,8 +16,10 @@ from golf_offshoot.decision.layer import advise_field
 from golf_offshoot.field_effects.interaction import apply_field_interactions
 from golf_offshoot.flags.bias import favorite_longshot_flags, flag_player
 from golf_offshoot.free_parameters.board import build_player_board
+from golf_offshoot.market.coverage import market_coverage_report
 from golf_offshoot.market.odds import build_market_snapshot
-from golf_offshoot.models.enums import BetType, RunMode
+from golf_offshoot.models.enums import BetType, RunMode, SourceKind
+from golf_offshoot.data_feeds.base import MockOnOperatingPathError
 from golf_offshoot.models.schemas import (
     AuditRecord,
     FieldSnapshot,
@@ -56,6 +59,8 @@ class GolfOffshootPipeline:
             # re-apply field_interaction after rebuild
         apply_field_interactions(field.players, tournament.course)
         field.notes = (field.notes + f" borrows={len(borrows)}").strip()
+        if field.operating:
+            _assert_no_mocks(field)
         return field
 
     def apply_overrides(self, field: FieldSnapshot, overrides: list[HumanOverride]) -> None:
@@ -128,6 +133,8 @@ class GolfOffshootPipeline:
             odds = {}
             if market:
                 for q in market.quotes:
+                    if q.line_role == "opening":
+                        continue
                     if q.bet_type == BetType.WIN and q.decimal_odds:
                         odds[q.player_id] = q.decimal_odds
             advice = {a.player_id: a for a in advise_field(ranked, BetType.WIN, odds)}
@@ -159,14 +166,60 @@ class GolfOffshootPipeline:
             alpha=self.engine.alpha,
         )
         audit.strategy = strategy
+        if field.inventory:
+            audit.extra["source_inventory"] = [i.model_dump(mode="json") for i in field.inventory]
+        audit.extra["operating"] = bool(field.operating)
+        if field.extra:
+            audit.extra.update(field.extra)
+        if market:
+            audit.extra["overround"] = market.overround
+            audit.extra["odds_quotes"] = len([q for q in market.quotes if q.line_role != "opening"])
+            audit.extra["opening_quotes"] = len([q for q in market.quotes if q.line_role == "opening"])
+            audit.extra["movement_vs_open_n"] = len(market.movement_vs_open)
+        sg_active = sum(
+            1
+            for p in field.players
+            if p.sg.quality is not None and not p.sg.quality.missing
+        )
+        recent_feat = sum(
+            1
+            for p in field.players
+            if p.recent_sg is not None and p.recent_sg.quality is not None and not p.recent_sg.quality.missing
+        )
+        recent_consumed = 0
+        for p in field.players:
+            st = p.factors.get("recent_form")
+            src = (st.quality.source_name if st and st.quality else "") or ""
+            if "event_only" in src or "datagolf" in src:
+                recent_consumed += 1
+        recent_delta = 0
+        for row in ranked:
+            if not row.explain:
+                continue
+            for c in row.explain.contributions:
+                if c.factor_id == "recent_form" and abs(c.delta_theta) > 1e-9:
+                    recent_delta += 1
+                    break
+        audit.extra["sg_players"] = sg_active
+        audit.extra["sg_field"] = len(field.players)
+        audit.extra["recent_sg_feature_players"] = recent_feat
+        audit.extra["recent_form_board_from_asof"] = recent_consumed
+        audit.extra["recent_form_delta_theta_players"] = recent_delta
+        if market:
+            audit.extra["market_coverage"] = market_coverage_report(
+                market.quotes, len(field.players)
+            )
+            lag_notes = ""
+            for item in field.inventory:
+                if item.field_name == "market_odds":
+                    lag_notes = item.notes
+                    break
+            audit.extra["odds_freshness"] = lag_notes
         if previous:
             audit.delta_notes = diff_runs(previous, audit)
             warnings.extend(audit.delta_notes[:12])
 
-        if persist and self.snapshot_dir:
-            save_audit(audit, self.snapshot_dir)
-
-        return TournamentRunResult(
+        result = TournamentRunResult(
             run_id=audit.run_id,
             tournament=tournament,
             mode=field.mode,
@@ -177,6 +230,12 @@ class GolfOffshootPipeline:
             never_auto_bet=True,
             strategy=strategy,
         )
+        if persist and field.operating:
+            shadow_rows = append_shadow_advises(result, market=market)
+            audit.extra["shadow_advises"] = len(shadow_rows)
+        if persist and self.snapshot_dir:
+            save_audit(audit, self.snapshot_dir)
+        return result
 
     def rerun_live(
         self,
@@ -196,3 +255,23 @@ class GolfOffshootPipeline:
             open_book=open_book,
             strategy_config=strategy_config,
         )
+
+
+def _assert_no_mocks(field: FieldSnapshot) -> None:
+    def _chk(q, ctx: str) -> None:
+        if q is None:
+            return
+        if q.source_kind == SourceKind.MOCK or q.role.value == "mock":
+            raise MockOnOperatingPathError(f"{ctx}: {q.source_name}")
+
+    for item in field.inventory:
+        if item.source_kind == SourceKind.MOCK:
+            raise MockOnOperatingPathError(f"inventory {item.field_name}")
+    for p in field.players:
+        _chk(p.sg.quality, f"{p.player.player_id}.sg")
+        if p.recent_sg:
+            _chk(p.recent_sg.quality, f"{p.player.player_id}.recent_sg")
+        for k, q in p.source_qualities.items():
+            _chk(q, f"{p.player.player_id}.{k}")
+        for fid, st in p.factors.items():
+            _chk(st.quality, f"{p.player.player_id}.{fid}")

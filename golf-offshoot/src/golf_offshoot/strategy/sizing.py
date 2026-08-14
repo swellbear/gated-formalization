@@ -83,7 +83,14 @@ def suggested_stake(
     )
     cap = bankroll * scaled_single_cap(config)
     stake = min(raw, cap, max(0.0, remaining_capacity))
-    if stake < 0.002 * bankroll:
+    min_unit = 0.002 * bankroll
+    if kelly > 0 and 0 < stake < min_unit:
+        # Conservative haircuts can crush a real posted-price edge into dust.
+        # Keep a minimum advisory unit so CONSIDER does not silently vanish.
+        return float(min(min_unit, max(0.0, remaining_capacity))), (
+            "Kelly is tiny after uncertainty haircut; sized to minimum advisory unit"
+        )
+    if stake < min_unit:
         return 0.0, "Suggested size rounds to essentially zero"
     return float(stake), warn
 

@@ -6,4 +6,16 @@ pytest-cache-files-*/
 dist/
 build/
 data/snapshots/*.json
+data/cache/
+data/shadow/*.jsonl
+data/paper/*.json
+data/openings/*.json
+data/exports/*.pdf
+data/exports/*.html
+data/exports/*.txt
+data/exports/_preview/
+data/exports/packs/
 .venv/
+.env
+.env.*
+!.env.example

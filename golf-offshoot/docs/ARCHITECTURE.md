@@ -51,8 +51,10 @@ post-event learning (calibration, override eval, α update hook)
 ## Modes
 
 - **Pre-tournament:** live-only factors are parked.
-- **Live:** `live_position` / tee-pairing enter the board; MC conditions on holes already played.
+- **Live:** `live_position` / tee-pairing enter the board (hole-dampened); MC banks observed to-par and simulates remaining holes only.
 
 ## What is mocked today
 
-Vendor ShotLink / Data Golf / books / injury wires are **interfaces + mocks**. Swap a `DataFeed` implementation without changing the engine.
+**Operating path (`ingest`, `calibrate`, `pressure-test`, `live`): no mocks.** Missing vendors are labeled `unavailable`.
+
+Mocks exist only for `python -m golf_offshoot demo` (explicit banner) and unit tests.

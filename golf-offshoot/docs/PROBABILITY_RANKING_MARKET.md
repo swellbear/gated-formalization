@@ -15,9 +15,11 @@ CLI table columns: rank, name, Win range, T10, Cut, Win edge, reliability, flags
 ## Market
 
 - American → decimal → raw implied
-- Proportional overround removal → `implied_fair`
-- Edge = model_p − fair implied (positive: model hotter than the market)
+- Proportional overround removal → `implied_fair` (`implied_raw / Σ implied_raw`)
+- Displayed edge = model_p − fair implied (positive: model hotter than the de-juiced book)
+- Actionable +EV also requires model_p > 1/posted decimal (decision layer)
 - Movement vs a previous snapshot when provided
+- Missing names are omitted, never filled
 
 ## Explainability
 

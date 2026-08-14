@@ -42,7 +42,7 @@ def current_model_record(alpha: dict[str, float] | None = None) -> ModelVersionR
         family=MODEL_FAMILY,
         weight_hash=weight_hash(a),
         config_hash=config_hash({"alpha": a}),
-        notes="expert-initialized weights; ARD/BO not yet fitted",
+        notes="weights may be expert-initialized or a frozen calibration artifact",
     )
 
 
@@ -84,6 +84,33 @@ def save_audit(record: AuditRecord, directory: Path) -> Path:
 
 def load_audit(path: Path) -> AuditRecord:
     return AuditRecord.model_validate_json(path.read_text(encoding="utf-8"))
+
+
+def latest_pre_audit(tournament_id: str, directory: Path | None = None) -> AuditRecord | None:
+    """Most recent pre-tournament snapshot for this ESPN/event id. Not invented if missing."""
+    from pydantic import ValidationError
+
+    from golf_offshoot.data_feeds.http import package_data_dir
+
+    d = directory or (package_data_dir() / "snapshots")
+    if not d.exists():
+        return None
+    want = str(tournament_id or "")
+    if not want:
+        return None
+    best: AuditRecord | None = None
+    for path in d.glob("*.json"):
+        try:
+            rec = load_audit(path)
+        except (OSError, ValueError, KeyError, TypeError, ValidationError):
+            continue
+        if str(rec.tournament_id) != want:
+            continue
+        if rec.mode != RunMode.PRE_TOURNAMENT:
+            continue
+        if best is None or rec.as_of > best.as_of:
+            best = rec
+    return best
 
 
 def diff_runs(previous: AuditRecord, current: AuditRecord) -> list[str]:

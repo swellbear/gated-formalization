@@ -44,6 +44,32 @@ Horizons are forced **coherent**: Win ≤ T5 ≤ T10 ≤ T20 ≤ Make Cut.
 
 Leave-one-factor-out shares attribute Win-range width. Optimistic/pessimistic scenarios push major *unconstrained* factors and map Δθ through a field softmax so the user sees how open parameters could move Win.
 
+## Live remaining holes
+
+When `RunMode.LIVE`:
+
+**Score card (MC):**
+
+```
+total = current_to_par + (−θ × remaining_rounds) + N(0, σ √remaining_rounds)
+remaining_rounds = (H − h) / 18
+H = n_rounds × 18
+```
+
+Completed holes are not resimulated.
+
+**Skill nudge (`live_position`):**
+
+```
+raw = −score_to_par / 3
+dampen = (h/H)×(h/18)   if h < 18
+dampen = h/H            if h ≥ 18
+evidence = raw × dampen
+quality = 0.30 + 0.65 × (h/H)   (capped at 0.95)
+```
+
+A −6 through 6 holes (`H=72`) has `dampen ≈ 0.028`, not the old undampened evidence of 2.0 that produced ~26% Win for an early leader.
+
 ## Field MC note
 
-Cut place is min(tournament.cut_place, field-scaled default) so a 20-player demo is not using a PGA 65-cut against 20 names.
+Cut place is the tournament's ESPN cut (or `cut_place` on the object). Events with `has_cut=False` / `cut_after=0` skip the 36-hole cut. The demo sets `cut_place=10` for a 20-player field; the engine no longer silently halves the field.

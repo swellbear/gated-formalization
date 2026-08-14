@@ -12,15 +12,18 @@ from golf_offshoot.models.enums import CourseType
 from golf_offshoot.models.schemas import Course, PlayerInputs
 
 
-def _profile(p: PlayerInputs) -> dict[str, float]:
+def _profile(p: PlayerInputs) -> dict[str, float | None]:
     sg = p.sg
+    sg_ok = sg.quality is not None and not sg.quality.missing
+    dist = sg.driving_distance_yd
+    acc = sg.driving_accuracy_pct
     return {
-        "distance": ((sg.driving_distance_yd or 295.0) - 295.0) / 12.0,
-        "accuracy": ((sg.driving_accuracy_pct or 60.0) - 60.0) / 8.0,
-        "approach": sg.app,
-        "putting": sg.putt,
-        "arg": sg.arg,
-        "ott": sg.ott,
+        "distance": None if dist is None else (dist - 295.0) / 12.0,
+        "accuracy": None if acc is None else (acc - 60.0) / 8.0,
+        "approach": sg.app if sg_ok else None,
+        "putting": sg.putt if sg_ok else None,
+        "arg": sg.arg if sg_ok else None,
+        "ott": sg.ott if sg_ok else None,
     }
 
 
@@ -59,17 +62,26 @@ def field_interaction_adjustments(
     """Return Δθ per player_id from relative-to-field × course demand × crowding."""
     if len(field) < 4:
         return {p.player.player_id: 0.0 for p in field}
-    keys = ["distance", "accuracy", "approach", "putting", "arg", "ott"]
-    mats = np.array([[_profile(p)[k] for k in keys] for p in field], dtype=float)
+    profiles = [_profile(p) for p in field]
+    keys_all = ["distance", "accuracy", "approach", "putting", "arg", "ott"]
+    keys = []
+    for k in keys_all:
+        n_have = sum(pr[k] is not None for pr in profiles)
+        if n_have >= max(4, int(0.5 * len(field))):
+            keys.append(k)
+    if not keys:
+        return {p.player.player_id: 0.0 for p in field}
+    mats = np.array(
+        [[float(pr[k]) if pr[k] is not None else 0.0 for k in keys] for pr in profiles],
+        dtype=float,
+    )
     mean = mats.mean(axis=0)
     std = mats.std(axis=0)
     std = np.where(std < 1e-6, 1.0, std)
-    # crowding high when dispersion is low
     crowding = np.exp(-std)
     demand = course_demand(course)
-    dvec = np.array([demand[k] for k in keys])
+    dvec = np.array([demand.get(k, 0.4) for k in keys])
     rel = mats - mean
-    # extra trait value shrinks when everyone has it
     adj = (rel * dvec * (1.0 - 0.55 * crowding)).sum(axis=1) * scale
     return {field[i].player.player_id: float(adj[i]) for i in range(len(field))}
 
@@ -81,21 +93,34 @@ def apply_field_interactions(field: list[PlayerInputs], course: Course) -> dict[
 
     adjs = field_interaction_adjustments(field, course)
     now = datetime.now(timezone.utc)
+    n_skill = sum(
+        1
+        for p in field
+        if (p.sg.quality is not None and not p.sg.quality.missing)
+        or p.sg.driving_distance_yd is not None
+        or p.sg.driving_accuracy_pct is not None
+    )
+    usable = n_skill >= 4
+    from golf_offshoot.models.enums import SourceKind
+
     for p in field:
         delta = adjs.get(p.player.player_id, 0.0)
         p.factors["field_interaction"] = FreeParameterState(
             factor_id="field_interaction",
-            status=FactorStatus.CONSTRAINED,
-            standardized_evidence=float(np.clip(delta / 0.22, -3, 3)),
+            status=FactorStatus.CONSTRAINED if usable else FactorStatus.UNCONSTRAINED,
+            standardized_evidence=float(np.clip(delta / 0.22, -3, 3)) if usable else 0.0,
             quality=DataQuality(
-                score=0.70,
+                score=0.70 if usable else 0.0,
                 source_name="field_composition",
                 as_of=now,
-                n_observations=len(field),
+                n_observations=len(field) if usable else 0,
+                missing=not usable,
+                source_kind=SourceKind.DERIVED_FROM_REAL if usable else SourceKind.UNAVAILABLE,
+                notes="relative-to-field from observed traits only; no SG fill-in",
             ),
-            n_obs=len(field),
+            n_obs=len(field) if usable else 0,
             importance=0.18,
-            open_question="",
-            notes=f"relative-to-field Δθ proxy {delta:+.3f}",
+            open_question="" if usable else "field interaction parked: no real skill-mix coverage",
+            notes=f"relative-to-field Δθ proxy {delta:+.3f}" if usable else "unavailable",
         )
     return adjs

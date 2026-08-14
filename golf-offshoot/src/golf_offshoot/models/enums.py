@@ -42,6 +42,21 @@ class DataRole(str, Enum):
     MANUAL = "manual"
 
 
+class SourceKind(str, Enum):
+    """Provenance label for every important ingested field.
+
+    MOCK is allowed only in unit tests and explicitly labeled offline demos.
+    The operating path may never emit MOCK, and must not relabel mocks as live.
+    """
+
+    REAL_LIVE = "real_live"
+    REAL_HISTORICAL = "real_historical"
+    DERIVED_FROM_REAL = "derived_from_real"
+    UNAVAILABLE = "unavailable"
+    MOCK = "mock"
+    UNSPECIFIED = "unspecified"  # legacy test helpers only
+
+
 class FactorStatus(str, Enum):
     UNCONSTRAINED = "unconstrained"
     PARTIALLY_CONSTRAINED = "partially_constrained"

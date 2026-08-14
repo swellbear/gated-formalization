@@ -63,6 +63,16 @@ def advise_bet(
         reasons.append("no market quote to compute edge")
     elif edge < MIN_EDGE_TO_CONSIDER:
         reasons.append(f"edge {edge:+.3f} below consider threshold {MIN_EDGE_TO_CONSIDER}")
+    posted_p = None
+    posted_edge = None
+    if decimal_odds is not None and decimal_odds > 1.0:
+        posted_p = 1.0 / decimal_odds
+        posted_edge = hp.central - posted_p
+        if posted_edge < MIN_EDGE_TO_CONSIDER:
+            reasons.append(
+                f"posted-price edge {posted_edge:+.3f} (model {hp.central:.3f} vs 1/odds {posted_p:.3f}) "
+                f"below {MIN_EDGE_TO_CONSIDER} — de-juiced edge is not a ticket"
+            )
     if width > MAX_RANGE_WIDTH_TO_CONSIDER:
         reasons.append(f"win/horizon range width {width:.3f} is wide")
     if rel < MIN_RELIABILITY_TO_CONSIDER:
@@ -71,15 +81,16 @@ def advise_bet(
         reasons.append("too correlated with existing book")
 
     ok_edge = edge is not None and edge >= MIN_EDGE_TO_CONSIDER
+    ok_posted = posted_edge is None or posted_edge >= MIN_EDGE_TO_CONSIDER
     ok_width = width <= MAX_RANGE_WIDTH_TO_CONSIDER
     ok_rel = rel >= MIN_RELIABILITY_TO_CONSIDER
     ok_corr = portfolio_corr_max is None or portfolio_corr_max <= MAX_PORTFOLIO_CORR_TO_STACK
     ok_flags = "thin_sample_overconfidence" not in row.flags
 
-    if ok_edge and ok_width and ok_rel and ok_corr and ok_flags:
+    if ok_edge and ok_posted and ok_width and ok_rel and ok_corr and ok_flags:
         action = DecisionAction.STRONG_CONSIDER if edge and edge >= 2 * MIN_EDGE_TO_CONSIDER else DecisionAction.CONSIDER
         reasons.append("passes decision screens — still requires user confirmation")
-    elif ok_edge and (ok_width or ok_rel):
+    elif ok_edge and ok_posted and (ok_width or ok_rel):
         reasons.append("mixed screens; default pass unless you take residual judgment")
 
     kelly = 0.0

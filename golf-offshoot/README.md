@@ -23,8 +23,16 @@ pytest
 python -m golf_offshoot demo --sims 1500
 python -m golf_offshoot explain --player p01
 python -m golf_offshoot strategy --bankroll 2000 --mode stay_selective
-python -m golf_offshoot strategy --live --mode protect_profits
+python -m golf_offshoot ingest                 # real ESPN field (no mocks)
+python -m golf_offshoot calibrate              # historical BO+ARD, pre-event features only
+python -m golf_offshoot pressure-test
+python -m golf_offshoot live
+python -m golf_offshoot shadow              # review paper-observation advises
 ```
+
+The `demo` / `explain` / `strategy` commands print an **OFFLINE DEMO — MOCK DATA** banner. They are not the operating path.
+
+**Weekly use:** [Operator Guide](docs/OPERATOR_GUIDE.md) — how to run ingest/live, read ranges vs edge, and stay observation-only until the system actually earns more.
 
 ## Folder structure
 
@@ -35,10 +43,13 @@ golf-offshoot/
   docs/                  architecture, engines, known limitations
   data/mocks/            reserved for frozen vendor dumps
   data/snapshots/        audit JSON per run
+  data/exports/          full-field ranked tables (PDF + HTML + txt) from ingest/live
   src/golf_offshoot/
     models/              Player, Tournament, probabilities, audit schemas
     free_parameters/     catalog, course-type importance, boards
-    data_feeds/          primary/fallback interfaces + mocks
+    data_feeds/          real ESPN / Open-Meteo / Bovada / Hard Rock Bet (Odds API) / PGA SG / opening archive + mocks (demo/tests only)
+    calibration/         leakage-safe dataset + BO/ARD weight fit
+    operating.py         real-path ingest / pressure-test helpers
     bayesian_engine/     prior → evidence updates → MC horizons
     clustering/          comparable players, venue clusters
     field_effects/       this-week field composition
@@ -70,11 +81,15 @@ For every player: **probability range** (central + low/high), **reliability** (s
 
 ## Documentation map
 
+- **[Operator Guide](docs/OPERATOR_GUIDE.md)** — start here for weekly use
 - [Architecture](docs/ARCHITECTURE.md)
 - [Free parameters](docs/FREE_PARAMETERS.md)
 - [Bayesian engine](docs/BAYESIAN_ENGINE.md)
 - [Data feeds](docs/DATA_FEEDS.md)
+- [Calibration](docs/CALIBRATION.md)
+- [Pressure test (St. Jude 2026)](docs/PRESSURE_TEST_2026_ST_JUDE.md)
 - [Probability, ranking, market, explainability](docs/PROBABILITY_RANKING_MARKET.md)
 - [Decision, live, learning, audit](docs/DECISION_LIVE_LEARNING.md)
 - [Strategy layer](docs/STRATEGY_LAYER.md)
 - [Known limitations](docs/KNOWN_LIMITATIONS.md)
+- [Shadow journal](docs/SHADOW_JOURNAL.md)

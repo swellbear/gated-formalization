@@ -6,7 +6,7 @@ the Gated Progressive Formalization method, templates, locks, or application fol
 
 from golf_offshoot.config import MODEL_VERSION
 
-__version__ = "0.2.0"
+__version__ = "0.7.0"
 __model_version__ = MODEL_VERSION
 
 __all__ = ["__version__", "__model_version__"]
