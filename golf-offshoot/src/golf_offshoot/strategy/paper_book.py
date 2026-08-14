@@ -263,6 +263,58 @@ def load_snapshot_outputs(run_id: str, *, directory: Path | None = None) -> list
     return list(rec.outputs)
 
 
+def _bet_terms_from_row(row: PlayerOutput, bet: str) -> dict:
+    key = bet or "win"
+    posted = row.posted_odds_by_bet.get(key)
+    try:
+        posted_f = float(posted) if posted is not None else None
+    except (TypeError, ValueError):
+        posted_f = None
+    if posted_f is None or posted_f <= 1.0:
+        imp = row.market_implied_by_bet.get(key)
+        posted_f = (1.0 / float(imp)) if imp and imp > 0 else None
+    model = None
+    try:
+        bt = BetType(key)
+        model = row.probabilities.p(_BET_HORIZON[bt]).central
+    except (ValueError, KeyError):
+        pass
+    edge = row.edge_by_bet.get(key)
+    posted_edge = None
+    if model is not None and posted_f is not None and posted_f > 1.0:
+        posted_edge = model - 1.0 / posted_f
+    out: dict = {}
+    if posted_f is not None and posted_f > 1.0:
+        out["decimal_odds"] = posted_f
+    if model is not None:
+        out["model_win"] = model
+    if edge is not None:
+        out["edge_w"] = edge
+    if posted_edge is not None:
+        out["posted_edge"] = posted_edge
+    return out
+
+
+def hydrate_new_bet_movement(mv: PaperMovement) -> PaperMovement:
+    """Fill posted odds / model on a new_bet from its snapshot. Do not invent a coupon."""
+    needs_odds = mv.decimal_odds is None or mv.decimal_odds <= 1.0
+    needs_model = mv.model_win is None
+    if not needs_odds and not needs_model:
+        return mv
+    rows = load_snapshot_outputs(mv.run_id)
+    if not rows:
+        return mv
+    row = next((r for r in rows if r.player_id and r.player_id == mv.player_id), None)
+    if row is None:
+        row = next((r for r in rows if r.name == mv.player_name), None)
+    if row is None:
+        return mv
+    terms = _bet_terms_from_row(row, mv.bet_type or "win")
+    if not terms:
+        return mv
+    return mv.model_copy(update=terms)
+
+
 def sizing_plain(config: StrategyConfig) -> str:
     unit = config.bankroll * scaled_single_cap(config)
     obs = unit * PAPER_OBSERVATION_STAKE_FRAC
@@ -447,10 +499,31 @@ def advice_from_recommendation(
             if mark and mark.live_decimal_odds and mark.live_decimal_odds > 1.0
             else None
         )
+        proposed = next(
+            (
+                p
+                for p in rec.proposed_new_positions
+                if kind == "new_bet"
+                and p.player_id == act.player_id
+                and p.bet_type == act.bet_type
+            ),
+            None,
+        )
         if kind in {"reduce", "exit"}:
             decimal_odds = live_posted
+        elif live_posted is not None:
+            decimal_odds = live_posted
+        elif pos:
+            decimal_odds = pos.decimal_odds
+        elif proposed and proposed.decimal_odds and proposed.decimal_odds > 1.0:
+            decimal_odds = proposed.decimal_odds
         else:
-            decimal_odds = live_posted if live_posted is not None else (pos.decimal_odds if pos else None)
+            decimal_odds = None
+        model_win = mark.live_model_p if mark else (proposed.entry_model_p if proposed else None)
+        edge_w = mark.live_edge if mark else (proposed.entry_edge if proposed else None)
+        posted_edge = mark.live_posted_edge if mark else None
+        if posted_edge is None and model_win is not None and decimal_odds and decimal_odds > 1.0:
+            posted_edge = model_win - 1.0 / decimal_odds
         estimated_offer = None
         if kind in {"reduce", "exit"} and pos and decimal_odds and act.cashout_quote is None:
             estimated_offer = estimated_cashout_offer(
@@ -481,9 +554,9 @@ def advice_from_recommendation(
                 stake_delta=delta,
                 stake_after=after,
                 decimal_odds=decimal_odds,
-                model_win=mark.live_model_p if mark else None,
-                edge_w=mark.live_edge if mark else None,
-                posted_edge=mark.live_posted_edge if mark else None,
+                model_win=model_win,
+                edge_w=edge_w,
+                posted_edge=posted_edge,
                 run_id=run_id,
                 reason_plain=plain,
                 reason_technical=f"kind={kind} reason={act.reason}{warn} details={details}",
@@ -810,22 +883,25 @@ def apply_advice(record: PaperBookFile, advice: list[PaperMovement]) -> PaperBoo
             applied.append(mv.model_copy(update={"status": "applied", "stake_after": after, "stake_delta": after - pos.stake}))
             continue
         if mv.kind == "new_bet" and mv.stake_delta > 0:
+            filled = hydrate_new_bet_movement(mv)
+            if filled.decimal_odds is None or filled.decimal_odds <= 1.0:
+                continue
             positions.append(
                 StrategyPosition(
                     position_id=new_id("paper"),
-                    player_id=mv.player_id,
-                    player_name=mv.player_name,
-                    bet_type=BetType(mv.bet_type) if mv.bet_type in {b.value for b in BetType} else BetType.WIN,
-                    stake=round(mv.stake_delta, 2),
-                    decimal_odds=mv.decimal_odds or 0.0,
-                    entry_edge=mv.edge_w or 0.0,
-                    entry_model_p=mv.model_win or 0.0,
+                    player_id=filled.player_id,
+                    player_name=filled.player_name,
+                    bet_type=BetType(filled.bet_type) if filled.bet_type in {b.value for b in BetType} else BetType.WIN,
+                    stake=round(filled.stake_delta, 2),
+                    decimal_odds=filled.decimal_odds,
+                    entry_edge=filled.edge_w or 0.0,
+                    entry_model_p=filled.model_win or 0.0,
                     notes="paper new_bet applied from advice",
                     user_recorded=True,
                     proposed=False,
                 )
             )
-            applied.append(mv.model_copy(update={"status": "applied", "stake_after": round(mv.stake_delta, 2)}))
+            applied.append(filled.model_copy(update={"status": "applied", "stake_after": round(filled.stake_delta, 2)}))
             continue
         if mv.kind == "reallocate" and mv.stake_delta > 0:
             take = abs(mv.stake_delta)

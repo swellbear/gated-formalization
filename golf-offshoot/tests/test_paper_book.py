@@ -411,6 +411,75 @@ def test_advice_carries_live_model_and_posted_edge(tmp_path, monkeypatch):
     assert holdish.decimal_odds == 17.0
 
 
+def test_apply_new_bet_fills_odds_from_snapshot(tmp_path, monkeypatch):
+    monkeypatch.setattr("golf_offshoot.strategy.paper_book.package_data_dir", lambda: tmp_path)
+    rows = [_row("kita", "Kurt Kitayama", 0.089, edge=0.044, posted=17.0)]
+    cfg = StrategyConfig(
+        enabled=True,
+        mode=StrategyMode.STAY_SELECTIVE,
+        risk=RiskPreference.CONSERVATIVE,
+        bankroll=250,
+    )
+    rec = lock_paper_positions(rows, cfg, event_id="401811962", run_id="run-a", odds_book="bovada")
+    scott = _row("scott", "Adam Scott", 0.059, edge=0.037, posted=26.0)
+    monkeypatch.setattr(
+        "golf_offshoot.strategy.paper_book.load_snapshot_outputs",
+        lambda run_id, directory=None: [scott],
+    )
+    rec = apply_advice(
+        rec,
+        [
+            PaperMovement(
+                movement_id="move-scott-1",
+                kind="new_bet",
+                status="advised",
+                player_id="scott",
+                player_name="Adam Scott",
+                bet_type="win",
+                stake_delta=0.5,
+                run_id="run-live",
+                reason_plain="Open a new paper ticket.",
+                amount_plain="New paper stake $0.50.",
+            )
+        ],
+    )
+    pos = next(p for p in rec.book.positions if p.player_name == "Adam Scott")
+    assert pos.stake == 0.50
+    assert pos.decimal_odds == 26.0
+    assert pos.entry_model_p == 0.059
+    assert rec.movements[-1].decimal_odds == 26.0
+    assert rec.movements[-1].status == "applied"
+
+
+def test_apply_new_bet_skips_without_coupon(tmp_path, monkeypatch):
+    monkeypatch.setattr("golf_offshoot.strategy.paper_book.package_data_dir", lambda: tmp_path)
+    rows = [_row("kita", "Kurt Kitayama", 0.089, edge=0.044, posted=17.0)]
+    cfg = StrategyConfig(
+        enabled=True,
+        mode=StrategyMode.STAY_SELECTIVE,
+        risk=RiskPreference.CONSERVATIVE,
+        bankroll=250,
+    )
+    rec = lock_paper_positions(rows, cfg, event_id="401811962", run_id="run-a", odds_book="bovada")
+    n = len(rec.book.positions)
+    rec = apply_advice(
+        rec,
+        [
+            PaperMovement(
+                movement_id="move-nobody",
+                kind="new_bet",
+                status="advised",
+                player_id="nobody",
+                player_name="Nobody",
+                bet_type="win",
+                stake_delta=0.5,
+                run_id="missing",
+            )
+        ],
+    )
+    assert len(rec.book.positions) == n
+
+
 def test_pressure_report_path_is_per_event():
     from golf_offshoot.operating import pressure_report_path
 
