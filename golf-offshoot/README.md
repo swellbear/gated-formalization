@@ -22,6 +22,9 @@ pip install -e ".[dev]"
 pytest
 python -m golf_offshoot demo --sims 1500
 python -m golf_offshoot explain --player p01
+python -m golf_offshoot paper                 # full cards for the locked paper book
+python -m golf_offshoot paper --event <id>
+python -m golf_offshoot paper --demo-paper    # toy demo book only
 python -m golf_offshoot strategy --bankroll 2000 --mode stay_selective
 python -m golf_offshoot ingest                 # real ESPN field (no mocks)
 python -m golf_offshoot calibrate              # historical BO+ARD, pre-event features only
@@ -70,6 +73,8 @@ golf-offshoot/
 ## What a ranked row always shows
 
 For every player: **probability range** (central + low/high), **reliability** (separate from the range), **market edge** when odds exist, **open questions**, **bias flags**, and a one-call **explainability** narrative.
+
+`python -m golf_offshoot paper` prints a **full card for each player currently in the locked paper book** (`data/paper/{espn_id}.json` from `live --lock-paper`). Pass `--event` to pick a week, `--demo-paper` for the toy book, or `--paper-file` for a raw `PortfolioState` JSON. `--json` dumps the same payload. The engine still **never auto-bets**.
 
 ## Non-negotiables
 

@@ -15,6 +15,7 @@ from golf_offshoot.models.enums import CourseType, Horizon, RiskPreference, RunM
 from golf_offshoot.models.strategy import StrategyConfig
 from golf_offshoot.pipeline import GolfOffshootPipeline
 from golf_offshoot.ranking.display import format_table, movement_note
+from golf_offshoot.ranking.report import format_player_report
 from golf_offshoot.strategy.engine import format_recommendation
 
 DEMO_BANNER = (
@@ -32,17 +33,17 @@ def main(argv: list[str] | None = None) -> int:
         "command",
         nargs="?",
         default="demo",
-        choices=["demo", "board", "explain", "strategy", "ingest", "calibrate", "pressure-test", "live", "shadow", "paper-export", "paper-ledger", "paper-deposit", "paper-withdraw", "paper-settle"],
+        choices=["demo", "board", "explain", "strategy", "ingest", "calibrate", "pressure-test", "live", "shadow", "paper", "paper-export", "paper-ledger", "paper-deposit", "paper-withdraw", "paper-settle"],
     )
     parser.add_argument("--course-type", default="parkland")
-    parser.add_argument("--player", default="p01")
+    parser.add_argument("--player", default="", help="player id for explain, or filter paper reports")
     parser.add_argument("--sims", type=int, default=1500)
     parser.add_argument("--snapshot-dir", default="")
     parser.add_argument("--strategy", action="store_true", help="enable strategy layer on demo/explain")
     parser.add_argument("--mode", default="stay_selective", help="protect_profits | press_edges | stay_selective")
     parser.add_argument("--risk", default="conservative")
     parser.add_argument("--bankroll", type=float, default=2000.0)
-    parser.add_argument("--live", action="store_true", help="strategy command: after pre-run, manage a demo book live")
+    parser.add_argument("--live", action="store_true", help="strategy/paper: after pre-run, mark a demo book live")
     parser.add_argument("--event", default="", help="ESPN event id (default: current PGA leaderboard)")
     parser.add_argument("--refresh", action="store_true", help="bypass HTTP cache")
     parser.add_argument("--no-season-stats", action="store_true")
@@ -64,6 +65,27 @@ def main(argv: list[str] | None = None) -> int:
     )
     parser.add_argument("--amount", type=float, default=0.0, help="paper-deposit / paper-withdraw amount")
     parser.add_argument("--note", default="", help="note for paper-deposit / paper-withdraw")
+    parser.add_argument(
+        "--paper-file",
+        default="",
+        help="paper: raw PortfolioState JSON (demo/tests). Locked books use --event or data/paper/",
+    )
+    parser.add_argument(
+        "--write-paper",
+        default="",
+        help="paper: write the PortfolioState used this run to this path",
+    )
+    parser.add_argument(
+        "--include-proposed",
+        action="store_true",
+        help="paper: also print full reports for strategy NEW_BET suggestions",
+    )
+    parser.add_argument("--json", action="store_true", dest="as_json", help="paper: machine-readable reports")
+    parser.add_argument(
+        "--demo-paper",
+        action="store_true",
+        help="paper: use the toy demo book instead of a locked operating paper book",
+    )
     args = parser.parse_args(argv)
 
     if args.command == "board":
@@ -91,6 +113,8 @@ def main(argv: list[str] | None = None) -> int:
         return _cmd_paper_withdraw(args)
     if args.command == "paper-settle":
         return _cmd_paper_settle(args)
+    if args.command == "paper":
+        return _cmd_paper(args)
 
     print(DEMO_BANNER)
     ct = CourseType(args.course_type)
@@ -113,9 +137,11 @@ def main(argv: list[str] | None = None) -> int:
     for w in result.warnings[:12]:
         print(" -", w)
     if args.command == "explain":
-        row = next((r for r in result.ranked if r.player_id == args.player), result.ranked[0])
-        print("\n--- explain ---")
-        print(row.explain.narrative if row.explain else "")
+        pid = args.player or "p01"
+        row = next((r for r in result.ranked if r.player_id == pid), result.ranked[0])
+        inputs = next((p for p in field.players if p.player.player_id == row.player_id), None)
+        print("\n--- full report ---")
+        print(format_player_report(row, inputs=inputs))
         print("open:", row.open_questions)
         print("flags:", row.flags)
         print("decision:", row.decision.action.value if row.decision else None)
@@ -140,6 +166,160 @@ def main(argv: list[str] | None = None) -> int:
         print("\n--- live strategy ---")
         if live.strategy:
             print(format_recommendation(live.strategy))
+    return 0
+
+
+def _cmd_paper(args) -> int:
+    """Full cards for names currently in the paper book. Never auto-bets."""
+    from types import SimpleNamespace
+
+    from golf_offshoot.audit.journal import load_audit
+    from golf_offshoot.data_feeds.http import package_data_dir
+    from golf_offshoot.strategy.engine import run_strategy
+    from golf_offshoot.strategy.paper_book import (
+        iter_paper_files,
+        load_paper_file,
+        unsettled_paper_files,
+    )
+    from golf_offshoot.strategy.paper_reports import (
+        format_paper_reports,
+        load_portfolio_json,
+        paper_reports_payload,
+        save_portfolio_json,
+    )
+
+    try:
+        from pydantic import ValidationError
+    except ImportError:  # pragma: no cover
+        ValidationError = ValueError
+
+    book = None
+    field = None
+    result = None
+    use_demo = bool(args.demo_paper or args.paper_file)
+
+    if args.paper_file:
+        try:
+            book = load_portfolio_json(args.paper_file)
+        except FileNotFoundError:
+            print(f"paper file not found: {args.paper_file}", file=sys.stderr)
+            return 2
+        except Exception as exc:
+            print(f"could not load paper file: {exc}", file=sys.stderr)
+            return 2
+        if book.bankroll <= 0:
+            book.bankroll = args.bankroll
+        use_demo = True
+
+    record = None
+    if not use_demo:
+        if args.event:
+            record = load_paper_file(args.event)
+            if record is None:
+                print(f"no locked paper book for event {args.event}", file=sys.stderr)
+                return 2
+        else:
+            open_recs = unsettled_paper_files()
+            pool = open_recs or iter_paper_files()
+            if pool:
+                record = sorted(pool, key=lambda r: r.locked_at)[-1]
+
+    if record is not None:
+        book = record.book
+        audit = None
+        snap_dir = package_data_dir() / "snapshots"
+        want = str(record.tournament_id or "")
+        if snap_dir.exists() and want:
+            best = None
+            for path in snap_dir.glob("*.json"):
+                try:
+                    rec = load_audit(path)
+                except (OSError, ValueError, KeyError, TypeError, ValidationError):
+                    continue
+                if str(rec.tournament_id) != want:
+                    continue
+                if best is None or rec.as_of > best.as_of:
+                    best = rec
+            audit = best
+        ranked = audit.outputs if audit else []
+        result = SimpleNamespace(
+            run_id=(audit.run_id if audit else record.locked_from_run_id) or "paper",
+            mode=audit.mode if audit else RunMode.LIVE,
+            never_auto_bet=True,
+            strategy=audit.strategy if audit else None,
+            ranked=ranked,
+        )
+        if not args.as_json:
+            print(
+                f"locked paper {record.tournament_name or record.tournament_id} "
+                f"never_auto_bet={record.never_auto_bet} observation_only={record.paper_observation_only}"
+            )
+
+    if result is None:
+        if not args.as_json:
+            print(DEMO_BANNER)
+        ct = CourseType(args.course_type)
+        strat_cfg = StrategyConfig(
+            enabled=True,
+            mode=StrategyMode(args.mode),
+            risk=RiskPreference(args.risk),
+            bankroll=args.bankroll if not book else book.bankroll,
+        )
+        engine = BayesianEngine(sim=SimConfig(n_sims=args.sims, seed=20260813))
+        snap = Path(args.snapshot_dir) if args.snapshot_dir else Path(__file__).resolve().parents[2] / "data" / "snapshots"
+        pipe = GolfOffshootPipeline(engine=engine, snapshot_dir=snap, strategy_config=strat_cfg)
+        tournament = demo_tournament(ct)
+        field = demo_field()
+        result = pipe.run(
+            tournament, field, market_quotes=demo_odds(field), persist=bool(args.snapshot_dir)
+        )
+        if book is None:
+            book = demo_open_book(result, bankroll=strat_cfg.bankroll)
+        if args.live:
+            live_field = demo_field()
+            for i, p in enumerate(live_field.players):
+                p.live_score_to_par = -3 + i * 0.4
+                p.live_holes_completed = 18
+            result = pipe.rerun_live(
+                tournament,
+                live_field,
+                previous=result.audit,
+                market_quotes=demo_odds(live_field),
+                open_book=book,
+                strategy_config=strat_cfg,
+            )
+            field = live_field
+        elif book.positions:
+            result.strategy = run_strategy(
+                result.ranked,
+                strat_cfg,
+                run_mode=result.mode,
+                field=field,
+                book=book,
+            )
+            result.audit.strategy = result.strategy
+
+    if args.player:
+        book.positions = [p for p in book.positions if p.player_id == args.player]
+    if args.write_paper:
+        save_portfolio_json(book, args.write_paper)
+    if args.as_json:
+        payload = paper_reports_payload(
+            result,
+            book,
+            field=field,
+            include_proposed=args.include_proposed,
+        )
+        print(json.dumps(payload, indent=2, default=str))
+        return 0
+    print(
+        format_paper_reports(
+            result,
+            book,
+            field=field,
+            include_proposed=args.include_proposed,
+        )
+    )
     return 0
 
 

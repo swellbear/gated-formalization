@@ -37,7 +37,7 @@ post-event learning (calibration, override eval, α update hook)
 | 5 Field interaction | `field_effects/` |
 | 6 Multi-horizon probabilities | `bayesian_engine/simulate.py`, `probability/` |
 | 7 Market-relative layer | `market/` |
-| 8 Ranking + explainability | `ranking/` |
+| 8 Ranking + explainability | `ranking/` (`report.py` = full player cards; `paper` CLI scopes them to the book) |
 | 9 Reliability score | `ranking/reliability.py` |
 | 10 Decision layer | `decision/` |
 | 10b Strategy layer (optional) | `strategy/` |

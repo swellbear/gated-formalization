@@ -447,6 +447,7 @@ All commands: `python -m golf_offshoot <command> ...` from `golf-offshoot/`.
 | Real live board + strategy (empty book) | `python -m golf_offshoot live --event <id>` |
 | Downloadable full-field table | `data/exports/` PDF (open in Edge/Adobe, not the editor) plus HTML |
 | Batch paper pack (combo + tickets + why-bets + field + bankroll) | `python -m golf_offshoot paper-export --event <id>` |
+| Full cards for current paper players | `python -m golf_offshoot paper` or `paper --event <id>` |
 | Paper bankroll readout (week + lifetime) | `python -m golf_offshoot paper-ledger` |
 | Add / remove mock cash | `paper-deposit --amount 50` / `paper-withdraw --amount 20` |
 | Settle weekend tickets into the rollover | `live` / `paper-ledger` auto-settle when ESPN is final; or `paper-settle --event <id>` |
