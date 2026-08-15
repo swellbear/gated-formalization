@@ -49,6 +49,10 @@ def _row(
     rel: float = 0.74,
     posted_by_bet: dict[str, float] | None = None,
     edge_by_bet: dict[str, float] | None = None,
+    place: int | None = None,
+    place_disp: str = "",
+    score: float | None = None,
+    holes: int = 0,
 ) -> PlayerOutput:
     horizons = {
         Horizon.WIN: _hp(Horizon.WIN, win),
@@ -77,6 +81,10 @@ def _row(
         market_implied_by_bet=implied,
         posted_odds_by_bet=posted_odds,
         flags=list(flags or []),
+        live_place=place,
+        live_place_display=place_disp,
+        live_score_to_par=score,
+        live_holes_completed=holes,
     )
 
 
@@ -528,3 +536,100 @@ def test_split_pnl_keeps_winner_and_place_separate():
     assert win == 8.75
     assert place == -2.0
     assert total == 6.75
+
+
+def test_batch_pack_held_and_as_of_and_book_stamp(tmp_path, monkeypatch):
+    monkeypatch.setattr("golf_offshoot.strategy.paper_book.package_data_dir", lambda: tmp_path)
+    monkeypatch.setattr("golf_offshoot.compare.fights.package_data_dir", lambda: tmp_path)
+    from golf_offshoot.audit.journal import save_audit
+    from golf_offshoot.compare.pack import write_batch_pack
+    from golf_offshoot.models.schemas import AuditRecord, ModelVersionRecord
+    from golf_offshoot.strategy.paper_book import save_paper_book
+
+    rows = [
+        _row("kita", "Kurt Kitayama", 0.089, edge=0.044, posted=17.0, place=4, place_disp="T4", score=-6, holes=18),
+        _row("fleet", "Tommy Fleetwood", 0.121, edge=0.041, posted=9.5, place=8, place_disp="T8", score=-3, holes=14),
+        _row("scheff", "Scottie Scheffler", 0.113, edge=0.012, posted=7.5, place=1, place_disp="1", score=-8, holes=18),
+    ]
+    lived = lock_paper_positions(
+        rows,
+        config_for(ComparePath.A_REPLAY, event_id="401811962"),
+        event_id="401811962",
+        event_name="FedEx St. Jude Championship",
+        path_id="lived",
+        write_exports=False,
+        run_id="held-test",
+        odds_book="bovada",
+    )
+    held_ids = {p.player_id for p in lived.book.positions}
+    assert "kita" in held_ids
+    assert "scheff" not in held_ids
+    a_replay = lock_paper_positions(
+        rows,
+        config_for(ComparePath.A_REPLAY, event_id="401811962"),
+        event_id="401811962",
+        event_name="FedEx St. Jude Championship",
+        path_id="a_replay",
+        independent_bankroll=True,
+        write_exports=False,
+        run_id="held-test",
+    )
+    assert not a_replay.odds_book
+    a_replay = a_replay.model_copy(update={"bankroll": 267.0, "book": a_replay.book.model_copy(update={"bankroll": 267.0})})
+    save_paper_book(a_replay)
+    audit = AuditRecord(
+        run_id="held-test",
+        tournament_id="401811962",
+        mode=RunMode.LIVE,
+        model=ModelVersionRecord(version_id="golf-offshoot-0.7.0", family="t", weight_hash="x", config_hash="y"),
+        data_snapshot_hash="abc",
+        outputs=rows,
+        as_of=datetime(2026, 8, 15, 19, 1, 50, tzinfo=timezone.utc),
+        extra={"odds_book": "bovada"},
+    )
+    save_audit(audit, tmp_path / "snapshots")
+    pack = write_batch_pack(
+        "401811962",
+        event_name="FedEx St. Jude Championship",
+        run_id="held-test",
+        directory=tmp_path / "packs",
+    )
+    board = (pack / "03_leaderboard.txt").read_text(encoding="utf-8")
+    kita_line = next(ln for ln in board.splitlines() if "Kurt Kitayama" in ln)
+    scheff_line = next(ln for ln in board.splitlines() if "Scottie Scheffler" in ln)
+    assert "paper" in kita_line
+    assert "paper" not in scheff_line
+    fights = (pack / "02_fights.txt").read_text(encoding="utf-8")
+    assert "as_of=n/a" not in fights
+    assert "Lock frozen" in fights or "live apply still mutates" in fights
+    assert "started $250" in fights
+    assert "now $267" in fights
+    stamped = load_paper_file("401811962", path_id="a_replay")
+    assert stamped is not None
+    assert stamped.odds_book == "bovada"
+    tickets = (pack / "07_a_replay_tickets.txt").read_text(encoding="utf-8")
+    assert "book n/a" not in tickets
+    assert "bovada" in tickets
+    assert "started $250, now $267" in tickets
+
+
+def test_fights_row_as_of_formats_when_passed():
+    from golf_offshoot.compare.fights import PathBookView, fights_document
+
+    a = PathBookView(path_id="a_replay", n=1, names=["Tommy Fleetwood"], exposure=1.0, bankroll=250)
+    b = PathBookView(path_id="b_nerves", n=0, names=[], exposure=0.0, bankroll=250)
+    events = fights_at(
+        {"a_replay": a, "b_nerves": b},
+        as_of="2026-08-15T19:01:50-04:00",
+        run_id="held-test",
+        event_id="401811962",
+    )
+    text = fights_document(
+        "401811962",
+        event_name="FedEx St. Jude Championship",
+        views={"a_replay": a, "b_nerves": b},
+        events=events,
+    )
+    assert "as_of=n/a" not in text
+    assert "2026-08-15" in text
+    assert "Tommy Fleetwood" in text

@@ -179,7 +179,7 @@ def render_bets_explained_html(
             f"<td class='num'>{html.escape(t.live_place)}</td>"
             f"<td class='num'>{html.escape(t.live_to_par)}</td>"
             f"<td class='num'>{html.escape(t.live_thru)}</td>"
-            f"<td class='txt'>{html.escape(entered)}</td>"
+            f"<td class='txt entered'>{html.escape(entered)}</td>"
             f"<td class='txt'>{html.escape(t.market)}</td>"
             f"<td class='num'>${t.stake:.2f}</td>"
             f"<td class='num'>{t.posted:.2f}</td>"
@@ -207,6 +207,7 @@ def render_bets_explained_html(
   tr.alt td {{ background: #eef3f6; }}
   .num {{ text-align: right; font-variant-numeric: tabular-nums; }}
   .txt {{ text-align: left; }}
+  .entered {{ white-space: nowrap; }}
   .foot {{ margin-top: 18px; }}
 </style>
 </head>
@@ -269,9 +270,9 @@ def _html_movement_rows(
             name = f"{name} (from {m.from_player_name})"
         when, entered, exited = movement_clocks(record, m)
         rows.append(
-            f"<tr{stripe}><td class='txt'>{html.escape(when)}</td>"
-            f"<td class='txt'>{html.escape(entered)}</td>"
-            f"<td class='txt'>{html.escape(exited)}</td>"
+            f"<tr{stripe}><td class='txt entered'>{html.escape(when)}</td>"
+            f"<td class='txt entered'>{html.escape(entered)}</td>"
+            f"<td class='txt entered'>{html.escape(exited)}</td>"
             f"<td class='txt'>{html.escape(m.kind)}</td>"
             f"<td class='txt'>{html.escape(m.status)}</td>"
             f"<td class='txt'>{html.escape(name)}</td>"
@@ -377,7 +378,7 @@ def write_bets_explained_pdf(
         "Why",
     )
     aligns = ("LEFT", "LEFT", "LEFT", "LEFT", "LEFT", "LEFT", "RIGHT", "LEFT")
-    widths = [pdf.epw * w for w in (0.12, 0.12, 0.10, 0.08, 0.08, 0.12, 0.07, 0.31)]
+    widths = [pdf.epw * w for w in (0.13, 0.13, 0.12, 0.08, 0.08, 0.12, 0.07, 0.27)]
 
     def movement_table(items: list[PaperMovement], empty: str) -> None:
         pdf.set_font(face, size=7)
@@ -446,7 +447,7 @@ def write_bets_explained_pdf(
         "LEFT", "RIGHT", "RIGHT", "RIGHT", "LEFT", "LEFT", "RIGHT",
         "RIGHT", "RIGHT", "RIGHT", "RIGHT", "RIGHT", "RIGHT",
     )
-    t_widths = [pdf.epw * w for w in (0.12, 0.05, 0.05, 0.045, 0.11, 0.07, 0.06, 0.08, 0.08, 0.08, 0.085, 0.08, 0.09)]
+    t_widths = [pdf.epw * w for w in (0.13, 0.04, 0.04, 0.035, 0.155, 0.075, 0.065, 0.09, 0.07, 0.07, 0.075, 0.07, 0.085)]
     with pdf.table(
         col_widths=t_widths,
         text_align=t_aligns,

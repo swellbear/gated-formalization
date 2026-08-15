@@ -100,6 +100,7 @@ class PaperBookFile(BaseModel):
     method_law_hash: str = ""
     settlement_pnl_win: float | None = None
     settlement_pnl_place: float | None = None
+    starting_bankroll: float | None = None
 
 
 @dataclass(frozen=True)
@@ -287,6 +288,62 @@ def lane_tag(cleared: bool) -> str:
     return "[cleared]" if cleared else "[observation]"
 
 
+def live_screen_tag(live_edge_w: float | None, live_posted_edge: float | None) -> str:
+    """Suffix on the entry lane when this-live marks exist.
+
+    |n/a = no posted coupon for this market on this snapshot.
+    |miss = this-live vs-posted (or EdgeW) is below the 3pp ticket bar.
+    """
+    if live_posted_edge is None:
+        return "|n/a"
+    if live_posted_edge < MIN_EDGE_TO_CONSIDER:
+        return "|miss"
+    if live_edge_w is not None and live_edge_w < MIN_EDGE_TO_CONSIDER:
+        return "|miss"
+    return ""
+
+
+def display_lane(
+    cleared: bool,
+    *,
+    live_edge_w: float | None = None,
+    live_posted_edge: float | None = None,
+    has_live: bool = False,
+) -> str:
+    word = "cleared" if cleared else "observation"
+    if not has_live:
+        return f"[{word}]"
+    extra = live_screen_tag(live_edge_w, live_posted_edge)
+    return f"[{word}{extra}]"
+
+
+def starting_bankroll_of(record: PaperBookFile) -> float | None:
+    if record.starting_bankroll is not None and record.starting_bankroll > 0:
+        return float(record.starting_bankroll)
+    if record.independent_bankroll:
+        from golf_offshoot.compare.law import METHOD_LAW_V1
+
+        return float(METHOD_LAW_V1["independent_compare_bankroll"])
+    return None
+
+
+def bankroll_now_blurb(record: PaperBookFile) -> str:
+    start = starting_bankroll_of(record)
+    now = float(record.bankroll)
+    if start is not None and abs(start - now) >= 0.5:
+        return f"started ${start:.0f}, now ${now:.0f}"
+    return f"${now:.0f} mock"
+
+
+def ensure_odds_book(record: PaperBookFile, odds_book: str) -> PaperBookFile:
+    """Fill a missing book name. Does not overwrite a name already on the file."""
+    want = (odds_book or "").strip()
+    if not want or (record.odds_book or "").strip():
+        return record
+    record.odds_book = want
+    return record
+
+
 def screen_plain(edge_w: float, posted_edge: float) -> str:
     if screen_cleared(edge_w, posted_edge):
         return "Cleared — model still beats the posted price by at least 3 percentage points"
@@ -351,7 +408,12 @@ def ticket_rows(
                 if_wins=p.stake * p.decimal_odds,
                 screen=screen_plain(p.entry_edge, posted_edge),
                 cleared=screen_cleared(p.entry_edge, posted_edge),
-                lane=lane_tag(screen_cleared(p.entry_edge, posted_edge)),
+                lane=display_lane(
+                    screen_cleared(p.entry_edge, posted_edge),
+                    live_edge_w=live_edge_w,
+                    live_posted_edge=live_vs,
+                    has_live=live_outputs is not None,
+                ),
                 live_posted=live_posted,
                 live_model=live_model,
                 live_edge_w=live_edge_w,
@@ -367,8 +429,8 @@ def ticket_rows(
     return rows
 
 
-def load_snapshot_outputs(run_id: str, *, directory: Path | None = None) -> list[PlayerOutput] | None:
-    """Outputs from one persisted run. Missing file is n/a, not invented."""
+def load_snapshot_audit(run_id: str, *, directory: Path | None = None):
+    """One persisted audit. Missing file is None, not invented."""
     if not run_id:
         return None
     from golf_offshoot.audit.journal import load_audit
@@ -380,8 +442,15 @@ def load_snapshot_outputs(run_id: str, *, directory: Path | None = None) -> list
     if not path.is_file():
         return None
     try:
-        rec = load_audit(path)
+        return load_audit(path)
     except (OSError, ValueError, KeyError, TypeError, ValidationError):
+        return None
+
+
+def load_snapshot_outputs(run_id: str, *, directory: Path | None = None) -> list[PlayerOutput] | None:
+    """Outputs from one persisted run. Missing file is n/a, not invented."""
+    rec = load_snapshot_audit(run_id, directory=directory)
+    if rec is None:
         return None
     return list(rec.outputs)
 
@@ -1370,6 +1439,7 @@ def lock_paper_positions(
         path_id=path_id or "lived",
         independent_bankroll=bool(independent_bankroll),
         method_law_hash=method_law_hash,
+        starting_bankroll=config.bankroll,
     )
     tickets = ticket_rows(record)
     by_key = {_pos_lookup_key(p.player_name, p.bet_type): p for p in positions}

@@ -16,6 +16,7 @@ from golf_offshoot.strategy.engine import run_strategy
 from golf_offshoot.strategy.paper_book import (
     PaperBookFile,
     advice_from_recommendation,
+    ensure_odds_book,
     load_paper_book,
     load_paper_file,
     lock_paper_positions,
@@ -107,6 +108,7 @@ def _sync_path_book(
     rec_strat = run_strategy(rows, cfg, run_mode=run_mode, book=existing.book)
     advice = advice_from_recommendation(existing, rec_strat, run_id=run_id)
     record, applied = maybe_apply_paper(existing, advice)
+    record = ensure_odds_book(record, odds_book)
     save_paper_book(record)
     return record, applied
 

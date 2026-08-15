@@ -15,7 +15,14 @@ from golf_offshoot.compare.scores import event_scoreboard
 from golf_offshoot.config import MODEL_VERSION
 from golf_offshoot.models.strategy import StrategyConfig
 from golf_offshoot.ranking.export_table import printed_at_utc
-from golf_offshoot.strategy.paper_book import load_paper_file, load_snapshot_outputs
+from golf_offshoot.strategy.paper_book import (
+    bankroll_now_blurb,
+    ensure_odds_book,
+    load_paper_file,
+    load_snapshot_audit,
+    load_snapshot_outputs,
+    save_paper_book,
+)
 from golf_offshoot.strategy.paper_explain import write_bets_explained_files
 from golf_offshoot.strategy.paper_export import write_paper_book_files
 from golf_offshoot.strategy.paper_pack import (
@@ -39,7 +46,7 @@ PATH_LABELS: dict[str, dict[str, str]] = {
         "short": "Lived museum",
         "one_line": (
             "Lived museum — current pipeline · EdgeW AND vs-posted · "
-            "place ladders allowed · not re-locked"
+            "place ladders allowed · lock frozen, live apply still mutates"
         ),
         "tickets": "Lived museum tickets",
         "explained": "Lived museum — why these bets",
@@ -48,7 +55,7 @@ PATH_LABELS: dict[str, dict[str, str]] = {
         "short": "A-replay",
         "one_line": (
             "A-replay — same ranking as lived · Winner-only · EdgeW screen · "
-            "independent $250 (A-control shares this book)"
+            "started $250 (A-control shares this book)"
         ),
         "tickets": "A-replay tickets (EdgeW, Winner-only)",
         "explained": "A-replay — why these bets",
@@ -56,7 +63,7 @@ PATH_LABELS: dict[str, dict[str, str]] = {
     "b_guts": {
         "short": "B-guts",
         "one_line": (
-            "B-guts — honest theta · Winner-only · EdgeW screen · independent $250"
+            "B-guts — honest theta · Winner-only · EdgeW screen · started $250"
         ),
         "tickets": "B-guts tickets (honest theta, EdgeW)",
         "explained": "B-guts — why these bets",
@@ -64,7 +71,7 @@ PATH_LABELS: dict[str, dict[str, str]] = {
     "b_nerves": {
         "short": "B-nerves",
         "one_line": (
-            "B-nerves — A's ranking · Winner-only · vs-posted (1/odds) · independent $250"
+            "B-nerves — A's ranking · Winner-only · vs-posted (1/odds) · started $250"
         ),
         "tickets": "B-nerves tickets (vs-posted, Winner-only)",
         "explained": "B-nerves — why these bets",
@@ -72,7 +79,7 @@ PATH_LABELS: dict[str, dict[str, str]] = {
     "b_full": {
         "short": "B-full",
         "one_line": (
-            "B-full — honest theta · Winner-only · vs-posted (1/odds) · independent $250"
+            "B-full — honest theta · Winner-only · vs-posted (1/odds) · started $250"
         ),
         "tickets": "B-full tickets (honest theta, vs-posted)",
         "explained": "B-full — why these bets",
@@ -85,19 +92,19 @@ def _path_labels(event_id: str) -> dict[str, dict[str, str]]:
     labels = {k: dict(v) for k, v in PATH_LABELS.items()}
     labels["a_replay"]["one_line"] = (
         f"A-replay — same ranking as lived · {markets} · EdgeW screen · "
-        "independent $250 (A-control shares this book)"
+        "started $250 (A-control shares this book)"
     )
     labels["a_replay"]["tickets"] = f"A-replay tickets (EdgeW, {markets})"
     labels["b_guts"]["one_line"] = (
-        f"B-guts — honest theta · {markets} · EdgeW screen · independent $250"
+        f"B-guts — honest theta · {markets} · EdgeW screen · started $250"
     )
     labels["b_guts"]["tickets"] = f"B-guts tickets (honest theta, EdgeW, {markets})"
     labels["b_nerves"]["one_line"] = (
-        f"B-nerves — A's ranking · {markets} · vs-posted (1/odds) · independent $250"
+        f"B-nerves — A's ranking · {markets} · vs-posted (1/odds) · started $250"
     )
     labels["b_nerves"]["tickets"] = f"B-nerves tickets (vs-posted, {markets})"
     labels["b_full"]["one_line"] = (
-        f"B-full — honest theta · {markets} · vs-posted (1/odds) · independent $250"
+        f"B-full — honest theta · {markets} · vs-posted (1/odds) · started $250"
     )
     labels["b_full"]["tickets"] = f"B-full tickets (honest theta, vs-posted, {markets})"
     return labels
@@ -141,8 +148,16 @@ def write_batch_pack(
     copied: list[str] = []
 
     live_outputs = load_snapshot_outputs(run_id)
+    audit = load_snapshot_audit(run_id)
+    as_of = str(audit.as_of) if audit is not None and audit.as_of else ""
     views = load_path_views(event_id)
-    events = fights_at(views, run_id=run_id, live_outputs=live_outputs, event_id=event_id)
+    events = fights_at(
+        views,
+        as_of=as_of,
+        run_id=run_id,
+        live_outputs=live_outputs,
+        event_id=event_id,
+    )
     write_how_to_read(root, event_id=event_id, event_name=event_name, run_id=run_id)
 
     fights_html = write_fights(
@@ -169,15 +184,28 @@ def write_batch_pack(
         shutil.copy2(path, dest)
         copied.append(dest.name)
 
+    _refresh_pack_leaderboard(
+        root,
+        event_id=event_id,
+        event_name=event_name,
+        run_id=run_id,
+        live_outputs=live_outputs,
+    )
+
     event = event_name or event_id
     labels_by_path = _path_labels(event_id)
+    lived_for_book = load_paper_file(event_id, path_id="lived")
+    lived_odds = (lived_for_book.odds_book if lived_for_book else "") or ""
     for path_id, ticket_n, explained_n in _PATH_SECTIONS:
         rec = load_paper_file(event_id, path_id=path_id)
         if rec is None:
             continue
+        rec = ensure_odds_book(rec, lived_odds)
+        if rec.odds_book:
+            save_paper_book(rec)
         labels = labels_by_path[path_id]
         meta = (
-            f"{labels['one_line']}   ${rec.bankroll:.0f} mock   "
+            f"{labels['one_line']}   {bankroll_now_blurb(rec)}   "
             f"{rec.odds_book or 'book n/a'}   live_run={run_id or 'n/a'}   "
             f"model={MODEL_VERSION}"
         )
@@ -244,6 +272,7 @@ def write_batch_pack(
                         "names": views[pid].names,
                         "exposure": views[pid].exposure,
                         "bankroll": views[pid].bankroll,
+                        "starting_bankroll": views[pid].starting_bankroll,
                         "label": _path_labels(event_id).get(pid, {}).get("one_line", pid),
                     }
                     for pid in views
@@ -259,6 +288,39 @@ def write_batch_pack(
         encoding="utf-8",
     )
     return root
+
+
+def _refresh_pack_leaderboard(
+    root: Path,
+    *,
+    event_id: str,
+    event_name: str,
+    run_id: str,
+    live_outputs,
+) -> None:
+    """Held must match the lived book after this snapshot's apply, not the pre-apply export."""
+    if not live_outputs:
+        return
+    from golf_offshoot.ranking.export_leaderboard import write_leaderboard_files
+
+    lived = load_paper_file(event_id, path_id="lived")
+    held = {p.player_id for p in lived.book.positions} if lived is not None else set()
+    write_leaderboard_files(
+        list(live_outputs),
+        held_ids=held,
+        directory=root,
+        stem="03_leaderboard",
+        title=f"{event_name or event_id} leaderboard (live snapshot)",
+        subtitle=(
+            f"id={event_id}   n={len(live_outputs)}   "
+            f"run={run_id or 'n/a'}   model={MODEL_VERSION}"
+        ),
+        caption=(
+            "ESPN place / to-par / thru at this run. Not model Win%. "
+            "Round-by-round scores are not listed (not ingested). Observation only. "
+            "Held is the lived mock book after this snapshot's apply."
+        ),
+    )
 
 
 def _combo_sources(root: Path) -> list[tuple[Path, str]]:
@@ -330,7 +392,8 @@ def _how_to_read_text(*, event_id: str, event_name: str, run_id: str) -> str:
         "  2. Fights             Who each book holds, and where they disagree",
         "  3. ESPN leaderboard   Place / to-par / thru. Not model Win%.",
         "  4. Model field        Win% ranking from the live sim",
-        "  5. Lived museum       Your real paper book (place ladders allowed)",
+        "  5. Lived museum       Your real paper book (place ladders allowed; "
+        "lock frozen, live apply still mutates)",
         f"  6. A-replay           Same ranking as lived. {markets}. EdgeW screen.",
         "                       A-control is not a second book; it shares A-replay.",
         f"  7. B-guts             Honest theta. {markets}. EdgeW screen.",
@@ -420,7 +483,7 @@ def _batch_readme(
         "02_fights.pdf           Who each book holds, and where they disagree",
         "03_leaderboard.pdf      ESPN place / to-par / thru (not Win%)",
         "04_field_live.pdf       Model Win% ranking",
-        "05_lived_tickets.pdf    Lived museum (EdgeW AND vs-posted; place ladders)",
+        "05_lived_tickets.pdf    Lived museum (lock frozen; live apply still mutates)",
         "06_lived_explained.pdf  Why those lived bets",
         "07_a_replay_tickets.pdf A-replay: same ranking as lived, EdgeW",
         "08_a_replay_explained.pdf",
@@ -430,7 +493,7 @@ def _batch_readme(
         "12_b_nerves_explained.pdf",
         "13_b_full_tickets.pdf   B-full: honest theta, vs-posted",
         "14_b_full_explained.pdf",
-        "15_bankroll.pdf         Lived lifetime ledger (compare books are independent)",
+        "15_bankroll.pdf         Lived lifetime ledger (compare books started at $250)",
         "16_movements.json       Path snapshot + Winner vs place scoreboard",
         "",
         "A-control is not a separate book. It shares A-replay.",

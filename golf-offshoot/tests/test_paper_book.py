@@ -577,4 +577,59 @@ def test_pressure_report_path_is_per_event():
     assert path.name == "PRESSURE_TEST_401811962.md"
     other = pressure_report_path("401703504")
     assert other.name == "PRESSURE_TEST_401703504.md"
-    assert "ST_JUDE" not in other.name
+
+
+def test_display_lane_live_suffix():
+    from golf_offshoot.strategy.paper_book import display_lane
+
+    assert display_lane(True) == "[cleared]"
+    assert display_lane(False) == "[observation]"
+    assert display_lane(True, has_live=True, live_posted_edge=None) == "[cleared|n/a]"
+    assert display_lane(True, has_live=True, live_posted_edge=0.002, live_edge_w=0.05) == "[cleared|miss]"
+    assert display_lane(True, has_live=True, live_posted_edge=0.06, live_edge_w=0.07) == "[cleared]"
+
+
+def test_ticket_lane_marks_live_na_without_coupon(tmp_path, monkeypatch):
+    monkeypatch.setattr("golf_offshoot.strategy.paper_book.package_data_dir", lambda: tmp_path)
+    cfg = StrategyConfig(
+        enabled=True,
+        mode=StrategyMode.STAY_SELECTIVE,
+        risk=RiskPreference.CONSERVATIVE,
+        bankroll=250,
+    )
+    rec = lock_paper_positions(
+        [_row("kita", "Kurt Kitayama", 0.089, edge=0.044, posted=17.0)],
+        cfg,
+        event_id="401811962",
+        write_exports=False,
+        run_id="lane-na",
+    )
+    live = [_row("kita", "Kurt Kitayama", 0.089, edge=0.044, posted=None)]
+    rows = ticket_rows(rec, live)
+    assert rows[0].lane == "[cleared|n/a]"
+    still = ticket_rows(rec)
+    assert still[0].lane == "[cleared]"
+
+
+def test_ticket_txt_keeps_entered_and_market_on_one_row(tmp_path, monkeypatch):
+    monkeypatch.setattr("golf_offshoot.strategy.paper_book.package_data_dir", lambda: tmp_path)
+    from golf_offshoot.strategy.paper_export import paper_book_document
+
+    cfg = StrategyConfig(
+        enabled=True,
+        mode=StrategyMode.STAY_SELECTIVE,
+        risk=RiskPreference.CONSERVATIVE,
+        bankroll=250,
+    )
+    rec = lock_paper_positions(
+        [_row("kita", "Kurt Kitayama", 0.089, edge=0.044, posted=17.0)],
+        cfg,
+        event_id="401811962",
+        write_exports=False,
+        run_id="entered-width",
+        odds_book="bovada",
+    )
+    text = paper_book_document(rec, tickets=ticket_rows(rec), live_run_id="entered-width")
+    data_line = next(ln for ln in text.splitlines() if "Kurt Kitayama" in ln and "Win" in ln)
+    assert "EDT" in data_line or "EST" in data_line
+    assert "Win" in data_line

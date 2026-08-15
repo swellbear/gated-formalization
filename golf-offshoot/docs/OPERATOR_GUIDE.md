@@ -181,14 +181,14 @@ python -m golf_offshoot paper-export --event 401811962
 
 `live` with an existing paper book records hold / reduce / exit / add / reallocate as **advice** in that snapshot's pack. When the **actionable** advice set changes (not a HOLD-only snapshot), it auto-applies that mock book. `--no-apply-paper` records advice without applying. `--apply-paper` force-applies even if the set did not change. Still mock money, still never a real bet. Open pack PDFs in Edge, Chrome, or Adobe — not as source in the editor.
 
-Parallel A/B paper machines (independent $250 books, lived museum not re-locked): [Compare method](COMPARE_METHOD.md).
+Parallel A/B paper machines (independent $250-start books; lived lock frozen, live apply still mutates): [Compare method](COMPARE_METHOD.md).
 
 ```bash
 python -m golf_offshoot live --event 401811962 --book bovada --compare-method
 python -m golf_offshoot compare-replay --event 401811962
 ```
 
-`--compare-method` writes one folder under `data/exports/packs/{espn_id}_{time}_{run}_batch/` with **`00_full_readout.pdf`** in this order: how to read (five-book legend), fights, ESPN leaderboard, model field, lived / A-replay / B-guts / B-nerves / B-full tickets and why-bets, then lived bankroll. Each ticket page is titled with the book. A-control shares A-replay; there is not a second A book. Individual PDFs stay in the folder. Open the readout in Edge, Chrome, or Adobe — not as source in the editor. Lived museum paper is not re-locked. St. Jude A/B books stay Winner-only. Later events ticket Top 5/10/20 when a real coupon exists and score Winner vs place P/L separately.
+`--compare-method` writes one folder under `data/exports/packs/{espn_id}_{time}_{run}_batch/` with **`00_full_readout.pdf`** in this order: how to read (five-book legend), fights, ESPN leaderboard, model field, lived / A-replay / B-guts / B-nerves / B-full tickets and why-bets, then lived bankroll. Each ticket page is titled with the book. A-control shares A-replay; there is not a second A book. Individual PDFs stay in the folder. Open the readout in Edge, Chrome, or Adobe — not as source in the editor. Lived lock is frozen (`--lock-paper` off); live apply still mutates. St. Jude A/B books stay Winner-only. Later events ticket Top 5/10/20 when a real coupon exists and score Winner vs place P/L separately.
 
 ### Paper bankroll (rollover)
 

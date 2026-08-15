@@ -13,7 +13,13 @@ from golf_offshoot.data_feeds.http import package_data_dir
 from golf_offshoot.localtime import format_eastern, filename_stamp, now_eastern_text
 from golf_offshoot.models.enums import Horizon
 from golf_offshoot.ranking.export_table import _pdf_text, _register_pdf_font, _require_fpdf2, mark_pdf_printed, printed_at_utc, write_pdf_footer, write_pdf_print_stamp
-from golf_offshoot.strategy.paper_book import PaperBookFile, live_board_mark, load_paper_file, posted_price_edge
+from golf_offshoot.strategy.paper_book import (
+    PaperBookFile,
+    live_board_mark,
+    load_paper_file,
+    posted_price_edge,
+    starting_bankroll_of,
+)
 
 def _path_winner_only(path_id: str, event_id: str = "") -> bool:
     law = PATH_LAW.get(path_id) or {}
@@ -94,6 +100,7 @@ class PathBookView:
     notes: list[str] = field(default_factory=list)
     holdings: list[HeldTicket] = field(default_factory=list)
     movements: list[PathMove] = field(default_factory=list)
+    starting_bankroll: float | None = None
 
 
 @dataclass
@@ -177,6 +184,7 @@ def book_view(record: PaperBookFile | None, path_id: str) -> PathBookView:
         notes=list(record.notes[-4:]),
         holdings=holdings,
         movements=moves,
+        starting_bankroll=starting_bankroll_of(record),
     )
 
 
@@ -456,11 +464,11 @@ def fights_document(
         "never_auto_bet=true  paper/mock only",
         "",
         "== what these books are ==",
-        "  lived      Museum book. Current pipeline. EdgeW AND vs-posted. Place ladders allowed. Not re-locked.",
-        f"  a_replay   A-replay / A-control (one book). Same ranking as lived. {markets}. EdgeW screen. Independent $250.",
-        f"  b_guts     Honest theta. {markets}. EdgeW screen. Independent $250.",
-        f"  b_nerves   A's ranking. {markets}. vs-posted (1/odds). Independent $250.",
-        f"  b_full     Honest theta. {markets}. vs-posted (1/odds). Independent $250.",
+        "  lived      Museum book. Current pipeline. EdgeW AND vs-posted. Place ladders allowed. Lock frozen; live apply still mutates.",
+        f"  a_replay   A-replay / A-control (one book). Same ranking as lived. {markets}. EdgeW screen. Started $250.",
+        f"  b_guts     Honest theta. {markets}. EdgeW screen. Started $250.",
+        f"  b_nerves   A's ranking. {markets}. vs-posted (1/odds). Started $250.",
+        f"  b_full     Honest theta. {markets}. vs-posted (1/odds). Started $250.",
         "  t=0.03     Ticket bar this week. EdgeW = model minus fair implied. vs-posted = model minus 1/decimal.",
         "",
         "== books (who is held right now) ==",
@@ -471,8 +479,13 @@ def fights_document(
             names = ", ".join(f"{n}{board.get(n, '')}" for n in view.names)
         else:
             names = "(empty)"
+        start = view.starting_bankroll
+        if start is not None and abs(float(start) - float(view.bankroll)) >= 0.5:
+            bank = f"${view.exposure:.2f} / now ${view.bankroll:.0f} (started ${start:.0f})"
+        else:
+            bank = f"${view.exposure:.2f} / ${view.bankroll:.0f}"
         lines.append(
-            f"  {pid:12} n={view.n:2d}  ${view.exposure:.2f} / ${view.bankroll:.0f}  {names}"
+            f"  {pid:12} n={view.n:2d}  {bank}  {names}"
         )
     lines += ["", "== disagreements =="]
     if not events:
@@ -490,7 +503,7 @@ def fights_document(
     lines += ["", "== notes =="]
     lines.append("  B never tickets on EdgeW alone. Posted bar is 1/decimal.")
     lines.append("  t stays 0.03 this week (n=1). Learner may not copy A because A won.")
-    lines.append("  Lived paper is a museum. Compare ledgers are independent $250 books.")
+    lines.append("  Lived paper is a museum: lock frozen (--lock-paper off); live apply still mutates. Compare ledgers started at $250; figures below are current.")
     lines.append(f"  A/B markets: {compare_markets_blurb(event_id)}.")
     lines.append("  Winner posted P/L and place posted P/L are scored separately.")
     from golf_offshoot.compare.scores import scoreboard_lines

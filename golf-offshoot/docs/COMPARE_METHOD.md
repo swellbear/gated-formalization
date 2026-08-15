@@ -1,6 +1,6 @@
 # Compare method (A vs B)
 
-Parallel paper machines. **Never auto-bets. Never real money.** Lived St. Jude `{event}.json` is a museum: auto-apply later snapshots is allowed; `--lock-paper` is not.
+Parallel paper machines. **Never auto-bets. Never real money.** Lived St. Jude `{event}.json` is a museum: auto-apply later snapshots is allowed; `--lock-paper` is not. Packs print current A/B bankroll vs the $250 start.
 
 Hashed constitution: `method_law_v1` in `golf_offshoot.compare.law`.
 

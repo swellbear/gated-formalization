@@ -350,7 +350,7 @@ def _cmd_live(args) -> int:
             f"compare-method fights={payload['fights']} "
             f"guts={payload['guts_run_id']} law={payload['law_hash']}"
         )
-        print("independent $250 compare books; lived paper not re-locked")
+        print("independent $250-start compare books; lived lock frozen (live apply still mutates)")
     else:
         result = run_operating(
             event_id=event_hint,

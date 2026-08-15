@@ -30,26 +30,45 @@ def export_live_leaderboard(
 ) -> TableExportPaths | None:
     if result.mode != RunMode.LIVE:
         return None
-    d = directory or default_export_dir()
-    d.mkdir(parents=True, exist_ok=True)
     n_rounds = int(result.tournament.n_rounds or 4)
-    view = leaderboard_view(result.ranked, n_rounds=n_rounds, held_ids=held_ids)
-    stem = _leaderboard_stem(result)
-    title = f"{result.tournament.name} leaderboard (live snapshot)"
-    subtitle = (
-        f"id={result.tournament.tournament_id}   n={len(result.ranked)}   "
-        f"run={result.run_id}   model={MODEL_VERSION}"
+    return write_leaderboard_files(
+        result.ranked,
+        held_ids=held_ids,
+        directory=directory or default_export_dir(),
+        stem=_leaderboard_stem(result),
+        title=f"{result.tournament.name} leaderboard (live snapshot)",
+        subtitle=(
+            f"id={result.tournament.tournament_id}   n={len(result.ranked)}   "
+            f"run={result.run_id}   model={MODEL_VERSION}"
+        ),
+        caption=(
+            "ESPN place / to-par / thru at this run. Not model Win%. "
+            "Round-by-round scores are not listed (not ingested). Observation only."
+        ),
+        n_rounds=n_rounds,
     )
-    caption = (
-        "ESPN place / to-par / thru at this run. Not model Win%. "
-        "Round-by-round scores are not listed (not ingested). Observation only."
-    )
-    txt = d / f"{stem}.txt"
-    html_path = d / f"{stem}.html"
-    pdf = d / f"{stem}.pdf"
-    body = format_leaderboard(result.ranked, n_rounds=n_rounds, held_ids=held_ids)
+
+
+def write_leaderboard_files(
+    ranked: list,
+    *,
+    held_ids: set[str] | None = None,
+    directory: Path,
+    stem: str,
+    title: str,
+    subtitle: str,
+    caption: str | None = None,
+    n_rounds: int = 4,
+) -> TableExportPaths:
+    """Write leaderboard PDF/HTML/txt. Held must be the open book at this write."""
+    directory.mkdir(parents=True, exist_ok=True)
+    view = leaderboard_view(ranked, n_rounds=n_rounds, held_ids=held_ids)
+    txt = directory / f"{stem}.txt"
+    html_path = directory / f"{stem}.html"
+    pdf = directory / f"{stem}.pdf"
+    body = format_leaderboard(ranked, n_rounds=n_rounds, held_ids=held_ids)
     txt.write_text(
-        f"{title}\n{subtitle}\nprinted {printed_at_utc()}\n{caption}\n\n{body}\n",
+        f"{title}\n{subtitle}\nprinted {printed_at_utc()}\n{caption or ''}\n\n{body}\n",
         encoding="utf-8",
     )
     html_path.write_text(

@@ -20,6 +20,7 @@ from golf_offshoot.ranking.export_table import (
 )
 from golf_offshoot.strategy.paper_book import (
     PaperBookFile,
+    bankroll_now_blurb,
     clocks_plain,
     format_paper_time,
     observation_plain,
@@ -50,7 +51,7 @@ def write_paper_book_files(
     event = record.tournament_name or record.tournament_id
     title = title or f"Paper book — {event}"
     subtitle = subtitle or (
-        f"${record.bankroll:.0f} mock   {record.odds_book or 'book n/a'}   "
+        f"{bankroll_now_blurb(record)}   {record.odds_book or 'book n/a'}   "
         f"locked {format_paper_time(record.locked_at)}   "
         f"lock_run={record.locked_from_run_id or 'n/a'}   "
         f"live_run={live_note}   model={MODEL_VERSION}"
@@ -103,7 +104,7 @@ def paper_book_document(
         heading or f"PAPER BOOK  {record.tournament_name or record.tournament_id}",
         f"path={pid}",
         f"printed {printed_at_utc()}",
-        f"${record.bankroll:.0f} mock  |  {record.odds_book or 'book n/a'}  |  "
+        f"{bankroll_now_blurb(record)}  |  {record.odds_book or 'book n/a'}  |  "
         f"locked {format_paper_time(record.locked_at)}  |  lock_run={record.locked_from_run_id or 'n/a'}  |  "
         f"live_run={live_run_id or 'n/a'}",
         f"open ${record.book.open_exposure:.2f} / ${record.bankroll:.2f} ({frac:.0%})  "
@@ -116,15 +117,15 @@ def paper_book_document(
         "",
         clocks_plain(),
         "",
-        f"{'Player':<22} {'Place':<6} {'ToPar':<5} {'Thru':<4} {'Entered':<18} {'Mkt':<6} {'Stake':>8} {'If wins':>9}  "
+        f"{'Player':<28} {'Place':<6} {'ToPar':<5} {'Thru':<4} {'Entered':<24} {'Mkt':<8} {'Stake':>8} {'If wins':>9}  "
         f"{'Ent post':>8} {'Ent mdl':>8} {'Ent EW':>8} {'Ent vs':>8}  "
         f"{'Live post':>9} {'Live mdl':>8} {'Live EW':>8} {'Live vs':>8}",
     ]
     for t in rows:
         entered = format_paper_time(getattr(t, "entered_at", None))
         lines.append(
-            f"{t.lane + ' ' + t.player_name:<22} {t.live_place:<6} {t.live_to_par:<5} {t.live_thru:<4} "
-            f"{entered:<18} {t.market:<6} ${t.stake:>7.2f} ${t.if_wins:>8.2f}  "
+            f"{t.lane + ' ' + t.player_name:<28} {t.live_place:<6} {t.live_to_par:<5} {t.live_thru:<4} "
+            f"{entered:<24} {t.market:<8} ${t.stake:>7.2f} ${t.if_wins:>8.2f}  "
             f"{t.posted:>8.2f} {t.model_win * 100:>7.1f}% {t.edge_w * 100:>+7.1f}pp "
             f"{t.posted_edge * 100:>+7.1f}pp  "
             f"{_fmt_dec(t.live_posted):>9} {_fmt_pct(t.live_model):>8} {_fmt_pp(t.live_edge_w):>8} "
@@ -158,7 +159,7 @@ def render_paper_html(record: PaperBookFile, *, title: str, subtitle: str, ticke
             + f"<td class='num'>{html.escape(t.live_place)}</td>"
             + f"<td class='num'>{html.escape(t.live_to_par)}</td>"
             + f"<td class='num'>{html.escape(t.live_thru)}</td>"
-            + f"<td class='txt'>{html.escape(format_paper_time(getattr(t, 'entered_at', None)))}</td>"
+            + f"<td class='txt entered'>{html.escape(format_paper_time(getattr(t, 'entered_at', None)))}</td>"
             + f"<td class='txt'>{html.escape(t.market)}</td>"
             + f"<td class='num'>${t.stake:.2f}</td>"
             + f"<td class='num'>${t.if_wins:.2f}</td>"
@@ -195,6 +196,7 @@ def render_paper_html(record: PaperBookFile, *, title: str, subtitle: str, ticke
   table.field tr.alt td {{ background: #eef3f6; color: #12202a; }}
   .num {{ text-align: right; font-variant-numeric: tabular-nums; white-space: nowrap; }}
   .txt {{ text-align: left; }}
+  .entered {{ white-space: nowrap; }}
   h2 {{ font-size: 16px; margin: 22px 0 8px; color: #12202a; }}
   table.gloss {{ border-collapse: collapse; width: 100%; font-size: 12px; background: #fff; }}
   table.gloss th {{ text-align: left; width: 110px; padding: 4px 8px 4px 0; vertical-align: top; color: #1f3b4d; background: #fff; }}
@@ -461,7 +463,9 @@ def _glossary() -> list[tuple[str, str]]:
         (
             "Screen",
             f"Cleared at entry only if vs posted is at least {MIN_EDGE_TO_CONSIDER * 100:.0f} percentage points. "
-            "Live juice often fails this even when EdgeW looks good. Lane tags on the player name are at-entry.",
+            "Live juice often fails this even when EdgeW looks good. Lane tags on the player name are at-entry. "
+            "|n/a means this live snapshot has no posted coupon for that market. "
+            "|miss means this-live vs-posted (or EdgeW) is below 3pp.",
         ),
         (
             "If wins",
@@ -476,8 +480,8 @@ def _glossary() -> list[tuple[str, str]]:
 
 def _paper_col_widths(epw: float) -> list[float]:
     weights = (
-        0.11, 0.045, 0.045, 0.04, 0.09, 0.06, 0.05, 0.055,
-        0.06, 0.06, 0.06, 0.06, 0.06, 0.06, 0.06, 0.065,
+        0.11, 0.04, 0.04, 0.035, 0.14, 0.055, 0.05, 0.05,
+        0.06, 0.055, 0.055, 0.055, 0.055, 0.055, 0.055, 0.055,
     )
     total = sum(weights)
     return [epw * w / total for w in weights]
