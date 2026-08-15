@@ -45,20 +45,27 @@ class GolfOffshootPipeline:
         self.snapshot_dir = snapshot_dir
         self.apply_decisions = apply_decisions
         self.strategy_config = strategy_config if strategy_config is not None else StrategyConfig(enabled=False)
+        self.honest = False
 
     def prepare_field(self, tournament: Tournament, field: FieldSnapshot) -> FieldSnapshot:
         """Start broad, borrow if thin, apply field interactions, constrain boards."""
-        borrows = comparable_borrows(field.players)
-        apply_player_borrow(field.players, borrows)
+        honest = bool(self.honest)
+        if honest:
+            for p in field.players:
+                p.narrative_momentum = 0.0
+        borrows = comparable_borrows(field.players, honest=honest)
+        apply_player_borrow(field.players, borrows, honest=honest)
         for p in field.players:
             p.factors = build_player_board(p, tournament.course.course_type, field.mode)
-        apply_field_interactions(field.players, tournament.course)
-        # rebuild boards so field_interaction + borrowed form are in states
+        apply_field_interactions(field.players, tournament.course, honest=honest)
         for p in field.players:
             p.factors = build_player_board(p, tournament.course.course_type, field.mode)
-            # re-apply field_interaction after rebuild
-        apply_field_interactions(field.players, tournament.course)
-        field.notes = (field.notes + f" borrows={len(borrows)}").strip()
+        apply_field_interactions(field.players, tournament.course, honest=honest)
+        if honest:
+            from golf_offshoot.compare.honest_field import park_unadmitted
+
+            park_unadmitted(field)
+        field.notes = (field.notes + f" borrows={len(borrows)} honest={honest}").strip()
         if field.operating:
             _assert_no_mocks(field)
         return field
@@ -92,6 +99,7 @@ class GolfOffshootPipeline:
         if overrides:
             self.apply_overrides(field, overrides)
 
+        self.engine.honest = bool(self.honest)
         bundles, thetas, warnings = self.engine.run(tournament, field)
 
         market: MarketSnapshot | None = None
@@ -130,6 +138,7 @@ class GolfOffshootPipeline:
             prev_theta=prev_theta,
         )
 
+        cfg = strategy_config if strategy_config is not None else self.strategy_config
         if self.apply_decisions:
             odds = {}
             if market:
@@ -138,11 +147,18 @@ class GolfOffshootPipeline:
                         continue
                     if q.bet_type == BetType.WIN and q.decimal_odds:
                         odds[q.player_id] = q.decimal_odds
-            advice = {a.player_id: a for a in advise_field(ranked, BetType.WIN, odds)}
+            advice = {
+                a.player_id: a
+                for a in advise_field(
+                    ranked,
+                    BetType.WIN,
+                    odds,
+                    ticket_screen=cfg.ticket_screen,
+                )
+            }
             for row in ranked:
                 row.decision = advice.get(row.player_id)
 
-        cfg = strategy_config if strategy_config is not None else self.strategy_config
         strategy = run_strategy(
             ranked,
             cfg,
@@ -174,10 +190,18 @@ class GolfOffshootPipeline:
         if field.extra:
             audit.extra.update(field.extra)
         if market:
+            audit.extra["market"] = market.model_dump(mode="json")
             audit.extra["overround"] = market.overround
             audit.extra["odds_quotes"] = len([q for q in market.quotes if q.line_role != "opening"])
             audit.extra["opening_quotes"] = len([q for q in market.quotes if q.line_role == "opening"])
             audit.extra["movement_vs_open_n"] = len(market.movement_vs_open)
+        audit.extra["field"] = field.model_dump(mode="json")
+        audit.extra["honest_theta"] = bool(getattr(self.engine, "honest", False) or self.honest)
+        from golf_offshoot.compare.law import METHOD_LAW_V1, law_hash
+
+        audit.extra["method_law_hash"] = law_hash()
+        audit.extra["method_law_id"] = METHOD_LAW_V1["id"]
+        audit.extra["ticket_screen"] = cfg.ticket_screen
         sg_active = sum(
             1
             for p in field.players

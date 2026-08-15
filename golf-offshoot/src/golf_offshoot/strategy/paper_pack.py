@@ -83,14 +83,23 @@ def write_paper_pack(
         live_run_id=run,
     )
     led = load_ledger()
-    if not led.entries:
-        led = ensure_opening_deposit(
-            record.bankroll,
-            event_id=record.tournament_id,
-            event_name=record.tournament_name,
-            note="opening paper bankroll (pack)",
+    if not getattr(record, "independent_bankroll", False):
+        if not led.entries:
+            led = ensure_opening_deposit(
+                record.bankroll,
+                event_id=record.tournament_id,
+                event_name=record.tournament_name,
+                note="opening paper bankroll (pack)",
+            )
+        write_bankroll_files(root, ledger=led, record=record)
+    else:
+        (root / "05_bankroll.txt").write_text(
+            (
+                f"Independent compare path {getattr(record, 'path_id', '')}. "
+                f"Mock ${record.bankroll:.0f}. Not the lived ledger.\n"
+            ),
+            encoding="utf-8",
         )
-    write_bankroll_files(root, ledger=led, record=record)
 
     copied: list[str] = []
     for src in extra_files or []:
@@ -152,9 +161,14 @@ def find_related_exports(event_id: str, run_id: str, *, export_dir: Path | None 
     return found
 
 
-def write_combo_pdf(root: Path) -> Path | None:
+def write_combo_pdf(
+    root: Path,
+    sources: list[tuple[Path, str]] | None = None,
+    *,
+    title: str = "Paper pack full readout",
+) -> Path | None:
     """Merge the numbered pack PDFs into one full readout. Leaves the parts in place."""
-    sources = _pack_pdf_sources(root)
+    sources = list(sources) if sources is not None else _pack_pdf_sources(root)
     dest = root / COMBO_PDF
     if dest.exists():
         dest.unlink()
@@ -179,7 +193,7 @@ def write_combo_pdf(root: Path) -> Path | None:
         return None
     writer.add_metadata(
         {
-            "/Title": "Paper pack full readout",
+            "/Title": title,
             "/Subject": "golf-offshoot observation only never auto-bet",
         }
     )
@@ -189,19 +203,17 @@ def write_combo_pdf(root: Path) -> Path | None:
 
 
 def _pack_pdf_sources(root: Path) -> list[tuple[Path, str]]:
+    """Numbered PDFs in name order. Skips the combo file itself."""
     found: list[tuple[Path, str]] = []
-    seen: set[str] = set()
-    for name, label in _PACK_PDF_SECTIONS:
-        path = root / name
-        if path.is_file():
-            found.append((path, label))
-            seen.add(name.lower())
-    for path in sorted(root.glob("03_*.pdf")):
-        key = path.name.lower()
-        if key in seen or key == COMBO_PDF:
+    for path in sorted(root.glob("*.pdf")):
+        name = path.name
+        if name.lower() == COMBO_PDF.lower():
+            continue
+        if len(name) < 4 or not name[:2].isdigit() or name[2] != "_":
+            continue
+        if name.startswith("00_"):
             continue
         found.append((path, path.stem.replace("_", " ")))
-        seen.add(key)
     return found
 
 

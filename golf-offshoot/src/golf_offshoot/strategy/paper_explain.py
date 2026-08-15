@@ -17,6 +17,8 @@ from golf_offshoot.strategy.paper_book import (
     PaperBookFile,
     PaperMovement,
     clocks_plain,
+    format_paper_time,
+    movement_clocks,
     observation_plain,
     observation_technical,
     sizing_plain,
@@ -35,13 +37,16 @@ def write_bets_explained_files(
     config: StrategyConfig | None = None,
     live_outputs=None,
     live_run_id: str = "",
+    title: str | None = None,
+    subtitle: str | None = None,
 ) -> TableExportPaths:
     cfg = config or StrategyConfig(enabled=True, bankroll=record.bankroll)
     advice = advice if advice is not None else list(record.latest_advice)
     tickets = ticket_rows(record, live_outputs, live_run_id=live_run_id)
     directory.mkdir(parents=True, exist_ok=True)
-    title = f"Bets made — {record.tournament_name or record.tournament_id}"
-    subtitle = (
+    event = record.tournament_name or record.tournament_id
+    title = title or f"Bets made — {event}"
+    subtitle = subtitle or (
         f"${record.bankroll:.0f} mock   {record.odds_book or 'book n/a'}   "
         f"{record.mode}/{record.risk}   lock_run={record.locked_from_run_id or 'n/a'}   "
         f"live_run={live_run_id or 'n/a'}   model={MODEL_VERSION}"
@@ -49,7 +54,9 @@ def write_bets_explained_files(
     txt = directory / "02_bets_explained.txt"
     html_path = directory / "02_bets_explained.html"
     pdf = directory / "02_bets_explained.pdf"
-    body = bets_explained_document(record, advice=advice, config=cfg, tickets=tickets)
+    body = bets_explained_document(
+        record, advice=advice, config=cfg, tickets=tickets, heading=title
+    )
     txt.write_text(body, encoding="utf-8")
     html_path.write_text(
         render_bets_explained_html(
@@ -80,11 +87,14 @@ def bets_explained_document(
     advice: list[PaperMovement],
     config: StrategyConfig,
     tickets=None,
+    heading: str | None = None,
 ) -> str:
     cash = record.bankroll - record.book.open_exposure
     rows = tickets if tickets is not None else ticket_rows(record)
+    pid = getattr(record, "path_id", None) or "lived"
     lines = [
-        f"BETS MADE  {record.tournament_name or record.tournament_id}",
+        heading or f"BETS MADE  {record.tournament_name or record.tournament_id}",
+        f"path={pid}",
         f"${record.bankroll:.0f} mock  never_auto_bet=true  {record.mode}/{record.risk}",
         f"open ${record.book.open_exposure:.2f}  cash ${cash:.2f}  tickets={len(record.book.positions)}",
         "",
@@ -104,18 +114,19 @@ def bets_explained_document(
     if not applied:
         lines.append("  (none recorded)")
     for m in applied:
-        lines.extend(_movement_lines(m))
+        lines.extend(_movement_lines(m, record=record))
     lines.append("")
     lines.append("Live advice this snapshot (not applied unless you pass --apply-paper)")
     if not advice:
         lines.append("  (no hold/sell/add/reallocate advice on this snapshot)")
     for m in advice:
-        lines.extend(_movement_lines(m))
+        lines.extend(_movement_lines(m, record=record))
     lines.append("")
     lines.append("Current tickets (at entry vs this live)")
     for t in rows:
+        entered = format_paper_time(getattr(t, "entered_at", None))
         lines.append(
-            f"  {t.lane} {t.player_name} {t.market} ${t.stake:.2f} "
+            f"  {t.lane} {t.player_name} {t.market} entered {entered} ${t.stake:.2f} "
             f"entry@{t.posted:.2f} EdgeW={t.edge_w:+.3f} vs={t.posted_edge:+.3f} "
             f"live@{_fmt_dec(t.live_posted)} EdgeW={_fmt_pp(t.live_edge_w)} "
             f"vs={_fmt_pp(t.live_posted_edge)}"
@@ -126,11 +137,13 @@ def bets_explained_document(
     return "\n".join(lines)
 
 
-def _movement_lines(m: PaperMovement) -> list[str]:
+def _movement_lines(m: PaperMovement, *, record: PaperBookFile | None = None) -> list[str]:
     after = f"${m.stake_after:.2f}" if m.stake_after is not None else "n/a"
     donor = f" from {m.from_player_name}" if m.from_player_name else ""
+    when, entered, exited = movement_clocks(record, m)
     return [
         f"  {m.kind.upper()} {m.status} {m.player_name}{donor} "
+        f"when={when} entered={entered} exited={exited} "
         f"delta={m.stake_delta:+.2f} after={after}",
         f"    why: {m.reason_plain}",
         f"    amount: {m.amount_plain}",
@@ -147,14 +160,18 @@ def render_bets_explained_html(
     config: StrategyConfig,
     tickets=None,
 ) -> str:
-    applied_rows = _html_movement_rows([m for m in record.movements if m.status == "applied"])
-    advice_rows = _html_movement_rows(advice)
+    applied_rows = _html_movement_rows(
+        [m for m in record.movements if m.status == "applied"], record=record
+    )
+    advice_rows = _html_movement_rows(advice, record=record)
     rows = tickets if tickets is not None else ticket_rows(record)
     ticket_rows_html = []
     for i, t in enumerate(rows):
         stripe = ' class="alt"' if i % 2 else ""
+        entered = format_paper_time(getattr(t, "entered_at", None))
         ticket_rows_html.append(
             f"<tr{stripe}><td class='txt'>{html.escape(t.player_name)}</td>"
+            f"<td class='txt'>{html.escape(entered)}</td>"
             f"<td class='txt'>{html.escape(t.market)}</td>"
             f"<td class='num'>${t.stake:.2f}</td>"
             f"<td class='num'>{t.posted:.2f}</td>"
@@ -199,21 +216,21 @@ def render_bets_explained_html(
 Cash unallocated ${cash:.2f}. Not real money. Never auto-bet.</p>
 <h2>Applied movements (in the paper book)</h2>
 <table>
-<thead><tr><th>Action</th><th>Player</th><th class="num">Delta</th><th class="num">After</th><th>Why this name</th><th>Why this amount</th></tr></thead>
-<tbody>{applied_rows or "<tr><td colspan='6'>None recorded.</td></tr>"}</tbody>
+<thead><tr><th>When (UTC)</th><th>Entered</th><th>Exited</th><th>Action</th><th>Status</th><th>Player</th><th class="num">Delta</th><th class="num">After</th><th>Why this name</th><th>Why this amount</th></tr></thead>
+<tbody>{applied_rows or "<tr><td colspan='10'>None recorded.</td></tr>"}</tbody>
 </table>
 <h2>Live advice this snapshot</h2>
 <p class="caption">Hold / sell / add / reallocate suggestions. Not applied unless you pass --apply-paper.
 Still mock. Still never a real bet.</p>
 <table>
-<thead><tr><th>Action</th><th>Player</th><th class="num">Delta</th><th class="num">After</th><th>Why this name</th><th>Why this amount</th></tr></thead>
-<tbody>{advice_rows or "<tr><td colspan='6'>No advice on this snapshot.</td></tr>"}</tbody>
+<thead><tr><th>When (UTC)</th><th>Entered</th><th>Exited</th><th>Action</th><th>Status</th><th>Player</th><th class="num">Delta</th><th class="num">After</th><th>Why this name</th><th>Why this amount</th></tr></thead>
+<tbody>{advice_rows or "<tr><td colspan='10'>No advice on this snapshot.</td></tr>"}</tbody>
 </table>
 <h2>Current tickets</h2>
 <table>
 <thead>
 <tr>
-<th rowspan="2">Player</th><th rowspan="2">Market</th><th class="num" rowspan="2">Stake</th>
+<th rowspan="2">Player</th><th rowspan="2">Entered</th><th rowspan="2">Market</th><th class="num" rowspan="2">Stake</th>
 <th colspan="3">At entry</th><th colspan="3">This live</th>
 </tr>
 <tr>
@@ -221,7 +238,7 @@ Still mock. Still never a real bet.</p>
 <th class="num">Posted</th><th class="num">EdgeW</th><th class="num">Vs posted</th>
 </tr>
 </thead>
-<tbody>{"".join(ticket_rows_html) or "<tr><td colspan='9'>No tickets.</td></tr>"}</tbody>
+<tbody>{"".join(ticket_rows_html) or "<tr><td colspan='10'>No tickets.</td></tr>"}</tbody>
 </table>
 <p class="foot">Paper / mock bankroll. Observation only. The system never auto-bets.</p>
 </body>
@@ -229,7 +246,9 @@ Still mock. Still never a real bet.</p>
 """
 
 
-def _html_movement_rows(items: list[PaperMovement]) -> str:
+def _html_movement_rows(
+    items: list[PaperMovement], *, record: PaperBookFile | None = None
+) -> str:
     rows = []
     for i, m in enumerate(items):
         stripe = ' class="alt"' if i % 2 else ""
@@ -237,8 +256,13 @@ def _html_movement_rows(items: list[PaperMovement]) -> str:
         name = m.player_name
         if m.from_player_name:
             name = f"{name} (from {m.from_player_name})"
+        when, entered, exited = movement_clocks(record, m)
         rows.append(
-            f"<tr{stripe}><td class='txt'>{html.escape(m.kind)} / {html.escape(m.status)}</td>"
+            f"<tr{stripe}><td class='txt'>{html.escape(when)}</td>"
+            f"<td class='txt'>{html.escape(entered)}</td>"
+            f"<td class='txt'>{html.escape(exited)}</td>"
+            f"<td class='txt'>{html.escape(m.kind)}</td>"
+            f"<td class='txt'>{html.escape(m.status)}</td>"
             f"<td class='txt'>{html.escape(name)}</td>"
             f"<td class='num'>{m.stake_delta:+.2f}</td>"
             f"<td class='num'>{html.escape(after)}</td>"
@@ -338,12 +362,21 @@ def write_bets_explained_pdf(
     pdf.ln(2)
 
     headings_style = FontFace(emphasis="BOLD", color=(255, 255, 255), fill_color=(31, 59, 77))
-    headers = ("Action", "Player", "Delta", "After", "Why this name", "Why this amount")
-    aligns = ("LEFT", "LEFT", "RIGHT", "RIGHT", "LEFT", "LEFT")
-    widths = [pdf.epw * w for w in (0.10, 0.12, 0.08, 0.08, 0.31, 0.31)]
+    headers = (
+        "When UTC",
+        "Entered",
+        "Exited",
+        "Action",
+        "Status",
+        "Player",
+        "Delta",
+        "Why",
+    )
+    aligns = ("LEFT", "LEFT", "LEFT", "LEFT", "LEFT", "LEFT", "RIGHT", "LEFT")
+    widths = [pdf.epw * w for w in (0.12, 0.12, 0.10, 0.08, 0.08, 0.12, 0.07, 0.31)]
 
     def movement_table(items: list[PaperMovement], empty: str) -> None:
-        pdf.set_font(face, size=8)
+        pdf.set_font(face, size=7)
         pdf.set_text_color(18, 32, 42)
         with pdf.table(
             col_widths=widths,
@@ -364,21 +397,23 @@ def write_bets_explained_pdf(
             if not items:
                 row = table.row()
                 row.cell(_pdf_text(empty, face))
-                for _ in range(5):
+                for _ in range(7):
                     row.cell("")
             else:
                 for m in items:
                     row = table.row()
-                    row.cell(_pdf_text(f"{m.kind} / {m.status}", face))
+                    when, entered, exited = movement_clocks(record, m)
                     name = m.player_name
                     if m.from_player_name:
                         name = f"{name} (from {m.from_player_name})"
+                    row.cell(_pdf_text(when, face))
+                    row.cell(_pdf_text(entered, face))
+                    row.cell(_pdf_text(exited, face))
+                    row.cell(_pdf_text(m.kind, face))
+                    row.cell(_pdf_text(m.status, face))
                     row.cell(_pdf_text(name, face))
                     row.cell(_pdf_text(f"{m.stake_delta:+.2f}", face))
-                    after = f"${m.stake_after:.2f}" if m.stake_after is not None else "n/a"
-                    row.cell(_pdf_text(after, face))
                     row.cell(_pdf_text(m.reason_plain, face))
-                    row.cell(_pdf_text(m.amount_plain, face))
         pdf.set_x(pdf.l_margin)
         pdf.ln(4)
 
@@ -390,6 +425,7 @@ def write_bets_explained_pdf(
     pdf.set_font(face, size=7)
     t_headers = (
         "Player",
+        "Entered",
         "Market",
         "Stake",
         "Entry posted",
@@ -399,8 +435,8 @@ def write_bets_explained_pdf(
         "Live EdgeW",
         "Live vs",
     )
-    t_aligns = ("LEFT", "LEFT", "RIGHT", "RIGHT", "RIGHT", "RIGHT", "RIGHT", "RIGHT", "RIGHT")
-    t_widths = [pdf.epw * w for w in (0.16, 0.08, 0.08, 0.10, 0.10, 0.10, 0.10, 0.09, 0.09)]
+    t_aligns = ("LEFT", "LEFT", "LEFT", "RIGHT", "RIGHT", "RIGHT", "RIGHT", "RIGHT", "RIGHT", "RIGHT")
+    t_widths = [pdf.epw * w for w in (0.13, 0.13, 0.08, 0.07, 0.09, 0.09, 0.09, 0.11, 0.10, 0.11)]
     with pdf.table(
         col_widths=t_widths,
         text_align=t_aligns,
@@ -421,12 +457,13 @@ def write_bets_explained_pdf(
         if not rows:
             row = table.row()
             row.cell(_pdf_text("No tickets.", face))
-            for _ in range(8):
+            for _ in range(9):
                 row.cell("")
         else:
             for t in rows:
                 row = table.row()
                 row.cell(_pdf_text(t.player_name, face))
+                row.cell(_pdf_text(format_paper_time(getattr(t, "entered_at", None)), face))
                 row.cell(_pdf_text(t.market, face))
                 row.cell(_pdf_text(f"${t.stake:.2f}", face))
                 row.cell(_pdf_text(f"{t.posted:.2f}", face))

@@ -113,6 +113,38 @@ def latest_pre_audit(tournament_id: str, directory: Path | None = None) -> Audit
     return best
 
 
+def list_event_audits(
+    tournament_id: str,
+    directory: Path | None = None,
+    *,
+    skip_compare: bool = True,
+) -> list[AuditRecord]:
+    """Snapshots for one ESPN/event id, oldest first. Missing dir is empty, not invented."""
+    from pydantic import ValidationError
+
+    from golf_offshoot.data_feeds.http import package_data_dir
+
+    d = directory or (package_data_dir() / "snapshots")
+    if not d.exists():
+        return []
+    want = str(tournament_id or "")
+    if not want:
+        return []
+    out: list[AuditRecord] = []
+    for path in d.glob("*.json"):
+        try:
+            rec = load_audit(path)
+        except (OSError, ValueError, KeyError, TypeError, ValidationError):
+            continue
+        if str(rec.tournament_id) != want:
+            continue
+        if skip_compare and rec.extra.get("compare_path"):
+            continue
+        out.append(rec)
+    out.sort(key=lambda r: (r.as_of, r.run_id))
+    return out
+
+
 def diff_runs(previous: AuditRecord, current: AuditRecord) -> list[str]:
     from golf_offshoot.models.enums import Horizon
 

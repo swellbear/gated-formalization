@@ -13,7 +13,7 @@ from golf_offshoot.models.schemas import (
 )
 
 
-def _player_vector(p: PlayerInputs) -> np.ndarray:
+def _player_vector(p: PlayerInputs, *, honest: bool = False) -> np.ndarray:
     """Fixed 8-d vector so mixed SG coverage still cosine-compares."""
     sg = p.sg
     sg_ok = sg.quality is not None and not sg.quality.missing
@@ -21,30 +21,40 @@ def _player_vector(p: PlayerInputs) -> np.ndarray:
     acc = 0.0 if sg.driving_accuracy_pct is None else (sg.driving_accuracy_pct - 60.0) / 10.0
     if sg_ok:
         ott, app, arg, putt = sg.ott, sg.app, sg.arg, sg.putt
+    elif honest:
+        ott = app = arg = putt = float("nan")
     else:
         ott = app = arg = putt = 0.0
     recent = p.recent_form_sg
     if p.recent_sg is not None and p.recent_sg.quality is not None and not p.recent_sg.quality.missing:
         recent = p.recent_sg.total
+    elif honest and recent is None:
+        recent = float("nan")
     return np.array(
-        [p.talent_prior, float(recent or 0.0), dist, acc, ott, app, arg, putt],
+        [p.talent_prior, float(recent or 0.0) if recent == recent else float("nan"), dist, acc, ott, app, arg, putt],
         dtype=float,
     )
 
 
 def cosine(a: np.ndarray, b: np.ndarray) -> float:
-    na, nb = np.linalg.norm(a), np.linalg.norm(b)
+    mask = np.isfinite(a) & np.isfinite(b)
+    if mask.sum() < 2:
+        return 0.0
+    aa, bb = a[mask], b[mask]
+    na, nb = np.linalg.norm(aa), np.linalg.norm(bb)
     if na < 1e-9 or nb < 1e-9:
         return 0.0
-    return float(np.dot(a, b) / (na * nb))
+    return float(np.dot(aa, bb) / (na * nb))
 
 
 def comparable_borrows(
     field: list[PlayerInputs],
     k: int = 6,
     min_sim: float = 0.15,
+    *,
+    honest: bool = False,
 ) -> dict[str, ComparableBorrow]:
-    vecs = [_player_vector(p) for p in field]
+    vecs = [_player_vector(p, honest=honest) for p in field]
     out: dict[str, ComparableBorrow] = {}
     for i, p in enumerate(field):
         if p.course_history_rounds >= THIN_SAMPLE_N and not p.player.is_lesser_known:
@@ -79,6 +89,8 @@ def comparable_borrows(
 def apply_player_borrow(
     field: list[PlayerInputs],
     borrows: dict[str, ComparableBorrow],
+    *,
+    honest: bool = False,
 ) -> None:
     """Blend course_history / form toward neighbors. Mutates factor boards if present."""
     by_id = {p.player.player_id: p for p in field}
@@ -96,7 +108,7 @@ def apply_player_borrow(
                 neighbor_hist.append(w * n.course_history_sg)
         if neighbor_form and p.recent_form_sg is not None:
             p.recent_form_sg = (1 - b.shrinkage) * p.recent_form_sg + b.shrinkage * sum(neighbor_form)
-        elif neighbor_form and p.recent_form_sg is None:
+        elif neighbor_form and p.recent_form_sg is None and not honest:
             p.recent_form_sg = sum(neighbor_form)
         if neighbor_hist and (p.course_history_rounds < THIN_SAMPLE_N):
             blended = sum(neighbor_hist)

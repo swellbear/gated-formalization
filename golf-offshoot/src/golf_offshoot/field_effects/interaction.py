@@ -27,7 +27,7 @@ def _profile(p: PlayerInputs) -> dict[str, float | None]:
     }
 
 
-def course_demand(course: Course) -> dict[str, float]:
+def course_demand(course: Course, *, honest: bool = False) -> dict[str, float]:
     ct = course.course_type
     demand = {
         "distance": 0.35 + 0.4 * (course.yardage - 7000) / 800.0,
@@ -37,6 +37,11 @@ def course_demand(course: Course) -> dict[str, float]:
         "arg": 0.25 + 0.40 * course.rough_severity,
         "ott": 0.40,
     }
+    if honest:
+        demand["accuracy"] = 0.30
+        demand["putting"] = 0.35
+        demand["arg"] = 0.25
+        demand["distance"] = 0.35 + 0.4 * (course.yardage - 7000) / 800.0
     if ct == CourseType.LINKS:
         demand["distance"] *= 0.75
         demand["accuracy"] *= 1.05
@@ -58,6 +63,8 @@ def field_interaction_adjustments(
     field: list[PlayerInputs],
     course: Course,
     scale: float = 0.22,
+    *,
+    honest: bool = False,
 ) -> dict[str, float]:
     """Return Δθ per player_id from relative-to-field × course demand × crowding."""
     if len(field) < 4:
@@ -65,33 +72,51 @@ def field_interaction_adjustments(
     profiles = [_profile(p) for p in field]
     keys_all = ["distance", "accuracy", "approach", "putting", "arg", "ott"]
     keys = []
+    min_frac = 0.9 if honest else 0.5
     for k in keys_all:
         n_have = sum(pr[k] is not None for pr in profiles)
-        if n_have >= max(4, int(0.5 * len(field))):
+        if n_have >= max(4, int(min_frac * len(field))):
             keys.append(k)
     if not keys:
         return {p.player.player_id: 0.0 for p in field}
     mats = np.array(
-        [[float(pr[k]) if pr[k] is not None else 0.0 for k in keys] for pr in profiles],
+        [[float("nan") if pr[k] is None else float(pr[k]) for k in keys] for pr in profiles],
         dtype=float,
     )
+    if honest:
+        mean = np.nanmean(mats, axis=0)
+        std = np.nanstd(mats, axis=0)
+        std = np.where(~np.isfinite(std) | (std < 1e-6), 1.0, std)
+        crowding = np.exp(-std)
+        demand = course_demand(course, honest=True)
+        dvec = np.array([demand.get(k, 0.4) for k in keys])
+        rel = mats - mean
+        rel = np.where(np.isfinite(rel), rel, 0.0)
+        adj = (rel * dvec * (1.0 - 0.55 * crowding)).sum(axis=1) * scale
+        return {field[i].player.player_id: float(adj[i]) for i in range(len(field))}
+    mats = np.where(np.isfinite(mats), mats, 0.0)
     mean = mats.mean(axis=0)
     std = mats.std(axis=0)
     std = np.where(std < 1e-6, 1.0, std)
     crowding = np.exp(-std)
-    demand = course_demand(course)
+    demand = course_demand(course, honest=False)
     dvec = np.array([demand.get(k, 0.4) for k in keys])
     rel = mats - mean
     adj = (rel * dvec * (1.0 - 0.55 * crowding)).sum(axis=1) * scale
     return {field[i].player.player_id: float(adj[i]) for i in range(len(field))}
 
 
-def apply_field_interactions(field: list[PlayerInputs], course: Course) -> dict[str, float]:
+def apply_field_interactions(
+    field: list[PlayerInputs],
+    course: Course,
+    *,
+    honest: bool = False,
+) -> dict[str, float]:
     from golf_offshoot.models.enums import FactorStatus
     from golf_offshoot.models.schemas import DataQuality, FreeParameterState
     from datetime import datetime, timezone
 
-    adjs = field_interaction_adjustments(field, course)
+    adjs = field_interaction_adjustments(field, course, honest=honest)
     now = datetime.now(timezone.utc)
     n_skill = sum(
         1

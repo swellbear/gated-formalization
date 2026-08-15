@@ -372,6 +372,7 @@ def live_manage(
             by_id.get(p.player_id),
             cashout_quote=quotes.get(p.player_id),
             mode=config.mode,
+            ticket_screen=config.ticket_screen,
         )
         for p in book.positions
     ]

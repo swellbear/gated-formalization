@@ -130,10 +130,57 @@ def test_lock_paper_book_persists_and_never_auto_bets(tmp_path, monkeypatch):
     assert explained.startswith(b"%PDF")
     html_x = (pack / "02_bets_explained.html").read_text(encoding="utf-8")
     assert "Why the amounts" in html_x
+    assert "When (UTC)" in html_x
+    assert "Entered" in html_x
+    assert "Exited" in html_x
+    assert " UTC" in html_x
     assert "concentration rule" in html_x
     assert "Kurt Kitayama" in html_x
     assert "never auto-bet" in html_x.lower() or "Never auto-bet" in html_x
     assert (pack / "04_movements.json").is_file()
+
+
+def test_movement_clocks_pair_entry_and_exit(tmp_path, monkeypatch):
+    monkeypatch.setattr("golf_offshoot.strategy.paper_book.package_data_dir", lambda: tmp_path)
+    from golf_offshoot.strategy.paper_book import format_paper_time, movement_clocks
+
+    cfg = StrategyConfig(
+        enabled=True,
+        mode=StrategyMode.STAY_SELECTIVE,
+        risk=RiskPreference.CONSERVATIVE,
+        bankroll=250,
+    )
+    rec = lock_paper_positions(
+        [_row("kita", "Kurt Kitayama", 0.089, edge=0.044, posted=17.0)],
+        cfg,
+        event_id="401811962",
+        write_exports=False,
+        run_id="clk",
+    )
+    lock_mv = rec.movements[0]
+    _when, entered, exited = movement_clocks(rec, lock_mv)
+    assert exited == "open"
+    assert entered == format_paper_time(lock_mv.at)
+    pos = rec.book.positions[0]
+    rec = apply_advice(
+        rec,
+        [
+            PaperMovement(
+                movement_id="exit-clk",
+                kind="exit",
+                player_id=pos.player_id,
+                player_name=pos.player_name,
+                position_id=pos.position_id,
+                bet_type="win",
+                stake_delta=-pos.stake,
+            )
+        ],
+    )
+    exit_mv = next(m for m in rec.movements if m.kind == "exit")
+    when, entered, exited = movement_clocks(rec, exit_mv)
+    assert exited == when
+    assert entered == format_paper_time(lock_mv.at)
+    assert exited != "open"
 
 
 def test_lock_sizes_cleared_full_unit_observation_quarter(tmp_path, monkeypatch):

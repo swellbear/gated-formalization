@@ -27,6 +27,7 @@ def mark_position(
     *,
     cashout_quote: float | None = None,
     mode: StrategyMode = StrategyMode.STAY_SELECTIVE,
+    ticket_screen: str = "both",
 ) -> PositionMark:
     live_model = pos.entry_model_p
     live_low = pos.entry_model_p
@@ -80,12 +81,15 @@ def mark_position(
     pnl = mtm - pos.stake
 
     collapsed = False
-    if live_edge is not None:
+    action_edge = live_edge
+    if (ticket_screen or "both").lower() == "posted":
+        action_edge = live_posted_edge
+    if action_edge is not None:
         floor = STRATEGY_EDGE_COLLAPSE_RATIO * max(pos.entry_edge, 0.01)
-        collapsed = live_edge < floor or live_edge < 0.0
+        collapsed = action_edge < floor or action_edge < 0.0
     improved = False
-    if live_edge is not None:
-        improved = live_edge >= pos.entry_edge + STRATEGY_EDGE_IMPROVE_ABS
+    if action_edge is not None:
+        improved = action_edge >= pos.entry_edge + STRATEGY_EDGE_IMPROVE_ABS
     runner = pnl >= STRATEGY_RUNNER_PNL_FRAC * pos.stake
 
     return PositionMark(

@@ -33,7 +33,7 @@ def main(argv: list[str] | None = None) -> int:
         "command",
         nargs="?",
         default="demo",
-        choices=["demo", "board", "explain", "strategy", "ingest", "calibrate", "pressure-test", "live", "shadow", "paper-export", "paper-ledger", "paper-deposit", "paper-withdraw", "paper-settle"],
+        choices=["demo", "board", "explain", "strategy", "ingest", "calibrate", "pressure-test", "live", "shadow", "paper-export", "paper-ledger", "paper-deposit", "paper-withdraw", "paper-settle", "compare-replay"],
     )
     parser.add_argument("--course-type", default="parkland")
     parser.add_argument("--player", default="p01")
@@ -61,7 +61,17 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument(
         "--apply-paper",
         action="store_true",
-        help="live: apply hold/sell/add/reallocate advice to the mock paper book (still never real money)",
+        help="live: force-apply hold/sell/add/reallocate advice to the mock paper book (still never real money)",
+    )
+    parser.add_argument(
+        "--no-apply-paper",
+        action="store_true",
+        help="live: record advice but do not apply even if the advice set changed",
+    )
+    parser.add_argument(
+        "--compare-method",
+        action="store_true",
+        help="live: ingest once, run A θ + B-guts θ, auto-apply four independent paper books, write fights page",
     )
     parser.add_argument("--amount", type=float, default=0.0, help="paper-deposit / paper-withdraw amount")
     parser.add_argument("--note", default="", help="note for paper-deposit / paper-withdraw")
@@ -102,6 +112,8 @@ def main(argv: list[str] | None = None) -> int:
         return _cmd_paper_withdraw(args)
     if args.command == "paper-settle":
         return _cmd_paper_settle(args)
+    if args.command == "compare-replay":
+        return _cmd_compare_replay(args)
 
     print(DEMO_BANNER)
     ct = CourseType(args.course_type)
@@ -266,7 +278,6 @@ def _cmd_live(args) -> int:
     from golf_offshoot.operating import run_operating
     from golf_offshoot.strategy.paper_book import (
         advice_from_recommendation,
-        apply_advice,
         backfill_estimated_cashouts,
         format_paper_book,
         load_paper_book,
@@ -310,20 +321,51 @@ def _cmd_live(args) -> int:
         bankroll = args.bankroll
     strat_mode = StrategyMode(args.mode)
     strat_risk = RiskPreference(args.risk)
-    result = run_operating(
-        event_id=event_hint,
-        mode=RunMode.LIVE,
-        sims=args.sims,
-        enable_strategy=True,
-        persist=True,
-        refresh=args.refresh,
-        bankroll=bankroll,
-        odds_book=args.book,
-        open_book=paper,
-        cashout_quotes=cash_bound or None,
-        strategy_mode=strat_mode,
-        risk=strat_risk,
-    )
+    if args.compare_method and args.lock_paper:
+        print("compare-method will not --lock-paper the lived museum book")
+        args.lock_paper = False
+    if args.compare_method:
+        from golf_offshoot.compare.runner import run_compare_method
+
+        payload = run_compare_method(
+            event_id=event_hint,
+            sims=args.sims,
+            refresh=args.refresh,
+            odds_book=args.book,
+            persist=True,
+            include_season_stats=not args.no_season_stats,
+            lived_strategy_config=StrategyConfig(
+                enabled=True,
+                mode=strat_mode,
+                risk=strat_risk,
+                bankroll=bankroll,
+                ticket_screen="both",
+                never_auto_bet=True,
+            ),
+            lived_open_book=paper,
+            cashout_quotes=cash_bound or None,
+        )
+        result = payload["lived_result"]
+        print(
+            f"compare-method fights={payload['fights']} "
+            f"guts={payload['guts_run_id']} law={payload['law_hash']}"
+        )
+        print("independent $250 compare books; lived paper not re-locked")
+    else:
+        result = run_operating(
+            event_id=event_hint,
+            mode=RunMode.LIVE,
+            sims=args.sims,
+            enable_strategy=True,
+            persist=True,
+            refresh=args.refresh,
+            bankroll=bankroll,
+            odds_book=args.book,
+            open_book=paper,
+            cashout_quotes=cash_bound or None,
+            strategy_mode=strat_mode,
+            risk=strat_risk,
+        )
     from golf_offshoot.audit.journal import latest_pre_audit
     from golf_offshoot.data_feeds.http import package_data_dir
 
@@ -369,8 +411,6 @@ def _cmd_live(args) -> int:
         if p
     ]
     if args.lock_paper:
-        from golf_offshoot.models.strategy import StrategyConfig
-
         if tid in settled_ids:
             record = load_paper_file(tid)
             print("this event just auto-settled; not locking a new paper book")
@@ -400,9 +440,16 @@ def _cmd_live(args) -> int:
         save_paper_book(record)
     if record and result.strategy:
         advice = advice_from_recommendation(record, result.strategy, run_id=result.run_id)
+        from golf_offshoot.compare.apply import maybe_apply_paper
+
         if args.apply_paper:
-            record = apply_advice(record, advice)
-            print("applied paper advice (mock only; never auto-bet)")
+            record, applied = maybe_apply_paper(record, advice, force=True)
+            if applied:
+                print("applied paper advice (mock only; never auto-bet)")
+        elif not args.no_apply_paper:
+            record, applied = maybe_apply_paper(record, advice)
+            if applied:
+                print("applied paper advice (mock only; never auto-bet) [advice set changed]")
         record.latest_advice = advice
         save_paper_book(record)
         pack = write_paper_pack(
@@ -413,6 +460,19 @@ def _cmd_live(args) -> int:
         )
         print(format_paper_book(record))
         print(f"paper pack: {pack}")
+    if args.compare_method:
+        from golf_offshoot.compare.pack import write_batch_pack
+
+        batch = write_batch_pack(
+            tid,
+            event_name=result.tournament.name,
+            run_id=result.run_id,
+            extra_files=extras,
+        )
+        print(f"batch pack: {batch}")
+        combo = batch / "00_full_readout.pdf"
+        if combo.is_file():
+            print(f"full readout: {combo}")
     return 0
 
 
@@ -530,6 +590,26 @@ def _cmd_paper_settle(args) -> int:
     print(f"paper pack: {pack}")
     print("Open PDFs in Edge, Chrome, or Adobe -- not as source in the editor.")
     return 0
+
+
+def _cmd_compare_replay(args) -> int:
+    from golf_offshoot.compare.replay import replay_event
+
+    event_id = args.event or "401811962"
+    payload = replay_event(event_id)
+    print(
+        f"compare-replay event={payload['event_id']} snapshots={payload['n_snapshots']} "
+        f"law={payload['law_hash']}"
+    )
+    print(f"fights: {payload['fights']}")
+    if payload.get("batch_pack"):
+        print(f"batch pack: {payload['batch_pack']}")
+        combo = Path(payload["batch_pack"]) / "00_full_readout.pdf"
+        if combo.is_file():
+            print(f"full readout: {combo}")
+    for n in payload.get("notes") or []:
+        print(f" - {n}")
+    return 0 if payload.get("n_snapshots") else 1
 
 
 def _print_table_export(result) -> None:

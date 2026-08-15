@@ -17,6 +17,7 @@ from golf_offshoot.ranking.export_table import (
 from golf_offshoot.strategy.paper_book import (
     PaperBookFile,
     clocks_plain,
+    format_paper_time,
     observation_plain,
     observation_technical,
     save_paper_book,
@@ -34,14 +35,17 @@ def write_paper_book_files(
     persist: bool = True,
     live_outputs=None,
     live_run_id: str = "",
+    title: str | None = None,
+    subtitle: str | None = None,
 ) -> TableExportPaths:
     """Write a new paper-book artifact for this lock. Never reuse a ranking PDF."""
     d = directory or default_export_dir()
     d.mkdir(parents=True, exist_ok=True)
     stem = paper_export_stem(record)
     live_note = live_run_id or "n/a"
-    title = f"Paper book — {record.tournament_name or record.tournament_id}"
-    subtitle = (
+    event = record.tournament_name or record.tournament_id
+    title = title or f"Paper book — {event}"
+    subtitle = subtitle or (
         f"${record.bankroll:.0f} mock   {record.odds_book or 'book n/a'}   "
         f"locked {record.locked_at.strftime('%Y-%m-%d %H:%M UTC')}   "
         f"lock_run={record.locked_from_run_id or 'n/a'}   "
@@ -51,7 +55,12 @@ def write_paper_book_files(
     txt = d / f"{stem}.txt"
     html_path = d / f"{stem}.html"
     pdf = d / f"{stem}.pdf"
-    txt.write_text(paper_book_document(record, tickets=tickets, live_run_id=live_run_id), encoding="utf-8")
+    txt.write_text(
+        paper_book_document(
+            record, tickets=tickets, live_run_id=live_run_id, heading=title
+        ),
+        encoding="utf-8",
+    )
     html_path.write_text(
         render_paper_html(record, title=title, subtitle=subtitle, tickets=tickets),
         encoding="utf-8",
@@ -69,15 +78,26 @@ def paper_export_stem(record: PaperBookFile) -> str:
     ts = record.locked_at.astimezone(timezone.utc).strftime("%Y%m%dT%H%M%SZ")
     tid = _safe(record.tournament_id)
     run = _safe(record.locked_from_run_id or "lock")
+    pid = getattr(record, "path_id", None) or "lived"
+    if pid and pid != "lived":
+        return f"{tid}_{pid}_paper_{ts}_{run}"
     return f"{tid}_paper_{ts}_{run}"
 
 
-def paper_book_document(record: PaperBookFile, *, tickets=None, live_run_id: str = "") -> str:
+def paper_book_document(
+    record: PaperBookFile,
+    *,
+    tickets=None,
+    live_run_id: str = "",
+    heading: str | None = None,
+) -> str:
     cash = record.bankroll - record.book.open_exposure
     frac = (record.book.open_exposure / record.bankroll) if record.bankroll else 0.0
     rows = tickets if tickets is not None else ticket_rows(record)
+    pid = getattr(record, "path_id", None) or "lived"
     lines = [
-        f"PAPER BOOK  {record.tournament_name or record.tournament_id}",
+        heading or f"PAPER BOOK  {record.tournament_name or record.tournament_id}",
+        f"path={pid}",
         f"${record.bankroll:.0f} mock  |  {record.odds_book or 'book n/a'}  |  "
         f"locked {record.locked_at.isoformat()}  |  lock_run={record.locked_from_run_id or 'n/a'}  |  "
         f"live_run={live_run_id or 'n/a'}",
@@ -91,13 +111,14 @@ def paper_book_document(record: PaperBookFile, *, tickets=None, live_run_id: str
         "",
         clocks_plain(),
         "",
-        f"{'Player':<22} {'Mkt':<6} {'Stake':>8} {'If wins':>9}  "
+        f"{'Player':<22} {'Entered':<18} {'Mkt':<6} {'Stake':>8} {'If wins':>9}  "
         f"{'Ent post':>8} {'Ent mdl':>8} {'Ent EW':>8} {'Ent vs':>8}  "
         f"{'Live post':>9} {'Live mdl':>8} {'Live EW':>8} {'Live vs':>8}",
     ]
     for t in rows:
+        entered = format_paper_time(getattr(t, "entered_at", None))
         lines.append(
-            f"{t.lane + ' ' + t.player_name:<22} {t.market:<6} ${t.stake:>7.2f} ${t.if_wins:>8.2f}  "
+            f"{t.lane + ' ' + t.player_name:<22} {entered:<18} {t.market:<6} ${t.stake:>7.2f} ${t.if_wins:>8.2f}  "
             f"{t.posted:>8.2f} {t.model_win * 100:>7.1f}% {t.edge_w * 100:>+7.1f}pp "
             f"{t.posted_edge * 100:>+7.1f}pp  "
             f"{_fmt_dec(t.live_posted):>9} {_fmt_pct(t.live_model):>8} {_fmt_pp(t.live_edge_w):>8} "
@@ -127,6 +148,7 @@ def render_paper_html(record: PaperBookFile, *, title: str, subtitle: str, ticke
             + stripe
             + ">"
             + f"<td class='txt'>{html.escape(t.lane + ' ' + t.player_name)}</td>"
+            + f"<td class='txt'>{html.escape(format_paper_time(getattr(t, 'entered_at', None)))}</td>"
             + f"<td class='txt'>{html.escape(t.market)}</td>"
             + f"<td class='num'>${t.stake:.2f}</td>"
             + f"<td class='num'>${t.if_wins:.2f}</td>"
@@ -142,7 +164,7 @@ def render_paper_html(record: PaperBookFile, *, title: str, subtitle: str, ticke
         )
     cash = record.bankroll - record.book.open_exposure
     frac = (record.book.open_exposure / record.bankroll) if record.bankroll else 0.0
-    body = "".join(rows_html) or "<tr><td colspan='12'>No tickets locked.</td></tr>"
+    body = "".join(rows_html) or "<tr><td colspan='13'>No tickets locked.</td></tr>"
     return f"""<!DOCTYPE html>
 <html lang="en">
 <head>
@@ -184,7 +206,8 @@ def render_paper_html(record: PaperBookFile, *, title: str, subtitle: str, ticke
 <table class="field">
 <thead>
 <tr>
-<th class="txt" rowspan="2">Player</th><th class="txt" rowspan="2">Market</th>
+<th class="txt" rowspan="2">Player</th><th class="txt" rowspan="2">Entered</th>
+<th class="txt" rowspan="2">Market</th>
 <th class="num" rowspan="2">Stake</th><th class="num" rowspan="2">If wins</th>
 <th class="group" colspan="4">At entry</th>
 <th class="group" colspan="4">This live</th>
@@ -290,6 +313,7 @@ def write_paper_pdf(
     headings_style = FontFace(emphasis="BOLD", color=(255, 255, 255), fill_color=(31, 59, 77))
     headers = (
         "Player",
+        "Entered",
         "Market",
         "Stake",
         "If wins",
@@ -303,6 +327,7 @@ def write_paper_pdf(
         "Live vs",
     )
     aligns = (
+        "LEFT",
         "LEFT",
         "LEFT",
         "RIGHT",
@@ -337,6 +362,7 @@ def write_paper_pdf(
             for t in rows:
                 row = table.row()
                 row.cell(_pdf_text(f"{t.lane} {t.player_name}", face))
+                row.cell(_pdf_text(format_paper_time(getattr(t, "entered_at", None)), face))
                 row.cell(_pdf_text(t.market, face))
                 row.cell(_pdf_text(f"${t.stake:.2f}", face))
                 row.cell(_pdf_text(f"${t.if_wins:.2f}", face))
@@ -351,7 +377,7 @@ def write_paper_pdf(
         else:
             row = table.row()
             row.cell(_pdf_text("No tickets locked.", face))
-            for _ in range(11):
+            for _ in range(12):
                 row.cell("")
     pdf.set_x(pdf.l_margin)
     if pdf.get_y() > pdf.h - 48:
@@ -385,6 +411,10 @@ def write_paper_pdf(
 
 def _glossary() -> list[tuple[str, str]]:
     return [
+        (
+            "Entered",
+            "When this paper ticket was opened (UTC). Exits are on the why-bets movement table, not here.",
+        ),
         (
             "At entry",
             "The booked ticket: posted decimal, model, EdgeW, and vs posted at lock or apply. Never rewritten when live runs.",
@@ -426,7 +456,7 @@ def _glossary() -> list[tuple[str, str]]:
 
 
 def _paper_col_widths(epw: float) -> list[float]:
-    weights = (0.14, 0.07, 0.07, 0.08, 0.08, 0.08, 0.08, 0.08, 0.08, 0.08, 0.08, 0.08)
+    weights = (0.12, 0.11, 0.07, 0.06, 0.07, 0.07, 0.07, 0.07, 0.07, 0.07, 0.07, 0.07, 0.08)
     total = sum(weights)
     return [epw * w / total for w in weights]
 

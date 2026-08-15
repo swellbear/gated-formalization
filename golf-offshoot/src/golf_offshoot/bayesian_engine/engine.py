@@ -29,6 +29,7 @@ class BayesianEngine:
         self.alpha = complete_alpha(alpha)
         self.ard_scale = ard_scale or {}
         self.sim = sim or SimConfig()
+        self.honest = False
 
     def player_theta(self, player: PlayerInputs) -> ThetaState:
         return update_theta(
@@ -37,6 +38,7 @@ class BayesianEngine:
             player.factors,
             self.alpha,
             self.ard_scale,
+            honest=self.honest,
         )
 
     def run(

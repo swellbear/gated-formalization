@@ -20,6 +20,13 @@ from golf_offshoot.free_parameters.catalog import CATALOG_BY_ID
 from golf_offshoot.models.enums import FactorStatus
 from golf_offshoot.models.schemas import FactorContribution, FreeParameterState
 
+_HONEST_PARK = frozenset(
+    {
+        "narrative_momentum",
+        "live_tee_pairing",
+    }
+)
+
 
 @dataclass
 class ThetaState:
@@ -64,6 +71,8 @@ def update_theta(
     board: dict[str, FreeParameterState],
     alpha: dict[str, float] | None = None,
     ard_scale: dict[str, float] | None = None,
+    *,
+    honest: bool = False,
 ) -> ThetaState:
     """Apply all non-parked factors. Talent prior is the starting mean."""
     alpha = complete_alpha(alpha)
@@ -97,6 +106,18 @@ def update_theta(
         st = board[fid]
         defn = CATALOG_BY_ID.get(fid)
         if st.status == FactorStatus.PARKED:
+            continue
+        if honest and fid in _HONEST_PARK:
+            contribs.append(
+                FactorContribution(
+                    factor_id=fid,
+                    delta_theta=0.0,
+                    evidence=st.standardized_evidence,
+                    quality=_quality_of(st),
+                    importance=st.importance,
+                    status=FactorStatus.PARKED,
+                )
+            )
             continue
         q = _quality_of(st)
         if q < MIN_QUALITY_TO_UPDATE and st.status == FactorStatus.UNCONSTRAINED:

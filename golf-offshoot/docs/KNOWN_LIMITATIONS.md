@@ -20,6 +20,7 @@ The system is honest about where it is weak. These are not “TODO cosmetics”;
 - **Cut rule** uses ESPN `cutRound`. Playoff events with `cutRound=0` are treated as no-cut (make-cut ≈ 1 except WD).
 - **Independent rounds given θ** ignore hot-round autocorrelation except insofar as live updates re-condition.
 - **Operator leftover callout** (used vs unconstrained vs held-ticket residual) is **parked** until after St. Jude 2026. Spec: [PARKED_LEFTOVER_CALLOUT.md](PARKED_LEFTOVER_CALLOUT.md). Do not ship it mid-event.
+- **A/B compare method** is paper/mock only. Lived `{event}.json` is a museum. Compare ledgers are independent $250 Winner books and must not write `ledger.json`. See [COMPARE_METHOD.md](COMPARE_METHOD.md).
 
 ## What it will not do
 

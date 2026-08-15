@@ -28,10 +28,12 @@ _H = {
 }
 
 
-def _odds(row: PlayerOutput, bet: BetType) -> float | None:
+def _odds(row: PlayerOutput, bet: BetType, *, posted_only: bool = False) -> float | None:
     posted = row.posted_odds_by_bet.get(bet.value)
     if posted and posted > 1.0:
         return posted
+    if posted_only:
+        return None
     imp = row.market_implied_by_bet.get(bet.value)
     if imp and imp > 0:
         return 1.0 / imp
@@ -42,10 +44,20 @@ def _edge(row: PlayerOutput, bet: BetType) -> float | None:
     return row.edge_by_bet.get(bet.value)
 
 
-def _score(row: PlayerOutput, bet: BetType) -> float:
-    e = _edge(row, bet) or 0.0
+def _posted_edge(row: PlayerOutput, bet: BetType) -> float | None:
+    odds = _odds(row, bet, posted_only=True)
+    if not odds or odds <= 1.0:
+        return None
+    return float(row.probabilities.p(_H[bet]).central - 1.0 / odds)
+
+
+def _score(row: PlayerOutput, bet: BetType, ticket_screen: str = "both") -> float:
     hp = row.probabilities.p(_H[bet])
     width = max(hp.high - hp.low, 1e-6)
+    if (ticket_screen or "both").lower() == "posted":
+        e = _posted_edge(row, bet) or 0.0
+    else:
+        e = _edge(row, bet) or 0.0
     return e * row.reliability.score / (1.0 + 4.0 * width)
 
 
@@ -61,18 +73,29 @@ def build_pre_tournament(
     by_id = {r.player_id: r for r in rows}
 
     candidates: list[tuple[float, PlayerOutput, BetType]] = []
+    posted_only = (config.ticket_screen or "both").lower() == "posted"
     for row in rows:
         for bet in config.allowed_bet_types:
             if _H[bet] not in row.probabilities.horizons:
                 continue
-            odds = _odds(row, bet)
-            advice = advise_bet(row, bet, odds)
+            odds = _odds(row, bet, posted_only=posted_only)
+            advice = advise_bet(
+                row,
+                bet,
+                odds,
+                ticket_screen=config.ticket_screen,
+            )
             if advice.action == DecisionAction.PASS:
                 continue
-            e = _edge(row, bet)
-            if e is None or e <= 0:
-                continue
-            candidates.append((_score(row, bet), row, bet))
+            if posted_only:
+                pe = _posted_edge(row, bet)
+                if pe is None or pe <= 0:
+                    continue
+            else:
+                e = _edge(row, bet)
+                if e is None or e <= 0:
+                    continue
+            candidates.append((_score(row, bet, config.ticket_screen), row, bet))
     candidates.sort(key=lambda t: t[0], reverse=True)
 
     for _, row, bet in candidates:
@@ -91,7 +114,9 @@ def build_pre_tournament(
             )
             break
         hp = row.probabilities.p(_H[bet])
-        odds = _odds(row, bet) or 2.0
+        odds = _odds(row, bet, posted_only=posted_only)
+        if not odds:
+            continue
         stake, warn = suggested_stake(
             bankroll=config.bankroll,
             model_p=hp.central,

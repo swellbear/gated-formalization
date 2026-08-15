@@ -64,6 +64,8 @@ class StrategyConfig(BaseModel):
     )
     controls: DrawdownControls = Field(default_factory=DrawdownControls)
     never_auto_bet: bool = True
+    ticket_screen: str = "both"
+    """both = EdgeW and vs-posted (lived). edgew = standard-edge control. posted = method B."""
 
 
 class StrategyPosition(BaseModel):

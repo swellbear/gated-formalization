@@ -12,7 +12,7 @@ from golf_offshoot.ranking.export_table import (
     _register_pdf_font,
     _require_fpdf2,
 )
-from golf_offshoot.strategy.paper_book import PaperBookFile
+from golf_offshoot.strategy.paper_book import PaperBookFile, format_paper_time, movement_clocks
 from golf_offshoot.strategy.paper_ledger import EventWeek, PaperLedger, load_ledger
 
 
@@ -22,12 +22,14 @@ def write_bankroll_files(
     ledger: PaperLedger | None = None,
     record: PaperBookFile | None = None,
     week: EventWeek | None = None,
+    title: str | None = None,
 ) -> TableExportPaths:
     ledger = ledger or load_ledger()
     directory.mkdir(parents=True, exist_ok=True)
-    title = "Paper bankroll — week and lifetime"
-    if record:
-        title = f"Paper bankroll — {record.tournament_name or record.tournament_id}"
+    if not title:
+        title = "Paper bankroll — week and lifetime"
+        if record:
+            title = f"Paper bankroll — {record.tournament_name or record.tournament_id}"
     subtitle = (
         f"current ${ledger.bankroll:.2f} mock   deposits ${ledger.deposits:.2f}   "
         f"withdrawals ${ledger.withdrawals:.2f}   betting P/L ${ledger.betting_pnl:+.2f}   "
@@ -107,8 +109,10 @@ def bankroll_document(
         if not record.movements:
             lines.append("  (none)")
         for m in record.movements:
+            when, entered, exited = movement_clocks(record, m)
             lines.append(
-                f"  {m.kind} {m.status} {m.player_name} delta={m.stake_delta:+.2f}  {m.reason_plain}"
+                f"  {when} {m.kind} {m.status} {m.player_name} "
+                f"entered={entered} exited={exited} delta={m.stake_delta:+.2f}  {m.reason_plain}"
             )
     week = week or _week_for(ledger, record)
     if week:
@@ -197,7 +201,10 @@ def render_bankroll_html(
         for i, m in enumerate(record.movements):
             stripe = ' class="alt"' if i % 2 else ""
             move_rows += (
-                f"<tr{stripe}><td>{html.escape(m.kind)}</td><td>{html.escape(m.status)}</td>"
+                f"<tr{stripe}><td>{html.escape(format_paper_time(m.at))}</td>"
+                f"<td>{html.escape(movement_clocks(record, m)[1])}</td>"
+                f"<td>{html.escape(movement_clocks(record, m)[2])}</td>"
+                f"<td>{html.escape(m.kind)}</td><td>{html.escape(m.status)}</td>"
                 f"<td>{html.escape(m.player_name)}</td>"
                 f"<td class='num'>{m.stake_delta:+.2f}</td>"
                 f"<td>{html.escape(m.reason_plain)}</td></tr>"
@@ -220,17 +227,18 @@ def render_bankroll_html(
             kind = p.bet_type.value if hasattr(p.bet_type, "value") else str(p.bet_type)
             pos_parts.append(
                 f"<tr{stripe}><td>{html.escape(p.player_name)}</td>"
+                f"<td>{html.escape(format_paper_time(p.entered_at))}</td>"
                 f"<td>{html.escape(kind)}</td>"
                 f"<td class='num'>${p.stake:.2f}</td>"
                 f"<td class='num'>{p.decimal_odds:.2f}</td>"
                 f"<td class='num'>${p.stake * p.decimal_odds:.2f}</td></tr>"
             )
-        pos_body = "".join(pos_parts) or "<tr><td colspan='5'>No open tickets.</td></tr>"
+        pos_body = "".join(pos_parts) or "<tr><td colspan='6'>No open tickets.</td></tr>"
         open_block = f"""
 <h2>Open exposure</h2>
 <p class="caption">Open tickets ${open_exp:.2f} sit at cost. Cash at cost ${cash:.2f}.
 Settled: {'yes' if settled_flag else 'no'}.</p>
-<table><thead><tr><th>Player</th><th>Market</th><th class="num">Stake</th>
+<table><thead><tr><th>Player</th><th>Entered</th><th>Market</th><th class="num">Stake</th>
 <th class="num">Posted</th><th class="num">If wins</th></tr></thead>
 <tbody>{pos_body}</tbody></table>
 """
@@ -248,8 +256,8 @@ Bankroll ${week.bankroll_before:.2f} to ${week.bankroll_after:.2f}.</p>
     if record:
         moves_block = f"""
 <h2>This week's applied moves</h2>
-<table><thead><tr><th>Action</th><th>Status</th><th>Player</th><th class="num">Delta</th><th>Why</th></tr></thead>
-<tbody>{move_rows or "<tr><td colspan='5'>None.</td></tr>"}</tbody></table>
+<table><thead><tr><th>When (UTC)</th><th>Entered</th><th>Exited</th><th>Action</th><th>Status</th><th>Player</th><th class="num">Delta</th><th>Why</th></tr></thead>
+<tbody>{move_rows or "<tr><td colspan='8'>None.</td></tr>"}</tbody></table>
 """
     return f"""<!DOCTYPE html>
 <html lang="en"><head><meta charset="utf-8"/><title>{html.escape(title)}</title>
@@ -429,12 +437,13 @@ def write_bankroll_pdf(
             f"Cash at cost ${cash:.2f}. Settled: {'yes' if settled else 'no'}."
         )
         table(
-            ("Player", "Market", "Stake", "Posted", "If wins"),
-            ("LEFT", "LEFT", "RIGHT", "RIGHT", "RIGHT"),
-            [pdf.epw * w for w in (0.28, 0.14, 0.16, 0.16, 0.26)],
+            ("Player", "Entered", "Market", "Stake", "Posted", "If wins"),
+            ("LEFT", "LEFT", "LEFT", "RIGHT", "RIGHT", "RIGHT"),
+            [pdf.epw * w for w in (0.20, 0.18, 0.12, 0.14, 0.16, 0.20)],
             [
                 [
                     p.player_name,
+                    format_paper_time(p.entered_at),
                     p.bet_type.value if hasattr(p.bet_type, "value") else str(p.bet_type),
                     f"${p.stake:.2f}",
                     f"{p.decimal_odds:.2f}",
@@ -447,11 +456,18 @@ def write_bankroll_pdf(
     if record and record.movements:
         section("This week's applied moves")
         table(
-            ("Action", "Status", "Player", "Delta", "Why"),
-            ("LEFT", "LEFT", "LEFT", "RIGHT", "LEFT"),
-            [pdf.epw * w for w in (0.10, 0.10, 0.16, 0.10, 0.54)],
+            ("When UTC", "Entered", "Exited", "Action", "Status", "Player", "Delta", "Why"),
+            ("LEFT", "LEFT", "LEFT", "LEFT", "LEFT", "LEFT", "RIGHT", "LEFT"),
+            [pdf.epw * w for w in (0.13, 0.13, 0.10, 0.08, 0.08, 0.12, 0.08, 0.28)],
             [
-                [m.kind, m.status, m.player_name, f"{m.stake_delta:+.2f}", m.reason_plain]
+                [
+                    *movement_clocks(record, m),
+                    m.kind,
+                    m.status,
+                    m.player_name,
+                    f"{m.stake_delta:+.2f}",
+                    m.reason_plain,
+                ]
                 for m in record.movements
             ],
             "None.",

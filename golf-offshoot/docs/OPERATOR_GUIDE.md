@@ -4,7 +4,7 @@ How to run Golf Betting Offshoot week to week. Model `golf-offshoot-0.7.0`.
 
 This is an operations manual, not a sales page. If a field is missing, treat it as missing. If strategy returns no action, that is often the correct output.
 
-Related internals: [Architecture](ARCHITECTURE.md), [Data feeds](DATA_FEEDS.md), [Strategy layer](STRATEGY_LAYER.md), [Known limitations](KNOWN_LIMITATIONS.md), [Shadow journal](SHADOW_JOURNAL.md), [Calibration](CALIBRATION.md).
+Related internals: [Architecture](ARCHITECTURE.md), [Data feeds](DATA_FEEDS.md), [Strategy layer](STRATEGY_LAYER.md), [Known limitations](KNOWN_LIMITATIONS.md), [Shadow journal](SHADOW_JOURNAL.md), [Calibration](CALIBRATION.md), [Compare method](COMPARE_METHOD.md).
 
 ---
 
@@ -179,7 +179,16 @@ python -m golf_offshoot live --event 401811962 --book bovada --bankroll 250
 python -m golf_offshoot paper-export --event 401811962
 ```
 
-`live` with an existing paper book records hold / reduce / exit / add / reallocate as **advice** in that snapshot's pack. It does not change the tickets unless you also pass `--apply-paper` (still mock money, still never a real bet). Open pack PDFs in Edge, Chrome, or Adobe — not as source in the editor.
+`live` with an existing paper book records hold / reduce / exit / add / reallocate as **advice** in that snapshot's pack. When the **actionable** advice set changes (not a HOLD-only snapshot), it auto-applies that mock book. `--no-apply-paper` records advice without applying. `--apply-paper` force-applies even if the set did not change. Still mock money, still never a real bet. Open pack PDFs in Edge, Chrome, or Adobe — not as source in the editor.
+
+Parallel A/B paper machines (independent $250 books, lived museum not re-locked): [Compare method](COMPARE_METHOD.md).
+
+```bash
+python -m golf_offshoot live --event 401811962 --book bovada --compare-method
+python -m golf_offshoot compare-replay --event 401811962
+```
+
+`--compare-method` writes one folder under `data/exports/packs/{espn_id}_{time}_{run}_batch/` with **`00_full_readout.pdf`** in this order: how to read (five-book legend), fights, ESPN leaderboard, model field, lived / A-replay / B-guts / B-nerves / B-full tickets and why-bets, then lived bankroll. Each ticket page is titled with the book. A-control shares A-replay; there is not a second A book. Individual PDFs stay in the folder. Open the readout in Edge, Chrome, or Adobe — not as source in the editor. Lived museum paper is not re-locked.
 
 ### Paper bankroll (rollover)
 
@@ -469,7 +478,9 @@ All commands: `python -m golf_offshoot <command> ...` from `golf-offshoot/`.
 | Paper bankroll readout (week + lifetime) | `python -m golf_offshoot paper-ledger` |
 | Add / remove mock cash | `paper-deposit --amount 50` / `paper-withdraw --amount 20` |
 | Settle weekend tickets into the rollover | `live` / `paper-ledger` auto-settle when ESPN is final; or `paper-settle --event <id>` |
-| Apply mock sells/reallocates to the paper book | `python -m golf_offshoot live --event <id> --bankroll 250 --apply-paper` |
+| Apply mock sells/reallocates to the paper book | default `live` when advice set changes; `--no-apply-paper` to skip; `--apply-paper` to force |
+| A vs B method compare (2 MCs, fights + batch pack + `00_full_readout.pdf`) | `python -m golf_offshoot live --event <id> --book bovada --compare-method` |
+| Retrofit A-replay + B-nerves from snapshots | `python -m golf_offshoot compare-replay --event 401811962` |
 | Live with typed cash-out vs hold | `python -m golf_offshoot live --event <id> --book bovada --cash-out "Name=12.40"` |
 | Pre + live + three strategy modes + markdown report | `python -m golf_offshoot pressure-test --event <id> --bankroll 2000` |
 | More Monte Carlo draws | add `--sims 2500` (pressure-test floors pre at 2000) |

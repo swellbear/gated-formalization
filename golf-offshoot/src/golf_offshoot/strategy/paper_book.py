@@ -93,6 +93,10 @@ class PaperBookFile(BaseModel):
     settled_at: datetime | None = None
     settlement_pnl: float | None = None
     settlement_winner: str = ""
+    path_id: str = "lived"
+    last_advice_sig: str = ""
+    independent_bankroll: bool = False
+    method_law_hash: str = ""
 
 
 @dataclass(frozen=True)
@@ -113,6 +117,75 @@ class PaperTicketRow:
     live_edge_w: float | None = None
     live_posted_edge: float | None = None
     live_run_id: str = ""
+    entered_at: datetime | None = None
+
+
+def format_paper_time(value: datetime | None) -> str:
+    if value is None:
+        return "n/a"
+    if value.tzinfo is None:
+        value = value.replace(tzinfo=timezone.utc)
+    return value.astimezone(timezone.utc).strftime("%Y-%m-%d %H:%M UTC")
+
+
+def _bet_key(value) -> str:
+    return str(getattr(value, "value", value) or "win").lower().replace(" ", "_")
+
+
+def entry_time_for(
+    record: PaperBookFile | None,
+    *,
+    player_id: str = "",
+    player_name: str = "",
+    bet_type: str = "win",
+) -> datetime | None:
+    """First lock/add on this player+market, else the open position's entered_at."""
+    if record is None:
+        return None
+    bet = _bet_key(bet_type)
+    for p in record.book.positions:
+        same = (player_id and p.player_id == player_id) or (
+            player_name and p.player_name == player_name
+        )
+        if same and _bet_key(p.bet_type) == bet:
+            return p.entered_at
+    first: datetime | None = None
+    for mv in record.movements:
+        if mv.status and mv.status not in {"applied"}:
+            continue
+        if mv.kind not in {"lock", "new_bet", "add"}:
+            continue
+        same = (player_id and mv.player_id == player_id) or (
+            player_name and mv.player_name == player_name
+        )
+        if not same or _bet_key(mv.bet_type) != bet:
+            continue
+        if first is None or (mv.at and first and mv.at < first):
+            first = mv.at
+    return first
+
+
+def movement_clocks(
+    record: PaperBookFile | None, m: PaperMovement
+) -> tuple[str, str, str]:
+    """When this row happened, when the ticket was entered, when it exited (or open)."""
+    when = format_paper_time(getattr(m, "at", None))
+    entered_dt = entry_time_for(
+        record,
+        player_id=m.player_id,
+        player_name=m.player_name,
+        bet_type=m.bet_type or "win",
+    )
+    if entered_dt is None and m.kind in {"lock", "new_bet", "add"}:
+        entered_dt = m.at
+    entered = format_paper_time(entered_dt)
+    if m.kind == "exit" and (not m.status or m.status == "applied"):
+        exited = when
+    elif m.kind == "exit":
+        exited = "n/a"
+    else:
+        exited = "open"
+    return when, entered, exited
 
 
 def _fmt_dec(value: float | None) -> str:
@@ -239,6 +312,7 @@ def ticket_rows(
                 live_edge_w=live_edge_w,
                 live_posted_edge=live_vs,
                 live_run_id=live_run_id,
+                entered_at=p.entered_at,
             )
         )
     return rows
@@ -717,6 +791,9 @@ def _maybe_post_sell_cashout(
         estimated = True
     if cashout_recorded_for(mv.movement_id):
         return offer, estimated, False
+    if getattr(record, "independent_bankroll", False):
+        record.bankroll = round(float(record.bankroll) + (offer - sold_f), 2)
+        return offer, estimated, False
     led = load_ledger()
     if not led.entries:
         return offer, estimated, False
@@ -886,12 +963,15 @@ def apply_advice(record: PaperBookFile, advice: list[PaperMovement]) -> PaperBoo
             filled = hydrate_new_bet_movement(mv)
             if filled.decimal_odds is None or filled.decimal_odds <= 1.0:
                 continue
+            bet = BetType(filled.bet_type) if filled.bet_type in {b.value for b in BetType} else BetType.WIN
+            if any(p.player_id == filled.player_id and p.bet_type == bet for p in positions):
+                continue
             positions.append(
                 StrategyPosition(
                     position_id=new_id("paper"),
                     player_id=filled.player_id,
                     player_name=filled.player_name,
-                    bet_type=BetType(filled.bet_type) if filled.bet_type in {b.value for b in BetType} else BetType.WIN,
+                    bet_type=bet,
                     stake=round(filled.stake_delta, 2),
                     decimal_odds=filled.decimal_odds,
                     entry_edge=filled.edge_w or 0.0,
@@ -941,11 +1021,13 @@ def apply_advice(record: PaperBookFile, advice: list[PaperMovement]) -> PaperBoo
                 positions[target] = pos.model_copy(update={"stake": round(pos.stake + take, 2)})
             applied.append(mv.model_copy(update={"status": "applied", "stake_delta": take}))
     book_update = {"positions": positions}
-    if booked_cashout:
+    if booked_cashout and not getattr(record, "independent_bankroll", False):
         led = load_ledger()
         if led.entries:
             record.bankroll = led.bankroll
             book_update["bankroll"] = led.bankroll
+    elif getattr(record, "independent_bankroll", False):
+        book_update["bankroll"] = record.bankroll
     record.book = record.book.model_copy(update=book_update)
     record.movements = list(record.movements) + applied
     return record
@@ -957,28 +1039,28 @@ def paper_dir() -> Path:
     return d
 
 
-def paper_book_path(event_id: str) -> Path:
+def paper_book_path(event_id: str, path_id: str = "lived") -> Path:
     safe = "".join(ch if ch.isalnum() or ch in "-_" else "-" for ch in str(event_id))
-    return paper_dir() / f"{safe or 'event'}.json"
+    stem = safe or "event"
+    if not path_id or path_id == "lived":
+        return paper_dir() / f"{stem}.json"
+    return paper_dir() / f"{stem}_{path_id}.json"
 
 
-def load_paper_book(event_id: str) -> PortfolioState | None:
-    path = paper_book_path(event_id)
-    if not path.is_file():
-        return None
-    payload = PaperBookFile.model_validate_json(path.read_text(encoding="utf-8"))
-    return payload.book
+def load_paper_book(event_id: str, path_id: str = "lived") -> PortfolioState | None:
+    rec = load_paper_file(event_id, path_id=path_id)
+    return rec.book if rec else None
 
 
-def load_paper_file(event_id: str) -> PaperBookFile | None:
-    path = paper_book_path(event_id)
+def load_paper_file(event_id: str, path_id: str = "lived") -> PaperBookFile | None:
+    path = paper_book_path(event_id, path_id)
     if not path.is_file():
         return None
     return PaperBookFile.model_validate_json(path.read_text(encoding="utf-8"))
 
 
 def save_paper_book(record: PaperBookFile) -> Path:
-    path = paper_book_path(record.tournament_id)
+    path = paper_book_path(record.tournament_id, getattr(record, "path_id", None) or "lived")
     path.write_text(record.model_dump_json(indent=2), encoding="utf-8")
     return path
 
@@ -992,9 +1074,12 @@ def iter_paper_files() -> list[PaperBookFile]:
         if path.name.lower() == "ledger.json":
             continue
         try:
-            out.append(PaperBookFile.model_validate_json(path.read_text(encoding="utf-8")))
+            rec = PaperBookFile.model_validate_json(path.read_text(encoding="utf-8"))
         except (OSError, ValueError):
             continue
+        if (rec.path_id or "lived") != "lived":
+            continue
+        out.append(rec)
     return out
 
 
@@ -1018,12 +1103,17 @@ def paper_candidates(
     bet: BetType = BetType.WIN,
     *,
     require_cleared: bool = False,
+    ticket_screen: str = "both",
+    min_edge: float = MIN_EDGE_TO_CONSIDER,
 ) -> list[PlayerOutput]:
-    """Clean names with a real quote and positive posted-edge.
+    """Clean names with a real quote, screened by ticket law.
 
-    Cleared names (EdgeW and vs-posted both >= 3pp) come first, then observation.
-    require_cleared=True drops observation names (same screen as advise_bet).
+    both (lived): EdgeW > 0 and vs-posted > 0; cleared first, then observation.
+    edgew (A-replay / B-guts): EdgeW >= min_edge; vs-posted may be short.
+    posted (B-nerves / B-full): vs-posted >= min_edge; EdgeW-only names are out.
+    require_cleared=True drops observation names on the lived both-screen.
     """
+    screen = (ticket_screen or "both").lower()
     cleared: list[tuple[float, PlayerOutput]] = []
     observation: list[tuple[float, PlayerOutput]] = []
     for row in rows:
@@ -1033,17 +1123,29 @@ def paper_candidates(
         if not odds:
             continue
         edge = row.edge_by_bet.get(bet.value)
-        if edge is None or edge <= 0:
-            continue
         hp = row.probabilities.p(_BET_HORIZON[bet])
         posted_edge = hp.central - 1.0 / odds
-        if posted_edge <= 0:
-            continue
-        bucket = cleared if screen_cleared(edge, posted_edge) else observation
-        bucket.append((edge, row))
+        if screen == "edgew":
+            if edge is None or edge < min_edge:
+                continue
+            bucket = cleared
+            key = float(edge)
+        elif screen == "posted":
+            if posted_edge < min_edge:
+                continue
+            bucket = cleared
+            key = float(posted_edge)
+        else:
+            if edge is None or edge <= 0:
+                continue
+            if posted_edge <= 0:
+                continue
+            bucket = cleared if screen_cleared(edge, posted_edge) else observation
+            key = float(edge)
+        bucket.append((key, row))
     cleared.sort(key=lambda t: t[0], reverse=True)
     observation.sort(key=lambda t: t[0], reverse=True)
-    if require_cleared:
+    if require_cleared or screen == "posted":
         return [r for _, r in cleared]
     return [r for _, r in cleared] + [r for _, r in observation]
 
@@ -1058,6 +1160,10 @@ def lock_paper_positions(
     odds_book: str = "",
     extra_export_files: list[Path] | None = None,
     require_cleared: bool = False,
+    path_id: str = "lived",
+    independent_bankroll: bool = False,
+    write_exports: bool = True,
+    method_law_hash: str = "",
 ) -> PaperBookFile:
     """Accept a mock book at conservative caps. Does not place a real bet."""
     from golf_offshoot.strategy.paper_ledger import (
@@ -1066,14 +1172,16 @@ def lock_paper_positions(
         working_bankroll,
     )
 
-    existing = load_ledger()
-    if existing.entries:
-        config = config.model_copy(
-            update={"bankroll": working_bankroll(except_event_id=str(event_id))}
-        )
+    if not independent_bankroll:
+        existing = load_ledger()
+        if existing.entries:
+            config = config.model_copy(
+                update={"bankroll": working_bankroll(except_event_id=str(event_id))}
+            )
     unit = config.bankroll * scaled_single_cap(config)
     positions: list[StrategyPosition] = []
     open_exp = 0.0
+    screen = (config.ticket_screen or "both").lower()
     notes = [
         "PAPER / MOCK bankroll. Not real money. The system never places bets.",
         "Locked so a later live run can suggest hold, sell, add, or reallocate.",
@@ -1084,20 +1192,28 @@ def lock_paper_positions(
             f"{PAPER_OBSERVATION_STAKE_FRAC:.0%} of unit "
             f"${unit * PAPER_OBSERVATION_STAKE_FRAC:.2f}."
         ),
+        f"path_id={path_id} ticket_screen={screen} independent_bankroll={independent_bankroll}",
     ]
-    for row in paper_candidates(rows, require_cleared=require_cleared):
+    for row in paper_candidates(
+        rows,
+        require_cleared=require_cleared,
+        ticket_screen=screen,
+    ):
         cap = remaining_exposure_capacity(open_exp, config.bankroll, config)
         odds = _posted(row) or 0.0
         hp = row.probabilities.p(Horizon.WIN)
         posted_edge = posted_price_edge(hp.central, odds)
         edge = row.edge_by_bet.get("win") or 0.0
-        cleared = screen_cleared(edge, posted_edge)
+        if screen in ("edgew", "posted"):
+            cleared = True
+        else:
+            cleared = screen_cleared(edge, posted_edge)
         tag = lane_tag(cleared)
         want = unit if cleared else unit * PAPER_OBSERVATION_STAKE_FRAC
         stake = min(want, cap)
         if stake < 0.002 * config.bankroll:
             break
-        screen = screen_plain(edge, posted_edge)
+        screen_txt = screen_plain(edge, posted_edge)
         positions.append(
             StrategyPosition(
                 position_id=new_id("paper"),
@@ -1109,7 +1225,7 @@ def lock_paper_positions(
                 entry_edge=edge,
                 entry_model_p=hp.central,
                 entry_market_p=row.market_implied_by_bet.get("win"),
-                notes=f"paper lock {tag}; {screen}",
+                notes=f"paper lock {tag}; {screen_txt}",
                 user_recorded=True,
                 proposed=False,
             )
@@ -1117,10 +1233,10 @@ def lock_paper_positions(
         open_exp += stake
         notes.append(
             f"{tag} {row.name} win stake={stake:.2f} @ {odds:.2f} EdgeW={edge:+.3f} "
-            f"posted_edge={posted_edge:+.3f} ({screen})"
+            f"posted_edge={posted_edge:+.3f} ({screen_txt})"
         )
     if not positions:
-        notes.append("No clean positive posted-edge names to lock.")
+        notes.append("No clean names to lock under this path's ticket screen.")
     book = PortfolioState(
         bankroll=config.bankroll,
         positions=positions,
@@ -1136,6 +1252,9 @@ def lock_paper_positions(
         mode=config.mode.value,
         notes=notes,
         book=book,
+        path_id=path_id or "lived",
+        independent_bankroll=bool(independent_bankroll),
+        method_law_hash=method_law_hash,
     )
     tickets = ticket_rows(record)
     by_name = {p.player_name: p for p in positions}
@@ -1151,18 +1270,20 @@ def lock_paper_positions(
         if t.player_name in by_name
     ]
     save_paper_book(record)
-    ensure_opening_deposit(
-        config.bankroll,
-        event_id=str(event_id),
-        event_name=event_name,
-        note=f"opening paper bankroll for {event_name or event_id}",
-    )
-    from golf_offshoot.strategy.paper_export import write_paper_book_files
+    if not independent_bankroll:
+        ensure_opening_deposit(
+            config.bankroll,
+            event_id=str(event_id),
+            event_name=event_name,
+            note=f"opening paper bankroll for {event_name or event_id}",
+        )
+    if write_exports:
+        from golf_offshoot.strategy.paper_export import write_paper_book_files
 
-    write_paper_book_files(record, directory=package_data_dir() / "exports")
-    from golf_offshoot.strategy.paper_pack import write_paper_pack
+        write_paper_book_files(record, directory=package_data_dir() / "exports")
+        from golf_offshoot.strategy.paper_pack import write_paper_pack
 
-    write_paper_pack(record, extra_files=extra_export_files)
+        write_paper_pack(record, extra_files=extra_export_files)
     return record
 
 
@@ -1171,6 +1292,7 @@ def format_paper_book(record: PaperBookFile) -> str:
     cash = record.bankroll - record.book.open_exposure
     lines = [
         f"PAPER BOOK {record.tournament_name or record.tournament_id} "
+        f"path={getattr(record, 'path_id', None) or 'lived'} "
         f"${record.bankroll:.0f} mock  never_auto_bet=true",
         f"locked_at={record.locked_at.isoformat()} run={record.locked_from_run_id} "
         f"odds_book={record.odds_book or 'n/a'}",
