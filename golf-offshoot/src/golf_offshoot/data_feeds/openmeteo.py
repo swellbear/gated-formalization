@@ -8,6 +8,7 @@ from urllib.parse import quote
 
 from golf_offshoot.data_feeds.base import DataFeed, unavailable_quality
 from golf_offshoot.data_feeds.http import DEFAULT_APP_UA, HttpCache
+from golf_offshoot.localtime import now
 from golf_offshoot.models.enums import DataRole, SourceKind
 from golf_offshoot.models.schemas import DataQuality
 
@@ -123,7 +124,7 @@ class OpenMeteoWeatherFeed(DataFeed[dict[str, Any]]):
             score=0.80,
             role=self.role,
             source_name=self.name,
-            as_of=datetime.now(timezone.utc),
+            as_of=now(),
             n_observations=int(summary.get("n_days") or 1),
             notes=notes,
             missing=False,

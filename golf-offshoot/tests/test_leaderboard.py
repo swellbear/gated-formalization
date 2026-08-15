@@ -117,6 +117,10 @@ def test_export_leaderboard_live_only(tmp_path):
     assert "leaderboard" in paths.pdf.name
     html = paths.html.read_text(encoding="utf-8")
     assert "Leader" in html
+    assert "printed" in html
+    txt = paths.txt.read_text(encoding="utf-8")
+    assert "-8" in txt
+    assert "printed" in txt
     assert "not the model ranking" in html.lower() or "Not model Win%" in html
     txt = paths.txt.read_text(encoding="utf-8")
     assert "-8" in txt

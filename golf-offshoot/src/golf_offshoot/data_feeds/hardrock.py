@@ -9,10 +9,10 @@ unless that coupon actually lists them.
 from __future__ import annotations
 
 import os
-from datetime import datetime, timezone
 from typing import Any
 
 from golf_offshoot.config import ODDS_TTL_LIVE_SECONDS, ODDS_TTL_PRE_SECONDS
+from golf_offshoot.localtime import now
 from golf_offshoot.data_feeds.base import DataFeed, FeedError, unavailable_quality
 from golf_offshoot.data_feeds.http import DEFAULT_APP_UA, HttpCache
 from golf_offshoot.data_feeds.local_env import load_local_env
@@ -150,7 +150,7 @@ class HardRockBetOddsFeed(DataFeed[list[MarketQuote]]):
             score=0.55 if meta.get("stale_fallback") else 0.74,
             role=self.role,
             source_name=f"{self.name}:{used}",
-            as_of=datetime.now(timezone.utc),
+            as_of=now(),
             n_observations=len(quotes),
             lag_hours=age_s / 3600.0,
             notes=notes,
@@ -193,7 +193,7 @@ class HardRockBetOddsFeed(DataFeed[list[MarketQuote]]):
         book = _preferred_bookmaker(chosen.get("bookmakers") or [])
         if book is None:
             return [], 0, ""
-        as_of = datetime.now(timezone.utc)
+        as_of = now()
         quotes: list[MarketQuote] = []
         unmatched = 0
         for market in book.get("markets") or []:

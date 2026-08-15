@@ -3,12 +3,13 @@
 from __future__ import annotations
 
 import json
-from datetime import datetime, timezone
+from datetime import datetime
 from pathlib import Path
 
 from pydantic import BaseModel
 
 from golf_offshoot.data_feeds.http import package_data_dir
+from golf_offshoot.localtime import now
 from golf_offshoot.models.enums import BetType, Horizon, StrategyActionKind, StrategyMode
 from golf_offshoot.models.schemas import MarketSnapshot, TournamentRunResult
 from golf_offshoot.models.strategy import StrategyAction, StrategyRecommendation
@@ -145,7 +146,7 @@ def _entries_from_recommendation(
                 continue
             quote_map[(q.player_id, q.bet_type.value)] = (q.decimal_odds, q.as_of)
     out: list[ShadowAdvise] = []
-    now = rec.as_of or datetime.now(timezone.utc)
+    stamp = rec.as_of or now()
     for act in rec.actions:
         if act.kind not in SHADOW_KINDS:
             continue
@@ -158,7 +159,7 @@ def _entries_from_recommendation(
                 run_id=run_id,
                 by_id=by_id,
                 quote_map=quote_map,
-                timestamp=now,
+                timestamp=stamp,
             )
         )
     return out

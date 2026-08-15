@@ -13,6 +13,7 @@ from typing import Any
 
 from golf_offshoot.data_feeds.base import DataFeed, FeedError, unavailable_quality
 from golf_offshoot.data_feeds.http import DEFAULT_BROWSER_UA, HttpCache
+from golf_offshoot.localtime import now
 from golf_offshoot.data_feeds.names import match_name, normalize_name
 from golf_offshoot.models.enums import DataRole, SourceKind
 from golf_offshoot.models.schemas import DataQuality, StrokesGainedProfile
@@ -183,7 +184,7 @@ class PgaTourSgFeed(DataFeed[SgTable]):
             score=0.86 if table.query_type == QUERY_EVENT_ONLY else 0.88,
             role=self.role,
             source_name=self.name,
-            as_of=datetime.now(timezone.utc),
+            as_of=now(),
             n_observations=len(table.rows),
             notes=(
                 f"PGA Tour StatDetails year={year} window={window} "

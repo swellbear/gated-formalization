@@ -5,15 +5,16 @@ from __future__ import annotations
 import html
 import json
 import shutil
-from datetime import datetime, timezone
 from pathlib import Path
 
+from golf_offshoot.localtime import filename_stamp
 from golf_offshoot.compare.fights import fights_at, load_path_views, write_fights
 from golf_offshoot.compare.law import law_hash
 from golf_offshoot.compare.paths import compare_markets_blurb
 from golf_offshoot.compare.scores import event_scoreboard
 from golf_offshoot.config import MODEL_VERSION
 from golf_offshoot.models.strategy import StrategyConfig
+from golf_offshoot.ranking.export_table import printed_at_utc
 from golf_offshoot.strategy.paper_book import load_paper_file, load_snapshot_outputs
 from golf_offshoot.strategy.paper_explain import write_bets_explained_files
 from golf_offshoot.strategy.paper_export import write_paper_book_files
@@ -130,7 +131,7 @@ def write_batch_pack(
     directory: Path | None = None,
 ) -> Path:
     """How-to-read + fights + field + each book + bankroll + one 00_full_readout.pdf."""
-    stamp = datetime.now(timezone.utc).strftime("%Y%m%dT%H%M%SZ")
+    stamp = filename_stamp()
     run = _safe(run_id or "batch")
     pack_name = f"{_safe(event_id)}_{stamp}_{run}_batch"
     root = (directory or packs_dir()) / pack_name
@@ -320,6 +321,7 @@ def _how_to_read_text(*, event_id: str, event_name: str, run_id: str) -> str:
     lines = [
         f"HOW TO READ THIS PACK  {event_name}",
         f"event={event_id}  run={run_id or 'n/a'}  law={law_hash()}",
+        f"printed {printed_at_utc()}",
         "Paper / mock only. The system never places bets.",
         "",
         "This file is five mock books plus the board they saw. Read in this order:",
@@ -351,7 +353,14 @@ def _how_to_read_text(*, event_id: str, event_name: str, run_id: str) -> str:
 def _write_how_to_read_pdf(path: Path, text: str, *, title: str) -> Path:
     from fpdf import FPDF
 
-    from golf_offshoot.ranking.export_table import _pdf_text, _register_pdf_font, _require_fpdf2
+    from golf_offshoot.ranking.export_table import (
+        _pdf_text,
+        _register_pdf_font,
+        _require_fpdf2,
+        mark_pdf_printed,
+        write_pdf_footer,
+        write_pdf_print_stamp,
+    )
 
     _require_fpdf2()
 
@@ -359,28 +368,20 @@ def _write_how_to_read_pdf(path: Path, text: str, *, title: str) -> Path:
         def header(self) -> None:
             face = getattr(self, "_table_font", "Helvetica")
             self.set_x(self.l_margin)
-            self.set_text_color(18, 32, 42)
+            write_pdf_print_stamp(self, face)
             self.set_font(face, "B", 14)
+            self.set_text_color(18, 32, 42)
             self.cell(0, 8, _pdf_text(title, face), new_x="LMARGIN", new_y="NEXT")
             self.ln(2)
 
         def footer(self) -> None:
             face = getattr(self, "_table_font", "Helvetica")
-            self.set_x(self.l_margin)
-            self.set_y(-12)
-            self.set_font(face, "I", 7)
-            self.set_text_color(90, 100, 110)
-            self.cell(
-                0,
-                6,
-                "compare batch  |  paper / mock  |  observation only  |  never auto-bet  |  "
-                f"page {self.page_no()} of {{nb}}",
-                align="C",
-            )
+            write_pdf_footer(self, face, "compare batch")
 
     pdf = Report(orientation="P", unit="mm", format="Letter")
     face = _register_pdf_font(pdf)
     pdf._table_font = face
+    mark_pdf_printed(pdf)
     if face == "Helvetica":
         pdf.core_fonts_encoding = "cp1252"
     pdf.alias_nb_pages()

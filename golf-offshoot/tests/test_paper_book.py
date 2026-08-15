@@ -29,6 +29,10 @@ def _row(
     posted: float | None,
     flags: list[str] | None = None,
     rel: float = 0.74,
+    place: int | None = None,
+    place_disp: str = "",
+    score: float | None = None,
+    holes: int = 0,
 ) -> PlayerOutput:
     horizons = {
         Horizon.WIN: _hp(Horizon.WIN, win),
@@ -53,6 +57,10 @@ def _row(
         market_implied_by_bet=implied,
         posted_odds_by_bet=posted_odds,
         flags=list(flags or []),
+        live_place=place,
+        live_place_display=place_disp,
+        live_score_to_par=score,
+        live_holes_completed=holes,
     )
 
 
@@ -119,6 +127,14 @@ def test_lock_paper_book_persists_and_never_auto_bets(tmp_path, monkeypatch):
     assert "sportsbook takes a cut" in html
     assert "1/decimal_odds" in html
     assert "Kurt Kitayama" in html
+    assert "Place" in html
+    assert "printed" in html
+    from pypdf import PdfReader
+
+    pdf_text = "".join((p.extract_text() or "") for p in PdfReader(pdf_path).pages)
+    assert "printed" in pdf_text
+    assert "EDT" in pdf_text or "EST" in pdf_text
+    assert "UTC" not in pdf_text
     assert "full-field" not in rec.export_pdf
     assert rec.movements
     assert all(m.kind == "lock" and m.status == "applied" for m in rec.movements)
@@ -130,10 +146,11 @@ def test_lock_paper_book_persists_and_never_auto_bets(tmp_path, monkeypatch):
     assert explained.startswith(b"%PDF")
     html_x = (pack / "02_bets_explained.html").read_text(encoding="utf-8")
     assert "Why the amounts" in html_x
-    assert "When (UTC)" in html_x
+    assert "When (ET)" in html_x
     assert "Entered" in html_x
     assert "Exited" in html_x
-    assert " UTC" in html_x
+    assert "EDT" in html_x or "EST" in html_x
+    assert "UTC" not in html_x
     assert "concentration rule" in html_x
     assert "Kurt Kitayama" in html_x
     assert "never auto-bet" in html_x.lower() or "Never auto-bet" in html_x
@@ -354,8 +371,14 @@ def test_ticket_rows_live_mark_and_place_na_without_coupon(tmp_path, monkeypatch
             )
         ],
     )
-    live_kita = _row("kita", "Kurt Kitayama", 0.070, edge=0.021, posted=15.0)
-    live_im = _row("im", "Sungjae Im", 0.097, edge=0.070, posted=31.0)
+    live_kita = _row(
+        "kita", "Kurt Kitayama", 0.070, edge=0.021, posted=15.0,
+        place=5, place_disp="T5", score=-6, holes=27,
+    )
+    live_im = _row(
+        "im", "Sungjae Im", 0.097, edge=0.070, posted=31.0,
+        place=2, place_disp="T2", score=-8, holes=36,
+    )
     tickets = ticket_rows(rec, [live_kita, live_im], live_run_id="live-b")
     by = {(t.player_name, t.market): t for t in tickets}
     kita = by[("Kurt Kitayama", "Win")]
@@ -363,12 +386,19 @@ def test_ticket_rows_live_mark_and_place_na_without_coupon(tmp_path, monkeypatch
     assert kita.live_posted == 15.0
     assert kita.live_model == 0.070
     assert abs(kita.live_edge_w - 0.021) < 1e-9
+    assert kita.live_place == "T5"
+    assert kita.live_to_par == "-6"
+    assert kita.live_thru == "9"
+    assert kita.board_now == "T5 -6 9"
     im = by[("Sungjae Im", "Top 20")]
     assert im.posted == 1.54
     assert im.live_model is not None
     assert im.live_posted is None
     assert im.live_posted_edge is None
     assert im.live_edge_w is None
+    assert im.live_place == "T2"
+    assert im.live_to_par == "-8"
+    assert im.live_thru == "F"
 
 
 def test_pack_tickets_fill_live_from_snapshot(tmp_path, monkeypatch):
@@ -391,7 +421,12 @@ def test_pack_tickets_fill_live_from_snapshot(tmp_path, monkeypatch):
         mode=RunMode.LIVE,
         model=current_model_record(),
         data_snapshot_hash="test",
-        outputs=[_row("kita", "Kurt Kitayama", 0.070, edge=0.021, posted=15.0)],
+        outputs=[
+            _row(
+                "kita", "Kurt Kitayama", 0.070, edge=0.021, posted=15.0,
+                place=5, place_disp="T5", score=-6, holes=27,
+            )
+        ],
     )
     save_audit(audit, tmp_path / "snapshots")
     pack = write_paper_pack(rec, run_id="live-b")
@@ -402,6 +437,14 @@ def test_pack_tickets_fill_live_from_snapshot(tmp_path, monkeypatch):
     html = (pack / "01_paper_tickets.html").read_text(encoding="utf-8")
     assert "At entry" in html
     assert "This live" in html
+    assert "Place" in html
+    assert "T5" in html
+    assert "-6" in html
+    assert "printed" in html
+    explained = (pack / "02_bets_explained.html").read_text(encoding="utf-8")
+    assert "Place" in explained
+    assert "T5" in explained
+    assert "printed" in explained
     explained = (pack / "02_bets_explained.txt").read_text(encoding="utf-8")
     assert "live@15.00" in explained
     assert "entry@17.00" in explained

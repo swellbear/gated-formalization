@@ -5,7 +5,7 @@ Suggestions only. Nothing here places a bet.
 
 from __future__ import annotations
 
-from datetime import datetime, timezone
+from datetime import datetime
 from uuid import uuid4
 
 from pydantic import BaseModel, Field
@@ -18,6 +18,7 @@ from golf_offshoot.config import (
     STRATEGY_MAX_STYLE_CLUSTER_FRAC,
     STRATEGY_MAX_TOTAL_EXPOSURE_FRAC,
 )
+from golf_offshoot.localtime import now as _now
 from golf_offshoot.models.enums import (
     BetType,
     RiskPreference,
@@ -25,10 +26,6 @@ from golf_offshoot.models.enums import (
     StrategyActionKind,
     StrategyMode,
 )
-
-
-def _utcnow() -> datetime:
-    return datetime.now(timezone.utc)
 
 
 def new_id(prefix: str) -> str:
@@ -80,7 +77,7 @@ class StrategyPosition(BaseModel):
     entry_edge: float
     entry_model_p: float
     entry_market_p: float | None = None
-    entered_at: datetime = Field(default_factory=_utcnow)
+    entered_at: datetime = Field(default_factory=_now)
     round_entered: int = 0
     notes: str = ""
     user_recorded: bool = True
@@ -177,7 +174,7 @@ class StrategyStatusSummary(BaseModel):
 
 class StrategyRecommendation(BaseModel):
     recommendation_id: str
-    as_of: datetime = Field(default_factory=_utcnow)
+    as_of: datetime = Field(default_factory=_now)
     mode: StrategyMode
     run_mode: RunMode
     actions: list[StrategyAction] = Field(default_factory=list)
@@ -201,5 +198,5 @@ class UserStrategyDecision(BaseModel):
     modified_stake: float | None = None
     note: str = ""
     operator: str = ""
-    at: datetime = Field(default_factory=_utcnow)
+    at: datetime = Field(default_factory=_now)
     placed_by_user: bool = True

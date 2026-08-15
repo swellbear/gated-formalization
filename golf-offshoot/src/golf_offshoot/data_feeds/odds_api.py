@@ -3,10 +3,10 @@
 from __future__ import annotations
 
 import os
-from datetime import datetime, timezone
 from typing import Any
 
 from golf_offshoot.config import ODDS_TTL_LIVE_SECONDS, ODDS_TTL_PRE_SECONDS
+from golf_offshoot.localtime import now
 from golf_offshoot.data_feeds.base import DataFeed, FeedError, unavailable_quality
 from golf_offshoot.data_feeds.http import DEFAULT_APP_UA, HttpCache
 from golf_offshoot.data_feeds.local_env import load_local_env
@@ -86,7 +86,7 @@ class OddsApiFeed(DataFeed[list[MarketQuote]]):
             score=0.55 if meta.get("stale_fallback") else 0.75,
             role=self.role,
             source_name=f"{self.name}:{used}",
-            as_of=datetime.now(timezone.utc),
+            as_of=now(),
             n_observations=len(quotes),
             lag_hours=age_s / 3600.0,
             notes=notes,
@@ -130,7 +130,7 @@ class OddsApiFeed(DataFeed[list[MarketQuote]]):
         events = payload if isinstance(payload, list) else []
         candidates = {normalize_name(n): pid for n, pid in name_to_id.items()}
         by_player: dict[str, list[float]] = {}
-        as_of = datetime.now(timezone.utc)
+        as_of = now()
         for ev in events:
             for book in ev.get("bookmakers") or []:
                 for market in book.get("markets") or []:

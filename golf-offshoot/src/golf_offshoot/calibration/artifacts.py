@@ -3,7 +3,6 @@
 from __future__ import annotations
 
 import json
-from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any
 
@@ -12,6 +11,7 @@ from golf_offshoot.calibration.optimize import CalibrationResult
 from golf_offshoot.calibration.scoring import HorizonMetrics
 from golf_offshoot.config import CALIBRATED_WEIGHTS_VERSION, MODEL_VERSION
 from golf_offshoot.data_feeds.http import package_data_dir
+from golf_offshoot.localtime import isoformat_now
 
 
 def calibration_dir() -> Path:
@@ -37,7 +37,7 @@ def result_to_payload(
 ) -> dict[str, Any]:
     payload = {
         "version_id": f"{MODEL_VERSION}-{CALIBRATED_WEIGHTS_VERSION}",
-        "created_at": datetime.now(timezone.utc).isoformat(),
+        "created_at": isoformat_now(),
         "no_future_leakage": True,
         "train_event_ids": train_ids,
         "holdout_event_ids": holdout_ids,

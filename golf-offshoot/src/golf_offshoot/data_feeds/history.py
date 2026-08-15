@@ -369,12 +369,12 @@ def quality_for_feature(
     missing: bool,
     score_if_present: float,
 ) -> DataQuality:
-    from datetime import datetime, timezone
+    from golf_offshoot.localtime import now
 
     return DataQuality(
         score=0.0 if missing else min(0.92, score_if_present),
         source_name=source,
-        as_of=datetime.now(timezone.utc),
+        as_of=now(),
         n_observations=n,
         notes=notes,
         missing=missing,

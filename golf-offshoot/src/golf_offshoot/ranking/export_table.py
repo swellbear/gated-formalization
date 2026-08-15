@@ -5,10 +5,12 @@ from __future__ import annotations
 import html
 import os
 from dataclasses import dataclass
+from datetime import datetime
 from pathlib import Path
 
 from golf_offshoot.config import MODEL_VERSION
 from golf_offshoot.data_feeds.http import package_data_dir
+from golf_offshoot.localtime import format_eastern, now_eastern_text
 from golf_offshoot.models.schemas import PlayerOutput, TournamentRunResult
 from golf_offshoot.ranking.display import RankedTableView, format_table, movement_note, ranked_table_view
 
@@ -24,6 +26,59 @@ def default_export_dir() -> Path:
     return package_data_dir() / "exports"
 
 
+def printed_at(when: datetime | None = None) -> str:
+    """Eastern print stamp for every PDF/HTML page. Not the ticket entry time."""
+    return format_eastern(when) if when is not None else now_eastern_text()
+
+
+def printed_at_utc(when: datetime | None = None) -> str:
+    """Deprecated name; display is Eastern. Kept so existing imports keep working."""
+    return printed_at(when)
+
+
+def mark_pdf_printed(pdf, when: datetime | None = None) -> str:
+    """Freeze one print time on the PDF object before add_page()."""
+    stamp = printed_at_utc(when)
+    pdf._printed_at = stamp
+    return stamp
+
+
+def pdf_printed_at(pdf) -> str:
+    return str(getattr(pdf, "_printed_at", "") or printed_at_utc())
+
+
+def write_pdf_print_stamp(pdf, face: str) -> None:
+    """Right-aligned printed-at on every page header."""
+    pdf.set_font(face, "", 8)
+    pdf.set_text_color(70, 85, 95)
+    pdf.cell(
+        0,
+        4,
+        _pdf_text(f"printed {pdf_printed_at(pdf)}", face),
+        align="R",
+        new_x="LMARGIN",
+        new_y="NEXT",
+    )
+
+
+def write_pdf_footer(pdf, face: str, kind: str) -> None:
+    """Footer on every page: print time, observation tag, page numbers."""
+    pdf.set_x(pdf.l_margin)
+    pdf.set_y(-12)
+    pdf.set_font(face, "I", 7)
+    pdf.set_text_color(90, 100, 110)
+    pdf.cell(
+        0,
+        6,
+        _pdf_text(
+            f"printed {pdf_printed_at(pdf)}  |  {kind}  |  observation only  |  never auto-bet  |  "
+            f"page {pdf.page_no()} of {{nb}}",
+            face,
+        ),
+        align="C",
+    )
+
+
 def ranked_table_document(
     result: TournamentRunResult,
     *,
@@ -34,6 +89,7 @@ def ranked_table_document(
         f"{result.tournament.name}  ({result.mode.value})",
         f"id={result.tournament.tournament_id}  n={len(result.ranked)}  run={result.run_id}",
         f"model={MODEL_VERSION}  never_auto_bet=true  observation only",
+        f"printed {printed_at_utc()}",
     ]
     if caption:
         lines.append(caption)
@@ -138,6 +194,7 @@ def render_ranked_html(
 <body>
 <h1>{html.escape(title)}</h1>
 <p class="sub">{html.escape(subtitle)}</p>
+<p class="sub">printed {html.escape(printed_at_utc())}</p>
 {cap}
 <table class="field">
 <thead><tr>{head_cells}</tr></thead>
@@ -174,8 +231,10 @@ def write_ranked_pdf(
             face = getattr(self, "_table_font", "Helvetica")
             self.set_x(self.l_margin)
             self.set_text_color(18, 32, 42)
+            write_pdf_print_stamp(self, face)
             if self.page_no() == 1:
                 self.set_font(face, "B", 14)
+                self.set_text_color(18, 32, 42)
                 self.cell(0, 7, _pdf_text(title, face), new_x="LMARGIN", new_y="NEXT")
                 self.set_font(face, "", 8)
                 self.set_text_color(70, 85, 95)
@@ -186,26 +245,18 @@ def write_ranked_pdf(
                 self.ln(2)
             else:
                 self.set_font(face, "B", 9)
+                self.set_text_color(18, 32, 42)
                 self.cell(0, 6, _pdf_text(f"{title}  (continued)", face), new_x="LMARGIN", new_y="NEXT")
                 self.ln(1)
 
         def footer(self) -> None:
             face = getattr(self, "_table_font", "Helvetica")
-            self.set_x(self.l_margin)
-            self.set_y(-12)
-            self.set_font(face, "I", 7)
-            self.set_text_color(90, 100, 110)
-            self.cell(
-                0,
-                6,
-                "golf-offshoot  |  observation only  |  never auto-bet  |  "
-                f"page {self.page_no()} of {{nb}}",
-                align="C",
-            )
+            write_pdf_footer(self, face, "golf-offshoot")
 
     pdf = Report(orientation="L", unit="mm", format="Letter")
     face = _register_pdf_font(pdf)
     pdf._table_font = face
+    mark_pdf_printed(pdf)
     if face == "Helvetica":
         pdf.core_fonts_encoding = "cp1252"
     pdf.alias_nb_pages()

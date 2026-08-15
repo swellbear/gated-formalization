@@ -7,10 +7,10 @@ without extra cookies; we do not scrape HTML and we do not fabricate fields.
 from __future__ import annotations
 
 import re
-from datetime import datetime, timezone
 from typing import Any
 
 from golf_offshoot.data_feeds.base import DataFeed, FeedError, unavailable_quality
+from golf_offshoot.localtime import now
 from golf_offshoot.data_feeds.http import DEFAULT_BROWSER_UA, HttpCache
 from golf_offshoot.models.enums import CourseType, DataRole, SourceKind
 from golf_offshoot.models.schemas import Course, DataQuality, Player, Tournament
@@ -56,7 +56,7 @@ def _now_q(
         score=score,
         role=DataRole.PRIMARY,
         source_name=source,
-        as_of=datetime.now(timezone.utc),
+        as_of=now(),
         n_observations=n,
         lag_hours=lag_hours,
         notes=notes,

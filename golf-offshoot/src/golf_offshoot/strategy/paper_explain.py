@@ -12,6 +12,10 @@ from golf_offshoot.ranking.export_table import (
     _pdf_text,
     _register_pdf_font,
     _require_fpdf2,
+    mark_pdf_printed,
+    printed_at_utc,
+    write_pdf_footer,
+    write_pdf_print_stamp,
 )
 from golf_offshoot.strategy.paper_book import (
     PaperBookFile,
@@ -95,6 +99,7 @@ def bets_explained_document(
     lines = [
         heading or f"BETS MADE  {record.tournament_name or record.tournament_id}",
         f"path={pid}",
+        f"printed {printed_at_utc()}",
         f"${record.bankroll:.0f} mock  never_auto_bet=true  {record.mode}/{record.risk}",
         f"open ${record.book.open_exposure:.2f}  cash ${cash:.2f}  tickets={len(record.book.positions)}",
         "",
@@ -126,7 +131,7 @@ def bets_explained_document(
     for t in rows:
         entered = format_paper_time(getattr(t, "entered_at", None))
         lines.append(
-            f"  {t.lane} {t.player_name} {t.market} entered {entered} ${t.stake:.2f} "
+            f"  {t.lane} {t.player_name} {t.market} now={t.board_now} entered {entered} ${t.stake:.2f} "
             f"entry@{t.posted:.2f} EdgeW={t.edge_w:+.3f} vs={t.posted_edge:+.3f} "
             f"live@{_fmt_dec(t.live_posted)} EdgeW={_fmt_pp(t.live_edge_w)} "
             f"vs={_fmt_pp(t.live_posted_edge)}"
@@ -171,6 +176,9 @@ def render_bets_explained_html(
         entered = format_paper_time(getattr(t, "entered_at", None))
         ticket_rows_html.append(
             f"<tr{stripe}><td class='txt'>{html.escape(t.player_name)}</td>"
+            f"<td class='num'>{html.escape(t.live_place)}</td>"
+            f"<td class='num'>{html.escape(t.live_to_par)}</td>"
+            f"<td class='num'>{html.escape(t.live_thru)}</td>"
             f"<td class='txt'>{html.escape(entered)}</td>"
             f"<td class='txt'>{html.escape(t.market)}</td>"
             f"<td class='num'>${t.stake:.2f}</td>"
@@ -205,6 +213,7 @@ def render_bets_explained_html(
 <body>
 <h1>{html.escape(title)}</h1>
 <p class="sub">{html.escape(subtitle)}</p>
+<p class="sub">printed {html.escape(printed_at_utc())}</p>
 <p class="caption"><strong>Observation only</strong></p>
 <p class="caption">{html.escape(observation_plain())}</p>
 <p class="caption">{html.escape(observation_technical())}</p>
@@ -216,21 +225,23 @@ def render_bets_explained_html(
 Cash unallocated ${cash:.2f}. Not real money. Never auto-bet.</p>
 <h2>Applied movements (in the paper book)</h2>
 <table>
-<thead><tr><th>When (UTC)</th><th>Entered</th><th>Exited</th><th>Action</th><th>Status</th><th>Player</th><th class="num">Delta</th><th class="num">After</th><th>Why this name</th><th>Why this amount</th></tr></thead>
+<thead><tr><th>When (ET)</th><th>Entered</th><th>Exited</th><th>Action</th><th>Status</th><th>Player</th><th class="num">Delta</th><th class="num">After</th><th>Why this name</th><th>Why this amount</th></tr></thead>
 <tbody>{applied_rows or "<tr><td colspan='10'>None recorded.</td></tr>"}</tbody>
 </table>
 <h2>Live advice this snapshot</h2>
 <p class="caption">Hold / sell / add / reallocate suggestions. Not applied unless you pass --apply-paper.
 Still mock. Still never a real bet.</p>
 <table>
-<thead><tr><th>When (UTC)</th><th>Entered</th><th>Exited</th><th>Action</th><th>Status</th><th>Player</th><th class="num">Delta</th><th class="num">After</th><th>Why this name</th><th>Why this amount</th></tr></thead>
+<thead><tr><th>When (ET)</th><th>Entered</th><th>Exited</th><th>Action</th><th>Status</th><th>Player</th><th class="num">Delta</th><th class="num">After</th><th>Why this name</th><th>Why this amount</th></tr></thead>
 <tbody>{advice_rows or "<tr><td colspan='10'>No advice on this snapshot.</td></tr>"}</tbody>
 </table>
 <h2>Current tickets</h2>
 <table>
 <thead>
 <tr>
-<th rowspan="2">Player</th><th rowspan="2">Entered</th><th rowspan="2">Market</th><th class="num" rowspan="2">Stake</th>
+<th rowspan="2">Player</th>
+<th class="num" rowspan="2">Place</th><th class="num" rowspan="2">ToPar</th><th class="num" rowspan="2">Thru</th>
+<th rowspan="2">Entered</th><th rowspan="2">Market</th><th class="num" rowspan="2">Stake</th>
 <th colspan="3">At entry</th><th colspan="3">This live</th>
 </tr>
 <tr>
@@ -238,7 +249,7 @@ Still mock. Still never a real bet.</p>
 <th class="num">Posted</th><th class="num">EdgeW</th><th class="num">Vs posted</th>
 </tr>
 </thead>
-<tbody>{"".join(ticket_rows_html) or "<tr><td colspan='10'>No tickets.</td></tr>"}</tbody>
+<tbody>{"".join(ticket_rows_html) or "<tr><td colspan='13'>No tickets.</td></tr>"}</tbody>
 </table>
 <p class="foot">Paper / mock bankroll. Observation only. The system never auto-bets.</p>
 </body>
@@ -298,9 +309,10 @@ def write_bets_explained_pdf(
         def header(self) -> None:
             face = getattr(self, "_table_font", "Helvetica")
             self.set_x(self.l_margin)
-            self.set_text_color(18, 32, 42)
+            write_pdf_print_stamp(self, face)
             if self.page_no() == 1:
                 self.set_font(face, "B", 14)
+                self.set_text_color(18, 32, 42)
                 self.cell(0, 7, _pdf_text(title, face), new_x="LMARGIN", new_y="NEXT")
                 self.set_font(face, "", 8)
                 self.set_text_color(70, 85, 95)
@@ -308,26 +320,18 @@ def write_bets_explained_pdf(
                 self.ln(2)
             else:
                 self.set_font(face, "B", 9)
+                self.set_text_color(18, 32, 42)
                 self.cell(0, 6, _pdf_text(f"{title}  (continued)", face), new_x="LMARGIN", new_y="NEXT")
                 self.ln(1)
 
         def footer(self) -> None:
             face = getattr(self, "_table_font", "Helvetica")
-            self.set_x(self.l_margin)
-            self.set_y(-12)
-            self.set_font(face, "I", 7)
-            self.set_text_color(90, 100, 110)
-            self.cell(
-                0,
-                6,
-                "bets made  |  paper / mock  |  observation only  |  never auto-bet  |  "
-                f"page {self.page_no()} of {{nb}}",
-                align="C",
-            )
+            write_pdf_footer(self, face, "bets made")
 
     pdf = Report(orientation="L", unit="mm", format="Letter")
     face = _register_pdf_font(pdf)
     pdf._table_font = face
+    mark_pdf_printed(pdf)
     if face == "Helvetica":
         pdf.core_fonts_encoding = "cp1252"
     pdf.alias_nb_pages()
@@ -363,7 +367,7 @@ def write_bets_explained_pdf(
 
     headings_style = FontFace(emphasis="BOLD", color=(255, 255, 255), fill_color=(31, 59, 77))
     headers = (
-        "When UTC",
+        "When (ET)",
         "Entered",
         "Exited",
         "Action",
@@ -425,6 +429,9 @@ def write_bets_explained_pdf(
     pdf.set_font(face, size=7)
     t_headers = (
         "Player",
+        "Place",
+        "ToPar",
+        "Thru",
         "Entered",
         "Market",
         "Stake",
@@ -435,8 +442,11 @@ def write_bets_explained_pdf(
         "Live EdgeW",
         "Live vs",
     )
-    t_aligns = ("LEFT", "LEFT", "LEFT", "RIGHT", "RIGHT", "RIGHT", "RIGHT", "RIGHT", "RIGHT", "RIGHT")
-    t_widths = [pdf.epw * w for w in (0.13, 0.13, 0.08, 0.07, 0.09, 0.09, 0.09, 0.11, 0.10, 0.11)]
+    t_aligns = (
+        "LEFT", "RIGHT", "RIGHT", "RIGHT", "LEFT", "LEFT", "RIGHT",
+        "RIGHT", "RIGHT", "RIGHT", "RIGHT", "RIGHT", "RIGHT",
+    )
+    t_widths = [pdf.epw * w for w in (0.12, 0.05, 0.05, 0.045, 0.11, 0.07, 0.06, 0.08, 0.08, 0.08, 0.085, 0.08, 0.09)]
     with pdf.table(
         col_widths=t_widths,
         text_align=t_aligns,
@@ -457,12 +467,15 @@ def write_bets_explained_pdf(
         if not rows:
             row = table.row()
             row.cell(_pdf_text("No tickets.", face))
-            for _ in range(9):
+            for _ in range(12):
                 row.cell("")
         else:
             for t in rows:
                 row = table.row()
                 row.cell(_pdf_text(t.player_name, face))
+                row.cell(_pdf_text(t.live_place, face))
+                row.cell(_pdf_text(t.live_to_par, face))
+                row.cell(_pdf_text(t.live_thru, face))
                 row.cell(_pdf_text(format_paper_time(getattr(t, "entered_at", None)), face))
                 row.cell(_pdf_text(t.market, face))
                 row.cell(_pdf_text(f"${t.stake:.2f}", face))

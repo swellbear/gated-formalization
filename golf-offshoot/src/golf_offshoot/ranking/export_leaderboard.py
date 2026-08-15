@@ -14,6 +14,10 @@ from golf_offshoot.ranking.export_table import (
     _register_pdf_font,
     _require_fpdf2,
     default_export_dir,
+    mark_pdf_printed,
+    printed_at_utc,
+    write_pdf_footer,
+    write_pdf_print_stamp,
 )
 from golf_offshoot.ranking.leaderboard import LeaderboardView, format_leaderboard, leaderboard_view
 
@@ -45,7 +49,7 @@ def export_live_leaderboard(
     pdf = d / f"{stem}.pdf"
     body = format_leaderboard(result.ranked, n_rounds=n_rounds, held_ids=held_ids)
     txt.write_text(
-        f"{title}\n{subtitle}\n{caption}\n\n{body}\n",
+        f"{title}\n{subtitle}\nprinted {printed_at_utc()}\n{caption}\n\n{body}\n",
         encoding="utf-8",
     )
     html_path.write_text(
@@ -106,6 +110,7 @@ def render_leaderboard_html(
 <body>
 <h1>{html.escape(title)}</h1>
 <p class="sub">{html.escape(subtitle)}</p>
+<p class="sub">printed {html.escape(printed_at_utc())}</p>
 {cap}
 <table class="field">
 <thead><tr>{head_cells}</tr></thead>
@@ -141,9 +146,10 @@ def write_leaderboard_pdf(
         def header(self) -> None:
             face = getattr(self, "_table_font", "Helvetica")
             self.set_x(self.l_margin)
-            self.set_text_color(18, 32, 42)
+            write_pdf_print_stamp(self, face)
             if self.page_no() == 1:
                 self.set_font(face, "B", 14)
+                self.set_text_color(18, 32, 42)
                 self.cell(0, 7, _pdf_text(title, face), new_x="LMARGIN", new_y="NEXT")
                 self.set_font(face, "", 8)
                 self.set_text_color(70, 85, 95)
@@ -154,26 +160,18 @@ def write_leaderboard_pdf(
                 self.ln(2)
             else:
                 self.set_font(face, "B", 9)
+                self.set_text_color(18, 32, 42)
                 self.cell(0, 6, _pdf_text(f"{title}  (continued)", face), new_x="LMARGIN", new_y="NEXT")
                 self.ln(1)
 
         def footer(self) -> None:
             face = getattr(self, "_table_font", "Helvetica")
-            self.set_x(self.l_margin)
-            self.set_y(-12)
-            self.set_font(face, "I", 7)
-            self.set_text_color(90, 100, 110)
-            self.cell(
-                0,
-                6,
-                "golf-offshoot  |  live scoreboard  |  observation only  |  never auto-bet  |  "
-                f"page {self.page_no()} of {{nb}}",
-                align="C",
-            )
+            write_pdf_footer(self, face, "live scoreboard")
 
     pdf = Report(orientation="L", unit="mm", format="Letter")
     face = _register_pdf_font(pdf)
     pdf._table_font = face
+    mark_pdf_printed(pdf)
     if face == "Helvetica":
         pdf.core_fonts_encoding = "cp1252"
     pdf.alias_nb_pages()

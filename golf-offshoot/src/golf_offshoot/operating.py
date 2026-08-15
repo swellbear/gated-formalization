@@ -3,7 +3,6 @@
 from __future__ import annotations
 
 import json
-from datetime import datetime, timezone
 from pathlib import Path
 
 from golf_offshoot.audit.shadow import format_shadow_review, load_shadow
@@ -16,6 +15,7 @@ from golf_offshoot.models.enums import Horizon, RiskPreference, RunMode, Strateg
 from golf_offshoot.models.schemas import SourceInventoryItem, TournamentRunResult
 from golf_offshoot.models.strategy import StrategyConfig
 from golf_offshoot.pipeline import GolfOffshootPipeline
+from golf_offshoot.localtime import now_eastern_text
 from golf_offshoot.ranking.display import format_table
 from golf_offshoot.strategy.engine import format_recommendation
 
@@ -283,7 +283,7 @@ def write_pressure_report(
     lines = [
         "# Pressure test — 2026 FedEx St. Jude Championship",
         "",
-        f"As of {datetime.now(timezone.utc).isoformat()} UTC. **Never auto-bet.** Operating path only (no mocks). Model `{result.audit.model.version_id if result.audit.model else ''}`",
+        f"As of {now_eastern_text(with_seconds=True)}. **Never auto-bet.** Operating path only (no mocks). Model `{result.audit.model.version_id if result.audit.model else ''}`",
         "",
         f"- Tournament: **{result.tournament.name}** (`{result.tournament.tournament_id}`)",
         f"- Course: {result.tournament.course.name} · par {result.tournament.course.par} · {result.tournament.course.yardage} yd",

@@ -3,7 +3,7 @@
 from __future__ import annotations
 
 from dataclasses import dataclass
-from datetime import datetime, timezone
+from datetime import datetime
 from pathlib import Path
 
 from pydantic import BaseModel, Field
@@ -13,6 +13,7 @@ from golf_offshoot.config import (
     PAPER_ESTIMATED_CASHOUT_HAIRCUT,
     PAPER_OBSERVATION_STAKE_FRAC,
 )
+from golf_offshoot.localtime import format_eastern, now
 from golf_offshoot.data_feeds.http import package_data_dir
 from golf_offshoot.models.enums import BetType, Horizon, StrategyActionKind
 from golf_offshoot.models.schemas import PlayerOutput
@@ -44,7 +45,7 @@ class PaperMovement(BaseModel):
     """One paper lock, sell, add, or reallocate. Never a real-money fill."""
 
     movement_id: str
-    at: datetime = Field(default_factory=lambda: datetime.now(timezone.utc))
+    at: datetime = Field(default_factory=now)
     kind: str
     status: str = "applied"
     player_id: str = ""
@@ -75,7 +76,7 @@ class PaperBookFile(BaseModel):
     tournament_id: str
     tournament_name: str = ""
     bankroll: float
-    locked_at: datetime = Field(default_factory=lambda: datetime.now(timezone.utc))
+    locked_at: datetime = Field(default_factory=now)
     locked_from_run_id: str = ""
     odds_book: str = ""
     paper_observation_only: bool = True
@@ -120,14 +121,20 @@ class PaperTicketRow:
     live_posted_edge: float | None = None
     live_run_id: str = ""
     entered_at: datetime | None = None
+    live_place: str = "n/a"
+    live_to_par: str = "n/a"
+    live_thru: str = "n/a"
+    live_status: str = "n/a"
+
+    @property
+    def board_now(self) -> str:
+        if self.live_place in {"", "n/a", "-"} and self.live_to_par in {"", "n/a", "-"}:
+            return "n/a"
+        return f"{self.live_place} {self.live_to_par} {self.live_thru}"
 
 
 def format_paper_time(value: datetime | None) -> str:
-    if value is None:
-        return "n/a"
-    if value.tzinfo is None:
-        value = value.replace(tzinfo=timezone.utc)
-    return value.astimezone(timezone.utc).strftime("%Y-%m-%d %H:%M UTC")
+    return format_eastern(value)
 
 
 def _bet_key(value) -> str:
@@ -235,9 +242,34 @@ def observation_technical() -> str:
 def clocks_plain() -> str:
     return (
         "At entry is the booked ticket and is never rewritten. This live is this "
-        "pack's snapshot only - the numbers strategy used. n/a means that market "
+        "pack's snapshot only - the numbers strategy used. Place / ToPar / Thru are "
+        "ESPN board at this print, not model Win% rank. n/a means that market "
         "had no posted coupon on this run (Winner Live is not used as a place price). "
-        "Stake and If wins stay on the entry decimal."
+        "Stake and If wins stay on the entry decimal. All clocks are Eastern (EDT/EST)."
+    )
+
+
+def live_board_mark(row: PlayerOutput | None, *, n_rounds: int = 4) -> tuple[str, str, str, str]:
+    """ESPN place / to-par / thru / status at this snapshot. Missing stays n/a."""
+    if row is None:
+        return "n/a", "n/a", "n/a", "n/a"
+    from golf_offshoot.ranking.leaderboard import (
+        format_place,
+        format_status,
+        format_thru,
+        format_to_par,
+    )
+
+    return (
+        format_place(row),
+        format_to_par(row.live_score_to_par),
+        format_thru(
+            row.live_holes_completed,
+            n_rounds,
+            withdrawn=row.withdrawn,
+            missed_cut=row.live_made_cut is False,
+        ),
+        format_status(row, n_rounds),
     )
 
 
@@ -271,6 +303,7 @@ def ticket_rows(
     live_outputs: list[PlayerOutput] | None = None,
     *,
     live_run_id: str = "",
+    n_rounds: int = 4,
 ) -> list[PaperTicketRow]:
     """At-entry blotter plus optional this-live marks from one snapshot.
 
@@ -279,6 +312,7 @@ def ticket_rows(
     stand-in for Top 5 / 10 / 20. Entry decimals are never rewritten.
     """
     by_id = {r.player_id: r for r in (live_outputs or [])}
+    by_name = {r.name: r for r in (live_outputs or [])}
     rows: list[PaperTicketRow] = []
     for p in record.book.positions:
         posted_edge = posted_price_edge(p.entry_model_p, p.decimal_odds)
@@ -286,7 +320,8 @@ def ticket_rows(
         live_model = None
         live_edge_w = None
         live_vs = None
-        row = by_id.get(p.player_id)
+        row = by_id.get(p.player_id) or by_name.get(p.player_name)
+        place, to_par, thru, status = live_board_mark(row, n_rounds=n_rounds)
         if row is not None:
             horizon = _BET_HORIZON.get(p.bet_type)
             if horizon is not None:
@@ -323,6 +358,10 @@ def ticket_rows(
                 live_posted_edge=live_vs,
                 live_run_id=live_run_id,
                 entered_at=p.entered_at,
+                live_place=place,
+                live_to_par=to_par,
+                live_thru=thru,
+                live_status=status,
             )
         )
     return rows
@@ -1370,7 +1409,7 @@ def format_paper_book(record: PaperBookFile) -> str:
         f"PAPER BOOK {record.tournament_name or record.tournament_id} "
         f"path={getattr(record, 'path_id', None) or 'lived'} "
         f"${record.bankroll:.0f} mock  never_auto_bet=true",
-        f"locked_at={record.locked_at.isoformat()} run={record.locked_from_run_id} "
+        f"locked_at={format_paper_time(record.locked_at)} run={record.locked_from_run_id} "
         f"odds_book={record.odds_book or 'n/a'}",
         f"open ${record.book.open_exposure:.2f} / ${record.bankroll:.2f} "
         f"({frac:.0%}) cash ${cash:.2f} n={len(record.book.positions)}",
@@ -1381,7 +1420,7 @@ def format_paper_book(record: PaperBookFile) -> str:
     for t in ticket_rows(record):
         lines.append(
             f"  {t.lane} {t.player_name} {t.market} ${t.stake:.2f} @ {t.posted:.2f} "
-            f"model={t.model_win:.3f} EdgeW={t.edge_w:+.3f} vs_posted={t.posted_edge:+.3f} "
+            f"now={t.board_now} model={t.model_win:.3f} EdgeW={t.edge_w:+.3f} vs_posted={t.posted_edge:+.3f} "
             f"if_wins=${t.if_wins:.2f}"
         )
         lines.append(f"    {t.screen}")

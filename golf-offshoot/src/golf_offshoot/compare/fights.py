@@ -4,15 +4,16 @@ from __future__ import annotations
 
 import html
 from dataclasses import dataclass, field
-from datetime import datetime, timezone
 from pathlib import Path
 
 from golf_offshoot.compare.law import METHOD_LAW_V1, law_hash
 from golf_offshoot.compare.paths import COMPARE_LEDGERS, ComparePath, compare_allows_place, compare_markets_blurb, ledger_id
 from golf_offshoot.config import MIN_EDGE_TO_CONSIDER
 from golf_offshoot.data_feeds.http import package_data_dir
+from golf_offshoot.localtime import format_eastern, filename_stamp, now_eastern_text
 from golf_offshoot.models.enums import Horizon
-from golf_offshoot.strategy.paper_book import PaperBookFile, load_paper_file, posted_price_edge
+from golf_offshoot.ranking.export_table import _pdf_text, _register_pdf_font, _require_fpdf2, mark_pdf_printed, printed_at_utc, write_pdf_footer, write_pdf_print_stamp
+from golf_offshoot.strategy.paper_book import PaperBookFile, live_board_mark, load_paper_file, posted_price_edge
 
 def _path_winner_only(path_id: str, event_id: str = "") -> bool:
     law = PATH_LAW.get(path_id) or {}
@@ -450,7 +451,8 @@ def fights_document(
         f"FIGHTS  {event_name or event_id}",
         f"event={event_id}",
         f"method_law={METHOD_LAW_V1['id']} hash={law_hash()}",
-        f"as_of={datetime.now(timezone.utc).isoformat()}",
+        f"as_of={now_eastern_text(with_seconds=True)}",
+        f"printed {printed_at_utc()}",
         "never_auto_bet=true  paper/mock only",
         "",
         "== what these books are ==",
@@ -463,8 +465,12 @@ def fights_document(
         "",
         "== books (who is held right now) ==",
     ]
+    board = _board_by_name(live_outputs)
     for pid, view in views.items():
-        names = ", ".join(view.names) if view.names else "(empty)"
+        if view.names:
+            names = ", ".join(f"{n}{board.get(n, '')}" for n in view.names)
+        else:
+            names = "(empty)"
         lines.append(
             f"  {pid:12} n={view.n:2d}  ${view.exposure:.2f} / ${view.bankroll:.0f}  {names}"
         )
@@ -480,7 +486,7 @@ def fights_document(
         if ev.technical:
             lines.append(f"      technical: {ev.technical}")
         if ev.run_id:
-            lines.append(f"      run={ev.run_id} as_of={ev.as_of}")
+            lines.append(f"      run={ev.run_id} as_of={format_eastern(ev.as_of)}")
     lines += ["", "== notes =="]
     lines.append("  B never tickets on EdgeW alone. Posted bar is 1/decimal.")
     lines.append("  t stays 0.03 this week (n=1). Learner may not copy A because A won.")
@@ -494,6 +500,16 @@ def fights_document(
     for n in extra_notes or []:
         lines.append(f"  {n}")
     return "\n".join(lines) + "\n"
+
+
+def _board_by_name(live_outputs) -> dict[str, str]:
+    out: dict[str, str] = {}
+    for row in live_outputs or []:
+        place, to_par, thru, _status = live_board_mark(row)
+        if place in {"n/a", "-"} and to_par in {"n/a", "-"}:
+            continue
+        out[row.name] = f" ({place} {to_par} {thru})"
+    return out
 
 
 def fights_html(text: str, *, title: str) -> str:
@@ -519,7 +535,7 @@ def write_fights(
 ) -> Path:
     d = directory or (package_data_dir() / "exports")
     d.mkdir(parents=True, exist_ok=True)
-    stamp = datetime.now(timezone.utc).strftime("%Y%m%dT%H%M%SZ")
+    stamp = filename_stamp()
     safe = "".join(ch if ch.isalnum() or ch in "-_" else "-" for ch in str(event_id))
     stem = f"{safe}_fights_{stamp}"
     text = fights_document(
@@ -552,36 +568,26 @@ def write_fights(
 def write_fights_pdf(path: Path, text: str, *, title: str) -> Path:
     from fpdf import FPDF
 
-    from golf_offshoot.ranking.export_table import _pdf_text, _register_pdf_font, _require_fpdf2
-
     _require_fpdf2()
 
     class Report(FPDF):
         def header(self) -> None:
             face = getattr(self, "_table_font", "Helvetica")
             self.set_x(self.l_margin)
-            self.set_text_color(18, 32, 42)
+            write_pdf_print_stamp(self, face)
             self.set_font(face, "B", 12)
+            self.set_text_color(18, 32, 42)
             self.cell(0, 7, _pdf_text(title, face), new_x="LMARGIN", new_y="NEXT")
             self.ln(1)
 
         def footer(self) -> None:
             face = getattr(self, "_table_font", "Helvetica")
-            self.set_x(self.l_margin)
-            self.set_y(-12)
-            self.set_font(face, "I", 7)
-            self.set_text_color(90, 100, 110)
-            self.cell(
-                0,
-                6,
-                "fights  |  paper / mock  |  observation only  |  never auto-bet  |  "
-                f"page {self.page_no()} of {{nb}}",
-                align="C",
-            )
+            write_pdf_footer(self, face, "fights")
 
     pdf = Report(orientation="L", unit="mm", format="Letter")
     face = _register_pdf_font(pdf)
     pdf._table_font = face
+    mark_pdf_printed(pdf)
     if face == "Helvetica":
         pdf.core_fonts_encoding = "cp1252"
     pdf.alias_nb_pages()

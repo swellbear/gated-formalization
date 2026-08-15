@@ -16,6 +16,7 @@ from golf_offshoot.config import (
     RECENT_SG_MIN_EVENTS,
     RECENT_SG_PILL_YEARS,
 )
+from golf_offshoot.localtime import now
 from golf_offshoot.data_feeds.base import unavailable_quality
 from golf_offshoot.data_feeds.names import normalize_name
 from golf_offshoot.data_feeds.pga_sg import (
@@ -229,7 +230,7 @@ class AsOfSgIndex:
                     score=min(0.88, 0.40 + 0.025 * n_ev),
                     role=DataRole.PRIMARY,
                     source_name="pga_tour_sg_event_only",
-                    as_of=datetime.now(timezone.utc),
+                    as_of=now(),
                     n_observations=n_players,
                     notes=(
                         f"mean of {n_ev}/{n_recent} requested PGA EVENT_ONLY SG tables before {before}: "

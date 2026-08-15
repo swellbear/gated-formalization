@@ -7,11 +7,11 @@ import json
 import time
 import urllib.error
 import urllib.request
-from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any
 
 from golf_offshoot.data_feeds.base import FeedError
+from golf_offshoot.localtime import isoformat_now
 
 DEFAULT_BROWSER_UA = (
     "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 "
@@ -207,7 +207,7 @@ class HttpCache:
                     meta["error"] = "non-JSON"
                     return stale_env["body"], meta
             raise FeedError(f"non-JSON from {url}") from exc
-        fetched_at = datetime.now(timezone.utc).isoformat()
+        fetched_at = isoformat_now()
         envelope = {
             "url": url,
             "method": method,

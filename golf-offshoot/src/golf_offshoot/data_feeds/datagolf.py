@@ -13,6 +13,7 @@ from typing import Any
 
 from golf_offshoot.data_feeds.base import DataFeed, FeedError, unavailable_quality
 from golf_offshoot.data_feeds.http import DEFAULT_APP_UA, HttpCache
+from golf_offshoot.localtime import now
 from golf_offshoot.models.enums import DataRole, SourceKind
 from golf_offshoot.models.schemas import DataQuality
 
@@ -82,7 +83,7 @@ class DataGolfRecentSgFeed(DataFeed[dict[str, Any]]):
                 score=0.0,
                 role=self.role,
                 source_name=self.name,
-                as_of=datetime.now(timezone.utc),
+                as_of=now(),
                 n_observations=len(rows),
                 missing=True,
                 source_kind=SourceKind.UNAVAILABLE,
@@ -98,7 +99,7 @@ class DataGolfRecentSgFeed(DataFeed[dict[str, Any]]):
             score=0.86,
             role=self.role,
             source_name=self.name,
-            as_of=datetime.now(timezone.utc),
+            as_of=now(),
             n_observations=recent_n,
             notes=f"Data Golf recent-window fields present for {recent_n}/{len(rows)} players",
             source_kind=SourceKind.REAL_HISTORICAL,

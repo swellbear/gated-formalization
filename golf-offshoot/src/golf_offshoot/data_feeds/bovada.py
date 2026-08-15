@@ -9,6 +9,7 @@ from typing import Any
 from golf_offshoot.config import ODDS_TTL_LIVE_SECONDS, ODDS_TTL_PRE_SECONDS
 from golf_offshoot.data_feeds.base import DataFeed, FeedError, unavailable_quality
 from golf_offshoot.data_feeds.http import DEFAULT_BROWSER_UA, HttpCache
+from golf_offshoot.localtime import EASTERN, now
 from golf_offshoot.data_feeds.names import match_name, normalize_name
 from golf_offshoot.models.enums import BetType, DataRole, SourceKind
 from golf_offshoot.models.schemas import DataQuality, MarketQuote
@@ -65,10 +66,10 @@ def _as_of_ms(raw: Any) -> datetime:
     try:
         ms = int(raw)
         if ms > 10_000_000_000:
-            return datetime.fromtimestamp(ms / 1000.0, tz=timezone.utc)
-        return datetime.fromtimestamp(ms, tz=timezone.utc)
+            return datetime.fromtimestamp(ms / 1000.0, tz=EASTERN)
+        return datetime.fromtimestamp(ms, tz=EASTERN)
     except (TypeError, ValueError, OSError):
-        return datetime.now(timezone.utc)
+        return now()
 
 
 def _tokens(name: str) -> set[str]:
@@ -106,7 +107,7 @@ class BovadaOddsFeed(DataFeed[list[MarketQuote]]):
         for n, pid in list(name_to_id.items()):
             norm_to_id.setdefault(normalize_name(n), pid)
         quotes, unmatched, markets_seen = self._quotes_from_events(events, norm_to_id, live=live)
-        as_of = max((_as_of_ms(ev.get("lastModified")) for ev in events), default=datetime.now(timezone.utc))
+        as_of = max((_as_of_ms(ev.get("lastModified")) for ev in events), default=now())
         meta = self._last_meta or {}
         age_s = float(meta.get("age_seconds") or 0.0)
         stale = bool(meta.get("stale_fallback"))

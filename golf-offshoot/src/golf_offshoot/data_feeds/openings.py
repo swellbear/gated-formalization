@@ -3,11 +3,12 @@
 from __future__ import annotations
 
 import json
-from datetime import datetime, timezone
+from datetime import datetime
 from pathlib import Path
 from typing import Any
 
 from golf_offshoot.data_feeds.http import package_data_dir
+from golf_offshoot.localtime import isoformat_now, now, to_eastern
 from golf_offshoot.models.enums import BetType, SourceKind
 from golf_offshoot.models.schemas import MarketQuote
 
@@ -51,11 +52,10 @@ def _quote_from_dict(row: dict[str, Any]) -> MarketQuote | None:
         return None
     as_of_raw = row.get("as_of")
     try:
-        as_of = datetime.fromisoformat(str(as_of_raw)) if as_of_raw else datetime.now(timezone.utc)
+        as_of = datetime.fromisoformat(str(as_of_raw)) if as_of_raw else now()
     except ValueError:
-        as_of = datetime.now(timezone.utc)
-    if as_of.tzinfo is None:
-        as_of = as_of.replace(tzinfo=timezone.utc)
+        as_of = now()
+    as_of = to_eastern(as_of)
     dec = row.get("decimal_odds")
     try:
         dec_f = float(dec)
@@ -126,7 +126,7 @@ def persist_prematch_openings(
     payload = {
         "event_id": event_id,
         "tournament_name": tournament_name,
-        "captured_at": datetime.now(timezone.utc).isoformat(),
+        "captured_at": isoformat_now(),
         "source_kind": SourceKind.REAL_LIVE.value,
         "notes": (
             "First distinct prematch coupon observed for this ESPN event. "

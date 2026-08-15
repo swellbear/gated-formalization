@@ -4,9 +4,9 @@ from __future__ import annotations
 
 import json
 import shutil
-from datetime import datetime, timezone
 from pathlib import Path
 
+from golf_offshoot.localtime import filename_stamp
 from golf_offshoot.models.strategy import StrategyConfig
 from golf_offshoot.strategy.paper_book import (
     PaperBookFile,
@@ -52,7 +52,7 @@ def write_paper_pack(
     ensure_lock_movements(record, cfg)
     advice = list(advice) if advice is not None else list(record.latest_advice)
     record.latest_advice = advice
-    stamp = datetime.now(timezone.utc).strftime("%Y%m%dT%H%M%SZ")
+    stamp = filename_stamp()
     run = _safe(run_id or record.locked_from_run_id or "pack")
     pack_name = f"{_safe(record.tournament_id)}_{stamp}_{run}"
     root = (directory or packs_dir()) / pack_name
@@ -203,17 +203,24 @@ def write_combo_pdf(
 
 
 def _pack_pdf_sources(root: Path) -> list[tuple[Path, str]]:
-    """Numbered PDFs in name order. Skips the combo file itself."""
+    """Numbered PDFs in pack reading order. Skips the combo file itself."""
     found: list[tuple[Path, str]] = []
+    seen: set[str] = set()
+    for name, label in _PACK_PDF_SECTIONS:
+        path = root / name
+        if path.is_file():
+            found.append((path, label))
+            seen.add(name.lower())
     for path in sorted(root.glob("*.pdf")):
         name = path.name
-        if name.lower() == COMBO_PDF.lower():
+        if name.lower() in seen or name.lower() == COMBO_PDF.lower():
             continue
         if len(name) < 4 or not name[:2].isdigit() or name[2] != "_":
             continue
         if name.startswith("00_"):
             continue
         found.append((path, path.stem.replace("_", " ")))
+        seen.add(name.lower())
     return found
 
 

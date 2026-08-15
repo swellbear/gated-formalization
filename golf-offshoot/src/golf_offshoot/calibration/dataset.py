@@ -29,13 +29,13 @@ class EventDataset:
 
 
 def _q(n: int, score: float, notes: str) -> DataQuality:
-    from datetime import datetime, timezone
+    from golf_offshoot.localtime import now
 
     return DataQuality(
         score=score,
         role=DataRole.PRIMARY,
         source_name="espn_leaderboard_history",
-        as_of=datetime.now(timezone.utc),
+        as_of=now(),
         n_observations=n,
         notes=notes,
         missing=n <= 0,

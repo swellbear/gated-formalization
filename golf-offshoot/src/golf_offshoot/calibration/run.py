@@ -2,8 +2,6 @@
 
 from __future__ import annotations
 
-from datetime import datetime, timezone
-
 from golf_offshoot.bayesian_engine.weights import complete_alpha, weight_hash
 from golf_offshoot.calibration.artifacts import result_to_payload, save_weights
 from golf_offshoot.calibration.dataset import (
@@ -18,9 +16,9 @@ from golf_offshoot.calibration.optimize import (
     fit_weights,
     keys_for_coverage,
 )
-from golf_offshoot.config import CALIBRATED_WEIGHTS_VERSION, MODEL_VERSION
+from golf_offshoot.config import CALIB_HISTORY_YEARS, CALIBRATED_WEIGHTS_VERSION, MODEL_VERSION
 from golf_offshoot.data_feeds.ingest import RealIngestor
-from golf_offshoot.config import CALIB_HISTORY_YEARS
+from golf_offshoot.localtime import isoformat_now
 
 
 def run_calibration(
@@ -92,7 +90,7 @@ def run_calibration(
         expert = complete_alpha()
         payload = {
             "version_id": f"{MODEL_VERSION}-{CALIBRATED_WEIGHTS_VERSION}",
-            "created_at": datetime.now(timezone.utc).isoformat(),
+            "created_at": isoformat_now(),
             "no_future_leakage": True,
             "train_event_ids": [d.event.event_id for d in train_ds],
             "holdout_event_ids": [d.event.event_id for d in hold_ds],

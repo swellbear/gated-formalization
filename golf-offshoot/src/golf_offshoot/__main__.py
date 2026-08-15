@@ -511,8 +511,7 @@ def _cmd_paper_export(args) -> int:
 
 
 def _cmd_paper_ledger(args) -> int:
-    from datetime import datetime, timezone
-
+    from golf_offshoot.localtime import filename_stamp
     from golf_offshoot.strategy.paper_bankroll_export import write_bankroll_files
     from golf_offshoot.strategy.paper_book import load_paper_file
     from golf_offshoot.strategy.paper_ledger import format_ledger, load_ledger
@@ -528,7 +527,7 @@ def _cmd_paper_ledger(args) -> int:
         pack = export_paper_pack(args.event)
         print(f"paper pack: {pack}")
         return 0
-    stamp = datetime.now(timezone.utc).strftime("%Y%m%dT%H%M%SZ")
+    stamp = filename_stamp()
     root = packs_dir() / f"ledger_{stamp}"
     record = load_paper_file(args.event) if args.event else None
     paths = write_bankroll_files(root, ledger=ledger, record=record)

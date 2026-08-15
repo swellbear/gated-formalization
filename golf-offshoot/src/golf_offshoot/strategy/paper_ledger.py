@@ -3,10 +3,12 @@
 from __future__ import annotations
 
 from collections.abc import Callable
-from datetime import datetime, timezone
+from datetime import datetime
 from pathlib import Path
 
 from pydantic import BaseModel, Field
+
+from golf_offshoot.localtime import now
 
 from golf_offshoot.models.enums import BetType
 from golf_offshoot.models.strategy import new_id
@@ -15,7 +17,7 @@ from golf_offshoot.strategy.paper_book import PaperBookFile, load_paper_file, sa
 
 class LedgerEntry(BaseModel):
     entry_id: str
-    at: datetime = Field(default_factory=lambda: datetime.now(timezone.utc))
+    at: datetime = Field(default_factory=now)
     kind: str
     amount: float
     bankroll_after: float
@@ -42,7 +44,7 @@ class TicketResult(BaseModel):
 class EventWeek(BaseModel):
     event_id: str
     event_name: str = ""
-    settled_at: datetime = Field(default_factory=lambda: datetime.now(timezone.utc))
+    settled_at: datetime = Field(default_factory=now)
     winner_id: str = ""
     winner_name: str = ""
     tickets: list[TicketResult] = Field(default_factory=list)
@@ -339,7 +341,7 @@ def settle_paper_event(
     record.book = record.book.model_copy(
         update={"positions": [], "realized_pnl_event": pnl_total}
     )
-    record.settled_at = datetime.now(timezone.utc)
+    record.settled_at = now()
     record.settlement_pnl = pnl_total
     win_pnl, place_pnl = _split_ticket_pnl(tickets)
     record.settlement_pnl_win = win_pnl
@@ -408,7 +410,7 @@ def settle_independent_compare_event(
     record.book = record.book.model_copy(
         update={"positions": [], "realized_pnl_event": pnl_total, "bankroll": bankroll_after}
     )
-    record.settled_at = datetime.now(timezone.utc)
+    record.settled_at = now()
     record.settlement_pnl = pnl_total
     record.settlement_pnl_win = win_pnl
     record.settlement_pnl_place = place_pnl

@@ -9,9 +9,9 @@ Rules:
 from __future__ import annotations
 
 from abc import ABC, abstractmethod
-from datetime import datetime, timezone
 from typing import Any, Generic, TypeVar
 
+from golf_offshoot.localtime import now
 from golf_offshoot.models.enums import DataRole, SourceKind
 from golf_offshoot.models.schemas import DataQuality
 
@@ -46,7 +46,7 @@ def unavailable_quality(
         score=0.0,
         role=role,
         source_name=source_name,
-        as_of=datetime.now(timezone.utc),
+        as_of=now(),
         missing=True,
         source_kind=SourceKind.UNAVAILABLE,
         notes=notes,
@@ -69,7 +69,7 @@ class DataFeed(ABC, Generic[T]):
                 score=0.0,
                 role=self.role,
                 source_name=self.name,
-                as_of=datetime.now(timezone.utc),
+                as_of=now(),
                 missing=True,
                 notes=f"fetch failed: {exc}",
                 source_kind=SourceKind.UNAVAILABLE,
@@ -106,7 +106,7 @@ class FallbackChain(Generic[T]):
             last_q = DataQuality(
                 score=0.0,
                 source_name="none",
-                as_of=datetime.now(timezone.utc),
+                as_of=now(),
                 missing=True,
                 notes="empty chain",
             )

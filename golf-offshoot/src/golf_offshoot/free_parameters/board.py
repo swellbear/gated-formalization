@@ -45,14 +45,14 @@ def build_player_board(
         kind: SourceKind = SourceKind.UNSPECIFIED,
         factor_id: str | None = None,
     ) -> DataQuality:
-        from datetime import datetime, timezone
+        from golf_offshoot.localtime import now
 
         if factor_id and factor_id in sq:
             return sq[factor_id]
         return DataQuality(
             score=score,
             source_name=source,
-            as_of=datetime.now(timezone.utc),
+            as_of=now(),
             n_observations=n,
             missing=missing,
             source_kind=kind,
@@ -163,12 +163,12 @@ def build_player_board(
                 }
             )
         else:
-            from datetime import datetime, timezone
+            from golf_offshoot.localtime import now
 
             live_q = DataQuality(
                 score=float(prog["quality"]),
                 source_name="espn_leaderboard_live",
-                as_of=datetime.now(timezone.utc),
+                as_of=now(),
                 n_observations=max(int(prog["holes"]), 1),
                 notes=note,
                 source_kind=SourceKind.REAL_LIVE,

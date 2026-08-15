@@ -8,11 +8,11 @@ from __future__ import annotations
 
 import hashlib
 import json
-from datetime import datetime, timezone
 from pathlib import Path
 from uuid import uuid4
 
 from golf_offshoot.bayesian_engine.weights import complete_alpha, weight_hash
+from golf_offshoot.localtime import filename_stamp
 from golf_offshoot.config import MODEL_FAMILY, MODEL_VERSION
 from golf_offshoot.models.enums import RunMode
 from golf_offshoot.models.schemas import (
@@ -47,7 +47,7 @@ def current_model_record(alpha: dict[str, float] | None = None) -> ModelVersionR
 
 
 def new_run_id() -> str:
-    return datetime.now(timezone.utc).strftime("%Y%m%dT%H%M%SZ") + "-" + uuid4().hex[:8]
+    return filename_stamp() + "-" + uuid4().hex[:8]
 
 
 def build_audit(

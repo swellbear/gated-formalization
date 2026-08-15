@@ -4,6 +4,7 @@ from __future__ import annotations
 
 from datetime import datetime, timezone
 
+from golf_offshoot.localtime import now
 from golf_offshoot.models.enums import BetType, CourseType, DataRole, RunMode, SourceKind
 from golf_offshoot.models.schemas import (
     Course,
@@ -45,7 +46,7 @@ def _q(score: float, n: int) -> DataQuality:
         score=score,
         role=DataRole.MOCK,
         source_name="demo",
-        as_of=datetime.now(timezone.utc),
+        as_of=now(),
         n_observations=n,
         source_kind=SourceKind.MOCK,
     )

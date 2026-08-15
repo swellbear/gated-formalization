@@ -2,10 +2,12 @@
 
 from __future__ import annotations
 
-from datetime import datetime, timezone
+from datetime import datetime
 from typing import Any
 
 from pydantic import BaseModel, Field, field_validator
+
+from golf_offshoot.localtime import now as _now
 
 from golf_offshoot.models.enums import (
     BetType,
@@ -18,10 +20,6 @@ from golf_offshoot.models.enums import (
     SourceKind,
 )
 from golf_offshoot.models.strategy import StrategyRecommendation, UserStrategyDecision
-
-
-def _utcnow() -> datetime:
-    return datetime.now(timezone.utc)
 
 
 class DataQuality(BaseModel):
@@ -169,7 +167,7 @@ class PlayerInputs(BaseModel):
 
 class FieldSnapshot(BaseModel):
     tournament_id: str
-    as_of: datetime = Field(default_factory=_utcnow)
+    as_of: datetime = Field(default_factory=_now)
     mode: RunMode = RunMode.PRE_TOURNAMENT
     players: list[PlayerInputs]
     weather_summary: str = ""
@@ -212,13 +210,13 @@ class MarketQuote(BaseModel):
     implied_raw: float | None = None
     implied_fair: float | None = None
     book: str = "consensus"
-    as_of: datetime = Field(default_factory=_utcnow)
+    as_of: datetime = Field(default_factory=_now)
     line_role: str = "current"  # current | opening — opening never synthesized from winner
 
 
 class MarketSnapshot(BaseModel):
     tournament_id: str
-    as_of: datetime = Field(default_factory=_utcnow)
+    as_of: datetime = Field(default_factory=_now)
     quotes: list[MarketQuote]
     overround: dict[str, float] = Field(default_factory=dict)
     movement_vs_open: dict[str, float] = Field(default_factory=dict)
@@ -313,7 +311,7 @@ class ModelVersionRecord(BaseModel):
     family: str
     weight_hash: str
     config_hash: str
-    created_at: datetime = Field(default_factory=_utcnow)
+    created_at: datetime = Field(default_factory=_now)
     notes: str = ""
 
 
@@ -324,7 +322,7 @@ class HumanOverride(BaseModel):
     delta_theta: float = 0.0
     reason: str
     operator: str
-    at: datetime = Field(default_factory=_utcnow)
+    at: datetime = Field(default_factory=_now)
 
 
 class BetRecord(BaseModel):
@@ -333,7 +331,7 @@ class BetRecord(BaseModel):
     stake: float
     decimal_odds: float
     book: str
-    placed_at: datetime = Field(default_factory=_utcnow)
+    placed_at: datetime = Field(default_factory=_now)
     notes: str = ""
     placed_by_user: bool = True
 
@@ -344,7 +342,7 @@ class AuditRecord(BaseModel):
     mode: RunMode
     model: ModelVersionRecord
     data_snapshot_hash: str
-    as_of: datetime = Field(default_factory=_utcnow)
+    as_of: datetime = Field(default_factory=_now)
     outputs: list[PlayerOutput]
     overrides: list[HumanOverride] = Field(default_factory=list)
     bets_placed: list[BetRecord] = Field(default_factory=list)

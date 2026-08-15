@@ -114,10 +114,10 @@ def apply_field_interactions(
 ) -> dict[str, float]:
     from golf_offshoot.models.enums import FactorStatus
     from golf_offshoot.models.schemas import DataQuality, FreeParameterState
-    from datetime import datetime, timezone
+    from golf_offshoot.localtime import now
 
     adjs = field_interaction_adjustments(field, course, honest=honest)
-    now = datetime.now(timezone.utc)
+    as_of = now()
     n_skill = sum(
         1
         for p in field
@@ -137,7 +137,7 @@ def apply_field_interactions(
             quality=DataQuality(
                 score=0.70 if usable else 0.0,
                 source_name="field_composition",
-                as_of=now,
+                as_of=as_of,
                 n_observations=len(field) if usable else 0,
                 missing=not usable,
                 source_kind=SourceKind.DERIVED_FROM_REAL if usable else SourceKind.UNAVAILABLE,
