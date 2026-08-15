@@ -1,0 +1,21 @@
+---
+description: Parked leftover callout — do not ship during St. Jude 2026; implement first after the event
+globs: golf-offshoot/**
+alwaysApply: false
+---
+
+# Leftover callout (parked → due)
+
+Canonical spec: `golf-offshoot/docs/PARKED_LEFTOVER_CALLOUT.md`.
+
+**If Status on that page is DONE:** ignore this rule.
+
+**Until 2026-08-17 (America/New_York) and while ESPN `401811962` is still in progress:**
+- Do **not** implement the leftover callout.
+- Do not add agronomy, tee pairing, narrative, injury wire, or a Δθ CLI.
+- Do not `--lock-paper` or resize the locked St. Jude mock book.
+
+**On/after that date, or when the operator is settling/scoring `401811962`:**
+- After settle/scoring if that is the ask, implement the leftover callout **before** other new golf-offshoot features.
+- Do it without waiting to be asked again. Follow the parked spec exactly (display-only; no GPF branches; no θ stuffing).
+- Mark **Status: DONE** on the parked page when shipped.
