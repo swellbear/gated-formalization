@@ -465,7 +465,9 @@ def _glossary() -> list[tuple[str, str]]:
             f"Cleared at entry only if vs posted is at least {MIN_EDGE_TO_CONSIDER * 100:.0f} percentage points. "
             "Live juice often fails this even when EdgeW looks good. Lane tags on the player name are at-entry. "
             "|n/a means this live snapshot has no posted coupon for that market. "
-            "|miss means this-live vs-posted (or EdgeW) is below 3pp.",
+            "|miss means this-live vs-posted (or EdgeW) is below 3pp. "
+            "A |n/a ticket stays open until official settle — that is not a cash-out, "
+            "and it is not an intact live edge.",
         ),
         (
             "If wins",

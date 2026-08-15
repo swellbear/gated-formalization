@@ -49,6 +49,13 @@ def hold_edge_intact() -> str:
     return "Original edge is still intact; no path reason to change size"
 
 
+def unmarked_ride_to_settle() -> str:
+    return (
+        "No live posted coupon for this market; edge cannot be marked. "
+        "Riding to official settle. Not a cash-out."
+    )
+
+
 def cashout_beats_hold() -> str:
     return (
         "Quoted cash-out beats remaining winner EV; take the quote rather than "

@@ -631,8 +631,11 @@ def ensure_lock_movements(record: PaperBookFile, config: StrategyConfig | None =
 
 _ACTION_PLAIN = {
     "hold": (
-        "Keep this paper ticket. The original reason is still intact; there is no path "
-        "reason to sell or add."
+        "Keep this paper ticket. There is no path reason to sell or add."
+    ),
+    "hold_unmarked": (
+        "Keep this paper ticket. There is no live posted coupon for this market, "
+        "so the edge cannot be marked and there is no honest cash-out. Riding to official settle."
     ),
     "reduce": (
         "Sell part of this paper ticket. The cut is a fraction of the current stake, "
@@ -686,7 +689,10 @@ def advice_from_recommendation(
             donor = by_pos[act.from_position_id].player_name
         details = "; ".join(act.reasons_detail) if act.reasons_detail else ""
         warn = f" {act.uncertainty_warning}" if act.uncertainty_warning else ""
-        plain = _ACTION_PLAIN.get(kind, act.reason)
+        plain_key = kind
+        if kind == "hold" and mark is not None and mark.live_edge_unmarked:
+            plain_key = "hold_unmarked"
+        plain = _ACTION_PLAIN.get(plain_key, act.reason)
         if act.reason:
             plain = f"{plain} Strategy reason: {act.reason}."
         if details:

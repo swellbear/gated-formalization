@@ -84,6 +84,7 @@ def mark_position(
     action_edge = live_edge
     if (ticket_screen or "both").lower() == "posted":
         action_edge = live_posted_edge
+    unmarked = action_edge is None
     if action_edge is not None:
         floor = STRATEGY_EDGE_COLLAPSE_RATIO * max(pos.entry_edge, 0.01)
         collapsed = action_edge < floor or action_edge < 0.0
@@ -121,4 +122,5 @@ def mark_position(
         cashout_threshold=cmp.threshold if cmp else None,
         cashout_beats_hold=cmp.beats_hold if cmp else None,
         mtm_is_cashout=mtm_is_cashout,
+        live_edge_unmarked=unmarked,
     )

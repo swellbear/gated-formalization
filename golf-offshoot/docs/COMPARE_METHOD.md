@@ -18,7 +18,7 @@ Honesty in B-guts: no agronomy schema defaults in course demand; missing SG is N
 
 Compare ledgers are independent **$250** books. They do not touch `ledger.json` / `working_bankroll`. Sells book P/L onto that path's own bankroll. Mode is frozen `stay_selective` + `conservative`. Threshold learner **keep_t** this week (`n=1`). Reject `copy_a_edgew_because_a_won`.
 
-**Markets:** St. Jude (`401811962`) stays **Winner-only**. From the next event on, A/B also ticket **Top 5 / Top 10 / Top 20 when that coupon is actually listed**. Place is never synthesized from Winner odds. Score **Winner posted P/L** and **place posted P/L** as two lines, not one blended book.
+**Markets:** St. Jude (`401811962`) stays **Winner-only**. From the next event on, A/B also ticket **Top 5 / Top 10 / Top 20 when that coupon is actually listed**. Place is never synthesized from Winner odds. Score **Winner posted P/L** and **place posted P/L** as two lines, not one blended book. Lived Thursday place ladders with no live coupon stay open (HOLD, ride to settle) — that is not an intact live edge and not a cash-out.
 
 ```bash
 python -m golf_offshoot live --event 401811962 --book bovada --compare-method

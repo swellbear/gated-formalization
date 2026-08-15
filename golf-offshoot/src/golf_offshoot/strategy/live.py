@@ -54,6 +54,12 @@ def _cashout_fields(mark: PositionMark) -> dict:
     }
 
 
+def _hold_reason(mark: PositionMark) -> str:
+    if mark.live_edge_unmarked:
+        return X.unmarked_ride_to_settle()
+    return X.hold_edge_intact()
+
+
 def _action_for_open(
     mark: PositionMark,
     pos: StrategyPosition,
@@ -288,7 +294,7 @@ def _action_for_open(
             player_name=name,
             bet_type=pos.bet_type,
             position_id=pos.position_id,
-            reason=X.hold_edge_intact(),
+            reason=_hold_reason(mark),
             reasons_detail=details,
         )
 
@@ -350,7 +356,7 @@ def _action_for_open(
         player_name=name,
         bet_type=pos.bet_type,
         position_id=pos.position_id,
-        reason=X.hold_edge_intact(),
+        reason=_hold_reason(mark),
         reasons_detail=details,
         uncertainty_warning=X.noisy_inputs(mark) if mark.reliability < 0.45 else None,
     )

@@ -179,7 +179,7 @@ python -m golf_offshoot live --event 401811962 --book bovada --bankroll 250
 python -m golf_offshoot paper-export --event 401811962
 ```
 
-`live` with an existing paper book records hold / reduce / exit / add / reallocate as **advice** in that snapshot's pack. When the **actionable** advice set changes (not a HOLD-only snapshot), it auto-applies that mock book. `--no-apply-paper` records advice without applying. `--apply-paper` force-applies even if the set did not change. Still mock money, still never a real bet. Open pack PDFs in Edge, Chrome, or Adobe — not as source in the editor.
+`live` with an existing paper book records hold / reduce / exit / add / reallocate as **advice** in that snapshot's pack. When the **actionable** advice set changes (not a HOLD-only snapshot), it auto-applies that mock book. `--no-apply-paper` records advice without applying. `--apply-paper` force-applies even if the set did not change. Still mock money, still never a real bet. Open pack PDFs in Edge, Chrome, or Adobe — not as source in the editor. If a place ticket has no live posted coupon (`|n/a` on Screen), HOLD means ride to official settle — not “edge intact,” and not an invented cash-out.
 
 Parallel A/B paper machines (independent $250-start books; lived lock frozen, live apply still mutates): [Compare method](COMPARE_METHOD.md).
 

@@ -276,3 +276,108 @@ def test_every_live_action_has_plain_reason():
     for a in rec.actions:
         assert a.reason
         assert a.never_auto_bet
+
+
+def test_unmarked_place_ticket_holds_ride_to_settle_not_intact():
+    f = demo_field()
+    pipe = _pipe()
+    result = pipe.run(demo_tournament(), f, market_quotes=demo_odds(f), persist=False)
+    row = result.ranked[0]
+    row = row.model_copy(
+        update={
+            "edge_by_bet": {k: v for k, v in row.edge_by_bet.items() if k == "win"},
+            "market_implied_by_bet": {k: v for k, v in row.market_implied_by_bet.items() if k == "win"},
+            "posted_odds_by_bet": {k: v for k, v in row.posted_odds_by_bet.items() if k == "win"},
+        }
+    )
+    pos = StrategyPosition(
+        position_id=new_id("pos"),
+        player_id=row.player_id,
+        player_name=row.name,
+        bet_type=BetType.TOP_20,
+        stake=1.61,
+        decimal_odds=6.0,
+        entry_edge=0.357,
+        entry_model_p=0.363,
+        user_recorded=True,
+    )
+    mark = mark_position(pos, row, ticket_screen="both")
+    assert mark.live_edge_unmarked is True
+    assert mark.original_edge_collapsed is False
+    cfg = StrategyConfig(
+        enabled=True, mode=StrategyMode.STAY_SELECTIVE, bankroll=270, ticket_screen="both"
+    )
+    act = _action_for_open(mark, pos, cfg, cooling=False)
+    assert act.kind == StrategyActionKind.HOLD
+    assert "settle" in act.reason.lower()
+    assert "coupon" in act.reason.lower()
+    assert "intact" not in act.reason.lower()
+
+
+def test_posted_screen_unmarked_when_place_coupon_missing():
+    f = demo_field()
+    pipe = _pipe()
+    result = pipe.run(demo_tournament(), f, market_quotes=demo_odds(f), persist=False)
+    row = result.ranked[0]
+    row = row.model_copy(
+        update={
+            "edge_by_bet": {**row.edge_by_bet, "top_20": 0.20},
+            "posted_odds_by_bet": {k: v for k, v in row.posted_odds_by_bet.items() if k == "win"},
+            "market_implied_by_bet": {k: v for k, v in row.market_implied_by_bet.items() if k == "win"},
+        }
+    )
+    pos = StrategyPosition(
+        position_id=new_id("pos"),
+        player_id=row.player_id,
+        player_name=row.name,
+        bet_type=BetType.TOP_20,
+        stake=1.61,
+        decimal_odds=6.0,
+        entry_edge=0.357,
+        entry_model_p=0.363,
+        user_recorded=True,
+    )
+    both = mark_position(pos, row, ticket_screen="both")
+    assert both.live_edge_unmarked is False
+    posted = mark_position(pos, row, ticket_screen="posted")
+    assert posted.live_edge_unmarked is True
+    assert posted.original_edge_collapsed is False
+    cfg = StrategyConfig(
+        enabled=True, mode=StrategyMode.STAY_SELECTIVE, bankroll=270, ticket_screen="posted"
+    )
+    act = _action_for_open(posted, pos, cfg, cooling=False)
+    assert act.kind == StrategyActionKind.HOLD
+    assert "intact" not in act.reason.lower()
+
+
+def test_marked_win_hold_still_says_intact_when_edge_lives():
+    f = demo_field()
+    pipe = _pipe()
+    result = pipe.run(demo_tournament(), f, market_quotes=demo_odds(f), persist=False)
+    row = result.ranked[0]
+    row = row.model_copy(
+        update={
+            "edge_by_bet": {**row.edge_by_bet, "win": 0.07},
+            "posted_odds_by_bet": {**row.posted_odds_by_bet, "win": 19.0},
+            "market_implied_by_bet": {**row.market_implied_by_bet, "win": 1.0 / 19.0},
+        }
+    )
+    pos = StrategyPosition(
+        position_id=new_id("pos"),
+        player_id=row.player_id,
+        player_name=row.name,
+        bet_type=BetType.WIN,
+        stake=0.54,
+        decimal_odds=19.0,
+        entry_edge=0.07,
+        entry_model_p=0.07 + 1.0 / 19.0,
+        user_recorded=True,
+    )
+    mark = mark_position(pos, row, ticket_screen="both")
+    assert mark.live_edge_unmarked is False
+    assert mark.original_edge_collapsed is False
+    cfg = StrategyConfig(enabled=True, mode=StrategyMode.STAY_SELECTIVE, bankroll=270)
+    act = _action_for_open(mark, pos, cfg, cooling=False)
+    assert act.kind == StrategyActionKind.HOLD
+    assert "intact" in act.reason.lower()
+    assert "settle" not in act.reason.lower()

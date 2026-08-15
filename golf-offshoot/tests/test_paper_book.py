@@ -1,9 +1,20 @@
 from pathlib import Path
 
-from golf_offshoot.models.enums import Horizon, RiskPreference, RunMode, StrategyMode
+from golf_offshoot.models.enums import BetType, Horizon, RiskPreference, RunMode, StrategyActionKind, StrategyMode
 from golf_offshoot.models.schemas import HorizonProbability, PlayerOutput, ProbabilityBundle, ReliabilityScore
-from golf_offshoot.models.strategy import StrategyConfig
+from golf_offshoot.models.strategy import (
+    PositionMark,
+    PortfolioState,
+    StrategyAction,
+    StrategyConfig,
+    StrategyPosition,
+    StrategyRecommendation,
+    StrategyStatusSummary,
+    new_id,
+)
+from golf_offshoot.strategy.explanations import unmarked_ride_to_settle
 from golf_offshoot.strategy.paper_book import (
+    PaperBookFile,
     PaperMovement,
     advice_from_recommendation,
     apply_advice,
@@ -633,3 +644,80 @@ def test_ticket_txt_keeps_entered_and_market_on_one_row(tmp_path, monkeypatch):
     data_line = next(ln for ln in text.splitlines() if "Kurt Kitayama" in ln and "Win" in ln)
     assert "EDT" in data_line or "EST" in data_line
     assert "Win" in data_line
+
+
+def test_unmarked_hold_blotter_does_not_say_intact():
+    pos_id = new_id("pos")
+    pid = "yella"
+    pos = StrategyPosition(
+        position_id=pos_id,
+        player_id=pid,
+        player_name="S. Yellamaraju",
+        bet_type=BetType.TOP_20,
+        stake=1.61,
+        decimal_odds=6.0,
+        entry_edge=0.357,
+        entry_model_p=0.363,
+        user_recorded=True,
+    )
+    book = PaperBookFile(
+        tournament_id="401811962",
+        bankroll=270.0,
+        book=PortfolioState(bankroll=270.0, positions=[pos]),
+    )
+    mark = PositionMark(
+        position_id=pos_id,
+        player_id=pid,
+        bet_type=BetType.TOP_20,
+        entry_edge=0.357,
+        live_edge=None,
+        entry_model_p=0.363,
+        live_model_p=0.0,
+        entry_market_p=None,
+        live_market_p=None,
+        live_decimal_odds=None,
+        stake=1.61,
+        mtm_value=1.61,
+        unrealized_pnl=0.0,
+        original_edge_collapsed=False,
+        live_edge_improved=False,
+        is_runner=False,
+        range_width=0.2,
+        reliability=0.5,
+        live_edge_unmarked=True,
+    )
+    rec = StrategyRecommendation(
+        recommendation_id=new_id("rec"),
+        mode=StrategyMode.STAY_SELECTIVE,
+        run_mode=RunMode.LIVE,
+        actions=[
+            StrategyAction(
+                action_id=new_id("act"),
+                kind=StrategyActionKind.HOLD,
+                player_id=pid,
+                player_name="S. Yellamaraju",
+                bet_type=BetType.TOP_20,
+                position_id=pos_id,
+                reason=unmarked_ride_to_settle(),
+            )
+        ],
+        marks=[mark],
+        status=StrategyStatusSummary(
+            open_exposure=1.61,
+            exposure_frac=0.01,
+            unrealized_pnl=0.0,
+            unrealized_edge_weighted=0.0,
+            biggest_concentration="",
+            biggest_concentration_frac=0.0,
+            posture=StrategyMode.STAY_SELECTIVE,
+            cooling_off=False,
+            n_positions=1,
+            n_suggested_actions=1,
+        ),
+    )
+    advice = advice_from_recommendation(book, rec, run_id="live-u")
+    assert advice
+    blob = advice[0].reason_plain.lower()
+    assert "intact" not in blob
+    assert "settle" in blob
+    assert "cash-out" in blob

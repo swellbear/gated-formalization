@@ -127,6 +127,7 @@ class PositionMark(BaseModel):
     cashout_threshold: float | None = None
     cashout_beats_hold: bool | None = None
     mtm_is_cashout: bool = False
+    live_edge_unmarked: bool = False
 
 
 class ConcentrationSlice(BaseModel):
