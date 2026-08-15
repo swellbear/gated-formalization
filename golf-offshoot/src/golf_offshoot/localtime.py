@@ -59,6 +59,10 @@ def isoformat_now(value: datetime | None = None) -> str:
 
 
 def filename_stamp(value: datetime | None = None) -> str:
-    """Path-safe Eastern stamp. Offset instead of Z (Z means UTC)."""
+    """Path-safe Eastern wall clock.
+
+    Uses YYYYMMDD_ETHHMMSS so Name-sort puts new packs after legacy
+    YYYYMMDDTHHMMSSZ folders (underscore sorts after T).
+    """
     local = to_eastern(value) if value is not None else now()
-    return local.strftime("%Y%m%dT%H%M%S%z")
+    return local.strftime("%Y%m%d_ET%H%M%S")

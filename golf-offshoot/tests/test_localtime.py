@@ -20,11 +20,13 @@ def test_format_eastern_accepts_iso_utc_string():
     assert format_eastern("2026-08-15T17:40:00Z") == "2026-08-15 13:40 EDT"
 
 
-def test_filename_stamp_uses_eastern_offset_not_z():
+def test_filename_stamp_is_eastern_and_sorts_after_legacy_z():
     dt = datetime(2026, 8, 15, 17, 40, tzinfo=timezone.utc)
-    assert filename_stamp(dt) == "20260815T134000-0400"
+    assert filename_stamp(dt) == "20260815_ET134000"
     winter = datetime(2026, 1, 15, 17, 40, tzinfo=timezone.utc)
-    assert filename_stamp(winter) == "20260115T124000-0500"
+    assert filename_stamp(winter) == "20260115_ET124000"
+    # Same calendar day: new Eastern stems must sort after old UTC-Z stems.
+    assert "20260815T174049Z" < "20260815_ET134000"
 
 
 def test_storage_now_is_eastern():
