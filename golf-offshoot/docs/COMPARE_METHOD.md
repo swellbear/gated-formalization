@@ -16,7 +16,9 @@ Two Monte Carlos, not four: lived/A sim + B-guts sim, **same seed**. B-nerves an
 
 Honesty in B-guts: no agronomy schema defaults in course demand; missing SG is NaN (not 0) in cosine; do not invent `recent_form_sg` from neighbors; park narrative and live tee pairing; health is WD-only.
 
-Compare ledgers are independent **$250** Winner-only books. They do not touch `ledger.json` / `working_bankroll`. Sells book P/L onto that path's own bankroll. Mode is frozen `stay_selective` + `conservative`. Threshold learner **keep_t** this week (`n=1`). Reject `copy_a_edgew_because_a_won`.
+Compare ledgers are independent **$250** books. They do not touch `ledger.json` / `working_bankroll`. Sells book P/L onto that path's own bankroll. Mode is frozen `stay_selective` + `conservative`. Threshold learner **keep_t** this week (`n=1`). Reject `copy_a_edgew_because_a_won`.
+
+**Markets:** St. Jude (`401811962`) stays **Winner-only**. From the next event on, A/B also ticket **Top 5 / Top 10 / Top 20 when that coupon is actually listed**. Place is never synthesized from Winner odds. Score **Winner posted P/L** and **place posted P/L** as two lines, not one blended book.
 
 ```bash
 python -m golf_offshoot live --event 401811962 --book bovada --compare-method
@@ -27,6 +29,6 @@ python -m golf_offshoot compare-replay --event 401811962
 
 Default `live` auto-applies the **lived** paper book when the actionable advice set changes (HOLD-only does not re-apply). `--no-apply-paper` skips. `--compare-method` will not `--lock-paper` lived.
 
-The **fights** page under `data/exports/{event}_fights_*.html` is the operator readout: who each path owns, where they disagree, and **why** (plain + technical: Winner-only vs place ladders, EdgeW vs vs-posted, honest theta vs A theta, with the 3pp numbers). `--compare-method` and `compare-replay` also write one **batch pack** under `data/exports/packs/{event}_{time}_{run}_batch/` with `00_full_readout.pdf` in this order: how to read (five-book legend), fights, ESPN leaderboard, model field, then lived / A-replay / B-guts / B-nerves / B-full tickets + why-bets, then lived bankroll. Each ticket page is titled with the book (A-control shares A-replay; there is not a second A book). Open that PDF in Edge, Chrome, or Adobe — not as source in the editor.
+The **fights** page under `data/exports/{event}_fights_*.html` is the operator readout: who each path owns, where they disagree, and **why** (plain + technical: Winner vs place coupons, EdgeW vs vs-posted, honest theta vs A theta, with the 3pp numbers). `--compare-method` and `compare-replay` also write one **batch pack** under `data/exports/packs/{event}_{time}_{run}_batch/` with `00_full_readout.pdf` in this order: how to read (five-book legend), fights, ESPN leaderboard, model field, then lived / A-replay / B-guts / B-nerves / B-full tickets + why-bets, then lived bankroll. Each ticket page is titled with the book (A-control shares A-replay; there is not a second A book). Open that PDF in Edge, Chrome, or Adobe — not as source in the editor.
 
 Leftover callout stays parked. Do not add agronomy / tee / injury feeds for this.

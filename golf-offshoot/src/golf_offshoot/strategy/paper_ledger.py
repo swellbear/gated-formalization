@@ -240,6 +240,18 @@ def ticket_hit(bet_type: str, finish: int | None, winner_ids: set[str], player_i
     return False
 
 
+def _split_ticket_pnl(tickets: list[TicketResult]) -> tuple[float, float]:
+    win = 0.0
+    place = 0.0
+    place_keys = {"top_5", "top_10", "top_20", "make_cut"}
+    for t in tickets:
+        if (t.bet_type or "win") in place_keys:
+            place = round(place + t.pnl, 2)
+        else:
+            win = round(win + t.pnl, 2)
+    return win, place
+
+
 def settle_paper_event(
     event_id: str,
     *,
@@ -329,11 +341,81 @@ def settle_paper_event(
     )
     record.settled_at = datetime.now(timezone.utc)
     record.settlement_pnl = pnl_total
+    win_pnl, place_pnl = _split_ticket_pnl(tickets)
+    record.settlement_pnl_win = win_pnl
+    record.settlement_pnl_place = place_pnl
     record.settlement_winner = winner_name
     record.bankroll = ledger.bankroll
     record.book = record.book.model_copy(update={"bankroll": ledger.bankroll})
     save_paper_book(record)
     return ledger, record, week
+
+
+def settle_independent_compare_event(
+    event_id: str,
+    path_id: str,
+    *,
+    finishes: dict[str, tuple[int | None, str]],
+    completed: bool,
+    status_note: str = "",
+    winner_ids: list[str] | None = None,
+    event_name: str = "",
+) -> PaperBookFile:
+    """Settle one A/B book onto its own bankroll. Does not write ledger.json."""
+    record = load_paper_file(event_id, path_id=path_id)
+    if record is None:
+        raise SettleError(f"no compare paper book {path_id} for event {event_id}")
+    if getattr(record, "settled_at", None):
+        raise SettleError(f"{path_id} event {event_id} already settled")
+    if not completed:
+        raise SettleError(
+            f"event is not final yet ({status_note or 'status unavailable'}). "
+            "Do not invent a winner."
+        )
+    winners = set(winner_ids if winner_ids is not None else [
+        pid for pid, (place, _n) in finishes.items() if place == 1
+    ])
+    if len(winners) != 1:
+        raise SettleError(
+            f"need exactly one official winner to settle win tickets; got {len(winners)}. "
+            "Playoff unresolved stays unsettled."
+        )
+    winner_id = next(iter(winners))
+    winner_name = finishes.get(winner_id, (None, winner_id))[1]
+    tickets: list[TicketResult] = []
+    pnl_total = 0.0
+    for pos in list(record.book.positions):
+        place, _nm = finishes.get(pos.player_id, (None, pos.player_name))
+        won = ticket_hit(pos.bet_type.value, place, winners, pos.player_id)
+        payout = round(pos.stake * pos.decimal_odds, 2) if won else 0.0
+        pnl = round(payout - pos.stake, 2)
+        pnl_total = round(pnl_total + pnl, 2)
+        tickets.append(
+            TicketResult(
+                player_id=pos.player_id,
+                player_name=pos.player_name,
+                bet_type=pos.bet_type.value,
+                stake=pos.stake,
+                decimal_odds=pos.decimal_odds,
+                finish=place,
+                won=won,
+                payout=payout,
+                pnl=pnl,
+            )
+        )
+    win_pnl, place_pnl = _split_ticket_pnl(tickets)
+    bankroll_after = round(float(record.bankroll) + pnl_total, 2)
+    record.book = record.book.model_copy(
+        update={"positions": [], "realized_pnl_event": pnl_total, "bankroll": bankroll_after}
+    )
+    record.settled_at = datetime.now(timezone.utc)
+    record.settlement_pnl = pnl_total
+    record.settlement_pnl_win = win_pnl
+    record.settlement_pnl_place = place_pnl
+    record.settlement_winner = winner_name
+    record.bankroll = bankroll_after
+    save_paper_book(record)
+    return record
 
 
 def other_open_exposure(*, except_event_id: str | None = None) -> float:
@@ -430,6 +512,32 @@ def settle_finished_open_books(
                 event_name=info.event_name or rec.tournament_name,
             )
             settled.append(result)
+        except SettleError as exc:
+            skipped.append((rec, str(exc)))
+    from golf_offshoot.strategy.paper_book import unsettled_compare_paper_files
+
+    for rec in unsettled_compare_paper_files():
+        try:
+            info = look(rec.tournament_id, refresh=refresh)
+        except TypeError:
+            try:
+                info = look(rec.tournament_id)
+            except Exception as exc:
+                skipped.append((rec, f"could not inspect ESPN ({exc})"))
+                continue
+        except Exception as exc:
+            skipped.append((rec, f"could not inspect ESPN ({exc})"))
+            continue
+        try:
+            settle_independent_compare_event(
+                rec.tournament_id,
+                rec.path_id,
+                finishes=info.finishes,
+                completed=info.completed,
+                status_note=info.status_note,
+                winner_ids=info.winner_ids,
+                event_name=info.event_name or rec.tournament_name,
+            )
         except SettleError as exc:
             skipped.append((rec, str(exc)))
     return settled, skipped

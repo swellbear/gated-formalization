@@ -10,6 +10,8 @@ from pathlib import Path
 
 from golf_offshoot.compare.fights import fights_at, load_path_views, write_fights
 from golf_offshoot.compare.law import law_hash
+from golf_offshoot.compare.paths import compare_markets_blurb
+from golf_offshoot.compare.scores import event_scoreboard
 from golf_offshoot.config import MODEL_VERSION
 from golf_offshoot.models.strategy import StrategyConfig
 from golf_offshoot.strategy.paper_book import load_paper_file, load_snapshot_outputs
@@ -76,6 +78,29 @@ PATH_LABELS: dict[str, dict[str, str]] = {
     },
 }
 
+
+def _path_labels(event_id: str) -> dict[str, dict[str, str]]:
+    markets = compare_markets_blurb(event_id)
+    labels = {k: dict(v) for k, v in PATH_LABELS.items()}
+    labels["a_replay"]["one_line"] = (
+        f"A-replay — same ranking as lived · {markets} · EdgeW screen · "
+        "independent $250 (A-control shares this book)"
+    )
+    labels["a_replay"]["tickets"] = f"A-replay tickets (EdgeW, {markets})"
+    labels["b_guts"]["one_line"] = (
+        f"B-guts — honest theta · {markets} · EdgeW screen · independent $250"
+    )
+    labels["b_guts"]["tickets"] = f"B-guts tickets (honest theta, EdgeW, {markets})"
+    labels["b_nerves"]["one_line"] = (
+        f"B-nerves — A's ranking · {markets} · vs-posted (1/odds) · independent $250"
+    )
+    labels["b_nerves"]["tickets"] = f"B-nerves tickets (vs-posted, {markets})"
+    labels["b_full"]["one_line"] = (
+        f"B-full — honest theta · {markets} · vs-posted (1/odds) · independent $250"
+    )
+    labels["b_full"]["tickets"] = f"B-full tickets (honest theta, vs-posted, {markets})"
+    return labels
+
 _COMBO_SECTIONS = (
     ("01_how_to_read.pdf", "How to read this pack"),
     ("02_fights.pdf", "Fights — who each book holds"),
@@ -116,7 +141,7 @@ def write_batch_pack(
 
     live_outputs = load_snapshot_outputs(run_id)
     views = load_path_views(event_id)
-    events = fights_at(views, run_id=run_id, live_outputs=live_outputs)
+    events = fights_at(views, run_id=run_id, live_outputs=live_outputs, event_id=event_id)
     write_how_to_read(root, event_id=event_id, event_name=event_name, run_id=run_id)
 
     fights_html = write_fights(
@@ -144,11 +169,12 @@ def write_batch_pack(
         copied.append(dest.name)
 
     event = event_name or event_id
+    labels_by_path = _path_labels(event_id)
     for path_id, ticket_n, explained_n in _PATH_SECTIONS:
         rec = load_paper_file(event_id, path_id=path_id)
         if rec is None:
             continue
-        labels = PATH_LABELS[path_id]
+        labels = labels_by_path[path_id]
         meta = (
             f"{labels['one_line']}   ${rec.bankroll:.0f} mock   "
             f"{rec.odds_book or 'book n/a'}   live_run={run_id or 'n/a'}   "
@@ -217,10 +243,11 @@ def write_batch_pack(
                         "names": views[pid].names,
                         "exposure": views[pid].exposure,
                         "bankroll": views[pid].bankroll,
-                        "label": PATH_LABELS.get(pid, {}).get("one_line", pid),
+                        "label": _path_labels(event_id).get(pid, {}).get("one_line", pid),
                     }
                     for pid in views
                 },
+                "scores": event_scoreboard(event_id),
             },
             indent=2,
         ),
@@ -289,6 +316,7 @@ def write_how_to_read(
 
 
 def _how_to_read_text(*, event_id: str, event_name: str, run_id: str) -> str:
+    markets = compare_markets_blurb(event_id)
     lines = [
         f"HOW TO READ THIS PACK  {event_name}",
         f"event={event_id}  run={run_id or 'n/a'}  law={law_hash()}",
@@ -301,17 +329,18 @@ def _how_to_read_text(*, event_id: str, event_name: str, run_id: str) -> str:
         "  3. ESPN leaderboard   Place / to-par / thru. Not model Win%.",
         "  4. Model field        Win% ranking from the live sim",
         "  5. Lived museum       Your real paper book (place ladders allowed)",
-        "  6. A-replay           Same ranking as lived. Winner-only. EdgeW screen.",
+        f"  6. A-replay           Same ranking as lived. {markets}. EdgeW screen.",
         "                       A-control is not a second book; it shares A-replay.",
-        "  7. B-guts             Honest theta. Winner-only. EdgeW screen.",
-        "  8. B-nerves           A's ranking. Winner-only. vs-posted (1/odds).",
-        "  9. B-full             Honest theta. Winner-only. vs-posted (1/odds).",
+        f"  7. B-guts             Honest theta. {markets}. EdgeW screen.",
+        f"  8. B-nerves           A's ranking. {markets}. vs-posted (1/odds).",
+        f"  9. B-full             Honest theta. {markets}. vs-posted (1/odds).",
         " 10. Lived bankroll     Lifetime ledger. Compare books do not use this.",
         "",
         "Each ticket table is titled with the book name in the page header.",
         "A 'why these bets' page follows that book's tickets.",
         "",
-        "Lived vs A/B: lived may hold Top 5 / Top 10 / Top 20. A and B are Winner-only.",
+        f"A/B markets: {markets}. Place only if the book lists Top 5/10/20 — never from Winner odds.",
+        "Score Winner posted P/L and place posted P/L as two lines, not one blended book.",
         "t stays 0.03 this week. Learner may not copy A because A won.",
         "",
         "Open this PDF in Edge, Chrome, or Adobe — not as source in the editor.",
@@ -392,18 +421,20 @@ def _batch_readme(
         "04_field_live.pdf       Model Win% ranking",
         "05_lived_tickets.pdf    Lived museum (EdgeW AND vs-posted; place ladders)",
         "06_lived_explained.pdf  Why those lived bets",
-        "07_a_replay_tickets.pdf A-replay: same ranking as lived, Winner-only, EdgeW",
+        "07_a_replay_tickets.pdf A-replay: same ranking as lived, EdgeW",
         "08_a_replay_explained.pdf",
-        "09_b_guts_tickets.pdf   B-guts: honest theta, Winner-only, EdgeW",
+        "09_b_guts_tickets.pdf   B-guts: honest theta, EdgeW",
         "10_b_guts_explained.pdf",
-        "11_b_nerves_tickets.pdf B-nerves: A's ranking, Winner-only, vs-posted",
+        "11_b_nerves_tickets.pdf B-nerves: A's ranking, vs-posted",
         "12_b_nerves_explained.pdf",
-        "13_b_full_tickets.pdf   B-full: honest theta, Winner-only, vs-posted",
+        "13_b_full_tickets.pdf   B-full: honest theta, vs-posted",
         "14_b_full_explained.pdf",
         "15_bankroll.pdf         Lived lifetime ledger (compare books are independent)",
-        "16_movements.json       Path snapshot for this batch",
+        "16_movements.json       Path snapshot + Winner vs place scoreboard",
         "",
         "A-control is not a separate book. It shares A-replay.",
+        f"A/B markets: {compare_markets_blurb(event_id)}.",
+        "Winner posted P/L and place posted P/L stay separate.",
         "",
         f"run {run_id or 'n/a'}   law {law_hash()}   never_auto_bet=true",
     ]

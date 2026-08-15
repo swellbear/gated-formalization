@@ -78,17 +78,17 @@ def _sync_path_book(
     write_exports: bool = True,
 ) -> tuple[PaperBookFile, bool]:
     pid = ledger_id(path)
-    cfg = config_for(path)
+    cfg = config_for(path, event_id=event_id)
     existing = load_paper_file(event_id, path_id=pid)
     if existing is None:
-        from golf_offshoot.strategy.paper_book import paper_candidates
+        from golf_offshoot.strategy.paper_book import paper_candidate_slots
 
-        cands = paper_candidates(
+        slots = paper_candidate_slots(
             rows,
-            ticket_screen=cfg.ticket_screen,
+            cfg,
             require_cleared=cfg.ticket_screen == "posted",
         )
-        if not cands:
+        if not slots:
             return existing, False
         rec = lock_paper_positions(
             rows,
@@ -190,7 +190,7 @@ def run_compare_method(
         save_audit(lived_result.audit, package_data_dir() / "snapshots")
 
     notes: list[str] = []
-    guts_cfg = config_for(ComparePath.B_GUTS)
+    guts_cfg = config_for(ComparePath.B_GUTS, event_id=str(tid))
     guts_result = run_theta(
         tournament,
         field,
@@ -231,6 +231,7 @@ def run_compare_method(
         as_of=str(lived_result.audit.as_of),
         run_id=lived_result.run_id,
         live_outputs=lived_result.ranked,
+        event_id=str(tid),
     )
     fights_path = write_fights(
         str(tid),

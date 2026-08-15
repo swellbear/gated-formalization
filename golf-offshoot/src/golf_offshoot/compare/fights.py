@@ -8,14 +8,19 @@ from datetime import datetime, timezone
 from pathlib import Path
 
 from golf_offshoot.compare.law import METHOD_LAW_V1, law_hash
-from golf_offshoot.compare.paths import COMPARE_LEDGERS, ComparePath, ledger_id
+from golf_offshoot.compare.paths import COMPARE_LEDGERS, ComparePath, compare_allows_place, compare_markets_blurb, ledger_id
 from golf_offshoot.config import MIN_EDGE_TO_CONSIDER
 from golf_offshoot.data_feeds.http import package_data_dir
 from golf_offshoot.models.enums import Horizon
 from golf_offshoot.strategy.paper_book import PaperBookFile, load_paper_file, posted_price_edge
 
-_T = MIN_EDGE_TO_CONSIDER
-_PLACE = {"top_5", "top_10", "top_20", "make_cut"}
+def _path_winner_only(path_id: str, event_id: str = "") -> bool:
+    law = PATH_LAW.get(path_id) or {}
+    if path_id == "lived":
+        return False
+    if compare_allows_place(event_id):
+        return False
+    return bool(law.get("winner_only", True))
 
 PATH_LAW: dict[str, dict[str, str | bool]] = {
     "lived": {
@@ -49,6 +54,10 @@ PATH_LAW: dict[str, dict[str, str | bool]] = {
         "ranking": "honest theta",
     },
 }
+
+
+_T = MIN_EDGE_TO_CONSIDER
+_PLACE = {"top_5", "top_10", "top_20", "make_cut"}
 
 
 @dataclass
@@ -176,6 +185,7 @@ def fights_at(
     as_of: str = "",
     run_id: str = "",
     live_outputs=None,
+    event_id: str = "",
 ) -> list[FightEvent]:
     all_names: set[str] = set()
     owned: dict[str, set[str]] = {}
@@ -189,7 +199,7 @@ def fights_at(
         miss = [p for p in path_ids if name not in owned[p]]
         if have and miss:
             plain, technical = explain_disagreement(
-                name, have, miss, views, live_outputs=live_outputs
+                name, have, miss, views, live_outputs=live_outputs, event_id=event_id
             )
             events.append(
                 FightEvent(
@@ -213,6 +223,7 @@ def explain_disagreement(
     views: dict[str, PathBookView],
     *,
     live_outputs=None,
+    event_id: str = "",
 ) -> tuple[str, str]:
     holdings = [
         h
@@ -232,15 +243,27 @@ def explain_disagreement(
     if place_only:
         labels = ", ".join(_label(p) for p in miss)
         mk = ", ".join(m.replace("_", " ") for m in markets)
-        plain.append(
-            f"{_label(have[0]) if len(have) == 1 else 'The holding book'} has {mk} "
-            f"tickets. {labels} "
-            f"{'is' if len(miss) == 1 else 'are'} Winner-only and cannot copy place ladders."
-        )
-        tech.append(
-            f"holdings={markets}; missing={miss} allowed_bet_types=[win] "
-            f"winner_only=true"
-        )
+        miss_winner_only = [p for p in miss if _path_winner_only(p, event_id)]
+        if miss_winner_only and len(miss_winner_only) == len(miss):
+            plain.append(
+                f"{_label(have[0]) if len(have) == 1 else 'The holding book'} has {mk} "
+                f"tickets. {labels} "
+                f"{'is' if len(miss) == 1 else 'are'} Winner-only and cannot copy place ladders."
+            )
+            tech.append(
+                f"holdings={markets}; missing={miss} allowed_bet_types=[win] "
+                f"winner_only=true"
+            )
+        else:
+            plain.append(
+                f"{_label(have[0]) if len(have) == 1 else 'The holding book'} has {mk} "
+                f"tickets. {labels} did not take this place market "
+                "(no real coupon, screen failed, or cap). Place is never built from Winner odds."
+            )
+            tech.append(
+                f"holdings={markets}; missing={miss} winner_only=false "
+                f"place_when_coupon={compare_allows_place(event_id)}"
+            )
         return " ".join(plain), "; ".join(tech)
 
     for pid in have:
@@ -281,7 +304,7 @@ def explain_disagreement(
         screen = str(law.get("screen") or "both")
         ranking = str(law.get("ranking") or pid)
         label = _label(pid)
-        if law.get("winner_only") and place_only:
+        if _path_winner_only(pid, event_id) and place_only:
             continue
         exit_m = _latest_exit(views.get(pid), name)
         ok = _clears(screen, edge_w, posted_edge)
@@ -421,7 +444,8 @@ def fights_document(
     live_outputs=None,
 ) -> str:
     views = views if views is not None else load_path_views(event_id)
-    events = events or fights_at(views, live_outputs=live_outputs)
+    events = events or fights_at(views, live_outputs=live_outputs, event_id=event_id)
+    markets = compare_markets_blurb(event_id)
     lines = [
         f"FIGHTS  {event_name or event_id}",
         f"event={event_id}",
@@ -431,10 +455,10 @@ def fights_document(
         "",
         "== what these books are ==",
         "  lived      Museum book. Current pipeline. EdgeW AND vs-posted. Place ladders allowed. Not re-locked.",
-        "  a_replay   A-replay / A-control (one book). Same ranking as lived. Winner-only. EdgeW screen. Independent $250.",
-        "  b_guts     Honest theta. Winner-only. EdgeW screen. Independent $250.",
-        "  b_nerves   A's ranking. Winner-only. vs-posted (1/odds). Independent $250.",
-        "  b_full     Honest theta. Winner-only. vs-posted (1/odds). Independent $250.",
+        f"  a_replay   A-replay / A-control (one book). Same ranking as lived. {markets}. EdgeW screen. Independent $250.",
+        f"  b_guts     Honest theta. {markets}. EdgeW screen. Independent $250.",
+        f"  b_nerves   A's ranking. {markets}. vs-posted (1/odds). Independent $250.",
+        f"  b_full     Honest theta. {markets}. vs-posted (1/odds). Independent $250.",
         "  t=0.03     Ticket bar this week. EdgeW = model minus fair implied. vs-posted = model minus 1/decimal.",
         "",
         "== books (who is held right now) ==",
@@ -461,6 +485,12 @@ def fights_document(
     lines.append("  B never tickets on EdgeW alone. Posted bar is 1/decimal.")
     lines.append("  t stays 0.03 this week (n=1). Learner may not copy A because A won.")
     lines.append("  Lived paper is a museum. Compare ledgers are independent $250 books.")
+    lines.append(f"  A/B markets: {compare_markets_blurb(event_id)}.")
+    lines.append("  Winner posted P/L and place posted P/L are scored separately.")
+    from golf_offshoot.compare.scores import scoreboard_lines
+
+    for line in scoreboard_lines(event_id):
+        lines.append(f"  {line}")
     for n in extra_notes or []:
         lines.append(f"  {n}")
     return "\n".join(lines) + "\n"

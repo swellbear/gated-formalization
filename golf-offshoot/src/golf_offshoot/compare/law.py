@@ -10,7 +10,12 @@ METHOD_LAW_V1: dict = {
     "never_auto_bet": True,
     "auto_apply_paper_is_mock_only": True,
     "operator_out_of_ticket_loop": True,
-    "scores_predeclared": ["brier_win", "posted_price_pnl"],
+    "scores_predeclared": [
+        "brier_win",
+        "posted_price_pnl",
+        "posted_price_pnl_win",
+        "posted_price_pnl_place",
+    ],
     "admitted_into_theta": [
         "espn_to_par_holes_when_live",
         "pga_sg_when_inventory_present",
@@ -34,6 +39,9 @@ METHOD_LAW_V1: dict = {
     "mode": "stay_selective",
     "risk": "conservative",
     "independent_compare_bankroll": 250.0,
+    "compare_place_when_coupon_exists": True,
+    "compare_place_markets": ["top_5", "top_10", "top_20"],
+    "winner_only_event_ids": ["401811962"],
     "learner": {
         "keep_t_until_holdout": True,
         "min_events_to_move_t": 8,

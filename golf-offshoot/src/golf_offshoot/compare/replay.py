@@ -53,17 +53,17 @@ def replay_event(
         views = {}
         for path in _RETROFIT_PATHS:
             pid = ledger_id(path)
-            cfg = config_for(path)
+            cfg = config_for(path, event_id=event_id)
             existing = load_paper_file(event_id, path_id=pid)
             if existing is None:
-                from golf_offshoot.strategy.paper_book import paper_candidates
+                from golf_offshoot.strategy.paper_book import paper_candidate_slots
 
-                cands = paper_candidates(
+                slots = paper_candidate_slots(
                     rows,
-                    ticket_screen=cfg.ticket_screen,
+                    cfg,
                     require_cleared=cfg.ticket_screen == "posted",
                 )
-                if not cands:
+                if not slots:
                     continue
                 rec = lock_paper_positions(
                     rows,
@@ -90,7 +90,7 @@ def replay_event(
                 save_paper_book(rec)
             views[pid] = book_view(rec, pid)
         fight_log.extend(
-            fights_at(views, as_of=str(audit.as_of), run_id=audit.run_id)
+            fights_at(views, as_of=str(audit.as_of), run_id=audit.run_id, event_id=event_id)
         )
 
     from golf_offshoot.compare.fights import load_path_views
@@ -100,7 +100,7 @@ def replay_event(
         event_id,
         event_name=event_name,
         views=views,
-        events=fight_log or fights_at(views),
+        events=fight_log or fights_at(views, event_id=event_id),
         extra_notes=notes + [f"snapshots_walked={len(audits)}"],
     )
     batch = None

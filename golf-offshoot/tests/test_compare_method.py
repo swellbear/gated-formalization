@@ -47,6 +47,8 @@ def _row(
     posted: float | None,
     flags: list[str] | None = None,
     rel: float = 0.74,
+    posted_by_bet: dict[str, float] | None = None,
+    edge_by_bet: dict[str, float] | None = None,
 ) -> PlayerOutput:
     horizons = {
         Horizon.WIN: _hp(Horizon.WIN, win),
@@ -56,9 +58,13 @@ def _row(
         Horizon.MAKE_CUT: _hp(Horizon.MAKE_CUT, 1.0),
     }
     bundle = ProbabilityBundle(player_id=pid, horizons=horizons, theta_mean=0.0, theta_sd=1.0)
-    posted_odds = {"win": posted} if posted else {}
-    implied = {"win": 1.0 / posted} if posted else {}
-    edges = {"win": edge} if edge is not None else {}
+    posted_odds = dict(posted_by_bet or {})
+    if posted and "win" not in posted_odds:
+        posted_odds["win"] = posted
+    implied = {k: 1.0 / v for k, v in posted_odds.items() if v}
+    edges = dict(edge_by_bet or {})
+    if edge is not None and "win" not in edges:
+        edges["win"] = edge
     return PlayerOutput(
         player_id=pid,
         name=name,
@@ -268,7 +274,7 @@ def test_fights_explains_place_ladder_vs_winner_only():
         ],
     )
     a = PathBookView(path_id="a_replay", n=0, names=[], exposure=0.0, bankroll=250)
-    events = fights_at({"lived": lived, "a_replay": a})
+    events = fights_at({"lived": lived, "a_replay": a}, event_id="401811962")
     assert events[0].player_name == "Sungjae Im"
     assert "Winner-only" in events[0].plain
     assert "place" in events[0].plain.lower() or "top 20" in events[0].plain.lower()
@@ -434,3 +440,91 @@ def test_batch_pack_writes_combo_readout(tmp_path, monkeypatch):
         part_pages += len(PdfReader(str(path)).pages)
     assert combo_pages == part_pages
     assert combo_pages >= 4
+
+
+def test_st_jude_compare_stays_winner_only():
+    from golf_offshoot.compare.paths import allowed_compare_bets, compare_allows_place
+
+    assert compare_allows_place("401811962") is False
+    assert allowed_compare_bets("401811962") == [BetType.WIN]
+    cfg = config_for(ComparePath.B_FULL, event_id="401811962")
+    assert cfg.allowed_bet_types == [BetType.WIN]
+
+
+def test_next_event_compare_allows_place_markets():
+    from golf_offshoot.compare.paths import compare_allows_place
+
+    assert compare_allows_place("401812000") is True
+    cfg = config_for(ComparePath.A_REPLAY, event_id="401812000")
+    assert BetType.WIN in cfg.allowed_bet_types
+    assert BetType.TOP_5 in cfg.allowed_bet_types
+    assert BetType.TOP_10 in cfg.allowed_bet_types
+    assert BetType.TOP_20 in cfg.allowed_bet_types
+    assert BetType.MAKE_CUT not in cfg.allowed_bet_types
+
+
+def test_future_lock_takes_real_place_coupon_not_invented(tmp_path, monkeypatch):
+    monkeypatch.setattr("golf_offshoot.strategy.paper_book.package_data_dir", lambda: tmp_path)
+    with_place = _row(
+        "im",
+        "Sungjae Im",
+        0.08,
+        edge=0.05,
+        posted=12.0,
+        posted_by_bet={"win": 12.0, "top_20": 1.8},
+        edge_by_bet={"win": 0.05, "top_20": 0.12},
+    )
+    win_only = _row("fleet", "Tommy Fleetwood", 0.12, edge=0.041, posted=9.5)
+    rec = lock_paper_positions(
+        [with_place, win_only],
+        config_for(ComparePath.B_FULL, event_id="401812000"),
+        event_id="401812000",
+        path_id="b_full",
+        independent_bankroll=True,
+        write_exports=False,
+        run_id="future-place",
+        require_cleared=True,
+    )
+    bets = {(p.player_name, p.bet_type.value) for p in rec.book.positions}
+    assert ("Sungjae Im", "top_20") in bets
+    assert ("Tommy Fleetwood", "top_20") not in bets
+
+
+def test_st_jude_lock_ignores_place_even_if_coupon_exists(tmp_path, monkeypatch):
+    monkeypatch.setattr("golf_offshoot.strategy.paper_book.package_data_dir", lambda: tmp_path)
+    row = _row(
+        "im",
+        "Sungjae Im",
+        0.08,
+        edge=0.05,
+        posted=12.0,
+        posted_by_bet={"win": 12.0, "top_20": 1.8},
+        edge_by_bet={"win": 0.05, "top_20": 0.12},
+    )
+    rec = lock_paper_positions(
+        [row],
+        config_for(ComparePath.B_FULL, event_id="401811962"),
+        event_id="401811962",
+        path_id="b_full",
+        independent_bankroll=True,
+        write_exports=False,
+        run_id="stjude-place",
+        require_cleared=True,
+    )
+    bets = {p.bet_type.value for p in rec.book.positions}
+    assert "top_20" not in bets
+    assert bets <= {"win"}
+
+
+def test_split_pnl_keeps_winner_and_place_separate():
+    from golf_offshoot.compare.scores import split_pnl
+    from golf_offshoot.strategy.paper_ledger import TicketResult
+
+    tickets = [
+        TicketResult(player_name="A", bet_type="win", stake=8.75, decimal_odds=2.0, won=True, payout=17.5, pnl=8.75),
+        TicketResult(player_name="B", bet_type="top_20", stake=2.0, decimal_odds=1.5, won=False, payout=0.0, pnl=-2.0),
+    ]
+    win, place, total = split_pnl(tickets)
+    assert win == 8.75
+    assert place == -2.0
+    assert total == 6.75

@@ -188,7 +188,7 @@ python -m golf_offshoot live --event 401811962 --book bovada --compare-method
 python -m golf_offshoot compare-replay --event 401811962
 ```
 
-`--compare-method` writes one folder under `data/exports/packs/{espn_id}_{time}_{run}_batch/` with **`00_full_readout.pdf`** in this order: how to read (five-book legend), fights, ESPN leaderboard, model field, lived / A-replay / B-guts / B-nerves / B-full tickets and why-bets, then lived bankroll. Each ticket page is titled with the book. A-control shares A-replay; there is not a second A book. Individual PDFs stay in the folder. Open the readout in Edge, Chrome, or Adobe — not as source in the editor. Lived museum paper is not re-locked.
+`--compare-method` writes one folder under `data/exports/packs/{espn_id}_{time}_{run}_batch/` with **`00_full_readout.pdf`** in this order: how to read (five-book legend), fights, ESPN leaderboard, model field, lived / A-replay / B-guts / B-nerves / B-full tickets and why-bets, then lived bankroll. Each ticket page is titled with the book. A-control shares A-replay; there is not a second A book. Individual PDFs stay in the folder. Open the readout in Edge, Chrome, or Adobe — not as source in the editor. Lived museum paper is not re-locked. St. Jude A/B books stay Winner-only. Later events ticket Top 5/10/20 when a real coupon exists and score Winner vs place P/L separately.
 
 ### Paper bankroll (rollover)
 
