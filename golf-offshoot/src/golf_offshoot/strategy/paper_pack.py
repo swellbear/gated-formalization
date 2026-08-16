@@ -21,6 +21,7 @@ from golf_offshoot.strategy.paper_ledger import ensure_opening_deposit, load_led
 
 COMBO_PDF = "00_full_readout.pdf"
 _PACK_PDF_SECTIONS = (
+    ("00_trigger.pdf", "Trigger pull"),
     ("01_paper_tickets.pdf", "Paper tickets"),
     ("02_bets_explained.pdf", "Bets explained"),
     ("03_leaderboard.pdf", "Live leaderboard"),
@@ -73,6 +74,16 @@ def write_paper_pack(
     _copy_if_exists(ticket_paths.pdf, root / "01_paper_tickets.pdf")
     _copy_if_exists(ticket_paths.html, root / "01_paper_tickets.html")
     _copy_if_exists(ticket_paths.txt, root / "01_paper_tickets.txt")
+
+    from golf_offshoot.strategy.paper_trigger import write_trigger_files
+
+    write_trigger_files(
+        record,
+        directory=root,
+        advice=advice,
+        run_id=run,
+        title=f"TRIGGER  {record.tournament_name or record.tournament_id}",
+    )
 
     write_bets_explained_files(
         record,
@@ -255,9 +266,10 @@ def _readme(
         "",
     ]
     if combo:
-        lines.append("00_full_readout.pdf     Combined tickets + explanation + leaderboard + field + bankroll")
+        lines.append("00_full_readout.pdf     Trigger first, then tickets + explanation + board + field + bankroll")
     lines += [
         "00_README.txt           This index",
+        "00_trigger.pdf          This snapshot: sell / reallocate / partial sell / add / new / hold",
         "01_paper_tickets.pdf    Current paper tickets (at entry vs this live snapshot)",
         "02_bets_explained.pdf   Why names were taken, why the amounts, sells/reallocates",
         "03_leaderboard.pdf      ESPN place / to-par / thru at this live snapshot (not Win%)",

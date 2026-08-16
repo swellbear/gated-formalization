@@ -152,6 +152,7 @@ def test_lock_paper_book_persists_and_never_auto_bets(tmp_path, monkeypatch):
     assert rec.latest_pack
     pack = Path(rec.latest_pack)
     assert (pack / "00_README.txt").is_file()
+    assert (pack / "00_trigger.pdf").is_file()
     assert (pack / "01_paper_tickets.pdf").is_file()
     explained = (pack / "02_bets_explained.pdf").read_bytes()
     assert explained.startswith(b"%PDF")

@@ -438,8 +438,12 @@ def test_batch_pack_writes_combo_readout(tmp_path, monkeypatch):
     fights = (pack / "02_fights.txt").read_text(encoding="utf-8")
     assert "== what these books are ==" in fights
     combo_text = " ".join((PdfReader(str(combo)).pages[0].extract_text() or "").split())
-    assert "HOW TO READ THIS PACK" in combo_text
+    assert "TRIGGER" in combo_text
+    assert (pack / "00_trigger.pdf").is_file()
+    trigger = (pack / "00_trigger.txt").read_text(encoding="utf-8")
+    assert "TRIGGER" in trigger
     assert "00_full_readout.pdf" in (pack / "00_README.txt").read_text(encoding="utf-8")
+    assert "00_trigger.pdf" in (pack / "00_README.txt").read_text(encoding="utf-8")
     combo_pages = len(PdfReader(str(combo)).pages)
     part_pages = 0
     for path in sorted(pack.glob("*.pdf")):

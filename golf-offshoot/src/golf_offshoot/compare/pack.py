@@ -110,6 +110,7 @@ def _path_labels(event_id: str) -> dict[str, dict[str, str]]:
     return labels
 
 _COMBO_SECTIONS = (
+    ("00_trigger.pdf", "Trigger pull — lived this snapshot"),
     ("01_how_to_read.pdf", "How to read this pack"),
     ("02_fights.pdf", "Fights — who each book holds"),
     ("03_leaderboard.pdf", "ESPN leaderboard (place / to-par / thru)"),
@@ -250,6 +251,17 @@ def write_batch_pack(
         _copy_if_exists(bank.html, root / "15_bankroll.html")
         _copy_if_exists(bank.txt, root / "15_bankroll.txt")
 
+    if lived is not None:
+        from golf_offshoot.strategy.paper_trigger import write_trigger_files
+
+        write_trigger_files(
+            lived,
+            directory=root,
+            advice=list(lived.latest_advice),
+            run_id=run_id,
+            title=f"TRIGGER  {event}",
+        )
+
     shutil.rmtree(scratch, ignore_errors=True)
     combo_sources = _combo_sources(root)
     combo = write_combo_pdf(
@@ -388,18 +400,19 @@ def _how_to_read_text(*, event_id: str, event_name: str, run_id: str) -> str:
         "",
         "This file is five mock books plus the board they saw. Read in this order:",
         "",
-        "  1. This page          What each book is",
-        "  2. Fights             Who each book holds, and where they disagree",
-        "  3. ESPN leaderboard   Place / to-par / thru. Not model Win%.",
-        "  4. Model field        Win% ranking from the live sim",
-        "  5. Lived museum       Your real paper book (place ladders allowed; "
+        "  1. Trigger            Lived book this snapshot: sell, reallocate, partial sell, add, new, hold",
+        "  2. This page          What each book is",
+        "  3. Fights             Who each book holds, and where they disagree",
+        "  4. ESPN leaderboard   Place / to-par / thru. Not model Win%.",
+        "  5. Model field        Win% ranking from the live sim",
+        "  6. Lived museum       Your real paper book (place ladders allowed; "
         "lock frozen, live apply still mutates)",
-        f"  6. A-replay           Same ranking as lived. {markets}. EdgeW screen.",
+        f"  7. A-replay           Same ranking as lived. {markets}. EdgeW screen.",
         "                       A-control is not a second book; it shares A-replay.",
-        f"  7. B-guts             Honest theta. {markets}. EdgeW screen.",
-        f"  8. B-nerves           A's ranking. {markets}. vs-posted (1/odds).",
-        f"  9. B-full             Honest theta. {markets}. vs-posted (1/odds).",
-        " 10. Lived bankroll     Lifetime ledger. Compare books do not use this.",
+        f"  8. B-guts             Honest theta. {markets}. EdgeW screen.",
+        f"  9. B-nerves           A's ranking. {markets}. vs-posted (1/odds).",
+        f" 10. B-full             Honest theta. {markets}. vs-posted (1/odds).",
+        " 11. Lived bankroll     Lifetime ledger. Compare books do not use this.",
         "",
         "Each ticket table is titled with the book name in the page header.",
         "A 'why these bets' page follows that book's tickets.",
@@ -472,13 +485,14 @@ def _batch_readme(
         "",
         "Open PDFs in Edge, Chrome, or Adobe — not as source in the editor.",
         "",
-        "Read 00_full_readout.pdf in this order. Each ticket page is titled with the book.",
+        "Read 00_full_readout.pdf in this order. Trigger is first. Then each ticket page is titled with the book.",
         "",
     ]
     if combo:
-        lines.append("00_full_readout.pdf     One file: legend + fights + board + each book + bankroll")
+        lines.append("00_full_readout.pdf     One file: trigger + legend + fights + board + each book + bankroll")
     lines += [
         "00_README.txt           This index",
+        "00_trigger.pdf          Lived this snapshot: sell / reallocate / partial sell / add / new / hold",
         "01_how_to_read.pdf      What each book is, and the reading order",
         "02_fights.pdf           Who each book holds, and where they disagree",
         "03_leaderboard.pdf      ESPN place / to-par / thru (not Win%)",

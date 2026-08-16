@@ -159,7 +159,7 @@ def test_pack_includes_bankroll_page(tmp_path, monkeypatch):
 
     combo_pages = len(PdfReader(str(combo)).pages)
     part_pages = 0
-    for name in ("01_paper_tickets.pdf", "02_bets_explained.pdf", "03_field_live.pdf", "05_bankroll.pdf"):
+    for name in ("00_trigger.pdf", "01_paper_tickets.pdf", "02_bets_explained.pdf", "03_field_live.pdf", "05_bankroll.pdf"):
         part = pack / name
         if part.is_file():
             part_pages += len(PdfReader(str(part)).pages)
