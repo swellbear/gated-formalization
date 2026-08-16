@@ -1,0 +1,21 @@
+# Frozen v1 S&P-style universe (not a live reconstitution). Expand only via method law.
+AAPL
+MSFT
+NVDA
+AMZN
+GOOGL
+META
+BRK.B
+JPM
+JNJ
+V
+UNH
+XOM
+PG
+MA
+HD
+COST
+ABBV
+CVX
+LLY
+AVGO

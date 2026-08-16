@@ -1,0 +1,17 @@
+__pycache__/
+*.pyc
+.pytest_cache/
+*.egg-info/
+dist/
+build/
+data/snapshots/*.json
+data/cache/
+data/paper/*.json
+data/exports/*.pdf
+data/exports/*.html
+data/exports/*.txt
+data/exports/packs/
+.venv/
+.env
+.env.*
+!.env.example

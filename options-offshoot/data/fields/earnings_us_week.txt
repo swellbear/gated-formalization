@@ -1,0 +1,11 @@
+# Frozen v1 universe for earnings_us_week when the calendar feed is unavailable.
+# Operating ingest prefers Polygon earnings dates; this file is the fallback list
+# only when the calendar is missing — still a closed leash, not "should be in."
+AAPL
+MSFT
+NVDA
+AMZN
+GOOGL
+META
+JPM
+XOM
