@@ -1,0 +1,166 @@
+{
+  "badge": "stand-in",
+  "lock": "L-HUNT-GAP",
+  "horses": [
+    "H-GAP-FADE",
+    "H-GAP-CONT"
+  ],
+  "discovery_cutoff": "2023-08-21",
+  "discovery_holdout": 500,
+  "min_train": 250,
+  "note": "F-ON and F-CC forecasts locked to 0. Selection is F-DAY. Day win != promote.",
+  "discovery": {
+    "H-GAP-FADE": {
+      "F-ON": {
+        "n": 500,
+        "first": "2021-08-25",
+        "last": "2023-08-21",
+        "rmse_horse": 0.007332539744657918,
+        "rmse_0": 0.007332539744657918,
+        "beats_0": false
+      },
+      "F-DAY": {
+        "n": 500,
+        "first": "2021-08-25",
+        "last": "2023-08-21",
+        "rmse_horse": 0.025843862820121157,
+        "rmse_0": 0.025846594083981028,
+        "beats_0": true,
+        "n_triggered": 98
+      },
+      "F-CC": {
+        "n": 500,
+        "first": "2021-08-25",
+        "last": "2023-08-21",
+        "rmse_horse": 0.02670533649743393,
+        "rmse_0": 0.02670533649743393,
+        "beats_0": false
+      }
+    },
+    "H-GAP-CONT": {
+      "F-ON": {
+        "n": 500,
+        "first": "2021-08-25",
+        "last": "2023-08-21",
+        "rmse_horse": 0.007332539744657918,
+        "rmse_0": 0.007332539744657918,
+        "beats_0": false
+      },
+      "F-DAY": {
+        "n": 500,
+        "first": "2021-08-25",
+        "last": "2023-08-21",
+        "rmse_horse": 0.025854745290632322,
+        "rmse_0": 0.025846594083981028,
+        "beats_0": false,
+        "n_triggered": 98
+      },
+      "F-CC": {
+        "n": 500,
+        "first": "2021-08-25",
+        "last": "2023-08-21",
+        "rmse_horse": 0.02670533649743393,
+        "rmse_0": 0.02670533649743393,
+        "beats_0": false
+      }
+    }
+  },
+  "survivor": {
+    "id": "H-GAP-FADE",
+    "discovery_fday_rmse_horse": 0.025843862820121157,
+    "discovery_fday_rmse_0": 0.025846594083981028,
+    "reason": "lowest discovery F-DAY RMSE among horses that strictly beat 0"
+  },
+  "discovery_n_sessions": 5769,
+  "confirm_horse": "H-GAP-FADE",
+  "confirm": {
+    "500": {
+      "F-ON": {
+        "n": 500,
+        "first": "2024-08-20",
+        "last": "2026-08-14",
+        "rmse_horse": 0.012910979462200952,
+        "rmse_0": 0.012910979462200952,
+        "beats_0": false
+      },
+      "F-DAY": {
+        "n": 500,
+        "first": "2024-08-20",
+        "last": "2026-08-14",
+        "rmse_horse": 0.026584044766822062,
+        "rmse_0": 0.026634268438116174,
+        "beats_0": true,
+        "n_triggered": 135
+      },
+      "F-CC": {
+        "n": 500,
+        "first": "2024-08-20",
+        "last": "2026-08-14",
+        "rmse_horse": 0.028693689531158018,
+        "rmse_0": 0.028693689531158018,
+        "beats_0": false
+      }
+    },
+    "250": {
+      "F-ON": {
+        "n": 250,
+        "first": "2025-08-18",
+        "last": "2026-08-14",
+        "rmse_horse": 0.01671503249961644,
+        "rmse_0": 0.01671503249961644,
+        "beats_0": false
+      },
+      "F-DAY": {
+        "n": 250,
+        "first": "2025-08-18",
+        "last": "2026-08-14",
+        "rmse_horse": 0.030890620377767637,
+        "rmse_0": 0.03093256856938298,
+        "beats_0": true,
+        "n_triggered": 91
+      },
+      "F-CC": {
+        "n": 250,
+        "first": "2025-08-18",
+        "last": "2026-08-14",
+        "rmse_horse": 0.03435533929314573,
+        "rmse_0": 0.03435533929314573,
+        "beats_0": false
+      }
+    },
+    "750": {
+      "F-ON": {
+        "n": 750,
+        "first": "2023-08-22",
+        "last": "2026-08-14",
+        "rmse_horse": 0.010882112091704187,
+        "rmse_0": 0.010882112091704187,
+        "beats_0": false
+      },
+      "F-DAY": {
+        "n": 750,
+        "first": "2023-08-22",
+        "last": "2026-08-14",
+        "rmse_horse": 0.02392033734589598,
+        "rmse_0": 0.0239575497756717,
+        "beats_0": true,
+        "n_triggered": 169
+      },
+      "F-CC": {
+        "n": 750,
+        "first": "2023-08-22",
+        "last": "2026-08-14",
+        "rmse_horse": 0.025688707258203724,
+        "rmse_0": 0.025688707258203724,
+        "beats_0": false
+      }
+    }
+  },
+  "promote": {
+    "fires": false,
+    "beat_500": false,
+    "hold_250": true,
+    "hold_750": true,
+    "note": "F-CC locked to 0 for these horses; a day win does not promote"
+  }
+}

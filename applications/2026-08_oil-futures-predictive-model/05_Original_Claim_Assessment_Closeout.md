@@ -38,7 +38,7 @@ Can a predictive model for oil futures be built?
 ### Free parameters remaining
 | ID | Status / freeze |
 |----|-----------------|
-| [R-F-SKILL](RESIDUAL_BRANCH_MENU.md#r-f-skill) | Skill class named; **L-HUNT-PRETELL** no survivor; **H-SPARSE-CAL** tiny 500 / **fails** 750; **H-SPARSE-VOL** and **H-LAG-WF** F-CC **loss**; H-KS not run; **not established**. `pursue`. Reopen: **different** horse on Yahoo (do **not** re-hunt confirm) |
+| [R-F-SKILL](RESIDUAL_BRANCH_MENU.md#r-f-skill) | Skill class named; **H-GAP-FADE** small F-DAY / F-CC **tie**; **L-HUNT-PRETELL** no survivor; **H-SPARSE-CAL** tiny 500 / **fails** 750; **H-SPARSE-VOL** and **H-LAG-WF** F-CC **loss**; H-KS not run; **not established**. `pursue`. Reopen: **different** horse on Yahoo (do **not** remix gap horses) |
 | [R-F-COMBO](RESIDUAL_BRANCH_MENU.md#r-f-combo) | Switching rule **unnamed**. `park-until-trigger`. Rule in advance; F-ON and F-DAY already scored separately |
 | [R-V-VALUE](RESIDUAL_BRANCH_MENU.md#r-v-value) | After-cost book **unnamed**. `park-until-trigger`. Later book must match **V2** |
 | [R-G8](RESIDUAL_BRANCH_MENU.md#r-g8) | **Executed → admitted meanings** (baseline scored; optional FTS not run) |
@@ -59,7 +59,7 @@ Any claim that a model beats last settlement out of sample; that a paper book ma
 | Option | Expected buy | Still leaves open |
 |--------|--------------|-------------------|
 | `leave skill not shown` | None required | F-SKILL stays not established (stand-in baseline on record) |
-| `name horse …` | Score a named **front-only** recipe on Yahoo under **L-SCREEN-Y-PROMOTE** | Does not auto-meet V-VALUE; Yahoo win ≠ live clearance; do **not** re-hunt this confirm window |
+| `name horse …` | Score a named **front-only** recipe on Yahoo under **L-SCREEN-Y-PROMOTE** | Does not auto-meet V-VALUE; Yahoo win ≠ live clearance; do **not** remix H-GAP-FADE/CONT |
 | `leave screen rule` | Keep **L-SCREEN-Y-PROMOTE** | Live CME still gated |
 | `name source class …` matching V-VALUE | Named paper book **under V2** | Does not auto-meet F-SKILL |
 | `run CR` / successor (existence-only or skill-only) | Different question, labeled | **Declined** 2026-08-17; Rank 4 leftover unchanged |
@@ -74,15 +74,15 @@ Original one-liner is a blended “can.” Rank 4 named the split without rewrit
 - [ ] **Revise claim** — then run **Claim-Revision Scaffolding** before a successor  
 - [x] **Keep original wording** — research agenda / scoped dependents only (default; CR **declined**, not run)
 
-**Default if no further authorization:** keep original wording + **hard stop (residuals live)** with this assessment. Skill leftover stays live (pretell hunt failed at discovery; H-LAG lost on F-CC; H-KS not run).
+**Default if no further authorization:** keep original wording + **hard stop (residuals live)** with this assessment. Skill leftover stays live (FADE small F-DAY, no promote; pretell hunt failed at discovery; H-LAG lost on F-CC; H-KS not run).
 
 ---
 
 ## Closeout statement
 
-Application **closed** as **Stable Provisional (split) — hard stop (residuals live)**. **L-SCREEN-Y-PROMOTE** in force. **L-HUNT-PRETELL** scored; **no survivor**. **H-SPARSE-CAL** / **H-SPARSE-VOL** scored; **neither promotes**. Leftover stays **live**. Phase 2 not entered. Amb **1.0**. Not trading advice.
+Application **closed** as **Stable Provisional (split) — hard stop (residuals live)**. **L-SCREEN-Y-PROMOTE** in force. **H-GAP-FADE** small F-DAY; **does not promote**. **L-HUNT-PRETELL** scored; **no survivor**. **H-SPARSE-CAL** / **H-SPARSE-VOL** scored; **neither promotes**. Leftover stays **live**. Phase 2 not entered. Amb **1.0**. Not trading advice.
 
-Awaiting further authorization (`leave skill not shown` · `name horse …` (**different**; do **not** re-hunt confirm) · `leave screen rule`). Live CME **only if** the F-CC gate fires. Optional modes **declined**.
+Awaiting further authorization (`leave skill not shown` · `name horse …` (**different**; do **not** remix gap horses) · `leave screen rule`). Live CME **only if** the F-CC gate fires. Optional modes **declined**.
 
 ---
 

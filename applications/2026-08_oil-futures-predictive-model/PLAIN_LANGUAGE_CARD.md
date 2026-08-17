@@ -1,27 +1,27 @@
 # Plain-language card
 
 **Application:** `2026-08_oil-futures-predictive-model`  
-**Date / checkpoint:** 2026-08-17 · pretell discovery/confirm hunt (L-PULSE-PRETELL-1)
+**Date / checkpoint:** 2026-08-17 · overnight-gap day horses (L-PULSE-GAP-1)
 
 ---
 
 ## What we’re doing
 
-We let the computer hunt among eight named recipes that use other Yahoo series (dollar, gasoline, heating oil, equities, copper, 10-year yield). It had to choose using only older sessions. **None** beat “assume no change” on the whole trip there, so **no recipe was sent** to the recent exam. This is not a trade.
+We scored two recipes that usually predict “no change” for the **day**, and only speak after a large overnight move. “Give some of it back” barely won the older day exam and still beat, by a **small** amount, on the recent day exam. The **whole trip** was left as no-change, so this does **not** move to official CME. This is not a trade.
 
 ## What we need from you
 
-Nothing required. Optional: leave skill not shown, or name a **different** front-only recipe (do not re-run this hunt on the recent window, and do not add more tickers to this drawer after seeing the scores).
+Nothing required. Optional: leave skill not shown, or name a **different** recipe (do not remix fade vs continuation, and do not re-run this on the recent window).
 
 **Preferred reply:** click A / B / C. Typed: `leave skill not shown` · `name horse …` · `leave screen rule`
 
 ## What a “yes” / this update means
 
-The hunt ran as locked. Failing discovery is **not** a pass. Live CME still only if the whole-trip gate fires. It did **not**.
+Those two day recipes are on the card. Fade was the only one allowed through to the recent day exam. A small day edge is **not** a pass. Live CME still only if the whole-trip gate fires. It did **not**.
 
 ## What this does *not* mean
 
-That a model beats last settlement. That we should take the least-bad recipe anyway. That we will now buy DataMine. That anyone should trade.
+That a model beats last settlement on the whole trip. That the small day dip is skill. That flattening before the close is already tested. That we will now buy DataMine. That anyone should trade.
 
 ---
 
@@ -29,11 +29,12 @@ That a model beats last settlement. That we should take the least-bad recipe any
 
 | Item | Value |
 |------|--------|
-| Claim-freeze / claim under test | Rank 4 F-CC; **L-SCREEN-Y-PROMOTE**; **L-HUNT-PRETELL** |
+| Claim-freeze / claim under test | Rank 4 F-CC; **L-SCREEN-Y-PROMOTE**; **L-HUNT-GAP** |
 | Amb | **1.0** (**≠ clearance**) |
-| Locks / package IDs | **L-HUNT-PRETELL**; **L-STANDIN-Y-TELLS**; L-SCREEN-Y-PROMOTE |
-| Hunt vs gate | **Fail** (no discovery survivor; confirm skipped) |
-| Artifact pointers | `Lock_Hunt_Pretell.md` · `PULSE_Hunt_Pretell.md` · `04_Material_Admission_Pretell.md` |
+| Locks / package IDs | **H-GAP-FADE**; **H-GAP-CONT**; L-SCREEN-Y-PROMOTE |
+| FADE vs gate | F-DAY small confirm beats; **F-CC tie** — **no promote** |
+| CONT vs gate | Discovery F-DAY **loss** — not confirmed |
+| Artifact pointers | `Lock_Horses_Gap.md` · `PULSE_Horses_Gap.md` · `04_Material_Admission_Gap.md` |
 
 ---
 

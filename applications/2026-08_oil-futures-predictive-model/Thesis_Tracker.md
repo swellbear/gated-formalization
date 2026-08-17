@@ -4,7 +4,7 @@
 
 **Application:** `2026-08_oil-futures-predictive-model`  
 **Last reviewed:** 2026-08-17  
-**Status:** **Stable Provisional (split) — hard stop (residuals live)** · Phase 1 closeout · D-EXIST-MET-FT · **F-SRC-CME-TAPE** · **L-SCREEN-Y-PROMOTE** · **L-HUNT-PRETELL** · L-SESS  
+**Status:** **Stable Provisional (split) — hard stop (residuals live)** · Phase 1 closeout · D-EXIST-MET-FT · **F-SRC-CME-TAPE** · **L-SCREEN-Y-PROMOTE** · **L-HUNT-GAP** · **L-HUNT-PRETELL** · L-SESS  
 
 **Tags** (see `docs/TRACKER_TAXONOMY.md`):  
 - Domain: `markets`  
@@ -19,7 +19,7 @@
 
 Can a predictive model for oil futures be built?
 
-**Successor / Rank lock (if any):** **Rank 4** nested split — D-EXIST ⊂ F-SKILL ⊂ V-VALUE. **D-EXIST-MET-FT**. V-COST **V2**. **F-SRC-CME-TAPE**. **L-SCREEN-Y-PROMOTE**. **L-HUNT-PRETELL**. V-SRC leave unnamed. CR **declined**, not run; default keep original wording.
+**Successor / Rank lock (if any):** **Rank 4** nested split — D-EXIST ⊂ F-SKILL ⊂ V-VALUE. **D-EXIST-MET-FT**. V-COST **V2**. **F-SRC-CME-TAPE**. **L-SCREEN-Y-PROMOTE**. **L-HUNT-GAP**. **L-HUNT-PRETELL**. V-SRC leave unnamed. CR **declined**, not run; default keep original wording.
 
 **Parent / successor relationship:** none
 
@@ -46,7 +46,7 @@ Can a predictive model for oil futures be built?
 - F-SRC **leave unnamed** — **superseded** 2026-08-17 by **F-SRC-CME-TAPE**.
 - **F-SRC-CME-TAPE** — named CME official open/settle + R1; optional FTS.
 - **L-PULSE-TAPE-0** — live-tape pulse executed; RMSE not computed.
-- **L-SCREEN-Y-PROMOTE** — Yahoo screen; live CME only if F-CC beats 0 on last 500 and does not lose on 250/750; H-LAG / CAL / VOL / pretell hunt do not promote.
+- **L-SCREEN-Y-PROMOTE** — Yahoo screen; live CME only if F-CC beats 0 on last 500 and does not lose on 250/750; H-GAP-FADE / pretell hunt / H-LAG / CAL / VOL do not promote.
 - **L-MAP-FT** — futures-target method census executed (evaluation; not F-SKILL-met; not a class pick).
 - **L-MAP-DRV** — mover-list census executed (exhaustive next-session list **does not exist**; not F-SKILL-met; not a class pick).
 - **L-SESS** — night/day/combo protocol locked (meanings; not skill-met).
@@ -57,7 +57,7 @@ Can a predictive model for oil futures be built?
 
 ## 4. Not established / negatively constrained
 
-- F-SKILL **not established** (L-HUNT-PRETELL no survivor; H-SPARSE-CAL tiny 500 / fails 750; H-SPARSE-VOL and H-LAG-WF lost on F-CC; H-KS not run; not a refute of all recipes).
+- F-SKILL **not established** (H-GAP-FADE small F-DAY / F-CC tie; L-HUNT-PRETELL no survivor; H-SPARSE-CAL tiny 500 / fails 750; H-SPARSE-VOL and H-LAG-WF lost on F-CC; H-KS not run; not a refute of all recipes).
 - F-ON / F-DAY / F-CC **H-LAG** last 500: 0.01283 / 0.02670 / 0.02888 vs 0-forecast 0.01291 / 0.02663 / 0.02869; **not** skill-met.
 - Kearney–Shang optional re-score **not run**.
 - V-VALUE **not established** (V-VALUE-TEST-0; V-SRC `leave unnamed`; **V2 named**; not a refute of all books).
@@ -84,7 +84,7 @@ None required (D-EXIST remains Minimal). V-VALUE is a marked elevation (Substant
 | [R-DRV](RESIDUAL_BRANCH_MENU.md#r-drv) | Exhaustive mover-list census | **Executed → evaluation** (L-MAP-DRV). Exhaustive list absent; does not fill F-SRC |
 | [R-SESS](RESIDUAL_BRANCH_MENU.md#r-sess) | Night vs day vs whole-trip protocol | **Executed → admitted meanings** (L-SESS). Does not meet skill |
 | [R-V-VALUE-TEST-0](RESIDUAL_BRANCH_MENU.md#r-v-value-test-0) | Named after-cost book | **Executed → not established** |
-| [R-F-SKILL](RESIDUAL_BRANCH_MENU.md#r-f-skill) | Named class for F-SKILL (F-CC + F-ON/F-DAY exhibits) | **L-HUNT-PRETELL** no survivor. **H-SPARSE-CAL** tiny 500 / **fails** 750. **H-SPARSE-VOL** / **H-LAG-WF** F-CC **loss**. H-KS not run. **not established**. Reopen: **different** horse on Yahoo (do **not** re-hunt confirm) |
+| [R-F-SKILL](RESIDUAL_BRANCH_MENU.md#r-f-skill) | Named class for F-SKILL (F-CC + F-ON/F-DAY exhibits) | **H-GAP-FADE** small F-DAY / F-CC **tie**. **L-HUNT-PRETELL** no survivor. **H-SPARSE-CAL** tiny 500 / **fails** 750. **H-SPARSE-VOL** / **H-LAG-WF** F-CC **loss**. H-KS not run. **not established**. Reopen: **different** horse on Yahoo (do **not** remix gap horses) |
 | [R-LIVE-STANDIN](RESIDUAL_BRANCH_MENU.md#r-live-standin) | Live CME vs stand-in | **Executed** (Yahoo `CL=F` stipulated). Reopen live **only if** **L-SCREEN-Y-PROMOTE** fires |
 | [R-F-COMBO](RESIDUAL_BRANCH_MENU.md#r-f-combo) | Named switching rule | **park-until-trigger**. Rule in advance; F-ON and F-DAY already scored separately |
 | [R-V-VALUE](RESIDUAL_BRANCH_MENU.md#r-v-value) | Named recipe/book for V-VALUE | **Leave unnamed**. `park-until-trigger`. Reopen: `name source class …` matching V-VALUE **under V2** |
@@ -98,7 +98,7 @@ None required (D-EXIST remains Minimal). V-VALUE is a marked elevation (Substant
 
 **Keep saying:** A specified non-no-change futures-target recipe has been written. Yahoo is a **stand-in**; the baseline is **not** a pass. Screen on Yahoo; live CME only if the whole-trip gate fires. Paper costs are **V2**; that is not a value pass. Skill and after-cost value are not established.
 
-**Test next (only if authorized):** `leave skill not shown` · `name horse …` (**different** recipe; do **not** re-hunt confirm). Live CME only if the F-CC promotion gate fires. Do **not** expand this drawer or CAL/VOL into a zoo.
+**Test next (only if authorized):** `leave skill not shown` · `name horse …` (**different** recipe; do **not** remix gap horses). Live CME only if the F-CC promotion gate fires. Do **not** expand this drawer or CAL/VOL into a zoo.
 
 ---
 
@@ -165,9 +165,14 @@ None required (D-EXIST remains Minimal). V-VALUE is a marked elevation (Substant
 - `PULSE_Hunt_Pretell.md`
 - `04_Material_Admission_Pretell.md`
 - `02_Gate_Scoring_After_Pretell.md`
+- `Lock_Horses_Gap.md`
+- `PULSE_Horses_Gap.md`
+- `04_Material_Admission_Gap.md`
+- `02_Gate_Scoring_After_Gap.md`
 - `data/sparse_calendar.json`
 - `data/horse_scores.json`
 - `data/pretell_hunt_scores.json`
+- `data/gap_horse_scores.json`
 - `Lock_Standin_Yahoo_Curve.md`
 - `PULSE_Horses_Standin.md`
 - `04_Material_Admission_Horses.md`
@@ -190,7 +195,7 @@ None required (D-EXIST remains Minimal). V-VALUE is a marked elevation (Substant
 - Closeout / verdict: [`05_Original_Claim_Assessment_Closeout.md`](05_Original_Claim_Assessment_Closeout.md) · [`final_verdict.md`](final_verdict.md)
 - Share pack: [`SHARE_PACK.md`](SHARE_PACK.md)
 - Parent / successor: —
-- Key admissions / locks: Rank 4; **D-EXIST-MET-FT**; **V-COST-V2**; **F-SRC-CME-TAPE**; **L-STANDIN-Y-CLF**; **L-SCREEN-Y-PROMOTE**; **L-HUNT-PRETELL**; V-SRC leave unnamed; L-PULSE-STANDIN-1 (baseline not met); F-SKILL/V-VALUE not established
+- Key admissions / locks: Rank 4; **D-EXIST-MET-FT**; **V-COST-V2**; **F-SRC-CME-TAPE**; **L-STANDIN-Y-CLF**; **L-SCREEN-Y-PROMOTE**; **L-HUNT-GAP**; **L-HUNT-PRETELL**; V-SRC leave unnamed; L-PULSE-STANDIN-1 (baseline not met); F-SKILL/V-VALUE not established
 
 ---
 
