@@ -3,7 +3,7 @@
 **Date:** 2026-08-17  
 **Application:** `2026-08_oil-futures-predictive-model`  
 **Operator selection:** **A** → **Rank 4 — Nested split A+B+C** (`lock Rank 4`)  
-**Status:** **LOCK INCOMPLETE** — V-VALUE cost schedule OR-slot still open. D-EXIST and F-SKILL meaning-locks are complete.
+**Status:** **LOCK INCOMPLETE** — V-COST OR-slot **now the live ask** (operator **C**, 2026-08-17). D-SRC **unnamed for now** (not a sealed `leave unnamed`).
 
 ---
 
@@ -46,10 +46,10 @@ D-EXIST and F-SKILL do not wait on this slot.
 
 ## Dependents now eligible to re-open (scoped)
 
-- **D-EXIST** — needs a **named** forecast recipe / public class. Operator **B**: no-change **OUT**. Operator hunt: **submit only if proven** — **L-HUNT-PROVEN**, no class submitted. `leave unnamed` leaves D-EXIST blocked.  
-- **F-SKILL** — **not established** on this hunt (schema fail vs next-session CL log-return). Still needs a named-enough matching class if a later pulse is wanted.  
-- **G8** — model class under F-SKILL (still free).  
-- **V-VALUE** — **blocked** by V-COST.
+- **D-EXIST** — D-SRC **unnamed for now** (operator **C**). Proven-only hunt submitted no class. Reopen: `name source class …`. Not a sealed leave-unnamed.  
+- **F-SKILL** — **not established** on the hunt.  
+- **G8** — still free under F-SKILL.  
+- **V-VALUE** — **blocked** by V-COST until `lock V-COST V2` / `V1` / `either`. Cost lock ≠ recipe named ≠ bar-met.
 
 ---
 

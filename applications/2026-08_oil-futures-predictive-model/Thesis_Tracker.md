@@ -77,7 +77,7 @@ None required (D-EXIST remains Minimal). V-VALUE is a marked elevation (Substant
 
 **Keep saying:** Proven-only hunt submitted **no class**. Nearby spot literature is kinship. Existence and skill are not established.
 
-**Test next (only if authorized):** `leave unnamed` · `name source class …` (drop proven filter) · V-COST.
+**Test next (only if authorized):** `lock V-COST V2` / `V1` / `either`. D-SRC unnamed for now.
 
 ---
 
@@ -93,7 +93,7 @@ None required (D-EXIST remains Minimal). V-VALUE is a marked elevation (Substant
 - `MULTI_ELEVATION_SPLIT.md`
 - `04_Material_Admission_Proven_Class_Search.md`
 - `E_Package_Evidence_Intake_Proven_Search.md`
-- `E_Quantitative_Evidence_Rubric_Proven_Search.md`
+- `V_COST_OR_Slot.md`
 
 ---
 

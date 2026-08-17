@@ -1,27 +1,27 @@
 # Plain-language card
 
 **Application:** `2026-08_oil-futures-predictive-model`  
-**Date / checkpoint:** 2026-08-17 · proven-only series hunt  
+**Date / checkpoint:** 2026-08-17 · V-COST OR-slot  
 
 ---
 
 ## What we’re doing
 
-We searched for a public forecasting series that is **proven** on the locked oil-**futures** test. We did not name one. Nearby work on **spot** oil and on using the futures curve to guess future spot prices is a different question.
+You parked the unnamed series for now and opened the after-cost value leg. We need a cost rule before that leg is a fair test.
 
 ## What we need from you
 
-Say whether to leave the class unnamed, name a series anyway (existence only, not proven), or switch to the cost rule for the value leg.
+Pick one cost freeze.
 
-**Preferred reply:** click A / B / C. Typed: `leave unnamed` · `name source class …` · `lock V-COST …`
+**Preferred reply:** click A / B / C. Typed: `lock V-COST V2` · `lock V-COST V1` · `lock V-COST either`
 
 ## What a “yes” / this update means
 
-The hunt is on the record. Existence and skill stay not established. No trading advice.
+We freeze how paper P/L subtracts frictions. We still have no named recipe, so value is **not** thereby established.
 
 ## What this does *not* mean
 
-That a model is impossible. That EIA STEO “failed as a company.” That 12-month spot results clear next-session futures skill.
+That a model makes money. That anyone should trade. That existence or skill has been shown.
 
 ---
 
@@ -29,11 +29,11 @@ That a model is impossible. That EIA STEO “failed as a company.” That 12-mon
 
 | Item | Value |
 |------|--------|
-| Claim-freeze / claim under test | Rank 4 F-SKILL + proven-only submit filter |
+| Claim-freeze / claim under test | Rank 4 V-VALUE; V-COST open |
 | Amb | **9** |
-| Locks / package IDs | Rank 4; V-COST open |
-| Method verdict label (if any) | Provisional; **L-HUNT-PROVEN** admitted as evaluation |
-| Artifact pointers | `04_Material_Admission_Proven_Class_Search.md` · `E_Package_Evidence_Intake_Proven_Search.md` |
+| Locks / package IDs | Rank 4; D-SRC unnamed for now |
+| Method verdict label (if any) | Provisional |
+| Artifact pointers | `V_COST_OR_Slot.md` · `Lock_Rank4_Nested_Split.md` |
 
 ---
 

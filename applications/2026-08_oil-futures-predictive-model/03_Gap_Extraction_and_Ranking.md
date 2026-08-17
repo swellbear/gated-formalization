@@ -130,9 +130,9 @@ G8 is the **named model class and feature recipe** under a locked G1/G6 — bloc
 
 ## Priority Order (highest sum first)
 
-1. **D-SRC** — named D-EXIST forecast recipe (no-change OUT)  
-2. **F-SRC** — named class for F-SKILL  
-3. **V-COST** — cost schedule (blocks V-VALUE)  
+1. **V-COST** — cost schedule (blocks V-VALUE); live ask  
+2. **D-SRC** — unnamed for now (operator C); reopen `name source class …`  
+3. **F-SRC** — named class for F-SKILL  
 4. **G8** / live vs stand-in — after a named class  
 
 Lean Default Path: name a D-EXIST class or leave unnamed. Do not auto-pulse. Do not collapse legs.
@@ -151,10 +151,10 @@ Lean Default Path: name a D-EXIST class or leave unnamed. Do not auto-pulse. Do 
 
 ## Search Plan for Top-Priority Gap(s)
 
-**Targeted gap:** D-SRC under operator proven-filter.  
-**Source classes to check:** Hunt executed 2026-08-17 — EIA STEO, Alquist–Kilian/IFDP 1022, NYMEX curve, one-off futures-return papers. **None submitted.**  
-**Diminishing-returns / time-box rule:** Do not keep hunting papers to collapse spot kinship into F-SKILL-met.  
-**Notes:** `04_Material_Admission_Proven_Class_Search.md`.
+**Targeted gap:** V-COST (operator C).  
+**Source classes to check:** N/A for this OR-slot (definitional). D-SRC hunt already executed; none submitted.  
+**Diminishing-returns / time-box rule:** Do not run a V-VALUE bake-off before V-COST is singled.  
+**Notes:** `V_COST_OR_Slot.md`. Cost lock ≠ named recipe ≠ bar-met.
 
 ---
 

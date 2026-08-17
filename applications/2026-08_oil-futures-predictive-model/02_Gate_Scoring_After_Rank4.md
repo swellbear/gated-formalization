@@ -81,6 +81,6 @@
 
 ## Next Action
 
-- [x] Other: **Stop for operator** — proven-only hunt submitted **no class**. `leave unnamed` / `name source class …` (existence-only) / V-COST.
+- [x] Other: **Stop for operator** — V-COST OR-slot (`V_COST_OR_Slot.md`). D-SRC unnamed for now.
 
 **Phase 2:** not entered. Per leftover: D-EXIST/F-SKILL/V-VALUE empirical bars are Phase 2-applicable **if later authorized**; named-class pulse may run without Phase 2 once a class is named enough.
