@@ -38,7 +38,7 @@ Can a predictive model for oil futures be built?
 ### Free parameters remaining
 | ID | Status / freeze |
 |----|-----------------|
-| [R-F-SKILL](RESIDUAL_BRANCH_MENU.md#r-f-skill) | Skill class named; **stand-in baseline scored**; **not established**. `pursue`. Reopen: horse vs baseline or live CME |
+| [R-F-SKILL](RESIDUAL_BRANCH_MENU.md#r-f-skill) | Skill class named; **H-LAG-WF scored, lost on F-CC**; H-KS not run; **not established**. `pursue`. Reopen: other horse or live/curve tape |
 | [R-F-COMBO](RESIDUAL_BRANCH_MENU.md#r-f-combo) | Switching rule **unnamed**. `park-until-trigger`. Rule in advance; F-ON and F-DAY already scored separately |
 | [R-V-VALUE](RESIDUAL_BRANCH_MENU.md#r-v-value) | After-cost book **unnamed**. `park-until-trigger`. Later book must match **V2** |
 | [R-G8](RESIDUAL_BRANCH_MENU.md#r-g8) | **Executed → admitted meanings** (baseline scored; optional FTS not run) |
@@ -74,13 +74,13 @@ Original one-liner is a blended “can.” Rank 4 named the split without rewrit
 - [ ] **Revise claim** — then run **Claim-Revision Scaffolding** before a successor  
 - [x] **Keep original wording** — research agenda / scoped dependents only (default; CR **declined**, not run)
 
-**Default if no further authorization:** keep original wording + **hard stop (residuals live)** with this assessment. Skill leftover stays live (stand-in baseline; no horse).
+**Default if no further authorization:** keep original wording + **hard stop (residuals live)** with this assessment. Skill leftover stays live (H-LAG lost on F-CC; H-KS not run).
 
 ---
 
 ## Closeout statement
 
-Application **closed** as **Stable Provisional (split) — hard stop (residuals live)**. Original one-liner **not** silently converted into “the model works.” Existence for futures-target recipes remains authorized and **separate**. Yahoo `CL=F` is a **stipulated stand-in**; last-500 baseline RMSE is on record; skill remains not shown; leftover stays **live**. Paper costs named **V2**; after-cost paper book stays unnamed. Phase 2 not entered. Leftover-ambiguity held at **1.0**. This is not trading advice and does not clear the blended slogan.
+Application **closed** as **Stable Provisional (split) — hard stop (residuals live)**. Original one-liner **not** silently converted into “the model works.” Yahoo `CL=F` is a **stipulated stand-in**. **H-LAG-WF** lost on F-CC; leftover stays **live**. Kearney–Shang not run. Paper costs named **V2**; after-cost book unnamed. Phase 2 not entered. Leftover-ambiguity held at **1.0**. This is not trading advice and does not clear the blended slogan.
 
 Awaiting further authorization (`leave skill not shown` / `live CME only` / `name horse …`). Optional modes **declined**.
 

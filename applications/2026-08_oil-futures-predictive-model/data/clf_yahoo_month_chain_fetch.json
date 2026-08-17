@@ -1,0 +1,416 @@
+{
+  "badge": "stand-in",
+  "source": "Yahoo v8 chart NYMEX CL month contracts",
+  "fetched_at_utc": "2026-08-17T19:58:13.301514+00:00",
+  "period1": 946684800,
+  "period2": 1787083079,
+  "n_symbols_tried": 60,
+  "n_ok": 38,
+  "n_fail": 22,
+  "ok_symbols": [
+    {
+      "symbol": "CLQ26.NYM",
+      "shortName": null,
+      "n_bars": 2136,
+      "first": "2018-01-22",
+      "last": "2026-07-21"
+    },
+    {
+      "symbol": "CLU26.NYM",
+      "shortName": "Crude Oil Sep 26",
+      "n_bars": 2155,
+      "first": "2018-01-22",
+      "last": "2026-08-17"
+    },
+    {
+      "symbol": "CLV26.NYM",
+      "shortName": "Crude Oil Oct 26",
+      "n_bars": 2155,
+      "first": "2018-01-22",
+      "last": "2026-08-17"
+    },
+    {
+      "symbol": "CLX26.NYM",
+      "shortName": "Crude Oil Nov 26",
+      "n_bars": 2155,
+      "first": "2018-01-22",
+      "last": "2026-08-17"
+    },
+    {
+      "symbol": "CLZ26.NYM",
+      "shortName": "Crude Oil Dec 26",
+      "n_bars": 2196,
+      "first": "2017-11-21",
+      "last": "2026-08-17"
+    },
+    {
+      "symbol": "CLF27.NYM",
+      "shortName": "Crude Oil Jan 27",
+      "n_bars": 2155,
+      "first": "2018-01-22",
+      "last": "2026-08-17"
+    },
+    {
+      "symbol": "CLG27.NYM",
+      "shortName": "Crude Oil Feb 27",
+      "n_bars": 2155,
+      "first": "2018-01-22",
+      "last": "2026-08-17"
+    },
+    {
+      "symbol": "CLH27.NYM",
+      "shortName": "Crude Oil Mar 27",
+      "n_bars": 1944,
+      "first": "2018-11-20",
+      "last": "2026-08-17"
+    },
+    {
+      "symbol": "CLJ27.NYM",
+      "shortName": "Crude Oil Apr 27",
+      "n_bars": 1944,
+      "first": "2018-11-20",
+      "last": "2026-08-17"
+    },
+    {
+      "symbol": "CLK27.NYM",
+      "shortName": "Crude Oil May 27",
+      "n_bars": 1944,
+      "first": "2018-11-20",
+      "last": "2026-08-17"
+    },
+    {
+      "symbol": "CLM27.NYM",
+      "shortName": "Crude Oil Jun 27",
+      "n_bars": 1945,
+      "first": "2018-11-20",
+      "last": "2026-08-17"
+    },
+    {
+      "symbol": "CLN27.NYM",
+      "shortName": "Crude Oil Jul 27",
+      "n_bars": 1945,
+      "first": "2018-11-20",
+      "last": "2026-08-17"
+    },
+    {
+      "symbol": "CLQ27.NYM",
+      "shortName": "Crude Oil Aug 27",
+      "n_bars": 1944,
+      "first": "2018-11-20",
+      "last": "2026-08-17"
+    },
+    {
+      "symbol": "CLU27.NYM",
+      "shortName": "Crude Oil Sep 27",
+      "n_bars": 1944,
+      "first": "2018-11-20",
+      "last": "2026-08-17"
+    },
+    {
+      "symbol": "CLV27.NYM",
+      "shortName": "Crude Oil Oct 27",
+      "n_bars": 1943,
+      "first": "2018-11-20",
+      "last": "2026-08-14"
+    },
+    {
+      "symbol": "CLX27.NYM",
+      "shortName": "Crude Oil Nov 27",
+      "n_bars": 1944,
+      "first": "2018-11-20",
+      "last": "2026-08-17"
+    },
+    {
+      "symbol": "CLZ27.NYM",
+      "shortName": "Crude Oil Dec 27",
+      "n_bars": 1945,
+      "first": "2018-11-20",
+      "last": "2026-08-17"
+    },
+    {
+      "symbol": "CLF28.NYM",
+      "shortName": "Crude Oil Jan 28",
+      "n_bars": 1943,
+      "first": "2018-11-20",
+      "last": "2026-08-14"
+    },
+    {
+      "symbol": "CLG28.NYM",
+      "shortName": "Crude Oil Feb 28",
+      "n_bars": 1944,
+      "first": "2018-11-20",
+      "last": "2026-08-17"
+    },
+    {
+      "symbol": "CLH28.NYM",
+      "shortName": "Crude Oil Mar 28",
+      "n_bars": 1807,
+      "first": "2019-06-10",
+      "last": "2026-08-14"
+    },
+    {
+      "symbol": "CLJ28.NYM",
+      "shortName": "Crude Oil Apr 28",
+      "n_bars": 1807,
+      "first": "2019-06-10",
+      "last": "2026-08-14"
+    },
+    {
+      "symbol": "CLK28.NYM",
+      "shortName": "Crude Oil May 28",
+      "n_bars": 1807,
+      "first": "2019-06-10",
+      "last": "2026-08-14"
+    },
+    {
+      "symbol": "CLM28.NYM",
+      "shortName": "Crude Oil Jun 28",
+      "n_bars": 1808,
+      "first": "2019-06-10",
+      "last": "2026-08-17"
+    },
+    {
+      "symbol": "CLN28.NYM",
+      "shortName": "Crude Oil Jul 28",
+      "n_bars": 1807,
+      "first": "2019-06-10",
+      "last": "2026-08-14"
+    },
+    {
+      "symbol": "CLQ28.NYM",
+      "shortName": "Crude Oil Aug 28",
+      "n_bars": 1807,
+      "first": "2019-06-10",
+      "last": "2026-08-14"
+    },
+    {
+      "symbol": "CLU28.NYM",
+      "shortName": "Crude Oil Sep 28",
+      "n_bars": 1807,
+      "first": "2019-06-10",
+      "last": "2026-08-14"
+    },
+    {
+      "symbol": "CLV28.NYM",
+      "shortName": "Crude Oil Oct 28",
+      "n_bars": 1807,
+      "first": "2019-06-10",
+      "last": "2026-08-14"
+    },
+    {
+      "symbol": "CLX28.NYM",
+      "shortName": "Crude Oil Nov 28",
+      "n_bars": 1807,
+      "first": "2019-06-10",
+      "last": "2026-08-14"
+    },
+    {
+      "symbol": "CLZ28.NYM",
+      "shortName": "Crude Oil Dec 28",
+      "n_bars": 1809,
+      "first": "2019-06-10",
+      "last": "2026-08-17"
+    },
+    {
+      "symbol": "CLF29.NYM",
+      "shortName": "Crude Oil Jan 29",
+      "n_bars": 1807,
+      "first": "2019-06-10",
+      "last": "2026-08-14"
+    },
+    {
+      "symbol": "CLG29.NYM",
+      "shortName": "Crude Oil Feb 29",
+      "n_bars": 1807,
+      "first": "2019-06-10",
+      "last": "2026-08-14"
+    },
+    {
+      "symbol": "CLH29.NYM",
+      "shortName": "Crude Oil Mar 29",
+      "n_bars": 1807,
+      "first": "2019-06-10",
+      "last": "2026-08-14"
+    },
+    {
+      "symbol": "CLK29.NYM",
+      "shortName": "Crude Oil May 29",
+      "n_bars": 1807,
+      "first": "2019-06-10",
+      "last": "2026-08-14"
+    },
+    {
+      "symbol": "CLM29.NYM",
+      "shortName": "Crude Oil Jun 29",
+      "n_bars": 1807,
+      "first": "2019-06-10",
+      "last": "2026-08-14"
+    },
+    {
+      "symbol": "CLN29.NYM",
+      "shortName": "Crude Oil Jul 29",
+      "n_bars": 1807,
+      "first": "2019-06-10",
+      "last": "2026-08-14"
+    },
+    {
+      "symbol": "CLQ29.NYM",
+      "shortName": "Crude Oil Aug 29",
+      "n_bars": 1807,
+      "first": "2019-06-10",
+      "last": "2026-08-14"
+    },
+    {
+      "symbol": "CLX29.NYM",
+      "shortName": "Crude Oil Nov 29",
+      "n_bars": 1807,
+      "first": "2019-06-10",
+      "last": "2026-08-14"
+    },
+    {
+      "symbol": "CLZ29.NYM",
+      "shortName": "Crude Oil Dec 29",
+      "n_bars": 1808,
+      "first": "2019-06-10",
+      "last": "2026-08-17"
+    }
+  ],
+  "fail_symbols": [
+    {
+      "symbol": "CLF25.NYM",
+      "http_status": 404,
+      "error": "HTTP Error 404: Not Found"
+    },
+    {
+      "symbol": "CLG25.NYM",
+      "http_status": 404,
+      "error": "HTTP Error 404: Not Found"
+    },
+    {
+      "symbol": "CLH25.NYM",
+      "http_status": 404,
+      "error": "HTTP Error 404: Not Found"
+    },
+    {
+      "symbol": "CLJ25.NYM",
+      "http_status": 404,
+      "error": "HTTP Error 404: Not Found"
+    },
+    {
+      "symbol": "CLK25.NYM",
+      "http_status": 404,
+      "error": "HTTP Error 404: Not Found"
+    },
+    {
+      "symbol": "CLM25.NYM",
+      "http_status": 404,
+      "error": "HTTP Error 404: Not Found"
+    },
+    {
+      "symbol": "CLN25.NYM",
+      "http_status": 404,
+      "error": "HTTP Error 404: Not Found"
+    },
+    {
+      "symbol": "CLQ25.NYM",
+      "http_status": 404,
+      "error": "HTTP Error 404: Not Found"
+    },
+    {
+      "symbol": "CLU25.NYM",
+      "http_status": 404,
+      "error": "HTTP Error 404: Not Found"
+    },
+    {
+      "symbol": "CLV25.NYM",
+      "http_status": 404,
+      "error": "HTTP Error 404: Not Found"
+    },
+    {
+      "symbol": "CLX25.NYM",
+      "http_status": 404,
+      "error": "HTTP Error 404: Not Found"
+    },
+    {
+      "symbol": "CLZ25.NYM",
+      "http_status": 404,
+      "error": "HTTP Error 404: Not Found"
+    },
+    {
+      "symbol": "CLF26.NYM",
+      "http_status": 404,
+      "error": "HTTP Error 404: Not Found"
+    },
+    {
+      "symbol": "CLG26.NYM",
+      "http_status": 404,
+      "error": "HTTP Error 404: Not Found"
+    },
+    {
+      "symbol": "CLH26.NYM",
+      "http_status": 404,
+      "error": "HTTP Error 404: Not Found"
+    },
+    {
+      "symbol": "CLJ26.NYM",
+      "http_status": 404,
+      "error": "HTTP Error 404: Not Found"
+    },
+    {
+      "symbol": "CLK26.NYM",
+      "http_status": 404,
+      "error": "HTTP Error 404: Not Found"
+    },
+    {
+      "symbol": "CLM26.NYM",
+      "http_status": 404,
+      "error": "HTTP Error 404: Not Found"
+    },
+    {
+      "symbol": "CLN26.NYM",
+      "http_status": 404,
+      "error": "HTTP Error 404: Not Found"
+    },
+    {
+      "symbol": "CLJ29.NYM",
+      "http_status": 404,
+      "error": "HTTP Error 404: Not Found"
+    },
+    {
+      "symbol": "CLU29.NYM",
+      "http_status": 404,
+      "error": "HTTP Error 404: Not Found"
+    },
+    {
+      "symbol": "CLV29.NYM",
+      "http_status": 404,
+      "error": "HTTP Error 404: Not Found"
+    }
+  ],
+  "panel_rows": 36514,
+  "n_dates": 2196,
+  "dates_with_tenors_1_to_18": 1944,
+  "tenor_row_counts": {
+    "1": 2196,
+    "2": 2156,
+    "3": 2156,
+    "4": 2156,
+    "5": 2156,
+    "6": 2155,
+    "7": 2155,
+    "8": 1944,
+    "9": 1944,
+    "10": 1944,
+    "11": 1944,
+    "12": 1944,
+    "13": 1944,
+    "14": 1944,
+    "15": 1944,
+    "16": 1944,
+    "17": 1944,
+    "18": 1944
+  },
+  "first_date": "2017-11-21",
+  "last_date": "2026-08-17",
+  "historical_cl1_18_note": "Yahoo 404s expired month contracts. Nearest still-listed month is not historical CL1 on dates before that contract was front. Kearney-Shang walk-forward on CL1-CL18 therefore cannot run on this panel as a freeze match."
+}

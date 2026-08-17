@@ -80,4 +80,4 @@ D-EXIST  ⊂  F-SKILL               (Rank 4-AC)
 
 ---
 
-*Rank 4 locked 2026-08-17. **D-EXIST established (futures-target only).** **L-SESS** in force. **F-SRC-CME-TAPE** named. **L-STANDIN-Y-CLF** stipulated (Yahoo `CL=F` baseline scored; not a pass). **V-COST-V2** named (not value-met). Spot/real-price OUT. V-SRC leave unnamed. F-SKILL and V-VALUE not established. Closeout: **hard stop (residuals live)**. Optional modes **declined**. Live residual: skill ([R-F-SKILL](RESIDUAL_BRANCH_MENU.md#r-f-skill)). Not a trade. Next: `leave skill not shown` / `live CME only` / `name horse …`.*
+*Rank 4 locked 2026-08-17. **D-EXIST established (futures-target only).** **L-SESS** in force. **H-LAG-WF** scored (F-CC loss). **H-KS-FTS** not run. **V-COST-V2** named. F-SKILL and V-VALUE not established. Closeout: **hard stop (residuals live)**. Not a trade. Next: `leave skill not shown` / `live CME / curve tape …` / `name horse …`.*

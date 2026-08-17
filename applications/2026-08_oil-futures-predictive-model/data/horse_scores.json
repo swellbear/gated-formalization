@@ -1,0 +1,98 @@
+{
+  "tape": "data/clf_yahoo_standin.csv",
+  "badge": "stand-in",
+  "holdout": 500,
+  "min_train": 250,
+  "H-LAG-WF": {
+    "F-ON": {
+      "n": 500,
+      "first": "2024-08-20",
+      "last": "2026-08-14",
+      "rmse_horse": 0.01282668974419558,
+      "rmse_0": 0.012910979462200952,
+      "beats_0": true
+    },
+    "F-DAY": {
+      "n": 500,
+      "first": "2024-08-20",
+      "last": "2026-08-14",
+      "rmse_horse": 0.026695838322301033,
+      "rmse_0": 0.026634268438116174,
+      "beats_0": false
+    },
+    "F-CC": {
+      "n": 500,
+      "first": "2024-08-20",
+      "last": "2026-08-14",
+      "rmse_horse": 0.028879967126278498,
+      "rmse_0": 0.028693689531158018,
+      "beats_0": false
+    }
+  },
+  "H-KS-FTS": {
+    "run": false,
+    "gate": {
+      "ok": false,
+      "n_dates_total": 2196,
+      "n_dates_labeled_cl1_cl18": 1944,
+      "n_dates_true_front_cl1_cl18": 54,
+      "first_true_front_complete": "2026-06-01",
+      "last_true_front_complete": "2026-08-17",
+      "reason": "Yahoo expired months 404; nearest still-listed contract is not historical CL1. True-front dates with CL1\u2013CL18: 54 (need 750)."
+    }
+  },
+  "sensitivity": {
+    "250": {
+      "F-ON": {
+        "n": 250,
+        "first": "2025-08-18",
+        "last": "2026-08-14",
+        "rmse_horse": 0.016577347264009962,
+        "rmse_0": 0.01671503249961644,
+        "beats_0": true
+      },
+      "F-DAY": {
+        "n": 250,
+        "first": "2025-08-18",
+        "last": "2026-08-14",
+        "rmse_horse": 0.030987463886200314,
+        "rmse_0": 0.03093256856938298,
+        "beats_0": false
+      },
+      "F-CC": {
+        "n": 250,
+        "first": "2025-08-18",
+        "last": "2026-08-14",
+        "rmse_horse": 0.03453558301150902,
+        "rmse_0": 0.03435533929314573,
+        "beats_0": false
+      }
+    },
+    "750": {
+      "F-ON": {
+        "n": 750,
+        "first": "2023-08-22",
+        "last": "2026-08-14",
+        "rmse_horse": 0.010814309640639386,
+        "rmse_0": 0.010882112091704187,
+        "beats_0": true
+      },
+      "F-DAY": {
+        "n": 750,
+        "first": "2023-08-22",
+        "last": "2026-08-14",
+        "rmse_horse": 0.024001935684785137,
+        "rmse_0": 0.0239575497756717,
+        "beats_0": false
+      },
+      "F-CC": {
+        "n": 750,
+        "first": "2023-08-22",
+        "last": "2026-08-14",
+        "rmse_horse": 0.02581874496395896,
+        "rmse_0": 0.025688707258203724,
+        "beats_0": false
+      }
+    }
+  }
+}

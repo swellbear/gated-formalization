@@ -46,7 +46,7 @@ Can a predictive model for oil futures be built?
 - F-SRC **leave unnamed** — **superseded** 2026-08-17 by **F-SRC-CME-TAPE**.
 - **F-SRC-CME-TAPE** — named CME official open/settle + R1; optional FTS.
 - **L-PULSE-TAPE-0** — live-tape pulse executed; RMSE not computed.
-- **L-STANDIN-Y-CLF** / **L-PULSE-STANDIN-1** — Yahoo `CL=F` stipulated; baseline RMSE scored; **not** skill-met.
+- **H-LAG-WF** / **L-PULSE-HORSES-1** — lagged-return scored; F-CC **loss**; tiny F-ON dip **not** met; H-KS **not run**.
 - **L-MAP-FT** — futures-target method census executed (evaluation; not F-SKILL-met; not a class pick).
 - **L-MAP-DRV** — mover-list census executed (exhaustive next-session list **does not exist**; not F-SKILL-met; not a class pick).
 - **L-SESS** — night/day/combo protocol locked (meanings; not skill-met).
@@ -57,8 +57,8 @@ Can a predictive model for oil futures be built?
 
 ## 4. Not established / negatively constrained
 
-- F-SKILL **not established** (stand-in baseline scored; no horse; not a refute of all recipes).
-- F-ON / F-DAY / F-CC **baseline** RMSE computed on Yahoo `CL=F` (last 500: 0.01291 / 0.02663 / 0.02869); **not** skill-met.
+- F-SKILL **not established** (H-LAG-WF lost on F-CC; H-KS not run; not a refute of all recipes).
+- F-ON / F-DAY / F-CC **H-LAG** last 500: 0.01283 / 0.02670 / 0.02888 vs 0-forecast 0.01291 / 0.02663 / 0.02869; **not** skill-met.
 - Kearney–Shang optional re-score **not run**.
 - V-VALUE **not established** (V-VALUE-TEST-0; V-SRC `leave unnamed`; **V2 named**; not a refute of all books).
 - Directional accuracy after costs / decision or trading value **not shown**.
@@ -84,7 +84,7 @@ None required (D-EXIST remains Minimal). V-VALUE is a marked elevation (Substant
 | [R-DRV](RESIDUAL_BRANCH_MENU.md#r-drv) | Exhaustive mover-list census | **Executed → evaluation** (L-MAP-DRV). Exhaustive list absent; does not fill F-SRC |
 | [R-SESS](RESIDUAL_BRANCH_MENU.md#r-sess) | Night vs day vs whole-trip protocol | **Executed → admitted meanings** (L-SESS). Does not meet skill |
 | [R-V-VALUE-TEST-0](RESIDUAL_BRANCH_MENU.md#r-v-value-test-0) | Named after-cost book | **Executed → not established** |
-| [R-F-SKILL](RESIDUAL_BRANCH_MENU.md#r-f-skill) | Named class for F-SKILL (F-CC + F-ON/F-DAY exhibits) | **F-SRC-CME-TAPE**. Stand-in baseline scored; **not established**. Reopen: horse vs baseline or live CME |
+| [R-F-SKILL](RESIDUAL_BRANCH_MENU.md#r-f-skill) | Named class for F-SKILL (F-CC + F-ON/F-DAY exhibits) | **H-LAG-WF** scored, **lost** on F-CC. H-KS not run. **not established**. Reopen: other horse or live/curve tape |
 | [R-LIVE-STANDIN](RESIDUAL_BRANCH_MENU.md#r-live-standin) | Live CME vs stand-in | **Executed** (Yahoo `CL=F` stipulated). Reopen: `live CME only` |
 | [R-F-COMBO](RESIDUAL_BRANCH_MENU.md#r-f-combo) | Named switching rule | **park-until-trigger**. Rule in advance; F-ON and F-DAY already scored separately |
 | [R-V-VALUE](RESIDUAL_BRANCH_MENU.md#r-v-value) | Named recipe/book for V-VALUE | **Leave unnamed**. `park-until-trigger`. Reopen: `name source class …` matching V-VALUE **under V2** |
@@ -98,7 +98,7 @@ None required (D-EXIST remains Minimal). V-VALUE is a marked elevation (Substant
 
 **Keep saying:** A specified non-no-change futures-target recipe has been written. Yahoo is a **stand-in**; the baseline is **not** a pass. Paper costs are **V2**; that is not a value pass. Skill and after-cost value are not established.
 
-**Test next (only if authorized):** `leave skill not shown` · `live CME only` · `name horse …`. Combo does not skip the queue.
+**Test next (only if authorized):** `leave skill not shown` · `live CME / curve tape …` · `name horse …`. Combo does not skip the queue.
 
 ---
 
@@ -157,8 +157,13 @@ None required (D-EXIST remains Minimal). V-VALUE is a marked elevation (Substant
 - `E_Quantitative_Evidence_Rubric_Standin_Yahoo.md`
 - `04_Material_Admission_Standin_Yahoo.md`
 - `02_Gate_Scoring_After_Standin_Yahoo.md`
-- `data/clf_yahoo_standin.csv`
-- `scripts/cl_session_rmse.py`
+- `Lock_Horses_Lag_KS.md`
+- `Lock_Standin_Yahoo_Curve.md`
+- `PULSE_Horses_Standin.md`
+- `04_Material_Admission_Horses.md`
+- `02_Gate_Scoring_After_Horses.md`
+- `data/horse_scores.json`
+- `data/clf_yahoo_month_chain.csv`
 - `05_Original_Claim_Assessment_Closeout.md`
 - `DISSERTATION.md`
 - `SHARE_PACK.md`

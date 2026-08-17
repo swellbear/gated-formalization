@@ -18,7 +18,7 @@ The question was whether a predictive model for oil futures can be built. That s
 
 A specified forecasting recipe for listed crude **futures**, other than last-price no-change, has been written. That is all existence means here. Recipes that forecast the real or spot price of oil stay outside that freeze. The list of academic and practitioner recipes is existence evidence only — not a pick of one paper as “the” model.
 
-Walk-forward skill on next-session CL log-returns versus last settlement is **not shown**. Yahoo `CL=F` is a **stipulated stand-in**. Night/day/whole-trip **baseline** RMSE is computed on that tape. No horse was scored against it.
+Walk-forward skill on next-session CL log-returns versus last settlement is **not shown**. Yahoo `CL=F` is a **stipulated stand-in**. A lagged-return horse (**H-LAG-WF**) was scored and **lost** on F-CC (0.02888 vs no-change 0.02869). A tiny overnight RMSE dip is **not** a pass. Kearney–Shang **not run**.
 
 After-cost paper trading value is **not shown**. Paper costs are now **V2** (fees plus $10/contract each way). The paper book was left unnamed. That is not a proof that every book fails.
 
@@ -41,7 +41,7 @@ Can a predictive model for oil futures be built?
 
 ## 3. How it was examined
 
-**Method path:** Phase 1 only. Cycle 0 (Amb 12) → Rank 4 → … → **F-SRC-CME-TAPE** named; pulse **L-PULSE-TAPE-0** (tape missing) → **L-STANDIN-Y-CLF** stipulated; pulse **L-PULSE-STANDIN-1** (Yahoo baseline RMSE) → **V-COST-V2** named. No Phase 2. No UX/CX/CR/QI run. Yahoo not used as live.
+**Method path:** Phase 1 only. … → **V-COST-V2** named → horses **H-LAG-WF** / **H-KS-FTS** named; pulse **L-PULSE-HORSES-1** (H-LAG scored, lost on F-CC; H-KS tape fail). No Phase 2. No UX/CX/CR/QI run. Yahoo not used as live.
 
 **Governing lock / freeze (if any):** Rank 4 `D-EXIST ⊂ F-SKILL ⊂ V-VALUE`. D-EXIST: `O1+M1+S1+C3+T2+H3+E3` (futures-target; no-change OUT as the model exhibit). F-SKILL: NYMEX CL front-month, next-session log-return, walk-forward RMSE vs last settlement. V-VALUE: after-cost paper P/L vs the curve under **V2** (listed fees + 1 tick/side). V-EITHER is historical.
 
@@ -68,14 +68,14 @@ Can a predictive model for oil futures be built?
 
 | Item | Status |
 |------|--------|
-| F-SKILL: real shot of beating last-settlement RMSE, walk-forward, next-session CL log-return | **not established** (Yahoo stand-in **baseline** scored; no horse; not live CME) — **not a refute**; **live residual** |
+| F-SKILL: real shot of beating last-settlement RMSE, walk-forward, next-session CL log-return | **not established** (H-LAG-WF **lost** on F-CC; H-KS not run; stand-in; not a refute) — **live residual** |
 | V-VALUE: real shot of after-cost paper P/L vs the curve | **not established** (V-SRC `leave unnamed`; **V2 named**; no book) — **not a refute** |
 | Directional accuracy that survives transaction costs | **not shown** |
 | Any decision or trading value; “should trade” | **not shown** (no should in the claim; LOCK-006 not imported) |
 | Spot / real-price recipes as inside D-EXIST | **OUT** of the existence freeze (nearby kinship) |
 | One paper from the menu as “the” recipe | **not picked** |
 | F-ON / F-DAY RMSE vs no-change | **stand-in baseline computed** on Yahoo `CL=F` (not live CME; not skill-met) |
-| Kearney–Shang FTS RMSE re-score on this tape | **not run** |
+| Kearney–Shang FTS RMSE re-score on this tape | **not run** (Yahoo month chain ≠ historical CL1–CL18; 54 true-front dates) |
 | Yahoo / `CL=F` as live CME | **rejected** as live; **stipulated** as stand-in |
 | Blended slogan “a predictive oil-futures model works” | **not cleared** |
 
@@ -93,17 +93,17 @@ Can a predictive model for oil futures be built?
 
 ## 7. Quantitative results (if any)
 
-Stand-in baseline only — **not** bar-met. Paper costs **V2**: CL tick identity (market structure, not a broker quote): $0.01/bbl × 1000 bbl = **$10**/contract/side (**$20** round-turn slippage before fees), plus listed fees. No named book, so V-VALUE still unused.
+Stand-in baseline and **H-LAG-WF** — **not** bar-met. Paper costs **V2**. No named book, so V-VALUE still unused.
 
-Yahoo `CL=F` last **500** sessions (2024-08-20 … 2026-08-14), Close as settlement, Open as open, R1 not applied:
+Yahoo `CL=F` last **500** sessions (2024-08-20 … 2026-08-14):
 
-| Window | RMSE vs 0 | n |
-|--------|-----------|---|
-| F-ON | 0.01291 | 500 |
-| F-DAY | 0.02663 | 500 |
-| F-CC | 0.02869 | 500 |
+| Window | RMSE 0 | RMSE H-LAG-WF | n |
+|--------|--------|---------------|---|
+| F-ON | 0.01291 | 0.01283 (tiny dip; **not** F-ON-met) | 500 |
+| F-DAY | 0.02663 | 0.02670 (loss) | 500 |
+| F-CC | 0.02869 | 0.02888 (loss; parent bar) | 500 |
 
-Sensitivity 250/750 in `PULSE_Standin_Yahoo_CLF_RMSE.md`. Kearney–Shang FTS **not run**. Print-match of nearby spot/monthly results or Kearney–Shang MAE was **not** used as F-SKILL clearance.
+H-KS-FTS **not run** (Yahoo month chain ≠ historical CL1–CL18). Print-match of Kearney–Shang MAE unused.
 
 ---
 
@@ -119,7 +119,7 @@ UX / CX / CR **declined, not run** (operator **C** `decline optional modes`). QI
 
 **Amb ≠ clearance:** Amb **1.0** is leftover V-SRC only. Live-vs-stand-in closed as Yahoo stipulated. V-COST named **V2**. Low leftover-ambiguity after locks does **not** mean skill, value, or the blended slogan is established.
 
-**Locked-bar status summary:** D-EXIST **established** (futures-target only). F-SKILL **not established** (stand-in baseline scored; no horse). V-VALUE **not established**.
+**Locked-bar status summary:** D-EXIST **established** (futures-target only). F-SKILL **not established** (H-LAG-WF lost on F-CC; H-KS not run). V-VALUE **not established**.
 
 **Continuation / hard-stop note:** Hygiene sealed. Optional modes declined. Skill leftover stays **live** ([R-F-SKILL](RESIDUAL_BRANCH_MENU.md#r-f-skill)). Tape leftover **executed** as stand-in ([R-LIVE-STANDIN](RESIDUAL_BRANCH_MENU.md#r-live-standin)). Phase 2 not entered. Next: `leave skill not shown` / `live CME only` / `name horse …`.
 
@@ -152,6 +152,7 @@ UX / CX / CR **declined, not run** (operator **C** `decline optional modes`). QI
 | F-SRC-CME-TAPE pulse | **2.5** | F-SRC 2→0; G8 1→0; live-vs-stand-in still 1 |
 | L-STANDIN-Y-CLF pulse | **1.5** | Live-vs-stand-in 1→0; Yahoo baseline scored; skill not met |
 | V-COST-V2 named | **1.0** | V-COST 0.5→0; V-VALUE still not met (no named book) |
+| L-PULSE-HORSES-1 | **1.0** | Unchanged; H-LAG lost on F-CC; H-KS not run |
 
 ### Admitted layers (index)
 
@@ -175,6 +176,9 @@ UX / CX / CR **declined, not run** (operator **C** `decline optional modes`). QI
 | L-STANDIN-Y-CLF | Yahoo `CL=F` stipulated stand-in | `Lock_Standin_Yahoo_CLF.md` |
 | L-PULSE-STANDIN-1 | Stand-in baseline RMSE; skill not met | `04_Material_Admission_Standin_Yahoo.md` |
 | V-COST-V2 | Named paper-cost schedule; not value-met | `Lock_VCOST_V2.md` |
+| L-STANDIN-Y-CHAIN | Yahoo month chain attempted; historical CL1–CL18 fail | `Lock_Standin_Yahoo_Curve.md` |
+| H-LAG-WF / H-KS-FTS | Named horses; H-LAG scored (F-CC loss); H-KS not run | `Lock_Horses_Lag_KS.md` |
+| L-PULSE-HORSES-1 | Horse pulse; skill not met | `04_Material_Admission_Horses.md` |
 
 ### Key artifacts
 

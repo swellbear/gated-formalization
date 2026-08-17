@@ -39,7 +39,7 @@
 | [R-DRV](#r-drv) | Exhaustive list of what can move next-session CL? | Empirically resolvable | Census of list-types; **no class submitted** | **executed → evaluation** (L-MAP-DRV) |
 | [R-SESS](#r-sess) | Night vs day vs whole-trip as separate tests? | Definitional lock | Protocol; **no class submitted** | **executed → admitted meanings** (L-SESS) |
 | [R-V-VALUE-TEST-0](#r-v-value-test-0) | Named after-cost paper book? | Empirically resolvable | None named | **executed → not established** |
-| [R-F-SKILL](#r-f-skill) | Next-session CL log-return skill vs last settlement (F-CC), plus F-ON/F-DAY exhibits? | Empirically resolvable | **F-SRC-CME-TAPE**; stand-in baseline scored | **pursue** (baseline only; **not established**) |
+| [R-F-SKILL](#r-f-skill) | Next-session CL log-return skill vs last settlement (F-CC), plus F-ON/F-DAY exhibits? | Empirically resolvable | **H-LAG-WF** scored (F-CC loss); **H-KS-FTS** not run | **pursue** (**not established**) |
 | [R-F-COMBO](#r-f-combo) | Named switching rule after F-ON and F-DAY scored separately? | Empirically resolvable | **unnamed** | **park-until-trigger** |
 | [R-V-VALUE](#r-v-value) | After-cost paper P/L vs the curve? | Empirically resolvable | **unnamed** (operator `leave unnamed`) | **park-until-trigger** |
 | [R-G8](#r-g8) | Model-class fashion under F-SKILL | Empirically resolvable (meanings) | Baseline RMSE + optional FTS | **executed → admitted meanings** |
@@ -158,13 +158,13 @@
 |-------|---------|
 | **Class** | Empirically resolvable |
 | **Named source class** | **F-SRC-CME-TAPE**. Stand-in tape: Yahoo `CL=F` (`Lock_Standin_Yahoo_CLF.md`) |
-| **What it is** | Whether any horse **beats** no-change RMSE on **F-ON / F-DAY / F-CC**. Stand-in pulse **L-PULSE-STANDIN-1** computed the **baseline** (last 500: F-ON 0.01291, F-DAY 0.02663, F-CC 0.02869). **Not established** |
+| **What it is** | Whether any horse **beats** no-change RMSE on **F-ON / F-DAY / F-CC**. **H-LAG-WF** scored last-500: F-ON 0.01283 vs 0 0.01291 (tiny dip, **not** met); F-DAY 0.02670 vs 0.02663 (loss); F-CC 0.02888 vs 0.02869 (**loss**; parent). **H-KS-FTS not run**. **Not established** |
 | **Why offered here** | Rank 4 F-SKILL leftover; tape fork closed as stand-in |
 | **What authorizing does** | A later horse must be named and scored against these windows. Honest **established** still **stops**. `live CME only` re-scores the baseline on official stamps |
 | **What success / failure changes** | Beating the stand-in baseline is still not live clearance. F-DAY-met ≠ F-CC-met |
 | **What it does *not* do** | Treat Yahoo as official settlement; treat baseline RMS as a pass; USO; EIA STEO; a trade |
 | **Effort** | Medium once a horse is named |
-| **Disposition** | **pursue** (stand-in baseline scored; **not established**) |
+| **Disposition** | **pursue** (H-LAG scored, lost on F-CC; H-KS not run; **not established**) |
 | **How to authorize** | `name horse …` vs this baseline, or `live CME only`, or leave |
 
 **Do not treat as this class:** EIA STEO; listed futures curve as a next-session CL return model; Alquist–Kilian / Fed IFDP spot-forecast papers; canonical real/spot VARs; the existence menu as “the” skill recipe; last-settlement no-change (baseline, not the model); **L-MAP-FT families as a silent F-SRC pick**; **L-MAP-DRV families as a silent F-SRC pick**; **USO / Zhang half-hour momentum as F-ON or F-DAY**.
@@ -261,7 +261,7 @@ None remaining. [R-G8](#r-g8) meanings admitted. [R-LIVE-STANDIN](#r-live-standi
 | [R-V-VALUE](#r-v-value) | park-until-trigger | Matching V-VALUE book named under **V2** |
 | [R-F-COMBO](#r-f-combo) | park-until-trigger | Rule in advance + F-ON and F-DAY already scored separately |
 
-**Live (not parked):** [R-F-SKILL](#r-f-skill) — `pursue` (stand-in baseline; no horse)
+**Live (not parked):** [R-F-SKILL](#r-f-skill) — `pursue` (H-LAG scored, lost on F-CC; H-KS not run)
 
 ---
 
@@ -281,6 +281,7 @@ None remaining. [R-G8](#r-g8) meanings admitted. [R-LIVE-STANDIN](#r-live-standi
 | 2026-08-17 | **F-SRC-CME-TAPE** named; **L-PULSE-TAPE-0** executed; live tape absent; Yahoo not used that pulse |
 | 2026-08-17 | **L-STANDIN-Y-CLF** stipulated (Yahoo `CL=F`); **L-PULSE-STANDIN-1** baseline RMSE scored; skill **not established**; Amb **2.5 → 1.5** |
 | 2026-08-17 | **V-COST-V2** named (fees + $10/contract/side); V-VALUE still not established; Amb **1.5 → 1.0** |
+| 2026-08-17 | **H-LAG-WF** scored (F-CC loss); **H-KS-FTS** not run (Yahoo month chain ≠ historical CL1–CL18); skill **not established**; Amb **held 1.0** |
 
 ---
 

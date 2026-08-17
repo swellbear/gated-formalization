@@ -1,27 +1,27 @@
 # Plain-language card
 
 **Application:** `2026-08_oil-futures-predictive-model`  
-**Date / checkpoint:** 2026-08-17 · V-COST named **V2** (after Yahoo `CL=F` stand-in pulse)
+**Date / checkpoint:** 2026-08-17 · named horses scored (L-PULSE-HORSES-1)
 
 ---
 
 ## What we’re doing
 
-You picked the **stricter paper-cost mock**: listed fees **plus** $10 per contract in and $10 out. Later paper books will be graded that way. That is how we keep the mock closer to a real fill. It does **not** mean a book already made money. Skill vs last settlement is still **not shown**. This is not a trade.
+We named two recipes and tested what we could. A simple model that uses yesterday’s night and day moves **did not beat** “assume no change” for the whole trip. A tiny overnight improvement is **not** a pass. The published curve method **could not run**: Yahoo does not keep expired months, so there is no historical CL1–CL18. This is not a trade.
 
 ## What we need from you
 
-Nothing required on costs. Optional on skill: wait for official CME stamps and re-score, or name a recipe to test **against** the Yahoo baselines.
+Nothing required. Optional: wait for official CME (or another real curve tape), or name a different recipe.
 
-**Preferred reply:** click A / B / C. Typed: `leave skill not shown` · `live CME only` · `name horse …`
+**Preferred reply:** click A / B / C. Typed: `leave skill not shown` · `live CME / curve tape …` · `name horse …`
 
 ## What a “yes” / this update means
 
-Paper costs are **V2**. Fees-only (V1) is **not** the live schedule. Naming a cost rule is not a pass of after-cost value.
+The lagged-return recipe is **on the card and scored**. Kearney–Shang stayed **unscored** because the curve stand-in failed. Naming and scoring is not a pass.
 
 ## What this does *not* mean
 
-That a model beats last settlement. That a paper book made money after costs. That anyone should trade. That an oil offshoot is cleared. That a live broker commission table was invented.
+That a model beats last settlement. That nighttime is now shown. That anyone should trade. That an oil offshoot is cleared.
 
 ---
 
@@ -29,14 +29,12 @@ That a model beats last settlement. That a paper book made money after costs. Th
 
 | Item | Value |
 |------|--------|
-| Claim-freeze / claim under test | Rank 4 F-CC + L-SESS F-ON/F-DAY; F-SRC-CME-TAPE; L-STANDIN-Y-CLF; **V-COST-V2** |
-| Amb | **1.0** (**≠ clearance**) — leftover is V-SRC only |
-| Locks / package IDs | Rank 4; D-EXIST-MET-FT; L-SESS; F-SRC-CME-TAPE; L-STANDIN-Y-CLF; L-PULSE-STANDIN-1; **V-COST-V2** |
+| Claim-freeze / claim under test | Rank 4 F-CC + L-SESS; **H-LAG-WF** scored; **H-KS-FTS** not run |
+| Amb | **1.0** (**≠ clearance**) — leftover is V-SRC |
+| Locks / package IDs | Rank 4; D-EXIST-MET-FT; V-COST-V2; L-STANDIN-Y-CLF; **L-STANDIN-Y-CHAIN**; **H-LAG-WF**; L-PULSE-HORSES-1 |
 | Method verdict label (if any) | Stable Provisional (split) — hard stop (residuals live) |
-| Live vs stand-in | **Stand-in stipulated** (Yahoo `CL=F` Open/Close) |
-| Last-500 RMSE vs 0 | F-ON 0.01291 · F-DAY 0.02663 · F-CC 0.02869 (n=500) |
-| Paper costs | **V2** = listed fees + 1 CL tick/side ($10/contract/side; $20 RT slippage before fees) |
-| Artifact pointers | `Lock_VCOST_V2.md` · `04_Material_Admission_VCOST_V2.md` · `Lock_Standin_Yahoo_CLF.md` |
+| H-LAG last-500 vs 0 | F-ON 0.01283 / 0.01291 (tiny dip) · F-DAY 0.02670 / 0.02663 (loss) · F-CC 0.02888 / 0.02869 (loss) |
+| Artifact pointers | `Lock_Horses_Lag_KS.md` · `PULSE_Horses_Standin.md` · `data/horse_scores.json` |
 
 ---
 

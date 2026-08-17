@@ -52,7 +52,7 @@ Only **pursue** items stay in active bands. Parked/dropped listed below.
 
 | Residual ID + app | Description | Reopen condition | Effort | Value | Dep | Disposition | Note |
 |-------------------|-------------|------------------|--------|-------|-----|-------------|------|
-| **R-F-SKILL** · oil-futures | Next-session CL log-return vs last-settlement RMSE (F-CC + F-ON/F-DAY) | `name horse …` vs stand-in (or live) baselines, or `live CME only` | med once a horse is named | high | stand-in baseline scored | **pursue** | Yahoo `CL=F` last-500 RMSE F-ON 0.01291 / F-DAY 0.02663 / F-CC 0.02869; **not** skill-met |
+| **R-F-SKILL** · oil-futures | Next-session CL log-return vs last-settlement RMSE (F-CC + F-ON/F-DAY) | `name horse …` or `live CME / curve tape …` | med once a horse is named | high | H-LAG scored, lost on F-CC | **pursue** | H-LAG last-500 F-CC 0.02888 vs 0 0.02869; H-KS not run; **not** skill-met |
 | **R-SOME / R-RECIPE / R-REPL** · llm-gwt | Live remnant → Admissible band | Name models; hallmark recipe; replication | med | high | data | **pursue** | Live Admissible-path residual |
 | **WS-MISSING** · foxnews / conscience | Recover worksheets | Recover artifacts or authorize backfill | med | med | data | **pursue** | Prerequisite for those apps |
 | **CLAIM-TEXT** · foxnews | Verbatim original claim | Recover article quote | low | med | data | **pursue** | Cheap unblock |
