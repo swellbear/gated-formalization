@@ -73,11 +73,11 @@ None required (D-EXIST remains Minimal). V-VALUE is a marked elevation (Substant
 
 ## 7. Action implications
 
-**Stop saying:** That an oil-futures model has been shown to work; that last-price no-change is the existence model; that anyone should trade; that Amb 9 is a confidence score.
+**Stop saying:** That EIA STEO or the futures curve is a proven next-session CL model; that spot/12-month results clear this freeze; that anyone should trade.
 
-**Keep saying:** Rank 4 is a split. No-change is the skill baseline, not the existence model. Existence is not established.
+**Keep saying:** Proven-only hunt submitted **no class**. Nearby spot literature is kinship. Existence and skill are not established.
 
-**Test next (only if authorized):** `name source class …` for D-EXIST, or `leave unnamed`.
+**Test next (only if authorized):** `leave unnamed` · `name source class …` (drop proven filter) · V-COST.
 
 ---
 
@@ -102,7 +102,7 @@ None required (D-EXIST remains Minimal). V-VALUE is a marked elevation (Substant
 - Dissertation: not yet (open run)
 - Closeout / verdict: not yet
 - Parent / successor: —
-- Key admissions / locks: Rank 4 meanings; D-EXIST HOLD at establishment-stop; process imports 003/009/010/011
+- Key admissions / locks: Rank 4; L-HUNT-PROVEN (no class submitted); D-EXIST/F-SKILL not established; process imports 003/009/010/011
 
 ---
 
