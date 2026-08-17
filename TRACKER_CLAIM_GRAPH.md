@@ -31,7 +31,7 @@
 | APP-FOMC-SEP | Application | `2026-08_fomc-june-2026-sep` | **Hard stop sealed**; L1–L17; Amb ≈ 1; 2026 F-ML not established (L13 + L17 SPF); July 29 OUT; CR offered not run (keep original default); UX/CX offered not run |
 | APP-FL-PTAX | Application | `2026-08_fl-property-tax-abolish-10y` | **Hard stop sealed**; Rank 1 + live official law; D-LAW admitted; Amb 2; P-BaseCase untested (`leave unnamed`); CR offered not run |
 | APP-FOMC-UFFR | Application | `2026-08_fomc-sep-2026-uffr-change` | **Hard stop sealed**; Rank 3 `Q3+O2+L1+M3+B1`; Amb 2.5; P-NN-TEST **not established**; C2 `leave unnamed`; F-PRINT parked; CR offered not run |
-| APP-OIL-FT | Application | `2026-08_oil-futures-predictive-model` | **Hard stop (residuals live)**; Rank 4 split; D-EXIST-MET-FT; Amb 5.5; F-SKILL/V-VALUE not established; F-SRC leave unnamed (**R-F-SKILL** pursue); V-SRC leave unnamed; CR offered not run |
+| APP-OIL-FT | Application | `2026-08_oil-futures-predictive-model` | **Hard stop (residuals live)**; Rank 4 split; D-EXIST-MET-FT; Amb 5.5; F-SKILL/V-VALUE not established; F-SRC leave unnamed (**R-F-SKILL** pursue); V-SRC leave unnamed; UX/CX/CR **declined** |
 | LOCK-2026-08-001 | Lock | Comparison class before uniqueness (O) | Active |
 | LOCK-2026-08-002 | Lock | Preferability needs named virtues/metrics | Active |
 | LOCK-2026-08-003 | Lock | Amb drop / scope lock ≠ clearance | Active |
@@ -143,7 +143,7 @@
 - Real-claim `APP-CRWV` validates forecast locks on live markets commentary; attribution≠life clearance.  
 - Real-claim `APP-ZITRON` hard-stopped under newsletter+monologue primary (Squawk OUT); MoU≠vendor/circular/70%/bubble clearance; claimed citations ≠ bar met; CR **keep original wording**; UX+CX executed (alts not adopted).  
 - Real-claim `APP-FOMC-SEP` **hard stop sealed** (2026 F-ML test **not established** after L13 brochure + L17 SPF Q2 2026; Amb ≈ 1; G8 not locked); July 29 OUT; CR/UX/CX offered not run; default keep original wording; print-match ≠ clearance.  
-- `APP-OIL-FT` **hard stop (residuals live)** (2026-08-17): Rank 4 nested split; D-EXIST-MET-FT (futures-target only); F-SKILL/V-VALUE not established; F-SRC leave unnamed with leftover **live**; V-SRC leave unnamed; Amb 5.5; Amb ≠ clearance; no class invented; Phase 2 not entered.
+- `APP-OIL-FT` **hard stop (residuals live)** (2026-08-17): Rank 4 nested split; D-EXIST-MET-FT (futures-target only); F-SKILL/V-VALUE not established; F-SRC leave unnamed with leftover **live**; V-SRC leave unnamed; Amb 5.5; Amb ≠ clearance; no class invented; Phase 2 not entered; UX/CX/CR **declined**.
 
 ---
 

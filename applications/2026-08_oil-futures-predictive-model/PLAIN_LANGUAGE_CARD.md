@@ -1,27 +1,27 @@
 # Plain-language card
 
 **Application:** `2026-08_oil-futures-predictive-model`  
-**Date / checkpoint:** 2026-08-17 · hard stop (residuals live)
+**Date / checkpoint:** 2026-08-17 · hard stop (residuals live); optional modes declined
 
 ---
 
 ## What we’re doing
 
-Closeout is sealed. A specified forecasting recipe for listed crude **futures** has been written. That existence call stays separate from skill. Walk-forward skill versus last settlement is **not shown**; that leftover stays live and unnamed. After-cost paper value is **not shown**.
+Optional modes were declined. Closeout stays sealed. A specified forecasting recipe for listed crude **futures** has been written. Skill versus last settlement is **not shown**; that leftover stays live and unnamed. After-cost paper value is **not shown**.
 
 ## What we need from you
 
-Nothing required. Optional side tools remain listed. Naming a matching skill series would reopen only that leftover.
+Nothing required. Naming a matching skill series would still reopen only that leftover.
 
-**Preferred reply:** click A / B / C. Typed: `run UX` · `run CX` · `run CR` · `decline optional modes` · `name source class …`
+**Preferred reply (if continuing later):** `name source class …` matching next-session CL log-return vs last settlement
 
 ## What a “yes” / this update means
 
-The file is closed as provisional with the skill leftover still live. Existence stays on the record. Skill and after-cost value stay not shown. That is not a finding that no recipe can beat last settlement.
+UX, CX, and CR will not run. The parent verdict is unchanged. Existence stays on the record. Skill and after-cost value stay not shown.
 
 ## What this does *not* mean
 
-That oil-futures models cannot have skill. That anyone should trade. That spot/real-price papers are inside existence. That the existence menu is the skill class. That Phase 2 started. That the blended slogan is cleared.
+That oil-futures models cannot have skill. That anyone should trade. That the skill leftover was parked or dropped. That Phase 2 started. That the blended slogan is cleared.
 
 ---
 
@@ -33,7 +33,7 @@ That oil-futures models cannot have skill. That anyone should trade. That spot/r
 | Amb | **5.5** (held; **≠ clearance**) |
 | Locks / package IDs | Rank 4; D-EXIST-MET-FT; V-EITHER; F-SRC/V-SRC leave unnamed |
 | Method verdict label (if any) | Stable Provisional (split) — hard stop (residuals live) |
-| Artifact pointers | `SHARE_PACK.md` · `DISSERTATION.md` · `05_Original_Claim_Assessment_Closeout.md` · `RESIDUAL_BRANCH_MENU.md` |
+| Artifact pointers | `SHARE_PACK.md` · `OPTIONAL_MODES_MENU.md` · `RESIDUAL_BRANCH_MENU.md` |
 
 ---
 

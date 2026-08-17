@@ -19,7 +19,7 @@
 
 Can a predictive model for oil futures be built?
 
-**Successor / Rank lock (if any):** **Rank 4** nested split — D-EXIST ⊂ F-SKILL ⊂ V-VALUE. **D-EXIST-MET-FT**. V-COST **either**. F-SRC and V-SRC leave unnamed. CR offered not run; default keep original wording.
+**Successor / Rank lock (if any):** **Rank 4** nested split — D-EXIST ⊂ F-SKILL ⊂ V-VALUE. **D-EXIST-MET-FT**. V-COST **either**. F-SRC and V-SRC leave unnamed. CR **declined**, not run; default keep original wording.
 
 **Parent / successor relationship:** none
 
@@ -84,7 +84,7 @@ None required (D-EXIST remains Minimal). V-VALUE is a marked elevation (Substant
 
 **Keep saying:** A specified non-no-change futures-target recipe has been written. Nearby spot literature is kinship. Skill and after-cost value are not established. F-SRC/V-SRC leave unnamed are not refutes. V-EITHER is not “we used V2.” Do not invent a skill class.
 
-**Test next (only if authorized):** `name source class …` (reopen skill) · `run UX` / `run CX` / `run CR` / `decline optional modes`. Do not treat L-D-SUITE as F-SRC.
+**Test next (only if authorized):** `name source class …` (reopen skill). Do not treat L-D-SUITE as F-SRC.
 
 ---
 

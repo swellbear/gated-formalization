@@ -57,7 +57,7 @@ This is **not** trading advice and does **not** clear the blended slogan “a pr
 
 **Keep saying:** A futures-target recipe has been written. Skill and after-cost value are not shown. The skill leftover stays live and unnamed. Leave-unnamed is not a refute.
 
-**Test next (only if authorized):** `name source class …` matching next-session CL log-return vs last settlement · `run UX` / `run CX` / `run CR` / `decline optional modes`
+**Test next (only if authorized):** `name source class …` matching next-session CL log-return vs last settlement
 
 ---
 
@@ -69,15 +69,13 @@ Offered. Skill leftover **live** ([R-F-SKILL](RESIDUAL_BRANCH_MENU.md#r-f-skill)
 
 ## Optional modes (offer ≠ run)
 
-[`OPTIONAL_MODES_MENU.md`](OPTIONAL_MODES_MENU.md) — UX/CX/CR **Offered, not run**. QI **N/A** (no failed numerical instance bar; unnamed skill is not a QI path).
-
-**Reply:** `run UX` / `decline UX` · `run CX` / `decline CX` · `run CR` / `decline CR` · `decline optional modes`
+[`OPTIONAL_MODES_MENU.md`](OPTIONAL_MODES_MENU.md) — UX/CX/CR **declined, not run** (operator **C**). QI **N/A** (no failed numerical instance bar; unnamed skill is not a QI path).
 
 ---
 
 ## Use-Exploration exhibit (only if authorized and run)
 
-`offered — not run`
+`declined — not run`
 
 ---
 

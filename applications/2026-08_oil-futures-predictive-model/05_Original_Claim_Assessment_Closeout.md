@@ -58,18 +58,18 @@ Any claim that a model beats last settlement out of sample; that a paper book ma
 |--------|--------------|-------------------|
 | `name source class …` matching Rank 4 F-SKILL | Named-class pulse of walk-forward RMSE vs last settlement on next-session CL log-return | Establishment-stop if honest `04` would say established; V-VALUE still unnamed |
 | `name source class …` matching V-VALUE | Named paper book; test must name V1 or V2 | Does not auto-meet F-SKILL |
-| `run CR` / successor (existence-only or skill-only) | Different question, labeled | Rank 4 leftover unchanged |
-| `run UX` / `run CX` | Documentation / alternatives | Parent verdict unchanged |
+| `run CR` / successor (existence-only or skill-only) | Different question, labeled | **Declined** 2026-08-17; Rank 4 leftover unchanged |
+| `run UX` / `run CX` | Documentation / alternatives | **Declined** 2026-08-17; parent verdict unchanged |
 | Leave skill live / value parked | None required | F-SKILL and V-VALUE stay not established |
 
 ---
 
 ## 3. Revision vs continuation fork
 
-Original one-liner is a blended “can.” Rank 4 named the split without rewriting the sentence. CR is **offered**, not required. Default: **keep original wording**.
+Original one-liner is a blended “can.” Rank 4 named the split without rewriting the sentence. CR was **offered**, then **declined**. Default remains: **keep original wording**.
 
 - [ ] **Revise claim** — then run **Claim-Revision Scaffolding** before a successor  
-- [x] **Keep original wording** — research agenda / scoped dependents only (default; CR offered, not run)
+- [x] **Keep original wording** — research agenda / scoped dependents only (default; CR **declined**, not run)
 
 **Default if no further authorization:** keep original wording + **hard stop (residuals live)** with this assessment. Skill leftover stays live and unnamed.
 
@@ -79,7 +79,7 @@ Original one-liner is a blended “can.” Rank 4 named the split without rewrit
 
 Application **closed** as **Stable Provisional (split) — hard stop (residuals live)**. Original one-liner **not** silently converted into “the model works.” Existence for futures-target recipes remains authorized and **separate**. Spot/real-price recipes stay outside. Skill source class stays unnamed; skill remains not shown; leftover stays **live**. After-cost paper book stays unnamed; after-cost value stays not shown. No class invented. Phase 2 not entered. Leftover-ambiguity held at **5.5**. This is not trading advice and does not clear the blended slogan.
 
-Awaiting further authorization only if continuing (`name source class …` on the skill leftover, or optional modes).
+Awaiting further authorization only if continuing (`name source class …` on the skill leftover). Optional modes **declined**.
 
 ---
 

@@ -5,7 +5,7 @@
 
 **Date:** 2026-08-17  
 **Application:** `2026-08_oil-futures-predictive-model`  
-**Closeout status:** **hard stop (residuals live)** — modes **offered, not run**
+**Closeout status:** **hard stop (residuals live)** — UX/CX/CR **declined, not run** (operator **C** `decline optional modes`)
 
 **Glossary:** [`docs/READER_GLOSSARY.md`](../../docs/READER_GLOSSARY.md)  
 **Residuals (separate):** [`RESIDUAL_BRANCH_MENU.md`](RESIDUAL_BRANCH_MENU.md)
@@ -16,7 +16,7 @@
 
 **What we’re doing:** Listing optional next steps that *could* run after closeout if you authorize them.
 
-**What we need from you:** Nothing unless you want one. Click an ID for what that mode means *in this app*.
+**What we need from you:** Nothing on this menu. Operator **C** declined optional modes. Click an ID only if you want the record of what those modes would have meant.
 
 **What authorizing means:** Runs that mode only (UX / CX / CR as named). Does **not** silently rewrite the parent closeout. Does **not** invent a skill class.
 
@@ -41,9 +41,9 @@
 
 | ID | One-line | Status |
 |----|----------|--------|
-| [UX](#ux) | Explore possible *uses* of findings (not advice) | **offered** |
-| [CX](#cx) | Alternative claims that fit the existence core without a fake skill/value bar | **offered** |
-| [CR](#cr) | Ranked successor wordings (existence-only or skill-only, labeled) | **offered** |
+| [UX](#ux) | Explore possible *uses* of findings (not advice) | **declined** |
+| [CX](#cx) | Alternative claims that fit the existence core without a fake skill/value bar | **declined** |
+| [CR](#cr) | Ranked successor wordings (existence-only or skill-only, labeled) | **declined** |
 | [QI](#qi) | Scale-factor after failed numerical instance | **N/A** |
 
 **Authorize grammar (show these one-liners):**  
@@ -115,7 +115,8 @@
 
 | Date | Action |
 |------|--------|
-| 2026-08-17 | Menu offered at hard-stop closeout — awaiting operator. `leave unnamed` is **not** `run CR`. Default keep original wording. Offering ≠ running. |
+| 2026-08-17 | Menu offered at hard-stop closeout. `leave unnamed` is **not** `run CR`. Default keep original wording. Offering ≠ running. |
+| 2026-08-17 | Operator **C** → `decline optional modes`. UX/CX/CR **declined, not run**. QI remains **N/A**. Parent closeout / Amb / established unchanged. |
 
 ---
 

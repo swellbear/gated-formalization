@@ -35,13 +35,13 @@ Can a predictive model for oil futures be built?
 
 **Claim type:** Mixed — **D-EXIST** descriptive construction/existence; **F-SKILL** descriptive walk-forward skill elevation; **V-VALUE** performance elevation (not a “should trade”). LOCK-006 not imported.
 
-**Parent or successor relationship (if any):** none. CR toward a skill-only or existence-only successor wording was **offered at closeout, not run**. Default: keep original wording.
+**Parent or successor relationship (if any):** none. CR toward a skill-only or existence-only successor wording was **declined, not run**. Default: keep original wording.
 
 ---
 
 ## 3. How it was examined
 
-**Method path:** Phase 1 only. Cycle 0 (Amb 12) → Rank 4 nested split locked → no-change held out as the existence exhibit → proven-only hunt submitted no F-SKILL class → V-COST either → V-VALUE no-recipe not established → V-SRC leave unnamed → named recipe suite → operator authorized D-EXIST established (futures-target only) → F-SRC leave unnamed → closeout. No Phase 2. No UX/CX/CR/QI run. No class invented.
+**Method path:** Phase 1 only. Cycle 0 (Amb 12) → Rank 4 nested split locked → no-change held out as the existence exhibit → proven-only hunt submitted no F-SKILL class → V-COST either → V-VALUE no-recipe not established → V-SRC leave unnamed → named recipe suite → operator authorized D-EXIST established (futures-target only) → F-SRC leave unnamed → closeout → optional modes declined. No Phase 2. No UX/CX/CR/QI run. No class invented.
 
 **Governing lock / freeze (if any):** Rank 4 `D-EXIST ⊂ F-SKILL ⊂ V-VALUE`. D-EXIST: `O1+M1+S1+C3+T2+H3+E3` (futures-target; no-change OUT as the model exhibit). F-SKILL: NYMEX CL front-month, next-session log-return, walk-forward RMSE vs last settlement. V-VALUE: after-cost paper P/L vs the curve; V-COST either (V1 fees-only or V2 fees + 1 tick/side); each later test must name which.
 
@@ -93,7 +93,7 @@ None as bar-met numbers. CL tick identity (market structure, not a broker quote)
 
 ## 8. Revisions, implications, and alternatives
 
-UX / CX / CR **offered at closeout, not run**. QI **N/A** (no failed numerical instance bar; unnamed skill is not a QI path). See [`OPTIONAL_MODES_MENU.md`](OPTIONAL_MODES_MENU.md). Original wording remains on record. Offering ≠ running.
+UX / CX / CR **declined, not run** (operator **C** `decline optional modes`). QI **N/A** (no failed numerical instance bar; unnamed skill is not a QI path). See [`OPTIONAL_MODES_MENU.md`](OPTIONAL_MODES_MENU.md). Original wording remains on record.
 
 ---
 
@@ -105,7 +105,7 @@ UX / CX / CR **offered at closeout, not run**. QI **N/A** (no failed numerical i
 
 **Locked-bar status summary:** D-EXIST **established** (futures-target only). F-SKILL **not established**. V-VALUE **not established**.
 
-**Continuation / hard-stop note:** Hygiene sealed. Skill leftover stays **live** ([R-F-SKILL](RESIDUAL_BRANCH_MENU.md#r-f-skill)). Do not invent a class. Phase 2 not entered. Next: `name source class …` matching the skill freeze, or optional modes.
+**Continuation / hard-stop note:** Hygiene sealed. Optional modes declined. Skill leftover stays **live** ([R-F-SKILL](RESIDUAL_BRANCH_MENU.md#r-f-skill)). Do not invent a class. Phase 2 not entered. Next: `name source class …` matching the skill freeze.
 
 ---
 

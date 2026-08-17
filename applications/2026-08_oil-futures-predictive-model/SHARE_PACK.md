@@ -60,16 +60,16 @@ Menu offered. Skill leftover **live** ([R-F-SKILL](RESIDUAL_BRANCH_MENU.md#r-f-s
 
 [`OPTIONAL_MODES_MENU.md`](OPTIONAL_MODES_MENU.md)
 
-**Offered:** `run UX` · `run CX` · `run CR` · `decline optional modes`  
+**Declined:** UX / CX / CR (operator **C** `decline optional modes`) — **not run**  
 **N/A:** `run QI` — no failed numerical instance bar (unnamed skill is not a QI path)
 
-**Offering ≠ running.**
+Parent closeout unchanged.
 
 ---
 
 ## 6. Use-Exploration exhibit
 
-`offered — not run` (see §5)
+`declined — not run` (see §5)
 
 ---
 
@@ -89,7 +89,7 @@ Menu offered. Skill leftover **live** ([R-F-SKILL](RESIDUAL_BRANCH_MENU.md#r-f-s
 | Method verdict | Stable Provisional (split); hard stop (residuals live) |
 | Amb | **5.5** |
 | Locks / layers | Rank 4; D-EXIST-MET-FT; V-EITHER; F-SRC/V-SRC leave unnamed |
-| Parent / successor | none (CR offered not run) |
+| Parent / successor | none (CR **declined**, not run; keep original wording) |
 | Key files | `05_Original_Claim_Assessment_Closeout.md` · `DISSERTATION.md` · `RESIDUAL_BRANCH_MENU.md` |
 
 ---

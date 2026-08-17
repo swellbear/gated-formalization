@@ -43,7 +43,7 @@
 
 **Authorize grammar:** `name source class …` matching the skill freeze · `authorize branch R-…` · `decline residual menu`
 
-**Also offered (separate):** [`OPTIONAL_MODES_MENU.md`](OPTIONAL_MODES_MENU.md). Offering ≠ running.
+**Also offered (separate):** [`OPTIONAL_MODES_MENU.md`](OPTIONAL_MODES_MENU.md) — UX/CX/CR **declined, not run**.
 
 **Closeout note:** Operator **C** kept the unnamed skill leftover **live** (`pursue`). That is not a named-class pulse until a matching series is named. Do **not** invent a class.
 
@@ -209,6 +209,7 @@
 | 2026-08-17 | D-EXIST established (futures-target); spot/real-price OUT |
 | 2026-08-17 | F-SRC `leave unnamed`; skill leftover live; do not invent a class |
 | 2026-08-17 | **C closeout** — hygiene sealed; leftover-ambiguity held at 5.5; Phase 2 not entered |
+| 2026-08-17 | Operator **C** `decline optional modes` — UX/CX/CR not run; skill leftover still live |
 
 ---
 
