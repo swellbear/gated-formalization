@@ -14,6 +14,7 @@ from golf_offshoot.strategy.paper_book import (
     load_paper_file,
     lock_paper_positions,
     save_paper_book,
+    void_post_settle_open_tickets,
 )
 
 
@@ -78,6 +79,10 @@ def replay_event(
                     method_law_hash=law_hash(),
                     require_cleared=cfg.ticket_screen == "posted",
                 )
+            elif existing.settled_at is not None:
+                rec, voided = void_post_settle_open_tickets(existing)
+                if voided:
+                    save_paper_book(rec)
             else:
                 rec_strat = run_strategy(
                     rows,

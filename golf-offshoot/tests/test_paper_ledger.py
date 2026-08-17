@@ -1,7 +1,15 @@
-from golf_offshoot.models.enums import Horizon, RiskPreference, StrategyMode
+from golf_offshoot.compare.apply import maybe_apply_paper
+from golf_offshoot.models.enums import BetType, Horizon, RiskPreference, StrategyMode
 from golf_offshoot.models.schemas import HorizonProbability, PlayerOutput, ProbabilityBundle, ReliabilityScore
-from golf_offshoot.models.strategy import StrategyConfig
-from golf_offshoot.strategy.paper_book import lock_paper_positions
+from golf_offshoot.models.strategy import StrategyConfig, StrategyPosition
+from golf_offshoot.strategy.paper_book import (
+    PaperMovement,
+    load_paper_file,
+    lock_paper_positions,
+    save_paper_book,
+    scrub_settled_leftover_tickets,
+    void_post_settle_open_tickets,
+)
 from golf_offshoot.strategy.paper_ledger import (
     EventInspect,
     SettleError,
@@ -255,3 +263,87 @@ def test_playoff_does_not_auto_settle(tmp_path, monkeypatch):
     assert any("exactly one official winner" in why for _rec, why in skipped)
     assert load_ledger().bankroll == 250
     assert working_bankroll(except_event_id="next-event") == 239.06
+
+
+def _leftover_scheffler() -> StrategyPosition:
+    return StrategyPosition(
+        position_id="leftover-win",
+        player_id="scheff",
+        player_name="Scottie Scheffler",
+        bet_type=BetType.WIN,
+        stake=9.69,
+        decimal_odds=1.57,
+        entry_edge=0.48,
+        entry_model_p=1.0,
+    )
+
+
+def test_void_post_settle_leftover_at_cost(tmp_path, monkeypatch):
+    rec = _st_jude_lock(tmp_path, monkeypatch)
+    finishes = {
+        "kita": (1, "Kurt Kitayama"),
+        "fleet": (12, "Tommy Fleetwood"),
+    }
+    ledger, rec, week = settle_paper_event(
+        "401811962",
+        finishes=finishes,
+        completed=True,
+        winner_ids=["kita"],
+        event_name="St Jude",
+    )
+    bankroll = rec.bankroll
+    rec.book = rec.book.model_copy(update={"positions": [_leftover_scheffler()]})
+    rec, voided = void_post_settle_open_tickets(rec)
+    assert voided is True
+    assert rec.book.positions == []
+    assert rec.bankroll == bankroll
+    assert ledger.bankroll == bankroll
+    assert week.betting_pnl == 155.31
+    assert any(m.kind == "void" and m.player_name == "Scottie Scheffler" for m in rec.movements)
+
+
+def test_maybe_apply_refuses_new_bet_after_settle(tmp_path, monkeypatch):
+    rec = _st_jude_lock(tmp_path, monkeypatch)
+    _ledger, rec, _week = settle_paper_event(
+        "401811962",
+        finishes={"kita": (1, "Kurt Kitayama"), "fleet": (12, "Tommy Fleetwood")},
+        completed=True,
+        winner_ids=["kita"],
+        event_name="St Jude",
+    )
+    rec, applied = maybe_apply_paper(
+        rec,
+        [
+            PaperMovement(
+                movement_id="junk",
+                kind="new_bet",
+                player_id="scheff",
+                player_name="Scottie Scheffler",
+                bet_type="win",
+                stake_delta=9.69,
+                decimal_odds=1.57,
+            )
+        ],
+        force=True,
+    )
+    assert applied is False
+    assert rec.book.positions == []
+
+
+def test_scrub_settled_leftover_tickets_persists(tmp_path, monkeypatch):
+    rec = _st_jude_lock(tmp_path, monkeypatch)
+    _ledger, rec, _week = settle_paper_event(
+        "401811962",
+        finishes={"kita": (1, "Kurt Kitayama"), "fleet": (12, "Tommy Fleetwood")},
+        completed=True,
+        winner_ids=["kita"],
+        event_name="St Jude",
+    )
+    rec.book = rec.book.model_copy(update={"positions": [_leftover_scheffler()]})
+    save_paper_book(rec)
+    changed = scrub_settled_leftover_tickets()
+    assert len(changed) == 1
+    assert changed[0].book.positions == []
+    loaded = load_paper_file("401811962")
+    assert loaded is not None
+    assert loaded.book.positions == []

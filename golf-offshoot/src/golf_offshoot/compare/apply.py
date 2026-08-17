@@ -32,8 +32,14 @@ def maybe_apply_paper(
     *,
     force: bool = False,
 ) -> tuple[PaperBookFile, bool]:
-    """Apply when the actionable advice set changes. HOLD-only is not an apply."""
+    """Apply when the actionable advice set changes. HOLD-only is not an apply.
+
+    Official settle freezes the book. Leftover Winner quotes after the tournament
+    are not a market; do not open new tickets, even with force.
+    """
     record.latest_advice = list(advice)
+    if record.settled_at is not None:
+        return record, False
     sig = advice_signature(advice)
     if not force and sig == (record.last_advice_sig or ""):
         return record, False

@@ -235,6 +235,48 @@ def test_hysteresis_skips_hold_and_same_set(tmp_path, monkeypatch):
     assert applied is False
 
 
+def test_compare_book_does_not_reopen_after_settle(tmp_path, monkeypatch):
+    monkeypatch.setattr("golf_offshoot.strategy.paper_book.package_data_dir", lambda: tmp_path)
+    from golf_offshoot.strategy.paper_ledger import settle_independent_compare_event
+
+    rec = lock_paper_positions(
+        _st_jude_rows(),
+        config_for(ComparePath.A_REPLAY),
+        event_id="401811962",
+        path_id="a_replay",
+        independent_bankroll=True,
+        write_exports=False,
+        run_id="hyst",
+    )
+    rec = settle_independent_compare_event(
+        "401811962",
+        "a_replay",
+        finishes={"kita": (1, "Kurt Kitayama"), "fleet": (12, "Tommy Fleetwood")},
+        completed=True,
+        winner_ids=["kita"],
+        event_name="St Jude",
+    )
+    bankroll = rec.bankroll
+    rec, applied = maybe_apply_paper(
+        rec,
+        [
+            PaperMovement(
+                movement_id="junk",
+                kind="new_bet",
+                player_id="scheff",
+                player_name="Scottie Scheffler",
+                bet_type="win",
+                stake_delta=8.75,
+                decimal_odds=1.57,
+            )
+        ],
+        force=True,
+    )
+    assert applied is False
+    assert rec.book.positions == []
+    assert rec.bankroll == bankroll
+
+
 def test_fights_page_flags_fleetwood_disagreement(tmp_path, monkeypatch):
     monkeypatch.setattr("golf_offshoot.strategy.paper_book.package_data_dir", lambda: tmp_path)
     a = lock_paper_positions(

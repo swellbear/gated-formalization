@@ -21,6 +21,7 @@ from golf_offshoot.strategy.paper_book import (
     load_paper_file,
     lock_paper_positions,
     save_paper_book,
+    void_post_settle_open_tickets,
 )
 
 
@@ -81,6 +82,11 @@ def _sync_path_book(
     pid = ledger_id(path)
     cfg = config_for(path, event_id=event_id)
     existing = load_paper_file(event_id, path_id=pid)
+    if existing is not None and existing.settled_at is not None:
+        rec, voided = void_post_settle_open_tickets(existing)
+        if voided:
+            save_paper_book(rec)
+        return rec, False
     if existing is None:
         from golf_offshoot.strategy.paper_book import paper_candidate_slots
 

@@ -32,6 +32,7 @@ from golf_offshoot.strategy.sizing import (
 )
 
 _HARD_PASS = {"thin_sample_overconfidence", "sparse_data"}
+_POST_SETTLE_SKIP_KINDS = frozenset({"new_bet", "add", "reallocate", "lock", "exit", "reduce"})
 _BET_HORIZON = {
     BetType.WIN: Horizon.WIN,
     BetType.TOP_5: Horizon.TOP_5,
@@ -667,8 +668,11 @@ def advice_from_recommendation(
 ) -> list[PaperMovement]:
     by_pos = {p.position_id: p for p in record.book.positions}
     out: list[PaperMovement] = []
+    settled = record.settled_at is not None
     for act in rec.actions:
         if act.kind == StrategyActionKind.NO_ACTION:
+            continue
+        if settled and act.kind.value in _POST_SETTLE_SKIP_KINDS:
             continue
         pos = by_pos.get(act.position_id or "")
         mark = next((m for m in rec.marks if m.position_id == act.position_id), None)
@@ -1014,6 +1018,8 @@ def apply_advice(record: PaperBookFile, advice: list[PaperMovement]) -> PaperBoo
     """Apply advised sells/adds/reallocates to the mock book. Still never real money."""
     from golf_offshoot.strategy.paper_ledger import load_ledger
 
+    if record.settled_at is not None:
+        return record
     positions = list(record.book.positions)
     by_id = {p.position_id: i for i, p in enumerate(positions)}
     applied: list[PaperMovement] = []
@@ -1160,6 +1166,59 @@ def apply_advice(record: PaperBookFile, advice: list[PaperMovement]) -> PaperBoo
     record.book = record.book.model_copy(update=book_update)
     record.movements = list(record.movements) + applied
     return record
+
+
+def void_post_settle_open_tickets(record: PaperBookFile) -> tuple[PaperBookFile, bool]:
+    """Drop leftover opens after official settle. At cost. Not a cash-out. Not week P/L."""
+    if record.settled_at is None or not record.book.positions:
+        return record, False
+    voids: list[PaperMovement] = []
+    for pos in record.book.positions:
+        bet = pos.bet_type.value if hasattr(pos.bet_type, "value") else str(pos.bet_type)
+        sold = round(float(pos.stake), 2)
+        voids.append(
+            PaperMovement(
+                movement_id=new_id("void"),
+                kind="void",
+                status="applied",
+                player_id=pos.player_id,
+                player_name=pos.player_name,
+                bet_type=bet,
+                position_id=pos.position_id,
+                stake_before=sold,
+                stake_delta=-sold,
+                stake_after=0.0,
+                decimal_odds=pos.decimal_odds,
+                reason_plain=(
+                    "Post-settle leftover. Not a ticket. Voided at cost. "
+                    "Not a cash-out. Not week P/L."
+                ),
+                reason_technical=(
+                    "settled_at is set; leftover Winner quote after official settle is not a market"
+                ),
+            )
+        )
+    note = (
+        "Voided leftover tickets opened after official settle. At cost. "
+        "Not a cash-out. Not week P/L."
+    )
+    record.book = record.book.model_copy(update={"positions": []})
+    record.movements = list(record.movements) + voids
+    record.latest_advice = []
+    if note not in record.notes:
+        record.notes = list(record.notes) + [note]
+    return record, True
+
+
+def scrub_settled_leftover_tickets() -> list[PaperBookFile]:
+    """Void leftover opens on every settled lived and A/B book. Saves when it voids."""
+    changed: list[PaperBookFile] = []
+    for rec in [*iter_paper_files(), *iter_compare_paper_files()]:
+        rec, voided = void_post_settle_open_tickets(rec)
+        if voided:
+            save_paper_book(rec)
+            changed.append(rec)
+    return changed
 
 
 def paper_dir() -> Path:
