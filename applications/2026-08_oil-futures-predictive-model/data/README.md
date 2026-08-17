@@ -16,6 +16,9 @@ Yahoo `CL=F` daily Open/Close used only after operator stipulation **L-STANDIN-Y
 - `djt_truth_posts.csv` — stripped Truth Social posts (CNN dump; **L-STANDIN-DJT-TRUTH**)
 - `djt_truth_fetch.json` — fetch metadata
 - `djt_hunt_scores.json` — H-DJT-WEEK / H-DJT-MONTH; discovery F-CC both tie 0; no survivor; confirm skipped
+- `cftc_cl_mm_net.csv` — CFTC disagg futures-only MM net for 067651 (**L-STANDIN-CFTC-COT**)
+- `cftc_cot_fetch.json` — COT fetch metadata
+- `cot_hunt_scores.json` — H-COT-NET / H-COT-CHG; discovery F-CC both lose; no survivor; confirm skipped
 
 Do **not** treat this as official settlement.
 
@@ -23,4 +26,5 @@ Re-run baseline RMSE: `python3 ../scripts/cl_session_rmse.py clf_yahoo_standin.c
 Re-run horses: `python3 ../scripts/cl_horses.py`  
 Re-run pretell hunt: `python3 ../scripts/cl_pretell_hunt.py`  
 Re-run gap horses: `python3 ../scripts/cl_gap_horses.py`  
-Re-run DJT hunt (from this application folder): `python3 scripts/fetch_djt_truth.py` then `python3 scripts/cl_djt_hunt.py`
+Re-run DJT hunt (from this application folder): `python3 scripts/fetch_djt_truth.py` then `python3 scripts/cl_djt_hunt.py`  
+Re-run COT hunt (from this application folder): `python3 scripts/fetch_cftc_cot.py` then `python3 scripts/cl_cot_hunt.py`
