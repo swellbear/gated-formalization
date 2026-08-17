@@ -44,7 +44,7 @@ Can a predictive model for oil futures be built?
 
 ## 4. Not established / negatively constrained
 
-- D-EXIST **not declared** (establishment-stop; would-be-met on no-change mapping).
+- D-EXIST **not established** (operator B; no-change **OUT** as model exhibit).
 - F-SKILL untested (class unnamed).
 - V-VALUE untested (V-COST open).
 - No trading advice.
@@ -61,7 +61,7 @@ None required (D-EXIST remains Minimal). V-VALUE is a marked elevation (Substant
 
 | ID | Residual | Concrete reopen condition |
 |----|----------|---------------------------|
-| D-EXIST checkpoint | Construction exhibit | Operator `confirm D-EXIST established` / `hold D-EXIST` / `name source class …` |
+| D-EXIST checkpoint | Construction exhibit | **Executed:** operator B hold; no-change OUT. Reopen: `name source class …` / `leave unnamed` |
 | F-SRC | Named class for F-SKILL | `name source class …` (named enough, non-circular) |
 | V-COST | Cost schedule | Single cost rule or formally accept either |
 | G8 | Model class under F-SKILL | After F-SRC; do not treat architecture fashion as skill |
@@ -72,11 +72,11 @@ None required (D-EXIST remains Minimal). V-VALUE is a marked elevation (Substant
 
 ## 7. Action implications
 
-**Stop saying:** That an oil-futures model has been shown to work; that D-EXIST is already stamped established; that anyone should trade; that Amb 9 is a confidence score.
+**Stop saying:** That an oil-futures model has been shown to work; that last-price no-change is the existence model; that anyone should trade; that Amb 9 is a confidence score.
 
-**Keep saying:** Rank 4 is a split. A cheap mapping can-be-built is not skill and not after-cost value.
+**Keep saying:** Rank 4 is a split. No-change is the skill baseline, not the existence model. Existence is not established.
 
-**Test next (only if authorized):** D-EXIST checkpoint this turn; F-SKILL only after a named class; V-VALUE only after V-COST.
+**Test next (only if authorized):** `name source class …` for D-EXIST, or `leave unnamed`.
 
 ---
 

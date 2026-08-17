@@ -47,7 +47,7 @@
 |----------------|----------|--------|--------|
 | G1 object / G2 modal / G3–G7 per-leg protocol | — | **0** | **Locked** (meanings) |
 | **V-COST** cost schedule for V-VALUE | High | 2 | **OR-slot open** |
-| **D-SRC** specified existence exhibit / named class | High | 2 | Open (establishment-stop queued) |
+| **D-SRC** specified existence exhibit / named class | High | 2 | Open — no-change **OUT**; named forecast recipe required |
 | **F-SRC** named source class for F-SKILL | High | 2 | Open (unnamed) |
 | **G8** model class / feature recipe under F-SKILL | Med | 1 | Re-opened (was G1-dependent) |
 | **Live vs stand-in** official CL settlements vs vendor series | Med | 1 | Open |
@@ -81,6 +81,6 @@
 
 ## Next Action
 
-- [x] Other: **Stop for operator** — D-EXIST establishment-stop (honest `04` would say construction/existence **met** on a specified no-change mapping). Do **not** auto-declare. V-COST remains open (not this picker’s second question).
+- [x] Other: **Stop for operator** — `name source class …` / `leave unnamed` for D-EXIST (no-change exhibit rejected). V-COST remains open (not this picker).
 
 **Phase 2:** not entered. Per leftover: D-EXIST/F-SKILL/V-VALUE empirical bars are Phase 2-applicable **if later authorized**; named-class pulse may run without Phase 2 once a class is named enough.

@@ -43,18 +43,20 @@ That rule is a fully specified mapping from a recorded futures settlement series
 
 ## Admission Decision
 
-- [ ] **ADMIT** D-EXIST **established** — **not declared** (establishment-stop)  
-- [ ] **ADMIT** D-EXIST **not established**  
-- [ ] **REJECT**  
-- [x] **HOLD** pending operator checkpoint (honest test would say established)
+- [ ] **ADMIT** D-EXIST **established**
+- [x] **ADMIT** this exhibit as **evaluation:** D-EXIST **not established** on last-settlement no-change  
+- [x] **REJECT** no-change as the D-EXIST **model exhibit** (operator **B** `hold D-EXIST`, 2026-08-17)  
+- [ ] **HOLD** pending checkpoint — **resolved**
 
-**If admitted (not done):** Amb would drop D-SRC (2) by fixing the existence exhibit; **still ≠ F-SKILL or V-VALUE clearance.**  
-**If admitted, expected effect on Prod:** D-EXIST checkable consequence executed.
+**Operator B:** last-price no-change is only the F-SKILL **baseline**, not “a predictive model.” D-EXIST waits on a **named forecast recipe / public class**.
 
-**Does not (even if later confirmed):**
+**Amb effect:** Unchanged at **9**. D-SRC stays High 2 (now: named class required; no-change **OUT**). **Amb ≠ clearance.**
+
+**Does not:**
 - Establish F-SKILL or V-VALUE.  
-- License trading.  
-- Name a published EIA/bank outlook as this exhibit (those remain a **different** class; often spot/average, not this freeze).
+- Remove no-change as the F-SKILL baseline (S2 still beats last-settlement).  
+- Name a published product.  
+- License trading.
 
 ---
 
@@ -64,20 +66,20 @@ That rule is a fully specified mapping from a recorded futures settlement series
 
 Under the locked D-EXIST freeze (S1 any specified mapping + M1 P-Logical), last-settlement no-change is a specified forecasting recipe for oil futures. Skipping this drill because the miss/hit “looks obvious” is not the method. **Hit case → stop.** Do **not** auto-declare bar-met.
 
-Rival residual judgment (not used to override the drill): some readers hear “predictive model” as excluding the naive baseline. That is a **Hold / stricter exhibit** choice for the operator, not a silent No.
+Rival residual judgment: operator **B** (2026-08-17) chose the stricter exhibit — no-change is **not** the D-EXIST model. Drill still records the would-be **Yes** on S1-as-written. That Yes was **not** taken.
 
 ---
 
 ## Post-Incorporation Action
 
-- [x] Re-score meanings (`02_Gate_Scoring_After_Rank4.md`) — Amb **9**; D-EXIST **not** marked established  
-- [ ] Update D-EXIST as established — **only after operator confirms**  
-- [x] Stop for operator checkpoint
+- [x] Re-score meanings (`02_Gate_Scoring_After_Rank4.md`) — Amb **9**; D-EXIST **not** established  
+- [x] Operator **B** `hold D-EXIST` (2026-08-17) — no-change **OUT** as D-EXIST exhibit; remains F-SKILL baseline  
+- [x] Stop for `name source class …` / `leave unnamed` (D-EXIST)
 
 ---
 
 ## Residual Judgment Notes for This Check
 
-- Already-included: the F-SKILL baseline sitting inside D-EXIST is why this exhibit was available without a new download.  
-- Print-match: a famous **spot** oil paper would be a different class, not required for this cheap construction hit.  
-- Confirming D-EXIST is the near-vacuous “yes” Rank 3 warned about. That is honest, not a failure of the split.
+- Honest freeze-as-written (S1 any mapping) would have met D-EXIST; operator chose the stricter “predictive model” exhibit. Recorded as residual judgment, not a silent freeze rewrite of S1 on F-SKILL.  
+- Already-included: no-change stays the thing F-SKILL must **beat**.  
+- Print-match: EIA/IEA/bank **spot or average-price** outlooks are a different class unless the operator names them *and* we re-check the futures freeze.

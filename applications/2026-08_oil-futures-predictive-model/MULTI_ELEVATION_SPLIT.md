@@ -80,4 +80,4 @@ D-EXIST  ⊂  F-SKILL               (Rank 4-AC)
 
 ---
 
-*Rank 4 locked 2026-08-17. Offering ≠ running F-SKILL/V-VALUE tests. Next: D-EXIST establishment checkpoint; V-COST still open.*
+*Rank 4 locked 2026-08-17. Operator B: no-change OUT as D-EXIST model. Next: `name source class …` / `leave unnamed`. V-COST still open.*

@@ -114,14 +114,14 @@ G8 is the **named model class and feature recipe** under a locked G1/G6 — bloc
 |--------|--------------------------|
 | G1 | **LOCKED Rank 4:** three jobs, not one object — D-EXIST (claim-under-test) ⊂ F-SKILL ⊂ V-VALUE (elevations). |
 | G2 | **LOCKED per leg:** D-EXIST P-Logical; F-SKILL P-NonNegligible; V-VALUE P-NonNegligible. Height ≠ met. |
-| G6 | **LOCKED per leg:** D-EXIST S1 any specified mapping; F-SKILL RMSE vs last-settlement; V-VALUE after-cost P/L vs curve. |
+| G6 | **LOCKED per leg:** D-EXIST S1 any specified mapping **except** last-settlement no-change as the model exhibit (operator B); F-SKILL RMSE vs last-settlement; V-VALUE after-cost P/L vs curve. |
+| D-SRC | Named D-EXIST forecast recipe/class — **unnamed**; no-change **OUT** (`04` D-EXIST). |
 | G3 | **LOCKED per leg:** D-EXIST C3 class (WTI or Brent, either); F-SKILL/V-VALUE C1 NYMEX CL front-month. |
 | G4 | **LOCKED per leg:** D-EXIST T2 price-level census; F-SKILL/V-VALUE T1 next-session log-return. |
 | G5 | **LOCKED per leg:** D-EXIST H3 open (census); F-SKILL/V-VALUE H1 next session. |
 | G7 | **LOCKED per leg:** D-EXIST E3 census; F-SKILL/V-VALUE E1 walk-forward. Live vs stand-in for settlements still open. |
 | G8 | Named model class under F-SKILL — **re-opened**; not a D-EXIST requirement. |
 | V-COST | V-VALUE cost schedule — **OR-slot open**; V-VALUE dependents blocked. |
-| D-SRC | Specified D-EXIST exhibit — establishment-stop queued (`04` D-EXIST). |
 | F-SRC | Named public class for F-SKILL — **unnamed**. |
 
 *Later candidates must quote the freeze line for any parameter they claim to close. Changing the freeze line is a claim change, not progress.*
@@ -130,37 +130,35 @@ G8 is the **named model class and feature recipe** under a locked G1/G6 — bloc
 
 ## Priority Order (highest sum first)
 
-1. **G1 Object** (tied with G6/G3 on sum; dominant blocker — dependents hang on it)  
-2. **G6 Success metric + baseline**  
-3. **G3 Contract identity**  
-4. **G2 “Can” modal bar**  
-5. G4 Target · G5 Horizon · G7 Protocol  
-6. **G8 Model class (dependent)** — do not attack first  
+1. **D-SRC** — named D-EXIST forecast recipe (no-change OUT)  
+2. **F-SRC** — named class for F-SKILL  
+3. **V-COST** — cost schedule (blocks V-VALUE)  
+4. **G8** / live vs stand-in — after a named class  
 
-Lean Default Path: attack **G1+G2+G6** as one lock package (contract/horizon/target ride in the package). Do not open architecture bake-offs or trading-book design while the job is unset.
+Lean Default Path: name a D-EXIST class or leave unnamed. Do not auto-pulse. Do not collapse legs.
 
 ---
 
 ## Inter-parameter dependency (mandatory)
 
-**G8** is no longer blocked by unset G1/G6 (Rank 4 locked). It is a scoped F-SKILL leftover (architecture/recipe). **V-SRC** is blocked primarily by unset **V-COST**. **F-SKILL tests** are blocked primarily by unnamed **F-SRC**.
+**D-EXIST** is blocked primarily by unnamed **D-SRC** after operator B rejected the no-change exhibit. **F-SKILL tests** are blocked primarily by unnamed **F-SRC**. **V-SRC** is blocked primarily by unset **V-COST**.
 
-**Rectification:** operator checkpoint on D-EXIST would-be-met; then `name source class …` for F-SKILL; single or “either” V-COST before V-VALUE dependents.
+**Rectification:** `name source class …` for D-EXIST (this ask); later F-SRC; single or “either” V-COST before V-VALUE dependents.
 
-**Reopen condition (prominent):** After D-EXIST confirm/hold, named F-SRC, and V-COST resolution. Do not auto-enter Phase 2. Named-class pulse only if the source class is already **named enough** and non-circular.
+**Reopen condition (prominent):** After a named-enough non-circular D-EXIST class, or `leave unnamed`. Do not auto-enter Phase 2.
 
 ---
 
 ## Search Plan for Top-Priority Gap(s)
 
-**Targeted gap:** D-EXIST establishment-stop; then F-SRC / V-COST as operator picks.  
-**Source classes to check:** none auto-named. “Some oil papers” is unnamed. Spot-oil outlooks are a different class.  
-**Diminishing-returns / time-box rule:** Do not hunt models to collapse three legs into one yes.  
-**Notes:** Rank 4 selected 2026-08-17. Material search on F-SKILL waits on `name source class …`. V-VALUE waits on V-COST.
+**Targeted gap:** D-SRC (named D-EXIST forecast recipe).  
+**Source classes to check:** none auto-named. Operator must name a **specific public series + matching locks**. “Some oil-forecasting papers” is unnamed. Spot/average-price outlooks are a different class unless named and re-checked against the futures freeze.  
+**Diminishing-returns / time-box rule:** Do not shop sources to force a D-EXIST yes.  
+**Notes:** Operator B 2026-08-17. No-change remains F-SKILL baseline.
 
 ---
 
 ## Ready for Material Search & Admission Checks?
 
-- [x] Yes — D-EXIST construction `04` run; **HOLD** at establishment-stop  
-- [ ] Need operator lock pick first (`R_Locking_Scaffolding.md`). Material search before that would pick a job by shopping sources.
+- [x] Yes — waiting on named class (D-EXIST not established on no-change)  
+- [ ] Need operator lock pick first

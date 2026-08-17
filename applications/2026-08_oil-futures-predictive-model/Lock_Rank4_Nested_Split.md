@@ -46,7 +46,7 @@ D-EXIST and F-SKILL do not wait on this slot.
 
 ## Dependents now eligible to re-open (scoped)
 
-- **D-EXIST** — construction/existence census (establishment-stop if a cheap specified mapping would meet P-Logical).  
+- **D-EXIST** — needs a **named** forecast recipe / public class. Operator **B** (2026-08-17): last-settlement **no-change is OUT** as the D-EXIST model exhibit. It **remains** the F-SKILL baseline. `leave unnamed` leaves D-EXIST blocked.  
 - **F-SKILL** — skill bar, after a **named-enough** public source class (`name source class …` if unnamed).  
 - **G8** — model class under F-SKILL (still free).  
 - **V-VALUE** — **blocked** by V-COST.
@@ -66,4 +66,4 @@ Selecting Rank 4 **drops leftover-ambiguity by fixing meanings** (three jobs, �
 3. Refuting V-VALUE does **not** refute D-EXIST.  
 4. Print-match of a spot-oil paper or in-sample R² is **not** F-SKILL-met.  
 5. Conflicted vendor backtests cannot solely affirm V-VALUE.  
-6. No trading advice.
+7. Last-settlement no-change is the F-SKILL **baseline**, not the D-EXIST **model** (operator B).
