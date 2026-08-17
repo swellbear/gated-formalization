@@ -19,7 +19,7 @@
 
 Can a predictive model for oil futures be built?
 
-**Successor / Rank lock (if any):** none yet — packages in `R_Locking_Scaffolding.md`
+**Successor / Rank lock (if any):** none yet — Rank 4 / Rank 4-AC **offered** (A+B+C as nested split, not a blend); singletons Rank 1–3 still available. See `R_Locking_Scaffolding.md` · `MULTI_ELEVATION_SPLIT.md`
 
 **Parent / successor relationship:** none
 
@@ -83,7 +83,7 @@ None required yet. Rank 3 is Minimal deviation; Rank 1 Moderate; Rank 2 Substant
 - `03_Gap_Extraction_and_Ranking.md`
 - `R_Locking_Scaffolding.md`
 - `PLAIN_LANGUAGE_CARD.md`
-- `IMPORTED_PATTERN_STAMP.md`
+- `MULTI_ELEVATION_SPLIT.md` (draft; not in force)
 
 ---
 
@@ -112,7 +112,7 @@ None required yet. Rank 3 is Minimal deviation; Rank 1 Moderate; Rank 2 Substant
 |--------|-----------------|
 | `2026-08_spacex-600-dollar-stock` | Soft-modal can/potential + lock-before-test (process only) |
 | `2026-08_fomc-sep-2026-uffr-change` | Object fork census vs forecast vs odds (process only) |
-| `2026-08_sell-in-may-sp500-2026` | Markets forecast locks; history ≠ forward edge (process only) |
+| `training/2026-08_stage8_us-50-states-only-coherent-curriculum` | Split-not-blend elevations (process only; different content) |
 
 *Related apps inform process only — no conclusion inheritance.*
 

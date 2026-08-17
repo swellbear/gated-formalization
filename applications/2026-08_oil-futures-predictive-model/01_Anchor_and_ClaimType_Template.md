@@ -44,7 +44,7 @@ Select one (or split mixed claims):
   - Normative/Strategic part:  
 
 **Notes on classification:**  
-As written, the sentence asks whether construction/feasibility of a forecasting procedure is possible. There is no “should.” Rank 2 in the lock table (after-cost economic value) would add a **performance / trading-edge** elevation and would then be treated as **Mixed**. Rank 3 (existence census) stays Descriptive. Do not score an unstated “should we trade oil futures with a model” as this claim.
+As written, the sentence asks whether construction/feasibility of a forecasting procedure is possible. There is no “should.” Rank 2 in the lock table (after-cost economic value) would add a **performance / trading-edge** elevation and would then be treated as **Mixed**. Rank 3 (existence census) stays Descriptive. **Rank 4** (operator-asked A+B+C combination) would **split** D-EXIST / F-SKILL / V-VALUE rather than blending them; V-VALUE stays a marked elevation, not a “should trade.” Do not score an unstated “should we trade oil futures with a model” as this claim. Split sheet (draft only): `MULTI_ELEVATION_SPLIT.md`.
 
 **Critically related apps (process only; no conclusion inheritance):**  
 - `2026-08_spacex-600-dollar-stock` — soft-modal “can/potential” plus missing window/success criterion.  

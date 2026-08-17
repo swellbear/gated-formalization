@@ -12,6 +12,8 @@
 - Operator question (verbatim): “Can a predictive model for oil futures be built?”
 - Park-90d session trigger: last quarterly review **2026-08-12** (cadence-existence); next due ~2026-11-12. **Not fired** this session.
 - Lean Default Path: Cycle 0 anchors → import forecast locks → gate score → gap rank (top G1/G6/G2) → locking-scaffolding. **Stop** for object + soft-modal package pick. No material admission, no named-class pulse (class unnamed; object unset).
+- Operator follow-up (2026-08-17): “Can I lock a combination of A B and C?”
+- Answer recorded: **not as one object** (O1+O2+O3 incoherent; “either” OR-slot does not apply). **Yes as nested split** Rank 4 (A+B+C) or Rank 4-AC (A+C, value out). Draft: `MULTI_ELEVATION_SPLIT.md`. **Not selected.**
 - No should in the text; LOCK-006 not imported.
 - This toolkit does **not** implement a trading model as the method output. A later authorized Phase 2 / Experimental Generation batch would still be accuracy-posture evidence work, not a desk.
 

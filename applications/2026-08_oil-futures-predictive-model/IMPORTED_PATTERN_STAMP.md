@@ -15,4 +15,9 @@ Imported pattern from `2026-08_sell-in-may-sp500-2026` (LOCK-011 kinship), re-va
 - Re-validation under current claim: No seasonality rule is under test. The transferable bit is history≠forward elevation, plus quantitative-bar hygiene **if** Rank 1 or 2 is locked (sample, frictions, already-included legs).
 - Not inherited: Sharpe-after-cost fail; May–Oct 2026 should.
 
+Imported pattern from `training/2026-08_stage8_us-50-states-only-coherent-curriculum`, re-validated here.
+- What was imported: **split-not-blend** multi-elevation legs; a cheaper core does not clear stronger elevations.
+- Re-validation under current claim: Legs here are D-EXIST / F-SKILL / V-VALUE, not uniqueness/should-curriculum. Same honesty rule; different content.
+- Not inherited: Stage 8 verdicts, FD-ONLY-COHERENT, or any teaching prescription.
+
 **Locks imported (process):** LOCK-003, LOCK-009, LOCK-010, LOCK-011. Never automatic; Cons vs this app’s L₀ recorded on `01`.

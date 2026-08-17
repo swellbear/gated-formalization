@@ -8,7 +8,7 @@
 
 ### Plain status
 
-We started examining the question “Can a predictive model for oil futures be built?” The sentence is not yet a fair test: “can,” “predictive,” and “oil futures” still have rival everyday meanings. We need you to pick one freeze package so later work checks one question, not three. Picking a package does **not** mean a working oil-futures model has been shown, or that anyone should trade.
+We started examining the question “Can a predictive model for oil futures be built?” You asked whether A, B, and C can be locked together. They can **only as separate nested legs**, not as one blended yes/no. We still need you to pick Rank 4 (all three legs), Rank 4-AC (existence + skill only), a singleton Rank 1/2/3, or no lock yet. Picking a package does **not** mean a working oil-futures model has been shown, or that anyone should trade.
 
 ---
 
@@ -18,7 +18,7 @@ We started examining the question “Can a predictive model for oil futures be b
 | **Phase** | Phase 1 — locking-scaffolding (object / “can” / success bar) |
 | **Amb** | **12** (Cycle 0; unconstrained slogan) |
 | **Locks in force** | none (process imports only: LOCK-003, 009, 010, 011) |
-| **Next authorization needed** | `lock Rank 1` / `lock Rank 2` / `lock Rank 3` / `no lock yet` |
+| **Next authorization needed** | `lock Rank 4` / `lock Rank 4-AC` / `lock Rank 1` / `lock Rank 2` / `lock Rank 3` / `no lock yet` |
 | **Related apps surfaced** | `2026-08_spacex-600-dollar-stock` — soft-modal “can/potential” must lock before a test; `2026-08_fomc-sep-2026-uffr-change` — object fork (census vs forecast vs odds) before scoring. Process only; **no conclusion inheritance**. |
 | **Optional modes** | none yet (not Phase 1 endpoint) |
 
