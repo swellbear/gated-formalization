@@ -160,5 +160,5 @@ Lean Default Path: name a D-EXIST class or leave unnamed. Do not auto-pulse. Do 
 
 ## Ready for Material Search & Admission Checks?
 
-- [x] Yes — proven-only hunt run; **no class submitted**  
+- [x] Yes — V-COST OR-slot live (`V_COST_OR_Slot.md`); D-SRC unnamed for now  
 - [ ] Need operator lock pick first
