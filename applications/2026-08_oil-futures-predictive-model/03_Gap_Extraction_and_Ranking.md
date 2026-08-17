@@ -4,7 +4,7 @@
 
 **Date:** 2026-08-17  
 **Parent application / claim:** `2026-08_oil-futures-predictive-model` — Can a predictive model for oil futures be built?  
-**Linked Gate Scoring Sheet:** `02_Gate_Scoring_Sheet.md`  
+**Linked Gate Scoring Sheet:** `02_Gate_Scoring_Sheet.md` · `02_Gate_Scoring_After_Rank4.md` · `02_Gate_Scoring_After_VCOST.md`  
 
 ---
 
@@ -121,8 +121,9 @@ G8 is the **named model class and feature recipe** under a locked G1/G6 — bloc
 | G5 | **LOCKED per leg:** D-EXIST H3 open (census); F-SKILL/V-VALUE H1 next session. |
 | G7 | **LOCKED per leg:** D-EXIST E3 census; F-SKILL/V-VALUE E1 walk-forward. Live vs stand-in for settlements still open. |
 | G8 | Named model class under F-SKILL — **re-opened**; not a D-EXIST requirement. |
-| V-COST | V-VALUE cost schedule — **OR-slot open**; V-VALUE dependents blocked. |
+| V-COST | V-VALUE cost schedule — **either accepted** (V1 or V2; each test must name which). Incomplete as a singleton. |
 | F-SRC | Named public class for F-SKILL — **unnamed**. |
+| V-SRC | Named recipe/book for V-VALUE — **unnamed**; V-VALUE-TEST-0 **not established**. |
 
 *Later candidates must quote the freeze line for any parameter they claim to close. Changing the freeze line is a claim change, not progress.*
 
@@ -130,35 +131,35 @@ G8 is the **named model class and feature recipe** under a locked G1/G6 — bloc
 
 ## Priority Order (highest sum first)
 
-1. **V-COST** — cost schedule (blocks V-VALUE); live ask  
+1. **V-SRC** — unnamed value-leg book; live ask after V-COST either  
 2. **D-SRC** — unnamed for now (operator C); reopen `name source class …`  
 3. **F-SRC** — named class for F-SKILL  
 4. **G8** / live vs stand-in — after a named class  
 
-Lean Default Path: name a D-EXIST class or leave unnamed. Do not auto-pulse. Do not collapse legs.
+Lean Default Path: name a V-VALUE book or leave that book unnamed. Do not invent a class. Do not auto-pulse. Do not collapse legs. Naming ≠ bar-met; later tests must still say V1 or V2.
 
 ---
 
 ## Inter-parameter dependency (mandatory)
 
-**D-EXIST** is blocked primarily by unnamed **D-SRC** after operator B rejected the no-change exhibit. **F-SKILL tests** are blocked primarily by unnamed **F-SRC**. **V-SRC** is blocked primarily by unset **V-COST**.
+**D-EXIST** is blocked primarily by unnamed **D-SRC** after operator B rejected the no-change exhibit. **F-SKILL tests** are blocked primarily by unnamed **F-SRC**. **V-VALUE** is no longer blocked by V-COST (either accepted); it is blocked primarily by unnamed **V-SRC** (no specified book). V-VALUE-TEST-0 recorded that miss as **not established**, not a refute of all books.
 
-**Rectification:** `name source class …` for D-EXIST (this ask); later F-SRC; single or “either” V-COST before V-VALUE dependents.
+**Rectification:** `name source class …` for the value-leg book (this ask), or `leave unnamed`. D-SRC remains unnamed for now (reopen separately). Do not auto-enter Phase 2.
 
-**Reopen condition (prominent):** After a named-enough non-circular D-EXIST class, or `leave unnamed`. Do not auto-enter Phase 2.
+**Reopen condition (prominent):** After a named-enough non-circular V-VALUE book (must still name V1 or V2 on the test), or `leave unnamed` / `endpoint only`. D-SRC reopen: `name source class …`.
 
 ---
 
 ## Search Plan for Top-Priority Gap(s)
 
-**Targeted gap:** V-COST (operator C).  
-**Source classes to check:** N/A for this OR-slot (definitional). D-SRC hunt already executed; none submitted.  
-**Diminishing-returns / time-box rule:** Do not run a V-VALUE bake-off before V-COST is singled.  
-**Notes:** `V_COST_OR_Slot.md`. Cost lock ≠ named recipe ≠ bar-met.
+**Targeted gap:** V-SRC (after V-COST either).  
+**Source classes to check:** None submitted. Proven-only hunt (**L-HUNT-PROVEN**) already failed F-SKILL schema; do not invent a V-VALUE book from EIA STEO / the listed curve / Alquist–Kilian spot papers.  
+**Diminishing-returns / time-box rule:** Do not treat V-EITHER as V2-used. Do not auto-pulse an unnamed class.  
+**Notes:** `Lock_VCOST_Either.md` · `04_Material_Admission_V_VALUE_No_Recipe.md`. Cost lock ≠ named recipe ≠ bar-met.
 
 ---
 
 ## Ready for Material Search & Admission Checks?
 
-- [x] Yes — V-COST OR-slot live (`V_COST_OR_Slot.md`); D-SRC unnamed for now  
+- [x] Yes — V-COST either locked; V-VALUE-TEST-0 **not established**; **stop** for unnamed V-SRC  
 - [ ] Need operator lock pick first

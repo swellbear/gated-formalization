@@ -1,27 +1,27 @@
 # Plain-language card
 
 **Application:** `2026-08_oil-futures-predictive-model`  
-**Date / checkpoint:** 2026-08-17 · V-COST OR-slot  
+**Date / checkpoint:** 2026-08-17 · V-COST either; unnamed value-leg book  
 
 ---
 
 ## What we’re doing
 
-You parked the unnamed series for now and opened the after-cost value leg. We need a cost rule before that leg is a fair test.
+Costs for the after-cost value test may be counted either as listed fees only or as those fees plus a one-tick fill. There is still no named paper book, so that value test is **not** shown.
 
 ## What we need from you
 
-Pick one cost freeze.
+Pick what to do with the unnamed value-leg book.
 
-**Preferred reply:** click A / B / C. Typed: `lock V-COST V2` · `lock V-COST V1` · `lock V-COST either`
+**Preferred reply:** click A / B / C. Typed: `name source class …` · `leave unnamed` · `endpoint only`
 
 ## What a “yes” / this update means
 
-We freeze how paper P/L subtracts frictions. We still have no named recipe, so value is **not** thereby established.
+Naming a class only names the vehicle. It does **not** mean after-cost value, forecast skill, or existence is established. Leaving it unnamed keeps value **not shown** (not a refute of every book). Endpoint only stops examining here with leftovers still live.
 
 ## What this does *not* mean
 
-That a model makes money. That anyone should trade. That existence or skill has been shown.
+That a model makes money. That anyone should trade. That existence or skill has been shown. That “either costs” already used the stricter fill rule.
 
 ---
 
@@ -29,11 +29,11 @@ That a model makes money. That anyone should trade. That existence or skill has 
 
 | Item | Value |
 |------|--------|
-| Claim-freeze / claim under test | Rank 4 V-VALUE; V-COST open |
-| Amb | **9** |
-| Locks / package IDs | Rank 4; D-SRC unnamed for now |
+| Claim-freeze / claim under test | Rank 4 V-VALUE; V-COST either; V-SRC unnamed |
+| Amb | **7.5** |
+| Locks / package IDs | Rank 4; V-EITHER; D-SRC unnamed for now |
 | Method verdict label (if any) | Provisional |
-| Artifact pointers | `V_COST_OR_Slot.md` · `Lock_Rank4_Nested_Split.md` |
+| Artifact pointers | `Lock_VCOST_Either.md` · `04_Material_Admission_V_VALUE_No_Recipe.md` |
 
 ---
 

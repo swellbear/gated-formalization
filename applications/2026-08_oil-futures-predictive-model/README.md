@@ -7,4 +7,4 @@ Do not duplicate standing-rule text here. Live decisions use the in-chat picker 
 
 **Claim (verbatim):** Can a predictive model for oil futures be built?
 
-**Current stop:** object + “can” lock package (see `R_Locking_Scaffolding.md`). Locking meanings ≠ proving the claim.
+**Current stop:** unnamed value-leg book after V-COST either (`PLAIN_LANGUAGE_CARD.md`). Locking meanings ≠ proving the claim.

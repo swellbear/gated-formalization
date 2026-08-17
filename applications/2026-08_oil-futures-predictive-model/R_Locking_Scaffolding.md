@@ -242,15 +242,15 @@ D-EXIST and F-SKILL only.
 - **What a “yes” means:** We freeze those definitions and only then check evidence under them.  
 - **What this does *not* mean:** Picking a package does **not** prove the original claim; it only sets the grading rules. (Lower ambiguity after a lock ≠ clearance.)
 
-**Status:** **SELECTED** — Rank 4 (operator **A**, 2026-08-17). Lock record: `Lock_Rank4_Nested_Split.md`. **OR-slot open:** V-COST. D-EXIST establishment-stop: `04_Material_Admission_D_EXIST_Construction.md` (would-be-met; **not** auto-declared).
+**Status:** **SELECTED** — Rank 4 (operator **A**, 2026-08-17). Lock record: `Lock_Rank4_Nested_Split.md`. **OR-slot accepted as either:** V-COST (`Lock_VCOST_Either.md`, operator **C**). D-EXIST establishment-stop: `04_Material_Admission_D_EXIST_Construction.md` (would-be-met; **not** auto-declared). V-VALUE-TEST-0 **not established**.
 
 ```
 Package: Rank 4 — Nested split A+B+C (D-EXIST ⊂ F-SKILL ⊂ V-VALUE)
 
 OR-slots (required if any alternatives remain):
   - [ ] Pick single: V-COST ____
-  - [ ] Formally accept either: { ____ , ____ }
-  - [x] OPEN: V-VALUE cost schedule (V-COST)
+  - [x] Formally accept either: { V1 fees-only , V2 fees + 1 tick/side }
+  - [ ] OPEN: V-VALUE cost schedule (V-COST)
 ```
 
 **Details (secondary):** `lock Rank 4` · `lock Rank 4-AC` · `lock Rank 1` · `lock Rank 2` · `lock Rank 3` · `no lock yet`

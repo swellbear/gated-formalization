@@ -25,7 +25,7 @@
 | Last-settlement no-change | Y | F-SKILL **baseline**; operator B: **not** the D-EXIST model |
 | Listed futures curve as market prices | Y | L₀; using the curve to forecast **spot** is a **different job** |
 | EIA STEO monthly average spot | N | Different object/horizon |
-| After-cost P/L | N | V-VALUE; V-COST open |
+| After-cost P/L | N | V-VALUE; V-COST later either-accepted; unused here |
 
 **If asked “what about the futures curve?”:** Already in L₀ / F-SKILL baseline family — not a proven extra model of next-session CL returns.
 

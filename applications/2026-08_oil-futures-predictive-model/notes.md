@@ -15,9 +15,11 @@
 - Operator follow-up (2026-08-17): “Can I lock a combination of A B and C?”
 - Answer recorded: **not as one object**. **Yes as nested split** Rank 4 — later **selected** (operator A).
 - Operator hunt (2026-08-17): search now; submit only if **proven** oil-futures forecaster. **L-HUNT-PROVEN:** no freeze-matching proven public series submitted (EIA STEO = monthly average **spot**; Alquist–Kilian/IFDP = futures as **spot** forecasts, mixed vs no-change; curve ≠ next-session CL return model). F-SKILL **not established**. D-SRC still unnamed.
-- Operator **C** (2026-08-17): switch to value-leg cost rule. D-SRC **unnamed for now** (not sealed leave-unnamed). Live ask: `V_COST_OR_Slot.md`.
+- Operator **C** (2026-08-17): switch to value-leg cost rule. D-SRC **unnamed for now** (not sealed leave-unnamed).
+- Operator **C** (2026-08-17, later): `lock V-COST either`. V1 or V2 must still be named on a later book. Not “stricter cost already used.”
+- V-VALUE-TEST-0: no named recipe → **not established** (not a refute of all books). Live ask: unnamed V-SRC.
 - F-SRC unnamed; no F-SKILL pulse.
-- Amb 12 → **9** (definitional). Amb ≠ clearance.
+- Amb 12 → 9 → **7.5** (definitional). Amb ≠ clearance.
 
 ## Residual judgment points encountered
 

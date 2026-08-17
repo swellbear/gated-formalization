@@ -3,7 +3,7 @@
 **Date:** 2026-08-17  
 **Application:** `2026-08_oil-futures-predictive-model`  
 **Operator selection:** **A** → **Rank 4 — Nested split A+B+C** (`lock Rank 4`)  
-**Status:** **LOCK INCOMPLETE** — V-COST OR-slot **now the live ask** (operator **C**, 2026-08-17). D-SRC **unnamed for now** (not a sealed `leave unnamed`).
+**Status:** **IN FORCE for meanings.** V-COST **either accepted** (operator **C**, 2026-08-17 — `Lock_VCOST_Either.md`). Incomplete as a **singleton** cost rule: later value tests must **name V1 or V2**. D-SRC **unnamed for now** (not a sealed `leave unnamed`). V-VALUE-TEST-0 **not established**.
 
 ---
 
@@ -18,7 +18,7 @@
 |-----|-----|-----------|
 | **D-EXIST** | Specified forecasting mapping for some liquid crude futures can be written or already exists | `O1+M1+S1+C3+T2+H3+E3` — P-Logical construction; any specified mapping; WTI **or** Brent as class (either accepted); census protocol |
 | **F-SKILL** | Real shot (P-NonNegligible) a specified recipe beats last-settlement RMSE, walk-forward | `O2+M2+S2+C1+T1+H1+E1` — NYMEX **CL front-month**, next-session **log-return**, walk-forward vs **no-change / last settlement** |
-| **V-VALUE** | Real shot (P-NonNegligible) of after-cost paper economic value vs the curve on the same CL next-session book | `O3+M2+S4+C1+T1+H1+E1` — **cost OR-slot open** |
+| **V-VALUE** | Real shot (P-NonNegligible) of after-cost paper economic value vs the curve on the same CL next-session book | `O3+M2+S4+C1+T1+H1+E1` — **V-COST either** (each test names V1 or V2) |
 
 **Claim-freeze (under Rank 4):**  
 “Can a predictive model for oil futures be built?” is graded as **three separate legs**. A result on one is not a result on the others. D-EXIST is the wording-faithful core. F-SKILL operationalizes “predictive.” V-VALUE is an added performance elevation, not a “should trade.”
@@ -33,12 +33,14 @@
 
 ---
 
-## Open OR-slot (V-VALUE)
+## OR-slot (V-VALUE) — formally accepted as either
 
-Cost schedule is **not** singled. V-VALUE dependents do **not** re-open until the operator:
+Cost schedule is **not** a singleton. Operator **C** formally accepted **either** V1 or V2 (`Lock_VCOST_Either.md`).
 
-- picks a single cost rule, or  
-- formally accepts “either” named cost rules.
+- **V1:** listed CL exchange/clearing/NFA-style fees; **no** slippage.  
+- **V2:** those fees **plus** 1 CL tick/side (**$10**/contract/side; **$20** round-turn slippage before fees).  
+- A later value-leg test **must still name V1 or V2** (or report both). Accepting either is **not** “we already used the stricter cost.”  
+- **Do not** invent a live broker schedule.
 
 D-EXIST and F-SKILL do not wait on this slot.
 
@@ -49,7 +51,7 @@ D-EXIST and F-SKILL do not wait on this slot.
 - **D-EXIST** — D-SRC **unnamed for now** (operator **C**). Proven-only hunt submitted no class. Reopen: `name source class …`. Not a sealed leave-unnamed.  
 - **F-SKILL** — **not established** on the hunt.  
 - **G8** — still free under F-SKILL.  
-- **V-VALUE** — **blocked** by V-COST until `lock V-COST V2` / `V1` / `either`. Cost lock ≠ recipe named ≠ bar-met.
+- **V-VALUE** — **testable** under V-EITHER. **V-VALUE-TEST-0 not established** (no named book; V1/V2 unused). Cost lock ≠ recipe named ≠ bar-met. Reopen: `name source class …` for the value-leg book (V-SRC).
 
 ---
 
@@ -66,4 +68,5 @@ Selecting Rank 4 **drops leftover-ambiguity by fixing meanings** (three jobs, �
 3. Refuting V-VALUE does **not** refute D-EXIST.  
 4. Print-match of a spot-oil paper or in-sample R² is **not** F-SKILL-met.  
 5. Conflicted vendor backtests cannot solely affirm V-VALUE.  
+6. V-COST either is **not** “we used V2.” Each test must name V1 or V2.  
 7. Last-settlement no-change is the F-SKILL **baseline**, not the D-EXIST **model** (operator B).

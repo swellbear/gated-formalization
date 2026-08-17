@@ -8,17 +8,17 @@
 
 ### Plain status
 
-You switched to the after-cost value leg. The public series stays unnamed for now. We need you to pick how costs are counted (listed fees only, or fees plus a one-tick fill, or allow either). Picking costs does **not** mean a profitable oil-futures model has been shown, and it is not trading advice.
+You allowed either cost rule for the after-cost value test. There is still no named paper book, so after-cost value is **not** shown. That is not a proof that every oil-futures book fails, and it is not trading advice. We need you to name a public recipe for that value test, leave it unnamed, or stop examining here.
 
 ---
 
 | Field | Value |
 |-------|--------|
 | **Closure state** | **open** |
-| **Phase** | Phase 1 — Rank 4 locked; V-COST OR-slot live |
-| **Amb** | **9** (unchanged until a cost rule is singled; **≠ clearance**) |
-| **Locks in force** | Rank 4; D-SRC unnamed for now; V-COST **open** |
-| **Next authorization needed** | `lock V-COST V2` / `lock V-COST V1` / `lock V-COST either` |
+| **Phase** | Phase 1 — Rank 4 locked; V-COST either; V-VALUE-TEST-0 not established |
+| **Amb** | **7.5** (definitional drop from V-EITHER; **≠ clearance**) |
+| **Locks in force** | Rank 4; V-COST either; D-SRC unnamed for now |
+| **Next authorization needed** | `name source class …` / `leave unnamed` / `endpoint only` (value-leg book) |
 | **Related apps surfaced** | `2026-08_sell-in-may-sp500-2026` — costs/frictions before a value bar; `2026-08_spacex-600-dollar-stock` — lock ≠ clearance. Process only. |
 | **Optional modes** | none yet |
 

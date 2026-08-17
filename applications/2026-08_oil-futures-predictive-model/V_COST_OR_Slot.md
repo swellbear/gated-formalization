@@ -6,12 +6,12 @@
 **Dependents blocked:** **V-VALUE** (and **V-SRC**)
 
 **Explicit dependency statement:**  
-V-VALUE is currently blocked primarily by the unset cost schedule. D-SRC stays **unnamed for now** (operator **C**, 2026-08-17) — that does **not** clear D-EXIST or F-SKILL. A cost lock does **not** supply a named recipe; after V-COST is singled, V-VALUE may still be **not established** for lack of a specified book.
+V-VALUE **was** blocked primarily by the unset cost schedule. **V-EITHER is now selected** (`Lock_VCOST_Either.md`). D-SRC stays **unnamed for now** — that does **not** clear D-EXIST or F-SKILL. A cost lock does **not** supply a named recipe; V-VALUE-TEST-0 is **not established** for lack of a specified book.
 
 **Original claim (verbatim, for deviation comparison):**  
 Can a predictive model for oil futures be built?
 
-**Operator this turn:** **C** → switch to the value-leg cost rule (`lock V-COST …`). Series hunt remains unsubmitted.
+**Operator this turn:** **C** → `lock V-COST either`. Series hunt remains unsubmitted. V-SRC is the live unnamed leftover.
 
 ---
 
@@ -107,7 +107,9 @@ Only after each test names V1 or V2 (or reports both).
 
 ## 6. Choice prompt
 
-**Plain-language card:**
+**Status:** **SELECTED** — **V-EITHER** (operator **C**, 2026-08-17). Lock record: `Lock_VCOST_Either.md`.
+
+**Plain-language card (at selection):**
 
 - **What we’re doing:** Choosing how costs are counted for the after-cost value leg.  
 - **What we need from you:** Pick **one** cost rule.  
@@ -115,17 +117,17 @@ Only after each test names V1 or V2 (or reports both).
 - **What this does *not* mean:** That anyone should trade; that existence or skill is established; that a recipe has been named.
 
 ```
-V-COST: ________
-  V2 — listed fees + 1 tick/side ($10 per side)
-  V1 — listed fees only (no slippage)
-  V-EITHER — formally accept either V1 or V2
+V-COST: V-EITHER — formally accept either V1 or V2
+  [ ] V2 — listed fees + 1 tick/side ($10 per side)
+  [ ] V1 — listed fees only (no slippage)
+  [x] V-EITHER — formally accept either V1 or V2
 ```
 
-**Details:** `lock V-COST V2` · `lock V-COST V1` · `lock V-COST either`
+**Details:** `lock V-COST V2` · `lock V-COST V1` · `lock V-COST either` **(selected)**
 
 **Lock-time Amb warning:** Selecting a cost rule typically **drops leftover-ambiguity by fixing meanings**. That drop **does not establish** V-VALUE or the original slogan. **Low Amb after lock ≠ clearance.**
 
-**Lean Default note (not a silent pick):** V2 is the more powerful friction freeze for an investor-relevant paper book. This note does **not** select a package.
+**Lean Default note (not a silent pick):** V2 is the more powerful friction freeze for an investor-relevant paper book. This note did **not** select a package. Operator **C** selected either.
 
 ---
 

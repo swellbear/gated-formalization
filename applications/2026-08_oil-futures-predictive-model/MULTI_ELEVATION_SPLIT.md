@@ -2,7 +2,7 @@
 
 **Application:** `2026-08_oil-futures-predictive-model`  
 **Date:** 2026-08-17  
-**Status:** **In force for meanings** (operator `lock Rank 4`, 2026-08-17). V-COST OR-slot still **open**. D-EXIST **not** auto-established (establishment-stop).
+**Status:** **In force for meanings** (operator `lock Rank 4`, 2026-08-17). V-COST **either accepted** (operator **C**). D-EXIST **not** auto-established (establishment-stop). V-VALUE-TEST-0 **not established**.
 
 **Rule:** Do **not** collapse legs. A yes on one is not a yes on the others. Amb drop ≠ clearance.
 
@@ -69,7 +69,7 @@ D-EXIST  ⊂  F-SKILL               (Rank 4-AC)
 |-----|---------|----------------------------|
 | D-EXIST | C3 class = WTI **or** Brent (either accepted inside Rank 3 mechanics) | Complete if Rank 4 / 4-AC selected |
 | F-SKILL | none | Complete if selected |
-| V-VALUE | Cost schedule (round-turn + slippage) must be **singled** or formally “either” | **Incomplete** on Rank 4 until that pick |
+| V-VALUE | Cost schedule (round-turn + slippage) must be **singled** or formally “either” | **Either accepted** (V1 or V2; each test names which) |
 
 ---
 
@@ -80,4 +80,4 @@ D-EXIST  ⊂  F-SKILL               (Rank 4-AC)
 
 ---
 
-*Rank 4 locked 2026-08-17. Operator B: no-change OUT as D-EXIST model. Next: `name source class …` / `leave unnamed`. V-COST still open.*
+*Rank 4 locked 2026-08-17. Operator B: no-change OUT as D-EXIST model. Operator C: V-COST either. V-VALUE-TEST-0 not established. Next: `name source class …` / `leave unnamed` / `endpoint only`.*
