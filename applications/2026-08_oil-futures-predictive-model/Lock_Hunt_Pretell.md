@@ -4,7 +4,7 @@
 **Application:** `2026-08_oil-futures-predictive-model`  
 **Operator selection:** **C** `proceed with C` (named finite discovery/confirm pre-tell hunt)  
 **App-local lock IDs:** **L-HUNT-PRETELL** · **L-STANDIN-Y-TELLS**  
-**Status:** **IN FORCE as protocol + named drawer (cap = these eight horses).** Written **before** last-500 confirm scores. Confirm is **one** survivor (or none). F-SKILL **not** auto-established by running the hunt.
+**Status:** **IN FORCE as protocol + named drawer (cap = these eight horses).** Written **before** last-500 confirm scores. Pulse **L-PULSE-PRETELL-1** scored. **No survivor** (none beat 0 on discovery F-CC). Confirm skipped. Promote does **not** fire. F-SKILL **not established**.
 
 ---
 

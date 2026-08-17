@@ -1,0 +1,268 @@
+{
+  "badge": "stand-in",
+  "lock": "L-HUNT-PRETELL",
+  "tells": "L-STANDIN-Y-TELLS",
+  "discovery_cutoff": "2023-08-21",
+  "discovery_holdout": 500,
+  "min_train": 250,
+  "horse_order": [
+    "H-TELL-DXY",
+    "H-TELL-RBOB",
+    "H-TELL-HO",
+    "H-TELL-SPX",
+    "H-TELL-HG",
+    "H-TELL-TNX",
+    "H-TELL-AND-DXY-RBOB",
+    "H-TELL-AND-RBOB-HO"
+  ],
+  "discovery": {
+    "H-TELL-DXY": {
+      "F-ON": {
+        "n": 500,
+        "first": "2021-08-25",
+        "last": "2023-08-21",
+        "rmse_horse": 0.007365735126887425,
+        "rmse_0": 0.007332539744657918,
+        "beats_0": false,
+        "n_missing_tell_oos": 0
+      },
+      "F-DAY": {
+        "n": 500,
+        "first": "2021-08-25",
+        "last": "2023-08-21",
+        "rmse_horse": 0.025868921710491644,
+        "rmse_0": 0.025846594083981028,
+        "beats_0": false,
+        "n_missing_tell_oos": 0
+      },
+      "F-CC": {
+        "n": 500,
+        "first": "2021-08-25",
+        "last": "2023-08-21",
+        "rmse_horse": 0.026790835057270708,
+        "rmse_0": 0.02670533649743393,
+        "beats_0": false,
+        "n_missing_tell_oos": 0
+      }
+    },
+    "H-TELL-RBOB": {
+      "F-ON": {
+        "n": 500,
+        "first": "2021-08-25",
+        "last": "2023-08-21",
+        "rmse_horse": 0.007372720629361835,
+        "rmse_0": 0.007332539744657918,
+        "beats_0": false,
+        "n_missing_tell_oos": 0
+      },
+      "F-DAY": {
+        "n": 500,
+        "first": "2021-08-25",
+        "last": "2023-08-21",
+        "rmse_horse": 0.025886039132086144,
+        "rmse_0": 0.025846594083981028,
+        "beats_0": false,
+        "n_missing_tell_oos": 0
+      },
+      "F-CC": {
+        "n": 500,
+        "first": "2021-08-25",
+        "last": "2023-08-21",
+        "rmse_horse": 0.026821885513450962,
+        "rmse_0": 0.02670533649743393,
+        "beats_0": false,
+        "n_missing_tell_oos": 0
+      }
+    },
+    "H-TELL-HO": {
+      "F-ON": {
+        "n": 500,
+        "first": "2021-08-25",
+        "last": "2023-08-21",
+        "rmse_horse": 0.0074399115617268365,
+        "rmse_0": 0.007332539744657918,
+        "beats_0": false,
+        "n_missing_tell_oos": 0
+      },
+      "F-DAY": {
+        "n": 500,
+        "first": "2021-08-25",
+        "last": "2023-08-21",
+        "rmse_horse": 0.025973860152832914,
+        "rmse_0": 0.025846594083981028,
+        "beats_0": false,
+        "n_missing_tell_oos": 0
+      },
+      "F-CC": {
+        "n": 500,
+        "first": "2021-08-25",
+        "last": "2023-08-21",
+        "rmse_horse": 0.026806279679980588,
+        "rmse_0": 0.02670533649743393,
+        "beats_0": false,
+        "n_missing_tell_oos": 0
+      }
+    },
+    "H-TELL-SPX": {
+      "F-ON": {
+        "n": 500,
+        "first": "2021-08-25",
+        "last": "2023-08-21",
+        "rmse_horse": 0.0073672798087485,
+        "rmse_0": 0.007332539744657918,
+        "beats_0": false,
+        "n_missing_tell_oos": 0
+      },
+      "F-DAY": {
+        "n": 500,
+        "first": "2021-08-25",
+        "last": "2023-08-21",
+        "rmse_horse": 0.025909060293996835,
+        "rmse_0": 0.025846594083981028,
+        "beats_0": false,
+        "n_missing_tell_oos": 0
+      },
+      "F-CC": {
+        "n": 500,
+        "first": "2021-08-25",
+        "last": "2023-08-21",
+        "rmse_horse": 0.026765002524835598,
+        "rmse_0": 0.02670533649743393,
+        "beats_0": false,
+        "n_missing_tell_oos": 0
+      }
+    },
+    "H-TELL-HG": {
+      "F-ON": {
+        "n": 500,
+        "first": "2021-08-25",
+        "last": "2023-08-21",
+        "rmse_horse": 0.00737550315532844,
+        "rmse_0": 0.007332539744657918,
+        "beats_0": false,
+        "n_missing_tell_oos": 0
+      },
+      "F-DAY": {
+        "n": 500,
+        "first": "2021-08-25",
+        "last": "2023-08-21",
+        "rmse_horse": 0.025864960646242795,
+        "rmse_0": 0.025846594083981028,
+        "beats_0": false,
+        "n_missing_tell_oos": 0
+      },
+      "F-CC": {
+        "n": 500,
+        "first": "2021-08-25",
+        "last": "2023-08-21",
+        "rmse_horse": 0.026791073588221862,
+        "rmse_0": 0.02670533649743393,
+        "beats_0": false,
+        "n_missing_tell_oos": 0
+      }
+    },
+    "H-TELL-TNX": {
+      "F-ON": {
+        "n": 500,
+        "first": "2021-08-25",
+        "last": "2023-08-21",
+        "rmse_horse": 0.007395795517364289,
+        "rmse_0": 0.007332539744657918,
+        "beats_0": false,
+        "n_missing_tell_oos": 0
+      },
+      "F-DAY": {
+        "n": 500,
+        "first": "2021-08-25",
+        "last": "2023-08-21",
+        "rmse_horse": 0.025817161147345054,
+        "rmse_0": 0.025846594083981028,
+        "beats_0": true,
+        "n_missing_tell_oos": 0
+      },
+      "F-CC": {
+        "n": 500,
+        "first": "2021-08-25",
+        "last": "2023-08-21",
+        "rmse_horse": 0.026823587696812472,
+        "rmse_0": 0.02670533649743393,
+        "beats_0": false,
+        "n_missing_tell_oos": 0
+      }
+    },
+    "H-TELL-AND-DXY-RBOB": {
+      "F-ON": {
+        "n": 500,
+        "first": "2021-08-25",
+        "last": "2023-08-21",
+        "rmse_horse": 0.007368583835347089,
+        "rmse_0": 0.007332539744657918,
+        "beats_0": false,
+        "n_missing_tell_oos": 0,
+        "n_triggered": 229
+      },
+      "F-DAY": {
+        "n": 500,
+        "first": "2021-08-25",
+        "last": "2023-08-21",
+        "rmse_horse": 0.025872075836407746,
+        "rmse_0": 0.025846594083981028,
+        "beats_0": false,
+        "n_missing_tell_oos": 0,
+        "n_triggered": 229
+      },
+      "F-CC": {
+        "n": 500,
+        "first": "2021-08-25",
+        "last": "2023-08-21",
+        "rmse_horse": 0.026787526588982924,
+        "rmse_0": 0.02670533649743393,
+        "beats_0": false,
+        "n_missing_tell_oos": 0,
+        "n_triggered": 229
+      }
+    },
+    "H-TELL-AND-RBOB-HO": {
+      "F-ON": {
+        "n": 500,
+        "first": "2021-08-25",
+        "last": "2023-08-21",
+        "rmse_horse": 0.007410083452492906,
+        "rmse_0": 0.007332539744657918,
+        "beats_0": false,
+        "n_missing_tell_oos": 0,
+        "n_triggered": 371
+      },
+      "F-DAY": {
+        "n": 500,
+        "first": "2021-08-25",
+        "last": "2023-08-21",
+        "rmse_horse": 0.02584448284128122,
+        "rmse_0": 0.025846594083981028,
+        "beats_0": true,
+        "n_missing_tell_oos": 0,
+        "n_triggered": 371
+      },
+      "F-CC": {
+        "n": 500,
+        "first": "2021-08-25",
+        "last": "2023-08-21",
+        "rmse_horse": 0.02679494476006384,
+        "rmse_0": 0.02670533649743393,
+        "beats_0": false,
+        "n_missing_tell_oos": 0,
+        "n_triggered": 371
+      }
+    }
+  },
+  "survivor": {
+    "id": null,
+    "reason": "no horse strictly beat 0 on discovery F-CC last 500"
+  },
+  "discovery_n_sessions": 5769,
+  "confirm": null,
+  "promote": {
+    "fires": false,
+    "reason": "no discovery survivor"
+  }
+}
