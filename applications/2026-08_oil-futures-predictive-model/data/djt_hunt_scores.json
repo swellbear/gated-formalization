@@ -1,0 +1,102 @@
+{
+  "badge": "stand-in",
+  "lock": "L-HUNT-DJT",
+  "tells": "L-STANDIN-DJT-TRUTH",
+  "discovery_cutoff": "2023-08-21",
+  "discovery_holdout": 500,
+  "min_train": 250,
+  "horse_order": [
+    "H-DJT-WEEK",
+    "H-DJT-MONTH"
+  ],
+  "n_posts": 28548,
+  "discovery_coverage": {
+    "n_oil_adjacent_posts": 345,
+    "n_oil_adjacent_in_session_span": 53,
+    "n_days_with_signal": 0,
+    "n_sessions": 5769,
+    "span_first": "2000-08-24",
+    "span_last": "2023-08-21"
+  },
+  "discovery_lexicon_split": {
+    "n_oil_adjacent_in_span": 53,
+    "n_on_cl_session_dates": 34,
+    "n_not_on_cl_session_dates": 19,
+    "pnf_in_span": {
+      "plus1": 0,
+      "minus1": 3,
+      "flat": 50
+    },
+    "pnf_on_cl_session_dates": {
+      "plus1": 0,
+      "minus1": 0,
+      "flat": 34
+    },
+    "note": "Frozen lexicon. Weekend/holiday posts do not attach to a CL date. Do not retune."
+  },
+  "discovery_n_sessions": 5769,
+  "discovery": {
+    "H-DJT-WEEK": {
+      "F-ON": {
+        "n": 500,
+        "first": "2021-08-25",
+        "last": "2023-08-21",
+        "rmse_horse": 0.007332539744657918,
+        "rmse_0": 0.007332539744657918,
+        "beats_0": false
+      },
+      "F-DAY": {
+        "n": 500,
+        "first": "2021-08-25",
+        "last": "2023-08-21",
+        "rmse_horse": 0.025846594083981028,
+        "rmse_0": 0.025846594083981028,
+        "beats_0": false
+      },
+      "F-CC": {
+        "n": 500,
+        "first": "2021-08-25",
+        "last": "2023-08-21",
+        "rmse_horse": 0.02670533649743393,
+        "rmse_0": 0.02670533649743393,
+        "beats_0": false
+      }
+    },
+    "H-DJT-MONTH": {
+      "F-ON": {
+        "n": 500,
+        "first": "2021-08-25",
+        "last": "2023-08-21",
+        "rmse_horse": 0.007332539744657918,
+        "rmse_0": 0.007332539744657918,
+        "beats_0": false
+      },
+      "F-DAY": {
+        "n": 500,
+        "first": "2021-08-25",
+        "last": "2023-08-21",
+        "rmse_horse": 0.025846594083981028,
+        "rmse_0": 0.025846594083981028,
+        "beats_0": false
+      },
+      "F-CC": {
+        "n": 500,
+        "first": "2021-08-25",
+        "last": "2023-08-21",
+        "rmse_horse": 0.02670533649743393,
+        "rmse_0": 0.02670533649743393,
+        "beats_0": false
+      }
+    }
+  },
+  "survivor": {
+    "id": null,
+    "reason": "no horse strictly beat 0 on discovery F-CC last 500"
+  },
+  "vehicle_fail": false,
+  "confirm": null,
+  "promote": {
+    "fires": false,
+    "reason": "no horse strictly beat 0 on discovery F-CC last 500"
+  }
+}

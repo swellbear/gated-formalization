@@ -117,23 +117,56 @@ def load_posts(path: Path) -> list[dict]:
     return rows
 
 
-def daily_scores(posts: list[dict], lex: dict) -> dict[str, float]:
+def daily_scores(posts: list[dict], lex: dict) -> tuple[dict[str, float], list[str]]:
     buckets: dict[str, list[int]] = {}
-    n_adj = 0
+    adj_dates: list[str] = []
     for rec in posts:
         s = score_post(rec["text"], lex)
         if s is None:
             continue
-        n_adj += 1
+        adj_dates.append(rec["date_utc"])
         buckets.setdefault(rec["date_utc"], []).append(s)
     out = {d: sum(vs) / len(vs) for d, vs in buckets.items()}
-    out["_n_oil_adjacent"] = float(n_adj)  # type: ignore[assignment]
-    return out
+    return out, adj_dates
 
 
-def attach_sentiment(rets: list[dict], daily: dict[str, float], windows: dict[str, int]) -> dict:
-    n_adj = int(daily.pop("_n_oil_adjacent", 0))
+def split_stats(posts: list[dict], lex: dict, cl_dates: set[str], lo: str, hi: str) -> dict:
+    pnf_span = {1: 0, -1: 0, 0: 0}
+    pnf_cl = {1: 0, -1: 0, 0: 0}
+    n_in = n_on_cl = n_off = 0
+    for rec in posts:
+        s = score_post(rec["text"], lex)
+        if s is None:
+            continue
+        d = rec["date_utc"]
+        if d < lo or d > hi:
+            continue
+        n_in += 1
+        pnf_span[s] += 1
+        if d in cl_dates:
+            n_on_cl += 1
+            pnf_cl[s] += 1
+        else:
+            n_off += 1
+    return {
+        "n_oil_adjacent_in_span": n_in,
+        "n_on_cl_session_dates": n_on_cl,
+        "n_not_on_cl_session_dates": n_off,
+        "pnf_in_span": {"plus1": pnf_span[1], "minus1": pnf_span[-1], "flat": pnf_span[0]},
+        "pnf_on_cl_session_dates": {"plus1": pnf_cl[1], "minus1": pnf_cl[-1], "flat": pnf_cl[0]},
+        "note": "Frozen lexicon. Weekend/holiday posts do not attach to a CL date. Do not retune.",
+    }
+
+
+def attach_sentiment(
+    rets: list[dict],
+    daily: dict[str, float],
+    windows: dict[str, int],
+    adj_dates: list[str],
+) -> dict:
     dates = [r["date"] for r in rets]
+    first, last = (dates[0], dates[-1]) if dates else ("", "")
+    n_adj_window = sum(1 for d in adj_dates if first <= d <= last) if dates else 0
     series = [float(daily.get(d, 0.0)) for d in dates]
     for rec, val in zip(rets, series):
         rec["s_daily"] = val
@@ -146,9 +179,12 @@ def attach_sentiment(rets: list[dict], daily: dict[str, float], windows: dict[st
                 rec["sent"][name] = float(sum(series[t - w + 1 : t + 1]) / w)
     n_nonzero_days = sum(1 for v in series if v != 0.0)
     return {
-        "n_oil_adjacent_posts": n_adj,
+        "n_oil_adjacent_posts": len(adj_dates),
+        "n_oil_adjacent_in_session_span": n_adj_window,
         "n_days_with_signal": n_nonzero_days,
         "n_sessions": len(rets),
+        "span_first": first or None,
+        "span_last": last or None,
     }
 
 
@@ -260,8 +296,10 @@ def build_rets(clf_path: str, cutoff: str | None, posts: list[dict], lex: dict) 
     if cutoff is not None:
         rows = [r for r in rows if r["date"] <= cutoff]
     rets = session_returns(rows)
-    daily = daily_scores(posts, lex)
-    coverage = attach_sentiment(rets, daily, {h["id"]: h["window"] for h in HORSES})
+    daily, adj_dates = daily_scores(posts, lex)
+    coverage = attach_sentiment(
+        rets, daily, {h["id"]: h["window"] for h in HORSES}, adj_dates
+    )
     return rets, coverage
 
 
@@ -294,12 +332,18 @@ def main() -> int:
     if args.phase in ("discovery", "all"):
         disc_rets, cov = build_rets(args.clf, args.discovery_cutoff, posts, lex)
         payload["discovery_coverage"] = cov
-        if cov["n_oil_adjacent_posts"] < args.min_adjacent:
+        cl_dates = {r["date"] for r in disc_rets}
+        span_lo = disc_rets[0]["date"] if disc_rets else ""
+        payload["discovery_lexicon_split"] = split_stats(
+            posts, lex, cl_dates, span_lo, args.discovery_cutoff
+        )
+        n_adj = int(cov.get("n_oil_adjacent_in_session_span") or 0)
+        if n_adj < args.min_adjacent:
             payload["survivor"] = {
                 "id": None,
                 "reason": (
-                    f"vehicle too thin: {cov['n_oil_adjacent_posts']} oil-adjacent posts "
-                    f"in discovery prefix (need {args.min_adjacent})"
+                    f"vehicle too thin: {n_adj} oil-adjacent posts "
+                    f"in discovery session span (need {args.min_adjacent})"
                 ),
             }
             payload["discovery"] = None
@@ -319,6 +363,7 @@ def main() -> int:
         payload["survivor"] = prior.get("survivor")
         payload["discovery_n_sessions"] = prior.get("discovery_n_sessions")
         payload["discovery_coverage"] = prior.get("discovery_coverage")
+        payload["discovery_lexicon_split"] = prior.get("discovery_lexicon_split")
         payload["vehicle_fail"] = prior.get("vehicle_fail")
 
     if args.phase in ("confirm", "all"):
