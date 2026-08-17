@@ -19,7 +19,7 @@ Can a predictive model for oil futures be built?
 
 A specified forecasting recipe for listed crude **futures** (not last-price no-change) has been written. That is all existence means here, and it stays separate. Spot and real-price recipes stay outside that freeze. The recipe list is not an endorsement of one paper.
 
-Walk-forward skill versus last settlement is **not shown**. That leftover stays live. We did not invent a public series to fill it.
+Walk-forward skill versus last settlement is **not shown**. Night and day are **separate** tests; a combo is a third test, not a shortcut. That leftover stays live. We did not invent a public series to fill it.
 
 After-cost paper value is **not shown**. The paper book was left unnamed. That is not a proof that every book fails.
 
@@ -57,7 +57,7 @@ This is **not** trading advice and does **not** clear the blended slogan “a pr
 
 **Keep saying:** A futures-target recipe has been written. Skill and after-cost value are not shown. The skill leftover stays live and unnamed. Leave-unnamed is not a refute.
 
-**Test next (only if authorized):** `name source class …` matching next-session CL log-return vs last settlement · or `leave unnamed`. The futures-target method map and the mover-list census are evaluation, not that class.
+**Test next (only if authorized):** `name source class …` matching CL official open/settlement (report F-CC, F-ON, F-DAY separately) · or `leave unnamed`. Session protocol is meanings, not that class. Combo does not skip the queue.
 
 ---
 

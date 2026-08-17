@@ -26,7 +26,8 @@
 - Operator **C** (2026-08-17, later): `decline optional modes`. UX/CX/CR **declined, not run**. QI N/A. Parent closeout / Amb **5.5** / established unchanged. Skill leftover still **live**.
 - Operator (2026-08-17, later): map published **futures-target** methods vs next-session / one-step log-return vs last settlement. **L-MAP-FT.** Closest kinship = daily CL curve MAE/MCS (Kearney–Shang 2020); Chantziara 2008 daily PCs = little OOS power; monthly NS ≠ next session; vol = wrong object; spot-using-futures OUT. F-SKILL **not established**. F-SRC **not filled**. Amb **unchanged 5.5**.
 - Operator (2026-08-17, later): has anyone made a comprehensive exhaustive list of what can actually move the locked object? **L-MAP-DRV.** Answer: **no**. EIA/Kilian buckets and calendars exist; inventory **surprises** move WTI futures **at the print** (Ye–Karali; Geman–Li) — contemporaneous, not next-session RMSE vs last settlement. F-SKILL **not established**. F-SRC **not filled**. Amb **unchanged 5.5**.
-- Amb 12 → 9 → 7.5 → **5.5**. Leave-unnamed, closeout, declining optional modes, and the method/mover maps do not drop Amb. Amb ≠ clearance.
+- Operator (2026-08-17, later): agreed to research night and day **separately**, then combo only after both scored with the rule written in advance; `ok proceed`. **L-SESS.** Parent F-SKILL stays **F-CC** (settlement-to-settlement). F-ON / F-DAY protocol locked, **not established**. F-COMBO park-until-trigger. USO half-hour momentum = kinship only (**L-MAP-SESS**). Not a trade. F-SRC still unnamed. Amb **unchanged 5.5**.
+- Amb 12 → 9 → 7.5 → **5.5**. Leave-unnamed, closeout, declining optional modes, maps, and L-SESS do not drop Amb. Amb ≠ clearance.
 
 ## Residual judgment points encountered
 

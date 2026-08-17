@@ -39,7 +39,7 @@ No named-class pulse on F-SKILL. Skill stays **not shown**.
 
 ## Reopen
 
-`name source class …` with a **specific public series + matching locks** (NYMEX CL front-month, next-session **log-return**, walk-forward RMSE vs last-settlement). Naming ≠ bar-met. Honest **established** still stops. Do **not** invent a class.
+`name source class …` with a **specific public series + matching locks** (NYMEX CL front-month, official **open and settlement** stamps, walk-forward RMSE vs the matching no-change). A matching pulse **reports F-CC, F-ON, and F-DAY separately**. Naming ≠ bar-met. Honest **established** still stops. Do **not** invent a class.
 
 ---
 

@@ -20,7 +20,7 @@ Can a predictive model for oil futures be built?
 |---------|----------------------------------------|
 | Three jobs, not one blended yes: existence ⊂ skill ⊂ after-cost value | Under Rank 4 |
 | Existence = a specified non-no-change mapping for listed WTI or Brent **futures** can be written | Under Rank 4 + **D-EXIST-MET-FT** |
-| Skill protocol = NYMEX CL front-month, next-session **log-return**, walk-forward RMSE vs last settlement | Under Rank 4 F-SKILL (bar **not met**) |
+| Skill protocol = NYMEX CL front-month, next-session **log-return**, walk-forward RMSE vs last settlement (**F-CC**); **L-SESS** requires separate **F-ON** / **F-DAY** exhibits; combo is a third test | Under Rank 4 F-SKILL + L-SESS (bars **not met**) |
 | Value protocol = after-cost paper P/L vs the curve on the same CL next-session book; V1 or V2 named per test | Under Rank 4 V-VALUE + V-EITHER (bar **not met**) |
 | No-change / last settlement = F-SKILL **baseline**, not the D-EXIST **model** | Under Rank 4 (operator B) |
 | Recipe menu = existence evidence only; not a singleton pick | Under L-D-SUITE / D-EXIST-MET-FT |
@@ -38,7 +38,8 @@ Can a predictive model for oil futures be built?
 ### Free parameters remaining
 | ID | Status / freeze |
 |----|-----------------|
-| [R-F-SKILL](RESIDUAL_BRANCH_MENU.md#r-f-skill) | Skill source class **unnamed**. `pursue` (leftover **live**). Reopen: `name source class …` matching next-session CL log-return vs last-settlement. Do not invent |
+| [R-F-SKILL](RESIDUAL_BRANCH_MENU.md#r-f-skill) | Skill source class **unnamed**. `pursue` (leftover **live**). Reopen: `name source class …` matching CL official open/settlement; report F-CC, F-ON, F-DAY separately. Do not invent |
+| [R-F-COMBO](RESIDUAL_BRANCH_MENU.md#r-f-combo) | Switching rule **unnamed**. `park-until-trigger`. Rule in advance; F-ON and F-DAY already scored separately |
 | [R-V-VALUE](RESIDUAL_BRANCH_MENU.md#r-v-value) | After-cost book **unnamed**. `park-until-trigger`. Test must still name V1 or V2 |
 | [R-G8](RESIDUAL_BRANCH_MENU.md#r-g8) / [R-LIVE-STANDIN](RESIDUAL_BRANCH_MENU.md#r-live-standin) | Definition-blocked until F-SRC is named |
 
@@ -56,7 +57,7 @@ Any claim that a model beats last settlement out of sample; that a paper book ma
 
 | Option | Expected buy | Still leaves open |
 |--------|--------------|-------------------|
-| `name source class …` matching Rank 4 F-SKILL | Named-class pulse of walk-forward RMSE vs last settlement on next-session CL log-return | Establishment-stop if honest `04` would say established; V-VALUE still unnamed; L-MAP-FT and L-MAP-DRV are **not** that class |
+| `name source class …` matching Rank 4 F-SKILL + L-SESS | Named-class pulse of walk-forward RMSE vs matching no-change on F-CC, with F-ON and F-DAY reported separately | Establishment-stop if honest `04` would say established; V-VALUE still unnamed; combo still parked |
 | `name source class …` matching V-VALUE | Named paper book; test must name V1 or V2 | Does not auto-meet F-SKILL |
 | `run CR` / successor (existence-only or skill-only) | Different question, labeled | **Declined** 2026-08-17; Rank 4 leftover unchanged |
 | `run UX` / `run CX` | Documentation / alternatives | **Declined** 2026-08-17; parent verdict unchanged |

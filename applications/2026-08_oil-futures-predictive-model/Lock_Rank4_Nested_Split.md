@@ -71,4 +71,5 @@ Selecting Rank 4 **drops leftover-ambiguity by fixing meanings** (three jobs, �
 6. V-COST either is **not** “we used V2.” Each test must name V1 or V2.  
 7. Last-settlement no-change is the F-SKILL **baseline**, not the D-EXIST **model** (operator B).  
 8. D-EXIST-met is **not** a pick of one paper from the menu, **not** spot-inside-C3, and **not** F-SKILL or V-VALUE.  
-9. F-SRC leave unnamed is **not** a refute of skill, **not** an undo of D-EXIST-MET-FT, and **not** a license to invent a class.
+9. F-SRC leave unnamed is **not** a refute of skill, **not** an undo of D-EXIST-MET-FT, and **not** a license to invent a class.  
+10–14. Session-split honesty: see `Lock_Session_Split.md` (F-DAY ≠ F-CC; combo is a third test; not a trade).

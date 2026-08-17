@@ -14,7 +14,7 @@ Does **not** replace `DISSERTATION.md` (audit) or change verdicts.
 
 A specified forecasting recipe for listed crude **futures** (not last-price no-change) has been written. That is all existence means here. Spot and real-price recipes stay outside that freeze. The recipe list is not an endorsement of one paper.
 
-Walk-forward skill versus last settlement is **not shown**. That leftover stays live. We did not invent a public series to fill it.
+Walk-forward skill versus last settlement is **not shown**. Night and day are now **separate** scoreboards; a combo is a **third** test, not a shortcut. That leftover stays live. We did not invent a public series to fill it.
 
 After-cost paper value is **not shown**. The paper book was left unnamed. That is not a proof that every book fails.
 
@@ -44,15 +44,15 @@ This is **not** trading advice and does **not** clear the blended slogan “a pr
 
 ## 3. Action implications
 
-**Stop saying:** That EIA STEO or the futures curve is a proven next-session CL model. That spot-oil papers clear this freeze. That existence-met is skill-met. That one paper was picked as “the” recipe. That anyone should trade. That unnamed skill means no model can ever beat last price. That EIA’s factor list or Wednesday inventories are an exhaustive catalog of next-session CL movers, or that an announcement-day jump is the locked skill test.
+**Stop saying:** That EIA STEO or the futures curve is a proven next-session CL model. That spot-oil papers clear this freeze. That existence-met is skill-met. That one paper was picked as “the” recipe. That anyone should trade. That unnamed skill means no model can ever beat last price. That EIA’s factor list or Wednesday inventories are an exhaustive catalog of next-session CL movers, or that an announcement-day jump is the locked skill test. That flattening before the close **is** the skill test, or that a combo is already passed.
 
-**Keep saying:** A futures-target recipe has been written. Skill and after-cost value are not shown. The skill leftover stays live and unnamed. Leave-unnamed is not a refute. Bucket lists of oil-price *kinds* exist; an exhaustive next-session mover list does not.
+**Keep saying:** A futures-target recipe has been written. Skill and after-cost value are not shown. Night, day, and the whole trip are separate tests. The skill leftover stays live and unnamed. Leave-unnamed is not a refute. Bucket lists of oil-price *kinds* exist; an exhaustive next-session mover list does not. This is not a trading strategy.
 
 ---
 
 ## 4. Residual-branch offer
 
-Menu offered. Skill leftover **live** ([R-F-SKILL](RESIDUAL_BRANCH_MENU.md#r-f-skill)). Futures-target method map executed as evaluation ([R-MAP](RESIDUAL_BRANCH_MENU.md#r-map); [`MAP_Futures_Target_Forecasting_Methods.md`](MAP_Futures_Target_Forecasting_Methods.md)). Mover-list census executed as evaluation ([R-DRV](RESIDUAL_BRANCH_MENU.md#r-drv); [`MAP_What_Can_Move_CL.md`](MAP_What_Can_Move_CL.md)). After-cost book parked until a matching class is named ([R-V-VALUE](RESIDUAL_BRANCH_MENU.md#r-v-value)). [`RESIDUAL_BRANCH_MENU.md`](RESIDUAL_BRANCH_MENU.md)
+Menu offered. Skill leftover **live** ([R-F-SKILL](RESIDUAL_BRANCH_MENU.md#r-f-skill)). Combo parked ([R-F-COMBO](RESIDUAL_BRANCH_MENU.md#r-f-combo)). Session protocol: [`Lock_Session_Split.md`](Lock_Session_Split.md). After-cost book parked until a matching class is named ([R-V-VALUE](RESIDUAL_BRANCH_MENU.md#r-v-value)). [`RESIDUAL_BRANCH_MENU.md`](RESIDUAL_BRANCH_MENU.md)
 
 ---
 

@@ -118,12 +118,13 @@ G8 is the **named model class and feature recipe** under a locked G1/G6 — bloc
 | D-SRC | D-EXIST exhibit — **established** (futures-target only, 2026-08-17). No-change **OUT**. Spot/real-price **OUT**. Menu ≠ singleton pick. |
 | G3 | **LOCKED per leg:** D-EXIST C3 class (WTI or Brent, either); F-SKILL/V-VALUE C1 NYMEX CL front-month. |
 | G4 | **LOCKED per leg:** D-EXIST T2 price-level census; F-SKILL/V-VALUE T1 next-session log-return. |
-| G5 | **LOCKED per leg:** D-EXIST H3 open (census); F-SKILL/V-VALUE H1 next session. |
+| G5 | **LOCKED per leg:** D-EXIST H3 open (census); F-SKILL/V-VALUE H1 next session as **F-CC** (settlement-to-settlement). **L-SESS:** F-ON = settlement→next official open; F-DAY = official open→same-day settlement. Combo is a **third** test, not a substitute. |
 | G7 | **LOCKED per leg:** D-EXIST E3 census; F-SKILL/V-VALUE E1 walk-forward. Live vs stand-in for settlements still open. |
 | G8 | Named model class under F-SKILL — **re-opened**; not a D-EXIST requirement. |
 | V-COST | V-VALUE cost schedule — **either accepted** (V1 or V2; each test must name which). Incomplete as a singleton. |
-| F-SRC | Named public class for F-SKILL — **leave unnamed** (operator B); F-SKILL **not established**; live residual; do not invent a class. |
+| F-SRC | Named public class for F-SKILL — **leave unnamed** (operator B); F-SKILL **not established**; live residual; do not invent a class. Later pulse must **report F-ON and F-DAY** separately (`Lock_Session_Split.md`). |
 | V-SRC | Named recipe/book for V-VALUE — **leave unnamed** (operator B); V-VALUE-TEST-0 **not established**; not a refute. |
+| F-COMBO | Named switching rule — **park-until-trigger** (rule in advance + F-ON and F-DAY already scored separately). |
 
 *Later candidates must quote the freeze line for any parameter they claim to close. Changing the freeze line is a claim change, not progress.*
 
@@ -143,7 +144,7 @@ Lean Default Path: do **not** invent a skill class. Existence stays separate. Ne
 
 **D-EXIST** is **established** (futures-target only). **F-SKILL** is blocked primarily by **F-SRC leave unnamed** (live residual; do not invent a class). **V-VALUE** is blocked primarily by **V-SRC leave unnamed**.
 
-**Rectification:** `name source class …` matching next-session CL log-return vs last-settlement, or `endpoint only` / `closeout`. Do not auto-enter Phase 2. Do not treat the existence menu as F-SRC.
+**Rectification:** `name source class …` matching NYMEX CL official open/settlement stamps (report F-CC, F-ON, and F-DAY separately), or `endpoint only` / `closeout`. Do not auto-enter Phase 2. Do not treat the existence menu or a USO half-hour paper as F-SRC. Combo does not skip the queue.
 
 **Reopen condition (prominent):** After a named-enough non-circular F-SKILL class, or `endpoint only` / `closeout`.
 

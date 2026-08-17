@@ -19,9 +19,9 @@
 
 ## 0. Plain-language framing
 
-**What we’re doing:** Listing leftovers after Phase 1. Existence for futures-target recipes is already on the record and stays separate. The skill source class was left unnamed on purpose; that leftover stays live. The after-cost paper book was left unnamed.
+**What we’re doing:** Listing leftovers after Phase 1. Existence for futures-target recipes is already on the record and stays separate. Night, day, and the whole close-to-close trip are **separate tests**; a combo is parked until those two are scored and a rule is written in advance. The skill source class was left unnamed on purpose; that leftover stays live. The after-cost paper book was left unnamed.
 
-**What we need from you:** Nothing unless you want to name a matching skill series later, or authorize a branch or optional mode. We will not invent a class.
+**What we need from you:** Nothing unless you want to name a matching skill series later (one that can report official **open and settlement**), or authorize a combo rule after the two scoreboards exist. We will not invent a class. This is not a trade.
 
 **What authorizing a branch means:** A scoped continuation on this same Rank 4 package — not a rewrite of existence-met, and not “oil models don’t work.”
 
@@ -37,8 +37,10 @@
 | [R-HUNT](#r-hunt) | Proven public series matching F-SKILL freeze? | Empirically resolvable | Hunt executed; **no class submitted** | **executed → not established** |
 | [R-MAP](#r-map) | Published futures-target methods vs next-session log-return? | Empirically resolvable | Census of families; **no class submitted** | **executed → evaluation** (L-MAP-FT) |
 | [R-DRV](#r-drv) | Exhaustive list of what can move next-session CL? | Empirically resolvable | Census of list-types; **no class submitted** | **executed → evaluation** (L-MAP-DRV) |
+| [R-SESS](#r-sess) | Night vs day vs whole-trip as separate tests? | Definitional lock | Protocol; **no class submitted** | **executed → admitted meanings** (L-SESS) |
 | [R-V-VALUE-TEST-0](#r-v-value-test-0) | Named after-cost paper book? | Empirically resolvable | None named | **executed → not established** |
-| [R-F-SKILL](#r-f-skill) | Next-session CL log-return skill vs last settlement? | Empirically resolvable | **unnamed** (operator `leave unnamed`) | **pursue** (leftover **live**) |
+| [R-F-SKILL](#r-f-skill) | Next-session CL log-return skill vs last settlement (F-CC), plus F-ON/F-DAY exhibits? | Empirically resolvable | **unnamed** (operator `leave unnamed`) | **pursue** (leftover **live**) |
+| [R-F-COMBO](#r-f-combo) | Named switching rule after F-ON and F-DAY scored separately? | Empirically resolvable | **unnamed** | **park-until-trigger** |
 | [R-V-VALUE](#r-v-value) | After-cost paper P/L vs the curve? | Empirically resolvable | **unnamed** (operator `leave unnamed`) | **park-until-trigger** |
 | [R-G8](#r-g8) | Model-class fashion under F-SKILL | Definition-blocked | — (waits on F-SRC) | **definition-blocked** |
 | [R-LIVE-STANDIN](#r-live-standin) | Live vs stand-in for a skill/value pulse | Definition-blocked | — (waits on F-SRC) | **definition-blocked** |
@@ -117,6 +119,22 @@
 | **Disposition** | **Executed 2026-08-17** → evaluation |
 | **How to authorize** | Already run. Later skill reopen is still [R-F-SKILL](#r-f-skill). Changing the freeze to announcement-day explanation would be a **new** object |
 
+<a id="r-sess"></a>
+### R-SESS
+
+| Field | Content |
+|-------|---------|
+| **Class** | Definitional lock (executed) |
+| **Named source class** | None — protocol only (`Lock_Session_Split.md`). Kinship map: `MAP_Session_Split.md` |
+| **What it is** | Night (F-ON), day (F-DAY), and whole trip (F-CC) as **separate** scoreboards; combo is a **third** test |
+| **Why offered here** | Operator agreed to research both, then combine only after; `ok proceed` |
+| **What authorizing does** | Already ran: `04_Material_Admission_Session_Split.md` (**L-SESS**) |
+| **What success / failure changes** | **Meanings admitted.** No skill bar met. USO half-hour papers stay kinship |
+| **What it does *not* do** | Does not approve a daytime trade; does not replace F-CC with F-DAY; does not invent a class |
+| **Effort** | Low (done) |
+| **Disposition** | **Executed 2026-08-17** → admitted meanings |
+| **How to authorize** | Already run. Skill reopen is [R-F-SKILL](#r-f-skill). Combo reopen is [R-F-COMBO](#r-f-combo) |
+
 <a id="r-v-value-test-0"></a>
 ### R-V-VALUE-TEST-0
 
@@ -140,16 +158,34 @@
 |-------|---------|
 | **Class** | Empirically resolvable |
 | **Named source class** | **unnamed**. Operator 2026-08-17: `leave unnamed`. Do **not** invent a class. L-D-SUITE is existence evidence **only** |
-| **What it is** | Whether a specified recipe has a real shot of beating last-settlement RMSE, walk-forward, NYMEX **CL front-month**, **next-session log-return** |
-| **Why offered here** | Rank 4 F-SKILL is the live leftover after existence-met. Operator closeout **C** kept it live |
-| **What authorizing does** | Only a later `name source class …` that **matches** the skill freeze enables a named-class pulse. Honest **established** still **stops** |
-| **What success / failure changes** | A matching pulse could establish / not-establish / refute F-SKILL. Leave-unnamed ≠ unlikely. Naming ≠ bar-met |
-| **What it does *not* do** | Does not license EIA STEO, Alquist–Kilian spot evaluations, the listed curve as L₀, the existence menu as “the” skill class, or last-settlement no-change as the model |
+| **What it is** | Whether a specified recipe has a real shot of beating no-change RMSE, walk-forward, on **F-CC** (settlement-to-settlement). A matching pulse **also reports F-ON and F-DAY** separately (`Lock_Session_Split.md`) |
+| **Why offered here** | Rank 4 F-SKILL is the live leftover after existence-met. Operator closeout **C** kept it live. Operator later locked the session split |
+| **What authorizing does** | Only a later `name source class …` that **matches** CL official **open and settlement** stamps. Honest **established** still **stops** |
+| **What success / failure changes** | A matching pulse could establish / not-establish / refute F-CC, F-ON, and F-DAY **as separate calls**. Leave-unnamed ≠ unlikely. Naming ≠ bar-met. F-DAY-met ≠ F-CC-met |
+| **What it does *not* do** | Does not license EIA STEO, Alquist–Kilian, the existence menu, USO half-hour momentum, last-settlement no-change as the model, or a daytime flatten as a pass of F-CC |
 | **Effort** | High until a matching series exists; then medium |
 | **Disposition** | **pursue** (leftover **live**; class remains unnamed) |
-| **How to authorize** | `name source class …` with a **specific public series + matching locks** (NYMEX CL front-month, next-session **log-return**, walk-forward RMSE vs last-settlement) |
+| **How to authorize** | `name source class …` with a **specific public series + matching locks** (NYMEX CL front-month, official **open and settlement**, walk-forward RMSE vs matching no-change). Pulse reports **F-CC, F-ON, and F-DAY** separately |
 
-**Do not treat as this class:** EIA STEO; listed futures curve as a next-session CL return model; Alquist–Kilian / Fed IFDP spot-forecast papers; canonical real/spot VARs; the existence menu as “the” skill recipe; last-settlement no-change (baseline, not the model); **L-MAP-FT families as a silent F-SRC pick** (Kearney–Shang MAE/MCS, Bredin holding-period/Sharpe, Baruník–Malinská monthly NS, Coppola 1-month VECM); **L-MAP-DRV families as a silent F-SRC pick** (EIA seven factors; Kilian shocks; Ye–Karali / Geman–Li inventory surprises).
+**Do not treat as this class:** EIA STEO; listed futures curve as a next-session CL return model; Alquist–Kilian / Fed IFDP spot-forecast papers; canonical real/spot VARs; the existence menu as “the” skill recipe; last-settlement no-change (baseline, not the model); **L-MAP-FT families as a silent F-SRC pick**; **L-MAP-DRV families as a silent F-SRC pick**; **USO / Zhang half-hour momentum as F-ON or F-DAY**.
+
+<a id="r-f-combo"></a>
+### R-F-COMBO
+
+| Field | Content |
+|-------|---------|
+| **Class** | Empirically resolvable |
+| **Named source class** | **unnamed**. Switching rule not written |
+| **What it is** | A **third** test: a named rule for when to play night, day, both, or flat, written **before** the out-of-sample window, after F-ON and F-DAY have already been scored **separately** |
+| **Why offered here** | Operator wanted a combo **after** the two scoreboards, not as a shortcut |
+| **What authorizing does** | `name source class …` with the **rule text in advance**. Walk-forward. After-cost is V-VALUE (name V1 or V2; count the book’s actual round-turns) |
+| **What success / failure changes** | Could establish / not-establish / refute **only F-COMBO** (and value if costs are on). Does **not** auto-meet F-CC |
+| **What it does *not* do** | Does not let the combo inherit a win from one half after the fact; not trading advice |
+| **Effort** | High until a rule and a matching series exist |
+| **Disposition** | **park-until-trigger** |
+| **How to authorize** | `name source class …` with the switching rule written in advance |
+
+**Trigger:** F-ON and F-DAY have been scored separately (even if both not-established) **and** a public switching rule is named that was written before the OOS window. Hindsight blending does **not** fire this trigger.
 
 <a id="r-v-value"></a>
 ### R-V-VALUE
@@ -158,7 +194,7 @@
 |-------|---------|
 | **Class** | Empirically resolvable |
 | **Named source class** | **unnamed**. Operator 2026-08-17: `leave unnamed`. After-cost value stays **not shown** |
-| **What it is** | Whether a named paper book has a real shot of after-cost P/L vs the curve on the same CL next-session book |
+| **What it is** | Whether a named paper book has a real shot of after-cost P/L vs the curve. Default book is F-CC (next-session). A **day** or **combo** book must count **its** round-turns (daily in-and-out is not free) |
 | **Why offered here** | Rank 4 V-VALUE is a marked elevation. Costs are allowed as either V1 or V2, but there is still no named book |
 | **What authorizing does** | Only a later `name source class …` that **matches** V-VALUE. That later test must still **name V1 or V2** |
 | **What success / failure changes** | A matching pulse could establish / not-establish / refute V-VALUE. Leave-unnamed ≠ every book fails |
