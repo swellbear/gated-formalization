@@ -38,7 +38,7 @@ Can a predictive model for oil futures be built?
 ### Free parameters remaining
 | ID | Status / freeze |
 |----|-----------------|
-| [R-F-SKILL](RESIDUAL_BRANCH_MENU.md#r-f-skill) | Skill class named; **H-LAG-WF scored, lost on F-CC** (does **not** promote); H-KS not run; **not established**. `pursue`. Reopen: other horse on Yahoo |
+| [R-F-SKILL](RESIDUAL_BRANCH_MENU.md#r-f-skill) | Skill class named; **H-SPARSE-CAL** tiny 500 / **fails** 750; **H-SPARSE-VOL** and **H-LAG-WF** F-CC **loss**; H-KS not run; **not established**. `pursue`. Reopen: **different** horse on Yahoo |
 | [R-F-COMBO](RESIDUAL_BRANCH_MENU.md#r-f-combo) | Switching rule **unnamed**. `park-until-trigger`. Rule in advance; F-ON and F-DAY already scored separately |
 | [R-V-VALUE](RESIDUAL_BRANCH_MENU.md#r-v-value) | After-cost book **unnamed**. `park-until-trigger`. Later book must match **V2** |
 | [R-G8](RESIDUAL_BRANCH_MENU.md#r-g8) | **Executed → admitted meanings** (baseline scored; optional FTS not run) |
@@ -80,9 +80,9 @@ Original one-liner is a blended “can.” Rank 4 named the split without rewrit
 
 ## Closeout statement
 
-Application **closed** as **Stable Provisional (split) — hard stop (residuals live)**. **L-SCREEN-Y-PROMOTE** in force: Yahoo first; live CME only if F-CC beats no-change on last 500 (and does not lose on 250/750). **H-LAG-WF** failed that gate. Leftover stays **live**. Phase 2 not entered. Amb **1.0**. Not trading advice.
+Application **closed** as **Stable Provisional (split) — hard stop (residuals live)**. **L-SCREEN-Y-PROMOTE** in force. **H-SPARSE-CAL** / **H-SPARSE-VOL** scored; **neither promotes**. Leftover stays **live**. Phase 2 not entered. Amb **1.0**. Not trading advice.
 
-Awaiting further authorization (`leave skill not shown` · `name horse …` · `leave screen rule`). Live CME **only if** the F-CC gate fires. Optional modes **declined**.
+Awaiting further authorization (`leave skill not shown` · `name horse …` (**different**) · `leave screen rule`). Live CME **only if** the F-CC gate fires. Optional modes **declined**.
 
 ---
 

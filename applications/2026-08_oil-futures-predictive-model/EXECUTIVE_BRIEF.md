@@ -19,7 +19,7 @@ Can a predictive model for oil futures be built?
 
 A specified forecasting recipe for listed crude **futures** (not last-price no-change) has been written. That is all existence means here, and it stays separate. Spot and real-price recipes stay outside that freeze. The recipe list is not an endorsement of one paper.
 
-Walk-forward skill versus last settlement is **not shown**. Yahoo is a **stipulated stand-in**. Screen on Yahoo; promote to live CME **only** if F-CC beats no-change on last 500 (and does not lose on 250/750). **H-LAG-WF** failed that gate. Kearney–Shang **not run**.
+Walk-forward skill versus last settlement is **not shown**. Yahoo is a **stipulated stand-in**. Two sparse horses were scored. **Neither promotes.** The calendar horse’s last-500 whole-trip dip is tiny and **loses** on last 750. Kearney–Shang **not run**.
 
 After-cost paper value is **not shown**. Paper costs are now **V2** (fees plus $10/contract each way). The paper book was left unnamed. That is not a proof that every book fails.
 
@@ -43,7 +43,7 @@ This is **not** trading advice and does **not** clear the blended slogan “a pr
 
 ## Not established
 
-- Next-session CL log-return skill vs last settlement (**H-LAG-WF lost on F-CC**; leftover **live**)  
+- Next-session CL log-return skill vs last settlement (**H-SPARSE-CAL** tiny 500 / **fails** 750; **H-SPARSE-VOL** and **H-LAG-WF** F-CC **loss**; leftover **live**)  
 - After-cost paper P/L vs the curve (book unnamed; **V2 named**)  
 - Directional accuracy after costs; any decision or trading value  
 - Spot/real-price recipes as the existence exhibit  
@@ -63,7 +63,7 @@ This is **not** trading advice and does **not** clear the blended slogan “a pr
 
 ## Residual-branch menu (at closeout)
 
-Offered. Skill leftover **live** ([R-F-SKILL](RESIDUAL_BRANCH_MENU.md#r-f-skill) H-LAG scored, lost on F-CC; H-KS not run). Live vs stand-in **executed** ([R-LIVE-STANDIN](RESIDUAL_BRANCH_MENU.md#r-live-standin)). After-cost book parked ([R-V-VALUE](RESIDUAL_BRANCH_MENU.md#r-v-value)). Combo parked ([R-F-COMBO](RESIDUAL_BRANCH_MENU.md#r-f-combo)). [`RESIDUAL_BRANCH_MENU.md`](RESIDUAL_BRANCH_MENU.md)
+Offered. Skill leftover **live** ([R-F-SKILL](RESIDUAL_BRANCH_MENU.md#r-f-skill) CAL/VOL/H-LAG fail promote; H-KS not run). Live vs stand-in **executed** ([R-LIVE-STANDIN](RESIDUAL_BRANCH_MENU.md#r-live-standin)). After-cost book parked ([R-V-VALUE](RESIDUAL_BRANCH_MENU.md#r-v-value)). Combo parked ([R-F-COMBO](RESIDUAL_BRANCH_MENU.md#r-f-combo)). [`RESIDUAL_BRANCH_MENU.md`](RESIDUAL_BRANCH_MENU.md)
 
 ---
 
@@ -85,7 +85,7 @@ Offered. Skill leftover **live** ([R-F-SKILL](RESIDUAL_BRANCH_MENU.md#r-f-skill)
 |------|--------|
 | Method verdict | Stable Provisional (split); **hard stop (residuals live)** |
 | Amb | **1.0** |
-| Locks / proxy IDs | Rank 4; D-EXIST-MET-FT; **V-COST-V2**; **L-SCREEN-Y-PROMOTE**; F-SRC-CME-TAPE; L-STANDIN-Y-CLF; **H-LAG-WF**; L-SESS; V-SRC leave unnamed |
+| Locks / proxy IDs | Rank 4; D-EXIST-MET-FT; **V-COST-V2**; **L-SCREEN-Y-PROMOTE**; F-SRC-CME-TAPE; L-STANDIN-Y-CLF; **H-LAG-WF**; **H-SPARSE-CAL**; **H-SPARSE-VOL**; L-SESS; V-SRC leave unnamed |
 | Scope label | Under Rank 4 only; existence = futures-target only |
 
 ---

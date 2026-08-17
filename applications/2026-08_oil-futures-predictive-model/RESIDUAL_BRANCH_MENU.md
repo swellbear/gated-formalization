@@ -6,7 +6,7 @@
 
 **Date:** 2026-08-17  
 **Application:** `2026-08_oil-futures-predictive-model`  
-**Closeout status:** **hard stop (residuals live)**. **L-SCREEN-Y-PROMOTE** in force. Skill leftover **live** (next horse on Yahoo; H-LAG failed promote gate). Phase 2 not entered.
+**Closeout status:** **hard stop (residuals live)**. **L-SCREEN-Y-PROMOTE** in force. Skill leftover **live** (CAL/VOL/H-LAG all fail promote; next horse must be **different**). Phase 2 not entered.
 
 **Glossary:** [`docs/READER_GLOSSARY.md`](../../docs/READER_GLOSSARY.md)  
 **Optional modes (separate):** [`OPTIONAL_MODES_MENU.md`](OPTIONAL_MODES_MENU.md)
@@ -19,7 +19,7 @@
 
 ## 0. Plain-language framing
 
-**What we’re doing:** Listing leftovers. Yahoo first. Live CME only if a named horse beats no-change on the **whole trip**. The lagged-return horse already failed that. Combo parked. After-cost book unnamed.
+**What we’re doing:** Listing leftovers. Yahoo first. Live CME only if a named horse beats no-change on the **whole trip**. Lagged-return, calendar-sparse, and vol-sparse horses all failed that gate. Combo parked. After-cost book unnamed.
 
 **What we need from you:** Nothing required. Optional: official CME re-score, or name a horse vs this baseline. This is not a trade.
 
@@ -39,7 +39,7 @@
 | [R-DRV](#r-drv) | Exhaustive list of what can move next-session CL? | Empirically resolvable | Census of list-types; **no class submitted** | **executed → evaluation** (L-MAP-DRV) |
 | [R-SESS](#r-sess) | Night vs day vs whole-trip as separate tests? | Definitional lock | Protocol; **no class submitted** | **executed → admitted meanings** (L-SESS) |
 | [R-V-VALUE-TEST-0](#r-v-value-test-0) | Named after-cost paper book? | Empirically resolvable | None named | **executed → not established** |
-| [R-F-SKILL](#r-f-skill) | Next-session CL log-return skill vs last settlement (F-CC), plus F-ON/F-DAY exhibits? | Empirically resolvable | **H-LAG-WF** scored (failed promote gate); **H-KS-FTS** not run | **pursue** (**not established**) |
+| [R-F-SKILL](#r-f-skill) | Next-session CL log-return skill vs last settlement (F-CC), plus F-ON/F-DAY exhibits? | Empirically resolvable | **H-SPARSE-CAL** / **H-SPARSE-VOL** / **H-LAG-WF** scored (all fail promote); **H-KS-FTS** not run | **pursue** (**not established**) |
 | [R-F-COMBO](#r-f-combo) | Named switching rule after F-ON and F-DAY scored separately? | Empirically resolvable | **unnamed** | **park-until-trigger** |
 | [R-V-VALUE](#r-v-value) | After-cost paper P/L vs the curve? | Empirically resolvable | **unnamed** (operator `leave unnamed`) | **park-until-trigger** |
 | [R-G8](#r-g8) | Model-class fashion under F-SKILL | Empirically resolvable (meanings) | Baseline RMSE + optional FTS | **executed → admitted meanings** |
@@ -158,14 +158,14 @@
 |-------|---------|
 | **Class** | Empirically resolvable |
 | **Named source class** | **F-SRC-CME-TAPE**. Stand-in tape: Yahoo `CL=F` (`Lock_Standin_Yahoo_CLF.md`) |
-| **What it is** | Whether any horse **beats** no-change RMSE on **F-ON / F-DAY / F-CC**. **H-LAG-WF** scored last-500: F-ON 0.01283 vs 0 0.01291 (tiny dip, **not** met); F-DAY 0.02670 vs 0.02663 (loss); F-CC 0.02888 vs 0.02869 (**loss**; parent). **H-KS-FTS not run**. **Not established** |
+| **What it is** | Whether any horse **beats** no-change RMSE on **F-ON / F-DAY / F-CC**. **H-SPARSE-CAL** last-500 F-CC 0.02868990 vs 0 0.02869369 (tiny; **fails** 750 — no promote). **H-SPARSE-VOL** F-CC **loss**. **H-LAG-WF** F-CC **loss**. **H-KS-FTS not run**. **Not established** |
 | **Why offered here** | Rank 4 F-SKILL leftover; tape fork closed as stand-in |
-| **What authorizing does** | A later **front-only** horse is scored on Yahoo under **L-SCREEN-Y-PROMOTE**. Live CME is **confirmation** of the same horse **only** if F-CC beats 0 on last 500 and does not lose on 250/750. Honest **established** still **stops**. |
-| **What success / failure changes** | A Yahoo F-CC beat still is not live clearance. F-ON/F-DAY alone do **not** promote |
-| **What it does *not* do** | Treat Yahoo as official settlement; promote on an overnight dip; USO; EIA STEO; a trade |
+| **What authorizing does** | A later **front-only** horse is scored on Yahoo under **L-SCREEN-Y-PROMOTE**. Do **not** expand CAL/VOL into a zoo. Live CME is **confirmation** of the same horse **only** if F-CC beats 0 on last 500 and does not lose on 250/750. Honest **established** still **stops**. |
+| **What success / failure changes** | A Yahoo F-CC beat still is not live clearance. F-ON/F-DAY alone do **not** promote. A 0.000004 dip is **not** met |
+| **What it does *not* do** | Treat Yahoo as official settlement; promote on a tiny dip; USO; EIA STEO; a trade |
 | **Effort** | Medium once a horse is named |
-| **Disposition** | **pursue** (H-LAG failed promote gate; next horse on Yahoo; **not established**) |
-| **How to authorize** | `name horse …` on Yahoo, or leave |
+| **Disposition** | **pursue** (CAL/VOL/H-LAG fail promote; next horse must be **different**; **not established**) |
+| **How to authorize** | `name horse …` on Yahoo (different recipe), or leave |
 
 **Do not treat as this class:** EIA STEO; listed futures curve as a next-session CL return model; Alquist–Kilian / Fed IFDP spot-forecast papers; canonical real/spot VARs; the existence menu as “the” skill recipe; last-settlement no-change (baseline, not the model); **L-MAP-FT families as a silent F-SRC pick**; **L-MAP-DRV families as a silent F-SRC pick**; **USO / Zhang half-hour momentum as F-ON or F-DAY**.
 
@@ -261,7 +261,7 @@ None remaining. [R-G8](#r-g8) meanings admitted. [R-LIVE-STANDIN](#r-live-standi
 | [R-V-VALUE](#r-v-value) | park-until-trigger | Matching V-VALUE book named under **V2** |
 | [R-F-COMBO](#r-f-combo) | park-until-trigger | Rule in advance + F-ON and F-DAY already scored separately |
 
-**Live (not parked):** [R-F-SKILL](#r-f-skill) — `pursue` (next horse on Yahoo; H-LAG failed promote gate)
+**Live (not parked):** [R-F-SKILL](#r-f-skill) — `pursue` (CAL/VOL/H-LAG fail promote; next horse must be **different**)
 
 ---
 
@@ -283,6 +283,7 @@ None remaining. [R-G8](#r-g8) meanings admitted. [R-LIVE-STANDIN](#r-live-standi
 | 2026-08-17 | **V-COST-V2** named (fees + $10/contract/side); V-VALUE still not established; Amb **1.5 → 1.0** |
 | 2026-08-17 | **H-LAG-WF** scored (F-CC loss); **H-KS-FTS** not run (Yahoo month chain ≠ historical CL1–CL18); skill **not established**; Amb **held 1.0** |
 | 2026-08-17 | **L-SCREEN-Y-PROMOTE** — Yahoo screen; live CME only if F-CC beats 0 on last 500 and does not lose on 250/750; H-LAG does not promote; Amb **held 1.0** |
+| 2026-08-17 | **H-SPARSE-CAL** / **H-SPARSE-VOL** scored; neither promotes (CAL tiny 500, **fails** 750; VOL F-CC loss); skill **not established**; Amb **held 1.0** |
 
 ---
 

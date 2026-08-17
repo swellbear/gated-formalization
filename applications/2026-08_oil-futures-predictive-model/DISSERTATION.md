@@ -18,7 +18,7 @@ The question was whether a predictive model for oil futures can be built. That s
 
 A specified forecasting recipe for listed crude **futures**, other than last-price no-change, has been written. That is all existence means here. Recipes that forecast the real or spot price of oil stay outside that freeze. The list of academic and practitioner recipes is existence evidence only — not a pick of one paper as “the” model.
 
-Walk-forward skill on next-session CL log-returns versus last settlement is **not shown**. Yahoo `CL=F` is a **stipulated stand-in**. Keep testing on that tape; move to official CME **only** if a named recipe **beats “no change” on the whole trip** (**L-SCREEN-Y-PROMOTE**). A lagged-return horse (**H-LAG-WF**) was scored and **lost** on F-CC (0.02888 vs no-change 0.02869) — it **does not promote**. A tiny overnight RMSE dip is **not** a pass. Kearney–Shang **not run**.
+Walk-forward skill on next-session CL log-returns versus last settlement is **not shown**. Yahoo `CL=F` is a **stipulated stand-in**. Two sparse horses (**H-SPARSE-CAL**, **H-SPARSE-VOL**) were scored. The calendar horse’s last-500 F-CC dip is **0.000004** and **loses** on last 750 — it **does not promote**. The vol-state horse **lost** on F-CC. A lagged-return horse (**H-LAG-WF**) also **lost** on F-CC. Kearney–Shang **not run**.
 
 After-cost paper trading value is **not shown**. Paper costs are now **V2** (fees plus $10/contract each way). The paper book was left unnamed. That is not a proof that every book fails.
 
@@ -41,7 +41,7 @@ Can a predictive model for oil futures be built?
 
 ## 3. How it was examined
 
-**Method path:** Phase 1 only. … → **V-COST-V2** named → horses **H-LAG-WF** / **H-KS-FTS** named; pulse **L-PULSE-HORSES-1** (H-LAG scored, lost on F-CC; H-KS tape fail) → **L-SCREEN-Y-PROMOTE** (Yahoo screen; live CME only on F-CC beat). No Phase 2. No UX/CX/CR/QI run. Yahoo not used as live.
+**Method path:** Phase 1 only. … → **L-SCREEN-Y-PROMOTE** → horses **H-SPARSE-CAL** / **H-SPARSE-VOL**; pulse **L-PULSE-SPARSE-1** (neither promotes). No Phase 2. No UX/CX/CR/QI run. Yahoo not used as live.
 
 **Governing lock / freeze (if any):** Rank 4 `D-EXIST ⊂ F-SKILL ⊂ V-VALUE`. D-EXIST: `O1+M1+S1+C3+T2+H3+E3` (futures-target; no-change OUT as the model exhibit). F-SKILL: NYMEX CL front-month, next-session log-return, walk-forward RMSE vs last settlement. V-VALUE: after-cost paper P/L vs the curve under **V2** (listed fees + 1 tick/side). V-EITHER is historical.
 
@@ -69,7 +69,7 @@ Can a predictive model for oil futures be built?
 
 | Item | Status |
 |------|--------|
-| F-SKILL: real shot of beating last-settlement RMSE, walk-forward, next-session CL log-return | **not established** (H-LAG-WF **lost** on F-CC; H-KS not run; stand-in; not a refute) — **live residual** |
+| F-SKILL: real shot of beating last-settlement RMSE, walk-forward, next-session CL log-return | **not established** (CAL tiny 500 / fails 750; VOL and H-LAG lost on F-CC; H-KS not run; stand-in; not a refute) — **live residual** |
 | V-VALUE: real shot of after-cost paper P/L vs the curve | **not established** (V-SRC `leave unnamed`; **V2 named**; no book) — **not a refute** |
 | Directional accuracy that survives transaction costs | **not shown** |
 | Any decision or trading value; “should trade” | **not shown** (no should in the claim; LOCK-006 not imported) |
@@ -94,17 +94,17 @@ Can a predictive model for oil futures be built?
 
 ## 7. Quantitative results (if any)
 
-Stand-in baseline and **H-LAG-WF** — **not** bar-met. Paper costs **V2**. No named book, so V-VALUE still unused.
+Stand-in baseline, **H-LAG-WF**, **H-SPARSE-CAL**, **H-SPARSE-VOL** — **not** bar-met. Paper costs **V2**. No named book, so V-VALUE still unused.
 
 Yahoo `CL=F` last **500** sessions (2024-08-20 … 2026-08-14):
 
-| Window | RMSE 0 | RMSE H-LAG-WF | n |
-|--------|--------|---------------|---|
-| F-ON | 0.01291 | 0.01283 (tiny dip; **not** F-ON-met) | 500 |
-| F-DAY | 0.02663 | 0.02670 (loss) | 500 |
-| F-CC | 0.02869 | 0.02888 (loss; parent bar) | 500 |
+| Window | RMSE 0 | H-LAG-WF | H-SPARSE-CAL | H-SPARSE-VOL |
+|--------|--------|----------|--------------|--------------|
+| F-ON | 0.01291 | 0.01283 (tiny) | 0.01288 (tiny) | 0.01284 (tiny) |
+| F-DAY | 0.02663 | 0.02670 (loss) | 0.026632 (tiny) | 0.02668 (loss) |
+| F-CC | 0.02869 | 0.02888 (loss) | 0.02868990 (tiny; **fails** 750) | 0.02885 (loss) |
 
-H-KS-FTS **not run** (Yahoo month chain ≠ historical CL1–CL18). Print-match of Kearney–Shang MAE unused.
+Promote gate: **none fire**. H-KS-FTS **not run**. Tiny ≠ met.
 
 ---
 
@@ -120,9 +120,9 @@ UX / CX / CR **declined, not run** (operator **C** `decline optional modes`). QI
 
 **Amb ≠ clearance:** Amb **1.0** is leftover V-SRC only. Live-vs-stand-in closed as Yahoo stipulated. V-COST named **V2**. Low leftover-ambiguity after locks does **not** mean skill, value, or the blended slogan is established.
 
-**Locked-bar status summary:** D-EXIST **established** (futures-target only). F-SKILL **not established** (H-LAG-WF lost on F-CC; H-KS not run). V-VALUE **not established**.
+**Locked-bar status summary:** D-EXIST **established** (futures-target only). F-SKILL **not established** (CAL tiny 500 / fails 750; VOL and H-LAG lost on F-CC; H-KS not run). V-VALUE **not established**.
 
-**Continuation / hard-stop note:** Hygiene sealed. Optional modes declined. Skill leftover stays **live** ([R-F-SKILL](RESIDUAL_BRANCH_MENU.md#r-f-skill)). Tape leftover **executed** as stand-in ([R-LIVE-STANDIN](RESIDUAL_BRANCH_MENU.md#r-live-standin)); reopen live **only if** **L-SCREEN-Y-PROMOTE** fires. Phase 2 not entered. Next: `leave skill not shown` · `name horse …` · `leave screen rule`. **Do not** auto-open DataMine.
+**Continuation / hard-stop note:** Hygiene sealed. Optional modes declined. Skill leftover stays **live** ([R-F-SKILL](RESIDUAL_BRANCH_MENU.md#r-f-skill)). Tape leftover **executed** as stand-in ([R-LIVE-STANDIN](RESIDUAL_BRANCH_MENU.md#r-live-standin)); reopen live **only if** **L-SCREEN-Y-PROMOTE** fires. Phase 2 not entered. Next: `leave skill not shown` · `name horse …` (**different**; do **not** grow this zoo) · `leave screen rule`. **Do not** auto-open DataMine.
 
 ---
 
@@ -155,6 +155,7 @@ UX / CX / CR **declined, not run** (operator **C** `decline optional modes`). QI
 | V-COST-V2 named | **1.0** | V-COST 0.5→0; V-VALUE still not met (no named book) |
 | L-PULSE-HORSES-1 | **1.0** | Unchanged; H-LAG lost on F-CC; H-KS not run |
 | L-SCREEN-Y-PROMOTE | **1.0** | Unchanged; Yahoo screen; live CME only on F-CC beat; H-LAG does not promote |
+| L-PULSE-SPARSE-1 | **1.0** | Unchanged; CAL tiny 500 / fails 750; VOL F-CC loss; neither promotes |
 
 ### Admitted layers (index)
 
@@ -182,10 +183,12 @@ UX / CX / CR **declined, not run** (operator **C** `decline optional modes`). QI
 | H-LAG-WF / H-KS-FTS | Named horses; H-LAG scored (F-CC loss); H-KS not run | `Lock_Horses_Lag_KS.md` |
 | L-PULSE-HORSES-1 | Horse pulse; skill not met | `04_Material_Admission_Horses.md` |
 | L-SCREEN-Y-PROMOTE | Yahoo screen; live CME only if F-CC beats 0 on last 500 and 250/750 | `Lock_Screen_Yahoo_Promote.md` |
+| H-SPARSE-CAL / H-SPARSE-VOL | Named sparse horses; neither promotes | `Lock_Horses_Sparse.md` |
+| L-PULSE-SPARSE-1 | Sparse pulse; skill not met | `04_Material_Admission_Sparse.md` |
 
 ### Key artifacts
 
-- `DISSERTATION.md` · `SHARE_PACK.md` · `EXECUTIVE_BRIEF.md` · `05_Original_Claim_Assessment_Closeout.md` · `final_verdict.md` · `RESIDUAL_BRANCH_MENU.md` · `OPTIONAL_MODES_MENU.md` · `MAP_Futures_Target_Forecasting_Methods.md` · `MAP_What_Can_Move_CL.md` · `Lock_Session_Split.md` · `MAP_Session_Split.md` · `Lock_FSRC_Named_CME_Tape.md` · `PULSE_Baseline_Session_RMSE.md` · `Lock_VCOST_V2.md` · `Lock_Screen_Yahoo_Promote.md`
+- `DISSERTATION.md` · `SHARE_PACK.md` · `EXECUTIVE_BRIEF.md` · `05_Original_Claim_Assessment_Closeout.md` · `final_verdict.md` · `RESIDUAL_BRANCH_MENU.md` · `OPTIONAL_MODES_MENU.md` · `MAP_Futures_Target_Forecasting_Methods.md` · `MAP_What_Can_Move_CL.md` · `Lock_Session_Split.md` · `MAP_Session_Split.md` · `Lock_FSRC_Named_CME_Tape.md` · `PULSE_Baseline_Session_RMSE.md` · `Lock_VCOST_V2.md` · `Lock_Screen_Yahoo_Promote.md` · `Lock_Horses_Sparse.md` · `PULSE_Horses_Sparse.md`
 
 ### Failure-mode / tracker pointers (if any)
 

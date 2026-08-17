@@ -4,7 +4,7 @@
 **Application:** `2026-08_oil-futures-predictive-model`  
 **Operator selection:** **B** `name horse H-SPARSE-CAL + H-SPARSE-VOL`  
 **App-local lock ID:** **H-SPARSE-CAL** · **H-SPARSE-VOL**  
-**Status:** **IN FORCE as named skill horses (cap = these two rows).** Pulse **L-PULSE-SPARSE-1**. F-SKILL **not** auto-established by naming.
+**Status:** **IN FORCE as named skill horses (cap = these two rows).** Pulse **L-PULSE-SPARSE-1** scored. Neither promotes. F-SKILL **not established**.
 
 ---
 
