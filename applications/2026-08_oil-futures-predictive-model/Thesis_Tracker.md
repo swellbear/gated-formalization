@@ -44,6 +44,7 @@ Can a predictive model for oil futures be built?
 - V-SRC **leave unnamed** (vehicle sealed empty; not a refute).
 - F-SRC **leave unnamed** (skill residual live; not a refute; do not invent a class).
 - **L-MAP-FT** — futures-target method census executed (evaluation; not F-SKILL-met; not a class pick).
+- **L-MAP-DRV** — mover-list census executed (exhaustive next-session list **does not exist**; not F-SKILL-met; not a class pick).
 - **D-EXIST-MET-FT** — specified non-no-change mapping for listed crude **futures** exists (menu ≠ singleton; spot/real-price OUT).
 
 ---
@@ -72,6 +73,7 @@ None required (D-EXIST remains Minimal). V-VALUE is a marked elevation (Substant
 | [R-D-EXIST](RESIDUAL_BRANCH_MENU.md#r-d-exist) | D-EXIST exhibit | **Executed → admitted** (futures-target). Reopen only if freeze changes (e.g. include spot) |
 | [R-HUNT](RESIDUAL_BRANCH_MENU.md#r-hunt) | Proven F-SKILL class hunt | **Executed → not established** |
 | [R-MAP](RESIDUAL_BRANCH_MENU.md#r-map) | Futures-target published-method map | **Executed → evaluation** (L-MAP-FT). Does not fill F-SRC |
+| [R-DRV](RESIDUAL_BRANCH_MENU.md#r-drv) | Exhaustive mover-list census | **Executed → evaluation** (L-MAP-DRV). Exhaustive list absent; does not fill F-SRC |
 | [R-V-VALUE-TEST-0](RESIDUAL_BRANCH_MENU.md#r-v-value-test-0) | Named after-cost book | **Executed → not established** |
 | [R-F-SKILL](RESIDUAL_BRANCH_MENU.md#r-f-skill) | Named class for F-SKILL | **Leave unnamed**. **pursue** (live). Reopen: `name source class …` matching next-session CL log-return vs last-settlement. Do not invent a class |
 | [R-V-VALUE](RESIDUAL_BRANCH_MENU.md#r-v-value) | Named recipe/book for V-VALUE | **Leave unnamed**. `park-until-trigger`. Reopen: `name source class …` matching V-VALUE; test must name V1 or V2 |
@@ -86,7 +88,7 @@ None required (D-EXIST remains Minimal). V-VALUE is a marked elevation (Substant
 
 **Keep saying:** A specified non-no-change futures-target recipe has been written. Nearby spot literature is kinship. Skill and after-cost value are not established. F-SRC/V-SRC leave unnamed are not refutes. V-EITHER is not “we used V2.” Do not invent a skill class.
 
-**Test next (only if authorized):** `name source class …` (reopen skill). Do not treat L-D-SUITE as F-SRC.
+**Test next (only if authorized):** `name source class …` (reopen skill). Do not treat L-D-SUITE, L-MAP-FT, or L-MAP-DRV as F-SRC.
 
 ---
 
@@ -120,6 +122,11 @@ None required (D-EXIST remains Minimal). V-VALUE is a marked elevation (Substant
 - `E_Quantitative_Evidence_Rubric_FT_Method_Map.md`
 - `04_Material_Admission_FT_Method_Map.md`
 - `02_Gate_Scoring_After_FT_Map.md`
+- `MAP_What_Can_Move_CL.md`
+- `E_Package_Evidence_Intake_FT_Driver_Map.md`
+- `E_Quantitative_Evidence_Rubric_FT_Driver_Map.md`
+- `04_Material_Admission_FT_Driver_Map.md`
+- `02_Gate_Scoring_After_FT_Driver_Map.md`
 - `05_Original_Claim_Assessment_Closeout.md`
 - `DISSERTATION.md`
 - `SHARE_PACK.md`

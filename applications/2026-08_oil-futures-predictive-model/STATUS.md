@@ -8,22 +8,22 @@
 
 ### Plain status
 
-Closeout remains sealed as **hard stop (residuals live)**. A map of published **futures-target** methods is now on the record (evaluation only). Walk-forward skill versus last settlement is still **not shown**; that leftover stays live and unnamed. After-cost paper value is **not shown**. This is not trading advice.
+Closeout remains sealed as **hard stop (residuals live)**. A map of published **futures-target** methods is on the record, and a census of **mover lists** is now on the record too (evaluation only). Nobody published an exhaustive list of what can move next-session CL. Walk-forward skill versus last settlement is still **not shown**; that leftover stays live and unnamed. After-cost paper value is **not shown**. This is not trading advice.
 
 ---
 
 | Field | Value |
 |-------|--------|
 | **Closure state** | **hard stop (residuals live)** |
-| **Phase** | Phase 1 closeout + **L-MAP-FT** census (evaluation; not a named-class pulse) |
-| **Amb** | **5.5** (unchanged by the map; **≠ clearance**) |
-| **Locks in force** | Rank 4; D-EXIST-MET-FT; V-COST either; V-SRC leave unnamed; F-SRC leave unnamed; **L-MAP-FT** |
+| **Phase** | Phase 1 closeout + **L-MAP-FT** + **L-MAP-DRV** censuses (evaluation; not a named-class pulse) |
+| **Amb** | **5.5** (unchanged by the maps; **≠ clearance**) |
+| **Locks in force** | Rank 4; D-EXIST-MET-FT; V-COST either; V-SRC leave unnamed; F-SRC leave unnamed; **L-MAP-FT**; **L-MAP-DRV** |
 | **Next authorization needed** | `name source class …` matching next-session CL log-return vs last settlement ([R-F-SKILL](RESIDUAL_BRANCH_MENU.md#r-f-skill)) · or `leave unnamed` — **not** `none — hard stop` |
 | **Related apps surfaced** | `2026-08_fomc-sep-2026-uffr-change` — leave unnamed ≠ refute; `2026-08_spacex-600-dollar-stock` — lock ≠ clearance. Process only. |
 | **Optional modes** | [OPTIONAL_MODES_MENU.md](OPTIONAL_MODES_MENU.md) — UX/CX/CR **declined, not run**; QI N/A |
 
 **Share pack:** [SHARE_PACK.md](SHARE_PACK.md)  
-**Map:** [MAP_Futures_Target_Forecasting_Methods.md](MAP_Futures_Target_Forecasting_Methods.md)  
+**Maps:** [MAP_Futures_Target_Forecasting_Methods.md](MAP_Futures_Target_Forecasting_Methods.md) · [MAP_What_Can_Move_CL.md](MAP_What_Can_Move_CL.md)  
 **Residuals:** [R-F-SKILL](RESIDUAL_BRANCH_MENU.md#r-f-skill) **pursue** (live, unnamed) · [R-V-VALUE](RESIDUAL_BRANCH_MENU.md#r-v-value) park-until-trigger
 
 **Endpoint** = examination done; verdict frozen. **Hard stop (residuals live)** = hygiene complete **and** `pursue` leftovers remain — `Next authorization needed` is **not** `none — hard stop`.

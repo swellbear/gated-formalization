@@ -57,13 +57,13 @@ This is **not** trading advice and does **not** clear the blended slogan “a pr
 
 **Keep saying:** A futures-target recipe has been written. Skill and after-cost value are not shown. The skill leftover stays live and unnamed. Leave-unnamed is not a refute.
 
-**Test next (only if authorized):** `name source class …` matching next-session CL log-return vs last settlement · or `leave unnamed`. The futures-target method map is evaluation, not that class.
+**Test next (only if authorized):** `name source class …` matching next-session CL log-return vs last settlement · or `leave unnamed`. The futures-target method map and the mover-list census are evaluation, not that class.
 
 ---
 
 ## Residual-branch menu (at closeout)
 
-Offered. Skill leftover **live** ([R-F-SKILL](RESIDUAL_BRANCH_MENU.md#r-f-skill)). After-cost book parked until a matching class is named ([R-V-VALUE](RESIDUAL_BRANCH_MENU.md#r-v-value)). [`RESIDUAL_BRANCH_MENU.md`](RESIDUAL_BRANCH_MENU.md)
+Offered. Skill leftover **live** ([R-F-SKILL](RESIDUAL_BRANCH_MENU.md#r-f-skill)). After-cost book parked until a matching class is named ([R-V-VALUE](RESIDUAL_BRANCH_MENU.md#r-v-value)). Mover-list census: [`MAP_What_Can_Move_CL.md`](MAP_What_Can_Move_CL.md). [`RESIDUAL_BRANCH_MENU.md`](RESIDUAL_BRANCH_MENU.md)
 
 ---
 

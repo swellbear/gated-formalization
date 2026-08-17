@@ -36,6 +36,7 @@
 | [R-D-EXIST](#r-d-exist) | Specified non-no-change futures-target mapping written? | Empirically resolvable | L-D-SUITE futures-target subset (menu, not a singleton) | **executed → admitted** (D-EXIST-MET-FT) |
 | [R-HUNT](#r-hunt) | Proven public series matching F-SKILL freeze? | Empirically resolvable | Hunt executed; **no class submitted** | **executed → not established** |
 | [R-MAP](#r-map) | Published futures-target methods vs next-session log-return? | Empirically resolvable | Census of families; **no class submitted** | **executed → evaluation** (L-MAP-FT) |
+| [R-DRV](#r-drv) | Exhaustive list of what can move next-session CL? | Empirically resolvable | Census of list-types; **no class submitted** | **executed → evaluation** (L-MAP-DRV) |
 | [R-V-VALUE-TEST-0](#r-v-value-test-0) | Named after-cost paper book? | Empirically resolvable | None named | **executed → not established** |
 | [R-F-SKILL](#r-f-skill) | Next-session CL log-return skill vs last settlement? | Empirically resolvable | **unnamed** (operator `leave unnamed`) | **pursue** (leftover **live**) |
 | [R-V-VALUE](#r-v-value) | After-cost paper P/L vs the curve? | Empirically resolvable | **unnamed** (operator `leave unnamed`) | **park-until-trigger** |
@@ -100,6 +101,22 @@
 | **Disposition** | **Executed 2026-08-17** → evaluation |
 | **How to authorize** | Already run. Later skill reopen is still [R-F-SKILL](#r-f-skill) |
 
+<a id="r-drv"></a>
+### R-DRV
+
+| Field | Content |
+|-------|---------|
+| **Class** | Empirically resolvable (executed) |
+| **Named source class** | **Unnamed menu** of mover-list types (`MAP_What_Can_Move_CL.md`). Not a singleton |
+| **What it is** | Whether anyone published a comprehensive exhaustive list of what can move next-session CL (or Brent) log-return vs last settlement |
+| **Why offered here** | Operator asked that question on the live skill leftover |
+| **What authorizing does** | Already ran: `04_Material_Admission_FT_Driver_Map.md` (**L-MAP-DRV**) |
+| **What success / failure changes** | **Admitted as evaluation.** Exhaustive list **does not exist**. Announcement-day inventory surprises **do** move WTI futures at the print (kinship). F-SKILL **not established**. F-SRC **not filled** |
+| **What it does *not* do** | Does not collapse “EIA moves oil on Wednesday” into F-SKILL-met; does not invent a class; does not treat Kilian shocks as next-session skill |
+| **Effort** | Low–medium (done) |
+| **Disposition** | **Executed 2026-08-17** → evaluation |
+| **How to authorize** | Already run. Later skill reopen is still [R-F-SKILL](#r-f-skill). Changing the freeze to announcement-day explanation would be a **new** object |
+
 <a id="r-v-value-test-0"></a>
 ### R-V-VALUE-TEST-0
 
@@ -132,7 +149,7 @@
 | **Disposition** | **pursue** (leftover **live**; class remains unnamed) |
 | **How to authorize** | `name source class …` with a **specific public series + matching locks** (NYMEX CL front-month, next-session **log-return**, walk-forward RMSE vs last-settlement) |
 
-**Do not treat as this class:** EIA STEO; listed futures curve as a next-session CL return model; Alquist–Kilian / Fed IFDP spot-forecast papers; canonical real/spot VARs; the existence menu as “the” skill recipe; last-settlement no-change (baseline, not the model); **L-MAP-FT families as a silent F-SRC pick** (Kearney–Shang MAE/MCS, Bredin holding-period/Sharpe, Baruník–Malinská monthly NS, Coppola 1-month VECM).
+**Do not treat as this class:** EIA STEO; listed futures curve as a next-session CL return model; Alquist–Kilian / Fed IFDP spot-forecast papers; canonical real/spot VARs; the existence menu as “the” skill recipe; last-settlement no-change (baseline, not the model); **L-MAP-FT families as a silent F-SRC pick** (Kearney–Shang MAE/MCS, Bredin holding-period/Sharpe, Baruník–Malinská monthly NS, Coppola 1-month VECM); **L-MAP-DRV families as a silent F-SRC pick** (EIA seven factors; Kilian shocks; Ye–Karali / Geman–Li inventory surprises).
 
 <a id="r-v-value"></a>
 ### R-V-VALUE

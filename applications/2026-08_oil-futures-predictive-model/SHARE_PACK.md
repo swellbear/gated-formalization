@@ -44,15 +44,15 @@ This is **not** trading advice and does **not** clear the blended slogan “a pr
 
 ## 3. Action implications
 
-**Stop saying:** That EIA STEO or the futures curve is a proven next-session CL model. That spot-oil papers clear this freeze. That existence-met is skill-met. That one paper was picked as “the” recipe. That anyone should trade. That unnamed skill means no model can ever beat last price.
+**Stop saying:** That EIA STEO or the futures curve is a proven next-session CL model. That spot-oil papers clear this freeze. That existence-met is skill-met. That one paper was picked as “the” recipe. That anyone should trade. That unnamed skill means no model can ever beat last price. That EIA’s factor list or Wednesday inventories are an exhaustive catalog of next-session CL movers, or that an announcement-day jump is the locked skill test.
 
-**Keep saying:** A futures-target recipe has been written. Skill and after-cost value are not shown. The skill leftover stays live and unnamed. Leave-unnamed is not a refute.
+**Keep saying:** A futures-target recipe has been written. Skill and after-cost value are not shown. The skill leftover stays live and unnamed. Leave-unnamed is not a refute. Bucket lists of oil-price *kinds* exist; an exhaustive next-session mover list does not.
 
 ---
 
 ## 4. Residual-branch offer
 
-Menu offered. Skill leftover **live** ([R-F-SKILL](RESIDUAL_BRANCH_MENU.md#r-f-skill)). Futures-target method map executed as evaluation ([R-MAP](RESIDUAL_BRANCH_MENU.md#r-map); [`MAP_Futures_Target_Forecasting_Methods.md`](MAP_Futures_Target_Forecasting_Methods.md)). After-cost book parked until a matching class is named ([R-V-VALUE](RESIDUAL_BRANCH_MENU.md#r-v-value)). [`RESIDUAL_BRANCH_MENU.md`](RESIDUAL_BRANCH_MENU.md)
+Menu offered. Skill leftover **live** ([R-F-SKILL](RESIDUAL_BRANCH_MENU.md#r-f-skill)). Futures-target method map executed as evaluation ([R-MAP](RESIDUAL_BRANCH_MENU.md#r-map); [`MAP_Futures_Target_Forecasting_Methods.md`](MAP_Futures_Target_Forecasting_Methods.md)). Mover-list census executed as evaluation ([R-DRV](RESIDUAL_BRANCH_MENU.md#r-drv); [`MAP_What_Can_Move_CL.md`](MAP_What_Can_Move_CL.md)). After-cost book parked until a matching class is named ([R-V-VALUE](RESIDUAL_BRANCH_MENU.md#r-v-value)). [`RESIDUAL_BRANCH_MENU.md`](RESIDUAL_BRANCH_MENU.md)
 
 ---
 

@@ -25,7 +25,8 @@
 - Operator **C** (2026-08-17): **Closeout.** Hygiene sealed (status / residual menu / share pack). Existence for futures-target remains authorized and separate. Spot/real-price stay outside. Skill class unnamed; leftover **live**. After-cost book unnamed; after-cost value not shown. No class invented. Phase 2 not entered. Amb **held at 5.5**. Not trading advice; blended slogan not cleared.
 - Operator **C** (2026-08-17, later): `decline optional modes`. UX/CX/CR **declined, not run**. QI N/A. Parent closeout / Amb **5.5** / established unchanged. Skill leftover still **live**.
 - Operator (2026-08-17, later): map published **futures-target** methods vs next-session / one-step log-return vs last settlement. **L-MAP-FT.** Closest kinship = daily CL curve MAE/MCS (Kearney–Shang 2020); Chantziara 2008 daily PCs = little OOS power; monthly NS ≠ next session; vol = wrong object; spot-using-futures OUT. F-SKILL **not established**. F-SRC **not filled**. Amb **unchanged 5.5**.
-- Amb 12 → 9 → 7.5 → **5.5**. Leave-unnamed, closeout, declining optional modes, and the method map do not drop Amb. Amb ≠ clearance.
+- Operator (2026-08-17, later): has anyone made a comprehensive exhaustive list of what can actually move the locked object? **L-MAP-DRV.** Answer: **no**. EIA/Kilian buckets and calendars exist; inventory **surprises** move WTI futures **at the print** (Ye–Karali; Geman–Li) — contemporaneous, not next-session RMSE vs last settlement. F-SKILL **not established**. F-SRC **not filled**. Amb **unchanged 5.5**.
+- Amb 12 → 9 → 7.5 → **5.5**. Leave-unnamed, closeout, declining optional modes, and the method/mover maps do not drop Amb. Amb ≠ clearance.
 
 ## Residual judgment points encountered
 

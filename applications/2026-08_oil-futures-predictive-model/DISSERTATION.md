@@ -130,6 +130,7 @@ UX / CX / CR **declined, not run** (operator **C** `decline optional modes`). QI
 | After D-EXIST-MET-FT | **5.5** | D-SRC 2 → 0 |
 | F-SRC leave unnamed / closeout | **5.5** | Unchanged |
 | L-MAP-FT census | **5.5** | Unchanged (menu ≠ named class) |
+| L-MAP-DRV census | **5.5** | Unchanged (no exhaustive list ≠ named class) |
 
 ### Admitted layers (index)
 
@@ -144,10 +145,11 @@ UX / CX / CR **declined, not run** (operator **C** `decline optional modes`). QI
 | V-SRC unnamed | Leave unnamed; not a refute | `Lock_VSRC_Leave_Unnamed.md` |
 | F-SRC unnamed | Leave unnamed; live residual | `Lock_FSRC_Leave_Unnamed.md` |
 | L-MAP-FT | Futures-target method census; skill not met | `04_Material_Admission_FT_Method_Map.md` |
+| L-MAP-DRV | Mover-list census; exhaustive next-session list absent | `04_Material_Admission_FT_Driver_Map.md` |
 
 ### Key artifacts
 
-- `DISSERTATION.md` · `SHARE_PACK.md` · `EXECUTIVE_BRIEF.md` · `05_Original_Claim_Assessment_Closeout.md` · `final_verdict.md` · `RESIDUAL_BRANCH_MENU.md` · `OPTIONAL_MODES_MENU.md` · `MAP_Futures_Target_Forecasting_Methods.md`
+- `DISSERTATION.md` · `SHARE_PACK.md` · `EXECUTIVE_BRIEF.md` · `05_Original_Claim_Assessment_Closeout.md` · `final_verdict.md` · `RESIDUAL_BRANCH_MENU.md` · `OPTIONAL_MODES_MENU.md` · `MAP_Futures_Target_Forecasting_Methods.md` · `MAP_What_Can_Move_CL.md`
 
 ### Failure-mode / tracker pointers (if any)
 
