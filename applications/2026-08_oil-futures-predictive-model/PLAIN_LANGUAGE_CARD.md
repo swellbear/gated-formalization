@@ -1,27 +1,27 @@
 # Plain-language card
 
 **Application:** `2026-08_oil-futures-predictive-model`  
-**Date / checkpoint:** 2026-08-17 · Yahoo `CL=F` stand-in pulse (L-PULSE-STANDIN-1)
+**Date / checkpoint:** 2026-08-17 · V-COST named **V2** (after Yahoo `CL=F` stand-in pulse)
 
 ---
 
 ## What we’re doing
 
-You allowed Yahoo crude (`CL=F`) as a **weaker** tape. We measured night vs day vs the whole trip against “assume no change.” Those are **baseline sizes**, not a model that beats last price. Yahoo is **not** official CME settlement. Skill is still **not shown**. This is not a trade.
+You picked the **stricter paper-cost mock**: listed fees **plus** $10 per contract in and $10 out. Later paper books will be graded that way. That is how we keep the mock closer to a real fill. It does **not** mean a book already made money. Skill vs last settlement is still **not shown**. This is not a trade.
 
 ## What we need from you
 
-Nothing required. Optional: wait for official CME stamps and re-score, or name a recipe to test **against** these baselines.
+Nothing required on costs. Optional on skill: wait for official CME stamps and re-score, or name a recipe to test **against** the Yahoo baselines.
 
 **Preferred reply:** click A / B / C. Typed: `leave skill not shown` · `live CME only` · `name horse …`
 
 ## What a “yes” / this update means
 
-The tape fork is closed as **stand-in**. Night/day/whole-trip RMSEs exist on Yahoo Open/Close. Naming a stand-in is not a pass.
+Paper costs are **V2**. Fees-only (V1) is **not** the live schedule. Naming a cost rule is not a pass of after-cost value.
 
 ## What this does *not* mean
 
-That a model beats last settlement. That daytime is easier (on this tape the day piece is **larger**). That anyone should trade. That an oil offshoot is cleared.
+That a model beats last settlement. That a paper book made money after costs. That anyone should trade. That an oil offshoot is cleared. That a live broker commission table was invented.
 
 ---
 
@@ -29,13 +29,14 @@ That a model beats last settlement. That daytime is easier (on this tape the day
 
 | Item | Value |
 |------|--------|
-| Claim-freeze / claim under test | Rank 4 F-CC + L-SESS F-ON/F-DAY; F-SRC-CME-TAPE; L-STANDIN-Y-CLF |
-| Amb | **1.5** (**≠ clearance**) |
-| Locks / package IDs | Rank 4; D-EXIST-MET-FT; L-SESS; F-SRC-CME-TAPE; L-STANDIN-Y-CLF; L-PULSE-STANDIN-1 |
+| Claim-freeze / claim under test | Rank 4 F-CC + L-SESS F-ON/F-DAY; F-SRC-CME-TAPE; L-STANDIN-Y-CLF; **V-COST-V2** |
+| Amb | **1.0** (**≠ clearance**) — leftover is V-SRC only |
+| Locks / package IDs | Rank 4; D-EXIST-MET-FT; L-SESS; F-SRC-CME-TAPE; L-STANDIN-Y-CLF; L-PULSE-STANDIN-1; **V-COST-V2** |
 | Method verdict label (if any) | Stable Provisional (split) — hard stop (residuals live) |
 | Live vs stand-in | **Stand-in stipulated** (Yahoo `CL=F` Open/Close) |
 | Last-500 RMSE vs 0 | F-ON 0.01291 · F-DAY 0.02663 · F-CC 0.02869 (n=500) |
-| Artifact pointers | `Lock_Standin_Yahoo_CLF.md` · `PULSE_Standin_Yahoo_CLF_RMSE.md` · `04_Material_Admission_Standin_Yahoo.md` |
+| Paper costs | **V2** = listed fees + 1 CL tick/side ($10/contract/side; $20 RT slippage before fees) |
+| Artifact pointers | `Lock_VCOST_V2.md` · `04_Material_Admission_VCOST_V2.md` · `Lock_Standin_Yahoo_CLF.md` |
 
 ---
 

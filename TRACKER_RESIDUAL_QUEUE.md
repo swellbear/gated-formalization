@@ -1,6 +1,6 @@
 # Tracker Residual Queue (Layer 3)
 
-**Last refreshed:** 2026-08-17 (oil-futures **hard stop (residuals live)**: **R-F-SKILL** stand-in baseline **pursue**; **R-LIVE-STANDIN** executed; **R-V-VALUE** / **R-F-COMBO** park-until-trigger. Park-90d quarterly still due ~2026-11-12 — this refresh does **not** re-churn that card.)  
+**Last refreshed:** 2026-08-17 (oil-futures **hard stop (residuals live)**: **R-F-SKILL** stand-in baseline **pursue**; **R-LIVE-STANDIN** executed; **R-V-VALUE** park-until-trigger (**V2 named**, book unnamed); **R-F-COMBO** park-until-trigger. Park-90d quarterly still due ~2026-11-12 — this refresh does **not** re-churn that card.)  
 **Last park-90d quarterly review:** **2026-08-12** (inaugural = **cadence-existence**, not quarterly proof; next due ~2026-11-12; post-rule addendum same day — still extend-all)  
 **Disposition vocabulary:** `pursue` | `park-90d` | `park-until-trigger` | `drop`  
 Only **pursue** items stay in active bands. Parked/dropped listed below.
@@ -63,7 +63,7 @@ Only **pursue** items stay in active bands. Parked/dropped listed below.
 
 | Residual ID + app | Description | Trigger | Disposition | Note |
 |-------------------|-------------|---------|-------------|------|
-| **R-V-VALUE** · oil-futures | After-cost paper P/L vs the curve | `name source class …` matching Rank 4 V-VALUE; later test must name V1 or V2 | **park-until-trigger** | Operator `leave unnamed`; not a refute of every book; V-EITHER unused |
+| **R-V-VALUE** · oil-futures | After-cost paper P/L vs the curve | `name source class …` matching Rank 4 V-VALUE **under V2** | **park-until-trigger** | Operator `leave unnamed`; **V2 named**; book unnamed; not a refute of every book |
 | **R-F-COMBO** · oil-futures | Named night/day switching rule | Rule written in advance **and** F-ON and F-DAY already scored separately | **park-until-trigger** | Third test; does not skip F-ON/F-DAY |
 | **R-L4e-BRIDGE** · SpaceX | Non-conflicted ~$7.9T / M2 bridge | Multi-year realized AI/Starship metrics or independent FV near ~$7.9T | **park-until-trigger** | No short-horizon path |
 | **R-EVID** · AV | Empirical R1/R2 under P-Strong-Both | OR-slots resolved + package-matching studies | **park-until-trigger** | Scope-locked |

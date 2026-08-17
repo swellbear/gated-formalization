@@ -8,7 +8,7 @@
 
 ### Plain status
 
-Closeout remains **hard stop (residuals live)**. Yahoo `CL=F` is now a **stipulated stand-in**. Night/day/whole-trip **baseline** RMSE is computed on that tape. Skill vs last settlement is still **not shown**. After-cost value is still **not shown**. This is not trading advice.
+Closeout remains **hard stop (residuals live)**. Yahoo `CL=F` is a **stipulated stand-in**. Night/day/whole-trip **baseline** RMSE is on that tape. Paper costs are now **V2** (fees plus $10/contract each way). Skill vs last settlement is still **not shown**. After-cost value is still **not shown** (no named book). This is not trading advice.
 
 ---
 
@@ -16,15 +16,15 @@ Closeout remains **hard stop (residuals live)**. Yahoo `CL=F` is now a **stipula
 |-------|--------|
 | **Closure state** | **hard stop (residuals live)** |
 | **Phase** | Stand-in pulse **L-PULSE-STANDIN-1** (executed; bars not met) |
-| **Amb** | **1.5** (**≠ clearance**) |
-| **Locks in force** | Rank 4; D-EXIST-MET-FT; V-COST either; V-SRC leave unnamed; **F-SRC-CME-TAPE**; **L-STANDIN-Y-CLF**; L-SESS; L-PULSE-STANDIN-1 |
+| **Amb** | **1.0** (**≠ clearance**) |
+| **Locks in force** | Rank 4; D-EXIST-MET-FT; **V-COST-V2**; V-SRC leave unnamed; **F-SRC-CME-TAPE**; **L-STANDIN-Y-CLF**; L-SESS; L-PULSE-STANDIN-1 |
 | **Next authorization needed** | `leave skill not shown` / `live CME only` / `name horse …` — **not** `none — hard stop` |
 | **Related apps surfaced** | `2026-08_fomc-sep-2026-uffr-change` — leave unnamed ≠ refute; `2026-08_spacex-600-dollar-stock` — lock ≠ clearance. Process only. |
 | **Optional modes** | [OPTIONAL_MODES_MENU.md](OPTIONAL_MODES_MENU.md) — UX/CX/CR **declined, not run**; QI N/A |
 
 **Share pack:** [SHARE_PACK.md](SHARE_PACK.md)  
 **Stand-in pulse:** [Lock_Standin_Yahoo_CLF.md](Lock_Standin_Yahoo_CLF.md) · [PULSE_Standin_Yahoo_CLF_RMSE.md](PULSE_Standin_Yahoo_CLF_RMSE.md)  
-**Residuals:** [R-F-SKILL](RESIDUAL_BRANCH_MENU.md#r-f-skill) **pursue** (stand-in baseline; no horse) · [R-LIVE-STANDIN](RESIDUAL_BRANCH_MENU.md#r-live-standin) **executed** (Yahoo stipulated) · [R-F-COMBO](RESIDUAL_BRANCH_MENU.md#r-f-combo) park-until-trigger · [R-V-VALUE](RESIDUAL_BRANCH_MENU.md#r-v-value) park-until-trigger
+**Residuals:** [R-F-SKILL](RESIDUAL_BRANCH_MENU.md#r-f-skill) **pursue** (stand-in baseline; no horse) · [R-LIVE-STANDIN](RESIDUAL_BRANCH_MENU.md#r-live-standin) **executed** (Yahoo stipulated) · [R-F-COMBO](RESIDUAL_BRANCH_MENU.md#r-f-combo) park-until-trigger · [R-V-VALUE](RESIDUAL_BRANCH_MENU.md#r-v-value) park-until-trigger (**V2 named**; book unnamed)
 
 **Endpoint** = examination done; verdict frozen. **Hard stop (residuals live)** = hygiene complete **and** `pursue` leftovers remain — `Next authorization needed` is **not** `none — hard stop`.
 

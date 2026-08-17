@@ -21,7 +21,7 @@ A specified forecasting recipe for listed crude **futures** (not last-price no-c
 
 Walk-forward skill versus last settlement is **not shown**. Yahoo `CL=F` is a **stipulated stand-in**. Night/day/whole-trip **baseline** RMSE is computed. No model was scored against it.
 
-After-cost paper value is **not shown**. The paper book was left unnamed. That is not a proof that every book fails.
+After-cost paper value is **not shown**. Paper costs are now **V2** (fees plus $10/contract each way). The paper book was left unnamed. That is not a proof that every book fails.
 
 **Bar height:** existence = merely possible (a recipe can be written) — **established** for futures-target recipes. Skill and after-cost value = real shot — **not established**.
 
@@ -37,14 +37,14 @@ This is **not** trading advice and does **not** clear the blended slogan “a pr
 
 - Rank 4 split of existence / skill / after-cost value as separate jobs  
 - Existence of a specified non-no-change mapping for listed crude **futures** (**D-EXIST-MET-FT**)  
-- V-COST either (meanings only; later tests must name V1 or V2)
+- V-COST **V2** (fees + $10/contract/side; not V-VALUE-met)
 
 ---
 
 ## Not established
 
 - Next-session CL log-return skill vs last settlement (**stand-in baseline scored**; leftover **live**)  
-- After-cost paper P/L vs the curve (book unnamed)  
+- After-cost paper P/L vs the curve (book unnamed; **V2 named**)  
 - Directional accuracy after costs; any decision or trading value  
 - Spot/real-price recipes as the existence exhibit  
 - Blended slogan clearance
@@ -55,7 +55,7 @@ This is **not** trading advice and does **not** clear the blended slogan “a pr
 
 **Stop saying:** That EIA STEO or the futures curve is a proven next-session CL model. That spot-oil papers clear this freeze. That existence-met is skill-met. That one paper was picked as “the” recipe. That anyone should trade. That unnamed skill means no model can ever beat last price.
 
-**Keep saying:** A futures-target recipe has been written. Yahoo is a stand-in, not live CME. The stand-in baseline is not a pass. Skill and after-cost value are not shown.
+**Keep saying:** A futures-target recipe has been written. Yahoo is a stand-in, not live CME. The stand-in baseline is not a pass. Paper costs are V2; that is not a value pass. Skill and after-cost value are not shown.
 
 **Test next (only if authorized):** `leave skill not shown` · `live CME only` · `name horse …`. Combo does not skip the queue.
 
@@ -84,8 +84,8 @@ Offered. Skill leftover **live** ([R-F-SKILL](RESIDUAL_BRANCH_MENU.md#r-f-skill)
 | Item | Value |
 |------|--------|
 | Method verdict | Stable Provisional (split); **hard stop (residuals live)** |
-| Amb | **1.5** |
-| Locks / proxy IDs | Rank 4; D-EXIST-MET-FT; V-EITHER; F-SRC-CME-TAPE; L-STANDIN-Y-CLF; L-SESS; L-PULSE-STANDIN-1; V-SRC leave unnamed |
+| Amb | **1.0** |
+| Locks / proxy IDs | Rank 4; D-EXIST-MET-FT; **V-COST-V2**; F-SRC-CME-TAPE; L-STANDIN-Y-CLF; L-SESS; L-PULSE-STANDIN-1; V-SRC leave unnamed |
 | Scope label | Under Rank 4 only; existence = futures-target only |
 
 ---

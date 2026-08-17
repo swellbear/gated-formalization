@@ -4,7 +4,7 @@
 **Application:** `2026-08_oil-futures-predictive-model`  
 **Claim family / parent (if any):** none. No successor started.  
 **Closeout verdict:** **Stable Provisional (split) — hard stop (residuals live)**  
-**Amb at closeout:** **1.5**
+**Amb at closeout:** **1.0**
 
 **Tags** (see `docs/TRACKER_TAXONOMY.md`): Domain `markets` · Claim-shape `forecast-extension`, `descriptive-census` · Pattern `R-dependence`
 
@@ -20,7 +20,7 @@ A specified forecasting recipe for listed crude **futures**, other than last-pri
 
 Walk-forward skill on next-session CL log-returns versus last settlement is **not shown**. Yahoo `CL=F` is a **stipulated stand-in**. Night/day/whole-trip **baseline** RMSE is computed on that tape. No horse was scored against it.
 
-After-cost paper trading value is **not shown**. The paper book was left unnamed. That is not a proof that every book fails.
+After-cost paper trading value is **not shown**. Paper costs are now **V2** (fees plus $10/contract each way). The paper book was left unnamed. That is not a proof that every book fails.
 
 This is not trading advice. A clearer, lower-ambiguity question is not a working predictor. The blended slogan is not cleared.
 
@@ -41,11 +41,11 @@ Can a predictive model for oil futures be built?
 
 ## 3. How it was examined
 
-**Method path:** Phase 1 only. Cycle 0 (Amb 12) → Rank 4 → … → **F-SRC-CME-TAPE** named; pulse **L-PULSE-TAPE-0** (tape missing) → **L-STANDIN-Y-CLF** stipulated; pulse **L-PULSE-STANDIN-1** (Yahoo baseline RMSE). No Phase 2. No UX/CX/CR/QI run. Yahoo not used as live.
+**Method path:** Phase 1 only. Cycle 0 (Amb 12) → Rank 4 → … → **F-SRC-CME-TAPE** named; pulse **L-PULSE-TAPE-0** (tape missing) → **L-STANDIN-Y-CLF** stipulated; pulse **L-PULSE-STANDIN-1** (Yahoo baseline RMSE) → **V-COST-V2** named. No Phase 2. No UX/CX/CR/QI run. Yahoo not used as live.
 
-**Governing lock / freeze (if any):** Rank 4 `D-EXIST ⊂ F-SKILL ⊂ V-VALUE`. D-EXIST: `O1+M1+S1+C3+T2+H3+E3` (futures-target; no-change OUT as the model exhibit). F-SKILL: NYMEX CL front-month, next-session log-return, walk-forward RMSE vs last settlement. V-VALUE: after-cost paper P/L vs the curve; V-COST either (V1 fees-only or V2 fees + 1 tick/side); each later test must name which.
+**Governing lock / freeze (if any):** Rank 4 `D-EXIST ⊂ F-SKILL ⊂ V-VALUE`. D-EXIST: `O1+M1+S1+C3+T2+H3+E3` (futures-target; no-change OUT as the model exhibit). F-SKILL: NYMEX CL front-month, next-session log-return, walk-forward RMSE vs last settlement. V-VALUE: after-cost paper P/L vs the curve under **V2** (listed fees + 1 tick/side). V-EITHER is historical.
 
-**Key artifacts:** `Lock_Rank4_Nested_Split.md` · `Lock_D_EXIST_Established_Futures_Target.md` · `Lock_FSRC_Named_CME_Tape.md` · `PULSE_Baseline_Session_RMSE.md` · `Lock_FSRC_Leave_Unnamed.md` (superseded) · `Lock_VSRC_Leave_Unnamed.md` · `Lock_VCOST_Either.md` · `Lock_Session_Split.md` · `04_Material_Admission_FSRC_Named.md` · `RESIDUAL_BRANCH_MENU.md` · `OPTIONAL_MODES_MENU.md` · this closeout pack.
+**Key artifacts:** `Lock_Rank4_Nested_Split.md` · `Lock_D_EXIST_Established_Futures_Target.md` · `Lock_FSRC_Named_CME_Tape.md` · `PULSE_Baseline_Session_RMSE.md` · `Lock_FSRC_Leave_Unnamed.md` (superseded) · `Lock_VSRC_Leave_Unnamed.md` · `Lock_VCOST_Either.md` (superseded as singleton) · `Lock_VCOST_V2.md` · `Lock_Session_Split.md` · `04_Material_Admission_FSRC_Named.md` · `RESIDUAL_BRANCH_MENU.md` · `OPTIONAL_MODES_MENU.md` · this closeout pack.
 
 ---
 
@@ -55,7 +55,7 @@ Can a predictive model for oil futures be built?
 |---------|--------|
 | Rank 4 meanings (three jobs; “can” heights; contract/metric/horizon per leg) | Under Rank 4 — definitional, not slogan clearance |
 | **D-EXIST:** a specified non-no-change mapping for listed WTI or Brent **futures** has been written | **Under Rank 4, futures-target only** (**D-EXIST-MET-FT**) |
-| V-COST either (V1 or V2; later tests must name which) | Meanings only — not V-VALUE-met |
+| V-COST **V2** (fees + $10/contract/side) | Named schedule — not V-VALUE-met |
 | Proven-only hunt executed; no freeze-matching proven public series submitted | **L-HUNT-PROVEN** (evaluation) |
 | V-VALUE-TEST-0: no named book | Evaluation: bar not met (not a refute) |
 | **F-SRC-CME-TAPE:** CME official CL open/settle + roll R1 named as the skill vehicle | Vehicle only — not skill-met |
@@ -69,14 +69,14 @@ Can a predictive model for oil futures be built?
 | Item | Status |
 |------|--------|
 | F-SKILL: real shot of beating last-settlement RMSE, walk-forward, next-session CL log-return | **not established** (Yahoo stand-in **baseline** scored; no horse; not live CME) — **not a refute**; **live residual** |
-| V-VALUE: real shot of after-cost paper P/L vs the curve | **not established** (V-SRC `leave unnamed`; V1/V2 unused) — **not a refute** |
+| V-VALUE: real shot of after-cost paper P/L vs the curve | **not established** (V-SRC `leave unnamed`; **V2 named**; no book) — **not a refute** |
 | Directional accuracy that survives transaction costs | **not shown** |
 | Any decision or trading value; “should trade” | **not shown** (no should in the claim; LOCK-006 not imported) |
 | Spot / real-price recipes as inside D-EXIST | **OUT** of the existence freeze (nearby kinship) |
 | One paper from the menu as “the” recipe | **not picked** |
-| F-ON / F-DAY RMSE vs no-change | **not computed** (live open/settle absent) |
+| F-ON / F-DAY RMSE vs no-change | **stand-in baseline computed** on Yahoo `CL=F` (not live CME; not skill-met) |
 | Kearney–Shang FTS RMSE re-score on this tape | **not run** |
-| Yahoo / `CL=F` as live CME | **rejected** this pulse |
+| Yahoo / `CL=F` as live CME | **rejected** as live; **stipulated** as stand-in |
 | Blended slogan “a predictive oil-futures model works” | **not cleared** |
 
 ---
@@ -93,7 +93,7 @@ Can a predictive model for oil futures be built?
 
 ## 7. Quantitative results (if any)
 
-Stand-in baseline only — **not** bar-met. CL tick identity (market structure, not a broker quote): $0.01/bbl × 1000 bbl = **$10**/contract/side (**$20** round-turn slippage before fees) under V2. V1/V2 unused (no named book).
+Stand-in baseline only — **not** bar-met. Paper costs **V2**: CL tick identity (market structure, not a broker quote): $0.01/bbl × 1000 bbl = **$10**/contract/side (**$20** round-turn slippage before fees), plus listed fees. No named book, so V-VALUE still unused.
 
 Yahoo `CL=F` last **500** sessions (2024-08-20 … 2026-08-14), Close as settlement, Open as open, R1 not applied:
 
@@ -117,7 +117,7 @@ UX / CX / CR **declined, not run** (operator **C** `decline optional modes`). QI
 
 **Verdict:** **Stable Provisional (split) — hard stop (residuals live)**
 
-**Amb ≠ clearance:** Amb **1.5** is leftover V-SRC (1) + V-COST (0.5). Live-vs-stand-in closed as Yahoo stipulated. Low leftover-ambiguity after locks does **not** mean skill, value, or the blended slogan is established.
+**Amb ≠ clearance:** Amb **1.0** is leftover V-SRC only. Live-vs-stand-in closed as Yahoo stipulated. V-COST named **V2**. Low leftover-ambiguity after locks does **not** mean skill, value, or the blended slogan is established.
 
 **Locked-bar status summary:** D-EXIST **established** (futures-target only). F-SKILL **not established** (stand-in baseline scored; no horse). V-VALUE **not established**.
 
@@ -129,7 +129,7 @@ UX / CX / CR **declined, not run** (operator **C** `decline optional modes`). QI
 
 - A **horse** scored against the stand-in (or live) F-ON / F-DAY / F-CC baselines that still **stops** if honest `04` would say established. Link: [R-F-SKILL](RESIDUAL_BRANCH_MENU.md#r-f-skill).  
 - Optionally, official CME open/settle to **replace** the stand-in: [R-LIVE-STANDIN](RESIDUAL_BRANCH_MENU.md#r-live-standin).  
-- Separately, a named paper book matching V-VALUE, stating V1 or V2: [R-V-VALUE](RESIDUAL_BRANCH_MENU.md#r-v-value).  
+- Separately, a named paper book matching V-VALUE **under V2**: [R-V-VALUE](RESIDUAL_BRANCH_MENU.md#r-v-value).  
 - Do **not** treat Yahoo RMSE as live CME, or EIA STEO / Alquist–Kilian / the existence menu as “the” skill class.
 
 ---
@@ -151,6 +151,7 @@ UX / CX / CR **declined, not run** (operator **C** `decline optional modes`). QI
 | L-SESS protocol | **5.5** | Unchanged (window meanings ≠ named class) |
 | F-SRC-CME-TAPE pulse | **2.5** | F-SRC 2→0; G8 1→0; live-vs-stand-in still 1 |
 | L-STANDIN-Y-CLF pulse | **1.5** | Live-vs-stand-in 1→0; Yahoo baseline scored; skill not met |
+| V-COST-V2 named | **1.0** | V-COST 0.5→0; V-VALUE still not met (no named book) |
 
 ### Admitted layers (index)
 
@@ -160,7 +161,8 @@ UX / CX / CR **declined, not run** (operator **C** `decline optional modes`). QI
 | D-EXIST-MET-FT | Existence established, futures-target only | `Lock_D_EXIST_Established_Futures_Target.md` |
 | L-D-SUITE | Named recipe menu; existence evidence only | `04_Material_Admission_D_EXIST_Named_Suite.md` |
 | L-HUNT-PROVEN | Hunt executed; no proven F-SKILL class | `04_Material_Admission_Proven_Class_Search.md` |
-| V-EITHER | Cost either; tests must name V1 or V2 | `Lock_VCOST_Either.md` |
+| V-EITHER | Cost either (historical OR-slot; superseded as singleton) | `Lock_VCOST_Either.md` |
+| V-COST-V2 | Named paper-cost schedule (fees + 1 tick/side); not value-met | `Lock_VCOST_V2.md` |
 | V-VALUE-TEST-0 | No named book; value not established | `04_Material_Admission_V_VALUE_No_Recipe.md` |
 | V-SRC unnamed | Leave unnamed; not a refute | `Lock_VSRC_Leave_Unnamed.md` |
 | F-SRC unnamed | Leave unnamed; later superseded | `Lock_FSRC_Leave_Unnamed.md` |
@@ -172,10 +174,11 @@ UX / CX / CR **declined, not run** (operator **C** `decline optional modes`). QI
 | L-PULSE-TAPE-0 | Pulse executed; tape missing; skill not met | `04_Material_Admission_FSRC_Named.md` |
 | L-STANDIN-Y-CLF | Yahoo `CL=F` stipulated stand-in | `Lock_Standin_Yahoo_CLF.md` |
 | L-PULSE-STANDIN-1 | Stand-in baseline RMSE; skill not met | `04_Material_Admission_Standin_Yahoo.md` |
+| V-COST-V2 | Named paper-cost schedule; not value-met | `Lock_VCOST_V2.md` |
 
 ### Key artifacts
 
-- `DISSERTATION.md` · `SHARE_PACK.md` · `EXECUTIVE_BRIEF.md` · `05_Original_Claim_Assessment_Closeout.md` · `final_verdict.md` · `RESIDUAL_BRANCH_MENU.md` · `OPTIONAL_MODES_MENU.md` · `MAP_Futures_Target_Forecasting_Methods.md` · `MAP_What_Can_Move_CL.md` · `Lock_Session_Split.md` · `MAP_Session_Split.md` · `Lock_FSRC_Named_CME_Tape.md` · `PULSE_Baseline_Session_RMSE.md`
+- `DISSERTATION.md` · `SHARE_PACK.md` · `EXECUTIVE_BRIEF.md` · `05_Original_Claim_Assessment_Closeout.md` · `final_verdict.md` · `RESIDUAL_BRANCH_MENU.md` · `OPTIONAL_MODES_MENU.md` · `MAP_Futures_Target_Forecasting_Methods.md` · `MAP_What_Can_Move_CL.md` · `Lock_Session_Split.md` · `MAP_Session_Split.md` · `Lock_FSRC_Named_CME_Tape.md` · `PULSE_Baseline_Session_RMSE.md` · `Lock_VCOST_V2.md`
 
 ### Failure-mode / tracker pointers (if any)
 

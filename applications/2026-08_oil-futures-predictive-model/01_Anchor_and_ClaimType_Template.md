@@ -41,7 +41,7 @@ Select one (or split mixed claims):
 - [ ] **Normative / Strategic** (value, advocacy, prescription, or framing recommendation)
 - [x] **Mixed** — split as follows:
   - Descriptive part: **D-EXIST** (construction/existence of a specified mapping); **F-SKILL** (walk-forward skill vs last-settlement on CL front-month).  
-  - Performance elevation (not a “should”): **V-VALUE** (after-cost paper value vs the curve). **V-COST either** (each test names V1 or V2).  
+  - Performance elevation (not a “should”): **V-VALUE** (after-cost paper value vs the curve). **V-COST-V2** (historical OR-slot was V-EITHER).  
   - Normative/Strategic part: **none** (no “should trade”). LOCK-006 still not imported.
 
 **Notes on classification:**  
@@ -59,7 +59,7 @@ Operator selected **Rank 4** (2026-08-17). D-EXIST is the claim-under-test. F-SK
 |---------------|----------------------------------------|
 | “can” on **D-EXIST** | **P-Logical (LOCKED)** — construction/existence; height ≠ F-SKILL |
 | “can” on **F-SKILL** | **P-NonNegligible (LOCKED)** — real shot of walk-forward skill; height ≠ met |
-| “can” on **V-VALUE** | **P-NonNegligible (LOCKED)** — real shot of after-cost value; height ≠ met; **V-COST either** |
+| “can” on **V-VALUE** | **P-NonNegligible (LOCKED)** — real shot of after-cost value; height ≠ met; **V-COST-V2** |
 
 **Near-vacuity warning:** D-EXIST + P-Logical is a low bar. It is now **established** on futures-target specified mappings (not no-change; not spot). That does **not** establish F-SKILL or V-VALUE. Do **not** silently strengthen any remaining leg into P-BaseCase or a trading recommendation.
 

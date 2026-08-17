@@ -48,7 +48,7 @@ Parent **F-SKILL** is **unchanged:** NYMEX **CL front-month**, **next-session se
 **Order (mandatory):**  
 1. Score **F-ON** and **F-DAY** **separately** (and keep reporting **F-CC**).  
 2. Only then may **F-COMBO** be tested, and only if the switching rule was written **in advance**.  
-3. After-cost P/L on any of these books is **V-VALUE**, not a skill pass. The day book and any combo that enters/exits daily must count **those** round-turns. Each value test still **names V1 or V2**.
+3. After-cost P/L on any of these books is **V-VALUE**, not a skill pass. The day book and any combo that enters/exits daily must count **those** round-turns. Later value tests use **V2**.
 
 **F-SRC:** still **unnamed**. This lock does **not** name a series. A later `name source class …` that matches F-SKILL must be able to support **F-CC**, and — when the pulse runs — **must report F-ON and F-DAY as separate exhibits**. Naming a day-only USO/ETF half-hour paper is **not** F-CC.
 

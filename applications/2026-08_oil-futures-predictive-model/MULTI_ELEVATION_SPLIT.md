@@ -69,7 +69,7 @@ D-EXIST  ⊂  F-SKILL               (Rank 4-AC)
 |-----|---------|----------------------------|
 | D-EXIST | C3 class = WTI **or** Brent (either accepted inside Rank 3 mechanics) | Complete if Rank 4 / 4-AC selected |
 | F-SKILL | none | Complete if selected |
-| V-VALUE | Cost schedule (round-turn + slippage) must be **singled** or formally “either” | **Either accepted** (V1 or V2; each test names which) |
+| V-VALUE | Cost schedule (round-turn + slippage) must be **singled** or formally “either” | **V2 named** (`Lock_VCOST_V2.md`; V-EITHER superseded as singleton) |
 
 ---
 
@@ -80,4 +80,4 @@ D-EXIST  ⊂  F-SKILL               (Rank 4-AC)
 
 ---
 
-*Rank 4 locked 2026-08-17. **D-EXIST established (futures-target only).** **L-SESS** in force. **F-SRC-CME-TAPE** named. **L-STANDIN-Y-CLF** stipulated (Yahoo `CL=F` baseline scored; not a pass). Spot/real-price OUT. V-SRC leave unnamed. F-SKILL and V-VALUE not established. Closeout: **hard stop (residuals live)**. Optional modes **declined**. Live residual: skill ([R-F-SKILL](RESIDUAL_BRANCH_MENU.md#r-f-skill)). Not a trade. Next: `leave skill not shown` / `live CME only` / `name horse …`.*
+*Rank 4 locked 2026-08-17. **D-EXIST established (futures-target only).** **L-SESS** in force. **F-SRC-CME-TAPE** named. **L-STANDIN-Y-CLF** stipulated (Yahoo `CL=F` baseline scored; not a pass). **V-COST-V2** named (not value-met). Spot/real-price OUT. V-SRC leave unnamed. F-SKILL and V-VALUE not established. Closeout: **hard stop (residuals live)**. Optional modes **declined**. Live residual: skill ([R-F-SKILL](RESIDUAL_BRANCH_MENU.md#r-f-skill)). Not a trade. Next: `leave skill not shown` / `live CME only` / `name horse …`.*

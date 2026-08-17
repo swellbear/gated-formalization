@@ -5,8 +5,10 @@
 **Dominant blocker ID(s):** **V-COST**  
 **Dependents blocked:** **V-VALUE** (and **V-SRC**)
 
+**Later (same day):** operator named **V2** as the live singleton (`Lock_VCOST_V2.md`). This file remains the historical OR-slot. V-EITHER is **superseded as singleton**. V-VALUE is still **not established** (no named book).
+
 **Explicit dependency statement:**  
-V-VALUE **was** blocked primarily by the unset cost schedule. **V-EITHER is now selected** (`Lock_VCOST_Either.md`). D-SRC stays **unnamed for now** — that does **not** clear D-EXIST or F-SKILL. A cost lock does **not** supply a named recipe; V-VALUE-TEST-0 is **not established** for lack of a specified book.
+V-VALUE **was** blocked primarily by the unset cost schedule. **V-EITHER was selected** (`Lock_VCOST_Either.md`), then **V2 named**. D-SRC later established (futures-target). A cost lock does **not** supply a named recipe; V-VALUE-TEST-0 is **not established** for lack of a specified book.
 
 **Original claim (verbatim, for deviation comparison):**  
 Can a predictive model for oil futures be built?
@@ -107,7 +109,7 @@ Only after each test names V1 or V2 (or reports both).
 
 ## 6. Choice prompt
 
-**Status:** **SELECTED** — **V-EITHER** (operator **C**, 2026-08-17). Lock record: `Lock_VCOST_Either.md`.
+**Status:** **SELECTED then superseded as singleton** — **V-EITHER** (operator **C**, 2026-08-17), then **V-COST-V2** (operator `go with V2 then`). Lock records: `Lock_VCOST_Either.md` · `Lock_VCOST_V2.md`.
 
 **Plain-language card (at selection):**
 

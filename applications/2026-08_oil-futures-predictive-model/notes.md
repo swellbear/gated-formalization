@@ -29,7 +29,8 @@
 - Operator (2026-08-17, later): agreed to research night and day **separately**, then combo only after both scored with the rule written in advance; `ok proceed`. **L-SESS.** Parent F-SKILL stays **F-CC** (settlement-to-settlement). F-ON / F-DAY protocol locked, **not established**. F-COMBO park-until-trigger. USO half-hour momentum = kinship only (**L-MAP-SESS**). Not a trade. F-SRC still unnamed at that moment. Amb **unchanged 5.5**.
 - Operator (2026-08-17, later): `ok proceed` with recommended named class (CME official CL open/settle, R1, baseline RMSE on three windows, optional Kearney–Shang on same tape). **F-SRC-CME-TAPE.** Pulse **L-PULSE-TAPE-0:** live tape **not obtained**; Yahoo **not used**; FTS **not run**; F-ON/F-DAY/F-CC **not computed**. Skill **not established**. Amb **5.5 → 2.5**. Next: live vs stand-in.
 - Operator (2026-08-17, later): `Ok do what needs to be done then` after stand-in how-to. **L-STANDIN-Y-CLF.** Pulse **L-PULSE-STANDIN-1:** Yahoo `CL=F` Open/Close; last-500 RMSE F-ON 0.01291 / F-DAY 0.02663 / F-CC 0.02869 (n=500). Badge **stand-in**. FTS **not run**. Skill **not established**. Amb **2.5 → 1.5**.
-- Amb 12 → 9 → 7.5 → 5.5 → 2.5 → **1.5**. Amb ≠ clearance.
+- Operator (2026-08-17, later): `go with V2 then` (more realistic mock). **V-COST-V2.** Fees plus $10/contract/side. V-VALUE **not established** (no named book). Amb **1.5 → 1.0**.
+- Amb 12 → 9 → 7.5 → 5.5 → 2.5 → 1.5 → **1.0**. Amb ≠ clearance.
 
 ## Residual judgment points encountered
 

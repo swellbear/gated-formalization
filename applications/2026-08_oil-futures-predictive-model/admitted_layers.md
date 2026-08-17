@@ -6,7 +6,7 @@
 **Admitted claim layers:**
 - **D-EXIST established** — futures-target only (`Lock_D_EXIST_Established_Futures_Target.md` · `04_Material_Admission_D_EXIST_Established.md`). Not a singleton recipe pick. Spot/real-price **OUT**.
 
-**Meaning lock:** Rank 4 nested split — `Lock_Rank4_Nested_Split.md`. V-COST **either**. V-SRC **leave unnamed**. **F-SRC-CME-TAPE** (named). **L-SESS**. F-SRC leave-unnamed seal **superseded**.
+**Meaning lock:** Rank 4 nested split — `Lock_Rank4_Nested_Split.md`. **V-COST-V2**. V-SRC **leave unnamed**. **F-SRC-CME-TAPE** (named). **L-SESS**. F-SRC leave-unnamed seal **superseded**. V-EITHER **superseded as singleton**.
 
 **Admitted as evaluation (not bar-met):**
 - `04_Material_Admission_D_EXIST_Construction.md` — no-change **OUT** as the D-EXIST model exhibit (operator B).
@@ -20,7 +20,8 @@
 - `04_Material_Admission_Session_Split.md` (**L-SESS**) — night/day/combo **protocol** locked (meanings); F-ON/F-DAY/F-CC/F-COMBO **not established**. `MAP_Session_Split.md` (**L-MAP-SESS**) evaluation only.
 - `04_Material_Admission_FSRC_Named.md` (**F-SRC-CME-TAPE** + **L-PULSE-TAPE-0**) — class named; live tape absent.
 - `04_Material_Admission_Standin_Yahoo.md` (**L-STANDIN-Y-CLF** + **L-PULSE-STANDIN-1**) — Yahoo `CL=F` stipulated; baseline RMSE scored; skill **not established**.
+- `04_Material_Admission_VCOST_V2.md` (**V-COST-V2**) — paper costs named V2; V-VALUE **not established**.
 
-**Closeout (2026-08-17):** **hard stop (residuals live)**. Skill leftover [R-F-SKILL](RESIDUAL_BRANCH_MENU.md#r-f-skill) **pursue** (stand-in baseline; no horse). Live vs stand-in [R-LIVE-STANDIN](RESIDUAL_BRANCH_MENU.md#r-live-standin) **executed**. Combo [R-F-COMBO](RESIDUAL_BRANCH_MENU.md#r-f-combo) park-until-trigger. After-cost book [R-V-VALUE](RESIDUAL_BRANCH_MENU.md#r-v-value) park-until-trigger.
+**Closeout (2026-08-17):** **hard stop (residuals live)**. Skill leftover [R-F-SKILL](RESIDUAL_BRANCH_MENU.md#r-f-skill) **pursue** (stand-in baseline; no horse). Live vs stand-in [R-LIVE-STANDIN](RESIDUAL_BRANCH_MENU.md#r-live-standin) **executed**. Combo [R-F-COMBO](RESIDUAL_BRANCH_MENU.md#r-f-combo) park-until-trigger. After-cost book [R-V-VALUE](RESIDUAL_BRANCH_MENU.md#r-v-value) park-until-trigger (V2 named; book unnamed).
 
-**Process imports:** LOCK-003, LOCK-009, LOCK-010, LOCK-011. App-local: V-EITHER; V-SRC leave unnamed; **F-SRC-CME-TAPE**; **L-STANDIN-Y-CLF**; D-EXIST-MET-FT (2026-08-17).
+**Process imports:** LOCK-003, LOCK-009, LOCK-010, LOCK-011. App-local: **V-COST-V2**; V-SRC leave unnamed; **F-SRC-CME-TAPE**; **L-STANDIN-Y-CLF**; D-EXIST-MET-FT (2026-08-17).

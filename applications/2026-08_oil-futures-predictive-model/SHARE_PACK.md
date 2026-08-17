@@ -16,7 +16,7 @@ A specified forecasting recipe for listed crude **futures** (not last-price no-c
 
 Walk-forward skill versus last settlement is **not shown**. The skill class is **named**. Yahoo `CL=F` is a **stipulated stand-in** (Open/Close, not official settlement). Night/day/whole-trip **baseline** RMSE is computed on that tape. No model was scored against it. A combo is a **third** test, not a shortcut.
 
-After-cost paper value is **not shown**. The paper book was left unnamed. That is not a proof that every book fails.
+After-cost paper value is **not shown**. Paper costs are now **V2** (fees plus $10/contract each way). The paper book was left unnamed. That is not a proof that every book fails.
 
 **Bar height:** existence = merely possible (a recipe can be written) — **established** for futures-target recipes. Skill and after-cost value = real shot — **not established**.
 
@@ -36,7 +36,7 @@ This is **not** trading advice and does **not** clear the blended slogan “a pr
 ## Not established
 
 - Next-session CL log-return skill vs last settlement (**stand-in baseline scored**; leftover **live**)  
-- After-cost paper P/L vs the curve (book unnamed)  
+- After-cost paper P/L vs the curve (book unnamed; **V2 named**)  
 - Directional accuracy after costs; any decision or trading value  
 - Spot/real-price recipes as the existence exhibit
 
@@ -46,7 +46,7 @@ This is **not** trading advice and does **not** clear the blended slogan “a pr
 
 **Stop saying:** That EIA STEO or the futures curve is a proven next-session CL model. That spot-oil papers clear this freeze. That existence-met is skill-met. That one paper was picked as “the” recipe. That anyone should trade. That unnamed skill means no model can ever beat last price. That EIA’s factor list or Wednesday inventories are an exhaustive catalog of next-session CL movers, or that an announcement-day jump is the locked skill test. That flattening before the close **is** the skill test, or that a combo is already passed.
 
-**Keep saying:** A futures-target recipe has been written. Yahoo is a stand-in, not live CME. The stand-in baseline is not a pass. Skill and after-cost value are not shown. Night, day, and the whole trip are separate tests. This is not a trading strategy.
+**Keep saying:** A futures-target recipe has been written. Yahoo is a stand-in, not live CME. The stand-in baseline is not a pass. Paper costs are V2; that is not a value pass. Skill and after-cost value are not shown. Night, day, and the whole trip are separate tests. This is not a trading strategy.
 
 ---
 
@@ -87,8 +87,8 @@ Parent closeout unchanged.
 | Item | Value |
 |------|--------|
 | Method verdict | Stable Provisional (split); hard stop (residuals live) |
-| Amb | **1.5** |
-| Locks / layers | Rank 4; D-EXIST-MET-FT; V-EITHER; F-SRC-CME-TAPE; L-STANDIN-Y-CLF; L-SESS; L-PULSE-STANDIN-1; V-SRC leave unnamed |
+| Amb | **1.0** |
+| Locks / layers | Rank 4; D-EXIST-MET-FT; **V-COST-V2**; F-SRC-CME-TAPE; L-STANDIN-Y-CLF; L-SESS; L-PULSE-STANDIN-1; V-SRC leave unnamed |
 | Parent / successor | none (CR **declined**, not run; keep original wording) |
 | Key files | `05_Original_Claim_Assessment_Closeout.md` · `DISSERTATION.md` · `RESIDUAL_BRANCH_MENU.md` |
 

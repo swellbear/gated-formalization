@@ -13,7 +13,7 @@
 
 **Live vs stand-in:** **Stand-in stipulated** (Yahoo `CL=F` Open/Close). Live CME still not in hand. **No print scored to met.**
 
-**Amb = 1.5.** F-SKILL and V-VALUE **not established**. **Amb ≠ clearance.**
+**Amb = 1.0.** F-SKILL and V-VALUE **not established**. **Amb ≠ clearance.**
 
 ---
 
@@ -145,7 +145,7 @@
 | **What it is** | Whether after-cost paper P/L vs the curve is a real shot on the locked CL next-session book |
 | **Why offered here** | Rank 4 V-VALUE; V-COST either already locked; still no recipe |
 | **What authorizing does** | Already ran: `04_Material_Admission_V_VALUE_No_Recipe.md` |
-| **What success / failure changes** | **Not established.** Not a refute of every book. V1/V2 unused |
+| **What success / failure changes** | **Not established.** Not a refute of every book. V1/V2 unused **at that pulse**. **Later:** V2 named |
 | **What it does *not* do** | Does not say “we already used the stricter cost”; does not prove every book fails |
 | **Effort** | Low (done) |
 | **Disposition** | **Executed 2026-08-17** → not established |
@@ -178,7 +178,7 @@
 | **Named source class** | **unnamed**. Switching rule not written |
 | **What it is** | A **third** test: a named rule for when to play night, day, both, or flat, written **before** the out-of-sample window, after F-ON and F-DAY have already been scored **separately** |
 | **Why offered here** | Operator wanted a combo **after** the two scoreboards, not as a shortcut |
-| **What authorizing does** | `name source class …` with the **rule text in advance**. Walk-forward. After-cost is V-VALUE (name V1 or V2; count the book’s actual round-turns) |
+| **What authorizing does** | `name source class …` with the **rule text in advance**. Walk-forward. After-cost is V-VALUE (**V2**; count the book’s actual round-turns) |
 | **What success / failure changes** | Could establish / not-establish / refute **only F-COMBO** (and value if costs are on). Does **not** auto-meet F-CC |
 | **What it does *not* do** | Does not let the combo inherit a win from one half after the fact; not trading advice |
 | **Effort** | High until a rule and a matching series exist |
@@ -195,15 +195,15 @@
 | **Class** | Empirically resolvable |
 | **Named source class** | **unnamed**. Operator 2026-08-17: `leave unnamed`. After-cost value stays **not shown** |
 | **What it is** | Whether a named paper book has a real shot of after-cost P/L vs the curve. Default book is F-CC (next-session). A **day** or **combo** book must count **its** round-turns (daily in-and-out is not free) |
-| **Why offered here** | Rank 4 V-VALUE is a marked elevation. Costs are allowed as either V1 or V2, but there is still no named book |
-| **What authorizing does** | Only a later `name source class …` that **matches** V-VALUE. That later test must still **name V1 or V2** |
+| **Why offered here** | Rank 4 V-VALUE is a marked elevation. Paper costs are now **V2**; there is still no named book |
+| **What authorizing does** | Only a later `name source class …` that **matches** V-VALUE under **V2** (fees + $10/contract/side; count actual round-turns) |
 | **What success / failure changes** | A matching pulse could establish / not-establish / refute V-VALUE. Leave-unnamed ≠ every book fails |
-| **What it does *not* do** | Does not invent a live broker commission; does not treat V-EITHER as “we used V2”; not trading advice |
+| **What it does *not* do** | Does not invent a live broker commission; does not treat V2 as “the model already made money”; not trading advice |
 | **Effort** | High until a matching book exists |
 | **Disposition** | **park-until-trigger** |
-| **How to authorize** | `name source class …` with a **specific public series + matching locks** (NYMEX CL front-month, next-session, walk-forward, after-cost paper P/L vs the curve). Test must name **V1 or V2** |
+| **How to authorize** | `name source class …` with a **specific public series + matching locks** (NYMEX CL front-month, next-session, walk-forward, after-cost paper P/L vs the curve **under V2**) |
 
-**Trigger:** A public recipe/book is named that matches Rank 4 V-VALUE (same CL next-session object; after-cost paper P/L vs the curve; freeze quoted; non-circular). EIA STEO / spot papers / the existence menu do **not** fire this trigger.
+**Trigger:** A public recipe/book is named that matches Rank 4 V-VALUE under **V2**. EIA STEO / spot papers / the existence menu do **not** fire this trigger.
 
 <a id="r-g8"></a>
 ### R-G8
@@ -258,7 +258,7 @@ None remaining. [R-G8](#r-g8) meanings admitted. [R-LIVE-STANDIN](#r-live-standi
 
 | Residual ID | Disposition | Trigger / note |
 |-------------|-------------|----------------|
-| [R-V-VALUE](#r-v-value) | park-until-trigger | Matching V-VALUE book named; test must name V1 or V2 |
+| [R-V-VALUE](#r-v-value) | park-until-trigger | Matching V-VALUE book named under **V2** |
 | [R-F-COMBO](#r-f-combo) | park-until-trigger | Rule in advance + F-ON and F-DAY already scored separately |
 
 **Live (not parked):** [R-F-SKILL](#r-f-skill) — `pursue` (stand-in baseline; no horse)
@@ -280,6 +280,7 @@ None remaining. [R-G8](#r-g8) meanings admitted. [R-LIVE-STANDIN](#r-live-standi
 | 2026-08-17 | **L-SESS** — night/day/combo protocol locked (meanings) |
 | 2026-08-17 | **F-SRC-CME-TAPE** named; **L-PULSE-TAPE-0** executed; live tape absent; Yahoo not used that pulse |
 | 2026-08-17 | **L-STANDIN-Y-CLF** stipulated (Yahoo `CL=F`); **L-PULSE-STANDIN-1** baseline RMSE scored; skill **not established**; Amb **2.5 → 1.5** |
+| 2026-08-17 | **V-COST-V2** named (fees + $10/contract/side); V-VALUE still not established; Amb **1.5 → 1.0** |
 
 ---
 

@@ -3,7 +3,8 @@
 **Date:** 2026-08-17  
 **Application:** `2026-08_oil-futures-predictive-model`  
 **Operator selection:** **C** → `lock V-COST either` (`V-EITHER`)  
-**App-local lock ID:** V-EITHER / LOCK-012 (this application only; not a library process lock).
+**App-local lock ID:** V-EITHER / LOCK-012 (this application only; not a library process lock).  
+**Status:** **SUPERSEDED 2026-08-17 as the singleton schedule** by `Lock_VCOST_V2.md` (operator named **V2**). Kept as audit trail of the OR-slot. Either-lock **lifted for the live schedule only**.
 
 ---
 

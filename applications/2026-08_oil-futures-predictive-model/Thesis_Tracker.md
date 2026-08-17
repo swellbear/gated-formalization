@@ -19,7 +19,7 @@
 
 Can a predictive model for oil futures be built?
 
-**Successor / Rank lock (if any):** **Rank 4** nested split — D-EXIST ⊂ F-SKILL ⊂ V-VALUE. **D-EXIST-MET-FT**. V-COST **either**. **F-SRC-CME-TAPE**. V-SRC leave unnamed. CR **declined**, not run; default keep original wording.
+**Successor / Rank lock (if any):** **Rank 4** nested split — D-EXIST ⊂ F-SKILL ⊂ V-VALUE. **D-EXIST-MET-FT**. V-COST **V2**. **F-SRC-CME-TAPE**. V-SRC leave unnamed. CR **declined**, not run; default keep original wording.
 
 **Parent / successor relationship:** none
 
@@ -29,9 +29,9 @@ Can a predictive model for oil futures be built?
 
 **Verdict:** **Stable Provisional (split) — hard stop (residuals live)** — D-EXIST established (futures-target only); F-SKILL and V-VALUE not
 
-**Amb path (brief):** 12 → 9 → 7.5 → 5.5 after D-EXIST-MET-FT → 2.5 after F-SRC-CME-TAPE → **1.5** after L-STANDIN-Y-CLF (live-vs-stand-in 1→0)
+**Amb path (brief):** 12 → 9 → 7.5 → 5.5 after D-EXIST-MET-FT → 2.5 after F-SRC-CME-TAPE → 1.5 after L-STANDIN-Y-CLF → **1.0** after V-COST-V2
 
-**Amb ≠ clearance:** Amb 1.5 is V-SRC (1) + V-COST (0.5). A stand-in baseline does not mean a model beats last price.
+**Amb ≠ clearance:** Amb 1.0 is V-SRC only. Naming V2 does not mean a model made money after costs. A stand-in baseline does not mean a model beats last price.
 
 ---
 
@@ -40,7 +40,8 @@ Can a predictive model for oil futures be built?
 - L₀ market-structure anchors.
 - Rank 4 **meanings** (not slogan clearance).
 - **L-HUNT-PROVEN** (search executed; no proven class submitted).
-- V-COST **either** (meanings; not a singleton V1 or V2).
+- V-COST **either** — **superseded** 2026-08-17 as singleton by **V-COST-V2**.
+- **V-COST-V2** — listed fees + 1 tick/side ($10/contract/side); not V-VALUE-met.
 - V-SRC **leave unnamed** (vehicle sealed empty; not a refute).
 - F-SRC **leave unnamed** — **superseded** 2026-08-17 by **F-SRC-CME-TAPE**.
 - **F-SRC-CME-TAPE** — named CME official open/settle + R1; optional FTS.
@@ -59,7 +60,7 @@ Can a predictive model for oil futures be built?
 - F-SKILL **not established** (stand-in baseline scored; no horse; not a refute of all recipes).
 - F-ON / F-DAY / F-CC **baseline** RMSE computed on Yahoo `CL=F` (last 500: 0.01291 / 0.02663 / 0.02869); **not** skill-met.
 - Kearney–Shang optional re-score **not run**.
-- V-VALUE **not established** (V-VALUE-TEST-0; V-SRC `leave unnamed`; not a refute of all books).
+- V-VALUE **not established** (V-VALUE-TEST-0; V-SRC `leave unnamed`; **V2 named**; not a refute of all books).
 - Directional accuracy after costs / decision or trading value **not shown**.
 - Spot/real-price recipes as inside D-EXIST — **OUT**.
 - Blended slogan — **not cleared**.
@@ -86,7 +87,7 @@ None required (D-EXIST remains Minimal). V-VALUE is a marked elevation (Substant
 | [R-F-SKILL](RESIDUAL_BRANCH_MENU.md#r-f-skill) | Named class for F-SKILL (F-CC + F-ON/F-DAY exhibits) | **F-SRC-CME-TAPE**. Stand-in baseline scored; **not established**. Reopen: horse vs baseline or live CME |
 | [R-LIVE-STANDIN](RESIDUAL_BRANCH_MENU.md#r-live-standin) | Live CME vs stand-in | **Executed** (Yahoo `CL=F` stipulated). Reopen: `live CME only` |
 | [R-F-COMBO](RESIDUAL_BRANCH_MENU.md#r-f-combo) | Named switching rule | **park-until-trigger**. Rule in advance; F-ON and F-DAY already scored separately |
-| [R-V-VALUE](RESIDUAL_BRANCH_MENU.md#r-v-value) | Named recipe/book for V-VALUE | **Leave unnamed**. `park-until-trigger`. Reopen: `name source class …` matching V-VALUE; test must name V1 or V2 |
+| [R-V-VALUE](RESIDUAL_BRANCH_MENU.md#r-v-value) | Named recipe/book for V-VALUE | **Leave unnamed**. `park-until-trigger`. Reopen: `name source class …` matching V-VALUE **under V2** |
 | [R-G8](RESIDUAL_BRANCH_MENU.md#r-g8) | Model class under F-SKILL | **Executed → admitted meanings** (baseline + optional FTS) |
 
 ---
@@ -95,7 +96,7 @@ None required (D-EXIST remains Minimal). V-VALUE is a marked elevation (Substant
 
 **Stop saying:** That EIA STEO or the futures curve is a proven next-session CL model; that spot/12-month results clear this freeze; that anyone should trade; that existence-met is skill-met; that one paper was picked as “the” recipe; that unnamed skill means no model can beat last price.
 
-**Keep saying:** A specified non-no-change futures-target recipe has been written. Yahoo is a **stand-in**; the baseline is **not** a pass. Skill and after-cost value are not established.
+**Keep saying:** A specified non-no-change futures-target recipe has been written. Yahoo is a **stand-in**; the baseline is **not** a pass. Paper costs are **V2**; that is not a value pass. Skill and after-cost value are not established.
 
 **Test next (only if authorized):** `leave skill not shown` · `live CME only` · `name horse …`. Combo does not skip the queue.
 
@@ -115,6 +116,9 @@ None required (D-EXIST remains Minimal). V-VALUE is a marked elevation (Substant
 - `E_Package_Evidence_Intake_Proven_Search.md`
 - `V_COST_OR_Slot.md`
 - `Lock_VCOST_Either.md`
+- `Lock_VCOST_V2.md`
+- `04_Material_Admission_VCOST_V2.md`
+- `02_Gate_Scoring_After_V2.md`
 - `02_Gate_Scoring_After_VCOST.md`
 - `04_Material_Admission_V_VALUE_No_Recipe.md`
 - `Lock_VSRC_Leave_Unnamed.md`
@@ -171,7 +175,7 @@ None required (D-EXIST remains Minimal). V-VALUE is a marked elevation (Substant
 - Closeout / verdict: [`05_Original_Claim_Assessment_Closeout.md`](05_Original_Claim_Assessment_Closeout.md) · [`final_verdict.md`](final_verdict.md)
 - Share pack: [`SHARE_PACK.md`](SHARE_PACK.md)
 - Parent / successor: —
-- Key admissions / locks: Rank 4; **D-EXIST-MET-FT**; V-COST either; **F-SRC-CME-TAPE**; **L-STANDIN-Y-CLF**; V-SRC leave unnamed; L-PULSE-STANDIN-1 (baseline not met); F-SKILL/V-VALUE not established
+- Key admissions / locks: Rank 4; **D-EXIST-MET-FT**; **V-COST-V2**; **F-SRC-CME-TAPE**; **L-STANDIN-Y-CLF**; V-SRC leave unnamed; L-PULSE-STANDIN-1 (baseline not met); F-SKILL/V-VALUE not established
 
 ---
 

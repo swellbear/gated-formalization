@@ -33,7 +33,7 @@ That every oil-futures book fails. That anyone should (or should not) trade. Exi
 | **V-VALUE** | **Not established** (not a refute of all books). |
 | **V1 / V2** | Still unused. Either-lock remains; unused because unused. |
 
-**Scope:** **Under Rank 4 (D-EXIST ⊂ F-SKILL ⊂ V-VALUE) only**, **Under V-COST either**, **Under V-SRC leave unnamed**.
+**Scope:** **Under Rank 4 (D-EXIST ⊂ F-SKILL ⊂ V-VALUE) only**, **Under V-COST-V2** (historical: V-COST either), **Under V-SRC leave unnamed**.
 
 **Do not treat as this class:** EIA STEO, the listed futures curve as a next-session CL return model, Alquist–Kilian / Fed IFDP spot-forecast papers, vendor/ML one-offs, last-settlement no-change.
 
@@ -41,7 +41,7 @@ That every oil-futures book fails. That anyone should (or should not) trade. Exi
 
 ## Reopen
 
-`name source class …` with a **specific public series + matching locks** (NYMEX CL front-month, next-session, walk-forward, after-cost paper P/L vs the curve). That later test must still **name V1 or V2**. Naming ≠ bar-met. Honest **established** still stops.
+`name source class …` with a **specific public series + matching locks** (NYMEX CL front-month, next-session, walk-forward, after-cost paper P/L vs the curve **under V2**). Naming ≠ bar-met. Honest **established** still stops.
 
 ---
 

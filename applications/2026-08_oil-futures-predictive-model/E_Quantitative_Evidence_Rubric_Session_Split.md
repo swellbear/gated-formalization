@@ -10,7 +10,7 @@
 | # | Check | Result |
 |---|-------|--------|
 | 1 | **Sample definition** | **No** freeze-matching CL official open/settle series submitted. USO 2006–2018 high-frequency is a **different** sample |
-| 2 | **Costs / taxes / frictions** | **N/A** for RMSE bars. Timing-profit claims **excluded** from skill; V-VALUE must name V1 or V2 and count daily round-turns on a day/combo book |
+| 2 | **Costs / taxes / frictions** | **N/A** for RMSE bars. Timing-profit claims **excluded** from skill; V-VALUE uses **V2** and counts daily round-turns on a day/combo book |
 | 3 | **Significance vs point estimate** | Zhang papers report **regression** significance on half-hours, not locked RMSE vs 0 |
 | 4 | **Matched comparison** | **No** — do not collapse half-hour R² or USO timing profits into F-ON/F-DAY/F-CC |
 | 5 | **Sensitivity to sample window** | Noted in those papers (EIA days vs other days). Untested on this freeze |

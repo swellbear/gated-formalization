@@ -119,9 +119,9 @@ G8 is the **named model class and feature recipe** under a locked G1/G6 — bloc
 | G3 | **LOCKED per leg:** D-EXIST C3 class (WTI or Brent, either); F-SKILL/V-VALUE C1 NYMEX CL front-month. |
 | G4 | **LOCKED per leg:** D-EXIST T2 price-level census; F-SKILL/V-VALUE T1 next-session log-return. |
 | G5 | **LOCKED per leg:** D-EXIST H3 open (census); F-SKILL/V-VALUE H1 next session as **F-CC** (settlement-to-settlement). **L-SESS:** F-ON = settlement→next official open; F-DAY = official open→same-day settlement. Combo is a **third** test, not a substitute. |
-| G7 | **LOCKED per leg:** D-EXIST E3 census; F-SKILL/V-VALUE E1 walk-forward. Live vs stand-in for settlements still open. |
+| G7 | **LOCKED per leg:** D-EXIST E3 census; F-SKILL/V-VALUE E1 walk-forward. **Stand-in stipulated** (Yahoo `CL=F`). |
 | G8 | **Named** with F-SRC-CME-TAPE: baseline RMSE; optional FTS. Not a D-EXIST requirement. |
-| V-COST | V-VALUE cost schedule — **either accepted** (V1 or V2; each test must name which). Incomplete as a singleton. |
+| V-COST | V-VALUE cost schedule — **V2 named** (fees + $10/contract/side). V1 not the live schedule. |
 | F-SRC | **F-SRC-CME-TAPE** (2026-08-17). Stand-in pulse scored; F-SKILL **not established**. |
 | Live vs stand-in | **Stand-in stipulated** — Yahoo `CL=F` Open/Close (`Lock_Standin_Yahoo_CLF.md`). Live CME still not in hand. |
 | V-SRC | Named recipe/book for V-VALUE — **leave unnamed** (operator B); V-VALUE-TEST-0 **not established**; not a refute. |
@@ -134,7 +134,7 @@ G8 is the **named model class and feature recipe** under a locked G1/G6 — bloc
 ## Priority Order (highest sum first)
 
 1. **F-SRC / F-SKILL** — stand-in baseline scored; **not established** until a horse beats it (or live tape re-score)  
-2. **V-SRC** — sealed leave unnamed  
+2. **V-SRC** — sealed leave unnamed; later book must use **V2**  
 3. **Live vs stand-in** — executed (Yahoo stipulated; not live)
 
 Lean Default Path: do **not** treat Yahoo RMSE as live or as a pass. Existence stays separate. Next operator fork is horse vs baseline / live re-score / leave. Do not enter Phase 2.

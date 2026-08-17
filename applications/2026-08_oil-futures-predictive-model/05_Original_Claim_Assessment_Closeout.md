@@ -3,10 +3,10 @@
 **Date:** 2026-08-17  
 **Application:** `2026-08_oil-futures-predictive-model`  
 **Closeout verdict:** **Stable Provisional (split) — hard stop (residuals live)**  
-**Amb at closeout:** **1.5** (after Yahoo stand-in pulse; 2.5 after F-SRC-CME-TAPE; 5.5 at first hygiene seal)
+**Amb at closeout:** **1.0** (after V-COST-V2; 1.5 after Yahoo stand-in pulse; 2.5 after F-SRC-CME-TAPE; 5.5 at first hygiene seal)
 
-**Amb ≠ clearance (mandatory):** Amb measures under-specification. Amb 1.5 does **not** mean a predictive oil-futures model works, that skill is established or refuted, or that anyone should trade. A stand-in baseline is not a pass.  
-**Locked bar status (if any):** D-EXIST (P-Logical, futures-target) — **established**. F-SKILL (P-NonNegligible, next-session CL log-return vs last settlement) — **not established** (Yahoo stand-in **baseline** scored; leftover **live**; not a refute). V-VALUE (P-NonNegligible after-cost paper P/L) — **not established** (V-SRC `leave unnamed`; not a refute).
+**Amb ≠ clearance (mandatory):** Amb measures under-specification. Amb 1.0 does **not** mean a predictive oil-futures model works, that skill or after-cost value is established or refuted, or that anyone should trade. A named cost schedule is not a value pass. A stand-in baseline is not a pass.  
+**Locked bar status (if any):** D-EXIST (P-Logical, futures-target) — **established**. F-SKILL (P-NonNegligible, next-session CL log-return vs last settlement) — **not established** (Yahoo stand-in **baseline** scored; leftover **live**; not a refute). V-VALUE (P-NonNegligible after-cost paper P/L) — **not established** (V-SRC `leave unnamed`; **V2 named**; not a refute).
 
 **Original claim (verbatim):**  
 Can a predictive model for oil futures be built?
@@ -21,7 +21,7 @@ Can a predictive model for oil futures be built?
 | Three jobs, not one blended yes: existence ⊂ skill ⊂ after-cost value | Under Rank 4 |
 | Existence = a specified non-no-change mapping for listed WTI or Brent **futures** can be written | Under Rank 4 + **D-EXIST-MET-FT** |
 | Skill protocol = NYMEX CL front-month, next-session **log-return**, walk-forward RMSE vs last settlement (**F-CC**); **L-SESS** requires separate **F-ON** / **F-DAY** exhibits; combo is a third test | Under Rank 4 F-SKILL + L-SESS (bars **not met**) |
-| Value protocol = after-cost paper P/L vs the curve on the same CL next-session book; V1 or V2 named per test | Under Rank 4 V-VALUE + V-EITHER (bar **not met**) |
+| Value protocol = after-cost paper P/L vs the curve on the same CL next-session book; **V2** (fees + $10/contract/side) | Under Rank 4 V-VALUE + **V-COST-V2** (bar **not met**) |
 | No-change / last settlement = F-SKILL **baseline**, not the D-EXIST **model** | Under Rank 4 (operator B) |
 | Recipe menu = existence evidence only; not a singleton pick | Under L-D-SUITE / D-EXIST-MET-FT |
 
@@ -40,7 +40,7 @@ Can a predictive model for oil futures be built?
 |----|-----------------|
 | [R-F-SKILL](RESIDUAL_BRANCH_MENU.md#r-f-skill) | Skill class named; **stand-in baseline scored**; **not established**. `pursue`. Reopen: horse vs baseline or live CME |
 | [R-F-COMBO](RESIDUAL_BRANCH_MENU.md#r-f-combo) | Switching rule **unnamed**. `park-until-trigger`. Rule in advance; F-ON and F-DAY already scored separately |
-| [R-V-VALUE](RESIDUAL_BRANCH_MENU.md#r-v-value) | After-cost book **unnamed**. `park-until-trigger`. Test must still name V1 or V2 |
+| [R-V-VALUE](RESIDUAL_BRANCH_MENU.md#r-v-value) | After-cost book **unnamed**. `park-until-trigger`. Later book must match **V2** |
 | [R-G8](RESIDUAL_BRANCH_MENU.md#r-g8) | **Executed → admitted meanings** (baseline scored; optional FTS not run) |
 | [R-LIVE-STANDIN](RESIDUAL_BRANCH_MENU.md#r-live-standin) | **Executed** (Yahoo `CL=F` stipulated). Reopen: `live CME only` |
 
@@ -61,7 +61,7 @@ Any claim that a model beats last settlement out of sample; that a paper book ma
 | `leave skill not shown` | None required | F-SKILL stays not established (stand-in baseline on record) |
 | `live CME only` | Re-score RMSE on official open/settle | Establishment-stop if honest `04` would say established |
 | `name horse …` | Score a named recipe vs the stand-in (or live) baselines | Does not auto-meet V-VALUE; stand-in ≠ live |
-| `name source class …` matching V-VALUE | Named paper book; test must name V1 or V2 | Does not auto-meet F-SKILL |
+| `name source class …` matching V-VALUE | Named paper book **under V2** | Does not auto-meet F-SKILL |
 | `run CR` / successor (existence-only or skill-only) | Different question, labeled | **Declined** 2026-08-17; Rank 4 leftover unchanged |
 | `run UX` / `run CX` | Documentation / alternatives | **Declined** 2026-08-17; parent verdict unchanged |
 
@@ -80,7 +80,7 @@ Original one-liner is a blended “can.” Rank 4 named the split without rewrit
 
 ## Closeout statement
 
-Application **closed** as **Stable Provisional (split) — hard stop (residuals live)**. Original one-liner **not** silently converted into “the model works.” Existence for futures-target recipes remains authorized and **separate**. Yahoo `CL=F` is a **stipulated stand-in**; last-500 baseline RMSE is on record; skill remains not shown; leftover stays **live**. After-cost paper book stays unnamed. Phase 2 not entered. Leftover-ambiguity held at **1.5**. This is not trading advice and does not clear the blended slogan.
+Application **closed** as **Stable Provisional (split) — hard stop (residuals live)**. Original one-liner **not** silently converted into “the model works.” Existence for futures-target recipes remains authorized and **separate**. Yahoo `CL=F` is a **stipulated stand-in**; last-500 baseline RMSE is on record; skill remains not shown; leftover stays **live**. Paper costs named **V2**; after-cost paper book stays unnamed. Phase 2 not entered. Leftover-ambiguity held at **1.0**. This is not trading advice and does not clear the blended slogan.
 
 Awaiting further authorization (`leave skill not shown` / `live CME only` / `name horse …`). Optional modes **declined**.
 
