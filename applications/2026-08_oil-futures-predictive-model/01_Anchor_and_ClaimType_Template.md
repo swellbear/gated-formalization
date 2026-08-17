@@ -37,14 +37,15 @@ Can a predictive model for oil futures be built?
 
 Select one (or split mixed claims):
 
-- [x] **Descriptive** (factual, causal, or structural)
+- [ ] **Descriptive** (factual, causal, or structural)
 - [ ] **Normative / Strategic** (value, advocacy, prescription, or framing recommendation)
-- [ ] **Mixed** — split as follows:
-  - Descriptive part:  
-  - Normative/Strategic part:  
+- [x] **Mixed** — split as follows:
+  - Descriptive part: **D-EXIST** (construction/existence of a specified mapping); **F-SKILL** (walk-forward skill vs last-settlement on CL front-month).  
+  - Performance elevation (not a “should”): **V-VALUE** (after-cost paper value vs the curve). Cost OR-slot still open.  
+  - Normative/Strategic part: **none** (no “should trade”). LOCK-006 still not imported.
 
 **Notes on classification:**  
-As written, the sentence asks whether construction/feasibility of a forecasting procedure is possible. There is no “should.” Rank 2 in the lock table (after-cost economic value) would add a **performance / trading-edge** elevation and would then be treated as **Mixed**. Rank 3 (existence census) stays Descriptive. **Rank 4** (operator-asked A+B+C combination) would **split** D-EXIST / F-SKILL / V-VALUE rather than blending them; V-VALUE stays a marked elevation, not a “should trade.” Do not score an unstated “should we trade oil futures with a model” as this claim. Split sheet (draft only): `MULTI_ELEVATION_SPLIT.md`.
+Operator selected **Rank 4** (2026-08-17). D-EXIST is the claim-under-test. F-SKILL and V-VALUE are marked elevations. Do not collapse legs. Split sheet: `MULTI_ELEVATION_SPLIT.md` (in force for meanings). Lock: `Lock_Rank4_Nested_Split.md`.
 
 **Critically related apps (process only; no conclusion inheritance):**  
 - `2026-08_spacex-600-dollar-stock` — soft-modal “can/potential” plus missing window/success criterion.  
@@ -56,9 +57,11 @@ As written, the sentence asks whether construction/feasibility of a forecasting 
 
 | Term in claim | Candidate bar (circle one when locking) |
 |---------------|----------------------------------------|
-| “can” | P-Logical / P-NonNegligible / P-BaseCase / other: **unset — lock package required** |
+| “can” on **D-EXIST** | **P-Logical (LOCKED)** — construction/existence; height ≠ F-SKILL |
+| “can” on **F-SKILL** | **P-NonNegligible (LOCKED)** — real shot of walk-forward skill; height ≠ met |
+| “can” on **V-VALUE** | **P-NonNegligible (LOCKED)** — real shot of after-cost value; height ≠ met; cost OR-slot open |
 
-**Near-vacuity warning:** Unbounded **P-Logical** (“not a contradiction that some program emits a number”) plus unspecified contract/horizon/metric is **near-vacuous**. Low productivity. State this if Rank 3 is selected. Do **not** silently strengthen “can” into “expected to work” (P-BaseCase) or into a trading recommendation.
+**Near-vacuity warning:** D-EXIST + P-Logical + any specified mapping is **near-vacuous**. An honest construction exhibit (last-settlement no-change) would meet it — **establishment-stop**, not auto-declared. Do **not** silently strengthen any leg into P-BaseCase or a trading recommendation.
 
 ---
 
@@ -79,7 +82,7 @@ As written, the sentence asks whether construction/feasibility of a forecasting 
 
 ## Ready for Gate Scoring?
 
-**In plain language:** The starting facts are stable. The *sentence* is still mushy; Cycle 0 scores that under-specification rather than pretending a lock already exists.
+**In plain language:** Rank 4 is in force. Re-score is `02_Gate_Scoring_After_Rank4.md`.
 
-- [x] Yes — proceed to Gate Scoring Sheet (Cycle 0 of unconstrained slogan)
+- [x] Yes — Cycle 0 done; current sheet `02_Gate_Scoring_After_Rank4.md`
 - [ ] No — revise anchors or claim statement first

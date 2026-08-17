@@ -4,12 +4,12 @@
 
 **Application:** `2026-08_oil-futures-predictive-model`  
 **Last reviewed:** 2026-08-17  
-**Status:** Open · Phase 1 locking-scaffolding · Cycle 0 Provisional  
+**Status:** Open · Phase 1 Rank 4 locked · D-EXIST establishment-stop · Provisional  
 
 **Tags** (see `docs/TRACKER_TAXONOMY.md`):  
 - Domain: `markets`  
 - Claim-shape: `forecast-extension`, `descriptive-census`  
-- Pattern: `R-dependence` (observed this cycle: G8 ← G1/G6; not yet a closed-app calibration event)
+- Pattern: `R-dependence` (V-SRC ← V-COST; F-SKILL ← F-SRC)
 
 ---
 
@@ -19,7 +19,7 @@
 
 Can a predictive model for oil futures be built?
 
-**Successor / Rank lock (if any):** none yet — Rank 4 / Rank 4-AC **offered** (A+B+C as nested split, not a blend); singletons Rank 1–3 still available. See `R_Locking_Scaffolding.md` · `MULTI_ELEVATION_SPLIT.md`
+**Successor / Rank lock (if any):** **Rank 4** nested split (`Lock_Rank4_Nested_Split.md`) — D-EXIST ⊂ F-SKILL ⊂ V-VALUE. V-COST incomplete.
 
 **Parent / successor relationship:** none
 
@@ -27,32 +27,33 @@ Can a predictive model for oil futures be built?
 
 ## 2. Verdict and Amb path
 
-**Verdict:** Cycle 0 **Provisional** (high Amb; not false)
+**Verdict:** **Provisional** (meanings locked; no bar met)
 
-**Amb path (brief):** unconstrained slogan **12**
+**Amb path (brief):** 12 → **9** after Rank 4 (definitional)
 
-**Amb ≠ clearance:** Amb 12 is under-specification. It does not mean a model cannot be built, should not be built, or already works.
+**Amb ≠ clearance:** Amb 9 is leftover vehicles/costs plus the D-EXIST checkpoint. It does not mean a model works or should be traded.
 
 ---
 
 ## 3. Established
 
-- L₀ market-structure anchors only (listed crude futures exist; mapping ≠ skill; curve ≠ fitted past print).
-- Soft-modal “can” flagged; object fork named.
+- L₀ market-structure anchors.
+- Rank 4 **meanings** (not bars).
 
 ---
 
 ## 4. Not established / negatively constrained
 
-- Original slogan not established (not yet well-posed).
-- No skill bar, value bar, or existence census executed.
+- D-EXIST **not declared** (establishment-stop; would-be-met on no-change mapping).
+- F-SKILL untested (class unnamed).
+- V-VALUE untested (V-COST open).
 - No trading advice.
 
 ---
 
 ## 5. Forced deviations
 
-None required yet. Rank 3 is Minimal deviation; Rank 1 Moderate; Rank 2 Substantial / problem substitution. FD extraction condition (no Minimal package) = **No**.
+None required (D-EXIST remains Minimal). V-VALUE is a marked elevation (Substantial), not FD-extraction of the slogan.
 
 ---
 
@@ -60,19 +61,22 @@ None required yet. Rank 3 is Minimal deviation; Rank 1 Moderate; Rank 2 Substant
 
 | ID | Residual | Concrete reopen condition |
 |----|----------|---------------------------|
-| *(pre-lock)* | Package pick | Operator `lock Rank N` or `no lock yet` |
+| D-EXIST checkpoint | Construction exhibit | Operator `confirm D-EXIST established` / `hold D-EXIST` / `name source class …` |
+| F-SRC | Named class for F-SKILL | `name source class …` (named enough, non-circular) |
+| V-COST | Cost schedule | Single cost rule or formally accept either |
+| G8 | Model class under F-SKILL | After F-SRC; do not treat architecture fashion as skill |
 
-*Residual-branch menu is drafted at Phase 1 endpoint, not before the lock pick.*
+*Residual-branch menu still waits for Phase 1 endpoint.*
 
 ---
 
 ## 7. Action implications
 
-**Stop saying:** That an oil-futures predictive model has been shown to work; that it cannot be built; that anyone should trade; that Amb 12 is a confidence score.
+**Stop saying:** That an oil-futures model has been shown to work; that D-EXIST is already stamped established; that anyone should trade; that Amb 9 is a confidence score.
 
-**Keep saying:** The sentence is not yet a fair test until job, “can,” and grading rule are frozen. Picking a freeze is not proving the claim.
+**Keep saying:** Rank 4 is a split. A cheap mapping can-be-built is not skill and not after-cost value.
 
-**Test next (only if authorized):** After lock, only tests that package licenses; named-class pulse only if class is named enough.
+**Test next (only if authorized):** D-EXIST checkpoint this turn; F-SKILL only after a named class; V-VALUE only after V-COST.
 
 ---
 
@@ -83,7 +87,14 @@ None required yet. Rank 3 is Minimal deviation; Rank 1 Moderate; Rank 2 Substant
 - `03_Gap_Extraction_and_Ranking.md`
 - `R_Locking_Scaffolding.md`
 - `PLAIN_LANGUAGE_CARD.md`
-- `MULTI_ELEVATION_SPLIT.md` (draft; not in force)
+- `Lock_Rank4_Nested_Split.md`
+- `02_Gate_Scoring_Sheet.md`
+- `02_Gate_Scoring_After_Rank4.md`
+- `04_Material_Admission_D_EXIST_Construction.md`
+- `03_Gap_Extraction_and_Ranking.md`
+- `R_Locking_Scaffolding.md`
+- `PLAIN_LANGUAGE_CARD.md`
+- `MULTI_ELEVATION_SPLIT.md` (meanings in force)
 
 ---
 
@@ -92,7 +103,7 @@ None required yet. Rank 3 is Minimal deviation; Rank 1 Moderate; Rank 2 Substant
 - Dissertation: not yet (open run)
 - Closeout / verdict: not yet
 - Parent / successor: —
-- Key admissions / locks: none in force; process imports 003/009/010/011
+- Key admissions / locks: Rank 4 meanings; D-EXIST HOLD at establishment-stop; process imports 003/009/010/011
 
 ---
 

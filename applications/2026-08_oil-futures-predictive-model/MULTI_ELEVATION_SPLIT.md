@@ -2,7 +2,7 @@
 
 **Application:** `2026-08_oil-futures-predictive-model`  
 **Date:** 2026-08-17  
-**Status:** **Draft.** Activates only if the operator selects `lock Rank 4` or `lock Rank 4-AC`. Not a silent pick.
+**Status:** **In force for meanings** (operator `lock Rank 4`, 2026-08-17). V-COST OR-slot still **open**. D-EXIST **not** auto-established (establishment-stop).
 
 **Rule:** Do **not** collapse legs. A yes on one is not a yes on the others. Amb drop ≠ clearance.
 
@@ -80,4 +80,4 @@ D-EXIST  ⊂  F-SKILL               (Rank 4-AC)
 
 ---
 
-*Offering this split ≠ locking it. Operator one-liner: `lock Rank 4` or `lock Rank 4-AC`.*
+*Rank 4 locked 2026-08-17. Offering ≠ running F-SKILL/V-VALUE tests. Next: D-EXIST establishment checkpoint; V-COST still open.*

@@ -112,14 +112,17 @@ G8 is the **named model class and feature recipe** under a locked G1/G6 — bloc
 
 | Gap ID | One-sentence freeze lock |
 |--------|--------------------------|
-| G1 | The **job**: existence/construction vs locked out-of-sample skill vs after-cost economic value. |
-| G2 | The **height** of “can” (P-Logical / P-NonNegligible / P-BaseCase); height ≠ met. |
-| G6 | The **grading rule**: metric + baseline that “predictive” must satisfy. |
-| G3 | The **named listed contract and tenor** (futures, not a silent spot swap). |
-| G4 | The **numeric target** (price / return / direction / curve). |
-| G5 | The **horizon** from forecast to the print that counts. |
-| G7 | The **evaluation protocol** (walk-forward vs in-sample; live vs stand-in). |
-| G8 | The **named model class** — **G1/G6-dependent**; do not pretend empirical closure first. |
+| G1 | **LOCKED Rank 4:** three jobs, not one object — D-EXIST (claim-under-test) ⊂ F-SKILL ⊂ V-VALUE (elevations). |
+| G2 | **LOCKED per leg:** D-EXIST P-Logical; F-SKILL P-NonNegligible; V-VALUE P-NonNegligible. Height ≠ met. |
+| G6 | **LOCKED per leg:** D-EXIST S1 any specified mapping; F-SKILL RMSE vs last-settlement; V-VALUE after-cost P/L vs curve. |
+| G3 | **LOCKED per leg:** D-EXIST C3 class (WTI or Brent, either); F-SKILL/V-VALUE C1 NYMEX CL front-month. |
+| G4 | **LOCKED per leg:** D-EXIST T2 price-level census; F-SKILL/V-VALUE T1 next-session log-return. |
+| G5 | **LOCKED per leg:** D-EXIST H3 open (census); F-SKILL/V-VALUE H1 next session. |
+| G7 | **LOCKED per leg:** D-EXIST E3 census; F-SKILL/V-VALUE E1 walk-forward. Live vs stand-in for settlements still open. |
+| G8 | Named model class under F-SKILL — **re-opened**; not a D-EXIST requirement. |
+| V-COST | V-VALUE cost schedule — **OR-slot open**; V-VALUE dependents blocked. |
+| D-SRC | Specified D-EXIST exhibit — establishment-stop queued (`04` D-EXIST). |
+| F-SRC | Named public class for F-SKILL — **unnamed**. |
 
 *Later candidates must quote the freeze line for any parameter they claim to close. Changing the freeze line is a claim change, not progress.*
 
@@ -140,24 +143,24 @@ Lean Default Path: attack **G1+G2+G6** as one lock package (contract/horizon/tar
 
 ## Inter-parameter dependency (mandatory)
 
-**G8** (and any architecture census) is currently blocked primarily by unset **G1** and **G6**. G4/G5/G7 are also G1-shaped: an existence object scopes them out or freezes them loosely; a skill/value object must lock them.
+**G8** is no longer blocked by unset G1/G6 (Rank 4 locked). It is a scoped F-SKILL leftover (architecture/recipe). **V-SRC** is blocked primarily by unset **V-COST**. **F-SKILL tests** are blocked primarily by unnamed **F-SRC**.
 
-**Rectification:** operator selects a lock package in `R_Locking_Scaffolding.md`. Then re-open only the dependents that package marks in-scope.
+**Rectification:** operator checkpoint on D-EXIST would-be-met; then `name source class …` for F-SKILL; single or “either” V-COST before V-VALUE dependents.
 
-**Reopen condition (prominent):** After `lock Rank N` (or à-la-carte with OR-slots resolved), re-score Amb and run only tests the package licenses. Do not auto-enter Phase 2. Named-class pulse only if the source class is already **named enough** and non-circular.
+**Reopen condition (prominent):** After D-EXIST confirm/hold, named F-SRC, and V-COST resolution. Do not auto-enter Phase 2. Named-class pulse only if the source class is already **named enough** and non-circular.
 
 ---
 
 ## Search Plan for Top-Priority Gap(s)
 
-**Targeted gap:** G1/G2/G6 via locking-scaffolding — **not** material search until the operator picks a package.  
-**Source classes to check:** none yet (unnamed). After a skill lock, a public series must be **named** (`name source class …`) before a pulse; “some oil-forecasting papers” is unnamed.  
-**Diminishing-returns / time-box rule:** Do not hunt models to “answer yes” while three jobs remain live. One lock-pick turn, then hygiene.  
-**Notes:** Existence of forecasting *software* or *spot* oil papers is not a silent admit for a locked futures skill bar (print-match ≠ clearance).
+**Targeted gap:** D-EXIST establishment-stop; then F-SRC / V-COST as operator picks.  
+**Source classes to check:** none auto-named. “Some oil papers” is unnamed. Spot-oil outlooks are a different class.  
+**Diminishing-returns / time-box rule:** Do not hunt models to collapse three legs into one yes.  
+**Notes:** Rank 4 selected 2026-08-17. Material search on F-SKILL waits on `name source class …`. V-VALUE waits on V-COST.
 
 ---
 
 ## Ready for Material Search & Admission Checks?
 
-- [ ] Yes  
-- [x] Need operator lock pick first (`R_Locking_Scaffolding.md`). Material search before that would pick a job by shopping sources.
+- [x] Yes — D-EXIST construction `04` run; **HOLD** at establishment-stop  
+- [ ] Need operator lock pick first (`R_Locking_Scaffolding.md`). Material search before that would pick a job by shopping sources.

@@ -1,27 +1,27 @@
 # Plain-language card
 
 **Application:** `2026-08_oil-futures-predictive-model`  
-**Date / checkpoint:** 2026-08-17 · combination ask (A+B+C)  
+**Date / checkpoint:** 2026-08-17 · Rank 4 locked · D-EXIST establishment-stop  
 
 ---
 
 ## What we’re doing
 
-You asked whether the three freeze packages can be locked together. Existence, skill, and after-cost value are different jobs. They can stay on the record as **separate nested legs**. They cannot be one blended yes.
+You chose the three-way split. We froze those meanings. A specified recipe already sits inside the lock: forecast the next oil-futures print as equal to the last print. Under the existence leg, that is enough to say “a mapping can be built.” We did **not** stamp that as established.
 
 ## What we need from you
 
-Pick how to lock (or not).
+Say whether that cheap existence yes counts, or whether existence needs a different exhibit.
 
-**Preferred reply:** click the in-chat A / B / C / D option. Typed equivalents: `lock Rank 4` · `lock Rank 4-AC` · `lock Rank 1` (or 2 or 3) · `no lock yet`
+**Preferred reply:** click the in-chat A / B / C option. Typed equivalents: `confirm D-EXIST established` · `hold D-EXIST` · `name source class …`
 
 ## What a “yes” / this update means
 
-We freeze that combination rule. A later yes on “a recipe exists” still would not mean the recipe beats last price or makes money after costs.
+If you confirm, we record only that a forecasting mapping can be built. Skill and after-cost value stay untested.
 
 ## What this does *not* mean
 
-That an oil-futures model works, that anyone should trade, or that naming three legs proves the original slogan.
+That the recipe beats last price. That it makes money after costs. That anyone should trade. A clearer split is not a proved slogan.
 
 ---
 
@@ -29,11 +29,11 @@ That an oil-futures model works, that anyone should trade, or that naming three 
 
 | Item | Value |
 |------|--------|
-| Claim-freeze / claim under test | “Can a predictive model for oil futures be built?” (lock still unset) |
-| Amb | **12** (unchanged; no package selected) |
-| Locks / package IDs | none in force; Rank 4 / 4-AC now **offered** |
-| Method verdict label (if any) | Cycle 0 **Provisional** |
-| Artifact pointers | `R_Locking_Scaffolding.md` · `MULTI_ELEVATION_SPLIT.md` |
+| Claim-freeze / claim under test | Rank 4: D-EXIST ⊂ F-SKILL ⊂ V-VALUE; D-EXIST is the slogan core |
+| Amb | **9** (was 12; definitional; ≠ clearance) |
+| Locks / package IDs | Rank 4; V-COST **open** |
+| Method verdict label (if any) | Provisional |
+| Artifact pointers | `Lock_Rank4_Nested_Split.md` · `04_Material_Admission_D_EXIST_Construction.md` · `02_Gate_Scoring_After_Rank4.md` |
 
 ---
 

@@ -8,18 +8,18 @@
 
 ### Plain status
 
-We started examining the question “Can a predictive model for oil futures be built?” You asked whether A, B, and C can be locked together. They can **only as separate nested legs**, not as one blended yes/no. We still need you to pick Rank 4 (all three legs), Rank 4-AC (existence + skill only), a singleton Rank 1/2/3, or no lock yet. Picking a package does **not** mean a working oil-futures model has been shown, or that anyone should trade.
+You locked the three-way split: existence, skill, and after-cost value stay separate. A cheap specified recipe (forecast next price = last price) would already count as “a mapping can be built.” That is **not** auto-marked established. Confirming it would **not** mean the recipe beats last price or makes money after costs, and it is not trading advice.
 
 ---
 
 | Field | Value |
 |-------|--------|
 | **Closure state** | **open** |
-| **Phase** | Phase 1 — locking-scaffolding (object / “can” / success bar) |
-| **Amb** | **12** (Cycle 0; unconstrained slogan) |
-| **Locks in force** | none (process imports only: LOCK-003, 009, 010, 011) |
-| **Next authorization needed** | `lock Rank 4` / `lock Rank 4-AC` / `lock Rank 1` / `lock Rank 2` / `lock Rank 3` / `no lock yet` |
-| **Related apps surfaced** | `2026-08_spacex-600-dollar-stock` — soft-modal “can/potential” must lock before a test; `2026-08_fomc-sep-2026-uffr-change` — object fork (census vs forecast vs odds) before scoring. Process only; **no conclusion inheritance**. |
+| **Phase** | Phase 1 — Rank 4 locked; D-EXIST establishment-stop |
+| **Amb** | **9** (was 12; definitional drop on meanings; **≠ clearance**) |
+| **Locks in force** | Rank 4 nested split (`Lock_Rank4_Nested_Split.md`); V-COST OR-slot **open** |
+| **Next authorization needed** | `confirm D-EXIST established` / `hold D-EXIST` / `name source class …` |
+| **Related apps surfaced** | `2026-08_spacex-600-dollar-stock` — lock-time Amb ≠ clearance; `2026-08_fomc-sep-2026-uffr-change` — establishment-stop on a would-be-met bar. Process only. |
 | **Optional modes** | none yet (not Phase 1 endpoint) |
 
 **Endpoint** = examination done; verdict frozen. **Hard stop** = endpoint + Layers 1–3 hygiene + share pack complete. **Hard stop (residuals live)** = hygiene complete **and** `pursue` leftovers remain — `Next authorization needed` must not be `none — hard stop`.

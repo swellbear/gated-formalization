@@ -15,7 +15,11 @@
 - Operator follow-up (2026-08-17): “Can I lock a combination of A B and C?”
 - Answer recorded: **not as one object** (O1+O2+O3 incoherent; “either” OR-slot does not apply). **Yes as nested split** Rank 4 (A+B+C) or Rank 4-AC (A+C, value out). Draft: `MULTI_ELEVATION_SPLIT.md`. **Not selected.**
 - No should in the text; LOCK-006 not imported.
-- This toolkit does **not** implement a trading model as the method output. A later authorized Phase 2 / Experimental Generation batch would still be accuracy-posture evidence work, not a desk.
+- Operator **A** (2026-08-17): `lock Rank 4` (nested split A+B+C). Record: `Lock_Rank4_Nested_Split.md`.
+- D-EXIST construction `04` run: **Would established? Yes** (no-change mapping). **HOLD** — establishment-stop. Not auto-declared.
+- V-COST still open (not this turn’s picker).
+- F-SRC unnamed; no F-SKILL pulse.
+- Amb 12 → **9** (definitional). Amb ≠ clearance.
 
 ## Residual judgment points encountered
 
