@@ -32,6 +32,7 @@
 - Operator (2026-08-17, later): `go with V2 then` (more realistic mock). **V-COST-V2.** Fees plus $10/contract/side. V-VALUE **not established** (no named book). Amb **1.5 → 1.0**.
 - Operator (2026-08-17, later): `ok proceed` to stipulate Yahoo month-chain curve stand-in and score both horses. **L-STANDIN-Y-CHAIN:** expired months 404; true-front CL1–CL18 dates = 54 (need 750). **H-LAG-WF:** last-500 F-CC 0.02888 vs 0 0.02869 (**loss**); F-ON tiny dip **not** met. **H-KS-FTS not run**. Skill **not established**. Amb **held 1.0**.
 - Operator (2026-08-17, later): **B** `name horse H-SPARSE-CAL + H-SPARSE-VOL`. **L-PULSE-SPARSE-1:** CAL last-500 F-CC 0.02868990 vs 0 0.02869369 (tiny; **fails** last 750). VOL F-CC **loss**. Neither promotes. Skill **not established**. Amb **held 1.0**. Cap remains these two rows.
+- Operator **C** (2026-08-17, later): `proceed with C` named finite discovery/confirm pretell hunt. **L-HUNT-PRETELL** / **L-PULSE-PRETELL-1:** eight locked Yahoo-tell horses; discovery F-CC **all lose** (0 = 0.026705); **no survivor**; confirm skipped; promote does not fire. Skill **not established**. Amb **held 1.0**. Cap remains these eight rows. Do not re-hunt confirm.
 - Amb 12 → 9 → 7.5 → 5.5 → 2.5 → 1.5 → **1.0**. Amb ≠ clearance.
 
 ## Residual judgment points encountered

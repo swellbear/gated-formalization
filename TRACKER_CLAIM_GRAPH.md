@@ -31,7 +31,7 @@
 | APP-FOMC-SEP | Application | `2026-08_fomc-june-2026-sep` | **Hard stop sealed**; L1–L17; Amb ≈ 1; 2026 F-ML not established (L13 + L17 SPF); July 29 OUT; CR offered not run (keep original default); UX/CX offered not run |
 | APP-FL-PTAX | Application | `2026-08_fl-property-tax-abolish-10y` | **Hard stop sealed**; Rank 1 + live official law; D-LAW admitted; Amb 2; P-BaseCase untested (`leave unnamed`); CR offered not run |
 | APP-FOMC-UFFR | Application | `2026-08_fomc-sep-2026-uffr-change` | **Hard stop sealed**; Rank 3 `Q3+O2+L1+M3+B1`; Amb 2.5; P-NN-TEST **not established**; C2 `leave unnamed`; F-PRINT parked; CR offered not run |
-| APP-OIL-FT | Application | `2026-08_oil-futures-predictive-model` | **Hard stop (residuals live)**; Rank 4 split; D-EXIST-MET-FT; **L-SCREEN-Y-PROMOTE**; **H-SPARSE-CAL** / **H-SPARSE-VOL** scored (neither promotes); **H-LAG-WF** scored (F-CC loss); **V-COST-V2**; Amb 1.0; F-SKILL/V-VALUE not established; **R-F-SKILL** pursue; V-SRC leave unnamed; UX/CX/CR **declined** |
+| APP-OIL-FT | Application | `2026-08_oil-futures-predictive-model` | **Hard stop (residuals live)**; Rank 4 split; D-EXIST-MET-FT; **L-SCREEN-Y-PROMOTE**; **L-HUNT-PRETELL** no survivor; **H-SPARSE-CAL** / **H-SPARSE-VOL** scored (neither promotes); **H-LAG-WF** scored (F-CC loss); **V-COST-V2**; Amb 1.0; F-SKILL/V-VALUE not established; **R-F-SKILL** pursue; V-SRC leave unnamed; UX/CX/CR **declined** |
 | LOCK-2026-08-001 | Lock | Comparison class before uniqueness (O) | Active |
 | LOCK-2026-08-002 | Lock | Preferability needs named virtues/metrics | Active |
 | LOCK-2026-08-003 | Lock | Amb drop / scope lock ≠ clearance | Active |
