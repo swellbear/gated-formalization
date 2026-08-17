@@ -1,6 +1,6 @@
 # Compare method (A vs B)
 
-Parallel paper machines. **Never auto-bets. Never real money.** Lived St. Jude `{event}.json` is a museum: auto-apply later snapshots is allowed; `--lock-paper` is not. Packs print current A/B bankroll vs the $250 start.
+Parallel paper machines. **Never auto-bets. Never real money.** Last week's lived St. Jude `{event}.json` is a museum: do not `--lock-paper` it. **This week** pin BMW `401811963`. Compare packs print each path's bankroll vs that path's $250 start.
 
 Hashed constitution: `method_law_v1` in `golf_offshoot.compare.law`.
 
@@ -18,17 +18,17 @@ Honesty in B-guts: no agronomy schema defaults in course demand; missing SG is N
 
 Compare ledgers are independent **$250** books. They do not touch `ledger.json` / `working_bankroll`. Sells book P/L onto that path's own bankroll. Mode is frozen `stay_selective` + `conservative`. Threshold learner **keep_t** this week (`n=1`). Reject `copy_a_edgew_because_a_won`.
 
-**Markets:** St. Jude (`401811962`) stays **Winner-only**. From the next event on, A/B also ticket **Top 5 / Top 10 / Top 20 when that coupon is actually listed**. Place is never synthesized from Winner odds. Score **Winner posted P/L** and **place posted P/L** as two lines, not one blended book. Lived Thursday place ladders with no live coupon stay open (HOLD, ride to settle) — that is not an intact live edge and not a cash-out.
+**Markets:** St. Jude (`401811962`) stays **Winner-only**. BMW (`401811963`) and later events ticket **Top 5 / Top 10 / Top 20 when that coupon is actually listed**. Place is never synthesized from Winner odds. Score **Winner posted P/L** and **place posted P/L** as two lines, not one blended book. Lived Thursday place ladders with no live coupon stay open (HOLD, ride to settle) — that is not an intact live edge and not a cash-out.
 
 ```bash
-python -m golf_offshoot live --event 401811962 --book bovada --compare-method
-python -m golf_offshoot compare-replay --event 401811962
+python -m golf_offshoot live --event 401811963 --book bovada --compare-method
+python -m golf_offshoot compare-replay --event 401811963
 ```
 
 `compare-replay` walks existing snapshots into A-replay + B-nerves only. B-guts needs persisted `audit.extra["field"]` (new audits store field + market). This week's older snapshots do not have that field.
 
-Default `live` auto-applies the **lived** paper book when the actionable advice set changes (HOLD-only does not re-apply). `--no-apply-paper` skips. `--compare-method` will not `--lock-paper` lived.
+Default `live` auto-applies the **lived** paper book when the actionable advice set changes (HOLD-only does not re-apply). `--no-apply-paper` skips. `--compare-method` will not `--lock-paper` lived. After official settle, neither lived nor A/B apply new tickets on that event; leftover post-settle opens are voided at cost.
 
 The **fights** page under `data/exports/{event}_fights_*.html` is the operator readout: who each path owns, where they disagree, and **why** (plain + technical: Winner vs place coupons, EdgeW vs vs-posted, honest theta vs A theta, with the 3pp numbers). `--compare-method` and `compare-replay` also write one **batch pack** under `data/exports/packs/{event}_{time}_{run}_batch/` with `00_full_readout.pdf` in this order: **trigger pull** (lived this snapshot: sell / reallocate / partial sell / add / new / hold), how to read (five-book legend), fights, ESPN leaderboard, model field, then lived / A-replay / B-guts / B-nerves / B-full tickets + why-bets, then lived bankroll. Each ticket page is titled with the book (A-control shares A-replay; there is not a second A book). Open that PDF in Edge, Chrome, or Adobe — not as source in the editor.
 
-Leftover callout stays parked. Do not add agronomy / tee / injury feeds for this.
+Leftover callout is display-only on `ingest` / `live` / pressure-test. Do not add agronomy / tee / injury feeds for this.

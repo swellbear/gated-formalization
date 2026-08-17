@@ -783,7 +783,7 @@ def build_inventory(
             "recent SG stays unconstrained; finish-residual form is not a last-N SG window",
         ),
         row("season_driving_putts", DataQuality(score=0.68 if season_n else 0.0, source_name="espn_athlete_season_rankings", as_of=now(), n_observations=season_n, missing=season_n == 0, source_kind=SourceKind.REAL_LIVE if season_n else SourceKind.UNAVAILABLE, notes="yards/drive, accuracy %; putts/GIR only if SG:PUTT missing"), f"{season_n}/{n}", "length/accuracy/putting proxies weaker"),
-        row("recent_form_trend", DataQuality(score=0.70, source_name="espn_leaderboard_history", as_of=now(), source_kind=SourceKind.DERIVED_FROM_REAL, notes="pre-event residuals from prior events only"), "players with ≥1 prior start", "form unconstrained"),
+        row("recent_form_trend", DataQuality(score=0.70, source_name="espn_leaderboard_history", as_of=now(), source_kind=SourceKind.DERIVED_FROM_REAL, notes="pre-event residuals from prior events only"), "players with >=1 prior start", "form unconstrained"),
         row("course_history", DataQuality(score=0.55, source_name="espn_same_course_history", as_of=now(), source_kind=SourceKind.DERIVED_FROM_REAL, notes="same ESPN course id across loaded seasons"), "thin if course not in 2025–26 sample", "course history unconstrained; reliability down"),
         row("course_identity", course_q, "1", "yards/par real; agronomy unavailable"),
         row("course_setup_agronomy", setup_q, "0", "tightness/rough/stimp not evidence"),
@@ -830,6 +830,6 @@ def build_inventory(
             str(opening_n) if opening_n else "0",
             "no open-to-current movement; live prices are not claimed as opens",
         ),
-        row("health_injury", health_q, "WD only", "injury rumours cannot move θ"),
+        row("health_injury", health_q, "WD only", "injury rumours cannot move theta"),
         row("cut_rule", DataQuality(score=0.9, source_name="espn_tournament_cutRound", as_of=now(), source_kind=SourceKind.REAL_LIVE, notes="has_cut from ESPN cutRound"), "event", f"has_cut={has_cut}"),
     ]

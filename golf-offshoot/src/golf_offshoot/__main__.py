@@ -16,6 +16,7 @@ from golf_offshoot.models.strategy import StrategyConfig
 from golf_offshoot.pipeline import GolfOffshootPipeline
 from golf_offshoot.ranking.display import format_table, movement_note
 from golf_offshoot.ranking.leaderboard import format_leaderboard
+from golf_offshoot.ranking.leftover import format_leftover_callout
 from golf_offshoot.strategy.engine import format_recommendation
 
 DEMO_BANNER = (
@@ -24,9 +25,22 @@ DEMO_BANNER = (
 )
 
 
+def _configure_stdio() -> None:
+    """Windows cp1252 cannot print inventory notes (e.g. >=). Fail open."""
+    for stream in (sys.stdout, sys.stderr):
+        reconf = getattr(stream, "reconfigure", None)
+        if not callable(reconf):
+            continue
+        try:
+            reconf(encoding="utf-8", errors="replace")
+        except (OSError, ValueError):
+            pass
+
+
 def main(argv: list[str] | None = None) -> int:
     from golf_offshoot.data_feeds.local_env import load_local_env
 
+    _configure_stdio()
     load_local_env()
     parser = argparse.ArgumentParser(description="Golf Betting Offshoot (never auto-bets)")
     parser.add_argument(
@@ -190,6 +204,8 @@ def _cmd_ingest(args) -> int:
         print(format_inventory(items))
     print(format_table(result.ranked, n=len(result.ranked)))
     _print_table_export(result)
+    print()
+    print(format_leftover_callout(result))
     return 0
 
 
@@ -240,6 +256,8 @@ def _cmd_pressure(args) -> int:
     for k, v in modes.items():
         print(f"\n=== strategy {k} ===")
         print(v)
+    print("\n=== leftover (pre) ===")
+    print(format_leftover_callout(pre))
     live = run_operating(
         event_id=pre.tournament.espn_event_id or pre.tournament.tournament_id,
         mode=RunMode.LIVE,
@@ -260,6 +278,12 @@ def _cmd_pressure(args) -> int:
     for k, v in live_modes.items():
         print(f"\n=== live strategy {k} ===")
         print(v)
+    from golf_offshoot.strategy.paper_book import load_paper_book
+
+    tid = pre.tournament.espn_event_id or pre.tournament.tournament_id
+    paper = load_paper_book(tid) if tid else None
+    print("\n=== leftover (live) ===")
+    print(format_leftover_callout(live, paper))
     inv_raw = pre.audit.extra.get("source_inventory") or []
     inv = [SourceInventoryItem.model_validate(x) for x in inv_raw]
     report = write_pressure_report(
@@ -269,6 +293,7 @@ def _cmd_pressure(args) -> int:
         live=live,
         calib_summary=load_weights(),
         live_strategy_blocks=live_modes,
+        open_book=paper,
     )
     print(f"wrote {report}")
     return 0
@@ -397,6 +422,8 @@ def _cmd_live(args) -> int:
         if extra_notes:
             result.strategy.notes = list(result.strategy.notes) + extra_notes
         print(format_recommendation(result.strategy))
+    print()
+    print(format_leftover_callout(result, paper))
     tid = result.tournament.espn_event_id or result.tournament.tournament_id
     extras = [
         Path(p)
@@ -436,13 +463,24 @@ def _cmd_live(args) -> int:
         return 0
     record = load_paper_file(tid) if tid else None
     if record:
+        from golf_offshoot.strategy.paper_book import void_post_settle_open_tickets
+
+        record, voided = void_post_settle_open_tickets(record)
+        if voided:
+            print(
+                "voided post-settle leftover tickets at cost "
+                "(not a cash-out; not week P/L)"
+            )
         record = backfill_estimated_cashouts(record)
         save_paper_book(record)
     if record and result.strategy:
         advice = advice_from_recommendation(record, result.strategy, run_id=result.run_id)
         from golf_offshoot.compare.apply import maybe_apply_paper
 
-        if args.apply_paper:
+        settled = record.settled_at is not None or (tid in settled_ids)
+        if settled:
+            print("event already settled; not applying new paper tickets")
+        elif args.apply_paper:
             record, applied = maybe_apply_paper(record, advice, force=True)
             if applied:
                 print("applied paper advice (mock only; never auto-bet)")
@@ -478,6 +516,7 @@ def _cmd_live(args) -> int:
 
 def _report_auto_settles(refresh: bool) -> list[str]:
     from golf_offshoot.strategy.paper_ledger import format_ledger, settle_finished_open_books
+    from golf_offshoot.strategy.paper_book import scrub_settled_leftover_tickets
     from golf_offshoot.strategy.paper_pack import write_paper_pack
 
     settled, skipped = settle_finished_open_books(refresh=refresh)
@@ -493,6 +532,12 @@ def _report_auto_settles(refresh: bool) -> list[str]:
         ids.append(str(record.tournament_id))
     for record, why in skipped:
         print(f"paper left open: {record.tournament_name or record.tournament_id} -- {why}")
+    for rec in scrub_settled_leftover_tickets():
+        path = rec.path_id or "lived"
+        print(
+            f"voided post-settle leftover tickets at cost "
+            f"({rec.tournament_id} {path}; not a cash-out; not week P/L)"
+        )
     return ids
 
 

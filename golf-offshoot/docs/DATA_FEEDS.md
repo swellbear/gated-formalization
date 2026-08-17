@@ -107,7 +107,7 @@ The Bayesian board seeds `recent_form` from `PlayerInputs.recent_sg.total` when 
 
 ```bash
 python -m golf_offshoot ingest              # current PGA event, real data
-python -m golf_offshoot ingest --event 401811962
-python -m golf_offshoot live --event 401811962
+python -m golf_offshoot ingest --event 401811963 --book bovada
+python -m golf_offshoot live --event 401811963 --book bovada
 python -m golf_offshoot shadow                 # review paper-observation advises
 ```

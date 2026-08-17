@@ -17,6 +17,7 @@ from golf_offshoot.models.strategy import StrategyConfig
 from golf_offshoot.pipeline import GolfOffshootPipeline
 from golf_offshoot.localtime import now_eastern_text
 from golf_offshoot.ranking.display import format_table
+from golf_offshoot.ranking.leftover import format_leftover_callout
 from golf_offshoot.strategy.engine import format_recommendation
 
 
@@ -207,6 +208,7 @@ def write_pressure_report(
     calib_summary: dict | None,
     path: Path | None = None,
     live_strategy_blocks: dict[str, str] | None = None,
+    open_book=None,
 ) -> Path:
     tid = result.tournament.espn_event_id or result.tournament.tournament_id
     path = path or pressure_report_path(tid)
@@ -363,6 +365,16 @@ def write_pressure_report(
     lines += ["", "## Strategy layer (advisory, sample bankroll $2000)", ""]
     for mode, block in strategy_blocks.items():
         lines += [f"### {mode}", "", "```", block, "```", ""]
+    lines += [
+        "## Leftover callout (display only)",
+        "",
+        "Used vs unconstrained vs held-ticket residual. Not a GPF menu. Do not stuff into theta.",
+        "",
+        "```",
+        format_leftover_callout(result),
+        "```",
+        "",
+    ]
     if live:
         live_pos = []
         for row in live.ranked[:8]:
@@ -402,6 +414,14 @@ def write_pressure_report(
             lines += ["### Live strategy modes (empty book, advisory)", ""]
             for mode, block in live_strategy_blocks.items():
                 lines += [f"#### {mode}", "", "```", block, "```", ""]
+        lines += [
+            "### Live leftover callout",
+            "",
+            "```",
+            format_leftover_callout(live, open_book),
+            "```",
+            "",
+        ]
     shadow_rows = load_shadow()
     lines += [
         "## Shadow journal (paper observation only)",

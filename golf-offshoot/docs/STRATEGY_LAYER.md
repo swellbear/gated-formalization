@@ -83,6 +83,7 @@ Risk preference (conservative / normal / aggressive) scales size and exposure ca
 - Style correlation is cosine similarity on the four SG categories, not a fitted copula.
 - Cooling-off uses realized P/L the user (or a future feed) puts on `PortfolioState`.
 - Default strategy layer is **off**.
+- Leftover callout after live/ingest/pressure-test is display-only (used vs unconstrained vs held-ticket residual); see [PARKED_LEFTOVER_CALLOUT.md](PARKED_LEFTOVER_CALLOUT.md).
 
 **Open**
 
@@ -90,6 +91,5 @@ Risk preference (conservative / normal / aggressive) scales size and exposure ca
 2. Whether make-cut and win books should have separate exposure caps.
 3. Fitted finish copula vs current θ / SG / cut-risk slices.
 4. Authenticated Open Bets scrape (not planned; type the quote instead).
-5. Leftover callout after live/strategy (used vs unconstrained vs held-ticket residual) — parked until after St. Jude 2026; see [PARKED_LEFTOVER_CALLOUT.md](PARKED_LEFTOVER_CALLOUT.md).
 
 CLI: `python -m golf_offshoot strategy --bankroll 2000 --mode press_edges --live`
