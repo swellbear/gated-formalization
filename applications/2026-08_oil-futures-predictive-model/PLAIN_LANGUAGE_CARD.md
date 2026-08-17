@@ -1,27 +1,27 @@
 # Plain-language card
 
 **Application:** `2026-08_oil-futures-predictive-model`  
-**Date / checkpoint:** 2026-08-17 · hold D-EXIST · name source class  
+**Date / checkpoint:** 2026-08-17 · proven-only series hunt  
 
 ---
 
 ## What we’re doing
 
-You rejected last-price no-change as “a predictive model.” Existence stays not established. A later test needs a **named** public forecasting series that matches the oil-futures freeze.
+We searched for a public forecasting series that is **proven** on the locked oil-**futures** test. We did not name one. Nearby work on **spot** oil and on using the futures curve to guess future spot prices is a different question.
 
 ## What we need from you
 
-Name that series, or leave it unnamed.
+Say whether to leave the class unnamed, name a series anyway (existence only, not proven), or switch to the cost rule for the value leg.
 
-**Preferred reply:** click the in-chat A / B option. Typed equivalents: `name source class …` · `leave unnamed`
+**Preferred reply:** click A / B / C. Typed: `leave unnamed` · `name source class …` · `lock V-COST …`
 
 ## What a “yes” / this update means
 
-If you name a class, we will check that series against the freeze. Naming it is not meeting the bar.
+The hunt is on the record. Existence and skill stay not established. No trading advice.
 
 ## What this does *not* mean
 
-That an oil-futures model works. That anyone should trade. That “some papers” is already a class. Spot-price outlooks are a different class unless you name them and we re-check.
+That a model is impossible. That EIA STEO “failed as a company.” That 12-month spot results clear next-session futures skill.
 
 ---
 
@@ -29,11 +29,11 @@ That an oil-futures model works. That anyone should trade. That “some papers�
 
 | Item | Value |
 |------|--------|
-| Claim-freeze / claim under test | Rank 4 D-EXIST (no-change OUT as model exhibit) |
-| Amb | **9** (unchanged) |
+| Claim-freeze / claim under test | Rank 4 F-SKILL + proven-only submit filter |
+| Amb | **9** |
 | Locks / package IDs | Rank 4; V-COST open |
-| Method verdict label (if any) | Provisional; D-EXIST **not established** |
-| Artifact pointers | `04_Material_Admission_D_EXIST_Construction.md` · `Lock_Rank4_Nested_Split.md` |
+| Method verdict label (if any) | Provisional; **L-HUNT-PROVEN** admitted as evaluation |
+| Artifact pointers | `04_Material_Admission_Proven_Class_Search.md` · `E_Package_Evidence_Intake_Proven_Search.md` |
 
 ---
 

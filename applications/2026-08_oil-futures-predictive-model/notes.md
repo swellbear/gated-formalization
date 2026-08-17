@@ -14,7 +14,7 @@
 - Lean Default Path: Cycle 0 anchors → import forecast locks → gate score → gap rank (top G1/G6/G2) → locking-scaffolding. **Stop** for object + soft-modal package pick. No material admission, no named-class pulse (class unnamed; object unset).
 - Operator follow-up (2026-08-17): “Can I lock a combination of A B and C?”
 - Answer recorded: **not as one object**. **Yes as nested split** Rank 4 — later **selected** (operator A).
-- Operator **B** (2026-08-17): `hold D-EXIST`. No-change **OUT** as D-EXIST model; remains F-SKILL baseline. D-EXIST **not established**. Next: `name source class …` / `leave unnamed`. Do not invent a series (including EIA STEO) as the class.
+- Operator hunt (2026-08-17): search now; submit only if **proven** oil-futures forecaster. **L-HUNT-PROVEN:** no freeze-matching proven public series submitted (EIA STEO = monthly average **spot**; Alquist–Kilian/IFDP = futures as **spot** forecasts, mixed vs no-change; curve ≠ next-session CL return model). F-SKILL **not established**. D-SRC still unnamed.
 - V-COST still open (not this turn’s picker).
 - F-SRC unnamed; no F-SKILL pulse.
 - Amb 12 → **9** (definitional). Amb ≠ clearance.

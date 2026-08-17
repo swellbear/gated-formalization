@@ -151,14 +151,14 @@ Lean Default Path: name a D-EXIST class or leave unnamed. Do not auto-pulse. Do 
 
 ## Search Plan for Top-Priority Gap(s)
 
-**Targeted gap:** D-SRC (named D-EXIST forecast recipe).  
-**Source classes to check:** none auto-named. Operator must name a **specific public series + matching locks**. “Some oil-forecasting papers” is unnamed. Spot/average-price outlooks are a different class unless named and re-checked against the futures freeze.  
-**Diminishing-returns / time-box rule:** Do not shop sources to force a D-EXIST yes.  
-**Notes:** Operator B 2026-08-17. No-change remains F-SKILL baseline.
+**Targeted gap:** D-SRC under operator proven-filter.  
+**Source classes to check:** Hunt executed 2026-08-17 — EIA STEO, Alquist–Kilian/IFDP 1022, NYMEX curve, one-off futures-return papers. **None submitted.**  
+**Diminishing-returns / time-box rule:** Do not keep hunting papers to collapse spot kinship into F-SKILL-met.  
+**Notes:** `04_Material_Admission_Proven_Class_Search.md`.
 
 ---
 
 ## Ready for Material Search & Admission Checks?
 
-- [x] Yes — waiting on named class (D-EXIST not established on no-change)  
+- [x] Yes — proven-only hunt run; **no class submitted**  
 - [ ] Need operator lock pick first

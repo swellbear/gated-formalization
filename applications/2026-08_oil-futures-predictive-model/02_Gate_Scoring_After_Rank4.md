@@ -81,6 +81,6 @@
 
 ## Next Action
 
-- [x] Other: **Stop for operator** — `name source class …` / `leave unnamed` for D-EXIST (no-change exhibit rejected). V-COST remains open (not this picker).
+- [x] Other: **Stop for operator** — proven-only hunt submitted **no class**. `leave unnamed` / `name source class …` (existence-only) / V-COST.
 
 **Phase 2:** not entered. Per leftover: D-EXIST/F-SKILL/V-VALUE empirical bars are Phase 2-applicable **if later authorized**; named-class pulse may run without Phase 2 once a class is named enough.

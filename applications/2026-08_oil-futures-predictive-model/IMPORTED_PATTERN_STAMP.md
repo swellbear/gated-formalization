@@ -20,4 +20,7 @@ Imported pattern from `training/2026-08_stage8_us-50-states-only-coherent-curric
 - Re-validation under current claim: Legs here are D-EXIST / F-SKILL / V-VALUE, not uniqueness/should-curriculum. Same honesty rule; different content.
 - Not inherited: Stage 8 verdicts, FD-ONLY-COHERENT, or any teaching prescription.
 
-**Locks imported (process):** LOCK-003, LOCK-009, LOCK-010, LOCK-011. Never automatic; Cons vs this app’s L₀ recorded on `01`.
+Imported pattern from `2026-08_fomc-june-2026-sep` / `2026-08_fomc-sep-2026-uffr-change`, re-validated here.
+- What was imported: print-match ≠ clearance; brochure/outlook kinship ≠ bar-met; unnamed class if no freeze-matching series.
+- Re-validation under current claim: EIA STEO and futures-as-spot evaluations are kinship to oil prices, not F-SKILL-met on CL next-session log-return vs last-settlement.
+- Not inherited: FOMC verdicts or SPF results.

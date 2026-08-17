@@ -39,13 +39,14 @@ Can a predictive model for oil futures be built?
 
 - L₀ market-structure anchors.
 - Rank 4 **meanings** (not bars).
+- **L-HUNT-PROVEN** (search executed; no proven class submitted).
 
 ---
 
 ## 4. Not established / negatively constrained
 
-- D-EXIST **not established** (operator B; no-change **OUT** as model exhibit).
-- F-SKILL untested (class unnamed).
+- D-EXIST **not established** (operator B; proven-only hunt submitted no class).
+- F-SKILL **not established** (schema fail vs next-session CL log-return).
 - V-VALUE untested (V-COST open).
 - No trading advice.
 
@@ -61,7 +62,7 @@ None required (D-EXIST remains Minimal). V-VALUE is a marked elevation (Substant
 
 | ID | Residual | Concrete reopen condition |
 |----|----------|---------------------------|
-| D-EXIST checkpoint | Construction exhibit | **Executed:** operator B hold; no-change OUT. Reopen: `name source class …` / `leave unnamed` |
+| D-SRC | Named proven? class | Hunt executed; **no class submitted**. Reopen: `leave unnamed` / `name source class …` |
 | F-SRC | Named class for F-SKILL | `name source class …` (named enough, non-circular) |
 | V-COST | Cost schedule | Single cost rule or formally accept either |
 | G8 | Model class under F-SKILL | After F-SRC; do not treat architecture fashion as skill |
@@ -90,7 +91,9 @@ None required (D-EXIST remains Minimal). V-VALUE is a marked elevation (Substant
 - `Lock_Rank4_Nested_Split.md`
 - `R_Locking_Scaffolding.md`
 - `MULTI_ELEVATION_SPLIT.md`
-- `PLAIN_LANGUAGE_CARD.md`
+- `04_Material_Admission_Proven_Class_Search.md`
+- `E_Package_Evidence_Intake_Proven_Search.md`
+- `E_Quantitative_Evidence_Rubric_Proven_Search.md`
 
 ---
 

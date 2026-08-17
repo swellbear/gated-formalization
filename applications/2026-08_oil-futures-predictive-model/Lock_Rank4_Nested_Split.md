@@ -46,8 +46,8 @@ D-EXIST and F-SKILL do not wait on this slot.
 
 ## Dependents now eligible to re-open (scoped)
 
-- **D-EXIST** — needs a **named** forecast recipe / public class. Operator **B** (2026-08-17): last-settlement **no-change is OUT** as the D-EXIST model exhibit. It **remains** the F-SKILL baseline. `leave unnamed` leaves D-EXIST blocked.  
-- **F-SKILL** — skill bar, after a **named-enough** public source class (`name source class …` if unnamed).  
+- **D-EXIST** — needs a **named** forecast recipe / public class. Operator **B**: no-change **OUT**. Operator hunt: **submit only if proven** — **L-HUNT-PROVEN**, no class submitted. `leave unnamed` leaves D-EXIST blocked.  
+- **F-SKILL** — **not established** on this hunt (schema fail vs next-session CL log-return). Still needs a named-enough matching class if a later pulse is wanted.  
 - **G8** — model class under F-SKILL (still free).  
 - **V-VALUE** — **blocked** by V-COST.
 
