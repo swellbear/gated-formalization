@@ -47,6 +47,6 @@ That every oil-futures book fails. That anyone should (or should not) trade. Exi
 
 ## Dependents
 
-- **V-VALUE** stays not established until a named-enough non-circular book is pulsed.  
-- **D-SRC** remains **unnamed for now** (not this seal). Live ask after this lock.  
-- **F-SRC** remains unnamed.
+- **V-VALUE** stays not established until a named-enough non-circular book is pulsed. This seal is **not** a refute of all books.  
+- **At lock time:** **D-SRC** was unnamed for now (next ask after this seal). **Later (same day):** operator named a suite and authorized **D-EXIST-MET-FT** (`Lock_D_EXIST_Established_Futures_Target.md`). This V-SRC seal does **not** reopen or undo that.  
+- **F-SRC** remains unnamed (live ask after D-EXIST-MET-FT). No Phase 2. No invented class.

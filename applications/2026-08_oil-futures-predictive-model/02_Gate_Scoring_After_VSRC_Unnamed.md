@@ -3,7 +3,8 @@
 **Date:** 2026-08-17  
 **Application:** `2026-08_oil-futures-predictive-model`  
 **Linked:** `Lock_VSRC_Leave_Unnamed.md` · `Lock_VCOST_Either.md` · `Lock_Rank4_Nested_Split.md`  
-**Scope:** **Under Rank 4 + V-COST either + V-SRC leave unnamed only**
+**Scope:** **Under Rank 4 + V-COST either + V-SRC leave unnamed only**  
+**Snapshot:** This sheet is the score **immediately after** `leave unnamed` on V-SRC (plan B). Later the same day, D-SRC closed as **D-EXIST-MET-FT**; current score is `02_Gate_Scoring_After_DEXIST.md` (Amb **5.5**). Do not read this snapshot as undoing that later lock.
 
 ---
 
