@@ -32,6 +32,8 @@ That any model works. That a Yahoo win is a live win. That anyone should trade.
 | **Does not promote** | F-ON or F-DAY alone; a tiny overnight dip; in-sample fit; Kearney–Shang MAE print-match |
 | **Live confirmation** | Official CME open/settle + roll **R1**. Re-score the **same named horse** vs 0. Not a new fishing trip on live stamps. |
 | **Yahoo win** | Still **stand-in**. Not live clearance. Not F-SKILL-met. Honest **established** still **stops**. |
+| **H-SPARSE-CAL** | Scored: tiny F-CC last-500 dip; **loss** on last 750. **Does not promote.** |
+| **H-SPARSE-VOL** | Scored: F-CC **loss**. **Does not promote.** |
 | **H-LAG-WF** | Already scored: F-CC **loss**. **Does not promote.** |
 | **H-KS-FTS** | **Out of this screen.** Needs a freeze-matching CL1–CL18 tape; Yahoo front `CL=F` is not that tape. |
 | **V-VALUE** | Unchanged. After-cost P/L under **V2** is a later named book, not this gate. |

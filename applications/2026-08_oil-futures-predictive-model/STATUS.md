@@ -8,24 +8,24 @@
 
 ### Plain status
 
-Closeout remains **hard stop (residuals live)**. Screen rule **L-SCREEN-Y-PROMOTE** is in force: keep testing on Yahoo `CL=F`; promote to live CME **only** if a named horse **beats no-change on F-CC** (last 500, and does not lose on 250/750). Overnight-only edges do **not** promote. **H-LAG-WF** already **fails** that gate. Kearney–Shang still needs a curve tape (out of this screen). Paper costs **V2**. After-cost value **not shown**. This is not trading advice.
+Closeout remains **hard stop (residuals live)**. Two sparse horses are now scored on Yahoo `CL=F`. **H-SPARSE-CAL** had a tiny whole-trip dip on last 500 and **lost** on last 750 — **does not promote**. **H-SPARSE-VOL** **lost** on F-CC. Screen rule **L-SCREEN-Y-PROMOTE** still in force. Overnight-only edges do **not** promote. Paper costs **V2**. After-cost value **not shown**. This is not trading advice.
 
 ---
 
 | Field | Value |
 |-------|--------|
 | **Closure state** | **hard stop (residuals live)** |
-| **Phase** | Screen/promote protocol **L-SCREEN-Y-PROMOTE** (meanings; bars not met) |
+| **Phase** | Sparse-horse pulse **L-PULSE-SPARSE-1** (evaluation; bars not met) |
 | **Amb** | **1.0** (**≠ clearance**) |
-| **Locks in force** | Rank 4; D-EXIST-MET-FT; **V-COST-V2**; V-SRC leave unnamed; **F-SRC-CME-TAPE**; **L-STANDIN-Y-CLF**; **L-SCREEN-Y-PROMOTE**; **H-LAG-WF**; L-SESS |
-| **Next authorization needed** | `leave skill not shown` / `name horse …` — **not** `none — hard stop`. Live CME only if the F-CC promotion gate fires. |
+| **Locks in force** | Rank 4; D-EXIST-MET-FT; **V-COST-V2**; V-SRC leave unnamed; **F-SRC-CME-TAPE**; **L-STANDIN-Y-CLF**; **L-SCREEN-Y-PROMOTE**; **H-LAG-WF**; **H-SPARSE-CAL**; **H-SPARSE-VOL**; L-SESS |
+| **Next authorization needed** | `leave skill not shown` / `name horse …` (a **different** recipe; do **not** grow this zoo) — **not** `none — hard stop`. Live CME only if the F-CC promotion gate fires. |
 | **Related apps surfaced** | `2026-08_fomc-sep-2026-uffr-change` — leave unnamed ≠ refute; `2026-08_spacex-600-dollar-stock` — lock ≠ clearance. Process only. |
 | **Optional modes** | [OPTIONAL_MODES_MENU.md](OPTIONAL_MODES_MENU.md) — UX/CX/CR **declined, not run**; QI N/A |
 
 **Share pack:** [SHARE_PACK.md](SHARE_PACK.md)  
 **Screen rule:** [Lock_Screen_Yahoo_Promote.md](Lock_Screen_Yahoo_Promote.md)  
-**Horses pulse:** [Lock_Horses_Lag_KS.md](Lock_Horses_Lag_KS.md) · [PULSE_Horses_Standin.md](PULSE_Horses_Standin.md)  
-**Residuals:** [R-F-SKILL](RESIDUAL_BRANCH_MENU.md#r-f-skill) **pursue** (H-LAG failed promote gate; next horse on Yahoo) · [R-LIVE-STANDIN](RESIDUAL_BRANCH_MENU.md#r-live-standin) **executed** (promote only if F-CC gate fires) · [R-F-COMBO](RESIDUAL_BRANCH_MENU.md#r-f-combo) park-until-trigger · [R-V-VALUE](RESIDUAL_BRANCH_MENU.md#r-v-value) park-until-trigger (**V2 named**; book unnamed)
+**Sparse pulse:** [Lock_Horses_Sparse.md](Lock_Horses_Sparse.md) · [PULSE_Horses_Sparse.md](PULSE_Horses_Sparse.md)  
+**Residuals:** [R-F-SKILL](RESIDUAL_BRANCH_MENU.md#r-f-skill) **pursue** (CAL/VOL/H-LAG all fail promote; next horse must be **different**) · [R-LIVE-STANDIN](RESIDUAL_BRANCH_MENU.md#r-live-standin) **executed** (promote only if F-CC gate fires) · [R-F-COMBO](RESIDUAL_BRANCH_MENU.md#r-f-combo) park-until-trigger · [R-V-VALUE](RESIDUAL_BRANCH_MENU.md#r-v-value) park-until-trigger (**V2 named**; book unnamed)
 
 **Endpoint** = examination done; verdict frozen. **Hard stop (residuals live)** = hygiene complete **and** `pursue` leftovers remain — `Next authorization needed` is **not** `none — hard stop`.
 

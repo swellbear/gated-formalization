@@ -16,6 +16,14 @@ H-LAG-WF (specified before looking at OOS):
 H-KS-FTS: requires a historical CL1–CL18 panel. If that panel cannot support
 the same 500-session OOS on tenor 1, the horse is skipped (not a silent substitute).
 
+H-SPARSE-CAL / H-SPARSE-VOL (specified before looking at OOS):
+  Same OLS as H-LAG-WF (fit on all expanding days, min train 250).
+  Emit OLS only when a trigger known at issue time is true; else forecast 0.
+  CAL: session date is EIA WPSR or regularly scheduled FOMC announcement
+       (data/sparse_calendar.json).
+  VOL: |r_CC,t-1| >= expanding 80th percentile of |r_CC| through t-1;
+       require >= 250 past |r_CC| else no trigger. Same trigger all windows.
+
 Does not download. Does not treat Yahoo as CME. Not a trade.
 """
 from __future__ import annotations
@@ -24,6 +32,7 @@ import argparse
 import csv
 import json
 import math
+from datetime import date, timedelta
 from pathlib import Path
 
 import numpy as np
@@ -74,6 +83,42 @@ def ols_forecast(y: np.ndarray, X: np.ndarray, x_new: np.ndarray) -> float:
     return float(x_new @ beta)
 
 
+def load_calendar(path: str, tape_dates: list[str]) -> set[str]:
+    spec = json.loads(Path(path).read_text())
+    tape = set(tape_dates)
+    event: set[str] = set()
+    for d in spec["fomc_announcement_dates"]:
+        if d in tape:
+            event.add(d)
+    skip_wed = {row["skip_wednesday"] for row in spec["eia_holiday_overrides"]}
+    alt = {row["alternate"] for row in spec["eia_holiday_overrides"]}
+    if tape_dates:
+        start = date.fromisoformat(tape_dates[0])
+        end = date.fromisoformat(tape_dates[-1])
+        wed = start
+        while wed.weekday() != 2:
+            wed += timedelta(days=1)
+        while wed <= end:
+            iso = wed.isoformat()
+            if iso not in skip_wed:
+                if iso in tape:
+                    event.add(iso)
+                else:
+                    nxt = wed + timedelta(days=1)
+                    last = wed + timedelta(days=6)
+                    while nxt <= last:
+                        cand = nxt.isoformat()
+                        if cand in tape:
+                            event.add(cand)
+                            break
+                        nxt += timedelta(days=1)
+            wed += timedelta(days=7)
+    for a in alt:
+        if a in tape:
+            event.add(a)
+    return event
+
+
 def walk_forward_lag(rets: list[dict], holdout: int, min_train: int) -> dict:
     n = len(rets)
     oos_start = max(min_train, n - holdout)
@@ -119,6 +164,100 @@ def walk_forward_lag(rets: list[dict], holdout: int, min_train: int) -> dict:
             "beats_0": (rmse(err) is not None and rmse(actuals) is not None and rmse(err) < rmse(actuals)),
         }
     return out
+
+
+def _window_xy(kind: str, cur: dict, lag: dict) -> tuple[float | None, list[float] | None]:
+    if kind == "on":
+        y = cur["r_on"]
+        x = [1.0, lag["r_on"], lag["r_day"]]
+    elif kind == "day":
+        y = cur["r_day"]
+        x = [1.0, cur["r_on"], lag["r_day"]]
+    else:
+        y = cur["r_cc"]
+        x = [1.0, lag["r_on"], lag["r_day"]]
+    if y is None or any(v is None for v in x):
+        return None, None
+    return y, x
+
+
+def walk_forward_sparse(
+    rets: list[dict],
+    holdout: int,
+    min_train: int,
+    mode: str,
+    event_days: set[str],
+) -> dict:
+    n = len(rets)
+    oos_start = max(min_train, n - holdout)
+    out: dict = {}
+    for kind, label in [("on", "F-ON"), ("day", "F-DAY"), ("cc", "F-CC")]:
+        actuals: list[float] = []
+        preds: list[float] = []
+        dates: list[str] = []
+        n_trig = 0
+        y_hist: list[float] = []
+        X_hist: list[list[float]] = []
+        for t in range(1, n):
+            cur, lag = rets[t], rets[t - 1]
+            y, x = _window_xy(kind, cur, lag)
+            if mode == "cal":
+                trig = cur["date"] in event_days
+            else:
+                hist = [abs(rets[s]["r_cc"]) for s in range(0, t) if rets[s]["r_cc"] is not None]
+                trig = (
+                    lag["r_cc"] is not None
+                    and len(hist) >= min_train
+                    and abs(lag["r_cc"]) >= float(np.percentile(hist, 80))
+                )
+            if y is None or x is None:
+                continue
+            if t >= oos_start:
+                if trig:
+                    pred = ols_forecast(
+                        np.array(y_hist, float),
+                        np.array(X_hist, float),
+                        np.array(x, float),
+                    )
+                    n_trig += 1
+                else:
+                    pred = 0.0
+                actuals.append(y)
+                preds.append(pred)
+                dates.append(cur["date"])
+            y_hist.append(y)
+            X_hist.append(x)
+        err = [a - p for a, p in zip(actuals, preds)]
+        out[label] = {
+            "n": len(actuals),
+            "n_triggered": n_trig,
+            "first": dates[0] if dates else None,
+            "last": dates[-1] if dates else None,
+            "rmse_horse": rmse(err),
+            "rmse_0": rmse(actuals),
+            "beats_0": (
+                rmse(err) is not None
+                and rmse(actuals) is not None
+                and rmse(err) < rmse(actuals)
+            ),
+        }
+    return out
+
+
+def promote_gate(score: dict) -> dict:
+    """L-SCREEN-Y-PROMOTE: F-CC < 0 on 500, and F-CC <= 0 on 250 and 750."""
+    s500 = score["500"]["F-CC"]
+    s250 = score["250"]["F-CC"]
+    s750 = score["750"]["F-CC"]
+    beat_500 = s500["rmse_horse"] < s500["rmse_0"]
+    hold_250 = s250["rmse_horse"] <= s250["rmse_0"]
+    hold_750 = s750["rmse_horse"] <= s750["rmse_0"]
+    return {
+        "fires": beat_500 and hold_250 and hold_750,
+        "beat_500": beat_500,
+        "hold_250": hold_250,
+        "hold_750": hold_750,
+    }
 
 
 def _months_ahead(date: str, delivery: str) -> int:
@@ -167,6 +306,7 @@ def main() -> int:
     p = argparse.ArgumentParser()
     p.add_argument("--clf", default="data/clf_yahoo_standin.csv")
     p.add_argument("--curve", default="data/clf_yahoo_month_chain.csv")
+    p.add_argument("--calendar", default="data/sparse_calendar.json")
     p.add_argument("--holdout", type=int, default=500)
     p.add_argument("--min-train", type=int, default=250)
     p.add_argument("--out", default="data/horse_scores.json")
@@ -174,18 +314,42 @@ def main() -> int:
 
     rows = load_clf(args.clf)
     rets = session_returns(rows)
+    tape_dates = [r["date"] for r in rows]
+    events = load_calendar(args.calendar, tape_dates)
     lag = walk_forward_lag(rets, args.holdout, args.min_train)
+    cal = walk_forward_sparse(rets, args.holdout, args.min_train, "cal", events)
+    vol = walk_forward_sparse(rets, args.holdout, args.min_train, "vol", events)
     ks_gate = curve_supports_ks(Path(args.curve), args.holdout)
+    sparse_sens = {}
+    for h in (250, 750):
+        sparse_sens[str(h)] = {
+            "H-SPARSE-CAL": walk_forward_sparse(rets, h, args.min_train, "cal", events),
+            "H-SPARSE-VOL": walk_forward_sparse(rets, h, args.min_train, "vol", events),
+        }
+    promote = {
+        "H-SPARSE-CAL": promote_gate(
+            {"500": cal, "250": sparse_sens["250"]["H-SPARSE-CAL"], "750": sparse_sens["750"]["H-SPARSE-CAL"]}
+        ),
+        "H-SPARSE-VOL": promote_gate(
+            {"500": vol, "250": sparse_sens["250"]["H-SPARSE-VOL"], "750": sparse_sens["750"]["H-SPARSE-VOL"]}
+        ),
+    }
     payload = {
         "tape": args.clf,
         "badge": "stand-in",
         "holdout": args.holdout,
         "min_train": args.min_train,
+        "calendar": args.calendar,
+        "n_event_days_on_tape": len(events),
         "H-LAG-WF": lag,
+        "H-SPARSE-CAL": cal,
+        "H-SPARSE-VOL": vol,
         "H-KS-FTS": {
             "run": False,
             "gate": ks_gate,
         },
+        "sparse_sensitivity": sparse_sens,
+        "promote": promote,
     }
     Path(args.out).write_text(json.dumps(payload, indent=2) + "\n")
     print(json.dumps(payload, indent=2))

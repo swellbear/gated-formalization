@@ -3,6 +3,8 @@
   "badge": "stand-in",
   "holdout": 500,
   "min_train": 250,
+  "calendar": "data/sparse_calendar.json",
+  "n_event_days_on_tape": 1357,
   "H-LAG-WF": {
     "F-ON": {
       "n": 500,
@@ -29,6 +31,64 @@
       "beats_0": false
     }
   },
+  "H-SPARSE-CAL": {
+    "F-ON": {
+      "n": 500,
+      "n_triggered": 105,
+      "first": "2024-08-20",
+      "last": "2026-08-14",
+      "rmse_horse": 0.012881076410697306,
+      "rmse_0": 0.012910979462200952,
+      "beats_0": true
+    },
+    "F-DAY": {
+      "n": 500,
+      "n_triggered": 105,
+      "first": "2024-08-20",
+      "last": "2026-08-14",
+      "rmse_horse": 0.026632087339908458,
+      "rmse_0": 0.026634268438116174,
+      "beats_0": true
+    },
+    "F-CC": {
+      "n": 500,
+      "n_triggered": 105,
+      "first": "2024-08-20",
+      "last": "2026-08-14",
+      "rmse_horse": 0.028689904707782564,
+      "rmse_0": 0.028693689531158018,
+      "beats_0": true
+    }
+  },
+  "H-SPARSE-VOL": {
+    "F-ON": {
+      "n": 500,
+      "n_triggered": 120,
+      "first": "2024-08-20",
+      "last": "2026-08-14",
+      "rmse_horse": 0.012836838861313607,
+      "rmse_0": 0.012910979462200952,
+      "beats_0": true
+    },
+    "F-DAY": {
+      "n": 500,
+      "n_triggered": 120,
+      "first": "2024-08-20",
+      "last": "2026-08-14",
+      "rmse_horse": 0.026681745527214362,
+      "rmse_0": 0.026634268438116174,
+      "beats_0": false
+    },
+    "F-CC": {
+      "n": 500,
+      "n_triggered": 120,
+      "first": "2024-08-20",
+      "last": "2026-08-14",
+      "rmse_horse": 0.028851830213256515,
+      "rmse_0": 0.028693689531158018,
+      "beats_0": false
+    }
+  },
   "H-KS-FTS": {
     "run": false,
     "gate": {
@@ -41,58 +101,140 @@
       "reason": "Yahoo expired months 404; nearest still-listed contract is not historical CL1. True-front dates with CL1\u2013CL18: 54 (need 750)."
     }
   },
-  "sensitivity": {
+  "sparse_sensitivity": {
     "250": {
-      "F-ON": {
-        "n": 250,
-        "first": "2025-08-18",
-        "last": "2026-08-14",
-        "rmse_horse": 0.016577347264009962,
-        "rmse_0": 0.01671503249961644,
-        "beats_0": true
+      "H-SPARSE-CAL": {
+        "F-ON": {
+          "n": 250,
+          "n_triggered": 52,
+          "first": "2025-08-18",
+          "last": "2026-08-14",
+          "rmse_horse": 0.016672674132322558,
+          "rmse_0": 0.01671503249961644,
+          "beats_0": true
+        },
+        "F-DAY": {
+          "n": 250,
+          "n_triggered": 52,
+          "first": "2025-08-18",
+          "last": "2026-08-14",
+          "rmse_horse": 0.030920427288183644,
+          "rmse_0": 0.03093256856938298,
+          "beats_0": true
+        },
+        "F-CC": {
+          "n": 250,
+          "n_triggered": 52,
+          "first": "2025-08-18",
+          "last": "2026-08-14",
+          "rmse_horse": 0.034338229210066,
+          "rmse_0": 0.03435533929314573,
+          "beats_0": true
+        }
       },
-      "F-DAY": {
-        "n": 250,
-        "first": "2025-08-18",
-        "last": "2026-08-14",
-        "rmse_horse": 0.030987463886200314,
-        "rmse_0": 0.03093256856938298,
-        "beats_0": false
-      },
-      "F-CC": {
-        "n": 250,
-        "first": "2025-08-18",
-        "last": "2026-08-14",
-        "rmse_horse": 0.03453558301150902,
-        "rmse_0": 0.03435533929314573,
-        "beats_0": false
+      "H-SPARSE-VOL": {
+        "F-ON": {
+          "n": 250,
+          "n_triggered": 76,
+          "first": "2025-08-18",
+          "last": "2026-08-14",
+          "rmse_horse": 0.016595695933443653,
+          "rmse_0": 0.01671503249961644,
+          "beats_0": true
+        },
+        "F-DAY": {
+          "n": 250,
+          "n_triggered": 76,
+          "first": "2025-08-18",
+          "last": "2026-08-14",
+          "rmse_horse": 0.030991002420774655,
+          "rmse_0": 0.03093256856938298,
+          "beats_0": false
+        },
+        "F-CC": {
+          "n": 250,
+          "n_triggered": 76,
+          "first": "2025-08-18",
+          "last": "2026-08-14",
+          "rmse_horse": 0.03460364515202023,
+          "rmse_0": 0.03435533929314573,
+          "beats_0": false
+        }
       }
     },
     "750": {
-      "F-ON": {
-        "n": 750,
-        "first": "2023-08-22",
-        "last": "2026-08-14",
-        "rmse_horse": 0.010814309640639386,
-        "rmse_0": 0.010882112091704187,
-        "beats_0": true
+      "H-SPARSE-CAL": {
+        "F-ON": {
+          "n": 750,
+          "n_triggered": 157,
+          "first": "2023-08-22",
+          "last": "2026-08-14",
+          "rmse_horse": 0.010858323040960152,
+          "rmse_0": 0.010882112091704187,
+          "beats_0": true
+        },
+        "F-DAY": {
+          "n": 750,
+          "n_triggered": 157,
+          "first": "2023-08-22",
+          "last": "2026-08-14",
+          "rmse_horse": 0.023955216212251815,
+          "rmse_0": 0.0239575497756717,
+          "beats_0": true
+        },
+        "F-CC": {
+          "n": 750,
+          "n_triggered": 157,
+          "first": "2023-08-22",
+          "last": "2026-08-14",
+          "rmse_horse": 0.025689897344196234,
+          "rmse_0": 0.025688707258203724,
+          "beats_0": false
+        }
       },
-      "F-DAY": {
-        "n": 750,
-        "first": "2023-08-22",
-        "last": "2026-08-14",
-        "rmse_horse": 0.024001935684785137,
-        "rmse_0": 0.0239575497756717,
-        "beats_0": false
-      },
-      "F-CC": {
-        "n": 750,
-        "first": "2023-08-22",
-        "last": "2026-08-14",
-        "rmse_horse": 0.02581874496395896,
-        "rmse_0": 0.025688707258203724,
-        "beats_0": false
+      "H-SPARSE-VOL": {
+        "F-ON": {
+          "n": 750,
+          "n_triggered": 151,
+          "first": "2023-08-22",
+          "last": "2026-08-14",
+          "rmse_horse": 0.010822086787204865,
+          "rmse_0": 0.010882112091704187,
+          "beats_0": true
+        },
+        "F-DAY": {
+          "n": 750,
+          "n_triggered": 151,
+          "first": "2023-08-22",
+          "last": "2026-08-14",
+          "rmse_horse": 0.023995205215197178,
+          "rmse_0": 0.0239575497756717,
+          "beats_0": false
+        },
+        "F-CC": {
+          "n": 750,
+          "n_triggered": 151,
+          "first": "2023-08-22",
+          "last": "2026-08-14",
+          "rmse_horse": 0.025803295250956045,
+          "rmse_0": 0.025688707258203724,
+          "beats_0": false
+        }
       }
+    }
+  },
+  "promote": {
+    "H-SPARSE-CAL": {
+      "fires": false,
+      "beat_500": true,
+      "hold_250": true,
+      "hold_750": false
+    },
+    "H-SPARSE-VOL": {
+      "fires": false,
+      "beat_500": false,
+      "hold_250": false,
+      "hold_750": false
     }
   }
 }
