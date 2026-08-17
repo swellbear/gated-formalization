@@ -80,4 +80,4 @@ D-EXIST  ⊂  F-SKILL               (Rank 4-AC)
 
 ---
 
-*Rank 4 locked 2026-08-17. **D-EXIST established (futures-target only).** Spot/real-price OUT. Menu ≠ “the” recipe. F-SRC and V-SRC leave unnamed. F-SKILL and V-VALUE not established. Live residual: skill test. Do not invent a class. Next: `name source class …` / `endpoint only` / `closeout`.*
+*Rank 4 locked 2026-08-17. **D-EXIST established (futures-target only).** Spot/real-price OUT. Menu ≠ “the” recipe. F-SRC and V-SRC leave unnamed. F-SKILL and V-VALUE not established. Closeout: **hard stop (residuals live)**. Live residual: skill test ([R-F-SKILL](RESIDUAL_BRANCH_MENU.md#r-f-skill)). Do not invent a class. Next: `name source class …` / `run UX` / `run CX` / `run CR` / `decline optional modes`.*

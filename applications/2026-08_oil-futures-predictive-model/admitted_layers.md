@@ -16,4 +16,6 @@
 - `Lock_FSRC_Leave_Unnamed.md` — F-SRC sealed unnamed; skill residual live; not a refute of all recipes.
 - `04_Material_Admission_D_EXIST_Named_Suite.md` (**L-D-SUITE**) — named menu; later authorized as existence exhibit only.
 
+**Closeout (2026-08-17):** **hard stop (residuals live)**. Skill leftover [R-F-SKILL](RESIDUAL_BRANCH_MENU.md#r-f-skill) remains `pursue` (unnamed). After-cost book [R-V-VALUE](RESIDUAL_BRANCH_MENU.md#r-v-value) park-until-trigger. UX/CX/CR offered, not run. QI N/A.
+
 **Process imports:** LOCK-003, LOCK-009, LOCK-010, LOCK-011. App-local: V-EITHER; V-SRC leave unnamed; F-SRC leave unnamed; D-EXIST-MET-FT (2026-08-17).

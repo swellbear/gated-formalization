@@ -1,13 +1,13 @@
 # Tracker Residual Queue (Layer 3)
 
-**Last refreshed:** 2026-08-13 (India heat-mortality: R-CITY / R-POL / R-INDEP **park-until-trigger**; R-REV **park-90d**; R-DOC executed. Park-90d quarterly still due ~2026-11-12 — this refresh does **not** re-churn that card.)  
+**Last refreshed:** 2026-08-17 (oil-futures closeout: **R-F-SKILL** · oil-futures **pursue** (unnamed, live); **R-V-VALUE** · oil-futures **park-until-trigger**. Park-90d quarterly still due ~2026-11-12 — this refresh does **not** re-churn that card.)  
 **Last park-90d quarterly review:** **2026-08-12** (inaugural = **cadence-existence**, not quarterly proof; next due ~2026-11-12; post-rule addendum same day — still extend-all)  
 **Disposition vocabulary:** `pursue` | `park-90d` | `park-until-trigger` | `drop`  
 Only **pursue** items stay in active bands. Parked/dropped listed below.
 
 **Cadence:** About once per quarter, review **`park-90d` only**.
 
-**Note:** CoreWeave **hard stop sealed**; Zitron Nvidia $500B **hard stop sealed** (restart frame; Squawk/D-APPEAR OUT). Prior Squawk-stand-in R-* rows remain historical/drop. FOMC parent closeout intact; R-FML-INDEP **executed** (SPF Q2 2026; not established; not a refute).
+**Note:** CoreWeave **hard stop sealed**; Zitron Nvidia $500B **hard stop sealed** (restart frame; Squawk/D-APPEAR OUT). Prior Squawk-stand-in R-* rows remain historical/drop. FOMC parent closeout intact; R-FML-INDEP **executed** (SPF Q2 2026; not established; not a refute). Oil-futures **hard stop (residuals live)**; R-F-SKILL **pursue** (unnamed).
 
 ---
 
@@ -52,7 +52,8 @@ Only **pursue** items stay in active bands. Parked/dropped listed below.
 
 | Residual ID + app | Description | Reopen condition | Effort | Value | Dep | Disposition | Note |
 |-------------------|-------------|------------------|--------|-------|-----|-------------|------|
-| **R-SOME / R-RECIPE / R-REPL** · llm-gwt | Live remnant → Admissible band | Name models; hallmark recipe; replication | med | high | data | **pursue** | Only live Admissible-path residual |
+| **R-F-SKILL** · oil-futures | Next-session CL log-return vs last-settlement RMSE | `name source class …` matching Rank 4 F-SKILL (NYMEX CL front-month, next-session log-return, walk-forward vs last settlement) | high until named | high | F-SRC unnamed | **pursue** | Operator closeout **C**: leftover **live**; class stays unnamed; do **not** invent; existence-met ≠ skill-met |
+| **R-SOME / R-RECIPE / R-REPL** · llm-gwt | Live remnant → Admissible band | Name models; hallmark recipe; replication | med | high | data | **pursue** | Live Admissible-path residual |
 | **WS-MISSING** · foxnews / conscience | Recover worksheets | Recover artifacts or authorize backfill | med | med | data | **pursue** | Prerequisite for those apps |
 | **CLAIM-TEXT** · foxnews | Verbatim original claim | Recover article quote | low | med | data | **pursue** | Cheap unblock |
 
@@ -62,6 +63,7 @@ Only **pursue** items stay in active bands. Parked/dropped listed below.
 
 | Residual ID + app | Description | Trigger | Disposition | Note |
 |-------------------|-------------|---------|-------------|------|
+| **R-V-VALUE** · oil-futures | After-cost paper P/L vs the curve | `name source class …` matching Rank 4 V-VALUE; later test must name V1 or V2 | **park-until-trigger** | Operator `leave unnamed`; not a refute of every book; V-EITHER unused |
 | **R-L4e-BRIDGE** · SpaceX | Non-conflicted ~$7.9T / M2 bridge | Multi-year realized AI/Starship metrics or independent FV near ~$7.9T | **park-until-trigger** | No short-horizon path |
 | **R-EVID** · AV | Empirical R1/R2 under P-Strong-Both | OR-slots resolved + package-matching studies | **park-until-trigger** | Scope-locked |
 | **R-INSTANCE** · debt parent | Matched C≥H | Treasury H + CBO C same action | **park-until-trigger** | Does not clear FD1–FD5 |

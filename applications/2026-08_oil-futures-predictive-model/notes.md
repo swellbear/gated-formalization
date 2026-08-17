@@ -1,6 +1,6 @@
 # Notes
 
-**Status:** see `STATUS.md`.
+**Status:** see `STATUS.md`. Closeout sealed 2026-08-17 as **hard stop (residuals live)**.
 
 **Application:** `2026-08_oil-futures-predictive-model`  
 **Date:** 2026-08-17  
@@ -22,7 +22,8 @@
 - Operator (2026-08-17): **Yes** + named D-EXIST suite. Recorded as **L-D-SUITE**.
 - Operator **A** (2026-08-17): `authorize D-EXIST established (futures-target)`. **D-EXIST-MET-FT**. Spot/real-price OUT. Menu ≠ “the” recipe. Amb **7.5 → 5.5**.
 - Operator **B** (2026-08-17): `leave unnamed` on F-SRC (next-session CL log-return vs last settlement). Skill **not shown**. Live residual = skill test. Do not invent a class. Phase 2 not entered. V-SRC remains leave unnamed. D-EXIST-MET-FT unchanged.
-- Amb 12 → 9 → 7.5 → **5.5**. Leave-unnamed does not drop Amb. Amb ≠ clearance.
+- Operator **C** (2026-08-17): **Closeout.** Hygiene sealed (status / residual menu / share pack). Existence for futures-target remains authorized and separate. Spot/real-price stay outside. Skill class unnamed; leftover **live**. After-cost book unnamed; after-cost value not shown. No class invented. Phase 2 not entered. Amb **held at 5.5**. Not trading advice; blended slogan not cleared.
+- Amb 12 → 9 → 7.5 → **5.5**. Leave-unnamed does not drop Amb. Amb ≠ clearance. Closeout does not drop Amb.
 
 ## Residual judgment points encountered
 

@@ -1,27 +1,27 @@
 # Plain-language card
 
 **Application:** `2026-08_oil-futures-predictive-model`  
-**Date / checkpoint:** 2026-08-17 · F-SRC leave unnamed; skill residual live  
+**Date / checkpoint:** 2026-08-17 · hard stop (residuals live)
 
 ---
 
 ## What we’re doing
 
-Existence for listed crude **futures** recipes stays on the record. The skill test’s public source class is left unnamed, so skill stays **not shown**. That skill leftover remains live; we will not invent a series to fill it.
+Closeout is sealed. A specified forecasting recipe for listed crude **futures** has been written. That existence call stays separate from skill. Walk-forward skill versus last settlement is **not shown**; that leftover stays live and unnamed. After-cost paper value is **not shown**.
 
 ## What we need from you
 
-Pick whether to reopen skill with a named class, stop examining here, or run closeout hygiene.
+Nothing required. Optional side tools remain listed. Naming a matching skill series would reopen only that leftover.
 
-**Preferred reply:** click A / B / C. Typed: `name source class …` · `endpoint only` · `closeout`
+**Preferred reply:** click A / B / C. Typed: `run UX` · `run CX` · `run CR` · `decline optional modes` · `name source class …`
 
 ## What a “yes” / this update means
 
-Leaving the skill class unnamed keeps skill **not shown** (not a proof that no recipe can beat last settlement). Existence is unchanged. After-cost value stays **not shown**.
+The file is closed as provisional with the skill leftover still live. Existence stays on the record. Skill and after-cost value stay not shown. That is not a finding that no recipe can beat last settlement.
 
 ## What this does *not* mean
 
-That oil-futures models cannot have skill. That anyone should trade. That spot/real-price papers are inside existence. That the existence menu is the skill class. That Phase 2 started.
+That oil-futures models cannot have skill. That anyone should trade. That spot/real-price papers are inside existence. That the existence menu is the skill class. That Phase 2 started. That the blended slogan is cleared.
 
 ---
 
@@ -29,11 +29,11 @@ That oil-futures models cannot have skill. That anyone should trade. That spot/r
 
 | Item | Value |
 |------|--------|
-| Claim-freeze / claim under test | Rank 4; **D-EXIST-MET-FT**; F-SRC leave unnamed |
-| Amb | **5.5** (unchanged) |
-| Locks / package IDs | Rank 4; D-EXIST-MET-FT; F-SRC/V-SRC leave unnamed; V-EITHER |
-| Method verdict label (if any) | Provisional (split) |
-| Artifact pointers | `Lock_FSRC_Leave_Unnamed.md` · `Lock_D_EXIST_Established_Futures_Target.md` |
+| Claim-freeze / claim under test | Rank 4; **D-EXIST-MET-FT**; F-SRC/V-SRC leave unnamed |
+| Amb | **5.5** (held; **≠ clearance**) |
+| Locks / package IDs | Rank 4; D-EXIST-MET-FT; V-EITHER; F-SRC/V-SRC leave unnamed |
+| Method verdict label (if any) | Stable Provisional (split) — hard stop (residuals live) |
+| Artifact pointers | `SHARE_PACK.md` · `DISSERTATION.md` · `05_Original_Claim_Assessment_Closeout.md` · `RESIDUAL_BRANCH_MENU.md` |
 
 ---
 

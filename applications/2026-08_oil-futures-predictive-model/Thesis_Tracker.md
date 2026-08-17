@@ -4,7 +4,7 @@
 
 **Application:** `2026-08_oil-futures-predictive-model`  
 **Last reviewed:** 2026-08-17  
-**Status:** Open · Phase 1 · D-EXIST-MET-FT · F-SRC/V-SRC leave unnamed · Provisional (split)  
+**Status:** **Stable Provisional (split) — hard stop (residuals live)** · Phase 1 closeout · D-EXIST-MET-FT · F-SRC/V-SRC leave unnamed  
 
 **Tags** (see `docs/TRACKER_TAXONOMY.md`):  
 - Domain: `markets`  
@@ -19,7 +19,7 @@
 
 Can a predictive model for oil futures be built?
 
-**Successor / Rank lock (if any):** **Rank 4** nested split — D-EXIST ⊂ F-SKILL ⊂ V-VALUE. **D-EXIST-MET-FT**. V-COST **either**. F-SRC and V-SRC leave unnamed.
+**Successor / Rank lock (if any):** **Rank 4** nested split — D-EXIST ⊂ F-SKILL ⊂ V-VALUE. **D-EXIST-MET-FT**. V-COST **either**. F-SRC and V-SRC leave unnamed. CR offered not run; default keep original wording.
 
 **Parent / successor relationship:** none
 
@@ -27,18 +27,18 @@ Can a predictive model for oil futures be built?
 
 ## 2. Verdict and Amb path
 
-**Verdict:** **Provisional (split)** — D-EXIST established (futures-target only); F-SKILL and V-VALUE not
+**Verdict:** **Stable Provisional (split) — hard stop (residuals live)** — D-EXIST established (futures-target only); F-SKILL and V-VALUE not
 
-**Amb path (brief):** 12 → 9 → 7.5 → **5.5** after D-EXIST-MET-FT; **unchanged** after F-SRC leave unnamed
+**Amb path (brief):** 12 → 9 → 7.5 → **5.5** after D-EXIST-MET-FT; **unchanged** after F-SRC leave unnamed and closeout
 
-**Amb ≠ clearance:** Amb 5.5 is leftover skill/value vehicles. Leave-unnamed does not drop Amb. It does not mean a model beats last price or should be traded.
+**Amb ≠ clearance:** Amb 5.5 is leftover skill/value vehicles (F-SRC 2 + G8 1 + live-vs-stand-in 1 + V-SRC 1 + V-COST 0.5). Leave-unnamed does not drop Amb. It does not mean a model beats last price or should be traded.
 
 ---
 
 ## 3. Established
 
 - L₀ market-structure anchors.
-- Rank 4 **meanings** (not bars).
+- Rank 4 **meanings** (not slogan clearance).
 - **L-HUNT-PROVEN** (search executed; no proven class submitted).
 - V-COST **either** (meanings; not a singleton V1 or V2).
 - V-SRC **leave unnamed** (vehicle sealed empty; not a refute).
@@ -49,10 +49,11 @@ Can a predictive model for oil futures be built?
 
 ## 4. Not established / negatively constrained
 
-- D-EXIST **established** (futures-target only; not spot; not a singleton recipe pick).
 - F-SKILL **not established** (F-SRC `leave unnamed`; hunt submitted no class; not a refute of all recipes).
 - V-VALUE **not established** (V-VALUE-TEST-0; V-SRC `leave unnamed`; not a refute of all books).
-- Directional accuracy after costs / decision or trading value **not shown** (operator restatement).
+- Directional accuracy after costs / decision or trading value **not shown**.
+- Spot/real-price recipes as inside D-EXIST — **OUT**.
+- Blended slogan — **not cleared**.
 - No trading advice.
 
 ---
@@ -67,23 +68,23 @@ None required (D-EXIST remains Minimal). V-VALUE is a marked elevation (Substant
 
 | ID | Residual | Concrete reopen condition |
 |----|----------|---------------------------|
-| D-SRC | D-EXIST exhibit | **Closed** as futures-target existence. Reopen only if freeze changes (e.g. include spot) |
-| F-SRC | Named class for F-SKILL | **Leave unnamed** (operator B). Live residual. Reopen: `name source class …` matching next-session CL log-return vs last-settlement. Do not invent a class |
-| V-COST | Cost schedule | **Either accepted**; later tests must name V1 or V2 |
-| V-SRC | Named recipe/book for V-VALUE | **Leave unnamed** (operator B). Reopen: `name source class …` matching V-VALUE; test must name V1 or V2 |
-| G8 | Model class under F-SKILL | After F-SRC; do not treat architecture fashion as skill |
-
-*Residual-branch menu still waits for Phase 1 endpoint.*
+| [R-D-EXIST](RESIDUAL_BRANCH_MENU.md#r-d-exist) | D-EXIST exhibit | **Executed → admitted** (futures-target). Reopen only if freeze changes (e.g. include spot) |
+| [R-HUNT](RESIDUAL_BRANCH_MENU.md#r-hunt) | Proven F-SKILL class hunt | **Executed → not established** |
+| [R-V-VALUE-TEST-0](RESIDUAL_BRANCH_MENU.md#r-v-value-test-0) | Named after-cost book | **Executed → not established** |
+| [R-F-SKILL](RESIDUAL_BRANCH_MENU.md#r-f-skill) | Named class for F-SKILL | **Leave unnamed**. **pursue** (live). Reopen: `name source class …` matching next-session CL log-return vs last-settlement. Do not invent a class |
+| [R-V-VALUE](RESIDUAL_BRANCH_MENU.md#r-v-value) | Named recipe/book for V-VALUE | **Leave unnamed**. `park-until-trigger`. Reopen: `name source class …` matching V-VALUE; test must name V1 or V2 |
+| [R-G8](RESIDUAL_BRANCH_MENU.md#r-g8) | Model class under F-SKILL | Definition-blocked until F-SRC; do not treat architecture fashion as skill |
+| [R-LIVE-STANDIN](RESIDUAL_BRANCH_MENU.md#r-live-standin) | Live vs stand-in | Definition-blocked; N/A at closeout (no print/proxy bar scored to met) |
 
 ---
 
 ## 7. Action implications
 
-**Stop saying:** That EIA STEO or the futures curve is a proven next-session CL model; that spot/12-month results clear this freeze; that anyone should trade; that existence-met is skill-met; that one paper was picked as “the” recipe.
+**Stop saying:** That EIA STEO or the futures curve is a proven next-session CL model; that spot/12-month results clear this freeze; that anyone should trade; that existence-met is skill-met; that one paper was picked as “the” recipe; that unnamed skill means no model can beat last price.
 
 **Keep saying:** A specified non-no-change futures-target recipe has been written. Nearby spot literature is kinship. Skill and after-cost value are not established. F-SRC/V-SRC leave unnamed are not refutes. V-EITHER is not “we used V2.” Do not invent a skill class.
 
-**Test next (only if authorized):** `name source class …` (reopen skill) / `endpoint only` / `closeout`. Do not treat L-D-SUITE as F-SRC.
+**Test next (only if authorized):** `name source class …` (reopen skill) · `run UX` / `run CX` / `run CR` / `decline optional modes`. Do not treat L-D-SUITE as F-SRC.
 
 ---
 
@@ -112,13 +113,21 @@ None required (D-EXIST remains Minimal). V-VALUE is a marked elevation (Substant
 - `02_Gate_Scoring_After_DEXIST.md`
 - `Lock_FSRC_Leave_Unnamed.md`
 - `02_Gate_Scoring_After_FSRC_Unnamed.md`
+- `05_Original_Claim_Assessment_Closeout.md`
+- `DISSERTATION.md`
+- `SHARE_PACK.md`
+- `EXECUTIVE_BRIEF.md`
+- `RESIDUAL_BRANCH_MENU.md`
+- `OPTIONAL_MODES_MENU.md`
+- `final_verdict.md`
 
 ---
 
 ## 9. Pointers
 
-- Dissertation: not yet (open run)
-- Closeout / verdict: not yet
+- Dissertation: [`DISSERTATION.md`](DISSERTATION.md)
+- Closeout / verdict: [`05_Original_Claim_Assessment_Closeout.md`](05_Original_Claim_Assessment_Closeout.md) · [`final_verdict.md`](final_verdict.md)
+- Share pack: [`SHARE_PACK.md`](SHARE_PACK.md)
 - Parent / successor: —
 - Key admissions / locks: Rank 4; **D-EXIST-MET-FT**; V-COST either; F-SRC/V-SRC leave unnamed; L-D-SUITE (existence evidence only); L-HUNT-PROVEN; F-SKILL/V-VALUE not established; process imports 003/009/010/011
 
@@ -138,9 +147,10 @@ None required (D-EXIST remains Minimal). V-VALUE is a marked elevation (Substant
 
 | App ID | One-line reason |
 |--------|-----------------|
+| `2026-08_sell-in-may-sp500-2026` | Costs before a value bar (process only) |
 | `2026-08_spacex-600-dollar-stock` | Soft-modal can/potential + lock-before-test (process only) |
 | `2026-08_fomc-sep-2026-uffr-change` | Leave unnamed ≠ refute (process only) |
-| `training/2026-08_stage8_us-50-states-only-coherent-curriculum` | Split-not-blend elevations (process only; different content) |
+| `2026-08_fomc-june-2026-sep` | Print-match ≠ clearance (process only) |
 
 *Related apps inform process only — no conclusion inheritance.*
 

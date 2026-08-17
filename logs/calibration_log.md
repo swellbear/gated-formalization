@@ -17,6 +17,12 @@ When the **same pattern tag** appears in **≥ 3 closed applications**, record a
 
 ## Entries
 
+### 2026-08-17 | `R-dependence` (oil-futures closeout instance)
+- **Apps (≥3 live, already calibrated):** AV E2E · many-worlds · SpaceX · conscience-sketch · CDS med-device · VOO/TSLA · **oil-futures-predictive-model** (this closeout)
+- **Decision:** **keep rule** (inter-parameter dependency + locking-scaffolding). No new lock. No Amb-weight change.
+- **Rationale:** Another closed instance of dependents blocked by unnamed vehicles: F-SKILL ← F-SRC; V-VALUE ← V-SRC. D-EXIST-MET-FT (futures-target) does not unblock skill. Operator `leave unnamed` on the skill class kept the leftover **live** (`pursue`) rather than parking it; that is an operator closeout pick, not a named-class pulse. Leave-unnamed ≠ refute. Amb held at **5.5**. Amb ≠ clearance. Do not invent a class. Phase 2 not entered.
+- **Change made:** none to dependency rule or Amb math; oil-futures added under `R-dependence` on `TRACKER_PATTERN_MAP.md`; Layer 3 `R-F-SKILL` pursue / `R-V-VALUE` park-until-trigger. Park-90d quarterly **not** fired (next ~2026-11-12).
+
 ### 2026-08-12 | `forced-deviation`
 - **Apps (≥3):** debt-limit parent · SpaceX · AV E2E · many-worlds · sell-in-May · llm-gwt (elevations)
 - **Decision:** **keep rule** + **add checklist** awareness via STATUS / executive brief (already have FD extraction)
