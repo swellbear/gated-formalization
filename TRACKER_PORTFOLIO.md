@@ -1,6 +1,6 @@
 # Tracker Portfolio (Layer 1)
 
-**Last refreshed:** 2026-08-17 (oil-futures **hard stop (residuals live)**; Amb 5.5; R-F-SKILL live unnamed; park-90d still due ~2026-11-12)  
+**Last refreshed:** 2026-08-17 (oil-futures **hard stop (residuals live)** + **L-MAP-FT** census; Amb 5.5; R-F-SKILL live unnamed; park-90d still due ~2026-11-12)  
 **Taxonomy:** [`docs/TRACKER_TAXONOMY.md`](docs/TRACKER_TAXONOMY.md) · **Pattern map:** [`TRACKER_PATTERN_MAP.md`](TRACKER_PATTERN_MAP.md)  
 **Rule:** Update at closeout / status change. Related apps = process kinship only (**no conclusion inheritance**).
 

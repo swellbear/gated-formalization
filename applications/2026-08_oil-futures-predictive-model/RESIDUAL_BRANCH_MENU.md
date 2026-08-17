@@ -35,6 +35,7 @@
 |-------------|----------|-------|--------------------|-------------|
 | [R-D-EXIST](#r-d-exist) | Specified non-no-change futures-target mapping written? | Empirically resolvable | L-D-SUITE futures-target subset (menu, not a singleton) | **executed → admitted** (D-EXIST-MET-FT) |
 | [R-HUNT](#r-hunt) | Proven public series matching F-SKILL freeze? | Empirically resolvable | Hunt executed; **no class submitted** | **executed → not established** |
+| [R-MAP](#r-map) | Published futures-target methods vs next-session log-return? | Empirically resolvable | Census of families; **no class submitted** | **executed → evaluation** (L-MAP-FT) |
 | [R-V-VALUE-TEST-0](#r-v-value-test-0) | Named after-cost paper book? | Empirically resolvable | None named | **executed → not established** |
 | [R-F-SKILL](#r-f-skill) | Next-session CL log-return skill vs last settlement? | Empirically resolvable | **unnamed** (operator `leave unnamed`) | **pursue** (leftover **live**) |
 | [R-V-VALUE](#r-v-value) | After-cost paper P/L vs the curve? | Empirically resolvable | **unnamed** (operator `leave unnamed`) | **park-until-trigger** |
@@ -83,6 +84,22 @@
 | **Disposition** | **Executed 2026-08-17** → not established |
 | **How to authorize** | Already run. Later skill reopen is [R-F-SKILL](#r-f-skill), not a silent re-use of this hunt as bar-met |
 
+<a id="r-map"></a>
+### R-MAP
+
+| Field | Content |
+|-------|---------|
+| **Class** | Empirically resolvable (executed) |
+| **Named source class** | **Unnamed menu** of futures-target families (`MAP_Futures_Target_Forecasting_Methods.md`). Not a singleton |
+| **What it is** | What published methods whose **target is listed crude futures** have actually been scored on next-session / one-step log-return vs last settlement, and where edges hold or shrink under walk-forward |
+| **Why offered here** | Operator asked for that map on the live skill leftover |
+| **What authorizing does** | Already ran: `04_Material_Admission_FT_Method_Map.md` (**L-MAP-FT**) |
+| **What success / failure changes** | **Admitted as evaluation.** F-SKILL **not established**. F-SRC **not filled**. Closest kinship = daily CL curve MAE/MCS (Kearney–Shang 2020); Chantziara daily PCs = little OOS power |
+| **What it does *not* do** | Does not collapse MAE/MCS/Sharpe/monthly NS/spot-MSPE into F-SKILL-met; does not invent a class |
+| **Effort** | Medium (done) |
+| **Disposition** | **Executed 2026-08-17** → evaluation |
+| **How to authorize** | Already run. Later skill reopen is still [R-F-SKILL](#r-f-skill) |
+
 <a id="r-v-value-test-0"></a>
 ### R-V-VALUE-TEST-0
 
@@ -115,7 +132,7 @@
 | **Disposition** | **pursue** (leftover **live**; class remains unnamed) |
 | **How to authorize** | `name source class …` with a **specific public series + matching locks** (NYMEX CL front-month, next-session **log-return**, walk-forward RMSE vs last-settlement) |
 
-**Do not treat as this class:** EIA STEO; listed futures curve as a next-session CL return model; Alquist–Kilian / Fed IFDP spot-forecast papers; canonical real/spot VARs; the existence menu as “the” skill recipe; last-settlement no-change (baseline, not the model).
+**Do not treat as this class:** EIA STEO; listed futures curve as a next-session CL return model; Alquist–Kilian / Fed IFDP spot-forecast papers; canonical real/spot VARs; the existence menu as “the” skill recipe; last-settlement no-change (baseline, not the model); **L-MAP-FT families as a silent F-SRC pick** (Kearney–Shang MAE/MCS, Bredin holding-period/Sharpe, Baruník–Malinská monthly NS, Coppola 1-month VECM).
 
 <a id="r-v-value"></a>
 ### R-V-VALUE
@@ -210,6 +227,7 @@
 | 2026-08-17 | F-SRC `leave unnamed`; skill leftover live; do not invent a class |
 | 2026-08-17 | **C closeout** — hygiene sealed; leftover-ambiguity held at 5.5; Phase 2 not entered |
 | 2026-08-17 | Operator **C** `decline optional modes` — UX/CX/CR not run; skill leftover still live |
+| 2026-08-17 | **L-MAP-FT** — futures-target method map executed; F-SKILL not established; F-SRC not filled |
 
 ---
 

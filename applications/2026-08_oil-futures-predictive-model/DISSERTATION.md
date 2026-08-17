@@ -111,7 +111,7 @@ UX / CX / CR **declined, not run** (operator **C** `decline optional modes`). QI
 
 ## 10. What would still be needed
 
-- A **named-enough** public series matching next-session CL front-month log-return, walk-forward RMSE vs last settlement — then a pulse that still **stops** if honest `04` would say established. Link: [R-F-SKILL](RESIDUAL_BRANCH_MENU.md#r-f-skill).  
+- A **named-enough** public series matching next-session CL front-month log-return, walk-forward RMSE vs last settlement — then a pulse that still **stops** if honest `04` would say established. Link: [R-F-SKILL](RESIDUAL_BRANCH_MENU.md#r-f-skill). The L-MAP-FT census is **not** that class.  
 - Separately, a named paper book matching V-VALUE, stating V1 or V2: [R-V-VALUE](RESIDUAL_BRANCH_MENU.md#r-v-value).  
 - Do **not** fill either leftover with EIA STEO, Alquist–Kilian spot evaluations, the listed curve as L₀, or the existence menu as “the” skill class.
 
@@ -129,6 +129,7 @@ UX / CX / CR **declined, not run** (operator **C** `decline optional modes`). QI
 | V-SRC leave unnamed | **7.5** | Unchanged (leave-unnamed does not drop Amb) |
 | After D-EXIST-MET-FT | **5.5** | D-SRC 2 → 0 |
 | F-SRC leave unnamed / closeout | **5.5** | Unchanged |
+| L-MAP-FT census | **5.5** | Unchanged (menu ≠ named class) |
 
 ### Admitted layers (index)
 
@@ -142,10 +143,11 @@ UX / CX / CR **declined, not run** (operator **C** `decline optional modes`). QI
 | V-VALUE-TEST-0 | No named book; value not established | `04_Material_Admission_V_VALUE_No_Recipe.md` |
 | V-SRC unnamed | Leave unnamed; not a refute | `Lock_VSRC_Leave_Unnamed.md` |
 | F-SRC unnamed | Leave unnamed; live residual | `Lock_FSRC_Leave_Unnamed.md` |
+| L-MAP-FT | Futures-target method census; skill not met | `04_Material_Admission_FT_Method_Map.md` |
 
 ### Key artifacts
 
-- `DISSERTATION.md` · `SHARE_PACK.md` · `EXECUTIVE_BRIEF.md` · `05_Original_Claim_Assessment_Closeout.md` · `final_verdict.md` · `RESIDUAL_BRANCH_MENU.md` · `OPTIONAL_MODES_MENU.md`
+- `DISSERTATION.md` · `SHARE_PACK.md` · `EXECUTIVE_BRIEF.md` · `05_Original_Claim_Assessment_Closeout.md` · `final_verdict.md` · `RESIDUAL_BRANCH_MENU.md` · `OPTIONAL_MODES_MENU.md` · `MAP_Futures_Target_Forecasting_Methods.md`
 
 ### Failure-mode / tracker pointers (if any)
 

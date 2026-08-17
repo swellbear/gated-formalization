@@ -57,7 +57,7 @@ This is **not** trading advice and does **not** clear the blended slogan “a pr
 
 **Keep saying:** A futures-target recipe has been written. Skill and after-cost value are not shown. The skill leftover stays live and unnamed. Leave-unnamed is not a refute.
 
-**Test next (only if authorized):** `name source class …` matching next-session CL log-return vs last settlement
+**Test next (only if authorized):** `name source class …` matching next-session CL log-return vs last settlement · or `leave unnamed`. The futures-target method map is evaluation, not that class.
 
 ---
 

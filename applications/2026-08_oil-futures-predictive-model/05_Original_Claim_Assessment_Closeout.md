@@ -56,7 +56,7 @@ Any claim that a model beats last settlement out of sample; that a paper book ma
 
 | Option | Expected buy | Still leaves open |
 |--------|--------------|-------------------|
-| `name source class …` matching Rank 4 F-SKILL | Named-class pulse of walk-forward RMSE vs last settlement on next-session CL log-return | Establishment-stop if honest `04` would say established; V-VALUE still unnamed |
+| `name source class …` matching Rank 4 F-SKILL | Named-class pulse of walk-forward RMSE vs last settlement on next-session CL log-return | Establishment-stop if honest `04` would say established; V-VALUE still unnamed; L-MAP-FT is **not** that class |
 | `name source class …` matching V-VALUE | Named paper book; test must name V1 or V2 | Does not auto-meet F-SKILL |
 | `run CR` / successor (existence-only or skill-only) | Different question, labeled | **Declined** 2026-08-17; Rank 4 leftover unchanged |
 | `run UX` / `run CX` | Documentation / alternatives | **Declined** 2026-08-17; parent verdict unchanged |

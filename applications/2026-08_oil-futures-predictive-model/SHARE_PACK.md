@@ -52,7 +52,7 @@ This is **not** trading advice and does **not** clear the blended slogan “a pr
 
 ## 4. Residual-branch offer
 
-Menu offered. Skill leftover **live** ([R-F-SKILL](RESIDUAL_BRANCH_MENU.md#r-f-skill)). After-cost book parked until a matching class is named ([R-V-VALUE](RESIDUAL_BRANCH_MENU.md#r-v-value)). [`RESIDUAL_BRANCH_MENU.md`](RESIDUAL_BRANCH_MENU.md)
+Menu offered. Skill leftover **live** ([R-F-SKILL](RESIDUAL_BRANCH_MENU.md#r-f-skill)). Futures-target method map executed as evaluation ([R-MAP](RESIDUAL_BRANCH_MENU.md#r-map); [`MAP_Futures_Target_Forecasting_Methods.md`](MAP_Futures_Target_Forecasting_Methods.md)). After-cost book parked until a matching class is named ([R-V-VALUE](RESIDUAL_BRANCH_MENU.md#r-v-value)). [`RESIDUAL_BRANCH_MENU.md`](RESIDUAL_BRANCH_MENU.md)
 
 ---
 
