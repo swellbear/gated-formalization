@@ -6,7 +6,7 @@
 **Admitted claim layers:**
 - **D-EXIST established** — futures-target only (`Lock_D_EXIST_Established_Futures_Target.md` · `04_Material_Admission_D_EXIST_Established.md`). Not a singleton recipe pick. Spot/real-price **OUT**.
 
-**Meaning lock:** Rank 4 nested split — `Lock_Rank4_Nested_Split.md`. **V-COST-V2**. **L-SCREEN-Y-PROMOTE**. **L-HUNT-DJT**. **L-HUNT-PRETELL**. **L-HUNT-GAP**. V-SRC **leave unnamed**. **F-SRC-CME-TAPE** (named). **H-LAG-WF** named and scored (does not promote). **H-SPARSE-CAL** / **H-SPARSE-VOL** named and scored (neither promotes). **H-GAP-FADE** / **H-GAP-CONT** named and scored (FADE small F-DAY; does not promote). **H-DJT-WEEK** / **H-DJT-MONTH** named and scored (no discovery survivor). **L-SESS**.
+**Meaning lock:** Rank 4 nested split — `Lock_Rank4_Nested_Split.md`. **V-COST-V2**. **L-SCREEN-Y-PROMOTE**. **L-HUNT-COT**. **L-HUNT-DJT**. **L-HUNT-PRETELL**. **L-HUNT-GAP**. V-SRC **leave unnamed**. **F-SRC-CME-TAPE** (named). **H-LAG-WF** named and scored (does not promote). **H-SPARSE-CAL** / **H-SPARSE-VOL** named and scored (neither promotes). **H-GAP-FADE** / **H-GAP-CONT** named and scored (FADE small F-DAY; does not promote). **H-DJT-WEEK** / **H-DJT-MONTH** named and scored (no discovery survivor). **H-COT-NET** / **H-COT-CHG** named and scored (no discovery survivor). **L-SESS**.
 
 **Admitted as evaluation (not bar-met):**
 - `04_Material_Admission_D_EXIST_Construction.md` — no-change **OUT** as the D-EXIST model exhibit (operator B).
@@ -26,7 +26,8 @@
 - `04_Material_Admission_Pretell.md` (**L-HUNT-PRETELL** / **L-STANDIN-Y-TELLS** + **L-PULSE-PRETELL-1**) — eight tell horses; **no discovery survivor**; confirm skipped; skill **not established**.
 - `04_Material_Admission_Gap.md` (**H-GAP-FADE** / **H-GAP-CONT** + **L-PULSE-GAP-1**) — fade small F-DAY confirm; F-CC locked to 0; does not promote; skill **not established**.
 - `04_Material_Admission_DJT.md` (**L-HUNT-DJT** / **L-STANDIN-DJT-TRUTH** + **L-PULSE-DJT-1**) — two Truth Social horses; **no discovery survivor**; confirm skipped; skill **not established**.
+- `04_Material_Admission_COT.md` (**L-HUNT-COT** / **L-STANDIN-CFTC-COT** + **L-PULSE-COT-1**) — two CFTC managed-money horses; **no discovery survivor**; confirm skipped; skill **not established**.
 
-**Closeout (2026-08-17):** **hard stop (residuals live)**. Skill leftover [R-F-SKILL](RESIDUAL_BRANCH_MENU.md#r-f-skill) **pursue** (DJT no survivor; FADE small F-DAY, no promote; pretell failed at discovery; CAL/VOL/H-LAG fail promote; H-KS not run).
+**Closeout (2026-08-17):** **hard stop (residuals live)**. Skill leftover [R-F-SKILL](RESIDUAL_BRANCH_MENU.md#r-f-skill) **pursue** (COT no survivor; DJT no survivor; FADE small F-DAY, no promote; pretell failed at discovery; CAL/VOL/H-LAG fail promote; H-KS not run).
 
-**Process imports:** LOCK-003, LOCK-009, LOCK-010, LOCK-011. App-local: **V-COST-V2**; V-SRC leave unnamed; **F-SRC-CME-TAPE**; **L-STANDIN-Y-CLF**; **L-SCREEN-Y-PROMOTE**; **L-HUNT-DJT**; **L-HUNT-PRETELL**; **L-HUNT-GAP**; **H-SPARSE-CAL**; **H-SPARSE-VOL**; D-EXIST-MET-FT (2026-08-17).
+**Process imports:** LOCK-003, LOCK-009, LOCK-010, LOCK-011. App-local: **V-COST-V2**; V-SRC leave unnamed; **F-SRC-CME-TAPE**; **L-STANDIN-Y-CLF**; **L-SCREEN-Y-PROMOTE**; **L-HUNT-COT**; **L-HUNT-DJT**; **L-HUNT-PRETELL**; **L-HUNT-GAP**; **H-SPARSE-CAL**; **H-SPARSE-VOL**; D-EXIST-MET-FT (2026-08-17).

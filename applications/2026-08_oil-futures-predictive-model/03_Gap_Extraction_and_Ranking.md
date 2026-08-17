@@ -120,7 +120,7 @@ G8 is the **named model class and feature recipe** under a locked G1/G6 — bloc
 | G4 | **LOCKED per leg:** D-EXIST T2 price-level census; F-SKILL/V-VALUE T1 next-session log-return. |
 | G5 | **LOCKED per leg:** D-EXIST H3 open (census); F-SKILL/V-VALUE H1 next session as **F-CC** (settlement-to-settlement). **L-SESS:** F-ON = settlement→next official open; F-DAY = official open→same-day settlement. Combo is a **third** test, not a substitute. |
 | G7 | **LOCKED per leg:** D-EXIST E3 census; F-SKILL/V-VALUE E1 walk-forward. **Stand-in stipulated** (Yahoo `CL=F`). |
-| G8 | **Named** with H-DJT-WEEK / H-DJT-MONTH (no discovery survivor), H-GAP-FADE / H-GAP-CONT (FADE small F-DAY, no promote), H-LAG-WF, H-SPARSE-CAL, H-SPARSE-VOL (scored; none promote), L-HUNT-PRETELL eight tell horses (no discovery survivor), and H-KS-FTS (not run). Not a D-EXIST requirement. |
+| G8 | **Named** with H-COT-NET / H-COT-CHG (no discovery survivor), H-DJT-WEEK / H-DJT-MONTH (no discovery survivor), H-GAP-FADE / H-GAP-CONT (FADE small F-DAY, no promote), H-LAG-WF, H-SPARSE-CAL, H-SPARSE-VOL (scored; none promote), L-HUNT-PRETELL eight tell horses (no discovery survivor), and H-KS-FTS (not run). Not a D-EXIST requirement. |
 | V-COST | V-VALUE cost schedule — **V2 named** (fees + $10/contract/side). V1 not the live schedule. |
 | F-SRC | **F-SRC-CME-TAPE** (2026-08-17). Stand-in pulse scored; F-SKILL **not established**. |
 | Live vs stand-in | **Stand-in stipulated** — Yahoo `CL=F` Open/Close. **L-SCREEN-Y-PROMOTE:** live CME only if F-CC beats 0 on last 500 and does not lose on 250/750. |
@@ -133,17 +133,17 @@ G8 is the **named model class and feature recipe** under a locked G1/G6 — bloc
 
 ## Priority Order (highest sum first)
 
-1. **F-SRC / F-SKILL** — L-HUNT-DJT no survivor; H-GAP-FADE small F-DAY, no promote; L-HUNT-PRETELL no survivor; H-SPARSE-CAL / H-SPARSE-VOL / H-LAG-WF scored; **none promote**; H-KS not run; **not established**  
+1. **F-SRC / F-SKILL** — L-HUNT-COT no survivor; L-HUNT-DJT no survivor; H-GAP-FADE small F-DAY, no promote; L-HUNT-PRETELL no survivor; H-SPARSE-CAL / H-SPARSE-VOL / H-LAG-WF scored; **none promote**; H-KS not run; **not established**  
 2. **V-SRC** — sealed leave unnamed; later book must use **V2**  
 3. **Live vs stand-in** — executed (Yahoo stipulated; not live)
 
-Lean Default Path: a **different** named horse on Yahoo, or leave. Do **not** auto-open live CME. Do **not** add year/6-month/day after DJT scores. Do **not** retune the DJT lexicon. Do **not** expand CAL/VOL into a zoo. Existence stays separate. Do not enter Phase 2.
+Lean Default Path: a **different** named horse on Yahoo, or leave. Do **not** auto-open live CME. Do **not** add percent-of-OI or other trader groups after COT scores. Do **not** retune the DJT lexicon. Do **not** expand CAL/VOL into a zoo. Existence stays separate. Do not enter Phase 2.
 
 ---
 
 ## Inter-parameter dependency (mandatory)
 
-**F-SKILL** is blocked primarily by **no freeze-matching horse that beats F-CC on the promote gate** (DJT no survivor; FADE F-CC tie; pretell no survivor; CAL tiny 500 / fails 750; VOL and H-LAG lost; H-KS tape fail). **V-VALUE** is blocked primarily by **V-SRC leave unnamed**.
+**F-SKILL** is blocked primarily by **no freeze-matching horse that beats F-CC on the promote gate** (COT no survivor; DJT no survivor; FADE F-CC tie; pretell no survivor; CAL tiny 500 / fails 750; VOL and H-LAG lost; H-KS tape fail). **V-VALUE** is blocked primarily by **V-SRC leave unnamed**.
 
 **Rectification:** `name horse …` on Yahoo under **L-SCREEN-Y-PROMOTE**. Do not auto-enter Phase 2. Combo does not skip the queue.
 

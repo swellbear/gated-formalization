@@ -40,6 +40,7 @@ That any model works. That a Yahoo win is a live win. That anyone should trade.
 | **H-GAP-FADE** | Day-gap fade. Small F-DAY confirm beats; F-CC locked to 0. **Does not promote.** |
 | **H-GAP-CONT** | Day-gap continuation. Discovery F-DAY **loss**. Not confirmed. **Does not promote.** |
 | **L-HUNT-DJT** | Two Truth Social oil-sentiment horses. Discovery F-CC: **both tie 0**. **No survivor.** Confirm skipped. **Does not promote.** |
+| **L-HUNT-COT** | Two CFTC managed-money horses. Discovery F-CC: **both lose**. **No survivor.** Confirm skipped. **Does not promote.** |
 | **V-VALUE** | Unchanged. After-cost P/L under **V2** is a later named book, not this gate. |
 
 **“Not lose” on 250/750** means horse RMSE **≤** no-change RMSE (ties allowed). Last **500** must **strictly beat**.
