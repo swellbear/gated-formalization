@@ -84,17 +84,13 @@ None required (D-EXIST remains Minimal). V-VALUE is a marked elevation (Substant
 
 - `01_Anchor_and_ClaimType_Template.md`
 - `02_Gate_Scoring_Sheet.md`
-- `03_Gap_Extraction_and_Ranking.md`
-- `R_Locking_Scaffolding.md`
-- `PLAIN_LANGUAGE_CARD.md`
-- `Lock_Rank4_Nested_Split.md`
-- `02_Gate_Scoring_Sheet.md`
 - `02_Gate_Scoring_After_Rank4.md`
-- `04_Material_Admission_D_EXIST_Construction.md`
 - `03_Gap_Extraction_and_Ranking.md`
+- `04_Material_Admission_D_EXIST_Construction.md`
+- `Lock_Rank4_Nested_Split.md`
 - `R_Locking_Scaffolding.md`
+- `MULTI_ELEVATION_SPLIT.md`
 - `PLAIN_LANGUAGE_CARD.md`
-- `MULTI_ELEVATION_SPLIT.md` (meanings in force)
 
 ---
 
@@ -113,7 +109,7 @@ None required (D-EXIST remains Minimal). V-VALUE is a marked elevation (Substant
 |------|------|
 | Domain | `markets` |
 | Claim-shape | `forecast-extension`, `descriptive-census` |
-| Pattern | `R-dependence` (open-run observation) |
+| Pattern | `R-dependence` (V-SRC ← V-COST; F-SKILL ← F-SRC) |
 
 ---
 
