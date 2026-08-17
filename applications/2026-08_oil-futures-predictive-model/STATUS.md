@@ -8,18 +8,18 @@
 
 ### Plain status
 
-A specified forecasting recipe for listed crude **futures** (not last-price no-change) has been written. That is all existence means here. Spot/real-price recipes stay outside that freeze. Walk-forward skill, directional accuracy after costs, and any trading or decision value remain **not shown**. This is not trading advice, and it is not a pick of one paper from the menu.
+A specified forecasting recipe for listed crude **futures** has been written. That existence call stays in force and is separate from skill. The skill source class (next-session CL log-return vs last settlement) is left **unnamed**, so skill stays **not shown**. We will not invent a class to fill it. Spot/real-price recipes stay outside existence. The after-cost paper book stays unnamed; after-cost value stays **not shown**. This is not trading advice.
 
 ---
 
 | Field | Value |
 |-------|--------|
 | **Closure state** | **open** |
-| **Phase** | Phase 1 — D-EXIST met (futures-target); F-SKILL/V-VALUE unmet |
-| **Amb** | **5.5** (definitional drop from D-SRC close; **≠ clearance**) |
-| **Locks in force** | Rank 4; D-EXIST-MET-FT; V-COST either; V-SRC leave unnamed |
-| **Next authorization needed** | `name source class …` / `leave unnamed` / `endpoint only` (skill leftover) |
-| **Related apps surfaced** | `2026-08_spacex-600-dollar-stock` — lock ≠ clearance; `2026-08_sell-in-may-sp500-2026` — costs before a value bar. Process only. |
+| **Phase** | Phase 1 — D-EXIST met (futures-target); F-SRC/V-SRC leave unnamed |
+| **Amb** | **5.5** (unchanged by leave-unnamed; **≠ clearance**) |
+| **Locks in force** | Rank 4; D-EXIST-MET-FT; V-COST either; V-SRC leave unnamed; F-SRC leave unnamed |
+| **Next authorization needed** | `name source class …` (reopen skill) / `endpoint only` / `closeout` |
+| **Related apps surfaced** | `2026-08_fomc-sep-2026-uffr-change` — leave unnamed ≠ refute; `2026-08_spacex-600-dollar-stock` — lock ≠ clearance. Process only. |
 | **Optional modes** | none yet |
 
 ---

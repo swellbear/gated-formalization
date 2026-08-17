@@ -20,15 +20,16 @@
 - V-VALUE-TEST-0: no named recipe → **not established** (not a refute of all books).
 - Operator **B** (2026-08-17): `leave unnamed` on V-SRC. Amb **unchanged 7.5**.
 - Operator (2026-08-17): **Yes** + named D-EXIST suite. Recorded as **L-D-SUITE**.
-- Operator **A** (2026-08-17): `authorize D-EXIST established (futures-target)`. **D-EXIST-MET-FT**. Spot/real-price OUT. Menu ≠ “the” recipe. F-SKILL/V-VALUE still not established. Amb **7.5 → 5.5**. Amb ≠ clearance.
-- F-SRC unnamed; no F-SKILL pulse. Live ask after this lock.
-- Amb 12 → 9 → 7.5 → **5.5**. Amb ≠ clearance.
+- Operator **A** (2026-08-17): `authorize D-EXIST established (futures-target)`. **D-EXIST-MET-FT**. Spot/real-price OUT. Menu ≠ “the” recipe. Amb **7.5 → 5.5**.
+- Operator **B** (2026-08-17): `leave unnamed` on F-SRC (next-session CL log-return vs last settlement). Skill **not shown**. Live residual = skill test. Do not invent a class. Phase 2 not entered. V-SRC remains leave unnamed. D-EXIST-MET-FT unchanged.
+- Amb 12 → 9 → 7.5 → **5.5**. Leave-unnamed does not drop Amb. Amb ≠ clearance.
 
 ## Residual judgment points encountered
 
 - “Predictive” can be a **job description** (a model whose task is forecasting) or a **success claim** (it actually forecasts better than a naive baseline). Rank 3 vs Rank 1 turns on that call. Recorded, not silently picked.
 - EIA/IEA/bank **outlooks** are tempting existence exhibits; many target **spot or average prices**, not a locked **CL futures** walk-forward. Flag now so a later pulse cannot print-match them into Rank 1.
 - Operator-named D-EXIST suite: futures-target vs real/spot-target is a **vehicle fork**, not one C3 object. “Specified” ≠ “beats no-change.”
+- F-SRC leave unnamed: live skill residual; unnamed ≠ impossible; do not invent a class.
 
 ## Sources / links
 

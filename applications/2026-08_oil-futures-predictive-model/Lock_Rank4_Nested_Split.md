@@ -3,7 +3,7 @@
 **Date:** 2026-08-17  
 **Application:** `2026-08_oil-futures-predictive-model`  
 **Operator selection:** **A** → **Rank 4 — Nested split A+B+C** (`lock Rank 4`)  
-**Status:** **IN FORCE for meanings.** **D-EXIST established (futures-target only).** V-COST **either accepted**. V-SRC **leave unnamed**. F-SKILL and V-VALUE **not established**.
+**Status:** **IN FORCE for meanings.** **D-EXIST established (futures-target only).** V-COST **either accepted**. V-SRC **leave unnamed**. F-SRC **leave unnamed**. F-SKILL and V-VALUE **not established**.
 
 ---
 
@@ -49,8 +49,8 @@ D-EXIST and F-SKILL do not wait on this slot.
 ## Dependents now eligible to re-open (scoped)
 
 - **D-EXIST** — **established** (futures-target only). Spot/real-price **OUT**. Menu is not a singleton pick.  
-- **F-SKILL** — **not established**. Live ask: unnamed F-SRC.  
-- **G8** — still free under F-SKILL.  
+- **F-SKILL** — **not established**. F-SRC **sealed leave unnamed** (live residual; do not invent a class).  
+- **G8** — still free under F-SKILL; blocked by unnamed F-SRC.  
 - **V-VALUE** — **not established** (V-VALUE-TEST-0). V-SRC **sealed leave unnamed**.
 
 ---
@@ -70,4 +70,5 @@ Selecting Rank 4 **drops leftover-ambiguity by fixing meanings** (three jobs, �
 5. Conflicted vendor backtests cannot solely affirm V-VALUE.  
 6. V-COST either is **not** “we used V2.” Each test must name V1 or V2.  
 7. Last-settlement no-change is the F-SKILL **baseline**, not the D-EXIST **model** (operator B).  
-8. D-EXIST-met is **not** a pick of one paper from the menu, **not** spot-inside-C3, and **not** F-SKILL or V-VALUE.
+8. D-EXIST-met is **not** a pick of one paper from the menu, **not** spot-inside-C3, and **not** F-SKILL or V-VALUE.  
+9. F-SRC leave unnamed is **not** a refute of skill, **not** an undo of D-EXIST-MET-FT, and **not** a license to invent a class.

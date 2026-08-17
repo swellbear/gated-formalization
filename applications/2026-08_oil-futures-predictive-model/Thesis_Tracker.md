@@ -4,7 +4,7 @@
 
 **Application:** `2026-08_oil-futures-predictive-model`  
 **Last reviewed:** 2026-08-17  
-**Status:** Open · Phase 1 · D-EXIST-MET-FT · F-SKILL/V-VALUE unmet · Provisional (split)  
+**Status:** Open · Phase 1 · D-EXIST-MET-FT · F-SRC/V-SRC leave unnamed · Provisional (split)  
 
 **Tags** (see `docs/TRACKER_TAXONOMY.md`):  
 - Domain: `markets`  
@@ -19,7 +19,7 @@
 
 Can a predictive model for oil futures be built?
 
-**Successor / Rank lock (if any):** **Rank 4** nested split — D-EXIST ⊂ F-SKILL ⊂ V-VALUE. **D-EXIST-MET-FT**. V-COST **either**. V-SRC leave unnamed.
+**Successor / Rank lock (if any):** **Rank 4** nested split — D-EXIST ⊂ F-SKILL ⊂ V-VALUE. **D-EXIST-MET-FT**. V-COST **either**. F-SRC and V-SRC leave unnamed.
 
 **Parent / successor relationship:** none
 
@@ -29,9 +29,9 @@ Can a predictive model for oil futures be built?
 
 **Verdict:** **Provisional (split)** — D-EXIST established (futures-target only); F-SKILL and V-VALUE not
 
-**Amb path (brief):** 12 → 9 → 7.5 → **5.5** after D-EXIST-MET-FT (D-SRC closed)
+**Amb path (brief):** 12 → 9 → 7.5 → **5.5** after D-EXIST-MET-FT; **unchanged** after F-SRC leave unnamed
 
-**Amb ≠ clearance:** Amb 5.5 is leftover skill/value vehicles. It does not mean a model beats last price or should be traded.
+**Amb ≠ clearance:** Amb 5.5 is leftover skill/value vehicles. Leave-unnamed does not drop Amb. It does not mean a model beats last price or should be traded.
 
 ---
 
@@ -42,6 +42,7 @@ Can a predictive model for oil futures be built?
 - **L-HUNT-PROVEN** (search executed; no proven class submitted).
 - V-COST **either** (meanings; not a singleton V1 or V2).
 - V-SRC **leave unnamed** (vehicle sealed empty; not a refute).
+- F-SRC **leave unnamed** (skill residual live; not a refute; do not invent a class).
 - **D-EXIST-MET-FT** — specified non-no-change mapping for listed crude **futures** exists (menu ≠ singleton; spot/real-price OUT).
 
 ---
@@ -49,7 +50,7 @@ Can a predictive model for oil futures be built?
 ## 4. Not established / negatively constrained
 
 - D-EXIST **established** (futures-target only; not spot; not a singleton recipe pick).
-- F-SKILL **not established** (schema fail vs next-session CL log-return; hunt submitted no class).
+- F-SKILL **not established** (F-SRC `leave unnamed`; hunt submitted no class; not a refute of all recipes).
 - V-VALUE **not established** (V-VALUE-TEST-0; V-SRC `leave unnamed`; not a refute of all books).
 - Directional accuracy after costs / decision or trading value **not shown** (operator restatement).
 - No trading advice.
@@ -67,7 +68,7 @@ None required (D-EXIST remains Minimal). V-VALUE is a marked elevation (Substant
 | ID | Residual | Concrete reopen condition |
 |----|----------|---------------------------|
 | D-SRC | D-EXIST exhibit | **Closed** as futures-target existence. Reopen only if freeze changes (e.g. include spot) |
-| F-SRC | Named class for F-SKILL | `name source class …` (named enough, non-circular) |
+| F-SRC | Named class for F-SKILL | **Leave unnamed** (operator B). Live residual. Reopen: `name source class …` matching next-session CL log-return vs last-settlement. Do not invent a class |
 | V-COST | Cost schedule | **Either accepted**; later tests must name V1 or V2 |
 | V-SRC | Named recipe/book for V-VALUE | **Leave unnamed** (operator B). Reopen: `name source class …` matching V-VALUE; test must name V1 or V2 |
 | G8 | Model class under F-SKILL | After F-SRC; do not treat architecture fashion as skill |
@@ -80,9 +81,9 @@ None required (D-EXIST remains Minimal). V-VALUE is a marked elevation (Substant
 
 **Stop saying:** That EIA STEO or the futures curve is a proven next-session CL model; that spot/12-month results clear this freeze; that anyone should trade; that existence-met is skill-met; that one paper was picked as “the” recipe.
 
-**Keep saying:** A specified non-no-change futures-target recipe has been written. Nearby spot literature is kinship. Skill and after-cost value are not established. V-SRC leave unnamed is not a refute. V-EITHER is not “we used V2.”
+**Keep saying:** A specified non-no-change futures-target recipe has been written. Nearby spot literature is kinship. Skill and after-cost value are not established. F-SRC/V-SRC leave unnamed are not refutes. V-EITHER is not “we used V2.” Do not invent a skill class.
 
-**Test next (only if authorized):** `name source class …` / `leave unnamed` / `endpoint only` for F-SKILL. Do not treat L-D-SUITE as F-SRC.
+**Test next (only if authorized):** `name source class …` (reopen skill) / `endpoint only` / `closeout`. Do not treat L-D-SUITE as F-SRC.
 
 ---
 
@@ -103,13 +104,14 @@ None required (D-EXIST remains Minimal). V-VALUE is a marked elevation (Substant
 - `02_Gate_Scoring_After_VCOST.md`
 - `04_Material_Admission_V_VALUE_No_Recipe.md`
 - `Lock_VSRC_Leave_Unnamed.md`
-- `Lock_VSRC_Leave_Unnamed.md`
 - `02_Gate_Scoring_After_VSRC_Unnamed.md`
 - `E_Package_Evidence_Intake_D_EXIST_Named_Suite.md`
 - `04_Material_Admission_D_EXIST_Named_Suite.md`
 - `Lock_D_EXIST_Established_Futures_Target.md`
 - `04_Material_Admission_D_EXIST_Established.md`
 - `02_Gate_Scoring_After_DEXIST.md`
+- `Lock_FSRC_Leave_Unnamed.md`
+- `02_Gate_Scoring_After_FSRC_Unnamed.md`
 
 ---
 
@@ -118,7 +120,7 @@ None required (D-EXIST remains Minimal). V-VALUE is a marked elevation (Substant
 - Dissertation: not yet (open run)
 - Closeout / verdict: not yet
 - Parent / successor: —
-- Key admissions / locks: Rank 4; **D-EXIST-MET-FT**; V-COST either; V-SRC leave unnamed; L-D-SUITE (existence evidence only); L-HUNT-PROVEN; F-SKILL/V-VALUE not established; process imports 003/009/010/011
+- Key admissions / locks: Rank 4; **D-EXIST-MET-FT**; V-COST either; F-SRC/V-SRC leave unnamed; L-D-SUITE (existence evidence only); L-HUNT-PROVEN; F-SKILL/V-VALUE not established; process imports 003/009/010/011
 
 ---
 

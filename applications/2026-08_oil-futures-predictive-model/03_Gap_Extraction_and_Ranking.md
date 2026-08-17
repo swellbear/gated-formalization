@@ -122,7 +122,7 @@ G8 is the **named model class and feature recipe** under a locked G1/G6 — bloc
 | G7 | **LOCKED per leg:** D-EXIST E3 census; F-SKILL/V-VALUE E1 walk-forward. Live vs stand-in for settlements still open. |
 | G8 | Named model class under F-SKILL — **re-opened**; not a D-EXIST requirement. |
 | V-COST | V-VALUE cost schedule — **either accepted** (V1 or V2; each test must name which). Incomplete as a singleton. |
-| F-SRC | Named public class for F-SKILL — **unnamed**. |
+| F-SRC | Named public class for F-SKILL — **leave unnamed** (operator B); F-SKILL **not established**; live residual; do not invent a class. |
 | V-SRC | Named recipe/book for V-VALUE — **leave unnamed** (operator B); V-VALUE-TEST-0 **not established**; not a refute. |
 
 *Later candidates must quote the freeze line for any parameter they claim to close. Changing the freeze line is a claim change, not progress.*
@@ -131,34 +131,34 @@ G8 is the **named model class and feature recipe** under a locked G1/G6 — bloc
 
 ## Priority Order (highest sum first)
 
-1. **F-SRC** — named class for F-SKILL; **live ask**  
-2. **G8** / live vs stand-in — after a named class  
+1. **F-SRC** — sealed leave unnamed; **live residual** (skill test); reopen only with `name source class …`  
+2. **G8** / live vs stand-in — F-SRC-dependent  
 3. **V-SRC** — sealed leave unnamed; reopen only with `name source class …`  
 
-Lean Default Path: name an F-SKILL class (next-session CL log-return vs last-settlement) or leave unnamed. Do **not** treat L-D-SUITE as that class. Do not invent. Do not auto-pulse. Naming ≠ bar-met.
+Lean Default Path: do **not** invent a skill class. Existence stays separate. Next operator fork is reopen / endpoint / closeout. Do not auto-pulse. Do not enter Phase 2.
 
 ---
 
 ## Inter-parameter dependency (mandatory)
 
-**D-EXIST** is **established** (futures-target only). **F-SKILL tests** are blocked primarily by unnamed **F-SRC** (and by the operator’s own no-change-benchmark caveats). **V-VALUE** is blocked primarily by **V-SRC leave unnamed**.
+**D-EXIST** is **established** (futures-target only). **F-SKILL** is blocked primarily by **F-SRC leave unnamed** (live residual; do not invent a class). **V-VALUE** is blocked primarily by **V-SRC leave unnamed**.
 
-**Rectification:** `name source class …` for F-SKILL (this ask), or `leave unnamed` / `endpoint only`. Do not auto-enter Phase 2. Do not treat the existence menu as F-SRC.
+**Rectification:** `name source class …` matching next-session CL log-return vs last-settlement, or `endpoint only` / `closeout`. Do not auto-enter Phase 2. Do not treat the existence menu as F-SRC.
 
-**Reopen condition (prominent):** After a named-enough non-circular F-SKILL class matching next-session CL log-return vs last-settlement, or `leave unnamed` / `endpoint only`.
+**Reopen condition (prominent):** After a named-enough non-circular F-SKILL class, or `endpoint only` / `closeout`.
 
 ---
 
 ## Search Plan for Top-Priority Gap(s)
 
-**Targeted gap:** F-SRC (after D-EXIST-MET-FT).  
-**Source classes to check:** None submitted for F-SKILL. **L-HUNT-PROVEN** already failed that schema. Do not relabel L-D-SUITE, EIA STEO, or Alquist–Kilian spot papers as F-SKILL.  
-**Diminishing-returns / time-box rule:** Do not auto-pulse. Existence met ≠ skill met.  
-**Notes:** `Lock_D_EXIST_Established_Futures_Target.md`.
+**Targeted gap:** F-SRC leave unnamed (live residual).  
+**Source classes to check:** None. Do not invent. Do not relabel L-D-SUITE / EIA STEO / Alquist–Kilian as F-SKILL.  
+**Diminishing-returns / time-box rule:** Leave-unnamed is the seal. Existence met ≠ skill met.  
+**Notes:** `Lock_FSRC_Leave_Unnamed.md`.
 
 ---
 
 ## Ready for Material Search & Admission Checks?
 
-- [x] Yes — D-EXIST-MET-FT recorded; **stop** for unnamed F-SRC  
+- [x] Yes — F-SRC sealed leave unnamed; **stop** (live skill residual; no invented class)  
 - [ ] Need operator lock pick first

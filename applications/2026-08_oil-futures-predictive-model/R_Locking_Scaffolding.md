@@ -242,7 +242,7 @@ D-EXIST and F-SKILL only.
 - **What a “yes” means:** We freeze those definitions and only then check evidence under them.  
 - **What this does *not* mean:** Picking a package does **not** prove the original claim; it only sets the grading rules. (Lower ambiguity after a lock ≠ clearance.)
 
-**Status:** **SELECTED** — Rank 4 (operator **A**, 2026-08-17). **D-EXIST established (futures-target only)** (`Lock_D_EXIST_Established_Futures_Target.md`). V-COST either. V-SRC leave unnamed. F-SKILL/V-VALUE **not established**. Live ask: F-SRC.
+**Status:** **SELECTED** — Rank 4 (operator **A**, 2026-08-17). **D-EXIST established (futures-target only)**. V-COST either. F-SRC and V-SRC **leave unnamed**. F-SKILL/V-VALUE **not established**. Live residual: skill test (`Lock_FSRC_Leave_Unnamed.md`).
 
 ```
 Package: Rank 4 — Nested split A+B+C (D-EXIST ⊂ F-SKILL ⊂ V-VALUE)

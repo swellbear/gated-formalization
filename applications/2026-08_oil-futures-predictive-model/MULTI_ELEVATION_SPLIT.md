@@ -80,4 +80,4 @@ D-EXIST  ⊂  F-SKILL               (Rank 4-AC)
 
 ---
 
-*Rank 4 locked 2026-08-17. **D-EXIST established (futures-target only).** Spot/real-price OUT. Menu ≠ “the” recipe. F-SKILL and V-VALUE not established. Next: F-SRC `name source class …` / `leave unnamed` / `endpoint only`.*
+*Rank 4 locked 2026-08-17. **D-EXIST established (futures-target only).** Spot/real-price OUT. Menu ≠ “the” recipe. F-SRC and V-SRC leave unnamed. F-SKILL and V-VALUE not established. Live residual: skill test. Do not invent a class. Next: `name source class …` / `endpoint only` / `closeout`.*

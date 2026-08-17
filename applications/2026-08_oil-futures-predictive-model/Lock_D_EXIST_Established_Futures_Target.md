@@ -51,6 +51,6 @@ Skill, directional accuracy that survives transaction costs, and any claim of de
 
 ## Reopen / dependents
 
-- **F-SKILL** still needs a named freeze-matching class (`name source class …`) or `leave unnamed` / `endpoint only`. Do **not** treat L-D-SUITE as F-SRC.  
-- **G8** still free under F-SKILL.  
+- **F-SKILL** — later **F-SRC leave unnamed** (`Lock_FSRC_Leave_Unnamed.md`). Live residual. Do **not** treat L-D-SUITE as F-SRC. Do not invent a class.  
+- **G8** still free under F-SKILL; blocked by unnamed F-SRC.  
 - Widening D-EXIST to include spot/real-price recipes would be a **freeze change**, not this lock.
