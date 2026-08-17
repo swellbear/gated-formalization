@@ -8,18 +8,18 @@
 
 ### Plain status
 
-You named several fully specified oil-forecast recipes and set last-price no-change aside. That is the right *kind* of existence evidence. We have **not** marked existence as established: much of the list forecasts the real/spot price, not listed futures, and the list is still a menu rather than one exhibit. Forecast skill and after-cost value stay **not shown**. This is not trading advice.
+A specified forecasting recipe for listed crude **futures** (not last-price no-change) has been written. That is all existence means here. Spot/real-price recipes stay outside that freeze. Walk-forward skill, directional accuracy after costs, and any trading or decision value remain **not shown**. This is not trading advice, and it is not a pick of one paper from the menu.
 
 ---
 
 | Field | Value |
 |-------|--------|
 | **Closure state** | **open** |
-| **Phase** | Phase 1 — Rank 4; V-SRC leave unnamed; D-EXIST suite named; establishment-stop |
-| **Amb** | **7.5** (unchanged; **≠ clearance**) |
-| **Locks in force** | Rank 4; V-COST either; V-SRC leave unnamed; **L-D-SUITE** (census, not met) |
-| **Next authorization needed** | `authorize D-EXIST established (futures-target)` / `census only` / `widen D-EXIST to include spot` |
-| **Related apps surfaced** | `2026-08_fomc-june-2026-sep` — print-match ≠ clearance; `2026-08_spacex-600-dollar-stock` — lock ≠ clearance. Process only. |
+| **Phase** | Phase 1 — D-EXIST met (futures-target); F-SKILL/V-VALUE unmet |
+| **Amb** | **5.5** (definitional drop from D-SRC close; **≠ clearance**) |
+| **Locks in force** | Rank 4; D-EXIST-MET-FT; V-COST either; V-SRC leave unnamed |
+| **Next authorization needed** | `name source class …` / `leave unnamed` / `endpoint only` (skill leftover) |
+| **Related apps surfaced** | `2026-08_spacex-600-dollar-stock` — lock ≠ clearance; `2026-08_sell-in-may-sp500-2026` — costs before a value bar. Process only. |
 | **Optional modes** | none yet |
 
 ---

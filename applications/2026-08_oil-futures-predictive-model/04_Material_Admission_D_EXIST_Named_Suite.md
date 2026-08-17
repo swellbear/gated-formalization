@@ -74,6 +74,7 @@ Under S1 + M1 + C3, “a codeable mapping whose object is listed WTI or Brent fu
 
 - [x] Intake recorded  
 - [x] **Stop for operator** — authorize D-EXIST-met on the futures-target subset, keep census-only, or widen the object to include spot/real-price recipes (a freeze change)  
+- [x] Operator **A** (2026-08-17): authorized — `Lock_D_EXIST_Established_Futures_Target.md` · `04_Material_Admission_D_EXIST_Established.md`  
 - [ ] Do not enter Phase 2  
 - [ ] Do not implement a trading model
 

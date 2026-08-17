@@ -19,9 +19,10 @@
 - Operator **C** (2026-08-17, later): `lock V-COST either`. V1 or V2 must still be named on a later book. Not “stricter cost already used.”
 - V-VALUE-TEST-0: no named recipe → **not established** (not a refute of all books).
 - Operator **B** (2026-08-17): `leave unnamed` on V-SRC. Amb **unchanged 7.5**.
-- Operator (2026-08-17): **Yes** + named D-EXIST suite (curve / VAR / crack / ensemble / Argus); no-change aside. Recorded as **L-D-SUITE**. Honest existence call would-be-met on **futures-target** subset → **stop**. Spot/real-price lineages nearby. F-SKILL still not established (operator caveats + hunt).
-- F-SRC unnamed; no F-SKILL pulse.
-- Amb 12 → 9 → **7.5**. Suite naming does not drop Amb. Amb ≠ clearance.
+- Operator (2026-08-17): **Yes** + named D-EXIST suite. Recorded as **L-D-SUITE**.
+- Operator **A** (2026-08-17): `authorize D-EXIST established (futures-target)`. **D-EXIST-MET-FT**. Spot/real-price OUT. Menu ≠ “the” recipe. F-SKILL/V-VALUE still not established. Amb **7.5 → 5.5**. Amb ≠ clearance.
+- F-SRC unnamed; no F-SKILL pulse. Live ask after this lock.
+- Amb 12 → 9 → 7.5 → **5.5**. Amb ≠ clearance.
 
 ## Residual judgment points encountered
 

@@ -3,7 +3,7 @@
 **Date:** 2026-08-17  
 **Application:** `2026-08_oil-futures-predictive-model`  
 **Operator selection:** **A** → **Rank 4 — Nested split A+B+C** (`lock Rank 4`)  
-**Status:** **IN FORCE for meanings.** V-COST **either accepted**. V-SRC **leave unnamed**. **L-D-SUITE** named; D-EXIST **not auto-established** (establishment-stop). V-VALUE-TEST-0 **not established**.
+**Status:** **IN FORCE for meanings.** **D-EXIST established (futures-target only).** V-COST **either accepted**. V-SRC **leave unnamed**. F-SKILL and V-VALUE **not established**.
 
 ---
 
@@ -48,10 +48,10 @@ D-EXIST and F-SKILL do not wait on this slot.
 
 ## Dependents now eligible to re-open (scoped)
 
-- **D-EXIST** — **L-D-SUITE** named; **not auto-established**. No-change **OUT**. Live ask: authorize met on futures-target subset / census only / widen to spot.  
-- **F-SKILL** — **not established** on the hunt.  
+- **D-EXIST** — **established** (futures-target only). Spot/real-price **OUT**. Menu is not a singleton pick.  
+- **F-SKILL** — **not established**. Live ask: unnamed F-SRC.  
 - **G8** — still free under F-SKILL.  
-- **V-VALUE** — **not established** (V-VALUE-TEST-0). V-SRC **sealed leave unnamed**. Reopen only with `name source class …` matching V-VALUE; test must still name V1 or V2.
+- **V-VALUE** — **not established** (V-VALUE-TEST-0). V-SRC **sealed leave unnamed**.
 
 ---
 
@@ -69,4 +69,5 @@ Selecting Rank 4 **drops leftover-ambiguity by fixing meanings** (three jobs, �
 4. Print-match of a spot-oil paper or in-sample R² is **not** F-SKILL-met.  
 5. Conflicted vendor backtests cannot solely affirm V-VALUE.  
 6. V-COST either is **not** “we used V2.” Each test must name V1 or V2.  
-7. Last-settlement no-change is the F-SKILL **baseline**, not the D-EXIST **model** (operator B).
+7. Last-settlement no-change is the F-SKILL **baseline**, not the D-EXIST **model** (operator B).  
+8. D-EXIST-met is **not** a pick of one paper from the menu, **not** spot-inside-C3, and **not** F-SKILL or V-VALUE.

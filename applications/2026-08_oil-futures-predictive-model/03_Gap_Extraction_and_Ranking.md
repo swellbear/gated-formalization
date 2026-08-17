@@ -115,7 +115,7 @@ G8 is the **named model class and feature recipe** under a locked G1/G6 — bloc
 | G1 | **LOCKED Rank 4:** three jobs, not one object — D-EXIST (claim-under-test) ⊂ F-SKILL ⊂ V-VALUE (elevations). |
 | G2 | **LOCKED per leg:** D-EXIST P-Logical; F-SKILL P-NonNegligible; V-VALUE P-NonNegligible. Height ≠ met. |
 | G6 | **LOCKED per leg:** D-EXIST S1 any specified mapping **except** last-settlement no-change as the model exhibit (operator B); F-SKILL RMSE vs last-settlement; V-VALUE after-cost P/L vs curve. |
-| D-SRC | Named D-EXIST forecast recipe/class — **L-D-SUITE** (menu named); no-change **OUT**; **not auto-established**; vehicle fork (which lineage; spot vs futures). |
+| D-SRC | D-EXIST exhibit — **established** (futures-target only, 2026-08-17). No-change **OUT**. Spot/real-price **OUT**. Menu ≠ singleton pick. |
 | G3 | **LOCKED per leg:** D-EXIST C3 class (WTI or Brent, either); F-SKILL/V-VALUE C1 NYMEX CL front-month. |
 | G4 | **LOCKED per leg:** D-EXIST T2 price-level census; F-SKILL/V-VALUE T1 next-session log-return. |
 | G5 | **LOCKED per leg:** D-EXIST H3 open (census); F-SKILL/V-VALUE H1 next session. |
@@ -131,35 +131,34 @@ G8 is the **named model class and feature recipe** under a locked G1/G6 — bloc
 
 ## Priority Order (highest sum first)
 
-1. **D-SRC** — **L-D-SUITE** named; establishment-stop (live ask: futures-target met vs census-only vs widen to spot)  
-2. **F-SRC** — named class for F-SKILL  
-3. **G8** / live vs stand-in — after a named class  
-4. **V-SRC** — sealed leave unnamed; reopen only with `name source class …`  
+1. **F-SRC** — named class for F-SKILL; **live ask**  
+2. **G8** / live vs stand-in — after a named class  
+3. **V-SRC** — sealed leave unnamed; reopen only with `name source class …`  
 
-Lean Default Path: if existence is to be called, call it only on **futures-target** specified recipes (not no-change; not spot-as-C3). That is **not** a silent pick. Do not auto-declare. Do not collapse to F-SKILL.
+Lean Default Path: name an F-SKILL class (next-session CL log-return vs last-settlement) or leave unnamed. Do **not** treat L-D-SUITE as that class. Do not invent. Do not auto-pulse. Naming ≠ bar-met.
 
 ---
 
 ## Inter-parameter dependency (mandatory)
 
-**D-EXIST** is blocked primarily by the **establishment-stop** on **L-D-SUITE** (menu named; spot vs futures fork; met call withheld). **F-SKILL tests** are blocked primarily by unnamed **F-SRC** (and by the operator’s own no-change-benchmark caveats). **V-VALUE** is blocked primarily by **V-SRC leave unnamed**.
+**D-EXIST** is **established** (futures-target only). **F-SKILL tests** are blocked primarily by unnamed **F-SRC** (and by the operator’s own no-change-benchmark caveats). **V-VALUE** is blocked primarily by **V-SRC leave unnamed**.
 
-**Rectification:** operator authorizes D-EXIST-met on the futures-target subset, keeps census-only, or widens C3 to include spot (freeze change). Do not auto-enter Phase 2.
+**Rectification:** `name source class …` for F-SKILL (this ask), or `leave unnamed` / `endpoint only`. Do not auto-enter Phase 2. Do not treat the existence menu as F-SRC.
 
-**Reopen condition (prominent):** After `authorize D-EXIST established (futures-target)` / `census only` / `widen D-EXIST to include spot`. F-SRC still `name source class …`.
+**Reopen condition (prominent):** After a named-enough non-circular F-SKILL class matching next-session CL log-return vs last-settlement, or `leave unnamed` / `endpoint only`.
 
 ---
 
 ## Search Plan for Top-Priority Gap(s)
 
-**Targeted gap:** D-SRC establishment-stop after **L-D-SUITE**.  
-**Source classes to check:** Operator-named suite (see `E_Package_Evidence_Intake_D_EXIST_Named_Suite.md`). Do not relabel Alquist–Kilian / EIA STEO as F-SKILL.  
-**Diminishing-returns / time-box rule:** Would-be-met still **stops**. Do not auto-establish.  
-**Notes:** `04_Material_Admission_D_EXIST_Named_Suite.md`.
+**Targeted gap:** F-SRC (after D-EXIST-MET-FT).  
+**Source classes to check:** None submitted for F-SKILL. **L-HUNT-PROVEN** already failed that schema. Do not relabel L-D-SUITE, EIA STEO, or Alquist–Kilian spot papers as F-SKILL.  
+**Diminishing-returns / time-box rule:** Do not auto-pulse. Existence met ≠ skill met.  
+**Notes:** `Lock_D_EXIST_Established_Futures_Target.md`.
 
 ---
 
 ## Ready for Material Search & Admission Checks?
 
-- [x] Yes — **L-D-SUITE** admitted as census; **stop** for D-EXIST establishment authorization  
+- [x] Yes — D-EXIST-MET-FT recorded; **stop** for unnamed F-SRC  
 - [ ] Need operator lock pick first

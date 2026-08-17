@@ -4,12 +4,12 @@
 
 **Application:** `2026-08_oil-futures-predictive-model`  
 **Last reviewed:** 2026-08-17  
-**Status:** Open · Phase 1 Rank 4 locked · L-D-SUITE named · D-EXIST establishment-stop · Provisional  
+**Status:** Open · Phase 1 · D-EXIST-MET-FT · F-SKILL/V-VALUE unmet · Provisional (split)  
 
 **Tags** (see `docs/TRACKER_TAXONOMY.md`):  
 - Domain: `markets`  
 - Claim-shape: `forecast-extension`, `descriptive-census`  
-- Pattern: `R-dependence` (V-VALUE ← V-SRC; F-SKILL ← F-SRC; D-EXIST ← D-SRC)
+- Pattern: `R-dependence` (V-VALUE ← V-SRC; F-SKILL ← F-SRC)
 
 ---
 
@@ -19,7 +19,7 @@
 
 Can a predictive model for oil futures be built?
 
-**Successor / Rank lock (if any):** **Rank 4** nested split (`Lock_Rank4_Nested_Split.md`) — D-EXIST ⊂ F-SKILL ⊂ V-VALUE. V-COST **either** (`Lock_VCOST_Either.md`).
+**Successor / Rank lock (if any):** **Rank 4** nested split — D-EXIST ⊂ F-SKILL ⊂ V-VALUE. **D-EXIST-MET-FT**. V-COST **either**. V-SRC leave unnamed.
 
 **Parent / successor relationship:** none
 
@@ -27,11 +27,11 @@ Can a predictive model for oil futures be built?
 
 ## 2. Verdict and Amb path
 
-**Verdict:** **Provisional** (meanings locked; no bar met)
+**Verdict:** **Provisional (split)** — D-EXIST established (futures-target only); F-SKILL and V-VALUE not
 
-**Amb path (brief):** 12 → 9 after Rank 4 → **7.5** after V-COST either; **unchanged** after V-SRC leave unnamed and L-D-SUITE (menu ≠ singleton)
+**Amb path (brief):** 12 → 9 → 7.5 → **5.5** after D-EXIST-MET-FT (D-SRC closed)
 
-**Amb ≠ clearance:** Amb 7.5 is leftover vehicles plus a half-weight either-cost. A named recipe menu does not drop Amb and does not mean a model works or should be traded.
+**Amb ≠ clearance:** Amb 5.5 is leftover skill/value vehicles. It does not mean a model beats last price or should be traded.
 
 ---
 
@@ -42,15 +42,16 @@ Can a predictive model for oil futures be built?
 - **L-HUNT-PROVEN** (search executed; no proven class submitted).
 - V-COST **either** (meanings; not a singleton V1 or V2).
 - V-SRC **leave unnamed** (vehicle sealed empty; not a refute).
-- **L-D-SUITE** (operator-named recipe menu; census, not bar-met).
+- **D-EXIST-MET-FT** — specified non-no-change mapping for listed crude **futures** exists (menu ≠ singleton; spot/real-price OUT).
 
 ---
 
 ## 4. Not established / negatively constrained
 
-- D-EXIST **not established** (no-change OUT; **L-D-SUITE** would-be-met on futures-target subset; establishment-stop).
-- F-SKILL **not established** (schema fail vs next-session CL log-return).
+- D-EXIST **established** (futures-target only; not spot; not a singleton recipe pick).
+- F-SKILL **not established** (schema fail vs next-session CL log-return; hunt submitted no class).
 - V-VALUE **not established** (V-VALUE-TEST-0; V-SRC `leave unnamed`; not a refute of all books).
+- Directional accuracy after costs / decision or trading value **not shown** (operator restatement).
 - No trading advice.
 
 ---
@@ -65,7 +66,7 @@ None required (D-EXIST remains Minimal). V-VALUE is a marked elevation (Substant
 
 | ID | Residual | Concrete reopen condition |
 |----|----------|---------------------------|
-| D-SRC | Named D-EXIST exhibit | **L-D-SUITE** named. Reopen: authorize met on futures-target / census only / widen to spot |
+| D-SRC | D-EXIST exhibit | **Closed** as futures-target existence. Reopen only if freeze changes (e.g. include spot) |
 | F-SRC | Named class for F-SKILL | `name source class …` (named enough, non-circular) |
 | V-COST | Cost schedule | **Either accepted**; later tests must name V1 or V2 |
 | V-SRC | Named recipe/book for V-VALUE | **Leave unnamed** (operator B). Reopen: `name source class …` matching V-VALUE; test must name V1 or V2 |
@@ -77,11 +78,11 @@ None required (D-EXIST remains Minimal). V-VALUE is a marked elevation (Substant
 
 ## 7. Action implications
 
-**Stop saying:** That EIA STEO or the futures curve is a proven next-session CL model; that spot/12-month results clear this freeze; that anyone should trade.
+**Stop saying:** That EIA STEO or the futures curve is a proven next-session CL model; that spot/12-month results clear this freeze; that anyone should trade; that existence-met is skill-met; that one paper was picked as “the” recipe.
 
-**Keep saying:** Specified non-no-change recipes exist as a *menu*. Nearby spot literature is kinship. Existence is not auto-established. Skill and after-cost value are not established. V-SRC leave unnamed is not a refute. V-EITHER is not “we used V2.”
+**Keep saying:** A specified non-no-change futures-target recipe has been written. Nearby spot literature is kinship. Skill and after-cost value are not established. V-SRC leave unnamed is not a refute. V-EITHER is not “we used V2.”
 
-**Test next (only if authorized):** `authorize D-EXIST established (futures-target)` / `census only` / `widen D-EXIST to include spot`.
+**Test next (only if authorized):** `name source class …` / `leave unnamed` / `endpoint only` for F-SKILL. Do not treat L-D-SUITE as F-SRC.
 
 ---
 
@@ -106,6 +107,9 @@ None required (D-EXIST remains Minimal). V-VALUE is a marked elevation (Substant
 - `02_Gate_Scoring_After_VSRC_Unnamed.md`
 - `E_Package_Evidence_Intake_D_EXIST_Named_Suite.md`
 - `04_Material_Admission_D_EXIST_Named_Suite.md`
+- `Lock_D_EXIST_Established_Futures_Target.md`
+- `04_Material_Admission_D_EXIST_Established.md`
+- `02_Gate_Scoring_After_DEXIST.md`
 
 ---
 
@@ -114,7 +118,7 @@ None required (D-EXIST remains Minimal). V-VALUE is a marked elevation (Substant
 - Dissertation: not yet (open run)
 - Closeout / verdict: not yet
 - Parent / successor: —
-- Key admissions / locks: Rank 4; V-COST either; V-SRC leave unnamed; **L-D-SUITE** (census, not met); L-HUNT-PROVEN; D-EXIST/F-SKILL/V-VALUE not established; process imports 003/009/010/011
+- Key admissions / locks: Rank 4; **D-EXIST-MET-FT**; V-COST either; V-SRC leave unnamed; L-D-SUITE (existence evidence only); L-HUNT-PROVEN; F-SKILL/V-VALUE not established; process imports 003/009/010/011
 
 ---
 
@@ -124,7 +128,7 @@ None required (D-EXIST remains Minimal). V-VALUE is a marked elevation (Substant
 |------|------|
 | Domain | `markets` |
 | Claim-shape | `forecast-extension`, `descriptive-census` |
-| Pattern | `R-dependence` (V-VALUE ← V-SRC; F-SKILL ← F-SRC; D-EXIST ← D-SRC) |
+| Pattern | `R-dependence` (V-VALUE ← V-SRC; F-SKILL ← F-SRC) |
 
 ---
 

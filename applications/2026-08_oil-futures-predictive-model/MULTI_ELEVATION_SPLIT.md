@@ -80,4 +80,4 @@ D-EXIST  ⊂  F-SKILL               (Rank 4-AC)
 
 ---
 
-*Rank 4 locked 2026-08-17. Operator B: no-change OUT as D-EXIST model. Operator C: V-COST either. Operator B: V-SRC leave unnamed. **L-D-SUITE** named; D-EXIST establishment-stop. Next: authorize met on futures-target / census only / widen to spot.*
+*Rank 4 locked 2026-08-17. **D-EXIST established (futures-target only).** Spot/real-price OUT. Menu ≠ “the” recipe. F-SKILL and V-VALUE not established. Next: F-SRC `name source class …` / `leave unnamed` / `endpoint only`.*

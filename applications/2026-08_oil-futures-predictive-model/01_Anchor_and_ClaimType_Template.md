@@ -61,7 +61,7 @@ Operator selected **Rank 4** (2026-08-17). D-EXIST is the claim-under-test. F-SK
 | “can” on **F-SKILL** | **P-NonNegligible (LOCKED)** — real shot of walk-forward skill; height ≠ met |
 | “can” on **V-VALUE** | **P-NonNegligible (LOCKED)** — real shot of after-cost value; height ≠ met; **V-COST either** |
 
-**Near-vacuity warning:** D-EXIST + P-Logical + any specified mapping is **near-vacuous**. Operator **B** rejected last-settlement no-change as the D-EXIST model exhibit; D-EXIST **not established**. Do **not** silently strengthen any leg into P-BaseCase or a trading recommendation.
+**Near-vacuity warning:** D-EXIST + P-Logical is a low bar. It is now **established** on futures-target specified mappings (not no-change; not spot). That does **not** establish F-SKILL or V-VALUE. Do **not** silently strengthen any remaining leg into P-BaseCase or a trading recommendation.
 
 ---
 

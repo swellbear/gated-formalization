@@ -242,7 +242,7 @@ D-EXIST and F-SKILL only.
 - **What a “yes” means:** We freeze those definitions and only then check evidence under them.  
 - **What this does *not* mean:** Picking a package does **not** prove the original claim; it only sets the grading rules. (Lower ambiguity after a lock ≠ clearance.)
 
-**Status:** **SELECTED** — Rank 4 (operator **A**, 2026-08-17). Lock record: `Lock_Rank4_Nested_Split.md`. **OR-slot accepted as either:** V-COST (`Lock_VCOST_Either.md`, operator **C**). **V-SRC leave unnamed** (`Lock_VSRC_Leave_Unnamed.md`, operator **B**). D-EXIST establishment-stop: `04_Material_Admission_D_EXIST_Construction.md` (would-be-met; **not** auto-declared). V-VALUE-TEST-0 **not established**. Live ask: D-SRC.
+**Status:** **SELECTED** — Rank 4 (operator **A**, 2026-08-17). **D-EXIST established (futures-target only)** (`Lock_D_EXIST_Established_Futures_Target.md`). V-COST either. V-SRC leave unnamed. F-SKILL/V-VALUE **not established**. Live ask: F-SRC.
 
 ```
 Package: Rank 4 — Nested split A+B+C (D-EXIST ⊂ F-SKILL ⊂ V-VALUE)
