@@ -29,6 +29,11 @@ def test_universe_files_load():
     spx = load_universe(get_field("spx_this_friday"))
     assert "AAPL" in spx
     assert load_universe(get_field("index_only")) == []
+    from options_offshoot.fields.catalog import freeze_header
+
+    meta = freeze_header(get_field("spx_this_friday"))
+    assert meta["n"] == str(len(spx))
+    assert "operator" in (meta.get("source") or "").lower() or meta.get("as_of")
 
 
 def test_this_friday_is_friday():

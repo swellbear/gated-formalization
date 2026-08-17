@@ -1,6 +1,6 @@
-# Frozen v1 universe for earnings_us_week when the calendar feed is unavailable.
-# Operating ingest prefers Polygon earnings dates; this file is the fallback list
-# only when the calendar is missing — still a closed leash, not "should be in."
+# as_of: 2026-08-16
+# source: operator fallback list when Polygon/Benzinga earnings calendar is unavailable
+# leftover: not this week's earnings if this file is used
 AAPL
 MSFT
 NVDA

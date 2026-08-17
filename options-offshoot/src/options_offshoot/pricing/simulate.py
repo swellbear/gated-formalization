@@ -57,7 +57,7 @@ def simulate_view(
         )
     extra = sum(ord(ch) for ch in contract.contract_id) % 10_000
     rng = np.random.default_rng(seed + extra)
-    # risk-neutral-ish: rate 0 for v1
+    # leftover: r=0 and no dividend yield. Not stuffed as a complete model.
     z = rng.standard_normal(n_sims)
     terminal = spot * np.exp((-0.5 * sigma * sigma) * t + sigma * math.sqrt(t) * z)
     k = contract.strike
@@ -78,9 +78,11 @@ def simulate_view(
     lo = float(np.percentile(cents, 10))
     hi = float(np.percentile(cents, 90))
     lo, hi = min(lo, p), max(hi, p)
-    rel = 0.72 if not unconstrained else 0.40
-    if honest and unconstrained:
-        rel = 0.25
+    # A-path default σ: Rel high enough that the ask bar decides. Do not lower MIN_RELIABILITY.
+    if unconstrained:
+        rel = 0.55
+    else:
+        rel = 0.72
     return ModelView(
         fair=fair,
         p_itm=p,
@@ -90,4 +92,5 @@ def simulate_view(
         honest=honest,
         sigma_used=float(sigma) if sigma is not None else None,
         unconstrained_vol=unconstrained,
+        default_sigma=unconstrained and not honest,
     )

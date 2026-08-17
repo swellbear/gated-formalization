@@ -44,3 +44,22 @@ class AdviceKind(str, Enum):
     ADD = "add"
     NEW = "new"
     EXIT = "exit"
+    REDUCE = "reduce"
+    REALLOCATE = "reallocate"
+
+
+class StrategyMode(str, Enum):
+    STAY_SELECTIVE = "stay_selective"
+    PROTECT_PROFITS = "protect_profits"
+    PRESS_EDGES = "press_edges"
+
+
+class RiskPreference(str, Enum):
+    CONSERVATIVE = "conservative"
+
+
+class QuoteVenue(str, Enum):
+    POLYGON = "polygon"
+    IBKR = "ibkr"
+    MOCK = "mock"
+    UNAVAILABLE = "unavailable"

@@ -5,6 +5,14 @@ from __future__ import annotations
 import hashlib
 import json
 
+from options_offshoot.config import (
+    CONSERVATIVE_HAIRCUT,
+    MAX_SAME_UNDERLYING_FRAC,
+    MAX_SINGLE_POSITION_FRAC,
+    MAX_TOTAL_EXPOSURE_FRAC,
+    STAY_SELECTIVE_CASHOUT_BUFFER,
+)
+
 METHOD_LAW_V1: dict = {
     "id": "method_law_v1",
     "never_auto_trade": True,
@@ -13,8 +21,10 @@ METHOD_LAW_V1: dict = {
     "sits_beside_gpf": True,
     "does_not_import_golf_offshoot": True,
     "does_not_import_applications": True,
-    "admitted_quotes": "polygon_options_snapshot",
-    "venue_ask_later": "interactive_brokers_not_v1",
+    "admitted_quotes": "massive_options_chain_snapshot",
+    "venue_ask": "interactive_brokers_when_requested",
+    "venue_ask_never_relabel_polygon": True,
+    "ibkr_market_data_only": True,
     "refuse_operating_quotes": ["yahoo", "html_scrape", "open_web"],
     "scores_predeclared": [
         "posted_ask_pnl",
@@ -35,6 +45,11 @@ METHOD_LAW_V1: dict = {
         "ticker_should_be_in",
         "unseeded_news",
         "schema_default_sigma_on_honest_path",
+        "listed_iv_as_sigma",
+        "interest_rate",
+        "dividend_yield",
+        "earnings_jump",
+        "american_early_exercise",
     ],
     "ticket_bar": "ask",
     "a_control_ticket_bar": "mid",
@@ -42,6 +57,12 @@ METHOD_LAW_V1: dict = {
     "starting_t": 0.03,
     "mode": "stay_selective",
     "risk": "conservative",
+    "max_single_position_frac": MAX_SINGLE_POSITION_FRAC,
+    "max_same_underlying_frac": MAX_SAME_UNDERLYING_FRAC,
+    "max_total_exposure_frac": MAX_TOTAL_EXPOSURE_FRAC,
+    "conservative_haircut": CONSERVATIVE_HAIRCUT,
+    "stay_selective_cashout_buffer": STAY_SELECTIVE_CASHOUT_BUFFER,
+    "whole_lots": True,
     "independent_compare_bankroll": 20000.0,
     "bankroll_per_field_per_path": True,
     "leftover_callout_required": True,
@@ -51,6 +72,9 @@ METHOD_LAW_V1: dict = {
     "not_sort_key": "p_itm",
     "settle": "expiry",
     "hold_no_ask_rides_to_expiry": True,
+    "hold_no_bid_unmarked": True,
+    "compare_does_not_lock_lived": True,
+    "compare_does_not_write_lived_ledger": True,
     "predeclared_fields": [
         "earnings_us_week",
         "spx_this_friday",

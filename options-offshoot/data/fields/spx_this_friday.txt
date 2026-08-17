@@ -1,4 +1,6 @@
-# Frozen v1 S&P-style universe (not a live reconstitution). Expand only via method law.
+# as_of: 2026-08-16
+# source: operator freeze (not an S&P reconstitution; not Wikipedia)
+# leftover: operator freeze of N names, not the S&P. Equity weeklies, not SPX/SPXW.
 AAPL
 MSFT
 NVDA

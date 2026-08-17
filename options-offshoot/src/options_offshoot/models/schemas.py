@@ -7,8 +7,16 @@ from typing import Any
 
 from pydantic import BaseModel, Field
 
+from options_offshoot.config import DEFAULT_MULTIPLIER
 from options_offshoot.localtime import now
-from options_offshoot.models.enums import AdviceKind, ComparePath, ContractType, RunMode, SourceKind
+from options_offshoot.models.enums import (
+    AdviceKind,
+    ComparePath,
+    ContractType,
+    QuoteVenue,
+    RunMode,
+    SourceKind,
+)
 
 
 class DataQuality(BaseModel):
@@ -34,6 +42,7 @@ class Quote(BaseModel):
     open_interest: int | None = None
     volume: int | None = None
     as_of: datetime = Field(default_factory=now)
+    venue: QuoteVenue = QuoteVenue.POLYGON
 
     @property
     def mid(self) -> float | None:
@@ -54,6 +63,10 @@ class Quote(BaseModel):
     def has_real_ask(self) -> bool:
         return self.ask is not None and self.ask > 0
 
+    @property
+    def has_real_bid(self) -> bool:
+        return self.bid is not None and self.bid > 0
+
 
 class Contract(BaseModel):
     contract_id: str
@@ -67,6 +80,19 @@ class Contract(BaseModel):
     years_to_expiry: float | None = None
     liquid: bool = False
     notes: str = ""
+    shares_per_contract: int | None = None
+    multiplier_defaulted: bool = False
+    listed_iv: float | None = None
+    ibkr_con_id: int | None = None
+    opening_ask: float | None = None
+    quote_venue: QuoteVenue = QuoteVenue.POLYGON
+    nonstandard_deliverable: bool = False
+
+    @property
+    def multiplier(self) -> int:
+        if self.shares_per_contract is not None and self.shares_per_contract > 0:
+            return int(self.shares_per_contract)
+        return int(DEFAULT_MULTIPLIER)
 
 
 class ModelView(BaseModel):
@@ -78,6 +104,7 @@ class ModelView(BaseModel):
     honest: bool = False
     sigma_used: float | None = None
     unconstrained_vol: bool = False
+    default_sigma: bool = False
 
 
 class RankedContract(BaseModel):
@@ -118,9 +145,15 @@ class PaperPosition(BaseModel):
     strike: float
     contract_type: ContractType
     stake: float
+    n_contracts: int = 0
+    multiplier: int = DEFAULT_MULTIPLIER
     entry_ask: float | None = None
+    opening_ask: float | None = None
     entry_fair: float | None = None
+    quote_venue: QuoteVenue = QuoteVenue.POLYGON
     locked_at: datetime = Field(default_factory=now)
+    settled: bool = False
+    settle_pnl: float | None = None
 
 
 class PaperMovement(BaseModel):
@@ -128,7 +161,17 @@ class PaperMovement(BaseModel):
     contract_id: str
     underlying: str
     amount: float = 0.0
+    n_contracts: int = 0
     reason: str = ""
+    from_contract_id: str = ""
+    unmarked: bool = False
+
+
+class PaperLedgerLine(BaseModel):
+    kind: str
+    amount: float
+    note: str = ""
+    at: datetime = Field(default_factory=now)
 
 
 class PaperBookFile(BaseModel):
@@ -137,11 +180,18 @@ class PaperBookFile(BaseModel):
     event_name: str = ""
     locked_at: datetime | None = None
     locked_from_run_id: str = ""
+    lock_identity: str = ""
     bankroll: float = 20000.0
     cash: float = 20000.0
     starting_bankroll: float = 20000.0
     never_auto_trade: bool = True
+    quote_venue_pin: QuoteVenue = QuoteVenue.POLYGON
     positions: list[PaperPosition] = Field(default_factory=list)
     last_advice: list[PaperMovement] = Field(default_factory=list)
+    last_advice_sig: str = ""
     method_law_hash: str = ""
     notes: list[str] = Field(default_factory=list)
+    ledger: list[PaperLedgerLine] = Field(default_factory=list)
+    realized_pnl: float = 0.0
+    posted_ask_pnl: float | None = None
+    expiry_settle_pnl: float | None = None

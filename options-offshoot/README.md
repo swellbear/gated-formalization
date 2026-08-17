@@ -28,14 +28,16 @@ pytest
 python -m options_offshoot demo
 python -m options_offshoot fields
 python -m options_offshoot ingest --field earnings_us_week
-python -m options_offshoot live --field spx_this_friday
+python -m options_offshoot live --field spx_this_friday --quotes ibkr
+python -m options_offshoot live --field spx_this_friday --compare-method
+python -m options_offshoot paper-ledger --field spx_this_friday
 ```
 
-`demo` prints an **OFFLINE DEMO — MOCK DATA** banner. It is not the operating path.
+`demo` prints an **OFFLINE DEMO — MOCK DATA** banner. It is not the operating path and does not mint a lived lock.
 
-Operating ingest/live need `POLYGON_API_KEY` in `options-offshoot/.env` (see `.env.example`). Do not commit `.env`.
+Operating ingest/live need `MASSIVE_API_KEY` or `POLYGON_API_KEY` in `options-offshoot/.env` (see `.env.example`). Same vendor after the Polygon → Massive rebrand. Optional IBKR venue ask: TWS/Gateway and `pip install -e ".[ibkr]"`, then `--quotes ibkr`. Do not commit `.env`.
 
-**Paper bankroll:** $20,000 **per field per path**. Independent. Never auto-trade. Settle at expiry.
+**Paper bankroll:** $20,000 **per field per path**. Independent. Whole lots. Never auto-trade. Settle at expiry.
 
 ## Folder structure
 

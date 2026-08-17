@@ -33,3 +33,6 @@ def test_leftover_has_four_sections():
     assert "none held" in text
     assert "earnings_narrative" in text
     assert "GPF gates" in text or "not GPF" in text
+    assert "r=0" in text
+    assert "dividend" in text
+    assert "Massive last_quote is never relabeled as IBKR" in text

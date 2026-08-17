@@ -26,8 +26,29 @@ def load_local_env() -> None:
 
 
 def polygon_api_key() -> str:
+    """Massive (formerly Polygon) key. Same vendor. Never print it."""
     load_local_env()
     return (
-        os.environ.get("POLYGON_API_KEY", "").strip()
+        os.environ.get("MASSIVE_API_KEY", "").strip()
+        or os.environ.get("POLYGON_API_KEY", "").strip()
         or os.environ.get("POLYGON_KEY", "").strip()
     )
+
+
+def quotes_mode() -> str:
+    load_local_env()
+    raw = os.environ.get("OPTIONS_QUOTES", "polygon").strip().lower()
+    if raw in {"ibkr", "interactive_brokers", "tws"}:
+        return "ibkr"
+    return "polygon"
+
+
+def feed_pause_s(default: float) -> float:
+    load_local_env()
+    raw = os.environ.get("OPTIONS_FEED_PAUSE", "").strip()
+    if raw == "":
+        return default
+    try:
+        return max(0.0, float(raw))
+    except ValueError:
+        return default

@@ -23,14 +23,16 @@ def test_compare_method_demo_writes_pack(tmp_path, monkeypatch):
     assert (pack / "00_full_readout.pdf").is_file()
     assert (pack / "00_trigger.txt").is_file()
     assert (pack / "02_fights.txt").is_file()
-    assert (pack / "04_leftover.txt").is_file()
-    leftover = (pack / "04_leftover.txt").read_text(encoding="utf-8")
+    leftover_path = pack / "05_leftover.txt"
+    assert leftover_path.is_file()
+    leftover = leftover_path.read_text(encoding="utf-8")
     assert "do not stuff" in leftover.lower()
     fights = Path(payload["pack"]).joinpath("02_fights.txt").read_text(encoding="utf-8")
     assert "b_guts" in fights
     assert "Honest theta" in fights
     assert "20000" in fights
-    assert payload["lived"].never_auto_trade is True
+    assert payload["books"]["a_replay"].never_auto_trade is True
+    assert payload["lived"] is None
 
 
 def test_fights_disagreement_plain():

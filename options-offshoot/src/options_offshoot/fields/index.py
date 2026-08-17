@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+from options_offshoot.data_feeds.opening import load_last_stats
 from options_offshoot.fields.catalog import INDEX_MAP_DISCLAIMER, listed_field_ids
 from options_offshoot.models.schemas import FieldRun
 
@@ -49,6 +50,7 @@ def format_index(stats: list[dict]) -> str:
         "n       contracts in the last snapshot (0 for index_only).",
         "n_ask   real bid/ask and size floor.",
         "n_clear vs-ask clears t. Not a signal to dump the bankroll here.",
+        "Sorted by field id, never by n_clear.",
     ]
     return "\n".join(lines)
 
@@ -58,3 +60,22 @@ def empty_index() -> list[dict]:
         {"field_id": fid, "n": None, "n_ask": None, "n_clear_ask": None}
         for fid in listed_field_ids()
     ]
+
+
+def last_snapshots_index() -> list[dict]:
+    rows = []
+    for fid in listed_field_ids():
+        last = load_last_stats(fid)
+        if last is None:
+            rows.append({"field_id": fid, "n": None, "n_ask": None, "n_clear_ask": None})
+        else:
+            rows.append(
+                {
+                    "field_id": fid,
+                    "n": last.get("n"),
+                    "n_ask": last.get("n_ask"),
+                    "n_clear_ask": last.get("n_clear_ask"),
+                    "map_only": last.get("map_only"),
+                }
+            )
+    return rows

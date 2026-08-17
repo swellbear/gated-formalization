@@ -20,6 +20,7 @@ def demo_contracts(*, expiry: date) -> list[Contract]:
             quote=Quote(bid=8.0, ask=8.20, last=8.10, open_interest=5000, volume=800),
             spot=205.0,
             realized_vol=0.28,
+            shares_per_contract=100,
         ),
         Contract(
             contract_id="O:AAPL250000C00300000",
@@ -30,6 +31,7 @@ def demo_contracts(*, expiry: date) -> list[Contract]:
             quote=Quote(bid=0.05, ask=0.25, last=0.10, open_interest=12, volume=1),
             spot=205.0,
             realized_vol=0.28,
+            shares_per_contract=100,
         ),
         Contract(
             contract_id="O:MSFT250000C00400000",
@@ -40,6 +42,7 @@ def demo_contracts(*, expiry: date) -> list[Contract]:
             quote=Quote(bid=None, ask=None, last=2.00, open_interest=800, volume=10),
             spot=410.0,
             realized_vol=None,
+            shares_per_contract=100,
         ),
         Contract(
             contract_id="O:MSFT250000P00400000",
@@ -50,5 +53,6 @@ def demo_contracts(*, expiry: date) -> list[Contract]:
             quote=Quote(bid=3.10, ask=3.20, last=3.15, open_interest=2000, volume=400),
             spot=410.0,
             realized_vol=None,
+            shares_per_contract=100,
         ),
     ]

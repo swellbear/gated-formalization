@@ -4,20 +4,26 @@
 
 Operating path needs a **real bid and ask**, or the row is `n/a`.
 
-| Need | v1 | If missing |
-|------|----|------------|
-| Options chain + bid/ask/OI/volume | Polygon snapshot (`admitted_quotes`) | `unavailable` — not a fake mid |
-| Spot | Polygon underlying price on the snapshot | `unavailable` |
-| Realized vol | Polygon daily aggregates (predeclared price history) | A may use schema default σ; honest path leaves unconstrained |
-| Earnings calendar | Polygon if the key’s plan includes it | Frozen `data/fields/earnings_us_week.txt` only as a closed fallback list |
-| S&P-style universe | Frozen `data/fields/spx_this_friday.txt` | Empty field |
+Named REST vendor is **Massive** (Polygon.io rebrand, Oct 2025). Same keys. Host `https://api.massive.com` (legacy `api.polygon.io` still works). Docs: https://massive.com/docs/rest/llms.txt
 
-Key: `POLYGON_API_KEY` in `options-offshoot/.env`. Never commit `.env`.
+Do **not** use Massive MCP, websocket, or the Python SDK on the operating path. Thin HTTP only. Never auto-trade.
 
-**Refuse on operating path:** Yahoo, HTML scrape, open web, “whatever chain we found.”
+| Need | Source | If missing |
+|------|--------|------------|
+| Options chain + OI/volume/specs | `GET /v3/snapshot/options/{ticker}` (Options Starter+) | leftover; not a fake mid |
+| Contract index / nearest expiry | `GET /v3/reference/options/contracts` (all Options plans) | leftover |
+| Venue ask/bid you would lift/hit | IBKR via TWS when requested | leftover; Massive last_quote is **not** IBKR |
+| Spot | underlying on the snapshot (stocks plan) | `unavailable` |
+| Realized vol | `GET /v2/aggs/ticker/{ticker}/range/1/day/...` | A may use default σ (flag `default_sigma`); honest path unconstrained |
+| Earnings calendar | `GET /benzinga/v1/earnings` (Benzinga expansion) | Frozen file + leftover **not this week's earnings** |
+| S&P-style universe | Operator freeze `data/fields/spx_this_friday.txt` | leftover **operator freeze of N, not the S&P** |
 
-**Later, not v1:** Interactive Brokers venue ask.
+Key: `MASSIVE_API_KEY` or `POLYGON_API_KEY` in `options-offshoot/.env`. Never commit `.env`. Do not paste the key into chat.
 
-Mocks are banned when `operating=True`. Demo is labeled `OFFLINE DEMO — MOCK DATA`.
+Option chain snapshot is **not** on Options Basic. `last_quote` is only returned if the plan includes quotes. Starter is 15-minute delayed; our max-stale is 15 minutes.
 
-HTTP responses cache under `data/cache/` (gitignored).
+IBKR: optional extra `pip install -e ".[ibkr]"`. **Market data only. No `placeOrder`.**
+
+**Refuse on operating path:** Yahoo, HTML scrape, open web, Wikipedia, Massive MCP as a hunter, websocket.
+
+HTTP cache: ingest 600s, live 45s, vol 6h. Quotes older than 15 minutes are unavailable. Cache key hashes the URL **without** `apiKey`. Paginate `next_url` (cap leftover “chain truncated”).

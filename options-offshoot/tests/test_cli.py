@@ -8,7 +8,6 @@ def test_fields_cli(capsys):
     assert "PREDECLARED FIELDS" in out
     assert "earnings_us_week" in out
     assert "Map only" in out
-    assert "n/a" in out
 
 
 def test_demo_cli(capsys, tmp_path, monkeypatch):

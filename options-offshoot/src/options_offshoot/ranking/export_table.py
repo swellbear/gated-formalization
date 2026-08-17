@@ -43,6 +43,8 @@ def format_table(run: FieldRun) -> str:
         ask = "n/a" if c.quote.ask is None else f"{c.quote.ask:.2f}"
         fair = "n/a" if row.model.fair is None else f"{row.model.fair:.2f}"
         flag = row.n_a_reason or ""
+        if row.model.default_sigma:
+            flag = (flag + " default_sigma").strip()
         lines.append(
             f"{i:3d} {c.underlying:<6} {c.contract_type.value:<4} {c.strike:8.2f} "
             f"{c.expiry.isoformat():<10} {_fmt_p(row):<18} {fair:>8} {ask:>8} "

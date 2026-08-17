@@ -1,4 +1,4 @@
-"""Live compare: one ingest, current + honest ranks, four strategy ledgers + lived."""
+"""Live compare: independent A/B books. Does not lock or write lived."""
 
 from __future__ import annotations
 
@@ -15,8 +15,10 @@ from options_offshoot.strategy.paper_book import (
     advice_for_book,
     lock_paper_positions,
     load_paper_file,
+    mark_scores,
     save_paper_book,
 )
+from options_offshoot.strategy.paper_settle import maybe_auto_settle
 
 
 def run_compare_method(
@@ -25,6 +27,7 @@ def run_compare_method(
     demo: bool = False,
     operating: bool = True,
     max_underlyings: int | None = None,
+    quotes: str | None = None,
 ) -> dict:
     current = ingest_field(
         field_id,
@@ -33,6 +36,7 @@ def run_compare_method(
         demo=demo,
         max_underlyings=max_underlyings,
         mode=RunMode.LIVE,
+        quotes=quotes,
     )
     guts = ingest_field(
         field_id,
@@ -41,17 +45,13 @@ def run_compare_method(
         demo=demo,
         max_underlyings=max_underlyings,
         mode=RunMode.LIVE,
+        quotes=quotes,
     )
     books: dict = {}
+    # Compare does not --lock-paper lived and does not write the lived ledger.
     lived = load_paper_file(field_id, ComparePath.LIVED.value)
-    if lived is None:
-        lived = lock_paper_positions(
-            current, path=ComparePath.LIVED, run_id=current.run_id
-        )
-    else:
-        adv = advice_for_book(lived, current)
-        lived, _ = maybe_apply_paper(lived, adv)
-        save_paper_book(lived)
+    if lived is not None:
+        mark_scores(lived, current)
     books["lived"] = lived
     for path in COMPARE_LEDGERS:
         run = guts if uses_honest_theta(path) else current
@@ -59,8 +59,10 @@ def run_compare_method(
         if rec is None:
             rec = lock_paper_positions(run, path=path, run_id=run.run_id)
         else:
+            rec = maybe_auto_settle(rec)
             adv = advice_for_book(rec, run)
-            rec, _ = maybe_apply_paper(rec, adv)
+            rec, _ = maybe_apply_paper(rec, adv, run=run)
+            mark_scores(rec, run)
             save_paper_book(rec)
         books[path.value] = rec
     views = load_path_views(field_id)
@@ -74,6 +76,7 @@ def run_compare_method(
         books=books,
         fights=fights,
         leftover=leftover,
+        guts=guts,
     )
     return {
         "field_id": field_id,

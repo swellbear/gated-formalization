@@ -18,6 +18,7 @@ def test_bankroll_is_20k_per_field():
     assert METHOD_LAW_V1["hunter_in_v1"] is False
     assert METHOD_LAW_V1["sort_key"] == "vs_ask"
     assert METHOD_LAW_V1["not_sort_key"] == "p_itm"
+    assert METHOD_LAW_V1["admitted_quotes"] == "massive_options_chain_snapshot"
 
 
 def test_shop_index_is_forbidden():

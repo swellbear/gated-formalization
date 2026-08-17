@@ -38,8 +38,8 @@ FIELDS: dict[str, FieldSpec] = {
     ),
     "spx_this_friday": FieldSpec(
         field_id="spx_this_friday",
-        title="S&P names this Friday",
-        meaning="Frozen S&P-style universe, this weekly expiry, same size floor",
+        title="Equity weeklies this Friday",
+        meaning="Equity weeklies on an operator freeze list (not SPX index options)",
         allows_tickets=True,
         universe_file="spx_this_friday.txt",
         expiry_rule="this_friday",
@@ -96,6 +96,31 @@ def load_universe(spec: FieldSpec) -> list[str]:
         if text:
             out.append(text)
     return out
+
+
+def freeze_header(spec: FieldSpec) -> dict[str, str]:
+    """as_of / source from comment header. Not a reconstitution."""
+    meta = {"as_of": "", "source": "", "n": "0"}
+    if not spec.universe_file:
+        return meta
+    path = fields_dir() / spec.universe_file
+    if not path.is_file():
+        return meta
+    names = load_universe(spec)
+    meta["n"] = str(len(names))
+    for line in path.read_text(encoding="utf-8").splitlines():
+        raw = line.strip()
+        if not raw.startswith("#"):
+            if raw:
+                break
+            continue
+        body = raw[1:].strip()
+        lowered = body.lower()
+        if lowered.startswith("as_of:"):
+            meta["as_of"] = body.split(":", 1)[1].strip()
+        elif lowered.startswith("source:"):
+            meta["source"] = body.split(":", 1)[1].strip()
+    return meta
 
 
 def menu_lines() -> list[str]:

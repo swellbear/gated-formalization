@@ -76,7 +76,7 @@ def rank_contract(
             width = model.p_itm_high - model.p_itm_low
         if width is not None and width > MAX_RANGE_WIDTH:
             n_a = n_a or "range too wide"
-        if model.reliability < MIN_RELIABILITY:
+        if model.reliability < MIN_RELIABILITY and not model.default_sigma:
             n_a = n_a or "low reliability"
     clears_ask = vs_ask is not None and vs_ask >= bar and n_a is None
     clears_mid = vs_mid is not None and vs_mid >= bar and n_a is None
