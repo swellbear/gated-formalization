@@ -16,6 +16,7 @@ from golf_offshoot.models.strategy import StrategyConfig
 from golf_offshoot.pipeline import GolfOffshootPipeline
 from golf_offshoot.ranking.display import format_table, movement_note
 from golf_offshoot.ranking.leaderboard import format_leaderboard
+from golf_offshoot.leftover import format_leftover_callout
 from golf_offshoot.strategy.engine import format_recommendation
 
 DEMO_BANNER = (
@@ -190,6 +191,7 @@ def _cmd_ingest(args) -> int:
         print(format_inventory(items))
     print(format_table(result.ranked, n=len(result.ranked)))
     _print_table_export(result)
+    print(format_leftover_callout(result))
     return 0
 
 
@@ -397,6 +399,7 @@ def _cmd_live(args) -> int:
         if extra_notes:
             result.strategy.notes = list(result.strategy.notes) + extra_notes
         print(format_recommendation(result.strategy))
+    print(format_leftover_callout(result, paper))
     tid = result.tournament.espn_event_id or result.tournament.tournament_id
     extras = [
         Path(p)

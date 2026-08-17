@@ -31,4 +31,4 @@ Default `live` auto-applies the **lived** paper book when the actionable advice 
 
 The **fights** page under `data/exports/{event}_fights_*.html` is the operator readout: who each path owns, where they disagree, and **why** (plain + technical: Winner vs place coupons, EdgeW vs vs-posted, honest theta vs A theta, with the 3pp numbers). `--compare-method` and `compare-replay` also write one **batch pack** under `data/exports/packs/{event}_{time}_{run}_batch/` with `00_full_readout.pdf` in this order: **trigger pull** (lived this snapshot: sell / reallocate / partial sell / add / new / hold), how to read (five-book legend), fights, ESPN leaderboard, model field, then lived / A-replay / B-guts / B-nerves / B-full tickets + why-bets, then lived bankroll. Each ticket page is titled with the book (A-control shares A-replay; there is not a second A book). Open that PDF in Edge, Chrome, or Adobe — not as source in the editor.
 
-Leftover callout stays parked. Do not add agronomy / tee / injury feeds for this.
+Leftover callout is display-only after operating `live` / `ingest`. Do not add agronomy / tee / injury feeds for this.

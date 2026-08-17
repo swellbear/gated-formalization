@@ -92,5 +92,5 @@ For every player: **probability range** (central + low/high), **reliability** (s
 - [Decision, live, learning, audit](docs/DECISION_LIVE_LEARNING.md)
 - [Strategy layer](docs/STRATEGY_LAYER.md)
 - [Known limitations](docs/KNOWN_LIMITATIONS.md)
-- [Parked leftover callout](docs/PARKED_LEFTOVER_CALLOUT.md) — implement after St. Jude 2026 (`401811962`), not during this event
+- [Leftover callout](docs/PARKED_LEFTOVER_CALLOUT.md) — after operating `live` / `ingest` strategy (display only)
 - [Shadow journal](docs/SHADOW_JOURNAL.md)

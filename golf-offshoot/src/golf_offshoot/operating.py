@@ -17,6 +17,7 @@ from golf_offshoot.models.strategy import StrategyConfig
 from golf_offshoot.pipeline import GolfOffshootPipeline
 from golf_offshoot.localtime import now_eastern_text
 from golf_offshoot.ranking.display import format_table
+from golf_offshoot.leftover import format_leftover_callout
 from golf_offshoot.strategy.engine import format_recommendation
 
 
@@ -363,6 +364,17 @@ def write_pressure_report(
     lines += ["", "## Strategy layer (advisory, sample bankroll $2000)", ""]
     for mode, block in strategy_blocks.items():
         lines += [f"### {mode}", "", "```", block, "```", ""]
+    leftover_src = live or result
+    lines += [
+        "## Leftover callout",
+        "",
+        "Display only. Not a GPF residual menu. No new feeds.",
+        "",
+        "```",
+        format_leftover_callout(leftover_src),
+        "```",
+        "",
+    ]
     if live:
         live_pos = []
         for row in live.ranked[:8]:

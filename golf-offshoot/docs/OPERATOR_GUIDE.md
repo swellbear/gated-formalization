@@ -263,7 +263,7 @@ python -m golf_offshoot shadow
 1. Replay `shadow` against the actual finish. An advise that “would have won” is not validation by itself — note posted price, range, reliability, and whether the market even existed.
 2. Read the audit JSON in `data/snapshots/` for that `run_id`.
 3. Do **not** run `calibrate` every week. Recalibration is a research action when the as-of panel is materially stronger (see [CALIBRATION.md](CALIBRATION.md)). Finish-only refits are forbidden. Production stays expert until an artifact says `use_calibrated`.
-4. **After this event is official final (not mid-round):** implement the leftover callout in [PARKED_LEFTOVER_CALLOUT.md](PARKED_LEFTOVER_CALLOUT.md) before the next paper lock. Do not implement it during 401811962.
+4. After `live` / `ingest` strategy, read the leftover callout (used vs unconstrained vs held tickets). Display only; it does not change θ. Spec: [PARKED_LEFTOVER_CALLOUT.md](PARKED_LEFTOVER_CALLOUT.md).
 
 ---
 
@@ -457,7 +457,7 @@ The system will not: place bets, hide interval width, treat print-matching a boo
 3. Live rerun after meaningful board/price change.
 4. Shadow review on Monday against actual finishes and **logged** prices.
 5. Keep a personal note of what the feeds missed (WD rumor, pin sheets, weather delay). That note is part of residual judgment, not something to stuff into θ by hand unless you use a documented override and accept the audit trail.
-6. After St. Jude 2026 (`401811962`) is final: leftover callout is the next code change ([PARKED_LEFTOVER_CALLOUT.md](PARKED_LEFTOVER_CALLOUT.md)). Not during this event.
+6. Leftover callout prints after operating `live` / `ingest` strategy ([PARKED_LEFTOVER_CALLOUT.md](PARKED_LEFTOVER_CALLOUT.md)). Display only.
 
 Until opening lines, place markets, or a hold-out-beating freeze exist, the honest posture is **observation-only**.
 
