@@ -3,7 +3,7 @@
 **Date:** 2026-08-17  
 **Application:** `2026-08_oil-futures-predictive-model`  
 **Operator selection:** **A** → **Rank 4 — Nested split A+B+C** (`lock Rank 4`)  
-**Status:** **IN FORCE for meanings.** V-COST **either accepted**. V-SRC **leave unnamed** (operator **B**, 2026-08-17 — `Lock_VSRC_Leave_Unnamed.md`). D-SRC **unnamed for now** (not a sealed `leave unnamed`). V-VALUE-TEST-0 **not established**.
+**Status:** **IN FORCE for meanings.** V-COST **either accepted**. V-SRC **leave unnamed**. **L-D-SUITE** named; D-EXIST **not auto-established** (establishment-stop). V-VALUE-TEST-0 **not established**.
 
 ---
 
@@ -48,7 +48,7 @@ D-EXIST and F-SKILL do not wait on this slot.
 
 ## Dependents now eligible to re-open (scoped)
 
-- **D-EXIST** — D-SRC **unnamed for now** (live ask). Proven-only hunt submitted no class. No-change **OUT** as the model exhibit. Reopen: `name source class …` / `leave unnamed` / `endpoint only`.  
+- **D-EXIST** — **L-D-SUITE** named; **not auto-established**. No-change **OUT**. Live ask: authorize met on futures-target subset / census only / widen to spot.  
 - **F-SKILL** — **not established** on the hunt.  
 - **G8** — still free under F-SKILL.  
 - **V-VALUE** — **not established** (V-VALUE-TEST-0). V-SRC **sealed leave unnamed**. Reopen only with `name source class …` matching V-VALUE; test must still name V1 or V2.

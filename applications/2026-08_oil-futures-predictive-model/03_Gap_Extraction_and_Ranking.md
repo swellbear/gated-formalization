@@ -115,7 +115,7 @@ G8 is the **named model class and feature recipe** under a locked G1/G6 — bloc
 | G1 | **LOCKED Rank 4:** three jobs, not one object — D-EXIST (claim-under-test) ⊂ F-SKILL ⊂ V-VALUE (elevations). |
 | G2 | **LOCKED per leg:** D-EXIST P-Logical; F-SKILL P-NonNegligible; V-VALUE P-NonNegligible. Height ≠ met. |
 | G6 | **LOCKED per leg:** D-EXIST S1 any specified mapping **except** last-settlement no-change as the model exhibit (operator B); F-SKILL RMSE vs last-settlement; V-VALUE after-cost P/L vs curve. |
-| D-SRC | Named D-EXIST forecast recipe/class — **unnamed**; no-change **OUT** (`04` D-EXIST). |
+| D-SRC | Named D-EXIST forecast recipe/class — **L-D-SUITE** (menu named); no-change **OUT**; **not auto-established**; vehicle fork (which lineage; spot vs futures). |
 | G3 | **LOCKED per leg:** D-EXIST C3 class (WTI or Brent, either); F-SKILL/V-VALUE C1 NYMEX CL front-month. |
 | G4 | **LOCKED per leg:** D-EXIST T2 price-level census; F-SKILL/V-VALUE T1 next-session log-return. |
 | G5 | **LOCKED per leg:** D-EXIST H3 open (census); F-SKILL/V-VALUE H1 next session. |
@@ -131,35 +131,35 @@ G8 is the **named model class and feature recipe** under a locked G1/G6 — bloc
 
 ## Priority Order (highest sum first)
 
-1. **D-SRC** — unnamed for now; **live ask** (claim-under-test vehicle)  
+1. **D-SRC** — **L-D-SUITE** named; establishment-stop (live ask: futures-target met vs census-only vs widen to spot)  
 2. **F-SRC** — named class for F-SKILL  
 3. **G8** / live vs stand-in — after a named class  
 4. **V-SRC** — sealed leave unnamed; reopen only with `name source class …`  
 
-Lean Default Path: name a D-EXIST class (not last-settlement no-change) or leave unnamed. Do not invent a class. Do not auto-pulse. Do not collapse legs. Naming ≠ bar-met. Cheap construction that would-be-met still **stops**.
+Lean Default Path: if existence is to be called, call it only on **futures-target** specified recipes (not no-change; not spot-as-C3). That is **not** a silent pick. Do not auto-declare. Do not collapse to F-SKILL.
 
 ---
 
 ## Inter-parameter dependency (mandatory)
 
-**D-EXIST** is blocked primarily by unnamed **D-SRC** after operator B rejected the no-change exhibit. **F-SKILL tests** are blocked primarily by unnamed **F-SRC**. **V-VALUE** is blocked primarily by **V-SRC leave unnamed** (no specified book). V-VALUE-TEST-0 recorded that miss as **not established**, not a refute of all books.
+**D-EXIST** is blocked primarily by the **establishment-stop** on **L-D-SUITE** (menu named; spot vs futures fork; met call withheld). **F-SKILL tests** are blocked primarily by unnamed **F-SRC** (and by the operator’s own no-change-benchmark caveats). **V-VALUE** is blocked primarily by **V-SRC leave unnamed**.
 
-**Rectification:** `name source class …` for D-EXIST (this ask), or `leave unnamed` / `endpoint only`. V-SRC reopen is separate. Do not auto-enter Phase 2.
+**Rectification:** operator authorizes D-EXIST-met on the futures-target subset, keeps census-only, or widens C3 to include spot (freeze change). Do not auto-enter Phase 2.
 
-**Reopen condition (prominent):** After a named-enough non-circular D-EXIST class that is **not** last-settlement no-change, or `leave unnamed` / `endpoint only`. V-SRC: `name source class …` matching V-VALUE (must still name V1 or V2).
+**Reopen condition (prominent):** After `authorize D-EXIST established (futures-target)` / `census only` / `widen D-EXIST to include spot`. F-SRC still `name source class …`.
 
 ---
 
 ## Search Plan for Top-Priority Gap(s)
 
-**Targeted gap:** D-SRC (after V-SRC leave unnamed).  
-**Source classes to check:** None submitted. Proven-only hunt (**L-HUNT-PROVEN**) failed F-SKILL schema; do not invent a D-EXIST class from EIA STEO / the listed curve / Alquist–Kilian spot papers / last-settlement no-change.  
-**Diminishing-returns / time-box rule:** Do not auto-establish a cheap mapping. Would-be-met still **stops**.  
-**Notes:** `Lock_VSRC_Leave_Unnamed.md` · `04_Material_Admission_D_EXIST_Construction.md`.
+**Targeted gap:** D-SRC establishment-stop after **L-D-SUITE**.  
+**Source classes to check:** Operator-named suite (see `E_Package_Evidence_Intake_D_EXIST_Named_Suite.md`). Do not relabel Alquist–Kilian / EIA STEO as F-SKILL.  
+**Diminishing-returns / time-box rule:** Would-be-met still **stops**. Do not auto-establish.  
+**Notes:** `04_Material_Admission_D_EXIST_Named_Suite.md`.
 
 ---
 
 ## Ready for Material Search & Admission Checks?
 
-- [x] Yes — V-SRC sealed leave unnamed; **stop** for unnamed D-SRC  
+- [x] Yes — **L-D-SUITE** admitted as census; **stop** for D-EXIST establishment authorization  
 - [ ] Need operator lock pick first

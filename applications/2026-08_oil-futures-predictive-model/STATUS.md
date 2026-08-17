@@ -8,18 +8,18 @@
 
 ### Plain status
 
-You left the after-cost paper book unnamed. After-cost value is still **not shown** — that is not a proof that every oil-futures book fails, and it is not trading advice. The original “can a forecasting recipe be built?” leftover is still unnamed. We need you to name a public existence exhibit (not last-price no-change), leave that unnamed too, or stop examining here.
+You named several fully specified oil-forecast recipes and set last-price no-change aside. That is the right *kind* of existence evidence. We have **not** marked existence as established: much of the list forecasts the real/spot price, not listed futures, and the list is still a menu rather than one exhibit. Forecast skill and after-cost value stay **not shown**. This is not trading advice.
 
 ---
 
 | Field | Value |
 |-------|--------|
 | **Closure state** | **open** |
-| **Phase** | Phase 1 — Rank 4 locked; V-COST either; V-SRC leave unnamed |
-| **Amb** | **7.5** (unchanged by leave-unnamed; **≠ clearance**) |
-| **Locks in force** | Rank 4; V-COST either; V-SRC leave unnamed; D-SRC unnamed for now |
-| **Next authorization needed** | `name source class …` / `leave unnamed` / `endpoint only` (existence leftover) |
-| **Related apps surfaced** | `2026-08_fomc-sep-2026-uffr-change` — leave unnamed ≠ refute; `2026-08_spacex-600-dollar-stock` — lock ≠ clearance. Process only. |
+| **Phase** | Phase 1 — Rank 4; V-SRC leave unnamed; D-EXIST suite named; establishment-stop |
+| **Amb** | **7.5** (unchanged; **≠ clearance**) |
+| **Locks in force** | Rank 4; V-COST either; V-SRC leave unnamed; **L-D-SUITE** (census, not met) |
+| **Next authorization needed** | `authorize D-EXIST established (futures-target)` / `census only` / `widen D-EXIST to include spot` |
+| **Related apps surfaced** | `2026-08_fomc-june-2026-sep` — print-match ≠ clearance; `2026-08_spacex-600-dollar-stock` — lock ≠ clearance. Process only. |
 | **Optional modes** | none yet |
 
 ---

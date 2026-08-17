@@ -4,7 +4,7 @@
 
 **Application:** `2026-08_oil-futures-predictive-model`  
 **Last reviewed:** 2026-08-17  
-**Status:** Open · Phase 1 Rank 4 locked · V-COST either · V-SRC leave unnamed · Provisional  
+**Status:** Open · Phase 1 Rank 4 locked · L-D-SUITE named · D-EXIST establishment-stop · Provisional  
 
 **Tags** (see `docs/TRACKER_TAXONOMY.md`):  
 - Domain: `markets`  
@@ -29,9 +29,9 @@ Can a predictive model for oil futures be built?
 
 **Verdict:** **Provisional** (meanings locked; no bar met)
 
-**Amb path (brief):** 12 → 9 after Rank 4 → **7.5** after V-COST either; **unchanged** after V-SRC leave unnamed
+**Amb path (brief):** 12 → 9 after Rank 4 → **7.5** after V-COST either; **unchanged** after V-SRC leave unnamed and L-D-SUITE (menu ≠ singleton)
 
-**Amb ≠ clearance:** Amb 7.5 is leftover vehicles plus a half-weight either-cost. Leave-unnamed does not drop Amb. It does not mean a model works or should be traded.
+**Amb ≠ clearance:** Amb 7.5 is leftover vehicles plus a half-weight either-cost. A named recipe menu does not drop Amb and does not mean a model works or should be traded.
 
 ---
 
@@ -42,12 +42,13 @@ Can a predictive model for oil futures be built?
 - **L-HUNT-PROVEN** (search executed; no proven class submitted).
 - V-COST **either** (meanings; not a singleton V1 or V2).
 - V-SRC **leave unnamed** (vehicle sealed empty; not a refute).
+- **L-D-SUITE** (operator-named recipe menu; census, not bar-met).
 
 ---
 
 ## 4. Not established / negatively constrained
 
-- D-EXIST **not established** (operator B; proven-only hunt submitted no class).
+- D-EXIST **not established** (no-change OUT; **L-D-SUITE** would-be-met on futures-target subset; establishment-stop).
 - F-SKILL **not established** (schema fail vs next-session CL log-return).
 - V-VALUE **not established** (V-VALUE-TEST-0; V-SRC `leave unnamed`; not a refute of all books).
 - No trading advice.
@@ -64,7 +65,7 @@ None required (D-EXIST remains Minimal). V-VALUE is a marked elevation (Substant
 
 | ID | Residual | Concrete reopen condition |
 |----|----------|---------------------------|
-| D-SRC | Named proven? class | Hunt executed; **no class submitted**. Reopen: `leave unnamed` / `name source class …` |
+| D-SRC | Named D-EXIST exhibit | **L-D-SUITE** named. Reopen: authorize met on futures-target / census only / widen to spot |
 | F-SRC | Named class for F-SKILL | `name source class …` (named enough, non-circular) |
 | V-COST | Cost schedule | **Either accepted**; later tests must name V1 or V2 |
 | V-SRC | Named recipe/book for V-VALUE | **Leave unnamed** (operator B). Reopen: `name source class …` matching V-VALUE; test must name V1 or V2 |
@@ -78,9 +79,9 @@ None required (D-EXIST remains Minimal). V-VALUE is a marked elevation (Substant
 
 **Stop saying:** That EIA STEO or the futures curve is a proven next-session CL model; that spot/12-month results clear this freeze; that anyone should trade.
 
-**Keep saying:** Proven-only hunt submitted **no class**. Nearby spot literature is kinship. Existence, skill, and after-cost value are not established. V-SRC leave unnamed is not a refute. V-EITHER is not “we used V2.”
+**Keep saying:** Specified non-no-change recipes exist as a *menu*. Nearby spot literature is kinship. Existence is not auto-established. Skill and after-cost value are not established. V-SRC leave unnamed is not a refute. V-EITHER is not “we used V2.”
 
-**Test next (only if authorized):** `name source class …` / `leave unnamed` / `endpoint only` for D-EXIST (not last-settlement no-change).
+**Test next (only if authorized):** `authorize D-EXIST established (futures-target)` / `census only` / `widen D-EXIST to include spot`.
 
 ---
 
@@ -101,7 +102,10 @@ None required (D-EXIST remains Minimal). V-VALUE is a marked elevation (Substant
 - `02_Gate_Scoring_After_VCOST.md`
 - `04_Material_Admission_V_VALUE_No_Recipe.md`
 - `Lock_VSRC_Leave_Unnamed.md`
+- `Lock_VSRC_Leave_Unnamed.md`
 - `02_Gate_Scoring_After_VSRC_Unnamed.md`
+- `E_Package_Evidence_Intake_D_EXIST_Named_Suite.md`
+- `04_Material_Admission_D_EXIST_Named_Suite.md`
 
 ---
 
@@ -110,7 +114,7 @@ None required (D-EXIST remains Minimal). V-VALUE is a marked elevation (Substant
 - Dissertation: not yet (open run)
 - Closeout / verdict: not yet
 - Parent / successor: —
-- Key admissions / locks: Rank 4; V-COST either; V-SRC leave unnamed; L-HUNT-PROVEN (no class submitted); D-EXIST/F-SKILL/V-VALUE not established; process imports 003/009/010/011
+- Key admissions / locks: Rank 4; V-COST either; V-SRC leave unnamed; **L-D-SUITE** (census, not met); L-HUNT-PROVEN; D-EXIST/F-SKILL/V-VALUE not established; process imports 003/009/010/011
 
 ---
 

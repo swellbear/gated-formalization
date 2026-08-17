@@ -18,14 +18,16 @@
 - Operator **C** (2026-08-17): switch to value-leg cost rule. D-SRC **unnamed for now** (not sealed leave-unnamed).
 - Operator **C** (2026-08-17, later): `lock V-COST either`. V1 or V2 must still be named on a later book. Not “stricter cost already used.”
 - V-VALUE-TEST-0: no named recipe → **not established** (not a refute of all books).
-- Operator **B** (2026-08-17): `leave unnamed` on V-SRC. Amb **unchanged 7.5**. Live ask: D-SRC.
+- Operator **B** (2026-08-17): `leave unnamed` on V-SRC. Amb **unchanged 7.5**.
+- Operator (2026-08-17): **Yes** + named D-EXIST suite (curve / VAR / crack / ensemble / Argus); no-change aside. Recorded as **L-D-SUITE**. Honest existence call would-be-met on **futures-target** subset → **stop**. Spot/real-price lineages nearby. F-SKILL still not established (operator caveats + hunt).
 - F-SRC unnamed; no F-SKILL pulse.
-- Amb 12 → 9 → **7.5** (definitional). Leave-unnamed does not drop Amb. Amb ≠ clearance.
+- Amb 12 → 9 → **7.5**. Suite naming does not drop Amb. Amb ≠ clearance.
 
 ## Residual judgment points encountered
 
 - “Predictive” can be a **job description** (a model whose task is forecasting) or a **success claim** (it actually forecasts better than a naive baseline). Rank 3 vs Rank 1 turns on that call. Recorded, not silently picked.
 - EIA/IEA/bank **outlooks** are tempting existence exhibits; many target **spot or average prices**, not a locked **CL futures** walk-forward. Flag now so a later pulse cannot print-match them into Rank 1.
+- Operator-named D-EXIST suite: futures-target vs real/spot-target is a **vehicle fork**, not one C3 object. “Specified” ≠ “beats no-change.”
 
 ## Sources / links
 
