@@ -52,4 +52,4 @@ FPCA on generic **CL1–CL9, CL12, CL18** (99% variance / two functional PCs in 
 
 ## Reopen
 
-`name horse …` for a different recipe, or `live CME only` / a freeze-matching curve tape for H-KS-FTS. Honest **established** still **stops**.
+`name horse …` for a different **front-only** recipe on Yahoo under **L-SCREEN-Y-PROMOTE**. Live CME **only if** that gate fires. A freeze-matching curve tape is still required for H-KS-FTS (out of this screen). Honest **established** still **stops**.

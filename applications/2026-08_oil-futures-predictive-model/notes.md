@@ -31,6 +31,7 @@
 - Operator (2026-08-17, later): `Ok do what needs to be done then` after stand-in how-to. **L-STANDIN-Y-CLF.** Pulse **L-PULSE-STANDIN-1:** Yahoo `CL=F` Open/Close; last-500 RMSE F-ON 0.01291 / F-DAY 0.02663 / F-CC 0.02869 (n=500). Badge **stand-in**. FTS **not run**. Skill **not established**. Amb **2.5 → 1.5**.
 - Operator (2026-08-17, later): `go with V2 then` (more realistic mock). **V-COST-V2.** Fees plus $10/contract/side. V-VALUE **not established** (no named book). Amb **1.5 → 1.0**.
 - Operator (2026-08-17, later): `ok proceed` to stipulate Yahoo month-chain curve stand-in and score both horses. **L-STANDIN-Y-CHAIN:** expired months 404; true-front CL1–CL18 dates = 54 (need 750). **H-LAG-WF:** last-500 F-CC 0.02888 vs 0 0.02869 (**loss**); F-ON tiny dip **not** met. **H-KS-FTS not run**. Skill **not established**. Amb **held 1.0**.
+- Operator (2026-08-17, later): `yes lets do that` — screen on Yahoo, promote to live CME only if F-CC beats 0. **L-SCREEN-Y-PROMOTE.** H-LAG does **not** promote. Amb **held 1.0**.
 - Amb 12 → 9 → 7.5 → 5.5 → 2.5 → 1.5 → **1.0**. Amb ≠ clearance.
 
 ## Residual judgment points encountered

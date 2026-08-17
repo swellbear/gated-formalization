@@ -19,7 +19,7 @@ Can a predictive model for oil futures be built?
 
 A specified forecasting recipe for listed crude **futures** (not last-price no-change) has been written. That is all existence means here, and it stays separate. Spot and real-price recipes stay outside that freeze. The recipe list is not an endorsement of one paper.
 
-Walk-forward skill versus last settlement is **not shown**. Yahoo `CL=F` is a **stipulated stand-in**. A lagged-return horse was scored and **lost** on the whole trip (F-CC 0.02888 vs 0.02869). A tiny overnight dip is **not** a pass. Kearney–Shang **not run**.
+Walk-forward skill versus last settlement is **not shown**. Yahoo is a **stipulated stand-in**. Screen on Yahoo; promote to live CME **only** if F-CC beats no-change on last 500 (and does not lose on 250/750). **H-LAG-WF** failed that gate. Kearney–Shang **not run**.
 
 After-cost paper value is **not shown**. Paper costs are now **V2** (fees plus $10/contract each way). The paper book was left unnamed. That is not a proof that every book fails.
 
@@ -57,7 +57,7 @@ This is **not** trading advice and does **not** clear the blended slogan “a pr
 
 **Keep saying:** A futures-target recipe has been written. Yahoo is a stand-in, not live CME. The lagged-return horse lost on the whole trip. A tiny overnight dip is not a pass. Paper costs are V2; that is not a value pass. Skill and after-cost value are not shown.
 
-**Test next (only if authorized):** `leave skill not shown` · `live CME / curve tape …` · `name horse …`. Combo does not skip the queue.
+**Test next (only if authorized):** `leave skill not shown` · `name horse …` on Yahoo. Live CME only if the F-CC promotion gate fires.
 
 ---
 
@@ -85,7 +85,7 @@ Offered. Skill leftover **live** ([R-F-SKILL](RESIDUAL_BRANCH_MENU.md#r-f-skill)
 |------|--------|
 | Method verdict | Stable Provisional (split); **hard stop (residuals live)** |
 | Amb | **1.0** |
-| Locks / proxy IDs | Rank 4; D-EXIST-MET-FT; **V-COST-V2**; F-SRC-CME-TAPE; L-STANDIN-Y-CLF; **H-LAG-WF**; L-SESS; L-PULSE-HORSES-1; V-SRC leave unnamed |
+| Locks / proxy IDs | Rank 4; D-EXIST-MET-FT; **V-COST-V2**; **L-SCREEN-Y-PROMOTE**; F-SRC-CME-TAPE; L-STANDIN-Y-CLF; **H-LAG-WF**; L-SESS; V-SRC leave unnamed |
 | Scope label | Under Rank 4 only; existence = futures-target only |
 
 ---

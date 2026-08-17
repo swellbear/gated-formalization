@@ -80,4 +80,4 @@ D-EXIST  ⊂  F-SKILL               (Rank 4-AC)
 
 ---
 
-*Rank 4 locked 2026-08-17. **D-EXIST established (futures-target only).** **L-SESS** in force. **H-LAG-WF** scored (F-CC loss). **H-KS-FTS** not run. **V-COST-V2** named. F-SKILL and V-VALUE not established. Closeout: **hard stop (residuals live)**. Not a trade. Next: `leave skill not shown` / `live CME / curve tape …` / `name horse …`.*
+*Rank 4 locked 2026-08-17. **D-EXIST established (futures-target only).** **L-SESS** in force. **H-LAG-WF** scored (F-CC loss; does **not** promote). **H-KS-FTS** not run. **V-COST-V2** named. **L-SCREEN-Y-PROMOTE** in force. F-SKILL and V-VALUE not established. Closeout: **hard stop (residuals live)**. Not a trade. Next: `leave skill not shown` · `name horse …` · `leave screen rule`.*

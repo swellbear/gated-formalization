@@ -63,4 +63,4 @@ r_CC,t  = ln(Close_t / Close_{t-1})
 
 ## Reopen
 
-`live CME only` — replace this tape with official open/settle and re-run the same formulas. Honest **established** still **stops**.
+Live confirmation is gated by **L-SCREEN-Y-PROMOTE** (`Lock_Screen_Yahoo_Promote.md`): official open/settle **only if** a named horse beats F-CC vs 0 on last 500 and does not lose on 250/750. Honest **established** still **stops**. A later operator may skip the gate; that is a freeze change.
