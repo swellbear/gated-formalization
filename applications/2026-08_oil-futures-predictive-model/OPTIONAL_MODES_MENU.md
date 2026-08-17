@@ -14,7 +14,7 @@
 
 ## 0. Plain-language framing
 
-**What we’re doing:** Listing optional next steps that *could* run after closeout if you authorize them.
+**What we’re doing:** Recording the optional-mode offer that was listed at closeout. Operator **C** declined it. The cards stay as the audit trail of what those modes would have meant.
 
 **What we need from you:** Nothing on this menu. Operator **C** declined optional modes. Click an ID only if you want the record of what those modes would have meant.
 
