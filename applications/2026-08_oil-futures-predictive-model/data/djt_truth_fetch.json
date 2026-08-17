@@ -1,0 +1,17 @@
+{
+  "badge": "stand-in",
+  "lock": "L-STANDIN-DJT-TRUTH",
+  "ok": true,
+  "source_used": "https://ix.cnn.io/data/truth-social/truth_archive.json",
+  "fetch": {
+    "url": "https://ix.cnn.io/data/truth-social/truth_archive.json",
+    "ok": true,
+    "http_status": 200,
+    "n_bytes": 19624270
+  },
+  "fetched_at_utc": "2026-08-17T21:34:21.023013+00:00",
+  "n_posts": 28548,
+  "first": "2022-02-14",
+  "last": "2026-08-17",
+  "note": "Truth Social only. Not White House remarks. UTC calendar date of created_at."
+}

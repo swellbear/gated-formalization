@@ -12,10 +12,15 @@ Yahoo `CL=F` daily Open/Close used only after operator stipulation **L-STANDIN-Y
 - `tell_yahoo_fetch.json` — tell fetch metadata
 - `pretell_hunt_scores.json` — eight named tell horses; discovery F-CC all lose; no survivor; confirm skipped
 - `gap_horse_scores.json` — H-GAP-FADE / H-GAP-CONT; FADE small F-DAY confirm; F-CC locked to 0; no promote
+- `djt_oil_lexicon.json` — frozen oil-adjacent + bull/bear tokens (**L-HUNT-DJT**; do not retune)
+- `djt_truth_posts.csv` — stripped Truth Social posts (CNN dump; **L-STANDIN-DJT-TRUTH**)
+- `djt_truth_fetch.json` — fetch metadata
+- `djt_hunt_scores.json` — H-DJT-WEEK / H-DJT-MONTH; discovery F-CC both tie 0; no survivor; confirm skipped
 
 Do **not** treat this as official settlement.
 
 Re-run baseline RMSE: `python3 ../scripts/cl_session_rmse.py clf_yahoo_standin.csv --holdout 500`  
 Re-run horses: `python3 ../scripts/cl_horses.py`  
 Re-run pretell hunt: `python3 ../scripts/cl_pretell_hunt.py`  
-Re-run gap horses: `python3 ../scripts/cl_gap_horses.py`
+Re-run gap horses: `python3 ../scripts/cl_gap_horses.py`  
+Re-run DJT hunt (from this application folder): `python3 scripts/fetch_djt_truth.py` then `python3 scripts/cl_djt_hunt.py`
