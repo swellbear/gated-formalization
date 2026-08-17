@@ -80,4 +80,4 @@ D-EXIST  ⊂  F-SKILL               (Rank 4-AC)
 
 ---
 
-*Rank 4 locked 2026-08-17. Operator B: no-change OUT as D-EXIST model. Operator C: V-COST either. V-VALUE-TEST-0 not established. Next: `name source class …` / `leave unnamed` / `endpoint only`.*
+*Rank 4 locked 2026-08-17. Operator B: no-change OUT as D-EXIST model. Operator C: V-COST either. Operator B: V-SRC leave unnamed. V-VALUE-TEST-0 not established. Next: D-SRC `name source class …` / `leave unnamed` / `endpoint only`.*

@@ -3,7 +3,7 @@
 **Date:** 2026-08-17  
 **Application:** `2026-08_oil-futures-predictive-model`  
 **Operator selection:** **A** → **Rank 4 — Nested split A+B+C** (`lock Rank 4`)  
-**Status:** **IN FORCE for meanings.** V-COST **either accepted** (operator **C**, 2026-08-17 — `Lock_VCOST_Either.md`). Incomplete as a **singleton** cost rule: later value tests must **name V1 or V2**. D-SRC **unnamed for now** (not a sealed `leave unnamed`). V-VALUE-TEST-0 **not established**.
+**Status:** **IN FORCE for meanings.** V-COST **either accepted**. V-SRC **leave unnamed** (operator **B**, 2026-08-17 — `Lock_VSRC_Leave_Unnamed.md`). D-SRC **unnamed for now** (not a sealed `leave unnamed`). V-VALUE-TEST-0 **not established**.
 
 ---
 
@@ -48,10 +48,10 @@ D-EXIST and F-SKILL do not wait on this slot.
 
 ## Dependents now eligible to re-open (scoped)
 
-- **D-EXIST** — D-SRC **unnamed for now** (operator **C**). Proven-only hunt submitted no class. Reopen: `name source class …`. Not a sealed leave-unnamed.  
+- **D-EXIST** — D-SRC **unnamed for now** (live ask). Proven-only hunt submitted no class. No-change **OUT** as the model exhibit. Reopen: `name source class …` / `leave unnamed` / `endpoint only`.  
 - **F-SKILL** — **not established** on the hunt.  
 - **G8** — still free under F-SKILL.  
-- **V-VALUE** — **testable** under V-EITHER. **V-VALUE-TEST-0 not established** (no named book; V1/V2 unused). Cost lock ≠ recipe named ≠ bar-met. Reopen: `name source class …` for the value-leg book (V-SRC).
+- **V-VALUE** — **not established** (V-VALUE-TEST-0). V-SRC **sealed leave unnamed**. Reopen only with `name source class …` matching V-VALUE; test must still name V1 or V2.
 
 ---
 

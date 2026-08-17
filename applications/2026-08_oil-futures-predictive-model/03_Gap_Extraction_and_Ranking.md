@@ -123,7 +123,7 @@ G8 is the **named model class and feature recipe** under a locked G1/G6 — bloc
 | G8 | Named model class under F-SKILL — **re-opened**; not a D-EXIST requirement. |
 | V-COST | V-VALUE cost schedule — **either accepted** (V1 or V2; each test must name which). Incomplete as a singleton. |
 | F-SRC | Named public class for F-SKILL — **unnamed**. |
-| V-SRC | Named recipe/book for V-VALUE — **unnamed**; V-VALUE-TEST-0 **not established**. |
+| V-SRC | Named recipe/book for V-VALUE — **leave unnamed** (operator B); V-VALUE-TEST-0 **not established**; not a refute. |
 
 *Later candidates must quote the freeze line for any parameter they claim to close. Changing the freeze line is a claim change, not progress.*
 
@@ -131,35 +131,35 @@ G8 is the **named model class and feature recipe** under a locked G1/G6 — bloc
 
 ## Priority Order (highest sum first)
 
-1. **V-SRC** — unnamed value-leg book; live ask after V-COST either  
-2. **D-SRC** — unnamed for now (operator C); reopen `name source class …`  
-3. **F-SRC** — named class for F-SKILL  
-4. **G8** / live vs stand-in — after a named class  
+1. **D-SRC** — unnamed for now; **live ask** (claim-under-test vehicle)  
+2. **F-SRC** — named class for F-SKILL  
+3. **G8** / live vs stand-in — after a named class  
+4. **V-SRC** — sealed leave unnamed; reopen only with `name source class …`  
 
-Lean Default Path: name a V-VALUE book or leave that book unnamed. Do not invent a class. Do not auto-pulse. Do not collapse legs. Naming ≠ bar-met; later tests must still say V1 or V2.
+Lean Default Path: name a D-EXIST class (not last-settlement no-change) or leave unnamed. Do not invent a class. Do not auto-pulse. Do not collapse legs. Naming ≠ bar-met. Cheap construction that would-be-met still **stops**.
 
 ---
 
 ## Inter-parameter dependency (mandatory)
 
-**D-EXIST** is blocked primarily by unnamed **D-SRC** after operator B rejected the no-change exhibit. **F-SKILL tests** are blocked primarily by unnamed **F-SRC**. **V-VALUE** is no longer blocked by V-COST (either accepted); it is blocked primarily by unnamed **V-SRC** (no specified book). V-VALUE-TEST-0 recorded that miss as **not established**, not a refute of all books.
+**D-EXIST** is blocked primarily by unnamed **D-SRC** after operator B rejected the no-change exhibit. **F-SKILL tests** are blocked primarily by unnamed **F-SRC**. **V-VALUE** is blocked primarily by **V-SRC leave unnamed** (no specified book). V-VALUE-TEST-0 recorded that miss as **not established**, not a refute of all books.
 
-**Rectification:** `name source class …` for the value-leg book (this ask), or `leave unnamed`. D-SRC remains unnamed for now (reopen separately). Do not auto-enter Phase 2.
+**Rectification:** `name source class …` for D-EXIST (this ask), or `leave unnamed` / `endpoint only`. V-SRC reopen is separate. Do not auto-enter Phase 2.
 
-**Reopen condition (prominent):** After a named-enough non-circular V-VALUE book (must still name V1 or V2 on the test), or `leave unnamed` / `endpoint only`. D-SRC reopen: `name source class …`.
+**Reopen condition (prominent):** After a named-enough non-circular D-EXIST class that is **not** last-settlement no-change, or `leave unnamed` / `endpoint only`. V-SRC: `name source class …` matching V-VALUE (must still name V1 or V2).
 
 ---
 
 ## Search Plan for Top-Priority Gap(s)
 
-**Targeted gap:** V-SRC (after V-COST either).  
-**Source classes to check:** None submitted. Proven-only hunt (**L-HUNT-PROVEN**) already failed F-SKILL schema; do not invent a V-VALUE book from EIA STEO / the listed curve / Alquist–Kilian spot papers.  
-**Diminishing-returns / time-box rule:** Do not treat V-EITHER as V2-used. Do not auto-pulse an unnamed class.  
-**Notes:** `Lock_VCOST_Either.md` · `04_Material_Admission_V_VALUE_No_Recipe.md`. Cost lock ≠ named recipe ≠ bar-met.
+**Targeted gap:** D-SRC (after V-SRC leave unnamed).  
+**Source classes to check:** None submitted. Proven-only hunt (**L-HUNT-PROVEN**) failed F-SKILL schema; do not invent a D-EXIST class from EIA STEO / the listed curve / Alquist–Kilian spot papers / last-settlement no-change.  
+**Diminishing-returns / time-box rule:** Do not auto-establish a cheap mapping. Would-be-met still **stops**.  
+**Notes:** `Lock_VSRC_Leave_Unnamed.md` · `04_Material_Admission_D_EXIST_Construction.md`.
 
 ---
 
 ## Ready for Material Search & Admission Checks?
 
-- [x] Yes — V-COST either locked; V-VALUE-TEST-0 **not established**; **stop** for unnamed V-SRC  
+- [x] Yes — V-SRC sealed leave unnamed; **stop** for unnamed D-SRC  
 - [ ] Need operator lock pick first

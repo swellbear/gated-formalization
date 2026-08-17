@@ -4,7 +4,7 @@
 
 **Application:** `2026-08_oil-futures-predictive-model`  
 **Last reviewed:** 2026-08-17  
-**Status:** Open · Phase 1 Rank 4 locked · V-COST either · V-VALUE-TEST-0 not established · Provisional  
+**Status:** Open · Phase 1 Rank 4 locked · V-COST either · V-SRC leave unnamed · Provisional  
 
 **Tags** (see `docs/TRACKER_TAXONOMY.md`):  
 - Domain: `markets`  
@@ -29,9 +29,9 @@ Can a predictive model for oil futures be built?
 
 **Verdict:** **Provisional** (meanings locked; no bar met)
 
-**Amb path (brief):** 12 → 9 after Rank 4 → **7.5** after V-COST either (definitional)
+**Amb path (brief):** 12 → 9 after Rank 4 → **7.5** after V-COST either; **unchanged** after V-SRC leave unnamed
 
-**Amb ≠ clearance:** Amb 7.5 is leftover vehicles plus a half-weight either-cost. It does not mean a model works or should be traded.
+**Amb ≠ clearance:** Amb 7.5 is leftover vehicles plus a half-weight either-cost. Leave-unnamed does not drop Amb. It does not mean a model works or should be traded.
 
 ---
 
@@ -41,6 +41,7 @@ Can a predictive model for oil futures be built?
 - Rank 4 **meanings** (not bars).
 - **L-HUNT-PROVEN** (search executed; no proven class submitted).
 - V-COST **either** (meanings; not a singleton V1 or V2).
+- V-SRC **leave unnamed** (vehicle sealed empty; not a refute).
 
 ---
 
@@ -48,7 +49,7 @@ Can a predictive model for oil futures be built?
 
 - D-EXIST **not established** (operator B; proven-only hunt submitted no class).
 - F-SKILL **not established** (schema fail vs next-session CL log-return).
-- V-VALUE **not established** (V-VALUE-TEST-0; no named book; V1/V2 unused).
+- V-VALUE **not established** (V-VALUE-TEST-0; V-SRC `leave unnamed`; not a refute of all books).
 - No trading advice.
 
 ---
@@ -66,7 +67,7 @@ None required (D-EXIST remains Minimal). V-VALUE is a marked elevation (Substant
 | D-SRC | Named proven? class | Hunt executed; **no class submitted**. Reopen: `leave unnamed` / `name source class …` |
 | F-SRC | Named class for F-SKILL | `name source class …` (named enough, non-circular) |
 | V-COST | Cost schedule | **Either accepted**; later tests must name V1 or V2 |
-| V-SRC | Named recipe/book for V-VALUE | Hunt submitted no class. Reopen: `name source class …` / `leave unnamed` / `endpoint only` |
+| V-SRC | Named recipe/book for V-VALUE | **Leave unnamed** (operator B). Reopen: `name source class …` matching V-VALUE; test must name V1 or V2 |
 | G8 | Model class under F-SKILL | After F-SRC; do not treat architecture fashion as skill |
 
 *Residual-branch menu still waits for Phase 1 endpoint.*
@@ -77,9 +78,9 @@ None required (D-EXIST remains Minimal). V-VALUE is a marked elevation (Substant
 
 **Stop saying:** That EIA STEO or the futures curve is a proven next-session CL model; that spot/12-month results clear this freeze; that anyone should trade.
 
-**Keep saying:** Proven-only hunt submitted **no class**. Nearby spot literature is kinship. Existence, skill, and after-cost value are not established. V-EITHER is not “we used V2.”
+**Keep saying:** Proven-only hunt submitted **no class**. Nearby spot literature is kinship. Existence, skill, and after-cost value are not established. V-SRC leave unnamed is not a refute. V-EITHER is not “we used V2.”
 
-**Test next (only if authorized):** `name source class …` / `leave unnamed` / `endpoint only` for the value-leg book. D-SRC unnamed for now.
+**Test next (only if authorized):** `name source class …` / `leave unnamed` / `endpoint only` for D-EXIST (not last-settlement no-change).
 
 ---
 
@@ -99,6 +100,8 @@ None required (D-EXIST remains Minimal). V-VALUE is a marked elevation (Substant
 - `Lock_VCOST_Either.md`
 - `02_Gate_Scoring_After_VCOST.md`
 - `04_Material_Admission_V_VALUE_No_Recipe.md`
+- `Lock_VSRC_Leave_Unnamed.md`
+- `02_Gate_Scoring_After_VSRC_Unnamed.md`
 
 ---
 
@@ -107,7 +110,7 @@ None required (D-EXIST remains Minimal). V-VALUE is a marked elevation (Substant
 - Dissertation: not yet (open run)
 - Closeout / verdict: not yet
 - Parent / successor: —
-- Key admissions / locks: Rank 4; V-COST either; L-HUNT-PROVEN (no class submitted); D-EXIST/F-SKILL/V-VALUE not established; process imports 003/009/010/011
+- Key admissions / locks: Rank 4; V-COST either; V-SRC leave unnamed; L-HUNT-PROVEN (no class submitted); D-EXIST/F-SKILL/V-VALUE not established; process imports 003/009/010/011
 
 ---
 
@@ -126,7 +129,7 @@ None required (D-EXIST remains Minimal). V-VALUE is a marked elevation (Substant
 | App ID | One-line reason |
 |--------|-----------------|
 | `2026-08_spacex-600-dollar-stock` | Soft-modal can/potential + lock-before-test (process only) |
-| `2026-08_fomc-sep-2026-uffr-change` | Object fork census vs forecast vs odds (process only) |
+| `2026-08_fomc-sep-2026-uffr-change` | Leave unnamed ≠ refute (process only) |
 | `training/2026-08_stage8_us-50-states-only-coherent-curriculum` | Split-not-blend elevations (process only; different content) |
 
 *Related apps inform process only — no conclusion inheritance.*

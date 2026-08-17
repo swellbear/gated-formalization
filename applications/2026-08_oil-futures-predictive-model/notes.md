@@ -17,9 +17,10 @@
 - Operator hunt (2026-08-17): search now; submit only if **proven** oil-futures forecaster. **L-HUNT-PROVEN:** no freeze-matching proven public series submitted (EIA STEO = monthly average **spot**; Alquist–Kilian/IFDP = futures as **spot** forecasts, mixed vs no-change; curve ≠ next-session CL return model). F-SKILL **not established**. D-SRC still unnamed.
 - Operator **C** (2026-08-17): switch to value-leg cost rule. D-SRC **unnamed for now** (not sealed leave-unnamed).
 - Operator **C** (2026-08-17, later): `lock V-COST either`. V1 or V2 must still be named on a later book. Not “stricter cost already used.”
-- V-VALUE-TEST-0: no named recipe → **not established** (not a refute of all books). Live ask: unnamed V-SRC.
+- V-VALUE-TEST-0: no named recipe → **not established** (not a refute of all books).
+- Operator **B** (2026-08-17): `leave unnamed` on V-SRC. Amb **unchanged 7.5**. Live ask: D-SRC.
 - F-SRC unnamed; no F-SKILL pulse.
-- Amb 12 → 9 → **7.5** (definitional). Amb ≠ clearance.
+- Amb 12 → 9 → **7.5** (definitional). Leave-unnamed does not drop Amb. Amb ≠ clearance.
 
 ## Residual judgment points encountered
 

@@ -55,7 +55,8 @@ No named recipe, no P/L series, no V1/V2 application. Do not treat “costs are 
 ## Post-Incorporation Action
 
 - [x] Re-score `02_Gate_Scoring_After_VCOST.md`  
-- [x] Stop for unnamed V-SRC (`name source class …` / `leave unnamed`)
+- [x] Stop for unnamed V-SRC (`name source class …` / `leave unnamed`)  
+- [x] Operator **B** (2026-08-17): `leave unnamed` — `Lock_VSRC_Leave_Unnamed.md`; Amb unchanged
 
 ---
 

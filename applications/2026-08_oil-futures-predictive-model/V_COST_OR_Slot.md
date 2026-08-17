@@ -137,4 +137,4 @@ V-COST: V-EITHER — formally accept either V1 or V2
 
 ---
 
-*D-SRC remains unnamed for now (operator C). Reopen with `name source class …`.*
+*D-SRC remains unnamed for now. Live ask after V-SRC leave unnamed. Reopen D-SRC with `name source class …` / `leave unnamed` / `endpoint only`.*

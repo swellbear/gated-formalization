@@ -8,18 +8,18 @@
 
 ### Plain status
 
-You allowed either cost rule for the after-cost value test. There is still no named paper book, so after-cost value is **not** shown. That is not a proof that every oil-futures book fails, and it is not trading advice. We need you to name a public recipe for that value test, leave it unnamed, or stop examining here.
+You left the after-cost paper book unnamed. After-cost value is still **not shown** — that is not a proof that every oil-futures book fails, and it is not trading advice. The original “can a forecasting recipe be built?” leftover is still unnamed. We need you to name a public existence exhibit (not last-price no-change), leave that unnamed too, or stop examining here.
 
 ---
 
 | Field | Value |
 |-------|--------|
 | **Closure state** | **open** |
-| **Phase** | Phase 1 — Rank 4 locked; V-COST either; V-VALUE-TEST-0 not established |
-| **Amb** | **7.5** (definitional drop from V-EITHER; **≠ clearance**) |
-| **Locks in force** | Rank 4; V-COST either; D-SRC unnamed for now |
-| **Next authorization needed** | `name source class …` / `leave unnamed` / `endpoint only` (value-leg book) |
-| **Related apps surfaced** | `2026-08_sell-in-may-sp500-2026` — costs/frictions before a value bar; `2026-08_spacex-600-dollar-stock` — lock ≠ clearance. Process only. |
+| **Phase** | Phase 1 — Rank 4 locked; V-COST either; V-SRC leave unnamed |
+| **Amb** | **7.5** (unchanged by leave-unnamed; **≠ clearance**) |
+| **Locks in force** | Rank 4; V-COST either; V-SRC leave unnamed; D-SRC unnamed for now |
+| **Next authorization needed** | `name source class …` / `leave unnamed` / `endpoint only` (existence leftover) |
+| **Related apps surfaced** | `2026-08_fomc-sep-2026-uffr-change` — leave unnamed ≠ refute; `2026-08_spacex-600-dollar-stock` — lock ≠ clearance. Process only. |
 | **Optional modes** | none yet |
 
 ---
