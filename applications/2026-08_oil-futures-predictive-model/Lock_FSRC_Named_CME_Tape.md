@@ -40,7 +40,7 @@ Front-month = the CL contract CME treats as the **lead/front** for that sessionâ
 |----|------|
 | **F-SRC** | **Named** as above. Not EIA STEO. Not USO. Not Yahoo unless later stipulated. |
 | **G8** | **Named** for this pulse: (1) no-change baseline RMSE on three windows; (2) optional Kearneyâ€“Shang FTS re-score on the same tape. Not an open architecture zoo. |
-| **Live vs stand-in** | **Live = official CME open + settlement.** Vendor generic / Yahoo / `CL=F` = **stand-in** unless stipulated. **Not stipulated this turn.** |
+| **Live vs stand-in** | **Live = official CME open + settlement.** **Later (same day):** Yahoo `CL=F` **stipulated** as stand-in (`Lock_Standin_Yahoo_CLF.md`). Live still not in hand. |
 | **F-COMBO** | Still **parked**. Not in this pulse. |
 
 ---

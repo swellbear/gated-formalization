@@ -6,22 +6,22 @@
 
 **Date:** 2026-08-17  
 **Application:** `2026-08_oil-futures-predictive-model`  
-**Closeout status:** **hard stop (residuals live)**. Parent Rank 4 split intact. **D-EXIST-MET-FT** in force (futures-target only). **F-SRC-CME-TAPE** named. V-SRC leave unnamed. Skill leftover **live** (tape missing). Phase 2 not entered.
+**Closeout status:** **hard stop (residuals live)**. Parent Rank 4 split intact. **D-EXIST-MET-FT** in force (futures-target only). **F-SRC-CME-TAPE** named. **L-STANDIN-Y-CLF** stipulated. V-SRC leave unnamed. Skill leftover **live** (baseline only). Phase 2 not entered.
 
 **Glossary:** [`docs/READER_GLOSSARY.md`](../../docs/READER_GLOSSARY.md)  
 **Optional modes (separate):** [`OPTIONAL_MODES_MENU.md`](OPTIONAL_MODES_MENU.md)
 
-**Live vs stand-in:** **Live tape not in hand; stand-in not stipulated.** Pulse executed; **no print scored to met.**
+**Live vs stand-in:** **Stand-in stipulated** (Yahoo `CL=F` Open/Close). Live CME still not in hand. **No print scored to met.**
 
-**Amb = 2.5.** F-SKILL and V-VALUE **not established**. **Amb ≠ clearance.**
+**Amb = 1.5.** F-SKILL and V-VALUE **not established**. **Amb ≠ clearance.**
 
 ---
 
 ## 0. Plain-language framing
 
-**What we’re doing:** Listing leftovers. Existence stays separate. The skill **class is named** (CME official CL open/settle). The **tape is missing**, so night/day/whole-trip RMSE was not computed. Yahoo was not used. Combo still parked. After-cost book still unnamed.
+**What we’re doing:** Listing leftovers. Existence stays separate. Yahoo `CL=F` is a **stipulated stand-in**. Night/day/whole-trip **baseline** RMSE is computed. No horse was scored against it. Combo still parked. After-cost book still unnamed.
 
-**What we need from you:** Official CME stamps, or a stipulated stand-in series. We will not invent one. This is not a trade.
+**What we need from you:** Nothing required. Optional: official CME re-score, or name a horse vs this baseline. This is not a trade.
 
 **What authorizing a branch means:** A scoped continuation on this same Rank 4 package — not a rewrite of existence-met, and not “oil models don’t work.”
 
@@ -39,17 +39,17 @@
 | [R-DRV](#r-drv) | Exhaustive list of what can move next-session CL? | Empirically resolvable | Census of list-types; **no class submitted** | **executed → evaluation** (L-MAP-DRV) |
 | [R-SESS](#r-sess) | Night vs day vs whole-trip as separate tests? | Definitional lock | Protocol; **no class submitted** | **executed → admitted meanings** (L-SESS) |
 | [R-V-VALUE-TEST-0](#r-v-value-test-0) | Named after-cost paper book? | Empirically resolvable | None named | **executed → not established** |
-| [R-F-SKILL](#r-f-skill) | Next-session CL log-return skill vs last settlement (F-CC), plus F-ON/F-DAY exhibits? | Empirically resolvable | **F-SRC-CME-TAPE** (named); live stamps **missing** | **pursue** (pulse ran; **not established**) |
+| [R-F-SKILL](#r-f-skill) | Next-session CL log-return skill vs last settlement (F-CC), plus F-ON/F-DAY exhibits? | Empirically resolvable | **F-SRC-CME-TAPE**; stand-in baseline scored | **pursue** (baseline only; **not established**) |
 | [R-F-COMBO](#r-f-combo) | Named switching rule after F-ON and F-DAY scored separately? | Empirically resolvable | **unnamed** | **park-until-trigger** |
 | [R-V-VALUE](#r-v-value) | After-cost paper P/L vs the curve? | Empirically resolvable | **unnamed** (operator `leave unnamed`) | **park-until-trigger** |
 | [R-G8](#r-g8) | Model-class fashion under F-SKILL | Empirically resolvable (meanings) | Baseline RMSE + optional FTS | **executed → admitted meanings** |
-| [R-LIVE-STANDIN](#r-live-standin) | Live CME open/settle vs stipulated stand-in? | Empirically resolvable | Live not in hand; stand-in not stipulated | **pursue** |
+| [R-LIVE-STANDIN](#r-live-standin) | Live CME open/settle vs stipulated stand-in? | Empirically resolvable | Yahoo `CL=F` stipulated | **executed → admitted** (stand-in; not live) |
 
-**Authorize grammar:** `live CME only` · `stipulate stand-in …` · `leave tape pending` · `authorize branch R-…` · `decline residual menu`
+**Authorize grammar:** `leave skill not shown` · `live CME only` · `name horse …` · `authorize branch R-…` · `decline residual menu`
 
 **Also offered (separate):** [`OPTIONAL_MODES_MENU.md`](OPTIONAL_MODES_MENU.md) — UX/CX/CR **declined, not run**.
 
-**Closeout note:** Class is named; pulse ran without stamps. Next leftover is the **tape**. Do **not** score Yahoo as live.
+**Closeout note:** Stand-in baseline scored. Skill leftover still **live**. Do **not** read Yahoo RMSE as live or as a pass.
 
 ---
 
@@ -157,15 +157,15 @@
 | Field | Content |
 |-------|---------|
 | **Class** | Empirically resolvable |
-| **Named source class** | **F-SRC-CME-TAPE** (`Lock_FSRC_Named_CME_Tape.md`). Operator 2026-08-17 named CME official CL open/settle + R1; optional Kearney–Shang on the same tape |
-| **What it is** | Whether no-change RMSE on **F-ON / F-DAY / F-CC** can be computed on that tape, and whether any horse beats it. Pulse **L-PULSE-TAPE-0** ran: **tape missing; not established** |
-| **Why offered here** | Rank 4 F-SKILL leftover; session split locked; class now named |
-| **What authorizing does** | Already named. Next is the **tape** ([R-LIVE-STANDIN](#r-live-standin)). Honest **established** still **stops** |
-| **What success / failure changes** | With a live or stipulated tape, RMSE can be computed. Naming ≠ bar-met. F-DAY-met ≠ F-CC-met. Missing tape ≠ refute |
-| **What it does *not* do** | Does not license Yahoo as live; USO; EIA STEO; Kearney–Shang MAE as RMSE-met; a trade |
-| **Effort** | Medium once stamps exist (`scripts/cl_session_rmse.py`) |
-| **Disposition** | **pursue** (named; pulse executed; **not established**; waiting on tape) |
-| **How to authorize** | Provide live CME open/settle **or** `stipulate stand-in …`. Re-run the same formulas |
+| **Named source class** | **F-SRC-CME-TAPE**. Stand-in tape: Yahoo `CL=F` (`Lock_Standin_Yahoo_CLF.md`) |
+| **What it is** | Whether any horse **beats** no-change RMSE on **F-ON / F-DAY / F-CC**. Stand-in pulse **L-PULSE-STANDIN-1** computed the **baseline** (last 500: F-ON 0.01291, F-DAY 0.02663, F-CC 0.02869). **Not established** |
+| **Why offered here** | Rank 4 F-SKILL leftover; tape fork closed as stand-in |
+| **What authorizing does** | A later horse must be named and scored against these windows. Honest **established** still **stops**. `live CME only` re-scores the baseline on official stamps |
+| **What success / failure changes** | Beating the stand-in baseline is still not live clearance. F-DAY-met ≠ F-CC-met |
+| **What it does *not* do** | Treat Yahoo as official settlement; treat baseline RMS as a pass; USO; EIA STEO; a trade |
+| **Effort** | Medium once a horse is named |
+| **Disposition** | **pursue** (stand-in baseline scored; **not established**) |
+| **How to authorize** | `name horse …` vs this baseline, or `live CME only`, or leave |
 
 **Do not treat as this class:** EIA STEO; listed futures curve as a next-session CL return model; Alquist–Kilian / Fed IFDP spot-forecast papers; canonical real/spot VARs; the existence menu as “the” skill recipe; last-settlement no-change (baseline, not the model); **L-MAP-FT families as a silent F-SRC pick**; **L-MAP-DRV families as a silent F-SRC pick**; **USO / Zhang half-hour momentum as F-ON or F-DAY**.
 
@@ -227,21 +227,21 @@
 | Field | Content |
 |-------|---------|
 | **Class** | Empirically resolvable |
-| **Named source class** | **Live** = CME official CL open + settlement (DataMine EOD / equivalent). Stand-in = vendor generic / Yahoo / `CL=F` — **not stipulated** |
+| **Named source class** | **Stand-in** = Yahoo `CL=F` daily Open/Close (stipulated). **Live** = CME official CL open + settlement (still not in hand) |
 | **What it is** | Whether this pulse may use a stand-in tape or must wait for official stamps |
-| **Why offered here** | Class is named; live fetch failed; scoring Yahoo without a stipulate would be a silent proxy |
-| **What authorizing does** | `live CME only` waits for official files. `stipulate stand-in …` names the vendor series and roll note, then re-runs `scripts/cl_session_rmse.py`. Badge **stand-in**; still not auto skill-met |
-| **What success / failure changes** | Unlocks numeric RMSE. Does **not** by itself establish P-NonNegligible skill |
-| **What it does *not* do** | Treat Yahoo as official settlement; treat a stand-in pass as live clearance without the badge |
-| **Effort** | Low to stipulate; high to license DataMine |
-| **Disposition** | **pursue** |
-| **How to authorize** | `live CME only` · `stipulate stand-in …` · `leave tape pending` |
+| **Why offered here** | Operator stipulated Yahoo after DataMine was unavailable |
+| **What authorizing does** | Already ran: `Lock_Standin_Yahoo_CLF.md` · `PULSE_Standin_Yahoo_CLF_RMSE.md` |
+| **What success / failure changes** | Unlocked numeric RMSE **as stand-in**. Did **not** establish P-NonNegligible skill |
+| **What it does *not* do** | Treat Yahoo as official settlement; treat a stand-in pass as live clearance |
+| **Effort** | — |
+| **Disposition** | **Executed 2026-08-17** → admitted (stand-in; not live) |
+| **How to authorize** | Already run. Reopen: `live CME only` |
 
 ---
 
 ## 3. Definition-blocked (lock first, then branch)
 
-None remaining. [R-G8](#r-g8) meanings admitted. [R-LIVE-STANDIN](#r-live-standin) unblocked and **pursue**.
+None remaining. [R-G8](#r-g8) meanings admitted. [R-LIVE-STANDIN](#r-live-standin) executed (stand-in).
 
 ---
 
@@ -261,7 +261,7 @@ None remaining. [R-G8](#r-g8) meanings admitted. [R-LIVE-STANDIN](#r-live-standi
 | [R-V-VALUE](#r-v-value) | park-until-trigger | Matching V-VALUE book named; test must name V1 or V2 |
 | [R-F-COMBO](#r-f-combo) | park-until-trigger | Rule in advance + F-ON and F-DAY already scored separately |
 
-**Live (not parked):** [R-F-SKILL](#r-f-skill) — `pursue` (named; tape missing) · [R-LIVE-STANDIN](#r-live-standin) — `pursue`
+**Live (not parked):** [R-F-SKILL](#r-f-skill) — `pursue` (stand-in baseline; no horse)
 
 ---
 
@@ -278,7 +278,8 @@ None remaining. [R-G8](#r-g8) meanings admitted. [R-LIVE-STANDIN](#r-live-standi
 | 2026-08-17 | Operator **C** `decline optional modes` — UX/CX/CR not run; skill leftover still live |
 | 2026-08-17 | **L-MAP-FT** — futures-target method map executed; F-SKILL not established; F-SRC not filled |
 | 2026-08-17 | **L-SESS** — night/day/combo protocol locked (meanings) |
-| 2026-08-17 | **F-SRC-CME-TAPE** named; **L-PULSE-TAPE-0** executed; live tape absent; Yahoo not used; skill **not established**; Amb **5.5 → 2.5** |
+| 2026-08-17 | **F-SRC-CME-TAPE** named; **L-PULSE-TAPE-0** executed; live tape absent; Yahoo not used that pulse |
+| 2026-08-17 | **L-STANDIN-Y-CLF** stipulated (Yahoo `CL=F`); **L-PULSE-STANDIN-1** baseline RMSE scored; skill **not established**; Amb **2.5 → 1.5** |
 
 ---
 

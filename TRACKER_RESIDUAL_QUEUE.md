@@ -1,13 +1,13 @@
 # Tracker Residual Queue (Layer 3)
 
-**Last refreshed:** 2026-08-17 (oil-futures **hard stop (residuals live)**: **R-F-SKILL** named/tape missing **pursue**; **R-LIVE-STANDIN** **pursue**; **R-V-VALUE** / **R-F-COMBO** park-until-trigger. Park-90d quarterly still due ~2026-11-12 — this refresh does **not** re-churn that card.)  
+**Last refreshed:** 2026-08-17 (oil-futures **hard stop (residuals live)**: **R-F-SKILL** stand-in baseline **pursue**; **R-LIVE-STANDIN** executed; **R-V-VALUE** / **R-F-COMBO** park-until-trigger. Park-90d quarterly still due ~2026-11-12 — this refresh does **not** re-churn that card.)  
 **Last park-90d quarterly review:** **2026-08-12** (inaugural = **cadence-existence**, not quarterly proof; next due ~2026-11-12; post-rule addendum same day — still extend-all)  
 **Disposition vocabulary:** `pursue` | `park-90d` | `park-until-trigger` | `drop`  
 Only **pursue** items stay in active bands. Parked/dropped listed below.
 
 **Cadence:** About once per quarter, review **`park-90d` only**.
 
-**Note:** CoreWeave **hard stop sealed**; Zitron Nvidia $500B **hard stop sealed** (restart frame; Squawk/D-APPEAR OUT). Prior Squawk-stand-in R-* rows remain historical/drop. FOMC parent closeout intact; R-FML-INDEP **executed** (SPF Q2 2026; not established; not a refute). Oil-futures **hard stop (residuals live)**; F-SRC-CME-TAPE named; R-F-SKILL **pursue** (tape missing); R-LIVE-STANDIN **pursue**.
+**Note:** CoreWeave **hard stop sealed**; Zitron Nvidia $500B **hard stop sealed** (restart frame; Squawk/D-APPEAR OUT). Prior Squawk-stand-in R-* rows remain historical/drop. FOMC parent closeout intact; R-FML-INDEP **executed** (SPF Q2 2026; not established; not a refute). Oil-futures **hard stop (residuals live)**; Yahoo `CL=F` stand-in baseline scored; R-F-SKILL **pursue** (no horse); R-LIVE-STANDIN **executed**.
 
 ---
 
@@ -52,8 +52,7 @@ Only **pursue** items stay in active bands. Parked/dropped listed below.
 
 | Residual ID + app | Description | Reopen condition | Effort | Value | Dep | Disposition | Note |
 |-------------------|-------------|------------------|--------|-------|-----|-------------|------|
-| **R-F-SKILL** · oil-futures | Next-session CL log-return vs last-settlement RMSE (F-CC + F-ON/F-DAY) | Live CME open/settle **or** `stipulate stand-in …`; re-run RMSE | med once stamps exist | high | tape missing | **pursue** | **F-SRC-CME-TAPE** named; pulse ran; **not established**; Yahoo not used |
-| **R-LIVE-STANDIN** · oil-futures | Live CME official open/settle vs stipulated stand-in | `live CME only` / `stipulate stand-in …` / `leave tape pending` | low to stipulate; high to license DataMine | high | F-SRC named | **pursue** | Unblocks numeric RMSE; not auto skill-met |
+| **R-F-SKILL** · oil-futures | Next-session CL log-return vs last-settlement RMSE (F-CC + F-ON/F-DAY) | `name horse …` vs stand-in (or live) baselines, or `live CME only` | med once a horse is named | high | stand-in baseline scored | **pursue** | Yahoo `CL=F` last-500 RMSE F-ON 0.01291 / F-DAY 0.02663 / F-CC 0.02869; **not** skill-met |
 | **R-SOME / R-RECIPE / R-REPL** · llm-gwt | Live remnant → Admissible band | Name models; hallmark recipe; replication | med | high | data | **pursue** | Live Admissible-path residual |
 | **WS-MISSING** · foxnews / conscience | Recover worksheets | Recover artifacts or authorize backfill | med | med | data | **pursue** | Prerequisite for those apps |
 | **CLAIM-TEXT** · foxnews | Verbatim original claim | Recover article quote | low | med | data | **pursue** | Cheap unblock |

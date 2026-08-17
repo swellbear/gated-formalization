@@ -18,8 +18,9 @@
 - `04_Material_Admission_FT_Method_Map.md` (**L-MAP-FT**) — futures-target method census; F-SKILL **not established**; F-SRC still unnamed.
 - `04_Material_Admission_FT_Driver_Map.md` (**L-MAP-DRV**) — mover-list census; exhaustive next-session list **does not exist**; F-SKILL **not established**; F-SRC still unnamed.
 - `04_Material_Admission_Session_Split.md` (**L-SESS**) — night/day/combo **protocol** locked (meanings); F-ON/F-DAY/F-CC/F-COMBO **not established**. `MAP_Session_Split.md` (**L-MAP-SESS**) evaluation only.
-- `04_Material_Admission_FSRC_Named.md` (**F-SRC-CME-TAPE** + **L-PULSE-TAPE-0**) — class named; pulse executed; live tape absent; skill **not established**.
+- `04_Material_Admission_FSRC_Named.md` (**F-SRC-CME-TAPE** + **L-PULSE-TAPE-0**) — class named; live tape absent.
+- `04_Material_Admission_Standin_Yahoo.md` (**L-STANDIN-Y-CLF** + **L-PULSE-STANDIN-1**) — Yahoo `CL=F` stipulated; baseline RMSE scored; skill **not established**.
 
-**Closeout (2026-08-17):** **hard stop (residuals live)**. Skill leftover [R-F-SKILL](RESIDUAL_BRANCH_MENU.md#r-f-skill) **pursue** (named; tape missing). Live vs stand-in [R-LIVE-STANDIN](RESIDUAL_BRANCH_MENU.md#r-live-standin) **pursue**. Combo [R-F-COMBO](RESIDUAL_BRANCH_MENU.md#r-f-combo) park-until-trigger. After-cost book [R-V-VALUE](RESIDUAL_BRANCH_MENU.md#r-v-value) park-until-trigger.
+**Closeout (2026-08-17):** **hard stop (residuals live)**. Skill leftover [R-F-SKILL](RESIDUAL_BRANCH_MENU.md#r-f-skill) **pursue** (stand-in baseline; no horse). Live vs stand-in [R-LIVE-STANDIN](RESIDUAL_BRANCH_MENU.md#r-live-standin) **executed**. Combo [R-F-COMBO](RESIDUAL_BRANCH_MENU.md#r-f-combo) park-until-trigger. After-cost book [R-V-VALUE](RESIDUAL_BRANCH_MENU.md#r-v-value) park-until-trigger.
 
-**Process imports:** LOCK-003, LOCK-009, LOCK-010, LOCK-011. App-local: V-EITHER; V-SRC leave unnamed; **F-SRC-CME-TAPE** (leave-unnamed seal superseded); D-EXIST-MET-FT (2026-08-17).
+**Process imports:** LOCK-003, LOCK-009, LOCK-010, LOCK-011. App-local: V-EITHER; V-SRC leave unnamed; **F-SRC-CME-TAPE**; **L-STANDIN-Y-CLF**; D-EXIST-MET-FT (2026-08-17).

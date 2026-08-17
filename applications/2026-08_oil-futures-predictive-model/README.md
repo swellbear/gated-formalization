@@ -7,4 +7,4 @@ Do not duplicate standing-rule text here. Live decisions use the in-chat picker 
 
 **Claim (verbatim):** Can a predictive model for oil futures be built?
 
-**Current stop:** **hard stop (residuals live)** + **L-SESS** + **F-SRC-CME-TAPE**. Optional modes declined. Existence met ≠ skill. Class named; live tape missing; Yahoo not used. Night/day split is testing order, not a trade. Next: live vs stand-in. Partner front door: [`SHARE_PACK.md`](SHARE_PACK.md).
+**Current stop:** **hard stop (residuals live)** + **L-SESS** + **F-SRC-CME-TAPE** + **L-STANDIN-Y-CLF**. Yahoo `CL=F` stand-in baseline scored; skill not shown. Optional modes declined. Partner front door: [`SHARE_PACK.md`](SHARE_PACK.md).

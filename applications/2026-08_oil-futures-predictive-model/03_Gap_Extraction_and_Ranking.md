@@ -122,8 +122,8 @@ G8 is the **named model class and feature recipe** under a locked G1/G6 — bloc
 | G7 | **LOCKED per leg:** D-EXIST E3 census; F-SKILL/V-VALUE E1 walk-forward. Live vs stand-in for settlements still open. |
 | G8 | **Named** with F-SRC-CME-TAPE: baseline RMSE; optional FTS. Not a D-EXIST requirement. |
 | V-COST | V-VALUE cost schedule — **either accepted** (V1 or V2; each test must name which). Incomplete as a singleton. |
-| F-SRC | **F-SRC-CME-TAPE** (2026-08-17). Pulse executed; live tape absent; F-SKILL **not established**. |
-| Live vs stand-in | **Open** — live CME not in hand; stand-in not stipulated. |
+| F-SRC | **F-SRC-CME-TAPE** (2026-08-17). Stand-in pulse scored; F-SKILL **not established**. |
+| Live vs stand-in | **Stand-in stipulated** — Yahoo `CL=F` Open/Close (`Lock_Standin_Yahoo_CLF.md`). Live CME still not in hand. |
 | V-SRC | Named recipe/book for V-VALUE — **leave unnamed** (operator B); V-VALUE-TEST-0 **not established**; not a refute. |
 | F-COMBO | Named switching rule — **park-until-trigger** (rule in advance + F-ON and F-DAY already scored separately). |
 
@@ -133,34 +133,34 @@ G8 is the **named model class and feature recipe** under a locked G1/G6 — bloc
 
 ## Priority Order (highest sum first)
 
-1. **Live vs stand-in** — **pursue**; official CME tape vs stipulated stand-in  
-2. **F-SRC / F-SKILL** — named; pulse ran; **not established** until stamps exist  
-3. **V-SRC** — sealed leave unnamed  
+1. **F-SRC / F-SKILL** — stand-in baseline scored; **not established** until a horse beats it (or live tape re-score)  
+2. **V-SRC** — sealed leave unnamed  
+3. **Live vs stand-in** — executed (Yahoo stipulated; not live)
 
-Lean Default Path: do **not** score Yahoo as live. Existence stays separate. Next operator fork is live vs stand-in. Do not enter Phase 2.
+Lean Default Path: do **not** treat Yahoo RMSE as live or as a pass. Existence stays separate. Next operator fork is horse vs baseline / live re-score / leave. Do not enter Phase 2.
 
 ---
 
 ## Inter-parameter dependency (mandatory)
 
-**F-SKILL** is blocked primarily by **live tape absent** (class named; pulse not computed). **V-VALUE** is blocked primarily by **V-SRC leave unnamed**.
+**F-SKILL** is blocked primarily by **no horse vs the stand-in baseline** (Yahoo RMSE computed; not a pass). **V-VALUE** is blocked primarily by **V-SRC leave unnamed**.
 
-**Rectification:** `live CME only` or `stipulate stand-in …`, then re-run RMSE formulas. Do not auto-enter Phase 2. Combo does not skip the queue.
+**Rectification:** `name horse …` against F-ON/F-DAY/F-CC, or `live CME only` to replace the tape. Do not auto-enter Phase 2. Combo does not skip the queue.
 
-**Reopen condition (prominent):** After live CME stamps or a stipulated stand-in, re-run RMSE. Honest established still stops.
+**Reopen condition (prominent):** After a named horse or live CME stamps, re-run. Honest established still stops.
 
 ---
 
 ## Search Plan for Top-Priority Gap(s)
 
-**Targeted gap:** Live vs stand-in for F-SRC-CME-TAPE.  
-**Source classes to check:** CME official open/settle (live) or operator-stipulated stand-in. Do not silently use Yahoo.  
-**Diminishing-returns / time-box rule:** Pulse already ran without stamps.  
-**Notes:** `Lock_FSRC_Named_CME_Tape.md` · `PULSE_Baseline_Session_RMSE.md`.
+**Targeted gap:** F-SKILL horse vs stand-in baseline (or live re-score).  
+**Source classes to check:** Only an operator-named horse, or official CME open/settle. Do not silently treat Yahoo RMSE as skill-met.  
+**Diminishing-returns / time-box rule:** Stand-in baseline already scored.  
+**Notes:** `Lock_Standin_Yahoo_CLF.md` · `PULSE_Standin_Yahoo_CLF_RMSE.md`.
 
 ---
 
 ## Ready for Material Search & Admission Checks?
 
-- [x] Yes — named-class pulse executed; **stop** for live vs stand-in (no invented stand-in)  
+- [x] Yes — stand-in pulse executed; **stop** for horse vs baseline / live re-score (do not invent a model)  
 - [ ] Need operator lock pick first

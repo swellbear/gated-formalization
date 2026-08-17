@@ -29,9 +29,9 @@ Can a predictive model for oil futures be built?
 
 **Verdict:** **Stable Provisional (split) — hard stop (residuals live)** — D-EXIST established (futures-target only); F-SKILL and V-VALUE not
 
-**Amb path (brief):** 12 → 9 → 7.5 → 5.5 after D-EXIST-MET-FT → **2.5** after F-SRC-CME-TAPE (F-SRC 2→0, G8 1→0)
+**Amb path (brief):** 12 → 9 → 7.5 → 5.5 after D-EXIST-MET-FT → 2.5 after F-SRC-CME-TAPE → **1.5** after L-STANDIN-Y-CLF (live-vs-stand-in 1→0)
 
-**Amb ≠ clearance:** Amb 2.5 is live-vs-stand-in (1) + V-SRC (1) + V-COST (0.5). Naming the tape does not mean a model beats last price.
+**Amb ≠ clearance:** Amb 1.5 is V-SRC (1) + V-COST (0.5). A stand-in baseline does not mean a model beats last price.
 
 ---
 
@@ -44,7 +44,8 @@ Can a predictive model for oil futures be built?
 - V-SRC **leave unnamed** (vehicle sealed empty; not a refute).
 - F-SRC **leave unnamed** — **superseded** 2026-08-17 by **F-SRC-CME-TAPE**.
 - **F-SRC-CME-TAPE** — named CME official open/settle + R1; optional FTS.
-- **L-PULSE-TAPE-0** — pulse executed; live tape absent; RMSE **not computed**.
+- **L-PULSE-TAPE-0** — live-tape pulse executed; RMSE not computed.
+- **L-STANDIN-Y-CLF** / **L-PULSE-STANDIN-1** — Yahoo `CL=F` stipulated; baseline RMSE scored; **not** skill-met.
 - **L-MAP-FT** — futures-target method census executed (evaluation; not F-SKILL-met; not a class pick).
 - **L-MAP-DRV** — mover-list census executed (exhaustive next-session list **does not exist**; not F-SKILL-met; not a class pick).
 - **L-SESS** — night/day/combo protocol locked (meanings; not skill-met).
@@ -55,8 +56,8 @@ Can a predictive model for oil futures be built?
 
 ## 4. Not established / negatively constrained
 
-- F-SKILL **not established** (class named; tape missing; not a refute of all recipes).
-- F-ON / F-DAY RMSE **not computed**.
+- F-SKILL **not established** (stand-in baseline scored; no horse; not a refute of all recipes).
+- F-ON / F-DAY / F-CC **baseline** RMSE computed on Yahoo `CL=F` (last 500: 0.01291 / 0.02663 / 0.02869); **not** skill-met.
 - Kearney–Shang optional re-score **not run**.
 - V-VALUE **not established** (V-VALUE-TEST-0; V-SRC `leave unnamed`; not a refute of all books).
 - Directional accuracy after costs / decision or trading value **not shown**.
@@ -82,8 +83,8 @@ None required (D-EXIST remains Minimal). V-VALUE is a marked elevation (Substant
 | [R-DRV](RESIDUAL_BRANCH_MENU.md#r-drv) | Exhaustive mover-list census | **Executed → evaluation** (L-MAP-DRV). Exhaustive list absent; does not fill F-SRC |
 | [R-SESS](RESIDUAL_BRANCH_MENU.md#r-sess) | Night vs day vs whole-trip protocol | **Executed → admitted meanings** (L-SESS). Does not meet skill |
 | [R-V-VALUE-TEST-0](RESIDUAL_BRANCH_MENU.md#r-v-value-test-0) | Named after-cost book | **Executed → not established** |
-| [R-F-SKILL](RESIDUAL_BRANCH_MENU.md#r-f-skill) | Named class for F-SKILL (F-CC + F-ON/F-DAY exhibits) | **F-SRC-CME-TAPE**. Pulse ran; **not established**. Reopen: live tape or stipulated stand-in |
-| [R-LIVE-STANDIN](RESIDUAL_BRANCH_MENU.md#r-live-standin) | Live CME vs stand-in | **pursue**. `live CME only` / `stipulate stand-in …` |
+| [R-F-SKILL](RESIDUAL_BRANCH_MENU.md#r-f-skill) | Named class for F-SKILL (F-CC + F-ON/F-DAY exhibits) | **F-SRC-CME-TAPE**. Stand-in baseline scored; **not established**. Reopen: horse vs baseline or live CME |
+| [R-LIVE-STANDIN](RESIDUAL_BRANCH_MENU.md#r-live-standin) | Live CME vs stand-in | **Executed** (Yahoo `CL=F` stipulated). Reopen: `live CME only` |
 | [R-F-COMBO](RESIDUAL_BRANCH_MENU.md#r-f-combo) | Named switching rule | **park-until-trigger**. Rule in advance; F-ON and F-DAY already scored separately |
 | [R-V-VALUE](RESIDUAL_BRANCH_MENU.md#r-v-value) | Named recipe/book for V-VALUE | **Leave unnamed**. `park-until-trigger`. Reopen: `name source class …` matching V-VALUE; test must name V1 or V2 |
 | [R-G8](RESIDUAL_BRANCH_MENU.md#r-g8) | Model class under F-SKILL | **Executed → admitted meanings** (baseline + optional FTS) |
@@ -94,9 +95,9 @@ None required (D-EXIST remains Minimal). V-VALUE is a marked elevation (Substant
 
 **Stop saying:** That EIA STEO or the futures curve is a proven next-session CL model; that spot/12-month results clear this freeze; that anyone should trade; that existence-met is skill-met; that one paper was picked as “the” recipe; that unnamed skill means no model can beat last price.
 
-**Keep saying:** A specified non-no-change futures-target recipe has been written. The skill **class is named**; the **tape is missing**. Skill and after-cost value are not established. V-EITHER is not “we used V2.” Yahoo is not live CME.
+**Keep saying:** A specified non-no-change futures-target recipe has been written. Yahoo is a **stand-in**; the baseline is **not** a pass. Skill and after-cost value are not established.
 
-**Test next (only if authorized):** `live CME only` or `stipulate stand-in …`. Combo does not skip the queue.
+**Test next (only if authorized):** `leave skill not shown` · `live CME only` · `name horse …`. Combo does not skip the queue.
 
 ---
 
@@ -146,6 +147,13 @@ None required (D-EXIST remains Minimal). V-VALUE is a marked elevation (Substant
 - `E_Quantitative_Evidence_Rubric_FSRC_Named.md`
 - `04_Material_Admission_FSRC_Named.md`
 - `02_Gate_Scoring_After_FSRC_Named.md`
+- `Lock_Standin_Yahoo_CLF.md`
+- `PULSE_Standin_Yahoo_CLF_RMSE.md`
+- `E_Package_Evidence_Intake_Standin_Yahoo.md`
+- `E_Quantitative_Evidence_Rubric_Standin_Yahoo.md`
+- `04_Material_Admission_Standin_Yahoo.md`
+- `02_Gate_Scoring_After_Standin_Yahoo.md`
+- `data/clf_yahoo_standin.csv`
 - `scripts/cl_session_rmse.py`
 - `05_Original_Claim_Assessment_Closeout.md`
 - `DISSERTATION.md`
@@ -163,7 +171,7 @@ None required (D-EXIST remains Minimal). V-VALUE is a marked elevation (Substant
 - Closeout / verdict: [`05_Original_Claim_Assessment_Closeout.md`](05_Original_Claim_Assessment_Closeout.md) · [`final_verdict.md`](final_verdict.md)
 - Share pack: [`SHARE_PACK.md`](SHARE_PACK.md)
 - Parent / successor: —
-- Key admissions / locks: Rank 4; **D-EXIST-MET-FT**; V-COST either; **F-SRC-CME-TAPE**; V-SRC leave unnamed; L-D-SUITE (existence evidence only); L-HUNT-PROVEN; L-PULSE-TAPE-0 (not met); F-SKILL/V-VALUE not established; process imports 003/009/010/011
+- Key admissions / locks: Rank 4; **D-EXIST-MET-FT**; V-COST either; **F-SRC-CME-TAPE**; **L-STANDIN-Y-CLF**; V-SRC leave unnamed; L-PULSE-STANDIN-1 (baseline not met); F-SKILL/V-VALUE not established
 
 ---
 
