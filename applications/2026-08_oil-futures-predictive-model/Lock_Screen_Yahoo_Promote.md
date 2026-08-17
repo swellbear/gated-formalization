@@ -37,6 +37,8 @@ That any model works. That a Yahoo win is a live win. That anyone should trade.
 | **H-LAG-WF** | Already scored: F-CC **loss**. **Does not promote.** |
 | **H-KS-FTS** | **Out of this screen.** Needs a freeze-matching CL1–CL18 tape; Yahoo front `CL=F` is not that tape. |
 | **L-HUNT-PRETELL** | Eight named tell horses. Discovery F-CC: **all lose**. **No survivor.** Confirm skipped. **Does not promote.** |
+| **H-GAP-FADE** | Day-gap fade. Small F-DAY confirm beats; F-CC locked to 0. **Does not promote.** |
+| **H-GAP-CONT** | Day-gap continuation. Discovery F-DAY **loss**. Not confirmed. **Does not promote.** |
 | **V-VALUE** | Unchanged. After-cost P/L under **V2** is a later named book, not this gate. |
 
 **“Not lose” on 250/750** means horse RMSE **≤** no-change RMSE (ties allowed). Last **500** must **strictly beat**.

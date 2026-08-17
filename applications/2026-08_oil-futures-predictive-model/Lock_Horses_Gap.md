@@ -4,7 +4,7 @@
 **Application:** `2026-08_oil-futures-predictive-model`  
 **Operator selection:** `ok proceed with your suggested route` after recommended **H-GAP-FADE + H-GAP-CONT**  
 **App-local lock IDs:** **H-GAP-FADE** · **H-GAP-CONT** · **L-HUNT-GAP**  
-**Status:** **IN FORCE as named day-book horses (cap = these two rows).** Written **before** last-500 confirm scores. A day win does **not** promote. F-SKILL / F-CC **not** auto-established.
+**Status:** **IN FORCE as named day-book horses (cap = these two rows).** Written **before** last-500 confirm scores. Pulse **L-PULSE-GAP-1** scored. Survivor **H-GAP-FADE** (tiny discovery F-DAY beat; small confirm F-DAY beats). Promote does **not** fire (F-CC locked to 0). F-DAY / F-SKILL **not established**.
 
 ---
 

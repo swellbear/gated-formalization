@@ -18,7 +18,7 @@ The question was whether a predictive model for oil futures can be built. That s
 
 A specified forecasting recipe for listed crude **futures**, other than last-price no-change, has been written. That is all existence means here. Recipes that forecast the real or spot price of oil stay outside that freeze. The list of academic and practitioner recipes is existence evidence only — not a pick of one paper as “the” model.
 
-Walk-forward skill on next-session CL log-returns versus last settlement is **not shown**. Yahoo `CL=F` is a **stipulated stand-in**. A named eight-horse pretell hunt (**L-HUNT-PRETELL**) **failed at discovery** — none beat no-change on F-CC in the older window, so confirm was skipped. Two sparse horses (**H-SPARSE-CAL**, **H-SPARSE-VOL**) were scored. The calendar horse’s last-500 F-CC dip is **0.000004** and **loses** on last 750 — it **does not promote**. The vol-state horse **lost** on F-CC. A lagged-return horse (**H-LAG-WF**) also **lost** on F-CC. Kearney–Shang **not run**.
+Walk-forward skill on next-session CL log-returns versus last settlement is **not shown**. Yahoo `CL=F` is a **stipulated stand-in**. Overnight-gap **fade** (**H-GAP-FADE**) had a **small F-DAY** confirm edge; F-CC was locked to no-change — it **does not promote**. Continuation **lost** discovery F-DAY. A named eight-horse pretell hunt (**L-HUNT-PRETELL**) **failed at discovery**. Two sparse horses (**H-SPARSE-CAL**, **H-SPARSE-VOL**) were scored. The calendar horse’s last-500 F-CC dip is **0.000004** and **loses** on last 750 — it **does not promote**. The vol-state horse **lost** on F-CC. A lagged-return horse (**H-LAG-WF**) also **lost** on F-CC. Kearney–Shang **not run**.
 
 After-cost paper trading value is **not shown**. Paper costs are now **V2** (fees plus $10/contract each way). The paper book was left unnamed. That is not a proof that every book fails.
 
@@ -41,7 +41,7 @@ Can a predictive model for oil futures be built?
 
 ## 3. How it was examined
 
-**Method path:** Phase 1 only. … → **L-SCREEN-Y-PROMOTE** → horses **H-SPARSE-CAL** / **H-SPARSE-VOL**; pulse **L-PULSE-SPARSE-1** (neither promotes) → **L-HUNT-PRETELL**; pulse **L-PULSE-PRETELL-1** (no survivor). No Phase 2. No UX/CX/CR/QI run. Yahoo not used as live.
+**Method path:** Phase 1 only. … → **L-SCREEN-Y-PROMOTE** → horses **H-SPARSE-CAL** / **H-SPARSE-VOL**; pulse **L-PULSE-SPARSE-1** (neither promotes) → **L-HUNT-PRETELL**; pulse **L-PULSE-PRETELL-1** (no survivor) → **L-HUNT-GAP**; pulse **L-PULSE-GAP-1** (FADE small F-DAY; no promote). No Phase 2. No UX/CX/CR/QI run. Yahoo not used as live.
 
 **Governing lock / freeze (if any):** Rank 4 `D-EXIST ⊂ F-SKILL ⊂ V-VALUE`. D-EXIST: `O1+M1+S1+C3+T2+H3+E3` (futures-target; no-change OUT as the model exhibit). F-SKILL: NYMEX CL front-month, next-session log-return, walk-forward RMSE vs last settlement. V-VALUE: after-cost paper P/L vs the curve under **V2** (listed fees + 1 tick/side). V-EITHER is historical.
 
@@ -94,7 +94,7 @@ Can a predictive model for oil futures be built?
 
 ## 7. Quantitative results (if any)
 
-Stand-in baseline, **H-LAG-WF**, **H-SPARSE-CAL**, **H-SPARSE-VOL**, **L-HUNT-PRETELL** — **not** bar-met. Paper costs **V2**. No named book, so V-VALUE still unused.
+Stand-in baseline, **H-LAG-WF**, **H-SPARSE-CAL**, **H-SPARSE-VOL**, **L-HUNT-PRETELL**, **H-GAP-FADE** / **H-GAP-CONT** — **not** bar-met. Paper costs **V2**. No named book, so V-VALUE still unused.
 
 Yahoo `CL=F` last **500** sessions (2024-08-20 … 2026-08-14):
 
@@ -104,7 +104,7 @@ Yahoo `CL=F` last **500** sessions (2024-08-20 … 2026-08-14):
 | F-DAY | 0.02663 | 0.02670 (loss) | 0.026632 (tiny) | 0.02668 (loss) |
 | F-CC | 0.02869 | 0.02888 (loss) | 0.02868990 (tiny; **fails** 750) | 0.02885 (loss) |
 
-Promote gate: **none fire**. **L-HUNT-PRETELL** discovery F-CC: all eight lose vs 0 = 0.026705 (prefix last 500, 2021-08-25 … 2023-08-21); **no survivor**; confirm skipped. H-KS-FTS **not run**. Tiny ≠ met.
+Promote gate: **none fire**. **H-GAP-FADE** confirm last-500 F-DAY 0.026584 vs 0 0.026634 (small); F-CC **tie**. **L-HUNT-PRETELL** discovery F-CC: all eight lose vs 0 = 0.026705; **no survivor**. H-KS-FTS **not run**. Tiny ≠ met. Day win ≠ promote.
 
 ---
 
@@ -120,9 +120,9 @@ UX / CX / CR **declined, not run** (operator **C** `decline optional modes`). QI
 
 **Amb ≠ clearance:** Amb **1.0** is leftover V-SRC only. Live-vs-stand-in closed as Yahoo stipulated. V-COST named **V2**. Low leftover-ambiguity after locks does **not** mean skill, value, or the blended slogan is established.
 
-**Locked-bar status summary:** D-EXIST **established** (futures-target only). F-SKILL **not established** (pretell hunt no survivor; CAL tiny 500 / fails 750; VOL and H-LAG lost on F-CC; H-KS not run). V-VALUE **not established**.
+**Locked-bar status summary:** D-EXIST **established** (futures-target only). F-SKILL **not established** (FADE small F-DAY / F-CC tie; pretell hunt no survivor; CAL tiny 500 / fails 750; VOL and H-LAG lost on F-CC; H-KS not run). V-VALUE **not established**.
 
-**Continuation / hard-stop note:** Hygiene sealed. Optional modes declined. Skill leftover stays **live** ([R-F-SKILL](RESIDUAL_BRANCH_MENU.md#r-f-skill)). Tape leftover **executed** as stand-in ([R-LIVE-STANDIN](RESIDUAL_BRANCH_MENU.md#r-live-standin)); reopen live **only if** **L-SCREEN-Y-PROMOTE** fires. Phase 2 not entered. Next: `leave skill not shown` · `name horse …` (**different**; do **not** re-hunt confirm; do **not** grow this drawer) · `leave screen rule`. **Do not** auto-open DataMine.
+**Continuation / hard-stop note:** Hygiene sealed. Optional modes declined. Skill leftover stays **live** ([R-F-SKILL](RESIDUAL_BRANCH_MENU.md#r-f-skill)). Tape leftover **executed** as stand-in ([R-LIVE-STANDIN](RESIDUAL_BRANCH_MENU.md#r-live-standin)); reopen live **only if** **L-SCREEN-Y-PROMOTE** fires. Phase 2 not entered. Next: `leave skill not shown` · `name horse …` (**different**; do **not** remix gap horses) · `leave screen rule`. **Do not** auto-open DataMine.
 
 ---
 
@@ -157,6 +157,7 @@ UX / CX / CR **declined, not run** (operator **C** `decline optional modes`). QI
 | L-SCREEN-Y-PROMOTE | **1.0** | Unchanged; Yahoo screen; live CME only on F-CC beat; H-LAG does not promote |
 | L-PULSE-SPARSE-1 | **1.0** | Unchanged; CAL tiny 500 / fails 750; VOL F-CC loss; neither promotes |
 | L-PULSE-PRETELL-1 | **1.0** | Unchanged; eight tell horses; discovery F-CC all lose; no survivor |
+| L-PULSE-GAP-1 | **1.0** | Unchanged; FADE small F-DAY confirm; F-CC tie; does not promote |
 
 ### Admitted layers (index)
 
@@ -188,10 +189,12 @@ UX / CX / CR **declined, not run** (operator **C** `decline optional modes`). QI
 | L-PULSE-SPARSE-1 | Sparse pulse; skill not met | `04_Material_Admission_Sparse.md` |
 | L-HUNT-PRETELL / L-STANDIN-Y-TELLS | Named finite tell hunt; no discovery survivor | `Lock_Hunt_Pretell.md` |
 | L-PULSE-PRETELL-1 | Pretell pulse; skill not met | `04_Material_Admission_Pretell.md` |
+| H-GAP-FADE / H-GAP-CONT | Named day-gap horses; FADE small F-DAY; no promote | `Lock_Horses_Gap.md` |
+| L-PULSE-GAP-1 | Gap pulse; skill not met | `04_Material_Admission_Gap.md` |
 
 ### Key artifacts
 
-- `DISSERTATION.md` · `SHARE_PACK.md` · `EXECUTIVE_BRIEF.md` · `05_Original_Claim_Assessment_Closeout.md` · `final_verdict.md` · `RESIDUAL_BRANCH_MENU.md` · `OPTIONAL_MODES_MENU.md` · `MAP_Futures_Target_Forecasting_Methods.md` · `MAP_What_Can_Move_CL.md` · `Lock_Session_Split.md` · `MAP_Session_Split.md` · `Lock_FSRC_Named_CME_Tape.md` · `PULSE_Baseline_Session_RMSE.md` · `Lock_VCOST_V2.md` · `Lock_Screen_Yahoo_Promote.md` · `Lock_Horses_Sparse.md` · `PULSE_Horses_Sparse.md` · `Lock_Hunt_Pretell.md` · `PULSE_Hunt_Pretell.md`
+- `DISSERTATION.md` · `SHARE_PACK.md` · `EXECUTIVE_BRIEF.md` · `05_Original_Claim_Assessment_Closeout.md` · `final_verdict.md` · `RESIDUAL_BRANCH_MENU.md` · `OPTIONAL_MODES_MENU.md` · `MAP_Futures_Target_Forecasting_Methods.md` · `MAP_What_Can_Move_CL.md` · `Lock_Session_Split.md` · `MAP_Session_Split.md` · `Lock_FSRC_Named_CME_Tape.md` · `PULSE_Baseline_Session_RMSE.md` · `Lock_VCOST_V2.md` · `Lock_Screen_Yahoo_Promote.md` · `Lock_Horses_Sparse.md` · `PULSE_Horses_Sparse.md` · `Lock_Hunt_Pretell.md` · `PULSE_Hunt_Pretell.md` · `Lock_Horses_Gap.md` · `PULSE_Horses_Gap.md`
 
 ### Failure-mode / tracker pointers (if any)
 
