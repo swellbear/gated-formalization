@@ -4,7 +4,7 @@
 **Application:** `2026-08_oil-futures-predictive-model`  
 **Operator selection:** agreed to research **both** windows **separately**, then a **combo only after** both are scored; `ok proceed`  
 **App-local lock ID:** **L-SESS**  
-**Status:** **IN FORCE for meanings.** Does **not** establish F-ON, F-DAY, F-CC, F-COMBO, or V-VALUE. **Not** a trading strategy.
+**Status:** **IN FORCE for meanings.** Does **not** establish F-ON, F-DAY, F-CC, F-COMBO, or V-VALUE. **Not** a trading strategy. **Later (same day):** F-SRC named as **F-SRC-CME-TAPE**; this lock’s “F-SRC still unnamed” lines are historical. Meanings remain in force.
 
 ---
 

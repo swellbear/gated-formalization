@@ -14,7 +14,7 @@ Does **not** replace `DISSERTATION.md` (audit) or change verdicts.
 
 A specified forecasting recipe for listed crude **futures** (not last-price no-change) has been written. That is all existence means here. Spot and real-price recipes stay outside that freeze. The recipe list is not an endorsement of one paper.
 
-Walk-forward skill versus last settlement is **not shown**. Night and day are now **separate** scoreboards; a combo is a **third** test, not a shortcut. That leftover stays live. We did not invent a public series to fill it.
+Walk-forward skill versus last settlement is **not shown**. The skill class is **named** (CME official CL open and settlement). The official tape was **not obtained**; Yahoo was **not** used. Night/day RMSE was not computed. A combo is a **third** test, not a shortcut.
 
 After-cost paper value is **not shown**. The paper book was left unnamed. That is not a proof that every book fails.
 
@@ -22,9 +22,9 @@ After-cost paper value is **not shown**. The paper book was left unnamed. That i
 
 This is **not** trading advice and does **not** clear the blended slogan “a predictive oil-futures model works.”
 
-**Reliability of this scoring pass:** high — Cycle 0 recorded under-specification; later passes recorded locks and unnamed vehicles, not a model bake-off.
+**Reliability of this scoring pass:** high — named-class pulse recorded a missing live tape, not a bake-off pass.
 
-**Live vs stand-in:** **N/A — no print/proxy bar scored to met.** Skill and value were not pulsed on a named live settlement series.
+**Live vs stand-in:** **Live tape not in hand; stand-in not stipulated. No print scored to met.**
 
 ---
 
@@ -35,7 +35,7 @@ This is **not** trading advice and does **not** clear the blended slogan “a pr
 
 ## Not established
 
-- Next-session CL log-return skill vs last settlement (source class unnamed; leftover **live**)  
+- Next-session CL log-return skill vs last settlement (**class named**; live tape **missing**; leftover **live**)  
 - After-cost paper P/L vs the curve (book unnamed)  
 - Directional accuracy after costs; any decision or trading value  
 - Spot/real-price recipes as the existence exhibit
@@ -46,13 +46,13 @@ This is **not** trading advice and does **not** clear the blended slogan “a pr
 
 **Stop saying:** That EIA STEO or the futures curve is a proven next-session CL model. That spot-oil papers clear this freeze. That existence-met is skill-met. That one paper was picked as “the” recipe. That anyone should trade. That unnamed skill means no model can ever beat last price. That EIA’s factor list or Wednesday inventories are an exhaustive catalog of next-session CL movers, or that an announcement-day jump is the locked skill test. That flattening before the close **is** the skill test, or that a combo is already passed.
 
-**Keep saying:** A futures-target recipe has been written. Skill and after-cost value are not shown. Night, day, and the whole trip are separate tests. The skill leftover stays live and unnamed. Leave-unnamed is not a refute. Bucket lists of oil-price *kinds* exist; an exhaustive next-session mover list does not. This is not a trading strategy.
+**Keep saying:** A futures-target recipe has been written. The skill class is named; the official tape is missing. Skill and after-cost value are not shown. Night, day, and the whole trip are separate tests. Yahoo is not live CME. This is not a trading strategy.
 
 ---
 
 ## 4. Residual-branch offer
 
-Menu offered. Skill leftover **live** ([R-F-SKILL](RESIDUAL_BRANCH_MENU.md#r-f-skill)). Combo parked ([R-F-COMBO](RESIDUAL_BRANCH_MENU.md#r-f-combo)). Session protocol: [`Lock_Session_Split.md`](Lock_Session_Split.md). After-cost book parked until a matching class is named ([R-V-VALUE](RESIDUAL_BRANCH_MENU.md#r-v-value)). [`RESIDUAL_BRANCH_MENU.md`](RESIDUAL_BRANCH_MENU.md)
+Menu offered. Skill leftover **live** ([R-F-SKILL](RESIDUAL_BRANCH_MENU.md#r-f-skill) named; tape missing). Live vs stand-in **pursue** ([R-LIVE-STANDIN](RESIDUAL_BRANCH_MENU.md#r-live-standin)). Combo parked ([R-F-COMBO](RESIDUAL_BRANCH_MENU.md#r-f-combo)). After-cost book parked ([R-V-VALUE](RESIDUAL_BRANCH_MENU.md#r-v-value)). [`RESIDUAL_BRANCH_MENU.md`](RESIDUAL_BRANCH_MENU.md)
 
 ---
 
@@ -61,7 +61,7 @@ Menu offered. Skill leftover **live** ([R-F-SKILL](RESIDUAL_BRANCH_MENU.md#r-f-s
 [`OPTIONAL_MODES_MENU.md`](OPTIONAL_MODES_MENU.md)
 
 **Declined:** UX / CX / CR (operator **C** `decline optional modes`) — **not run**  
-**N/A:** `run QI` — no failed numerical instance bar (unnamed skill is not a QI path)
+**N/A:** `run QI` — no failed numerical instance bar (missing-tape RMSE is not a QI path)
 
 Parent closeout unchanged.
 
@@ -87,8 +87,8 @@ Parent closeout unchanged.
 | Item | Value |
 |------|--------|
 | Method verdict | Stable Provisional (split); hard stop (residuals live) |
-| Amb | **5.5** |
-| Locks / layers | Rank 4; D-EXIST-MET-FT; V-EITHER; F-SRC/V-SRC leave unnamed |
+| Amb | **2.5** |
+| Locks / layers | Rank 4; D-EXIST-MET-FT; V-EITHER; F-SRC-CME-TAPE; L-SESS; L-PULSE-TAPE-0; V-SRC leave unnamed |
 | Parent / successor | none (CR **declined**, not run; keep original wording) |
 | Key files | `05_Original_Claim_Assessment_Closeout.md` · `DISSERTATION.md` · `RESIDUAL_BRANCH_MENU.md` |
 

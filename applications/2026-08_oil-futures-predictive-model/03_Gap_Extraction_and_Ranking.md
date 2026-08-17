@@ -120,9 +120,10 @@ G8 is the **named model class and feature recipe** under a locked G1/G6 — bloc
 | G4 | **LOCKED per leg:** D-EXIST T2 price-level census; F-SKILL/V-VALUE T1 next-session log-return. |
 | G5 | **LOCKED per leg:** D-EXIST H3 open (census); F-SKILL/V-VALUE H1 next session as **F-CC** (settlement-to-settlement). **L-SESS:** F-ON = settlement→next official open; F-DAY = official open→same-day settlement. Combo is a **third** test, not a substitute. |
 | G7 | **LOCKED per leg:** D-EXIST E3 census; F-SKILL/V-VALUE E1 walk-forward. Live vs stand-in for settlements still open. |
-| G8 | Named model class under F-SKILL — **re-opened**; not a D-EXIST requirement. |
+| G8 | **Named** with F-SRC-CME-TAPE: baseline RMSE; optional FTS. Not a D-EXIST requirement. |
 | V-COST | V-VALUE cost schedule — **either accepted** (V1 or V2; each test must name which). Incomplete as a singleton. |
-| F-SRC | Named public class for F-SKILL — **leave unnamed** (operator B); F-SKILL **not established**; live residual; do not invent a class. Later pulse must **report F-ON and F-DAY** separately (`Lock_Session_Split.md`). |
+| F-SRC | **F-SRC-CME-TAPE** (2026-08-17). Pulse executed; live tape absent; F-SKILL **not established**. |
+| Live vs stand-in | **Open** — live CME not in hand; stand-in not stipulated. |
 | V-SRC | Named recipe/book for V-VALUE — **leave unnamed** (operator B); V-VALUE-TEST-0 **not established**; not a refute. |
 | F-COMBO | Named switching rule — **park-until-trigger** (rule in advance + F-ON and F-DAY already scored separately). |
 
@@ -132,34 +133,34 @@ G8 is the **named model class and feature recipe** under a locked G1/G6 — bloc
 
 ## Priority Order (highest sum first)
 
-1. **F-SRC** — sealed leave unnamed; **live residual** (skill test); reopen only with `name source class …`  
-2. **G8** / live vs stand-in — F-SRC-dependent  
-3. **V-SRC** — sealed leave unnamed; reopen only with `name source class …`  
+1. **Live vs stand-in** — **pursue**; official CME tape vs stipulated stand-in  
+2. **F-SRC / F-SKILL** — named; pulse ran; **not established** until stamps exist  
+3. **V-SRC** — sealed leave unnamed  
 
-Lean Default Path: do **not** invent a skill class. Existence stays separate. Next operator fork is reopen / endpoint / closeout. Do not auto-pulse. Do not enter Phase 2.
+Lean Default Path: do **not** score Yahoo as live. Existence stays separate. Next operator fork is live vs stand-in. Do not enter Phase 2.
 
 ---
 
 ## Inter-parameter dependency (mandatory)
 
-**D-EXIST** is **established** (futures-target only). **F-SKILL** is blocked primarily by **F-SRC leave unnamed** (live residual; do not invent a class). **V-VALUE** is blocked primarily by **V-SRC leave unnamed**.
+**F-SKILL** is blocked primarily by **live tape absent** (class named; pulse not computed). **V-VALUE** is blocked primarily by **V-SRC leave unnamed**.
 
-**Rectification:** `name source class …` matching NYMEX CL official open/settlement stamps (report F-CC, F-ON, and F-DAY separately), or `endpoint only` / `closeout`. Do not auto-enter Phase 2. Do not treat the existence menu or a USO half-hour paper as F-SRC. Combo does not skip the queue.
+**Rectification:** `live CME only` or `stipulate stand-in …`, then re-run RMSE formulas. Do not auto-enter Phase 2. Combo does not skip the queue.
 
-**Reopen condition (prominent):** After a named-enough non-circular F-SKILL class, or `endpoint only` / `closeout`.
+**Reopen condition (prominent):** After live CME stamps or a stipulated stand-in, re-run RMSE. Honest established still stops.
 
 ---
 
 ## Search Plan for Top-Priority Gap(s)
 
-**Targeted gap:** F-SRC leave unnamed (live residual).  
-**Source classes to check:** None. Do not invent. Do not relabel L-D-SUITE / EIA STEO / Alquist–Kilian as F-SKILL.  
-**Diminishing-returns / time-box rule:** Leave-unnamed is the seal. Existence met ≠ skill met.  
-**Notes:** `Lock_FSRC_Leave_Unnamed.md`.
+**Targeted gap:** Live vs stand-in for F-SRC-CME-TAPE.  
+**Source classes to check:** CME official open/settle (live) or operator-stipulated stand-in. Do not silently use Yahoo.  
+**Diminishing-returns / time-box rule:** Pulse already ran without stamps.  
+**Notes:** `Lock_FSRC_Named_CME_Tape.md` · `PULSE_Baseline_Session_RMSE.md`.
 
 ---
 
 ## Ready for Material Search & Admission Checks?
 
-- [x] Yes — F-SRC sealed leave unnamed; **stop** (live skill residual; no invented class)  
+- [x] Yes — named-class pulse executed; **stop** for live vs stand-in (no invented stand-in)  
 - [ ] Need operator lock pick first

@@ -26,15 +26,16 @@
 - Operator **C** (2026-08-17, later): `decline optional modes`. UX/CX/CR **declined, not run**. QI N/A. Parent closeout / Amb **5.5** / established unchanged. Skill leftover still **live**.
 - Operator (2026-08-17, later): map published **futures-target** methods vs next-session / one-step log-return vs last settlement. **L-MAP-FT.** Closest kinship = daily CL curve MAE/MCS (Kearney–Shang 2020); Chantziara 2008 daily PCs = little OOS power; monthly NS ≠ next session; vol = wrong object; spot-using-futures OUT. F-SKILL **not established**. F-SRC **not filled**. Amb **unchanged 5.5**.
 - Operator (2026-08-17, later): has anyone made a comprehensive exhaustive list of what can actually move the locked object? **L-MAP-DRV.** Answer: **no**. EIA/Kilian buckets and calendars exist; inventory **surprises** move WTI futures **at the print** (Ye–Karali; Geman–Li) — contemporaneous, not next-session RMSE vs last settlement. F-SKILL **not established**. F-SRC **not filled**. Amb **unchanged 5.5**.
-- Operator (2026-08-17, later): agreed to research night and day **separately**, then combo only after both scored with the rule written in advance; `ok proceed`. **L-SESS.** Parent F-SKILL stays **F-CC** (settlement-to-settlement). F-ON / F-DAY protocol locked, **not established**. F-COMBO park-until-trigger. USO half-hour momentum = kinship only (**L-MAP-SESS**). Not a trade. F-SRC still unnamed. Amb **unchanged 5.5**.
-- Amb 12 → 9 → 7.5 → **5.5**. Leave-unnamed, closeout, declining optional modes, maps, and L-SESS do not drop Amb. Amb ≠ clearance.
+- Operator (2026-08-17, later): agreed to research night and day **separately**, then combo only after both scored with the rule written in advance; `ok proceed`. **L-SESS.** Parent F-SKILL stays **F-CC** (settlement-to-settlement). F-ON / F-DAY protocol locked, **not established**. F-COMBO park-until-trigger. USO half-hour momentum = kinship only (**L-MAP-SESS**). Not a trade. F-SRC still unnamed at that moment. Amb **unchanged 5.5**.
+- Operator (2026-08-17, later): `ok proceed` with recommended named class (CME official CL open/settle, R1, baseline RMSE on three windows, optional Kearney–Shang on same tape). **F-SRC-CME-TAPE.** Pulse **L-PULSE-TAPE-0:** live tape **not obtained**; Yahoo **not used**; FTS **not run**; F-ON/F-DAY/F-CC **not computed**. Skill **not established**. Amb **5.5 → 2.5**. Next: live vs stand-in.
+- Amb 12 → 9 → 7.5 → 5.5 → **2.5**. Amb ≠ clearance.
 
 ## Residual judgment points encountered
 
 - “Predictive” can be a **job description** (a model whose task is forecasting) or a **success claim** (it actually forecasts better than a naive baseline). Rank 3 vs Rank 1 turns on that call. Recorded, not silently picked.
 - EIA/IEA/bank **outlooks** are tempting existence exhibits; many target **spot or average prices**, not a locked **CL futures** walk-forward. Flag now so a later pulse cannot print-match them into Rank 1.
 - Operator-named D-EXIST suite: futures-target vs real/spot-target is a **vehicle fork**, not one C3 object. “Specified” ≠ “beats no-change.”
-- F-SRC leave unnamed: live skill residual; unnamed ≠ impossible; do not invent a class.
+- F-SRC leave unnamed: later **superseded** by F-SRC-CME-TAPE; tape still missing.
 
 ## Sources / links
 

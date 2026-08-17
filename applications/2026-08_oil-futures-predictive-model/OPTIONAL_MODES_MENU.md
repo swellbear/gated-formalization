@@ -33,7 +33,7 @@
 | **UX** Use-Exploration | **Offer** | Existence is established (futures-target); skill and value are not shown — uses of *that* split, not a trade |
 | **CX** Contrastive Recommendation | **Offer** | Established core (a futures-target recipe has been written) + elevations not established (skill / after-cost value). Alternatives can fit the split without smuggling “the model works” |
 | **CR** Claim-Revision | **Offer** | Original one-liner blends three jobs. Operator may want a cleaner successor (existence-only, or skill-only) labeled as such. Default: **keep original wording** |
-| **QI** Quantitative Implication | **N/A** | No failed C≥H / Sharpe-style numerical *instance* bar. Unnamed skill is not a QI path |
+| **QI** Quantitative Implication | **N/A** | No failed C≥H / Sharpe-style numerical *instance* bar. Missing-tape RMSE is not a QI path |
 
 ---
 

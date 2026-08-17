@@ -3,7 +3,7 @@
 **Date:** 2026-08-17  
 **Application:** `2026-08_oil-futures-predictive-model`  
 **Operator selection:** **B** → `leave unnamed` (skill freeze / F-SRC)  
-**Status:** **SEALED unnamed.** Live residual: the skill test. Do **not** invent a class to fill it.
+**Status:** **SUPERSEDED 2026-08-17** by `Lock_FSRC_Named_CME_Tape.md` (operator named the CME open/settle class). Kept as audit trail. Unnamed seal **lifted for that class only**.
 
 ---
 

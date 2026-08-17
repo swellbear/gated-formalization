@@ -3,10 +3,10 @@
 **Date:** 2026-08-17  
 **Application:** `2026-08_oil-futures-predictive-model`  
 **Closeout verdict:** **Stable Provisional (split) — hard stop (residuals live)**  
-**Amb at closeout:** **5.5**
+**Amb at closeout:** **2.5** (after F-SRC-CME-TAPE pulse; originally 5.5 at first hygiene seal)
 
-**Amb ≠ clearance (mandatory):** Amb measures under-specification. Amb 5.5 does **not** mean a predictive oil-futures model works, that skill is established or refuted, or that anyone should trade.  
-**Locked bar status (if any):** D-EXIST (P-Logical, futures-target) — **established**. F-SKILL (P-NonNegligible, next-session CL log-return vs last settlement) — **not established** (F-SRC `leave unnamed`; leftover **live**; not a refute). V-VALUE (P-NonNegligible after-cost paper P/L) — **not established** (V-SRC `leave unnamed`; not a refute).
+**Amb ≠ clearance (mandatory):** Amb measures under-specification. Amb 2.5 does **not** mean a predictive oil-futures model works, that skill is established or refuted, or that anyone should trade. Naming the tape is not a pass.  
+**Locked bar status (if any):** D-EXIST (P-Logical, futures-target) — **established**. F-SKILL (P-NonNegligible, next-session CL log-return vs last settlement) — **not established** (**F-SRC-CME-TAPE** named; live tape missing; leftover **live**; not a refute). V-VALUE (P-NonNegligible after-cost paper P/L) — **not established** (V-SRC `leave unnamed`; not a refute).
 
 **Original claim (verbatim):**  
 Can a predictive model for oil futures be built?
@@ -38,10 +38,11 @@ Can a predictive model for oil futures be built?
 ### Free parameters remaining
 | ID | Status / freeze |
 |----|-----------------|
-| [R-F-SKILL](RESIDUAL_BRANCH_MENU.md#r-f-skill) | Skill source class **unnamed**. `pursue` (leftover **live**). Reopen: `name source class …` matching CL official open/settlement; report F-CC, F-ON, F-DAY separately. Do not invent |
+| [R-F-SKILL](RESIDUAL_BRANCH_MENU.md#r-f-skill) | Skill class **named** (F-SRC-CME-TAPE). Pulse ran; **not established**. `pursue`. Reopen: live CME tape or stipulated stand-in |
 | [R-F-COMBO](RESIDUAL_BRANCH_MENU.md#r-f-combo) | Switching rule **unnamed**. `park-until-trigger`. Rule in advance; F-ON and F-DAY already scored separately |
 | [R-V-VALUE](RESIDUAL_BRANCH_MENU.md#r-v-value) | After-cost book **unnamed**. `park-until-trigger`. Test must still name V1 or V2 |
-| [R-G8](RESIDUAL_BRANCH_MENU.md#r-g8) / [R-LIVE-STANDIN](RESIDUAL_BRANCH_MENU.md#r-live-standin) | Definition-blocked until F-SRC is named |
+| [R-G8](RESIDUAL_BRANCH_MENU.md#r-g8) | **Executed → admitted meanings** (baseline RMSE + optional FTS) |
+| [R-LIVE-STANDIN](RESIDUAL_BRANCH_MENU.md#r-live-standin) | **pursue**. `live CME only` / `stipulate stand-in …` / `leave tape pending` |
 
 ### Forced-deviation terms (if extraction was triggered)
 None required. Rank 4 D-EXIST is Minimal deviation. F-SKILL is Moderate. V-VALUE is a marked Substantial elevation, not FD-extraction of the slogan.
@@ -57,11 +58,12 @@ Any claim that a model beats last settlement out of sample; that a paper book ma
 
 | Option | Expected buy | Still leaves open |
 |--------|--------------|-------------------|
-| `name source class …` matching Rank 4 F-SKILL + L-SESS | Named-class pulse of walk-forward RMSE vs matching no-change on F-CC, with F-ON and F-DAY reported separately | Establishment-stop if honest `04` would say established; V-VALUE still unnamed; combo still parked |
+| `live CME only` | Official open/settle stamps; re-run RMSE on F-ON / F-DAY / F-CC | Establishment-stop if honest `04` would say established; V-VALUE still unnamed; combo still parked |
+| `stipulate stand-in …` | Named vendor series + roll note; badge stand-in; re-run script | Not auto skill-met; not live CME |
+| `leave tape pending` | None required | F-ON / F-DAY / F-CC stay not computed |
 | `name source class …` matching V-VALUE | Named paper book; test must name V1 or V2 | Does not auto-meet F-SKILL |
 | `run CR` / successor (existence-only or skill-only) | Different question, labeled | **Declined** 2026-08-17; Rank 4 leftover unchanged |
 | `run UX` / `run CX` | Documentation / alternatives | **Declined** 2026-08-17; parent verdict unchanged |
-| Leave skill live / value parked | None required | F-SKILL and V-VALUE stay not established |
 
 ---
 
@@ -72,15 +74,15 @@ Original one-liner is a blended “can.” Rank 4 named the split without rewrit
 - [ ] **Revise claim** — then run **Claim-Revision Scaffolding** before a successor  
 - [x] **Keep original wording** — research agenda / scoped dependents only (default; CR **declined**, not run)
 
-**Default if no further authorization:** keep original wording + **hard stop (residuals live)** with this assessment. Skill leftover stays live and unnamed.
+**Default if no further authorization:** keep original wording + **hard stop (residuals live)** with this assessment. Skill leftover stays live (class named; tape missing).
 
 ---
 
 ## Closeout statement
 
-Application **closed** as **Stable Provisional (split) — hard stop (residuals live)**. Original one-liner **not** silently converted into “the model works.” Existence for futures-target recipes remains authorized and **separate**. Spot/real-price recipes stay outside. Skill source class stays unnamed; skill remains not shown; leftover stays **live**. After-cost paper book stays unnamed; after-cost value stays not shown. No class invented. Phase 2 not entered. Leftover-ambiguity held at **5.5**. This is not trading advice and does not clear the blended slogan.
+Application **closed** as **Stable Provisional (split) — hard stop (residuals live)**. Original one-liner **not** silently converted into “the model works.” Existence for futures-target recipes remains authorized and **separate**. Spot/real-price recipes stay outside. Skill class is **named** (CME official CL open/settle); live tape **missing**; skill remains not shown; leftover stays **live**. After-cost paper book stays unnamed; after-cost value stays not shown. Phase 2 not entered. Leftover-ambiguity held at **2.5**. This is not trading advice and does not clear the blended slogan.
 
-Awaiting further authorization only if continuing (`name source class …` on the skill leftover). Optional modes **declined**.
+Awaiting further authorization on **live vs stand-in** (`live CME only` / `stipulate stand-in …` / `leave tape pending`). Optional modes **declined**.
 
 ---
 

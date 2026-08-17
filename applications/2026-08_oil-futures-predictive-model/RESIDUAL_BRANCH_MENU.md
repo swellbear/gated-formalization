@@ -6,22 +6,22 @@
 
 **Date:** 2026-08-17  
 **Application:** `2026-08_oil-futures-predictive-model`  
-**Closeout status:** **hard stop (residuals live)**. Parent Rank 4 split intact. **D-EXIST-MET-FT** in force (futures-target only). F-SRC / V-SRC leave unnamed. Skill leftover **live**. No class invented. Phase 2 not entered.
+**Closeout status:** **hard stop (residuals live)**. Parent Rank 4 split intact. **D-EXIST-MET-FT** in force (futures-target only). **F-SRC-CME-TAPE** named. V-SRC leave unnamed. Skill leftover **live** (tape missing). Phase 2 not entered.
 
 **Glossary:** [`docs/READER_GLOSSARY.md`](../../docs/READER_GLOSSARY.md)  
 **Optional modes (separate):** [`OPTIONAL_MODES_MENU.md`](OPTIONAL_MODES_MENU.md)
 
-**Live vs stand-in:** **N/A — no print/proxy bar scored to met.** Skill and value were not pulsed on a named live settlement series.
+**Live vs stand-in:** **Live tape not in hand; stand-in not stipulated.** Pulse executed; **no print scored to met.**
 
-**Amb = 5.5.** F-SKILL and V-VALUE **not established**. **Amb ≠ clearance.**
+**Amb = 2.5.** F-SKILL and V-VALUE **not established**. **Amb ≠ clearance.**
 
 ---
 
 ## 0. Plain-language framing
 
-**What we’re doing:** Listing leftovers after Phase 1. Existence for futures-target recipes is already on the record and stays separate. Night, day, and the whole close-to-close trip are **separate tests**; a combo is parked until those two are scored and a rule is written in advance. The skill source class was left unnamed on purpose; that leftover stays live. The after-cost paper book was left unnamed.
+**What we’re doing:** Listing leftovers. Existence stays separate. The skill **class is named** (CME official CL open/settle). The **tape is missing**, so night/day/whole-trip RMSE was not computed. Yahoo was not used. Combo still parked. After-cost book still unnamed.
 
-**What we need from you:** Nothing unless you want to name a matching skill series later (one that can report official **open and settlement**), or authorize a combo rule after the two scoreboards exist. We will not invent a class. This is not a trade.
+**What we need from you:** Official CME stamps, or a stipulated stand-in series. We will not invent one. This is not a trade.
 
 **What authorizing a branch means:** A scoped continuation on this same Rank 4 package — not a rewrite of existence-met, and not “oil models don’t work.”
 
@@ -39,17 +39,17 @@
 | [R-DRV](#r-drv) | Exhaustive list of what can move next-session CL? | Empirically resolvable | Census of list-types; **no class submitted** | **executed → evaluation** (L-MAP-DRV) |
 | [R-SESS](#r-sess) | Night vs day vs whole-trip as separate tests? | Definitional lock | Protocol; **no class submitted** | **executed → admitted meanings** (L-SESS) |
 | [R-V-VALUE-TEST-0](#r-v-value-test-0) | Named after-cost paper book? | Empirically resolvable | None named | **executed → not established** |
-| [R-F-SKILL](#r-f-skill) | Next-session CL log-return skill vs last settlement (F-CC), plus F-ON/F-DAY exhibits? | Empirically resolvable | **unnamed** (operator `leave unnamed`) | **pursue** (leftover **live**) |
+| [R-F-SKILL](#r-f-skill) | Next-session CL log-return skill vs last settlement (F-CC), plus F-ON/F-DAY exhibits? | Empirically resolvable | **F-SRC-CME-TAPE** (named); live stamps **missing** | **pursue** (pulse ran; **not established**) |
 | [R-F-COMBO](#r-f-combo) | Named switching rule after F-ON and F-DAY scored separately? | Empirically resolvable | **unnamed** | **park-until-trigger** |
 | [R-V-VALUE](#r-v-value) | After-cost paper P/L vs the curve? | Empirically resolvable | **unnamed** (operator `leave unnamed`) | **park-until-trigger** |
-| [R-G8](#r-g8) | Model-class fashion under F-SKILL | Definition-blocked | — (waits on F-SRC) | **definition-blocked** |
-| [R-LIVE-STANDIN](#r-live-standin) | Live vs stand-in for a skill/value pulse | Definition-blocked | — (waits on F-SRC) | **definition-blocked** |
+| [R-G8](#r-g8) | Model-class fashion under F-SKILL | Empirically resolvable (meanings) | Baseline RMSE + optional FTS | **executed → admitted meanings** |
+| [R-LIVE-STANDIN](#r-live-standin) | Live CME open/settle vs stipulated stand-in? | Empirically resolvable | Live not in hand; stand-in not stipulated | **pursue** |
 
-**Authorize grammar:** `name source class …` matching the skill freeze · `authorize branch R-…` · `decline residual menu`
+**Authorize grammar:** `live CME only` · `stipulate stand-in …` · `leave tape pending` · `authorize branch R-…` · `decline residual menu`
 
 **Also offered (separate):** [`OPTIONAL_MODES_MENU.md`](OPTIONAL_MODES_MENU.md) — UX/CX/CR **declined, not run**.
 
-**Closeout note:** Operator **C** kept the unnamed skill leftover **live** (`pursue`). That is not a named-class pulse until a matching series is named. Do **not** invent a class.
+**Closeout note:** Class is named; pulse ran without stamps. Next leftover is the **tape**. Do **not** score Yahoo as live.
 
 ---
 
@@ -157,15 +157,15 @@
 | Field | Content |
 |-------|---------|
 | **Class** | Empirically resolvable |
-| **Named source class** | **unnamed**. Operator 2026-08-17: `leave unnamed`. Do **not** invent a class. L-D-SUITE is existence evidence **only** |
-| **What it is** | Whether a specified recipe has a real shot of beating no-change RMSE, walk-forward, on **F-CC** (settlement-to-settlement). A matching pulse **also reports F-ON and F-DAY** separately (`Lock_Session_Split.md`) |
-| **Why offered here** | Rank 4 F-SKILL is the live leftover after existence-met. Operator closeout **C** kept it live. Operator later locked the session split |
-| **What authorizing does** | Only a later `name source class …` that **matches** CL official **open and settlement** stamps. Honest **established** still **stops** |
-| **What success / failure changes** | A matching pulse could establish / not-establish / refute F-CC, F-ON, and F-DAY **as separate calls**. Leave-unnamed ≠ unlikely. Naming ≠ bar-met. F-DAY-met ≠ F-CC-met |
-| **What it does *not* do** | Does not license EIA STEO, Alquist–Kilian, the existence menu, USO half-hour momentum, last-settlement no-change as the model, or a daytime flatten as a pass of F-CC |
-| **Effort** | High until a matching series exists; then medium |
-| **Disposition** | **pursue** (leftover **live**; class remains unnamed) |
-| **How to authorize** | `name source class …` with a **specific public series + matching locks** (NYMEX CL front-month, official **open and settlement**, walk-forward RMSE vs matching no-change). Pulse reports **F-CC, F-ON, and F-DAY** separately |
+| **Named source class** | **F-SRC-CME-TAPE** (`Lock_FSRC_Named_CME_Tape.md`). Operator 2026-08-17 named CME official CL open/settle + R1; optional Kearney–Shang on the same tape |
+| **What it is** | Whether no-change RMSE on **F-ON / F-DAY / F-CC** can be computed on that tape, and whether any horse beats it. Pulse **L-PULSE-TAPE-0** ran: **tape missing; not established** |
+| **Why offered here** | Rank 4 F-SKILL leftover; session split locked; class now named |
+| **What authorizing does** | Already named. Next is the **tape** ([R-LIVE-STANDIN](#r-live-standin)). Honest **established** still **stops** |
+| **What success / failure changes** | With a live or stipulated tape, RMSE can be computed. Naming ≠ bar-met. F-DAY-met ≠ F-CC-met. Missing tape ≠ refute |
+| **What it does *not* do** | Does not license Yahoo as live; USO; EIA STEO; Kearney–Shang MAE as RMSE-met; a trade |
+| **Effort** | Medium once stamps exist (`scripts/cl_session_rmse.py`) |
+| **Disposition** | **pursue** (named; pulse executed; **not established**; waiting on tape) |
+| **How to authorize** | Provide live CME open/settle **or** `stipulate stand-in …`. Re-run the same formulas |
 
 **Do not treat as this class:** EIA STEO; listed futures curve as a next-session CL return model; Alquist–Kilian / Fed IFDP spot-forecast papers; canonical real/spot VARs; the existence menu as “the” skill recipe; last-settlement no-change (baseline, not the model); **L-MAP-FT families as a silent F-SRC pick**; **L-MAP-DRV families as a silent F-SRC pick**; **USO / Zhang half-hour momentum as F-ON or F-DAY**.
 
@@ -210,41 +210,38 @@
 
 | Field | Content |
 |-------|---------|
-| **Class** | Definition-blocked |
-| **Named source class** | — (blocked primarily by unnamed F-SRC) |
-| **What it is** | Which model-class fashion counts under F-SKILL once a source class exists |
-| **Why offered here** | Architecture labels are not skill. G8 stays free under F-SKILL but cannot be scored while F-SRC is unnamed |
-| **What authorizing does** | Nothing until F-SRC is named. Then a later lock if needed |
+| **Class** | Empirically resolvable (meanings executed) |
+| **Named source class** | Baseline 0-forecast RMSE on three windows; optional Kearney–Shang FTS re-score on the same tape |
+| **What it is** | Which recipe is on the card under F-SKILL for this pulse |
+| **Why offered here** | Unblocked when F-SRC was named |
+| **What authorizing does** | Already locked in `Lock_FSRC_Named_CME_Tape.md`. Optional FTS **not run** (no curve tape) |
 | **What success / failure changes** | Does not meet F-SKILL by itself |
-| **What it does *not* do** | Treat neural-net fashion as walk-forward skill |
-| **Effort** | — until unblocked |
-| **Disposition** | **definition-blocked** |
-| **How to authorize** | After [R-F-SKILL](#r-f-skill) is named; do not authorize G8 as a substitute for the skill class |
+| **What it does *not* do** | Treat FTS fashion as walk-forward RMSE-met |
+| **Effort** | — |
+| **Disposition** | **Executed 2026-08-17** → admitted meanings |
+| **How to authorize** | Already run. Do not treat G8 as skill-met |
 
 <a id="r-live-standin"></a>
 ### R-LIVE-STANDIN
 
 | Field | Content |
 |-------|---------|
-| **Class** | Definition-blocked |
-| **Named source class** | — (blocked primarily by unnamed F-SRC) |
-| **What it is** | Which print is live vs stand-in if a skill or value pulse is later run |
-| **Why offered here** | Closeout live-vs-stand-in is **N/A** because no print/proxy bar was scored to met |
-| **What authorizing does** | Nothing until a matching class is named for a pulse |
-| **What success / failure changes** | A later pulse must badge live vs stand-in; print-match ≠ clearance |
-| **What it does *not* do** | Treat nearby spot/monthly prints as the CL next-session live object |
-| **Effort** | — until unblocked |
-| **Disposition** | **definition-blocked** |
-| **How to authorize** | After a named skill or value class exists; not a substitute for naming that class |
+| **Class** | Empirically resolvable |
+| **Named source class** | **Live** = CME official CL open + settlement (DataMine EOD / equivalent). Stand-in = vendor generic / Yahoo / `CL=F` — **not stipulated** |
+| **What it is** | Whether this pulse may use a stand-in tape or must wait for official stamps |
+| **Why offered here** | Class is named; live fetch failed; scoring Yahoo without a stipulate would be a silent proxy |
+| **What authorizing does** | `live CME only` waits for official files. `stipulate stand-in …` names the vendor series and roll note, then re-runs `scripts/cl_session_rmse.py`. Badge **stand-in**; still not auto skill-met |
+| **What success / failure changes** | Unlocks numeric RMSE. Does **not** by itself establish P-NonNegligible skill |
+| **What it does *not* do** | Treat Yahoo as official settlement; treat a stand-in pass as live clearance without the badge |
+| **Effort** | Low to stipulate; high to license DataMine |
+| **Disposition** | **pursue** |
+| **How to authorize** | `live CME only` · `stipulate stand-in …` · `leave tape pending` |
 
 ---
 
 ## 3. Definition-blocked (lock first, then branch)
 
-| Residual ID | What must be locked first | Then branch could… |
-|-------------|---------------------------|--------------------|
-| [R-G8](#r-g8) | Named F-SRC matching the skill freeze | Score model-class fashion without treating it as skill-met |
-| [R-LIVE-STANDIN](#r-live-standin) | Named F-SRC (or V-SRC) for a pulse | Badge live vs stand-in on that pulse |
+None remaining. [R-G8](#r-g8) meanings admitted. [R-LIVE-STANDIN](#r-live-standin) unblocked and **pursue**.
 
 ---
 
@@ -262,10 +259,9 @@
 | Residual ID | Disposition | Trigger / note |
 |-------------|-------------|----------------|
 | [R-V-VALUE](#r-v-value) | park-until-trigger | Matching V-VALUE book named; test must name V1 or V2 |
-| [R-G8](#r-g8) | definition-blocked | After F-SRC named |
-| [R-LIVE-STANDIN](#r-live-standin) | definition-blocked | After a named pulse vehicle |
+| [R-F-COMBO](#r-f-combo) | park-until-trigger | Rule in advance + F-ON and F-DAY already scored separately |
 
-**Live (not parked):** [R-F-SKILL](#r-f-skill) — `pursue`; class unnamed; do not invent.
+**Live (not parked):** [R-F-SKILL](#r-f-skill) — `pursue` (named; tape missing) · [R-LIVE-STANDIN](#r-live-standin) — `pursue`
 
 ---
 
@@ -281,6 +277,8 @@
 | 2026-08-17 | **C closeout** — hygiene sealed; leftover-ambiguity held at 5.5; Phase 2 not entered |
 | 2026-08-17 | Operator **C** `decline optional modes` — UX/CX/CR not run; skill leftover still live |
 | 2026-08-17 | **L-MAP-FT** — futures-target method map executed; F-SKILL not established; F-SRC not filled |
+| 2026-08-17 | **L-SESS** — night/day/combo protocol locked (meanings) |
+| 2026-08-17 | **F-SRC-CME-TAPE** named; **L-PULSE-TAPE-0** executed; live tape absent; Yahoo not used; skill **not established**; Amb **5.5 → 2.5** |
 
 ---
 
