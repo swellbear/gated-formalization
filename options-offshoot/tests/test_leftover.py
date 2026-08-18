@@ -36,3 +36,4 @@ def test_leftover_has_four_sections():
     assert "r=0" in text
     assert "dividend" in text
     assert "Massive last_quote is never relabeled as IBKR" in text
+    assert "IBKR 15-min delayed is not live OPRA" in text

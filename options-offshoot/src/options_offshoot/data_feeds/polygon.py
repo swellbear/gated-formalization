@@ -137,6 +137,13 @@ class PolygonClient:
             truncated = True
             self.last_notes.append(f"{ticker}: chain truncated after {pages} pages")
         self.pages_truncated = self.pages_truncated or truncated
+        if results and not any(
+            isinstance(row, dict) and row.get("last_quote") for row in results
+        ):
+            self.last_notes.append(
+                f"{ticker}: chain has no last_quote (quotes not on this snapshot). "
+                "No invented mid from day.close."
+            )
         out = dict(first)
         out["results"] = results
         out["_pages"] = pages
@@ -171,6 +178,24 @@ class PolygonClient:
         mean = sum(rets) / len(rets)
         var = sum((x - mean) ** 2 for x in rets) / max(1, len(rets) - 1)
         return math.sqrt(max(var, 0.0) * 252.0)
+
+    def stock_spot(self, underlying: str) -> float | None:
+        """Prev daily close. Stocks snapshot/last trade 403 on this plan. Not NBBO."""
+        ticker = underlying.strip().upper()
+        path = f"/v2/aggs/ticker/{ticker}/prev?adjusted=true"
+        try:
+            payload = self._get(path, ttl_s=TTL_VOL_S)
+        except (HttpError, StaleCacheError, FeedError, RuntimeError):
+            return None
+        rows = payload.get("results") or []
+        if rows:
+            px = _num(rows[0].get("c"))
+            if px is not None and px > 0:
+                return px
+        px = _num(payload.get("close") or payload.get("c"))
+        if px is not None and px > 0:
+            return px
+        return None
 
     def nearest_listed_expiry(self, underlying: str, on_or_after: date) -> date | None:
         ticker = underlying.strip().upper()
@@ -259,8 +284,11 @@ def contracts_from_snapshot(
         if strike is None or exp is None or not ticker:
             continue
         lq = row.get("last_quote") or {}
-        bid = _num(lq.get("bid") or lq.get("bid_price") or row.get("bid"))
-        ask = _num(lq.get("ask") or lq.get("ask_price") or row.get("ask"))
+        if not isinstance(lq, dict):
+            lq = {}
+        # last_quote only. Never promote day.close / last_trade to an ask.
+        bid = _num(lq.get("bid") or lq.get("bid_price"))
+        ask = _num(lq.get("ask") or lq.get("ask_price"))
         last = _num((row.get("last_trade") or {}).get("price") or row.get("last"))
         oi = _int(row.get("open_interest"))
         vol = _int((row.get("day") or {}).get("volume") or row.get("volume"))

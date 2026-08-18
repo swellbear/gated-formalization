@@ -10,5 +10,5 @@
 - Does not import GPF or golf-offshoot. Does not auto-trade. IBKR never places an order.
 - Settle is expiry. Marks are not the result.
 - n=1 tape. Do not move `t` from one expiry.
-- IBKR overlay needs TWS/Gateway and OPRA. Tests mock it. CI does not require Gateway.
-- Option chain snapshot (`GET /v3/snapshot/options/{ticker}`) is Options Starter+, not Options Basic / stocks-only. Stocks aggs can still work. Leftover names the plan gate. No invented mid. Massive MCP / websocket are not on the operating path.
+- IBKR overlay needs TWS/Gateway. 15-minute delayed bid/ask is admitted (leftover: not live OPRA, not Massive Advanced). Tests mock it. CI does not require Gateway.
+- Option chain snapshot is Options Starter+. `last_quote` / `/v3/quotes` stay omitted/403 without Advanced. Do not pay Advanced just for delay — use IBKR delayed. No invented mid. Massive MCP / websocket are not on the operating path.

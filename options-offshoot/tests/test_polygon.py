@@ -120,8 +120,45 @@ def test_snapshot_403_names_starter_plan(monkeypatch):
     assert not any("api.polygon.io" in u for u in calls)
 
 
+def test_day_close_is_not_an_ask():
+    payload = {
+        "results": [
+            {
+                "details": {
+                    "ticker": "O:TEST",
+                    "expiration_date": "2026-08-21",
+                    "strike_price": 105,
+                    "contract_type": "call",
+                },
+                "day": {"close": 9.99, "volume": 20},
+                "open_interest": 400,
+                "bid": 1.0,
+                "ask": 1.1,
+            }
+        ],
+    }
+    rows = contracts_from_snapshot(
+        payload, underlying="TEST", expiry=date(2026, 8, 21)
+    )
+    assert rows[0].quote.ask is None
+    assert rows[0].quote.bid is None
+
+
+def test_select_ibkr_overlay_oi_floor():
+    from options_offshoot.data_feeds.ibkr import select_ibkr_overlay
+    from options_offshoot.data_feeds.mocks import demo_contracts
+
+    rows = demo_contracts(expiry=date(2026, 8, 21))
+    picked, notes = select_ibkr_overlay(rows)
+    assert all((c.quote.open_interest or 0) >= 100 for c in picked)
+    assert isinstance(notes, list)
+    ids = {c.contract_id for c in picked}
+    assert "O:AAPL250000C00300000" not in ids
+
+
 def test_demo_ingest_not_operating():
     run = ingest_field("spx_this_friday", demo=True, operating=True)
     assert run.operating is False
     assert run.rows
     assert any(r.n_a_reason for r in run.rows)
+

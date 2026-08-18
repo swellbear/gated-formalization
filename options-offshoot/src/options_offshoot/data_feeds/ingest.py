@@ -186,6 +186,7 @@ def ingest_field(
             )
             n_ok = 0
             n_vol = 0
+            n_spot = 0
             truncated = False
             for und in universe:
                 if spec.expiry_rule == "nearest_listed_on_or_after_event":
@@ -206,6 +207,12 @@ def ingest_field(
                 if vol is not None:
                     n_vol += 1
                 try:
+                    spot = cli.stock_spot(und)
+                except (FeedError, RuntimeError, HttpError, StaleCacheError):
+                    spot = None
+                if spot is not None:
+                    n_spot += 1
+                try:
                     payload = cli.snapshot(und, expiry=exp.isoformat())
                 except StaleCacheError as exc:
                     notes.append(f"{und}: quotes stale >15min ({exc})")
@@ -220,6 +227,7 @@ def ingest_field(
                     payload,
                     underlying=und,
                     expiry=exp,
+                    spot=spot,
                     realized_vol=vol,
                     years_to_expiry=years_to_expiry(exp, day),
                     venue=QuoteVenue.POLYGON,
@@ -227,11 +235,17 @@ def ingest_field(
                 n_ok += 1
                 contracts.extend(chunk)
             notes.extend(cli.last_notes)
+            n_lq = sum(1 for c in contracts if c.quote.has_real_ask)
             if n_ok == 0 and any("403" in n for n in notes):
                 quote_notes = (
                     "Massive option chain snapshot 403: Options Starter+ "
                     "(not Options Basic / stocks-only). last_quote only if the plan "
                     "includes quotes. No invented mid."
+                )
+            elif n_ok > 0 and n_lq == 0:
+                quote_notes = (
+                    "chain/specs/OI used; last_quote omitted (quotes not on this "
+                    "Massive plan; /v3/quotes 403). No invented mid from day.close."
                 )
             else:
                 quote_notes = (
@@ -248,6 +262,20 @@ def ingest_field(
                     n=len(contracts),
                 )
             )
+            if n_ok > 0 and n_lq == 0:
+                inventory.append(
+                    inventory_item(
+                        "massive_last_quote",
+                        used=False,
+                        missing=True,
+                        source="polygon",
+                        notes=(
+                            "last_quote not on chain/contract snapshot; /v3/quotes 403. "
+                            "Stocks snapshot/last trade 403. No invented mid."
+                        ),
+                        kind=SourceKind.UNAVAILABLE,
+                    )
+                )
             inventory.append(
                 inventory_item(
                     "realized_vol",
@@ -257,6 +285,20 @@ def ingest_field(
                     notes="DTE-matched lookback from predeclared dailies; honest path leaves missing unconstrained",
                     kind=SourceKind.REAL_HISTORICAL if n_vol else SourceKind.UNAVAILABLE,
                     n=n_vol,
+                )
+            )
+            inventory.append(
+                inventory_item(
+                    "spot",
+                    used=n_spot > 0,
+                    missing=n_spot == 0,
+                    source="polygon_aggs_prev",
+                    notes=(
+                        "prev daily close from aggs (not NBBO). Stocks snapshot 403. "
+                        "Session leftover."
+                    ),
+                    kind=SourceKind.REAL_HISTORICAL if n_spot else SourceKind.UNAVAILABLE,
+                    n=n_spot,
                 )
             )
             if truncated:
@@ -283,27 +325,35 @@ def ingest_field(
                     )
                 )
 
-        if venue_name == "ibkr" and contracts:
+        n_lq_now = sum(1 for c in contracts if c.quote.has_real_ask)
+        want_ibkr = venue_name == "ibkr" or (
+            (not demo) and operating and bool(contracts) and n_lq_now == 0
+        )
+        if want_ibkr and contracts:
+            fallback = venue_name != "ibkr"
             contracts, ib_notes = overlay_ibkr(
                 contracts, quotes=ibkr_quotes, live_fetch=ibkr_quotes is None
             )
             notes.extend(ib_notes)
             n_ib = sum(1 for c in contracts if c.quote_venue == QuoteVenue.IBKR)
+            prefix = (
+                "Massive last_quote omitted; IBKR overlay attempted. "
+                "Not relabeled as Massive last_quote. "
+                if fallback
+                else "venue ask overlay; market data only, never placeOrder. "
+            )
             inventory.append(
                 inventory_item(
                     "ibkr_venue_ask",
                     used=n_ib > 0,
                     missing=n_ib == 0,
                     source="ibkr",
-                    notes=(
-                        "venue ask overlay; market data only, never placeOrder. "
-                        + ("; ".join(ib_notes) if ib_notes else "IBKR bid/ask used")
-                    ),
+                    notes=prefix + ("; ".join(ib_notes) if ib_notes else "IBKR bid/ask used"),
                     kind=SourceKind.REAL_LIVE if n_ib else SourceKind.UNAVAILABLE,
                     n=n_ib,
                 )
             )
-            venue_used = QuoteVenue.IBKR if n_ib else QuoteVenue.POLYGON
+            venue_used = QuoteVenue.IBKR if n_ib else venue_used
         elif venue_name == "ibkr":
             inventory.append(
                 inventory_item(

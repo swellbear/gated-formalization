@@ -73,6 +73,7 @@ def format_leftover_callout(
         "  listed IV as sigma, r, dividends, jumps, early exercise.",
         "  Overrides stay documented or they do not happen. No hunter.",
         "  Massive last_quote is never relabeled as IBKR.",
+        "  IBKR 15-min delayed is not live OPRA and not Massive Advanced.",
     ]
     if incomplete:
         lines.append(

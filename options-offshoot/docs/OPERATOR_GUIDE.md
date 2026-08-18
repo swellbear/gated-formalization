@@ -20,7 +20,7 @@ python -m options_offshoot paper-withdraw --field spx_this_friday --amount 100
 python -m options_offshoot paper-settle --field spx_this_friday
 ```
 
-`--quotes` defaults to **polygon**. IBKR only when `--quotes ibkr` or `OPTIONS_QUOTES=ibkr`. IBKR is market data only — no orders. `--cash-out "O:AAPL...=1.50"` is a typed per-share bid. `--no-apply-paper` skips mock apply. Demo does not mint a lived lock.
+`--quotes` defaults to **polygon** (Massive). IBKR is market data only — no orders. On an operating ingest, if Massive has chain but **no** `last_quote` (Starter), IBKR overlay is attempted automatically. `--quotes ibkr` forces IBKR even when Massive had asks. Start TWS or Gateway first (API on; paper socket **7497**). **15-minute delayed option bid/ask is enough** — leftover names it; you do not need Massive Options Advanced. `--cash-out "O:AAPL...=1.50"` is a typed per-share bid. `--no-apply-paper` skips mock apply. Demo does not mint a lived lock. `--compare-method` does not `--lock-paper`.
 
 Operating ingest/live need `MASSIVE_API_KEY` or `POLYGON_API_KEY` in `.env`. Demo is mock data.
 

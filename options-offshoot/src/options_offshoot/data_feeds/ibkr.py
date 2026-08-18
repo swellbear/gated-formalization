@@ -10,6 +10,8 @@ from options_offshoot.config import (
     IBKR_CLIENT_ID_DEFAULT,
     IBKR_HOST_DEFAULT,
     IBKR_PORT_DEFAULT,
+    MAX_IBKR_OVERLAY_PER_UNDERLYING,
+    MIN_OPEN_INTEREST,
 )
 from options_offshoot.models.enums import ContractType, QuoteVenue
 from options_offshoot.models.schemas import Contract
@@ -49,6 +51,11 @@ def occ_match(
     )
 
 
+def ibkr_underlying(symbol: str) -> str:
+    """IBKR uses a space for class-A shares (BRK.B -> BRK B)."""
+    return str(symbol or "").strip().upper().replace(".", " ")
+
+
 def apply_ibkr_quote(
     contract: Contract,
     *,
@@ -57,7 +64,11 @@ def apply_ibkr_quote(
     con_id: int | None = None,
     delayed: bool = False,
 ) -> Contract:
-    """Overlay venue bid/ask. Never copies Polygon last_quote under an IBKR label."""
+    """Overlay venue bid/ask. Never copies Polygon last_quote under an IBKR label.
+
+    Delayed (15-min class) is admitted without Massive Advanced. Leftover names it.
+    Not a fake mid from last/close.
+    """
     q = contract.quote.model_copy()
     q.bid = bid
     q.ask = ask
@@ -67,20 +78,40 @@ def apply_ibkr_quote(
     if con_id is not None:
         contract.ibkr_con_id = int(con_id)
     if delayed:
-        note = "IBKR delayed-only; leftover, not live venue ask"
+        note = "IBKR 15-min delayed bid/ask; not live OPRA; not Massive last_quote"
         contract.notes = f"{contract.notes}; {note}".strip("; ")
-        q.bid = None
-        q.ask = None
-        contract.quote_venue = QuoteVenue.UNAVAILABLE
-        q.venue = QuoteVenue.UNAVAILABLE
-        contract.quote = q
     return contract
+
+
+def select_ibkr_overlay(contracts: list[Contract]) -> tuple[list[Contract], list[str]]:
+    """OI floor, top-N per underlying. Not a hunter; leftover if truncated."""
+    notes: list[str] = []
+    by_und: dict[str, list[Contract]] = {}
+    for contract in contracts:
+        oi = contract.quote.open_interest or 0
+        if oi < MIN_OPEN_INTEREST:
+            continue
+        by_und.setdefault(contract.underlying, []).append(contract)
+    out: list[Contract] = []
+    cap = int(MAX_IBKR_OVERLAY_PER_UNDERLYING)
+    for und, rows in by_und.items():
+        ranked = sorted(rows, key=lambda c: -(c.quote.open_interest or 0))
+        if len(ranked) > cap:
+            notes.append(
+                f"ibkr: overlay truncated to top {cap} OI for {und} "
+                f"(had {len(ranked)} at size floor)"
+            )
+            ranked = ranked[:cap]
+        out.extend(ranked)
+    if contracts and not out:
+        notes.append("ibkr: no contracts at OI floor to overlay")
+    return out, notes
 
 
 def fetch_ibkr_quotes(
     contracts: list[Contract],
     *,
-    timeout: float = 8.0,
+    timeout: float = 3.0,
 ) -> tuple[dict[str, dict[str, Any]], list[str]]:
     """Return {contract_id: {bid, ask, con_id, delayed}} plus leftover notes.
 
@@ -96,14 +127,29 @@ def fetch_ibkr_quotes(
 
     cfg = ibkr_settings()
     ib = IB()
-    try:
-        ib.connect(cfg["host"], cfg["port"], clientId=cfg["client_id"], timeout=timeout)
-    except Exception as exc:
-        return {}, [f"ibkr: handshake fail ({exc}); venue ask unavailable"]
+    ports = []
+    for port in (int(cfg["port"]), 7497, 7496, 4002, 4001):
+        if port not in ports:
+            ports.append(port)
+    connected = False
+    last_fail = "handshake fail"
+    for port in ports:
+        try:
+            ib.connect(cfg["host"], port, clientId=cfg["client_id"], timeout=timeout)
+            connected = True
+            if port != int(cfg["port"]):
+                notes.append(f"ibkr: connected port {port}")
+            break
+        except Exception as exc:
+            last_fail = str(exc)
+            continue
+    if not connected:
+        return {}, [f"ibkr: handshake fail ({last_fail}); start TWS/Gateway with API. venue ask unavailable"]
 
     out: dict[str, dict[str, Any]] = {}
     delayed_any = False
     unmatched = 0
+    use_delayed_md = False
     try:
         try:
             ib.reqMarketDataType(1)
@@ -112,7 +158,7 @@ def fetch_ibkr_quotes(
         for contract in contracts:
             right = "P" if contract.contract_type == ContractType.PUT else "C"
             spec = Option(
-                contract.underlying,
+                ibkr_underlying(contract.underlying),
                 contract.expiry.strftime("%Y%m%d"),
                 float(contract.strike),
                 right,
@@ -138,7 +184,7 @@ def fetch_ibkr_quotes(
             qed = qualified[0]
             if not occ_match(
                 contract,
-                symbol=str(getattr(qed, "symbol", contract.underlying)),
+                symbol=str(getattr(qed, "symbol", contract.underlying)).replace(" ", "."),
                 expiry=contract.expiry,
                 strike=float(getattr(qed, "strike", contract.strike)),
                 right=str(getattr(qed, "right", right)),
@@ -152,9 +198,31 @@ def fetch_ibkr_quotes(
             ib.sleep(0.35)
             bid = _px(getattr(ticker, "bid", None))
             ask = _px(getattr(ticker, "ask", None))
-            delayed = bool(getattr(ticker, "marketDataType", 1) not in (1, None, 0))
+            mdt = getattr(ticker, "marketDataType", 1)
+            delayed = mdt in (3, 4) or use_delayed_md
+            if (bid is None or ask is None) and not use_delayed_md:
+                try:
+                    ib.reqMarketDataType(3)
+                except Exception:
+                    pass
+                use_delayed_md = True
+                try:
+                    ib.cancelMktData(qed)
+                except Exception:
+                    pass
+                ticker = ib.reqMktData(qed, "", snapshot=True, regulatorySnapshot=False)
+                ib.sleep(0.35)
+                bid = _px(getattr(ticker, "bid", None))
+                ask = _px(getattr(ticker, "ask", None))
+                delayed = True
             if delayed:
                 delayed_any = True
+            if bid is None or ask is None:
+                try:
+                    ib.cancelMktData(qed)
+                except Exception:
+                    pass
+                continue
             out[contract.contract_id] = {
                 "bid": bid,
                 "ask": ask,
@@ -171,7 +239,9 @@ def fetch_ibkr_quotes(
         except Exception:
             pass
     if delayed_any:
-        notes.append("ibkr: delayed-only (no OPRA live); venue ask unavailable")
+        notes.append(
+            "ibkr: 15-min delayed bid/ask admitted (not live OPRA; not Massive Advanced)"
+        )
     if unmatched:
         notes.append(f"ibkr: unmatched {unmatched} contracts; no neighbor fill")
     if not out and not notes:
@@ -188,7 +258,10 @@ def overlay_ibkr(
     notes: list[str] = []
     fetched = quotes
     if fetched is None and live_fetch:
-        fetched, notes = fetch_ibkr_quotes(contracts)
+        candidates, sel_notes = select_ibkr_overlay(contracts)
+        notes.extend(sel_notes)
+        fetched, fetch_notes = fetch_ibkr_quotes(candidates)
+        notes.extend(fetch_notes)
     fetched = fetched or {}
     if not fetched:
         if not notes:
