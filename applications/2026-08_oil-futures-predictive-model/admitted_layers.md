@@ -6,7 +6,7 @@
 **Admitted claim layers:**
 - **D-EXIST established** — futures-target only (`Lock_D_EXIST_Established_Futures_Target.md` · `04_Material_Admission_D_EXIST_Established.md`). Not a singleton recipe pick. Spot/real-price **OUT**.
 
-**Meaning lock:** Rank 4 nested split — `Lock_Rank4_Nested_Split.md`. **V-COST-V2**. V-SRC **leave unnamed**. **F-SRC-CME-TAPE** (named). **H-LAG-WF** named and scored. **L-SESS**. F-SRC leave-unnamed seal **superseded**. V-EITHER **superseded as singleton**.
+**Meaning lock:** Rank 4 nested split — `Lock_Rank4_Nested_Split.md`. **V-COST-V2**. **L-SCREEN-Y-PROMOTE**. V-SRC **leave unnamed**. **F-SRC-CME-TAPE** (named). **H-LAG-WF** named and scored (does not promote). **L-SESS**.
 
 **Admitted as evaluation (not bar-met):**
 - `04_Material_Admission_D_EXIST_Construction.md` — no-change **OUT** as the D-EXIST model exhibit (operator B).
@@ -21,8 +21,8 @@
 - `04_Material_Admission_FSRC_Named.md` (**F-SRC-CME-TAPE** + **L-PULSE-TAPE-0**) — class named; live tape absent.
 - `04_Material_Admission_Standin_Yahoo.md` (**L-STANDIN-Y-CLF** + **L-PULSE-STANDIN-1**) — Yahoo `CL=F` stipulated; baseline RMSE scored; skill **not established**.
 - `04_Material_Admission_VCOST_V2.md` (**V-COST-V2**) — paper costs named V2; V-VALUE **not established**.
-- `04_Material_Admission_Horses.md` (**H-LAG-WF** / **L-PULSE-HORSES-1**) — lagged-return scored, F-CC **loss**; H-KS **not run**; skill **not established**.
+- `04_Material_Admission_Screen_Promote.md` (**L-SCREEN-Y-PROMOTE**) — Yahoo screen; live CME only on F-CC beat; H-LAG does not promote; skill **not established**.
 
-**Closeout (2026-08-17):** **hard stop (residuals live)**. Skill leftover [R-F-SKILL](RESIDUAL_BRANCH_MENU.md#r-f-skill) **pursue** (H-LAG scored, lost on F-CC; H-KS not run).
+**Closeout (2026-08-17):** **hard stop (residuals live)**. Skill leftover [R-F-SKILL](RESIDUAL_BRANCH_MENU.md#r-f-skill) **pursue** (H-LAG failed promote gate; next horse on Yahoo; H-KS not run).
 
-**Process imports:** LOCK-003, LOCK-009, LOCK-010, LOCK-011. App-local: **V-COST-V2**; V-SRC leave unnamed; **F-SRC-CME-TAPE**; **L-STANDIN-Y-CLF**; D-EXIST-MET-FT (2026-08-17).
+**Process imports:** LOCK-003, LOCK-009, LOCK-010, LOCK-011. App-local: **V-COST-V2**; V-SRC leave unnamed; **F-SRC-CME-TAPE**; **L-STANDIN-Y-CLF**; **L-SCREEN-Y-PROMOTE**; D-EXIST-MET-FT (2026-08-17).

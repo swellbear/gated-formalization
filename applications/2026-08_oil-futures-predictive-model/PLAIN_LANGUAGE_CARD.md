@@ -1,27 +1,27 @@
 # Plain-language card
 
 **Application:** `2026-08_oil-futures-predictive-model`  
-**Date / checkpoint:** 2026-08-17 · named horses scored (L-PULSE-HORSES-1)
+**Date / checkpoint:** 2026-08-17 · Yahoo-screen / live-CME promote rule (L-SCREEN-Y-PROMOTE)
 
 ---
 
 ## What we’re doing
 
-We named two recipes and tested what we could. A simple model that uses yesterday’s night and day moves **did not beat** “assume no change” for the whole trip. A tiny overnight improvement is **not** a pass. The published curve method **could not run**: Yahoo does not keep expired months, so there is no historical CL1–CL18. This is not a trade.
+We will keep testing new recipes on the Yahoo tape we already have. We will **not** move to official CME unless a named recipe **beats “assume no change” on the whole trip** (last 500 sessions, and it must not lose on 250 and 750). A tiny overnight blip does **not** count. The lagged-return model already **failed** that test. This is not a trade.
 
 ## What we need from you
 
-Nothing required. Optional: wait for official CME (or another real curve tape), or name a different recipe.
+Nothing required. Optional: name another front-only recipe to test on Yahoo, or leave skill not shown.
 
-**Preferred reply:** click A / B / C. Typed: `leave skill not shown` · `live CME / curve tape …` · `name horse …`
+**Preferred reply:** click A / B / C. Typed: `leave skill not shown` · `name horse …` · `leave screen rule`
 
 ## What a “yes” / this update means
 
-The lagged-return recipe is **on the card and scored**. Kearney–Shang stayed **unscored** because the curve stand-in failed. Naming and scoring is not a pass.
+The order of work is frozen. Yahoo first. Live CME only as **confirmation** of the same recipe after the whole-trip gate. Naming the rule is not a pass.
 
 ## What this does *not* mean
 
-That a model beats last settlement. That nighttime is now shown. That anyone should trade. That an oil offshoot is cleared.
+That a model beats last settlement. That we will now buy DataMine. That anyone should trade. That an oil offshoot is cleared.
 
 ---
 
@@ -29,12 +29,12 @@ That a model beats last settlement. That nighttime is now shown. That anyone sho
 
 | Item | Value |
 |------|--------|
-| Claim-freeze / claim under test | Rank 4 F-CC + L-SESS; **H-LAG-WF** scored; **H-KS-FTS** not run |
-| Amb | **1.0** (**≠ clearance**) — leftover is V-SRC |
-| Locks / package IDs | Rank 4; D-EXIST-MET-FT; V-COST-V2; L-STANDIN-Y-CLF; **L-STANDIN-Y-CHAIN**; **H-LAG-WF**; L-PULSE-HORSES-1 |
-| Method verdict label (if any) | Stable Provisional (split) — hard stop (residuals live) |
-| H-LAG last-500 vs 0 | F-ON 0.01283 / 0.01291 (tiny dip) · F-DAY 0.02670 / 0.02663 (loss) · F-CC 0.02888 / 0.02869 (loss) |
-| Artifact pointers | `Lock_Horses_Lag_KS.md` · `PULSE_Horses_Standin.md` · `data/horse_scores.json` |
+| Claim-freeze / claim under test | Rank 4 F-CC; **L-SCREEN-Y-PROMOTE** |
+| Amb | **1.0** (**≠ clearance**) |
+| Locks / package IDs | Rank 4; L-STANDIN-Y-CLF; **L-SCREEN-Y-PROMOTE**; H-LAG-WF (does not promote) |
+| Promotion gate | F-CC RMSE < 0 on last 500 **and** F-CC ≤ 0 on last 250 and 750 |
+| H-LAG vs gate | **Fail** (F-CC loss) |
+| Artifact pointers | `Lock_Screen_Yahoo_Promote.md` · `04_Material_Admission_Screen_Promote.md` |
 
 ---
 

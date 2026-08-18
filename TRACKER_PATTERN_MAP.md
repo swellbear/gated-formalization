@@ -1,6 +1,6 @@
 # Tracker Pattern Map
 
-**Last refreshed:** 2026-08-17 (oil-futures **hard stop (residuals live)** — F-SKILL ← horse vs Yahoo stand-in baseline; park-90d next ~2026-11-12)  
+**Last refreshed:** 2026-08-17 (oil-futures **hard stop (residuals live)** — F-SKILL ← horse vs Yahoo stand-in under **L-SCREEN-Y-PROMOTE**; park-90d next ~2026-11-12)  
 **Taxonomy:** [`docs/TRACKER_TAXONOMY.md`](docs/TRACKER_TAXONOMY.md)  
 **Calibration:** When a pattern appears in ≥3 closed apps → [`logs/calibration_log.md`](logs/calibration_log.md)  
 Only patterns **evidenced** in current applications. Sparse by design.
@@ -21,7 +21,7 @@ Only patterns **evidenced** in current applications. Sparse by design.
 
 **Definition:** Dependent questions blocked primarily by an unset lock or free parameter (inter-parameter dependency).
 
-**Applications:** AV E2E (R1/R2 ← R4/OR-slots) · many-worlds (A3–A4 ← A1/A2) · SpaceX (M2 ← Rank 1 locks) · conscience (expansion ← free f/Pi/R) · CDS med-device (R4/R5 ← unset H/S/P before lock) · VOO/TSLA (cheaper/soon/idea ← R2+H-6m+M3 Dip Plan lock) · **oil-futures-predictive-model** (F-SKILL ← horse that beats F-CC after **H-LAG-WF** loss; V-VALUE ← unnamed V-SRC under **V2**; overnight dip ≠ skill-met)
+**Applications:** AV E2E (R1/R2 ← R4/OR-slots) · many-worlds (A3–A4 ← A1/A2) · SpaceX (M2 ← Rank 1 locks) · conscience (expansion ← free f/Pi/R) · CDS med-device (R4/R5 ← unset H/S/P before lock) · VOO/TSLA (cheaper/soon/idea ← R2+H-6m+M3 Dip Plan lock) · **oil-futures-predictive-model** (F-SKILL ← horse that beats F-CC on Yahoo **and** the promote gate after **H-LAG-WF** loss; live CME only if **L-SCREEN-Y-PROMOTE** fires; V-VALUE ← unnamed V-SRC under **V2**; overnight dip ≠ promote)
 
 **Lesson:** State dependency explicitly; locking-scaffolding before pretending empirical closure.
 

@@ -123,7 +123,7 @@ G8 is the **named model class and feature recipe** under a locked G1/G6 — bloc
 | G8 | **Named** with H-LAG-WF (scored; F-CC loss) and H-KS-FTS (not run). Not a D-EXIST requirement. |
 | V-COST | V-VALUE cost schedule — **V2 named** (fees + $10/contract/side). V1 not the live schedule. |
 | F-SRC | **F-SRC-CME-TAPE** (2026-08-17). Stand-in pulse scored; F-SKILL **not established**. |
-| Live vs stand-in | **Stand-in stipulated** — Yahoo `CL=F` Open/Close (`Lock_Standin_Yahoo_CLF.md`). Live CME still not in hand. |
+| Live vs stand-in | **Stand-in stipulated** — Yahoo `CL=F` Open/Close. **L-SCREEN-Y-PROMOTE:** live CME only if F-CC beats 0 on last 500 and does not lose on 250/750. |
 | V-SRC | Named recipe/book for V-VALUE — **leave unnamed** (operator B); V-VALUE-TEST-0 **not established**; not a refute. |
 | F-COMBO | Named switching rule — **park-until-trigger** (rule in advance + F-ON and F-DAY already scored separately). |
 
@@ -137,7 +137,7 @@ G8 is the **named model class and feature recipe** under a locked G1/G6 — bloc
 2. **V-SRC** — sealed leave unnamed; later book must use **V2**  
 3. **Live vs stand-in** — executed (Yahoo stipulated; not live)
 
-Lean Default Path: do **not** treat Yahoo RMSE as live or as a pass. Existence stays separate. Next operator fork is horse vs baseline / live re-score / leave. Do not enter Phase 2.
+Lean Default Path: next horse on Yahoo. Do **not** auto-open live CME. H-LAG does not promote. Existence stays separate. Do not enter Phase 2.
 
 ---
 
@@ -145,9 +145,9 @@ Lean Default Path: do **not** treat Yahoo RMSE as live or as a pass. Existence s
 
 **F-SKILL** is blocked primarily by **no freeze-matching horse that beats F-CC** (H-LAG lost; H-KS tape fail). **V-VALUE** is blocked primarily by **V-SRC leave unnamed**.
 
-**Rectification:** `name horse …` against F-ON/F-DAY/F-CC, or `live CME only` to replace the tape. Do not auto-enter Phase 2. Combo does not skip the queue.
+**Rectification:** `name horse …` on Yahoo under **L-SCREEN-Y-PROMOTE**. Do not auto-enter Phase 2. Combo does not skip the queue.
 
-**Reopen condition (prominent):** After a named horse or live CME stamps, re-run. Honest established still stops.
+**Reopen condition (prominent):** After a named horse on Yahoo, re-run. Live CME **only if** **L-SCREEN-Y-PROMOTE** fires. Honest established still stops.
 
 ---
 

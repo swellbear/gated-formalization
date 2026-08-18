@@ -4,12 +4,12 @@
 
 **Application:** `2026-08_oil-futures-predictive-model`  
 **Last reviewed:** 2026-08-17  
-**Status:** **Stable Provisional (split) — hard stop (residuals live)** · Phase 1 closeout · D-EXIST-MET-FT · **F-SRC-CME-TAPE** · L-SESS  
+**Status:** **Stable Provisional (split) — hard stop (residuals live)** · Phase 1 closeout · D-EXIST-MET-FT · **F-SRC-CME-TAPE** · **L-SCREEN-Y-PROMOTE** · L-SESS  
 
 **Tags** (see `docs/TRACKER_TAXONOMY.md`):  
 - Domain: `markets`  
 - Claim-shape: `forecast-extension`, `descriptive-census`  
-- Pattern: `R-dependence` (V-VALUE ← V-SRC; F-SKILL ← live tape after F-SRC named)
+- Pattern: `R-dependence` (V-VALUE ← V-SRC; F-SKILL ← horse vs Yahoo stand-in under **L-SCREEN-Y-PROMOTE**)
 
 ---
 
@@ -19,7 +19,7 @@
 
 Can a predictive model for oil futures be built?
 
-**Successor / Rank lock (if any):** **Rank 4** nested split — D-EXIST ⊂ F-SKILL ⊂ V-VALUE. **D-EXIST-MET-FT**. V-COST **V2**. **F-SRC-CME-TAPE**. V-SRC leave unnamed. CR **declined**, not run; default keep original wording.
+**Successor / Rank lock (if any):** **Rank 4** nested split — D-EXIST ⊂ F-SKILL ⊂ V-VALUE. **D-EXIST-MET-FT**. V-COST **V2**. **F-SRC-CME-TAPE**. **L-SCREEN-Y-PROMOTE**. V-SRC leave unnamed. CR **declined**, not run; default keep original wording.
 
 **Parent / successor relationship:** none
 
@@ -46,7 +46,7 @@ Can a predictive model for oil futures be built?
 - F-SRC **leave unnamed** — **superseded** 2026-08-17 by **F-SRC-CME-TAPE**.
 - **F-SRC-CME-TAPE** — named CME official open/settle + R1; optional FTS.
 - **L-PULSE-TAPE-0** — live-tape pulse executed; RMSE not computed.
-- **H-LAG-WF** / **L-PULSE-HORSES-1** — lagged-return scored; F-CC **loss**; tiny F-ON dip **not** met; H-KS **not run**.
+- **L-SCREEN-Y-PROMOTE** — Yahoo screen; live CME only if F-CC beats 0 on last 500 and does not lose on 250/750; H-LAG does not promote.
 - **L-MAP-FT** — futures-target method census executed (evaluation; not F-SKILL-met; not a class pick).
 - **L-MAP-DRV** — mover-list census executed (exhaustive next-session list **does not exist**; not F-SKILL-met; not a class pick).
 - **L-SESS** — night/day/combo protocol locked (meanings; not skill-met).
@@ -84,8 +84,8 @@ None required (D-EXIST remains Minimal). V-VALUE is a marked elevation (Substant
 | [R-DRV](RESIDUAL_BRANCH_MENU.md#r-drv) | Exhaustive mover-list census | **Executed → evaluation** (L-MAP-DRV). Exhaustive list absent; does not fill F-SRC |
 | [R-SESS](RESIDUAL_BRANCH_MENU.md#r-sess) | Night vs day vs whole-trip protocol | **Executed → admitted meanings** (L-SESS). Does not meet skill |
 | [R-V-VALUE-TEST-0](RESIDUAL_BRANCH_MENU.md#r-v-value-test-0) | Named after-cost book | **Executed → not established** |
-| [R-F-SKILL](RESIDUAL_BRANCH_MENU.md#r-f-skill) | Named class for F-SKILL (F-CC + F-ON/F-DAY exhibits) | **H-LAG-WF** scored, **lost** on F-CC. H-KS not run. **not established**. Reopen: other horse or live/curve tape |
-| [R-LIVE-STANDIN](RESIDUAL_BRANCH_MENU.md#r-live-standin) | Live CME vs stand-in | **Executed** (Yahoo `CL=F` stipulated). Reopen: `live CME only` |
+| [R-F-SKILL](RESIDUAL_BRANCH_MENU.md#r-f-skill) | Named class for F-SKILL (F-CC + F-ON/F-DAY exhibits) | **H-LAG-WF** scored, **lost** on F-CC. Does **not** promote. H-KS not run. **not established**. Reopen: other horse on Yahoo |
+| [R-LIVE-STANDIN](RESIDUAL_BRANCH_MENU.md#r-live-standin) | Live CME vs stand-in | **Executed** (Yahoo `CL=F` stipulated). Reopen live **only if** **L-SCREEN-Y-PROMOTE** fires |
 | [R-F-COMBO](RESIDUAL_BRANCH_MENU.md#r-f-combo) | Named switching rule | **park-until-trigger**. Rule in advance; F-ON and F-DAY already scored separately |
 | [R-V-VALUE](RESIDUAL_BRANCH_MENU.md#r-v-value) | Named recipe/book for V-VALUE | **Leave unnamed**. `park-until-trigger`. Reopen: `name source class …` matching V-VALUE **under V2** |
 | [R-G8](RESIDUAL_BRANCH_MENU.md#r-g8) | Model class under F-SKILL | **Executed → admitted meanings** (baseline + optional FTS) |
@@ -96,9 +96,9 @@ None required (D-EXIST remains Minimal). V-VALUE is a marked elevation (Substant
 
 **Stop saying:** That EIA STEO or the futures curve is a proven next-session CL model; that spot/12-month results clear this freeze; that anyone should trade; that existence-met is skill-met; that one paper was picked as “the” recipe; that unnamed skill means no model can beat last price.
 
-**Keep saying:** A specified non-no-change futures-target recipe has been written. Yahoo is a **stand-in**; the baseline is **not** a pass. Paper costs are **V2**; that is not a value pass. Skill and after-cost value are not established.
+**Keep saying:** A specified non-no-change futures-target recipe has been written. Yahoo is a **stand-in**; the baseline is **not** a pass. Screen on Yahoo; live CME only if the whole-trip gate fires. Paper costs are **V2**; that is not a value pass. Skill and after-cost value are not established.
 
-**Test next (only if authorized):** `leave skill not shown` · `live CME / curve tape …` · `name horse …`. Combo does not skip the queue.
+**Test next (only if authorized):** `leave skill not shown` · `name horse …` on Yahoo. Live CME only if the F-CC promotion gate fires.
 
 ---
 
@@ -157,7 +157,9 @@ None required (D-EXIST remains Minimal). V-VALUE is a marked elevation (Substant
 - `E_Quantitative_Evidence_Rubric_Standin_Yahoo.md`
 - `04_Material_Admission_Standin_Yahoo.md`
 - `02_Gate_Scoring_After_Standin_Yahoo.md`
-- `Lock_Horses_Lag_KS.md`
+- `Lock_Screen_Yahoo_Promote.md`
+- `04_Material_Admission_Screen_Promote.md`
+- `02_Gate_Scoring_After_Screen_Promote.md`
 - `Lock_Standin_Yahoo_Curve.md`
 - `PULSE_Horses_Standin.md`
 - `04_Material_Admission_Horses.md`
@@ -180,7 +182,7 @@ None required (D-EXIST remains Minimal). V-VALUE is a marked elevation (Substant
 - Closeout / verdict: [`05_Original_Claim_Assessment_Closeout.md`](05_Original_Claim_Assessment_Closeout.md) · [`final_verdict.md`](final_verdict.md)
 - Share pack: [`SHARE_PACK.md`](SHARE_PACK.md)
 - Parent / successor: —
-- Key admissions / locks: Rank 4; **D-EXIST-MET-FT**; **V-COST-V2**; **F-SRC-CME-TAPE**; **L-STANDIN-Y-CLF**; V-SRC leave unnamed; L-PULSE-STANDIN-1 (baseline not met); F-SKILL/V-VALUE not established
+- Key admissions / locks: Rank 4; **D-EXIST-MET-FT**; **V-COST-V2**; **F-SRC-CME-TAPE**; **L-STANDIN-Y-CLF**; **L-SCREEN-Y-PROMOTE**; V-SRC leave unnamed; L-PULSE-STANDIN-1 (baseline not met); F-SKILL/V-VALUE not established
 
 ---
 
@@ -190,7 +192,7 @@ None required (D-EXIST remains Minimal). V-VALUE is a marked elevation (Substant
 |------|------|
 | Domain | `markets` |
 | Claim-shape | `forecast-extension`, `descriptive-census` |
-| Pattern | `R-dependence` (V-VALUE ← V-SRC; F-SKILL ← live tape after F-SRC named) |
+| Pattern | `R-dependence` (V-VALUE ← V-SRC; F-SKILL ← horse vs Yahoo stand-in under **L-SCREEN-Y-PROMOTE**) |
 
 ---
 

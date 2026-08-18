@@ -1,0 +1,56 @@
+# Lock Record — Yahoo screen, promote to live CME only on F-CC beat
+
+**Date:** 2026-08-17  
+**Application:** `2026-08_oil-futures-predictive-model`  
+**Operator selection:** `yes lets do that` after recommended screen-then-confirm  
+**App-local lock ID:** **L-SCREEN-Y-PROMOTE**  
+**Status:** **IN FORCE as protocol.** Does **not** establish F-SKILL. **H-LAG-WF** already **fails** this gate (F-CC loss). Nothing promotes now.
+
+---
+
+## 0. Plain-language framing
+
+**What was decided:**  
+Keep building and testing front-only recipes on the Yahoo tape we already have. Spend on official CME only if a named recipe **beats “assume no change” on the whole trip**. A tiny overnight blip does **not** count.
+
+**What this settles:**  
+The order of work, and what “looks interesting” means before live stamps.
+
+**What this does *not* settle:**  
+That any model works. That a Yahoo win is a live win. That anyone should trade.
+
+---
+
+## Locked content
+
+**Scope:** **Under Rank 4 + L-SESS + F-SRC-CME-TAPE + L-STANDIN-Y-CLF + L-SCREEN-Y-PROMOTE**.
+
+| ID | Rule |
+|----|------|
+| **Screen tape** | Yahoo `CL=F` Open/Close stand-in (`Lock_Standin_Yahoo_CLF.md`). Front-only horses. |
+| **Promotion gate (all required)** | A **named** horse, walk-forward, same declared OOS as the baseline: **F-CC RMSE < RMSE of 0** on last **500**, **and** F-CC horse RMSE **≤** RMSE of 0 on last **250** and last **750**. |
+| **Does not promote** | F-ON or F-DAY alone; a tiny overnight dip; in-sample fit; Kearney–Shang MAE print-match |
+| **Live confirmation** | Official CME open/settle + roll **R1**. Re-score the **same named horse** vs 0. Not a new fishing trip on live stamps. |
+| **Yahoo win** | Still **stand-in**. Not live clearance. Not F-SKILL-met. Honest **established** still **stops**. |
+| **H-LAG-WF** | Already scored: F-CC **loss**. **Does not promote.** |
+| **H-KS-FTS** | **Out of this screen.** Needs a freeze-matching CL1–CL18 tape; Yahoo front `CL=F` is not that tape. |
+| **V-VALUE** | Unchanged. After-cost P/L under **V2** is a later named book, not this gate. |
+
+**“Not lose” on 250/750** means horse RMSE **≤** no-change RMSE (ties allowed). Last **500** must **strictly beat**.
+
+---
+
+## What this does *not* do
+
+- Does **not** establish F-SKILL, F-ON, F-DAY, F-CC, or V-VALUE.  
+- Does **not** auto-fetch DataMine.  
+- Does **not** license trading or start an oil offshoot.  
+- Does **not** enter Phase 2.
+
+**Lock-time Amb warning:** Fixing the screen rule does **not** drop leftover-ambiguity. **Amb ≠ clearance.**
+
+---
+
+## Reopen
+
+A later operator may change the promotion numbers or skip straight to live CME. That is a freeze change, not a silent softening.

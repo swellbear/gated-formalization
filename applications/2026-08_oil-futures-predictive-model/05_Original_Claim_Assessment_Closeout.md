@@ -38,11 +38,11 @@ Can a predictive model for oil futures be built?
 ### Free parameters remaining
 | ID | Status / freeze |
 |----|-----------------|
-| [R-F-SKILL](RESIDUAL_BRANCH_MENU.md#r-f-skill) | Skill class named; **H-LAG-WF scored, lost on F-CC**; H-KS not run; **not established**. `pursue`. Reopen: other horse or live/curve tape |
+| [R-F-SKILL](RESIDUAL_BRANCH_MENU.md#r-f-skill) | Skill class named; **H-LAG-WF scored, lost on F-CC** (does **not** promote); H-KS not run; **not established**. `pursue`. Reopen: other horse on Yahoo |
 | [R-F-COMBO](RESIDUAL_BRANCH_MENU.md#r-f-combo) | Switching rule **unnamed**. `park-until-trigger`. Rule in advance; F-ON and F-DAY already scored separately |
 | [R-V-VALUE](RESIDUAL_BRANCH_MENU.md#r-v-value) | After-cost book **unnamed**. `park-until-trigger`. Later book must match **V2** |
 | [R-G8](RESIDUAL_BRANCH_MENU.md#r-g8) | **Executed → admitted meanings** (baseline scored; optional FTS not run) |
-| [R-LIVE-STANDIN](RESIDUAL_BRANCH_MENU.md#r-live-standin) | **Executed** (Yahoo `CL=F` stipulated). Reopen: `live CME only` |
+| [R-LIVE-STANDIN](RESIDUAL_BRANCH_MENU.md#r-live-standin) | **Executed** (Yahoo `CL=F` stipulated). Reopen live **only if** **L-SCREEN-Y-PROMOTE** fires |
 
 ### Forced-deviation terms (if extraction was triggered)
 None required. Rank 4 D-EXIST is Minimal deviation. F-SKILL is Moderate. V-VALUE is a marked Substantial elevation, not FD-extraction of the slogan.
@@ -59,8 +59,8 @@ Any claim that a model beats last settlement out of sample; that a paper book ma
 | Option | Expected buy | Still leaves open |
 |--------|--------------|-------------------|
 | `leave skill not shown` | None required | F-SKILL stays not established (stand-in baseline on record) |
-| `live CME only` | Re-score RMSE on official open/settle | Establishment-stop if honest `04` would say established |
-| `name horse …` | Score a named recipe vs the stand-in (or live) baselines | Does not auto-meet V-VALUE; stand-in ≠ live |
+| `name horse …` | Score a named **front-only** recipe on Yahoo under **L-SCREEN-Y-PROMOTE** | Does not auto-meet V-VALUE; Yahoo win ≠ live clearance |
+| `leave screen rule` | Keep **L-SCREEN-Y-PROMOTE** | Live CME still gated |
 | `name source class …` matching V-VALUE | Named paper book **under V2** | Does not auto-meet F-SKILL |
 | `run CR` / successor (existence-only or skill-only) | Different question, labeled | **Declined** 2026-08-17; Rank 4 leftover unchanged |
 | `run UX` / `run CX` | Documentation / alternatives | **Declined** 2026-08-17; parent verdict unchanged |
@@ -80,9 +80,9 @@ Original one-liner is a blended “can.” Rank 4 named the split without rewrit
 
 ## Closeout statement
 
-Application **closed** as **Stable Provisional (split) — hard stop (residuals live)**. Original one-liner **not** silently converted into “the model works.” Yahoo `CL=F` is a **stipulated stand-in**. **H-LAG-WF** lost on F-CC; leftover stays **live**. Kearney–Shang not run. Paper costs named **V2**; after-cost book unnamed. Phase 2 not entered. Leftover-ambiguity held at **1.0**. This is not trading advice and does not clear the blended slogan.
+Application **closed** as **Stable Provisional (split) — hard stop (residuals live)**. **L-SCREEN-Y-PROMOTE** in force: Yahoo first; live CME only if F-CC beats no-change on last 500 (and does not lose on 250/750). **H-LAG-WF** failed that gate. Leftover stays **live**. Phase 2 not entered. Amb **1.0**. Not trading advice.
 
-Awaiting further authorization (`leave skill not shown` / `live CME only` / `name horse …`). Optional modes **declined**.
+Awaiting further authorization (`leave skill not shown` · `name horse …` · `leave screen rule`). Live CME **only if** the F-CC gate fires. Optional modes **declined**.
 
 ---
 
