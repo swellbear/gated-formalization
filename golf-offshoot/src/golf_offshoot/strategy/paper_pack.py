@@ -14,7 +14,7 @@ from golf_offshoot.strategy.paper_book import (
     ensure_lock_movements,
     save_paper_book,
 )
-from golf_offshoot.strategy.paper_bankroll_export import write_bankroll_files
+from golf_offshoot.strategy.paper_bankroll_export import independent_ledger_from_book, overlay_path_cash, write_bankroll_files
 from golf_offshoot.strategy.paper_explain import write_bets_explained_files
 from golf_offshoot.strategy.paper_export import write_paper_book_files
 from golf_offshoot.strategy.paper_ledger import ensure_opening_deposit, load_ledger
@@ -27,6 +27,7 @@ _PACK_PDF_SECTIONS = (
     ("03_leaderboard.pdf", "Live leaderboard"),
     ("03_field_live.pdf", "Field live"),
     ("03_field_pre.pdf", "Field pre-tournament"),
+    ("04_leftover.pdf", "Leftover (display)"),
     ("05_bankroll.pdf", "Bankroll"),
 )
 
@@ -49,21 +50,28 @@ def write_paper_pack(
     run_id: str = "",
 ) -> Path:
     """Write a new folder with tickets, bets-made explanation, and any field tables."""
+    from golf_offshoot.strategy.fills import backfill_lock_entry_on_fills
+
+    record = backfill_lock_entry_on_fills(record)
     cfg = config or StrategyConfig(enabled=True, bankroll=record.bankroll)
     ensure_lock_movements(record, cfg)
-    advice = list(advice) if advice is not None else list(record.latest_advice)
-    record.latest_advice = advice
     stamp = filename_stamp()
     run = _safe(run_id or record.locked_from_run_id or "pack")
-    pack_name = f"{_safe(record.tournament_id)}_{stamp}_{run}"
+    pid = getattr(record, "path_id", None) or "lived"
+    suffix = "_polymarket" if pid == "polymarket" else ""
+    pack_name = f"{_safe(record.tournament_id)}_{stamp}_{run}{suffix}"
     root = (directory or packs_dir()) / pack_name
     root.mkdir(parents=True, exist_ok=True)
 
     # Always render tickets from the current book. Copying export_pdf froze the
     # lock-time sheet after apply/reduce/new_bet, so 01_paper_tickets lagged JSON.
     from golf_offshoot.strategy.paper_book import load_snapshot_outputs, package_data_dir as data_dir
+    from golf_offshoot.strategy.paper_trigger import sanitize_pre_tee_advice, write_trigger_files
 
     live_outputs = load_snapshot_outputs(run)
+    advice = list(advice) if advice is not None else list(record.latest_advice)
+    advice = sanitize_pre_tee_advice(advice, live_outputs)
+    record.latest_advice = advice
     ticket_paths = write_paper_book_files(
         record,
         directory=data_dir() / "exports",
@@ -74,8 +82,6 @@ def write_paper_pack(
     _copy_if_exists(ticket_paths.pdf, root / "01_paper_tickets.pdf")
     _copy_if_exists(ticket_paths.html, root / "01_paper_tickets.html")
     _copy_if_exists(ticket_paths.txt, root / "01_paper_tickets.txt")
-
-    from golf_offshoot.strategy.paper_trigger import write_trigger_files
 
     write_trigger_files(
         record,
@@ -93,8 +99,21 @@ def write_paper_pack(
         live_outputs=live_outputs,
         live_run_id=run,
     )
+    from golf_offshoot.ranking.leftover import leftover_from_snapshot, write_leftover_files
+
+    write_leftover_files(
+        root,
+        leftover_from_snapshot(record, run),
+        title=f"Leftover — {record.tournament_name or record.tournament_id}",
+    )
     led = load_ledger()
-    if not getattr(record, "independent_bankroll", False):
+    if getattr(record, "independent_bankroll", False):
+        led = overlay_path_cash(record)
+        title = None
+        if (getattr(record, "path_id", None) or "") == "polymarket":
+            title = f"Polymarket paper bankroll — {record.tournament_name or record.tournament_id}"
+        write_bankroll_files(root, ledger=led, record=record, title=title)
+    else:
         if not led.entries:
             led = ensure_opening_deposit(
                 record.bankroll,
@@ -103,14 +122,6 @@ def write_paper_pack(
                 note="opening paper bankroll (pack)",
             )
         write_bankroll_files(root, ledger=led, record=record)
-    else:
-        (root / "05_bankroll.txt").write_text(
-            (
-                f"Independent compare path {getattr(record, 'path_id', '')}. "
-                f"Mock ${record.bankroll:.0f}. Not the lived ledger.\n"
-            ),
-            encoding="utf-8",
-        )
 
     copied: list[str] = []
     for src in extra_files or []:
@@ -129,7 +140,14 @@ def write_paper_pack(
         shutil.copy2(path, dest)
         copied.append(dest.name)
 
-    combo = write_combo_pdf(root)
+    combo = write_combo_pdf(
+        root,
+        title=(
+            f"Polymarket readout — {record.tournament_name or record.tournament_id}"
+            if pid == "polymarket"
+            else "Paper pack full readout"
+        ),
+    )
 
     ledger = {
         "tournament_id": record.tournament_id,
@@ -151,6 +169,62 @@ def write_paper_pack(
     )
     record.latest_pack = str(root)
     save_paper_book(record)
+    return root
+
+
+def write_polymarket_pack(
+    *,
+    event_id: str,
+    event_name: str = "",
+    run_id: str = "",
+    extra_files: list[Path] | None = None,
+    record: PaperBookFile | None = None,
+    directory: Path | None = None,
+) -> Path:
+    """Polymarket-only readout. Never includes lived Bovada or A/B compare books."""
+    if record is not None:
+        return write_paper_pack(
+            record,
+            extra_files=extra_files,
+            directory=directory,
+            run_id=run_id,
+        )
+    stamp = filename_stamp()
+    run = _safe(run_id or "pack")
+    pack_name = f"{_safe(event_id)}_{stamp}_{run}_polymarket"
+    root = (directory or packs_dir()) / pack_name
+    root.mkdir(parents=True, exist_ok=True)
+    copied: list[str] = []
+    for src in extra_files or []:
+        path = Path(src)
+        if not path.is_file() or "_paper_" in path.name.lower():
+            continue
+        dest = root / _field_pack_name(path)
+        shutil.copy2(path, dest)
+        copied.append(dest.name)
+    combo = write_combo_pdf(
+        root,
+        title=f"Polymarket readout — {event_name or event_id}",
+    )
+    lines = [
+        f"Polymarket pack — {event_name or event_id}",
+        "Mock / paper. Not real money. The system never places bets. No CLOB orders.",
+        "This readout is Polymarket only. Lived Bovada and A/B compare books are not in this folder.",
+        "",
+        "Open PDFs in Edge, Chrome, or Adobe — not as source in the editor.",
+        "",
+    ]
+    if combo:
+        lines.append("00_full_readout.pdf     Field / board from this snapshot (no paper tickets yet)")
+    lines += [
+        "00_README.txt           This index",
+        "",
+        "No polymarket paper book on this snapshot (empty ESPN field, or nobody cleared the screen).",
+        f"run {run_id or 'n/a'}   never_auto_bet=true   odds_book=polymarket",
+    ]
+    if copied:
+        lines.append("copied: " + ", ".join(copied))
+    (root / "00_README.txt").write_text("\n".join(lines) + "\n", encoding="utf-8")
     return root
 
 
@@ -214,14 +288,19 @@ def write_combo_pdf(
 
 
 def _pack_pdf_sources(root: Path) -> list[tuple[Path, str]]:
-    """Numbered PDFs in pack reading order. Skips the combo file itself."""
+    """Numbered PDFs in pack reading order. Bankroll is always last."""
     found: list[tuple[Path, str]] = []
+    bankroll: list[tuple[Path, str]] = []
     seen: set[str] = set()
     for name, label in _PACK_PDF_SECTIONS:
         path = root / name
-        if path.is_file():
+        if not path.is_file():
+            continue
+        seen.add(name.lower())
+        if "bankroll" in name.lower():
+            bankroll.append((path, label))
+        else:
             found.append((path, label))
-            seen.add(name.lower())
     for path in sorted(root.glob("*.pdf")):
         name = path.name
         if name.lower() in seen or name.lower() == COMBO_PDF.lower():
@@ -230,8 +309,12 @@ def _pack_pdf_sources(root: Path) -> list[tuple[Path, str]]:
             continue
         if name.startswith("00_"):
             continue
-        found.append((path, path.stem.replace("_", " ")))
         seen.add(name.lower())
+        if "bankroll" in name.lower():
+            bankroll.append((path, "Bankroll"))
+        else:
+            found.append((path, path.stem.replace("_", " ")))
+    found.extend(bankroll)
     return found
 
 
@@ -240,10 +323,11 @@ def export_paper_pack(
     *,
     extra_files: list[Path] | None = None,
     directory: Path | None = None,
+    path_id: str = "lived",
 ) -> Path:
     from golf_offshoot.strategy.paper_book import backfill_estimated_cashouts, load_paper_file
 
-    record = load_paper_file(event_id)
+    record = load_paper_file(event_id, path_id=path_id)
     if record is None:
         raise FileNotFoundError(f"no paper book locked for event {event_id}")
     record = backfill_estimated_cashouts(record)
@@ -266,13 +350,14 @@ def _readme(
         "",
     ]
     if combo:
-        lines.append("00_full_readout.pdf     Trigger first, then tickets + explanation + board + field + bankroll")
+        lines.append("00_full_readout.pdf     Trigger first, then tickets + explanation + board + field + leftover; bankroll last")
     lines += [
         "00_README.txt           This index",
         "00_trigger.pdf          This snapshot: sell / reallocate / partial sell / add / new / hold",
         "01_paper_tickets.pdf    Current paper tickets (at entry vs this live snapshot)",
         "02_bets_explained.pdf   Why names were taken, why the amounts, sells/reallocates",
         "03_leaderboard.pdf      ESPN place / to-par / thru at this live snapshot (not Win%)",
+        "04_leftover.pdf         Used vs unconstrained vs R1/R2/R3 leftover, fill tape, T10/Win climb (display)",
         "05_bankroll.pdf         Week moves, wins/losses, deposits, lifetime rollover",
         "04_movements.json       Machine ledger for this snapshot",
     ]
@@ -288,12 +373,22 @@ def _readme(
         f"Applied movements {len(record.movements)}   advice this snapshot {len(advice)}",
         f"Book {record.odds_book or 'n/a'}   lock run {record.locked_from_run_id or 'n/a'}",
         "",
+    ]
+    if (getattr(record, "path_id", None) or "lived") == "polymarket":
+        lines += [
+            "This pack is Polymarket only. Lived Bovada tickets and A/B compare books are not here.",
+            "No CLOB orders. Observation stubs are tracking, not fills, until paper-fill.",
+            "Fill tape (cost vs bid vs keep-to-win) is display. Offer vs cost is not a sell.",
+            "After Thursday, rerun live --book polymarket when the ESPN board moves.",
+            "",
+        ]
+    lines += [
         "00_full_readout.pdf is the one-file version of the numbered PDFs. The individual",
         "files stay in the folder. 03_leaderboard.pdf is the golf board at that live run;",
-        "03_field_live.pdf is the model Win% ranking. 05_bankroll.pdf is the week + lifetime",
-        "paper money readout. Wins add, losses subtract, deposits you record are added.",
-        "live auto-settles a finished open week before the next lock so new caps use the",
-        "rolled bankroll.",
+        "03_field_live.pdf is the model Win% ranking. 04_leftover.pdf is display only (not a ticket).",
+        "05_bankroll.pdf is the week + lifetime paper money readout. Wins add, losses subtract,",
+        "deposits you record are added. live auto-settles a finished open week before the next lock",
+        "so new caps use the rolled bankroll.",
         "",
         "01_paper_tickets.pdf splits At entry (booked ticket) from This live (this pack's",
         "snapshot — the numbers strategy used). n/a means that market had no posted coupon.",

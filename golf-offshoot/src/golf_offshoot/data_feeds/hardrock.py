@@ -37,11 +37,13 @@ _MISSING_KEY_NOTES = (
 
 
 def resolve_odds_book(raw: str | None = None) -> str:
-    """Return auto | bovada | hardrockbet. Unknown values stay auto (Bovada path)."""
+    """Return auto | bovada | hardrockbet | polymarket. Unknown values stay auto (Bovada path)."""
     text = (raw if raw is not None else os.environ.get("GOLF_ODDS_BOOK", "")).strip().lower()
     compact = text.replace("_", " ").replace("-", " ").replace(" ", "")
     if compact in {"hardrock", "hardrockbet", "hrb"}:
         return "hardrockbet"
+    if compact in {"polymarket", "pmkt"}:
+        return "polymarket"
     if compact == "bovada":
         return "bovada"
     return "auto"

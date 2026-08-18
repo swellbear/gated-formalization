@@ -11,6 +11,7 @@ def test_resolve_odds_book_aliases():
     assert resolve_odds_book("bovada") == "bovada"
     assert resolve_odds_book("auto") == "auto"
     assert resolve_odds_book("") == "auto"
+    assert resolve_odds_book("polymarket") == "polymarket"
 
 
 def test_hardrock_parser_uses_pinned_book_and_drops_unmatched():

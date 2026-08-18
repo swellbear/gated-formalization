@@ -80,17 +80,26 @@ def run_operating(
         odds_book=odds_book,
     )
     if open_book is None:
-        from golf_offshoot.strategy.paper_book import load_paper_book
+        from golf_offshoot.data_feeds.hardrock import resolve_odds_book
+        from golf_offshoot.strategy.paper_book import load_paper_book, load_paper_file
 
         tid = tournament.espn_event_id or tournament.tournament_id
-        open_book = load_paper_book(tid)
+        if tid and resolve_odds_book(odds_book) == "polymarket":
+            rec = load_paper_file(tid, path_id="polymarket")
+            open_book = rec.book if rec else None
+        else:
+            open_book = load_paper_book(tid) if tid else None
     snap = package_data_dir() / "snapshots"
     engine = make_engine(sims=sims)
+    tid = tournament.espn_event_id or tournament.tournament_id
+    from golf_offshoot.compare.paths import allowed_bets_for_quotes
+
     strat = StrategyConfig(
         enabled=enable_strategy,
         mode=strategy_mode,
         risk=risk,
         bankroll=bankroll,
+        allowed_bet_types=allowed_bets_for_quotes(tid, quotes),
     )
     pipe = GolfOffshootPipeline(engine=engine, snapshot_dir=snap, strategy_config=strat)
     previous = None
@@ -147,12 +156,21 @@ def run_strategy_modes(
     risk: RiskPreference = RiskPreference.CONSERVATIVE,
 ) -> dict[str, str]:
     from golf_offshoot.audit.shadow import append_shadow_advises
+    from golf_offshoot.compare.paths import allowed_bets_from_rows
     from golf_offshoot.strategy.engine import run_strategy
 
     out = {}
     operating = bool(result_base.audit.extra.get("operating"))
+    tid = result_base.tournament.espn_event_id or result_base.tournament.tournament_id
+    allowed = allowed_bets_from_rows(tid, result_base.ranked)
     for mode in (StrategyMode.PROTECT_PROFITS, StrategyMode.PRESS_EDGES, StrategyMode.STAY_SELECTIVE):
-        cfg = StrategyConfig(enabled=True, mode=mode, bankroll=bankroll, risk=risk)
+        cfg = StrategyConfig(
+            enabled=True,
+            mode=mode,
+            bankroll=bankroll,
+            risk=risk,
+            allowed_bet_types=allowed,
+        )
         rec = run_strategy(result_base.ranked, cfg, run_mode=result_base.mode)
         out[mode.value] = format_recommendation(rec)
         if operating:
@@ -275,12 +293,16 @@ def write_pressure_report(
             f"posted={r.posted_odds_by_bet.get(bet, float('nan')):.2f} "
             f"edge_fair={r.edge_by_bet.get(bet, 0):+.3f}"
             for r in rows
+            if horizon in r.probabilities.horizons
         ]
 
     t5_lines = _edge_block("top_5", Horizon.TOP_5)
     t10_lines = _edge_block("top_10", Horizon.TOP_10)
     t20_lines = _edge_block("top_20", Horizon.TOP_20)
     mc_lines = _edge_block("make_cut", Horizon.MAKE_CUT)
+    r1_lines = _edge_block("win_after_r1", Horizon.WIN_AFTER_R1)
+    r2_lines = _edge_block("win_after_r2", Horizon.WIN_AFTER_R2)
+    r3_lines = _edge_block("win_after_r3", Horizon.WIN_AFTER_R3)
     cov = result.audit.extra.get("market_coverage") or {}
     lines = [
         "# Pressure test — 2026 FedEx St. Jude Championship",
@@ -324,7 +346,8 @@ def write_pressure_report(
         "",
         "## Place / finish market coverage",
         "",
-        "Winner and place markets stay separated. Place prices are never synthesized from winner odds. "
+        "Winner, place, and after-round markets stay separated. "
+        "Place and after-round prices are never synthesized from winner odds. "
         "Opening lines are counted only when a distinct prematch coupon exists beside the current price.",
         "",
         "```json",
@@ -353,6 +376,24 @@ def write_pressure_report(
         "",
         "```",
         "\n".join(mc_lines),
+        "```",
+        "",
+        "### Win after round 1",
+        "",
+        "```",
+        "\n".join(r1_lines),
+        "```",
+        "",
+        "### Win after round 2",
+        "",
+        "```",
+        "\n".join(r2_lines),
+        "```",
+        "",
+        "### Win after round 3",
+        "",
+        "```",
+        "\n".join(r3_lines),
         "```",
         "",
         "## Coherence / edges / reliability",

@@ -20,6 +20,9 @@ class Horizon(str, Enum):
     TOP_10 = "top_10"
     TOP_5 = "top_5"
     WIN = "win"
+    WIN_AFTER_R1 = "win_after_r1"
+    WIN_AFTER_R2 = "win_after_r2"
+    WIN_AFTER_R3 = "win_after_r3"
 
 
 class BetType(str, Enum):
@@ -28,6 +31,31 @@ class BetType(str, Enum):
     TOP_10 = "top_10"
     TOP_20 = "top_20"
     MAKE_CUT = "make_cut"
+    WIN_AFTER_R1 = "win_after_r1"
+    WIN_AFTER_R2 = "win_after_r2"
+    WIN_AFTER_R3 = "win_after_r3"
+
+
+ROUND_LEADER_BETS = (BetType.WIN_AFTER_R1, BetType.WIN_AFTER_R2, BetType.WIN_AFTER_R3)
+ROUND_LEADER_HORIZONS = (
+    Horizon.WIN_AFTER_R1,
+    Horizon.WIN_AFTER_R2,
+    Horizon.WIN_AFTER_R3,
+)
+
+
+def horizon_for(bet: BetType | str) -> Horizon | None:
+    """BetType and Horizon share values. Unknown labels stay unmapped."""
+    key = bet.value if isinstance(bet, BetType) else str(bet or "")
+    try:
+        return Horizon(key)
+    except ValueError:
+        return None
+
+
+def is_round_leader_bet(bet: BetType | str) -> bool:
+    key = bet.value if isinstance(bet, BetType) else str(bet or "").lower()
+    return key in {b.value for b in ROUND_LEADER_BETS}
 
 
 class RunMode(str, Enum):

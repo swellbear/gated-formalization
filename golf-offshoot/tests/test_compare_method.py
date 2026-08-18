@@ -517,6 +517,23 @@ def test_next_event_compare_allows_place_markets():
     assert BetType.MAKE_CUT not in cfg.allowed_bet_types
 
 
+def test_quoted_round_markets_join_allowed_bets():
+    from golf_offshoot.compare.paths import allowed_bets_for_quotes
+    from golf_offshoot.models.schemas import MarketQuote
+
+    quote = MarketQuote(
+        player_id="x",
+        bet_type=BetType.WIN_AFTER_R1,
+        decimal_odds=12.0,
+        implied_raw=1.0 / 12.0,
+        book="polymarket",
+    )
+    bets = allowed_bets_for_quotes("401811963", [quote])
+    assert BetType.WIN in bets
+    assert BetType.WIN_AFTER_R1 in bets
+    assert allowed_bets_for_quotes("401811962", [quote]) == [BetType.WIN]
+
+
 def test_future_lock_takes_real_place_coupon_not_invented(tmp_path, monkeypatch):
     monkeypatch.setattr("golf_offshoot.strategy.paper_book.package_data_dir", lambda: tmp_path)
     with_place = _row(

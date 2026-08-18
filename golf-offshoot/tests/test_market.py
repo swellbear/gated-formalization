@@ -48,7 +48,8 @@ def test_opening_quotes_are_not_dejuiced_into_current_book():
             Horizon.WIN: HorizonProbability(horizon=Horizon.WIN, central=0.25, low=0.1, high=0.4),
         },
     )
-    edge, implied, posted = edges_for_player(bundle, snap)
+    edge, implied, posted, bids = edges_for_player(bundle, snap)
     assert posted["win"] == 5.0
+    assert bids == {}
     assert abs(implied["win"] - 1.0) < 1e-9  # single current quote, fair=1 after de-juice
 

@@ -5,6 +5,7 @@ from __future__ import annotations
 from dataclasses import dataclass
 
 from golf_offshoot.bayesian_engine.updates import ThetaState
+from golf_offshoot.config import DEFAULT_CUT_PLACE, DEFAULT_ROUNDS
 from golf_offshoot.market.odds import edges_for_player
 from golf_offshoot.models.enums import Horizon
 from golf_offshoot.models.schemas import (
@@ -26,6 +27,9 @@ def rank_field(
     borrow_notes: dict[str, list[str]] | None = None,
     field_notes: dict[str, str] | None = None,
     prev_theta: dict[str, float] | None = None,
+    n_rounds: int | None = None,
+    cut_place: int | None = None,
+    has_cut: bool = True,
 ) -> list[PlayerOutput]:
     flags = flags or {}
     borrow_notes = borrow_notes or {}
@@ -39,8 +43,9 @@ def rank_field(
         rel = reliability_for(p, prev_theta.get(pid), th.mean)
         edge, implied = ({}, {})
         posted = {}
+        bids = {}
         if market:
-            edge, implied, posted = edges_for_player(bundle, market)
+            edge, implied, posted, bids = edges_for_player(bundle, market)
         expl = explain_player(
             p,
             th,
@@ -57,6 +62,7 @@ def rank_field(
                 edge_by_bet=edge,
                 market_implied_by_bet=implied,
                 posted_odds_by_bet=posted,
+                bid_by_bet=bids,
                 open_questions=expl.open_questions,
                 flags=flags.get(pid, []),
                 explain=expl,
@@ -72,6 +78,14 @@ def rank_field(
     rows.sort(key=lambda r: r.probabilities.p(Horizon.WIN).central, reverse=True)
     for i, r in enumerate(rows, start=1):
         r.rank = i
+    from golf_offshoot.strategy.flip import attach_flip_heat
+
+    attach_flip_heat(
+        rows,
+        n_rounds=n_rounds or DEFAULT_ROUNDS,
+        cut_place=cut_place if cut_place is not None else DEFAULT_CUT_PLACE,
+        has_cut=has_cut,
+    )
     return rows
 
 
@@ -115,7 +129,11 @@ def column_index_items(*, show_move: bool = False, show_t10: bool = False) -> li
     items.extend(
         [
             ("Rel", "Trust in the inputs (0-1). Not how tight the Win range is."),
-            ("Flags", "Warnings. sparse_data and thin_sample_overconfidence are hard passes."),
+            (
+                "Flags",
+                "Warnings. sparse_data and thin_sample_overconfidence are hard passes. "
+                "course_history_missing is not (Rel haircut only).",
+            ),
             ("n/a", "Missing or unmatched. Not the same as zero."),
             ("Note", "Observation only. The system never auto-bets."),
         ]

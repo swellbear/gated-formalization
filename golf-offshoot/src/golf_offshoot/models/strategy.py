@@ -51,13 +51,7 @@ class StrategyConfig(BaseModel):
     risk: RiskPreference = RiskPreference.CONSERVATIVE
     bankroll: float = 1000.0
     allowed_bet_types: list[BetType] = Field(
-        default_factory=lambda: [
-            BetType.WIN,
-            BetType.TOP_5,
-            BetType.TOP_10,
-            BetType.TOP_20,
-            BetType.MAKE_CUT,
-        ]
+        default_factory=lambda: list(BetType)
     )
     controls: DrawdownControls = Field(default_factory=DrawdownControls)
     never_auto_bet: bool = True
@@ -82,6 +76,12 @@ class StrategyPosition(BaseModel):
     notes: str = ""
     user_recorded: bool = True
     proposed: bool = False
+    shares: float | None = None
+    fill_price: float | None = None
+    cost_usd: float | None = None
+    intent: str = "hold"
+    """hold = ride to Sunday. flip = sell at fill+20% if still green next live."""
+    flip_hurdle_hits: int = 0
 
 
 class PortfolioState(BaseModel):
@@ -127,6 +127,10 @@ class PositionMark(BaseModel):
     cashout_threshold: float | None = None
     cashout_beats_hold: bool | None = None
     mtm_is_cashout: bool = False
+    mtm_is_bid: bool = False
+    live_bid: float | None = None
+    shares: float | None = None
+    min_sell_price: float | None = None
     live_edge_unmarked: bool = False
 
 
@@ -157,6 +161,10 @@ class StrategyAction(BaseModel):
     cashout_quote: float | None = None
     hold_expected_payout: float | None = None
     cashout_threshold: float | None = None
+    live_bid: float | None = None
+    min_sell_price: float | None = None
+    shares: float | None = None
+    mtm_is_bid: bool = False
 
 
 class StrategyStatusSummary(BaseModel):

@@ -40,6 +40,27 @@ MAX_RANGE_WIDTH_TO_CONSIDER = 0.18  # on win-prob scale
 MIN_RELIABILITY_TO_CONSIDER = 0.45
 MAX_PORTFOLIO_CORR_TO_STACK = 0.72
 KELLY_FRACTION_CAP = 0.25  # of a full Kelly; suggestion only
+# End-of-round leader is not Winner. Floor / scale of posted Yes; cap is Winner 3pp.
+ROUND_LEADER_EDGE_FLOOR = {
+    "win_after_r1": 0.015,
+    "win_after_r2": 0.020,
+    "win_after_r3": 0.025,
+}
+ROUND_LEADER_EDGE_SCALE = {
+    "win_after_r1": 0.25,
+    "win_after_r2": 0.30,
+    "win_after_r3": 0.35,
+}
+ROUND_LEADER_RANGE_WIDTH = {
+    "win_after_r1": 0.28,
+    "win_after_r2": 0.24,
+    "win_after_r3": 0.20,
+}
+ROUND_LEADER_SIZE_FRAC = {
+    "win_after_r1": 0.35,
+    "win_after_r2": 0.55,
+    "win_after_r3": 0.75,
+}
 
 # Strategy layer — conservative defaults; never auto-bet
 STRATEGY_MAX_DAILY_LOSS_FRAC = 0.05
@@ -55,6 +76,15 @@ STRATEGY_WIDE_RANGE_BLOCK = 0.18
 STRATEGY_LOW_RELIABILITY_BLOCK = 0.40
 # User-typed cash-out must beat remaining win EV by this fraction (Stay Selective).
 STRATEGY_CASHOUT_BUFFER_FRAC = 0.10
+# Flip sleeve on listed Yes (Win / R1 / R2 / R3 / place if quoted).
+# Display leftover P(); NEW if P clears. Sell at fill * hurdle if still green next live.
+FLIP_HURDLE = 1.20
+FLIP_NEW_MIN_P = 0.20
+FLIP_SIZE_FRAC = 0.25  # of the Winner unit
+FLIP_MAX_STAKE_FRAC = 0.01  # of bankroll
+FLIP_NEW_MAX = 3  # per listed market, including open flip fills
+FLIP_NEW_MAX_TOTAL = 6  # open flips on the book, not 6 new names every live
+FLIP_HEAT_N_SIMS = 2000
 # Paper lock: names that fail the 3pp posted screen but still have +posted_edge.
 PAPER_OBSERVATION_STAKE_FRAC = 0.25
 # Paper reduce/exit without a typed Open Bets quote: keep this fraction of the

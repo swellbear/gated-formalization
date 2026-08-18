@@ -3,6 +3,8 @@ from golf_offshoot.strategy.paper_book import PaperBookFile, PaperMovement
 from golf_offshoot.strategy.paper_trigger import (
     group_trigger_actions,
     market_label,
+    pre_tee_trigger_note,
+    sanitize_pre_tee_advice,
     trigger_document,
     trigger_headline,
     trigger_movements,
@@ -105,3 +107,52 @@ def test_trigger_page_is_name_and_action_only():
     assert "EdgeW" not in text
     assert "entry edge" not in text
     assert market_label("top_10") == "Top 10"
+
+
+def test_pre_tee_sanitize_converts_collapse_sell_to_hold():
+    exit_mv = _mv(kind="exit", name="Eric Cole", delta=-2.19)
+    held = sanitize_pre_tee_advice([exit_mv], rows=None)
+    assert held[0].kind == "hold"
+    assert held[0].stake_delta == 0.0
+    assert "has not started" in held[0].reason_plain.lower()
+    assert pre_tee_trigger_note(held)
+    text = trigger_document(
+        PaperBookFile(
+            tournament_id="401811963",
+            tournament_name="BMW Championship",
+            bankroll=250,
+            book=PortfolioState(bankroll=250),
+        ),
+        advice=held,
+    )
+    assert "SELL" not in text
+    assert "HOLD" in text
+    assert "Tournament has not started" in text
+
+
+def test_pre_tee_sanitize_keeps_typed_cashout_sell():
+    typed = _mv(kind="exit", name="Eric Cole", delta=-2.19).model_copy(
+        update={"cashout_quote": 12.4, "cashout_estimated": False, "mtm_is_bid": False}
+    )
+    out = sanitize_pre_tee_advice([typed], rows=None)
+    assert out[0].kind == "exit"
+
+
+def test_pre_tee_sanitize_holds_estimated_or_bid_sell():
+    estimated = _mv(kind="exit", name="Eric Cole", delta=-2.19).model_copy(
+        update={"cashout_quote": 1.53, "cashout_estimated": True}
+    )
+    bid = _mv(kind="exit", name="Eric Cole", delta=-2.19).model_copy(
+        update={"cashout_quote": 1.53, "mtm_is_bid": True}
+    )
+    assert sanitize_pre_tee_advice([estimated], rows=None)[0].kind == "hold"
+    assert sanitize_pre_tee_advice([bid], rows=None)[0].kind == "hold"
+
+
+def test_pre_tee_sanitize_leaves_sell_once_board_exists():
+    from types import SimpleNamespace
+
+    board = [SimpleNamespace(live_holes_completed=9, live_place=4, live_score_to_par=-2)]
+    exit_mv = _mv(kind="exit", name="Eric Cole", delta=-2.19)
+    out = sanitize_pre_tee_advice([exit_mv], rows=board)
+    assert out[0].kind == "exit"

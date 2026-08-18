@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 
-from golf_offshoot.models.enums import BetType, Horizon
+from golf_offshoot.models.enums import BetType, horizon_for
 from golf_offshoot.models.schemas import MarketQuote, MarketSnapshot, ProbabilityBundle
 
 
@@ -32,6 +32,39 @@ def fill_quote(q: MarketQuote) -> MarketQuote:
 
 def is_current_quote(q: MarketQuote) -> bool:
     return str(getattr(q, "line_role", "current") or "current") != "opening"
+
+
+# Coherent Yes-ask sums: Win~1, T5~5, T10~10, T20~20, lead-after-N~1.
+# Caps are ~2x that. Win allows more because live outrights already run ~2.5.
+# A Gamma place/round-leader book summing to 16-40 is not a ticketable coupon.
+YES_ASK_SUM_CAP: dict[BetType, float] = {
+    BetType.WIN: 4.0,
+    BetType.TOP_5: 12.0,
+    BetType.TOP_10: 18.0,
+    BetType.TOP_20: 32.0,
+    BetType.MAKE_CUT: 90.0,
+    BetType.WIN_AFTER_R1: 3.0,
+    BetType.WIN_AFTER_R2: 3.0,
+    BetType.WIN_AFTER_R3: 3.0,
+}
+
+
+def yes_ask_sum(decimals: list[float | None]) -> float:
+    total = 0.0
+    for d in decimals:
+        if d is not None and d > 1.0:
+            total += 1.0 / float(d)
+    return total
+
+
+def yes_book_is_ticketable(bet: BetType, ask_sum: float) -> bool:
+    """False when the Yes book is too juiced to treat as that market."""
+    if ask_sum <= 0:
+        return False
+    cap = YES_ASK_SUM_CAP.get(bet)
+    if cap is None:
+        return True
+    return ask_sum <= cap
 
 
 def remove_overround(quotes: list[MarketQuote], bet_type: BetType) -> tuple[list[MarketQuote], float]:
@@ -96,34 +129,27 @@ def build_market_snapshot(
     )
 
 
-_BT_TO_H = {
-    BetType.WIN: Horizon.WIN,
-    BetType.TOP_5: Horizon.TOP_5,
-    BetType.TOP_10: Horizon.TOP_10,
-    BetType.TOP_20: Horizon.TOP_20,
-    BetType.MAKE_CUT: Horizon.MAKE_CUT,
-}
-
-
 def edges_for_player(
     bundle: ProbabilityBundle,
     market: MarketSnapshot,
-) -> tuple[dict[str, float], dict[str, float], dict[str, float]]:
-    """Return (edge_vs_fair, implied_fair, posted_decimal).
+) -> tuple[dict[str, float], dict[str, float], dict[str, float], dict[str, float]]:
+    """Return (edge_vs_fair, implied_fair, posted_decimal, yes_bid).
 
     Display edge is model − de-juiced market. Actionable +EV is model vs posted
-    1/decimal, enforced in the decision layer.
+    1/decimal, enforced in the decision layer. Yes bid is the sell side when a
+    book posts one (Polymarket bestBid); never synthesized from the ask.
     """
     edge: dict[str, float] = {}
     implied: dict[str, float] = {}
     posted: dict[str, float] = {}
+    bids: dict[str, float] = {}
     for q in market.quotes:
         if q.player_id != bundle.player_id:
             continue
         if not is_current_quote(q):
             continue
-        h = _BT_TO_H.get(q.bet_type)
-        if h is None:
+        h = horizon_for(q.bet_type)
+        if h is None or h not in bundle.horizons:
             continue
         mkt = q.implied_fair if q.implied_fair is not None else q.implied_raw
         if mkt is None:
@@ -133,4 +159,6 @@ def edges_for_player(
         edge[q.bet_type.value] = float(model_p - mkt)
         if q.decimal_odds and q.decimal_odds > 1.0:
             posted[q.bet_type.value] = float(q.decimal_odds)
-    return edge, implied, posted
+        if q.bid_raw is not None and 0.0 < float(q.bid_raw) < 1.0:
+            bids[q.bet_type.value] = float(q.bid_raw)
+    return edge, implied, posted, bids

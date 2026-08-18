@@ -2,11 +2,11 @@
 
 from __future__ import annotations
 
+from golf_offshoot.decision.layer import max_range_width_for_bet
 from golf_offshoot.models.enums import (
-    BetType,
-    Horizon,
     StrategyActionKind,
     StrategyMode,
+    horizon_for,
 )
 from golf_offshoot.models.schemas import FieldSnapshot, PlayerOutput
 from golf_offshoot.models.strategy import (
@@ -19,7 +19,16 @@ from golf_offshoot.models.strategy import (
 )
 from golf_offshoot.strategy import explanations as X
 from golf_offshoot.strategy.builder import build_pre_tournament
-from golf_offshoot.strategy.correlation import concentrations, would_raise_cut_stack
+from golf_offshoot.strategy.flip import (
+    board_progress_holes,
+    build_flip_new,
+    flip_dead,
+    flip_fail_holes,
+    flip_hurdle_dollars,
+    is_flip,
+    position_is_fill,
+)
+from golf_offshoot.strategy.correlation import concentrations, would_raise_cut_stack, would_stack_win_proxy
 from golf_offshoot.strategy.cashout import compare_cashout
 from golf_offshoot.strategy.path import mark_position
 from golf_offshoot.strategy.sizing import (
@@ -28,14 +37,6 @@ from golf_offshoot.strategy.sizing import (
     suggested_stake,
     uncertainty_blocks_action,
 )
-
-_H = {
-    BetType.WIN: Horizon.WIN,
-    BetType.TOP_5: Horizon.TOP_5,
-    BetType.TOP_10: Horizon.TOP_10,
-    BetType.TOP_20: Horizon.TOP_20,
-    BetType.MAKE_CUT: Horizon.MAKE_CUT,
-}
 
 
 def _reduce_frac(config: StrategyConfig, mark: PositionMark) -> float:
@@ -51,7 +52,23 @@ def _cashout_fields(mark: PositionMark) -> dict:
         "cashout_quote": mark.cashout_quote,
         "hold_expected_payout": mark.hold_expected_payout,
         "cashout_threshold": mark.cashout_threshold,
+        "live_bid": mark.live_bid,
+        "min_sell_price": mark.min_sell_price,
+        "shares": mark.shares,
+        "mtm_is_bid": mark.mtm_is_bid,
     }
+
+
+def golf_has_started(rows: list[PlayerOutput]) -> bool:
+    """True once anyone has a board mark. Blank pre-tee field is not in-play."""
+    for row in rows:
+        if int(row.live_holes_completed or 0) > 0:
+            return True
+        if row.live_place is not None:
+            return True
+        if row.live_score_to_par is not None:
+            return True
+    return False
 
 
 def _hold_reason(mark: PositionMark) -> str:
@@ -60,12 +77,149 @@ def _hold_reason(mark: PositionMark) -> str:
     return X.hold_edge_intact()
 
 
+def _action_for_flip(
+    mark: PositionMark,
+    pos: StrategyPosition,
+    *,
+    golf_started: bool,
+    row: PlayerOutput | None,
+    progress_holes: int,
+) -> StrategyAction:
+    """Fill+20% pop, card fail clock, dead after a board mark. Not keep-to-win."""
+    name = pos.player_name
+    hurdle = flip_hurdle_dollars(pos)
+    offer = mark.cashout_quote
+    green = offer is not None and hurdle > 0 and float(offer) + 1e-9 >= hurdle
+    holes = int(getattr(row, "live_holes_completed", 0) or 0) if row is not None else 0
+    details = [
+        f"flip hurdle ${hurdle:.2f} (fill+20%)",
+        f"offer ${offer:.2f}" if offer is not None else "offer n/a",
+        "not keep-to-win",
+    ]
+    if mark.mtm_is_bid:
+        details.append("MTM is shares x Polymarket bestBid; not a CLOB order")
+
+    if not golf_started:
+        pos.flip_hurdle_hits = 0
+        return StrategyAction(
+            action_id=new_id("act"),
+            kind=StrategyActionKind.HOLD,
+            player_id=pos.player_id,
+            player_name=name,
+            bet_type=pos.bet_type,
+            position_id=pos.position_id,
+            reason=X.pre_tee_hold(),
+            reasons_detail=details + ["tournament has not started"],
+            **_cashout_fields(mark),
+        )
+
+    if flip_dead(row):
+        pos.flip_hurdle_hits = 0
+        return StrategyAction(
+            action_id=new_id("act"),
+            kind=StrategyActionKind.EXIT,
+            player_id=pos.player_id,
+            player_name=name,
+            bet_type=pos.bet_type,
+            position_id=pos.position_id,
+            suggested_stake_delta=-pos.stake,
+            suggested_unit=pos.stake,
+            reason=X.flip_dead(),
+            reasons_detail=details + ["exit at bid"],
+            **_cashout_fields(mark),
+        )
+
+    if not position_is_fill(pos):
+        pos.flip_hurdle_hits = 0
+        return StrategyAction(
+            action_id=new_id("act"),
+            kind=StrategyActionKind.HOLD,
+            player_id=pos.player_id,
+            player_name=name,
+            bet_type=pos.bet_type,
+            position_id=pos.position_id,
+            reason=X.flip_waiting_fill(),
+            reasons_detail=details,
+            **_cashout_fields(mark),
+        )
+
+    if green and int(getattr(pos, "flip_hurdle_hits", 0) or 0) >= 1:
+        return StrategyAction(
+            action_id=new_id("act"),
+            kind=StrategyActionKind.EXIT,
+            player_id=pos.player_id,
+            player_name=name,
+            bet_type=pos.bet_type,
+            position_id=pos.position_id,
+            suggested_stake_delta=-pos.stake,
+            suggested_unit=pos.stake,
+            reason=X.flip_take_pop(),
+            reasons_detail=details + ["TAKE THE POP"],
+            **_cashout_fields(mark),
+        )
+
+    if green:
+        pos.flip_hurdle_hits = 1
+        return StrategyAction(
+            action_id=new_id("act"),
+            kind=StrategyActionKind.HOLD,
+            player_id=pos.player_id,
+            player_name=name,
+            bet_type=pos.bet_type,
+            position_id=pos.position_id,
+            reason=X.flip_hurdle_armed(),
+            reasons_detail=details + ["first green; confirm next live"],
+            **_cashout_fields(mark),
+        )
+
+    pos.flip_hurdle_hits = 0
+    fail_at = flip_fail_holes(pos.bet_type)
+    if max(progress_holes, holes) >= fail_at:
+        return StrategyAction(
+            action_id=new_id("act"),
+            kind=StrategyActionKind.EXIT,
+            player_id=pos.player_id,
+            player_name=name,
+            bet_type=pos.bet_type,
+            position_id=pos.position_id,
+            suggested_stake_delta=-pos.stake,
+            suggested_unit=pos.stake,
+            reason=X.flip_failed(),
+            reasons_detail=details + [f"FLIP FAILED at {fail_at} holes"],
+            **_cashout_fields(mark),
+        )
+
+    return StrategyAction(
+        action_id=new_id("act"),
+        kind=StrategyActionKind.HOLD,
+        player_id=pos.player_id,
+        player_name=name,
+        bet_type=pos.bet_type,
+        position_id=pos.position_id,
+        reason=X.flip_hold(),
+        reasons_detail=details,
+        **_cashout_fields(mark),
+    )
+
+
 def _action_for_open(
     mark: PositionMark,
     pos: StrategyPosition,
     config: StrategyConfig,
     cooling: bool,
+    *,
+    golf_started: bool = True,
+    row: PlayerOutput | None = None,
+    progress_holes: int = 0,
 ) -> StrategyAction:
+    if is_flip(pos):
+        return _action_for_flip(
+            mark,
+            pos,
+            golf_started=golf_started,
+            row=row,
+            progress_holes=progress_holes,
+        )
     name = pos.player_name
     details = [
         f"entry edge {mark.entry_edge:+.3f}",
@@ -83,7 +237,9 @@ def _action_for_open(
             mode=config.mode,
         )
         details.extend(cmp.notes)
-        if mark.mtm_is_cashout:
+        if mark.mtm_is_bid:
+            details.append("MTM is shares x Polymarket bestBid; not a CLOB order")
+        elif mark.mtm_is_cashout:
             details.append("MTM is the typed cash-out, not the odds-ratio proxy")
         if cmp.beats_hold:
             return StrategyAction(
@@ -138,7 +294,9 @@ def _action_for_open(
                     reasons_detail=details + ["Protect Profits: do not add into a live move"],
                     **_cashout_fields(mark),
                 )
-            block = uncertainty_blocks_action(mark.range_width, mark.reliability)
+            block = uncertainty_blocks_action(
+                mark.range_width, mark.reliability, max_width=max_range_width_for_bet(pos.bet_type)
+            )
             if block and config.mode != StrategyMode.PRESS_EDGES:
                 return StrategyAction(
                     action_id=new_id("act"),
@@ -181,6 +339,22 @@ def _action_for_open(
             reasons_detail=details + extra,
             uncertainty_warning=X.noisy_inputs(mark) if mark.reliability < 0.45 else None,
             **_cashout_fields(mark),
+        )
+
+    if not golf_started:
+        extra = []
+        if mark.original_edge_collapsed:
+            extra.append("edge vs market moved, but golf has not started")
+        return StrategyAction(
+            action_id=new_id("act"),
+            kind=StrategyActionKind.HOLD,
+            player_id=pos.player_id,
+            player_name=name,
+            bet_type=pos.bet_type,
+            position_id=pos.position_id,
+            reason=X.pre_tee_hold(),
+            reasons_detail=details + extra,
+            uncertainty_warning=X.noisy_inputs(mark) if mark.reliability < 0.45 else None,
         )
 
     if mark.original_edge_collapsed:
@@ -261,7 +435,9 @@ def _action_for_open(
             )
         # Press: hold runner; add only if live edge improved (handled below)
         if config.mode == StrategyMode.PRESS_EDGES and mark.live_edge_improved:
-            block = uncertainty_blocks_action(mark.range_width, mark.reliability)
+            block = uncertainty_blocks_action(
+                mark.range_width, mark.reliability, max_width=max_range_width_for_bet(pos.bet_type)
+            )
             if block:
                 return StrategyAction(
                     action_id=new_id("act"),
@@ -321,7 +497,9 @@ def _action_for_open(
                 reason=X.live_improved_generic(),
                 reasons_detail=details + ["Protect Profits: do not add into a live move"],
             )
-        block = uncertainty_blocks_action(mark.range_width, mark.reliability)
+        block = uncertainty_blocks_action(
+            mark.range_width, mark.reliability, max_width=max_range_width_for_bet(pos.bet_type)
+        )
         if block and config.mode != StrategyMode.PRESS_EDGES:
             return StrategyAction(
                 action_id=new_id("act"),
@@ -372,6 +550,8 @@ def live_manage(
 ) -> tuple[list[StrategyAction], list[StrategyPosition], list[PositionMark]]:
     by_id = {r.player_id: r for r in rows}
     quotes = cashout_quotes or {}
+    golf_started = golf_has_started(rows)
+    progress_holes = board_progress_holes(rows)
     marks = [
         mark_position(
             p,
@@ -385,12 +565,22 @@ def live_manage(
     actions: list[StrategyAction] = []
 
     for pos, mark in zip(book.positions, marks):
-        actions.append(_action_for_open(mark, pos, config, cooling))
+        actions.append(
+            _action_for_open(
+                mark,
+                pos,
+                config,
+                cooling,
+                golf_started=golf_started,
+                row=by_id.get(pos.player_id),
+                progress_holes=progress_holes,
+            )
+        )
 
     # concentration: reduce worst live-edge cut-risk stack
     conc = concentrations(book.positions, by_id, field)
     cut = next((c for c in conc if c.axis == "cut_risk"), None)
-    if cut and cut.fraction_of_book > scaled_cut_cap(config):
+    if golf_started and cut and cut.fraction_of_book > scaled_cut_cap(config):
         worst = None
         worst_e = 9.0
         for pos, mark in zip(book.positions, marks):
@@ -428,8 +618,14 @@ def live_manage(
     ):
         if (pos.player_id, pos.bet_type) in held_keys:
             continue
+        if is_flip(pos):
+            continue
+        if would_stack_win_proxy(book.positions + proposed, pos.player_id, pos.bet_type):
+            continue
         cap = remaining_exposure_capacity(open_exp, config.bankroll, config)
         if cap <= 0:
+            if not golf_started:
+                continue
             if not marks:
                 continue
             donor = min(marks, key=lambda m: m.live_edge if m.live_edge is not None else 9.0)
@@ -466,8 +662,9 @@ def live_manage(
             actions.append(act)
             continue
         row = by_id.get(pos.player_id)
-        if row:
-            hp = row.probabilities.p(_H[pos.bet_type])
+        h = horizon_for(pos.bet_type)
+        if row and h is not None and h in row.probabilities.horizons:
+            hp = row.probabilities.p(h)
             stake, warn = suggested_stake(
                 bankroll=config.bankroll,
                 model_p=hp.central,
@@ -477,6 +674,7 @@ def live_manage(
                 reliability=row.reliability.score,
                 config=config,
                 remaining_capacity=cap,
+                bet_type=pos.bet_type,
             )
             if stake <= 0:
                 continue
@@ -487,6 +685,28 @@ def live_manage(
                     "suggested_unit": stake,
                     "uncertainty_warning": warn,
                     "reason": X.fresh_edge() if not warn else warn,
+                }
+            )
+        actions.append(act)
+        proposed.append(pos)
+        open_exp += pos.stake
+        held_keys.add((pos.player_id, pos.bet_type))
+
+    flip_actions, flip_pos = build_flip_new(
+        rows, config, book.positions + proposed, field
+    )
+    for act, pos in zip(flip_actions, flip_pos):
+        if (pos.player_id, pos.bet_type) in held_keys:
+            continue
+        cap = remaining_exposure_capacity(open_exp, config.bankroll, config)
+        if cap <= 0:
+            break
+        if pos.stake > cap:
+            pos = pos.model_copy(update={"stake": cap})
+            act = act.model_copy(
+                update={
+                    "suggested_stake_delta": pos.stake,
+                    "suggested_unit": pos.stake,
                 }
             )
         actions.append(act)

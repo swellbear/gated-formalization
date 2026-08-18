@@ -21,6 +21,10 @@ def concentrated_cut() -> str:
     return "Exposure too concentrated in cut-risk players"
 
 
+def win_proxy_stack() -> str:
+    return "Already holding Win, R2 leader, or R3 leader on this player"
+
+
 def range_too_wide() -> str:
     return "Range still too wide to justify adding"
 
@@ -43,6 +47,10 @@ def exposure_cap() -> str:
 
 def fresh_edge() -> str:
     return "Fresh model-vs-market edge that is not already in the book"
+
+
+def pre_tee_hold() -> str:
+    return "Tournament has not started; quote drift is not a sell"
 
 
 def hold_edge_intact() -> str:
@@ -78,3 +86,37 @@ def noisy_inputs(mark: PositionMark | None = None) -> str:
     if mark and mark.reliability < 0.45:
         return "Strong uncertainty: recommendation rests on still-noisy inputs"
     return "Strong uncertainty: inputs are still noisy"
+
+
+def flip_heat_new() -> str:
+    return (
+        "Flip heat: chance this card's early model % clears ask plus spread. "
+        "Small Yes, not hold-to-settle, one flip per player"
+    )
+
+
+def flip_take_pop() -> str:
+    return "Take the pop: offer still clears fill plus 20% on a following live run"
+
+
+def flip_hurdle_armed() -> str:
+    return "Flip hurdle is green this live; confirm still green on the next live run"
+
+
+def flip_failed() -> str:
+    return (
+        "Flip failed: this card's hole clock ran out and fill plus 20% never "
+        "cleared; exit at bid"
+    )
+
+
+def flip_dead() -> str:
+    return "Flip is dead (WD or missed cut) after a board mark; exit at bid"
+
+
+def flip_waiting_fill() -> str:
+    return "Flip sleeve waiting for a paper-fill; quote drift is not a sell"
+
+
+def flip_hold() -> str:
+    return "Flip sleeve: offer has not cleared fill plus 20%; not keep-to-win"

@@ -140,3 +140,56 @@ def would_raise_cut_stack(
     if cut_risk(cand) >= 0.40:
         cut_exp += candidate_stake
     return (cut_exp / total) > cap
+
+
+_WIN_PROXY_BETS = {BetType.WIN, BetType.WIN_AFTER_R2, BetType.WIN_AFTER_R3}
+_ROUND_LEADER_STACK = {
+    BetType.WIN_AFTER_R1,
+    BetType.WIN_AFTER_R2,
+    BetType.WIN_AFTER_R3,
+}
+
+
+def would_stack_win_proxy(
+    positions: list[StrategyPosition],
+    player_id: str,
+    bet: BetType,
+    *,
+    intent: str = "hold",
+) -> bool:
+    """Skip NEW Win / R2 / R3 if that player already has one of those. R1 may sit beside hold Win.
+
+    Flip Win does not sit beside Win or any R1/R2/R3 coupon. R1 does not sit beside a flip Win.
+    """
+    held_pos = [
+        p
+        for p in positions
+        if p.player_id == player_id and float(p.stake or 0) > 0
+    ]
+    held = {p.bet_type for p in held_pos}
+    any_flip = any((getattr(p, "intent", "hold") or "hold").lower() == "flip" for p in held_pos)
+    flip_win = any(
+        (getattr(p, "intent", "hold") or "hold").lower() == "flip" and p.bet_type == BetType.WIN
+        for p in held_pos
+    )
+    if (intent or "hold").lower() == "flip":
+        return bool(held_pos)
+    if any_flip and bet in ({BetType.WIN} | _ROUND_LEADER_STACK):
+        return True
+    if bet == BetType.WIN_AFTER_R1:
+        return flip_win
+    if bet not in _WIN_PROXY_BETS:
+        return False
+    return bool(held & _WIN_PROXY_BETS)
+
+
+def would_stack_flip(
+    positions: list[StrategyPosition],
+    player_id: str,
+    bet: BetType | None = None,
+) -> bool:
+    """One flip per player. Any open ticket on that name blocks a new flip."""
+    del bet
+    return any(
+        p.player_id == player_id and float(p.stake or 0) > 0 for p in positions
+    )

@@ -17,12 +17,39 @@ from golf_offshoot.pipeline import GolfOffshootPipeline
 from golf_offshoot.ranking.display import format_table, movement_note
 from golf_offshoot.ranking.leaderboard import format_leaderboard
 from golf_offshoot.ranking.leftover import format_leftover_callout
+from golf_offshoot.operator_hints import (
+    is_empty_field,
+    pinned_event_hint,
+    pre_thursday_opening_warning,
+)
 from golf_offshoot.strategy.engine import format_recommendation
 
 DEMO_BANNER = (
     "OFFLINE DEMO — MOCK DATA. Not live, not historical, not for rankings in the "
     "operating path. Mocks are allowed here only."
 )
+
+
+def _event_is_settled(event_id: str | None) -> bool:
+    if not event_id:
+        return False
+    from golf_offshoot.strategy.paper_book import load_paper_file
+
+    rec = load_paper_file(event_id)
+    return rec is not None and rec.settled_at is not None
+
+
+def _print_operator_hints(result, *, pinned_id: str | None, settled: bool) -> None:
+    note = pinned_event_hint(pinned_id, settled=settled)
+    if note:
+        print(note)
+    warn = pre_thursday_opening_warning(
+        result.tournament.start_date,
+        int(result.audit.extra.get("opening_quotes") or 0),
+        odds_book=str(result.audit.extra.get("odds_book") or ""),
+    )
+    if warn:
+        print(warn)
 
 
 def _configure_stdio() -> None:
@@ -47,7 +74,7 @@ def main(argv: list[str] | None = None) -> int:
         "command",
         nargs="?",
         default="demo",
-        choices=["demo", "board", "explain", "strategy", "ingest", "calibrate", "pressure-test", "live", "shadow", "paper-export", "paper-ledger", "paper-deposit", "paper-withdraw", "paper-settle", "compare-replay"],
+        choices=["demo", "board", "explain", "strategy", "ingest", "calibrate", "pressure-test", "live", "watch", "shadow", "paper-export", "paper-ledger", "paper-deposit", "paper-withdraw", "paper-settle", "paper-fill", "compare-replay"],
     )
     parser.add_argument("--course-type", default="parkland")
     parser.add_argument("--player", default="p01")
@@ -64,8 +91,8 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument(
         "--book",
         default="auto",
-        choices=["auto", "bovada", "hardrockbet"],
-        help="odds book for ingest/live/pressure-test (auto=Odds API then Bovada; hardrockbet never falls back to Bovada)",
+        choices=["auto", "bovada", "hardrockbet", "polymarket"],
+        help="odds book for ingest/live/watch/pressure-test/paper-ledger/paper-deposit/paper-withdraw/paper-export (auto=Odds API then Bovada; polymarket never writes ledger.json)",
     )
     parser.add_argument(
         "--lock-paper",
@@ -95,9 +122,63 @@ def main(argv: list[str] | None = None) -> int:
         default=None,
         dest="cash_out",
         help=(
-            'live: user-typed sportsbook cash-out dollars for this snapshot, '
-            'e.g. "Kurt Kitayama=12.40,Tommy Fleetwood=7.10". Not scraped. Optional.'
+            'live: user-typed cash-out dollars for this snapshot, '
+            'e.g. "Kurt Kitayama=12.40,Tommy Fleetwood=7.10". '
+            "Not scraped. Optional. On --book polymarket overrides shares x bestBid."
         ),
+    )
+    parser.add_argument("--shares", type=float, default=0.0, help="paper-fill: Yes shares received")
+    parser.add_argument(
+        "--fill",
+        type=float,
+        default=0.0,
+        help="paper-fill: Yes fill price in (0, 1), e.g. 0.034",
+    )
+    parser.add_argument(
+        "--cost",
+        type=float,
+        default=None,
+        help="paper-fill: USDC spent (default shares x fill)",
+    )
+    parser.add_argument(
+        "--market",
+        default="win",
+        help="paper-fill: win | top_5 | top_10 | top_20 | make_cut | win_after_r1 | win_after_r2 | win_after_r3",
+    )
+    parser.add_argument(
+        "--intent",
+        default=None,
+        help="paper-fill: hold | flip (default hold on new tickets; keep existing on replace)",
+    )
+    parser.add_argument(
+        "--interval",
+        type=int,
+        default=600,
+        help="watch: seconds between in-play ticks (default 600)",
+    )
+    parser.add_argument(
+        "--pre-tee-interval",
+        type=int,
+        default=1800,
+        dest="pre_tee_interval",
+        help="watch: seconds between ticks before anyone is on the ESPN board (default 1800)",
+    )
+    parser.add_argument(
+        "--once",
+        action="store_true",
+        help="watch: one tick then exit (use this to confirm ntfy)",
+    )
+    parser.add_argument(
+        "--dry-run",
+        action="store_true",
+        dest="dry_run",
+        help="watch: compute the trigger and print; do not POST to ntfy",
+    )
+    parser.add_argument(
+        "--ntfy-topic",
+        default=None,
+        dest="ntfy_topic",
+        help="watch: ntfy topic (default NTFY_TOPIC from .env)",
     )
     args = parser.parse_args(argv)
 
@@ -114,6 +195,8 @@ def main(argv: list[str] | None = None) -> int:
         return _cmd_pressure(args)
     if args.command == "live":
         return _cmd_live(args)
+    if args.command == "watch":
+        return _cmd_watch(args)
     if args.command == "shadow":
         return _cmd_shadow(args)
     if args.command == "paper-export":
@@ -126,6 +209,8 @@ def main(argv: list[str] | None = None) -> int:
         return _cmd_paper_withdraw(args)
     if args.command == "paper-settle":
         return _cmd_paper_settle(args)
+    if args.command == "paper-fill":
+        return _cmd_paper_fill(args)
     if args.command == "compare-replay":
         return _cmd_compare_replay(args)
 
@@ -206,6 +291,11 @@ def _cmd_ingest(args) -> int:
     _print_table_export(result)
     print()
     print(format_leftover_callout(result))
+    _print_operator_hints(
+        result,
+        pinned_id=args.event or None,
+        settled=_event_is_settled(result.tournament.espn_event_id or result.tournament.tournament_id),
+    )
     return 0
 
 
@@ -284,6 +374,11 @@ def _cmd_pressure(args) -> int:
     paper = load_paper_book(tid) if tid else None
     print("\n=== leftover (live) ===")
     print(format_leftover_callout(live, paper))
+    _print_operator_hints(
+        live,
+        pinned_id=event_id or (live.tournament.espn_event_id or live.tournament.tournament_id),
+        settled=_event_is_settled(live.tournament.espn_event_id or live.tournament.tournament_id),
+    )
     inv_raw = pre.audit.extra.get("source_inventory") or []
     inv = [SourceInventoryItem.model_validate(x) for x in inv_raw]
     report = write_pressure_report(
@@ -299,9 +394,196 @@ def _cmd_pressure(args) -> int:
     return 0
 
 
+def _cmd_live_polymarket(args) -> int:
+    """Polymarket-only live + readout. Never loads lived Bovada or the A/B batch pack."""
+    from golf_offshoot.compare.apply import maybe_apply_paper
+    from golf_offshoot.compare.law import METHOD_LAW_V1
+    from golf_offshoot.compare.paths import allowed_bets_from_rows
+    from golf_offshoot.data_feeds.polymarket import POLYMARKET_PATH_ID
+    from golf_offshoot.operating import run_operating
+    from golf_offshoot.models.enums import BetType, ROUND_LEADER_BETS
+    from golf_offshoot.strategy.paper_book import (
+        EmptyFieldLockError,
+        advice_from_recommendation,
+        format_paper_book,
+        load_paper_file,
+        lock_paper_positions,
+        paper_candidate_slots,
+        save_paper_book,
+        void_unlisted_paper_bets,
+    )
+    from golf_offshoot.strategy.paper_pack import write_polymarket_pack
+
+    if args.compare_method:
+        print("compare-method is the Bovada A/B pack; this run writes a Polymarket-only readout")
+    event_hint = args.event or None
+    existing = load_paper_file(event_hint, path_id=POLYMARKET_PATH_ID) if event_hint else None
+    if existing is not None:
+        existing, dropped = void_unlisted_paper_bets(
+            existing,
+            {BetType.WIN, *ROUND_LEADER_BETS},
+            reason_plain=(
+                "Not listed on Polymarket US golf futures. Voided at cost. Not a cash-out."
+            ),
+            reason_technical=(
+                "US gateway golf futures are Winner and end-of-round leader; "
+                "Top 5/10/20 are international Gamma cards"
+            ),
+        )
+        if dropped:
+            save_paper_book(existing)
+            print("voided polymarket tickets that are not on the US golf app (at cost)")
+    bankroll = float(
+        existing.bankroll
+        if existing is not None
+        else METHOD_LAW_V1["independent_compare_bankroll"]
+    )
+    print(
+        f"polymarket path; independent ${bankroll:.0f} mock; "
+        "lived Bovada ledger not used; no CLOB orders"
+    )
+    from golf_offshoot.strategy.cashout import bind_cashout_quotes, parse_cashout_cli
+
+    paper = existing.book if existing else None
+    cash_pairs, cash_warn = parse_cashout_cli(args.cash_out)
+    cash_bound, cash_bind_warn = bind_cashout_quotes(cash_pairs, paper.positions if paper else [])
+    for w in cash_warn + cash_bind_warn:
+        print(f"cash-out: {w}")
+    if cash_pairs and not cash_bound:
+        print("cash-out: no quotes attached; live MTM stays shares x bestBid when a fill exists")
+    strat_mode = StrategyMode(args.mode)
+    strat_risk = RiskPreference(args.risk)
+    result = run_operating(
+        event_id=event_hint,
+        mode=RunMode.LIVE,
+        sims=args.sims,
+        enable_strategy=True,
+        persist=True,
+        refresh=args.refresh,
+        bankroll=bankroll,
+        odds_book="polymarket",
+        open_book=paper,
+        strategy_mode=strat_mode,
+        risk=strat_risk,
+        cashout_quotes=cash_bound or None,
+    )
+    from golf_offshoot.audit.journal import latest_pre_audit
+    from golf_offshoot.data_feeds.http import package_data_dir
+
+    pre = latest_pre_audit(
+        result.tournament.espn_event_id or result.tournament.tournament_id,
+        package_data_dir() / "snapshots",
+    )
+    print(
+        f"OPERATING live {result.tournament.name} "
+        f"id={result.tournament.tournament_id} n={len(result.ranked)} run={result.run_id} "
+        "odds_book=polymarket"
+    )
+    print(movement_note(pre.run_id if pre else None))
+    tid = result.tournament.espn_event_id or result.tournament.tournament_id
+    held = {p.player_id for p in paper.positions} if paper else set()
+    print("live scoreboard (ESPN place / to-par / thru; not model Win%)")
+    print(
+        format_leaderboard(
+            result.ranked,
+            n_rounds=int(result.tournament.n_rounds or 4),
+            held_ids=held,
+        )
+    )
+    print(format_table(result.ranked, n=len(result.ranked), baseline=pre.outputs if pre else None))
+    _print_table_export(result)
+    if result.strategy:
+        print(format_recommendation(result.strategy))
+    print()
+    print(format_leftover_callout(result, paper))
+    _print_operator_hints(
+        result,
+        pinned_id=args.event or tid,
+        settled=_event_is_settled(tid),
+    )
+    extras = [
+        Path(p)
+        for p in (
+            result.audit.extra.get("export_pdf"),
+            result.audit.extra.get("export_html"),
+            result.audit.extra.get("export_txt"),
+            result.audit.extra.get("export_leaderboard_pdf"),
+            result.audit.extra.get("export_leaderboard_html"),
+            result.audit.extra.get("export_leaderboard_txt"),
+        )
+        if p
+    ]
+    record = existing
+    cfg = StrategyConfig(
+        enabled=True,
+        mode=strat_mode,
+        risk=strat_risk,
+        bankroll=bankroll,
+        ticket_screen="both",
+        never_auto_bet=True,
+        allowed_bet_types=allowed_bets_from_rows(tid, result.ranked),
+    )
+    if is_empty_field(result.ranked):
+        print("empty field; not locking polymarket paper")
+    elif record is None:
+        slots = paper_candidate_slots(result.ranked, cfg, require_cleared=False)
+        if not slots:
+            print("no polymarket names cleared the ticket screen; not locking paper")
+        else:
+            try:
+                record = lock_paper_positions(
+                    result.ranked,
+                    cfg,
+                    event_id=tid,
+                    event_name=result.tournament.name,
+                    run_id=result.run_id,
+                    odds_book="polymarket",
+                    extra_export_files=extras,
+                    path_id=POLYMARKET_PATH_ID,
+                    independent_bankroll=True,
+                    write_exports=False,
+                )
+            except EmptyFieldLockError as exc:
+                print(str(exc))
+                record = None
+    elif result.strategy:
+        advice = advice_from_recommendation(record, result.strategy, run_id=result.run_id)
+        if args.no_apply_paper:
+            record.latest_advice = advice
+            save_paper_book(record)
+        else:
+            record, applied = maybe_apply_paper(record, advice)
+            if applied:
+                print("applied polymarket paper advice (mock only; never auto-bet)")
+            save_paper_book(record)
+    if record:
+        print(format_paper_book(record))
+    try:
+        pack = write_polymarket_pack(
+            event_id=tid,
+            event_name=result.tournament.name,
+            run_id=result.run_id,
+            extra_files=extras,
+            record=record,
+        )
+    except PermissionError as exc:
+        print(f"polymarket pack blocked; close the open PDF and rerun pack. {exc}")
+        return 1
+    print(f"polymarket pack: {pack}")
+    combo = pack / "00_full_readout.pdf"
+    if combo.is_file():
+        print(f"full readout: {combo}")
+    return 0
+
+
 def _cmd_live(args) -> int:
+    from golf_offshoot.data_feeds.hardrock import resolve_odds_book
+
+    if resolve_odds_book(args.book) == "polymarket":
+        return _cmd_live_polymarket(args)
     from golf_offshoot.operating import run_operating
     from golf_offshoot.strategy.paper_book import (
+        EmptyFieldLockError,
         advice_from_recommendation,
         backfill_estimated_cashouts,
         format_paper_book,
@@ -425,6 +707,11 @@ def _cmd_live(args) -> int:
     print()
     print(format_leftover_callout(result, paper))
     tid = result.tournament.espn_event_id or result.tournament.tournament_id
+    _print_operator_hints(
+        result,
+        pinned_id=args.event or tid,
+        settled=(tid in settled_ids) or _event_is_settled(tid),
+    )
     extras = [
         Path(p)
         for p in (
@@ -438,6 +725,9 @@ def _cmd_live(args) -> int:
         if p
     ]
     if args.lock_paper:
+        if is_empty_field(result.ranked):
+            print("empty field; not locking paper")
+            return 2
         if tid in settled_ids:
             record = load_paper_file(tid)
             print("this event just auto-settled; not locking a new paper book")
@@ -450,15 +740,19 @@ def _cmd_live(args) -> int:
             risk=strat_risk,
             bankroll=bankroll,
         )
-        record = lock_paper_positions(
-            result.ranked,
-            cfg,
-            event_id=tid,
-            event_name=result.tournament.name,
-            run_id=result.run_id,
-            odds_book=str(result.audit.extra.get("odds_book") or args.book),
-            extra_export_files=extras,
-        )
+        try:
+            record = lock_paper_positions(
+                result.ranked,
+                cfg,
+                event_id=tid,
+                event_name=result.tournament.name,
+                run_id=result.run_id,
+                odds_book=str(result.audit.extra.get("odds_book") or args.book),
+                extra_export_files=extras,
+            )
+        except EmptyFieldLockError as exc:
+            print(str(exc))
+            return 2
         print(format_paper_book(record))
         return 0
     record = load_paper_file(tid) if tid else None
@@ -541,6 +835,15 @@ def _report_auto_settles(refresh: bool) -> list[str]:
     return ids
 
 
+def _paper_path_id(args) -> str:
+    from golf_offshoot.data_feeds.hardrock import resolve_odds_book
+
+    book = resolve_odds_book(getattr(args, "book", None))
+    if book == "polymarket":
+        return "polymarket"
+    return "lived"
+
+
 def _cmd_paper_export(args) -> int:
     from golf_offshoot.strategy.paper_pack import export_paper_pack
 
@@ -549,7 +852,7 @@ def _cmd_paper_export(args) -> int:
         print("paper-export requires --event <espn_id>")
         return 2
     _report_auto_settles(args.refresh)
-    pack = export_paper_pack(event_id)
+    pack = export_paper_pack(event_id, path_id=_paper_path_id(args))
     print(f"paper pack: {pack}")
     print("Open PDFs in Edge, Chrome, or Adobe -- not as source in the editor.")
     return 0
@@ -557,12 +860,39 @@ def _cmd_paper_export(args) -> int:
 
 def _cmd_paper_ledger(args) -> int:
     from golf_offshoot.localtime import filename_stamp
-    from golf_offshoot.strategy.paper_bankroll_export import write_bankroll_files
+    from golf_offshoot.strategy.paper_bankroll_export import overlay_path_cash, write_bankroll_files
     from golf_offshoot.strategy.paper_book import load_paper_file
     from golf_offshoot.strategy.paper_ledger import format_ledger, load_ledger
     from golf_offshoot.strategy.paper_pack import export_paper_pack, packs_dir
 
     _report_auto_settles(args.refresh)
+    path_id = _paper_path_id(args)
+    if path_id == "polymarket":
+        rec = load_paper_file(args.event, path_id=path_id) if args.event else None
+        if rec is None:
+            from golf_offshoot.strategy.paper_ledger import _path_record
+
+            rec = _path_record(path_id, args.event)
+        if rec is None:
+            print("no polymarket paper book yet; live --book polymarket --lock-paper first")
+            return 1
+        ledger = overlay_path_cash(rec)
+        print(format_ledger(ledger))
+        if args.event:
+            pack = export_paper_pack(args.event, path_id=path_id)
+            print(f"paper pack: {pack}")
+            return 0
+        stamp = filename_stamp()
+        root = packs_dir() / f"ledger_polymarket_{stamp}"
+        paths = write_bankroll_files(
+            root,
+            ledger=ledger,
+            record=rec,
+            title=f"Polymarket paper bankroll — {rec.tournament_name or rec.tournament_id}",
+        )
+        print(f"paper pack: {root}")
+        print(f"bankroll PDF: {paths.pdf}")
+        return 0
     ledger = load_ledger()
     if not ledger.entries:
         print("no paper ledger yet; lock-paper or paper-deposit to start")
@@ -589,13 +919,18 @@ def _cmd_paper_deposit(args) -> int:
         print("paper-deposit requires --amount greater than 0")
         return 2
     try:
-        ledger = record_deposit(args.amount, note=args.note, event_id=args.event or "")
+        ledger = record_deposit(
+            args.amount,
+            note=args.note,
+            event_id=args.event or "",
+            path_id=_paper_path_id(args),
+        )
     except ValueError as exc:
         print(str(exc))
         return 2
     print(format_ledger(ledger))
     if args.event:
-        print(f"paper pack: {export_paper_pack(args.event)}")
+        print(f"paper pack: {export_paper_pack(args.event, path_id=_paper_path_id(args))}")
     return 0
 
 
@@ -607,13 +942,18 @@ def _cmd_paper_withdraw(args) -> int:
         print("paper-withdraw requires --amount greater than 0")
         return 2
     try:
-        ledger = record_withdrawal(args.amount, note=args.note, event_id=args.event or "")
+        ledger = record_withdrawal(
+            args.amount,
+            note=args.note,
+            event_id=args.event or "",
+            path_id=_paper_path_id(args),
+        )
     except ValueError as exc:
         print(str(exc))
         return 2
     print(format_ledger(ledger))
     if args.event:
-        print(f"paper pack: {export_paper_pack(args.event)}")
+        print(f"paper pack: {export_paper_pack(args.event, path_id=_paper_path_id(args))}")
     return 0
 
 
@@ -636,10 +976,48 @@ def _cmd_paper_settle(args) -> int:
     return 0
 
 
+def _cmd_paper_fill(args) -> int:
+    from golf_offshoot.audit.journal import latest_pre_audit
+    from golf_offshoot.data_feeds.http import package_data_dir
+    from golf_offshoot.strategy.fills import FillError, record_polymarket_fill
+    from golf_offshoot.strategy.paper_book import format_paper_book
+
+    if not args.event:
+        print("paper-fill requires --event <espn_id>")
+        return 2
+    if not args.player or args.player == "p01":
+        print('paper-fill requires --player "Name"')
+        return 2
+    ranked_names = None
+    pre = latest_pre_audit(args.event, package_data_dir() / "snapshots")
+    if pre is not None:
+        ranked_names = {o.name: o.player_id for o in pre.outputs}
+    try:
+        rec = record_polymarket_fill(
+            event_id=args.event,
+            player_name=args.player,
+            shares=args.shares,
+            fill=args.fill,
+            cost=args.cost,
+            market=args.market,
+            ranked_names=ranked_names,
+            intent=args.intent,
+        )
+    except FillError as exc:
+        print(str(exc))
+        return 2
+    print("recorded polymarket fill (mock paper path; no CLOB order; not ledger.json)")
+    print(format_paper_book(rec))
+    return 0
+
+
 def _cmd_compare_replay(args) -> int:
     from golf_offshoot.compare.replay import replay_event
 
     event_id = args.event or "401811962"
+    hint = pinned_event_hint(event_id, settled=_event_is_settled(event_id))
+    if hint:
+        print(hint)
     payload = replay_event(event_id)
     print(
         f"compare-replay event={payload['event_id']} snapshots={payload['n_snapshots']} "
@@ -675,6 +1053,109 @@ def _print_table_export(result) -> None:
         print(f"live leaderboard HTML: {board_html}")
     if board_txt:
         print(f"live leaderboard txt: {board_txt}")
+
+
+def _cmd_watch(args) -> int:
+    import time
+
+    from golf_offshoot.data_feeds.hardrock import resolve_odds_book
+    from golf_offshoot.data_feeds.polymarket import POLYMARKET_PATH_ID
+    from golf_offshoot.operating import run_operating
+    from golf_offshoot.strategy.live import golf_has_started
+    from golf_offshoot.strategy.paper_book import load_paper_file
+    from golf_offshoot.strategy.watch import (
+        WatchConfigError,
+        advice_for_watch,
+        decide_watch,
+        ensure_ntfy_topic_in_env,
+        load_watch_state,
+        ntfy_server,
+        ntfy_topic,
+        publish_ntfy,
+        save_watch_state,
+        watch_state_path,
+    )
+
+    event_id = (args.event or "").strip()
+    if not event_id:
+        print("watch requires --event <espn_id>")
+        return 2
+    book = resolve_odds_book(args.book)
+    path_id = POLYMARKET_PATH_ID if book == "polymarket" else "lived"
+    try:
+        topic = ntfy_topic(args.ntfy_topic) if args.ntfy_topic else ensure_ntfy_topic_in_env()
+    except WatchConfigError as exc:
+        print(str(exc))
+        return 2
+    print(f"watch topic={topic}  subscribe in ntfy to {ntfy_server()}/{topic}")
+    print("no packs, no PDFs, no snapshots, no paper apply, no CLOB")
+    interval = max(60, int(args.interval or 600))
+    pre_interval = max(60, int(args.pre_tee_interval or 1800))
+    state_path = watch_state_path(event_id, path_id)
+    while True:
+        rec = load_paper_file(event_id, path_id=path_id)
+        paper = rec.book if rec is not None else None
+        bankroll = float(rec.bankroll) if rec is not None else args.bankroll
+        result = run_operating(
+            event_id=event_id,
+            mode=RunMode.LIVE,
+            sims=args.sims,
+            enable_strategy=True,
+            persist=False,
+            refresh=True,
+            bankroll=bankroll,
+            odds_book=book if book != "auto" else args.book,
+            open_book=paper,
+            strategy_mode=StrategyMode(args.mode),
+            risk=RiskPreference(args.risk),
+        )
+        tid = result.tournament.espn_event_id or result.tournament.tournament_id or event_id
+        advice = advice_for_watch(rec, result)
+        state = load_watch_state(state_path)
+        decision = decide_watch(
+            advice,
+            result.ranked,
+            event=result.tournament.name or tid,
+            prev_signature=str(state.get("signature") or ""),
+            armed=bool(state.get("armed")),
+            arm_ping=True,
+        )
+        if decision.should_ping:
+            try:
+                publish_ntfy(
+                    decision.body,
+                    topic=topic,
+                    title=f"{result.tournament.name or tid}: {decision.headline}",
+                    priority=decision.priority,
+                    dry_run=bool(args.dry_run),
+                )
+            except WatchConfigError as exc:
+                print(str(exc))
+                return 2
+            verb = "would ping" if args.dry_run else "ntfy ping"
+            print(f"{verb} {decision.kind}: {decision.headline}")
+        else:
+            print(f"watch quiet: {decision.headline}")
+        if not args.dry_run:
+            save_watch_state(
+                state_path,
+                {
+                    "signature": decision.signature,
+                    "armed": True,
+                    "headline": decision.headline,
+                    "kind": decision.kind,
+                    "run_id": result.run_id,
+                },
+            )
+        if args.once:
+            return 0
+        wait = interval if golf_has_started(result.ranked) else pre_interval
+        print(f"next tick in {wait}s")
+        try:
+            time.sleep(wait)
+        except KeyboardInterrupt:
+            print("watch stopped")
+            return 0
 
 
 def _cmd_shadow(_args) -> int:

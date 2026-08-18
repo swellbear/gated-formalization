@@ -49,6 +49,43 @@ def allowed_compare_bets(event_id: str | None) -> list[BetType]:
     return [BetType.WIN]
 
 
+def allowed_bets_for_quotes(event_id: str | None, quotes) -> list[BetType]:
+    """Winner/place from method law, plus any other coupon that actually listed."""
+    base = allowed_compare_bets(event_id)
+    if not compare_allows_place(event_id):
+        return base
+    seen = list(base)
+    have = set(seen)
+    for q in quotes or []:
+        bt = getattr(q, "bet_type", None)
+        if isinstance(bt, str):
+            try:
+                bt = BetType(bt)
+            except ValueError:
+                continue
+        if bt is None or bt in have:
+            continue
+        have.add(bt)
+        seen.append(bt)
+    return seen
+
+
+def allowed_bets_from_rows(event_id: str | None, rows) -> list[BetType]:
+    """Same as allowed_bets_for_quotes, reading posted coupons off ranked rows."""
+    class _Q:
+        def __init__(self, bet_type: BetType) -> None:
+            self.bet_type = bet_type
+
+    quotes = []
+    for row in rows or []:
+        for key in getattr(row, "posted_odds_by_bet", {}) or {}:
+            try:
+                quotes.append(_Q(BetType(key)))
+            except ValueError:
+                continue
+    return allowed_bets_for_quotes(event_id, quotes)
+
+
 def experiment_config(
     *,
     ticket_screen: str,

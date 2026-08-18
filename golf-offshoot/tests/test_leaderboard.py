@@ -191,6 +191,8 @@ def test_paper_pack_puts_leaderboard_before_model_table(tmp_path, monkeypatch):
     assert (pack / "03_field_live.pdf").is_file()
     names = [p.name for p, _ in _pack_pdf_sources(pack)]
     assert names.index("03_leaderboard.pdf") < names.index("03_field_live.pdf")
+    if "05_bankroll.pdf" in names:
+        assert names[-1] == "05_bankroll.pdf"
     readme = (pack / "00_README.txt").read_text(encoding="utf-8")
     assert "03_leaderboard.pdf" in readme
     combo = pack / "00_full_readout.pdf"
@@ -199,3 +201,17 @@ def test_paper_pack_puts_leaderboard_before_model_table(tmp_path, monkeypatch):
 
     text = "\n".join((page.extract_text() or "") for page in PdfReader(str(combo)).pages)
     assert "leaderboard" in text.lower() or "ToPar" in text or "Kurt Kitayama" in text
+
+
+def test_pack_sources_bankroll_is_last(tmp_path):
+    for name in (
+        "00_trigger.pdf",
+        "01_paper_tickets.pdf",
+        "03_field_live.pdf",
+        "03_zzz_extra.pdf",
+        "05_bankroll.pdf",
+    ):
+        (tmp_path / name).write_bytes(b"%PDF-1.4\n")
+    names = [p.name for p, _ in _pack_pdf_sources(tmp_path)]
+    assert names[-1] == "05_bankroll.pdf"
+    assert names.index("03_zzz_extra.pdf") < names.index("05_bankroll.pdf")

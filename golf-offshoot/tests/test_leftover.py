@@ -153,6 +153,8 @@ def test_leftover_has_four_sections():
     assert "== still unconstrained ==" in text
     assert "== on held tickets ==" in text
     assert "== do not stuff into theta ==" in text
+    assert "== operator ==" in text
+    assert "rerun live when the ESPN board moves" in text
     assert "GPF" in text
     assert "HumanOverride" in text
     assert "\u03b8" not in text
@@ -207,3 +209,92 @@ def test_wording_does_not_claim_agronomy_or_narrative_used():
     assert "as-of SG" in _section(text, "already used")
     assert "posted odds" in _section(text, "already used")
     assert "bovada" in _section(text, "already used").lower()
+
+
+def test_provisional_field_is_not_labeled_espn():
+    result = _result(RunMode.PRE_TOURNAMENT, [_row("p1", "Demo One", 0.12)])
+    inv = _fixture_inventory()
+    inv[0] = _item(
+        "player_identification_field",
+        kind=SourceKind.DERIVED_FROM_REAL,
+        source="bovada_outright_names",
+        coverage="50/50",
+        notes="provisional field from bovada_outright_names; not an official ESPN field",
+    )
+    result.audit.extra["source_inventory"] = [i.model_dump(mode="json") for i in inv]
+    used = _section(format_leftover_callout(result), "already used")
+    assert "provisional field" in used
+    assert "bovada_outright_names" in used
+    assert "ESPN field" not in used
+
+
+def test_round_leader_leftover_display_without_quotes():
+    result = _result(RunMode.LIVE, [_row("p1", "Demo One", 0.12)])
+    text = format_leftover_callout(result)
+    section = _section(text, "round-leader leftover (display; not a ticket)")
+    assert "No R1/R2/R3 Yes quotes" in section
+    assert "not a ticket" in section
+    assert "Keith Mitchell" not in section
+
+
+def test_round_leader_leftover_prints_vs_posted_when_quoted():
+    row = _row("p1", "Keith Mitchell", 0.12)
+    horizons = dict(row.probabilities.horizons)
+    horizons[Horizon.WIN_AFTER_R1] = _hp(Horizon.WIN_AFTER_R1, 0.10)
+    row = row.model_copy(
+        update={
+            "probabilities": row.probabilities.model_copy(update={"horizons": horizons}),
+            "posted_odds_by_bet": {"win_after_r1": 12.5},
+        }
+    )
+    result = _result(RunMode.LIVE, [row])
+    text = format_leftover_callout(result)
+    section = _section(text, "round-leader leftover (display; not a ticket)")
+    assert "Keith Mitchell" in section
+    assert "R1 leader" in section
+    assert "vs-posted=" in section
+    assert "bar=" in section
+    assert "not a ticket" in text
+    assert "18-hole" in section
+
+
+def test_fill_tape_and_climb_are_display_not_tickets():
+    row = _row("p1", "Longshot One", 0.015)
+    horizons = dict(row.probabilities.horizons)
+    horizons[Horizon.TOP_10] = _hp(Horizon.TOP_10, 0.12)
+    row = row.model_copy(
+        update={
+            "probabilities": row.probabilities.model_copy(update={"horizons": horizons}),
+            "posted_odds_by_bet": {"win": 80.0},
+            "bid_by_bet": {"win": 0.010},
+        }
+    )
+    result = _result(RunMode.LIVE, [row])
+    book = PortfolioState(
+        bankroll=250.0,
+        positions=[
+            StrategyPosition(
+                position_id="fill-1",
+                player_id="p1",
+                player_name="Longshot One",
+                bet_type=BetType.WIN,
+                stake=2.19,
+                decimal_odds=100.0,
+                entry_edge=0.02,
+                entry_model_p=0.02,
+                shares=50.0,
+                fill_price=0.0438,
+                cost_usd=2.19,
+            )
+        ],
+    )
+    text = format_leftover_callout(result, book)
+    tape = _section(text, "fill tape (display; not a sell)")
+    assert "Longshot One" in tape
+    assert "cost $2.19" in tape
+    assert "no pop" in tape
+    assert "not a sell" in tape
+    climb = _section(text, "fat Top 10 / skinny Win (display; not a ticket)")
+    assert "Longshot One" in climb
+    assert "not a ticket" in climb.lower()
+    assert "NEW" not in climb

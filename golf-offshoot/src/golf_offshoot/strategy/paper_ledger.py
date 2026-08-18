@@ -10,7 +10,7 @@ from pydantic import BaseModel, Field
 
 from golf_offshoot.localtime import now
 
-from golf_offshoot.models.enums import BetType
+from golf_offshoot.models.enums import BetType, is_round_leader_bet
 from golf_offshoot.models.strategy import new_id
 from golf_offshoot.strategy.paper_book import PaperBookFile, load_paper_file, save_paper_book
 
@@ -83,21 +83,25 @@ class EventInspect(BaseModel):
     status_note: str = ""
 
 
-def ledger_path() -> Path:
+def ledger_path(path_id: str = "lived") -> Path:
     from golf_offshoot.strategy.paper_book import paper_dir
 
-    return paper_dir() / "ledger.json"
+    if not path_id or path_id == "lived":
+        return paper_dir() / "ledger.json"
+    safe = "".join(ch if ch.isalnum() or ch in "-_" else "-" for ch in str(path_id))
+    return paper_dir() / f"ledger_{safe}.json"
 
 
-def load_ledger() -> PaperLedger:
-    path = ledger_path()
+def load_ledger(path_id: str = "lived") -> PaperLedger:
+    path = ledger_path(path_id)
     if not path.is_file():
         return PaperLedger()
     return PaperLedger.model_validate_json(path.read_text(encoding="utf-8"))
 
 
-def save_ledger(ledger: PaperLedger) -> Path:
-    path = ledger_path()
+def save_ledger(ledger: PaperLedger, path_id: str = "lived") -> Path:
+    path = ledger_path(path_id)
+    path.parent.mkdir(parents=True, exist_ok=True)
     path.write_text(ledger.model_dump_json(indent=2), encoding="utf-8")
     return path
 
@@ -140,10 +144,14 @@ def ensure_opening_deposit(
     return ledger
 
 
-def record_deposit(amount: float, *, note: str = "", event_id: str = "") -> PaperLedger:
+def record_deposit(
+    amount: float, *, note: str = "", event_id: str = "", path_id: str = "lived"
+) -> PaperLedger:
     amt = round(float(amount), 2)
     if amt <= 0:
         raise ValueError("deposit amount must be positive")
+    if path_id and path_id != "lived":
+        return _record_path_cash("deposit", amt, note=note or "paper deposit", event_id=event_id, path_id=path_id)
     ledger = load_ledger()
     if not ledger.entries:
         ledger.starting_bankroll = amt
@@ -153,10 +161,14 @@ def record_deposit(amount: float, *, note: str = "", event_id: str = "") -> Pape
     return ledger
 
 
-def record_withdrawal(amount: float, *, note: str = "", event_id: str = "") -> PaperLedger:
+def record_withdrawal(
+    amount: float, *, note: str = "", event_id: str = "", path_id: str = "lived"
+) -> PaperLedger:
     amt = round(float(amount), 2)
     if amt <= 0:
         raise ValueError("withdrawal amount must be positive")
+    if path_id and path_id != "lived":
+        return _record_path_cash("withdrawal", amt, note=note or "paper withdrawal", event_id=event_id, path_id=path_id)
     ledger = load_ledger()
     if amt > ledger.bankroll + 1e-9:
         raise ValueError(f"cannot withdraw ${amt:.2f}; paper bankroll is ${ledger.bankroll:.2f}")
@@ -164,6 +176,71 @@ def record_withdrawal(amount: float, *, note: str = "", event_id: str = "") -> P
     _post(ledger, "withdrawal", -amt, event_id=event_id, note=note or "paper withdrawal")
     save_ledger(ledger)
     return ledger
+
+
+def _record_path_cash(
+    kind: str,
+    amount: float,
+    *,
+    note: str,
+    event_id: str,
+    path_id: str,
+) -> PaperLedger:
+    rec = _path_record(path_id, event_id)
+    if rec is None:
+        raise ValueError(
+            f"no {path_id} paper book to {kind}. Pass --event <espn_id> after a lock, "
+            "and use --book polymarket. This is not ledger.json."
+        )
+    cash = round(float(rec.bankroll) - rec.book.open_exposure, 2)
+    if kind == "withdrawal" and amount > cash + 1e-9:
+        raise ValueError(
+            f"cannot withdraw ${amount:.2f}; {path_id} cash at cost is ${cash:.2f}"
+        )
+    delta = amount if kind == "deposit" else -amount
+    stored = load_ledger(path_id)
+    rec.bankroll = round(float(rec.bankroll) + delta, 2)
+    rec.book.bankroll = rec.bankroll
+    save_paper_book(rec)
+    if kind == "deposit":
+        stored.deposits = round(stored.deposits + amount, 2)
+    else:
+        stored.withdrawals = round(stored.withdrawals + amount, 2)
+    stored.entries.append(
+        LedgerEntry(
+            entry_id=new_id("led"),
+            kind=kind,
+            amount=delta,
+            bankroll_after=rec.bankroll,
+            event_id=rec.tournament_id,
+            event_name=rec.tournament_name,
+            note=f"{note}. Independent {path_id} mock. Not ledger.json.",
+        )
+    )
+    stored.bankroll = rec.bankroll
+    save_ledger(stored, path_id)
+    from golf_offshoot.strategy.paper_bankroll_export import overlay_path_cash
+
+    return overlay_path_cash(rec, stored)
+
+
+def _path_record(path_id: str, event_id: str = ""):
+    if event_id:
+        return load_paper_file(event_id, path_id=path_id)
+    unsettled = [r for r in iter_compare_unsettled(path_id)]
+    if unsettled:
+        return max(unsettled, key=lambda r: r.locked_at)
+    return None
+
+
+def iter_compare_unsettled(path_id: str):
+    from golf_offshoot.strategy.paper_book import iter_compare_paper_files
+
+    for rec in iter_compare_paper_files():
+        if (rec.path_id or "") != path_id:
+            continue
+        if rec.settled_at is None:
+            yield rec
 
 
 def cashout_recorded_for(movement_id: str) -> bool:
@@ -239,6 +316,8 @@ def ticket_hit(bet_type: str, finish: int | None, winner_ids: set[str], player_i
         return finish <= 20
     if kind == BetType.MAKE_CUT.value:
         return finish > 0
+    if is_round_leader_bet(kind):
+        return False
     return False
 
 
@@ -292,14 +371,23 @@ def settle_paper_event(
     pnl_total = 0.0
     for pos in list(record.book.positions):
         place, _nm = finishes.get(pos.player_id, (None, pos.player_name))
-        won = ticket_hit(pos.bet_type.value, place, winners, pos.player_id)
-        payout = round(pos.stake * pos.decimal_odds, 2) if won else 0.0
-        pnl = round(payout - pos.stake, 2)
+        if is_round_leader_bet(pos.bet_type.value):
+            payout = round(pos.stake, 2)
+            pnl = 0.0
+            won = False
+            note = (
+                f"VOID at cost; round-leader is not settled from 72-hole finish "
+                f"stake={pos.stake:.2f} @ {pos.decimal_odds:.2f} payout={payout:.2f} pnl={pnl:+.2f}"
+            )
+        else:
+            won = ticket_hit(pos.bet_type.value, place, winners, pos.player_id)
+            payout = round(pos.stake * pos.decimal_odds, 2) if won else 0.0
+            pnl = round(payout - pos.stake, 2)
+            note = (
+                f"{'HIT' if won else 'MISS'} finish={place if place is not None else 'n/a'} "
+                f"stake={pos.stake:.2f} @ {pos.decimal_odds:.2f} payout={payout:.2f} pnl={pnl:+.2f}"
+            )
         pnl_total = round(pnl_total + pnl, 2)
-        note = (
-            f"{'HIT' if won else 'MISS'} finish={place if place is not None else 'n/a'} "
-            f"stake={pos.stake:.2f} @ {pos.decimal_odds:.2f} payout={payout:.2f} pnl={pnl:+.2f}"
-        )
         tickets.append(
             TicketResult(
                 player_id=pos.player_id,
@@ -316,7 +404,7 @@ def settle_paper_event(
         )
         _post(
             ledger,
-            "settle_win" if won else "settle_loss",
+            "settle_win" if won else ("settle_void" if is_round_leader_bet(pos.bet_type.value) else "settle_loss"),
             pnl,
             event_id=str(event_id),
             event_name=event_name or record.tournament_name,
@@ -388,9 +476,14 @@ def settle_independent_compare_event(
     pnl_total = 0.0
     for pos in list(record.book.positions):
         place, _nm = finishes.get(pos.player_id, (None, pos.player_name))
-        won = ticket_hit(pos.bet_type.value, place, winners, pos.player_id)
-        payout = round(pos.stake * pos.decimal_odds, 2) if won else 0.0
-        pnl = round(payout - pos.stake, 2)
+        if is_round_leader_bet(pos.bet_type.value):
+            won = False
+            payout = round(pos.stake, 2)
+            pnl = 0.0
+        else:
+            won = ticket_hit(pos.bet_type.value, place, winners, pos.player_id)
+            payout = round(pos.stake * pos.decimal_odds, 2) if won else 0.0
+            pnl = round(payout - pos.stake, 2)
         pnl_total = round(pnl_total + pnl, 2)
         tickets.append(
             TicketResult(

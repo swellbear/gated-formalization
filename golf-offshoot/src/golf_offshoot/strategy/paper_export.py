@@ -25,6 +25,7 @@ from golf_offshoot.strategy.paper_book import (
     format_paper_time,
     observation_plain,
     observation_technical,
+    tracking_stub_plain,
     save_paper_book,
     ticket_rows,
     _fmt_dec,
@@ -46,7 +47,7 @@ def write_paper_book_files(
     """Write a new paper-book artifact for this lock. Never reuse a ranking PDF."""
     d = directory or default_export_dir()
     d.mkdir(parents=True, exist_ok=True)
-    stem = paper_export_stem(record)
+    stem = paper_export_stem(record, live_run_id=live_run_id)
     live_note = live_run_id or "n/a"
     event = record.tournament_name or record.tournament_id
     title = title or f"Paper book — {event}"
@@ -70,7 +71,7 @@ def write_paper_book_files(
         render_paper_html(record, title=title, subtitle=subtitle, tickets=tickets),
         encoding="utf-8",
     )
-    write_paper_pdf(pdf, record, title=title, subtitle=subtitle, tickets=tickets)
+    pdf = write_paper_pdf(pdf, record, title=title, subtitle=subtitle, tickets=tickets)
     record.export_pdf = str(pdf)
     record.export_html = str(html_path)
     record.export_txt = str(txt)
@@ -79,10 +80,10 @@ def write_paper_book_files(
     return TableExportPaths(pdf=pdf, html=html_path, txt=txt)
 
 
-def paper_export_stem(record: PaperBookFile) -> str:
+def paper_export_stem(record: PaperBookFile, live_run_id: str = "") -> str:
     ts = filename_stamp(record.locked_at)
     tid = _safe(record.tournament_id)
-    run = _safe(record.locked_from_run_id or "lock")
+    run = _safe(live_run_id or record.locked_from_run_id or "lock")
     pid = getattr(record, "path_id", None) or "lived"
     if pid and pid != "lived":
         return f"{tid}_{pid}_paper_{ts}_{run}"
@@ -114,6 +115,10 @@ def paper_book_document(
         "Observation only",
         observation_plain(),
         observation_technical(),
+    ]
+    if pid == "polymarket":
+        lines += ["", tracking_stub_plain()]
+    lines += [
         "",
         clocks_plain(),
         "",
@@ -138,8 +143,8 @@ def paper_book_document(
     lines.append("At entry Posted / EdgeW / Vs posted are the booked ticket.")
     lines.append("This live is the pack snapshot strategy used. n/a = no coupon for that market.")
     lines.append(
-        f"Ticket screen (at entry) needs at least {MIN_EDGE_TO_CONSIDER * 100:.0f} percentage points "
-        "on vs posted, not only on EdgeW."
+        f"Ticket screen (at entry): Winner needs at least {MIN_EDGE_TO_CONSIDER * 100:.0f} percentage points "
+        "on vs posted. R1/R2/R3 leader uses a scaled bar (still must beat the Yes ask)."
     )
     lines.append("If wins = stake times entry posted decimal (stake returned plus profit).")
     lines.append("Observation only. Never auto-bet.")
@@ -211,6 +216,7 @@ def render_paper_html(record: PaperBookFile, *, title: str, subtitle: str, ticke
 <p class="caption"><strong>Observation only</strong></p>
 <p class="caption">{html.escape(observation_plain())}</p>
 <p class="caption">{html.escape(observation_technical())}</p>
+{f'<p class="caption">{html.escape(tracking_stub_plain())}</p>' if (getattr(record, "path_id", None) or "") == "polymarket" else ""}
 <p class="caption">{html.escape(clocks_plain())}</p>
 <p class="stats">Open ${record.book.open_exposure:.2f} / ${record.bankroll:.2f} ({frac:.0%})
 &nbsp;&nbsp; Cash unallocated ${cash:.2f}
@@ -311,6 +317,9 @@ def write_paper_pdf(
     pdf.ln(1)
     pdf.multi_cell(0, 4.4, _pdf_text(observation_technical(), face))
     pdf.ln(1)
+    if (getattr(record, "path_id", None) or "") == "polymarket":
+        pdf.multi_cell(0, 4.4, _pdf_text(tracking_stub_plain(), face))
+        pdf.ln(1)
     pdf.multi_cell(0, 4.4, _pdf_text(clocks_plain(), face))
     pdf.ln(2)
     pdf.set_text_color(18, 32, 42)
@@ -422,7 +431,12 @@ def write_paper_pdf(
             row = glossary.row()
             row.cell(_pdf_text(name, face))
             row.cell(_pdf_text(meaning, face))
-    pdf.output(str(path))
+    try:
+        pdf.output(str(path))
+    except PermissionError:
+        alt = path.with_name(f"{path.stem}_{filename_stamp()}{path.suffix}")
+        pdf.output(str(alt))
+        return alt
     return path
 
 
@@ -462,10 +476,11 @@ def _glossary() -> list[tuple[str, str]]:
         ),
         (
             "Screen",
-            f"Cleared at entry only if vs posted is at least {MIN_EDGE_TO_CONSIDER * 100:.0f} percentage points. "
+            f"Cleared at entry only if vs posted clears that card's bar (Winner {MIN_EDGE_TO_CONSIDER * 100:.0f}pp; "
+            "R1/R2/R3 leader scales with posted Yes). "
             "Live juice often fails this even when EdgeW looks good. Lane tags on the player name are at-entry. "
             "|n/a means this live snapshot has no posted coupon for that market. "
-            "|miss means this-live vs-posted (or EdgeW) is below 3pp. "
+            "|miss means this-live vs-posted (or EdgeW) is below that card's bar. "
             "A |n/a ticket stays open until official settle — that is not a cash-out, "
             "and it is not an intact live edge.",
         ),

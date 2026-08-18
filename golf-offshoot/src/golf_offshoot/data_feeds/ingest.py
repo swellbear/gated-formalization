@@ -14,6 +14,7 @@ from golf_offshoot.data_feeds.base import (
 )
 from golf_offshoot.data_feeds.bovada import BovadaOddsFeed
 from golf_offshoot.data_feeds.hardrock import HardRockBetOddsFeed, resolve_odds_book
+from golf_offshoot.data_feeds.polymarket import PolymarketOddsFeed
 from golf_offshoot.data_feeds.datagolf import DataGolfRecentSgFeed
 from golf_offshoot.data_feeds.espn import (
     EspnClient,
@@ -187,6 +188,32 @@ class RealIngestor:
         sg_cur, sg_cur_q = sg_feed.quality_or_missing(year=sg_year)
         sg_prev, sg_prev_q = sg_feed.quality_or_missing(year=sg_year - 1)
         comps = [c for c in iter_competitors(event) if c.get("athlete")]
+        field_provisional = False
+        field_source = "espn_field"
+        history_field_matched = 0
+        if not comps:
+            from golf_offshoot.data_feeds.field_fallback import (
+                attach_history_ids,
+                history_name_ids,
+                list_provisional_names,
+                stub_competitor,
+            )
+
+            raw_names, field_source = list_provisional_names(
+                tournament_name=tournament.name,
+                odds_book=odds_book,
+                cache=self.cache,
+                refresh=self.refresh,
+            )
+            hist_ids = history_name_ids(
+                history,
+                before=tournament.start_date,
+                exclude_event_id=tournament.espn_event_id,
+            )
+            attached = attach_history_ids(raw_names, hist_ids)
+            comps = [stub_competitor(nm, pid) for nm, pid, _ok in attached]
+            history_field_matched = sum(1 for _nm, _pid, ok in attached if ok)
+            field_provisional = bool(comps)
         players: list[PlayerInputs] = []
         sg_missing = 0
         sg_prior_season = 0
@@ -254,8 +281,9 @@ class RealIngestor:
         win_n = sum(1 for q in quotes if q.bet_type.value == "win" and q.line_role != "opening")
         t10_n = sum(1 for q in quotes if q.bet_type.value == "top_10" and q.line_role != "opening")
         notes = (
-            f"operating ingest event={eid} sources=espn,open-meteo,bovada|odds_api|hardrockbet,pga_sg,datagolf "
+            f"operating ingest event={eid} sources=espn,open-meteo,bovada|odds_api|hardrockbet|polymarket,pga_sg,datagolf "
             f"odds_book={resolve_odds_book(odds_book)} "
+            f"field={'provisional:' + field_source if field_provisional else 'espn'} "
             f"odds={win_n}/{len(players)} top10={t10_n} sg_missing={sg_missing}/{len(players)} "
             f"sg_through_event={sg_through_event} "
             f"recent_sg={'yes' if not recent_sg_q.missing else 'unavailable'} "
@@ -287,6 +315,12 @@ class RealIngestor:
             market_coverage=market_coverage_report(quotes, len(players)),
             asof_coverage=asof_cov,
             sg_through_event=sg_through_event,
+            field_q=_field_inventory_quality(
+                n=len(players),
+                provisional=field_provisional,
+                source_name=field_source,
+                history_matched=history_field_matched,
+            ),
         )
         field = FieldSnapshot(
             tournament_id=tournament.tournament_id,
@@ -296,7 +330,12 @@ class RealIngestor:
             notes=notes,
             inventory=inv,
             operating=True,
-            extra={"asof_coverage": asof_cov, "odds_book": resolve_odds_book(odds_book)},
+            extra={
+                "asof_coverage": asof_cov,
+                "odds_book": resolve_odds_book(odds_book),
+                "field_provisional": field_provisional,
+                "field_source": field_source,
+            },
         )
         _guard_field(field)
         if weather:
@@ -321,6 +360,8 @@ class RealIngestor:
             chain = FallbackChain([HardRockBetOddsFeed(cache=self.cache)])
         elif book == "bovada":
             chain = FallbackChain([BovadaOddsFeed(cache=self.cache, refresh=self.refresh)])
+        elif book == "polymarket":
+            chain = FallbackChain([PolymarketOddsFeed(cache=self.cache, refresh=self.refresh)])
         else:
             chain = FallbackChain(
                 [
@@ -345,6 +386,8 @@ class RealIngestor:
             extra = ""
             if book == "hardrockbet":
                 extra = " odds_book=hardrockbet (Bovada not used as a substitute);"
+            elif book == "polymarket":
+                extra = " odds_book=polymarket US golf futures (not Gamma international; Bovada not used; no orders);"
             odds_q = odds_q.model_copy(
                 update={
                     "notes": (
@@ -360,6 +403,11 @@ class RealIngestor:
             q = unavailable_quality(
                 "market_odds",
                 f"no usable Hard Rock Bet outrights (not filled from Bovada) ({odds_q.notes})",
+            )
+        elif book == "polymarket":
+            q = unavailable_quality(
+                "market_odds",
+                f"no usable Polymarket outrights (not filled from Bovada) ({odds_q.notes})",
             )
         else:
             q = unavailable_quality(
@@ -470,7 +518,7 @@ class RealIngestor:
             )
         )
         course_fit = feats.course_history
-        if include_season_stats:
+        if include_season_stats and not player.player_id.startswith("name:"):
             try:
                 overview = self.espn.athlete_overview(player.player_id)
                 ranks = parse_season_rankings(overview)
@@ -673,6 +721,32 @@ def _apply_wind_exposure(tournament: Tournament, weather: dict[str, Any]) -> Non
     tournament.course.wind_exposure = float(min(1.0, max(0.0, float(mph) / 25.0)))
 
 
+def _field_inventory_quality(
+    *,
+    n: int,
+    provisional: bool,
+    source_name: str,
+    history_matched: int,
+) -> DataQuality:
+    from golf_offshoot.data_feeds.field_fallback import field_quality
+
+    if not provisional:
+        return field_quality(
+            n=n,
+            source_name="espn_field",
+            history_matched=n,
+            notes="ESPN leaderboard competitors",
+            provisional=False,
+        )
+    return field_quality(
+        n=n,
+        source_name=source_name,
+        history_matched=history_matched,
+        notes=f"provisional field from {source_name}",
+        provisional=True,
+    )
+
+
 def _guard_field(field: FieldSnapshot) -> None:
     for p in field.players:
         if p.sg.quality:
@@ -704,6 +778,7 @@ def build_inventory(
     market_coverage: dict | None = None,
     asof_coverage: dict | None = None,
     sg_through_event: int = 0,
+    field_q: DataQuality | None = None,
 ) -> list[SourceInventoryItem]:
     def row(name, q: DataQuality, coverage: str, impact: str) -> SourceInventoryItem:
         return SourceInventoryItem(
@@ -745,6 +820,9 @@ def build_inventory(
     t5 = by_mkt.get("top_5") or {}
     t20 = by_mkt.get("top_20") or {}
     mc = by_mkt.get("make_cut") or {}
+    r1 = by_mkt.get("win_after_r1") or {}
+    r2 = by_mkt.get("win_after_r2") or {}
+    r3 = by_mkt.get("win_after_r3") or {}
     opening_n = int(cov.get("opening_quotes") or 0)
     unavailable_mkts = ", ".join(cov.get("unavailable_markets") or ["top_5", "top_10", "top_20", "make_cut"])
     asof = asof_coverage or {}
@@ -755,8 +833,18 @@ def build_inventory(
         f"{k} long={v.get('long_term', 0)} recent={v.get('recent', 0)}"
         for k, v in cats.items()
     )
+    if field_q is None:
+        field_q = course_q.model_copy(
+            update={
+                "source_name": "espn_field",
+                "score": 0.92,
+                "source_kind": SourceKind.REAL_LIVE,
+                "notes": "ESPN leaderboard competitors",
+            }
+        )
+    field_cov = f"{n}/{n}" if n else "0/0"
     return [
-        row("player_identification_field", course_q.model_copy(update={"source_name": "espn_field", "score": 0.92, "source_kind": SourceKind.REAL_LIVE, "notes": "ESPN leaderboard competitors"}), f"{n}/{n}", "cannot rank without a field"),
+        row("player_identification_field", field_q, field_cov, "cannot rank without a field"),
         row("long_term_talent", DataQuality(score=0.80, source_name="espn_leaderboard_history", as_of=now(), n_observations=history_events, source_kind=SourceKind.DERIVED_FROM_REAL, notes=f"finish-skill from {history_events} completed ESPN events"), "all players with prior starts", "new players stay near 0 with wide SD"),
         row("owgr", owgr_q, "0", "no official world rank; talent is finish-derived only"),
         row(
@@ -806,6 +894,8 @@ def build_inventory(
                 notes=(
                     f"top10={t10.get('coverage', '0')} top5={t5.get('coverage', '0')} "
                     f"top20={t20.get('coverage', '0')} make_cut={mc.get('coverage', '0')}; "
+                    f"win_after_r1={r1.get('coverage', '0')} win_after_r2={r2.get('coverage', '0')} "
+                    f"win_after_r3={r3.get('coverage', '0')}; "
                     f"unavailable={unavailable_mkts}; never synthesized from winner odds"
                 ),
             ),

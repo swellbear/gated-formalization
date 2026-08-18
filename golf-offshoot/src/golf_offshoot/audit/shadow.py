@@ -10,7 +10,7 @@ from pydantic import BaseModel
 
 from golf_offshoot.data_feeds.http import package_data_dir
 from golf_offshoot.localtime import now
-from golf_offshoot.models.enums import BetType, Horizon, StrategyActionKind, StrategyMode
+from golf_offshoot.models.enums import StrategyActionKind, StrategyMode, horizon_for
 from golf_offshoot.models.schemas import MarketSnapshot, TournamentRunResult
 from golf_offshoot.models.strategy import StrategyAction, StrategyRecommendation
 
@@ -20,14 +20,6 @@ SHADOW_KINDS = {
     StrategyActionKind.REDUCE,
     StrategyActionKind.EXIT,
     StrategyActionKind.REALLOCATE,
-}
-
-_H = {
-    BetType.WIN: Horizon.WIN,
-    BetType.TOP_5: Horizon.TOP_5,
-    BetType.TOP_10: Horizon.TOP_10,
-    BetType.TOP_20: Horizon.TOP_20,
-    BetType.MAKE_CUT: Horizon.MAKE_CUT,
 }
 
 
@@ -179,9 +171,9 @@ def _from_action(
     row = by_id.get(act.player_id)
     hp = None
     if row is not None:
-        horizon = _H.get(act.bet_type)
+        horizon = horizon_for(act.bet_type)
         if horizon is not None:
-            hp = row.probabilities.p(horizon)
+            hp = row.probabilities.horizons.get(horizon)
     posted, odds_as_of = quote_map.get((act.player_id, act.bet_type.value), (None, None))
     if posted is None and row is not None:
         posted = row.posted_odds_by_bet.get(act.bet_type.value)

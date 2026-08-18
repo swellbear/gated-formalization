@@ -8,7 +8,8 @@ Separate from probability. Screens:
 - range width
 - reliability
 - correlation with an existing book (θ proximity proxy)
-- hard pass on `thin_sample_overconfidence`
+- hard pass on `thin_sample_overconfidence` and player-level `sparse_data`
+- `course_history_missing` is not a hard pass (venue absent from loaded years; Rel haircut only)
 
 Actions: `pass` / `consider` / `strong_consider`. There is **no execute**. Kelly fraction is a **cap suggestion** only. `never_auto_bet` and `requires_user_confirmation` are always true.
 

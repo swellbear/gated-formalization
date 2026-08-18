@@ -55,6 +55,29 @@ def classify_market(label: str) -> BetType | None:
     return None
 
 
+def winner_outcome_names(events: list[dict[str, Any]]) -> list[str]:
+    """Winner-market names only. Not a field from Top 10 / 2-ball cards."""
+    from golf_offshoot.data_feeds.field_fallback import is_skip_field_name
+
+    names: list[str] = []
+    seen: set[str] = set()
+    for event in events:
+        for dg in event.get("displayGroups") or []:
+            for mkt in dg.get("markets") or []:
+                if classify_market(str(mkt.get("description") or "")) != BetType.WIN:
+                    continue
+                for oc in mkt.get("outcomes") or []:
+                    nm = str(oc.get("description") or "").strip()
+                    if not nm or is_skip_field_name(nm):
+                        continue
+                    key = normalize_name(nm)
+                    if not key or key in seen:
+                        continue
+                    seen.add(key)
+                    names.append(nm)
+    return names
+
+
 def book_tag_for_label(label: str) -> str:
     """Prematch vs in-play coupon. Does not invent a missing opening line."""
     if "live" in str(label or "").lower():
@@ -152,6 +175,16 @@ class BovadaOddsFeed(DataFeed[list[MarketQuote]]):
             source_kind=SourceKind.REAL_LIVE,
         )
         return quotes, q
+
+    def list_winner_names(self, tournament_name: str, *, refresh: bool = False) -> list[str]:
+        payload = self._coupon(
+            tournament_name,
+            ttl_seconds=ODDS_TTL_PRE_SECONDS,
+            refresh=refresh,
+            allow_stale_on_error=True,
+        )
+        events = self._matching_events(payload, tournament_name)
+        return winner_outcome_names(events)
 
     def _coupon(
         self,

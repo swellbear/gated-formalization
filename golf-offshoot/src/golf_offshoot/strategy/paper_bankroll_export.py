@@ -19,11 +19,138 @@ from golf_offshoot.ranking.export_table import (
 from golf_offshoot.strategy.paper_book import (
     PaperBookFile,
     format_paper_time,
+    iter_compare_paper_files,
     load_snapshot_outputs,
     movement_clocks,
     ticket_rows as paper_ticket_rows,
 )
-from golf_offshoot.strategy.paper_ledger import EventWeek, PaperLedger, load_ledger
+from golf_offshoot.strategy.paper_ledger import EventWeek, LedgerEntry, PaperLedger, load_ledger
+from golf_offshoot.models.strategy import new_id
+
+
+def independent_ledger_from_book(record: PaperBookFile) -> PaperLedger:
+    """Money page for a path that does not write ledger.json (Polymarket, A/B)."""
+    from golf_offshoot.compare.law import METHOD_LAW_V1
+
+    start = float(record.starting_bankroll or 0.0)
+    if start <= 0:
+        start = float(METHOD_LAW_V1["independent_compare_bankroll"])
+    path = (getattr(record, "path_id", None) or "independent").strip() or "independent"
+    ledger = PaperLedger(
+        bankroll=start,
+        starting_bankroll=start,
+        deposits=start,
+        withdrawals=0.0,
+        betting_pnl=0.0,
+        never_auto_bet=True,
+        paper_observation_only=True,
+    )
+    ledger.entries.append(
+        LedgerEntry(
+            entry_id=new_id("led"),
+            at=record.locked_at,
+            kind="deposit",
+            amount=start,
+            bankroll_after=start,
+            event_id=record.tournament_id,
+            event_name=record.tournament_name,
+            note=f"opening {path} paper bankroll. Independent mock. Not ledger.json.",
+        )
+    )
+    running = start
+    betting = 0.0
+    for mv in record.movements:
+        if (mv.status or "").lower() != "applied":
+            continue
+        kind = (mv.kind or "").lower()
+        if kind != "exit" or mv.cashout_quote is None:
+            continue
+        sold = float(mv.stake_before if mv.stake_before is not None else abs(mv.stake_delta or 0.0))
+        pnl = round(float(mv.cashout_quote) - sold, 2)
+        if abs(pnl) < 0.005:
+            continue
+        running = round(running + pnl, 2)
+        betting = round(betting + pnl, 2)
+        est = " estimated" if mv.cashout_estimated else ""
+        ledger.entries.append(
+            LedgerEntry(
+                entry_id=new_id("led"),
+                at=mv.at,
+                kind="cashout",
+                amount=pnl,
+                bankroll_after=running,
+                event_id=record.tournament_id,
+                event_name=record.tournament_name,
+                player_name=mv.player_name,
+                note=f"{path} paper{est} cash-out {mv.player_name}. Mock. Never a CLOB order.",
+            )
+        )
+    ledger.bankroll = round(float(record.bankroll), 2)
+    ledger.betting_pnl = round(float(record.bankroll) - start, 2)
+    if record.settled_at is not None:
+        ledger.events.append(
+            EventWeek(
+                event_id=record.tournament_id,
+                event_name=record.tournament_name,
+                settled_at=record.settled_at,
+                winner_name=record.settlement_winner or "",
+                betting_pnl=float(record.settlement_pnl or 0.0),
+                bankroll_before=round(float(record.bankroll) - float(record.settlement_pnl or 0.0), 2),
+                bankroll_after=float(record.bankroll),
+                never_auto_bet=True,
+            )
+        )
+    for other in iter_compare_paper_files():
+        if (other.path_id or "") != path:
+            continue
+        if other.tournament_id == record.tournament_id:
+            continue
+        if other.settled_at is None:
+            continue
+        ledger.events.append(
+            EventWeek(
+                event_id=other.tournament_id,
+                event_name=other.tournament_name,
+                settled_at=other.settled_at,
+                winner_name=other.settlement_winner or "",
+                betting_pnl=float(other.settlement_pnl or 0.0),
+                bankroll_before=round(float(other.starting_bankroll or start), 2),
+                bankroll_after=float(other.bankroll),
+                never_auto_bet=True,
+            )
+        )
+    ledger.events.sort(key=lambda ev: ev.settled_at)
+    return ledger
+
+
+def overlay_path_cash(record: PaperBookFile, stored: PaperLedger | None = None) -> PaperLedger:
+    """Opening + cash-outs from the paper file, plus extra deposits/withdrawals on this path."""
+    from golf_offshoot.strategy.paper_ledger import load_ledger
+
+    led = independent_ledger_from_book(record)
+    path = (getattr(record, "path_id", None) or "").strip()
+    if not path or path == "lived":
+        return led
+    stored = stored if stored is not None else load_ledger(path)
+    extras = [e for e in stored.entries if e.kind in {"deposit", "withdrawal"}]
+    extra_dep = sum(float(e.amount) for e in extras if e.kind == "deposit")
+    extra_wd = sum(abs(float(e.amount)) for e in extras if e.kind == "withdrawal")
+    led.entries.extend(extras)
+    led.deposits = round(led.deposits + extra_dep, 2)
+    led.withdrawals = round(led.withdrawals + extra_wd, 2)
+    led.bankroll = round(float(record.bankroll), 2)
+    led.betting_pnl = round(led.bankroll - led.starting_bankroll - extra_dep + extra_wd, 2)
+    return led
+
+
+def _independent_blurb(record: PaperBookFile | None) -> str:
+    if record is None or not getattr(record, "independent_bankroll", False):
+        return ""
+    path = (getattr(record, "path_id", None) or "independent").strip() or "independent"
+    return (
+        f"Independent {path} mock bankroll. Not the lived Bovada ledger.json. "
+        "Deposits, cash-outs, and weekend settle on this path only. Never a CLOB order."
+    )
 
 
 def write_bankroll_files(
@@ -91,6 +218,9 @@ def bankroll_document(
         "exactly one winner. Mid-round sells without live posted odds return stake at cost. "
         "A typed --cash-out quote still overrides the estimate.",
     ]
+    blurb = _independent_blurb(record)
+    if blurb:
+        lines.append(blurb)
     if record:
         open_exp, cash, settled = _open_snapshot(ledger, record)
         lines += [
@@ -306,6 +436,7 @@ Wins add to the bankroll. Losses come out. Deposits you record are added. The sy
 and applied cash-out P/L (typed quote or estimated offer minus sold stake).
 Estimated sells haircut 20% of the odds-ratio MTM gap and are not scraped Open Bets.
 Open tickets sit at cost until ESPN is clearly final. live / paper-ledger / paper-export auto-settle then. Settled this event: {settled}.</p>
+{f'<p class="caption">{html.escape(_independent_blurb(record))}</p>' if _independent_blurb(record) else ""}
 {open_block}
 {moves_block}
 {week_block}
@@ -398,6 +529,9 @@ def write_bankroll_pdf(
         "Open tickets sit at cost until ESPN is clearly final. "
         "live / paper-ledger / paper-export auto-settle then."
     )
+    extra = _independent_blurb(record)
+    if extra:
+        para(extra)
     stats = (
         f"Current ${ledger.bankroll:.2f}    starting ${ledger.starting_bankroll:.2f}    "
         f"deposits ${ledger.deposits:.2f}    withdrawals ${ledger.withdrawals:.2f}    "

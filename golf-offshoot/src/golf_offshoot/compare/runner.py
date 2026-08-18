@@ -88,6 +88,8 @@ def _sync_path_book(
             save_paper_book(rec)
         return rec, False
     if existing is None:
+        if not rows:
+            return existing, False
         from golf_offshoot.strategy.paper_book import paper_candidate_slots
 
         slots = paper_candidate_slots(

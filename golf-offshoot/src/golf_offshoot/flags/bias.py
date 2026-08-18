@@ -7,6 +7,10 @@ from golf_offshoot.config import NARRATIVE_ABS_CAP, THIN_SAMPLE_N
 from golf_offshoot.models.schemas import MarketSnapshot, PlayerInputs, ProbabilityBundle
 from golf_offshoot.models.enums import Horizon
 
+# Ticket vetoes. Missing venue history in the loaded years is not in this set.
+PLAYER_HARD_PASS_FLAGS = frozenset({"thin_sample_overconfidence", "sparse_data"})
+COURSE_HISTORY_MISSING = "course_history_missing"
+
 
 def flag_player(
     player: PlayerInputs,
@@ -27,10 +31,14 @@ def flag_player(
         flags.append("narrative_overweight")
     win = bundle.p(Horizon.WIN)
     width = win.high - win.low
-    if player.course_history_rounds < THIN_SAMPLE_N or player.player.is_lesser_known:
+    thin_player = bool(player.player.is_lesser_known)
+    thin_course = player.course_history_rounds < THIN_SAMPLE_N
+    if thin_player:
         if width < 0.04 and win.central > 0.03:
             flags.append("thin_sample_overconfidence")
         flags.append("sparse_data")
+    elif thin_course:
+        flags.append(COURSE_HISTORY_MISSING)
     return flags
 
 

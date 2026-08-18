@@ -7,18 +7,10 @@ from golf_offshoot.config import (
     STRATEGY_EDGE_IMPROVE_ABS,
     STRATEGY_RUNNER_PNL_FRAC,
 )
-from golf_offshoot.models.enums import BetType, Horizon, StrategyMode
+from golf_offshoot.models.enums import BetType, StrategyMode, horizon_for
 from golf_offshoot.models.schemas import PlayerOutput
 from golf_offshoot.models.strategy import PositionMark, StrategyPosition
-from golf_offshoot.strategy.cashout import compare_cashout
-
-_H = {
-    BetType.WIN: Horizon.WIN,
-    BetType.TOP_5: Horizon.TOP_5,
-    BetType.TOP_10: Horizon.TOP_10,
-    BetType.TOP_20: Horizon.TOP_20,
-    BetType.MAKE_CUT: Horizon.MAKE_CUT,
-}
+from golf_offshoot.strategy.cashout import bid_cashout_dollars, compare_cashout, min_sell_price
 
 
 def mark_position(
@@ -39,11 +31,13 @@ def mark_position(
     live_dec = None
     live_posted_edge = None
     if row is not None:
-        hp = row.probabilities.p(_H[pos.bet_type])
-        live_model = hp.central
-        live_low = hp.low
-        live_high = hp.high
-        width = float(hp.high - hp.low)
+        h = horizon_for(pos.bet_type)
+        hp = row.probabilities.horizons.get(h) if h is not None else None
+        if hp is not None:
+            live_model = hp.central
+            live_low = hp.low
+            live_high = hp.high
+            width = float(hp.high - hp.low)
         rel = row.reliability.score
         live_market = row.market_implied_by_bet.get(pos.bet_type.value)
         live_edge = row.edge_by_bet.get(pos.bet_type.value)
@@ -61,21 +55,37 @@ def mark_position(
     if live_edge is None and live_market is not None:
         live_edge = live_model - live_market
 
+    live_bid = None
+    shares = float(pos.shares) if pos.shares and pos.shares > 0 else None
+    if row is not None:
+        raw_bid = row.bid_by_bet.get(pos.bet_type.value)
+        try:
+            bid_f = float(raw_bid) if raw_bid is not None else None
+        except (TypeError, ValueError):
+            bid_f = None
+        if bid_f is not None and 0.0 < bid_f < 1.0:
+            live_bid = bid_f
+    bid_quote = bid_cashout_dollars(shares, live_bid)
+    typed = cashout_quote is not None and cashout_quote > 0
+    quote = float(cashout_quote) if typed else bid_quote
+
     mtm = pos.stake
     mtm_is_cashout = False
+    mtm_is_bid = False
     cmp = None
-    if cashout_quote is not None and cashout_quote > 0:
+    if quote is not None and quote > 0:
         cmp = compare_cashout(
             stake=pos.stake,
             decimal_odds=pos.decimal_odds,
             live_model_p=live_model,
             live_model_low=live_low,
             live_model_high=live_high,
-            quote=cashout_quote,
+            quote=quote,
             mode=mode,
         )
         mtm = cmp.quote
         mtm_is_cashout = True
+        mtm_is_bid = bool(bid_quote is not None and not typed)
     elif live_dec and live_dec > 1.0:
         mtm = pos.stake * (pos.decimal_odds / live_dec)
     pnl = mtm - pos.stake
@@ -122,5 +132,9 @@ def mark_position(
         cashout_threshold=cmp.threshold if cmp else None,
         cashout_beats_hold=cmp.beats_hold if cmp else None,
         mtm_is_cashout=mtm_is_cashout,
+        mtm_is_bid=mtm_is_bid,
+        live_bid=live_bid,
+        shares=shares,
+        min_sell_price=min_sell_price(cmp.threshold if cmp else None, shares),
         live_edge_unmarked=unmarked,
     )

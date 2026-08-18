@@ -3,7 +3,8 @@
 from __future__ import annotations
 
 from golf_offshoot.decision.layer import advise_bet
-from golf_offshoot.models.enums import BetType, DecisionAction, Horizon, StrategyActionKind
+from golf_offshoot.market.odds import yes_ask_sum, yes_book_is_ticketable
+from golf_offshoot.models.enums import BetType, DecisionAction, StrategyActionKind, horizon_for
 from golf_offshoot.models.schemas import FieldSnapshot, PlayerOutput
 from golf_offshoot.models.strategy import (
     StrategyAction,
@@ -12,21 +13,13 @@ from golf_offshoot.models.strategy import (
     new_id,
 )
 from golf_offshoot.strategy import explanations as X
-from golf_offshoot.strategy.correlation import would_raise_cut_stack
+from golf_offshoot.strategy.correlation import would_raise_cut_stack, would_stack_win_proxy
+from golf_offshoot.strategy.flip import build_flip_new
 from golf_offshoot.strategy.sizing import (
     remaining_exposure_capacity,
     scaled_cut_cap,
     suggested_stake,
 )
-
-_H = {
-    BetType.WIN: Horizon.WIN,
-    BetType.TOP_5: Horizon.TOP_5,
-    BetType.TOP_10: Horizon.TOP_10,
-    BetType.TOP_20: Horizon.TOP_20,
-    BetType.MAKE_CUT: Horizon.MAKE_CUT,
-}
-
 
 def _odds(row: PlayerOutput, bet: BetType, *, posted_only: bool = False) -> float | None:
     posted = row.posted_odds_by_bet.get(bet.value)
@@ -48,11 +41,11 @@ def _posted_edge(row: PlayerOutput, bet: BetType) -> float | None:
     odds = _odds(row, bet, posted_only=True)
     if not odds or odds <= 1.0:
         return None
-    return float(row.probabilities.p(_H[bet]).central - 1.0 / odds)
+    return float(row.probabilities.p(horizon_for(bet)).central - 1.0 / odds)
 
 
 def _score(row: PlayerOutput, bet: BetType, ticket_screen: str = "both") -> float:
-    hp = row.probabilities.p(_H[bet])
+    hp = row.probabilities.p(horizon_for(bet))
     width = max(hp.high - hp.low, 1e-6)
     if (ticket_screen or "both").lower() == "posted":
         e = _posted_edge(row, bet) or 0.0
@@ -74,9 +67,19 @@ def build_pre_tournament(
 
     candidates: list[tuple[float, PlayerOutput, BetType]] = []
     posted_only = (config.ticket_screen or "both").lower() == "posted"
+    skip_bets = {
+        bet
+        for bet in config.allowed_bet_types
+        if not yes_book_is_ticketable(
+            bet,
+            yes_ask_sum([_odds(r, bet, posted_only=True) for r in rows]),
+        )
+    }
     for row in rows:
         for bet in config.allowed_bet_types:
-            if _H[bet] not in row.probabilities.horizons:
+            if bet in skip_bets:
+                continue
+            if horizon_for(bet) not in row.probabilities.horizons:
                 continue
             odds = _odds(row, bet, posted_only=posted_only)
             advice = advise_bet(
@@ -113,7 +116,7 @@ def build_pre_tournament(
                 )
             )
             break
-        hp = row.probabilities.p(_H[bet])
+        hp = row.probabilities.p(horizon_for(bet))
         odds = _odds(row, bet, posted_only=posted_only)
         if not odds:
             continue
@@ -126,6 +129,7 @@ def build_pre_tournament(
             reliability=row.reliability.score,
             config=config,
             remaining_capacity=cap,
+            bet_type=bet,
         )
         if stake <= 0:
             actions.append(
@@ -151,6 +155,19 @@ def build_pre_tournament(
                     bet_type=bet,
                     reason=X.concentrated_cut(),
                     reasons_detail=["Skipped to avoid stacking correlated cut-risk"],
+                )
+            )
+            continue
+        if would_stack_win_proxy(proposed, row.player_id, bet):
+            actions.append(
+                StrategyAction(
+                    action_id=new_id("act"),
+                    kind=StrategyActionKind.NO_ACTION,
+                    player_id=row.player_id,
+                    player_name=row.name,
+                    bet_type=bet,
+                    reason=X.win_proxy_stack(),
+                    reasons_detail=["Skipped Win / R2 / R3 stack on the same player; R1 may sit beside Win"],
                 )
             )
             continue
@@ -193,4 +210,7 @@ def build_pre_tournament(
                 uncertainty_warning=warn or (X.noisy_inputs() if row.reliability.score < 0.45 else None),
             )
         )
+    flip_actions, flip_pos = build_flip_new(rows, config, proposed, field)
+    actions.extend(flip_actions)
+    proposed.extend(flip_pos)
     return actions, proposed

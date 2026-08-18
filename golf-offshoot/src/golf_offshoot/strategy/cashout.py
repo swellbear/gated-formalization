@@ -32,6 +32,30 @@ def typed_cashout_ledger_token(movement_id: str) -> str:
     return f"movement:{movement_id}"
 
 
+def bid_cashout_dollars(shares: float | None, bid: float | None) -> float | None:
+    """shares × Yes bid. None if either side is missing. Not a CLOB fill."""
+    try:
+        n = float(shares) if shares is not None else 0.0
+        p = float(bid) if bid is not None else 0.0
+    except (TypeError, ValueError):
+        return None
+    if n <= 0 or p <= 0.0 or p >= 1.0:
+        return None
+    return round(n * p, 2)
+
+
+def min_sell_price(threshold: float | None, shares: float | None) -> float | None:
+    """Sell-bar dollars / shares. The bid to beat, not an order."""
+    try:
+        bar = float(threshold) if threshold is not None else 0.0
+        n = float(shares) if shares is not None else 0.0
+    except (TypeError, ValueError):
+        return None
+    if bar <= 0 or n <= 0:
+        return None
+    return round(bar / n, 4)
+
+
 def estimated_cashout_offer(
     sold_stake: float,
     entry_odds: float | None,

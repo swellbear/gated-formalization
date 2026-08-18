@@ -14,17 +14,42 @@ from golf_offshoot.config import (
     MAX_RANGE_WIDTH_TO_CONSIDER,
     MIN_EDGE_TO_CONSIDER,
     MIN_RELIABILITY_TO_CONSIDER,
+    ROUND_LEADER_EDGE_FLOOR,
+    ROUND_LEADER_EDGE_SCALE,
+    ROUND_LEADER_RANGE_WIDTH,
+    ROUND_LEADER_SIZE_FRAC,
 )
-from golf_offshoot.models.enums import BetType, DecisionAction, Horizon
+from golf_offshoot.flags.bias import COURSE_HISTORY_MISSING, PLAYER_HARD_PASS_FLAGS
+from golf_offshoot.models.enums import BetType, DecisionAction, horizon_for
 from golf_offshoot.models.schemas import DecisionAdvice, PlayerOutput
 
-_H = {
-    BetType.WIN: Horizon.WIN,
-    BetType.TOP_5: Horizon.TOP_5,
-    BetType.TOP_10: Horizon.TOP_10,
-    BetType.TOP_20: Horizon.TOP_20,
-    BetType.MAKE_CUT: Horizon.MAKE_CUT,
-}
+
+def _bet_key(bet: BetType | str | None) -> str:
+    if bet is None:
+        return ""
+    return bet.value if isinstance(bet, BetType) else str(bet or "").lower()
+
+
+def min_edge_for_bet(bet: BetType | str | None, posted_p: float | None = None) -> float:
+    """Winner stays 3pp. Round-leader bar scales with posted Yes, floored, capped at 3pp."""
+    key = _bet_key(bet)
+    floor = ROUND_LEADER_EDGE_FLOOR.get(key)
+    if floor is None:
+        return MIN_EDGE_TO_CONSIDER
+    scale = ROUND_LEADER_EDGE_SCALE.get(key, 0.0)
+    if posted_p is None or posted_p <= 0:
+        return float(floor)
+    return float(max(floor, min(MIN_EDGE_TO_CONSIDER, scale * posted_p)))
+
+
+def max_range_width_for_bet(bet: BetType | str | None) -> float:
+    key = _bet_key(bet)
+    return float(ROUND_LEADER_RANGE_WIDTH.get(key, MAX_RANGE_WIDTH_TO_CONSIDER))
+
+
+def size_frac_for_bet(bet: BetType | str | None) -> float:
+    key = _bet_key(bet)
+    return float(ROUND_LEADER_SIZE_FRAC.get(key, 1.0))
 
 
 def fractional_kelly(p: float, decimal_odds: float, fraction: float = 0.25) -> float:
@@ -37,7 +62,7 @@ def fractional_kelly(p: float, decimal_odds: float, fraction: float = 0.25) -> f
 
 
 def _range_width(row: PlayerOutput, bet: BetType) -> float:
-    hp = row.probabilities.p(_H[bet])
+    hp = row.probabilities.p(horizon_for(bet))
     return float(hp.high - hp.low)
 
 
@@ -47,18 +72,30 @@ def advise_bet(
     decimal_odds: float | None = None,
     portfolio_corr_max: float | None = None,
     ticket_screen: str = "both",
-    min_edge: float = MIN_EDGE_TO_CONSIDER,
+    min_edge: float | None = None,
 ) -> DecisionAdvice:
-    hp = row.probabilities.p(_H[bet])
+    hp = row.probabilities.p(horizon_for(bet))
     edge = row.edge_by_bet.get(bet.value)
     market_p = row.market_implied_by_bet.get(bet.value)
     width = _range_width(row, bet)
     rel = row.reliability.score
     reasons: list[str] = []
     action = DecisionAction.PASS
+    posted_p = None
+    posted_edge = None
+    if decimal_odds is not None and decimal_odds > 1.0:
+        posted_p = 1.0 / decimal_odds
+        posted_edge = hp.central - posted_p
+    if min_edge is None:
+        min_edge = min_edge_for_bet(bet, posted_p)
+    max_width = max_range_width_for_bet(bet)
 
     if "thin_sample_overconfidence" in row.flags:
         reasons.append("thin-sample overconfidence flag — pass unless you override")
+    if "sparse_data" in row.flags:
+        reasons.append("sparse_data (thin player record) — pass unless you override")
+    if COURSE_HISTORY_MISSING in row.flags:
+        reasons.append("no rounds at this venue in the loaded sample — not a ticket veto")
     if "narrative_overweight" in row.flags:
         reasons.append("narrative overweight flag")
     screen = (ticket_screen or "both").lower()
@@ -66,17 +103,12 @@ def advise_bet(
         reasons.append("no market quote to compute edge")
     elif screen != "posted" and edge < min_edge:
         reasons.append(f"edge {edge:+.3f} below consider threshold {min_edge}")
-    posted_p = None
-    posted_edge = None
-    if decimal_odds is not None and decimal_odds > 1.0:
-        posted_p = 1.0 / decimal_odds
-        posted_edge = hp.central - posted_p
-        if screen != "edgew" and posted_edge < min_edge:
-            reasons.append(
-                f"posted-price edge {posted_edge:+.3f} (model {hp.central:.3f} vs 1/odds {posted_p:.3f}) "
-                f"below {min_edge} — de-juiced edge is not a ticket"
-            )
-    if width > MAX_RANGE_WIDTH_TO_CONSIDER:
+    if posted_edge is not None and screen != "edgew" and posted_edge < min_edge:
+        reasons.append(
+            f"posted-price edge {posted_edge:+.3f} (model {hp.central:.3f} vs 1/odds {posted_p:.3f}) "
+            f"below {min_edge} — de-juiced edge is not a ticket"
+        )
+    if width > max_width:
         reasons.append(f"win/horizon range width {width:.3f} is wide")
     if rel < MIN_RELIABILITY_TO_CONSIDER:
         reasons.append(f"reliability {rel:.2f} below {MIN_RELIABILITY_TO_CONSIDER}")
@@ -92,10 +124,10 @@ def advise_bet(
         if posted_edge is None:
             ok_posted = False
             reasons.append("posted screen: no decimal coupon")
-    ok_width = width <= MAX_RANGE_WIDTH_TO_CONSIDER
+    ok_width = width <= max_width
     ok_rel = rel >= MIN_RELIABILITY_TO_CONSIDER
     ok_corr = portfolio_corr_max is None or portfolio_corr_max <= MAX_PORTFOLIO_CORR_TO_STACK
-    ok_flags = "thin_sample_overconfidence" not in row.flags
+    ok_flags = not PLAYER_HARD_PASS_FLAGS.intersection(row.flags)
 
     if ok_edge and ok_posted and ok_width and ok_rel and ok_corr and ok_flags:
         strong_from = posted_edge if screen == "posted" else edge
@@ -135,7 +167,7 @@ def advise_field(
     odds_by_player: dict[str, float] | None = None,
     existing_theta: dict[str, float] | None = None,
     ticket_screen: str = "both",
-    min_edge: float = MIN_EDGE_TO_CONSIDER,
+    min_edge: float | None = None,
 ) -> list[DecisionAdvice]:
     """Portfolio-aware: approximate correlation via latent θ proximity."""
     odds_by_player = odds_by_player or {}

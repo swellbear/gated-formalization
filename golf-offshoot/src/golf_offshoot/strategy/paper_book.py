@@ -13,9 +13,12 @@ from golf_offshoot.config import (
     PAPER_ESTIMATED_CASHOUT_HAIRCUT,
     PAPER_OBSERVATION_STAKE_FRAC,
 )
+from golf_offshoot.decision.layer import min_edge_for_bet, size_frac_for_bet
+from golf_offshoot.flags.bias import PLAYER_HARD_PASS_FLAGS
 from golf_offshoot.localtime import format_eastern, now
+from golf_offshoot.market.odds import yes_ask_sum, yes_book_is_ticketable
 from golf_offshoot.data_feeds.http import package_data_dir
-from golf_offshoot.models.enums import BetType, Horizon, StrategyActionKind
+from golf_offshoot.models.enums import BetType, StrategyActionKind, horizon_for
 from golf_offshoot.models.schemas import PlayerOutput
 from golf_offshoot.models.strategy import (
     PortfolioState,
@@ -25,21 +28,19 @@ from golf_offshoot.models.strategy import (
     new_id,
 )
 from golf_offshoot.strategy.cashout import estimated_cashout_offer
+from golf_offshoot.strategy.correlation import would_stack_win_proxy
 from golf_offshoot.strategy.sizing import (
     remaining_exposure_capacity,
     scaled_exposure_cap,
     scaled_single_cap,
 )
 
-_HARD_PASS = {"thin_sample_overconfidence", "sparse_data"}
+_HARD_PASS = PLAYER_HARD_PASS_FLAGS
 _POST_SETTLE_SKIP_KINDS = frozenset({"new_bet", "add", "reallocate", "lock", "exit", "reduce"})
-_BET_HORIZON = {
-    BetType.WIN: Horizon.WIN,
-    BetType.TOP_5: Horizon.TOP_5,
-    BetType.TOP_10: Horizon.TOP_10,
-    BetType.TOP_20: Horizon.TOP_20,
-    BetType.MAKE_CUT: Horizon.MAKE_CUT,
-}
+
+
+class EmptyFieldLockError(ValueError):
+    """No ESPN field. A blank paper book is not a lock."""
 
 
 class PaperMovement(BaseModel):
@@ -71,6 +72,11 @@ class PaperMovement(BaseModel):
     cashout_estimated: bool = False
     hold_expected_payout: float | None = None
     cashout_threshold: float | None = None
+    shares: float | None = None
+    live_bid: float | None = None
+    min_sell_price: float | None = None
+    mtm_is_bid: bool = False
+    intent: str = "hold"
 
 
 class PaperBookFile(BaseModel):
@@ -230,11 +236,21 @@ def observation_plain() -> str:
     )
 
 
+def tracking_stub_plain() -> str:
+    return (
+        "Observation stubs are tracking tickets, not fills. They are not a Yes you bought. "
+        "After you actually buy, run paper-fill with shares and the fill price. "
+        "Until then, bid MTM and min-sell do not apply."
+    )
+
+
 def observation_technical() -> str:
     return (
         "Technical: EdgeW = model_p minus implied_fair (overround stripped). "
-        "Ticket screen = model_p minus 1/decimal_odds, and must be at least "
+        "Winner ticket screen = model_p minus 1/decimal_odds, and must be at least "
         f"{MIN_EDGE_TO_CONSIDER:.2f} ({MIN_EDGE_TO_CONSIDER * 100:.0f}pp) to consider. "
+        "End-of-round leader (R1/R2/R3) still has to beat the Yes ask, but the bar "
+        "scales with posted Yes (floor 1.5/2.0/2.5pp, cap Winner 3pp). "
         "Live winner boards often carry overround about 1.29-1.37; that extra cut is "
         "live juice. A paper lock is residual judgment on clean positive posted-edge "
         "names, not DecisionAction.CONSIDER clearance, and not a real-money ticket."
@@ -281,25 +297,41 @@ def posted_price_edge(model_p: float, decimal_odds: float) -> float:
     return float(model_p) - 1.0 / float(decimal_odds)
 
 
-def screen_cleared(edge_w: float, posted_edge: float) -> bool:
-    return edge_w >= MIN_EDGE_TO_CONSIDER and posted_edge >= MIN_EDGE_TO_CONSIDER
+def _posted_p(decimal_odds: float | None) -> float | None:
+    if decimal_odds is None or decimal_odds <= 1.0:
+        return None
+    return 1.0 / float(decimal_odds)
+
+
+def ticket_bar(bet: BetType | str | None, decimal_odds: float | None = None) -> float:
+    return min_edge_for_bet(bet, _posted_p(decimal_odds))
+
+
+def screen_cleared(edge_w: float, posted_edge: float, min_edge: float | None = None) -> bool:
+    bar = MIN_EDGE_TO_CONSIDER if min_edge is None else min_edge
+    return edge_w >= bar and posted_edge >= bar
 
 
 def lane_tag(cleared: bool) -> str:
     return "[cleared]" if cleared else "[observation]"
 
 
-def live_screen_tag(live_edge_w: float | None, live_posted_edge: float | None) -> str:
+def live_screen_tag(
+    live_edge_w: float | None,
+    live_posted_edge: float | None,
+    min_edge: float | None = None,
+) -> str:
     """Suffix on the entry lane when this-live marks exist.
 
     |n/a = no posted coupon for this market on this snapshot.
-    |miss = this-live vs-posted (or EdgeW) is below the 3pp ticket bar.
+    |miss = this-live vs-posted (or EdgeW) is below that card's ticket bar.
     """
+    bar = MIN_EDGE_TO_CONSIDER if min_edge is None else min_edge
     if live_posted_edge is None:
         return "|n/a"
-    if live_posted_edge < MIN_EDGE_TO_CONSIDER:
+    if live_posted_edge < bar:
         return "|miss"
-    if live_edge_w is not None and live_edge_w < MIN_EDGE_TO_CONSIDER:
+    if live_edge_w is not None and live_edge_w < bar:
         return "|miss"
     return ""
 
@@ -310,11 +342,13 @@ def display_lane(
     live_edge_w: float | None = None,
     live_posted_edge: float | None = None,
     has_live: bool = False,
+    min_edge: float | None = None,
+    filled: bool = False,
 ) -> str:
-    word = "cleared" if cleared else "observation"
+    word = "fill" if filled else ("cleared" if cleared else "observation")
     if not has_live:
         return f"[{word}]"
-    extra = live_screen_tag(live_edge_w, live_posted_edge)
+    extra = live_screen_tag(live_edge_w, live_posted_edge, min_edge=min_edge)
     return f"[{word}{extra}]"
 
 
@@ -345,12 +379,14 @@ def ensure_odds_book(record: PaperBookFile, odds_book: str) -> PaperBookFile:
     return record
 
 
-def screen_plain(edge_w: float, posted_edge: float) -> str:
-    if screen_cleared(edge_w, posted_edge):
-        return "Cleared — model still beats the posted price by at least 3 percentage points"
+def screen_plain(edge_w: float, posted_edge: float, min_edge: float | None = None) -> str:
+    bar = MIN_EDGE_TO_CONSIDER if min_edge is None else min_edge
+    pp = bar * 100.0
+    if screen_cleared(edge_w, posted_edge, min_edge=bar):
+        return f"Cleared — model still beats the posted price by at least {pp:.1f} percentage points"
     if posted_edge > 0:
         return (
-            f"Short of 3pp vs the posted price ({posted_edge * 100:+.1f}pp). "
+            f"Short of {pp:.1f}pp vs the posted price ({posted_edge * 100:+.1f}pp). "
             "Live juice makes the number you would actually buy harder to beat than the fair EdgeW."
         )
     return "Does not beat the posted price. The book is already shorter than the model."
@@ -374,14 +410,16 @@ def ticket_rows(
     rows: list[PaperTicketRow] = []
     for p in record.book.positions:
         posted_edge = posted_price_edge(p.entry_model_p, p.decimal_odds)
+        bar = ticket_bar(p.bet_type, p.decimal_odds)
         live_posted = None
         live_model = None
         live_edge_w = None
         live_vs = None
+        live_bar = bar
         row = by_id.get(p.player_id) or by_name.get(p.player_name)
         place, to_par, thru, status = live_board_mark(row, n_rounds=n_rounds)
         if row is not None:
-            horizon = _BET_HORIZON.get(p.bet_type)
+            horizon = horizon_for(p.bet_type)
             if horizon is not None:
                 hp = row.probabilities.horizons.get(horizon)
                 if hp is not None:
@@ -394,6 +432,7 @@ def ticket_rows(
             if posted_f is not None and posted_f > 1.0 and live_model is not None:
                 live_posted = posted_f
                 live_vs = posted_price_edge(live_model, posted_f)
+                live_bar = ticket_bar(p.bet_type, posted_f)
                 edge = row.edge_by_bet.get(p.bet_type.value)
                 if edge is not None:
                     live_edge_w = float(edge)
@@ -407,13 +446,15 @@ def ticket_rows(
                 edge_w=p.entry_edge,
                 posted_edge=posted_edge,
                 if_wins=p.stake * p.decimal_odds,
-                screen=screen_plain(p.entry_edge, posted_edge),
-                cleared=screen_cleared(p.entry_edge, posted_edge),
+                screen=screen_plain(p.entry_edge, posted_edge, min_edge=bar),
+                cleared=screen_cleared(p.entry_edge, posted_edge, min_edge=bar),
                 lane=display_lane(
-                    screen_cleared(p.entry_edge, posted_edge),
+                    screen_cleared(p.entry_edge, posted_edge, min_edge=bar),
                     live_edge_w=live_edge_w,
                     live_posted_edge=live_vs,
                     has_live=live_outputs is not None,
+                    min_edge=live_bar,
+                    filled=_position_is_fill(p),
                 ),
                 live_posted=live_posted,
                 live_model=live_model,
@@ -428,6 +469,15 @@ def ticket_rows(
             )
         )
     return rows
+
+
+def _position_is_fill(pos) -> bool:
+    shares = getattr(pos, "shares", None)
+    fill = getattr(pos, "fill_price", None)
+    try:
+        return shares is not None and float(shares) > 0 and fill is not None and float(fill) > 0
+    except (TypeError, ValueError):
+        return False
 
 
 def load_snapshot_audit(run_id: str, *, directory: Path | None = None):
@@ -469,7 +519,10 @@ def _bet_terms_from_row(row: PlayerOutput, bet: str) -> dict:
     model = None
     try:
         bt = BetType(key)
-        model = row.probabilities.p(_BET_HORIZON[bt]).central
+        h = horizon_for(bt)
+        hp = row.probabilities.horizons.get(h) if h is not None else None
+        if hp is not None:
+            model = hp.central
     except (ValueError, KeyError):
         pass
     edge = row.edge_by_bet.get(key)
@@ -513,12 +566,13 @@ def sizing_plain(config: StrategyConfig) -> str:
     obs = unit * PAPER_OBSERVATION_STAKE_FRAC
     total = config.bankroll * scaled_exposure_cap(config)
     return (
-        f"Cleared names (EdgeW and vs-posted both at least {MIN_EDGE_TO_CONSIDER * 100:.0f}pp) "
+        f"Cleared Winner names (EdgeW and vs-posted both at least {MIN_EDGE_TO_CONSIDER * 100:.0f}pp) "
         f"are capped at {scaled_single_cap(config):.1%} of the "
         f"${config.bankroll:.0f} paper bankroll (${unit:.2f}). That is a 5% single-name "
-        "ceiling times the risk haircut. Observation names (positive vs-posted but short of "
-        f"the 3pp ticket screen) get {PAPER_OBSERVATION_STAKE_FRAC:.0%} of that unit "
-        f"(${obs:.2f}). It is a concentration rule, not a fitted Kelly size. "
+        "ceiling times the risk haircut. R1/R2/R3 leader uses 35/55/75% of that Winner unit "
+        "and a scaled vs-posted bar. Observation names (positive vs-posted but short of "
+        f"that card's ticket screen) get {PAPER_OBSERVATION_STAKE_FRAC:.0%} of that unit "
+        f"(${obs:.2f} on Winner). It is a concentration rule, not a fitted Kelly size. "
         "Two cleared names can get the same dollar amount because both hit the per-name "
         "ceiling, not because they have the same edge. Cash left is unused room under the "
         f"{scaled_exposure_cap(config):.0%} total cap (${total:.2f}) plus everything above it."
@@ -532,7 +586,8 @@ def sizing_technical(config: StrategyConfig) -> str:
         "scaled_exposure_cap = 0.20 * risk haircut. "
         "Advisory size is fractional Kelly (0.25) * range haircut * reliability * risk * "
         "mode, then min(unit, remaining total cap). The paper lock does not use "
-        "that Kelly figure as the stake; cleared uses the unit cap, observation uses 25% of it."
+        "that Kelly figure as the stake; cleared Winner uses the unit cap, observation uses 25% of it. "
+        "R1/R2/R3 leader uses 35/55/75% of the Winner unit."
     )
 
 
@@ -573,7 +628,7 @@ def lock_movement_for_ticket(
         amount_plain = (
             f"{tag} ${ticket.stake:.2f} is {PAPER_OBSERVATION_STAKE_FRAC:.0%} of the "
             f"single-name unit (${unit:.2f} → ${obs_unit:.2f}) because the posted-price "
-            "screen is short of 3pp. Not the same dollars as a cleared name."
+            "screen is short of that card's ticket bar. Not the same dollars as a cleared name."
         )
     amount_tech = (
         f"stake={ticket.stake:.2f} unit_cap={unit:.2f} "
@@ -746,6 +801,7 @@ def advice_from_recommendation(
             cashout_quote=act.cashout_quote,
             hold_expected_payout=act.hold_expected_payout,
             estimated_offer=estimated_offer,
+            bid_quote=bool(act.mtm_is_bid),
         )
         out.append(
             PaperMovement(
@@ -785,6 +841,15 @@ def advice_from_recommendation(
                 cashout_estimated=False,
                 hold_expected_payout=act.hold_expected_payout,
                 cashout_threshold=act.cashout_threshold,
+                shares=act.shares,
+                live_bid=act.live_bid,
+                min_sell_price=act.min_sell_price,
+                mtm_is_bid=bool(act.mtm_is_bid),
+                intent=(
+                    (getattr(proposed, "intent", None) or "")
+                    or (getattr(pos, "intent", None) or "")
+                    or "hold"
+                ),
             )
         )
     return out
@@ -799,12 +864,14 @@ def _advice_amount_plain(
     cashout_quote: float | None = None,
     hold_expected_payout: float | None = None,
     estimated_offer: float | None = None,
+    bid_quote: bool = False,
 ) -> str:
+    label = "Bid cash-out (shares x bestBid)" if bid_quote else "Typed cash-out"
     if kind == "hold":
         if cashout_quote is not None:
             hold = f"${hold_expected_payout:.2f}" if hold_expected_payout is not None else "n/a"
             return (
-                f"Stake stays ${before:.2f}. Typed cash-out ${cashout_quote:.2f} "
+                f"Stake stays ${before:.2f}. {label} ${cashout_quote:.2f} "
                 f"does not beat hold EV {hold}."
             )
         return f"Stake stays ${before:.2f}. Hold is a size of zero change, not a new bet."
@@ -812,8 +879,8 @@ def _advice_amount_plain(
         if cashout_quote is not None:
             hold = f"${hold_expected_payout:.2f}" if hold_expected_payout is not None else "n/a"
             return (
-                f"Take quoted cash-out ${cashout_quote:.2f} on the ${before:.2f} ticket "
-                f"(paper). Hold EV {hold}. After = $0.00."
+                f"Take {label.lower()} ${cashout_quote:.2f} on the ${before:.2f} ticket "
+                f"(hold EV {hold}). Not a CLOB order."
             )
         if estimated_offer is not None:
             return (
@@ -1101,6 +1168,10 @@ def apply_advice(record: PaperBookFile, advice: list[PaperMovement]) -> PaperBoo
             bet = BetType(filled.bet_type) if filled.bet_type in {b.value for b in BetType} else BetType.WIN
             if any(p.player_id == filled.player_id and p.bet_type == bet for p in positions):
                 continue
+            intent = (getattr(filled, "intent", None) or "hold").lower()
+            notes = "paper new_bet applied from advice"
+            if intent == "flip":
+                notes = "paper new_bet applied from advice; flip sleeve; sell at fill+20%"
             positions.append(
                 StrategyPosition(
                     position_id=new_id("paper"),
@@ -1111,9 +1182,10 @@ def apply_advice(record: PaperBookFile, advice: list[PaperMovement]) -> PaperBoo
                     decimal_odds=filled.decimal_odds,
                     entry_edge=filled.edge_w or 0.0,
                     entry_model_p=filled.model_win or 0.0,
-                    notes="paper new_bet applied from advice",
+                    notes=notes,
                     user_recorded=True,
                     proposed=False,
+                    intent=intent if intent in {"hold", "flip"} else "hold",
                 )
             )
             applied.append(filled.model_copy(update={"status": "applied", "stake_after": round(filled.stake_delta, 2)}))
@@ -1168,6 +1240,114 @@ def apply_advice(record: PaperBookFile, advice: list[PaperMovement]) -> PaperBoo
     return record
 
 
+def restore_applied_exits(
+    record: PaperBookFile,
+    *,
+    player_names: list[str] | None = None,
+    reason_plain: str = "",
+) -> tuple[PaperBookFile, list[str]]:
+    """Put back mock tickets flattened by a later applied EXIT. Undoes independent cash-out P/L."""
+    want = {n.strip().lower() for n in (player_names or []) if n.strip()}
+    note = reason_plain or (
+        "Restored after a pre-tee collapse sell. Quote drift before golf starts is not a sell."
+    )
+    open_ids = {p.position_id for p in record.book.positions}
+    open_keys = {(p.player_id, p.bet_type) for p in record.book.positions}
+    restored: list[str] = []
+    positions = list(record.book.positions)
+    movements = list(record.movements)
+    bankroll = float(record.bankroll)
+    for i, mv in enumerate(movements):
+        if (mv.kind or "").lower() != "exit":
+            continue
+        if (mv.status or "").lower() != "applied":
+            continue
+        if want and (mv.player_name or "").strip().lower() not in want:
+            continue
+        if mv.position_id and mv.position_id in open_ids:
+            continue
+        try:
+            bet = BetType(str(mv.bet_type or "win").lower().replace(" ", "_"))
+        except ValueError:
+            bet = BetType.WIN
+        key = (mv.player_id, bet)
+        if mv.player_id and key in open_keys:
+            continue
+        sold = round(float(mv.stake_before if mv.stake_before is not None else abs(mv.stake_delta or 0.0)), 2)
+        if sold <= 0:
+            continue
+        lock_mv = next(
+            (
+                m
+                for m in record.movements
+                if m.position_id == mv.position_id and (m.kind or "").lower() == "lock"
+            ),
+            None,
+        )
+        odds = float(
+            (lock_mv.decimal_odds if lock_mv and lock_mv.decimal_odds else None) or mv.decimal_odds or 0.0
+        )
+        model = float(
+            (lock_mv.model_win if lock_mv and lock_mv.model_win is not None else mv.model_win) or 0.0
+        )
+        edge = float((lock_mv.edge_w if lock_mv and lock_mv.edge_w is not None else mv.edge_w) or 0.0)
+        if getattr(record, "independent_bankroll", False) and mv.cashout_quote is not None:
+            bankroll = round(bankroll - (float(mv.cashout_quote) - sold), 2)
+        pid = mv.position_id or new_id("paper")
+        pos = StrategyPosition(
+            position_id=pid,
+            player_id=mv.player_id,
+            player_name=mv.player_name,
+            bet_type=bet,
+            stake=sold,
+            decimal_odds=odds,
+            entry_edge=edge,
+            entry_model_p=model,
+            notes="paper lock restored after pre-tee collapse exit",
+            user_recorded=True,
+            proposed=False,
+            shares=mv.shares if mv.shares else (lock_mv.shares if lock_mv else None),
+        )
+        positions.append(pos)
+        open_ids.add(pid)
+        if mv.player_id:
+            open_keys.add(key)
+        movements[i] = mv.model_copy(update={"status": "reverted"})
+        movements.append(
+            PaperMovement(
+                movement_id=new_id("restore"),
+                kind="restore",
+                status="applied",
+                player_id=mv.player_id,
+                player_name=mv.player_name,
+                bet_type=bet.value,
+                position_id=pid,
+                stake_before=0.0,
+                stake_delta=sold,
+                stake_after=sold,
+                decimal_odds=mv.decimal_odds,
+                model_win=mv.model_win,
+                edge_w=mv.edge_w,
+                posted_edge=mv.posted_edge,
+                run_id=mv.run_id,
+                reason_plain=note,
+                reason_technical=f"reverted exit {mv.movement_id}",
+                amount_plain=f"Restored ${sold:.2f} paper ticket. Mock. Never auto-bet.",
+            )
+        )
+        restored.append(mv.player_name or pid)
+    if not restored:
+        return record, []
+    book_update = {"positions": positions, "bankroll": bankroll}
+    record.bankroll = bankroll
+    record.book = record.book.model_copy(update=book_update)
+    record.movements = movements
+    record.last_advice_sig = ""
+    if note not in record.notes:
+        record.notes = list(record.notes) + [note]
+    return record, restored
+
+
 def void_post_settle_open_tickets(record: PaperBookFile) -> tuple[PaperBookFile, bool]:
     """Drop leftover opens after official settle. At cost. Not a cash-out. Not week P/L."""
     if record.settled_at is None or not record.book.positions:
@@ -1205,6 +1385,49 @@ def void_post_settle_open_tickets(record: PaperBookFile) -> tuple[PaperBookFile,
     record.book = record.book.model_copy(update={"positions": []})
     record.movements = list(record.movements) + voids
     record.latest_advice = []
+    if note not in record.notes:
+        record.notes = list(record.notes) + [note]
+    return record, True
+
+
+def void_unlisted_paper_bets(
+    record: PaperBookFile,
+    allowed: set[BetType],
+    *,
+    reason_plain: str,
+    reason_technical: str,
+) -> tuple[PaperBookFile, bool]:
+    """Drop open tickets whose market is not on the current book. At cost."""
+    keep: list = []
+    voids: list[PaperMovement] = []
+    for pos in record.book.positions:
+        bet = pos.bet_type if isinstance(pos.bet_type, BetType) else BetType(str(pos.bet_type))
+        if bet in allowed:
+            keep.append(pos)
+            continue
+        sold = round(float(pos.stake), 2)
+        voids.append(
+            PaperMovement(
+                movement_id=new_id("void"),
+                kind="void",
+                status="applied",
+                player_id=pos.player_id,
+                player_name=pos.player_name,
+                bet_type=bet.value if hasattr(bet, "value") else str(bet),
+                position_id=pos.position_id,
+                stake_before=sold,
+                stake_delta=-sold,
+                stake_after=0.0,
+                decimal_odds=pos.decimal_odds,
+                reason_plain=reason_plain,
+                reason_technical=reason_technical,
+            )
+        )
+    if not voids:
+        return record, False
+    note = reason_plain
+    record.book = record.book.model_copy(update={"positions": keep})
+    record.movements = list(record.movements) + voids
     if note not in record.notes:
         record.notes = list(record.notes) + [note]
     return record, True
@@ -1259,7 +1482,7 @@ def iter_paper_files() -> list[PaperBookFile]:
     if not paper_dir().is_dir():
         return out
     for path in sorted(paper_dir().glob("*.json")):
-        if path.name.lower() == "ledger.json":
+        if path.name.lower() == "ledger.json" or path.name.lower().startswith("ledger_"):
             continue
         try:
             rec = PaperBookFile.model_validate_json(path.read_text(encoding="utf-8"))
@@ -1277,7 +1500,7 @@ def iter_compare_paper_files() -> list[PaperBookFile]:
     if not paper_dir().is_dir():
         return out
     for path in sorted(paper_dir().glob("*.json")):
-        if path.name.lower() == "ledger.json":
+        if path.name.lower() == "ledger.json" or path.name.lower().startswith("ledger_"):
             continue
         try:
             rec = PaperBookFile.model_validate_json(path.read_text(encoding="utf-8"))
@@ -1314,7 +1537,7 @@ def paper_candidates(
     *,
     require_cleared: bool = False,
     ticket_screen: str = "both",
-    min_edge: float = MIN_EDGE_TO_CONSIDER,
+    min_edge: float | None = None,
 ) -> list[PlayerOutput]:
     """Clean names with a real quote, screened by ticket law.
 
@@ -1322,6 +1545,7 @@ def paper_candidates(
     edgew (A-replay / B-guts): EdgeW >= min_edge; vs-posted may be short.
     posted (B-nerves / B-full): vs-posted >= min_edge; EdgeW-only names are out.
     require_cleared=True drops observation names on the lived both-screen.
+    Winner min_edge defaults to 3pp. Round-leader uses that card's scaled bar.
     """
     screen = (ticket_screen or "both").lower()
     cleared: list[tuple[float, PlayerOutput]] = []
@@ -1333,15 +1557,19 @@ def paper_candidates(
         if not odds:
             continue
         edge = row.edge_by_bet.get(bet.value)
-        hp = row.probabilities.p(_BET_HORIZON[bet])
+        h = horizon_for(bet)
+        hp = row.probabilities.horizons.get(h) if h is not None else None
+        if hp is None:
+            continue
         posted_edge = hp.central - 1.0 / odds
+        bar = min_edge if min_edge is not None else min_edge_for_bet(bet, 1.0 / odds)
         if screen == "edgew":
-            if edge is None or edge < min_edge:
+            if edge is None or edge < bar:
                 continue
             bucket = cleared
             key = float(edge)
         elif screen == "posted":
-            if posted_edge < min_edge:
+            if posted_edge < bar:
                 continue
             bucket = cleared
             key = float(posted_edge)
@@ -1350,7 +1578,7 @@ def paper_candidates(
                 continue
             if posted_edge <= 0:
                 continue
-            bucket = cleared if screen_cleared(edge, posted_edge) else observation
+            bucket = cleared if screen_cleared(edge, posted_edge, min_edge=bar) else observation
             key = float(edge)
         bucket.append((key, row))
     cleared.sort(key=lambda t: t[0], reverse=True)
@@ -1368,33 +1596,39 @@ def paper_candidate_slots(
 ) -> list[tuple[PlayerOutput, BetType, float, float, float, bool]]:
     """(row, bet, posted_odds, edge, posted_edge, cleared). Skips markets with no coupon."""
     screen = (config.ticket_screen or "both").lower()
-    min_edge = MIN_EDGE_TO_CONSIDER
     slots: list[tuple[float, PlayerOutput, BetType, float, float, float, bool]] = []
     bets = list(config.allowed_bet_types or [BetType.WIN])
     for bet in bets:
+        ask_sum = yes_ask_sum([_posted(row, bet) for row in rows])
+        if not yes_book_is_ticketable(bet, ask_sum):
+            continue
         for row in rows:
             if _hard_pass(row):
                 continue
             odds = _posted(row, bet)
             if not odds:
                 continue
-            hp = row.probabilities.p(_BET_HORIZON[bet])
+            h = horizon_for(bet)
+            hp = row.probabilities.horizons.get(h) if h is not None else None
+            if hp is None:
+                continue
             posted_edge = hp.central - 1.0 / odds
             edge = row.edge_by_bet.get(bet.value)
+            bar = min_edge_for_bet(bet, 1.0 / odds)
             if screen == "edgew":
-                if edge is None or edge < min_edge:
+                if edge is None or edge < bar:
                     continue
                 key = float(edge)
                 cleared = True
             elif screen == "posted":
-                if posted_edge < min_edge:
+                if posted_edge < bar:
                     continue
                 key = float(posted_edge)
                 cleared = True
             else:
                 if edge is None or edge <= 0 or posted_edge <= 0:
                     continue
-                cleared = screen_cleared(edge, posted_edge)
+                cleared = screen_cleared(edge, posted_edge, min_edge=bar)
                 if require_cleared and not cleared:
                     continue
                 key = float(edge)
@@ -1419,6 +1653,8 @@ def lock_paper_positions(
     method_law_hash: str = "",
 ) -> PaperBookFile:
     """Accept a mock book at conservative caps. Does not place a real bet."""
+    if not rows:
+        raise EmptyFieldLockError("empty field; not locking paper")
     from golf_offshoot.strategy.paper_ledger import (
         ensure_opening_deposit,
         load_ledger,
@@ -1441,9 +1677,8 @@ def lock_paper_positions(
         observation_plain(),
         observation_technical(),
         (
-            f"Cleared stake = full unit ${unit:.2f}. Observation stake = "
-            f"{PAPER_OBSERVATION_STAKE_FRAC:.0%} of unit "
-            f"${unit * PAPER_OBSERVATION_STAKE_FRAC:.2f}."
+            f"Cleared Winner stake = full unit ${unit:.2f}. R1/R2/R3 uses 35/55/75% of that unit. "
+            f"Observation stake = {PAPER_OBSERVATION_STAKE_FRAC:.0%} of the card's unit."
         ),
         f"path_id={path_id} ticket_screen={screen} independent_bankroll={independent_bankroll} "
         f"bets={[b.value for b in (config.allowed_bet_types or [BetType.WIN])]}",
@@ -1456,13 +1691,19 @@ def lock_paper_positions(
             lane_cleared = True
         else:
             lane_cleared = cleared
+        if would_stack_win_proxy(positions, row.player_id, bet):
+            continue
         tag = lane_tag(lane_cleared)
-        want = unit if lane_cleared else unit * PAPER_OBSERVATION_STAKE_FRAC
+        frac = size_frac_for_bet(bet)
+        want = unit * frac if lane_cleared else unit * frac * PAPER_OBSERVATION_STAKE_FRAC
         stake = min(want, cap)
         if stake < 0.002 * config.bankroll:
             break
-        hp = row.probabilities.p(_BET_HORIZON[bet])
-        screen_txt = screen_plain(edge, posted_edge)
+        hp = row.probabilities.horizons.get(horizon_for(bet))
+        if hp is None:
+            continue
+        bar = ticket_bar(bet, odds)
+        screen_txt = screen_plain(edge, posted_edge, min_edge=bar)
         positions.append(
             StrategyPosition(
                 position_id=new_id("paper"),

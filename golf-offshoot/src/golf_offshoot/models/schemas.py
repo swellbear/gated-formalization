@@ -209,6 +209,7 @@ class MarketQuote(BaseModel):
     american_odds: int | None = None
     implied_raw: float | None = None
     implied_fair: float | None = None
+    bid_raw: float | None = None
     book: str = "consensus"
     as_of: datetime = Field(default_factory=_now)
     line_role: str = "current"  # current | opening — opening never synthesized from winner
@@ -262,6 +263,7 @@ class PlayerOutput(BaseModel):
     edge_by_bet: dict[str, float] = Field(default_factory=dict)
     market_implied_by_bet: dict[str, float] = Field(default_factory=dict)
     posted_odds_by_bet: dict[str, float] = Field(default_factory=dict)
+    bid_by_bet: dict[str, float] = Field(default_factory=dict)
     open_questions: list[str] = Field(default_factory=list)
     flags: list[str] = Field(default_factory=list)
     explain: ExplainabilityReport | None = None
@@ -273,6 +275,10 @@ class PlayerOutput(BaseModel):
     live_status_name: str = ""
     live_made_cut: bool | None = None
     withdrawn: bool = False
+    flip_heat_p: float | None = None
+    flip_heat_bar: float | None = None
+    flip_heat_p_by_bet: dict[str, float] = Field(default_factory=dict)
+    flip_heat_bar_by_bet: dict[str, float] = Field(default_factory=dict)
 
 
 class DecisionAdvice(BaseModel):

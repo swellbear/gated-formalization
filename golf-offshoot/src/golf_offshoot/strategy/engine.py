@@ -134,6 +134,10 @@ def format_recommendation(rec: StrategyRecommendation) -> str:
             hold = f"{a.hold_expected_payout:.2f}" if a.hold_expected_payout is not None else "n/a"
             bar = f"{a.cashout_threshold:.2f}" if a.cashout_threshold is not None else "n/a"
             cash = f" cash-out ${a.cashout_quote:.2f} vs hold EV ${hold} sell-bar ${bar}"
+            if a.live_bid is not None:
+                cash += f" bid {a.live_bid:.3f}"
+            if a.min_sell_price is not None:
+                cash += f" min-sell {a.min_sell_price:.3f}"
         lines.append(
             f"  {a.kind.value:11} {a.player_name or a.player_id} {a.bet_type.value}{extra} -- {a.reason}{cash}{warn}"
         )

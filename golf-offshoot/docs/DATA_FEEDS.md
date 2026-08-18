@@ -28,13 +28,14 @@ Mocks are **banned** from rankings, probabilities, edges, calibration, strategy 
 
 | Need | Primary | Fallback | If both fail |
 |------|---------|----------|----------------|
-| Field list / IDs | ESPN leaderboard (`site.web.api`) | — | fail the run |
+| Field list / IDs | ESPN leaderboard (`site.web.api`) | Pinned-book Winner names (Bovada or Polymarket, not mixed) joined to ESPN history ids by name | **Unavailable** — `n=0`; no invented athlete ids |
 | Talent / form / course history | Derived from ESPN completed leaderboards (events that **started before** this tee time) | — | wide prior, unconstrained form |
 | Season driving / putts/GIR | ESPN athlete overview rankings | — | those factors unconstrained |
 | Strokes gained long-term | PGA Tour GraphQL `THROUGH_EVENT` of the last completed pill dated **before** this tee time | Season StatDetails, then prior-season table | **Unavailable** for unmatched names |
 | Recent SG windows | Data Golf last-8 fields if a key exists **and** the payload contains a true recent window; otherwise PGA Tour GraphQL `EVENT_ONLY` mean of the last **16** completed pills before tee time (weeks the player actually appears; misses skipped, not zero-filled) | — | **Unavailable** — season tables are **not** used as last-N |
 | Odds | The Odds API if `THE_ODDS_API_KEY` is set **and** a golf outright exists | Bovada public golf coupon (`Winner` / `Winner Live` / Finishes when listed) | **Unavailable** — no invented prices |
 | Odds (Hard Rock Bet) | The Odds API with `bookmakers=hardrockbet` (and FL/AZ/OH skins, not averaged) when `--book hardrockbet` or `GOLF_ODDS_BOOK=hardrockbet` | — (Bovada is **not** a substitute) | **Unavailable** — Hard Rock has no Bovada-style public CLI coupon |
+| Odds (Polymarket) | Polymarket **US** golf futures (`gateway.polymarket.us`, `--book polymarket`) | — (Gamma international and Bovada are **not** substitutes) | **Unavailable** — unmatched names stay unmatched; no CLOB orders |
 | OWGR | ESPN rankings core endpoint | — | **Unavailable** (endpoint empty) |
 | Weather now | ESPN course AccuWeather blob | Open-Meteo forecast | weather unconstrained |
 | Weather history | Open-Meteo archive | — | weather-fit unconstrained |
@@ -63,11 +64,13 @@ implied_raw_i = 1 / decimal_i
 implied_fair_i = implied_raw_i / Σ_j implied_raw_j
 ```
 
-Displayed Win edge is `model_p − implied_fair`. That is a probability-scale comparison, not a ticket. Live winner coupons can carry a large overround; longshot fair probs shrink a lot. The decision/strategy layer therefore also requires **beating the posted number**: `model_p − 1/decimal ≥ MIN_EDGE_TO_CONSIDER`. Players with no matched outcome are `unavailable` — no invented price.
+Displayed Win edge is `model_p − implied_fair`. That is a probability-scale comparison, not a ticket. Live winner coupons can carry a large overround; longshot fair probs shrink a lot. The decision/strategy layer therefore also requires **beating the posted number**: Winner uses `model_p − 1/decimal ≥ MIN_EDGE_TO_CONSIDER` (3pp). End-of-round leader still has to beat the Yes ask, but the consider bar scales with posted Yes (floored, capped at Winner 3pp). Players with no matched outcome are `unavailable` — no invented price.
 
-Place / top-10 / top-5 / top-20 / make-cut are ingested **only** if a matching coupon actually lists that market. Winner decimals are never converted into place prices. St. Jude Winner Live often has no Finishes card — those markets stay `unavailable`.
+Place / top-10 / top-5 / top-20 / make-cut / win-after-round-1/2/3 are ingested **only** if a matching coupon actually lists that market. Winner decimals are never converted into place or after-round prices. St. Jude Winner Live often has no Finishes card — those markets stay `unavailable`.
 
 `--book hardrockbet` pins the operating path to Hard Rock Bet. Bovada prices are not used as a stand-in. That path needs `THE_ODDS_API_KEY` (shell env or `golf-offshoot/.env`; do not commit the file). Without it Hard Rock odds stay **unavailable**. Opening archives are stored per book family so a Bovada open is never relabeled as a Hard Rock open.
+
+`--book polymarket` pins **Polymarket US** golf futures from `gateway.polymarket.us/v2/sports/golf/events?type=futures`. For this BMW week that is Winner plus End of Round 1/2/3 Leader (`pga-bmwcham-2026-08-20-w` / `…-r1l` / `r2l` / `r3l`). Top 5/10/20 on gamma-api.polymarket.com are international website cards and are not ingested. Classification uses the US question/title (`BMW Championship Winner`, `End of Round 1 Leader`). Posted Yes is `bestAskQuote.value` (decimal `1 / ask`). Typed fills mark with `bestBidQuote`. The CLI never places orders. Polymarket paper stays on path `polymarket`. Strategy uses Win or P(lead after round N) for those US cards only.
 
 Bovada `Winner Live` during the round is an **in-play** outright (`book=bovada_live`), not a frozen opening line. A distinct prematch `Winner` coupon, when present on the same event, is stored as `line_role=opening`. The first observed prematch coupon is also archived under `data/openings/` and merged back after the market flips live. Current in-play prices are never relabeled as opens. If no distinct prematch coupon was captured, opening stays `unavailable`.
 

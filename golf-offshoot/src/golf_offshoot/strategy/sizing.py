@@ -6,8 +6,8 @@ from golf_offshoot.config import (
     STRATEGY_LOW_RELIABILITY_BLOCK,
     STRATEGY_WIDE_RANGE_BLOCK,
 )
-from golf_offshoot.decision.layer import fractional_kelly
-from golf_offshoot.models.enums import RiskPreference, StrategyMode
+from golf_offshoot.decision.layer import fractional_kelly, max_range_width_for_bet, size_frac_for_bet
+from golf_offshoot.models.enums import BetType, RiskPreference, StrategyMode
 from golf_offshoot.models.strategy import StrategyConfig
 
 
@@ -41,8 +41,14 @@ def sizing_probability(central: float, low: float, risk: RiskPreference) -> floa
     return float(max(0.0, min(1.0, central - frac * span)))
 
 
-def uncertainty_blocks_action(range_width: float, reliability: float) -> str | None:
-    if range_width > STRATEGY_WIDE_RANGE_BLOCK:
+def uncertainty_blocks_action(
+    range_width: float,
+    reliability: float,
+    *,
+    max_width: float | None = None,
+) -> str | None:
+    cap = STRATEGY_WIDE_RANGE_BLOCK if max_width is None else max_width
+    if range_width > cap:
         return "Range still too wide to justify adding"
     if reliability < STRATEGY_LOW_RELIABILITY_BLOCK:
         return "Reliability too low to justify adding"
@@ -59,20 +65,23 @@ def suggested_stake(
     reliability: float,
     config: StrategyConfig,
     remaining_capacity: float,
+    bet_type: BetType | str | None = None,
 ) -> tuple[float, str | None]:
     """Return (stake, block_reason). Stake is 0 if blocked or tiny."""
-    warn = uncertainty_blocks_action(range_width, reliability)
+    width_cap = max_range_width_for_bet(bet_type) if bet_type is not None else STRATEGY_WIDE_RANGE_BLOCK
+    warn = uncertainty_blocks_action(range_width, reliability, max_width=width_cap)
     if warn and config.mode != StrategyMode.PRESS_EDGES:
         return 0.0, warn
     p = sizing_probability(model_p, low_p, config.risk)
     kelly = fractional_kelly(p, decimal_odds, fraction=0.25)
     if kelly <= 0:
         return 0.0, "No positive Kelly after uncertainty haircut"
-    haircut = max(0.15, 1.0 - min(0.85, range_width / max(STRATEGY_WIDE_RANGE_BLOCK, 1e-6)))
+    haircut = max(0.15, 1.0 - min(0.85, range_width / max(width_cap, 1e-6)))
     rel_m = max(0.20, reliability)
     if warn and config.mode == StrategyMode.PRESS_EDGES:
         haircut *= 0.45
         rel_m *= 0.70
+    frac = size_frac_for_bet(bet_type) if bet_type is not None else 1.0
     raw = (
         bankroll
         * kelly
@@ -80,10 +89,11 @@ def suggested_stake(
         * rel_m
         * _RISK_SIZE[config.risk]
         * _MODE_SIZE[config.mode]
+        * frac
     )
-    cap = bankroll * scaled_single_cap(config)
+    cap = bankroll * scaled_single_cap(config) * frac
     stake = min(raw, cap, max(0.0, remaining_capacity))
-    min_unit = 0.002 * bankroll
+    min_unit = 0.002 * bankroll * frac
     if kelly > 0 and 0 < stake < min_unit:
         # Conservative haircuts can crush a real posted-price edge into dust.
         # Keep a minimum advisory unit so CONSIDER does not silently vanish.

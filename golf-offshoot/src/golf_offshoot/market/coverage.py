@@ -6,7 +6,7 @@ from golf_offshoot.market.odds import is_current_quote
 from golf_offshoot.models.enums import BetType
 from golf_offshoot.models.schemas import MarketQuote
 
-_ALL = (BetType.WIN, BetType.TOP_5, BetType.TOP_10, BetType.TOP_20, BetType.MAKE_CUT)
+_ALL = tuple(BetType)
 
 
 def market_coverage_report(
@@ -53,8 +53,8 @@ def market_coverage_report(
         "opening_quotes": opening_n,
         "opening_available": opening_n > 0,
         "notes": (
-            "Place/top-10 ingested only when the source coupon lists them. "
-            "Winner odds are never converted into place prices. "
+            "Place/top/round-leader ingested only when the source coupon lists them. "
+            "Winner odds are never converted into place or after-round prices. "
             "Opening lines counted only when a distinct prematch coupon exists "
             "alongside the current (usually live) price."
         ),

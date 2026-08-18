@@ -17,7 +17,7 @@ from golf_offshoot.models.strategy import (
 )
 from golf_offshoot.pipeline import GolfOffshootPipeline
 from golf_offshoot.strategy.engine import record_user_decision, run_strategy
-from golf_offshoot.strategy.live import _action_for_open
+from golf_offshoot.strategy.live import _action_for_open, golf_has_started
 from golf_offshoot.strategy.path import mark_position
 from golf_offshoot.strategy.sizing import suggested_stake, uncertainty_blocks_action
 
@@ -199,6 +199,35 @@ def test_collapsed_edge_exits():
     act = _action_for_open(mark, pos, cfg, cooling=False)
     assert act.kind == StrategyActionKind.EXIT
     assert "collapsed" in act.reason.lower()
+
+
+def test_pre_tee_collapsed_holds():
+    f = demo_field()
+    pipe = _pipe()
+    result = pipe.run(demo_tournament(), f, market_quotes=demo_odds(f), persist=False)
+    assert golf_has_started(result.ranked) is False
+    row = result.ranked[-1]
+    pos = StrategyPosition(
+        position_id=new_id("pos"),
+        player_id=row.player_id,
+        player_name=row.name,
+        bet_type=BetType.WIN,
+        stake=2.19,
+        decimal_odds=29.41,
+        entry_edge=0.023,
+        entry_model_p=0.036,
+        user_recorded=True,
+    )
+    mark = mark_position(pos, row)
+    mark = mark.model_copy(update={"original_edge_collapsed": True, "live_edge": 0.001, "is_runner": False})
+    cfg = StrategyConfig(enabled=True, mode=StrategyMode.STAY_SELECTIVE, bankroll=250)
+    act = _action_for_open(mark, pos, cfg, cooling=False, golf_started=False)
+    assert act.kind == StrategyActionKind.HOLD
+    assert "has not started" in act.reason.lower()
+    row = row.model_copy(update={"live_holes_completed": 9, "live_score_to_par": -2, "live_place": 4})
+    assert golf_has_started([row]) is True
+    started = _action_for_open(mark, pos, cfg, cooling=False, golf_started=True)
+    assert started.kind == StrategyActionKind.EXIT
 
 
 def test_cooling_off_blocks_new_risk():

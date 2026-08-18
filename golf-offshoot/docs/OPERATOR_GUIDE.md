@@ -156,7 +156,7 @@ Live tables add **dWin / Pre# / dRnk** when a pre-tournament `ingest` snapshot e
 1. Rank is Win **central**, not “best bet.”
 2. Read the **range** and **Rel** before EdgeW.
 3. EdgeW is model − **de-juiced** implied, not a ticket. Decision/strategy also require beating **1 / posted decimal**.
-4. Flags such as `thin_sample_overconfidence` or `sparse_data` are hard reasons to pass.
+4. Flags such as `thin_sample_overconfidence` or `sparse_data` are hard reasons to pass. `course_history_missing` is not — Rel haircut only (the venue is not in the loaded ESPN years).
 5. On no-cut playoff fields, Cut ≈ 1.00 except WD. That is the rule, not a forecast of making the weekend.
 
 ### Optional strategy construction
@@ -181,6 +181,8 @@ python -m golf_offshoot paper-export --event 401811963
 
 `live` with an existing paper book records hold / reduce / exit / add / reallocate as **advice** in that snapshot's pack. When the **actionable** advice set changes (not a HOLD-only snapshot), it auto-applies that mock book. `--no-apply-paper` records advice without applying. `--apply-paper` force-applies even if the set did not change. After ESPN is official and the week is settled, live does **not** open new tickets on leftover Winner quotes; leftover post-settle opens are voided at cost (not a cash-out, not week P/L). Still mock money, still never a real bet. Open pack PDFs in Edge, Chrome, or Adobe — not as source in the editor. If a place ticket has no live posted coupon (`|n/a` on Screen), HOLD means ride to official settle — not “edge intact,” and not an invented cash-out.
 
+`--lock-paper` refuses an empty field (`n=0`) instead of writing a blank book. If ESPN competitors are empty, ingest falls back to the **pinned book’s** Winner names joined to ESPN history ids (provisional field; not labeled as ESPN). Pinning a settled event prints ESPN’s current week (name + id) so you do not silently score last week’s museum. Ingest before Thursday warns if no distinct opening coupon was stored yet — capture Winner before it flips to Winner Live.
+
 Parallel A/B paper machines (independent $250-start books; lived lock frozen, live apply still mutates): [Compare method](COMPARE_METHOD.md).
 
 ```bash
@@ -189,6 +191,38 @@ python -m golf_offshoot compare-replay --event 401811963
 ```
 
 `--compare-method` writes one folder under `data/exports/packs/{espn_id}_{time}_{run}_batch/` with **`00_full_readout.pdf`** in this order: **trigger pull** (lived this snapshot: sell, reallocate, partial sell, add, new, hold), how to read (five-book legend), fights, ESPN leaderboard, model field, lived / A-replay / B-guts / B-nerves / B-full tickets and why-bets, then lived bankroll. Each ticket page is titled with the book. A-control shares A-replay; there is not a second A book. Individual PDFs stay in the folder. Open the readout in Edge, Chrome, or Adobe — not as source in the editor. `--compare-method` will not `--lock-paper` lived. Live apply still mutates until official settle. St. Jude (`401811962`) A/B books stay Winner-only. BMW and later events ticket Top 5/10/20 when a real coupon exists and score Winner vs place P/L separately.
+
+Polymarket is a **separate** paper machine. It never fills from Bovada, never writes `ledger.json`, and never lands in the `_batch/` five-book pack. `live --book polymarket` writes `{espn_id}_{time}_{run}_polymarket/` with its own `00_full_readout.pdf`, including `05_bankroll.pdf` for that path (opening $250, this week's moves, cash-outs, weekend settle/rollover on Polymarket only). Paper file is `data/paper/{espn_id}_polymarket.json` (independent $250). Odds come from the **US app** golf futures list (Winner and end-of-round leader when listed), not the international website Top 5/10/20 cards. Strategy prices each US card with the matching model (Win vs lead-after-N). Winner still needs 3pp vs the posted Yes. End-of-round leader still has to beat the Yes ask, but the consider bar scales with posted Yes (floor 1.5/2.0/2.5pp, cap Winner 3pp) and size is 35/55/75% of the Winner unit. Same player does not stack Win with R2/R3 (R1 may sit beside Win). 2-ball / matchup questions stay skipped. No orders.
+
+Auto-lock observation tickets are **not** fills. After you actually buy, record shares and the Yes price you got:
+
+```bash
+python -m golf_offshoot paper-fill --event 401811963 --player "Matt Fitzpatrick" --shares 50 --fill 0.034
+python -m golf_offshoot paper-fill --event 401811963 --player "Matt Fitzpatrick" --shares 50 --fill 0.034 --cost 1.80
+python -m golf_offshoot paper-fill --event 401811963 --player "Matt Fitzpatrick" --shares 50 --fill 0.034 --market win_after_r1
+```
+
+`--fill` is a Yes price in `(0, 1)`. `--cost` is optional USDC spent (defaults to shares × fill). That replaces a matching observation stub on the Polymarket path only. The lock model and vs-posted edge stay on the ticket so it still says why the name was booked. Later `live --book polymarket` marks the fill with `shares × bestBid` vs hold EV and prints **bid now** and **min-sell** on the trigger, plus a **fill tape** (cost vs offer vs keep-to-win, pop or no pop). Offer vs cost is display only — Stay Selective still sells only if the bid beats keep-to-win. **Flip** tickets are a separate sleeve on **listed** Yes cards (Winner, R1/R2/R3, place/make-cut when quoted): leftover prints P(early contract % ≥ ask + spread); NEW only if that P is at least 0.20; one flip per player; at most 6 open flips (3 per market), counting fills already on the book — a later live does not refill with the next-best names; a fail/sell that frees a slot can still print whoever is hottest then; live sells at fill+20% if still green on a following live run (not keep-to-win). Fail clock is 18 holes for R1, 36 for Winner/R2/place, 54 for R3. Unlisted cards are not invented. Fitz/Cole-style hold-to-Sunday tickets stay `intent=hold`. `--cash-out "Name=12.40"` on that same command overrides the bid dollars. Until you `paper-fill`, open names stay **[observation]** tracking stubs, not fills.
+
+Pack leftover is `04_leftover.pdf` (used vs unconstrained vs Round 1/2/3 vs-posted, fill tape, fat Top 10 / skinny Win, and flip heat P as display, not a ticket). After Thursday, rerun `live --book polymarket` when the ESPN board moves so Round 2/3 use live to-par. Tee/wave stays leftover, not theta. The pack is the journal; do not keep a separate notebook.
+
+Polymarket cash is **not** `ledger.json`:
+
+```bash
+python -m golf_offshoot paper-ledger --book polymarket --event 401811963
+python -m golf_offshoot paper-deposit --book polymarket --event 401811963 --amount 50 --note "add cash"
+python -m golf_offshoot paper-withdraw --book polymarket --event 401811963 --amount 20 --note "take some off"
+python -m golf_offshoot paper-export --book polymarket --event 401811963
+```
+
+```bash
+python -m golf_offshoot live --event 401811963 --book polymarket
+python -m golf_offshoot live --event 401811963 --book polymarket --cash-out "Matt Fitzpatrick=2.10"
+python -m golf_offshoot watch --event 401811963 --book polymarket --once
+python -m golf_offshoot watch --event 401811963 --book polymarket
+```
+
+`watch` pings [ntfy](https://ntfy.sh) when the trigger actually changes (TAKE THE POP, FLIP FAILED, SELL after golf starts, NEW, REALLOCATE). Leftover heat does not ping. It always refreshes, never applies paper, never writes a pack/PDF/snapshot, and never places a CLOB order. Set `NTFY_TOPIC` in `golf-offshoot/.env` and subscribe to that topic in the ntfy app. `--once` is the phone check. Leave the looping command running in a terminal; pre-tee waits 30 minutes between ticks, in-play 10 minutes. Ctrl+C stops it.
 
 ### Paper bankroll (rollover)
 
@@ -204,13 +238,13 @@ python -m golf_offshoot paper-settle --event 401811962 --refresh
 
 `live`, `paper-ledger`, and `paper-export` **auto-settle** any open paper book when ESPN marks that event **final** with exactly one official winner. They do not invent a winner or a playoff; those stay open. After settle, that event’s book stays empty: leftover posted odds are not a new market. After a finished week is booked, the next `--lock-paper` sizes off the **rolled** bankroll (and subtracts any tickets still open on a not-yet-final event). `paper-settle` is still the explicit command that errors if the field is not official. After a lock exists, `live --bankroll` is ignored in favor of the working bankroll; use `paper-deposit` to add cash.
 
-Every batch pack includes `00_full_readout.pdf` (all numbered PDFs in one file), `03_leaderboard.pdf` on live snapshots (ESPN place / to-par / thru at that run, not model Win%), and `05_bankroll.pdf`: this week’s moves, ticket wins/losses once settled, deposits/withdrawals, and lifetime event P/L.
+Every batch pack includes `00_full_readout.pdf` (all numbered PDFs in one file), `03_leaderboard.pdf` on live snapshots (ESPN place / to-par / thru at that run, not model Win%), `04_leftover.pdf` (display leftover, including Round 1/2/3 vs-posted when quoted), and `05_bankroll.pdf`: this week’s moves, ticket wins/losses once settled, deposits/withdrawals, and lifetime event P/L. Bankroll is last in the combo.
 
 `--book bovada` screens tickets against Bovada quotes only (Winner / Winner Live when listed). Use that for this week's BMW Championship: The Odds API has no weekly PGA outright and no Hard Rock golf coupon, so `--book hardrockbet` stays empty. Do not map Hard Rock, DraftKings, or major-winner futures onto this event. After St. Jude settle, the next `--lock-paper` sizes off the **rolled** ledger bankroll. `--bankroll` on live is ignored when a ledger exists. Empty strategy output is still the honest result when nobody clears.
 
-**Screens vs live juice, in plain language:** the sportsbook takes a cut on live winner odds, so the number you would actually buy is worse than a fair market. `EdgeW` looks at the fair market after that cut is stripped and can look good. The ticket screen asks whether the model is still at least 3 percentage points more optimistic than `1 / posted odds`. When live juice is heavy, that screen fails even if EdgeW is positive. That is expected. A paper lock still records clean names so you can track fake money: **cleared** tickets get the full single-name unit; **observation** tickets (positive vs-posted but short of 3pp) get 25% of that unit. It is not clearance to bet. The St. Jude mock book was locked before the cleared/observation split and was not re-sized. BMW is a new lock off the rolled bankroll.
+**Screens vs live juice, in plain language:** the sportsbook takes a cut on live winner odds, so the number you would actually buy is worse than a fair market. `EdgeW` looks at the fair market after that cut is stripped and can look good. The ticket screen asks whether the model is still at least 3 percentage points more optimistic than `1 / posted odds` **on Winner**. End-of-round leader uses a smaller, posted-Yes-scaled bar (still must beat the ask). When live juice is heavy, that screen fails even if EdgeW is positive. That is expected. A paper lock still records clean names so you can track fake money: **cleared** tickets get the full single-name unit (R1/R2/R3 get 35/55/75% of that unit); **observation** tickets (positive vs-posted but short of that card's bar) get 25% of that card's unit. It is not clearance to bet. The St. Jude mock book was locked before the cleared/observation split and was not re-sized. BMW is a new lock off the rolled bankroll.
 
-**Same point, technical:** `EdgeW = model_p − implied_fair`. Ticket screen = `model_p − 1/decimal` ≥ `MIN_EDGE_TO_CONSIDER` (0.03). Live winner overround on this event has been ~1.29–1.37.
+**Same point, technical:** `EdgeW = model_p − implied_fair`. Winner ticket screen = `model_p − 1/decimal` ≥ `MIN_EDGE_TO_CONSIDER` (0.03). Round-leader bar = `max(floor, min(0.03, scale × posted Yes))` with floors 0.015/0.020/0.025 and scales 0.25/0.30/0.35 for R1/R2/R3. Live winner overround on this event has been ~1.29–1.37.
 
 ### Live updates during the event
 
@@ -223,6 +257,7 @@ python -m golf_offshoot live --event 401811963 --book bovada
 Live mode:
 
 - Uses ESPN score-to-par and holes completed (`period` + `thru`, not “FINISHED = 72 holes”).
+- Until anyone has a board mark (holes / place / to-par), live **HOLD**s open tickets. Pre-tee quote drift is not a collapse sell. Typed `--cash-out` that beats hold EV can still EXIT.
 - Hole-dampens `live_position` so a 6-hole Round-1 lead cannot dominate θ.
 - Refetches odds with a **45s** TTL. If refresh fails, quotes older than **15 minutes** are suppressed (`EDGES_SUPPRESSED_STALE`), not treated as live.
 - Prints **dWin / Pre# / dRnk** against the latest pre-tournament snapshot for that event. Run `ingest` first this week or those columns stay off. Live is never treated as the opening line.
@@ -296,7 +331,7 @@ Two different comparisons:
 | Quantity | Formula | Meaning |
 |----------|---------|---------|
 | Displayed `EdgeW` | `model_p − implied_fair` | Fair = raw implied / sum of raw implied (overround stripped) |
-| Ticket screen | `model_p − 1/decimal` | Must clear ~3pp (`MIN_EDGE_TO_CONSIDER`) to even `consider` |
+| Ticket screen | `model_p − 1/decimal` | Winner must clear ~3pp (`MIN_EDGE_TO_CONSIDER`). R1/R2/R3 leader uses a scaled bar (still must beat the Yes ask). |
 
 Live Winner coupons often carry **large overround** (St. Jude ~1.29–1.37). De-juicing shrinks longshot fair probs and inflates `EdgeW` on names the book barely prices. That is why a +0.03 EdgeW on a 176.00 longshot is usually still `pass` on the posted-number screen.
 
@@ -310,7 +345,7 @@ Typical stack:
 - Positive EdgeW vs fair, but does not beat **1/odds**.
 - Range wider than ~0.18 on the horizon.
 - Rel below ~0.45.
-- `thin_sample_overconfidence` / `sparse_data` / `narrative_overweight`.
+- `thin_sample_overconfidence` / `sparse_data` / `narrative_overweight`. `course_history_missing` is not a hard pass.
 - No coupon for the horizon you wanted (e.g. ranked on T10, book has Winner only).
 - Playoff field: make-cut “edges” are meaningless when Cut is structurally ~1.
 
@@ -485,6 +520,7 @@ All commands: `python -m golf_offshoot <command> ...` from `golf-offshoot/`.
 | Apply mock sells/reallocates to the paper book | default `live` when advice set changes; `--no-apply-paper` to skip; `--apply-paper` to force |
 | A vs B method compare (2 MCs, fights + batch pack + `00_full_readout.pdf`) | `python -m golf_offshoot live --event <id> --book bovada --compare-method` |
 | Retrofit A-replay + B-nerves from snapshots | `python -m golf_offshoot compare-replay --event 401811962` |
+| Record a Polymarket fill (shares + Yes price; no CLOB) | `python -m golf_offshoot paper-fill --event <id> --player "Name" --shares 50 --fill 0.034` |
 | Live with typed cash-out vs hold | `python -m golf_offshoot live --event <id> --book bovada --cash-out "Name=12.40"` |
 | Pre + live + three strategy modes + markdown report | `python -m golf_offshoot pressure-test --event <id> --bankroll 2000` |
 | More Monte Carlo draws | add `--sims 2500` (pressure-test floors pre at 2000) |

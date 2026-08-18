@@ -19,11 +19,16 @@ from golf_offshoot.config import (
     DEFAULT_ROUND_SIGMA,
     DEFAULT_ROUNDS,
 )
-from golf_offshoot.models.enums import Horizon
+from golf_offshoot.models.enums import Horizon, ROUND_LEADER_HORIZONS
 from golf_offshoot.models.schemas import HorizonProbability, ProbabilityBundle
 
 
 HORIZON_ORDER = (Horizon.WIN, Horizon.TOP_5, Horizon.TOP_10, Horizon.TOP_20, Horizon.MAKE_CUT)
+LEAD_ROUNDS = (
+    (Horizon.WIN_AFTER_R1, 1),
+    (Horizon.WIN_AFTER_R2, 2),
+    (Horizon.WIN_AFTER_R3, 3),
+)
 
 
 @dataclass
@@ -40,7 +45,10 @@ class SimConfig:
 
 
 def _enforce_coherence(p: dict[Horizon, float]) -> dict[Horizon, float]:
-    """Force WIN ≤ TOP5 ≤ TOP10 ≤ TOP20 ≤ MAKE_CUT ≤ 1."""
+    """Force WIN ≤ TOP5 ≤ TOP10 ≤ TOP20 ≤ MAKE_CUT ≤ 1.
+
+    Round-leader horizons stay off this chain. They are not 72-hole finishes.
+    """
     chain = [
         Horizon.WIN,
         Horizon.TOP_5,
@@ -55,6 +63,43 @@ def _enforce_coherence(p: dict[Horizon, float]) -> dict[Horizon, float]:
         out[h] = v
         running = v
     return out
+
+
+def _lead_after_n(
+    scores,
+    n_r: int,
+    *,
+    theta,
+    live_score,
+    live_holes,
+    holes_per_round: int,
+    round_sigma: float,
+    rng,
+    wd,
+):
+    """P(tied or sole lead after n_r rounds). Ties count as in the lead."""
+    n_r = max(1, min(int(n_r), int(scores.shape[2])))
+    after = scores[:, :, :n_r].sum(axis=2)
+    if live_score is not None and live_holes is not None:
+        holes_needed = float(n_r * holes_per_round)
+        holes = np.asarray(live_holes, dtype=float)
+        still = holes < holes_needed
+        if np.any(still):
+            capped = np.minimum(holes, holes_needed)
+            live_after = remaining_totals(
+                theta,
+                np.asarray(live_score, dtype=float),
+                capped,
+                n_r,
+                round_sigma,
+                rng,
+                holes_per_round=holes_per_round,
+            )
+            after = np.where(still[None, :], live_after, after)
+    after = np.array(after, copy=True)
+    after[:, wd] = 1e9
+    best = np.min(after, axis=1, keepdims=True)
+    return after <= best + 1e-9
 
 
 def simulate_field(
@@ -156,6 +201,21 @@ def simulate_field(
     top10 &= made
     top20 &= made
 
+    lead = {}
+    for h, n_r in LEAD_ROUNDS:
+        if n_r <= cfg.n_rounds:
+            lead[h] = _lead_after_n(
+                scores,
+                n_r,
+                theta=theta,
+                live_score=live_score if has_live_board else None,
+                live_holes=live_holes if has_live_board else None,
+                holes_per_round=holes_per_round,
+                round_sigma=round_sigma,
+                rng=rng,
+                wd=wd,
+            )
+
     # Percentile bands via Bernoulli: use beta-ish from sim batches
     # Split sims into blocks for a cheap posterior range
     n_blocks = 10
@@ -181,6 +241,7 @@ def simulate_field(
             (Horizon.TOP_10, top10),
             (Horizon.TOP_20, top20),
             (Horizon.MAKE_CUT, made),
+            *[(h, lead[h]) for h in ROUND_LEADER_HORIZONS if h in lead],
         ):
             c, lo, hi = band(arr)
             raw[h] = (c, lo, hi)

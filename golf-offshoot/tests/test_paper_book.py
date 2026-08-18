@@ -21,6 +21,7 @@ from golf_offshoot.strategy.paper_book import (
     load_paper_book,
     lock_paper_positions,
     paper_candidates,
+    restore_applied_exits,
     ticket_rows,
 )
 
@@ -91,6 +92,39 @@ def test_paper_candidates_skip_flags_and_negative_posted():
     assert names[0] == "Kurt Kitayama"
     cleared_only = [r.name for r in paper_candidates(rows, require_cleared=True)]
     assert cleared_only == ["Kurt Kitayama"]
+
+
+def test_paper_candidates_keep_missing_venue_history():
+    rows = [
+        _row(
+            "scheff",
+            "Scottie Scheffler",
+            0.141,
+            edge=0.060,
+            posted=8.0,
+            flags=["course_history_missing"],
+        ),
+        _row("p7", "Player 7", 0.015, edge=0.04, posted=20.0, flags=["sparse_data"]),
+    ]
+    names = [r.name for r in paper_candidates(rows)]
+    assert names == ["Scottie Scheffler"]
+
+
+def test_lock_paper_empty_field_raises():
+    from golf_offshoot.strategy.paper_book import EmptyFieldLockError
+
+    cfg = StrategyConfig(
+        enabled=True,
+        mode=StrategyMode.STAY_SELECTIVE,
+        risk=RiskPreference.CONSERVATIVE,
+        bankroll=250,
+    )
+    try:
+        lock_paper_positions([], cfg, event_id="401811963", run_id="empty")
+    except EmptyFieldLockError as exc:
+        assert "empty field; not locking paper" in str(exc)
+        return
+    raise AssertionError("expected EmptyFieldLockError")
 
 
 def test_lock_paper_book_persists_and_never_auto_bets(tmp_path, monkeypatch):
@@ -599,6 +633,7 @@ def test_display_lane_live_suffix():
     assert display_lane(True, has_live=True, live_posted_edge=None) == "[cleared|n/a]"
     assert display_lane(True, has_live=True, live_posted_edge=0.002, live_edge_w=0.05) == "[cleared|miss]"
     assert display_lane(True, has_live=True, live_posted_edge=0.06, live_edge_w=0.07) == "[cleared]"
+    assert display_lane(False, filled=True) == "[fill]"
 
 
 def test_ticket_lane_marks_live_na_without_coupon(tmp_path, monkeypatch):
@@ -722,3 +757,71 @@ def test_unmarked_hold_blotter_does_not_say_intact():
     assert "intact" not in blob
     assert "settle" in blob
     assert "cash-out" in blob
+
+
+def test_restore_applied_exit_puts_ticket_back():
+    pos_id = "paper-cole"
+    rec = PaperBookFile(
+        tournament_id="401811963",
+        tournament_name="BMW Championship",
+        bankroll=249.34,
+        odds_book="polymarket",
+        independent_bankroll=True,
+        book=PortfolioState(
+            bankroll=249.34,
+            positions=[
+                StrategyPosition(
+                    position_id="paper-fitz",
+                    player_id="fitz",
+                    player_name="Matt Fitzpatrick",
+                    bet_type=BetType.WIN,
+                    stake=2.19,
+                    decimal_odds=29.41,
+                    entry_edge=0.023,
+                    entry_model_p=0.036,
+                    user_recorded=True,
+                )
+            ],
+        ),
+        movements=[
+            PaperMovement(
+                movement_id="lock-cole",
+                kind="lock",
+                status="applied",
+                player_id="cole",
+                player_name="Eric Cole",
+                bet_type="win",
+                position_id=pos_id,
+                stake_delta=2.19,
+                stake_after=2.19,
+                decimal_odds=29.41,
+                model_win=0.036,
+                edge_w=0.023,
+            ),
+            PaperMovement(
+                movement_id="exit-cole",
+                kind="exit",
+                status="applied",
+                player_id="cole",
+                player_name="Eric Cole",
+                bet_type="win",
+                position_id=pos_id,
+                stake_before=2.19,
+                stake_delta=-2.19,
+                stake_after=0.0,
+                decimal_odds=40.0,
+                cashout_quote=1.53,
+                cashout_estimated=True,
+            ),
+        ],
+    )
+    rec, names = restore_applied_exits(rec, player_names=["Eric Cole"])
+    assert names == ["Eric Cole"]
+    by = {p.player_name: p for p in rec.book.positions}
+    assert "Eric Cole" in by
+    assert abs(by["Eric Cole"].stake - 2.19) < 1e-9
+    assert abs(by["Eric Cole"].decimal_odds - 29.41) < 1e-9
+    assert abs(rec.bankroll - 250.0) < 1e-9
+    exit_mv = next(m for m in rec.movements if m.movement_id == "exit-cole")
+    assert exit_mv.status == "reverted"
+    assert any(m.kind == "restore" and m.player_name == "Eric Cole" for m in rec.movements)

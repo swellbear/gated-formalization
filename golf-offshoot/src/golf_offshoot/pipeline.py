@@ -136,6 +136,9 @@ class GolfOffshootPipeline:
             borrow_notes=borrow_notes,
             field_notes=field_notes,
             prev_theta=prev_theta,
+            n_rounds=tournament.n_rounds,
+            cut_place=tournament.cut_place,
+            has_cut=tournament.has_cut,
         )
 
         cfg = strategy_config if strategy_config is not None else self.strategy_config
