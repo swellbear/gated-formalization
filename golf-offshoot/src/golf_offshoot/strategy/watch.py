@@ -34,6 +34,7 @@ class WatchDecision:
     should_ping: bool
     kind: str
     priority: str
+    pulls: tuple = ()
 
 
 def ntfy_topic(raw: str | None = None) -> str:
@@ -77,6 +78,30 @@ def save_watch_state(path: Path, state: dict) -> None:
     tmp = path.with_suffix(".json.tmp")
     tmp.write_text(json.dumps(state, indent=2), encoding="utf-8")
     tmp.replace(path)
+
+
+def serialize_pulls(moves: list[PaperMovement]) -> list[dict]:
+    out: list[dict] = []
+    for mv in moves or []:
+        out.append(
+            {
+                "kind": mv.kind,
+                "player_id": mv.player_id,
+                "player_name": mv.player_name,
+                "bet_type": mv.bet_type,
+                "intent": mv.intent or "hold",
+                "model_win": mv.model_win,
+                "edge_w": mv.edge_w,
+                "posted_edge": mv.posted_edge,
+                "decimal_odds": mv.decimal_odds,
+            }
+        )
+    return out
+
+
+def last_pulls_from_state(state: dict | None) -> list[dict]:
+    raw = (state or {}).get("last_pulls")
+    return list(raw) if isinstance(raw, list) else []
 
 
 def pull_moves(advice: list[PaperMovement], rows: list | None) -> list[PaperMovement]:
@@ -131,6 +156,7 @@ def decide_watch(
             should_ping=sig != (prev_signature or ""),
             kind="pull",
             priority=_priority_for(pulls),
+            pulls=tuple(pulls),
         )
     headline = "NOTHING TO PULL — all HOLD"
     if arm_ping and not armed:
@@ -145,6 +171,7 @@ def decide_watch(
             should_ping=True,
             kind="armed",
             priority="min",
+            pulls=(),
         )
     return WatchDecision(
         headline=headline,
@@ -153,6 +180,7 @@ def decide_watch(
         should_ping=False,
         kind="hold",
         priority="min",
+        pulls=(),
     )
 
 

@@ -547,6 +547,9 @@ def _cmd_live_polymarket(args) -> int:
                 print(str(exc))
                 record = None
     elif result.strategy:
+        from golf_offshoot.strategy.fills import relink_paper_player_ids
+
+        record = relink_paper_player_ids(record, result.ranked)
         advice = advice_from_recommendation(record, result.strategy, run_id=result.run_id)
         if args.no_apply_paper:
             record.latest_advice = advice
@@ -977,10 +980,12 @@ def _cmd_paper_settle(args) -> int:
 
 
 def _cmd_paper_fill(args) -> int:
-    from golf_offshoot.audit.journal import latest_pre_audit
+    from golf_offshoot.audit.journal import latest_event_audit
     from golf_offshoot.data_feeds.http import package_data_dir
+    from golf_offshoot.data_feeds.polymarket import POLYMARKET_PATH_ID
     from golf_offshoot.strategy.fills import FillError, record_polymarket_fill
     from golf_offshoot.strategy.paper_book import format_paper_book
+    from golf_offshoot.strategy.watch import last_pulls_from_state, load_watch_state, watch_state_path
 
     if not args.event:
         print("paper-fill requires --event <espn_id>")
@@ -989,9 +994,11 @@ def _cmd_paper_fill(args) -> int:
         print('paper-fill requires --player "Name"')
         return 2
     ranked_names = None
-    pre = latest_pre_audit(args.event, package_data_dir() / "snapshots")
-    if pre is not None:
-        ranked_names = {o.name: o.player_id for o in pre.outputs}
+    audit = latest_event_audit(args.event, package_data_dir() / "snapshots")
+    if audit is not None:
+        ranked_names = {o.name: o.player_id for o in audit.outputs}
+    watch = load_watch_state(watch_state_path(args.event, POLYMARKET_PATH_ID))
+    pulls = last_pulls_from_state(watch)
     try:
         rec = record_polymarket_fill(
             event_id=args.event,
@@ -1002,11 +1009,17 @@ def _cmd_paper_fill(args) -> int:
             market=args.market,
             ranked_names=ranked_names,
             intent=args.intent,
+            pulls=pulls or None,
         )
     except FillError as exc:
         print(str(exc))
         return 2
     print("recorded polymarket fill (mock paper path; no CLOB order; not ledger.json)")
+    last = rec.notes[-1] if rec.notes else ""
+    if "last ntfy ADD" in last:
+        print("attached to last ntfy ADD on this name+market")
+    elif "last ntfy" in last:
+        print("attached to last ntfy pull on this name+market")
     print(format_paper_book(rec))
     return 0
 
@@ -1073,6 +1086,7 @@ def _cmd_watch(args) -> int:
         ntfy_topic,
         publish_ntfy,
         save_watch_state,
+        serialize_pulls,
         watch_state_path,
     )
 
@@ -1109,6 +1123,12 @@ def _cmd_watch(args) -> int:
             strategy_mode=StrategyMode(args.mode),
             risk=RiskPreference(args.risk),
         )
+        if rec is not None:
+            from golf_offshoot.strategy.fills import relink_paper_player_ids
+            from golf_offshoot.strategy.paper_book import save_paper_book
+
+            rec = relink_paper_player_ids(rec, result.ranked)
+            save_paper_book(rec)
         tid = result.tournament.espn_event_id or result.tournament.tournament_id or event_id
         advice = advice_for_watch(rec, result)
         state = load_watch_state(state_path)
@@ -1137,16 +1157,19 @@ def _cmd_watch(args) -> int:
         else:
             print(f"watch quiet: {decision.headline}")
         if not args.dry_run:
-            save_watch_state(
-                state_path,
-                {
-                    "signature": decision.signature,
-                    "armed": True,
-                    "headline": decision.headline,
-                    "kind": decision.kind,
-                    "run_id": result.run_id,
-                },
-            )
+            payload = {
+                "signature": decision.signature,
+                "armed": True,
+                "headline": decision.headline,
+                "kind": decision.kind,
+                "run_id": result.run_id,
+                "last_pulls": (
+                    serialize_pulls(list(decision.pulls))
+                    if decision.kind == "pull"
+                    else list(state.get("last_pulls") or [])
+                ),
+            }
+            save_watch_state(state_path, payload)
         if args.once:
             return 0
         wait = interval if golf_has_started(result.ranked) else pre_interval

@@ -464,7 +464,6 @@ def build_flip_new(
     actions: list[StrategyAction] = []
     proposed: list[StrategyPosition] = []
     allowed = list(config.allowed_bet_types or list(BetType))
-    progress = board_progress_holes(rows)
     held_flips = open_flip_positions(open_positions)
     if len(held_flips) >= FLIP_NEW_MAX_TOTAL:
         return actions, proposed
@@ -472,7 +471,7 @@ def build_flip_new(
     cands: list[tuple[float, PlayerOutput, BetType]] = []
     for row in rows:
         for bet in listed_flip_bets(row, allowed=allowed):
-            if progress >= flip_fail_holes(bet):
+            if int(row.live_holes_completed or 0) >= flip_fail_holes(bet):
                 continue
             p, bar = _heat_get(row, bet)
             if p is None or bar is None or p < FLIP_NEW_MIN_P:

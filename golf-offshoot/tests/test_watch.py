@@ -49,6 +49,15 @@ def test_pull_pings_then_stays_quiet_on_same_set():
     assert again.should_ping is False
 
 
+def test_watch_keeps_pulls_on_decision():
+    pulls = [_mv("add", "Gary Woodland", extra="live improved")]
+    first = decide_watch(pulls, _STARTED, event="BMW", prev_signature="", armed=True)
+    assert first.kind == "pull"
+    assert first.pulls
+    assert first.pulls[0].kind == "add"
+    assert "Gary Woodland" in first.body
+
+
 def test_new_pull_after_hold_is_a_ping():
     hold = decide_watch([_mv("hold", "Eric Cole")], [], event="BMW", armed=True)
     nxt = decide_watch(

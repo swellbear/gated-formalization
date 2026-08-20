@@ -194,7 +194,7 @@ python -m golf_offshoot compare-replay --event 401811963
 
 Polymarket is a **separate** paper machine. It never fills from Bovada, never writes `ledger.json`, and never lands in the `_batch/` five-book pack. `live --book polymarket` writes `{espn_id}_{time}_{run}_polymarket/` with its own `00_full_readout.pdf`, including `05_bankroll.pdf` for that path (opening $250, this week's moves, cash-outs, weekend settle/rollover on Polymarket only). Paper file is `data/paper/{espn_id}_polymarket.json` (independent $250). Odds come from the **US app** golf futures list (Winner and end-of-round leader when listed), not the international website Top 5/10/20 cards. Strategy prices each US card with the matching model (Win vs lead-after-N). Winner still needs 3pp vs the posted Yes. End-of-round leader still has to beat the Yes ask, but the consider bar scales with posted Yes (floor 1.5/2.0/2.5pp, cap Winner 3pp) and size is 35/55/75% of the Winner unit. Same player does not stack Win with R2/R3 (R1 may sit beside Win). 2-ball / matchup questions stay skipped. No orders.
 
-Auto-lock observation tickets are **not** fills. After you actually buy, record shares and the Yes price you got:
+Auto-lock observation tickets are **not** fills. After you actually buy, record shares and the Yes price you got. `paper-fill` attaches to the **last ntfy ADD** on that name+market when the ping was ADD (ESPN id, existing intent, lock model) and **adds shares** onto the open ticket. If the ping was NEW, it still attaches to that NEW. R1 leader is not automatically a flip.
 
 ```bash
 python -m golf_offshoot paper-fill --event 401811963 --player "Matt Fitzpatrick" --shares 50 --fill 0.034
@@ -222,7 +222,7 @@ python -m golf_offshoot watch --event 401811963 --book polymarket --once
 python -m golf_offshoot watch --event 401811963 --book polymarket
 ```
 
-`watch` pings [ntfy](https://ntfy.sh) when the trigger actually changes (TAKE THE POP, FLIP FAILED, SELL after golf starts, NEW, REALLOCATE). Leftover heat does not ping. It always refreshes, never applies paper, never writes a pack/PDF/snapshot, and never places a CLOB order. Set `NTFY_TOPIC` in `golf-offshoot/.env` and subscribe to that topic in the ntfy app. `--once` is the phone check. Leave the looping command running in a terminal; pre-tee waits 30 minutes between ticks, in-play 10 minutes. Ctrl+C stops it.
+`watch` pings [ntfy](https://ntfy.sh) when the trigger actually changes (TAKE THE POP, FLIP FAILED, SELL after golf starts, ADD, NEW, REALLOCATE). Leftover heat does not ping. It always refreshes, never applies paper, never writes a pack/PDF/snapshot, and never places a CLOB order. Set `NTFY_TOPIC` in `golf-offshoot/.env` and subscribe to that topic in the ntfy app. `--once` is the phone check. Leave the looping command running in a terminal; pre-tee waits 30 minutes between ticks, in-play 10 minutes. Ctrl+C stops it.
 
 ### Paper bankroll (rollover)
 

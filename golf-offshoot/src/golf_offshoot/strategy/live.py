@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 from golf_offshoot.decision.layer import max_range_width_for_bet
+from golf_offshoot.data_feeds.names import normalize_name
 from golf_offshoot.models.enums import (
     StrategyActionKind,
     StrategyMode,
@@ -57,6 +58,24 @@ def _cashout_fields(mark: PositionMark) -> dict:
         "shares": mark.shares,
         "mtm_is_bid": mark.mtm_is_bid,
     }
+
+
+def _row_for(pos: StrategyPosition, by_id: dict, by_name: dict) -> PlayerOutput | None:
+    row = by_id.get(pos.player_id)
+    if row is not None:
+        return row
+    if pos.player_name:
+        return by_name.get(pos.player_name) or by_name.get(normalize_name(pos.player_name))
+    return None
+
+
+def _index_rows(rows: list[PlayerOutput]) -> tuple[dict, dict]:
+    by_id = {r.player_id: r for r in rows}
+    by_name: dict = {}
+    for row in rows:
+        by_name[row.name] = row
+        by_name[normalize_name(row.name)] = row
+    return by_id, by_name
 
 
 def golf_has_started(rows: list[PlayerOutput]) -> bool:
@@ -174,7 +193,7 @@ def _action_for_flip(
 
     pos.flip_hurdle_hits = 0
     fail_at = flip_fail_holes(pos.bet_type)
-    if max(progress_holes, holes) >= fail_at:
+    if row is not None and holes >= fail_at:
         return StrategyAction(
             action_id=new_id("act"),
             kind=StrategyActionKind.EXIT,
@@ -548,15 +567,15 @@ def live_manage(
     cooling: bool,
     cashout_quotes: dict[str, float] | None = None,
 ) -> tuple[list[StrategyAction], list[StrategyPosition], list[PositionMark]]:
-    by_id = {r.player_id: r for r in rows}
+    by_id, by_name = _index_rows(rows)
     quotes = cashout_quotes or {}
     golf_started = golf_has_started(rows)
     progress_holes = board_progress_holes(rows)
     marks = [
         mark_position(
             p,
-            by_id.get(p.player_id),
-            cashout_quote=quotes.get(p.player_id),
+            _row_for(p, by_id, by_name),
+            cashout_quote=quotes.get(p.player_id) or quotes.get(p.player_name),
             mode=config.mode,
             ticket_screen=config.ticket_screen,
         )
@@ -572,7 +591,7 @@ def live_manage(
                 config,
                 cooling,
                 golf_started=golf_started,
-                row=by_id.get(pos.player_id),
+                row=_row_for(pos, by_id, by_name),
                 progress_holes=progress_holes,
             )
         )
@@ -610,6 +629,7 @@ def live_manage(
         return actions, proposed, marks
 
     held_keys = {(p.player_id, p.bet_type) for p in book.positions}
+    held_names = {(normalize_name(p.player_name), p.bet_type) for p in book.positions if p.player_name}
     new_actions, new_pos = build_pre_tournament(rows, config, field)
     open_exp = book.open_exposure
     for act, pos in zip(
@@ -617,6 +637,8 @@ def live_manage(
         new_pos,
     ):
         if (pos.player_id, pos.bet_type) in held_keys:
+            continue
+        if (normalize_name(pos.player_name), pos.bet_type) in held_names:
             continue
         if is_flip(pos):
             continue
@@ -691,12 +713,16 @@ def live_manage(
         proposed.append(pos)
         open_exp += pos.stake
         held_keys.add((pos.player_id, pos.bet_type))
+        if pos.player_name:
+            held_names.add((normalize_name(pos.player_name), pos.bet_type))
 
     flip_actions, flip_pos = build_flip_new(
         rows, config, book.positions + proposed, field
     )
     for act, pos in zip(flip_actions, flip_pos):
         if (pos.player_id, pos.bet_type) in held_keys:
+            continue
+        if (normalize_name(pos.player_name), pos.bet_type) in held_names:
             continue
         cap = remaining_exposure_capacity(open_exp, config.bankroll, config)
         if cap <= 0:
