@@ -37,7 +37,7 @@
 | **H-SPOT-REV** | Always opposite of sign as of *t* |
 | Continuation | **Baseline, not a horse** |
 
-**Burned (fill after discovery, not before):** none at lock time.
+**Burned (after L-PULSE-SPOT-1 discovery):** H-SPOT-FLIP-HOLD and H-SPOT-REV on **WTI** and on **Brent**. Do **not** retune. Do **not** unburn.
 
 ---
 

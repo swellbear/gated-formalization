@@ -1,8 +1,36 @@
 {
   "pulse": "L-HUNT-SPOT-TREND",
   "lock": "Lock_Hunt_Spot_Trend.md",
-  "active_horses": ["H-SPOT-FLIP-HOLD", "H-SPOT-REV"],
-  "burned": [],
+  "active_horses": [
+    "H-SPOT-FLIP-HOLD",
+    "H-SPOT-REV"
+  ],
+  "burned": [
+    {
+      "horse": "H-SPOT-FLIP-HOLD",
+      "scoreboard": "WTI",
+      "status": "burned_discovery_loss",
+      "note": "Failed to strictly beat continuation on discovery. Do not retune."
+    },
+    {
+      "horse": "H-SPOT-REV",
+      "scoreboard": "WTI",
+      "status": "burned_discovery_loss",
+      "note": "Failed to strictly beat continuation on discovery. Do not retune."
+    },
+    {
+      "horse": "H-SPOT-FLIP-HOLD",
+      "scoreboard": "Brent",
+      "status": "burned_discovery_loss",
+      "note": "Failed to strictly beat continuation on discovery. Do not retune."
+    },
+    {
+      "horse": "H-SPOT-REV",
+      "scoreboard": "Brent",
+      "status": "burned_discovery_loss",
+      "note": "Failed to strictly beat continuation on discovery. Do not retune."
+    }
+  ],
   "next": [
     {
       "id": "C-SPOT-INV",
@@ -19,5 +47,15 @@
       "status": "queued_not_this_pulse",
       "class": "Expanding-window logistic on past-only 21-day sign + abs return"
     }
-  ]
+  ],
+  "last_discovery": {
+    "WTI": {
+      "id": null,
+      "reason": "no horse strictly beat continuation on discovery"
+    },
+    "Brent": {
+      "id": null,
+      "reason": "no horse strictly beat continuation on discovery"
+    }
+  }
 }

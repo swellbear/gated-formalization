@@ -4,7 +4,7 @@
 **Application:** `2026-08_oil-futures-predictive-model`  
 **Operator selection:** `yes lets do that` after recommended screen-then-confirm  
 **App-local lock ID:** **L-SCREEN-Y-PROMOTE**  
-**Status:** **IN FORCE as protocol.** Does **not** establish F-SKILL. **H-LAG-WF** already **fails** this gate (F-CC loss). Nothing promotes now.
+**Status:** **IN FORCE as protocol.** Does **not** establish F-SKILL. **H-LAG-WF** already **fails** this gate (F-CC loss). **L-HUNT-SPOT-TREND** does **not** fire this gate (wrong object). Nothing promotes now.
 
 ---
 

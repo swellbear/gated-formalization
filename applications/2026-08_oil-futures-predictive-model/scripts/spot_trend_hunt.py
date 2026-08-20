@@ -183,7 +183,6 @@ def score_board(rows: list[dict], holdouts: list[int]) -> dict:
             "survivor": survivor,
         },
         "confirm": confirm,
-        "dashboard": dashboard,
     }
 
 

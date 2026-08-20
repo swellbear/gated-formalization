@@ -1,0 +1,75 @@
+{
+  "fetched_at": "2026-08-20T13:15:58Z",
+  "lock": "L-STANDIN-EIA-SPOT",
+  "eia_key_present": false,
+  "series": {
+    "WTI": {
+      "vehicle": "fred_eia_reprint",
+      "fred_id": "DCOILWTICO",
+      "eia_id": "PET.RWTC.D",
+      "attempts": [
+        {
+          "url": "https://www.eia.gov/dnav/pet/hist/LeafHandler.ashx?n=PET&s=RWTC&f=D",
+          "ok": true,
+          "http_status": 200,
+          "n_bytes": 471896,
+          "content_type": "text/html"
+        },
+        {
+          "url": "https://www.eia.gov/dnav/pet/hist_xls/RWTCd.xls",
+          "ok": true,
+          "http_status": 200,
+          "n_bytes": 503808,
+          "content_type": "application/vnd.ms-excel",
+          "skipped": "binary_xls_no_xlrd"
+        },
+        {
+          "url": "https://fred.stlouisfed.org/graph/fredgraph.csv?id=DCOILWTICO",
+          "ok": true,
+          "http_status": 200,
+          "n_bytes": 178915,
+          "content_type": "application/csv"
+        }
+      ],
+      "n": 10225,
+      "first": "1986-01-02",
+      "last": "2026-08-18",
+      "csv": "eia_spot_wti.csv",
+      "vehicle_fail": false
+    },
+    "Brent": {
+      "vehicle": "fred_eia_reprint",
+      "fred_id": "DCOILBRENTEU",
+      "eia_id": "PET.RBRTE.D",
+      "attempts": [
+        {
+          "url": "https://www.eia.gov/dnav/pet/hist/LeafHandler.ashx?n=PET&s=RBRTE&f=D",
+          "ok": true,
+          "http_status": 200,
+          "n_bytes": 456953,
+          "content_type": "text/html"
+        },
+        {
+          "url": "https://www.eia.gov/dnav/pet/hist_xls/RBRTEd.xls",
+          "ok": true,
+          "http_status": 200,
+          "n_bytes": 492032,
+          "content_type": "application/vnd.ms-excel",
+          "skipped": "binary_xls_no_xlrd"
+        },
+        {
+          "url": "https://fred.stlouisfed.org/graph/fredgraph.csv?id=DCOILBRENTEU",
+          "ok": true,
+          "http_status": 200,
+          "n_bytes": 173834,
+          "content_type": "application/csv"
+        }
+      ],
+      "n": 9958,
+      "first": "1987-05-20",
+      "last": "2026-08-18",
+      "csv": "eia_spot_brent.csv",
+      "vehicle_fail": false
+    }
+  }
+}

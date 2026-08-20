@@ -133,21 +133,22 @@ G8 is the **named model class and feature recipe** under a locked G1/G6 — bloc
 
 ## Priority Order (highest sum first)
 
-1. **F-SRC / F-SKILL** — L-HUNT-COT no survivor; L-HUNT-DJT no survivor; H-GAP-FADE small F-DAY, no promote; L-HUNT-PRETELL no survivor; H-SPARSE-CAL / H-SPARSE-VOL / H-LAG-WF scored; **none promote**; H-KS not run; **not established**  
-2. **V-SRC** — sealed leave unnamed; later book must use **V2**  
-3. **Live vs stand-in** — executed (Yahoo stipulated; not live)
+1. **F-SRC / F-SKILL** — parked this pulse (Track B is a different object); **L-HUNT-COT** no survivor; **L-HUNT-DJT** no survivor; **H-GAP-FADE** small F-DAY, no promote; **L-HUNT-PRETELL** no survivor; **H-SPARSE-CAL** / **H-SPARSE-VOL** / **H-LAG-WF** scored; **none promote**; H-KS not run; **not established**  
+2. **R-SPOT-TREND** — **L-PULSE-SPOT-1** no survivor either board; next is queued **C-SPOT-INV** (do not unburn; do not change 21)  
+3. **V-SRC** — sealed leave unnamed; later book must use **V2**  
+4. **Live vs stand-in** — executed (Yahoo stipulated; not live)
 
-Lean Default Path: a **different** named horse on Yahoo, or leave. Do **not** auto-open live CME. Do **not** add percent-of-OI or other trader groups after COT scores. Do **not** retune the DJT lexicon. Do **not** expand CAL/VOL into a zoo. Existence stays separate. Do not enter Phase 2.
+Lean Default Path: a **queued** spot class, a **different** named CL horse on Yahoo, or leave. Do **not** auto-open live CME. Do **not** unburn FLIP-HOLD/REV. Do **not** add percent-of-OI after COT scores. Existence stays separate. Do not enter Phase 2.
 
 ---
 
 ## Inter-parameter dependency (mandatory)
 
-**F-SKILL** is blocked primarily by **no freeze-matching horse that beats F-CC on the promote gate** (COT no survivor; DJT no survivor; FADE F-CC tie; pretell no survivor; CAL tiny 500 / fails 750; VOL and H-LAG lost; H-KS tape fail). **V-VALUE** is blocked primarily by **V-SRC leave unnamed**.
+**F-SKILL** is blocked primarily by **no freeze-matching horse that beats F-CC on the promote gate** (COT no survivor; DJT no survivor; FADE F-CC tie; pretell no survivor; CAL tiny 500 / fails 750; VOL and H-LAG lost; H-KS tape fail). **R-SPOT-TREND** is a **different** leftover: blocked by **no horse that strictly beats continuation** on discovery (FLIP-HOLD/REV burned both boards). **V-VALUE** is blocked primarily by **V-SRC leave unnamed**.
 
-**Rectification:** `name horse …` on Yahoo under **L-SCREEN-Y-PROMOTE**. Do not auto-enter Phase 2. Combo does not skip the queue.
+**Rectification:** queued **C-SPOT-INV** for Track B, or `name horse …` on Yahoo under **L-SCREEN-Y-PROMOTE** for F-SKILL. Do not auto-enter Phase 2. Combo does not skip the queue. Do not unburn FLIP-HOLD/REV. Do not change 21.
 
-**Reopen condition (prominent):** After a named horse on Yahoo, re-run. Live CME **only if** **L-SCREEN-Y-PROMOTE** fires. Honest established still stops.
+**Reopen condition (prominent):** After a named queued spot class, or a named CL horse on Yahoo, re-run. Live CME **only if** **L-SCREEN-Y-PROMOTE** fires. Honest established still stops.
 
 ---
 

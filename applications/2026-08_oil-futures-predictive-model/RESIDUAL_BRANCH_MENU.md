@@ -4,9 +4,9 @@
 
 **Clickable cards (mandatory):** Every residual ID must have (1) an index-table link and (2) an anchored card with instance-specific explainers.
 
-**Date:** 2026-08-17  
+**Date:** 2026-08-20  
 **Application:** `2026-08_oil-futures-predictive-model`  
-**Closeout status:** **hard stop (residuals live)**. **L-SCREEN-Y-PROMOTE** in force. Skill leftover **live** (FADE small F-DAY, no promote; pretell hunt failed at discovery; CAL/VOL/H-LAG all fail promote; next horse must be **different**). Phase 2 not entered.
+**Closeout status:** **hard stop (residuals live)**. **L-SCREEN-Y-PROMOTE** in force. **L-HUNT-SPOT-TREND** failed at discovery (both boards). Skill leftover **live** (parked this pulse; next CL horse must be **different**). Phase 2 not entered.
 
 **Glossary:** [`docs/READER_GLOSSARY.md`](../../docs/READER_GLOSSARY.md)  
 **Optional modes (separate):** [`OPTIONAL_MODES_MENU.md`](OPTIONAL_MODES_MENU.md)
@@ -19,7 +19,7 @@
 
 ## 0. Plain-language framing
 
-**What we’re doing:** Listing leftovers. Yahoo first. Live CME only if a named horse beats no-change on the **whole trip**. Overnight-gap fade had a small **day** edge and did **not** promote. Pretell hunt failed at discovery. Lagged-return, calendar-sparse, and vol-sparse horses all failed that gate. Combo parked. After-cost book unnamed.
+**What we’re doing:** Listing leftovers. Track B (cash 21-day trend) failed at discovery; confirm skipped. Yahoo first for **futures** skill. Live CME only if a named horse beats no-change on the **whole trip**. Overnight-gap fade had a small **day** edge and did **not** promote. Pretell / COT / DJT hunts failed at discovery. Lagged-return, calendar-sparse, and vol-sparse horses all failed that gate. Combo parked. After-cost book unnamed.
 
 **What we need from you:** Nothing required. Optional: official CME re-score, or name a horse vs this baseline. This is not a trade.
 
@@ -39,13 +39,14 @@
 | [R-DRV](#r-drv) | Exhaustive list of what can move next-session CL? | Empirically resolvable | Census of list-types; **no class submitted** | **executed → evaluation** (L-MAP-DRV) |
 | [R-SESS](#r-sess) | Night vs day vs whole-trip as separate tests? | Definitional lock | Protocol; **no class submitted** | **executed → admitted meanings** (L-SESS) |
 | [R-V-VALUE-TEST-0](#r-v-value-test-0) | Named after-cost paper book? | Empirically resolvable | None named | **executed → not established** |
-| [R-F-SKILL](#r-f-skill) | Next-session CL log-return skill vs last settlement (F-CC), plus F-ON/F-DAY exhibits? | Empirically resolvable | **L-HUNT-COT** no survivor; **L-HUNT-DJT** no survivor; **H-GAP-FADE** small F-DAY (no promote); **L-HUNT-PRETELL** no survivor; **H-SPARSE-CAL** / **H-SPARSE-VOL** / **H-LAG-WF** scored (all fail promote); **H-KS-FTS** not run | **pursue** (**not established**) |
+| [R-F-SKILL](#r-f-skill) | Next-session CL log-return skill vs last settlement (F-CC), plus F-ON/F-DAY exhibits? | Empirically resolvable | **L-HUNT-SPOT-TREND** is a **different object** (parked F-SKILL this pulse); **L-HUNT-COT** no survivor; **L-HUNT-DJT** no survivor; **H-GAP-FADE** small F-DAY (no promote); **L-HUNT-PRETELL** no survivor; **H-SPARSE-CAL** / **H-SPARSE-VOL** / **H-LAG-WF** scored (all fail promote); **H-KS-FTS** not run | **pursue** (**not established**) |
+| [R-SPOT-TREND](#r-spot-trend) | Cash WTI/Brent 21-day sign vs continuation? | Empirically resolvable | **L-HUNT-SPOT-TREND** two horses; discovery **both lose** both boards | **executed → not established** |
 | [R-F-COMBO](#r-f-combo) | Named switching rule after F-ON and F-DAY scored separately? | Empirically resolvable | **unnamed** | **park-until-trigger** |
 | [R-V-VALUE](#r-v-value) | After-cost paper P/L vs the curve? | Empirically resolvable | **unnamed** (operator `leave unnamed`) | **park-until-trigger** |
 | [R-G8](#r-g8) | Model-class fashion under F-SKILL | Empirically resolvable (meanings) | Baseline RMSE + optional FTS | **executed → admitted meanings** |
 | [R-LIVE-STANDIN](#r-live-standin) | Live CME open/settle vs stipulated stand-in? | Empirically resolvable | Yahoo `CL=F` stipulated | **executed → admitted** (stand-in; not live) |
 
-**Authorize grammar:** `leave skill not shown` · `name horse …` (different; do **not** add percent-of-OI or other trader groups after COT scores; do **not** retune DJT; do **not** remix gap horses; do **not** re-hunt confirm) · `leave screen rule` · `authorize branch R-…` · `decline residual menu`
+**Authorize grammar:** `leave skill not shown` · `name horse …` (different **CL** recipe; do **not** add percent-of-OI or other trader groups after COT scores; do **not** retune DJT; do **not** remix gap horses; do **not** re-hunt confirm) · next queued **C-SPOT-INV** (do **not** unburn FLIP-HOLD/REV; do **not** change 21) · `leave screen rule` · `authorize branch R-…` · `decline residual menu`
 
 **Also offered (separate):** [`OPTIONAL_MODES_MENU.md`](OPTIONAL_MODES_MENU.md) — UX/CX/CR **declined, not run**.
 
@@ -167,7 +168,23 @@
 | **Disposition** | **pursue** (COT no survivor; DJT no survivor; FADE small F-DAY, no promote; pretell failed at discovery; CAL/VOL/H-LAG fail promote; next horse must be **different**; **not established**) |
 | **How to authorize** | `name horse …` on Yahoo (different recipe), or leave |
 
-**Do not treat as this class:** EIA STEO; listed futures curve as a next-session CL return model; Alquist–Kilian / Fed IFDP spot-forecast papers; canonical real/spot VARs; the existence menu as “the” skill recipe; last-settlement no-change (baseline, not the model); **L-MAP-FT families as a silent F-SRC pick**; **L-MAP-DRV families as a silent F-SRC pick**; **USO / Zhang half-hour momentum as F-ON or F-DAY**.
+**Do not treat as this class:** EIA STEO; listed futures curve as a next-session CL return model; Alquist–Kilian / Fed IFDP spot-forecast papers; canonical real/spot VARs; the existence menu as “the” skill recipe; last-settlement no-change (baseline, not the model); **L-MAP-FT families as a silent F-SRC pick**; **L-MAP-DRV families as a silent F-SRC pick**; **USO / Zhang half-hour momentum as F-ON or F-DAY**; **L-HUNT-SPOT-TREND as F-CC**.
+
+<a id="r-spot-trend"></a>
+### R-SPOT-TREND
+
+| Field | Content |
+|-------|---------|
+| **Class** | Empirically resolvable (executed) |
+| **Named source class** | **L-HUNT-SPOT-TREND** / **L-STANDIN-EIA-SPOT** — EIA Cushing WTI + Europe Brent daily spots; FRED reprint this pulse |
+| **What it is** | Whether a named 21-day sign rule **strictly beats continuation** on discovery hit-rate (WTI and Brent separate). **L-PULSE-SPOT-1:** both horses **lose** both boards; **no survivor**; confirm skipped |
+| **Why offered here** | Operator Track B (call the cash trend / flip / next window), not F-SKILL |
+| **What authorizing does** | Already ran: `Lock_Hunt_Spot_Trend.md` · `PULSE_Hunt_Spot_Trend.md`. Next pulse must quote **L-SPOT-QUEUE** (**C-SPOT-INV** first) |
+| **What success / failure changes** | A later queued class that beats continuation still is not F-SKILL-met and not a trade |
+| **What it does *not* do** | Unburn FLIP-HOLD/REV; change 21 after scores; use confirm as train; mix DJT/COT/gap; bring spot inside D-EXIST |
+| **Effort** | Medium for the next queued class |
+| **Disposition** | **Executed 2026-08-20** → not established |
+| **How to authorize** | Next: freeze **C-SPOT-INV** in its own lock, or leave |
 
 <a id="r-f-combo"></a>
 ### R-F-COMBO
@@ -261,7 +278,7 @@ None remaining. [R-G8](#r-g8) meanings admitted. [R-LIVE-STANDIN](#r-live-standi
 | [R-V-VALUE](#r-v-value) | park-until-trigger | Matching V-VALUE book named under **V2** |
 | [R-F-COMBO](#r-f-combo) | park-until-trigger | Rule in advance + F-ON and F-DAY already scored separately |
 
-**Live (not parked):** [R-F-SKILL](#r-f-skill) — `pursue` (FADE small F-DAY, no promote; hunt failed at discovery; CAL/VOL/H-LAG fail promote; next horse must be **different**)
+**Live (not parked):** [R-F-SKILL](#r-f-skill) — `pursue` (parked this pulse; next CL horse must be **different**). [R-SPOT-TREND](#r-spot-trend) executed (no survivor; next queued class).
 
 ---
 
@@ -288,6 +305,7 @@ None remaining. [R-G8](#r-g8) meanings admitted. [R-LIVE-STANDIN](#r-live-standi
 | 2026-08-17 | **H-GAP-FADE** / **H-GAP-CONT** scored; FADE small F-DAY confirm; F-CC tie; **does not promote**; CONT discovery F-DAY loss; skill **not established**; Amb **held 1.0** |
 | 2026-08-17 | **L-HUNT-DJT** / **L-PULSE-DJT-1** — two Truth Social horses; discovery F-CC both tie 0; session-day scores all zero; **no survivor**; confirm skipped; skill **not established**; Amb **held 1.0** |
 | 2026-08-17 | **L-HUNT-COT** / **L-PULSE-COT-1** — two CFTC MM horses; discovery F-CC both lose; **no survivor**; confirm skipped; skill **not established**; Amb **held 1.0** |
+| 2026-08-20 | **L-HUNT-SPOT-TREND** / **L-PULSE-SPOT-1** — Track B cash 21-day; both horses lose continuation on WTI and Brent; **no survivor**; confirm skipped; F-SKILL parked; Amb **held 1.0** |
 
 ---
 

@@ -4,32 +4,28 @@
 **Glossary:** `docs/READER_GLOSSARY.md`
 
 **Application:** `2026-08_oil-futures-predictive-model`  
-**Updated:** 2026-08-17  
+**Updated:** 2026-08-20  
 
 ### Plain status
 
-Closeout remains **hard stop (residuals live)**. CFTC managed-money week/level hunt **failed at discovery** (both horses **lost** vs no-change). Trump Truth Social week/month hunt still **failed at discovery**. Overnight-gap **fade** had a **small** day-session edge on Yahoo; the whole trip was left as no-change — **does not promote**. Pretell, sparse, and lag horses still **do not promote**. Screen rule **L-SCREEN-Y-PROMOTE** still in force. Day-only edges do **not** promote. Paper costs **V2**. After-cost value **not shown**. This is not trading advice.
+Closeout remains **hard stop (residuals live)**. Track B (cash WTI / Brent 21-day trend) **failed at discovery**: both named rules **lost** to “the trend continues,” on both oils. Confirm was **not** run. That is **not** a futures skill test. CFTC, Truth Social, gap, pretell, sparse, and lag hunts still **do not promote** on Yahoo. Screen rule **L-SCREEN-Y-PROMOTE** still in force. Paper costs **V2**. After-cost value **not shown**. This is not trading advice.
 
 ---
 
 | Field | Value |
 |-------|--------|
 | **Closure state** | **hard stop (residuals live)** |
-| **Phase** | COT hunt pulse **L-PULSE-COT-1** (evaluation; no discovery survivor; confirm skipped; bars not met) |
+| **Phase** | Spot-trend hunt pulse **L-PULSE-SPOT-1** (evaluation; no discovery survivor either board; confirm skipped; bars not met). F-SKILL **parked** this pulse |
 | **Amb** | **1.0** (**≠ clearance**) |
-| **Locks in force** | Rank 4; D-EXIST-MET-FT; **V-COST-V2**; V-SRC leave unnamed; **F-SRC-CME-TAPE**; **L-STANDIN-Y-CLF**; **L-SCREEN-Y-PROMOTE**; **L-HUNT-COT**; **L-STANDIN-CFTC-COT**; **L-HUNT-DJT**; **L-HUNT-PRETELL**; **L-HUNT-GAP**; **H-GAP-FADE**; **H-GAP-CONT**; **H-LAG-WF**; **H-SPARSE-CAL**; **H-SPARSE-VOL**; L-SESS |
-| **Next authorization needed** | `leave skill not shown` / `name horse …` (a **different** recipe; do **not** add percent-of-OI or other trader groups after scores; do **not** re-hunt confirm) — **not** `none — hard stop`. Live CME only if the F-CC promotion gate fires. |
+| **Locks in force** | Rank 4; D-EXIST-MET-FT; **V-COST-V2**; V-SRC leave unnamed; **F-SRC-CME-TAPE**; **L-STANDIN-Y-CLF**; **L-SCREEN-Y-PROMOTE**; **L-HUNT-SPOT-TREND**; **L-STANDIN-EIA-SPOT**; **L-HUNT-COT**; **L-HUNT-DJT**; **L-HUNT-PRETELL**; **L-HUNT-GAP**; **H-LAG-WF**; **H-SPARSE-CAL**; **H-SPARSE-VOL**; L-SESS |
+| **Next authorization needed** | `leave skill not shown` / next queued class **C-SPOT-INV** (do **not** unburn FLIP-HOLD/REV; do **not** change 21) / `name horse …` on Yahoo (**different** CL recipe) — **not** `none — hard stop`. Live CME only if the F-CC promotion gate fires. |
 | **Related apps surfaced** | `2026-08_fomc-sep-2026-uffr-change` — leave unnamed ≠ refute; `2026-08_spacex-600-dollar-stock` — lock ≠ clearance. Process only. |
 | **Optional modes** | [OPTIONAL_MODES_MENU.md](OPTIONAL_MODES_MENU.md) — UX/CX/CR **declined, not run**; QI N/A |
 
 **Share pack:** [SHARE_PACK.md](SHARE_PACK.md)  
-**Screen rule:** [Lock_Screen_Yahoo_Promote.md](Lock_Screen_Yahoo_Promote.md)  
-**Sparse pulse:** [Lock_Horses_Sparse.md](Lock_Horses_Sparse.md) · [PULSE_Horses_Sparse.md](PULSE_Horses_Sparse.md)  
-**Pretell hunt:** [Lock_Hunt_Pretell.md](Lock_Hunt_Pretell.md) · [PULSE_Hunt_Pretell.md](PULSE_Hunt_Pretell.md)  
-**Gap pulse:** [Lock_Horses_Gap.md](Lock_Horses_Gap.md) · [PULSE_Horses_Gap.md](PULSE_Horses_Gap.md)  
-**DJT hunt:** [Lock_Hunt_DJT.md](Lock_Hunt_DJT.md) · [PULSE_Hunt_DJT.md](PULSE_Hunt_DJT.md)  
+**Spot-trend hunt:** [Lock_Hunt_Spot_Trend.md](Lock_Hunt_Spot_Trend.md) · [PULSE_Hunt_Spot_Trend.md](PULSE_Hunt_Spot_Trend.md) · [QUEUE_Spot_Trend_Exploration.md](QUEUE_Spot_Trend_Exploration.md)  
 **COT hunt:** [Lock_Hunt_COT.md](Lock_Hunt_COT.md) · [PULSE_Hunt_COT.md](PULSE_Hunt_COT.md)  
-**Residuals:** [R-F-SKILL](RESIDUAL_BRANCH_MENU.md#r-f-skill) **pursue** (COT no survivor; DJT no survivor; FADE small F-DAY, no promote; pretell failed; CAL/VOL/H-LAG fail promote; next horse must be **different**) · [R-LIVE-STANDIN](RESIDUAL_BRANCH_MENU.md#r-live-standin) **executed** (promote only if F-CC gate fires) · [R-F-COMBO](RESIDUAL_BRANCH_MENU.md#r-f-combo) park-until-trigger · [R-V-VALUE](RESIDUAL_BRANCH_MENU.md#r-v-value) park-until-trigger (**V2 named**; book unnamed)
+**Residuals:** [R-SPOT-TREND](RESIDUAL_BRANCH_MENU.md#r-spot-trend) **executed → not established** (next: queue) · [R-F-SKILL](RESIDUAL_BRANCH_MENU.md#r-f-skill) **pursue** (parked this pulse; next CL horse must be **different**) · [R-LIVE-STANDIN](RESIDUAL_BRANCH_MENU.md#r-live-standin) **executed** · [R-F-COMBO](RESIDUAL_BRANCH_MENU.md#r-f-combo) park-until-trigger · [R-V-VALUE](RESIDUAL_BRANCH_MENU.md#r-v-value) park-until-trigger (**V2 named**; book unnamed)
 
 **Endpoint** = examination done; verdict frozen. **Hard stop (residuals live)** = hygiene complete **and** `pursue` leftovers remain — `Next authorization needed` is **not** `none — hard stop`.
 
@@ -43,7 +39,7 @@ Closeout remains **hard stop (residuals live)**. CFTC managed-money week/level h
 - [x] **`SHARE_PACK.md`**
 - [x] Layer 2 `Thesis_Tracker.md`
 - [x] Layer 1 `TRACKER_PORTFOLIO.md` row updated
-- [x] Layer 3 residual dispositions set ([R-F-SKILL](RESIDUAL_BRANCH_MENU.md#r-f-skill) **pursue**; [R-V-VALUE](RESIDUAL_BRANCH_MENU.md#r-v-value) park-until-trigger)
+- [x] Layer 3 residual dispositions set ([R-F-SKILL](RESIDUAL_BRANCH_MENU.md#r-f-skill) **pursue**; [R-SPOT-TREND](RESIDUAL_BRANCH_MENU.md#r-spot-trend) executed)
 - [x] Residual-branch menu if residuals remain
 - [x] **Optional-modes menu**
 - [x] `TRACKER_PATTERN_MAP.md` if new pattern — `R-dependence` already mapped; this app added as a closed instance
@@ -52,7 +48,7 @@ Closeout remains **hard stop (residuals live)**. CFTC managed-money week/level h
 - [x] `STATUS.md` set to hard stop (this file) — **hard stop (residuals live)**
 - [x] `final_verdict.md`
 
-**Gates:** Examination + hygiene + SHARE_PACK + optional-modes **offer** done → **hard stop (residuals live)** because [R-F-SKILL](RESIDUAL_BRANCH_MENU.md#r-f-skill) remains `pursue`. **Amb ≠ clearance.** Existence-met ≠ skill-met. Stand-in ≠ live.
+**Gates:** Examination + hygiene + SHARE_PACK + optional-modes **offer** done → **hard stop (residuals live)** because [R-F-SKILL](RESIDUAL_BRANCH_MENU.md#r-f-skill) remains `pursue`. **Amb ≠ clearance.** Existence-met ≠ skill-met. Spot-trend miss ≠ futures miss. Stand-in ≠ live.
 
 ---
 
