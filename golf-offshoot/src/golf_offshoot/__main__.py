@@ -1141,6 +1141,7 @@ def _cmd_watch(args) -> int:
             prev_signature=str(state.get("signature") or ""),
             armed=bool(state.get("armed")),
             arm_ping=True,
+            positions=rec.book.positions if rec is not None else None,
         )
         if decision.should_ping:
             try:

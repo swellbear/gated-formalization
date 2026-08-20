@@ -222,7 +222,7 @@ python -m golf_offshoot watch --event 401811963 --book polymarket --once
 python -m golf_offshoot watch --event 401811963 --book polymarket
 ```
 
-`watch` pings [ntfy](https://ntfy.sh) when the trigger actually changes (TAKE THE POP, FLIP FAILED, SELL after golf starts, ADD, NEW, REALLOCATE). Leftover heat does not ping. It always refreshes, never applies paper, never writes a pack/PDF/snapshot, and never places a CLOB order. Set `NTFY_TOPIC` in `golf-offshoot/.env` and subscribe to that topic in the ntfy app. `--once` is the phone check. Leave the looping command running in a terminal; pre-tee waits 30 minutes between ticks, in-play 10 minutes. Ctrl+C stops it.
+`watch` pings [ntfy](https://ntfy.sh) when the trigger actually changes (TAKE THE POP, FLIP FAILED, SELL after golf starts, ADD, NEW, REALLOCATE). Leftover heat does not ping. After you `paper-fill` an ADD/NEW, that same name+market is dropped from later pings unless live wants a real residual add (the ~20% bump, not the original ticket dollars). An already-filled Gary Woodland R1 `$0.12` ADD sitting next to a later J.J. Spaun NEW is the old ticket reprinted because the pull *set* changed — not a second `$0.12` buy. It always refreshes, never applies paper, never writes a pack/PDF/snapshot, and never places a CLOB order. Set `NTFY_TOPIC` in `golf-offshoot/.env` and subscribe to that topic in the ntfy app. `--once` is the phone check. Leave the looping command running in a terminal; pre-tee waits 30 minutes between ticks, in-play 10 minutes. Ctrl+C stops it.
 
 ### Paper bankroll (rollover)
 

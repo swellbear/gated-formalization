@@ -11,7 +11,13 @@ from pathlib import Path
 
 from golf_offshoot.compare.apply import advice_signature
 from golf_offshoot.data_feeds.http import package_data_dir
-from golf_offshoot.strategy.paper_book import PaperBookFile, PaperMovement, advice_from_recommendation
+from golf_offshoot.data_feeds.names import normalize_name
+from golf_offshoot.strategy.paper_book import (
+    PaperBookFile,
+    PaperMovement,
+    _position_is_fill,
+    advice_from_recommendation,
+)
 from golf_offshoot.strategy.paper_trigger import (
     group_trigger_actions,
     sanitize_pre_tee_advice,
@@ -104,9 +110,94 @@ def last_pulls_from_state(state: dict | None) -> list[dict]:
     return list(raw) if isinstance(raw, list) else []
 
 
-def pull_moves(advice: list[PaperMovement], rows: list | None) -> list[PaperMovement]:
+def _bet_key(raw) -> str:
+    val = getattr(raw, "value", raw)
+    return str(val or "win").replace("-", "_").lower()
+
+
+def _filled_tickets(positions) -> tuple[dict, dict]:
+    by_name: dict[tuple[str, str], object] = {}
+    by_id: dict[tuple[str, str], object] = {}
+    for pos in positions or []:
+        if not _position_is_fill(pos):
+            continue
+        bet = _bet_key(getattr(pos, "bet_type", "win"))
+        name = normalize_name(getattr(pos, "player_name", "") or "")
+        pid = str(getattr(pos, "player_id", "") or "")
+        if name:
+            by_name[(name, bet)] = pos
+        if pid:
+            by_id[(pid, bet)] = pos
+    return by_name, by_id
+
+
+def _filled_position(mv: PaperMovement, by_name: dict, by_id: dict):
+    bet = _bet_key(mv.bet_type)
+    name = normalize_name(mv.player_name or "")
+    if name:
+        hit = by_name.get((name, bet))
+        if hit is not None:
+            return hit
+    pid = str(mv.player_id or "")
+    if pid:
+        return by_id.get((pid, bet))
+    return None
+
+
+def _add_is_filled_ticket_reprint(mv: PaperMovement, pos) -> bool:
+    """True when ADD reprints the open fill dollars, not a later 20% bump."""
+    try:
+        delta = abs(float(mv.stake_delta or 0.0))
+    except (TypeError, ValueError):
+        return False
+    try:
+        stake = float(getattr(pos, "stake", 0.0) or 0.0)
+        cost = getattr(pos, "cost_usd", None)
+        cost_f = float(cost) if cost is not None else stake
+    except (TypeError, ValueError):
+        return False
+    open_usd = min((x for x in (stake, cost_f) if x > 0), default=0.0)
+    if delta <= 0.005:
+        return True
+    if open_usd <= 0:
+        return False
+    return delta + 0.005 >= 0.9 * open_usd
+
+
+def suppress_executed_pulls(moves: list[PaperMovement], positions) -> list[PaperMovement]:
+    """Drop ADD/NEW already covered by a user-typed fill on that name+market.
+
+    Watch pings the whole current pull set when any row appears. An already-filled
+    R1 ADD at the original ticket dollars hitchhiking next to a later NEW is the
+    old ticket, not a second buy. A live_improved bump (~20/40% of stake) still
+    pings.
+    """
+    by_name, by_id = _filled_tickets(positions)
+    if not by_name and not by_id:
+        return list(moves or [])
+    out: list[PaperMovement] = []
+    for mv in moves or []:
+        kind = (mv.kind or "").lower()
+        pos = _filled_position(mv, by_name, by_id)
+        if pos is None:
+            out.append(mv)
+            continue
+        if kind in {"new_bet", "lock"}:
+            continue
+        if kind == "add" and _add_is_filled_ticket_reprint(mv, pos):
+            continue
+        out.append(mv)
+    return out
+
+
+def pull_moves(
+    advice: list[PaperMovement],
+    rows: list | None,
+    positions=None,
+) -> list[PaperMovement]:
     cleaned = sanitize_pre_tee_advice(list(advice or []), rows)
-    return [m for m in cleaned if (m.kind or "").lower() in PULL_KINDS]
+    pulls = [m for m in cleaned if (m.kind or "").lower() in PULL_KINDS]
+    return suppress_executed_pulls(pulls, positions)
 
 
 def _priority_for(moves: list[PaperMovement]) -> str:
@@ -144,8 +235,9 @@ def decide_watch(
     prev_signature: str = "",
     armed: bool = False,
     arm_ping: bool = True,
+    positions=None,
 ) -> WatchDecision:
-    pulls = pull_moves(advice, rows)
+    pulls = pull_moves(advice, rows, positions=positions)
     sig = advice_signature(pulls)
     if pulls:
         headline, body = format_watch_body(pulls, event=event)
