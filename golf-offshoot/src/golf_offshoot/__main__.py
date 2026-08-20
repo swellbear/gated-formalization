@@ -1018,6 +1018,8 @@ def _cmd_paper_fill(args) -> int:
     last = rec.notes[-1] if rec.notes else ""
     if "last ntfy ADD" in last:
         print("attached to last ntfy ADD on this name+market")
+    elif "last ntfy new_bet" in last or "last ntfy lock" in last:
+        print("attached to last ntfy NEW on this name+market")
     elif "last ntfy" in last:
         print("attached to last ntfy pull on this name+market")
     print(format_paper_book(rec))

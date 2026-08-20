@@ -330,6 +330,76 @@ def test_fill_add_uses_pull_hold_not_guessed_flip(tmp_path, monkeypatch):
     assert pos.shares == 0.27
 
 
+def test_r2_new_still_attaches_when_watch_last_pull_is_r1_add(tmp_path, monkeypatch):
+    monkeypatch.setattr("golf_offshoot.strategy.paper_book.package_data_dir", lambda: tmp_path)
+    r1 = StrategyPosition(
+        position_id="paper-r1",
+        player_id="3550",
+        player_name="Gary Woodland",
+        bet_type=BetType.WIN_AFTER_R1,
+        stake=0.12,
+        decimal_odds=2.25,
+        entry_edge=0.15,
+        entry_model_p=0.56,
+        shares=0.27,
+        fill_price=0.44,
+        cost_usd=0.12,
+        intent="hold",
+        user_recorded=True,
+    )
+    rec = PaperBookFile(
+        tournament_id="401811963",
+        tournament_name="BMW Championship",
+        bankroll=250,
+        starting_bankroll=250,
+        odds_book="polymarket",
+        path_id="polymarket",
+        independent_bankroll=True,
+        latest_advice=[
+            PaperMovement(
+                movement_id="n2",
+                kind="new_bet",
+                player_id="3550",
+                player_name="Gary Woodland",
+                bet_type="win_after_r2",
+                intent="hold",
+                model_win=0.176,
+                posted_edge=0.034,
+            )
+        ],
+        book=PortfolioState(bankroll=250, positions=[r1]),
+    )
+    save_paper_book(rec)
+    out = record_polymarket_fill(
+        event_id="401811963",
+        player_name="Gary Woodland",
+        shares=1.59,
+        fill=0.16,
+        cost=0.27,
+        market="win_after_r2",
+        ranked_names={"Gary Woodland": "3550"},
+        pulls=[
+            {
+                "kind": "add",
+                "player_id": "3550",
+                "player_name": "Gary Woodland",
+                "bet_type": "win_after_r1",
+                "intent": "hold",
+                "model_win": 0.56,
+            }
+        ],
+    )
+    by_mkt = {p.bet_type: p for p in out.book.positions}
+    assert by_mkt[BetType.WIN_AFTER_R1].shares == 0.27
+    r2 = by_mkt[BetType.WIN_AFTER_R2]
+    assert r2.player_id == "3550"
+    assert r2.intent == "hold"
+    assert r2.shares == 1.59
+    assert r2.cost_usd == 0.27
+    assert abs(r2.entry_model_p - 0.176) < 1e-9
+    assert "last ntfy new_bet" in (r2.notes or "")
+
+
 def test_mark_position_uses_bid_unless_typed():
     pos = StrategyPosition(
         position_id=new_id("fill"),

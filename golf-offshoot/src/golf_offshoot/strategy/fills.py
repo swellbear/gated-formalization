@@ -268,8 +268,8 @@ def record_polymarket_fill(
     names = ranked_names_map(ranked_names)
     rec = relink_paper_player_ids(rec, names) if rec is not None else rec
     pull_list = parse_fill_pulls(pulls)
-    if rec is not None and not pull_list:
-        pull_list = pulls_from_advice(rec.latest_advice)
+    if rec is not None:
+        pull_list = list(pull_list) + pulls_from_advice(rec.latest_advice)
     pull = match_fill_pull(name, bet, pull_list)
     pull_pid = (pull.player_id if pull else "") or ""
     if pull_pid and not is_provisional_player_id(pull_pid):
