@@ -3,7 +3,12 @@ from golf_offshoot.models.enums import BetType, Horizon, StrategyMode
 from golf_offshoot.models.schemas import HorizonProbability, PlayerOutput, ProbabilityBundle, ReliabilityScore
 from golf_offshoot.models.strategy import PortfolioState, StrategyPosition, new_id
 from golf_offshoot.strategy.cashout import bid_cashout_dollars, min_sell_price
-from golf_offshoot.strategy.fills import FillError, parse_fill_market, record_polymarket_fill
+from golf_offshoot.strategy.fills import (
+    FillError,
+    parse_fill_market,
+    record_polymarket_fill,
+    record_polymarket_sell,
+)
 from golf_offshoot.strategy.paper_book import PaperBookFile, PaperMovement, save_paper_book
 from golf_offshoot.strategy.paper_trigger import group_trigger_actions, trigger_document
 from golf_offshoot.strategy.path import mark_position
@@ -157,6 +162,249 @@ def test_record_fill_can_add_flip_without_touching_hold(tmp_path, monkeypatch):
     assert abs(names["Russell Henley"].shares - 114.99) < 1e-9
 
 
+def test_fill_prefers_ntfy_add_over_new_and_adds_shares(tmp_path, monkeypatch):
+    monkeypatch.setattr("golf_offshoot.strategy.paper_book.package_data_dir", lambda: tmp_path)
+    held = StrategyPosition(
+        position_id="paper-gw",
+        player_id="name:gary-woodland",
+        player_name="Gary Woodland",
+        bet_type=BetType.WIN_AFTER_R1,
+        stake=0.50,
+        decimal_odds=2.5,
+        entry_edge=0.15,
+        entry_model_p=0.56,
+        entry_market_p=0.41,
+        shares=1.25,
+        fill_price=0.40,
+        cost_usd=0.50,
+        intent="hold",
+        user_recorded=True,
+    )
+    rec = PaperBookFile(
+        tournament_id="401811963",
+        tournament_name="BMW Championship",
+        bankroll=250,
+        starting_bankroll=250,
+        odds_book="polymarket",
+        path_id="polymarket",
+        independent_bankroll=True,
+        latest_advice=[
+            PaperMovement(
+                movement_id="a1",
+                kind="new_bet",
+                player_id="3550",
+                player_name="Gary Woodland",
+                bet_type="win_after_r1",
+                intent="hold",
+                model_win=0.56,
+            ),
+            PaperMovement(
+                movement_id="a2",
+                kind="add",
+                player_id="3550",
+                player_name="Gary Woodland",
+                bet_type="win_after_r1",
+                intent="hold",
+                model_win=0.56,
+                posted_edge=0.15,
+            ),
+        ],
+        book=PortfolioState(bankroll=250, positions=[held]),
+    )
+    save_paper_book(rec)
+    out = record_polymarket_fill(
+        event_id="401811963",
+        player_name="Gary Woodland",
+        shares=0.27,
+        fill=0.44,
+        cost=0.12,
+        market="win_after_r1",
+        ranked_names={"Gary Woodland": "3550"},
+    )
+    assert len(out.book.positions) == 1
+    pos = out.book.positions[0]
+    assert pos.player_id == "3550"
+    assert pos.intent == "hold"
+    assert abs(pos.shares - 1.52) < 1e-9
+    assert pos.cost_usd == 0.62
+    assert pos.position_id == "paper-gw"
+    assert any(m.kind == "fill_add" for m in out.movements)
+    assert "last ntfy ADD" in out.notes[-1]
+
+
+def test_fill_add_on_observation_replaces_stub(tmp_path, monkeypatch):
+    monkeypatch.setattr("golf_offshoot.strategy.paper_book.package_data_dir", lambda: tmp_path)
+    obs = StrategyPosition(
+        position_id="paper-obs",
+        player_id="3550",
+        player_name="Gary Woodland",
+        bet_type=BetType.WIN_AFTER_R1,
+        stake=0.53,
+        decimal_odds=2.44,
+        entry_edge=0.15,
+        entry_model_p=0.56,
+        notes="paper lock [observation]",
+        intent="hold",
+    )
+    rec = PaperBookFile(
+        tournament_id="401811963",
+        tournament_name="BMW Championship",
+        bankroll=250,
+        starting_bankroll=250,
+        odds_book="polymarket",
+        path_id="polymarket",
+        independent_bankroll=True,
+        book=PortfolioState(bankroll=250, positions=[obs]),
+    )
+    save_paper_book(rec)
+    out = record_polymarket_fill(
+        event_id="401811963",
+        player_name="Gary Woodland",
+        shares=0.27,
+        fill=0.44,
+        cost=0.12,
+        market="win_after_r1",
+        pulls=[
+            {
+                "kind": "add",
+                "player_id": "3550",
+                "player_name": "Gary Woodland",
+                "bet_type": "win_after_r1",
+                "intent": "hold",
+                "model_win": 0.56,
+                "posted_edge": 0.15,
+            }
+        ],
+    )
+    pos = out.book.positions[0]
+    assert pos.shares == 0.27
+    assert pos.cost_usd == 0.12
+    assert pos.intent == "hold"
+    assert abs(pos.entry_model_p - 0.56) < 1e-9
+    assert pos.position_id == "paper-obs"
+
+
+def test_fill_add_uses_pull_hold_not_guessed_flip(tmp_path, monkeypatch):
+    monkeypatch.setattr("golf_offshoot.strategy.paper_book.package_data_dir", lambda: tmp_path)
+    obs = StrategyPosition(
+        position_id="paper-obs",
+        player_id="name:gary-woodland",
+        player_name="Gary Woodland",
+        bet_type=BetType.WIN_AFTER_R1,
+        stake=0.53,
+        decimal_odds=2.44,
+        entry_edge=0.0,
+        entry_model_p=0.44,
+        notes="wrongly tagged flip",
+        intent="flip",
+    )
+    rec = PaperBookFile(
+        tournament_id="401811963",
+        tournament_name="BMW Championship",
+        bankroll=250,
+        starting_bankroll=250,
+        odds_book="polymarket",
+        path_id="polymarket",
+        independent_bankroll=True,
+        book=PortfolioState(bankroll=250, positions=[obs]),
+    )
+    save_paper_book(rec)
+    out = record_polymarket_fill(
+        event_id="401811963",
+        player_name="Gary Woodland",
+        shares=0.27,
+        fill=0.44,
+        cost=0.12,
+        market="win_after_r1",
+        ranked_names={"Gary Woodland": "3550"},
+        pulls=[
+            {
+                "kind": "add",
+                "player_id": "3550",
+                "player_name": "Gary Woodland",
+                "bet_type": "win_after_r1",
+                "intent": "hold",
+                "model_win": 0.56,
+                "posted_edge": 0.15,
+            }
+        ],
+    )
+    pos = out.book.positions[0]
+    assert pos.player_id == "3550"
+    assert pos.intent == "hold"
+    assert pos.shares == 0.27
+
+
+def test_r2_new_still_attaches_when_watch_last_pull_is_r1_add(tmp_path, monkeypatch):
+    monkeypatch.setattr("golf_offshoot.strategy.paper_book.package_data_dir", lambda: tmp_path)
+    r1 = StrategyPosition(
+        position_id="paper-r1",
+        player_id="3550",
+        player_name="Gary Woodland",
+        bet_type=BetType.WIN_AFTER_R1,
+        stake=0.12,
+        decimal_odds=2.25,
+        entry_edge=0.15,
+        entry_model_p=0.56,
+        shares=0.27,
+        fill_price=0.44,
+        cost_usd=0.12,
+        intent="hold",
+        user_recorded=True,
+    )
+    rec = PaperBookFile(
+        tournament_id="401811963",
+        tournament_name="BMW Championship",
+        bankroll=250,
+        starting_bankroll=250,
+        odds_book="polymarket",
+        path_id="polymarket",
+        independent_bankroll=True,
+        latest_advice=[
+            PaperMovement(
+                movement_id="n2",
+                kind="new_bet",
+                player_id="3550",
+                player_name="Gary Woodland",
+                bet_type="win_after_r2",
+                intent="hold",
+                model_win=0.176,
+                posted_edge=0.034,
+            )
+        ],
+        book=PortfolioState(bankroll=250, positions=[r1]),
+    )
+    save_paper_book(rec)
+    out = record_polymarket_fill(
+        event_id="401811963",
+        player_name="Gary Woodland",
+        shares=1.59,
+        fill=0.16,
+        cost=0.27,
+        market="win_after_r2",
+        ranked_names={"Gary Woodland": "3550"},
+        pulls=[
+            {
+                "kind": "add",
+                "player_id": "3550",
+                "player_name": "Gary Woodland",
+                "bet_type": "win_after_r1",
+                "intent": "hold",
+                "model_win": 0.56,
+            }
+        ],
+    )
+    by_mkt = {p.bet_type: p for p in out.book.positions}
+    assert by_mkt[BetType.WIN_AFTER_R1].shares == 0.27
+    r2 = by_mkt[BetType.WIN_AFTER_R2]
+    assert r2.player_id == "3550"
+    assert r2.intent == "hold"
+    assert r2.shares == 1.59
+    assert r2.cost_usd == 0.27
+    assert abs(r2.entry_model_p - 0.176) < 1e-9
+    assert "last ntfy new_bet" in (r2.notes or "")
+
+
 def test_mark_position_uses_bid_unless_typed():
     pos = StrategyPosition(
         position_id=new_id("fill"),
@@ -262,3 +510,91 @@ def test_trigger_fill_tape_is_display_not_sell():
     assert "keep-to-win $2.89" in text
     assert "no pop" in text
     assert "not a sell" in text.lower()
+
+
+def test_record_sell_closes_fill_and_books_pnl(tmp_path, monkeypatch):
+    monkeypatch.setattr("golf_offshoot.strategy.paper_book.package_data_dir", lambda: tmp_path)
+    rec = PaperBookFile(
+        tournament_id="401811963",
+        tournament_name="BMW Championship",
+        bankroll=250,
+        starting_bankroll=250,
+        odds_book="polymarket",
+        path_id="polymarket",
+        independent_bankroll=True,
+        book=PortfolioState(
+            bankroll=250,
+            positions=[
+                StrategyPosition(
+                    position_id="fill-fitz",
+                    player_id="9037",
+                    player_name="Matt Fitzpatrick",
+                    bet_type=BetType.WIN_AFTER_R1,
+                    stake=0.17,
+                    decimal_odds=1.0 / 0.03,
+                    entry_edge=0.0,
+                    entry_model_p=0.03,
+                    user_recorded=True,
+                    shares=0.17 / 0.03,
+                    fill_price=0.03,
+                    cost_usd=0.17,
+                    intent="hold",
+                )
+            ],
+        ),
+    )
+    save_paper_book(rec)
+    out = record_polymarket_sell(
+        event_id="401811963",
+        player_name="Matt Fitzpatrick",
+        payout=0.08,
+        market="win_after_r1",
+        pulls=[
+            {
+                "kind": "exit",
+                "player_id": "9037",
+                "player_name": "Matt Fitzpatrick",
+                "bet_type": "win_after_r1",
+            }
+        ],
+    )
+    assert out.book.positions == []
+    assert abs(out.bankroll - 249.91) < 1e-9
+    assert out.book.realized_pnl_event == -0.09
+    sell = [m for m in out.movements if m.kind == "fill_sell"][-1]
+    assert sell.cashout_quote == 0.08
+    assert sell.stake_before == 0.17
+    assert "last ntfy exit" in out.notes[-1]
+
+
+def test_record_sell_can_open_then_close_missing_ticket(tmp_path, monkeypatch):
+    monkeypatch.setattr("golf_offshoot.strategy.paper_book.package_data_dir", lambda: tmp_path)
+    out = record_polymarket_sell(
+        event_id="401811963",
+        player_name="Matt Fitzpatrick",
+        payout=0.08,
+        market="win_after_r1",
+        cost=0.17,
+        fill=0.03,
+        ranked_names={"Matt Fitzpatrick": "9037"},
+    )
+    names = [p.player_name for p in out.book.positions]
+    assert "Matt Fitzpatrick" not in names
+    assert abs(out.bankroll - 249.91) < 1e-9
+    kinds = [m.kind for m in out.movements]
+    assert "fill" in kinds
+    assert "fill_sell" in kinds
+
+
+def test_record_sell_requires_open_or_cost(tmp_path, monkeypatch):
+    monkeypatch.setattr("golf_offshoot.strategy.paper_book.package_data_dir", lambda: tmp_path)
+    try:
+        record_polymarket_sell(
+            event_id="401811963",
+            player_name="Matt Fitzpatrick",
+            payout=0.08,
+            market="win_after_r1",
+        )
+    except FillError:
+        return
+    raise AssertionError("expected FillError")

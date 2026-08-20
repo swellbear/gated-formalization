@@ -550,6 +550,31 @@ def test_open_flips_count_toward_per_market_cap():
     assert pos2[0].bet_type == BetType.WIN_AFTER_R1
 
 
+def test_r1_flip_does_not_fail_on_someone_elses_18():
+    cfg = StrategyConfig(enabled=True, bankroll=250)
+    pos = _flip_pos(bet_type=BetType.WIN_AFTER_R1)
+    act = _action_for_open(
+        _mark(offer=2.00),
+        pos,
+        cfg,
+        cooling=False,
+        golf_started=True,
+        row=_row("p1", "Flip Name", 0.44, holes=15),
+        progress_holes=18,
+    )
+    assert act.kind == StrategyActionKind.HOLD
+    unmatched = _action_for_open(
+        _mark(offer=None),
+        _flip_pos(bet_type=BetType.WIN_AFTER_R1, player_id="name:gary-woodland"),
+        cfg,
+        cooling=False,
+        golf_started=True,
+        row=None,
+        progress_holes=18,
+    )
+    assert unmatched.kind == StrategyActionKind.HOLD
+
+
 def test_r1_flip_fails_at_18_not_36():
     cfg = StrategyConfig(enabled=True, bankroll=250)
     pos = _flip_pos(bet_type=BetType.WIN_AFTER_R1)

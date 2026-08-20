@@ -74,7 +74,7 @@ def main(argv: list[str] | None = None) -> int:
         "command",
         nargs="?",
         default="demo",
-        choices=["demo", "board", "explain", "strategy", "ingest", "calibrate", "pressure-test", "live", "watch", "shadow", "paper-export", "paper-ledger", "paper-deposit", "paper-withdraw", "paper-settle", "paper-fill", "compare-replay"],
+        choices=["demo", "board", "explain", "strategy", "ingest", "calibrate", "pressure-test", "live", "watch", "shadow", "paper-export", "paper-ledger", "paper-deposit", "paper-withdraw", "paper-settle", "paper-fill", "paper-sell", "compare-replay"],
     )
     parser.add_argument("--course-type", default="parkland")
     parser.add_argument("--player", default="p01")
@@ -127,23 +127,29 @@ def main(argv: list[str] | None = None) -> int:
             "Not scraped. Optional. On --book polymarket overrides shares x bestBid."
         ),
     )
-    parser.add_argument("--shares", type=float, default=0.0, help="paper-fill: Yes shares received")
+    parser.add_argument("--shares", type=float, default=0.0, help="paper-fill / paper-sell: Yes shares")
     parser.add_argument(
         "--fill",
         type=float,
         default=0.0,
-        help="paper-fill: Yes fill price in (0, 1), e.g. 0.034",
+        help="paper-fill / paper-sell: Yes fill price in (0, 1), e.g. 0.034",
     )
     parser.add_argument(
         "--cost",
         type=float,
         default=None,
-        help="paper-fill: USDC spent (default shares x fill)",
+        help="paper-fill / paper-sell: USDC spent (default shares x fill)",
+    )
+    parser.add_argument(
+        "--payout",
+        type=float,
+        default=None,
+        help="paper-sell: USDC received (the confirmation Payout)",
     )
     parser.add_argument(
         "--market",
         default="win",
-        help="paper-fill: win | top_5 | top_10 | top_20 | make_cut | win_after_r1 | win_after_r2 | win_after_r3",
+        help="paper-fill / paper-sell: win | top_5 | top_10 | top_20 | make_cut | win_after_r1 | win_after_r2 | win_after_r3",
     )
     parser.add_argument(
         "--intent",
@@ -211,6 +217,8 @@ def main(argv: list[str] | None = None) -> int:
         return _cmd_paper_settle(args)
     if args.command == "paper-fill":
         return _cmd_paper_fill(args)
+    if args.command == "paper-sell":
+        return _cmd_paper_sell(args)
     if args.command == "compare-replay":
         return _cmd_compare_replay(args)
 
@@ -547,6 +555,9 @@ def _cmd_live_polymarket(args) -> int:
                 print(str(exc))
                 record = None
     elif result.strategy:
+        from golf_offshoot.strategy.fills import relink_paper_player_ids
+
+        record = relink_paper_player_ids(record, result.ranked)
         advice = advice_from_recommendation(record, result.strategy, run_id=result.run_id)
         if args.no_apply_paper:
             record.latest_advice = advice
@@ -977,10 +988,12 @@ def _cmd_paper_settle(args) -> int:
 
 
 def _cmd_paper_fill(args) -> int:
-    from golf_offshoot.audit.journal import latest_pre_audit
+    from golf_offshoot.audit.journal import latest_event_audit
     from golf_offshoot.data_feeds.http import package_data_dir
+    from golf_offshoot.data_feeds.polymarket import POLYMARKET_PATH_ID
     from golf_offshoot.strategy.fills import FillError, record_polymarket_fill
     from golf_offshoot.strategy.paper_book import format_paper_book
+    from golf_offshoot.strategy.watch import last_pulls_from_state, load_watch_state, watch_state_path
 
     if not args.event:
         print("paper-fill requires --event <espn_id>")
@@ -989,9 +1002,11 @@ def _cmd_paper_fill(args) -> int:
         print('paper-fill requires --player "Name"')
         return 2
     ranked_names = None
-    pre = latest_pre_audit(args.event, package_data_dir() / "snapshots")
-    if pre is not None:
-        ranked_names = {o.name: o.player_id for o in pre.outputs}
+    audit = latest_event_audit(args.event, package_data_dir() / "snapshots")
+    if audit is not None:
+        ranked_names = {o.name: o.player_id for o in audit.outputs}
+    watch = load_watch_state(watch_state_path(args.event, POLYMARKET_PATH_ID))
+    pulls = last_pulls_from_state(watch)
     try:
         rec = record_polymarket_fill(
             event_id=args.event,
@@ -1002,11 +1017,67 @@ def _cmd_paper_fill(args) -> int:
             market=args.market,
             ranked_names=ranked_names,
             intent=args.intent,
+            pulls=pulls or None,
         )
     except FillError as exc:
         print(str(exc))
         return 2
     print("recorded polymarket fill (mock paper path; no CLOB order; not ledger.json)")
+    last = rec.notes[-1] if rec.notes else ""
+    if "last ntfy ADD" in last:
+        print("attached to last ntfy ADD on this name+market")
+    elif "last ntfy new_bet" in last or "last ntfy lock" in last:
+        print("attached to last ntfy NEW on this name+market")
+    elif "last ntfy" in last:
+        print("attached to last ntfy pull on this name+market")
+    print(format_paper_book(rec))
+    return 0
+
+
+def _cmd_paper_sell(args) -> int:
+    from golf_offshoot.audit.journal import latest_event_audit
+    from golf_offshoot.data_feeds.http import package_data_dir
+    from golf_offshoot.data_feeds.polymarket import POLYMARKET_PATH_ID
+    from golf_offshoot.strategy.fills import FillError, record_polymarket_sell
+    from golf_offshoot.strategy.paper_book import format_paper_book
+    from golf_offshoot.strategy.watch import last_pulls_from_state, load_watch_state, watch_state_path
+
+    if not args.event:
+        print("paper-sell requires --event <espn_id>")
+        return 2
+    if not args.player or args.player == "p01":
+        print('paper-sell requires --player "Name"')
+        return 2
+    if args.payout is None:
+        print("paper-sell requires --payout <usdc received>")
+        return 2
+    ranked_names = None
+    audit = latest_event_audit(args.event, package_data_dir() / "snapshots")
+    if audit is not None:
+        ranked_names = {o.name: o.player_id for o in audit.outputs}
+    watch = load_watch_state(watch_state_path(args.event, POLYMARKET_PATH_ID))
+    pulls = last_pulls_from_state(watch)
+    try:
+        rec = record_polymarket_sell(
+            event_id=args.event,
+            player_name=args.player,
+            payout=args.payout,
+            market=args.market,
+            ranked_names=ranked_names,
+            pulls=pulls or None,
+            shares=args.shares if args.shares and args.shares > 0 else None,
+            fill=args.fill if args.fill and args.fill > 0 else None,
+            cost=args.cost,
+        )
+    except FillError as exc:
+        print(str(exc))
+        return 2
+    print("recorded polymarket sell (mock paper path; no CLOB order; not ledger.json)")
+    last = rec.notes[-1] if rec.notes else ""
+    if "last ntfy exit" in last:
+        print("attached to last ntfy SELL on this name+market")
+    elif "last ntfy reduce" in last:
+        print("attached to last ntfy PARTIAL SELL on this name+market")
     print(format_paper_book(rec))
     return 0
 
@@ -1073,6 +1144,7 @@ def _cmd_watch(args) -> int:
         ntfy_topic,
         publish_ntfy,
         save_watch_state,
+        serialize_pulls,
         watch_state_path,
     )
 
@@ -1109,6 +1181,12 @@ def _cmd_watch(args) -> int:
             strategy_mode=StrategyMode(args.mode),
             risk=RiskPreference(args.risk),
         )
+        if rec is not None:
+            from golf_offshoot.strategy.fills import relink_paper_player_ids
+            from golf_offshoot.strategy.paper_book import save_paper_book
+
+            rec = relink_paper_player_ids(rec, result.ranked)
+            save_paper_book(rec)
         tid = result.tournament.espn_event_id or result.tournament.tournament_id or event_id
         advice = advice_for_watch(rec, result)
         state = load_watch_state(state_path)
@@ -1119,6 +1197,7 @@ def _cmd_watch(args) -> int:
             prev_signature=str(state.get("signature") or ""),
             armed=bool(state.get("armed")),
             arm_ping=True,
+            positions=rec.book.positions if rec is not None else None,
         )
         if decision.should_ping:
             try:
@@ -1137,16 +1216,19 @@ def _cmd_watch(args) -> int:
         else:
             print(f"watch quiet: {decision.headline}")
         if not args.dry_run:
-            save_watch_state(
-                state_path,
-                {
-                    "signature": decision.signature,
-                    "armed": True,
-                    "headline": decision.headline,
-                    "kind": decision.kind,
-                    "run_id": result.run_id,
-                },
-            )
+            payload = {
+                "signature": decision.signature,
+                "armed": True,
+                "headline": decision.headline,
+                "kind": decision.kind,
+                "run_id": result.run_id,
+                "last_pulls": (
+                    serialize_pulls(list(decision.pulls))
+                    if decision.kind == "pull"
+                    else list(state.get("last_pulls") or [])
+                ),
+            }
+            save_watch_state(state_path, payload)
         if args.once:
             return 0
         wait = interval if golf_has_started(result.ranked) else pre_interval

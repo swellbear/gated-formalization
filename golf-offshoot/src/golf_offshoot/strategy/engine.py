@@ -13,6 +13,7 @@ from golf_offshoot.models.strategy import (
 )
 from golf_offshoot.strategy.builder import build_pre_tournament
 from golf_offshoot.strategy.correlation import concentrations
+from golf_offshoot.strategy.fills import relink_positions
 from golf_offshoot.strategy.live import live_manage
 from golf_offshoot.strategy.path import mark_position
 from golf_offshoot.strategy.status import cooling_off, format_status, status_summary
@@ -46,6 +47,7 @@ def run_strategy(
         return disabled_recommendation(config, run_mode)
 
     book = book or PortfolioState(bankroll=config.bankroll)
+    book = book.model_copy(update={"positions": relink_positions(book.positions, rows)})
     cooling = cooling_off(book, config)
     notes: list[str] = []
     if cooling:

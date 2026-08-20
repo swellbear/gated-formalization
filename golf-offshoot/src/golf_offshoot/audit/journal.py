@@ -145,6 +145,23 @@ def list_event_audits(
     return out
 
 
+def latest_event_audit(
+    tournament_id: str,
+    directory: Path | None = None,
+    *,
+    prefer_live: bool = True,
+) -> AuditRecord | None:
+    """Newest snapshot for this event. Live beats a stale pre-tournament ingest."""
+    audits = list_event_audits(tournament_id, directory)
+    if not audits:
+        return None
+    if prefer_live:
+        lives = [a for a in audits if a.mode == RunMode.LIVE]
+        if lives:
+            return lives[-1]
+    return audits[-1]
+
+
 def diff_runs(previous: AuditRecord, current: AuditRecord) -> list[str]:
     from golf_offshoot.models.enums import Horizon
 
