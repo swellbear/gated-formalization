@@ -41,7 +41,7 @@ Can a predictive model for oil futures be built?
 
 ## 3. How it was examined
 
-**Method path:** Phase 1 only. … → **L-HUNT-COT**; pulse **L-PULSE-COT-1** (no survivor) → **L-HUNT-SPOT-TREND**; pulse **L-PULSE-SPOT-1** (no survivor either board; F-SKILL parked). No Phase 2. No UX/CX/CR/QI run. Yahoo not used as live. Spot cash tape ≠ CL.
+**Method path:** Phase 1 only. … → **L-HUNT-SPOT-TREND**; pulse **L-PULSE-SPOT-1** (no survivor) → **L-HUNT-SPOT-INV**; pulse **L-PULSE-SPOT-INV-1** (no survivor either board; F-SKILL parked). No Phase 2.
 
 **Governing lock / freeze (if any):** Rank 4 `D-EXIST ⊂ F-SKILL ⊂ V-VALUE`. D-EXIST: `O1+M1+S1+C3+T2+H3+E3` (futures-target; no-change OUT as the model exhibit). F-SKILL: NYMEX CL front-month, next-session log-return, walk-forward RMSE vs last settlement. V-VALUE: after-cost paper P/L vs the curve under **V2** (listed fees + 1 tick/side). V-EITHER is historical.
 
@@ -70,7 +70,7 @@ Can a predictive model for oil futures be built?
 | Item | Status |
 |------|--------|
 | F-SKILL: real shot of beating last-settlement RMSE, walk-forward, next-session CL log-return | **not established** (COT no survivor; DJT no survivor; FADE small F-DAY / F-CC tie; pretell no survivor; CAL tiny 500 / fails 750; VOL and H-LAG lost on F-CC; H-KS not run; stand-in; not a refute) — **live residual** |
-| Spot 21-day sign vs continuation (Track B) | **not established** (both horses lose both boards; confirm skipped; not a refute of every trend rule) |
+| Spot 21-day sign vs continuation (Track B) | **not established** (**L-PULSE-SPOT-1** and **L-PULSE-SPOT-INV-1** both no survivor; confirm skipped; not a refute of every trend rule) |
 | V-VALUE: real shot of after-cost paper P/L vs the curve | **not established** (V-SRC `leave unnamed`; **V2 named**; no book) — **not a refute** |
 | Directional accuracy that survives transaction costs | **not shown** |
 | Any decision or trading value; “should trade” | **not shown** (no should in the claim; LOCK-006 not imported) |
@@ -105,7 +105,7 @@ Yahoo `CL=F` last **500** sessions (2024-08-20 … 2026-08-14):
 | F-DAY | 0.02663 | 0.02670 (loss) | 0.026632 (tiny) | 0.02668 (loss) |
 | F-CC | 0.02869 | 0.02888 (loss) | 0.02868990 (tiny; **fails** 750) | 0.02885 (loss) |
 
-Promote gate: **none fire**. **L-HUNT-SPOT-TREND** discovery: both horses lose continuation on WTI (0.508 vs 0.494 / 0.492) and Brent (0.506 vs 0.496 / 0.494); **no survivor**; confirm skipped (wrong object for Yahoo promote). **L-HUNT-COT** discovery F-CC: both lose vs 0 = 0.026705 (closest H-COT-NET 0.026796); **no survivor**. **L-HUNT-DJT** discovery F-CC: both horses **tie** 0 = 0.026705; session-day scores all zero; **no survivor**. **H-GAP-FADE** confirm last-500 F-DAY 0.026584 vs 0 0.026634 (small); F-CC **tie**. **L-HUNT-PRETELL** discovery F-CC: all eight lose vs 0 = 0.026705; **no survivor**. H-KS-FTS **not run**. Tiny ≠ met. Day win ≠ promote. Equal-to-0 ≠ beat-0. Confirm ≠ train.
+Promote gate: **none fire**. **L-HUNT-SPOT-INV** discovery: both lose continuation (WTI CONT 0.506 vs 0.508; Brent CONT 0.502 vs 0.506); **no survivor**. **L-HUNT-SPOT-TREND** discovery: both horses lose continuation on WTI (0.508 vs 0.494 / 0.492) and Brent (0.506 vs 0.496 / 0.494); **no survivor**; confirm skipped (wrong object for Yahoo promote). **L-HUNT-COT** discovery F-CC: both lose vs 0 = 0.026705 (closest H-COT-NET 0.026796); **no survivor**. **L-HUNT-DJT** discovery F-CC: both horses **tie** 0 = 0.026705; session-day scores all zero; **no survivor**. **H-GAP-FADE** confirm last-500 F-DAY 0.026584 vs 0 0.026634 (small); F-CC **tie**. **L-HUNT-PRETELL** discovery F-CC: all eight lose vs 0 = 0.026705; **no survivor**. H-KS-FTS **not run**. Tiny ≠ met. Day win ≠ promote. Equal-to-0 ≠ beat-0. Confirm ≠ train.
 
 ---
 
@@ -123,7 +123,7 @@ UX / CX / CR **declined, not run** (operator **C** `decline optional modes`). QI
 
 **Locked-bar status summary:** D-EXIST **established** (futures-target only). F-SKILL **not established** (COT no survivor; DJT no survivor; FADE small F-DAY / F-CC tie; pretell hunt no survivor; CAL tiny 500 / fails 750; VOL and H-LAG lost on F-CC; H-KS not run). V-VALUE **not established**.
 
-**Continuation / hard-stop note:** Hygiene sealed. Optional modes declined. Skill leftover stays **live** ([R-F-SKILL](RESIDUAL_BRANCH_MENU.md#r-f-skill)). Spot-trend drawer **executed** ([R-SPOT-TREND](RESIDUAL_BRANCH_MENU.md#r-spot-trend)). Tape leftover **executed** as stand-in ([R-LIVE-STANDIN](RESIDUAL_BRANCH_MENU.md#r-live-standin)); reopen live **only if** **L-SCREEN-Y-PROMOTE** fires. Phase 2 not entered. Next: `leave skill not shown` · queued **C-SPOT-INV** · `name horse …` (**different** CL recipe) · `leave screen rule`. **Do not** auto-open DataMine.
+**Continuation / hard-stop note:** Hygiene sealed. Optional modes declined. Skill leftover stays **live** ([R-F-SKILL](RESIDUAL_BRANCH_MENU.md#r-f-skill)). Spot-trend drawer **executed** ([R-SPOT-TREND](RESIDUAL_BRANCH_MENU.md#r-spot-trend)). Tape leftover **executed** as stand-in ([R-LIVE-STANDIN](RESIDUAL_BRANCH_MENU.md#r-live-standin)); reopen live **only if** **L-SCREEN-Y-PROMOTE** fires. Phase 2 not entered. Next: `leave skill not shown` · queued **C-SPOT-CROSS** · `name horse …` (**different** CL recipe) · `leave screen rule`. **Do not** auto-open DataMine.
 
 ---
 
@@ -200,6 +200,8 @@ UX / CX / CR **declined, not run** (operator **C** `decline optional modes`). QI
 | L-PULSE-COT-1 | COT pulse; skill not met | `04_Material_Admission_COT.md` |
 | L-HUNT-SPOT-TREND / L-STANDIN-EIA-SPOT | Named cash 21-day trend hunt; no discovery survivor either board | `Lock_Hunt_Spot_Trend.md` |
 | L-PULSE-SPOT-1 | Spot-trend pulse; not bar-met; F-SKILL parked | `04_Material_Admission_Spot_Trend.md` |
+| L-HUNT-SPOT-INV / L-STANDIN-EIA-INV | Named weekly inventory overlay; no discovery survivor either board | `Lock_Hunt_Spot_Inv.md` |
+| L-PULSE-SPOT-INV-1 | Inventory overlay pulse; not bar-met | `04_Material_Admission_Spot_Inv.md` |
 
 ### Key artifacts
 

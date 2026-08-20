@@ -1,9 +1,9 @@
 {
-  "pulse": "L-HUNT-SPOT-TREND",
-  "lock": "Lock_Hunt_Spot_Trend.md",
+  "pulse": "L-HUNT-SPOT-INV",
+  "lock": "Lock_Hunt_Spot_Inv.md",
   "active_horses": [
-    "H-SPOT-FLIP-HOLD",
-    "H-SPOT-REV"
+    "H-SPOT-INV-CONT",
+    "H-SPOT-INV-FADE"
   ],
   "burned": [
     {
@@ -29,14 +29,33 @@
       "scoreboard": "Brent",
       "status": "burned_discovery_loss",
       "note": "Failed to strictly beat continuation on discovery. Do not retune."
+    },
+    {
+      "horse": "H-SPOT-INV-CONT",
+      "scoreboard": "WTI",
+      "status": "burned_discovery_loss",
+      "note": "Failed to strictly beat continuation on discovery. Do not retune."
+    },
+    {
+      "horse": "H-SPOT-INV-FADE",
+      "scoreboard": "WTI",
+      "status": "burned_discovery_loss",
+      "note": "Failed to strictly beat continuation on discovery. Do not retune."
+    },
+    {
+      "horse": "H-SPOT-INV-CONT",
+      "scoreboard": "Brent",
+      "status": "burned_discovery_loss",
+      "note": "Failed to strictly beat continuation on discovery. Do not retune."
+    },
+    {
+      "horse": "H-SPOT-INV-FADE",
+      "scoreboard": "Brent",
+      "status": "burned_discovery_loss",
+      "note": "Failed to strictly beat continuation on discovery. Do not retune."
     }
   ],
   "next": [
-    {
-      "id": "C-SPOT-INV",
-      "status": "queued_not_this_pulse",
-      "class": "EIA weekly inventory surprise overlay on the same 21-day sign target"
-    },
     {
       "id": "C-SPOT-CROSS",
       "status": "queued_not_this_pulse",

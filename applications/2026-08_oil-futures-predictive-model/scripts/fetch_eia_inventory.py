@@ -9,9 +9,11 @@ from __future__ import annotations
 import argparse
 import csv
 import datetime as dt
+import html as htmlmod
 import io
 import json
 import os
+import re
 import urllib.error
 import urllib.request
 from pathlib import Path
@@ -66,7 +68,73 @@ def parse_level(raw: str) -> float | None:
     return v
 
 
+MONTHS = {
+    "Jan": 1, "Feb": 2, "Mar": 3, "Apr": 4, "May": 5, "Jun": 6,
+    "Jul": 7, "Aug": 8, "Sep": 9, "Oct": 10, "Nov": 11, "Dec": 12,
+}
+
+
+def parse_eia_leaf_html(text: str) -> list[dict]:
+    """Parse EIA weekly history grid (Year-Month + Week End Date / Value)."""
+    tbody = re.search(r"<tbody>(.*?)</tbody>", text, flags=re.I | re.S)
+    block = tbody.group(1) if tbody else text
+    rows = []
+    for tr in re.findall(r"<tr>(.*?)</tr>", block, flags=re.I | re.S):
+        cells = re.findall(r"<td[^>]*>(.*?)</td>", tr, flags=re.I | re.S)
+        if len(cells) < 3:
+            continue
+        def _clean(s: str) -> str:
+            s = re.sub(r"<[^>]+>", "", s)
+            s = htmlmod.unescape(s)
+            return s.replace("\xa0", " ").replace("&nbsp;", " ").strip()
+        cleaned = [_clean(c) for c in cells]
+        ym = re.match(r"(\d{4})-([A-Za-z]{3})$", cleaned[0])
+        if not ym:
+            continue
+        year = int(ym.group(1))
+        label_month = MONTHS.get(ym.group(2))
+        if not label_month:
+            continue
+        rest = cleaned[1:]
+        for i in range(0, len(rest) - 1, 2):
+            draw = rest[i]
+            vraw = rest[i + 1]
+            dm = re.match(r"(\d{1,2})/(\d{1,2})$", draw)
+            v = parse_level(vraw)
+            if not dm or v is None:
+                continue
+            month, day = int(dm.group(1)), int(dm.group(2))
+            y = year
+            if label_month == 1 and month == 12:
+                y -= 1
+            elif label_month == 12 and month == 1:
+                y += 1
+            try:
+                week_end = dt.date(y, month, day).isoformat()
+            except ValueError:
+                continue
+            rows.append({"week_ending": week_end, "stocks": v})
+    by = {r["week_ending"]: r for r in rows}
+    out = sorted(by.values(), key=lambda r: r["week_ending"])
+    return out
+
+
 def parse_fred_csv(text: str) -> list[dict]:
+    rows = []
+    reader = csv.reader(io.StringIO(text.lstrip("\ufeff")))
+    header = True
+    for parts in reader:
+        if not parts or len(parts) < 2:
+            continue
+        if header:
+            header = False
+            continue
+        d = parse_date(parts[0])
+        v = parse_level(parts[1])
+        if d and v is not None:
+            rows.append({"week_ending": d, "stocks": v})
+    rows.sort(key=lambda r: r["week_ending"])
+    return rows
     rows = []
     reader = csv.reader(io.StringIO(text.lstrip("\ufeff")))
     header = True
@@ -122,7 +190,7 @@ def main() -> int:
     trail = []
     rows: list[dict] = []
     vehicle = None
-    # EIA leaf is usually HTML; try then FRED.
+    # EIA leaf is HTML week-grid; FRED WCESTUS1 is a named fallback (often 404).
     body, meta = fetch_bytes(EIA_LEAF)
     trail.append(meta)
     if body:
@@ -131,6 +199,10 @@ def main() -> int:
             rows = parse_fred_csv(text)
             if len(rows) >= 30:
                 vehicle = "eia_leaf_csv"
+        if len(rows) < 30:
+            rows = parse_eia_leaf_html(text)
+            if len(rows) >= 30:
+                vehicle = "eia_leaf_html"
     if len(rows) < 30:
         body, meta = fetch_bytes(FRED_CSV)
         trail.append(meta)

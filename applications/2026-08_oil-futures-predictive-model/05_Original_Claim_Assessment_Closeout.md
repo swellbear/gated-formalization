@@ -39,7 +39,7 @@ Can a predictive model for oil futures be built?
 | ID | Status / freeze |
 |----|-----------------|
 | [R-F-SKILL](RESIDUAL_BRANCH_MENU.md#r-f-skill) | Skill class named; parked this pulse; **L-HUNT-COT** no survivor; **L-HUNT-DJT** no survivor; **H-GAP-FADE** small F-DAY / F-CC **tie**; **L-HUNT-PRETELL** no survivor; **H-SPARSE-CAL** tiny 500 / **fails** 750; **H-SPARSE-VOL** and **H-LAG-WF** F-CC **loss**; H-KS not run; **not established**. `pursue`. Reopen: **different** horse on Yahoo |
-| [R-SPOT-TREND](RESIDUAL_BRANCH_MENU.md#r-spot-trend) | **L-PULSE-SPOT-1** no survivor either board. `executed → not established`. Reopen: queued **C-SPOT-INV** (do not unburn; do not change 21) |
+| [R-SPOT-TREND](RESIDUAL_BRANCH_MENU.md#r-spot-trend) | **L-PULSE-SPOT-1** and **L-PULSE-SPOT-INV-1** no survivor either board. `executed → not established`. Reopen: queued **C-SPOT-CROSS** (do not unburn; do not change 21) |
 | [R-F-COMBO](RESIDUAL_BRANCH_MENU.md#r-f-combo) | Switching rule **unnamed**. `park-until-trigger`. Rule in advance; F-ON and F-DAY already scored separately |
 | [R-V-VALUE](RESIDUAL_BRANCH_MENU.md#r-v-value) | After-cost book **unnamed**. `park-until-trigger`. Later book must match **V2** |
 | [R-G8](RESIDUAL_BRANCH_MENU.md#r-g8) | **Executed → admitted meanings** (baseline scored; optional FTS not run) |
@@ -81,9 +81,9 @@ Original one-liner is a blended “can.” Rank 4 named the split without rewrit
 
 ## Closeout statement
 
-Application **closed** as **Stable Provisional (split) — hard stop (residuals live)**. **L-SCREEN-Y-PROMOTE** in force. **L-HUNT-SPOT-TREND** scored; **no survivor** either board; F-SKILL parked this pulse. **L-HUNT-COT** scored; **no survivor**. **L-HUNT-DJT** scored; **no survivor**. **H-GAP-FADE** small F-DAY; **does not promote**. **L-HUNT-PRETELL** scored; **no survivor**. **H-SPARSE-CAL** / **H-SPARSE-VOL** scored; **neither promotes**. Leftover stays **live**. Phase 2 not entered. Amb **1.0**. Not trading advice.
+Application **closed** as **Stable Provisional (split) — hard stop (residuals live)**. **L-SCREEN-Y-PROMOTE** in force. **L-HUNT-SPOT-INV** scored; **no survivor**. **L-HUNT-SPOT-TREND** scored; **no survivor** either board; F-SKILL parked this pulse. **L-HUNT-COT** scored; **no survivor**. **L-HUNT-DJT** scored; **no survivor**. **H-GAP-FADE** small F-DAY; **does not promote**. **L-HUNT-PRETELL** scored; **no survivor**. **H-SPARSE-CAL** / **H-SPARSE-VOL** scored; **neither promotes**. Leftover stays **live**. Phase 2 not entered. Amb **1.0**. Not trading advice.
 
-Awaiting further authorization (`leave skill not shown` · queued **C-SPOT-INV** · `name horse …` (**different** CL recipe) · `leave screen rule`). Live CME **only if** the F-CC gate fires. Optional modes **declined**.
+Awaiting further authorization (`leave skill not shown` · queued **C-SPOT-CROSS** · `name horse …` (**different** CL recipe) · `leave screen rule`). Live CME **only if** the F-CC gate fires. Optional modes **declined**.
 
 ---
 

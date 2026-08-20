@@ -1,0 +1,25 @@
+{
+  "fetched_at": "2026-08-20T13:32:53Z",
+  "lock": "L-STANDIN-EIA-INV",
+  "eia_id": "PET.WCESTUS1.W",
+  "fred_id": "WCESTUS1",
+  "eia_key_present": false,
+  "vehicle": "eia_leaf_html",
+  "n": 2290,
+  "first_week": "1982-08-20",
+  "last_week": "2026-08-14",
+  "first_release": "1982-08-25",
+  "last_release": "2026-08-19",
+  "vehicle_fail": false,
+  "attempts": [
+    {
+      "url": "https://www.eia.gov/dnav/pet/hist/LeafHandler.ashx?n=PET&s=WCESTUS1&f=W",
+      "ok": true,
+      "http_status": 200,
+      "n_bytes": 243980,
+      "content_type": "text/html; charset=utf-8"
+    }
+  ],
+  "csv": "eia_weekly_crude_exspr.csv",
+  "note": "Naive surprise is hunt-side (WoW minus prior-4-week mean WoW). Not Bloomberg consensus."
+}
