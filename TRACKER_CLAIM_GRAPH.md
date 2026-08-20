@@ -1,6 +1,6 @@
 # Claim Graph
 
-**Date:** 2026-08-17  
+**Date:** 2026-08-20  
 **Scope:** portfolio-wide + real-claim intakes (CoreWeave + Zitron Nvidia $500B + FOMC June 2026 SEP **hard stop**) + FL property-tax **hard stop** + FOMC Sep 2026 UFFR-change **hard stop** (`leave unnamed`) + oil-futures **hard stop (residuals live)**  
 **Maintainer note:** Three claim-shape lock clusters Active (001–004 uniqueness+preferability; 005–008 numerical+should; 009–011 forecast-extension). Real-claim intakes: `APP-CRWV`, `APP-ZITRON`; synthetic twin scaling still saturated.
 
@@ -31,7 +31,7 @@
 | APP-FOMC-SEP | Application | `2026-08_fomc-june-2026-sep` | **Hard stop sealed**; L1–L17; Amb ≈ 1; 2026 F-ML not established (L13 + L17 SPF); July 29 OUT; CR offered not run (keep original default); UX/CX offered not run |
 | APP-FL-PTAX | Application | `2026-08_fl-property-tax-abolish-10y` | **Hard stop sealed**; Rank 1 + live official law; D-LAW admitted; Amb 2; P-BaseCase untested (`leave unnamed`); CR offered not run |
 | APP-FOMC-UFFR | Application | `2026-08_fomc-sep-2026-uffr-change` | **Hard stop sealed**; Rank 3 `Q3+O2+L1+M3+B1`; Amb 2.5; P-NN-TEST **not established**; C2 `leave unnamed`; F-PRINT parked; CR offered not run |
-| APP-OIL-FT | Application | `2026-08_oil-futures-predictive-model` | **Hard stop (residuals live)**; Rank 4 split; D-EXIST-MET-FT; **L-SCREEN-Y-PROMOTE**; **L-HUNT-COT** no survivor; **L-HUNT-DJT** no survivor; **H-GAP-FADE** small F-DAY (no promote); **L-HUNT-PRETELL** no survivor; **H-SPARSE-CAL** / **H-SPARSE-VOL** scored (neither promotes); **H-LAG-WF** scored (F-CC loss); **V-COST-V2**; Amb 1.0; F-SKILL/V-VALUE not established; **R-F-SKILL** pursue; V-SRC leave unnamed; UX/CX/CR **declined** |
+| APP-OIL-FT | Application | `2026-08_oil-futures-predictive-model` | **Hard stop (residuals live)**; Rank 4 split; D-EXIST-MET-FT; **L-SCREEN-Y-PROMOTE**; **L-HUNT-SPOT-TREND** no survivor either board; **L-HUNT-COT** no survivor; **L-HUNT-DJT** no survivor; **H-GAP-FADE** small F-DAY (no promote); **L-HUNT-PRETELL** no survivor; **H-SPARSE-CAL** / **H-SPARSE-VOL** scored (neither promotes); **H-LAG-WF** scored (F-CC loss); **V-COST-V2**; Amb 1.0; F-SKILL/V-VALUE not established; **R-F-SKILL** pursue; **R-SPOT-TREND** executed; V-SRC leave unnamed; UX/CX/CR **declined** |
 | LOCK-2026-08-001 | Lock | Comparison class before uniqueness (O) | Active |
 | LOCK-2026-08-002 | Lock | Preferability needs named virtues/metrics | Active |
 | LOCK-2026-08-003 | Lock | Amb drop / scope lock ≠ clearance | Active |
@@ -143,7 +143,7 @@
 - Real-claim `APP-CRWV` validates forecast locks on live markets commentary; attribution≠life clearance.  
 - Real-claim `APP-ZITRON` hard-stopped under newsletter+monologue primary (Squawk OUT); MoU≠vendor/circular/70%/bubble clearance; claimed citations ≠ bar met; CR **keep original wording**; UX+CX executed (alts not adopted).  
 - Real-claim `APP-FOMC-SEP` **hard stop sealed** (2026 F-ML test **not established** after L13 brochure + L17 SPF Q2 2026; Amb ≈ 1; G8 not locked); July 29 OUT; CR/UX/CX offered not run; default keep original wording; print-match ≠ clearance.  
-- `APP-OIL-FT` **hard stop (residuals live)** (2026-08-17): Rank 4 nested split; D-EXIST-MET-FT; **L-HUNT-COT** no survivor; **L-HUNT-DJT** no survivor; H-LAG-WF scored and lost on F-CC; H-KS not run; **V-COST-V2**; Amb 1.0; Amb ≠ clearance; Phase 2 not entered; UX/CX/CR **declined**.
+- `APP-OIL-FT` **hard stop (residuals live)** (2026-08-20): Rank 4 nested split; D-EXIST-MET-FT; **L-HUNT-SPOT-TREND** no survivor; **L-HUNT-COT** no survivor; **L-HUNT-DJT** no survivor; H-LAG-WF scored and lost on F-CC; H-KS not run; **V-COST-V2**; Amb 1.0; Amb ≠ clearance; Phase 2 not entered; UX/CX/CR **declined**.
 
 ---
 

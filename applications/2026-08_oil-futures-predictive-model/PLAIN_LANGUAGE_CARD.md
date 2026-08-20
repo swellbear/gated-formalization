@@ -1,27 +1,27 @@
 # Plain-language card
 
 **Application:** `2026-08_oil-futures-predictive-model`  
-**Date / checkpoint:** 2026-08-17 · CFTC managed-money positioning hunt (L-PULSE-COT-1)
+**Date / checkpoint:** 2026-08-20 · EIA spot WTI/Brent 21-day trend hunt (L-PULSE-SPOT-1)
 
 ---
 
 ## What we’re doing
 
-We scored the public weekly count of how many crude-oil futures “managed money” traders are long minus short — either the latest level, or the change from the week before. The computer was allowed to pick **one** of those two only if it already beat “assume no change” on **older** whole oil sessions. Neither did. So **no winner** went to the recent exam. This does **not** move to official CME. This is not a trade.
+We scored two frozen rules on the public **cash** price of WTI and of Brent: wait a day after a 21-day flip, or always call the opposite of the last 21 days. The computer was allowed to pick **one** per oil only if it already beat “whatever just happened will happen again” on **older** days. Neither did, on either oil. So **no winner** went to the recent exam. As of the last completed print (2026-08-18), both 21-day labels are **up** and **did not flip** that day — that is a description, not a pass. This does **not** move to official CME. This is not a trade.
 
 ## What we need from you
 
-Nothing required. Optional: leave skill not shown, or name a **different** recipe (do not switch to percent-of-open-interest or other trader groups after seeing this).
+Nothing required. Optional: leave futures skill not shown, authorize the **next queued** spot class (inventory surprise), or name a **different** futures recipe on Yahoo.
 
-**Preferred reply:** click A / B / C. Typed: `leave skill not shown` · `name horse …` · `leave screen rule`
+**Preferred reply:** click A / B / C. Typed: `leave skill not shown` · next queue class · `name horse …` · `leave screen rule`
 
 ## What a “yes” / this update means
 
-Those two weekly positioning recipes are on the card. Neither survived the older whole-trip exam. A loss versus no-change is **not** a pass. Live CME still only if the whole-trip gate fires. It did **not**.
+Those two 21-day spot rules are on the card and **burned**. Neither survived the older exam. A loss versus continuation is **not** a pass. Futures skill is still not shown.
 
 ## What this does *not* mean
 
-That specs drive crude, or that they don’t. That a model beats last settlement. That we will now buy DataMine. That anyone should trade.
+That oil has no trend, or that a trend model works. That we trained on the recent exam. That anyone should trade. That cash WTI/Brent is the same as NYMEX CL.
 
 ---
 
@@ -29,12 +29,12 @@ That specs drive crude, or that they don’t. That a model beats last settlement
 
 | Item | Value |
 |------|--------|
-| Claim-freeze / claim under test | Rank 4 F-CC; **L-SCREEN-Y-PROMOTE**; **L-HUNT-COT** |
+| Claim-freeze / claim under test | Rank 4 F-SKILL **parked**; **L-HUNT-SPOT-TREND** vs continuation |
 | Amb | **1.0** (**≠ clearance**) |
-| Locks / package IDs | **H-COT-NET**; **H-COT-CHG**; L-STANDIN-CFTC-COT; L-SCREEN-Y-PROMOTE |
-| Discovery F-CC | Both **lose** vs 0 (0.026705); closest NET 0.026796; **no survivor** |
-| Confirm / promote | **Skipped** / **does not fire** |
-| Artifact pointers | `Lock_Hunt_COT.md` · `PULSE_Hunt_COT.md` · `04_Material_Admission_COT.md` |
+| Locks / package IDs | **H-SPOT-FLIP-HOLD**; **H-SPOT-REV**; L-STANDIN-EIA-SPOT; L-SPOT-ARMS; L-SPOT-QUEUE |
+| Discovery | Both horses **lose** both boards (WTI cont. 0.508; Brent 0.506); **no survivor** |
+| Confirm / promote | **Skipped** / **does not apply** |
+| Artifact pointers | `Lock_Hunt_Spot_Trend.md` · `PULSE_Hunt_Spot_Trend.md` · `04_Material_Admission_Spot_Trend.md` |
 
 ---
 

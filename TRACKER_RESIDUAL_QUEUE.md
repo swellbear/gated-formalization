@@ -1,13 +1,13 @@
 # Tracker Residual Queue (Layer 3)
 
-**Last refreshed:** 2026-08-17 (oil-futures **hard stop (residuals live)**: **R-F-SKILL** **pursue** (**L-HUNT-COT** no survivor; **L-HUNT-DJT** no survivor; **H-GAP-FADE** small F-DAY, no promote; **L-HUNT-PRETELL** no survivor; CAL/VOL/H-LAG fail **L-SCREEN-Y-PROMOTE**; next horse must be **different**); **R-LIVE-STANDIN** executed (promote only if F-CC gate fires); **R-V-VALUE** park-until-trigger (**V2 named**, book unnamed); **R-F-COMBO** park-until-trigger. Park-90d quarterly still due ~2026-11-12 — this refresh does **not** re-churn that card.)  
+**Last refreshed:** 2026-08-20 (oil-futures **hard stop (residuals live)**: **R-SPOT-TREND** executed (no discovery survivor either board); **R-F-SKILL** **pursue** (parked this pulse; next CL horse must be **different**); **R-LIVE-STANDIN** executed (promote only if F-CC gate fires); **R-V-VALUE** park-until-trigger (**V2 named**, book unnamed); **R-F-COMBO** park-until-trigger. Park-90d quarterly still due ~2026-11-12 — this refresh does **not** re-churn that card.)  
 **Last park-90d quarterly review:** **2026-08-12** (inaugural = **cadence-existence**, not quarterly proof; next due ~2026-11-12; post-rule addendum same day — still extend-all)  
 **Disposition vocabulary:** `pursue` | `park-90d` | `park-until-trigger` | `drop`  
 Only **pursue** items stay in active bands. Parked/dropped listed below.
 
 **Cadence:** About once per quarter, review **`park-90d` only**.
 
-**Note:** CoreWeave **hard stop sealed**; Zitron Nvidia $500B **hard stop sealed** (restart frame; Squawk/D-APPEAR OUT). Prior Squawk-stand-in R-* rows remain historical/drop. FOMC parent closeout intact; R-FML-INDEP **executed** (SPF Q2 2026; not established; not a refute). Oil-futures **hard stop (residuals live)**; Yahoo `CL=F` stand-in; **L-SCREEN-Y-PROMOTE**; R-F-SKILL **pursue** (COT no survivor; DJT no survivor; FADE small F-DAY, no promote; pretell hunt no survivor; CAL/VOL/H-LAG fail promote; next horse must be different); R-LIVE-STANDIN **executed** (live CME only if F-CC gate fires).
+**Note:** CoreWeave **hard stop sealed**; Zitron Nvidia $500B **hard stop sealed** (restart frame; Squawk/D-APPEAR OUT). Prior Squawk-stand-in R-* rows remain historical/drop. FOMC parent closeout intact; R-FML-INDEP **executed** (SPF Q2 2026; not established; not a refute). Oil-futures **hard stop (residuals live)**; Yahoo `CL=F` stand-in; **L-SCREEN-Y-PROMOTE**; R-SPOT-TREND executed (no survivor); R-F-SKILL **pursue** (parked this pulse); R-LIVE-STANDIN **executed** (live CME only if F-CC gate fires).
 
 ---
 
@@ -52,7 +52,7 @@ Only **pursue** items stay in active bands. Parked/dropped listed below.
 
 | Residual ID + app | Description | Reopen condition | Effort | Value | Dep | Disposition | Note |
 |-------------------|-------------|------------------|--------|-------|-----|-------------|------|
-| **R-F-SKILL** · oil-futures | Next-session CL log-return vs last-settlement RMSE (F-CC + F-ON/F-DAY) | `name horse …` (**different** recipe) on Yahoo; do **not** add percent-of-OI or other trader groups after COT scores; live CME **only if** **L-SCREEN-Y-PROMOTE** fires | med once a horse is named | high | COT no survivor; DJT no survivor; FADE small F-DAY / F-CC tie; pretell hunt no survivor; CAL tiny 500 / fails 750; VOL and H-LAG lost on F-CC | **pursue** | COT discovery F-CC both lose; H-KS not run; **not** skill-met |
+| **R-F-SKILL** · oil-futures | Next-session CL log-return vs last-settlement RMSE (F-CC + F-ON/F-DAY) | `name horse …` (**different** recipe) on Yahoo; do **not** add percent-of-OI or other trader groups after COT scores; live CME **only if** **L-SCREEN-Y-PROMOTE** fires | med once a horse is named | high | COT no survivor; DJT no survivor; FADE small F-DAY / F-CC tie; pretell hunt no survivor; CAL tiny 500 / fails 750; VOL and H-LAG lost on F-CC; Track B parked this pulse | **pursue** | COT discovery F-CC both lose; H-KS not run; **not** skill-met |
 | **R-SOME / R-RECIPE / R-REPL** · llm-gwt | Live remnant → Admissible band | Name models; hallmark recipe; replication | med | high | data | **pursue** | Live Admissible-path residual |
 | **WS-MISSING** · foxnews / conscience | Recover worksheets | Recover artifacts or authorize backfill | med | med | data | **pursue** | Prerequisite for those apps |
 | **CLAIM-TEXT** · foxnews | Verbatim original claim | Recover article quote | low | med | data | **pursue** | Cheap unblock |

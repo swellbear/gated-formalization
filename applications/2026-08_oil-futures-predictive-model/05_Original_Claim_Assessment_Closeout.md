@@ -1,6 +1,6 @@
 # Original-Claim Assessment (Closeout)
 
-**Date:** 2026-08-17  
+**Date:** 2026-08-20  
 **Application:** `2026-08_oil-futures-predictive-model`  
 **Closeout verdict:** **Stable Provisional (split) — hard stop (residuals live)**  
 **Amb at closeout:** **1.0** (after V-COST-V2; 1.5 after Yahoo stand-in pulse; 2.5 after F-SRC-CME-TAPE; 5.5 at first hygiene seal)
@@ -38,7 +38,8 @@ Can a predictive model for oil futures be built?
 ### Free parameters remaining
 | ID | Status / freeze |
 |----|-----------------|
-| [R-F-SKILL](RESIDUAL_BRANCH_MENU.md#r-f-skill) | Skill class named; **L-HUNT-COT** no survivor; **L-HUNT-DJT** no survivor; **H-GAP-FADE** small F-DAY / F-CC **tie**; **L-HUNT-PRETELL** no survivor; **H-SPARSE-CAL** tiny 500 / **fails** 750; **H-SPARSE-VOL** and **H-LAG-WF** F-CC **loss**; H-KS not run; **not established**. `pursue`. Reopen: **different** horse on Yahoo (do **not** add percent-of-OI or other trader groups after COT scores) |
+| [R-F-SKILL](RESIDUAL_BRANCH_MENU.md#r-f-skill) | Skill class named; parked this pulse; **L-HUNT-COT** no survivor; **L-HUNT-DJT** no survivor; **H-GAP-FADE** small F-DAY / F-CC **tie**; **L-HUNT-PRETELL** no survivor; **H-SPARSE-CAL** tiny 500 / **fails** 750; **H-SPARSE-VOL** and **H-LAG-WF** F-CC **loss**; H-KS not run; **not established**. `pursue`. Reopen: **different** horse on Yahoo |
+| [R-SPOT-TREND](RESIDUAL_BRANCH_MENU.md#r-spot-trend) | **L-PULSE-SPOT-1** no survivor either board. `executed → not established`. Reopen: queued **C-SPOT-INV** (do not unburn; do not change 21) |
 | [R-F-COMBO](RESIDUAL_BRANCH_MENU.md#r-f-combo) | Switching rule **unnamed**. `park-until-trigger`. Rule in advance; F-ON and F-DAY already scored separately |
 | [R-V-VALUE](RESIDUAL_BRANCH_MENU.md#r-v-value) | After-cost book **unnamed**. `park-until-trigger`. Later book must match **V2** |
 | [R-G8](RESIDUAL_BRANCH_MENU.md#r-g8) | **Executed → admitted meanings** (baseline scored; optional FTS not run) |
@@ -74,15 +75,15 @@ Original one-liner is a blended “can.” Rank 4 named the split without rewrit
 - [ ] **Revise claim** — then run **Claim-Revision Scaffolding** before a successor  
 - [x] **Keep original wording** — research agenda / scoped dependents only (default; CR **declined**, not run)
 
-**Default if no further authorization:** keep original wording + **hard stop (residuals live)** with this assessment. Skill leftover stays live (COT no survivor; DJT no survivor; FADE small F-DAY, no promote; pretell hunt failed at discovery; H-LAG lost on F-CC; H-KS not run).
+**Default if no further authorization:** keep original wording + **hard stop (residuals live)** with this assessment. Skill leftover stays live. Spot-trend drawer executed (no survivor).
 
 ---
 
 ## Closeout statement
 
-Application **closed** as **Stable Provisional (split) — hard stop (residuals live)**. **L-SCREEN-Y-PROMOTE** in force. **L-HUNT-COT** scored; **no survivor**. **L-HUNT-DJT** scored; **no survivor**. **H-GAP-FADE** small F-DAY; **does not promote**. **L-HUNT-PRETELL** scored; **no survivor**. **H-SPARSE-CAL** / **H-SPARSE-VOL** scored; **neither promotes**. Leftover stays **live**. Phase 2 not entered. Amb **1.0**. Not trading advice.
+Application **closed** as **Stable Provisional (split) — hard stop (residuals live)**. **L-SCREEN-Y-PROMOTE** in force. **L-HUNT-SPOT-TREND** scored; **no survivor** either board; F-SKILL parked this pulse. **L-HUNT-COT** scored; **no survivor**. **L-HUNT-DJT** scored; **no survivor**. **H-GAP-FADE** small F-DAY; **does not promote**. **L-HUNT-PRETELL** scored; **no survivor**. **H-SPARSE-CAL** / **H-SPARSE-VOL** scored; **neither promotes**. Leftover stays **live**. Phase 2 not entered. Amb **1.0**. Not trading advice.
 
-Awaiting further authorization (`leave skill not shown` · `name horse …` (**different**; do **not** add percent-of-OI or other trader groups after scores) · `leave screen rule`). Live CME **only if** the F-CC gate fires. Optional modes **declined**.
+Awaiting further authorization (`leave skill not shown` · queued **C-SPOT-INV** · `name horse …` (**different** CL recipe) · `leave screen rule`). Live CME **only if** the F-CC gate fires. Optional modes **declined**.
 
 ---
 
