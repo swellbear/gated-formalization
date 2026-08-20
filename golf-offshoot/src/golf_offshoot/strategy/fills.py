@@ -18,6 +18,7 @@ from golf_offshoot.strategy.paper_book import (
 )
 
 _PULL_FILL_KINDS = frozenset({"new_bet", "lock", "add"})
+_PULL_SELL_KINDS = frozenset({"exit", "reduce"})
 
 _MARKET_ALIASES = {
     "win": BetType.WIN,
@@ -166,6 +167,23 @@ def match_fill_pull(name: str, bet: BetType, pulls: list[FillPull]) -> FillPull 
     adds = [p for p in hits if p.kind == "add"]
     if adds:
         return adds[-1]
+    return hits[-1] if hits else None
+
+
+def match_sell_pull(name: str, bet: BetType, pulls: list[FillPull]) -> FillPull | None:
+    """Last ntfy SELL / PARTIAL SELL on this name+market."""
+    want = normalize_name(name)
+    market = bet.value
+    hits = [
+        p
+        for p in pulls
+        if p.kind in _PULL_SELL_KINDS
+        and normalize_name(p.player_name) == want
+        and str(p.bet_type or "win").replace("-", "_") == market
+    ]
+    exits = [p for p in hits if p.kind == "exit"]
+    if exits:
+        return exits[-1]
     return hits[-1] if hits else None
 
 
@@ -399,6 +417,155 @@ def record_polymarket_fill(
     )
     save_paper_book(rec)
     return rec
+
+
+def record_polymarket_sell(
+    *,
+    event_id: str,
+    player_name: str,
+    payout: float,
+    market: str = "win",
+    ranked_names: dict[str, str] | None = None,
+    pulls=None,
+    shares: float | None = None,
+    fill: float | None = None,
+    cost: float | None = None,
+) -> PaperBookFile:
+    """Record a user sell on the Polymarket paper path. Never a CLOB order.
+
+    `--payout` is the USDC received (the confirmation Payout). If this name+market
+    is not open yet, pass the original `--cost` / `--fill` / `--shares` so the
+    buy is booked first, then sold.
+    """
+    eid = str(event_id or "").strip()
+    if not eid:
+        raise FillError("event id is required")
+    name = str(player_name or "").strip()
+    if not name:
+        raise FillError("player name is required")
+    try:
+        received = float(payout)
+    except (TypeError, ValueError) as exc:
+        raise FillError("payout must be a number") from exc
+    if received <= 0:
+        raise FillError("payout must be > 0")
+    bet = parse_fill_market(market)
+    rec = load_paper_file(eid, path_id=POLYMARKET_PATH_ID)
+    names = ranked_names_map(ranked_names)
+    rec = relink_paper_player_ids(rec, names) if rec is not None else rec
+    pull_list = parse_fill_pulls(pulls)
+    if rec is not None:
+        pull_list = list(pull_list) + pulls_from_advice(rec.latest_advice)
+    sell_pull = match_sell_pull(name, bet, pull_list)
+    pid = ""
+    if sell_pull and sell_pull.player_id and not is_provisional_player_id(sell_pull.player_id):
+        pid = sell_pull.player_id
+    elif rec is not None:
+        pid = _resolve_player_id(name, player_id=None, record=rec, ranked_names=ranked_names)
+        hit = match_name(name, names) if names else None
+        if hit:
+            pid = hit
+    pos = _find_open_ticket(rec, pid, name, bet)
+    if pos is None:
+        need_open = (
+            (shares is not None and float(shares) > 0)
+            or (fill is not None and float(fill) > 0)
+            or (cost is not None and float(cost) > 0)
+        )
+        if not need_open:
+            raise FillError(
+                "no open ticket on that name+market; paper-fill first or pass "
+                "--cost and --fill (and --shares if not cost/fill)"
+            )
+        rec = record_polymarket_fill(
+            event_id=eid,
+            player_name=name,
+            shares=_shares_for_open(shares, fill, cost),
+            fill=_fill_for_open(fill, shares, cost),
+            cost=cost,
+            market=market,
+            ranked_names=ranked_names,
+            pulls=pull_list or None,
+        )
+        pos = _find_open_ticket(rec, pid, name, bet)
+    if rec is None or pos is None:
+        raise FillError("no open ticket on that name+market")
+    sold = round(float(pos.stake), 2)
+    pnl = round(received - sold, 2)
+    kept = [p for p in rec.book.positions if p.position_id != pos.position_id]
+    rec.bankroll = round(float(rec.bankroll) + pnl, 2)
+    rec.book = rec.book.model_copy(
+        update={
+            "positions": kept,
+            "bankroll": rec.bankroll,
+            "realized_pnl_event": round(float(rec.book.realized_pnl_event or 0.0) + pnl, 2),
+            "realized_pnl_today": round(float(rec.book.realized_pnl_today or 0.0) + pnl, 2),
+        }
+    )
+    pull_tag = f"last ntfy {sell_pull.kind}" if sell_pull else ""
+    rec.movements = list(rec.movements) + [
+        PaperMovement(
+            movement_id=new_id("move"),
+            kind="fill_sell",
+            status="applied",
+            player_id=pos.player_id,
+            player_name=pos.player_name,
+            bet_type=bet.value,
+            position_id=pos.position_id,
+            stake_before=sold,
+            stake_delta=-sold,
+            stake_after=0.0,
+            decimal_odds=pos.decimal_odds,
+            reason_plain=(
+                f"Recorded Polymarket sell payout ${received:.2f} on ${sold:.2f} "
+                f"cost (P/L ${pnl:+.2f}). Not a CLOB order."
+                + (" Attached to last ntfy SELL." if sell_pull else "")
+            ),
+            reason_technical=f"payout={received} cost={sold} pnl={pnl}",
+            cashout_quote=received,
+            cashout_estimated=False,
+            shares=pos.shares,
+            live_bid=(received / float(pos.shares)) if pos.shares else None,
+            mtm_is_bid=True,
+            intent=pos.intent,
+            model_win=pos.entry_model_p,
+            posted_edge=pos.entry_edge,
+        )
+    ]
+    rec.notes = list(rec.notes or [])
+    rec.notes.append(
+        f"sell {pos.player_name} {bet.value} payout=${received:.2f} cost=${sold:.2f} pnl=${pnl:+.2f}"
+        + (f" ({pull_tag})" if pull_tag else "")
+    )
+    save_paper_book(rec)
+    return rec
+
+
+def _shares_for_open(shares, fill, cost) -> float:
+    if shares is not None and float(shares) > 0:
+        return float(shares)
+    if fill is not None and cost is not None and float(fill) > 0 and float(cost) > 0:
+        return float(cost) / float(fill)
+    raise FillError("pass --shares, or both --cost and --fill, to book a missing buy before the sell")
+
+
+def _fill_for_open(fill, shares, cost) -> float:
+    if fill is not None and float(fill) > 0:
+        return float(fill)
+    if shares is not None and cost is not None and float(shares) > 0 and float(cost) > 0:
+        px = float(cost) / float(shares)
+        if 0.0 < px < 1.0:
+            return px
+    raise FillError("pass --fill in (0, 1), or --cost and --shares")
+
+
+def _find_open_ticket(rec: PaperBookFile | None, pid: str, name: str, bet: BetType):
+    if rec is None:
+        return None
+    for pos in rec.book.positions:
+        if _same_ticket(pos, pid, name, bet):
+            return pos
+    return None
 
 
 def _existing_is_fill(old) -> bool:

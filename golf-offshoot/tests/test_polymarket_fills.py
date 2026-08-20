@@ -3,7 +3,12 @@ from golf_offshoot.models.enums import BetType, Horizon, StrategyMode
 from golf_offshoot.models.schemas import HorizonProbability, PlayerOutput, ProbabilityBundle, ReliabilityScore
 from golf_offshoot.models.strategy import PortfolioState, StrategyPosition, new_id
 from golf_offshoot.strategy.cashout import bid_cashout_dollars, min_sell_price
-from golf_offshoot.strategy.fills import FillError, parse_fill_market, record_polymarket_fill
+from golf_offshoot.strategy.fills import (
+    FillError,
+    parse_fill_market,
+    record_polymarket_fill,
+    record_polymarket_sell,
+)
 from golf_offshoot.strategy.paper_book import PaperBookFile, PaperMovement, save_paper_book
 from golf_offshoot.strategy.paper_trigger import group_trigger_actions, trigger_document
 from golf_offshoot.strategy.path import mark_position
@@ -505,3 +510,91 @@ def test_trigger_fill_tape_is_display_not_sell():
     assert "keep-to-win $2.89" in text
     assert "no pop" in text
     assert "not a sell" in text.lower()
+
+
+def test_record_sell_closes_fill_and_books_pnl(tmp_path, monkeypatch):
+    monkeypatch.setattr("golf_offshoot.strategy.paper_book.package_data_dir", lambda: tmp_path)
+    rec = PaperBookFile(
+        tournament_id="401811963",
+        tournament_name="BMW Championship",
+        bankroll=250,
+        starting_bankroll=250,
+        odds_book="polymarket",
+        path_id="polymarket",
+        independent_bankroll=True,
+        book=PortfolioState(
+            bankroll=250,
+            positions=[
+                StrategyPosition(
+                    position_id="fill-fitz",
+                    player_id="9037",
+                    player_name="Matt Fitzpatrick",
+                    bet_type=BetType.WIN_AFTER_R1,
+                    stake=0.17,
+                    decimal_odds=1.0 / 0.03,
+                    entry_edge=0.0,
+                    entry_model_p=0.03,
+                    user_recorded=True,
+                    shares=0.17 / 0.03,
+                    fill_price=0.03,
+                    cost_usd=0.17,
+                    intent="hold",
+                )
+            ],
+        ),
+    )
+    save_paper_book(rec)
+    out = record_polymarket_sell(
+        event_id="401811963",
+        player_name="Matt Fitzpatrick",
+        payout=0.08,
+        market="win_after_r1",
+        pulls=[
+            {
+                "kind": "exit",
+                "player_id": "9037",
+                "player_name": "Matt Fitzpatrick",
+                "bet_type": "win_after_r1",
+            }
+        ],
+    )
+    assert out.book.positions == []
+    assert abs(out.bankroll - 249.91) < 1e-9
+    assert out.book.realized_pnl_event == -0.09
+    sell = [m for m in out.movements if m.kind == "fill_sell"][-1]
+    assert sell.cashout_quote == 0.08
+    assert sell.stake_before == 0.17
+    assert "last ntfy exit" in out.notes[-1]
+
+
+def test_record_sell_can_open_then_close_missing_ticket(tmp_path, monkeypatch):
+    monkeypatch.setattr("golf_offshoot.strategy.paper_book.package_data_dir", lambda: tmp_path)
+    out = record_polymarket_sell(
+        event_id="401811963",
+        player_name="Matt Fitzpatrick",
+        payout=0.08,
+        market="win_after_r1",
+        cost=0.17,
+        fill=0.03,
+        ranked_names={"Matt Fitzpatrick": "9037"},
+    )
+    names = [p.player_name for p in out.book.positions]
+    assert "Matt Fitzpatrick" not in names
+    assert abs(out.bankroll - 249.91) < 1e-9
+    kinds = [m.kind for m in out.movements]
+    assert "fill" in kinds
+    assert "fill_sell" in kinds
+
+
+def test_record_sell_requires_open_or_cost(tmp_path, monkeypatch):
+    monkeypatch.setattr("golf_offshoot.strategy.paper_book.package_data_dir", lambda: tmp_path)
+    try:
+        record_polymarket_sell(
+            event_id="401811963",
+            player_name="Matt Fitzpatrick",
+            payout=0.08,
+            market="win_after_r1",
+        )
+    except FillError:
+        return
+    raise AssertionError("expected FillError")
