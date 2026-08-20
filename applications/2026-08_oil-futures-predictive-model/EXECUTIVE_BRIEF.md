@@ -44,7 +44,7 @@ This is **not** trading advice and does **not** clear the blended slogan “a pr
 ## Not established
 
 - Next-session CL log-return skill vs last settlement (**L-HUNT-COT** no survivor; **L-HUNT-DJT** no survivor; **H-GAP-FADE** small F-DAY / F-CC **tie**; **L-HUNT-PRETELL** no survivor; **H-SPARSE-CAL** tiny 500 / **fails** 750; **H-SPARSE-VOL** and **H-LAG-WF** F-CC **loss**; leftover **live**)  
-- Cash WTI/Brent 21-day sign vs continuation (**L-HUNT-SPOT-TREND** no survivor either board)  
+- Cash WTI/Brent 21-day sign vs continuation (**L-HUNT-SPOT-TREND** and **L-HUNT-SPOT-INV** no survivor either board)  
 - After-cost paper P/L vs the curve (book unnamed; **V2 named**)  
 - Directional accuracy after costs; any decision or trading value  
 - Spot/real-price recipes as the existence exhibit  
@@ -56,9 +56,9 @@ This is **not** trading advice and does **not** clear the blended slogan “a pr
 
 **Stop saying:** That EIA STEO or the futures curve is a proven next-session CL model. That spot-oil papers clear this freeze. That existence-met is skill-met. That one paper was picked as “the” recipe. That anyone should trade. That unnamed skill means no model can ever beat last price.
 
-**Keep saying:** A futures-target recipe has been written. Yahoo is a stand-in, not live CME. A small day-session fade is not a whole-trip pass. The spot 21-day hunt failed at discovery. The COT hunt failed at discovery. The DJT Truth hunt failed at discovery. The pretell hunt failed at discovery. The lagged-return horse lost on the whole trip. Paper costs are V2; that is not a value pass. Skill and after-cost value are not shown.
+**Keep saying:** A futures-target recipe has been written. Yahoo is a stand-in, not live CME. A small day-session fade is not a whole-trip pass. The cash 21-day hunt failed at discovery. The weekly-inventory overlay failed at discovery. The COT hunt failed at discovery. The DJT Truth hunt failed at discovery. The pretell hunt failed at discovery. The lagged-return horse lost on the whole trip. Paper costs are V2; that is not a value pass. Skill and after-cost value are not shown.
 
-**Test next (only if authorized):** `leave skill not shown` · queued **C-SPOT-INV** · `name horse …` on Yahoo (different CL recipe). Live CME only if the F-CC promotion gate fires.
+**Test next (only if authorized):** `leave skill not shown` · queued **C-SPOT-CROSS** · `name horse …` on Yahoo (different CL recipe). Live CME only if the F-CC promotion gate fires.
 
 ---
 
@@ -86,7 +86,7 @@ Offered. Skill leftover **live** ([R-F-SKILL](RESIDUAL_BRANCH_MENU.md#r-f-skill)
 |------|--------|
 | Method verdict | Stable Provisional (split); **hard stop (residuals live)** |
 | Amb | **1.0** |
-| Locks / proxy IDs | Rank 4; D-EXIST-MET-FT; **V-COST-V2**; **L-SCREEN-Y-PROMOTE**; **L-HUNT-SPOT-TREND**; **L-HUNT-COT**; **L-HUNT-DJT**; F-SRC-CME-TAPE; L-STANDIN-Y-CLF; **H-LAG-WF**; **H-SPARSE-CAL**; **H-SPARSE-VOL**; L-SESS; V-SRC leave unnamed |
+| Locks / proxy IDs | Rank 4; D-EXIST-MET-FT; **V-COST-V2**; **L-SCREEN-Y-PROMOTE**; **L-HUNT-SPOT-TREND**; **L-HUNT-SPOT-INV**; **L-HUNT-COT**; **L-HUNT-DJT**; F-SRC-CME-TAPE; L-STANDIN-Y-CLF; **H-LAG-WF**; **H-SPARSE-CAL**; **H-SPARSE-VOL**; L-SESS; V-SRC leave unnamed |
 | Scope label | Under Rank 4 only; existence = futures-target only |
 
 ---

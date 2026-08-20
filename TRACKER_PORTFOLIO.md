@@ -1,6 +1,6 @@
 # Tracker Portfolio (Layer 1)
 
-**Last refreshed:** 2026-08-20 (oil-futures **hard stop (residuals live)** + **L-PULSE-SPOT-1**; spot 21-day no discovery survivor; COT no discovery survivor; Amb 1.0; R-F-SKILL pursue; R-SPOT-TREND executed; park-90d still due ~2026-11-12)  
+**Last refreshed:** 2026-08-20 (oil-futures **L-PULSE-SPOT-INV-1**; inventory overlay no discovery survivor; Amb 1.0; R-F-SKILL pursue; R-SPOT-TREND executed; park-90d still due ~2026-11-12)  
 **Taxonomy:** [`docs/TRACKER_TAXONOMY.md`](docs/TRACKER_TAXONOMY.md) · **Pattern map:** [`TRACKER_PATTERN_MAP.md`](TRACKER_PATTERN_MAP.md)  
 **Rule:** Update at closeout / status change. Related apps = process kinship only (**no conclusion inheritance**).
 

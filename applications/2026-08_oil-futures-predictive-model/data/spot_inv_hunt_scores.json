@@ -1,0 +1,132 @@
+{
+  "lock": "L-HUNT-SPOT-INV",
+  "stage": "discovery",
+  "discovery_cutoff": "2023-08-21",
+  "horizon_price_steps": 21,
+  "surprise": "wow minus mean of prior 4 wow; not Bloomberg consensus",
+  "clock": "latest WPSR with release_date <= t-1; carry forward",
+  "train_arm": "N/A for these two rule horses",
+  "select_arm": "discovery last 500 of prefix <= 2023-08-21",
+  "confirm_arm": "last 500/250/750; never train; skipped if no survivor",
+  "refused_burned": [
+    "H-SPOT-FLIP-HOLD",
+    "H-SPOT-REV"
+  ],
+  "vehicle_fail": false,
+  "boards": {
+    "WTI": {
+      "n_prints": 10225,
+      "n_eligible": 10131,
+      "n_discovery_pool": 9408,
+      "vehicle_fail": false,
+      "span_first": "1986-01-02",
+      "span_last": "2026-08-18",
+      "inventory": {
+        "n_reports": 2290,
+        "n_reports_in_session_span": 2119,
+        "n_reports_release_le_discovery_cutoff": 1963,
+        "n_sessions_with_nonzero_surprise": 10225,
+        "first_week": "1982-08-20",
+        "last_week": "2026-08-14",
+        "lookback_wow": 4
+      },
+      "discovery": {
+        "cutoff": "2023-08-21",
+        "n_pool": 9408,
+        "n_scoreboard": 500,
+        "first": "2021-08-24",
+        "last": "2023-08-21",
+        "continuation": {
+          "n": 500,
+          "hits": 254,
+          "hit_rate": 0.508,
+          "first": "2021-08-24",
+          "last": "2023-08-21"
+        },
+        "horses": {
+          "H-SPOT-INV-CONT": {
+            "n": 500,
+            "hits": 253,
+            "hit_rate": 0.506,
+            "first": "2021-08-24",
+            "last": "2023-08-21",
+            "beats_continuation": false
+          },
+          "H-SPOT-INV-FADE": {
+            "n": 500,
+            "hits": 247,
+            "hit_rate": 0.494,
+            "first": "2021-08-24",
+            "last": "2023-08-21",
+            "beats_continuation": false
+          }
+        },
+        "survivor": {
+          "id": null,
+          "reason": "no horse strictly beat continuation on discovery"
+        }
+      },
+      "confirm": null,
+      "confirm_deferred": true
+    },
+    "Brent": {
+      "n_prints": 9958,
+      "n_eligible": 9852,
+      "n_discovery_pool": 9119,
+      "vehicle_fail": false,
+      "span_first": "1987-05-20",
+      "span_last": "2026-08-18",
+      "inventory": {
+        "n_reports": 2290,
+        "n_reports_in_session_span": 2048,
+        "n_reports_release_le_discovery_cutoff": 1892,
+        "n_sessions_with_nonzero_surprise": 9958,
+        "first_week": "1982-08-20",
+        "last_week": "2026-08-14",
+        "lookback_wow": 4
+      },
+      "discovery": {
+        "cutoff": "2023-08-21",
+        "n_pool": 9119,
+        "n_scoreboard": 500,
+        "first": "2021-08-27",
+        "last": "2023-08-21",
+        "continuation": {
+          "n": 500,
+          "hits": 253,
+          "hit_rate": 0.506,
+          "first": "2021-08-27",
+          "last": "2023-08-21"
+        },
+        "horses": {
+          "H-SPOT-INV-CONT": {
+            "n": 500,
+            "hits": 251,
+            "hit_rate": 0.502,
+            "first": "2021-08-27",
+            "last": "2023-08-21",
+            "beats_continuation": false
+          },
+          "H-SPOT-INV-FADE": {
+            "n": 500,
+            "hits": 249,
+            "hit_rate": 0.498,
+            "first": "2021-08-27",
+            "last": "2023-08-21",
+            "beats_continuation": false
+          }
+        },
+        "survivor": {
+          "id": null,
+          "reason": "no horse strictly beat continuation on discovery"
+        }
+      },
+      "confirm": null,
+      "confirm_deferred": true
+    }
+  },
+  "queue_still_queued": [
+    "C-SPOT-CROSS",
+    "C-SPOT-LOGIT"
+  ]
+}

@@ -1,6 +1,6 @@
 # Tracker Residual Queue (Layer 3)
 
-**Last refreshed:** 2026-08-20 (oil-futures **hard stop (residuals live)**: **R-SPOT-TREND** executed (no discovery survivor either board); **R-F-SKILL** **pursue** (parked this pulse; next CL horse must be **different**); **R-LIVE-STANDIN** executed (promote only if F-CC gate fires); **R-V-VALUE** park-until-trigger (**V2 named**, book unnamed); **R-F-COMBO** park-until-trigger. Park-90d quarterly still due ~2026-11-12 — this refresh does **not** re-churn that card.)  
+**Last refreshed:** 2026-08-20 (oil-futures **hard stop (residuals live)**: **R-SPOT-TREND** executed (INV overlay and first 21-day pair both no survivor); **R-F-SKILL** **pursue** (parked); park-90d quarterly still due ~2026-11-12 — this refresh does **not** re-churn that card.)  
 **Last park-90d quarterly review:** **2026-08-12** (inaugural = **cadence-existence**, not quarterly proof; next due ~2026-11-12; post-rule addendum same day — still extend-all)  
 **Disposition vocabulary:** `pursue` | `park-90d` | `park-until-trigger` | `drop`  
 Only **pursue** items stay in active bands. Parked/dropped listed below.

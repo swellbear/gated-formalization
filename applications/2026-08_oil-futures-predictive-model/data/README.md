@@ -21,8 +21,11 @@ Yahoo `CL=F` daily Open/Close used only after operator stipulation **L-STANDIN-Y
 - `cot_hunt_scores.json` — H-COT-NET / H-COT-CHG; discovery F-CC both lose; no survivor; confirm skipped
 - `eia_spot_wti.csv` / `eia_spot_brent.csv` — daily cash prints (**L-STANDIN-EIA-SPOT**; FRED EIA reprints this pulse)
 - `eia_spot_fetch.json` — spot fetch metadata
-- `spot_trend_hunt_scores.json` — H-SPOT-FLIP-HOLD / H-SPOT-REV; discovery both lose continuation on WTI and Brent; no survivor; confirm skipped
-- `spot_trend_queue.json` — exploration register (burned FLIP-HOLD/REV both boards; next C-SPOT-* not scored)
+- `spot_trend_hunt_scores.json` — H-SPOT-FLIP-HOLD / H-SPOT-REV; discovery both lose continuation; no survivor; confirm skipped
+- `spot_trend_queue.json` — exploration register (FLIP-HOLD/REV and INV-CONT/FADE burned both boards; next C-SPOT-CROSS / C-SPOT-LOGIT)
+- `spot_inv_hunt_scores.json` — H-SPOT-INV-CONT / H-SPOT-INV-FADE; discovery both lose continuation; no survivor; confirm skipped
+- `eia_weekly_crude_exspr.csv` — EIA weekly US crude ex-SPR (**L-STANDIN-EIA-INV**)
+- `eia_inv_fetch.json` — inventory fetch metadata
 
 Do **not** treat this as official settlement.
 
@@ -32,4 +35,5 @@ Re-run pretell hunt: `python3 ../scripts/cl_pretell_hunt.py`
 Re-run gap horses: `python3 ../scripts/cl_gap_horses.py`  
 Re-run DJT hunt (from this application folder): `python3 scripts/fetch_djt_truth.py` then `python3 scripts/cl_djt_hunt.py`  
 Re-run COT hunt (from this application folder): `python3 scripts/fetch_cftc_cot.py` then `python3 scripts/cl_cot_hunt.py`  
-Re-run spot-trend hunt (from this application folder): `python3 scripts/fetch_eia_spot.py` then `python3 scripts/spot_trend_hunt.py --stage discovery`
+Re-run spot-trend hunt (from this application folder): `python3 scripts/fetch_eia_spot.py` then `python3 scripts/spot_trend_hunt.py --stage discovery`  
+Re-run inventory overlay (from this application folder): `python3 scripts/fetch_eia_inventory.py` then `python3 scripts/spot_inv_hunt.py --stage discovery`

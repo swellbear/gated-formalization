@@ -86,7 +86,7 @@ None required (D-EXIST remains Minimal). V-VALUE is a marked elevation (Substant
 | [R-SESS](RESIDUAL_BRANCH_MENU.md#r-sess) | Night vs day vs whole-trip protocol | **Executed → admitted meanings** (L-SESS). Does not meet skill |
 | [R-V-VALUE-TEST-0](RESIDUAL_BRANCH_MENU.md#r-v-value-test-0) | Named after-cost book | **Executed → not established** |
 | [R-F-SKILL](RESIDUAL_BRANCH_MENU.md#r-f-skill) | Named class for F-SKILL (F-CC + F-ON/F-DAY exhibits) | Parked this pulse. **L-HUNT-COT** no survivor. **L-HUNT-DJT** no survivor. **H-GAP-FADE** small F-DAY / F-CC **tie**. **L-HUNT-PRETELL** no survivor. **H-SPARSE-CAL** tiny 500 / **fails** 750. **H-SPARSE-VOL** / **H-LAG-WF** F-CC **loss**. H-KS not run. **not established**. Reopen: **different** horse on Yahoo |
-| [R-SPOT-TREND](RESIDUAL_BRANCH_MENU.md#r-spot-trend) | Cash WTI/Brent 21-day sign vs continuation | **Executed → not established**. Reopen: queued **C-SPOT-INV** (do not unburn; do not change 21) |
+| [R-SPOT-TREND](RESIDUAL_BRANCH_MENU.md#r-spot-trend) | Cash WTI/Brent 21-day sign vs continuation | **Executed → not established** (INV overlay also no survivor). Reopen: queued **C-SPOT-CROSS** (do not unburn; do not change 21) |
 | [R-LIVE-STANDIN](RESIDUAL_BRANCH_MENU.md#r-live-standin) | Live CME vs stand-in | **Executed** (Yahoo `CL=F` stipulated). Reopen live **only if** **L-SCREEN-Y-PROMOTE** fires |
 | [R-F-COMBO](RESIDUAL_BRANCH_MENU.md#r-f-combo) | Named switching rule | **park-until-trigger**. Rule in advance; F-ON and F-DAY already scored separately |
 | [R-V-VALUE](RESIDUAL_BRANCH_MENU.md#r-v-value) | Named recipe/book for V-VALUE | **Leave unnamed**. `park-until-trigger`. Reopen: `name source class …` matching V-VALUE **under V2** |
@@ -100,7 +100,7 @@ None required (D-EXIST remains Minimal). V-VALUE is a marked elevation (Substant
 
 **Keep saying:** A specified non-no-change futures-target recipe has been written. Yahoo is a **stand-in**; the baseline is **not** a pass. Screen on Yahoo; live CME only if the whole-trip gate fires. Paper costs are **V2**; that is not a value pass. Skill and after-cost value are not established.
 
-**Test next (only if authorized):** `leave skill not shown` · queued **C-SPOT-INV** · `name horse …` (**different** CL recipe). Live CME only if the F-CC promotion gate fires. Do **not** unburn FLIP-HOLD/REV. Do **not** change 21.
+**Test next (only if authorized):** `leave skill not shown` · queued **C-SPOT-CROSS** · `name horse …` (**different** CL recipe). Live CME only if the F-CC promotion gate fires. Do **not** unburn. Do **not** change 21.
 
 ---
 
@@ -184,6 +184,8 @@ None required (D-EXIST remains Minimal). V-VALUE is a marked elevation (Substant
 - `PULSE_Hunt_COT.md`
 - `Lock_Hunt_Spot_Trend.md`
 - `PULSE_Hunt_Spot_Trend.md`
+- `Lock_Hunt_Spot_Inv.md`
+- `PULSE_Hunt_Spot_Inv.md`
 - `QUEUE_Spot_Trend_Exploration.md`
 - `04_Material_Admission_COT.md`
 - `02_Gate_Scoring_After_COT.md`

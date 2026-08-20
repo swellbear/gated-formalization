@@ -1,9 +1,9 @@
 # Exploration queue — spot 21-day trend (Track B)
 
 **Date:** 2026-08-20  
-**Lock:** `Lock_Hunt_Spot_Trend.md` (**L-SPOT-QUEUE**)  
+**Lock:** `Lock_Hunt_Spot_Trend.md` (**L-SPOT-QUEUE**) · this pulse `Lock_Hunt_Spot_Inv.md`  
 **Machine register:** `data/spot_trend_queue.json`  
-**Status:** Protocol in force **before** confirm scores. This file does **not** score queued classes.
+**Status:** **C-SPOT-INV** scored (**no survivor**). Next queued: **C-SPOT-CROSS**.
 
 ---
 
@@ -11,15 +11,15 @@
 
 **What we’re doing:** Keep a written list of *kinds* of idea to try on the same spot-trend question, and a list of ideas that already failed. One kind at a time. The recent exam is never where we invent a new rule.
 
-**What we need from you:** Nothing this pulse. Optional later: authorize the next queued class, or leave skill not shown.
+**What we need from you:** Nothing this pulse. Optional later: next queued class, or leave.
 
-**What this does *not* mean:** A bot that watches misses and rewrites itself. A kitchen sink of DJT / COT / gaps. A pass because we tried many things.
+**What this does *not* mean:** A bot that watches misses and rewrites itself. Unburning the first two rules. Changing 21 days.
 
 ---
 
 ## Rules (frozen)
 
-1. **One class, two horses max** per pulse (this pulse already named).  
+1. **One class, two horses max** per pulse.  
 2. Freeze the rule **before** discovery. Discovery **before** confirm.  
 3. Pick one only if it **strictly beats continuation**. Else **no survivor**. Do not pick least-bad.  
 4. **Burned** rows are not remixed after hit-rate.  
@@ -29,15 +29,15 @@
 
 ---
 
-## This pulse (active)
+## This pulse (active) — **C-SPOT-INV** / **L-HUNT-SPOT-INV**
 
 | ID | Role |
 |----|------|
-| **H-SPOT-FLIP-HOLD** | One-print hold (call sign as of *t−1*) |
-| **H-SPOT-REV** | Always opposite of sign as of *t* |
+| **H-SPOT-INV-CONT** | Draw surprise → Up; build surprise → Down; zero → continuation |
+| **H-SPOT-INV-FADE** | Opposite overlay |
 | Continuation | **Baseline, not a horse** |
 
-**Burned (after L-PULSE-SPOT-1 discovery):** H-SPOT-FLIP-HOLD and H-SPOT-REV on **WTI** and on **Brent**. Do **not** retune. Do **not** unburn.
+**Burned (do not retune / do not unburn):** H-SPOT-FLIP-HOLD, H-SPOT-REV, **H-SPOT-INV-CONT**, and **H-SPOT-INV-FADE** on **WTI** and on **Brent**.
 
 ---
 
@@ -45,13 +45,12 @@
 
 | Queue ID | Class | Why it is a different class |
 |----------|-------|------------------------------|
-| **C-SPOT-INV** | EIA weekly inventory surprise overlay | Different public series; same 21-day target |
 | **C-SPOT-CROSS** | WTI sign as Brent call (and reverse) | Cross-bench, not a window retune |
 | **C-SPOT-LOGIT** | Expanding-window logistic on past-only sign + abs return | First use of the train arm with fitted coefficients |
 
-Do **not** score these until a later lock quotes this table and freezes that class’s horses.
+**Already run:** **C-SPOT-INV** (**L-PULSE-SPOT-INV-1**; no survivor). First pulse **L-PULSE-SPOT-1** also no survivor.
 
-**Not queued (refused):** change 21 to 5/63/252 after scores; percent-of-OI; DJT lexicon; COT remix; gap remix; “blend the two horses.”
+**Not queued (refused):** change 21 to 5/63/252 after scores; Cushing-only after scores; Bloomberg consensus; percent-of-OI; DJT lexicon; COT remix; gap remix; unburn FLIP-HOLD/REV.
 
 ---
 
