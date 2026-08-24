@@ -38,7 +38,7 @@ Can a predictive model for oil futures be built?
 ### Free parameters remaining
 | ID | Status / freeze |
 |----|-----------------|
-| [R-F-SKILL](RESIDUAL_BRANCH_MENU.md#r-f-skill) | Skill class named; parked this pulse; **L-HUNT-COT** no survivor; **L-HUNT-DJT** no survivor; **H-GAP-FADE** small F-DAY / F-CC **tie**; **L-HUNT-PRETELL** no survivor; **H-SPARSE-CAL** tiny 500 / **fails** 750; **H-SPARSE-VOL** and **H-LAG-WF** F-CC **loss**; H-KS not run; **not established**. `pursue`. Reopen: **different** horse on Yahoo |
+| [R-F-SKILL](RESIDUAL_BRANCH_MENU.md#r-f-skill) | Skill class named; **L-HUNT-CL-INV** no survivor (do not pick least-bad WOW); **L-HUNT-COT** no survivor; **L-HUNT-DJT** no survivor; **H-GAP-FADE** small F-DAY / F-CC **tie**; **L-HUNT-PRETELL** no survivor; **H-SPARSE-CAL** tiny 500 / **fails** 750; **H-SPARSE-VOL** and **H-LAG-WF** F-CC **loss**; H-KS not run; **not established**. `pursue`. Reopen: **different** horse on Yahoo |
 | [R-SPOT-TREND](RESIDUAL_BRANCH_MENU.md#r-spot-trend) | **L-PULSE-SPOT-1** / **INV-1** no survivor; **CROSS-1** WTI fail / Brent tiny 250 ≠ met; **LOGIT-1** discovery beat / confirm **lose** all windows both boards; named queue **empty**. `executed → not established`. Reopen: `leave` · Yahoo horse · name **new** spot class (do not retune FULL; do not unburn; do not change 21) |
 | [R-F-COMBO](RESIDUAL_BRANCH_MENU.md#r-f-combo) | Switching rule **unnamed**. `park-until-trigger`. Rule in advance; F-ON and F-DAY already scored separately |
 | [R-V-VALUE](RESIDUAL_BRANCH_MENU.md#r-v-value) | After-cost book **unnamed**. `park-until-trigger`. Later book must match **V2** |
@@ -60,7 +60,7 @@ Any claim that a model beats last settlement out of sample; that a paper book ma
 | Option | Expected buy | Still leaves open |
 |--------|--------------|-------------------|
 | `leave skill not shown` | None required | F-SKILL stays not established (stand-in baseline on record) |
-| `name horse …` | Score a named **front-only** recipe on Yahoo under **L-SCREEN-Y-PROMOTE** | Does not auto-meet V-VALUE; Yahoo win ≠ live clearance; do **not** add percent-of-OI or other trader groups after COT scores |
+| `name horse …` | Score a named **front-only** recipe on Yahoo under **L-SCREEN-Y-PROMOTE** | Does not auto-meet V-VALUE; Yahoo win ≠ live clearance; do **not** pick least-bad WOW after CL-INV; do **not** add percent-of-OI or other trader groups after COT scores |
 | `leave screen rule` | Keep **L-SCREEN-Y-PROMOTE** | Live CME still gated |
 | `name source class …` matching V-VALUE | Named paper book **under V2** | Does not auto-meet F-SKILL |
 | `run CR` / successor (existence-only or skill-only) | Different question, labeled | **Declined** 2026-08-17; Rank 4 leftover unchanged |
@@ -75,15 +75,15 @@ Original one-liner is a blended “can.” Rank 4 named the split without rewrit
 - [ ] **Revise claim** — then run **Claim-Revision Scaffolding** before a successor  
 - [x] **Keep original wording** — research agenda / scoped dependents only (default; CR **declined**, not run)
 
-**Default if no further authorization:** keep original wording + **hard stop (residuals live)** with this assessment. Skill leftover stays live. Spot-trend drawer executed (**not established**; LOGIT confirm lose; queue empty).
+**Default if no further authorization:** keep original wording + **hard stop (residuals live)** with this assessment. Skill leftover stays **live** (`pursue`; CL-INV no survivor; do not pick least-bad WOW). Spot-trend drawer executed (**not established**; LOGIT confirm lose; queue empty).
 
 ---
 
 ## Closeout statement
 
-Application **closed** as **Stable Provisional (split) — hard stop (residuals live)**. **L-SCREEN-Y-PROMOTE** in force. **L-HUNT-SPOT-LOGIT** scored; discovery beat both boards; confirm **lose** all windows both boards; named Track B queue **empty**; spot-trend **not established**. **L-HUNT-SPOT-CROSS** scored; WTI **no survivor**; Brent W2B confirm point-beats but last-250 **tiny (+1)** ≠ met. **L-HUNT-SPOT-INV** scored; **no survivor**. **L-HUNT-SPOT-TREND** scored; **no survivor** either board; F-SKILL parked this pulse. **L-HUNT-COT** scored; **no survivor**. **L-HUNT-DJT** scored; **no survivor**. **H-GAP-FADE** small F-DAY; **does not promote**. **L-HUNT-PRETELL** scored; **no survivor**. **H-SPARSE-CAL** / **H-SPARSE-VOL** scored; **neither promotes**. Leftover stays **live**. Phase 2 not entered. Amb **1.0**. Not trading advice.
+Application **closed** as **Stable Provisional (split) — hard stop (residuals live)**. **L-SCREEN-Y-PROMOTE** in force. **L-HUNT-CL-INV** scored; discovery F-CC **both lose** (0 = 0.026705; closest WOW 0.026803); **no survivor**; confirm skipped; promote does not fire; do **not** pick least-bad; F-SKILL **not established**. **L-HUNT-SPOT-LOGIT** scored; discovery beat both boards; confirm **lose** all windows both boards; named Track B queue **empty**; spot-trend **not established**. **L-HUNT-SPOT-CROSS** scored; WTI **no survivor**; Brent W2B confirm point-beats but last-250 **tiny (+1)** ≠ met. **L-HUNT-SPOT-INV** scored; **no survivor**. **L-HUNT-SPOT-TREND** scored; **no survivor** either board. **L-HUNT-COT** scored; **no survivor**. **L-HUNT-DJT** scored; **no survivor**. **H-GAP-FADE** small F-DAY; **does not promote**. **L-HUNT-PRETELL** scored; **no survivor**. **H-SPARSE-CAL** / **H-SPARSE-VOL** scored; **neither promotes**. Leftover stays **live** (`pursue`). Phase 2 not entered. Amb **1.0**. Not a trade.
 
-Awaiting further authorization (`leave skill not shown` · `name horse …` (**different** CL recipe on Yahoo) · name a **new** spot class · `leave screen rule`). Live CME **only if** the F-CC gate fires. Optional modes **declined**.
+Awaiting further authorization (`leave skill not shown` · `name horse …` (**different** CL recipe on Yahoo; do **not** pick least-bad WOW) · name a **new** spot class · `leave screen rule`). Live CME **only if** the F-CC gate fires. Optional modes **declined**.
 
 ---
 

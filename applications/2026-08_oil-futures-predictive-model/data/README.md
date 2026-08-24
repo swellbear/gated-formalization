@@ -26,7 +26,8 @@ Yahoo `CL=F` daily Open/Close used only after operator stipulation **L-STANDIN-Y
 - `spot_inv_hunt_scores.json` — H-SPOT-INV-CONT / H-SPOT-INV-FADE; discovery both lose continuation; no survivor; confirm skipped
 - `spot_cross_hunt_scores.json` — H-SPOT-CROSS-B2W / H-SPOT-CROSS-W2B; WTI no survivor; Brent W2B confirm point-beats (last-250 tiny); spot-trend not established
 - `spot_logit_hunt_scores.json` — H-SPOT-LOGIT-FULL / H-SPOT-LOGIT-SIGN; discovery beat both boards; FULL confirm lose all windows both boards; queue empty
-- `eia_weekly_crude_exspr.csv` — EIA weekly US crude ex-SPR (**L-STANDIN-EIA-INV**)
+- `cl_inv_hunt_scores.json` — H-CL-INV-SURP / H-CL-INV-WOW; discovery F-CC both lose (0 = 0.026705; closest WOW 0.026803); no survivor; confirm skipped; do not pick least-bad
+- `eia_weekly_crude_exspr.csv` — EIA weekly US crude ex-SPR (**L-STANDIN-EIA-INV** / **L-STANDIN-EIA-INV-CL**)
 - `eia_inv_fetch.json` — inventory fetch metadata
 
 Do **not** treat this as official settlement.
@@ -40,4 +41,5 @@ Re-run COT hunt (from this application folder): `python3 scripts/fetch_cftc_cot.
 Re-run spot-trend hunt (from this application folder): `python3 scripts/fetch_eia_spot.py` then `python3 scripts/spot_trend_hunt.py --stage discovery`  
 Re-run inventory overlay (from this application folder): `python3 scripts/fetch_eia_inventory.py` then `python3 scripts/spot_inv_hunt.py --stage discovery`  
 Re-run cross-bench overlay (from this application folder): `python3 scripts/spot_cross_hunt.py --stage discovery` then (Brent survivor only) `python3 scripts/spot_cross_hunt.py --stage confirm`  
-Re-run logistic overlay (from this application folder): `python3 scripts/spot_logit_hunt.py --stage discovery` then `python3 scripts/spot_logit_hunt.py --stage confirm`
+Re-run logistic overlay (from this application folder): `python3 scripts/spot_logit_hunt.py --stage discovery` then `python3 scripts/spot_logit_hunt.py --stage confirm`  
+Re-run CL inventory overlay (from this application folder): `python3 scripts/cl_inv_hunt.py --phase discovery`

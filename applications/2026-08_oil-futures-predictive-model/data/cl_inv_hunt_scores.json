@@ -1,0 +1,103 @@
+{
+  "badge": "stand-in",
+  "lock": "L-HUNT-CL-INV",
+  "tells": "L-STANDIN-EIA-INV-CL",
+  "discovery_cutoff": "2023-08-21",
+  "discovery_holdout": 500,
+  "min_train": 250,
+  "scale": 10000.0,
+  "surprise": "wow minus mean of prior 4 wow; not Bloomberg consensus",
+  "horse_order": [
+    "H-CL-INV-SURP",
+    "H-CL-INV-WOW"
+  ],
+  "n_reports": 2290,
+  "refused_prior": [
+    "H-LAG-WF",
+    "H-SPARSE-CAL",
+    "H-SPARSE-VOL",
+    "H-GAP-FADE",
+    "H-GAP-CONT",
+    "L-HUNT-PRETELL",
+    "L-HUNT-DJT",
+    "L-HUNT-COT"
+  ],
+  "discovery_coverage": {
+    "n_reports": 2290,
+    "n_reports_in_session_span": 1199,
+    "n_sessions": 5769,
+    "n_sessions_with_nonzero_surprise": 5769,
+    "span_first": "2000-08-24",
+    "span_last": "2023-08-21",
+    "first_week": "1982-08-20",
+    "last_week": "2026-08-14",
+    "scale": 10000.0,
+    "lookback_wow": 4
+  },
+  "discovery_n_sessions": 5769,
+  "discovery": {
+    "H-CL-INV-SURP": {
+      "F-ON": {
+        "n": 500,
+        "first": "2021-08-25",
+        "last": "2023-08-21",
+        "rmse_horse": 0.007369029004783118,
+        "rmse_0": 0.007332539744657918,
+        "beats_0": false
+      },
+      "F-DAY": {
+        "n": 500,
+        "first": "2021-08-25",
+        "last": "2023-08-21",
+        "rmse_horse": 0.025941880534211603,
+        "rmse_0": 0.025846594083981028,
+        "beats_0": false
+      },
+      "F-CC": {
+        "n": 500,
+        "first": "2021-08-25",
+        "last": "2023-08-21",
+        "rmse_horse": 0.0268361254509638,
+        "rmse_0": 0.02670533649743393,
+        "beats_0": false
+      }
+    },
+    "H-CL-INV-WOW": {
+      "F-ON": {
+        "n": 500,
+        "first": "2021-08-25",
+        "last": "2023-08-21",
+        "rmse_horse": 0.007380759729328349,
+        "rmse_0": 0.007332539744657918,
+        "beats_0": false
+      },
+      "F-DAY": {
+        "n": 500,
+        "first": "2021-08-25",
+        "last": "2023-08-21",
+        "rmse_horse": 0.025910732926528648,
+        "rmse_0": 0.025846594083981028,
+        "beats_0": false
+      },
+      "F-CC": {
+        "n": 500,
+        "first": "2021-08-25",
+        "last": "2023-08-21",
+        "rmse_horse": 0.026803435805466843,
+        "rmse_0": 0.02670533649743393,
+        "beats_0": false
+      }
+    }
+  },
+  "survivor": {
+    "id": null,
+    "reason": "no horse strictly beat 0 on discovery F-CC last 500"
+  },
+  "vehicle_fail": false,
+  "confirm": null,
+  "confirm_deferred": true,
+  "promote": {
+    "fires": false,
+    "reason": "confirm deferred"
+  }
+}
