@@ -22,9 +22,10 @@ Yahoo `CL=F` daily Open/Close used only after operator stipulation **L-STANDIN-Y
 - `eia_spot_wti.csv` / `eia_spot_brent.csv` — daily cash prints (**L-STANDIN-EIA-SPOT**; FRED EIA reprints this pulse)
 - `eia_spot_fetch.json` — spot fetch metadata
 - `spot_trend_hunt_scores.json` — H-SPOT-FLIP-HOLD / H-SPOT-REV; discovery both lose continuation; no survivor; confirm skipped
-- `spot_trend_queue.json` — exploration register (FLIP/REV/INV burned both boards; B2W burned on WTI; next **C-SPOT-LOGIT**)
+- `spot_trend_queue.json` — exploration register (FLIP/REV/INV burned both boards; B2W burned on WTI; LOGIT scored; named queue **empty**)
 - `spot_inv_hunt_scores.json` — H-SPOT-INV-CONT / H-SPOT-INV-FADE; discovery both lose continuation; no survivor; confirm skipped
 - `spot_cross_hunt_scores.json` — H-SPOT-CROSS-B2W / H-SPOT-CROSS-W2B; WTI no survivor; Brent W2B confirm point-beats (last-250 tiny); spot-trend not established
+- `spot_logit_hunt_scores.json` — H-SPOT-LOGIT-FULL / H-SPOT-LOGIT-SIGN; discovery beat both boards; FULL confirm lose all windows both boards; queue empty
 - `eia_weekly_crude_exspr.csv` — EIA weekly US crude ex-SPR (**L-STANDIN-EIA-INV**)
 - `eia_inv_fetch.json` — inventory fetch metadata
 
@@ -38,4 +39,5 @@ Re-run DJT hunt (from this application folder): `python3 scripts/fetch_djt_truth
 Re-run COT hunt (from this application folder): `python3 scripts/fetch_cftc_cot.py` then `python3 scripts/cl_cot_hunt.py`  
 Re-run spot-trend hunt (from this application folder): `python3 scripts/fetch_eia_spot.py` then `python3 scripts/spot_trend_hunt.py --stage discovery`  
 Re-run inventory overlay (from this application folder): `python3 scripts/fetch_eia_inventory.py` then `python3 scripts/spot_inv_hunt.py --stage discovery`  
-Re-run cross-bench overlay (from this application folder): `python3 scripts/spot_cross_hunt.py --stage discovery` then (Brent survivor only) `python3 scripts/spot_cross_hunt.py --stage confirm`
+Re-run cross-bench overlay (from this application folder): `python3 scripts/spot_cross_hunt.py --stage discovery` then (Brent survivor only) `python3 scripts/spot_cross_hunt.py --stage confirm`  
+Re-run logistic overlay (from this application folder): `python3 scripts/spot_logit_hunt.py --stage discovery` then `python3 scripts/spot_logit_hunt.py --stage confirm`

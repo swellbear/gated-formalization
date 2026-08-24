@@ -1,9 +1,9 @@
 {
-  "pulse": "L-HUNT-SPOT-CROSS",
-  "lock": "Lock_Hunt_Spot_Cross.md",
+  "pulse": "L-HUNT-SPOT-LOGIT",
+  "lock": "Lock_Hunt_Spot_Logit.md",
   "active_horses": [
-    "H-SPOT-CROSS-B2W",
-    "H-SPOT-CROSS-W2B"
+    "H-SPOT-LOGIT-FULL",
+    "H-SPOT-LOGIT-SIGN"
   ],
   "burned": [
     {
@@ -61,21 +61,15 @@
       "note": "Failed to strictly beat continuation on discovery. Do not retune."
     }
   ],
-  "next": [
-    {
-      "id": "C-SPOT-LOGIT",
-      "status": "queued_not_this_pulse",
-      "class": "Expanding-window logistic on past-only 21-day sign + abs return"
-    }
-  ],
+  "next": [],
   "last_discovery": {
     "WTI": {
-      "id": null,
-      "reason": "no horse strictly beat continuation on discovery"
+      "id": "H-SPOT-LOGIT-FULL",
+      "reason": "strictly beat continuation; ties keep H-SPOT-LOGIT-FULL"
     },
     "Brent": {
-      "id": "H-SPOT-CROSS-W2B",
-      "reason": "strictly beat continuation; one horse per board so ties N/A"
+      "id": "H-SPOT-LOGIT-FULL",
+      "reason": "strictly beat continuation; ties keep H-SPOT-LOGIT-FULL"
     }
   }
 }

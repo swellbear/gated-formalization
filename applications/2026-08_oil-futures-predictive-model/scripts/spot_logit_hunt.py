@@ -170,17 +170,14 @@ def predict_call(beta: np.ndarray | None, x: np.ndarray, continuation: str) -> t
 def walk_forward_calls(elig: list[dict]) -> dict[str, list[dict]]:
     """Return parallel lists of call records per horse, same order as elig."""
     out = {hid: [] for hid in HORSES}
-    # Eligible rows sorted by date already (from annotate).
-    # Train pointer: among elig, include those whose outcome_date < call date.
-    train_end = 0  # exclusive index into elig for rows with known outcome before current t
+    # Eligible rows sorted by date. Train = earlier elig rows whose next-21
+    # outcome print is strictly before the call date.
+    matured = 0
     for j, rec in enumerate(elig):
         t_date = rec["date"]
-        while train_end < j and elig[train_end]["outcome_date"] < t_date:
-            train_end += 1
-        # Also allow earlier elig rows whose outcome matured even if train_end lagged
-        while train_end < len(elig) and elig[train_end]["outcome_date"] < t_date and train_end < j:
-            train_end += 1
-        train = [elig[k] for k in range(train_end) if elig[k]["outcome_date"] < t_date]
+        while matured < j and elig[matured]["outcome_date"] < t_date:
+            matured += 1
+        train = elig[:matured]
         for hid in HORSES:
             cont = rec["sign"]
             if len(train) < MIN_TRAIN:

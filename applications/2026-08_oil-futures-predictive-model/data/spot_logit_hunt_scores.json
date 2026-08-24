@@ -1,0 +1,240 @@
+{
+  "lock": "L-HUNT-SPOT-LOGIT",
+  "stage": "confirm",
+  "discovery_cutoff": "2023-08-21",
+  "horizon_price_steps": 21,
+  "train_arm": "expanding past-only logistic; outcome_date < t; min_train 50",
+  "features": {
+    "FULL": "intercept + sign_num(+1/-1) + abs_r21",
+    "SIGN": "intercept + sign_num(+1/-1)"
+  },
+  "select_arm": "discovery last 500 of prefix <= 2023-08-21",
+  "confirm_arm": "last 500/250/750; never train; skipped if no survivor",
+  "refused_burned": [
+    "H-SPOT-CROSS-B2W",
+    "H-SPOT-FLIP-HOLD",
+    "H-SPOT-INV-CONT",
+    "H-SPOT-INV-FADE",
+    "H-SPOT-REV"
+  ],
+  "vehicle_fail": false,
+  "boards": {
+    "WTI": {
+      "n_prints": 10204,
+      "n_eligible": 10131,
+      "n_discovery_pool": 9408,
+      "vehicle_fail": false,
+      "span_first": "1986-02-03",
+      "span_last": "2026-07-20",
+      "min_train": 50,
+      "discovery": {
+        "cutoff": "2023-08-21",
+        "n_pool": 9408,
+        "n_scoreboard": 500,
+        "first": "2021-08-24",
+        "last": "2023-08-21",
+        "n_fitted_full_on_scoreboard": 500,
+        "continuation": {
+          "n": 500,
+          "hits": 254,
+          "hit_rate": 0.508,
+          "first": "2021-08-24",
+          "last": "2023-08-21",
+          "n_fitted": 500
+        },
+        "horses": {
+          "H-SPOT-LOGIT-FULL": {
+            "n": 500,
+            "hits": 266,
+            "hit_rate": 0.532,
+            "first": "2021-08-24",
+            "last": "2023-08-21",
+            "n_fitted": 500,
+            "beats_continuation": true
+          },
+          "H-SPOT-LOGIT-SIGN": {
+            "n": 500,
+            "hits": 266,
+            "hit_rate": 0.532,
+            "first": "2021-08-24",
+            "last": "2023-08-21",
+            "n_fitted": 500,
+            "beats_continuation": true
+          }
+        },
+        "survivor": {
+          "id": "H-SPOT-LOGIT-FULL",
+          "reason": "strictly beat continuation; ties keep H-SPOT-LOGIT-FULL"
+        }
+      },
+      "confirm": {
+        "500": {
+          "horse": {
+            "n": 500,
+            "hits": 215,
+            "hit_rate": 0.43,
+            "first": "2024-07-16",
+            "last": "2026-07-20",
+            "n_fitted": 500
+          },
+          "continuation": {
+            "n": 500,
+            "hits": 276,
+            "hit_rate": 0.552,
+            "first": "2024-07-16",
+            "last": "2026-07-20",
+            "n_fitted": 500
+          },
+          "beats_continuation": false
+        },
+        "250": {
+          "horse": {
+            "n": 250,
+            "hits": 119,
+            "hit_rate": 0.476,
+            "first": "2025-07-18",
+            "last": "2026-07-20",
+            "n_fitted": 250
+          },
+          "continuation": {
+            "n": 250,
+            "hits": 143,
+            "hit_rate": 0.572,
+            "first": "2025-07-18",
+            "last": "2026-07-20",
+            "n_fitted": 250
+          },
+          "beats_continuation": false
+        },
+        "750": {
+          "horse": {
+            "n": 750,
+            "hits": 347,
+            "hit_rate": 0.46266666666666667,
+            "first": "2023-07-14",
+            "last": "2026-07-20",
+            "n_fitted": 750
+          },
+          "continuation": {
+            "n": 750,
+            "hits": 418,
+            "hit_rate": 0.5573333333333333,
+            "first": "2023-07-14",
+            "last": "2026-07-20",
+            "n_fitted": 750
+          },
+          "beats_continuation": false
+        }
+      }
+    },
+    "Brent": {
+      "n_prints": 9937,
+      "n_eligible": 9852,
+      "n_discovery_pool": 9119,
+      "vehicle_fail": false,
+      "span_first": "1987-06-22",
+      "span_last": "2026-07-20",
+      "min_train": 50,
+      "discovery": {
+        "cutoff": "2023-08-21",
+        "n_pool": 9119,
+        "n_scoreboard": 500,
+        "first": "2021-08-27",
+        "last": "2023-08-21",
+        "n_fitted_full_on_scoreboard": 500,
+        "continuation": {
+          "n": 500,
+          "hits": 253,
+          "hit_rate": 0.506,
+          "first": "2021-08-27",
+          "last": "2023-08-21",
+          "n_fitted": 500
+        },
+        "horses": {
+          "H-SPOT-LOGIT-FULL": {
+            "n": 500,
+            "hits": 275,
+            "hit_rate": 0.55,
+            "first": "2021-08-27",
+            "last": "2023-08-21",
+            "n_fitted": 500,
+            "beats_continuation": true
+          },
+          "H-SPOT-LOGIT-SIGN": {
+            "n": 500,
+            "hits": 275,
+            "hit_rate": 0.55,
+            "first": "2021-08-27",
+            "last": "2023-08-21",
+            "n_fitted": 500,
+            "beats_continuation": true
+          }
+        },
+        "survivor": {
+          "id": "H-SPOT-LOGIT-FULL",
+          "reason": "strictly beat continuation; ties keep H-SPOT-LOGIT-FULL"
+        }
+      },
+      "confirm": {
+        "500": {
+          "horse": {
+            "n": 500,
+            "hits": 221,
+            "hit_rate": 0.442,
+            "first": "2024-07-24",
+            "last": "2026-07-20",
+            "n_fitted": 500
+          },
+          "continuation": {
+            "n": 500,
+            "hits": 261,
+            "hit_rate": 0.522,
+            "first": "2024-07-24",
+            "last": "2026-07-20",
+            "n_fitted": 500
+          },
+          "beats_continuation": false
+        },
+        "250": {
+          "horse": {
+            "n": 250,
+            "hits": 124,
+            "hit_rate": 0.496,
+            "first": "2025-07-21",
+            "last": "2026-07-20",
+            "n_fitted": 250
+          },
+          "continuation": {
+            "n": 250,
+            "hits": 131,
+            "hit_rate": 0.524,
+            "first": "2025-07-21",
+            "last": "2026-07-20",
+            "n_fitted": 250
+          },
+          "beats_continuation": false
+        },
+        "750": {
+          "horse": {
+            "n": 750,
+            "hits": 349,
+            "hit_rate": 0.4653333333333333,
+            "first": "2023-07-28",
+            "last": "2026-07-20",
+            "n_fitted": 750
+          },
+          "continuation": {
+            "n": 750,
+            "hits": 394,
+            "hit_rate": 0.5253333333333333,
+            "first": "2023-07-28",
+            "last": "2026-07-20",
+            "n_fitted": 750
+          },
+          "beats_continuation": false
+        }
+      }
+    }
+  },
+  "queue_still_queued": []
+}

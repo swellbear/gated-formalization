@@ -63,7 +63,7 @@ Same eligible issue dates as Track B. Continuation = sign_t (baseline, not a hor
 | **H-SPOT-LOGIT-FULL** | intercept + sign_num + abs_r21 | Up if `P(y=1) ≥ 0.5`, else Down |
 | **H-SPOT-LOGIT-SIGN** | intercept + sign_num | Up if `P(y=1) ≥ 0.5`, else Down |
 
-`P(y=1) = 1 / (1 + exp(−x′β))` with β from maximum-likelihood logistic (IRLS). Probability exactly 0.5 → **Up** (frozen; rare).
+`P(y=1) = 1 / (1 + exp(−x′β))` with β from maximum-likelihood logistic (IRLS). A **fixed** 1e−8 diagonal load is allowed only for numerical invertibility (not a free hyperparameter; do not tune after scores). Probability exactly 0.5 → **Up** (frozen; rare).
 
 Do **not** score burned horses. Do **not** blend with DJT / COT / gap / CROSS-W2B. Do **not** change 21.
 

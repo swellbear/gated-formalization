@@ -1,27 +1,27 @@
 # Plain-language card
 
 **Application:** `2026-08_oil-futures-predictive-model`  
-**Date / checkpoint:** 2026-08-24 · EIA spot WTI↔Brent cross-bench overlay (L-PULSE-SPOT-CROSS-1)
+**Date / checkpoint:** 2026-08-24 · EIA spot expanding-window logistic (L-PULSE-SPOT-LOGIT-1)
 
 ---
 
 ## What we’re doing
 
-We asked whether one cash oil’s last 21-day up/down label could call the **other** oil’s next 21 days better than “whatever just happened will happen again.” Using Brent to call WTI **lost** on the older exam. Using WTI to call Brent **beat** that older exam and also beat continuation on the three recent windows — but the shortest recent window was a **one-hit** margin, which this project does not treat as a pass. Burned rules stayed burned. This is not futures skill and not a trade.
+We let the computer fit a simple rule on **older** cash 21-day days only (whether the last 21 days were up or down, and how large that move was), then asked whether that beat “whatever just happened will happen again.” It beat the older exam for WTI and Brent, but **lost** the recent exam on every locked window for both oils. Burned rules stayed burned. This is not futures skill and not a trade.
 
 ## What we need from you
 
-Nothing required. Optional: leave, try the next queued idea (a past-only statistical fit on the same 21-day question), or name a **different** futures recipe on Yahoo.
+Nothing required. Optional: leave, name a **different** futures recipe on Yahoo, or explicitly name a new spot idea (unnamed ideas stop).
 
-**Preferred reply:** click A / B / C. Typed: `leave skill not shown` · next queue **C-SPOT-LOGIT** · `name horse …`
+**Preferred reply:** click A / B / C. Typed: `leave skill not shown` · `name horse …` · `name source class …`
 
 ## What a “yes” / this update means
 
-The Brent-using-WTI rule is on the card as a **discovery survivor with confirm point-beats**. A 132/250 vs 131/250 edge is **not** a pass. The WTI-using-Brent rule is **burned**.
+The first train-arm spot drawer is on the card. A discovery beat that loses confirm is **not** a pass. The named Track B queue is now **empty**.
 
 ## What this does *not* mean
 
-That WTI “leads” Brent. That both oils cleared. That anyone should trade.
+That a fitted “oil model” works. That anyone should trade. That we should rewrite the fit after the recent misses.
 
 ---
 
@@ -29,12 +29,12 @@ That WTI “leads” Brent. That both oils cleared. That anyone should trade.
 
 | Item | Value |
 |------|--------|
-| Claim-freeze / claim under test | Rank 4 F-SKILL **parked**; **L-HUNT-SPOT-CROSS** vs continuation |
+| Claim-freeze / claim under test | Rank 4 F-SKILL **parked**; **L-HUNT-SPOT-LOGIT** vs continuation |
 | Amb | **1.0** (**≠ clearance**) |
-| Locks / package IDs | **H-SPOT-CROSS-B2W**; **H-SPOT-CROSS-W2B** |
-| Discovery | WTI **lose** 0.494 vs 0.508; Brent **beat** 0.528 vs 0.506 |
-| Confirm | Brent last 500 **0.544 vs 0.522**; last 250 **0.528 vs 0.524 (tiny)**; last 750 **0.545 vs 0.525**. WTI **skipped** |
-| Artifact pointers | `Lock_Hunt_Spot_Cross.md` · `PULSE_Hunt_Spot_Cross.md` · `04_Material_Admission_Spot_Cross.md` |
+| Locks / package IDs | **H-SPOT-LOGIT-FULL**; **H-SPOT-LOGIT-SIGN** |
+| Discovery | WTI **0.532** vs 0.508; Brent **0.550** vs 0.506; survivor **FULL** both |
+| Confirm | FULL **loses** 500/250/750 both boards |
+| Artifact pointers | `Lock_Hunt_Spot_Logit.md` · `PULSE_Hunt_Spot_Logit.md` · `04_Material_Admission_Spot_Logit.md` |
 
 ---
 

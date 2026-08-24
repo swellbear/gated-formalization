@@ -3,7 +3,7 @@
 **Date:** 2026-08-24  
 **Lock:** `Lock_Hunt_Spot_Trend.md` (**L-SPOT-QUEUE**) · this pulse `Lock_Hunt_Spot_Logit.md`  
 **Machine register:** `data/spot_trend_queue.json`  
-**Status:** **C-SPOT-LOGIT** is the active pulse. Confirm still unseen at lock time for LOGIT.
+**Status:** **C-SPOT-LOGIT** scored. Discovery survivors **FULL** both boards; confirm **lost** continuation every window. Named queue **empty**.
 
 ---
 
@@ -11,9 +11,9 @@
 
 **What we’re doing:** Keep a written list of *kinds* of idea to try on the same spot-trend question, and a list of ideas that already failed. One kind at a time. The recent exam is never where we invent a new rule.
 
-**What we need from you:** Nothing this pulse. Optional later: leave, or name a different futures recipe.
+**What we need from you:** Optional: leave, name a different futures recipe on Yahoo, or explicitly name a new spot class.
 
-**What this does *not* mean:** A bot that watches misses and rewrites itself. Unburning burned rules. Changing 21 days. Remxing the Brent CROSS survivor into this fit.
+**What this does *not* mean:** A bot that watches confirm misses and rewrites the fit. Unburning burned rules. Changing 21 days.
 
 ---
 
@@ -29,15 +29,15 @@
 
 ---
 
-## This pulse (active) — **C-SPOT-LOGIT** / **L-HUNT-SPOT-LOGIT**
+## This pulse (scored) — **C-SPOT-LOGIT** / **L-HUNT-SPOT-LOGIT**
 
-| ID | Role |
-|----|------|
-| **H-SPOT-LOGIT-FULL** | Expanding-window logistic: intercept + sign_num + \|r21\|; call by P≥0.5 |
-| **H-SPOT-LOGIT-SIGN** | Same clock; intercept + sign_num only |
-| Continuation | **Baseline, not a horse** |
+| ID | Role | Result |
+|----|------|--------|
+| **H-SPOT-LOGIT-FULL** | Expanding logistic: intercept + sign + \|r21\| | Discovery beat both boards; confirm **lose** all windows both boards. Do **not** retune. |
+| **H-SPOT-LOGIT-SIGN** | Expanding logistic: intercept + sign | Discovery tie with FULL (not a loss). Not sent to confirm. |
+| Continuation | **Baseline, not a horse** | |
 
-**Burned (do not retune / do not unburn):** H-SPOT-FLIP-HOLD, H-SPOT-REV, H-SPOT-INV-CONT, H-SPOT-INV-FADE on **WTI** and **Brent**; **H-SPOT-CROSS-B2W** on **WTI**. Do **not** retune **H-SPOT-CROSS-W2B**.
+**Burned (do not retune / do not unburn):** H-SPOT-FLIP-HOLD, H-SPOT-REV, H-SPOT-INV-CONT, H-SPOT-INV-FADE on **WTI** and **Brent**; **H-SPOT-CROSS-B2W** on **WTI**. Do **not** retune **H-SPOT-CROSS-W2B** or **H-SPOT-LOGIT-FULL**.
 
 ---
 
@@ -45,12 +45,12 @@
 
 | Queue ID | Class | Why it is a different class |
 |----------|-------|------------------------------|
-| *(none)* | — | Queue empty after this class |
+| *(none)* | — | Named Track B queue empty |
 
-**Already run:** **C-SPOT-CROSS** (**L-PULSE-SPOT-CROSS-1**). **C-SPOT-INV** (**L-PULSE-SPOT-INV-1**; no survivor). First pulse **L-PULSE-SPOT-1** also no survivor. **C-SPOT-LOGIT** is this pulse.
+**Already run:** **C-SPOT-LOGIT** (**L-PULSE-SPOT-LOGIT-1**). **C-SPOT-CROSS**. **C-SPOT-INV**. **L-PULSE-SPOT-1**.
 
-**Not queued (refused):** change 21; peer/inventory remix into the logit; unburn burned rows; retune W2B; invent a new spot class after scores without a new operator pick.
+**Not queued (refused):** change 21; remix confirm losses into a new feature; unburn; invent a spot class after scores without a new operator pick.
 
 ---
 
-*Failed discovery is an allowed useful negative. The project learns. The horse does not peek.*
+*Failed confirm after a discovery beat is an allowed useful negative. The project learns. The horse does not peek.*

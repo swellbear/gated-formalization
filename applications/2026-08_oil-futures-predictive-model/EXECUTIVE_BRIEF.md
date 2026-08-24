@@ -19,7 +19,7 @@ Can a predictive model for oil futures be built?
 
 A specified forecasting recipe for listed crude **futures** (not last-price no-change) has been written. That is all existence means here, and it stays separate. Spot and real-price recipes stay outside that freeze. The recipe list is not an endorsement of one paper.
 
-Walk-forward skill versus last settlement is **not shown**. Yahoo is a **stipulated stand-in**. A named cash WTI/Brent 21-day hunt **failed at discovery** (both **lost** to continuation on both oils). A WTI↔Brent cross-bench overlay **failed to establish** spot-trend (WTI **lost** discovery; Brent confirm beat but last-250 **tiny +1**). A named CFTC managed-money hunt **failed at discovery** (both **lost** vs no-change). A named Trump Truth Social week/month hunt **failed at discovery** (both **tied** no-change). Overnight-gap fade had a **small day-session** edge; the whole trip was unchanged — **does not promote**. A named eight-horse pretell hunt **failed at discovery**. Two sparse horses were scored. **Neither promotes.** Kearney–Shang **not run**.
+Walk-forward skill versus last settlement is **not shown**. Yahoo is a **stipulated stand-in**. A named cash WTI/Brent 21-day hunt **failed at discovery** (both **lost** to continuation on both oils). A WTI↔Brent cross-bench overlay **failed to establish** spot-trend (WTI **lost** discovery; Brent confirm beat but last-250 **tiny +1**). An expanding-window logistic drawer **beat discovery** then **lost confirm** both boards — named Track B queue **empty**. A named CFTC managed-money hunt **failed at discovery** (both **lost** vs no-change). A named Trump Truth Social week/month hunt **failed at discovery** (both **tied** no-change). Overnight-gap fade had a **small day-session** edge; the whole trip was unchanged — **does not promote**. A named eight-horse pretell hunt **failed at discovery**. Two sparse horses were scored. **Neither promotes.** Kearney–Shang **not run**.
 
 After-cost paper value is **not shown**. Paper costs are now **V2** (fees plus $10/contract each way). The paper book was left unnamed. That is not a proof that every book fails.
 
@@ -44,7 +44,7 @@ This is **not** trading advice and does **not** clear the blended slogan “a pr
 ## Not established
 
 - Next-session CL log-return skill vs last settlement (**L-HUNT-COT** no survivor; **L-HUNT-DJT** no survivor; **H-GAP-FADE** small F-DAY / F-CC **tie**; **L-HUNT-PRETELL** no survivor; **H-SPARSE-CAL** tiny 500 / **fails** 750; **H-SPARSE-VOL** and **H-LAG-WF** F-CC **loss**; leftover **live**)  
-- Cash WTI/Brent 21-day sign vs continuation (**L-HUNT-SPOT-TREND** / **INV** no survivor; **CROSS** WTI fail / Brent tiny 250 ≠ met; **not established**)  
+- Cash WTI/Brent 21-day sign vs continuation (**L-HUNT-SPOT-TREND** / **INV** no survivor; **CROSS** WTI fail / Brent tiny 250 ≠ met; **LOGIT** discovery beat / confirm lose; queue empty; **not established**)  
 - After-cost paper P/L vs the curve (book unnamed; **V2 named**)  
 - Directional accuracy after costs; any decision or trading value  
 - Spot/real-price recipes as the existence exhibit  
@@ -56,15 +56,15 @@ This is **not** trading advice and does **not** clear the blended slogan “a pr
 
 **Stop saying:** That EIA STEO or the futures curve is a proven next-session CL model. That spot-oil papers clear this freeze. That existence-met is skill-met. That one paper was picked as “the” recipe. That anyone should trade. That unnamed skill means no model can ever beat last price.
 
-**Keep saying:** A futures-target recipe has been written. Yahoo is a stand-in, not live CME. A small day-session fade is not a whole-trip pass. The cash 21-day hunt failed at discovery. The weekly-inventory overlay failed at discovery. The WTI↔Brent cross-bench failed to establish spot-trend (WTI fail; Brent tiny 250). The COT hunt failed at discovery. The DJT Truth hunt failed at discovery. The pretell hunt failed at discovery. The lagged-return horse lost on the whole trip. Paper costs are V2; that is not a value pass. Skill and after-cost value are not shown.
+**Keep saying:** A futures-target recipe has been written. Yahoo is a stand-in, not live CME. A small day-session fade is not a whole-trip pass. The cash 21-day hunt failed at discovery. The weekly-inventory overlay failed at discovery. The WTI↔Brent cross-bench failed to establish spot-trend (WTI fail; Brent tiny 250). The expanding logistic drawer beat discovery then lost confirm both boards; named Track B queue is empty. The COT hunt failed at discovery. The DJT Truth hunt failed at discovery. The pretell hunt failed at discovery. The lagged-return horse lost on the whole trip. Paper costs are V2; that is not a value pass. Skill and after-cost value are not shown.
 
-**Test next (only if authorized):** `leave skill not shown` · queued **C-SPOT-LOGIT** · `name horse …` on Yahoo (different CL recipe). Live CME only if the F-CC promotion gate fires.
+**Test next (only if authorized):** `leave skill not shown` · `name horse …` on Yahoo (different CL recipe) · name a **new** spot class (queue empty). Live CME only if the F-CC promotion gate fires.
 
 ---
 
 ## Residual-branch menu (at closeout)
 
-Offered. Skill leftover **live** ([R-F-SKILL](RESIDUAL_BRANCH_MENU.md#r-f-skill)). Spot-trend **executed** ([R-SPOT-TREND](RESIDUAL_BRANCH_MENU.md#r-spot-trend)). Live vs stand-in **executed** ([R-LIVE-STANDIN](RESIDUAL_BRANCH_MENU.md#r-live-standin)). After-cost book parked ([R-V-VALUE](RESIDUAL_BRANCH_MENU.md#r-v-value)). Combo parked ([R-F-COMBO](RESIDUAL_BRANCH_MENU.md#r-f-combo)). [`RESIDUAL_BRANCH_MENU.md`](RESIDUAL_BRANCH_MENU.md)
+Offered. Skill leftover **live** ([R-F-SKILL](RESIDUAL_BRANCH_MENU.md#r-f-skill)). Spot-trend **executed** ([R-SPOT-TREND](RESIDUAL_BRANCH_MENU.md#r-spot-trend); LOGIT confirm lose; queue empty). Live vs stand-in **executed** ([R-LIVE-STANDIN](RESIDUAL_BRANCH_MENU.md#r-live-standin)). After-cost book parked ([R-V-VALUE](RESIDUAL_BRANCH_MENU.md#r-v-value)). Combo parked ([R-F-COMBO](RESIDUAL_BRANCH_MENU.md#r-f-combo)). [`RESIDUAL_BRANCH_MENU.md`](RESIDUAL_BRANCH_MENU.md)
 
 ---
 
@@ -86,7 +86,7 @@ Offered. Skill leftover **live** ([R-F-SKILL](RESIDUAL_BRANCH_MENU.md#r-f-skill)
 |------|--------|
 | Method verdict | Stable Provisional (split); **hard stop (residuals live)** |
 | Amb | **1.0** |
-| Locks / proxy IDs | Rank 4; D-EXIST-MET-FT; **V-COST-V2**; **L-SCREEN-Y-PROMOTE**; **L-HUNT-SPOT-TREND**; **L-HUNT-SPOT-INV**; **L-HUNT-SPOT-CROSS**; **L-HUNT-COT**; **L-HUNT-DJT**; F-SRC-CME-TAPE; L-STANDIN-Y-CLF; **H-LAG-WF**; **H-SPARSE-CAL**; **H-SPARSE-VOL**; L-SESS; V-SRC leave unnamed |
+| Locks / proxy IDs | Rank 4; D-EXIST-MET-FT; **V-COST-V2**; **L-SCREEN-Y-PROMOTE**; **L-HUNT-SPOT-TREND**; **L-HUNT-SPOT-INV**; **L-HUNT-SPOT-CROSS**; **L-HUNT-SPOT-LOGIT**; **L-HUNT-COT**; **L-HUNT-DJT**; F-SRC-CME-TAPE; L-STANDIN-Y-CLF; **H-LAG-WF**; **H-SPARSE-CAL**; **H-SPARSE-VOL**; L-SESS; V-SRC leave unnamed |
 | Scope label | Under Rank 4 only; existence = futures-target only |
 
 ---
