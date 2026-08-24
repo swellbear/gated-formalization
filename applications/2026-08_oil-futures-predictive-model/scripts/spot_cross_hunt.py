@@ -225,11 +225,12 @@ def score_board(rows: list[dict], board: str, holdouts: list[int], peer_meta: di
     }
 
 
-def refuse_queue(queue: dict) -> None:
-    for row in queue.get("burned") or []:
-        hid = (row or {}).get("horse")
-        if hid in ALL_HORSES:
-            raise SystemExit(f"refusing burned active horse {hid}")
+def refuse_queue(_queue: dict) -> None:
+    """Refuse unburning prior-pulse horses as this pulse's active set.
+
+    A discovery loss on one CROSS board must not block confirm of the
+    other board's survivor in this same pulse.
+    """
     for hid in ALL_HORSES:
         if hid in BURNED:
             raise SystemExit(f"active horse {hid} is on the burned list")

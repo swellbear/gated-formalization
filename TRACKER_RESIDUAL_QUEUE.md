@@ -1,13 +1,13 @@
 # Tracker Residual Queue (Layer 3)
 
-**Last refreshed:** 2026-08-20 (oil-futures **hard stop (residuals live)**: **R-SPOT-TREND** executed (INV overlay and first 21-day pair both no survivor); **R-F-SKILL** **pursue** (parked); park-90d quarterly still due ~2026-11-12 — this refresh does **not** re-churn that card.)  
+**Last refreshed:** 2026-08-24 (oil-futures **hard stop (residuals live)**: **L-PULSE-SPOT-CROSS-1** scored — WTI fail / Brent tiny 250 ≠ met; spot-trend **not established**; next **C-SPOT-LOGIT**; **R-F-SKILL** **pursue** (parked); park-90d quarterly still due ~2026-11-12 — this refresh does **not** re-churn that card.)  
 **Last park-90d quarterly review:** **2026-08-12** (inaugural = **cadence-existence**, not quarterly proof; next due ~2026-11-12; post-rule addendum same day — still extend-all)  
 **Disposition vocabulary:** `pursue` | `park-90d` | `park-until-trigger` | `drop`  
 Only **pursue** items stay in active bands. Parked/dropped listed below.
 
 **Cadence:** About once per quarter, review **`park-90d` only**.
 
-**Note:** CoreWeave **hard stop sealed**; Zitron Nvidia $500B **hard stop sealed** (restart frame; Squawk/D-APPEAR OUT). Prior Squawk-stand-in R-* rows remain historical/drop. FOMC parent closeout intact; R-FML-INDEP **executed** (SPF Q2 2026; not established; not a refute). Oil-futures **hard stop (residuals live)**; Yahoo `CL=F` stand-in; **L-SCREEN-Y-PROMOTE**; R-SPOT-TREND executed (no survivor); R-F-SKILL **pursue** (parked this pulse); R-LIVE-STANDIN **executed** (live CME only if F-CC gate fires).
+**Note:** CoreWeave **hard stop sealed**; Zitron Nvidia $500B **hard stop sealed** (restart frame; Squawk/D-APPEAR OUT). Prior Squawk-stand-in R-* rows remain historical/drop. FOMC parent closeout intact; R-FML-INDEP **executed** (SPF Q2 2026; not established; not a refute). Oil-futures **hard stop (residuals live)**; Yahoo `CL=F` stand-in; **L-SCREEN-Y-PROMOTE**; R-SPOT-TREND executed (CROSS WTI fail / Brent tiny 250; not established); R-F-SKILL **pursue** (parked this pulse); R-LIVE-STANDIN **executed** (live CME only if F-CC gate fires).
 
 ---
 

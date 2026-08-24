@@ -1,0 +1,174 @@
+{
+  "lock": "L-HUNT-SPOT-CROSS",
+  "stage": "confirm",
+  "discovery_cutoff": "2023-08-21",
+  "horizon_price_steps": 21,
+  "overlay": "peer 21-day sign as of latest peer print date <= t; Flat/missing \u2192 continuation",
+  "train_arm": "N/A for these two rule horses",
+  "select_arm": "discovery last 500 of prefix <= 2023-08-21",
+  "confirm_arm": "last 500/250/750; never train; skipped if no survivor",
+  "refused_burned": [
+    "H-SPOT-FLIP-HOLD",
+    "H-SPOT-INV-CONT",
+    "H-SPOT-INV-FADE",
+    "H-SPOT-REV"
+  ],
+  "horses_by_board": {
+    "WTI": [
+      "H-SPOT-CROSS-B2W"
+    ],
+    "Brent": [
+      "H-SPOT-CROSS-W2B"
+    ]
+  },
+  "vehicle_fail": false,
+  "boards": {
+    "WTI": {
+      "n_prints": 10225,
+      "n_eligible": 10131,
+      "n_discovery_pool": 9408,
+      "vehicle_fail": false,
+      "span_first": "1986-01-02",
+      "span_last": "2026-08-18",
+      "peer": {
+        "n_peer_prints": 9958,
+        "n_home_with_peer_updown": 9837,
+        "peer_first": "1987-05-20",
+        "peer_last": "2026-08-18",
+        "clock": "latest peer print with date <= t; carry forward; Flat/missing \u2192 continuation",
+        "peer_board": "Brent",
+        "n_discovery_500_with_peer_updown": 500
+      },
+      "discovery": {
+        "cutoff": "2023-08-21",
+        "n_pool": 9408,
+        "n_scoreboard": 500,
+        "first": "2021-08-24",
+        "last": "2023-08-21",
+        "continuation": {
+          "n": 500,
+          "hits": 254,
+          "hit_rate": 0.508,
+          "first": "2021-08-24",
+          "last": "2023-08-21"
+        },
+        "horses": {
+          "H-SPOT-CROSS-B2W": {
+            "n": 500,
+            "hits": 247,
+            "hit_rate": 0.494,
+            "first": "2021-08-24",
+            "last": "2023-08-21",
+            "beats_continuation": false
+          }
+        },
+        "survivor": {
+          "id": null,
+          "reason": "no horse strictly beat continuation on discovery"
+        }
+      },
+      "confirm": null
+    },
+    "Brent": {
+      "n_prints": 9958,
+      "n_eligible": 9852,
+      "n_discovery_pool": 9119,
+      "vehicle_fail": false,
+      "span_first": "1987-05-20",
+      "span_last": "2026-08-18",
+      "peer": {
+        "n_peer_prints": 10225,
+        "n_home_with_peer_updown": 9942,
+        "peer_first": "1986-01-02",
+        "peer_last": "2026-08-18",
+        "clock": "latest peer print with date <= t; carry forward; Flat/missing \u2192 continuation",
+        "peer_board": "WTI",
+        "n_discovery_500_with_peer_updown": 500
+      },
+      "discovery": {
+        "cutoff": "2023-08-21",
+        "n_pool": 9119,
+        "n_scoreboard": 500,
+        "first": "2021-08-27",
+        "last": "2023-08-21",
+        "continuation": {
+          "n": 500,
+          "hits": 253,
+          "hit_rate": 0.506,
+          "first": "2021-08-27",
+          "last": "2023-08-21"
+        },
+        "horses": {
+          "H-SPOT-CROSS-W2B": {
+            "n": 500,
+            "hits": 264,
+            "hit_rate": 0.528,
+            "first": "2021-08-27",
+            "last": "2023-08-21",
+            "beats_continuation": true
+          }
+        },
+        "survivor": {
+          "id": "H-SPOT-CROSS-W2B",
+          "reason": "strictly beat continuation; one horse per board so ties N/A"
+        }
+      },
+      "confirm": {
+        "500": {
+          "horse": {
+            "n": 500,
+            "hits": 272,
+            "hit_rate": 0.544,
+            "first": "2024-07-24",
+            "last": "2026-07-20"
+          },
+          "continuation": {
+            "n": 500,
+            "hits": 261,
+            "hit_rate": 0.522,
+            "first": "2024-07-24",
+            "last": "2026-07-20"
+          },
+          "beats_continuation": true
+        },
+        "250": {
+          "horse": {
+            "n": 250,
+            "hits": 132,
+            "hit_rate": 0.528,
+            "first": "2025-07-21",
+            "last": "2026-07-20"
+          },
+          "continuation": {
+            "n": 250,
+            "hits": 131,
+            "hit_rate": 0.524,
+            "first": "2025-07-21",
+            "last": "2026-07-20"
+          },
+          "beats_continuation": true
+        },
+        "750": {
+          "horse": {
+            "n": 750,
+            "hits": 409,
+            "hit_rate": 0.5453333333333333,
+            "first": "2023-07-28",
+            "last": "2026-07-20"
+          },
+          "continuation": {
+            "n": 750,
+            "hits": 394,
+            "hit_rate": 0.5253333333333333,
+            "first": "2023-07-28",
+            "last": "2026-07-20"
+          },
+          "beats_continuation": true
+        }
+      }
+    }
+  },
+  "queue_still_queued": [
+    "C-SPOT-LOGIT"
+  ]
+}

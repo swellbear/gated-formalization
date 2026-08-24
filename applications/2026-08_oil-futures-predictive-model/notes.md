@@ -1,6 +1,6 @@
 # Notes
 
-**Status:** see `STATUS.md`. Closeout sealed 2026-08-17 as **hard stop (residuals live)**. Track B pulses **L-PULSE-SPOT-1** and **L-PULSE-SPOT-INV-1** 2026-08-20 (no discovery survivor).
+**Status:** see `STATUS.md`. Closeout sealed 2026-08-17 as **hard stop (residuals live)**. Track B pulses **L-PULSE-SPOT-1** / **L-PULSE-SPOT-INV-1** 2026-08-20; **L-PULSE-SPOT-CROSS-1** 2026-08-24 (spot-trend **not established**; next **C-SPOT-LOGIT**).
 
 **Application:** `2026-08_oil-futures-predictive-model`  
 **Date:** 2026-08-17  
@@ -38,6 +38,7 @@
 - Operator (2026-08-17, later): implement named CFTC positioning hunt. **L-HUNT-COT** / **L-PULSE-COT-1**. CFTC disagg futures-only 067651: **867** reports (2010-01-05 … 2026-08-11). Discovery-span reports **711** (vehicle OK). Both H-COT-NET / H-COT-CHG discovery F-CC **lose** (0 = 0.026705; closest NET 0.026796). **No survivor**. Confirm skipped. Promote does not fire. Do **not** add percent-of-OI. Skill **not established**. Amb **held 1.0**. Cap remains these two rows.
 - Operator (2026-08-20): **ok build it** — Track B cash WTI/Brent 21-day. **L-HUNT-SPOT-TREND** / **L-PULSE-SPOT-1**. FRED EIA reprints (DCOILWTICO / DCOILBRENTEU). Discovery: WTI continuation **0.508**, FLIP-HOLD **0.494**, REV **0.492**; Brent continuation **0.506**, FLIP-HOLD **0.496**, REV **0.494**. **No survivor**. Confirm skipped. F-SKILL parked. Amb **held 1.0**.
 - Operator (2026-08-20): **B** next queued class **C-SPOT-INV**. **L-HUNT-SPOT-INV** / **L-PULSE-SPOT-INV-1**. EIA WCESTUS1 HTML leaf **2290** weeks. Naive surprise = WoW − prior-4 mean. Discovery: WTI continuation **0.508**, CONT **0.506**, FADE **0.494**; Brent continuation **0.506**, CONT **0.502**, FADE **0.498**. **No survivor**. Confirm skipped. Do **not** unburn. Do **not** change 21. Spot-trend **not established**. Amb **held 1.0**.
+- Operator (2026-08-24): **B** next queued class **C-SPOT-CROSS**. **L-HUNT-SPOT-CROSS** / **L-PULSE-SPOT-CROSS-1**. Discovery: WTI continuation **0.508** (254/500), B2W **0.494** (247) — **no survivor**, burned; Brent continuation **0.506** (253/500), W2B **0.528** (264) — **survivor**. Confirm Brent W2B only: last 500 **0.544** (272) vs cont **0.522** (261); last 250 **0.528** (132) vs cont **0.524** (131) — beat but **tiny (+1)**; last 750 **0.545** (409) vs cont **0.525** (394). Spot-trend **not established**. Tiny ≠ met. WTI-met ≠ Brent-met. F-SKILL parked. Do **not** unburn B2W/FLIP/REV/INV. Do **not** retune W2B. Do **not** change 21. Next queued: **C-SPOT-LOGIT**. Amb **held 1.0**.
 - Amb 12 → 9 → 7.5 → 5.5 → 2.5 → 1.5 → **1.0**. Amb ≠ clearance.
 
 ## Residual judgment points encountered

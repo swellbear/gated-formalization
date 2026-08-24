@@ -1,27 +1,27 @@
 # Plain-language card
 
 **Application:** `2026-08_oil-futures-predictive-model`  
-**Date / checkpoint:** 2026-08-20 · EIA weekly inventory overlay (L-PULSE-SPOT-INV-1)
+**Date / checkpoint:** 2026-08-24 · EIA spot WTI↔Brent cross-bench overlay (L-PULSE-SPOT-CROSS-1)
 
 ---
 
 ## What we’re doing
 
-We took the public weekly U.S. crude **stockpile** report, compared this week’s change to the last four weeks, and asked whether overlaying that on the next 21 cash days beat “whatever just happened will happen again.” One rule calls **up** after a tighter-than-recent print; the other calls **down**. Neither beat continuation on the older exam, for WTI or for Brent. The first two 21-day rules stayed on the burned list. This is not a Wall Street poll, not futures skill, and not a trade.
+We asked whether one cash oil’s last 21-day up/down label could call the **other** oil’s next 21 days better than “whatever just happened will happen again.” Using Brent to call WTI **lost** on the older exam. Using WTI to call Brent **beat** that older exam and also beat continuation on the three recent windows — but the shortest recent window was a **one-hit** margin, which this project does not treat as a pass. Burned rules stayed burned. This is not futures skill and not a trade.
 
 ## What we need from you
 
-Nothing required. Optional: leave, try the next queued idea (use WTI’s 21-day sign to call Brent, and the reverse), or name a **different** futures recipe on Yahoo.
+Nothing required. Optional: leave, try the next queued idea (a past-only statistical fit on the same 21-day question), or name a **different** futures recipe on Yahoo.
 
-**Preferred reply:** click A / B / C. Typed: `leave skill not shown` · next queue **C-SPOT-CROSS** · `name horse …`
+**Preferred reply:** click A / B / C. Typed: `leave skill not shown` · next queue **C-SPOT-LOGIT** · `name horse …`
 
 ## What a “yes” / this update means
 
-Those two inventory overlay rules are on the card and **burned**. A 253/500 vs 254/500 loss is **not** a pass.
+The Brent-using-WTI rule is on the card as a **discovery survivor with confirm point-beats**. A 132/250 vs 131/250 edge is **not** a pass. The WTI-using-Brent rule is **burned**.
 
 ## What this does *not* mean
 
-That inventories drive oil, or that they don’t. That we used a Bloomberg survey number. That anyone should trade.
+That WTI “leads” Brent. That both oils cleared. That anyone should trade.
 
 ---
 
@@ -29,12 +29,12 @@ That inventories drive oil, or that they don’t. That we used a Bloomberg surve
 
 | Item | Value |
 |------|--------|
-| Claim-freeze / claim under test | Rank 4 F-SKILL **parked**; **L-HUNT-SPOT-INV** vs continuation |
+| Claim-freeze / claim under test | Rank 4 F-SKILL **parked**; **L-HUNT-SPOT-CROSS** vs continuation |
 | Amb | **1.0** (**≠ clearance**) |
-| Locks / package IDs | **H-SPOT-INV-CONT**; **H-SPOT-INV-FADE**; L-STANDIN-EIA-INV |
-| Discovery | Both **lose** both boards (WTI CONT 0.506 vs 0.508); **no survivor** |
-| Confirm | **Skipped** |
-| Artifact pointers | `Lock_Hunt_Spot_Inv.md` · `PULSE_Hunt_Spot_Inv.md` · `04_Material_Admission_Spot_Inv.md` |
+| Locks / package IDs | **H-SPOT-CROSS-B2W**; **H-SPOT-CROSS-W2B** |
+| Discovery | WTI **lose** 0.494 vs 0.508; Brent **beat** 0.528 vs 0.506 |
+| Confirm | Brent last 500 **0.544 vs 0.522**; last 250 **0.528 vs 0.524 (tiny)**; last 750 **0.545 vs 0.525**. WTI **skipped** |
+| Artifact pointers | `Lock_Hunt_Spot_Cross.md` · `PULSE_Hunt_Spot_Cross.md` · `04_Material_Admission_Spot_Cross.md` |
 
 ---
 

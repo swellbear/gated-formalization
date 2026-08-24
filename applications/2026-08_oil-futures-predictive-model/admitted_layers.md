@@ -1,12 +1,12 @@
 # Admitted layers
 
 **Application:** `2026-08_oil-futures-predictive-model`  
-**Updated:** 2026-08-20  
+**Updated:** 2026-08-24  
 
 **Admitted claim layers:**
 - **D-EXIST established** — futures-target only (`Lock_D_EXIST_Established_Futures_Target.md` · `04_Material_Admission_D_EXIST_Established.md`). Not a singleton recipe pick. Spot/real-price **OUT**.
 
-**Meaning lock:** Rank 4 nested split — `Lock_Rank4_Nested_Split.md`. **V-COST-V2**. **L-SCREEN-Y-PROMOTE**. **L-HUNT-SPOT-TREND**. **L-HUNT-SPOT-INV**. **L-HUNT-COT**. **L-HUNT-DJT**. **L-HUNT-PRETELL**. **L-HUNT-GAP**. V-SRC **leave unnamed**. **F-SRC-CME-TAPE** (named). **H-LAG-WF** named and scored (does not promote). **H-SPARSE-CAL** / **H-SPARSE-VOL** named and scored (neither promotes). **H-GAP-FADE** / **H-GAP-CONT** named and scored (FADE small F-DAY; does not promote). **H-DJT-WEEK** / **H-DJT-MONTH** named and scored (no discovery survivor). **H-COT-NET** / **H-COT-CHG** named and scored (no discovery survivor). **H-SPOT-FLIP-HOLD** / **H-SPOT-REV** named and scored (no discovery survivor either board). **H-SPOT-INV-CONT** / **H-SPOT-INV-FADE** named and scored (no discovery survivor either board). **L-SESS**.
+**Meaning lock:** Rank 4 nested split — `Lock_Rank4_Nested_Split.md`. **V-COST-V2**. **L-SCREEN-Y-PROMOTE**. **L-HUNT-SPOT-TREND**. **L-HUNT-SPOT-INV**. **L-HUNT-SPOT-CROSS**. **L-HUNT-COT**. **L-HUNT-DJT**. **L-HUNT-PRETELL**. **L-HUNT-GAP**. V-SRC **leave unnamed**. **F-SRC-CME-TAPE** (named). **H-LAG-WF** named and scored (does not promote). **H-SPARSE-CAL** / **H-SPARSE-VOL** named and scored (neither promotes). **H-GAP-FADE** / **H-GAP-CONT** named and scored (FADE small F-DAY; does not promote). **H-DJT-WEEK** / **H-DJT-MONTH** named and scored (no discovery survivor). **H-COT-NET** / **H-COT-CHG** named and scored (no discovery survivor). **H-SPOT-FLIP-HOLD** / **H-SPOT-REV** named and scored (no discovery survivor either board). **H-SPOT-INV-CONT** / **H-SPOT-INV-FADE** named and scored (no discovery survivor either board). **H-SPOT-CROSS-B2W** / **H-SPOT-CROSS-W2B** named and scored (WTI B2W burned; Brent W2B discovery survivor; confirm tiny 250 ≠ met). **L-SESS**.
 
 **Admitted as evaluation (not bar-met):**
 - `04_Material_Admission_D_EXIST_Construction.md` — no-change **OUT** as the D-EXIST model exhibit (operator B).
@@ -29,7 +29,8 @@
 - `04_Material_Admission_COT.md` (**L-HUNT-COT** / **L-STANDIN-CFTC-COT** + **L-PULSE-COT-1**) — two CFTC managed-money horses; **no discovery survivor**; confirm skipped; skill **not established**.
 - `04_Material_Admission_Spot_Trend.md` (**L-HUNT-SPOT-TREND** / **L-STANDIN-EIA-SPOT** + **L-PULSE-SPOT-1**) — two 21-day spot horses; **no discovery survivor** on WTI or Brent; confirm skipped; F-SKILL parked; spot-trend **not established**.
 - `04_Material_Admission_Spot_Inv.md` (**L-HUNT-SPOT-INV** / **L-STANDIN-EIA-INV** + **L-PULSE-SPOT-INV-1**) — inventory overlay; **no discovery survivor** either board; confirm skipped; naive surprise ≠ Bloomberg.
+- `04_Material_Admission_Spot_Cross.md` (**L-HUNT-SPOT-CROSS** + **L-PULSE-SPOT-CROSS-1**) — WTI↔Brent cross-bench; WTI **B2W** no survivor (burned); Brent **W2B** confirm point-beats (last-250 **tiny +1**); spot-trend **not established**.
 
-**Closeout (2026-08-17; pulse 2026-08-20):** **hard stop (residuals live)**. Skill leftover [R-F-SKILL](RESIDUAL_BRANCH_MENU.md#r-f-skill) **pursue**. [R-SPOT-TREND](RESIDUAL_BRANCH_MENU.md#r-spot-trend) executed (no survivor).
+**Closeout (2026-08-17; pulse 2026-08-24):** **hard stop (residuals live)**. Skill leftover [R-F-SKILL](RESIDUAL_BRANCH_MENU.md#r-f-skill) **pursue**. [R-SPOT-TREND](RESIDUAL_BRANCH_MENU.md#r-spot-trend) executed (not established; next **C-SPOT-LOGIT**).
 
-**Process imports:** LOCK-003, LOCK-009, LOCK-010, LOCK-011. App-local: **V-COST-V2**; V-SRC leave unnamed; **F-SRC-CME-TAPE**; **L-STANDIN-Y-CLF**; **L-SCREEN-Y-PROMOTE**; **L-HUNT-SPOT-TREND**; **L-HUNT-COT**; **L-HUNT-DJT**; **L-HUNT-PRETELL**; **L-HUNT-GAP**; **H-SPARSE-CAL**; **H-SPARSE-VOL**; D-EXIST-MET-FT (2026-08-17).
+**Process imports:** LOCK-003, LOCK-009, LOCK-010, LOCK-011. App-local: **V-COST-V2**; V-SRC leave unnamed; **F-SRC-CME-TAPE**; **L-STANDIN-Y-CLF**; **L-SCREEN-Y-PROMOTE**; **L-HUNT-SPOT-TREND**; **L-HUNT-SPOT-INV**; **L-HUNT-SPOT-CROSS**; **L-HUNT-COT**; **L-HUNT-DJT**; **L-HUNT-PRETELL**; **L-HUNT-GAP**; **H-SPARSE-CAL**; **H-SPARSE-VOL**; D-EXIST-MET-FT (2026-08-17).

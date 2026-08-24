@@ -4,28 +4,29 @@
 **Glossary:** `docs/READER_GLOSSARY.md`
 
 **Application:** `2026-08_oil-futures-predictive-model`  
-**Updated:** 2026-08-20  
+**Updated:** 2026-08-24  
 
 ### Plain status
 
-Closeout remains **hard stop (residuals live)**. The queued weekly-inventory overlay **failed at discovery** (both rules **lost** to continuation on both oils). The first two 21-day rules stay **burned**. Confirm was **not** run. That is **not** a futures skill test and **not** a Wall Street inventory-poll test. Yahoo promote still does not fire. Paper costs **V2**. After-cost value **not shown**. This is not trading advice.
+Closeout remains **hard stop (residuals live)**. The queued cross-oil 21-day overlay: using Brent to call WTI **failed at discovery**; using WTI to call Brent **survived discovery** and beat continuation on the three recent windows, but the shortest window was a **one-hit** margin (not a pass). Prior burned rules stay **burned**. That is **not** a futures skill test. Yahoo promote still does not fire. Paper costs **V2**. After-cost value **not shown**. This is not trading advice.
 
 ---
 
 | Field | Value |
 |-------|--------|
 | **Closure state** | **hard stop (residuals live)** |
-| **Phase** | Inventory overlay pulse **L-PULSE-SPOT-INV-1** (evaluation; no discovery survivor either board; confirm skipped). F-SKILL **parked** |
+| **Phase** | Cross-bench overlay pulse **L-PULSE-SPOT-CROSS-1** (WTI no survivor; Brent W2B confirm point-beats, tiny 250). F-SKILL **parked** |
 | **Amb** | **1.0** (**≠ clearance**) |
-| **Locks in force** | Rank 4; D-EXIST-MET-FT; **V-COST-V2**; **L-SCREEN-Y-PROMOTE**; **L-HUNT-SPOT-TREND**; **L-HUNT-SPOT-INV**; **L-STANDIN-EIA-INV**; **L-HUNT-COT**; **L-HUNT-DJT**; L-SESS |
-| **Next authorization needed** | `leave skill not shown` / next queued **C-SPOT-CROSS** (do **not** unburn; do **not** change 21) / `name horse …` on Yahoo (**different** CL recipe) |
+| **Locks in force** | Rank 4; D-EXIST-MET-FT; **V-COST-V2**; **L-SCREEN-Y-PROMOTE**; **L-HUNT-SPOT-TREND**; **L-HUNT-SPOT-INV**; **L-HUNT-SPOT-CROSS**; **L-HUNT-COT**; **L-HUNT-DJT**; L-SESS |
+| **Next authorization needed** | `leave skill not shown` / next queued **C-SPOT-LOGIT** (do **not** unburn; do **not** change 21; do **not** retune W2B) / `name horse …` on Yahoo (**different** CL recipe) |
 | **Related apps surfaced** | `2026-08_fomc-sep-2026-uffr-change` — leave unnamed ≠ refute; `2026-08_spacex-600-dollar-stock` — lock ≠ clearance. Process only. |
 | **Optional modes** | [OPTIONAL_MODES_MENU.md](OPTIONAL_MODES_MENU.md) — UX/CX/CR **declined, not run**; QI N/A |
 
 **Share pack:** [SHARE_PACK.md](SHARE_PACK.md)  
+**Cross-bench overlay:** [Lock_Hunt_Spot_Cross.md](Lock_Hunt_Spot_Cross.md) · [PULSE_Hunt_Spot_Cross.md](PULSE_Hunt_Spot_Cross.md)  
 **Inventory overlay:** [Lock_Hunt_Spot_Inv.md](Lock_Hunt_Spot_Inv.md) · [PULSE_Hunt_Spot_Inv.md](PULSE_Hunt_Spot_Inv.md)  
 **Spot-trend hunt:** [Lock_Hunt_Spot_Trend.md](Lock_Hunt_Spot_Trend.md) · [PULSE_Hunt_Spot_Trend.md](PULSE_Hunt_Spot_Trend.md)  
-**Residuals:** [R-SPOT-TREND](RESIDUAL_BRANCH_MENU.md#r-spot-trend) **executed → not established** (INV overlay also no survivor; next: **C-SPOT-CROSS**) · [R-F-SKILL](RESIDUAL_BRANCH_MENU.md#r-f-skill) **pursue** (parked)
+**Residuals:** [R-SPOT-TREND](RESIDUAL_BRANCH_MENU.md#r-spot-trend) **executed → not established** (CROSS: WTI fail; Brent tiny 250) · [R-F-SKILL](RESIDUAL_BRANCH_MENU.md#r-f-skill) **pursue** (parked)
 
 **Endpoint** = examination done; verdict frozen. **Hard stop (residuals live)** = hygiene complete **and** `pursue` leftovers remain.
 

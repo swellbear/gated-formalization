@@ -4,9 +4,9 @@
 
 **Clickable cards (mandatory):** Every residual ID must have (1) an index-table link and (2) an anchored card with instance-specific explainers.
 
-**Date:** 2026-08-20  
+**Date:** 2026-08-24  
 **Application:** `2026-08_oil-futures-predictive-model`  
-**Closeout status:** **hard stop (residuals live)**. **L-SCREEN-Y-PROMOTE** in force. **L-HUNT-SPOT-TREND** failed at discovery (both boards). Skill leftover **live** (parked this pulse; next CL horse must be **different**). Phase 2 not entered.
+**Closeout status:** **hard stop (residuals live)**. **L-SCREEN-Y-PROMOTE** in force. **L-HUNT-SPOT-CROSS** scored (WTI fail; Brent tiny 250 ≠ met). Spot-trend **not established**. Skill leftover **live** (parked this pulse; next CL horse must be **different**). Phase 2 not entered.
 
 **Glossary:** [`docs/READER_GLOSSARY.md`](../../docs/READER_GLOSSARY.md)  
 **Optional modes (separate):** [`OPTIONAL_MODES_MENU.md`](OPTIONAL_MODES_MENU.md)
@@ -40,13 +40,13 @@
 | [R-SESS](#r-sess) | Night vs day vs whole-trip as separate tests? | Definitional lock | Protocol; **no class submitted** | **executed → admitted meanings** (L-SESS) |
 | [R-V-VALUE-TEST-0](#r-v-value-test-0) | Named after-cost paper book? | Empirically resolvable | None named | **executed → not established** |
 | [R-F-SKILL](#r-f-skill) | Next-session CL log-return skill vs last settlement (F-CC), plus F-ON/F-DAY exhibits? | Empirically resolvable | **L-HUNT-SPOT-TREND** is a **different object** (parked F-SKILL this pulse); **L-HUNT-COT** no survivor; **L-HUNT-DJT** no survivor; **H-GAP-FADE** small F-DAY (no promote); **L-HUNT-PRETELL** no survivor; **H-SPARSE-CAL** / **H-SPARSE-VOL** / **H-LAG-WF** scored (all fail promote); **H-KS-FTS** not run | **pursue** (**not established**) |
-| [R-SPOT-TREND](#r-spot-trend) | Cash WTI/Brent 21-day sign vs continuation? | Empirically resolvable | **L-HUNT-SPOT-INV** overlay no survivor; **L-HUNT-SPOT-TREND** first pulse no survivor | **executed → not established** |
+| [R-SPOT-TREND](#r-spot-trend) | Cash WTI/Brent 21-day sign vs continuation? | Empirically resolvable | **L-HUNT-SPOT-CROSS** WTI fail / Brent tiny 250; **INV** / first pulse no survivor | **executed → not established** |
 | [R-F-COMBO](#r-f-combo) | Named switching rule after F-ON and F-DAY scored separately? | Empirically resolvable | **unnamed** | **park-until-trigger** |
 | [R-V-VALUE](#r-v-value) | After-cost paper P/L vs the curve? | Empirically resolvable | **unnamed** (operator `leave unnamed`) | **park-until-trigger** |
 | [R-G8](#r-g8) | Model-class fashion under F-SKILL | Empirically resolvable (meanings) | Baseline RMSE + optional FTS | **executed → admitted meanings** |
 | [R-LIVE-STANDIN](#r-live-standin) | Live CME open/settle vs stipulated stand-in? | Empirically resolvable | Yahoo `CL=F` stipulated | **executed → admitted** (stand-in; not live) |
 
-**Authorize grammar:** `leave skill not shown` · `name horse …` (different **CL** recipe) · next queued **C-SPOT-CROSS** (do **not** unburn; do **not** change 21) · `leave screen rule` · `authorize branch R-…` · `decline residual menu`
+**Authorize grammar:** `leave skill not shown` · `name horse …` (different **CL** recipe) · next queued **C-SPOT-LOGIT** (do **not** unburn B2W/FLIP/REV/INV; do **not** retune W2B; do **not** change 21) · `leave screen rule` · `authorize branch R-…` · `decline residual menu`
 
 **Also offered (separate):** [`OPTIONAL_MODES_MENU.md`](OPTIONAL_MODES_MENU.md) — UX/CX/CR **declined, not run**.
 
@@ -176,15 +176,15 @@
 | Field | Content |
 |-------|---------|
 | **Class** | Empirically resolvable (executed) |
-| **Named source class** | **L-HUNT-SPOT-TREND** / **L-STANDIN-EIA-SPOT** — EIA Cushing WTI + Europe Brent daily spots; FRED reprint this pulse |
-| **What it is** | Whether a named 21-day sign rule **strictly beats continuation** on discovery hit-rate (WTI and Brent separate). **L-PULSE-SPOT-1:** FLIP-HOLD/REV **lose** both boards. **L-PULSE-SPOT-INV-1:** INV-CONT/FADE **lose** both boards (closest WTI CONT 0.506 vs 0.508). Confirm skipped both pulses |
+| **Named source class** | **L-HUNT-SPOT-TREND** / **L-STANDIN-EIA-SPOT** / **L-HUNT-SPOT-INV** / **L-HUNT-SPOT-CROSS** — EIA Cushing WTI + Europe Brent daily spots; FRED reprint |
+| **What it is** | Whether a named 21-day sign rule **strictly beats continuation** on discovery hit-rate (WTI and Brent separate). **L-PULSE-SPOT-1:** FLIP-HOLD/REV **lose** both boards. **L-PULSE-SPOT-INV-1:** INV-CONT/FADE **lose** both boards. **L-PULSE-SPOT-CROSS-1:** WTI B2W **lose** (burned); Brent W2B discovery survivor; confirm point-beats but last-250 **tiny +1** ≠ met |
 | **Why offered here** | Operator Track B (call the cash trend / flip / next window), not F-SKILL |
-| **What authorizing does** | Already ran: `Lock_Hunt_Spot_Trend.md` · `Lock_Hunt_Spot_Inv.md`. Next pulse must quote **L-SPOT-QUEUE** (**C-SPOT-CROSS** first) |
+| **What authorizing does** | Already ran: `Lock_Hunt_Spot_Trend.md` · `Lock_Hunt_Spot_Inv.md` · `Lock_Hunt_Spot_Cross.md`. Next pulse must quote **L-SPOT-QUEUE** (**C-SPOT-LOGIT** first) |
 | **What success / failure changes** | A later queued class that beats continuation still is not F-SKILL-met and not a trade |
-| **What it does *not* do** | Unburn burned rows; change 21 after scores; use confirm as train; mix DJT/COT/gap; Street-poll substitution; bring spot inside D-EXIST |
+| **What it does *not* do** | Unburn burned rows; retune W2B; change 21 after scores; use confirm as train; mix DJT/COT/gap; Street-poll substitution; bring spot inside D-EXIST |
 | **Effort** | Medium for the next queued class |
-| **Disposition** | **Executed 2026-08-20** → not established (two pulses) |
-| **How to authorize** | Next: freeze **C-SPOT-CROSS** in its own lock, or leave |
+| **Disposition** | **Executed 2026-08-24** → not established (three pulses; CROSS tiny ≠ met) |
+| **How to authorize** | Next: freeze **C-SPOT-LOGIT** in its own lock, or leave |
 
 <a id="r-f-combo"></a>
 ### R-F-COMBO
@@ -278,7 +278,7 @@ None remaining. [R-G8](#r-g8) meanings admitted. [R-LIVE-STANDIN](#r-live-standi
 | [R-V-VALUE](#r-v-value) | park-until-trigger | Matching V-VALUE book named under **V2** |
 | [R-F-COMBO](#r-f-combo) | park-until-trigger | Rule in advance + F-ON and F-DAY already scored separately |
 
-**Live (not parked):** [R-F-SKILL](#r-f-skill) — `pursue` (parked this pulse; next CL horse must be **different**). [R-SPOT-TREND](#r-spot-trend) executed (no survivor; next queued class).
+**Live (not parked):** [R-F-SKILL](#r-f-skill) — `pursue` (parked this pulse; next CL horse must be **different**). [R-SPOT-TREND](#r-spot-trend) executed (not established; next queued **C-SPOT-LOGIT**).
 
 ---
 
@@ -307,6 +307,7 @@ None remaining. [R-G8](#r-g8) meanings admitted. [R-LIVE-STANDIN](#r-live-standi
 | 2026-08-17 | **L-HUNT-COT** / **L-PULSE-COT-1** — two CFTC MM horses; discovery F-CC both lose; **no survivor**; confirm skipped; skill **not established**; Amb **held 1.0** |
 | 2026-08-20 | **L-HUNT-SPOT-TREND** / **L-PULSE-SPOT-1** — Track B cash 21-day; both horses lose continuation on WTI and Brent; **no survivor**; confirm skipped; F-SKILL parked; Amb **held 1.0** |
 | 2026-08-20 | **L-HUNT-SPOT-INV** / **L-PULSE-SPOT-INV-1** — weekly crude ex-SPR naive surprise overlay; both horses lose continuation both boards; **no survivor**; confirm skipped; do not unburn; Amb **held 1.0** |
+| 2026-08-24 | **L-HUNT-SPOT-CROSS** / **L-PULSE-SPOT-CROSS-1** — WTI B2W lose (burned); Brent W2B discovery survivor; confirm 500/750 beat, last-250 **tiny +1**; spot-trend **not established**; do not unburn / retune W2B / change 21; next **C-SPOT-LOGIT**; Amb **held 1.0** |
 
 ---
 

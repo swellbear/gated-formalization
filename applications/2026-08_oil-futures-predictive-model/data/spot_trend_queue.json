@@ -1,9 +1,9 @@
 {
-  "pulse": "L-HUNT-SPOT-INV",
-  "lock": "Lock_Hunt_Spot_Inv.md",
+  "pulse": "L-HUNT-SPOT-CROSS",
+  "lock": "Lock_Hunt_Spot_Cross.md",
   "active_horses": [
-    "H-SPOT-INV-CONT",
-    "H-SPOT-INV-FADE"
+    "H-SPOT-CROSS-B2W",
+    "H-SPOT-CROSS-W2B"
   ],
   "burned": [
     {
@@ -53,14 +53,15 @@
       "scoreboard": "Brent",
       "status": "burned_discovery_loss",
       "note": "Failed to strictly beat continuation on discovery. Do not retune."
+    },
+    {
+      "horse": "H-SPOT-CROSS-B2W",
+      "scoreboard": "WTI",
+      "status": "burned_discovery_loss",
+      "note": "Failed to strictly beat continuation on discovery. Do not retune."
     }
   ],
   "next": [
-    {
-      "id": "C-SPOT-CROSS",
-      "status": "queued_not_this_pulse",
-      "class": "WTI 21-day sign as the call for Brent next 21 (and reverse)"
-    },
     {
       "id": "C-SPOT-LOGIT",
       "status": "queued_not_this_pulse",
@@ -73,8 +74,8 @@
       "reason": "no horse strictly beat continuation on discovery"
     },
     "Brent": {
-      "id": null,
-      "reason": "no horse strictly beat continuation on discovery"
+      "id": "H-SPOT-CROSS-W2B",
+      "reason": "strictly beat continuation; one horse per board so ties N/A"
     }
   }
 }

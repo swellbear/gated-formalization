@@ -7,4 +7,4 @@ Do not duplicate standing-rule text here. Live decisions use the in-chat picker 
 
 **Claim (verbatim):** Can a predictive model for oil futures be built?
 
-**Current stop:** **hard stop (residuals live)** + **L-PULSE-SPOT-INV-1**. Weekly-inventory overlay **failed at discovery**. First 21-day pair still **burned**. CFTC / Truth Social hunts still **failed at discovery**. Skill not shown. Optional modes declined. Partner front door: [`SHARE_PACK.md`](SHARE_PACK.md).
+**Current stop:** **hard stop (residuals live)** + **L-PULSE-SPOT-CROSS-1**. WTI↔Brent cross-bench: WTI **failed** discovery; Brent confirm **tiny** on last 250 ≠ met. Spot-trend **not established**. Next queued **C-SPOT-LOGIT**. Skill not shown. Optional modes declined. Partner front door: [`SHARE_PACK.md`](SHARE_PACK.md).
