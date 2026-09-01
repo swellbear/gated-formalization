@@ -1,6 +1,6 @@
 # Original-Claim Assessment (Closeout)
 
-**Date:** 2026-08-24  
+**Date:** 2026-09-01  
 **Application:** `2026-08_oil-futures-predictive-model`  
 **Closeout verdict:** **Stable Provisional (split) — hard stop (residuals live)**  
 **Amb at closeout:** **1.0** (after V-COST-V2; 1.5 after Yahoo stand-in pulse; 2.5 after F-SRC-CME-TAPE; 5.5 at first hygiene seal)
@@ -38,7 +38,7 @@ Can a predictive model for oil futures be built?
 ### Free parameters remaining
 | ID | Status / freeze |
 |----|-----------------|
-| [R-F-SKILL](RESIDUAL_BRANCH_MENU.md#r-f-skill) | Skill class named; **L-HUNT-CL-INV** no survivor (do not pick least-bad WOW); **L-HUNT-COT** no survivor; **L-HUNT-DJT** no survivor; **H-GAP-FADE** small F-DAY / F-CC **tie**; **L-HUNT-PRETELL** no survivor; **H-SPARSE-CAL** tiny 500 / **fails** 750; **H-SPARSE-VOL** and **H-LAG-WF** F-CC **loss**; H-KS not run; **not established**. `pursue`. Reopen: **different** horse on Yahoo |
+| [R-F-SKILL](RESIDUAL_BRANCH_MENU.md#r-f-skill) | Skill class named; **L-HUNT-CL-SEAS** no survivor (do not pick least-bad ANN); **L-HUNT-CL-INV** no survivor (do not pick least-bad WOW); **L-HUNT-COT** no survivor; **L-HUNT-DJT** no survivor; **H-GAP-FADE** small F-DAY / F-CC **tie**; **L-HUNT-PRETELL** no survivor; **H-SPARSE-CAL** tiny 500 / **fails** 750; **H-SPARSE-VOL** and **H-LAG-WF** F-CC **loss**; H-KS not run; **not established**. `pursue`. Reopen: frozen **C-CL-DOW** |
 | [R-SPOT-TREND](RESIDUAL_BRANCH_MENU.md#r-spot-trend) | **L-PULSE-SPOT-1** / **INV-1** no survivor; **CROSS-1** WTI fail / Brent tiny 250 ≠ met; **LOGIT-1** discovery beat / confirm **lose** all windows both boards; named queue **empty**. `executed → not established`. Reopen: `leave` · Yahoo horse · name **new** spot class (do not retune FULL; do not unburn; do not change 21) |
 | [R-F-COMBO](RESIDUAL_BRANCH_MENU.md#r-f-combo) | Switching rule **unnamed**. `park-until-trigger`. Rule in advance; F-ON and F-DAY already scored separately |
 | [R-V-VALUE](RESIDUAL_BRANCH_MENU.md#r-v-value) | After-cost book **unnamed**. `park-until-trigger`. Later book must match **V2** |

@@ -4,7 +4,7 @@
 **Application:** `2026-08_oil-futures-predictive-model`  
 **Operator selection:** `yes lets do that` after recommended screen-then-confirm  
 **App-local lock ID:** **L-SCREEN-Y-PROMOTE**  
-**Status:** **IN FORCE as protocol.** Does **not** establish F-SKILL. **H-LAG-WF** already **fails** this gate (F-CC loss). **L-HUNT-CL-INV** scored (**no survivor**; does not promote). **L-HUNT-SPOT-TREND** does **not** fire this gate (wrong object). Nothing promotes now.
+**Status:** **IN FORCE as protocol.** Does **not** establish F-SKILL. **H-LAG-WF** already **fails** this gate (F-CC loss). **L-HUNT-CL-SEAS** scored (**no survivor**; does not promote). **L-HUNT-CL-INV** scored (**no survivor**; does not promote). **L-HUNT-SPOT-TREND** does **not** fire this gate (wrong object). Nothing promotes now.
 
 ---
 
@@ -42,6 +42,7 @@ That any model works. That a Yahoo win is a live win. That anyone should trade.
 | **L-HUNT-DJT** | Two Truth Social oil-sentiment horses. Discovery F-CC: **both tie 0**. **No survivor.** Confirm skipped. **Does not promote.** |
 | **L-HUNT-COT** | Two CFTC managed-money horses. Discovery F-CC: **both lose**. **No survivor.** Confirm skipped. **Does not promote.** |
 | **L-HUNT-CL-INV** | Two EIA weekly inventory overlay horses on Yahoo CL (**H-CL-INV-SURP** / **H-CL-INV-WOW**). Discovery F-CC last 500 of prefix ≤ 2023-08-21: RMSE 0 = **0.026705**; SURP **0.026836** (beats_0 false); WOW **0.026803** (beats_0 false, closest). **No survivor.** Do **not** pick least-bad. Confirm skipped. **Does not promote.** |
+| **L-HUNT-CL-SEAS** | Two annual-season overlay horses on Yahoo CL (**H-CL-SEAS-ANN** / **H-CL-SEAS-MON**). Discovery F-CC last 500 of prefix ≤ 2023-08-21: RMSE 0 = **0.026705**; ANN **0.026799** (beats_0 false, closest); MON **0.026816** (beats_0 false). **No survivor.** Do **not** pick least-bad. Confirm skipped. **Does not promote.** |
 | **V-VALUE** | Unchanged. After-cost P/L under **V2** is a later named book, not this gate. |
 
 **“Not lose” on 250/750** means horse RMSE **≤** no-change RMSE (ties allowed). Last **500** must **strictly beat**.

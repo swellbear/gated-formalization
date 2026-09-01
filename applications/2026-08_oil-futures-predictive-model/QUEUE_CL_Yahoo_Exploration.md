@@ -3,6 +3,7 @@
 **Date:** 2026-09-01  
 **Lock this pulse:** `Lock_Hunt_CL_Seas.md`  
 **Machine register:** `data/cl_yahoo_queue.json`  
+**Status:** **C-CL-SEAS** scored. Discovery **no survivor**. Frozen next remains **C-CL-DOW**.  
 **Operator:** delegated — decide the unused classes and chip them without a further prompt.
 
 ---
@@ -32,22 +33,24 @@
 
 | Queue ID | Class | Why it is a different class |
 |----------|-------|------------------------------|
-| **C-CL-SEAS** (this pulse) | Annual calendar harmonics / month overlay | Every-session season, not EIA/FOMC **event-day** sparse (`H-SPARSE-CAL`) |
-| **C-CL-DOW** | Weekday overlay | Weekly cycle, not annual season and not event-day sparse |
+| **C-CL-SEAS** (scored) | Annual calendar harmonics / month overlay | Discovery both lose; burned. Not event-day sparse |
+| **C-CL-DOW** (next) | Weekday overlay | Weekly cycle, not annual season and not event-day sparse |
 
 **Not queued (refused):** new Track B spot class; Yahoo month-chain curve; `front_id` roll clock; retune INV/COT/DJT/gap/pretell/lag/sparse; pick least-bad discovery loser.
 
 ---
 
-## This pulse — **C-CL-SEAS** / **L-HUNT-CL-SEAS**
+## This pulse (scored) — **C-CL-SEAS** / **L-HUNT-CL-SEAS**
 
-| ID | Role |
-|----|------|
-| **H-CL-SEAS-ANN** | Expanding OLS: CL lags + annual sin/cos of day-of-year |
-| **H-CL-SEAS-MON** | Expanding OLS: CL lags + calendar-month dummies (Jan baseline) |
-| No-change **0** | **Baseline, not a horse** |
+| ID | Role | Result |
+|----|------|--------|
+| **H-CL-SEAS-ANN** | Expanding OLS: CL lags + annual sin/cos of day-of-year | Discovery F-CC **0.026799** vs 0 **0.026705** — **lose** (closest miss) |
+| **H-CL-SEAS-MON** | Expanding OLS: CL lags + calendar-month dummies (Jan baseline) | Discovery F-CC **0.026816** vs 0 **0.026705** — **lose** |
+| No-change **0** | **Baseline, not a horse** | |
 
-**Burned (do not retune / do not unburn):** H-LAG-WF, H-SPARSE-CAL, H-SPARSE-VOL, H-GAP-FADE, H-GAP-CONT, L-HUNT-PRETELL, L-HUNT-DJT, L-HUNT-COT, H-CL-INV-SURP, H-CL-INV-WOW.
+**Survivor:** **none.** Confirm skipped. Do **not** pick least-bad ANN.
+
+**Burned (do not retune / do not unburn):** H-LAG-WF, H-SPARSE-CAL, H-SPARSE-VOL, H-GAP-FADE, H-GAP-CONT, L-HUNT-PRETELL, L-HUNT-DJT, L-HUNT-COT, H-CL-INV-SURP, H-CL-INV-WOW, **H-CL-SEAS-ANN**, **H-CL-SEAS-MON**.
 
 ---
 

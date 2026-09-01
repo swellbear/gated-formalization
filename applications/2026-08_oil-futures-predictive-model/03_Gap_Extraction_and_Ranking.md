@@ -120,7 +120,7 @@ G8 is the **named model class and feature recipe** under a locked G1/G6 — bloc
 | G4 | **LOCKED per leg:** D-EXIST T2 price-level census; F-SKILL/V-VALUE T1 next-session log-return. |
 | G5 | **LOCKED per leg:** D-EXIST H3 open (census); F-SKILL/V-VALUE H1 next session as **F-CC** (settlement-to-settlement). **L-SESS:** F-ON = settlement→next official open; F-DAY = official open→same-day settlement. Combo is a **third** test, not a substitute. |
 | G7 | **LOCKED per leg:** D-EXIST E3 census; F-SKILL/V-VALUE E1 walk-forward. **Stand-in stipulated** (Yahoo `CL=F`). |
-| G8 | **Named** with H-CL-INV-SURP / H-CL-INV-WOW (no discovery survivor; do not pick least-bad WOW), H-COT-NET / H-COT-CHG (no discovery survivor), H-DJT-WEEK / H-DJT-MONTH (no discovery survivor), H-GAP-FADE / H-GAP-CONT (FADE small F-DAY, no promote), H-LAG-WF, H-SPARSE-CAL, H-SPARSE-VOL (scored; none promote), L-HUNT-PRETELL eight tell horses (no discovery survivor), and H-KS-FTS (not run). Not a D-EXIST requirement. |
+| G8 | **Named** with H-CL-SEAS-ANN / H-CL-SEAS-MON (no discovery survivor; do not pick least-bad ANN), H-CL-INV-SURP / H-CL-INV-WOW (no discovery survivor; do not pick least-bad WOW), H-COT-NET / H-COT-CHG (no discovery survivor), H-DJT-WEEK / H-DJT-MONTH (no discovery survivor), H-GAP-FADE / H-GAP-CONT (FADE small F-DAY, no promote), H-LAG-WF, H-SPARSE-CAL, H-SPARSE-VOL (scored; none promote), L-HUNT-PRETELL eight tell horses (no discovery survivor), and H-KS-FTS (not run). Not a D-EXIST requirement. |
 | V-COST | V-VALUE cost schedule — **V2 named** (fees + $10/contract/side). V1 not the live schedule. |
 | F-SRC | **F-SRC-CME-TAPE** (2026-08-17). Stand-in pulse scored; F-SKILL **not established**. |
 | Live vs stand-in | **Stand-in stipulated** — Yahoo `CL=F` Open/Close. **L-SCREEN-Y-PROMOTE:** live CME only if F-CC beats 0 on last 500 and does not lose on 250/750. |
@@ -133,7 +133,7 @@ G8 is the **named model class and feature recipe** under a locked G1/G6 — bloc
 
 ## Priority Order (highest sum first)
 
-1. **F-SRC / F-SKILL** — **L-HUNT-CL-INV** no survivor (do not pick least-bad WOW); **L-HUNT-COT** no survivor; **L-HUNT-DJT** no survivor; **H-GAP-FADE** small F-DAY, no promote; **L-HUNT-PRETELL** no survivor; **H-SPARSE-CAL** / **H-SPARSE-VOL** / **H-LAG-WF** scored; **none promote**; H-KS not run; **not established**; **pursue**  
+1. **F-SRC / F-SKILL** — **L-HUNT-CL-SEAS** no survivor (do not pick least-bad ANN); **L-HUNT-CL-INV** no survivor (do not pick least-bad WOW); **L-HUNT-COT** no survivor; **L-HUNT-DJT** no survivor; **H-GAP-FADE** small F-DAY, no promote; **L-HUNT-PRETELL** no survivor; **H-SPARSE-CAL** / **H-SPARSE-VOL** / **H-LAG-WF** scored; **none promote**; H-KS not run; **not established**; **pursue**  
 2. **R-SPOT-TREND** — **L-PULSE-SPOT-1** / **INV-1** no survivor; **CROSS-1** WTI fail / Brent confirm tiny 250 ≠ met; **LOGIT-1** discovery beat / confirm **lose** all windows both boards; **not established**; named Track B queue **empty** (do not retune FULL; do not unburn; do not change 21)  
 3. **V-SRC** — sealed leave unnamed; later book must use **V2**  
 4. **Live vs stand-in** — executed (Yahoo stipulated; not live)
@@ -144,7 +144,7 @@ Lean Default Path: `leave skill not shown`, a **different** named CL horse on Ya
 
 ## Inter-parameter dependency (mandatory)
 
-**F-SKILL** is blocked primarily by **no freeze-matching horse that beats F-CC on the promote gate** (CL-INV no survivor; COT no survivor; DJT no survivor; FADE F-CC tie; pretell no survivor; CAL tiny 500 / fails 750; VOL and H-LAG lost; H-KS tape fail). **R-SPOT-TREND** is a **different** leftover: blocked by **no board-complete horse that meets the spot bar** (FLIP/REV/INV burned; CROSS WTI fail; Brent W2B confirm tiny ≠ met; LOGIT FULL confirm lose both boards). **V-VALUE** is blocked primarily by **V-SRC leave unnamed**.
+**F-SKILL** is blocked primarily by **no freeze-matching horse that beats F-CC on the promote gate** (CL-SEAS no survivor; CL-INV no survivor; COT no survivor; DJT no survivor; FADE F-CC tie; pretell no survivor; CAL tiny 500 / fails 750; VOL and H-LAG lost; H-KS tape fail). **R-SPOT-TREND** is a **different** leftover: blocked by **no board-complete horse that meets the spot bar** (FLIP/REV/INV burned; CROSS WTI fail; Brent W2B confirm tiny ≠ met; LOGIT FULL confirm lose both boards). **V-VALUE** is blocked primarily by **V-SRC leave unnamed**.
 
 **Rectification:** `leave skill not shown` · `name horse …` on Yahoo under **L-SCREEN-Y-PROMOTE** for F-SKILL (different recipe; do not pick least-bad) · or operator-name a **new** spot class (named Track B queue **empty**). Do not auto-enter Phase 2. Do not unburn. Do not retune FULL / W2B. Do not change 21.
 

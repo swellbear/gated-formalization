@@ -2,10 +2,7 @@
   "pulse": "L-HUNT-CL-SEAS",
   "lock": "Lock_Hunt_CL_Seas.md",
   "operator": "delegated_decide_and_chip",
-  "active_horses": [
-    "H-CL-SEAS-ANN",
-    "H-CL-SEAS-MON"
-  ],
+  "active_horses": [],
   "burned": [
     {
       "horse": "H-LAG-WF",
@@ -56,6 +53,16 @@
       "horse": "H-CL-INV-WOW",
       "status": "burned_discovery_loss",
       "note": "Closest INV miss is not a survivor."
+    },
+    {
+      "horse": "H-CL-SEAS-ANN",
+      "status": "burned_discovery_loss",
+      "note": "Closest SEAS miss is not a survivor. Do not retune Fourier."
+    },
+    {
+      "horse": "H-CL-SEAS-MON",
+      "status": "burned_discovery_loss",
+      "note": "Do not retune month dummies."
     }
   ],
   "next": [
@@ -65,6 +72,13 @@
       "why_different": "Weekly calendar cycle, not annual season and not EIA/FOMC event-day sparse."
     }
   ],
+  "last_discovery": {
+    "id": null,
+    "reason": "no horse strictly beat 0 on discovery F-CC last 500",
+    "rmse_0": 0.026705336497433927,
+    "H-CL-SEAS-ANN": 0.026798939825314286,
+    "H-CL-SEAS-MON": 0.02681557681509441
+  },
   "refused": [
     "new spot 21-day class (Track B confirm already lost; continuation won that object)",
     "Yahoo month-chain curve (not historical CL1-CL18)",

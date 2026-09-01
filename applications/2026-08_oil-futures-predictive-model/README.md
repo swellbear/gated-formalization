@@ -7,4 +7,4 @@ Do not duplicate standing-rule text here. Live decisions use the in-chat picker 
 
 **Claim (verbatim):** Can a predictive model for oil futures be built?
 
-**Current stop:** **hard stop (residuals live)** + **L-PULSE-CL-INV-1**. Next different CL horse (EIA weekly inventory overlay): discovery **both lose**; **no survivor**; confirm skipped; do **not** pick least-bad WOW. Skill **not established** (`pursue`). Spot-trend drawer already executed (not established; queue empty). Optional modes declined. Partner front door: [`SHARE_PACK.md`](SHARE_PACK.md).
+**Current stop:** **hard stop (residuals live)** + **L-PULSE-CL-SEAS-1**. Annual season overlay: discovery **both lose**; **no survivor**; confirm skipped; do **not** pick least-bad ANN. Frozen next **C-CL-DOW**. Skill **not established** (`pursue`). Spot-trend drawer already executed (not established; queue empty). Optional modes declined. Partner front door: [`SHARE_PACK.md`](SHARE_PACK.md).
