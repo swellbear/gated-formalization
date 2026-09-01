@@ -1,0 +1,75 @@
+{
+  "pulse": "L-HUNT-CL-SEAS",
+  "lock": "Lock_Hunt_CL_Seas.md",
+  "operator": "delegated_decide_and_chip",
+  "active_horses": [
+    "H-CL-SEAS-ANN",
+    "H-CL-SEAS-MON"
+  ],
+  "burned": [
+    {
+      "horse": "H-LAG-WF",
+      "status": "burned_fcc_loss",
+      "note": "Do not retune lags."
+    },
+    {
+      "horse": "H-SPARSE-CAL",
+      "status": "burned_no_promote",
+      "note": "Event-day sparse. Distinct from annual season. Do not retune."
+    },
+    {
+      "horse": "H-SPARSE-VOL",
+      "status": "burned_fcc_loss",
+      "note": "Do not retune."
+    },
+    {
+      "horse": "H-GAP-FADE",
+      "status": "burned_no_promote",
+      "note": "Do not remix gap horses."
+    },
+    {
+      "horse": "H-GAP-CONT",
+      "status": "burned_discovery_loss",
+      "note": "Do not remix gap horses."
+    },
+    {
+      "horse": "L-HUNT-PRETELL",
+      "status": "burned_discovery_loss",
+      "note": "Do not expand the tell drawer."
+    },
+    {
+      "horse": "L-HUNT-DJT",
+      "status": "burned_discovery_loss",
+      "note": "Do not retune the lexicon."
+    },
+    {
+      "horse": "L-HUNT-COT",
+      "status": "burned_discovery_loss",
+      "note": "Do not add other trader groups."
+    },
+    {
+      "horse": "H-CL-INV-SURP",
+      "status": "burned_discovery_loss",
+      "note": "Do not pick least-bad. Do not retune inventories."
+    },
+    {
+      "horse": "H-CL-INV-WOW",
+      "status": "burned_discovery_loss",
+      "note": "Closest INV miss is not a survivor."
+    }
+  ],
+  "next": [
+    {
+      "id": "C-CL-DOW",
+      "class": "weekday overlay on Yahoo CL F-CC",
+      "why_different": "Weekly calendar cycle, not annual season and not EIA/FOMC event-day sparse."
+    }
+  ],
+  "refused": [
+    "new spot 21-day class (Track B confirm already lost; continuation won that object)",
+    "Yahoo month-chain curve (not historical CL1-CL18)",
+    "days-to-expiry from stand-in front_id (always CL=F)",
+    "unburn or retune burned CL horses",
+    "append a class after seeing SEAS scores"
+  ]
+}
