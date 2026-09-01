@@ -1,6 +1,6 @@
 {
-  "pulse": "L-HUNT-CL-SEAS",
-  "lock": "Lock_Hunt_CL_Seas.md",
+  "pulse": "L-HUNT-CL-DOW",
+  "lock": "Lock_Hunt_CL_Dow.md",
   "operator": "delegated_decide_and_chip",
   "active_horses": [],
   "burned": [
@@ -63,27 +63,31 @@
       "horse": "H-CL-SEAS-MON",
       "status": "burned_discovery_loss",
       "note": "Do not retune month dummies."
-    }
-  ],
-  "next": [
+    },
     {
-      "id": "C-CL-DOW",
-      "class": "weekday overlay on Yahoo CL F-CC",
-      "why_different": "Weekly calendar cycle, not annual season and not EIA/FOMC event-day sparse."
+      "horse": "H-CL-DOW-WD",
+      "status": "burned_discovery_loss",
+      "note": "Do not retune weekday dummies."
+    },
+    {
+      "horse": "H-CL-DOW-FRI",
+      "status": "burned_discovery_loss",
+      "note": "Closest DOW miss is not a survivor."
     }
   ],
+  "next": [],
   "last_discovery": {
     "id": null,
     "reason": "no horse strictly beat 0 on discovery F-CC last 500",
     "rmse_0": 0.026705336497433927,
-    "H-CL-SEAS-ANN": 0.026798939825314286,
-    "H-CL-SEAS-MON": 0.02681557681509441
+    "H-CL-DOW-WD": 0.02681169712101866,
+    "H-CL-DOW-FRI": 0.026775387552925307
   },
   "refused": [
     "new spot 21-day class (Track B confirm already lost; continuation won that object)",
     "Yahoo month-chain curve (not historical CL1-CL18)",
     "days-to-expiry from stand-in front_id (always CL=F)",
     "unburn or retune burned CL horses",
-    "append a class after seeing SEAS scores"
+    "append a class after seeing SEAS or DOW scores"
   ]
 }

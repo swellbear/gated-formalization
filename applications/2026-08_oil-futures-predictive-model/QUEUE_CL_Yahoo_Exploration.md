@@ -1,9 +1,9 @@
 # Exploration queue — Yahoo CL F-CC (R-F-SKILL leftover)
 
 **Date:** 2026-09-01  
-**Lock this pulse:** `Lock_Hunt_CL_Seas.md`  
+**Lock this pulse:** `Lock_Hunt_CL_Dow.md`  
 **Machine register:** `data/cl_yahoo_queue.json`  
-**Status:** **C-CL-SEAS** scored. Discovery **no survivor**. Frozen next remains **C-CL-DOW**.  
+**Status:** **C-CL-DOW** scored. Discovery **no survivor**. Frozen `next` **empty**. **Stop.**  
 **Operator:** delegated — decide the unused classes and chip them without a further prompt.
 
 ---
@@ -33,24 +33,24 @@
 
 | Queue ID | Class | Why it is a different class |
 |----------|-------|------------------------------|
-| **C-CL-SEAS** (scored) | Annual calendar harmonics / month overlay | Discovery both lose; burned. Not event-day sparse |
-| **C-CL-DOW** (next) | Weekday overlay | Weekly cycle, not annual season and not event-day sparse |
+| **C-CL-SEAS** (scored) | Annual calendar harmonics / month overlay | Discovery both lose; burned |
+| **C-CL-DOW** (scored) | Weekday overlay | Discovery both lose; burned. Named queue **empty** |
 
 **Not queued (refused):** new Track B spot class; Yahoo month-chain curve; `front_id` roll clock; retune INV/COT/DJT/gap/pretell/lag/sparse; pick least-bad discovery loser.
 
 ---
 
-## This pulse (scored) — **C-CL-SEAS** / **L-HUNT-CL-SEAS**
+## This pulse (scored) — **C-CL-DOW** / **L-HUNT-CL-DOW**
 
 | ID | Role | Result |
 |----|------|--------|
-| **H-CL-SEAS-ANN** | Expanding OLS: CL lags + annual sin/cos of day-of-year | Discovery F-CC **0.026799** vs 0 **0.026705** — **lose** (closest miss) |
-| **H-CL-SEAS-MON** | Expanding OLS: CL lags + calendar-month dummies (Jan baseline) | Discovery F-CC **0.026816** vs 0 **0.026705** — **lose** |
+| **H-CL-DOW-WD** | Expanding OLS: CL lags + Tue–Fri dummies (Mon baseline) | Discovery F-CC **0.026812** vs 0 **0.026705** — **lose** |
+| **H-CL-DOW-FRI** | Expanding OLS: CL lags + Friday dummy | Discovery F-CC **0.026775** vs 0 **0.026705** — **lose** (closest miss) |
 | No-change **0** | **Baseline, not a horse** | |
 
-**Survivor:** **none.** Confirm skipped. Do **not** pick least-bad ANN.
+**Survivor:** **none.** Confirm skipped. Do **not** pick least-bad FRI. Frozen `next` **empty**. **Stop.**
 
-**Burned (do not retune / do not unburn):** H-LAG-WF, H-SPARSE-CAL, H-SPARSE-VOL, H-GAP-FADE, H-GAP-CONT, L-HUNT-PRETELL, L-HUNT-DJT, L-HUNT-COT, H-CL-INV-SURP, H-CL-INV-WOW, **H-CL-SEAS-ANN**, **H-CL-SEAS-MON**.
+**Burned (do not retune / do not unburn):** H-LAG-WF, H-SPARSE-CAL, H-SPARSE-VOL, H-GAP-FADE, H-GAP-CONT, L-HUNT-PRETELL, L-HUNT-DJT, L-HUNT-COT, H-CL-INV-SURP, H-CL-INV-WOW, H-CL-SEAS-ANN, H-CL-SEAS-MON, **H-CL-DOW-WD**, **H-CL-DOW-FRI**.
 
 ---
 

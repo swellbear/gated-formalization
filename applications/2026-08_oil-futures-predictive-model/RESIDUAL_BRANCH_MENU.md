@@ -6,7 +6,7 @@
 
 **Date:** 2026-09-01  
 **Application:** `2026-08_oil-futures-predictive-model`  
-**Closeout status:** **hard stop (residuals live)**. **L-SCREEN-Y-PROMOTE** in force. **L-HUNT-CL-SEAS** scored (discovery both lose; no survivor; confirm skipped; do not pick least-bad ANN). Skill leftover **live** (`pursue`; next frozen **C-CL-DOW**). Spot-trend **not established** (LOGIT confirm lose; queue empty). Phase 2 not entered.
+**Closeout status:** **hard stop (residuals live)**. **L-SCREEN-Y-PROMOTE** in force. **L-HUNT-CL-DOW** scored (discovery both lose; no survivor; confirm skipped; do not pick least-bad FRI). Named Yahoo CL queue **empty**. Skill leftover **live** (`pursue` until a new class is named). Spot-trend **not established** (LOGIT confirm lose; queue empty). Phase 2 not entered.
 
 **Glossary:** [`docs/READER_GLOSSARY.md`](../../docs/READER_GLOSSARY.md)  
 **Optional modes (separate):** [`OPTIONAL_MODES_MENU.md`](OPTIONAL_MODES_MENU.md)
@@ -19,7 +19,7 @@
 
 ## 0. Plain-language framing
 
-**What we’re doing:** Listing leftovers. The next unused Yahoo CL recipe (annual season overlay) **failed at discovery** — do **not** pick least-bad Fourier. Frozen next class is **C-CL-DOW**. Track B (cash 21-day trend) ran four named classes; last drawer (**LOGIT**) beat discovery then **lost confirm** — named queue **empty**. Yahoo first for **futures** skill. Live CME only if a named horse beats no-change on the **whole trip**. Overnight-gap fade had a small **day** edge and did **not** promote. Pretell / COT / DJT / INV hunts failed at discovery. Lagged-return, calendar-sparse, and vol-sparse horses all failed that gate. Combo parked. After-cost book unnamed.
+**What we’re doing:** Listing leftovers. The last frozen Yahoo CL recipe (weekday overlay) **failed at discovery** — do **not** pick least-bad Friday. Named Yahoo CL queue **empty**. Track B (cash 21-day trend) ran four named classes; last drawer (**LOGIT**) beat discovery then **lost confirm** — named queue **empty**. Yahoo first for **futures** skill. Live CME only if a named horse beats no-change on the **whole trip**. Overnight-gap fade had a small **day** edge and did **not** promote. Pretell / COT / DJT / INV / SEAS hunts failed at discovery. Lagged-return, calendar-sparse, and vol-sparse horses all failed that gate. Combo parked. After-cost book unnamed.
 
 **What we need from you:** Nothing required. Optional: official CME re-score, or name a horse vs this baseline. This is not a trade.
 
@@ -39,14 +39,14 @@
 | [R-DRV](#r-drv) | Exhaustive list of what can move next-session CL? | Empirically resolvable | Census of list-types; **no class submitted** | **executed → evaluation** (L-MAP-DRV) |
 | [R-SESS](#r-sess) | Night vs day vs whole-trip as separate tests? | Definitional lock | Protocol; **no class submitted** | **executed → admitted meanings** (L-SESS) |
 | [R-V-VALUE-TEST-0](#r-v-value-test-0) | Named after-cost paper book? | Empirically resolvable | None named | **executed → not established** |
-| [R-F-SKILL](#r-f-skill) | Next-session CL log-return skill vs last settlement (F-CC), plus F-ON/F-DAY exhibits? | Empirically resolvable | **L-HUNT-CL-SEAS** no survivor (do not pick least-bad ANN); **L-HUNT-CL-INV** no survivor (do not pick least-bad WOW); **L-HUNT-COT** no survivor; **L-HUNT-DJT** no survivor; **H-GAP-FADE** small F-DAY (no promote); **L-HUNT-PRETELL** no survivor; **H-SPARSE-CAL** / **H-SPARSE-VOL** / **H-LAG-WF** scored (all fail promote); **H-KS-FTS** not run | **pursue** (**not established**) |
+| [R-F-SKILL](#r-f-skill) | Next-session CL log-return skill vs last settlement (F-CC), plus F-ON/F-DAY exhibits? | Empirically resolvable | **L-HUNT-CL-DOW** no survivor (do not pick least-bad FRI); **L-HUNT-CL-SEAS** no survivor (do not pick least-bad ANN); **L-HUNT-CL-INV** no survivor (do not pick least-bad WOW); **L-HUNT-COT** no survivor; **L-HUNT-DJT** no survivor; **H-GAP-FADE** small F-DAY (no promote); **L-HUNT-PRETELL** no survivor; **H-SPARSE-CAL** / **H-SPARSE-VOL** / **H-LAG-WF** scored (all fail promote); **H-KS-FTS** not run | **pursue** (**not established**; named Yahoo CL queue **empty**) |
 | [R-SPOT-TREND](#r-spot-trend) | Cash WTI/Brent 21-day sign vs continuation? | Empirically resolvable | **L-HUNT-SPOT-LOGIT** discovery beat / confirm lose; **CROSS** WTI fail / Brent tiny 250; **INV** / first pulse no survivor; queue **empty** | **executed → not established** |
 | [R-F-COMBO](#r-f-combo) | Named switching rule after F-ON and F-DAY scored separately? | Empirically resolvable | **unnamed** | **park-until-trigger** |
 | [R-V-VALUE](#r-v-value) | After-cost paper P/L vs the curve? | Empirically resolvable | **unnamed** (operator `leave unnamed`) | **park-until-trigger** |
 | [R-G8](#r-g8) | Model-class fashion under F-SKILL | Empirically resolvable (meanings) | Baseline RMSE + optional FTS | **executed → admitted meanings** |
 | [R-LIVE-STANDIN](#r-live-standin) | Live CME open/settle vs stipulated stand-in? | Empirically resolvable | Yahoo `CL=F` stipulated | **executed → admitted** (stand-in; not live) |
 
-**Authorize grammar:** chip frozen **C-CL-DOW** · `leave skill not shown` · name a **new** spot class (named Track B queue **empty**; do **not** retune FULL; do **not** unburn; do **not** change 21) · `leave screen rule` · `authorize branch R-…` · `decline residual menu`
+**Authorize grammar:** `leave skill not shown` · `name horse …` (new **CL** recipe; named Yahoo CL queue **empty**; do **not** pick least-bad FRI) · name a **new** spot class (named Track B queue **empty**; do **not** retune FULL; do **not** unburn; do **not** change 21) · `leave screen rule` · `authorize branch R-…` · `decline residual menu`
 
 **Also offered (separate):** [`OPTIONAL_MODES_MENU.md`](OPTIONAL_MODES_MENU.md) — UX/CX/CR **declined, not run**.
 
@@ -159,14 +159,14 @@
 |-------|---------|
 | **Class** | Empirically resolvable |
 | **Named source class** | **F-SRC-CME-TAPE**. Stand-in tape: Yahoo `CL=F` (`Lock_Standin_Yahoo_CLF.md`) |
-| **What it is** | Whether any horse **beats** no-change RMSE on **F-ON / F-DAY / F-CC**. **L-HUNT-CL-SEAS:** two annual-season horses; discovery F-CC **both lose** (0 = 0.026705; closest H-CL-SEAS-ANN 0.026799); **no survivor**; confirm skipped; do **not** pick least-bad. **L-HUNT-CL-INV:** two EIA weekly inventory horses; discovery F-CC **both lose** (0 = 0.026705; closest H-CL-INV-WOW 0.026803); **no survivor**; confirm skipped; do **not** pick least-bad. **L-HUNT-COT:** two CFTC MM horses; discovery F-CC **both lose** (0 = 0.026705; closest H-COT-NET 0.026796); **no survivor**. **L-HUNT-DJT:** two Truth Social horses; discovery F-CC **both tie** 0 (0.026705); session-day scores **all zero**; **no survivor**. **H-GAP-FADE** confirm last-500 F-DAY 0.026584 vs 0 0.026634 (small; F-CC **tie** — no promote). **H-GAP-CONT** discovery F-DAY **loss**. **L-HUNT-PRETELL:** eight tell horses; discovery F-CC **all lose**; **no survivor**. **H-SPARSE-CAL** last-500 F-CC 0.02868990 vs 0 0.02869369 (tiny; **fails** 750 — no promote). **H-SPARSE-VOL** F-CC **loss**. **H-LAG-WF** F-CC **loss**. **H-KS-FTS not run**. **Not established** |
+| **What it is** | Whether any horse **beats** no-change RMSE on **F-ON / F-DAY / F-CC**. **L-HUNT-CL-DOW:** two weekday horses; discovery F-CC **both lose** (0 = 0.026705; closest H-CL-DOW-FRI 0.026775); **no survivor**; confirm skipped; do **not** pick least-bad. **L-HUNT-CL-SEAS:** two annual-season horses; discovery F-CC **both lose** (0 = 0.026705; closest H-CL-SEAS-ANN 0.026799); **no survivor**; confirm skipped; do **not** pick least-bad. **L-HUNT-CL-INV:** two EIA weekly inventory horses; discovery F-CC **both lose** (0 = 0.026705; closest H-CL-INV-WOW 0.026803); **no survivor**; confirm skipped; do **not** pick least-bad. **L-HUNT-COT:** two CFTC MM horses; discovery F-CC **both lose** (0 = 0.026705; closest H-COT-NET 0.026796); **no survivor**. **L-HUNT-DJT:** two Truth Social horses; discovery F-CC **both tie** 0 (0.026705); session-day scores **all zero**; **no survivor**. **H-GAP-FADE** confirm last-500 F-DAY 0.026584 vs 0 0.026634 (small; F-CC **tie** — no promote). **H-GAP-CONT** discovery F-DAY **loss**. **L-HUNT-PRETELL:** eight tell horses; discovery F-CC **all lose**; **no survivor**. **H-SPARSE-CAL** last-500 F-CC 0.02868990 vs 0 0.02869369 (tiny; **fails** 750 — no promote). **H-SPARSE-VOL** F-CC **loss**. **H-LAG-WF** F-CC **loss**. **H-KS-FTS not run**. **Not established** |
 | **Why offered here** | Rank 4 F-SKILL leftover; tape fork closed as stand-in |
-| **What authorizing does** | Chip frozen **C-CL-DOW** (weekday overlay) under **L-SCREEN-Y-PROMOTE**. Do **not** pick least-bad ANN after CL-SEAS. Do **not** pick least-bad WOW after CL-INV. Do **not** add percent-of-OI or other trader groups after COT scores. Do **not** retune the DJT lexicon. Do **not** remix H-GAP-FADE/CONT. Do **not** re-hunt confirm windows. Do **not** expand the pretell drawer or CAL/VOL/SEAS into a zoo. Live CME is **confirmation** of the same horse **only** if F-CC beats 0 on last 500 and does not lose on 250/750. Honest **established** still **stops**. |
+| **What authorizing does** | A later **front-only** horse is scored on Yahoo under **L-SCREEN-Y-PROMOTE** only if newly named (frozen `next` **empty**). Do **not** pick least-bad FRI after CL-DOW. Do **not** pick least-bad ANN after CL-SEAS. Do **not** pick least-bad WOW after CL-INV. Do **not** add percent-of-OI or other trader groups after COT scores. Do **not** retune the DJT lexicon. Do **not** remix H-GAP-FADE/CONT. Do **not** re-hunt confirm windows. Do **not** expand the pretell drawer or CAL/VOL/SEAS/DOW into a zoo. Live CME is **confirmation** of the same horse **only** if F-CC beats 0 on last 500 and does not lose on 250/750. Honest **established** still **stops**. |
 | **What success / failure changes** | A Yahoo F-CC beat still is not live clearance. F-ON/F-DAY alone do **not** promote. A small F-DAY dip is **not** met |
 | **What it does *not* do** | Treat Yahoo as official settlement; promote on a tiny dip; USO; EIA STEO; a trade; pick least-bad discovery loser |
 | **Effort** | Medium once a horse is named |
-| **Disposition** | **pursue** (CL-SEAS no survivor; CL-INV no survivor; COT no survivor; DJT no survivor; FADE small F-DAY, no promote; pretell failed at discovery; CAL/VOL/H-LAG fail promote; next frozen **C-CL-DOW**; **not established**) |
-| **How to authorize** | Chip **C-CL-DOW**, or leave |
+| **Disposition** | **pursue** (CL-DOW no survivor; CL-SEAS no survivor; CL-INV no survivor; COT no survivor; DJT no survivor; FADE small F-DAY, no promote; pretell failed at discovery; CAL/VOL/H-LAG fail promote; named Yahoo CL queue **empty**; **not established**) |
+| **How to authorize** | `name horse …` (new class), or leave |
 
 **Do not treat as this class:** EIA STEO; listed futures curve as a next-session CL return model; Alquist–Kilian / Fed IFDP spot-forecast papers; canonical real/spot VARs; the existence menu as “the” skill recipe; last-settlement no-change (baseline, not the model); **L-MAP-FT families as a silent F-SRC pick**; **L-MAP-DRV families as a silent F-SRC pick**; **USO / Zhang half-hour momentum as F-ON or F-DAY**; **L-HUNT-SPOT-TREND as F-CC**; **least-bad H-CL-INV-WOW as a survivor**; **least-bad H-CL-SEAS-ANN as a survivor**; **H-SPARSE-CAL as annual season**.
 
@@ -278,7 +278,7 @@ None remaining. [R-G8](#r-g8) meanings admitted. [R-LIVE-STANDIN](#r-live-standi
 | [R-V-VALUE](#r-v-value) | park-until-trigger | Matching V-VALUE book named under **V2** |
 | [R-F-COMBO](#r-f-combo) | park-until-trigger | Rule in advance + F-ON and F-DAY already scored separately |
 
-**Live (not parked):** [R-F-SKILL](#r-f-skill) — `pursue` (CL-SEAS no survivor; next frozen **C-CL-DOW**; do not pick least-bad ANN). [R-SPOT-TREND](#r-spot-trend) executed (not established; LOGIT confirm lose; named queue **empty**).
+**Live (not parked):** [R-F-SKILL](#r-f-skill) — `pursue` (CL-DOW no survivor; named Yahoo CL queue **empty**; do not pick least-bad FRI). [R-SPOT-TREND](#r-spot-trend) executed (not established; LOGIT confirm lose; named queue **empty**).
 
 ---
 
@@ -311,6 +311,7 @@ None remaining. [R-G8](#r-g8) meanings admitted. [R-LIVE-STANDIN](#r-live-standi
 | 2026-08-24 | **L-HUNT-SPOT-LOGIT** / **L-PULSE-SPOT-LOGIT-1** — discovery FULL/SIGN beat both boards (survivor FULL); confirm FULL **lose** all windows both boards; spot-trend **not established**; named queue **empty**; do not retune FULL / unburn / change 21; F-SKILL parked; Amb **held 1.0** |
 | 2026-08-24 | **L-HUNT-CL-INV** / **L-PULSE-CL-INV-1** — discovery F-CC both lose (0 = 0.026705; SURP 0.026836; WOW 0.026803 closest); **no survivor**; confirm skipped; promote does not fire; do **not** pick least-bad WOW; F-SKILL **not established**; skill leftover still **pursue**; Amb **held 1.0**; not a trade |
 | 2026-09-01 | **L-HUNT-CL-SEAS** / **L-PULSE-CL-SEAS-1** — discovery F-CC both lose (0 = 0.026705; ANN 0.026799 closest; MON 0.026816); **no survivor**; confirm skipped; promote does not fire; do **not** pick least-bad ANN; next frozen **C-CL-DOW**; F-SKILL **not established**; skill leftover still **pursue**; Amb **held 1.0**; not a trade |
+| 2026-09-01 | **L-HUNT-CL-DOW** / **L-PULSE-CL-DOW-1** — discovery F-CC both lose (0 = 0.026705; WD 0.026812; FRI 0.026775 closest); **no survivor**; confirm skipped; promote does not fire; do **not** pick least-bad FRI; named Yahoo CL queue **empty**; F-SKILL **not established**; skill leftover still **pursue**; Amb **held 1.0**; not a trade |
 
 ---
 

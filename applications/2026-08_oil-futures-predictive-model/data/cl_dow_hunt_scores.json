@@ -1,0 +1,95 @@
+{
+  "badge": "stand-in",
+  "lock": "L-HUNT-CL-DOW",
+  "discovery_cutoff": "2023-08-21",
+  "discovery_holdout": 500,
+  "min_train": 250,
+  "horse_order": [
+    "H-CL-DOW-WD",
+    "H-CL-DOW-FRI"
+  ],
+  "refused_prior": [
+    "H-LAG-WF",
+    "H-SPARSE-CAL",
+    "H-SPARSE-VOL",
+    "H-GAP-FADE",
+    "H-GAP-CONT",
+    "L-HUNT-PRETELL",
+    "L-HUNT-DJT",
+    "L-HUNT-COT",
+    "H-CL-INV-SURP",
+    "H-CL-INV-WOW",
+    "H-CL-SEAS-ANN",
+    "H-CL-SEAS-MON"
+  ],
+  "discovery_n_sessions": 5769,
+  "discovery_span": {
+    "first": "2000-08-24",
+    "last": "2023-08-21"
+  },
+  "discovery": {
+    "H-CL-DOW-WD": {
+      "F-ON": {
+        "n": 500,
+        "first": "2021-08-25",
+        "last": "2023-08-21",
+        "rmse_horse": 0.007393645270599262,
+        "rmse_0": 0.00733253974465792,
+        "beats_0": false
+      },
+      "F-DAY": {
+        "n": 500,
+        "first": "2021-08-25",
+        "last": "2023-08-21",
+        "rmse_horse": 0.02585818586202688,
+        "rmse_0": 0.025846594083981028,
+        "beats_0": false
+      },
+      "F-CC": {
+        "n": 500,
+        "first": "2021-08-25",
+        "last": "2023-08-21",
+        "rmse_horse": 0.02681169712101866,
+        "rmse_0": 0.026705336497433927,
+        "beats_0": false
+      }
+    },
+    "H-CL-DOW-FRI": {
+      "F-ON": {
+        "n": 500,
+        "first": "2021-08-25",
+        "last": "2023-08-21",
+        "rmse_horse": 0.007371482564648851,
+        "rmse_0": 0.00733253974465792,
+        "beats_0": false
+      },
+      "F-DAY": {
+        "n": 500,
+        "first": "2021-08-25",
+        "last": "2023-08-21",
+        "rmse_horse": 0.025840739070221493,
+        "rmse_0": 0.025846594083981028,
+        "beats_0": true
+      },
+      "F-CC": {
+        "n": 500,
+        "first": "2021-08-25",
+        "last": "2023-08-21",
+        "rmse_horse": 0.026775387552925307,
+        "rmse_0": 0.026705336497433927,
+        "beats_0": false
+      }
+    }
+  },
+  "survivor": {
+    "id": null,
+    "reason": "no horse strictly beat 0 on discovery F-CC last 500"
+  },
+  "vehicle_fail": false,
+  "confirm": null,
+  "confirm_deferred": true,
+  "promote": {
+    "fires": false,
+    "reason": "no horse strictly beat 0 on discovery F-CC last 500"
+  }
+}

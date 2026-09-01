@@ -28,7 +28,8 @@ Yahoo `CL=F` daily Open/Close used only after operator stipulation **L-STANDIN-Y
 - `spot_logit_hunt_scores.json` — H-SPOT-LOGIT-FULL / H-SPOT-LOGIT-SIGN; discovery beat both boards; FULL confirm lose all windows both boards; queue empty
 - `cl_inv_hunt_scores.json` — H-CL-INV-SURP / H-CL-INV-WOW; discovery F-CC both lose (0 = 0.026705; closest WOW 0.026803); no survivor; confirm skipped; do not pick least-bad
 - `cl_seas_hunt_scores.json` — H-CL-SEAS-ANN / H-CL-SEAS-MON; discovery F-CC both lose (0 = 0.026705; closest ANN 0.026799); no survivor; confirm skipped; do not pick least-bad
-- `cl_yahoo_queue.json` — Yahoo CL exploration register (SEAS burned; next **C-CL-DOW**)
+- `cl_dow_hunt_scores.json` — H-CL-DOW-WD / H-CL-DOW-FRI; discovery F-CC both lose (0 = 0.026705; closest FRI 0.026775); no survivor; confirm skipped; do not pick least-bad
+- `cl_yahoo_queue.json` — Yahoo CL exploration register (SEAS and DOW burned; named `next` **empty**)
 - `eia_weekly_crude_exspr.csv` — EIA weekly US crude ex-SPR (**L-STANDIN-EIA-INV** / **L-STANDIN-EIA-INV-CL**)
 - `eia_inv_fetch.json` — inventory fetch metadata
 
@@ -45,4 +46,5 @@ Re-run inventory overlay (from this application folder): `python3 scripts/fetch_
 Re-run cross-bench overlay (from this application folder): `python3 scripts/spot_cross_hunt.py --stage discovery` then (Brent survivor only) `python3 scripts/spot_cross_hunt.py --stage confirm`  
 Re-run logistic overlay (from this application folder): `python3 scripts/spot_logit_hunt.py --stage discovery` then `python3 scripts/spot_logit_hunt.py --stage confirm`  
 Re-run CL inventory overlay (from this application folder): `python3 scripts/cl_inv_hunt.py --phase discovery`  
-Re-run CL season overlay (from this application folder): `python3 scripts/cl_seas_hunt.py --phase discovery`
+Re-run CL season overlay (from this application folder): `python3 scripts/cl_seas_hunt.py --phase discovery`  
+Re-run CL weekday overlay (from this application folder): `python3 scripts/cl_dow_hunt.py --phase discovery`
