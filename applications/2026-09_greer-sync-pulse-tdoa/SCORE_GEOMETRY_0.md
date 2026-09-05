@@ -77,7 +77,7 @@ Median error tracks `c · σ_t`. At 1 ns the range-scale `σ_d ≈ 0.300 m` sits
 - This is **not** skill-met.
 - **X** is a **median** bar, **not** a p90 bar.
 
-**NEXT (as of #0; named, not run on that sheet):** **multipath / NLOS positive-bias injection** under the **same frozen Chan (1994) 2D WLS**. **Later:** that pulse ran as **MULTIPATH1 Soften** — see [`SCORE_MULTIPATH1.md`](SCORE_MULTIPATH1.md). Next leftover is **sync-imperfection**.
+**NEXT (as of #0; named, not run on that sheet):** **multipath / NLOS positive-bias injection** under the **same frozen Chan (1994) 2D WLS**. **Later:** that pulse ran as **MULTIPATH1 Soften** — [`SCORE_MULTIPATH1.md`](SCORE_MULTIPATH1.md) — then **SYNC1 Soften** — [`SCORE_SYNC_1.md`](SCORE_SYNC_1.md).
 
 **HOLD** (as of #0) Lab invent of that named pulse — **not run** on the #0 sheet.
 
@@ -90,7 +90,7 @@ Cell-tower Amb stays **PARKED**. BIA→weight portfolio stays **CLOSED**.
 ## 4. Hard NO
 
 - Do **not** treat **0.50 m** as a hardware bar, a field locator, or a **p90** bar.
-- Do **not** run the named next pulse on the #0 sheet. **Later:** MULTIPATH1 ran as Soften. Next leftover is **sync-imperfection**.
+- Do **not** invent the next pulse until Founder / user reopens a parked textbook follow-on. **Later:** MULTIPATH1 Soften and SYNC1 Soften scoped **X**.
 - Do **not** invent RF / ML / fingerprint models.
 - Do **not** use GPS / DGPS as the mobile fix.
 - Do **not** copy US10135667B1 claim language.
@@ -98,7 +98,7 @@ Cell-tower Amb stays **PARKED**. BIA→weight portfolio stays **CLOSED**.
 - Do **not** write skill-met / elevated language.
 - Do **not** reopen `2026-09_cell-tower-geometry` as live.
 - Do **not** reopen the BIA→weight portfolio.
-- Do **not** invent a different next pulse (sync-imperfection stays unopened).
+- Do **not** invent fingerprint / ML / RF to rescue loose sync.
 
 ---
 
