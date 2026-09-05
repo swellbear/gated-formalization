@@ -79,6 +79,7 @@ Live remnant checkable-definition string vs retired strong elevations. Offering 
 | 2026-09-05 | Exploration A opened; R-SOME / R-RECIPE **open** on [`NAMED_GAP_LEDGER.md`](NAMED_GAP_LEDGER.md); R-REPL blocked; retired elevations stay parked. Not consciousness proved. |
 | 2026-09-05 | Operator gate: **ADMIT S1+S2**, **REJECT S3**; **ADMIT R1 primary + R2 screen**, **REJECT R3-as-Weak-pass**. Plain card: [`PLAIN_GATE_CARD_R-SOME_R-RECIPE.md`](PLAIN_GATE_CARD_R-SOME_R-RECIPE.md). Not consciousness proved; not Admissible-band elevation; not A-Strong. |
 | 2026-09-05 | Sub-lock gate: Qwen cite audit **PASS_WITH_CAVEATS** (`Qwen/Qwen3.6-27B` in S1(b)); S2 HF IDs **LOCKED**; H-thresholds **FROZEN**. R-SOME + R-RECIPE **COMPLETE**. R-REPL no longer definition-blocked; **not authorized** (park-until-trigger). |
+| 2026-09-05 | H-threshold freeze corrected to Operator-gated Lab numerics after #39 drift. |
 
 ---
 
