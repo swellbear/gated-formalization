@@ -4,9 +4,9 @@
 
 **Clickable cards (mandatory):** Every residual ID must have (1) an index-table link and (2) an anchored card with instance-specific explainers.
 
-**Date:** 2026-08-17  
+**Date:** 2026-09-05  
 **Application:** `2026-08_oil-futures-predictive-model`  
-**Closeout status:** **hard stop (residuals live)**. Parent Rank 4 split intact. **D-EXIST-MET-FT** in force (futures-target only). **F-SRC-CME-TAPE** named. **L-STANDIN-Y-CLF** stipulated. V-SRC leave unnamed. Skill leftover **live** (baseline only). Phase 2 not entered.
+**Closeout status:** **hard stop (residuals live)**. Parent Rank 4 split intact. **D-EXIST-MET-FT** in force (futures-target only). **F-SRC-CME-TAPE** named. **L-STANDIN-Y-CLF** stipulated. V-SRC leave unnamed. Skill leftover **live** (named Yahoo CL queue **empty**; H-KS still not run). Phase 2 not entered. Track B (EIA spot 21-day) is a **separate** object — named queue empty; **not** F-CC futures skill.
 
 **Glossary:** [`docs/READER_GLOSSARY.md`](../../docs/READER_GLOSSARY.md)  
 **Optional modes (separate):** [`OPTIONAL_MODES_MENU.md`](OPTIONAL_MODES_MENU.md)
@@ -19,9 +19,9 @@
 
 ## 0. Plain-language framing
 
-**What we’re doing:** Listing leftovers. Existence stays separate. Yahoo `CL=F` is a **stipulated stand-in**. Night/day/whole-trip **baseline** RMSE is computed. No horse was scored against it. Combo still parked. After-cost book still unnamed.
+**What we’re doing:** Listing leftovers. Existence stays separate. Yahoo `CL=F` is a **stipulated stand-in**. Night/day/whole-trip **baseline** RMSE is computed. **H-LAG-WF** and later named Yahoo classes were scored and **burned** (confirm skipped or failed; no least-bad). Named Yahoo CL queue is **empty**. Combo still parked. After-cost book still unnamed. Track B (spot 21-day) is **not** this leftover.
 
-**What we need from you:** Nothing required. Optional: official CME re-score, or name a horse vs this baseline. This is not a trade.
+**What we need from you:** Nothing required. Optional: official CME / curve tape, or `name horse …` (a **new** named class — the Yahoo queue is empty). This is not a trade.
 
 **What authorizing a branch means:** A scoped continuation on this same Rank 4 package — not a rewrite of existence-met, and not “oil models don’t work.”
 
@@ -39,7 +39,7 @@
 | [R-DRV](#r-drv) | Exhaustive list of what can move next-session CL? | Empirically resolvable | Census of list-types; **no class submitted** | **executed → evaluation** (L-MAP-DRV) |
 | [R-SESS](#r-sess) | Night vs day vs whole-trip as separate tests? | Definitional lock | Protocol; **no class submitted** | **executed → admitted meanings** (L-SESS) |
 | [R-V-VALUE-TEST-0](#r-v-value-test-0) | Named after-cost paper book? | Empirically resolvable | None named | **executed → not established** |
-| [R-F-SKILL](#r-f-skill) | Next-session CL log-return skill vs last settlement (F-CC), plus F-ON/F-DAY exhibits? | Empirically resolvable | **H-LAG-WF** scored (F-CC loss); **H-KS-FTS** not run | **pursue** (**not established**) |
+| [R-F-SKILL](#r-f-skill) | Next-session CL log-return skill vs last settlement (F-CC), plus F-ON/F-DAY exhibits? | Empirically resolvable | **H-LAG-WF** scored (F-CC loss); later named Yahoo classes burned; **queue empty**; **H-KS-FTS** not run | **pursue** (**not established**) |
 | [R-F-COMBO](#r-f-combo) | Named switching rule after F-ON and F-DAY scored separately? | Empirically resolvable | **unnamed** | **park-until-trigger** |
 | [R-V-VALUE](#r-v-value) | After-cost paper P/L vs the curve? | Empirically resolvable | **unnamed** (operator `leave unnamed`) | **park-until-trigger** |
 | [R-G8](#r-g8) | Model-class fashion under F-SKILL | Empirically resolvable (meanings) | Baseline RMSE + optional FTS | **executed → admitted meanings** |
@@ -49,7 +49,7 @@
 
 **Also offered (separate):** [`OPTIONAL_MODES_MENU.md`](OPTIONAL_MODES_MENU.md) — UX/CX/CR **declined, not run**.
 
-**Closeout note:** Stand-in baseline scored. Skill leftover still **live**. Do **not** read Yahoo RMSE as live or as a pass.
+**Closeout note:** Stand-in baseline scored. Named Yahoo CL queue **empty**. Skill leftover still **live**. Do **not** read Yahoo RMSE as live or as a pass. Emptying the named queue ≠ skill closed. Track B empty is **separate**.
 
 ---
 
@@ -157,17 +157,34 @@
 | Field | Content |
 |-------|---------|
 | **Class** | Empirically resolvable |
-| **Named source class** | **F-SRC-CME-TAPE**. Stand-in tape: Yahoo `CL=F` (`Lock_Standin_Yahoo_CLF.md`) |
-| **What it is** | Whether any horse **beats** no-change RMSE on **F-ON / F-DAY / F-CC**. **H-LAG-WF** scored last-500: F-ON 0.01283 vs 0 0.01291 (tiny dip, **not** met); F-DAY 0.02670 vs 0.02663 (loss); F-CC 0.02888 vs 0.02869 (**loss**; parent). **H-KS-FTS not run**. **Not established** |
+| **Named source class** | **F-SRC-CME-TAPE**. Stand-in tape: Yahoo `CL=F` (`Lock_Standin_Yahoo_CLF.md`). **L-SCREEN-Y-PROMOTE** (PR #9 capital): live CME only after a named horse beats F-CC no-change on last **500** **and** ≤ 0 on last **250** and **750**. Named Yahoo CL queue is now **empty**. |
+| **What it is** | Whether any horse **beats** no-change RMSE on **F-ON / F-DAY / F-CC**. **H-LAG-WF** scored last-500: F-ON 0.01283 vs 0 0.01291 (tiny dip, **not** met); F-DAY 0.02670 vs 0.02663 (loss); F-CC 0.02888 vs 0.02869 (**loss**; parent). Later named Yahoo classes **burned** (below). **H-KS-FTS not run**. **Not established** |
 | **Why offered here** | Rank 4 F-SKILL leftover; tape fork closed as stand-in |
 | **What authorizing does** | A later horse must be named and scored against these windows. Honest **established** still **stops**. `live CME only` re-scores the baseline on official stamps |
-| **What success / failure changes** | Beating the stand-in baseline is still not live clearance. F-DAY-met ≠ F-CC-met |
-| **What it does *not* do** | Treat Yahoo as official settlement; treat baseline RMS as a pass; USO; EIA STEO; a trade |
-| **Effort** | Medium once a horse is named |
-| **Disposition** | **pursue** (H-LAG scored, lost on F-CC; H-KS not run; **not established**) |
-| **How to authorize** | `name horse …` vs this baseline, or `live CME only`, or leave |
+| **What success / failure changes** | Beating the stand-in baseline is still not live clearance. F-DAY-met ≠ F-CC-met. Discovery beat ≠ confirm. Empty named Yahoo queue ≠ leftover closed |
+| **What it does *not* do** | Treat Yahoo as official settlement; treat baseline RMS as a pass; pick least-bad; USO; EIA STEO; a trade; smuggle Track B (spot 21-day) into F-SKILL |
+| **Effort** | Medium once a **new** horse is named (named Yahoo queue empty) |
+| **Disposition** | **pursue** (H-LAG scored, lost on F-CC; later named Yahoo classes burned; **queue empty**; H-KS not run; **not established**) |
+| **How to authorize** | `name horse …` vs this baseline, or `live CME / curve tape`, or leave |
 
-**Do not treat as this class:** EIA STEO; listed futures curve as a next-session CL return model; Alquist–Kilian / Fed IFDP spot-forecast papers; canonical real/spot VARs; the existence menu as “the” skill recipe; last-settlement no-change (baseline, not the model); **L-MAP-FT families as a silent F-SRC pick**; **L-MAP-DRV families as a silent F-SRC pick**; **USO / Zhang half-hour momentum as F-ON or F-DAY**.
+**Burned / null roster (oil R-F-SKILL — all not established; confirm skipped or failed; no least-bad):**
+
+| Pulse / PR | Horses | Result |
+|------------|--------|--------|
+| **H-LAG-WF** (on master) | lagged-return | F-CC **loss**; tiny F-ON ≠ met |
+| **L-SCREEN-Y-PROMOTE** (PR #9) | promote capital | H-LAG does **not** promote; lock file not merged |
+| **H-SPARSE-CAL / H-SPARSE-VOL** (PR #10) | sparse calendar; vol-state | neither promotes; tiny 500 CAL dip ≠ met |
+| **L-PULSE-PRETELL-1** (PR #11) | eight pretell horses | discovery **fail**; confirm skipped |
+| **L-PULSE-GAP-1** (PR #12) | H-GAP-FADE vs CONT | skill **not established**; tiny F-DAY ≠ F-CC promote |
+| **L-PULSE-DJT-1** (PR #13) | WEEK / MONTH | discovery 0 / tie; confirm skipped |
+| **L-PULSE-COT-1** (PR #14) | NET / CHG | both lose F-CC discovery |
+| **C-CL-INV** (PR #20) | SURP / WOW | no discovery survivor |
+| **C-CL-SEAS** (PR #21) | ANN / MON | no survivor; month-chain / `front_id` roll **refused** as bad vehicles |
+| **C-CL-DOW** (PR #22) | WD / FRI | no survivor; **named Yahoo CL horse queue now empty**; loop stops |
+
+**H-KS-FTS still not run** (Yahoo month chain ≠ historical CL1–CL18). Emptying the named Yahoo queue ≠ skill closed. Skill leftover remains **pursue**.
+
+**Do not treat as this class:** EIA STEO; listed futures curve as a next-session CL return model; Alquist–Kilian / Fed IFDP spot-forecast papers; canonical real/spot VARs; the existence menu as “the” skill recipe; last-settlement no-change (baseline, not the model); **L-MAP-FT families as a silent F-SRC pick**; **L-MAP-DRV families as a silent F-SRC pick**; **USO / Zhang half-hour momentum as F-ON or F-DAY**; **Track B EIA spot 21-day** (separate object, below).
 
 <a id="r-f-combo"></a>
 ### R-F-COMBO
@@ -261,7 +278,9 @@ None remaining. [R-G8](#r-g8) meanings admitted. [R-LIVE-STANDIN](#r-live-standi
 | [R-V-VALUE](#r-v-value) | park-until-trigger | Matching V-VALUE book named under **V2** |
 | [R-F-COMBO](#r-f-combo) | park-until-trigger | Rule in advance + F-ON and F-DAY already scored separately |
 
-**Live (not parked):** [R-F-SKILL](#r-f-skill) — `pursue` (H-LAG scored, lost on F-CC; H-KS not run)
+**Live (not parked):** [R-F-SKILL](#r-f-skill) — `pursue` (H-LAG scored, lost on F-CC; named Yahoo classes burned; **queue empty**; H-KS not run)
+
+**Track B (separate object — not F-SKILL; not a new residual ID):** EIA spot WTI/Brent **21-day vs continuation**. Park/spot-21d stays parked relative to F-SKILL. Named queue **empty** after #15 FLIP-HOLD/REV (burned, no survivor); #16 C-SPOT-INV (no survivor); #18 C-SPOT-CROSS (WTI fail; Brent tiny confirm +1 on 250 ≠ met); #19 C-SPOT-LOGIT (discovery beat, confirm lose). Discovery beat ≠ confirm. Do **not** smuggle into skill-met.
 
 ---
 
@@ -282,6 +301,7 @@ None remaining. [R-G8](#r-g8) meanings admitted. [R-LIVE-STANDIN](#r-live-standi
 | 2026-08-17 | **L-STANDIN-Y-CLF** stipulated (Yahoo `CL=F`); **L-PULSE-STANDIN-1** baseline RMSE scored; skill **not established**; Amb **2.5 → 1.5** |
 | 2026-08-17 | **V-COST-V2** named (fees + $10/contract/side); V-VALUE still not established; Amb **1.5 → 1.0** |
 | 2026-08-17 | **H-LAG-WF** scored (F-CC loss); **H-KS-FTS** not run (Yahoo month chain ≠ historical CL1–CL18); skill **not established**; Amb **held 1.0** |
+| 2026-09-05 | Tracker fold of open hunt stack **#9–#22** (scripts **not** merged). **L-SCREEN-Y-PROMOTE** capital recorded (PR #9). Named Yahoo CL classes #10–#14 / #20–#22 **burned**; **queue empty**. Track B #15–#19 **empty** separately. R-F-SKILL still **pursue**. Amb **held 1.0**. Do not pick least-bad. |
 
 ---
 
