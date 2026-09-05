@@ -2,8 +2,8 @@
 
 **Date:** 2026-09-05  
 **Application:** `2026-09_greer-sync-pulse-tdoa`  
-**String:** first-pulse fog peek **ADMITTED** (Lab `PROPOSED_FOG_PEEK`); **GEOM0 HARDEN**; **MULTIPATH1 Soften**; **SYNC1 Soften**; **JOINT1 Soften**; **DRIFT1 HARDEN**  
-**Named gap (this fold):** does batch path-shared τ + linear α restore the locked **0.50 m** sim bar on SYNC1 drift breakers?  
+**String:** first-pulse fog peek **ADMITTED** (Lab `PROPOSED_FOG_PEEK`); **GEOM0 HARDEN**; **MULTIPATH1 Soften**; **SYNC1 Soften**; **JOINT1 Soften**; **DRIFT1 HARDEN**; **GATE1 Soften**  
+**Named gap (this fold):** does a detect-only residual∨LORO refuse belt catch out-of-budget sync / unmatched-drift without blowing in-band FA?  
 **Ledger:** [`NAMED_GAP_LEDGER.md`](NAMED_GAP_LEDGER.md)  
 **Peek digestion:** [`DIGESTION_FIRST_PULSE.md`](DIGESTION_FIRST_PULSE.md)  
 **#0 score:** [`SCORE_GEOMETRY_0.md`](SCORE_GEOMETRY_0.md)  
@@ -14,7 +14,11 @@
 **JOINT1 score:** [`SCORE_JOINT1.md`](SCORE_JOINT1.md)  
 **JOINT1 digestion:** [`DIGESTION_JOINT1.md`](DIGESTION_JOINT1.md)  
 **DRIFT1 score:** [`SCORE_DRIFT1.md`](SCORE_DRIFT1.md)  
-**DRIFT1 digestion:** [`DIGESTION_DRIFT1.md`](DIGESTION_DRIFT1.md)
+**DRIFT1 digestion:** [`DIGESTION_DRIFT1.md`](DIGESTION_DRIFT1.md)  
+**GATE1 score:** [`SCORE_GATE1.md`](SCORE_GATE1.md)  
+**GATE1 digestion:** [`DIGESTION_GATE1.md`](DIGESTION_GATE1.md)  
+**Founder write-up (PRIMARY; HOLD send):** [`GREER_WRITEUP.md`](GREER_WRITEUP.md)  
+**Lab audit draft:** [`GREER_WRITEUP_DRAFT.md`](GREER_WRITEUP_DRAFT.md)
 
 Lab invented ranked peek / pulse probes. Lab does **not** self-admit. The fog-peek record below is the gated fact set copied from the Method Operator gate. **#0** later scored a numeric sim **X**. **MULTIPATH1** later **Soften**ed it with an NLOS scope. Lab scratch was **not** on this fold VM.
 
@@ -174,7 +178,27 @@ Batch path-shared τ + linear α nuisance on SYNC1 drift breakers.
 
 **LOCK** provisional **sim X = 0.50 m** remains, with **JOINT1 fixed-offset + named DRIFT1 batch α + NLOS** scope. **PARK** hardware **X**. Details: [`SCORE_DRIFT1.md`](SCORE_DRIFT1.md).
 
-**NEXT (not this fold):** **GATE1**, then a Greer-facing write-up. Still no RF / ML. No fingerprint rescue. **Multipath later.**
+**LATER THE SAME DAY:** **GATE1 Soften**. See [`SCORE_GATE1.md`](SCORE_GATE1.md).
+
+---
+
+## 6e. GATE1 (gated Soften — this fold)
+
+Detect-only refuse OR: **G1a_DRIFT1 residual ∨ G1b raw LORO**. Injection-calibrated thresholds.
+
+| Quantity | Rate |
+|----------|------|
+| FA `σ≤3` drift0 | ≈ **0.100** |
+| FA +matched drift3 | ≈ **0.080** |
+| TD `σ=10` | ≈ **0.828** |
+| TD unmatched under drift3 | **1.000** |
+| TD per_epoch `σ=3` | **1.000** |
+
+**Soften.** Kill **not** triggered. Aim B **Succeed**. Residual-alone misses σ=10 (τ absorbs fixed_trial); raw LORO carries it. Use: widen the error bar or refuse a point fix — **not** a magic accuracy repair.
+
+**LOCK** provisional **sim X = 0.50 m** remains, with **JOINT1 fixed-offset + named DRIFT1 batch α + GATE1 refuse-belt + NLOS** scope. **PARK** hardware **X**. Details: [`SCORE_GATE1.md`](SCORE_GATE1.md).
+
+**HOLD:** Lab invent pending Greer criteria / user send OK. Write-up on disk — Founder [`GREER_WRITEUP.md`](GREER_WRITEUP.md) **PRIMARY** (**HOLD send**). Lab audit [`GREER_WRITEUP_DRAFT.md`](GREER_WRITEUP_DRAFT.md). Still no RF / ML. No fingerprint rescue. **Multipath later.**
 
 ---
 
@@ -188,4 +212,4 @@ Batch path-shared τ + linear α nuisance on SYNC1 drift breakers.
 
 ---
 
-*Docs only. Peek succeed / #0 HARDEN / MULTIPATH1 Soften / SYNC1 Soften / JOINT1 Soften / DRIFT1 HARDEN ≠ claim clearance. Named DRIFT1 batch α ≠ free per-epoch realtime. JOINT1-scoped sim X ≠ multipath-robust X. Not a locator. Not skill-met. Not a patent-product claim. Not rithm. Lab does not self-admit. Lab scratch was not on this VM; summary copied from the Operator gate.*
+*Docs only. Peek succeed / #0 HARDEN / MULTIPATH1 Soften / SYNC1 Soften / JOINT1 Soften / DRIFT1 HARDEN / GATE1 Soften ≠ claim clearance. Named DRIFT1 batch α ≠ free per-epoch realtime. GATE1 refuse belt ≠ magic repair. JOINT1-scoped sim X ≠ multipath-robust X. Not a locator. Not skill-met. Not a patent-product claim. Not rithm. Lab does not self-admit. Lab scratch was not on this VM; summary copied from the Operator gate. Write-up HOLD send until user OK.*
