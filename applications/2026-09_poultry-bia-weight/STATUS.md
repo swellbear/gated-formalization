@@ -8,26 +8,27 @@
 
 ### Plain status
 
-Open **step-1 data hunt**. Named gap: a **public, row-level** poultry/chicken BIA table (resistance / reactance / impedance: **R / X / Z**) **plus** paired body weight/mass, under an **open license**. Lab invents ranked hunt probes. Operator gates. Last check: **none**. This is **not** training. This is **not** a commercial weighing claim. This is **not** rithm. Commercial weighing is **not** solved here. Collatz playground is **done** (#45). Track B invent stays **paused**. llm-gwt R-REPL stays **parked**.
+**Step-1 data hunt is parked.** Operator + Founder **ADMIT DATA-BLOCKED park**: no public row-level poultry/chicken BIA / impedance + body weight under an open license after an honest hunt (Lab + Founder independently agree). Nearest-misses are **docs only** — **not** succeed. This is **not** training. Training is **not** established. This is **not** a commercial weighing claim. Commercial weighing is **not** solved. This is **not** rithm. No author outreach. Do **not** reconstruct fake bird rows from means. Collatz playground is **done** (#45). Track B invent stays **paused**. llm-gwt R-REPL stays **parked**.
 
 ---
 
 | Field | Value |
 |-------|--------|
-| **Closure state** | **open** |
-| **Phase** | step-1 data hunt (Lab invents ranked probes; Operator gates) |
-| **Amb** | unset (no lock / no score this fold) |
-| **Locks in force** | none yet — the named gap is the missing public table, not a scored lock |
-| **Next authorization needed** | Operator gate on Lab-ranked hunt probes (admit / reject / park) — **not** auto-clearance; **not** a trained map; **not** a commercial claim |
+| **Closure state** | **open** — step-1 **parked** (DATA-BLOCKED); not hard stop; no closeout hygiene this fold |
+| **Phase** | step-1 data hunt **parked** (DATA-BLOCKED) |
+| **Amb** | DATA-BLOCKED on the named public table; unset as a trained map (none started) |
+| **Locks in force** | none — DATA-BLOCKED park is not a scored lock and is not a BIA→weight map |
+| **Next authorization needed** | **none for this hunt** — Lab **HOLD**. No training. No author outreach. Reopen only if a public URL/DOI + schema + license with row-level BIA (R/X/Z) + weight appears. **Not** a commercial claim |
 | **Related apps surfaced** | `2026-09_collatz-shortcut-map` — playground invent **complete** (#45); Lab HOLD there; **not** a proof · `2026-08_llm-global-workspace-consciousness` — R-REPL **parked** (unchanged) |
 | **Optional modes** | none yet (open scaffold; not endpoint) |
 
 **Ledger:** [`NAMED_GAP_LEDGER.md`](NAMED_GAP_LEDGER.md)  
+**Hunt + gate:** [`PROPOSED_HUNT.md`](PROPOSED_HUNT.md)  
 **Decision log:** [`RESIDUAL_BRANCH_MENU.md`](RESIDUAL_BRANCH_MENU.md)
 
-**What this fold does not do:** no model training docs as established; no weights; no product claim.
+**What this fold does not do:** no model training docs as established; no weights; no product claim; no fake rows from means; no author emails.
 
-**Endpoint** = examination done; verdict frozen. This fold is **open**. Do **not** label hard stop.
+**Endpoint** = examination done; verdict frozen. This fold is **open** (step-1 parked). Do **not** label hard stop.
 
 ---
 
@@ -50,7 +51,7 @@ Not claimed this fold. Boxes stay open.
 - [ ] `STATUS.md` set to hard stop
 - [ ] `final_verdict.md`
 
-**Gates:** Scaffold only. Named gap is **open**. BIA→weight is **not** established. Training is **not** established.
+**Gates:** Step-1 **parked**. Named gap last check **DATA-BLOCKED**. BIA→weight is **not** established. Training is **not** established.
 
 ---
 

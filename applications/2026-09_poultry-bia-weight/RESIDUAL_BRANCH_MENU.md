@@ -4,20 +4,21 @@
 
 **Date:** 2026-09-05  
 **Application:** `2026-09_poultry-bia-weight`  
-**Status:** open step-1 data hunt  
+**Status:** step-1 data hunt **parked** (DATA-BLOCKED)  
 
 **Glossary:** `docs/READER_GLOSSARY.md`  
-**Ledger:** [`NAMED_GAP_LEDGER.md`](NAMED_GAP_LEDGER.md)
+**Ledger:** [`NAMED_GAP_LEDGER.md`](NAMED_GAP_LEDGER.md)  
+**Hunt + gate:** [`PROPOSED_HUNT.md`](PROPOSED_HUNT.md)
 
 ---
 
 ## 0. Plain-language framing
 
-**What we’re doing:** Opening a step-1 data hunt. Lab invents ranked probes for one named gap (public row-level poultry/chicken BIA R/X/Z + paired body weight/mass under an open license). Operator gates.
+**What we’re doing:** Recording the Operator + Founder gate on the step-1 hunt. Named table not found. Step-1 is **DATA-BLOCKED park**.
 
-**What we need from you:** Gate Lab’s ranked hunt probes when they exist. No probe is admitted yet.
+**What we need from you:** **none for this hunt.** Lab HOLD. No training. No author outreach.
 
-**What this does *not* mean:** A BIA→weight map. Training started or established. Commercial weighing solved. Rithm. Auto-admit. Reopening Track B. Reopening llm-gwt R-REPL. Reopening Collatz invent (#45 playground is done; Lab HOLD there).
+**What this does *not* mean:** A BIA→weight map. Training started or established. Commercial weighing solved. Rithm. Nearest-miss succeed. Fake bird rows from means. Reopening Track B. Reopening llm-gwt R-REPL. Reopening Collatz invent (#45 playground is done; Lab HOLD there).
 
 ---
 
@@ -25,7 +26,7 @@
 
 | ID | One-line | Class | Disposition |
 |----|----------|-------|-------------|
-| public-bia-weight-table | Public row-level poultry/chicken BIA (R/X/Z) + paired weight/mass, open license | Empirically resolvable **after** Lab proposes hunt probes and Operator gates | **open** — last check: none; kill = **DATA-BLOCKED park**; succeed = URL/DOI + schema + license |
+| public-bia-weight-table | Public row-level poultry/chicken BIA (R/X/Z) + paired weight/mass, open license | Parked — data does not exist on the public record after honest hunt | **paused** / **DATA-BLOCKED** — last check: 2026-09-05 Operator + Founder **ADMIT DATA-BLOCKED park**; nearest-misses docs-only; succeed still = URL/DOI + schema + license |
 
 No other empirically resolvable residuals on this fold.
 
@@ -46,6 +47,7 @@ No other empirically resolvable residuals on this fold.
 | Date | Action |
 |------|--------|
 | 2026-09-05 | Founder opens this string. Lab inventing ranked hunt probes. Operator gates. Collatz playground **done** (#45). Track B **paused**. llm-gwt R-REPL stays **parked**. Last check: none. BIA→weight is **not** established. Training is **not** established. Not rithm. Commercial weighing is **not** solved. |
+| 2026-09-05 | Operator + Founder **ADMIT DATA-BLOCKED park**. Honest hunt: no public row-level poultry/chicken BIA / impedance + body weight under open license. Lab + Founder independently agree. Nearest-misses (Benítez-Puñal 2024; woody-breast Morey/Siddique; Zenodo 10.5281/zenodo.16733922; adjacent INRAE 10.57745/NZG3YZ) are **docs only — not succeed**. Hard NO: commercial weighing solved; training established; reconstructing fake bird rows from means. **No author outreach** unlocked. Step-1 **parked**. |
 
 ---
 
