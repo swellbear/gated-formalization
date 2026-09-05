@@ -43,6 +43,16 @@ Habit only — not a scoring rule. Full note: [`docs/INVENT_TEST_HABIT.md`](docs
 - [ ] Let the Operator admit, reject, or park — Lab never self-admits
 - [ ] Skip the full write-up for tiny practice / training runs; live invent→test writes tracker results when the Operator decides
 
+## When you are trying to clear fog
+
+Habit only — not a scoring rule. Full note: [`docs/SOLVE_LOOP_HABIT.md`](docs/SOLVE_LOOP_HABIT.md).
+
+- [ ] Name **one** concrete missing piece (the fog)
+- [ ] Invent a check that could answer or clear that piece — not another lookalike horse. Targeted research may rank 2–3 options for that *named* piece only; a literature summary with no probe is not a solve step
+- [ ] Run it cheap
+- [ ] If the fog shrinks, keep going; if the missing piece was wrong, pick the next piece
+- [ ] Stop when checks only restate the same FRAGILE / still-foggy result
+
 ## How choices are presented
 
 Whenever you are asked to choose, options appear **in this chat** as clickable A / B / C choices. Each option shows a short label and one everyday sentence. **Click the option — that click is the reply.** You do not leave the conversation. Canonical rule: **Choice Presentation Standard** in `.cursor/rules/applications-gated-method.mdc`. Typed letters and one-liners remain accepted equivalents. Wording source: [`ui/choice-presenter/catalog.json`](ui/choice-presenter/catalog.json). The HTML/canvas files are an optional demo only; they are not how a live run decides.
