@@ -2,19 +2,21 @@
 
 **Date:** 2026-09-05  
 **Application:** `2026-09_greer-sync-pulse-tdoa`  
-**String:** first-pulse fog peek **ADMITTED** (Lab `PROPOSED_FOG_PEEK`); **GEOM0 HARDEN**; **MULTIPATH1 Soften**; **SYNC1 Soften**  
-**Named gap (this fold):** does positive range-bias kill the locked **0.50 m** sim bar, or only scope it?  
+**String:** first-pulse fog peek **ADMITTED** (Lab `PROPOSED_FOG_PEEK`); **GEOM0 HARDEN**; **MULTIPATH1 Soften**; **SYNC1 Soften**; **JOINT1 Soften**  
+**Named gap (this fold):** does path-shared joint clocks restore the locked **0.50 m** sim bar under looser `σ_sync`, or only scrape / fail?  
 **Ledger:** [`NAMED_GAP_LEDGER.md`](NAMED_GAP_LEDGER.md)  
 **Peek digestion:** [`DIGESTION_FIRST_PULSE.md`](DIGESTION_FIRST_PULSE.md)  
 **#0 score:** [`SCORE_GEOMETRY_0.md`](SCORE_GEOMETRY_0.md)  
 **MULTIPATH1 score:** [`SCORE_MULTIPATH1.md`](SCORE_MULTIPATH1.md)  
 **MULTIPATH1 digestion:** [`DIGESTION_MULTIPATH1.md`](DIGESTION_MULTIPATH1.md)  
 **SYNC1 score:** [`SCORE_SYNC_1.md`](SCORE_SYNC_1.md)  
-**SYNC1 digestion:** [`DIGESTION_SYNC_1.md`](DIGESTION_SYNC_1.md)
+**SYNC1 digestion:** [`DIGESTION_SYNC_1.md`](DIGESTION_SYNC_1.md)  
+**JOINT1 score:** [`SCORE_JOINT1.md`](SCORE_JOINT1.md)  
+**JOINT1 digestion:** [`DIGESTION_JOINT1.md`](DIGESTION_JOINT1.md)
 
 Lab invented ranked peek / pulse probes. Lab does **not** self-admit. The fog-peek record below is the gated fact set copied from the Method Operator gate. **#0** later scored a numeric sim **X**. **MULTIPATH1** later **Soften**ed it with an NLOS scope. Lab scratch was **not** on this fold VM.
 
-**What this is not:** A TDOA locator. Claim clearance. A multipath-robust 0.50 m. Training established. Skill-met. RF fingerprinting. Fingerprint rescue. GPS/DGPS as the mobile fix. Reopening cell-tower as live. Reopening BIA→weight. Rithm. A product copied from the named patent. Hardware **X**.
+**What this is not:** A TDOA locator. Claim clearance. A multipath-robust 0.50 m. A drift-robust 0.50 m. Training established. Skill-met. RF fingerprinting. Fingerprint rescue. GPS/DGPS as the mobile fix. Reopening cell-tower as live. Reopening BIA→weight. Rithm. A product copied from the named patent. Hardware **X**.
 
 ---
 
@@ -92,7 +94,7 @@ A held-out path inside a GPS-denied box can be **scored** while GPS/DGPS **place
 **Hard NO**
 
 - Do **not** claim a multipath-robust 0.50 m or invent fingerprint rescue.
-- Do **not** invent the next pulse until Founder / user reopens a parked textbook follow-on.
+- Do **not** run **DRIFT1** in this fold.
 - Do **not** treat **sim X = 0.50 m** as a hardware bar or a **p90** bar.
 - Do **not** train an RF fingerprint / radio-map model.
 - Do **not** use GPS / DGPS as the mobile fix.
@@ -113,7 +115,7 @@ A held-out path inside a GPS-denied box can be **scored** while GPS/DGPS **place
 - **No** trained estimator invent. **No** fingerprint.
 - GPS/DGPS **place/time refs only** — **never** the mobile fix.
 - Provisional **sim X = 0.50 m** (**median**-based @ 1 ns: median **0.361 m** + margin). **X is median-not-p90** (1 ns p90 ≈ **1.16 m**). Hardware **X PARKED**.
-- After #0: **MULTIPATH1 Soften** then **SYNC1 Soften** (same day). **X** stays 0.50 m, scoped to near-ideal sync + mild NLOS. Lab **HOLD**. Still **no RF / ML**.
+- After #0: **MULTIPATH1 Soften**, **SYNC1 Soften**, then **JOINT1 Soften** (same day). **X** stays 0.50 m, scoped to `σ_sync ≲ 3 ns` under JOINT1 + mild NLOS. Next (**not this fold**): **DRIFT1**. Still **no RF / ML**.
 
 ---
 
@@ -133,7 +135,26 @@ Frozen Chan 1994; `σ_t` = 1 ns; **positive range-bias** injection; **same refs 
 
 **LOCK** provisional **sim X = 0.50 m** remains, with **NLOS scope annotation**. **PARK** hardware **X**. Details: [`SCORE_MULTIPATH1.md`](SCORE_MULTIPATH1.md).
 
-**LATER THE SAME DAY:** **SYNC1 Soften** (Kill not triggered). Combined **X** scope = near-ideal sync + NLOS. Lab **HOLD**. See [`SCORE_SYNC_1.md`](SCORE_SYNC_1.md). Still no RF / ML. No fingerprint rescue.
+**LATER THE SAME DAY:** **SYNC1 Soften** then **JOINT1 Soften** (Kill not triggered; Aim A partial). Combined **X** scope = `σ_sync ≲ 3 ns` under JOINT1 + NLOS. Next (**not this fold**): **DRIFT1**. See [`SCORE_SYNC_1.md`](SCORE_SYNC_1.md) and [`SCORE_JOINT1.md`](SCORE_JOINT1.md). Still no RF / ML. No fingerprint rescue.
+
+---
+
+## 6c. JOINT1 (gated Soften — this fold)
+
+Path-shared joint clocks (shared-τ) under **fixed_trial** `σ_sync`.
+
+| Condition | Median Euclidean error vs **X = 0.50 m** |
+|-----------|------------------------------------------|
+| JOINT1 `σ_sync` = **1 ns** (fixed_trial) | **0.231 m** ≤ X — Chan scrape at 1 ns **restored** |
+| JOINT1 `σ_sync` = **3 ns** (fixed_trial) | **0.439 m** ≤ X |
+| JOINT1 `σ_sync` = **10 ns** (fixed_trial) | **1.816 m** — **fails X** |
+| JOINT1 **drift 3 ns/path** | **0.919 m** — **fails X** (shared-τ misspecified vs ramp) |
+
+**Soften.** Kill **not** triggered. Aim A **partial**. Named sync Soften budget **widens** to **`σ_sync ≲ 3 ns` under JOINT1** + prior mild-NLOS. Do **not** claim multipath-robust. Do **not** claim drift-robust.
+
+**LOCK** provisional **sim X = 0.50 m** remains, with **JOINT1 sync + NLOS** scope. **PARK** hardware **X**. Details: [`SCORE_JOINT1.md`](SCORE_JOINT1.md).
+
+**NEXT (not this fold):** **DRIFT1**. Still no RF / ML. No fingerprint rescue.
 
 ---
 
@@ -147,4 +168,4 @@ Frozen Chan 1994; `σ_t` = 1 ns; **positive range-bias** injection; **same refs 
 
 ---
 
-*Docs only. Peek succeed / #0 HARDEN / MULTIPATH1 Soften ≠ claim clearance. NLOS-scoped sim X ≠ multipath-robust X. Not a locator. Not skill-met. Not a patent-product claim. Not rithm. Lab does not self-admit. Lab scratch was not on this VM; summary copied from the Operator gate.*
+*Docs only. Peek succeed / #0 HARDEN / MULTIPATH1 Soften / SYNC1 Soften / JOINT1 Soften ≠ claim clearance. JOINT1-scoped sim X ≠ multipath-robust X and ≠ drift-robust X. Not a locator. Not skill-met. Not a patent-product claim. Not rithm. Lab does not self-admit. Lab scratch was not on this VM; summary copied from the Operator gate.*

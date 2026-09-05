@@ -6,7 +6,7 @@
 **Parent peek:** first-pulse fog naming **ADMITTED** (C1/C2/C3 SUCCEED; sim-only; hardware **X PARKED**) — [`DIGESTION_FIRST_PULSE.md`](DIGESTION_FIRST_PULSE.md)  
 **Ledger:** [`NAMED_GAP_LEDGER.md`](NAMED_GAP_LEDGER.md)  
 **Digestion:** [`DIGESTION_GEOMETRY_0.md`](DIGESTION_GEOMETRY_0.md)  
-**Later check:** [`SCORE_MULTIPATH1.md`](SCORE_MULTIPATH1.md) (Soften; **X** stays 0.50 m, NLOS-scoped)  
+**Later checks:** [`SCORE_MULTIPATH1.md`](SCORE_MULTIPATH1.md) (Soften; NLOS-scoped) · [`SCORE_SYNC_1.md`](SCORE_SYNC_1.md) (Soften; Chan-alone) · [`SCORE_JOINT1.md`](SCORE_JOINT1.md) (Soften; **X** stays 0.50 m under JOINT1 sync + NLOS)  
 **Protocol (short):** invent→test habit [`docs/INVENT_TEST_HABIT.md`](../../docs/INVENT_TEST_HABIT.md); named-gap ledger [`docs/NAMED_GAP_LEDGER_HABIT.md`](../../docs/NAMED_GAP_LEDGER_HABIT.md). Lab invents; Operator admits / rejects / parks. Lab does **not** self-admit.
 
 Lab scratch was **not** on this fold VM. Metrics below are copied from the **Operator gate** (authoritative). Hunt scripts / Lab notebooks are **not** on master.

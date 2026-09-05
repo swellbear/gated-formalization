@@ -27,9 +27,9 @@ Soften is **not** clearance. A scoped 0.50 m sim bar is **not** a field locator.
 
 ## What this string must do next (later the same day: SYNC1)
 
-Lab later scored **SYNC1 Soften**. See [`DIGESTION_SYNC_1.md`](DIGESTION_SYNC_1.md). **MULTIPATH1 Soften** still stands. Lab **HOLD**. Optional later textbook follow-ons stay **parked** until Founder / user reopens. Still **no RF / ML**. **No** fingerprint rescue.
+Lab later scored **SYNC1 Soften** then **JOINT1 Soften**. See [`DIGESTION_SYNC_1.md`](DIGESTION_SYNC_1.md) and [`DIGESTION_JOINT1.md`](DIGESTION_JOINT1.md). **MULTIPATH1 Soften** still stands. Next after JOINT1 (not this note): **DRIFT1**. Still **no RF / ML**. **No** fingerprint rescue.
 
-Clock / sync leftover is now **SYNC1 Soften** (near-ideal window only). Strong persistent multipath stays named as **out of scope** for frozen Chan + the 0.50 m bar — do **not** silently drop it, and do **not** invent a fingerprint to rescue it.
+Clock / sync leftover is now **SYNC1 Soften** (Chan-alone near-ideal) plus **JOINT1 Soften** (`σ_sync ≲ 3 ns` under joint clocks). Strong persistent multipath stays named as **out of scope** for frozen Chan + the 0.50 m bar — do **not** silently drop it, and do **not** invent a fingerprint to rescue it.
 
 Stay the **same Amb**. Do **not** unpark hardware **X**. Do **not** train. Do **not** copy patent claims.
 
