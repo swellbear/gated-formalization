@@ -63,7 +63,7 @@ Can a predictive model for oil futures be built?
 - V-VALUE **not established** (V-VALUE-TEST-0; V-SRC `leave unnamed`; **V2 named**; not a refute of all books).
 - Directional accuracy after costs / decision or trading value **not shown**.
 - Spot/real-price recipes as inside D-EXIST — **OUT**.
-- Track B spot-trend skill **not established** (Lab batch 1 + batch 2 **REJECT / burn**; MAG/PERSIST/BREAK/DXY then SHORT/VOTE/RATES/SPREAD all horses both boards; confirm survivors **NONE**; named queue still **empty**). Separate from F-SKILL.
+- Track B spot-trend skill **not established** (Lab batch 1 + batch 2 **REJECT / burn**; batch 3 burns VIX/THRESH/SKEW plus SEAS MOY-DIR / WTI MOY-CONT). Brent **H-SPOT-MOY-CONT** is a **scoped confirm pass** — **not** a null, **not** skill-met, **not** C-SPOT-SEAS established, **not** WTI-met. Burned-class invent queue **empty**; live scoped horse on record. Separate from F-SKILL.
 - Blended slogan — **not cleared**.
 - No trading advice.
 
@@ -85,7 +85,7 @@ None required (D-EXIST remains Minimal). V-VALUE is a marked elevation (Substant
 | [R-DRV](RESIDUAL_BRANCH_MENU.md#r-drv) | Exhaustive mover-list census | **Executed → evaluation** (L-MAP-DRV). Exhaustive list absent; does not fill F-SRC |
 | [R-SESS](RESIDUAL_BRANCH_MENU.md#r-sess) | Night vs day vs whole-trip protocol | **Executed → admitted meanings** (L-SESS). Does not meet skill |
 | [R-V-VALUE-TEST-0](RESIDUAL_BRANCH_MENU.md#r-v-value-test-0) | Named after-cost book | **Executed → not established** |
-| [R-F-SKILL](RESIDUAL_BRANCH_MENU.md#r-f-skill) | Named class for F-SKILL (F-CC + F-ON/F-DAY exhibits) | **H-LAG-WF** scored, **lost** on F-CC. Later named Yahoo classes burned; **queue empty**. H-KS not run. **not established**. Reopen: `name horse …` (new class) or live/curve tape. Track B empty is **separate** (Lab batch 1 + batch 2 **REJECT / confirm-none**; queue still empty) |
+| [R-F-SKILL](RESIDUAL_BRANCH_MENU.md#r-f-skill) | Named class for F-SKILL (F-CC + F-ON/F-DAY exhibits) | **H-LAG-WF** scored, **lost** on F-CC. Later named Yahoo classes burned; **queue empty**. H-KS not run. **not established**. Reopen: `name horse …` (new class) or live/curve tape. Track B is **separate** (Lab batch 1 + batch 2 **REJECT / confirm-none**; batch 3 Brent **H-SPOT-MOY-CONT** scoped confirm pass ≠ skill-met / ≠ C-SPOT-SEAS / ≠ WTI-met; burned-class invent empty) |
 | [R-LIVE-STANDIN](RESIDUAL_BRANCH_MENU.md#r-live-standin) | Live CME vs stand-in | **Executed** (Yahoo `CL=F` stipulated). Reopen: `live CME only` |
 | [R-F-COMBO](RESIDUAL_BRANCH_MENU.md#r-f-combo) | Named switching rule | **park-until-trigger**. Rule in advance; F-ON and F-DAY already scored separately |
 | [R-V-VALUE](RESIDUAL_BRANCH_MENU.md#r-v-value) | Named recipe/book for V-VALUE | **Leave unnamed**. `park-until-trigger`. Reopen: `name source class …` matching V-VALUE **under V2** |
@@ -97,7 +97,7 @@ None required (D-EXIST remains Minimal). V-VALUE is a marked elevation (Substant
 
 **Stop saying:** That EIA STEO or the futures curve is a proven next-session CL model; that spot/12-month results clear this freeze; that anyone should trade; that existence-met is skill-met; that one paper was picked as “the” recipe; that unnamed skill means no model can beat last price.
 
-**Keep saying:** A specified non-no-change futures-target recipe has been written. Yahoo is a **stand-in**; the baseline is **not** a pass. The named Yahoo CL queue is **empty**; skill leftover is still **live**. Track B Lab batch 1 + batch 2 are **REJECT / burn** (confirm-none); spot-trend skill is **not established**. Paper costs are **V2**; that is not a value pass. Skill and after-cost value are not established.
+**Keep saying:** A specified non-no-change futures-target recipe has been written. Yahoo is a **stand-in**; the baseline is **not** a pass. The named Yahoo CL queue is **empty**; skill leftover is still **live**. Track B Lab batch 1 + batch 2 are **REJECT / burn** (confirm-none). Batch 3 burns VIX/THRESH/SKEW; Brent **H-SPOT-MOY-CONT** is a scoped confirm pass, **not** skill-met and **not** a null. Spot-trend skill is **not established**. Paper costs are **V2**; that is not a value pass. Skill and after-cost value are not established.
 
 **Test next (only if authorized):** `leave skill not shown` · `live CME / curve tape …` · `name horse …` (named Yahoo queue is empty). Combo does not skip the queue. Do not pick least-bad.
 
@@ -172,6 +172,7 @@ None required (D-EXIST remains Minimal). V-VALUE is a marked elevation (Substant
 - `RESIDUAL_BRANCH_MENU.md`
 - `PULSE_Lab_TrackB_Batch1.md`
 - `PULSE_Lab_TrackB_Batch2.md`
+- `PULSE_Lab_TrackB_Batch3.md`
 - `OPTIONAL_MODES_MENU.md`
 - `final_verdict.md`
 
