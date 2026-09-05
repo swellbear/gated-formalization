@@ -8,26 +8,28 @@
 
 ### Plain status
 
-Open **step-1 data hunt**. Named gap: a **public, row-level** dog and/or cat BIA table (resistance / reactance / impedance: **R / X / Z**) **plus** paired **live** body weight, under an **open license**. Either species clears. Lab invents ranked hunt probes. Operator gates. Last check: **none**. Expect privacy walls. Do **not** invent rows. This is **not** training. This is **not** a commercial weighing claim. This is **not** rithm. Commercial weighing is **not** solved here. Poultry BIA→weight step-1 stays **parked** (#47 DATA-BLOCKED). Cattle BIA→weight step-1 stays **parked** (#49 DATA-BLOCKED). Sheep BIA→weight step-1 stays **parked** (#51 DATA-BLOCKED). Collatz playground is **done** (#45). Track B invent stays **paused**. llm-gwt R-REPL stays **parked**.
+**Soften + training-scale DATA-BLOCKED.** Operator + Founder **ADMIT Soften** for existence of tiny joint canine rows (Yaguiyan-Colliard 2015 Tables 1+2, n=13, CC-BY 4.0) and **ADMIT training-scale DATA-BLOCKED park** (n=13 is not holdout-capable; do **not** admit full SUCCEED). Feline half is **parked** (no joint open rows; literature-only Soften). This is **not** training. Training is **not** established. This is **not** a commercial weighing claim. Commercial weighing is **not** solved. This is **not** rithm. Do **not** invent rows. Do **not** reconstruct rows from means. Micro-toy training only if the user reopens — **ask first**. Poultry BIA→weight step-1 stays **parked** (#47 DATA-BLOCKED). Cattle BIA→weight step-1 stays **parked** (#49 DATA-BLOCKED). Sheep BIA→weight step-1 stays **parked** (#51 DATA-BLOCKED). Collatz playground is **done** (#45). Track B invent stays **paused**. llm-gwt R-REPL stays **parked**.
 
 ---
 
 | Field | Value |
 |-------|--------|
-| **Closure state** | **open** |
-| **Phase** | step-1 data hunt (Lab invents ranked probes; Operator gates) |
-| **Amb** | unset (no lock / no score this fold) |
-| **Locks in force** | none yet — the named gap is the missing public table, not a scored lock |
-| **Next authorization needed** | Operator gate on Lab-ranked hunt probes (admit / reject / park) — **not** auto-clearance; **not** a trained map; **not** a commercial claim |
+| **Closure state** | **open** — Soften (existence / tiny joint rows) + training-scale **parked** (DATA-BLOCKED); feline half **parked**; not hard stop; no closeout hygiene this fold |
+| **Phase** | step-1 data hunt **gated** (Soften + training-scale DATA-BLOCKED) |
+| **Amb** | Soften on tiny public canine rows; **DATA-BLOCKED** on a holdout-capable public table; unset as a trained map (none started) |
+| **Locks in force** | none — Soften / DATA-BLOCKED park is not a scored lock and is not a BIA→weight map |
+| **Next authorization needed** | **none for this hunt** — Lab **HOLD**. No training. No invented/reconstructed rows. Micro-toy only if the user reopens (**ask first**). Reopen training-scale only if a public URL/DOI + schema + license with holdout-capable row-level canine/feline BIA (R/X/Z) + live weight appears. **Not** a commercial claim |
 | **Related apps surfaced** | `2026-09_sheep-bia-weight` — step-1 **parked** (#51 DATA-BLOCKED); this app does **not** reopen it · `2026-09_cattle-bia-weight` — step-1 **parked** (#49 DATA-BLOCKED); this app does **not** reopen it |
 | **Optional modes** | none yet (open scaffold; not endpoint) |
 
 **Ledger:** [`NAMED_GAP_LEDGER.md`](NAMED_GAP_LEDGER.md)  
+**Hunt + gate:** [`PROPOSED_HUNT.md`](PROPOSED_HUNT.md)  
+**Tamura inspect:** [`TAMURA_INSPECT.md`](TAMURA_INSPECT.md)  
 **Decision log:** [`RESIDUAL_BRANCH_MENU.md`](RESIDUAL_BRANCH_MENU.md)
 
-**What this fold does not do:** no model training docs as established; no weights; no product claim; no invented rows; no reopen of poultry #47, cattle #49, or sheep #51.
+**What this fold does not do:** no model training docs as established; no weights; no product claim; no invented rows; no reconstructed rows from means; no micro-toy unless asked; no reopen of poultry #47, cattle #49, or sheep #51.
 
-**Endpoint** = examination done; verdict frozen. This fold is **open**. Do **not** label hard stop.
+**Endpoint** = examination done; verdict frozen. This fold is **open** (Soften + training-scale parked). Do **not** label hard stop.
 
 ---
 
@@ -50,7 +52,7 @@ Not claimed this fold. Boxes stay open.
 - [ ] `STATUS.md` set to hard stop
 - [ ] `final_verdict.md`
 
-**Gates:** Scaffold only. Named gap is **open**. BIA→weight is **not** established. Training is **not** established.
+**Gates:** Soften (existence / n=13). Training-scale **parked** (DATA-BLOCKED). Feline half **parked**. Named gap last check **not** full SUCCEED. BIA→weight is **not** established. Training is **not** established.
 
 ---
 
