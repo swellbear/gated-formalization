@@ -3,7 +3,7 @@
 **Application:** `2026-08_llm-global-workspace-consciousness`  
 **Date / checkpoint:** 2026-09-05 Operator gate + sub-lock gate + Founder addendum  
 **Ledger:** [`NAMED_GAP_LEDGER.md`](NAMED_GAP_LEDGER.md)  
-**Lab boards:** [`PROPOSED_Lab_R-SOME_R-RECIPE_options.md`](PROPOSED_Lab_R-SOME_R-RECIPE_options.md) · [`PROPOSED_PENDING_SUBLOCKS.md`](PROPOSED_PENDING_SUBLOCKS.md)
+**Lab boards:** [`PROPOSED_Lab_R-SOME_R-RECIPE_options.md`](PROPOSED_Lab_R-SOME_R-RECIPE_options.md) · [`PROPOSED_PENDING_SUBLOCKS.md`](PROPOSED_PENDING_SUBLOCKS.md) · [`PROPOSED_R-REPL_CHECKS.md`](PROPOSED_R-REPL_CHECKS.md) · [`PROPOSED_R-REPL_API_CHECKS.md`](PROPOSED_R-REPL_API_CHECKS.md) · [`C1_SCORE_PROPOSED.md`](C1_SCORE_PROPOSED.md)
 
 ---
 
@@ -13,7 +13,7 @@ Recording a **definitional** lock so “some models” and “the hallmark recip
 
 ## What we need from you
 
-None — informing only. **R-REPL** invent is **open** (Founder 2026-09-05) for Lab invent→test under Operator gate. Remnant only. Last check: none yet.
+None — informing only. **R-REPL** is **paused**. Last check: C1 unrunnable (infra), not a hallmark fail. Do not chase GPU, HF, or API keys. Park until the user later volunteers credentials they already own.
 
 ## What a “yes” / this update means
 
@@ -21,7 +21,7 @@ Meanings are named. Ambiguity is tighter because the remnant is checkable. That 
 
 ## What this does *not* mean
 
-Consciousness is **not** proved. This is **not** an Admissible-band elevation. **A-Strong**, sufficiency, unconstrained scale, and Strong-GNW stay parked. Opening R-REPL invent does **not** show hallmarks and is **not** clearance.
+Consciousness is **not** proved. This is **not** an Admissible-band elevation. **A-Strong**, sufficiency, unconstrained scale, and Strong-GNW stay parked. C1 infra-kill does **not** show hallmarks and is **not** clearance. This is **not** an R1 pass via API.
 
 ---
 
@@ -54,7 +54,7 @@ Consciousness is **not** proved. This is **not** an Admissible-band elevation. *
 | Claim under test | Narrowed A-Weak remnant only (`00_Working_Claim_Branch_A.md`) |
 | Amb | ≈ 2.5 (definitional lock ≠ clearance) |
 | Locks | **ADMIT S1+S2** (S3 rejected); **ADMIT R1+R2** (R3 not Weak pass); sub-locks **COMPLETE** |
-| R-REPL | **open** (invent under Operator gate; remnant only; last check none yet) |
+| R-REPL | **paused** (C1 infra-kill; local-GPU / R1 mech / A1 keys parked; remnant only) |
 | Verdict | Still **not** consciousness proved; **not** Admissible elevation; **not** A-Strong |
 
 ---

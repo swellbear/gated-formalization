@@ -47,6 +47,6 @@ Lab invents. Lab does **not** self-admit. This file is the **PROPOSED** board pl
 
 ## After the sub-lock gate
 
-R-SOME + R-RECIPE definitional locks are **COMPLETE**. **Later (2026-09-05):** Founder opens **R-REPL** invent (see [`NAMED_GAP_LEDGER.md`](NAMED_GAP_LEDGER.md)). Remnant only. Last check: none yet.
+R-SOME + R-RECIPE definitional locks are **COMPLETE**. **Later (2026-09-05):** Founder opens **R-REPL** invent; Operator **C1 KILL-unrunnable (infra)**; API A3/A1/A2 gated; Founder parks credentialed runs (see [`NAMED_GAP_LEDGER.md`](NAMED_GAP_LEDGER.md)). Remnant only. R-REPL **paused**.
 
 Track B invent remains **paused** (unchanged).

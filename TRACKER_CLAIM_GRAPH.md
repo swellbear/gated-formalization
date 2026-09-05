@@ -14,7 +14,7 @@
 |---------|------|-------------|------------------------|
 | APP-MWI | Application | `2026-08_many-worlds-unitarity-preferability` | Provisional closed; Amb ≈ 5.5 |
 | APP-AV | Application | `2026-08_av-e2e-vs-modular-preferability` | Stable Provisional closed; Amb ≈ 4 |
-| APP-GWT | Application | `2026-08_llm-global-workspace-consciousness` | Live remnant Provisional-stable; Amb ≈ 2.5; **LLM remnant string** definitional locks **complete**; R-REPL invent **open** (remnant only) |
+| APP-GWT | Application | `2026-08_llm-global-workspace-consciousness` | Live remnant Provisional-stable; Amb ≈ 2.5; **LLM remnant string** definitional locks **complete**; R-REPL **paused** (C1 infra-kill; remnant only) |
 | APP-CDS | Application | `2026-08_cds-med-device-ad-segment-preferability` | Stable Provisional (proxy-scoped) |
 | APP-MS | Application | `2026-08_microservices-alone-cascading-preferability` | Stable Provisional; Amb ≈ 8; FD 1 |
 | APP-SVL | Application | `2026-08_serverless-alone-ops-preferability` | Stable Provisional; Amb ≈ 8; FD 1 |
