@@ -1,4 +1,4 @@
-# Copy gate — US10135667B1 abstract ingest + A1/A2 honesty numbers
+# Copy gate — US10135667B1 abstract ingest + A1/A2/A3/A4 honesty numbers
 
 **Date:** 2026-09-05  
 **Application:** `2026-09_greer-sync-pulse-tdoa`  
@@ -17,6 +17,8 @@ This gate is required because the owner asked us to ingest the published abstrac
 | Operator-named public timing classes: differential **~2.5 ns (F9T-class)**; commodity **20–50 ns**; common-view **~10 ns**; absolute-only **~5–15 ns**; public residuals **ns–tens-of-ns** | A2 score / digestion / STATUS / ledger | A2 Soften (conditional); **not** claim text; **not** a product used |
 | Operator-named Chan ~**1.14 m** @ ~2.5 ns | A2 score / digestion | Kill bare Chan; copied from the gate |
 | Operator-named **brutal lock** paraphrase: patent simultaneous-via-DGPS-1PPS ≠ commercial 1PPS reality | A2 / STATUS / ledger | Honesty lock; **not** claim quote; **not** product copy |
+| Operator-named 50 kHz `c/B` ~**6 km** resolution caution | A3 / STATUS / ledger | Honesty caution; **not** injected as fix error; **not** claim text; distinct from A4 detection jitter |
+| Operator-gated A3 sim metrics (mild LE ~0.5–1 m; `b=2` abs 1.34/1.52; `b=5` ~3.9) | [`SCORE_A3.md`](SCORE_A3.md) / STATUS / ledger | Honesty pulse; **not** claim text |
 
 ## Hard NO
 
@@ -32,7 +34,7 @@ This gate is required because the owner asked us to ingest the published abstrac
 
 - [`SOURCE.md`](SOURCE.md) holds the published abstract + bibliographic table. **Claims absent.**
 - [`PROPOSED_ABSTRACT_INGEST.md`](PROPOSED_ABSTRACT_INGEST.md) and [`ABSTRACT_INGEST_SUMMARY.md`](ABSTRACT_INGEST_SUMMARY.md) paraphrase leftovers. **No claim quotes.**
-- [`SCORE_A1.md`](SCORE_A1.md) / [`SCORE_A2.md`](SCORE_A2.md) use Operator-named bars and public timing classes. **No claim quotes.** **No** 1PPS product copy.
+- [`SCORE_A1.md`](SCORE_A1.md) / [`SCORE_A2.md`](SCORE_A2.md) / [`SCORE_A3.md`](SCORE_A3.md) use Operator-named bars and public timing classes. **No claim quotes.** **No** 1PPS product copy.
 - **≤1 m xy**, **DGPS ~0.4–0.5 m**, **F9T-class ~2.5 ns**, commodity / common-view / absolute-only classes, and the brutal lock appear as Operator-named honesty, **not** as claim language.
 - [`GREER_WRITEUP.md`](GREER_WRITEUP.md) banner restates **sync-fragility evidence only**. Body is not rewritten into claim-product copy.
 

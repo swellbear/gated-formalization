@@ -31,7 +31,7 @@ Hardware **X PARKED.**
 
 ## What this string must do next
 
-Later the same day: **A1 Soften** — [`DIGESTION_A1.md`](DIGESTION_A1.md). Later still: suite **A1→A4 Soften** wrap — [`DIGESTION_A1A4_SUITE.md`](DIGESTION_A1A4_SUITE.md). Link/map stays **PARKED**.
+Later the same day: **A1 Soften** — [`DIGESTION_A1.md`](DIGESTION_A1.md). **A2 Soften (conditional)** — [`DIGESTION_A2.md`](DIGESTION_A2.md). **A3 Soften** — [`DIGESTION_A3.md`](DIGESTION_A3.md). **A4 Soften X/σ_t** — [`DIGESTION_A4.md`](DIGESTION_A4.md). Suite wrap — [`DIGESTION_A1A4_SUITE.md`](DIGESTION_A1A4_SUITE.md). Link/map stays **PARKED**.
 
 **Greer send HOLD** until DIGEST + Founder fold. [`GREER_WRITEUP.md`](GREER_WRITEUP.md) is **sync-fragility evidence only**.
 

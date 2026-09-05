@@ -6,6 +6,7 @@
 **Parent pulses:** US10135667B1 **abstract ingest ADMITTED** as Amb spine ([`DIGESTION_ABSTRACT_INGEST.md`](DIGESTION_ABSTRACT_INGEST.md); patent-facing **≤1 m xy**; **DGPS ~0.4–0.5 m** absolute floor named) · first-pulse fog naming **ADMITTED** (C1/C2/C3 SUCCEED) · **#0 GEOM0 HARDEN** ([`SCORE_GEOMETRY_0.md`](SCORE_GEOMETRY_0.md); **median-not-p90**; 1 ns p90 ≈ **1.16 m**; **perfect-ref** assumed) · **MULTIPATH1 Soften** ([`SCORE_MULTIPATH1.md`](SCORE_MULTIPATH1.md); LOS + mild/intermittent NLOS only) · **SYNC1 Soften** ([`SCORE_SYNC_1.md`](SCORE_SYNC_1.md); Chan-alone near-ideal `σ_sync ≲ 0.3 ns`) · **JOINT1 Soften** ([`SCORE_JOINT1.md`](SCORE_JOINT1.md); `σ_sync ≲ 3 ns` **fixed offsets**) · **DRIFT1 HARDEN** ([`SCORE_DRIFT1.md`](SCORE_DRIFT1.md); named batch α restores SYNC1 drift breakers) · **GATE1 Soften** ([`SCORE_GATE1.md`](SCORE_GATE1.md); detect-only refuse belt)  
 **Ledger:** [`NAMED_GAP_LEDGER.md`](NAMED_GAP_LEDGER.md)  
 **Digestion:** [`DIGESTION_A1.md`](DIGESTION_A1.md)  
+**Later the same day:** **A2 Soften (conditional)** (carried) · **A3 Soften** ([`SCORE_A3.md`](SCORE_A3.md); [`DIGESTION_A3.md`](DIGESTION_A3.md)) · **A4 Soften X/σ_t** ([`SCORE_A4.md`](SCORE_A4.md))  
 **Ingest triad (prior):** [`ABSTRACT_INGEST_SUMMARY.md`](ABSTRACT_INGEST_SUMMARY.md) · [`PROPOSED_ABSTRACT_INGEST.md`](PROPOSED_ABSTRACT_INGEST.md) · [`SOURCE.md`](SOURCE.md)  
 **Copy gate (prior):** [`COPY_GATE.md`](COPY_GATE.md)  
 **Greer-facing write-up (Founder PRIMARY; HOLD send until suite digests):** [`GREER_WRITEUP.md`](GREER_WRITEUP.md)  
@@ -116,9 +117,9 @@ Do **not** invent fingerprint / ML / RF to rescue the RN floor, loose sync, free
 - **X = 0.50 m** stays **perfect-ref scoped sim only**. Soften silent perfect-ref absolute-≤0.50 language from prior GEOM0.
 - Do **not** Harden absolute **X**.
 
-**LATER THE SAME DAY:** **A2 Soften (conditional)**. See [`SCORE_A2.md`](SCORE_A2.md). **A1 Soften** still stands.
+**LATER THE SAME DAY:** **A2 Soften (conditional)** ([`SCORE_A2.md`](SCORE_A2.md)), **A3 Soften** ([`SCORE_A3.md`](SCORE_A3.md)), and **A4 Soften X/σ_t** ([`SCORE_A4.md`](SCORE_A4.md)). **A1 Soften** still stands.
 
-**NEXT (locked; user override suite):** **GO A3** then **A4**. Soften/Harden each.
+**NEXT (locked):** **DIGEST + Founder fold**. Greer send **HOLD** until then.
 
 **PARK** hardware **X**. Link/map GIS/CAD overlay stays **PARKED**.
 

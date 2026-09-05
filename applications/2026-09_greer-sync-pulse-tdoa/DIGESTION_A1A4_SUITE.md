@@ -2,7 +2,7 @@
 
 A short plain suite write-up. Habit: [`docs/DIGESTION_HABIT.md`](../../docs/DIGESTION_HABIT.md). **Lab DIGEST was not on this VM.** This file is **scaffolded from the Operator gate**. Operator may follow-on when Lab DIGEST lands. It does **not** score a locator. It does **not** copy claims. It does **not** send to Greer.
 
-**This wrap:** `2026-09_greer-sync-pulse-tdoa` A1→A4 — Method Operator **ADMIT** the suite Soften wrap. A4 this fold: **Soften X/σ_t**. Score: [`SCORE_A4.md`](SCORE_A4.md). A4 note: [`DIGESTION_A4.md`](DIGESTION_A4.md). A1 on disk: [`SCORE_A1.md`](SCORE_A1.md) · [`DIGESTION_A1.md`](DIGESTION_A1.md). A2 on disk: [`SCORE_A2.md`](SCORE_A2.md) · [`DIGESTION_A2.md`](DIGESTION_A2.md). A3 individual SCORE / DIGESTION may land from the A3 fold; the **gate** below is authoritative if they are not yet on master.
+**This wrap:** `2026-09_greer-sync-pulse-tdoa` A1→A4 — Method Operator **ADMIT** the suite Soften wrap. A4 this fold: **Soften X/σ_t**. Score: [`SCORE_A4.md`](SCORE_A4.md). A4 note: [`DIGESTION_A4.md`](DIGESTION_A4.md). A1 on disk: [`SCORE_A1.md`](SCORE_A1.md) · [`DIGESTION_A1.md`](DIGESTION_A1.md). A2 on disk: [`SCORE_A2.md`](SCORE_A2.md) · [`DIGESTION_A2.md`](DIGESTION_A2.md). A3 individual SCORE / DIGESTION: [`SCORE_A3.md`](SCORE_A3.md) · [`DIGESTION_A3.md`](DIGESTION_A3.md).
 
 **Standing (record the suite):** **A1 Soften** · **A2 Soften-conditional** · **A3 Soften** · **A4 Soften X/σ_t** · abstract ingest **ADMITTED** · **GEOM0 HARDEN** (named 1 ns model) · **MULTIPATH1 Soften** · prior SYNC/JOINT/DRIFT/GATE = **partial** sync-fragility.
 
@@ -14,7 +14,7 @@ A short plain suite write-up. Habit: [`docs/DIGESTION_HABIT.md`](../../docs/DIGE
 |-------|------|----------|
 | **A1 Soften** | Soften (Kill not triggered) | abs **≤1 m** under RN floor; **X=0.50** perfect-ref only; **DGPS floor named** |
 | **A2 Soften-conditional** | Soften-conditional | **JOINT1+~2.5 ns** Soften; **Kill** bare Chan/commodity |
-| **A3 Soften** | Soften | **mild/intermittent LE** only for **≤1 m**; persistent **B_lb** fails |
+| **A3 Soften** | Soften | mild/intermittent LE (~**0.5–1 m** / `f≈0.25`) survives ≤1 m; persistent `B_lb ≳ 2 m` / `B_dense` fail (`b=2` → **1.34 / 1.52**; `b=5` → ~**3.9**) |
 | **A4 Soften** | Soften X/σ_t | Soften **X/σ_t**; **RF PARKED** |
 
 **A4 gate (this fold):**
@@ -50,12 +50,13 @@ Operator **ADMIT Soften-conditional**. See [`SCORE_A2.md`](SCORE_A2.md) · [`DIG
 
 ---
 
-## A3 Soften (gate; individual file may follow-on)
+## A3 Soften (scored)
 
-Operator **ADMIT Soften**. Copied from the suite gate. Individual SCORE / DIGESTION may land from the A3 fold. Lab DIGEST may follow-on.
+Operator **ADMIT Soften**. Kill **not** wholesale. Harden **unsupported**. See [`SCORE_A3.md`](SCORE_A3.md) · [`DIGESTION_A3.md`](DIGESTION_A3.md).
 
-- **Mild / intermittent LE** (leading-edge / first-arrival) **only** keeps **≤1 m** poseable.
-- **Persistent B_lb** (bias lower bound) **fails**.
+- Mild / intermittent LE (~**0.5–1 m** bias, or intermittent `f≈0.25`) **survives ≤1 m** under Chan + RN `σ_ref=0.5`.
+- Persistent `B_lb ≳ 2 m` and `B_dense` **fail ≤1 m** (`b=2` → abs **1.34 / 1.52**; `b=5` → ~**3.9**).
+- 50 kHz `c/B` ~**6 km** = **resolution caution only**, **not** injected as fix error. Distinct from A4 honest 50 kHz **phase-flip detection jitter**.
 - This is **not** a substitute for our earlier **MULTIPATH1** additive-NLOS Soften, and it is **not** a Harden of indoor first-arrival.
 
 ---
