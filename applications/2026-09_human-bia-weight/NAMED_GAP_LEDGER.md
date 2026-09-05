@@ -1,14 +1,14 @@
 # Named-gap ledger — human BIA → weight
 
-Habit: [`docs/NAMED_GAP_LEDGER_HABIT.md`](../../docs/NAMED_GAP_LEDGER_HABIT.md). One line per open gap. This is a problem-solving scoreboard, **not** a trained map, **not** livestock transfer, and **not** a farm / commercial weighing claim.
+Habit: [`docs/NAMED_GAP_LEDGER_HABIT.md`](../../docs/NAMED_GAP_LEDGER_HABIT.md). One line per open gap. This is a problem-solving scoreboard, **not** a commercial weighing claim, **not** livestock transfer, and **not** rithm.
 
 **Opened:** 2026-09-05 — Founder opens the **human BIA → weight** step-1 data hunt as **method practice** after poultry #47, cattle #49, sheep #51 **DATA-BLOCKED** and companion #53 **Soften** (tiny n) + training-scale **DATA-BLOCKED**. Lab invents ranked hunt probes. Operator gates.
 
-**Last check:** 2026-09-05 — Operator + Founder **ADMIT SUCCEED** on the Step-1 named gap (public row-level human BIA + weight under reusable public terms). Primary: NHANES 1999–2004 BIX↔BMX. DUA caveats recorded. Hunt: [`PROPOSED_HUNT.md`](PROPOSED_HUNT.md). Next string = sklearn invent board (not this fold).
+**Last check:** 2026-09-05 — Operator **ADMIT S1 HARDEN** on NHANES Cycle C sklearn holdout (after Step-1 SUCCEED #55). S2 Soften/park (MISS). S3 HOLD/park (not run). Score: [`SCORE_S1_PROPOSED.md`](SCORE_S1_PROPOSED.md). Digestion: [`DIGESTION_S1_HOLDOUT.md`](DIGESTION_S1_HOLDOUT.md).
 
-**What this is not:** This is **not** rithm. Livestock transfer is **not** claimed. Farm livestock continuous-weighing is a **separate** Amb — not this fold. Farm / commercial weighing is **not** solved. Step-1 SUCCEED is **not** a trained map and is **not** skill-met beyond the data gap. Training is **not** started and is **not** established. Do **not** invent rows. Do **not** write skill-met / elevated language.
+**What this is not:** This is **not** rithm. Livestock transfer is **not** claimed. Farm livestock continuous-weighing is a **separate** Amb. Farm / commercial weighing is **not** solved. Residual ~11 kg RMSE is **not** a product win. Step-1 SUCCEED is **not** a trained map. S1 HARDEN is **method-practice holdout only**. DUA: statistical analysis / **no re-id**. Do **not** invent rows. Do **not** write skill-met / elevated language for farm weighing.
 
-**Process:** Lab invented hunt probes. Operator + Founder admitted SUCCEED. Lab does **not** self-admit. The next invent (cheap sklearn holdout vs mean and height-only baselines) waits for the next string and must point at the open sklearn line.
+**Process:** Lab invented hunt probes, then a cheap sklearn holdout. Operator admits, rejects, or parks. Lab does **not** self-admit. After this fold Lab is **HOLD** on this bite unless a Founder opens a new named gap.
 
 **Poultry BIA→weight** step-1 remains **parked** (#47 DATA-BLOCKED). This app does **not** reopen it.  
 **Cattle BIA→weight** step-1 remains **parked** (#49 DATA-BLOCKED). This app does **not** reopen it.  
@@ -21,6 +21,10 @@ Habit: [`docs/NAMED_GAP_LEDGER_HABIT.md`](../../docs/NAMED_GAP_LEDGER_HABIT.md).
 
 ## Lines
 
-`public row-level human BIA + weight under reusable public terms` → kill vs succeed: citable URL/DOI + schema + license + usable n → **SUCCEED** (NHANES 1999–2004 BIX↔BMX; SEQN; BIXS\*/BIXC\* + BMXWT; proven BIX_C∩BMX_C n=4278; stacked ~13221; NCHS DUA — statistical analysis only; no re-identification; **not CC-BY**; Operator: no explicit ML train/eval ban → Succeed, not Soften) → last check: 2026-09-05 Operator + Founder **ADMIT SUCCEED**; Soften secondaries logged, not substitutes ([`PROPOSED_HUNT.md`](PROPOSED_HUNT.md)) → status: **killed** / **SUCCEED**
+`public row-level human BIA + weight under reusable public terms` → kill vs succeed: citable URL/DOI + schema + license + usable n → **SUCCEED** (NHANES 1999–2004 BIX↔BMX; SEQN; BIXS\*/BIXC\* + BMXWT; proven BIX_C∩BMX_C n=4278; stacked ~13221; NCHS DUA — statistical analysis only; no re-identification; **not CC-BY**; Operator: no explicit ML train/eval ban → Succeed, not Soften) → last check: 2026-09-05 Operator + Founder **ADMIT SUCCEED** (#55); Soften secondaries logged, not substitutes ([`PROPOSED_HUNT.md`](PROPOSED_HUNT.md)) → status: **killed** / **SUCCEED**
 
-`cheap sklearn holdout of human BIA→weight vs mean and height-only baselines on NHANES BIX↔BMX (DUA / statistical-analysis framing)` → kill vs succeed: a cheap holdout that beats both baselines vs fails them / is not yet invented → last check: **none** (not this fold; Lab invents under Operator) → status: **open**
+`cheap sklearn holdout of human BIA→weight vs mean and height-only / anthro baselines on NHANES Cycle C (DUA / statistical-analysis framing)` → kill vs harden: holdout fails baselines vs Ridge R50+Xc50+height+sex+age beats height+sex+age alone under the 0.90 ratio bar → last check: 2026-09-05 Cycle C n eligible **4276** (train 3420 / test 856; SEQN 80/20; `random_state=0`); test RMSE kg B0 21.997 / B1 15.683 / B1+ 14.655 / S1-A 14.057 / S1-B 11.271; S1-B/B1+ = **0.769** ≤ 0.90; S1-A < B0 → status: **hardened** (method-practice Amb bite; BIA beyond anthro on this holdout; residual ~11 kg RMSE leftover honesty — **not** commercial weighing)
+
+`S2 multi-freq 5/50/100 required for this Amb on Cycle C` → kill vs harden: a cheap multi-freq lift that would clear the provisional bar vs only a thin miss → last check: S2-B RMSE 10.963 vs S1-B 11.271 (ratio **0.973**); MAE drop **0.23 kg < 0.5** — provisional tag **MISS** → status: **paused** (Soften / park; multi-freq not required for this Amb on C)
+
+`S3 further holdout invent on Cycle C` → kill vs harden: a needed extra check vs ceremony after S1 already clear → last check: **not run** — Operator **HOLD/park**; not needed given S1 clear → status: **paused**

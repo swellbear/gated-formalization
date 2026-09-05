@@ -32,7 +32,7 @@ Lab invents ranked hunt probes. Lab does **not** self-admit. Lab scratch was **n
 |-------|--------|
 | Primary: NHANES 1999–2004 BIX↔BMX | **SUCCEED** — public-use XPT; SEQN join; raw R/Xc + weight; usable n |
 | Soften secondaries | **logged, not substitutes** — PhysioNet QDE; Senegal Zenodo Z50+Wt; BIAID / UK Biobank / BIAdata |
-| Training / holdout invent | **not this fold** — next string |
+| Training / holdout invent | **gated after this hunt** — S1 HARDEN / S2 Soften / S3 HOLD; see [`SCORE_S1_PROPOSED.md`](SCORE_S1_PROPOSED.md) |
 
 Soften secondaries below are **docs only**. They do **not** replace the NHANES succeed table.
 
@@ -55,7 +55,7 @@ Soften secondaries below are **docs only**. They do **not** replace the NHANES s
 - **No** attempt to learn the identity of any person or establishment.
 - **Not** CC-BY.
 - Operator confirmed: **no explicit ban** on ML train/eval.
-- Intended next use is a **cheap sklearn holdout** framed as statistical analysis → **Succeed, not Soften**.
+- Intended next use was a **cheap sklearn holdout** framed as statistical analysis → **Succeed, not Soften**. That holdout is now gated ([`SCORE_S1_PROPOSED.md`](SCORE_S1_PROPOSED.md)).
 
 This fold does **not** download, join, or train on the XPT files.
 
@@ -93,7 +93,7 @@ Soften secondaries are **logged, not substitutes**.
 - Do **not** invent rows.
 - Poultry #47, cattle #49, sheep #51, and companion #53 stay **parked**. This hunt does **not** reopen them.
 
-**Next string (after this fold):** invent → test a cheap sklearn holdout vs **mean** and **height-only** baselines. Lab invents under Operator. **Not in this PR.**
+**Next string (after the hunt fold):** invent → test a cheap sklearn holdout vs **mean** and **height-only** baselines. That string **ran**. Operator **ADMIT S1 HARDEN**; S2 Soften/park; S3 HOLD/park. Metrics: [`SCORE_S1_PROPOSED.md`](SCORE_S1_PROPOSED.md). Digestion: [`DIGESTION_S1_HOLDOUT.md`](DIGESTION_S1_HOLDOUT.md).
 
 ---
 
