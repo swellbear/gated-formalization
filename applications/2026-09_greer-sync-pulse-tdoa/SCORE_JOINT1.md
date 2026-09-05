@@ -6,11 +6,12 @@
 **Parent pulses:** first-pulse fog naming **ADMITTED** (C1/C2/C3 SUCCEED) · **#0 GEOM0 HARDEN** ([`SCORE_GEOMETRY_0.md`](SCORE_GEOMETRY_0.md); **median-not-p90**; 1 ns p90 ≈ **1.16 m**) · **MULTIPATH1 Soften** ([`SCORE_MULTIPATH1.md`](SCORE_MULTIPATH1.md); LOS + mild/intermittent NLOS only) · **SYNC1 Soften** ([`SCORE_SYNC_1.md`](SCORE_SYNC_1.md); Chan-alone near-ideal `σ_sync ≲ 0.3 ns`)  
 **Ledger:** [`NAMED_GAP_LEDGER.md`](NAMED_GAP_LEDGER.md)  
 **Digestion:** [`DIGESTION_JOINT1.md`](DIGESTION_JOINT1.md)  
+**Later check:** [`SCORE_DRIFT1.md`](SCORE_DRIFT1.md) (HARDEN; named batch α restores SYNC1 drift breakers)  
 **Protocol (short):** invent→test habit [`docs/INVENT_TEST_HABIT.md`](../../docs/INVENT_TEST_HABIT.md); named-gap ledger [`docs/NAMED_GAP_LEDGER_HABIT.md`](../../docs/NAMED_GAP_LEDGER_HABIT.md). Lab invents; Operator admits / rejects / parks. Lab does **not** self-admit.
 
 Lab scratch was **not** on this fold VM. Metrics below are copied from the **Operator gate** (authoritative). Hunt scripts / Lab notebooks are **not** on master.
 
-**What this is not:** A locator. Claim clearance. Hardware **X**. Skill-met. RF fingerprinting / ML. GPS/DGPS as the mobile fix. A product copied from US10135667B1. A multipath-robust 0.50 m. A drift-robust 0.50 m. Reopening cell-tower as live. Reopening BIA→weight. Rithm. A p90 bar.
+**What this is not:** A locator. Claim clearance. Hardware **X**. Skill-met. RF fingerprinting / ML. GPS/DGPS as the mobile fix. A product copied from US10135667B1. A multipath-robust 0.50 m. A **free per-epoch realtime** drift claim. Reopening cell-tower as live. Reopening BIA→weight. Rithm. A p90 bar.
 
 ---
 
@@ -18,9 +19,9 @@ Lab scratch was **not** on this fold VM. Metrics below are copied from the **Ope
 
 **What this is:** A cheap joint-clock check after SYNC1 Soften. Path-shared JOINT1 estimates a **shared τ** on the same honesty board. Inter-reference error is **fixed_trial** `σ_sync` (one offset per trial, not a ramp). No RF. No ML. No fingerprint.
 
-**What this settles:** Kill is **not** triggered. Aim A is **partial**. Path-shared JOINT1 **restores X** under fixed_trial `σ_sync` up to **≲ 3 ns**. The Chan-alone 1 ns scrape is **restored**. `σ_sync` = 10 ns **fails**. Drift 3 ns/path **still breaks X** — shared-τ is misspecified versus a ramp. Named sync Soften budget **widens** to **`σ_sync ≲ 3 ns` under JOINT1** + prior mild-NLOS. **GEOM0 HARDEN** still stands. **MULTIPATH1 Soften** still stands. **SYNC1 Soften** still stands as the Chan-alone near-ideal window. **Median-not-p90** honesty remains.
+**What this settles:** Kill is **not** triggered. Aim A is **partial**. Path-shared JOINT1 **restores X** under fixed_trial `σ_sync` up to **≲ 3 ns**. The Chan-alone 1 ns scrape is **restored**. `σ_sync` = 10 ns **fails**. Drift 3 ns/path **still broke X on this pulse** — shared-τ is misspecified versus a ramp. Later **DRIFT1 HARDEN** restored those SYNC1 drift breakers under named batch α. Named sync Soften budget **widens** to **`σ_sync ≲ 3 ns` under JOINT1** + prior mild-NLOS. **GEOM0 HARDEN** still stands. **MULTIPATH1 Soften** still stands. **SYNC1 Soften** still stands as the Chan-alone near-ideal window. **Median-not-p90** honesty remains.
 
-**What this is not:** Not a field locator. Not a hardware bar. Not a p90 bar. Not claim clearance. Not a multipath-robust claim. Not a drift-robust claim. Not a reason to invent RF, ML, or fingerprints.
+**What this is not:** Not a field locator. Not a hardware bar. Not a p90 bar. Not claim clearance. Not a multipath-robust claim. Not a free per-epoch realtime drift claim. Not a reason to invent RF, ML, or fingerprints.
 
 ---
 
@@ -51,7 +52,7 @@ This fold does **not** re-run the sim. Numbers are the gated Lab summary.
 
 **Soften (Operator). Kill not triggered. Aim A partial.**
 
-Path-shared JOINT1 restores **X** under fixed_trial `σ_sync` up to **≲ 3 ns**. Named sync Soften budget **widens** to that window + prior mild-NLOS. Do **not** claim multipath-robust. Do **not** claim drift-robust.
+Path-shared JOINT1 restores **X** under fixed_trial `σ_sync` up to **≲ 3 ns**. Named sync Soften budget **widens** to that window + prior mild-NLOS. Do **not** claim multipath-robust. Shared-τ-only is **not** drift-robust (this pulse). Later **DRIFT1** — [`SCORE_DRIFT1.md`](SCORE_DRIFT1.md).
 
 ---
 
@@ -68,7 +69,7 @@ Provisional **sim X = 0.50 m** remains. It is honest only under:
 **Fails the bar (do not invent a rescue):**
 
 - JOINT1 `σ_sync` = **10 ns** → **1.816 m**.
-- **Drift 3 ns/path** → JOINT1 **0.919 m** (shared-τ misspecified vs ramp). **Not drift-robust.**
+- **Drift 3 ns/path** → JOINT1 **0.919 m** (shared-τ misspecified vs ramp on this pulse). Later **DRIFT1 HARDEN** restored those breakers under named batch α — [`SCORE_DRIFT1.md`](SCORE_DRIFT1.md).
 - Strong multipath (beyond mild/intermittent NLOS). **Not multipath-robust.**
 
 Do **not** invent fingerprint / ML / RF to rescue loose sync, drift, or strong multipath.
@@ -83,7 +84,7 @@ Do **not** invent fingerprint / ML / RF to rescue loose sync, drift, or strong m
 
 **PARK** hardware **X**.
 
-**NEXT (named; not this fold):** **DRIFT1** pulse. Still **no RF / ML**. **No** fingerprint rescue.
+**LATER THE SAME DAY:** **DRIFT1 HARDEN**. See [`SCORE_DRIFT1.md`](SCORE_DRIFT1.md). **JOINT1 Soften** still stands as the **fixed-offset** window. Next after DRIFT1 (**not this note**): **GATE1**, then a Greer-facing write-up. Still **no RF / ML**. **No** fingerprint rescue.
 
 **Honesty locks**
 
@@ -91,7 +92,7 @@ Do **not** invent fingerprint / ML / RF to rescue loose sync, drift, or strong m
 - **GEOM0 HARDEN** still stands.
 - **MULTIPATH1 Soften** still stands (LOS + mild/intermittent NLOS only). **Not** a multipath-robust claim.
 - **SYNC1 Soften** still stands as Chan-alone near-ideal.
-- Drift 3 ns/path still breaks X. **Not** a drift-robust claim.
+- Drift 3 ns/path still broke X on this pulse. Later **DRIFT1 HARDEN**. **JOINT1 Soften** is the **fixed-offset** window, **not** a free per-epoch realtime claim.
 - GPS is **never** the mobile fix.
 - This is **not** claim clearance.
 - This is **not** a locator.
@@ -106,7 +107,7 @@ Cell-tower Amb stays **PARKED**. BIA→weight portfolio stays **CLOSED**.
 
 ## 5. Hard NO
 
-- Do **not** treat **0.50 m** as a hardware bar, a field locator, a **p90** bar, a **multipath-robust** bar, or a **drift-robust** bar.
+- Do **not** treat **0.50 m** as a hardware bar, a field locator, a **p90** bar, a **multipath-robust** bar, or a **free per-epoch realtime** drift bar.
 - Do **not** treat JOINT1 `σ_sync` = 10 ns (**1.816 m**) or drift 3 ns/path (**0.919 m**) as a pass.
 - Do **not** silently drop the Chan-alone SYNC1 window — JOINT1 widens the named budget **under joint clocks**, it does not erase Chan-alone scrape at 1 ns.
 - Do **not** invent fingerprint / ML / RF to rescue loose sync, drift, or strong multipath.
@@ -116,8 +117,8 @@ Cell-tower Amb stays **PARKED**. BIA→weight portfolio stays **CLOSED**.
 - Do **not** write skill-met / elevated language.
 - Do **not** reopen `2026-09_cell-tower-geometry` as live.
 - Do **not** reopen the BIA→weight portfolio.
-- Do **not** run **DRIFT1** in this fold.
+- Do **not** run **GATE1** from this JOINT1 note.
 
 ---
 
-*Docs only. Soften ≠ claim clearance. Kill not triggered ≠ locator. Aim A partial ≠ drift-robust. Provisional sim X is median-not-p90. Provisional sim X ≠ hardware X. Not skill-met. Not a patent-product claim. Not rithm. Lab does not self-admit. Lab scratch was not on this VM; summary copied from the Operator gate.*
+*Docs only. Soften ≠ claim clearance. Kill not triggered ≠ locator. Aim A partial ≠ free per-epoch realtime. Later DRIFT1 HARDEN restored the path-drift breakers under named batch α. Provisional sim X is median-not-p90. Provisional sim X ≠ hardware X. Not skill-met. Not a patent-product claim. Not rithm. Lab does not self-admit. Lab scratch was not on this VM; summary copied from the Operator gate.*

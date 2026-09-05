@@ -90,7 +90,7 @@ Do **not** invent fingerprint / ML / RF to rescue loose sync.
 - This is **not** skill-met.
 - No fingerprint / ML / RF invent to rescue loose sync.
 
-**LATER THE SAME DAY:** **JOINT1 Soften** widened the named sync budget under path-shared joint clocks. See [`SCORE_JOINT1.md`](SCORE_JOINT1.md). **SYNC1 Soften** still stands as the Chan-alone near-ideal window. Still **no RF / ML**.
+**LATER THE SAME DAY:** **JOINT1 Soften** widened the named sync budget under path-shared joint clocks. See [`SCORE_JOINT1.md`](SCORE_JOINT1.md). Later **DRIFT1 HARDEN** restored the SYNC1 drift breakers under named batch α. See [`SCORE_DRIFT1.md`](SCORE_DRIFT1.md). **SYNC1 Soften** still stands as the Chan-alone near-ideal window. Still **no RF / ML**.
 
 US10135667B1 — owner-requested **collaboration framing** (bibliographic; custom-beacon substrate, **not** a carrier-mast Amb). **No claim-language copy.**
 

@@ -26,7 +26,7 @@ HARDEN is **not** clearance. A 0.50 m **median** sim bar is **not** a field loca
 
 ## What this string must do next (later gated)
 
-**MULTIPATH1** later **Soften**ed the multipath leftover. **SYNC1** later **Soften**ed Chan-alone sync-imperfection. **JOINT1** later **Soften**ed path-shared joint clocks and **widened** the named sync budget to `σ_sync ≲ 3 ns` under JOINT1. **X** stays 0.50 m under **JOINT1 sync + NLOS** scope. Next after JOINT1 (not this note): **DRIFT1**. Still **no RF / ML**. **No** fingerprint rescue. See [`DIGESTION_JOINT1.md`](DIGESTION_JOINT1.md).
+**MULTIPATH1** later **Soften**ed the multipath leftover. **SYNC1** later **Soften**ed Chan-alone sync-imperfection. **JOINT1** later **Soften**ed path-shared joint clocks and **widened** the named sync budget to `σ_sync ≲ 3 ns` under JOINT1. **DRIFT1** later **HARDENED** path-drift α (batch τ + linear α; SYNC1 drift breakers restore). **X** stays 0.50 m under **JOINT1 fixed-offset + named DRIFT1 batch α + NLOS** scope. Next after DRIFT1 (not this note): **GATE1**, then a Greer-facing write-up. Still **no RF / ML**. **No** fingerprint rescue. See [`DIGESTION_DRIFT1.md`](DIGESTION_DRIFT1.md).
 
 This #0 note does **not** re-score MULTIPATH1. Geometry under ideal sync + Gaussian Δt remains **not** the bottleneck. See [`DIGESTION_MULTIPATH1.md`](DIGESTION_MULTIPATH1.md).
 

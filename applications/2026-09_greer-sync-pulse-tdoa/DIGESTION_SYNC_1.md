@@ -34,14 +34,14 @@ That is an **Amb Soften** of the sync leftover. It is **not** a locator. It is *
 
 ## What this string must do next (later the same day: JOINT1)
 
-Lab later scored **JOINT1 Soften**. See [`DIGESTION_JOINT1.md`](DIGESTION_JOINT1.md). **SYNC1 Soften** still stands as the Chan-alone near-ideal window. Named sync budget later **widened** to `σ_sync ≲ 3 ns` under JOINT1. Next after JOINT1 (not this note): **DRIFT1**. Still **no RF / ML**. Do **not** invent a fingerprint rescue.
+Lab later scored **JOINT1 Soften**. See [`DIGESTION_JOINT1.md`](DIGESTION_JOINT1.md). **SYNC1 Soften** still stands as the Chan-alone near-ideal window. Named sync budget later **widened** to `σ_sync ≲ 3 ns` under JOINT1. Later **DRIFT1 HARDEN** restored the SYNC1 drift breakers under named batch α — [`DIGESTION_DRIFT1.md`](DIGESTION_DRIFT1.md). Next after DRIFT1 (not this note): **GATE1**, then a Greer-facing write-up. Still **no RF / ML**. Do **not** invent a fingerprint rescue.
 
 US10135667B1 — owner-requested **collaboration framing** (bibliographic; custom-beacon substrate, **not** a carrier-mast Amb). **No claim-language copy.**
 
 ## What stays parked / closed
 
 - **Hardware X** stays **PARKED**.
-- **DRIFT1** is named after JOINT1 — **not** scored in the SYNC1 fold.
+- **DRIFT1** later scored **HARDEN** — [`DIGESTION_DRIFT1.md`](DIGESTION_DRIFT1.md). **GATE1** is named next — **not** scored in the SYNC1 fold.
 - **Cell-tower geometry** stays **PARKED**. Do **not** reopen as live.
 - **BIA→weight portfolio** stays **CLOSED**. Do **not** reopen human, poultry, cattle, sheep, or companion BIA apps.
 - **Collatz playground** stays **done** (#45). Lab HOLD there.
