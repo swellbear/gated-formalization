@@ -1,0 +1,41 @@
+{
+  "check": "K1 Syracuse",
+  "board": "T1",
+  "N": 10000,
+  "seed": 20260905,
+  "classic_C": {
+    "mean_steps_to_1": 84.975,
+    "median": 73,
+    "max": 261,
+    "fail": 0
+  },
+  "K1": {
+    "mean_steps_to_1": 56.770,
+    "median": 50,
+    "max": 165,
+    "fail": 0
+  },
+  "ratio_K1_over_C": 0.6681,
+  "bar": 0.90,
+  "operator_gate": "ADMIT Amb HARDEN vs C only",
+  "honesty": [
+    "Collatz odd-orbit compression (forced half folded into odd branch)",
+    "not new dynamics",
+    "not Collatz proved",
+    "not beats random affine"
+  ],
+  "control_A": {
+    "first_draw": {
+      "pair": [3, 1],
+      "note": "identical to K1; thin"
+    },
+    "redraw_excl_3_1": {
+      "pool": [[5, 1], [5, -1], [7, 1]],
+      "result": "all fail smoke or T1 mostly timeouts",
+      "ok_frac_5_1": 0.0255,
+      "disposition": "PARK control limb as wrong-piece / inconclusive"
+    }
+  },
+  "K2_K3": "HOLD",
+  "scripts_on_master": false
+}

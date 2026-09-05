@@ -8,21 +8,22 @@
 
 ### Plain status
 
-Open **leashed** invent→test. Named gap: does a named shortcut reduce average stopping time (steps-to-1) on a **finite pre-registered range** versus a baseline **and** a control? Lab invents ranked shortcuts. Operator gates. Last check: **none**. This is **not** Collatz proved. Hunt scripts are **not** merged yet.
+Operator gated **K1** Syracuse on T1 (`N=10^4`, seed `20260905`): **ADMIT Amb HARDEN vs C only**. K1 mean steps-to-1 56.770 vs classic C 84.975 (ratio 0.6681 ≤ 0.90; 0 fail). Honesty: this is Collatz **odd-orbit compression**, **not** new dynamics, **not** Collatz proved, **not** “beats random affine.” Control-A first draw `(3,1)` was identical to K1 (thin); redraw pool parked as **wrong-piece / inconclusive**. K2/K3 **HOLD**. Track B invent stays **paused**. llm-gwt R-REPL stays **parked**. Hunt scripts are **not** merged.
 
 ---
 
 | Field | Value |
 |-------|--------|
 | **Closure state** | **open** |
-| **Phase** | leashed invent→test (Lab invents; Operator gates) |
-| **Amb** | unset (no lock / no score this fold) |
-| **Locks in force** | none yet — finite pre-registered range + baseline + control are the named gap, not a scored lock |
-| **Next authorization needed** | Operator gate on Lab-ranked shortcuts (admit / reject / park) — **not** auto-clearance; **not** a Collatz proof |
-| **Related apps surfaced** | `2026-08_llm-global-workspace-consciousness` — last string (R-REPL **paused**); `2026-08_oil-futures-predictive-model` — Track B invent **paused** |
+| **Phase** | leashed invent→test (Lab invents; Operator gates) — K1 gated |
+| **Amb** | HARDEN vs C only; control limb parked (wrong-piece / inconclusive). Remainder named: faithful reach-1 control still missing; K1 is odd-orbit compression, not new dynamics |
+| **Locks in force** | none — finite pre-registered range + baseline + control remain the named gap; K1 is an Amb HARDEN vs C, not a scored lock |
+| **Next authorization needed** | K2/K3 **HOLD**; control limb **parked**. No new invent unless Operator unlocks a faithful control or later ranked shortcut — **not** auto-clearance; **not** a Collatz proof |
+| **Related apps surfaced** | `2026-08_llm-global-workspace-consciousness` — last string (R-REPL **paused**, unchanged); `2026-08_oil-futures-predictive-model` — Track B invent **paused** (unchanged) |
 | **Optional modes** | none yet (open scaffold; not endpoint) |
 
 **Ledger:** [`NAMED_GAP_LEDGER.md`](NAMED_GAP_LEDGER.md)  
+**K1 score (both Lab boards + Operator gate):** [`SCORE_K1_PROPOSED.md`](SCORE_K1_PROPOSED.md)  
 **Digestion of last string:** [`DIGESTION_FROM_LLM_GWT.md`](DIGESTION_FROM_LLM_GWT.md)  
 **Decision log:** [`RESIDUAL_BRANCH_MENU.md`](RESIDUAL_BRANCH_MENU.md)
 
@@ -51,7 +52,7 @@ Not claimed this fold. Boxes stay open.
 - [ ] `STATUS.md` set to hard stop
 - [ ] `final_verdict.md`
 
-**Gates:** Scaffold only. Named gap is **open**. Collatz is **not** proved.
+**Gates:** Named gap last check **K1**. Status **hardened-vs-C** / **control-parked**. Collatz is **not** proved.
 
 ---
 
