@@ -1,6 +1,6 @@
 # Digestion — first-pulse fog peek (surrogate-first Soften; Δ = 5 dB)
 
-A short plain note of what the first-pulse fog peek taught. Habit: [`docs/DIGESTION_HABIT.md`](../../docs/DIGESTION_HABIT.md). Incoming Greer lesson: [`DIGESTION_FROM_GREER.md`](DIGESTION_FROM_GREER.md). Peek sheet: [`PROPOSED_PULSE.md`](PROPOSED_PULSE.md). **Later the same day:** Operator **ADMIT SURROGATE1 Soften Rank1** — [`DIGESTION_SURROGATE1.md`](DIGESTION_SURROGATE1.md) · [`SCORE_SURROGATE1.md`](SCORE_SURROGATE1.md). Rank1 EO ΔS21 = **3.32 dB**; locked **Δ = 5 unmet**. This does **not** score isolation. It does **not** invent models. It does **not** reopen Greer invent. It does **not** send the Greer write-up. It does **not** reopen cell-tower as live. It does **not** reopen BIA→weight.
+A short plain note of what the first-pulse fog peek taught. Habit: [`docs/DIGESTION_HABIT.md`](../../docs/DIGESTION_HABIT.md). Incoming Greer lesson: [`DIGESTION_FROM_GREER.md`](DIGESTION_FROM_GREER.md). Peek sheet: [`PROPOSED_PULSE.md`](PROPOSED_PULSE.md). **Later the same day:** Operator **ADMIT SURROGATE1 Soften Rank1** then Founder/Operator **Soften Amb DIGEST** — [`DIGESTION_SURROGATE1.md`](DIGESTION_SURROGATE1.md) · [`SCORE_SURROGATE1.md`](SCORE_SURROGATE1.md). Rank1 EO ΔS21 = **3.32 dB**; locked **Δ = 5 unmet** (**do not drop to 3.32**). **Lab HOLD invent.** Formal DGS Hold is **not** Amb clear. This does **not** score isolation. It does **not** invent models. It does **not** reopen Greer invent. It does **not** send the Greer write-up. It does **not** reopen cell-tower as live. It does **not** reopen BIA→weight.
 
 **This peek:** `2026-09_skymirr-mulcat-isolation` first pulse — Method Operator **ADMIT FOG_PEEK Soften**. Lab scratch was **not** on this fold VM; the gated fact set was copied from the Operator gate.
 
@@ -28,7 +28,7 @@ Peek succeed is **not** isolation shown. A 5 dB bar is **not** a measured S21 ca
 
 ## What this string must do next (later the same day: SURROGATE1)
 
-Lab later scored **SURROGATE1 Soften Rank1**. See [`DIGESTION_SURROGATE1.md`](DIGESTION_SURROGATE1.md). **FOG_PEEK Soften** still stands. After SURROGATE1: **Lab HOLD invent**. No next pulse was admitted on that fold.
+Lab later scored **SURROGATE1 Soften Rank1**. Founder + Operator then folded a **Soften Amb DIGEST**. See [`DIGESTION_SURROGATE1.md`](DIGESTION_SURROGATE1.md). **FOG_PEEK Soften** still stands. After the DIGEST: **Lab HOLD invent**. Further surrogate invent is **parked**. Reopen later **only** for openEMS / toolchain or user override. Keep **Δ = 5** — **do not drop the bar to 3.32**. Formal DGS Hold is **not** Amb clear. No next pulse was admitted on that fold.
 
 Stay the **same Amb**. Do **not** unpark 3D fine-mesh. Do **not** smuggle HFSS. Do **not** vanity-freeze 12. Do **not** vanity-chase Ze/Zo. Do **not** train. Do **not** copy patent claims. Do **not** pull the AI / design-optimizer later wave forward.
 

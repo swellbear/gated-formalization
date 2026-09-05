@@ -19,7 +19,7 @@ Incoming parked / closed strings (still not live): `2026-09_cell-tower-geometry`
 
 Stay a **new** Amb, not Greer invent reopened, not cell-tower reopened as live, and not a BIA sequel.
 
-- Quote the Founder **CLAIM LOCK**. First-pulse fog peek **ADMITTED Soften**; later **SURROGATE1 Soften Rank1** (Rank1 EO ΔS21 = **3.32 dB**; locked **Δ = 5 unmet**). Provisional **Δ = 5 dB** stands. Live path = **surrogate-first Soften**. Surrogate ≠ PCB.
+- Quote the Founder **CLAIM LOCK**. First-pulse fog peek **ADMITTED Soften**; later **SURROGATE1 Soften Rank1** (Rank1 EO ΔS21 = **3.32 dB**; locked **Δ = 5 unmet**). Founder/Operator **Soften Amb DIGEST** folded. **Lab HOLD invent.** Further surrogate invent **PARKED**. **Formal DGS Hold** — **not** Amb clear. **Do not drop Δ to 3.32.** Reopen later **only** for openEMS / toolchain or user override. Provisional **Δ = 5 dB** stands. Live path = **surrogate-first Soften**. Surrogate ≠ PCB.
 - Full-wave openEMS/Meep stays **DATA-BLOCKED** on the Lab box. 3D fine-mesh stays **PARKED** on a 16 GB laptop. **HFSS Hard NO.**
 - Path must stay **laptop-feasible**. **Do not vanity-freeze 12.** Alternate Harden **Δ = 10** is held, not locked.
 - Contrast US12,719,158 B2 / SkyMirr MuLCAT as prior art for **method practice / explore the isolation idea**. Do **not** copy claims as a product embodiment.
