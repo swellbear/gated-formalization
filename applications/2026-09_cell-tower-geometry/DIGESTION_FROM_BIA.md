@@ -1,6 +1,6 @@
 # Digestion — from the closed BIA→weight portfolio
 
-A short plain note before this new claim. Habit: [`docs/DIGESTION_HABIT.md`](../../docs/DIGESTION_HABIT.md). This does **not** score cell-tower geometry. It does **not** reopen BIA→weight. First-pulse peek is now gated: [`DIGESTION_FIRST_PULSE.md`](DIGESTION_FIRST_PULSE.md).
+A short plain note before this new claim. Habit: [`docs/DIGESTION_HABIT.md`](../../docs/DIGESTION_HABIT.md). This does **not** score cell-tower geometry. It does **not** reopen BIA→weight. First-pulse peek was gated: [`DIGESTION_FIRST_PULSE.md`](DIGESTION_FIRST_PULSE.md). The Amb is now **PARKED**: [`DIGESTION_PARK.md`](DIGESTION_PARK.md).
 
 **Last string:** `2026-09_human-bia-weight` (#59 string CLOSE / scale-accuracy **KILL**), after Step-1 SUCCEED (#55), S1 HARDEN (#56), and Ship-A method-practice demo (#57). Animal parks stay: poultry #47, cattle #49, sheep #51 DATA-BLOCKED; companion #53 Soften.
 
@@ -21,7 +21,7 @@ Stay a **new Amb**, not a BIA sequel.
 - GPS, if used at all, is **held-out scoring only** — never a fingerprint training target.
 - Say the ceiling out loud: coarse location / GPS-fallback, **not** GPS replacement.
 - Do **not** train. Do **not** commit big datasets. Do **not** write skill-met / GPS-replacement language.
-- Next pulse (not the peek fold): invent 2–3 ranked pure geometry / path-loss estimators. This note does **not** invent them.
+- Next pulse after peek was estimator invent. Cheap checks A→B were **halted mid-flight**. This Amb is now **PARKED**. This note does **not** invent estimators.
 
 ## What stays parked / closed
 

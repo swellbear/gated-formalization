@@ -2,7 +2,7 @@
 
 **Date:** 2026-09-05  
 **Application:** `2026-09_cell-tower-geometry`  
-**String:** first-pulse peek **ADMITTED**  
+**String:** first-pulse peek **ADMITTED** (#61) — later the same day the Amb was **PARKED** (Founder STOP / user pivot). Cheap checks A→B **halted mid-flight**. Peek facts below stay **on record**. The Amb is **not live**. Park: [`DIGESTION_PARK.md`](DIGESTION_PARK.md).  
 **Named gap:** can a geometry / path-loss test even be posed from public traces + honest mast maps?  
 **Ledger:** [`NAMED_GAP_LEDGER.md`](NAMED_GAP_LEDGER.md)  
 **Digestion:** [`DIGESTION_FIRST_PULSE.md`](DIGESTION_FIRST_PULSE.md)
@@ -91,7 +91,7 @@ Soften/RSSI-only: Malaysia GNetTrack (no TA documented).
 
 **Geography:** EU packs first; US ASR Soften until join honesty-cleared.
 
-**Next (not this fold):** invent 2–3 ranked pure geometry/path-loss estimators — **no invent in this fold**.
+**Next (halted):** invent 2–3 ranked pure geometry/path-loss estimators — cheap checks A→B **halted mid-flight**. **No invent in this folder.** Amb **PARKED**; do **not** reopen as live.
 
 **BIA→weight stays CLOSED.**
 

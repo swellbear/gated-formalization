@@ -1,6 +1,6 @@
 # Digestion — first-pulse peek (X = 300 m provisional)
 
-A short plain note of what the first-pulse peek taught. Habit: [`docs/DIGESTION_HABIT.md`](../../docs/DIGESTION_HABIT.md). Incoming BIA lesson: [`DIGESTION_FROM_BIA.md`](DIGESTION_FROM_BIA.md). Peek sheet: [`PROPOSED_PULSE.md`](PROPOSED_PULSE.md). This does **not** score a geometry locator. It does **not** reopen BIA→weight.
+A short plain note of what the first-pulse peek taught. Habit: [`docs/DIGESTION_HABIT.md`](../../docs/DIGESTION_HABIT.md). Incoming BIA lesson: [`DIGESTION_FROM_BIA.md`](DIGESTION_FROM_BIA.md). Peek sheet: [`PROPOSED_PULSE.md`](PROPOSED_PULSE.md). **Later the same day:** Amb **PARKED** — see [`DIGESTION_PARK.md`](DIGESTION_PARK.md). This does **not** score a geometry locator. It does **not** reopen this Amb as live. It does **not** reopen BIA→weight.
 
 **This peek:** `2026-09_cell-tower-geometry` first pulse — Method Operator **ADMIT**. Lab scratch was **not** on this fold VM; the gated fact set was copied from the Operator gate.
 
@@ -20,14 +20,15 @@ The claim is **measurable** on the public record. It is **not** cleared.
 
 Peek succeed is **not** claim clearance. A 300 m bar is **not** a locator. Training is **not** established.
 
-## What this string must do next (not this fold)
+## What this string must do next (halted)
 
-Invent 2–3 ranked **pure geometry / path-loss** estimators on the admitted EU packs. Operator gates. This fold does **not** invent them.
+Cheap checks A→B were **halted mid-flight**. Do **not** invent estimators in this folder. The Amb is now **PARKED** (Founder STOP / user pivot). Peek facts stay on record. Do **not** reopen as live.
 
-Stay the **same Amb**. Do **not** upgrade the ceiling to GPS replacement. Do **not** train. Do **not** commit big datasets.
+Stay off the **same Amb** unless Founder / Operator explicitly unparks this folder. Do **not** upgrade the ceiling to GPS replacement. Do **not** train. Do **not** commit big datasets.
 
 ## What stays parked / closed
 
+- **This Amb** is now **PARKED** (Founder STOP / user pivot). Do **not** reopen as live.
 - **CID↔ASRN join** stays **PARKED**.
 - **US ASR** stays **Soften** until join honesty-cleared.
 - **BIA→weight portfolio** stays **CLOSED**. Do **not** reopen human, poultry, cattle, sheep, or companion BIA apps.

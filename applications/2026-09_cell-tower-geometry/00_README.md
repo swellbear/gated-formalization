@@ -3,9 +3,11 @@
 **Application ID:** `2026-09_cell-tower-geometry`  
 **Opened:** 2026-09-05  
 
-**First-pulse peek ADMITTED.** Separate Amb: can a phone’s location be recovered from **public mast maps + radio observations** by geometry / path-loss — **without** training on GPS-labeled fingerprints? Peek1 **PASS**. Peek2 **MIXED** (CID↔ASRN join **PARKED**). Peek3 **PASS**. Provisional **X = 300 m** urban median, with TA + non-fog masts.
+**PARKED** 2026-09-05 (Founder STOP / user pivot). Cheap checks A→B **halted mid-flight**. Peek #61 + provisional **X = 300 m** remain **on record**. The Amb is **not live**.
 
-This is **not** a trained map. Training is **not** established. This is **not** GPS replacement. This is **not** MLS / OpenCelliD fingerprinting. This is **not** rithm. Peek succeed is **not** claim clearance. The BIA→weight Amb portfolio is **CLOSED**. This app does **not** reopen it. Next pulse (not this fold): invent 2–3 ranked pure geometry / path-loss estimators. Lab **HOLD** on invent until that pulse is authorized.
+Separate Amb (on record, not live): can a phone’s location be recovered from **public mast maps + radio observations** by geometry / path-loss — **without** training on GPS-labeled fingerprints? Peek1 **PASS**. Peek2 **MIXED** (CID↔ASRN join **PARKED**). Peek3 **PASS**. Provisional **X = 300 m** urban median, with TA + non-fog masts.
+
+This is **not** a trained map. Training is **not** established. This is **not** GPS replacement. This is **not** MLS / OpenCelliD fingerprinting. This is **not** skill-met. This is **not** rithm. Peek succeed is **not** claim clearance. The BIA→weight Amb portfolio is **CLOSED**. This app does **not** reopen it. Do **not** reopen this Amb as live. Successor (separate folder, not this Amb): [`../2026-09_greer-sync-pulse-tdoa/`](../2026-09_greer-sync-pulse-tdoa/). Lab **HOLD**.
 
 ## Claim (locked wording)
 
@@ -31,16 +33,17 @@ Not the usual MLS / OpenCelliD path (GPS drives → fingerprint DB → cell→lo
 - Soften/Kill **X** if RSSI-only or fog-as-honesty.
 - This is **not** a GPS-replacement claim.
 
-## Next pulse (not this fold)
+## Next pulse (halted)
 
-Invent 2–3 ranked **pure geometry / path-loss** estimators on the admitted EU packs. Operator gates. See [`PROPOSED_PULSE.md`](PROPOSED_PULSE.md). **No invent on the peek fold.**
+Cheap checks A→B **halted mid-flight**. Do **not** invent estimators in this folder. Peek #61 facts stay in [`PROPOSED_PULSE.md`](PROPOSED_PULSE.md).
 
 ## Reading order
 
-1. [`STATUS.md`](STATUS.md) — where we are
-2. [`NAMED_GAP_LEDGER.md`](NAMED_GAP_LEDGER.md) — the open / parked / hardened lines
-3. [`PROPOSED_PULSE.md`](PROPOSED_PULSE.md) — Lab peek + Operator gate
-4. [`DIGESTION_FIRST_PULSE.md`](DIGESTION_FIRST_PULSE.md) — what the peek taught
-5. [`DIGESTION_FROM_BIA.md`](DIGESTION_FROM_BIA.md) — what the last string taught
-6. [`RESIDUAL_BRANCH_MENU.md`](RESIDUAL_BRANCH_MENU.md) — decision log
-7. [`notes.md`](notes.md) — one-line pointer
+1. [`STATUS.md`](STATUS.md) — where we are (**PARKED**; not live)
+2. [`NAMED_GAP_LEDGER.md`](NAMED_GAP_LEDGER.md) — the parked / on-record lines
+3. [`DIGESTION_PARK.md`](DIGESTION_PARK.md) — Founder STOP / user pivot
+4. [`PROPOSED_PULSE.md`](PROPOSED_PULSE.md) — peek #61 on record (A→B halted)
+5. [`DIGESTION_FIRST_PULSE.md`](DIGESTION_FIRST_PULSE.md) — what the peek taught
+6. [`DIGESTION_FROM_BIA.md`](DIGESTION_FROM_BIA.md) — what the last string taught
+7. [`RESIDUAL_BRANCH_MENU.md`](RESIDUAL_BRANCH_MENU.md) — decision log
+8. [`notes.md`](notes.md) — one-line pointer
