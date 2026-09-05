@@ -1,0 +1,36 @@
+{
+  "status": "ADMITTED (Operator)",
+  "package": "Ship-A",
+  "model_id": "S1-B",
+  "cycle": "C_2003_2004",
+  "features": ["BIXS050K", "BIXC050K", "BMXHT", "RIAGENDR", "RIDAGEYR"],
+  "pipeline": "StandardScaler+RidgeCV",
+  "n_train": 3420,
+  "n_test": 856,
+  "alpha": 3.1622776601683795,
+  "holdout": {
+    "rmse": 11.271495752140735,
+    "mae": 8.783979696023593,
+    "r2": 0.7363714213498394
+  },
+  "fit_note": "train-split only matching HARDEN",
+  "example": {
+    "input": {
+      "BIXS050K": 520.0,
+      "BIXC050K": 55.0,
+      "BMXHT": 170.0,
+      "RIAGENDR": 1,
+      "RIDAGEYR": 40
+    },
+    "expected_kg": 75.2460,
+    "note": "synthetic example; not a real NHANES row"
+  },
+  "scope_locks": {
+    "method_practice_only": true,
+    "residual_rmse_kg_not_commercial": "~11 kg RMSE ≠ commercial continuous weighing",
+    "not_clinical": true,
+    "no_livestock_transfer": true,
+    "animal_parks_stay": true,
+    "nhanes_dua": "statistical analysis / no re-identification; not CC-BY"
+  }
+}
