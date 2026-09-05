@@ -5,7 +5,7 @@ A short working habit. It does not change how claims are scored.
 ## The habit
 
 - Before you start a **brand-new claim**, write down what the last one taught you. If something is still unfinished, park it clearly so it does not vanish.
-- You may keep working the **same** problem for a while. When that string of tries stalls, stop and write it up.
+- You may keep working the **same** problem for a while. When that string of tries stalls, stop and write it up. If you stay on the same problem and invent a new candidate, use the sibling habit: [`docs/INVENT_TEST_HABIT.md`](INVENT_TEST_HABIT.md).
 - Tiny practice or training runs do not need the full ritual.
 
 ## Why
