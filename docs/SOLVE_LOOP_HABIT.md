@@ -10,6 +10,8 @@ A short working habit. It does not change how claims are scored.
 - After the run: either the fog shrinks, or that missing piece was the wrong one. Then pick the **next** piece.
 - Stop when new checks only restate the same FRAGILE / still-foggy result.
 
+You **may** use **targeted research** when inventing the check: propose **2–3 ranked options** for that *named* missing piece only. For each option say why it could clear that fog, the rough cost, and whether a result would kill vs harden the gap. Do **not** default to an extensive literature survey. Research designs a better check; it does **not** replace running one. A literature summary with no probe is not a solve step — that is search-as-solve, and it does not count.
+
 Tiny practice or training runs can stay light.
 
 ## How to score an invent

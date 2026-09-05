@@ -48,7 +48,7 @@ Habit only — not a scoring rule. Full note: [`docs/INVENT_TEST_HABIT.md`](docs
 Habit only — not a scoring rule. Full note: [`docs/SOLVE_LOOP_HABIT.md`](docs/SOLVE_LOOP_HABIT.md).
 
 - [ ] Name **one** concrete missing piece (the fog)
-- [ ] Invent a check that could answer or clear that piece — not another lookalike horse
+- [ ] Invent a check that could answer or clear that piece — not another lookalike horse. Targeted research may rank 2–3 options for that *named* piece only; a literature summary with no probe is not a solve step
 - [ ] Run it cheap
 - [ ] If the fog shrinks, keep going; if the missing piece was wrong, pick the next piece
 - [ ] Stop when checks only restate the same FRAGILE / still-foggy result
