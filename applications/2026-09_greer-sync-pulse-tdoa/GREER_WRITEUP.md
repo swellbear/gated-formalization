@@ -3,7 +3,7 @@
 **For:** Kerry Greer (at your request)  
 **From:** swellbear / gated-formalization collaboration  
 **Date:** 2026-09-05  
-**Status:** **Sync-fragility evidence only.** Not a patent-hard-problem digest. Not a product pitch. Not a patent filing. Not a claim that hardware performance is proven. **HOLD send** until the **A2 → A3 → A4** suite digests. Patent-facing bar **≤1 m xy** stands. **0.50 m** is **perfect-ref scoped sim only** — **not** an absolute bar under the RN floor (A1 Soften: Chan abs **0.832 m** @ `σ_ref=0.5 m`). **DGPS ~0.4–0.5 m** is the named absolute floor.
+**Status:** **Sync-fragility evidence only.** Not a patent-hard-problem digest. Not a product pitch. Not a patent filing. Not a claim that hardware performance is proven. **HOLD send** until the A1–A4 suite digests. **A1 Soften** carried (≤1 m poseable; X=0.50 perfect-ref; RN floor named). **A2 Soften (conditional)** on record — JOINT1 + ~2.5 ns F9T-class path-shared relative-clock named; commercial 1PPS killed on both curves. Patent simultaneous-via-DGPS-1PPS ≠ commercial 1PPS reality.
 
 ---
 
