@@ -41,3 +41,5 @@ Step-1 named gap **SUCCEED**s. Public row-level human BIA + weight exists under 
 - **llm-gwt R-REPL** stays **parked**.
 
 This note does **not** authorize those strings. It does **not** start a commercial product invent. The sklearn holdout **ran** and is digested in [`DIGESTION_S1_HOLDOUT.md`](DIGESTION_S1_HOLDOUT.md).
+
+**2026-09-05 portfolio close:** the BIA→weight string is **PORTFOLIO CLOSED**. Scale-replacement / accurate wearable weight is **killed**. Ship-A stays a method-practice demo. See [`DIGESTION_PORTFOLIO_CLOSE.md`](DIGESTION_PORTFOLIO_CLOSE.md).

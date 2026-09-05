@@ -8,17 +8,19 @@
 
 ### Plain status
 
-**Step-1 data hunt is parked.** Operator + Founder **ADMIT DATA-BLOCKED park**: no public row-level sheep/lamb/ovine BIA / impedance + body weight under an open license after an honest hunt (Lab + Founder independently agree; same honesty bar as poultry #47 / cattle #49). Lab hunt nearest-misses are now on this fold. Nearest-misses are **docs only** — **not** succeed. This is **not** training. Training is **not** established. This is **not** a commercial weighing claim. Commercial weighing is **not** solved. This is **not** rithm. No author outreach. Do **not** reconstruct fake sheep/lamb rows from means. Poultry BIA→weight step-1 stays **parked** (#47). Cattle BIA→weight step-1 stays **parked** (#49). Collatz playground is **done** (#45). Track B invent stays **paused**. llm-gwt R-REPL stays **parked**.
+**BIA→weight portfolio is CLOSED.** Founder/Operator honest kill of scale-replacement / accurate wearable weight (impedance ≠ mass). This sheep park **stays**. Same narrative: [`../2026-09_human-bia-weight/DIGESTION_PORTFOLIO_CLOSE.md`](../2026-09_human-bia-weight/DIGESTION_PORTFOLIO_CLOSE.md). **Not** skill-met. **Not** livestock transfer.
+
+**Step-1 data hunt is parked.** Operator + Founder **ADMIT DATA-BLOCKED park**: no public row-level sheep/lamb/ovine BIA / impedance + body weight under an open license after an honest hunt (Lab + Founder independently agree; same honesty bar as poultry #47 / cattle #49). Lab hunt nearest-misses are now on this fold. Nearest-misses are **docs only** — **not** succeed. This is **not** training. Training is **not** established. This is **not** a commercial weighing claim. Commercial weighing is **not** solved. This is **not** rithm (archive-only; **not** reopened). No author outreach. Do **not** reconstruct fake sheep/lamb rows from means. Poultry BIA→weight step-1 stays **parked** (#47). Cattle BIA→weight step-1 stays **parked** (#49). Lab HOLD. Collatz playground is **done** (#45). Track B invent stays **paused**. llm-gwt R-REPL stays **parked**.
 
 ---
 
 | Field | Value |
 |-------|--------|
-| **Closure state** | **open** — step-1 **parked** (DATA-BLOCKED); not hard stop; no closeout hygiene this fold |
-| **Phase** | step-1 data hunt **parked** (DATA-BLOCKED) |
-| **Amb** | DATA-BLOCKED on the named public table; unset as a trained map (none started) |
-| **Locks in force** | none — DATA-BLOCKED park is not a scored lock and is not a BIA→weight map |
-| **Next authorization needed** | **none for this hunt** — Lab **HOLD**. No training. No author outreach. Reopen only if a public URL/DOI + schema + license with row-level sheep/lamb/ovine BIA (R/X/Z) + body weight appears. **Not** a commercial claim |
+| **Closure state** | **PORTFOLIO CLOSED** (parent string) — this step-1 stays **parked** (DATA-BLOCKED); not hard stop; no closeout hygiene this fold |
+| **Phase** | step-1 data hunt **parked** (DATA-BLOCKED); portfolio close pointer only |
+| **Amb** | DATA-BLOCKED on the named public table; unset as a trained map (none started). Scale-replacement **killed** on the parent string — **not** a livestock skill-met |
+| **Locks in force** | none — DATA-BLOCKED park is not a scored lock and is not a BIA→weight map. No new object lock |
+| **Next authorization needed** | **none** — Lab **HOLD**. Portfolio closed. No training. No author outreach. **Not** a commercial claim. **Not** skill-met |
 | **Related apps surfaced** | `2026-09_poultry-bia-weight` — step-1 **parked** (#47 DATA-BLOCKED); this app does **not** reopen it · `2026-09_cattle-bia-weight` — step-1 **parked** (#49 DATA-BLOCKED); this app does **not** reopen it |
 | **Optional modes** | none yet (open scaffold; not endpoint) |
 
@@ -28,7 +30,7 @@
 
 **What this fold does not do:** no model training docs as established; no weights; no product claim; no fake rows from means; no author emails; no reopen of poultry #47 or cattle #49.
 
-**Endpoint** = examination done; verdict frozen. This fold is **open** (step-1 parked). Do **not** label hard stop.
+**Endpoint** = examination done; verdict frozen. Parent string is **PORTFOLIO CLOSED**. This fold stays **parked** (not hard stop). Do **not** label hard stop.
 
 ---
 
@@ -51,7 +53,7 @@ Not claimed this fold. Boxes stay open.
 - [ ] `STATUS.md` set to hard stop
 - [ ] `final_verdict.md`
 
-**Gates:** Step-1 **parked**. Named gap last check **DATA-BLOCKED**. BIA→weight is **not** established. Training is **not** established.
+**Gates:** Parent **PORTFOLIO CLOSED**. Step-1 **parked**. Named gap last check **DATA-BLOCKED**. BIA→weight is **not** established. Training is **not** established. Not skill-met. Not livestock transfer.
 
 ---
 

@@ -3,6 +3,8 @@
 **Application ID:** `2026-09_companion-bia-weight`  
 **Opened:** 2026-09-05  
 
+**BIA→weight portfolio is CLOSED** (honest kill of scale-replacement; see [`../2026-09_human-bia-weight/DIGESTION_PORTFOLIO_CLOSE.md`](../2026-09_human-bia-weight/DIGESTION_PORTFOLIO_CLOSE.md)). This companion park **stays**.
+
 **Soften + training-scale DATA-BLOCKED.** Named gap: a public, row-level **dog and/or cat** BIA table (R / X / Z) plus paired **live** body weight, under an open license. Tiny canine joint rows exist (Yaguiyan-Colliard 2015 Tables 1+2, n=13, CC-BY 4.0) — **Soften**, **not** full SUCCEED. Training-scale is **DATA-BLOCKED**. Feline half is **parked**.
 
 This is **not** a trained map. Training is **not** established. This is **not** rithm. Commercial weighing is **not** solved. Soften is **not** full SUCCEED. Do **not** invent or reconstruct rows. Micro-toy training only if the user reopens — **ask first**. Poultry #47, cattle #49, and sheep #51 stay **parked**.

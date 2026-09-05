@@ -4,7 +4,7 @@ Habit: [`docs/NAMED_GAP_LEDGER_HABIT.md`](../../docs/NAMED_GAP_LEDGER_HABIT.md).
 
 **Opened:** 2026-09-05 — Founder opens the **sheep BIA → weight** step-1 data hunt after poultry #47 and cattle #49 **DATA-BLOCKED**. Lab invents ranked hunt probes. Operator gates.
 
-**Last check:** 2026-09-05 — Operator + Founder **ADMIT DATA-BLOCKED park**. Honest hunt: no public row-level sheep/lamb/ovine BIA / impedance + body weight under an open license. Lab and Founder independently agree. Same honesty bar as poultry #47 / cattle #49. Lab hunt nearest-misses now on this fold (see [`PROPOSED_HUNT.md`](PROPOSED_HUNT.md)).
+**Last check:** 2026-09-05 — Parent BIA→weight string **PORTFOLIO CLOSED** (honest kill of scale-replacement; this park stays). See [`../2026-09_human-bia-weight/DIGESTION_PORTFOLIO_CLOSE.md`](../2026-09_human-bia-weight/DIGESTION_PORTFOLIO_CLOSE.md). Prior: Operator + Founder **ADMIT DATA-BLOCKED park**. Honest hunt: no public row-level sheep/lamb/ovine BIA / impedance + body weight under an open license. Lab and Founder independently agree. Same honesty bar as poultry #47 / cattle #49. Lab hunt nearest-misses now on this fold (see [`PROPOSED_HUNT.md`](PROPOSED_HUNT.md)).
 
 **What this is not:** This is **not** rithm. Commercial weighing is **not** solved. Training is **not** established. Nearest-misses are **not** succeed. Reconstructing fake sheep/lamb rows from means is **not** allowed. Author outreach is **not** unlocked.
 

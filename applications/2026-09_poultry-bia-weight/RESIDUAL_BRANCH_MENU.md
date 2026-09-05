@@ -4,7 +4,7 @@
 
 **Date:** 2026-09-05  
 **Application:** `2026-09_poultry-bia-weight`  
-**Status:** step-1 data hunt **parked** (DATA-BLOCKED)  
+**Status:** **PORTFOLIO CLOSED** (parent string) — this step-1 stays **parked** (DATA-BLOCKED)  
 
 **Glossary:** `docs/READER_GLOSSARY.md`  
 **Ledger:** [`NAMED_GAP_LEDGER.md`](NAMED_GAP_LEDGER.md)  
@@ -48,6 +48,7 @@ No other empirically resolvable residuals on this fold.
 |------|--------|
 | 2026-09-05 | Founder opens this string. Lab inventing ranked hunt probes. Operator gates. Collatz playground **done** (#45). Track B **paused**. llm-gwt R-REPL stays **parked**. Last check: none. BIA→weight is **not** established. Training is **not** established. Not rithm. Commercial weighing is **not** solved. |
 | 2026-09-05 | Operator + Founder **ADMIT DATA-BLOCKED park**. Honest hunt: no public row-level poultry/chicken BIA / impedance + body weight under open license. Lab + Founder independently agree. Nearest-misses (Benítez-Puñal 2024; woody-breast Morey/Siddique; Zenodo 10.5281/zenodo.16733922; adjacent INRAE 10.57745/NZG3YZ) are **docs only — not succeed**. Hard NO: commercial weighing solved; training established; reconstructing fake bird rows from means. **No author outreach** unlocked. Step-1 **parked**. |
+| 2026-09-05 | Parent BIA→weight string **PORTFOLIO CLOSED**. Honest kill of scale-replacement / accurate wearable weight (impedance ≠ mass). This poultry park **stays**. Same narrative: [`../2026-09_human-bia-weight/DIGESTION_PORTFOLIO_CLOSE.md`](../2026-09_human-bia-weight/DIGESTION_PORTFOLIO_CLOSE.md). **Not** skill-met. **Not** livestock transfer. **No** new object lock. Lab HOLD. |
 
 ---
 

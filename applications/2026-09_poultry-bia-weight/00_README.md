@@ -3,6 +3,8 @@
 **Application ID:** `2026-09_poultry-bia-weight`  
 **Opened:** 2026-09-05  
 
+**BIA→weight portfolio is CLOSED** (honest kill of scale-replacement; see [`../2026-09_human-bia-weight/DIGESTION_PORTFOLIO_CLOSE.md`](../2026-09_human-bia-weight/DIGESTION_PORTFOLIO_CLOSE.md)). This poultry park **stays**.
+
 **Step-1 data hunt is parked** (DATA-BLOCKED). Named gap: a public, row-level poultry/chicken BIA table (R / X / Z) plus paired body weight/mass, under an open license. Honest hunt found **no** such table.
 
 This is **not** a trained map. Training is **not** established. This is **not** rithm. Commercial weighing is **not** solved. Nearest-misses are **docs only**. Author outreach is **not** unlocked.

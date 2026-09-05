@@ -58,9 +58,11 @@ That is a method-practice **Amb bite**. It is **not** commercial weighing solved
 
 ## Where invent sits now
 
-**S1 HARDEN is on the record. Ship-A (S1-B) predict package is ADMITTED under method-practice** ([`ship/`](ship/README.md); dry-run **75.2460** kg, synthetic). S2 / S3 parked. Lab HOLD on this bite unless a Founder opens a new named gap.
+**Superseded by portfolio close.** See [`DIGESTION_PORTFOLIO_CLOSE.md`](DIGESTION_PORTFOLIO_CLOSE.md).
 
-Do **not** treat residual ~11 kg RMSE as a green light for a product invent. Do **not** reopen animal parks. Do **not** run S3 for ceremony.
+S1 HARDEN stays on the record as method practice. Ship-A (#57) stays the kept demo at [`ship/`](ship/) (dry-run **75.2460** kg, synthetic). S2 / S3 parked. **Scale-replacement is killed.** **PORTFOLIO CLOSED. Lab HOLD.** No new Amb invent until Founder/user picks the next problem. Do **not** rewrite `ship/` package files.
+
+Do **not** treat residual ~11.3 kg RMSE as a green light for a product invent. Do **not** reopen animal parks. Do **not** run S3 for ceremony.
 
 ---
 
@@ -68,6 +70,7 @@ Do **not** treat residual ~11 kg RMSE as a green light for a product invent. Do 
 
 | Record | What it is |
 |--------|------------|
+| [`DIGESTION_PORTFOLIO_CLOSE.md`](DIGESTION_PORTFOLIO_CLOSE.md) | PORTFOLIO CLOSED — kill scale-replacement; keep Ship-A demo |
 | [`SCORE_S1_PROPOSED.md`](SCORE_S1_PROPOSED.md) | S1 HARDEN + S2 MISS + S3 HOLD; full RMSE table |
 | [`NAMED_GAP_LEDGER.md`](NAMED_GAP_LEDGER.md) | Scoreboard lines |
 | [`DIGESTION_FROM_COMPANION.md`](DIGESTION_FROM_COMPANION.md) | Incoming animal-park + Step-1 SUCCEED lesson |
@@ -75,4 +78,4 @@ Do **not** treat residual ~11 kg RMSE as a green light for a product invent. Do 
 
 ---
 
-*Docs only. S1 HARDEN ≠ commercial weighing. Residual ~11 kg RMSE is leftover honesty. No livestock transfer. DUA / no re-id. Not rithm. Lab does not self-admit.*
+*Docs only. S1 HARDEN ≠ a scale. Residual ~11.3 kg RMSE is leftover honesty. Portfolio close: [`DIGESTION_PORTFOLIO_CLOSE.md`](DIGESTION_PORTFOLIO_CLOSE.md). No livestock transfer. DUA / no re-id. Not rithm. Lab does not self-admit.*

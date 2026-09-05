@@ -3,6 +3,8 @@
 **Application ID:** `2026-09_cattle-bia-weight`  
 **Opened:** 2026-09-05  
 
+**BIA→weight portfolio is CLOSED** (honest kill of scale-replacement; see [`../2026-09_human-bia-weight/DIGESTION_PORTFOLIO_CLOSE.md`](../2026-09_human-bia-weight/DIGESTION_PORTFOLIO_CLOSE.md)). This cattle park **stays**.
+
 **Step-1 data hunt is parked** (DATA-BLOCKED). Named gap: a public, row-level cattle/beef/dairy BIA table (R / X / Z) plus paired body weight / live mass / carcass weight, under an open license. Honest hunt found **no** such table. Same honesty bar as poultry #47.
 
 This is **not** a trained map. Training is **not** established. This is **not** rithm. Commercial weighing is **not** solved. Nearest-misses are **docs only**. Author outreach is **not** unlocked. Poultry #47 stays **parked**.

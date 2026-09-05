@@ -24,6 +24,14 @@ After every **closed application**, or after every **N ≥ 5** REJECT/HOLD decis
 
 ## Entries
 
+### 2026-09-05 | BIA→weight portfolio | Honest kill of scale-replacement; Ship-A remains method-practice demo
+- **Gate outcome at the time:** Poultry #47 / cattle #49 / sheep #51 **DATA-BLOCKED**. Companion #53 Soften n=13 + training-scale DATA-BLOCKED. Human #55 SUCCEED (NHANES BIX↔BMX) then #56 S1 HARDEN (Cycle C S1-B RMSE 11.27 vs B1+ 14.66). Ship-A #57 (on master) kept as method-practice demo at `applications/2026-09_human-bia-weight/ship/`. Do **not** rewrite `ship/`.
+- **Later evidence:** Founder/Operator **PORTFOLIO CLOSED**. Digestion: [`applications/2026-09_human-bia-weight/DIGESTION_PORTFOLIO_CLOSE.md`](../applications/2026-09_human-bia-weight/DIGESTION_PORTFOLIO_CLOSE.md). Scale-replacement / accurate wearable weight **killed**. Impedance ≠ mass. ~11.3 kg / ~25 lb RMSE is rough proxy / method practice only. Animal parks stay. rithm archive-only. Lab HOLD. **Not** skill-met. **Not** livestock transfer. **No** new object lock.
+- **Direction of error:** **method-pressure-point** — a public table (or a holdout that beats anthro) is easy to misread as “BIA can replace a scale.” More public data will not make BIA a scale. Honesty is to kill the scale-replacement claim and keep the demo with loud limits, not to elevate farm weighing.
+- **Which rule or judgment contributed:** [`docs/DIGESTION_HABIT.md`](../docs/DIGESTION_HABIT.md); Amb HARDEN ≠ skill-met; DATA-BLOCKED park ≠ livestock transfer; do not treat a method-practice RMSE as a product; do not null-burn other live horses.
+- **Adjustment made (if any):** Docs-only portfolio close. No new invent authorized. No new object lock. No Layer 1 row (same as #47–#57).
+- **Notes:** Keep Ship-A as method-practice demo. Animal parks stay parks (not rewritten as “no future table can exist”). Track B leftover untouched.
+
 ### 2026-09-05 | Markets / oil Track B (spot) | Stalled invent→test / solve-loop string written up — digestion; invent paused
 - **Gate outcome at the time:** Track B invent already **paused** after P4 HARDEN (digest). P3=B parks the all-day directional hunt. Residual live = vehicle + cutoff fragility on Brent **H-SPOT-MOY-CONT** (scoped+FRAGILE; year-stability HARDENED). Still **not** skill-met. Lab one-probe allotment **DONE**. Separate from R-F-SKILL. Parent Amb held **1.0**.
 - **Later evidence:** Digestion written: [`applications/2026-08_oil-futures-predictive-model/DIGESTION_TrackB_2026-09-05.md`](../applications/2026-08_oil-futures-predictive-model/DIGESTION_TrackB_2026-09-05.md). Taught / fog parked / refuse-to-claim recorded in plain English. Invent remains **paused**. Lab held. Still **not** skill-met. Does **not** elevate. Does **not** null-burn.

@@ -4,7 +4,7 @@
 
 **Date:** 2026-09-05  
 **Application:** `2026-09_sheep-bia-weight`  
-**Status:** step-1 data hunt **parked** (DATA-BLOCKED)  
+**Status:** **PORTFOLIO CLOSED** (parent string) — this step-1 stays **parked** (DATA-BLOCKED)  
 
 **Glossary:** `docs/READER_GLOSSARY.md`  
 **Ledger:** [`NAMED_GAP_LEDGER.md`](NAMED_GAP_LEDGER.md)  
@@ -51,6 +51,7 @@ No other empirically resolvable residuals on this fold.
 | 2026-09-05 | Founder opens this string after poultry #47 and cattle #49 **DATA-BLOCKED**. Lab inventing ranked hunt probes. Operator gates. Poultry stays **parked**. Cattle stays **parked**. Collatz playground **done** (#45). Track B **paused**. llm-gwt R-REPL stays **parked**. Last check: none. BIA→weight is **not** established. Training is **not** established. Not rithm. Commercial weighing is **not** solved. |
 | 2026-09-05 | Operator + Founder **ADMIT DATA-BLOCKED park**. Honest hunt: no public row-level sheep/lamb/ovine BIA / impedance + body weight under open license. Lab + Founder independently agree. Same honesty bar as poultry #47 / cattle #49. Nearest-misses (JAS skaf394 multi-site BIA; Harper Adams / UFSM BIA composition; soften-only `pasagropasr` `lambBreeds`; RDG-style weight-only; tissue permittivity without paired live weight) are **docs only — not succeed**. Hard NO: commercial weighing solved; training established; reconstructing fake sheep/lamb rows from means. **No author outreach** unlocked. Poultry stays **parked**. Cattle stays **parked**. Step-1 **parked**. |
 | 2026-09-05 | Lab hunt copied onto this fold (Operator forwarded Lab nearest-miss list; scratch `/workspace/sheep_bia_lab/PROPOSED_HUNT.md` not readable on this VM; `HUNT_NOTES.md` absent). Lab list: RDG [10.57745/OVKXJX](https://doi.org/10.57745/OVKXJX) Etalab 2.0 `Poids_*`+`Poids_Carc` 313 rows **no BIA**; `pasagropasr` `lambBreeds` GPL-3 HCW+morphometrics **no Rs/Xc**; *Sci. Rep.* ovine muscle permittivity CC-BY tissue σ/εr **no BW**; papers up to n≈204 private raw (Berg/Neary/Altmann/Hegarty/Silva + Han 2025). Still **ADMIT DATA-BLOCKED**. Nearest-misses remain **docs only — not succeed**. |
+| 2026-09-05 | Parent BIA→weight string **PORTFOLIO CLOSED**. Honest kill of scale-replacement / accurate wearable weight (impedance ≠ mass). This sheep park **stays**. Same narrative: [`../2026-09_human-bia-weight/DIGESTION_PORTFOLIO_CLOSE.md`](../2026-09_human-bia-weight/DIGESTION_PORTFOLIO_CLOSE.md). **Not** skill-met. **Not** livestock transfer. **No** new object lock. Lab HOLD. |
 
 ---
 

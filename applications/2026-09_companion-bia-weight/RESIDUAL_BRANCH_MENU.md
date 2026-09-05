@@ -4,7 +4,7 @@
 
 **Date:** 2026-09-05  
 **Application:** `2026-09_companion-bia-weight`  
-**Status:** Soften (existence / n=13) + training-scale **parked** (DATA-BLOCKED); feline half **parked**  
+**Status:** **PORTFOLIO CLOSED** (parent string) — Soften (existence / n=13) + training-scale **parked** (DATA-BLOCKED); feline half **parked**  
 
 **Glossary:** `docs/READER_GLOSSARY.md`  
 **Ledger:** [`NAMED_GAP_LEDGER.md`](NAMED_GAP_LEDGER.md)  
@@ -54,6 +54,7 @@ No other empirically resolvable residuals on this fold.
 |------|--------|
 | 2026-09-05 | Founder opens this string after poultry #47, cattle #49, and sheep #51 **DATA-BLOCKED**. Lab inventing ranked hunt probes. Operator gates. Livestock parks stay: poultry **parked**, cattle **parked**, sheep **parked**. Collatz playground **done** (#45). Track B **paused**. llm-gwt R-REPL stays **parked**. Last check: none. Expect privacy walls. Do **not** invent rows. BIA→weight is **not** established. Training is **not** established. Not rithm. Commercial weighing is **not** solved. |
 | 2026-09-05 | Operator + Founder **ADMIT Soften** (existence / tiny joint rows): Yaguiyan-Colliard et al. 2015 *BMC Res Notes* [DOI 10.1186/s13104-015-1298-2](https://doi.org/10.1186/s13104-015-1298-2) Tables 1+2 join dog ID → live W (kg) + R/X (Ω), n=13, CC-BY 4.0. Heavy caveats: tiny n; journal tables not a deposit; one physiologically implausible published row (dog 7). **ADMIT training-scale DATA-BLOCKED park** — do **not** admit full SUCCEED (n=13 not holdout-capable). Tamura 2026 *PLOS ONE* [DOI 10.1371/journal.pone.0355338](https://doi.org/10.1371/journal.pone.0355338) **inspected-fail** (SI mislink; BW prose-only; n=7); Soften existence/intent only. Feline half **parked** (no joint open rows; Soften literature-only: Borges / Stanton / Elliott). Also Soften adjacent: VetCompass Figshare dog/cat Weight_kg CSVs (CC-BY) — no BIA. Hard NO: inventing rows; reconstructing from means; training established; commercial weighing solved; micro-toy training only if user reopens (**ask first**). Livestock parks stay. Lab scratch `/workspace/companion_bia_lab/PROPOSED_HUNT.md` not readable on this VM; Tamura inspect summarized in [`TAMURA_INSPECT.md`](TAMURA_INSPECT.md). |
+| 2026-09-05 | Parent BIA→weight string **PORTFOLIO CLOSED**. Honest kill of scale-replacement / accurate wearable weight (impedance ≠ mass). This companion park **stays**. Same narrative: [`../2026-09_human-bia-weight/DIGESTION_PORTFOLIO_CLOSE.md`](../2026-09_human-bia-weight/DIGESTION_PORTFOLIO_CLOSE.md). **Not** skill-met. **Not** livestock transfer. **No** new object lock. Lab HOLD. |
 
 ---
 

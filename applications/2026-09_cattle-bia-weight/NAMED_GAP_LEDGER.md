@@ -4,7 +4,7 @@ Habit: [`docs/NAMED_GAP_LEDGER_HABIT.md`](../../docs/NAMED_GAP_LEDGER_HABIT.md).
 
 **Opened:** 2026-09-05 — Founder opens the **cattle BIA → weight** step-1 data hunt after poultry #47 **DATA-BLOCKED**. Lab invents ranked hunt probes. Operator gates.
 
-**Last check:** 2026-09-05 — Operator + Founder **ADMIT DATA-BLOCKED park**. Honest hunt: no public row-level cattle/beef/dairy BIA / impedance + body weight / live mass / paired carcass weight under an open license. Lab and Founder independently agree. Same honesty bar as poultry #47. Hunt: [`PROPOSED_HUNT.md`](PROPOSED_HUNT.md).
+**Last check:** 2026-09-05 — Parent BIA→weight string **PORTFOLIO CLOSED** (honest kill of scale-replacement; this park stays). See [`../2026-09_human-bia-weight/DIGESTION_PORTFOLIO_CLOSE.md`](../2026-09_human-bia-weight/DIGESTION_PORTFOLIO_CLOSE.md). Prior: Operator + Founder **ADMIT DATA-BLOCKED park**. Honest hunt: no public row-level cattle/beef/dairy BIA / impedance + body weight / live mass / paired carcass weight under an open license. Lab and Founder independently agree. Same honesty bar as poultry #47. Hunt: [`PROPOSED_HUNT.md`](PROPOSED_HUNT.md).
 
 **What this is not:** This is **not** rithm. Commercial weighing is **not** solved. Training is **not** established. Nearest-misses are **not** succeed. Reconstructing fake cattle rows from means is **not** allowed. Author outreach is **not** unlocked.
 

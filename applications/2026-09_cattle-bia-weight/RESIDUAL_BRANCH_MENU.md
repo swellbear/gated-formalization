@@ -4,7 +4,7 @@
 
 **Date:** 2026-09-05  
 **Application:** `2026-09_cattle-bia-weight`  
-**Status:** step-1 data hunt **parked** (DATA-BLOCKED)  
+**Status:** **PORTFOLIO CLOSED** (parent string) — this step-1 stays **parked** (DATA-BLOCKED)  
 
 **Glossary:** `docs/READER_GLOSSARY.md`  
 **Ledger:** [`NAMED_GAP_LEDGER.md`](NAMED_GAP_LEDGER.md)  
@@ -49,6 +49,7 @@ No other empirically resolvable residuals on this fold.
 |------|--------|
 | 2026-09-05 | Founder opens this string after poultry #47 **DATA-BLOCKED**. Lab inventing ranked hunt probes. Operator gates. Poultry stays **parked**. Collatz playground **done** (#45). Track B **paused**. llm-gwt R-REPL stays **parked**. Last check: none. BIA→weight is **not** established. Training is **not** established. Not rithm. Commercial weighing is **not** solved. |
 | 2026-09-05 | Operator + Founder **ADMIT DATA-BLOCKED park**. Honest hunt: no public row-level cattle/beef/dairy BIA / impedance + body weight / live mass / paired carcass weight under open license. Lab + Founder independently agree. Same honesty bar as poultry #47. Nearest-misses (Marchello/Slanger saleable-product; Heine et al. 2021 Holstein heifer; Afonso et al. 2020 beef LM; no Zenodo/Dryad/Figshare hit) are **docs only — not succeed**. Hard NO: commercial weighing solved; training established; reconstructing fake cattle rows from means. **No author outreach** unlocked. Poultry stays **parked**. Step-1 **parked**. |
+| 2026-09-05 | Parent BIA→weight string **PORTFOLIO CLOSED**. Honest kill of scale-replacement / accurate wearable weight (impedance ≠ mass). This cattle park **stays**. Same narrative: [`../2026-09_human-bia-weight/DIGESTION_PORTFOLIO_CLOSE.md`](../2026-09_human-bia-weight/DIGESTION_PORTFOLIO_CLOSE.md). **Not** skill-met. **Not** livestock transfer. **No** new object lock. Lab HOLD. |
 
 ---
 

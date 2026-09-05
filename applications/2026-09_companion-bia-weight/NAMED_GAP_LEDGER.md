@@ -4,7 +4,7 @@ Habit: [`docs/NAMED_GAP_LEDGER_HABIT.md`](../../docs/NAMED_GAP_LEDGER_HABIT.md).
 
 **Opened:** 2026-09-05 — Founder opens the **companion dog/cat BIA → weight** step-1 data hunt after poultry #47, cattle #49, and sheep #51 **DATA-BLOCKED**. Lab invents ranked hunt probes. Operator gates.
 
-**Last check:** 2026-09-05 — Operator + Founder **ADMIT Soften** (existence / tiny joint canine rows: Yaguiyan-Colliard 2015 Tables 1+2, n=13, CC-BY 4.0) and **ADMIT training-scale DATA-BLOCKED park** (n=13 not holdout-capable; do **not** admit full SUCCEED). Feline half **parked**. Lab hunt + Tamura inspect now on this fold (see [`PROPOSED_HUNT.md`](PROPOSED_HUNT.md), [`TAMURA_INSPECT.md`](TAMURA_INSPECT.md)).
+**Last check:** 2026-09-05 — Parent BIA→weight string **PORTFOLIO CLOSED** (honest kill of scale-replacement; this park stays). See [`../2026-09_human-bia-weight/DIGESTION_PORTFOLIO_CLOSE.md`](../2026-09_human-bia-weight/DIGESTION_PORTFOLIO_CLOSE.md). Prior: Operator + Founder **ADMIT Soften** (existence / tiny joint canine rows: Yaguiyan-Colliard 2015 Tables 1+2, n=13, CC-BY 4.0) and **ADMIT training-scale DATA-BLOCKED park** (n=13 not holdout-capable; do **not** admit full SUCCEED). Feline half **parked**. Lab hunt + Tamura inspect now on this fold (see [`PROPOSED_HUNT.md`](PROPOSED_HUNT.md), [`TAMURA_INSPECT.md`](TAMURA_INSPECT.md)).
 
 **What this is not:** This is **not** rithm. Commercial weighing is **not** solved. Training is **not** established. Soften is **not** full SUCCEED. Inventing rows is **not** allowed. Reconstructing rows from means is **not** allowed. Micro-toy training only if the user reopens — **ask first**.
 
