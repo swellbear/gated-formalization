@@ -24,7 +24,7 @@ This repository is an **operator toolkit**: documentation + reusable worksheets 
 
 See `workflow.md` for the operator checklist.
 
-Before a brand-new claim, write up what the last one taught you: [`docs/DIGESTION_HABIT.md`](docs/DIGESTION_HABIT.md).
+Before a brand-new claim, write up what the last one taught you: [`docs/DIGESTION_HABIT.md`](docs/DIGESTION_HABIT.md). While still on the same problem, invent a new candidate, test it cheaply, then let the Operator decide: [`docs/INVENT_TEST_HABIT.md`](docs/INVENT_TEST_HABIT.md).
 
 ## Repository Structure
 
@@ -53,6 +53,7 @@ Start from hard-to-dispute anchors. Admit new formal layers only when they pass 
 - `docs/01_operational_upgrade.md` — sharpened gates, claim-type, checklists, calibration, optional toolbox (§§9–14)
 - `workflow.md` — operator checklist (pointer to optional toolbox in Reminders)
 - `docs/DIGESTION_HABIT.md` — before a brand-new claim, write up what the last one taught you (habit, not a scoring rule)
+- `docs/INVENT_TEST_HABIT.md` — invent a new candidate, test it cheaply, then let the Operator decide (habit, not a scoring rule)
 - `ui/choice-presenter/catalog.json` — wording catalog for in-chat choices (HTML/canvas demo is optional; does not score)
 - `TRACKER_CLAIM_GRAPH.md` — portfolio claim-graph instance (optional overview)
 - `docs/thesis_final.pdf` — archival frozen Complete Thesis (vFinal consolidated working paper)

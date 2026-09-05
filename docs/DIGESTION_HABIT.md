@@ -21,3 +21,5 @@ You do not need a new format. A few sentences in any place you already use is en
 - the failure log (`logs/failure_mode_log.md` — what went wrong and why)
 
 This does not change the scoring rules. It is an operator habit.
+
+When you are still on the **same** problem, invent a new candidate, test it cheaply, then let the Operator decide: [`docs/INVENT_TEST_HABIT.md`](INVENT_TEST_HABIT.md).
