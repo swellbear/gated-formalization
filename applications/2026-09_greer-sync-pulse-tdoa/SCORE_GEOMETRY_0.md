@@ -6,6 +6,7 @@
 **Parent peek:** first-pulse fog naming **ADMITTED** (C1/C2/C3 SUCCEED; sim-only; hardware **X PARKED**) — [`DIGESTION_FIRST_PULSE.md`](DIGESTION_FIRST_PULSE.md)  
 **Ledger:** [`NAMED_GAP_LEDGER.md`](NAMED_GAP_LEDGER.md)  
 **Digestion:** [`DIGESTION_GEOMETRY_0.md`](DIGESTION_GEOMETRY_0.md)  
+**Later check:** [`SCORE_MULTIPATH1.md`](SCORE_MULTIPATH1.md) (Soften; **X** stays 0.50 m, NLOS-scoped)  
 **Protocol (short):** invent→test habit [`docs/INVENT_TEST_HABIT.md`](../../docs/INVENT_TEST_HABIT.md); named-gap ledger [`docs/NAMED_GAP_LEDGER_HABIT.md`](../../docs/NAMED_GAP_LEDGER_HABIT.md). Lab invents; Operator admits / rejects / parks. Lab does **not** self-admit.
 
 Lab scratch was **not** on this fold VM. Metrics below are copied from the **Operator gate** (authoritative). Hunt scripts / Lab notebooks are **not** on master.
@@ -76,9 +77,9 @@ Median error tracks `c · σ_t`. At 1 ns the range-scale `σ_d ≈ 0.300 m` sits
 - This is **not** skill-met.
 - **X** is a **median** bar, **not** a p90 bar.
 
-**NEXT (named; not run in this fold):** **multipath / NLOS positive-bias injection** under the **same frozen Chan (1994) 2D WLS**. Still **no RF / ML**. Sync-imperfection stays **not** the named next pulse.
+**NEXT (as of #0; named, not run on that sheet):** **multipath / NLOS positive-bias injection** under the **same frozen Chan (1994) 2D WLS**. **Later:** that pulse ran as **MULTIPATH1 Soften** — see [`SCORE_MULTIPATH1.md`](SCORE_MULTIPATH1.md). Next leftover is **sync-imperfection**.
 
-**HOLD** Lab invent of that named pulse — **not run** here.
+**HOLD** (as of #0) Lab invent of that named pulse — **not run** on the #0 sheet.
 
 US10135667B1 remains a **prior-art note only** — method practice / explore the idea; **not** copy claims for a product.
 
@@ -89,7 +90,7 @@ Cell-tower Amb stays **PARKED**. BIA→weight portfolio stays **CLOSED**.
 ## 4. Hard NO
 
 - Do **not** treat **0.50 m** as a hardware bar, a field locator, or a **p90** bar.
-- Do **not** run the named next pulse (multipath / NLOS positive-bias injection) in this fold.
+- Do **not** run the named next pulse on the #0 sheet. **Later:** MULTIPATH1 ran as Soften. Next leftover is **sync-imperfection**.
 - Do **not** invent RF / ML / fingerprint models.
 - Do **not** use GPS / DGPS as the mobile fix.
 - Do **not** copy US10135667B1 claim language.
@@ -101,4 +102,4 @@ Cell-tower Amb stays **PARKED**. BIA→weight portfolio stays **CLOSED**.
 
 ---
 
-*Docs only. HARDEN ≠ claim clearance. Provisional sim X is median-not-p90. Provisional sim X ≠ hardware X. Not a locator. Not skill-met. Not a patent-product claim. Not rithm. Named next pulse (multipath/NLOS) is not run. Lab does not self-admit. Lab scratch was not on this VM; summary copied from the Operator gate.*
+*Docs only. HARDEN ≠ claim clearance. Provisional sim X is median-not-p90. Provisional sim X ≠ hardware X. Not a locator. Not skill-met. Not a patent-product claim. Not rithm. Later: MULTIPATH1 Soften (NLOS-scoped). Lab does not self-admit. Lab scratch was not on this VM; summary copied from the Operator gate.*

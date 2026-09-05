@@ -24,11 +24,11 @@ That is an **Amb HARDEN** of the geometry leftover. It is **not** a locator. It 
 
 HARDEN is **not** clearance. A 0.50 m **median** sim bar is **not** a field locator and is **not** a p90 bar. Skill-met is **not** claimed.
 
-## What this string must do next (named; not run)
+## What this string must do next (later gated)
 
-**Named next pulse:** **multipath / NLOS positive-bias injection** under the **same frozen Chan (1994) 2D WLS**. **Not run** this fold. Still **no RF / ML**.
+**MULTIPATH1** later **Soften**ed the multipath leftover (Kill not triggered; **X** stays 0.50 m with NLOS scope). Clock / sync honesty stays open — next pulse is **sync-imperfection** (not the #0 fold). Still **no RF / ML**. **No** fingerprint rescue.
 
-Clock / sync honesty stays open (ideal sync was assumed). Sync-imperfection is **not** the named next pulse. Multipath honesty stays open (not injected) and is the named leftover. Those are the leftover fog — not planar geometry under the frozen Chan estimator.
+This #0 note does **not** re-score MULTIPATH1. Geometry under ideal sync + Gaussian Δt remains **not** the bottleneck. See [`DIGESTION_MULTIPATH1.md`](DIGESTION_MULTIPATH1.md).
 
 ## What stays parked / closed
 

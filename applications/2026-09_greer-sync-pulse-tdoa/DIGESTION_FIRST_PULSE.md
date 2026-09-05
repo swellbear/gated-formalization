@@ -1,6 +1,6 @@
 # Digestion — first-pulse fog peek (sim-first; park hardware X)
 
-A short plain note of what the first-pulse fog peek taught. Habit: [`docs/DIGESTION_HABIT.md`](../../docs/DIGESTION_HABIT.md). Incoming cell-tower lesson: [`DIGESTION_FROM_CELL_TOWER.md`](DIGESTION_FROM_CELL_TOWER.md). Peek sheet: [`PROPOSED_PULSE.md`](PROPOSED_PULSE.md). **Later the same day:** Operator **ADMIT #0 HARDEN** — see [`DIGESTION_GEOMETRY_0.md`](DIGESTION_GEOMETRY_0.md). Provisional **sim X = 0.50 m**. Hardware **X PARKED**. Lab **HOLD**. This does **not** score a TDOA locator. It does **not** reopen cell-tower as live. It does **not** reopen BIA→weight.
+A short plain note of what the first-pulse fog peek taught. Habit: [`docs/DIGESTION_HABIT.md`](../../docs/DIGESTION_HABIT.md). Incoming cell-tower lesson: [`DIGESTION_FROM_CELL_TOWER.md`](DIGESTION_FROM_CELL_TOWER.md). Peek sheet: [`PROPOSED_PULSE.md`](PROPOSED_PULSE.md). **Later the same day:** Operator **ADMIT #0 HARDEN** — see [`DIGESTION_GEOMETRY_0.md`](DIGESTION_GEOMETRY_0.md) — then **MULTIPATH1 Soften** — see [`DIGESTION_MULTIPATH1.md`](DIGESTION_MULTIPATH1.md). Provisional **sim X = 0.50 m** (**NLOS-scoped**; **median-not-p90**). Hardware **X PARKED**. This does **not** score a TDOA locator. It does **not** reopen cell-tower as live. It does **not** reopen BIA→weight.
 
 **This peek:** `2026-09_greer-sync-pulse-tdoa` first pulse — Method Operator **ADMIT** fog naming (Lab `PROPOSED_FOG_PEEK`). Lab scratch was **not** on this fold VM; the gated fact set was copied from the Operator gate.
 
@@ -27,7 +27,7 @@ Peek succeed is **not** claim clearance. Sim-geometry-first is **not** a locator
 
 **#0 geometry-bottleneck sim** was **admitted** here and **scored** later the same day. See [`DIGESTION_GEOMETRY_0.md`](DIGESTION_GEOMETRY_0.md).
 
-Stay the **same Amb**. Do **not** unpark hardware **X**. Do **not** train. Do **not** copy patent claims. After #0, next pulse is **named** (multipath / NLOS positive-bias injection, same frozen Chan) and is **not run** here.
+Stay the **same Amb**. Do **not** unpark hardware **X**. Do **not** train. Do **not** copy patent claims. Do **not** claim a multipath-robust 0.50 m. After MULTIPATH1 Soften, next pulse is **sync-imperfection** (not this peek).
 
 ## What stays parked / closed
 
