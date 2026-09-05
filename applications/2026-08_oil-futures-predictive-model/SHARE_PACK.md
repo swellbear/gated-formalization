@@ -14,7 +14,7 @@ Does **not** replace `DISSERTATION.md` (audit) or change verdicts.
 
 A specified forecasting recipe for listed crude **futures** (not last-price no-change) has been written. That is all existence means here. Spot and real-price recipes stay outside that freeze. The recipe list is not an endorsement of one paper.
 
-Walk-forward skill versus last settlement is **not shown**. Yahoo `CL=F` is a **stipulated stand-in**. A lagged-return horse was scored on that tape and **lost** on the whole trip (F-CC 0.02888 vs no-change 0.02869). Later named Yahoo CL classes were also scored and **burned**; that **named queue is now empty**. Emptying the queue ≠ skill closed. A tiny overnight RMSE dip is **not** a pass. Kearney–Shang was **not run** (Yahoo month chain is not historical CL1–CL18). A combo is a **third** test, not a shortcut. Track B (EIA spot 21-day) emptied separately (#15–#19 plus Lab batch 1 **REJECT / confirm-none**) and is **not** this leftover.
+Walk-forward skill versus last settlement is **not shown**. Yahoo `CL=F` is a **stipulated stand-in**. A lagged-return horse was scored on that tape and **lost** on the whole trip (F-CC 0.02888 vs no-change 0.02869). Later named Yahoo CL classes were also scored and **burned**; that **named queue is now empty**. Emptying the queue ≠ skill closed. A tiny overnight RMSE dip is **not** a pass. Kearney–Shang was **not run** (Yahoo month chain is not historical CL1–CL18). A combo is a **third** test, not a shortcut. Track B (EIA spot 21-day) emptied separately (#15–#19 plus Lab batch 1 + batch 2 **REJECT / confirm-none**) and is **not** this leftover.
 
 After-cost paper value is **not shown**. Paper costs are now **V2** (fees plus $10/contract each way). The paper book was left unnamed. That is not a proof that every book fails.
 
@@ -46,13 +46,13 @@ This is **not** trading advice and does **not** clear the blended slogan “a pr
 
 **Stop saying:** That EIA STEO or the futures curve is a proven next-session CL model. That spot-oil papers clear this freeze. That existence-met is skill-met. That one paper was picked as “the” recipe. That anyone should trade. That unnamed skill means no model can ever beat last price. That EIA’s factor list or Wednesday inventories are an exhaustive catalog of next-session CL movers, or that an announcement-day jump is the locked skill test. That flattening before the close **is** the skill test, or that a combo is already passed.
 
-**Keep saying:** A futures-target recipe has been written. Yahoo is a stand-in, not live CME. The lagged-return horse lost on the whole trip. The named Yahoo CL queue is empty; skill leftover is still live. Track B Lab batch 1 is REJECT / confirm-none; spot-trend skill is not established. A tiny overnight dip is not a pass. Paper costs are V2; that is not a value pass. Skill and after-cost value are not shown. Night, day, and the whole trip are separate tests. This is not a trading strategy.
+**Keep saying:** A futures-target recipe has been written. Yahoo is a stand-in, not live CME. The lagged-return horse lost on the whole trip. The named Yahoo CL queue is empty; skill leftover is still live. Track B Lab batch 1 + batch 2 are REJECT / confirm-none; spot-trend skill is not established. A tiny overnight dip is not a pass. Paper costs are V2; that is not a value pass. Skill and after-cost value are not shown. Night, day, and the whole trip are separate tests. This is not a trading strategy.
 
 ---
 
 ## 4. Residual-branch offer
 
-Menu offered. Skill leftover **live** ([R-F-SKILL](RESIDUAL_BRANCH_MENU.md#r-f-skill) H-LAG scored, lost on F-CC; named Yahoo queue **empty**; H-KS not run). Track B named queue **empty** (Lab batch 1 **REJECT**; confirm-none; separate object; not F-SKILL). Live vs stand-in **executed** ([R-LIVE-STANDIN](RESIDUAL_BRANCH_MENU.md#r-live-standin)). Combo parked ([R-F-COMBO](RESIDUAL_BRANCH_MENU.md#r-f-combo)). After-cost book parked ([R-V-VALUE](RESIDUAL_BRANCH_MENU.md#r-v-value)). [`RESIDUAL_BRANCH_MENU.md`](RESIDUAL_BRANCH_MENU.md)
+Menu offered. Skill leftover **live** ([R-F-SKILL](RESIDUAL_BRANCH_MENU.md#r-f-skill) H-LAG scored, lost on F-CC; named Yahoo queue **empty**; H-KS not run). Track B named queue **empty** (Lab batch 1 + batch 2 **REJECT**; confirm-none; separate object; not F-SKILL). Live vs stand-in **executed** ([R-LIVE-STANDIN](RESIDUAL_BRANCH_MENU.md#r-live-standin)). Combo parked ([R-F-COMBO](RESIDUAL_BRANCH_MENU.md#r-f-combo)). After-cost book parked ([R-V-VALUE](RESIDUAL_BRANCH_MENU.md#r-v-value)). [`RESIDUAL_BRANCH_MENU.md`](RESIDUAL_BRANCH_MENU.md)
 
 ---
 

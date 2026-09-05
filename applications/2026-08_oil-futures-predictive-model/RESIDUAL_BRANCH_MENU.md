@@ -6,7 +6,7 @@
 
 **Date:** 2026-09-05  
 **Application:** `2026-08_oil-futures-predictive-model`  
-**Closeout status:** **hard stop (residuals live)**. Parent Rank 4 split intact. **D-EXIST-MET-FT** in force (futures-target only). **F-SRC-CME-TAPE** named. **L-STANDIN-Y-CLF** stipulated. V-SRC leave unnamed. Skill leftover **live** (named Yahoo CL queue **empty**; H-KS still not run). Phase 2 not entered. Track B (EIA spot 21-day) is a **separate** object — Lab batch 1 **REJECT / burn**; named queue empty; **not** F-CC futures skill.
+**Closeout status:** **hard stop (residuals live)**. Parent Rank 4 split intact. **D-EXIST-MET-FT** in force (futures-target only). **F-SRC-CME-TAPE** named. **L-STANDIN-Y-CLF** stipulated. V-SRC leave unnamed. Skill leftover **live** (named Yahoo CL queue **empty**; H-KS still not run). Phase 2 not entered. Track B (EIA spot 21-day) is a **separate** object — Lab batch 1 + batch 2 **REJECT / burn**; named queue empty; **not** F-CC futures skill.
 
 **Glossary:** [`docs/READER_GLOSSARY.md`](../../docs/READER_GLOSSARY.md)  
 **Optional modes (separate):** [`OPTIONAL_MODES_MENU.md`](OPTIONAL_MODES_MENU.md)
@@ -280,7 +280,7 @@ None remaining. [R-G8](#r-g8) meanings admitted. [R-LIVE-STANDIN](#r-live-standi
 
 **Live (not parked):** [R-F-SKILL](#r-f-skill) — `pursue` (H-LAG scored, lost on F-CC; named Yahoo classes burned; **queue empty**; H-KS not run)
 
-**Track B (separate object — not F-SKILL; not a new residual ID):** EIA spot WTI/Brent **21-day vs continuation** under protocol `Lock_Hunt_Spot_Trend` (FRED EIA spot WTI `DCOILWTICO` / Brent `DCOILBRENTEU`; discovery **n=500**, dates **≤2023-08-21** vs continuation **WTI 0.5080 / Brent 0.5060**; confirm windows **250 / 500 / 750** on **survivors only**; DXY=**DTWEXBGS**). Park/spot-21d stays parked relative to F-SKILL. Spot-trend skill **not established**. Named queue **empty**. Discovery beat ≠ confirm. Do **not** pick least-bad. Do **not** smuggle into skill-met. Locked cite: [`PULSE_Lab_TrackB_Batch1.md`](PULSE_Lab_TrackB_Batch1.md) (docs only; scripts not merged).
+**Track B (separate object — not F-SKILL; not a new residual ID):** EIA spot WTI/Brent **21-day vs continuation** under protocol `Lock_Hunt_Spot_Trend` (FRED EIA spot WTI `DCOILWTICO` / Brent `DCOILBRENTEU`; discovery **n=500**, dates **≤2023-08-21** vs continuation **WTI 0.5080 / Brent 0.5060**; confirm windows **250 / 500 / 750** on **survivors only**; DXY=**DTWEXBGS**; rates vehicle **DGS10** not DXY; spread = Brent−WTI z expanding, past-only). Park/spot-21d stays parked relative to F-SKILL. Spot-trend skill **not established**. Named queue **empty**. Discovery beat ≠ confirm. Do **not** pick least-bad (incl. strong disc / last-750 near-miss). Do **not** smuggle into skill-met. Locked cites: [`PULSE_Lab_TrackB_Batch1.md`](PULSE_Lab_TrackB_Batch1.md) · [`PULSE_Lab_TrackB_Batch2.md`](PULSE_Lab_TrackB_Batch2.md) (docs only; scripts not merged).
 
 **Prior burned (still burned):** #15 FLIP-HOLD/REV (no survivor); #16 C-SPOT-INV (no survivor); #18 C-SPOT-CROSS (WTI fail; Brent tiny confirm +1 on 250 ≠ met); #19 C-SPOT-LOGIT (discovery beat, confirm lose).
 
@@ -297,7 +297,22 @@ None remaining. [R-G8](#r-g8) meanings admitted. [R-LIVE-STANDIN](#r-live-standi
 | **C-SPOT-DXY** | DXY-INV | disc survivor → confirm fail | disc survivor → confirm fail |
 | **C-SPOT-DXY** | DXY-ALIGN | killed disc | killed disc |
 
-**Confirm survivors:** **NONE**. Nothing admitted. Named Track B queue remains **empty** after these burns. Lab may invent **new** classes after this fold — must **not** revive the burned set (FLIP/REV, INV, CROSS, LOGIT, MAG, PERSIST, BREAK, DXY).
+**Confirm survivors:** **NONE**. Nothing admitted. Named Track B queue remains **empty** after these burns.
+
+**Lab invent→test batch 2 (2026-09-05) — gatekeeper REJECT / burn all classes and horses both boards; confirm survivors: NONE.**
+
+| Class | Horse | WTI | Brent |
+|-------|-------|-----|-------|
+| **C-SPOT-SHORT** | SIGN5 | disc survivor → confirm kill | disc survivor → confirm kill |
+| **C-SPOT-SHORT** | SIGN10 | disc survivor → confirm kill | disc survivor → confirm kill |
+| **C-SPOT-VOTE** | VOTE3 | disc survivor → confirm kill | disc survivor → confirm kill |
+| **C-SPOT-VOTE** | VOTE-STRICT | killed disc (tautology: 0 noncont / always continuation) | killed disc (tautology: 0 noncont / always continuation) |
+| **C-SPOT-RATES** | DGS10-INV | killed disc | killed disc |
+| **C-SPOT-RATES** | DGS10-ALIGN | disc strong (~0.61–0.62) → confirm kill (**last-500 tie**) | disc strong (~0.61–0.62) → confirm kill |
+| **C-SPOT-SPREAD** | SPREAD-FADE | disc survivor → confirm kill | killed disc (opposite horse) |
+| **C-SPOT-SPREAD** | SPREAD-CATCH | killed disc (opposite horse) | disc survivor → confirm kill (**500/250 yes, 750 no**) |
+
+**Confirm survivors:** **NONE**. Nothing admitted. SPREAD is **not** CROSS. Named Track B queue remains **empty** after these burns. Lab may invent **new** classes after this fold — must **not** revive the burned set (FLIP/REV, INV, CROSS, LOGIT, MAG, PERSIST, BREAK, DXY, SHORT, VOTE, RATES, SPREAD).
 
 ---
 
@@ -320,6 +335,7 @@ None remaining. [R-G8](#r-g8) meanings admitted. [R-LIVE-STANDIN](#r-live-standi
 | 2026-08-17 | **H-LAG-WF** scored (F-CC loss); **H-KS-FTS** not run (Yahoo month chain ≠ historical CL1–CL18); skill **not established**; Amb **held 1.0** |
 | 2026-09-05 | Tracker fold of open hunt stack **#9–#22** (scripts **not** merged). **L-SCREEN-Y-PROMOTE** capital recorded (PR #9). Named Yahoo CL classes #10–#14 / #20–#22 **burned**; **queue empty**. Track B #15–#19 **empty** separately. R-F-SKILL still **pursue**. Amb **held 1.0**. Do not pick least-bad. |
 | 2026-09-05 | Lab invent→test **batch 1 REJECT / burn** (Track B, separate from R-F-SKILL). Cite pack locked: disc n=500 ≤2023-08-21; cont WTI=0.5080 Brent=0.5060; DXY=DTWEXBGS. **C-SPOT-MAG / PERSIST / BREAK / DXY** all variants both boards **burned**. Confirm survivors: **NONE**. Named Track B queue still **empty**. Spot-trend skill **not established**. Scripts **not** merged. Do not pick least-bad. |
+| 2026-09-05 | Lab invent→test **batch 2 REJECT / burn** (Track B, still separate from R-F-SKILL). Same cite: disc n=500 ≤2023-08-21; cont WTI=0.5080 Brent=0.5060; confirm 500/250/750 survivors only. Vehicles: **DGS10** (not DXY); spread Brent−WTI z expanding past-only. **C-SPOT-SHORT / VOTE / RATES / SPREAD** all horses both boards **burned**. Confirm survivors: **NONE**. Strong disc (DGS10-ALIGN ~0.61–0.62) and Brent SPREAD-CATCH last-750 near-miss ≠ least-bad. Named Track B queue still **empty**. Spot-trend skill **not established**. Scripts **not** merged. |
 
 ---
 
