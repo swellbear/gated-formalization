@@ -2,14 +2,16 @@
 
 **Date:** 2026-09-05  
 **Application:** `2026-09_greer-sync-pulse-tdoa`  
-**String:** first-pulse fog peek **ADMITTED** (Lab `PROPOSED_FOG_PEEK`)  
+**String:** first-pulse fog peek **ADMITTED** (Lab `PROPOSED_FOG_PEEK`); later the same day **#0 HARDEN**  
 **Named gap:** can a ≥3-ref simultaneous-sync TDOA test even be posed on a laptop-feasible sim/prototype path?  
 **Ledger:** [`NAMED_GAP_LEDGER.md`](NAMED_GAP_LEDGER.md)  
-**Digestion:** [`DIGESTION_FIRST_PULSE.md`](DIGESTION_FIRST_PULSE.md)
+**Peek digestion:** [`DIGESTION_FIRST_PULSE.md`](DIGESTION_FIRST_PULSE.md)  
+**#0 score:** [`SCORE_GEOMETRY_0.md`](SCORE_GEOMETRY_0.md)  
+**#0 digestion:** [`DIGESTION_GEOMETRY_0.md`](DIGESTION_GEOMETRY_0.md)
 
-Lab invented ranked peek probes. Lab does **not** self-admit. Lab scratch was **not** readable on this fold VM. Record below is the gated fact set copied from the Method Operator gate (honest docs / public-ref / assumption peek; no estimator; no #0 run).
+Lab invented ranked peek probes. Lab does **not** self-admit. The fog-peek record below is the gated fact set copied from the Method Operator gate (honest docs / public-ref / assumption peek). **#0** later scored a numeric sim **X** — see [`SCORE_GEOMETRY_0.md`](SCORE_GEOMETRY_0.md). Lab scratch for both pulses was **not** on this fold VM.
 
-**What this is not:** A TDOA locator. Claim clearance. Training established. Skill-met. RF fingerprinting. GPS/DGPS as the mobile fix. Reopening cell-tower as live. Reopening BIA→weight. Rithm. A product copied from the named patent. Estimator invent (not this fold). A numeric sim **X** freeze (not this fold).
+**What this is not:** A TDOA locator. Claim clearance. Training established. Skill-met. RF fingerprinting. GPS/DGPS as the mobile fix. Reopening cell-tower as live. Reopening BIA→weight. Rithm. A product copied from the named patent. Hardware **X**.
 
 ---
 
@@ -80,15 +82,14 @@ A held-out path inside a GPS-denied box can be **scored** while GPS/DGPS **place
 
 **LOCK:** sim-only path; provisional **X = sim-geometry first**. **PARK** hardware **X**.
 
-**NEXT (admitted as next pulse, not run in this PR):** **#0 geometry-bottleneck sim** — laptop; no RF; frozen textbook multilateration only; no trained estimator invent; no fingerprint; GPS/DGPS refs only, never the mobile fix. Numeric sim **X** frozen only after that scored pulse.
+**NEXT (admitted here; scored later the same day):** **#0 geometry-bottleneck sim** — see [`SCORE_GEOMETRY_0.md`](SCORE_GEOMETRY_0.md). Operator **ADMIT HARDEN**. Provisional **sim X = 0.50 m**. Hardware **X** stays **PARKED**.
 
 **US10135667B1** = prior-art note only. Cell-tower **PARKED**. BIA **CLOSED**. Peek succeed ≠ claim clearance.
 
 **Hard NO**
 
-- Do **not** invent TDOA / multilateration models on this pulse (beyond naming the frozen textbook class for #0).
-- Do **not** run #0 in this fold.
-- Do **not** freeze a numeric sim **X** before that scored pulse.
+- Do **not** invent the next pulse until Founder / Operator opens sync-imperfection or multipath-bias.
+- Do **not** treat **sim X = 0.50 m** as a hardware bar.
 - Do **not** train an RF fingerprint / radio-map model.
 - Do **not** use GPS / DGPS as the mobile fix.
 - Do **not** copy US10135667B1 claim language or treat this as a product embodiment of that patent.
@@ -99,17 +100,16 @@ A held-out path inside a GPS-denied box can be **scored** while GPS/DGPS **place
 
 ---
 
-## 6. Next pulse #0 (admitted; not this fold)
+## 6. Next pulse #0 (scored later the same day)
 
-**#0 geometry-bottleneck sim** — constraints copied from the gate:
+**#0 geometry-bottleneck sim** ran and was **HARDENED**. Metrics live on [`SCORE_GEOMETRY_0.md`](SCORE_GEOMETRY_0.md).
 
 - Ordinary **laptop**; **no RF**; **no** hardware campaign.
-- Estimator class = **frozen textbook multilateration only**.
+- Estimator class = frozen Chan (1994) two-stage WLS (textbook multilateration).
 - **No** trained estimator invent. **No** fingerprint.
 - GPS/DGPS **place/time refs only** — **never** the mobile fix.
-- Numeric sim **X** is frozen **only after** that pulse is scored under Operator.
-
-This fold does **not** run #0 and does **not** invent that sim.
+- Provisional **sim X = 0.50 m** (1 ns median **0.361 m** + margin). Hardware **X PARKED**.
+- After #0: Lab **HOLD** until Founder / Operator opens sync-imperfection or multipath-bias. Still **no RF / ML**.
 
 ---
 
@@ -123,4 +123,4 @@ This fold does **not** run #0 and does **not** invent that sim.
 
 ---
 
-*Docs only. Peek succeed ≠ claim clearance. Provisional X class ≠ a scored locator. Not a trained map. Not skill-met. Not a patent-product claim. Not rithm. Lab does not self-admit. Lab scratch was not on this VM; summary copied from the Operator gate.*
+*Docs only. Peek succeed / #0 HARDEN ≠ claim clearance. Provisional sim X ≠ hardware X. Not a locator. Not skill-met. Not a patent-product claim. Not rithm. Lab does not self-admit. Lab scratch was not on this VM; summary copied from the Operator gate.*

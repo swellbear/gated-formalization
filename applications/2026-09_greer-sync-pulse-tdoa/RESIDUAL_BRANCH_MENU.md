@@ -1,13 +1,15 @@
 # Residual-Branch Menu — Greer-style sync-pulse TDOA
 
-**Open scaffold.** Offering ≠ running. This is **not** a closeout menu, **not** a locator, and **not** a product claim.
+**Open string after #0.** Offering ≠ running. This is **not** a closeout menu, **not** a locator, and **not** a product claim.
 
 **Date:** 2026-09-05  
 **Application:** `2026-09_greer-sync-pulse-tdoa`  
-**Status:** first-pulse fog peek **ADMITTED**; sim-only path locked; provisional **X = sim-geometry first**; hardware **X PARKED**  
+**Status:** fog peek **ADMITTED**; **#0 geometry HARDEN**; provisional **sim X = 0.50 m**; hardware **X PARKED**; Lab **HOLD**
 
 **Glossary:** `docs/READER_GLOSSARY.md`  
 **Ledger:** [`NAMED_GAP_LEDGER.md`](NAMED_GAP_LEDGER.md)  
+**#0 score:** [`SCORE_GEOMETRY_0.md`](SCORE_GEOMETRY_0.md)  
+**#0 digestion:** [`DIGESTION_GEOMETRY_0.md`](DIGESTION_GEOMETRY_0.md)  
 **Peek + gate:** [`PROPOSED_PULSE.md`](PROPOSED_PULSE.md)  
 **Peek digestion:** [`DIGESTION_FIRST_PULSE.md`](DIGESTION_FIRST_PULSE.md)
 
@@ -15,11 +17,11 @@
 
 ## 0. Plain-language framing
 
-**What we’re doing:** Recording the Method Operator gate on the first-pulse fog peek. A sim-only path is poseable. A clock story is named. Scoring can use GPS as refs only. **X** class = sim-geometry first. Hardware **X** is parked. Peek succeed is **not** claim clearance.
+**What we’re doing:** Recording the #0 HARDEN after the fog peek. Geometry under ideal sync + Gaussian Δt is **not** the bottleneck. Sim **X** is locked at **0.50 m**. Hardware **X** stays parked. Lab holds until Founder / Operator opens sync-imperfection or multipath-bias. **No RF / ML.**
 
-**What we need from you:** **none for this peek.** Lab HOLD on running #0 here. Next pulse (**admitted**, not this fold) = **#0 geometry-bottleneck sim** under Operator.
+**What we need from you:** Nothing this fold. Lab **HOLD**. Next invent only if you open sync-imperfection or multipath-bias.
 
-**What this does *not* mean:** A TDOA locator. Training started or established. Skill-met. RF fingerprinting. GPS/DGPS as the mobile fix. A product copied from US10135667B1. Claim clearance. A numeric sim **X**. Auto-run of #0. Reopening cell-tower as live. Reopening BIA→weight. Reopening Track B. Reopening llm-gwt R-REPL. Reopening Collatz invent (#45 playground is done; Lab HOLD there).
+**What this does *not* mean:** A TDOA locator. Claim clearance. Hardware **X**. Training started or established. Skill-met. RF fingerprinting. GPS/DGPS as the mobile fix. A product copied from US10135667B1. Auto-admit. Reopening cell-tower as live. Reopening BIA→weight. Reopening Track B. Reopening llm-gwt R-REPL. Reopening Collatz invent (#45 playground is done; Lab HOLD there).
 
 ---
 
@@ -27,14 +29,15 @@
 
 | ID | One-line | Class | Disposition |
 |----|----------|-------|-------------|
-| greer-tdoa-median-X | ≥3-ref simultaneous-sync TDOA, laptop-feasible sim-only, median error ≤ X on a held-out GPS-denied path; GPS/DGPS place/time refs only; no RF fingerprint training | Empirically resolvable **after** #0 scores a numeric sim **X**; class lock is provisional | **open** — last check: 2026-09-05 Operator **ADMIT** provisional **X = sim-geometry first**; hardware **X PARKED**; numeric sim **X** unset until #0; peek succeed ≠ claim clearance |
-| spectrum-hardware-vs-sim | Can the path stay laptop-feasible sim-only, or must hardware/spectrum be named first? | Peek settled | **hardened** — last check: 2026-09-05 **C1 SUCCEED**; sim-only path poseable; hardware not required to name a sim **X** |
-| hardware-X | A hardware / spectrum **X** on a later radio path | Parked — live path is sim-only | **paused** / **PARKED** — last check: 2026-09-05 Operator **PARK** hardware **X** |
-| clock-resolution-sync | Can a simultaneous-sync / clock-resolution assumption be named from public refs? | Peek settled | **hardened** — last check: 2026-09-05 **C2 SUCCEED**; provisional ideal simultaneous TX + Δt → Δd = c·Δt (~0.3 m/ns); still not a locator |
-| multipath-denied-box | Multipath honesty + held-out path inside a GPS-denied box without GPS as the mobile fix | Peek settled as poseable; multipath stays fog | **open** (constraint) — last check: 2026-09-05 **C3 SUCCEED**; scoring poseable with GPS refs-only; do not silently drop multipath |
-| geometry-bottleneck-sim-0 | #0 geometry-bottleneck sim — laptop; no RF; frozen textbook multilateration only | Empirically resolvable on the **admitted** next pulse | **open** / **admitted as next pulse, not run** — **not this fold**; Lab does **not** run #0 here |
+| greer-tdoa-median-X | ≥3-ref simultaneous-sync TDOA, laptop-feasible sim-only, median error ≤ **0.50 m** on a held-out GPS-denied path; GPS/DGPS place/time refs only; no RF fingerprint training | Empirically posed on sim (provisional **X** locked); succeed still requires a later held-out median ≤ X **without** dropping honesty locks | **open** / **HOLD** — last check: #0 HARDEN; **sim X = 0.50 m**; **not** claim clearance |
+| spectrum-hardware-vs-sim | Can the path stay laptop-feasible sim-only, or must hardware/spectrum be named first? | Peek settled | **hardened** — last check: 2026-09-05 **C1 SUCCEED**; sim-only path poseable |
+| hardware-X | A hardware / spectrum **X** on a later radio path | Parked until sync/multipath gate | **paused** / **PARKED** — last check: 2026-09-05 Operator **PARK** hardware **X** |
+| clock-resolution-sync | Can a simultaneous-sync / clock-resolution assumption be named from public refs? | Peek settled | **hardened** — last check: 2026-09-05 **C2 SUCCEED**; #0 assumed that idealization; still not a locator |
+| sync-imperfection | Does the 0.50 m sim bar survive named clock / sync error? | Empirically resolvable **after** Operator opens this pulse | **paused** / **HOLD** — not opened; do not invent until opened |
+| multipath-denied-box | Multipath honesty + held-out path inside a GPS-denied box without GPS as the mobile fix | Peek settled as poseable; #0 did not inject; multipath stays fog | **open** (constraint) — last check: 2026-09-05 **C3 SUCCEED** then #0 no-inject; next invent only if Operator opens multipath-bias |
+| geometry-bottleneck-sim-0 | #0 geometry-bottleneck sim — laptop; no RF; frozen Chan (1994) 2D WLS | Scored | **hardened** — not the bottleneck; median tracks `c · σ_t`; **sim X = 0.50 m** |
 
-No other empirically resolvable residuals on this fold.
+No other empirically resolvable residuals on this fold. Lab does **not** invent clock or multipath pulses until they are opened.
 
 ---
 
@@ -55,7 +58,8 @@ No other empirically resolvable residuals on this fold.
 | Date | Action |
 |------|--------|
 | 2026-09-05 | Founder **CLAIM LOCK** opens this string as a **new** Amb (Greer-style GPS-denied locate via dedicated sync-pulse refs + mobile TDOA; contrast US10135667B1 — method practice / explore the idea; not copy claims for product). Claim wording locked. **X** TBD. First pulse after admit = name fog + 2–3 cheap checks. **No invent models this fold.** Lab HOLD. Cell-tower Amb **PARKED** (not reopened as live). BIA→weight portfolio **CLOSED**. Collatz playground **done** (#45). Track B **paused**. llm-gwt R-REPL stays **parked**. Last check: none. TDOA locate is **not** established. Training is **not** established. Not skill-met. Not rithm. |
-| 2026-09-05 | Method Operator **ADMIT** first-pulse fog naming (Lab `PROPOSED_FOG_PEEK`). **C1 SUCCEED** — sim-only path poseable; hardware not required to name sim **X**. **C2 SUCCEED** — provisional ideal simultaneous TX + Δt → Δd = c·Δt (~0.3 m/ns). **C3 SUCCEED** — scoring poseable with GPS refs-only; multipath stays on fog. **LOCK:** sim-only path; provisional **X = sim-geometry first**. **PARK** hardware **X**. Next (**admitted**, not this fold): **#0 geometry-bottleneck sim** — laptop; no RF; frozen textbook multilateration only; no trained estimator invent; no fingerprint; GPS/DGPS refs only, never mobile fix. Numeric sim **X** frozen only after that scored pulse. US10135667B1 = prior-art note only. Cell-tower stays **PARKED**. BIA stays **CLOSED**. Lab scratch not on this VM; peek summary copied from the Operator gate into [`PROPOSED_PULSE.md`](PROPOSED_PULSE.md). Peek succeed ≠ claim clearance. TDOA locate is **not** established. Training is **not** established. Not skill-met. Not rithm. |
+| 2026-09-05 | Method Operator **ADMIT** first-pulse fog naming (Lab `PROPOSED_FOG_PEEK`). **C1 SUCCEED** — sim-only path poseable; hardware not required to name sim **X**. **C2 SUCCEED** — provisional ideal simultaneous TX + Δt → Δd = c·Δt (~0.3 m/ns). **C3 SUCCEED** — scoring poseable with GPS refs-only; multipath stays on fog. **LOCK:** sim-only path; provisional **X = sim-geometry first**. **PARK** hardware **X**. Next (**admitted**, then scored the same day): **#0 geometry-bottleneck sim**. US10135667B1 = prior-art note only. Cell-tower stays **PARKED**. BIA stays **CLOSED**. Peek succeed ≠ claim clearance. TDOA locate is **not** established. Training is **not** established. Not skill-met. Not rithm. |
+| 2026-09-05 | Operator **ADMIT #0 HARDEN**. Frozen Chan (1994) 2D WLS; numpy; 5 refs; L-path 101; 40 MC; seed 20260905. 1 ns median **0.361 m** (`σ_d`≈0.300 m); 3 ns median **1.081 m**; zero-noise ~1e-14 m; 0 failures. Geometry is **not** the bottleneck under ideal simultaneous sync + Gaussian Δt. **LOCK** provisional **sim X = 0.50 m** (1 ns + margin). **PARK** hardware **X** until sync/multipath gate. Honesty: ideal sync assumed; multipath not injected; GPS never the mobile fix; not claim clearance; not a locator; not skill-met. **HOLD** next Lab invent until Founder / Operator opens sync-imperfection or multipath-bias (still no RF / ML). US10135667B1 prior-art note only. Cell-tower stays **PARKED**. BIA stays **CLOSED**. |
 
 ---
 
