@@ -34,6 +34,15 @@ Habit only — not a scoring rule. Full note: [`docs/DIGESTION_HABIT.md`](docs/D
 - [ ] If you have been working the *same* problem and that string of tries has stalled, stop and write it up first
 - [ ] Skip this ritual for tiny practice / training runs
 
+## While still on the same problem
+
+Habit only — not a scoring rule. Full note: [`docs/INVENT_TEST_HABIT.md`](docs/INVENT_TEST_HABIT.md).
+
+- [ ] Invent a **new** candidate (named class / horse) — do not revive burned classes
+- [ ] Run a cheap test under the frozen protocol (discovery, then confirm only if it survives)
+- [ ] Let the Operator admit, reject, or park — Lab never self-admits
+- [ ] Skip the full write-up for tiny practice / training runs; live invent→test writes tracker results when the Operator decides
+
 ## How choices are presented
 
 Whenever you are asked to choose, options appear **in this chat** as clickable A / B / C choices. Each option shows a short label and one everyday sentence. **Click the option — that click is the reply.** You do not leave the conversation. Canonical rule: **Choice Presentation Standard** in `.cursor/rules/applications-gated-method.mdc`. Typed letters and one-liners remain accepted equivalents. Wording source: [`ui/choice-presenter/catalog.json`](ui/choice-presenter/catalog.json). The HTML/canvas files are an optional demo only; they are not how a live run decides.
