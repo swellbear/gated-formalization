@@ -63,7 +63,7 @@ Can a predictive model for oil futures be built?
 - V-VALUE **not established** (V-VALUE-TEST-0; V-SRC `leave unnamed`; **V2 named**; not a refute of all books).
 - Directional accuracy after costs / decision or trading value **not shown**.
 - Spot/real-price recipes as inside D-EXIST — **OUT**.
-- Track B spot-trend skill **not established** (Lab batch 1 **REJECT / burn**; confirm survivors **none**; named queue still **empty**). Separate from F-SKILL.
+- Track B spot-trend skill **not established** (Lab batch 1 **REJECT / burn**; MAG/PERSIST/BREAK/DXY all variants both boards; confirm survivors **NONE**; named queue still **empty**). Separate from F-SKILL.
 - Blended slogan — **not cleared**.
 - No trading advice.
 
