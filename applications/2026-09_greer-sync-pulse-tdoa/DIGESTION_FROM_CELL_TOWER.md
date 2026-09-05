@@ -1,6 +1,6 @@
 # Digestion — from the parked cell-tower Amb
 
-A short plain note before this new claim. Habit: [`docs/DIGESTION_HABIT.md`](../../docs/DIGESTION_HABIT.md). This does **not** score Greer-style TDOA. It does **not** reopen cell-tower as live. It does **not** reopen BIA→weight.
+A short plain note before this new claim. Habit: [`docs/DIGESTION_HABIT.md`](../../docs/DIGESTION_HABIT.md). This does **not** score Greer-style TDOA. It does **not** reopen cell-tower as live. It does **not** reopen BIA→weight. First-pulse fog peek is now gated: [`DIGESTION_FIRST_PULSE.md`](DIGESTION_FIRST_PULSE.md).
 
 **Last string:** `2026-09_cell-tower-geometry` — first-pulse peek **ADMITTED** (#61), then **PARKED** 2026-09-05 (Founder STOP / user pivot). Cheap checks A→B **halted mid-flight**. Provisional **X = 300 m** and the peek facts stay **on record**. The Amb is **not live**.
 
@@ -19,12 +19,12 @@ Incoming BIA lesson (still closed): `2026-09_human-bia-weight` (#59 string CLOSE
 
 Stay a **new** Amb, not cell-tower reopened as live, and not a BIA sequel.
 
-- Quote the Founder **CLAIM LOCK**. Keep **X** TBD until after the first cheap peek (sim geometry vs hardware).
-- First pulse after admit = **name fog** (spectrum/hardware vs sim-only; clock resolution; multipath) + **2–3 cheap checks**. **Not a model.**
+- Quote the Founder **CLAIM LOCK**. First-pulse fog peek now **ADMITTED**; provisional **X = sim-geometry first**. Hardware **X PARKED**.
 - GPS / DGPS, if used at all, **place and time refs only** — never the mobile fix.
 - Contrast US10135667B1 as prior art for **method practice / explore the idea**. Do **not** copy claims for a product.
 - Do **not** train. Do **not** invent models this fold. Do **not** write skill-met language.
 - Do **not** reopen `2026-09_cell-tower-geometry` as live.
+- Next pulse (**admitted**, not the peek fold): **#0 geometry-bottleneck sim**. This note does **not** run it. Numeric sim **X** frozen only after that scored pulse.
 
 ## What stays parked / closed
 

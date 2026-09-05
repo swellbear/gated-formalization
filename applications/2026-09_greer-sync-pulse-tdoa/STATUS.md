@@ -8,30 +8,31 @@
 
 ### Plain status
 
-Open **Amb scaffold**. Founder **CLAIM LOCK** is on the record. Locked claim: on a laptop-feasible sim/prototype path, a ≥3-reference simultaneous-sync TDOA estimator (GPS/DGPS used only to place/time refs; never as the mobile fix) can recover mobile position with median error ≤ X on a held-out path inside a GPS-denied box — **without RF fingerprint training**. **X** is TBD after the first cheap peek (sim geometry vs hardware). First pulse after admit = name fog (spectrum/hardware vs sim-only; clock resolution; multipath) + 2–3 cheap checks. **No invent models this fold.** Last check: **none**. This is **not** a locator. This is **not** training. This is **not** skill-met. This is **not** rithm. This is **not** a copy of US10135667B1 claims for a product. The cell-tower Amb is **PARKED** and is **not** reopened as live. The BIA→weight portfolio stays **CLOSED**. Collatz playground is **done** (#45). Track B invent stays **paused**. llm-gwt R-REPL stays **parked**.
+**First-pulse fog peek ADMITTED** (Lab `PROPOSED_FOG_PEEK`). A laptop-feasible **sim-only** path is poseable (**C1 SUCCEED**); hardware is **not** required to name a sim **X**. A provisional clock story is poseable: ideal simultaneous TX + Δt → Δd = c·Δt (~0.3 m/ns) (**C2 SUCCEED**). Scoring is poseable with GPS/DGPS as **refs only** (**C3 SUCCEED**); multipath stays on the fog list. **LOCK:** sim-only path; provisional **X = sim-geometry first**. **PARK** hardware **X**. This is **not** a locator. This is **not** training. This is **not** skill-met. This is **not** rithm. This is **not** a copy of US10135667B1 claims for a product. Peek succeed is **not** claim clearance. Numeric sim **X** is **not** frozen. The cell-tower Amb stays **PARKED**. The BIA→weight portfolio stays **CLOSED**. Next (admitted as next pulse, **not this fold**): **#0 geometry-bottleneck sim** — laptop; no RF; frozen textbook multilateration only.
 
 ---
 
 | Field | Value |
 |-------|--------|
-| **Closure state** | **open** — Amb scaffold; Founder claim lock recorded; first pulse **not run**; not hard stop; no closeout hygiene this fold |
-| **Phase** | Amb scaffold / awaiting Method Operator admit of first pulse (Lab HOLD; first pulse after admit = fog/peek, **no models**) |
-| **Amb** | unset (no scored lock this fold). Named fog open: spectrum/hardware vs sim-only; clock resolution; multipath. **X** unset |
-| **Locks in force** | Founder **CLAIM LOCK** (wording recorded; not a scored lock). Contrast prior art US10135667B1 = method practice / explore the idea — **not** copy claims for product |
-| **Next authorization needed** | Method Operator **admit** (or reject / park) of the first fog/peek — **not** auto-clearance; **not** a locator; **not** invent models; **not** skill-met |
+| **Closure state** | **open** — first-pulse fog peek **ADMITTED**; sim-only path locked; provisional **X = sim-geometry first**; hardware **X PARKED**; not hard stop; no closeout hygiene this fold |
+| **Phase** | first-pulse fog peek **gated** (docs / assumption peek only; not a model) |
+| **Amb** | provisional **X = sim-geometry first** (not a numeric bar). Named leftover: hardware **X PARKED**; multipath stays on fog; numeric sim **X** unset until #0 is scored |
+| **Locks in force** | sim-only path · provisional **X = sim-geometry first** · clock: ideal simultaneous TX + Δt → Δd = c·Δt (~0.3 m/ns) · eval: GPS/DGPS = place/time refs only, **never** the mobile fix · **no** RF fingerprint training · US10135667B1 = prior-art note only |
+| **Next authorization needed** | **none for this peek** — Lab **HOLD** on running #0 here. Next pulse (**admitted**, not this fold) = **#0 geometry-bottleneck sim** (laptop; no RF; frozen textbook multilateration only). Numeric sim **X** frozen only after that scored pulse |
 | **Related apps surfaced** | `2026-09_cell-tower-geometry` — Amb **PARKED** (Founder STOP / user pivot; peek #61 + X=300 m on record; **not live**); this app does **not** reopen it as live · `2026-09_human-bia-weight` — string **CLOSE** / scale-accuracy **KILL** (#59); BIA portfolio **CLOSED**; this app does **not** reopen it |
-| **Optional modes** | none yet (open scaffold; not endpoint) |
+| **Optional modes** | none yet (open; not endpoint) |
 
 **Ledger:** [`NAMED_GAP_LEDGER.md`](NAMED_GAP_LEDGER.md)  
-**Proposed pulse:** [`PROPOSED_PULSE.md`](PROPOSED_PULSE.md)  
-**Digestion of last string:** [`DIGESTION_FROM_CELL_TOWER.md`](DIGESTION_FROM_CELL_TOWER.md)  
+**Peek + gate:** [`PROPOSED_PULSE.md`](PROPOSED_PULSE.md)  
+**Peek digestion:** [`DIGESTION_FIRST_PULSE.md`](DIGESTION_FIRST_PULSE.md)  
+**Incoming digestion:** [`DIGESTION_FROM_CELL_TOWER.md`](DIGESTION_FROM_CELL_TOWER.md)  
 **Decision log:** [`RESIDUAL_BRANCH_MENU.md`](RESIDUAL_BRANCH_MENU.md)
 
-**What this fold does not do:** no TDOA model; no estimator invent; no RF fingerprint training docs as established; no weights; no big datasets committed; no copy of US10135667B1 claim language; no GPS/DGPS-as-mobile-fix claim; no skill-met / elevated language; no reopen of cell-tower as live; no reopen of the BIA→weight portfolio (human #59 CLOSE; poultry #47 / cattle #49 / sheep #51 / companion #53 stay parked).
+**What this fold does not do:** no TDOA model; no estimator invent; no #0 sim run; no numeric sim **X** freeze; no RF fingerprint training docs as established; no weights; no big datasets committed; no copy of US10135667B1 claim language; no GPS/DGPS-as-mobile-fix claim; no skill-met / elevated language; no reopen of cell-tower as live; no reopen of the BIA→weight portfolio (human #59 CLOSE; poultry #47 / cattle #49 / sheep #51 / companion #53 stay parked).
 
-**Run constraint:** first pulse after admit must stay on **ordinary laptop/CPU** — docs / public-ref / assumption peek only. No GPU. No trained models. No hardware campaign. No bulk dataset download into the repo.
+**Run constraint:** first pulse stayed on **ordinary laptop/CPU** — docs / public-ref / assumption peek only. No GPU. No trained models. No RF. No hardware campaign. No bulk dataset download into the repo.
 
-**Endpoint** = examination done; verdict frozen. This fold is **open**. Do **not** label hard stop.
+**Endpoint** = examination done; verdict frozen. This fold is **open** (peek gated; **X** class provisional). Do **not** label hard stop.
 
 ---
 
@@ -54,7 +55,7 @@ Not claimed this fold. Boxes stay open.
 - [ ] `STATUS.md` set to hard stop
 - [ ] `final_verdict.md`
 
-**Gates:** Scaffold only. Named gap is **open**. GPS-denied TDOA locate is **not** established. Training is **not** established. Skill-met is **not** claimed. Cell-tower stays **PARKED**. BIA stays **CLOSED**.
+**Gates:** C1 **SUCCEED**. C2 **SUCCEED**. C3 **SUCCEED**. Sim-only path locked. Provisional **X = sim-geometry first**. Hardware **X PARKED**. Peek succeed is **not** claim clearance. GPS-denied TDOA locate is **not** established. Training is **not** established. Skill-met is **not** claimed. Cell-tower stays **PARKED**. BIA stays **CLOSED**.
 
 ---
 
