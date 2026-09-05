@@ -9,17 +9,18 @@
 **Continuation:** WTI **0.5080** / Brent **0.5060**  
 **Confirm:** windows **250 / 500 / 750**, **survivors only**  
 **VIX vehicle:** FRED **VIXCLS**  
-**Gatekeeper:** **REJECT / burn** VIX / THRESH / SKEW and C-SPOT-SEAS MOY-DIR (both boards) plus WTI MOY-CONT (killed disc). **Scoped confirm survivor:** Brent **H-SPOT-MOY-CONT** — **not** skill-met, **not** C-SPOT-SEAS established, **not** WTI-met. Scripts **not** on master.
+**Gatekeeper:** **REJECT / burn** VIX / THRESH / SKEW and C-SPOT-SEAS MOY-DIR (both boards) plus WTI MOY-CONT (killed disc). **Burns remain burns.**  
+**Founder lock:** Brent **H-SPOT-MOY-CONT** is **scoped only**. Do **not** promote to skill-met / SEAS-class-met / WTI-met. Scripts **not** on master.
 
 ---
 
 ## 0. Plain-language framing
 
-**What this is:** The locked cite pack for Lab invent→test batch 3. Four new spot classes were scored against continuation. VIX-ALIGN repeated the DGS10-ALIGN pattern (strong discovery, then confirm kill). One horse — Brent month-continuation (**H-SPOT-MOY-CONT**) — **survived confirm** under the protocol. That is a **scoped confirm pass**, not a parent-claim clearance.
+**What this is:** The locked cite pack for Lab invent→test batch 3. Four new spot classes were scored against continuation. VIX-ALIGN repeated the DGS10-ALIGN pattern (strong discovery, then confirm kill). One horse — Brent month-continuation (**H-SPOT-MOY-CONT**) — **survived confirm** under the protocol. Founder confirmation: that result stays **scoped only**.
 
-**What this settles:** VIX / THRESH / SKEW — **burned** (SKEW UPFRAC ≡ UPFRAC-GATE; one family). C-SPOT-SEAS is **not** established (MOY-DIR confirm-killed both boards; WTI MOY-CONT killed at discovery). Brent MOY-CONT is **not** a null — record it as a scoped confirm pass. Burned-class invent queue is **empty**. Live scoped horse: **Brent H-SPOT-MOY-CONT**. Spot-trend skill is still **not established**. WTI-met ≠ Brent-met. Amb ≠ clearance. Not a trade.
+**What this settles:** VIX / THRESH / SKEW — **burned** (SKEW UPFRAC ≡ UPFRAC-GATE; one family). Burns remain burns. C-SPOT-SEAS is **not** established (MOY-DIR confirm-killed both boards; WTI MOY-CONT killed at discovery). Brent MOY-CONT is **not** a null — record it as **scoped only**. Do **not** promote to skill-met / SEAS-class-met / WTI-met. Burned-class invent queue is **empty**. Live scoped horse: **Brent H-SPOT-MOY-CONT**. Spot-trend skill is still **not established**. WTI-met ≠ Brent-met. Amb ≠ clearance. Not a trade.
 
-**What this is not:** Not an R-F-SKILL pulse. Not a futures horse. Not Track B skill-met. Not C-SPOT-SEAS class-met. Not WTI-met. Not a reason to revive FLIP/REV, INV, CROSS, LOGIT, MAG, PERSIST, BREAK, DXY, SHORT, VOTE, RATES, SPREAD, VIX, THRESH, or SKEW. Not a reason to treat Brent MOY-CONT as burned.
+**What this is not:** Not an R-F-SKILL pulse. Not a futures horse. **Not** Track B skill-met. **Not** C-SPOT-SEAS class-met. **Not** WTI-met. Not a promotion. Not a reason to revive FLIP/REV, INV, CROSS, LOGIT, MAG, PERSIST, BREAK, DXY, SHORT, VOTE, RATES, SPREAD, VIX, THRESH, or SKEW. Not a reason to treat Brent MOY-CONT as burned.
 
 ---
 
@@ -40,17 +41,19 @@
 
 ---
 
-## 2. Locked cite — scoped confirm survivor (not skill-met)
+## 2. Locked cite — scoped only (do not promote)
 
 | Horse | Board | last_500 | last_250 | last_750 | Gatekeeper |
 |-------|-------|----------|----------|----------|------------|
-| **H-SPOT-MOY-CONT** | **Brent only** | **0.5440 > 0.5100** | **0.5600 > 0.5200** | **0.5253 > 0.5147** (small margin; still strict beat) | **scoped confirm pass** |
+| **H-SPOT-MOY-CONT** | **Brent only** | **0.5440 > 0.5100** | **0.5600 > 0.5200** | **0.5253 > 0.5147** (small margin; still strict beat) | **scoped only** |
+
+**Founder lock:** Do **not** promote Brent H-SPOT-MOY-CONT to skill-met / SEAS-class-met / WTI-met.
 
 **Do not claim:** Track B spot-trend skill established. C-SPOT-SEAS established. WTI-met. Parent slogan cleared.
 
 **Do not burn:** Brent MOY-CONT as a null.
 
-**Do record:** scoped confirm pass under `Lock_Hunt_Spot_Trend`. Amb ≠ clearance. Not a trade.
+**Do record:** scoped-only confirm pass under `Lock_Hunt_Spot_Trend`. Amb ≠ clearance. Not a trade.
 
 ---
 
@@ -60,11 +63,11 @@
 - VIX vehicle is **VIXCLS**. VIX-ALIGN disc-strong-then-confirm-kill = same pressure point as DGS10-ALIGN.
 - UPFRAC and UPFRAC-GATE are definitionally equivalent — burned as one family.
 - C-SPOT-SEAS is **not** class-met: MOY-DIR failed confirm both boards; WTI MOY-CONT failed discovery.
-- WTI-met ≠ Brent-met. First scoped confirm ≠ slogan clearance.
-- Burned-class invent queue is **empty**. Live scoped horse: Brent **H-SPOT-MOY-CONT**.
+- WTI-met ≠ Brent-met. First scoped confirm ≠ slogan clearance. **Scoped only ≠ promote.**
+- Burned-class invent queue is **empty**. Live scoped horse (do **not** promote): Brent **H-SPOT-MOY-CONT**.
 - Scripts / hunt code **not** merged.
-- Lab may invent **new** classes after this fold. Must **not** revive the burned set. Must **not** treat Brent MOY-CONT as a null.
+- Lab may invent **new** classes after this fold. Must **not** revive the burned set. Must **not** treat Brent MOY-CONT as a null. Must **not** promote it to skill-met / SEAS-class-met / WTI-met.
 
 ---
 
-*Docs only. Track B ≠ F-SKILL. Scoped confirm ≠ skill-met. Discovery beat ≠ confirm. No least-bad. Not trading advice.*
+*Docs only. Track B ≠ F-SKILL. Scoped only ≠ skill-met / SEAS-class-met / WTI-met. Discovery beat ≠ confirm. No least-bad. Not trading advice.*

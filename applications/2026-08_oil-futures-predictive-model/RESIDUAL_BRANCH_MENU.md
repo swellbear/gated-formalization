@@ -6,7 +6,7 @@
 
 **Date:** 2026-09-05  
 **Application:** `2026-08_oil-futures-predictive-model`  
-**Closeout status:** **hard stop (residuals live)**. Parent Rank 4 split intact. **D-EXIST-MET-FT** in force (futures-target only). **F-SRC-CME-TAPE** named. **L-STANDIN-Y-CLF** stipulated. V-SRC leave unnamed. Skill leftover **live** (named Yahoo CL queue **empty**; H-KS still not run). Phase 2 not entered. Track B (EIA spot 21-day) is a **separate** object — Lab batch 1 + batch 2 **REJECT / burn**; batch 3 burns VIX/THRESH/SKEW + SEAS MOY-DIR / WTI MOY-CONT; **Brent H-SPOT-MOY-CONT** is a **scoped confirm pass** (not skill-met; not C-SPOT-SEAS established; not WTI-met); burned-class invent queue empty; live scoped horse on record; **not** F-CC futures skill.
+**Closeout status:** **hard stop (residuals live)**. Parent Rank 4 split intact. **D-EXIST-MET-FT** in force (futures-target only). **F-SRC-CME-TAPE** named. **L-STANDIN-Y-CLF** stipulated. V-SRC leave unnamed. Skill leftover **live** (named Yahoo CL queue **empty**; H-KS still not run). Phase 2 not entered. Track B (EIA spot 21-day) is a **separate** object — Lab batch 1 + batch 2 **REJECT / burn**; batch 3 burns remain burns; **Brent H-SPOT-MOY-CONT is scoped only** (do **not** promote to skill-met / SEAS-class-met / WTI-met); burned-class invent queue empty; **not** F-CC futures skill.
 
 **Glossary:** [`docs/READER_GLOSSARY.md`](../../docs/READER_GLOSSARY.md)  
 **Optional modes (separate):** [`OPTIONAL_MODES_MENU.md`](OPTIONAL_MODES_MENU.md)
@@ -280,7 +280,9 @@ None remaining. [R-G8](#r-g8) meanings admitted. [R-LIVE-STANDIN](#r-live-standi
 
 **Live (not parked):** [R-F-SKILL](#r-f-skill) — `pursue` (H-LAG scored, lost on F-CC; named Yahoo classes burned; **queue empty**; H-KS not run)
 
-**Track B (separate object — not F-SKILL; not a new residual ID):** EIA spot WTI/Brent **21-day vs continuation** under protocol `Lock_Hunt_Spot_Trend` (FRED EIA spot WTI `DCOILWTICO` / Brent `DCOILBRENTEU`; discovery **n=500**, dates **≤2023-08-21** vs continuation **WTI 0.5080 / Brent 0.5060**; confirm windows **250 / 500 / 750** on **survivors only**; DXY=**DTWEXBGS**; rates vehicle **DGS10** not DXY; VIX vehicle **VIXCLS**; spread = Brent−WTI z expanding, past-only). Park/spot-21d stays parked relative to F-SKILL. Spot-trend skill **not established**. C-SPOT-SEAS **not** established. WTI-met ≠ Brent-met. Burned-class invent queue **empty**. **Live scoped horse:** Brent **H-SPOT-MOY-CONT** (scoped confirm pass — **not** a null; **not** skill-met; **not** slogan clearance). Discovery beat ≠ confirm. First scoped confirm ≠ clearance. Do **not** pick least-bad (incl. strong disc / last-750 near-miss). Do **not** smuggle into skill-met. Locked cites: [`PULSE_Lab_TrackB_Batch1.md`](PULSE_Lab_TrackB_Batch1.md) · [`PULSE_Lab_TrackB_Batch2.md`](PULSE_Lab_TrackB_Batch2.md) · [`PULSE_Lab_TrackB_Batch3.md`](PULSE_Lab_TrackB_Batch3.md) (docs only; scripts not merged).
+**Track B (separate object — not F-SKILL; not a new residual ID):** EIA spot WTI/Brent **21-day vs continuation** under protocol `Lock_Hunt_Spot_Trend` (FRED EIA spot WTI `DCOILWTICO` / Brent `DCOILBRENTEU`; discovery **n=500**, dates **≤2023-08-21** vs continuation **WTI 0.5080 / Brent 0.5060**; confirm windows **250 / 500 / 750** on **survivors only**; DXY=**DTWEXBGS**; rates vehicle **DGS10** not DXY; VIX vehicle **VIXCLS**; spread = Brent−WTI z expanding, past-only). Park/spot-21d stays parked relative to F-SKILL.
+
+**Founder lock — Brent H-SPOT-MOY-CONT is scoped only.** Do **not** promote to skill-met / SEAS-class-met / WTI-met. Spot-trend skill **not established**. C-SPOT-SEAS **not** established. WTI-met ≠ Brent-met. Burns remain burns. Burned-class invent queue **empty**. **Live scoped horse (not a promotion):** Brent **H-SPOT-MOY-CONT** — Brent-only confirm pass; **not** a null; **not** slogan clearance. Discovery beat ≠ confirm. First scoped confirm ≠ clearance. Do **not** pick least-bad (incl. strong disc / last-750 near-miss). Do **not** smuggle into skill-met. Locked cites: [`PULSE_Lab_TrackB_Batch1.md`](PULSE_Lab_TrackB_Batch1.md) · [`PULSE_Lab_TrackB_Batch2.md`](PULSE_Lab_TrackB_Batch2.md) · [`PULSE_Lab_TrackB_Batch3.md`](PULSE_Lab_TrackB_Batch3.md) (docs only; scripts not merged).
 
 **Prior burned (still burned):** #15 FLIP-HOLD/REV (no survivor); #16 C-SPOT-INV (no survivor); #18 C-SPOT-CROSS (WTI fail; Brent tiny confirm +1 on 250 ≠ met); #19 C-SPOT-LOGIT (discovery beat, confirm lose).
 
@@ -314,7 +316,7 @@ None remaining. [R-G8](#r-g8) meanings admitted. [R-LIVE-STANDIN](#r-live-standi
 
 **Confirm survivors:** **NONE**. Nothing admitted. SPREAD is **not** CROSS. Named Track B queue remained **empty** after these burns.
 
-**Lab invent→test batch 3 (2026-09-05) — gatekeeper REJECT / burn listed classes; Brent H-SPOT-MOY-CONT = scoped confirm pass (not skill-met / not class-met / not WTI-met).**
+**Lab invent→test batch 3 (2026-09-05) — gatekeeper REJECT / burn listed classes. Burns remain burns. Brent H-SPOT-MOY-CONT = scoped only (do not promote to skill-met / SEAS-class-met / WTI-met).**
 
 | Class | Horse | WTI | Brent |
 |-------|-------|-----|-------|
@@ -324,11 +326,11 @@ None remaining. [R-G8](#r-g8) meanings admitted. [R-LIVE-STANDIN](#r-live-standi
 | **C-SPOT-THRESH** | ABS10 | burned | killed disc |
 | **C-SPOT-SKEW** | UPFRAC / UPFRAC-GATE | burned as one family (definitionally ≡) | burned as one family (definitionally ≡) |
 | **C-SPOT-SEAS** | MOY-DIR | confirm kill | confirm kill |
-| **C-SPOT-SEAS** | MOY-CONT | killed disc | **scoped confirm pass** (H-SPOT-MOY-CONT) — **not** a null |
+| **C-SPOT-SEAS** | MOY-CONT | killed disc | **scoped only** (H-SPOT-MOY-CONT) — **not** a promotion; **not** a null |
 
-**Scoped confirm survivor — Brent H-SPOT-MOY-CONT** (protocol `Lock_Hunt_Spot_Trend`; **not** skill-met; **not** C-SPOT-SEAS established; **not** WTI-met): last_500 **0.5440 > 0.5100**; last_250 **0.5600 > 0.5200**; last_750 **0.5253 > 0.5147** (small margin; still strict beat). Amb ≠ clearance. Not a trade.
+**Founder lock — Brent H-SPOT-MOY-CONT is scoped only.** Do **not** promote to skill-met / SEAS-class-met / WTI-met. Protocol `Lock_Hunt_Spot_Trend`; last_500 **0.5440 > 0.5100**; last_250 **0.5600 > 0.5200**; last_750 **0.5253 > 0.5147** (small margin; still strict beat). That is a Brent-only confirm pass. That is **not** Track B skill. That is **not** C-SPOT-SEAS class-met. That is **not** WTI-met. Amb ≠ clearance. Not a trade.
 
-**Burned-class invent queue:** **empty**. **Live scoped horse:** Brent **H-SPOT-MOY-CONT**. Spot-trend skill still **not established**. Lab may invent **new** classes after this fold — must **not** revive the burned set (FLIP/REV, INV, CROSS, LOGIT, MAG, PERSIST, BREAK, DXY, SHORT, VOTE, RATES, SPREAD, VIX, THRESH, SKEW). Must **not** treat Brent MOY-CONT as a null.
+**Burned-class invent queue:** **empty**. **Live scoped horse (do not promote):** Brent **H-SPOT-MOY-CONT**. Spot-trend skill still **not established**. Lab may invent **new** classes after this fold — must **not** revive the burned set (FLIP/REV, INV, CROSS, LOGIT, MAG, PERSIST, BREAK, DXY, SHORT, VOTE, RATES, SPREAD, VIX, THRESH, SKEW). Must **not** treat Brent MOY-CONT as a null. Must **not** promote it.
 
 ---
 
@@ -352,7 +354,7 @@ None remaining. [R-G8](#r-g8) meanings admitted. [R-LIVE-STANDIN](#r-live-standi
 | 2026-09-05 | Tracker fold of open hunt stack **#9–#22** (scripts **not** merged). **L-SCREEN-Y-PROMOTE** capital recorded (PR #9). Named Yahoo CL classes #10–#14 / #20–#22 **burned**; **queue empty**. Track B #15–#19 **empty** separately. R-F-SKILL still **pursue**. Amb **held 1.0**. Do not pick least-bad. |
 | 2026-09-05 | Lab invent→test **batch 1 REJECT / burn** (Track B, separate from R-F-SKILL). Cite pack locked: disc n=500 ≤2023-08-21; cont WTI=0.5080 Brent=0.5060; DXY=DTWEXBGS. **C-SPOT-MAG / PERSIST / BREAK / DXY** all variants both boards **burned**. Confirm survivors: **NONE**. Named Track B queue still **empty**. Spot-trend skill **not established**. Scripts **not** merged. Do not pick least-bad. |
 | 2026-09-05 | Lab invent→test **batch 2 REJECT / burn** (Track B, still separate from R-F-SKILL). Same cite: disc n=500 ≤2023-08-21; cont WTI=0.5080 Brent=0.5060; confirm 500/250/750 survivors only. Vehicles: **DGS10** (not DXY); spread Brent−WTI z expanding past-only. **C-SPOT-SHORT / VOTE / RATES / SPREAD** all horses both boards **burned**. Confirm survivors: **NONE**. Strong disc (DGS10-ALIGN ~0.61–0.62) and Brent SPREAD-CATCH last-750 near-miss ≠ least-bad. Named Track B queue still **empty**. Spot-trend skill **not established**. Scripts **not** merged. |
-| 2026-09-05 | Lab invent→test **batch 3** (Track B, still separate from R-F-SKILL). Same cite: disc n=500 ≤2023-08-21; cont WTI=0.5080 Brent=0.5060; VIX=**VIXCLS**. **REJECT / burn:** C-SPOT-VIX (VIX-INV / VIX-ALIGN both boards; ALIGN disc strong then confirm kill — same pattern as DGS10-ALIGN); C-SPOT-THRESH (ABS05 / ABS10 both boards; WTI ABS05 disc survivor → confirm kill; Brent both disc kill); C-SPOT-SKEW (UPFRAC ≡ UPFRAC-GATE; one family; both boards); C-SPOT-SEAS MOY-DIR both boards (confirm kill); C-SPOT-SEAS MOY-CONT on **WTI** (killed disc). **Scoped confirm survivor — not a null:** Brent **H-SPOT-MOY-CONT** last_500 0.5440>0.5100; last_250 0.5600>0.5200; last_750 0.5253>0.5147 (small margin; still strict beat). **Do not** claim Track B skill-met, C-SPOT-SEAS established, or WTI-met. Burned-class invent queue **empty**; live scoped horse on record. Spot-trend skill **not established**. Amb ≠ clearance. Scripts **not** merged. |
+| 2026-09-05 | Lab invent→test **batch 3** (Track B, still separate from R-F-SKILL). Same cite: disc n=500 ≤2023-08-21; cont WTI=0.5080 Brent=0.5060; VIX=**VIXCLS**. **REJECT / burn (burns remain burns):** C-SPOT-VIX (VIX-INV / VIX-ALIGN both boards; ALIGN disc strong then confirm kill — same pattern as DGS10-ALIGN); C-SPOT-THRESH (ABS05 / ABS10 both boards; WTI ABS05 disc survivor → confirm kill; Brent both disc kill); C-SPOT-SKEW (UPFRAC ≡ UPFRAC-GATE; one family; both boards); C-SPOT-SEAS MOY-DIR both boards (confirm kill); C-SPOT-SEAS MOY-CONT on **WTI** (killed disc). **Founder lock — Brent H-SPOT-MOY-CONT is scoped only.** Do **not** promote to skill-met / SEAS-class-met / WTI-met. last_500 0.5440>0.5100; last_250 0.5600>0.5200; last_750 0.5253>0.5147. **Not** a null. Burned-class invent queue **empty**. Spot-trend skill **not established**. Amb ≠ clearance. Scripts **not** merged. |
 
 ---
 
