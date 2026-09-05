@@ -64,7 +64,7 @@ Brent **H-SPOT-MOY-CONT** remains the **scoped confirm pass** recorded in batch 
 - C-SPOT-SEAS is still **not** class-met. WTI-met ≠ Brent-met. Scoped confirm ≠ slogan clearance. FRAGILE scoped confirm ≠ skill-met.
 - Burned-class invent queue is **empty**. Live scoped horse: Brent **H-SPOT-MOY-CONT** (**FRAGILE**).
 - Scripts / hunt code **not** merged.
-- Lab may invent **new** classes after this fold. Must **not** revive the burned set (now including SHRINK / VOLTGT / QUANT). Must **not** treat Brent MOY-CONT as a null. Must **not** promote it to skill-met.
+- **P3=B** (Founder/user 2026-09-05, after this fold): all-day directional invent **parked**. Do **not** mint new beat-continuation / direction horse classes. Residual left open is **vehicle + cutoff fragility** on Brent MOY-CONT (scoped confirm + FRAGILE). Must **not** revive the burned set (now including SHRINK / VOLTGT / QUANT). Must **not** treat Brent MOY-CONT as a null. Must **not** promote it to skill-met.
 
 ---
 
