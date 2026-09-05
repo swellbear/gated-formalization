@@ -6,6 +6,7 @@
 **Ledger:** [`NAMED_GAP_LEDGER.md`](NAMED_GAP_LEDGER.md)  
 **Digestion:** [`DIGESTION_MULTIPATH1.md`](DIGESTION_MULTIPATH1.md)  
 **#0 geometry (prior HARDEN):** [`SCORE_GEOMETRY_0.md`](SCORE_GEOMETRY_0.md)  
+**Later checks:** [`SCORE_SYNC_1.md`](SCORE_SYNC_1.md) · [`SCORE_JOINT1.md`](SCORE_JOINT1.md) · [`SCORE_DRIFT1.md`](SCORE_DRIFT1.md)  
 **Protocol (short):** invent→test habit [`docs/INVENT_TEST_HABIT.md`](../../docs/INVENT_TEST_HABIT.md); named-gap ledger [`docs/NAMED_GAP_LEDGER_HABIT.md`](../../docs/NAMED_GAP_LEDGER_HABIT.md). Lab invents; Operator admits / rejects / parks. Lab does **not** self-admit.
 
 Lab scratch was **not** on this fold VM. Metrics below are copied from the **Operator gate** (authoritative). Hunt scripts / Lab notebooks are **not** on master.
@@ -101,7 +102,7 @@ Cell-tower Amb stays **PARKED**. BIA→weight portfolio stays **CLOSED**.
 - Do **not** write skill-met / elevated language.
 - Do **not** reopen `2026-09_cell-tower-geometry` as live.
 - Do **not** reopen the BIA→weight portfolio.
-- Do **not** run **DRIFT1** from this MULTIPATH1 note.
+- Do **not** run **GATE1** from this MULTIPATH1 note. **Multipath later** is a later pulse, not this note.
 
 ---
 
