@@ -17,12 +17,12 @@ That is an **Amb HARDEN** of the geometry leftover. It is **not** a locator. It 
 
 ## What was locked (provisional)
 
-- **Sim X = 0.50 m** (**median**-based @ 1 ns + margin). **X is median-not-p90** (1 ns p90 ≈ **1.16 m**). Sim-only. Ideal sync assumed. Multipath not injected.
+- **Sim X = 0.50 m** (**median**-based @ 1 ns + margin; **perfect-ref**). **X is median-not-p90** (1 ns p90 ≈ **1.16 m**). Sim-only. Ideal sync assumed. Multipath not injected. Later **A1 Soften** — [`DIGESTION_A1.md`](DIGESTION_A1.md) — Softens silent absolute-≤0.50 reading of this lock.
 - **Hardware X PARKED** until a sync / multipath gate.
 - GPS / DGPS, if used at all, **place and time refs only** — never the mobile fix.
 - US10135667B1 stays a **prior-art note only**.
 
-HARDEN is **not** clearance. A 0.50 m **median** sim bar is **not** a field locator and is **not** a p90 bar. Skill-met is **not** claimed.
+HARDEN is **not** clearance. A 0.50 m **median** sim bar is **not** a field locator, **not** a p90 bar, and (later A1) **not** an absolute bar under the RN floor. Skill-met is **not** claimed.
 
 ## What this string must do next (later gated)
 

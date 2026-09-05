@@ -3,7 +3,7 @@
 **For:** Kerry Greer (at your request)  
 **From:** swellbear / gated-formalization collaboration  
 **Date:** 2026-09-05  
-**Status:** **Sync-fragility evidence only.** Not a patent-hard-problem digest. Not a product pitch. Not a patent filing. Not a claim that hardware performance is proven. **HOLD send** until abstract ingest (on disk) **+ preferably A1** (or A1+A2). Patent-facing bar is now **≤1 m xy**; **0.50 m** is the scoped sim bar only. **DGPS ~0.4–0.5 m** is the named absolute floor.
+**Status:** **Sync-fragility evidence only.** Not a patent-hard-problem digest. Not a product pitch. Not a patent filing. Not a claim that hardware performance is proven. **HOLD send** until the **A2 → A3 → A4** suite digests. Patent-facing bar **≤1 m xy** stands. **0.50 m** is **perfect-ref scoped sim only** — **not** an absolute bar under the RN floor (A1 Soften: Chan abs **0.832 m** @ `σ_ref=0.5 m`). **DGPS ~0.4–0.5 m** is the named absolute floor.
 
 ---
 
@@ -23,7 +23,7 @@ Five fixed beacons at known positions in a **40 × 30 m** area. A mobile walked 
 
 ## 3. What “good” meant here
 
-We used a provisional target: **median location error ≤ 0.50 m** under the conditions named below. That is a **median**, not a “almost always” promise (at 1 ns receiver noise alone, the 90th percentile was already about **1.2 m**). A hardware accuracy target is still open.
+We used a provisional target: **median location error ≤ 0.50 m** under the conditions named below. That is a **median**, not a “almost always” promise (at 1 ns receiver noise alone, the 90th percentile was already about **1.2 m**). It is also **perfect-ref scoped sim only** — under DGPS-class reference-node survey error the absolute median sits above 0.50 m and under the patent-facing **≤1 m** bar (A1). A hardware accuracy target is still open.
 
 ---
 
@@ -89,19 +89,20 @@ Use: **widen the error bar or refuse a point fix** when the check fires — not 
 
 ---
 
-## 5. Honest stack (what 0.50 m currently means)
+## 5. Honest stack (what 0.50 m currently means — perfect-ref sim only)
 
 All of these together, in simulation:
 
 1. Laptop sim only (no radios built yet)  
 2. This geometry / path / textbook estimator stack  
-3. About **1 ns** receiver timing noise as the X basis  
-4. Mild multipath only — not strong stuck reflections  
-5. With clock+drift estimators: fixed sync mess up to about **3 ns**; matched linear walk drift cleared on this grid  
-6. Refuse-belt when measurements leave that band  
-7. No fingerprinting / ML; GPS not used on the mobile  
+3. **Perfectly known** beacon positions (A1: under DGPS-class survey error, absolute median is not ≤0.50 m)  
+4. About **1 ns** receiver timing noise as the X basis  
+5. Mild multipath only — not strong stuck reflections  
+6. With clock+drift estimators: fixed sync mess up to about **3 ns**; matched linear walk drift cleared on this grid  
+7. Refuse-belt when measurements leave that band  
+8. No fingerprinting / ML; GPS not used on the mobile  
 
-Drop a condition and the half-meter story does not automatically follow.
+Drop a condition and the half-meter story does not automatically follow. The patent-facing **≤1 m** bar is a different object.
 
 ---
 
@@ -109,9 +110,10 @@ Drop a condition and the half-meter story does not automatically follow.
 
 - Very large sync mess (**~10 ns**) — refuse helps; it does not restore 0.50 m  
 - Strong multipath — not solved here  
+- Reference-node survey error — absolute ≤0.50 m is **not** under a DGPS-class RN floor; patent-facing **≤1 m** still looks poseable on that board  
 - Real hardware accuracy — not measured  
 - Free per-sample clocks with no batch structure — not claimed  
-- **Your success criteria** — please confirm or replace our provisional 0.50 m bar and scopes  
+- **Your success criteria** — please confirm or replace our provisional 0.50 m (perfect-ref sim) and ≤1 m (patent-facing) bars  
 
 ---
 

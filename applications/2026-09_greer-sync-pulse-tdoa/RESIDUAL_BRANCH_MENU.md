@@ -1,10 +1,10 @@
 # Residual-Branch Menu — Greer-style sync-pulse TDOA
 
-**Open string after abstract ingest ADMIT (Amb spine) + prior GATE1 Soften.** Offering ≠ running. This is **not** a closeout menu, **not** a locator, and **not** a product claim.
+**Open string after A1 Soften + abstract ingest ADMIT (Amb spine) + prior GATE1 Soften.** Offering ≠ running. This is **not** a closeout menu, **not** a locator, and **not** a product claim.
 
 **Date:** 2026-09-05  
 **Application:** `2026-09_greer-sync-pulse-tdoa`  
-**Status:** abstract ingest **ADMITTED**; patent-facing **≤1 m xy**; scoped **sim X = 0.50 m** (ideal refs + named GEOM0 noise; **not** patent promise); **DGPS ~0.4–0.5 m** absolute floor; **A1 opened**; A2 then A3/A4 named; link/map **PARKED**; fog peek **ADMITTED**; **GEOM0 HARDEN** stands; prior SYNC/JOINT/DRIFT/GATE = **sync-fragility evidence (partial)**; hardware **X PARKED**; write-up = sync-fragility evidence only (**HOLD send** until ingest + preferably A1 or A1+A2); Lab **HOLD** invent except A1
+**Status:** **A1 Soften**; abstract ingest **ADMITTED**; patent-facing **≤1 m xy** stands; **X = 0.50 m** perfect-ref scoped sim only (**not** absolute under RN floor; **not** patent promise); **DGPS ~0.4–0.5 m** absolute floor; next **A2 → A3 → A4**; link/map **PARKED**; fog peek **ADMITTED**; **GEOM0 HARDEN** stands (silent abs-≤0.50 Softened); prior SYNC/JOINT/DRIFT/GATE = **sync-fragility evidence (partial)**; hardware **X PARKED**; write-up = sync-fragility evidence only (**HOLD send** until suite digests); Lab **HOLD** invent except locked suite
 
 **Glossary:** `docs/READER_GLOSSARY.md`  
 **Ledger:** [`NAMED_GAP_LEDGER.md`](NAMED_GAP_LEDGER.md)  
@@ -12,7 +12,9 @@
 **Ingest summary:** [`ABSTRACT_INGEST_SUMMARY.md`](ABSTRACT_INGEST_SUMMARY.md)  
 **Copy gate:** [`COPY_GATE.md`](COPY_GATE.md)  
 **Ingest digestion:** [`DIGESTION_ABSTRACT_INGEST.md`](DIGESTION_ABSTRACT_INGEST.md)  
-**Founder write-up (PRIMARY; sync-fragility evidence only; HOLD send):** [`GREER_WRITEUP.md`](GREER_WRITEUP.md)  
+**A1 score:** [`SCORE_A1.md`](SCORE_A1.md)  
+**A1 digestion:** [`DIGESTION_A1.md`](DIGESTION_A1.md)  
+**Founder write-up (PRIMARY; sync-fragility evidence only; HOLD send until suite digests):** [`GREER_WRITEUP.md`](GREER_WRITEUP.md)  
 **Lab audit draft:** [`GREER_WRITEUP_DRAFT.md`](GREER_WRITEUP_DRAFT.md)  
 **GATE1 score:** [`SCORE_GATE1.md`](SCORE_GATE1.md)  
 **GATE1 digestion:** [`DIGESTION_GATE1.md`](DIGESTION_GATE1.md)  
@@ -33,9 +35,9 @@
 
 ## 0. Plain-language framing
 
-**What we’re doing:** Recording abstract ingest as Amb spine. Patent-facing **≤1 m xy**. **0.50 m** stays the scoped sim bar only. **A1** (ref-floor honesty) is opened. Prior write-up is **sync-fragility evidence only**. Hardware **X** stays parked. **No RF / ML.**
+**What we’re doing:** Recording **A1 Soften** after abstract ingest. Patent-facing **≤1 m xy** stands. **0.50 m** stays **perfect-ref scoped sim only**. Absolute ≤0.50 m is **not** under the RN floor. Next: **GO A2** then **A3** then **A4**. Prior write-up is **sync-fragility evidence only**. Hardware **X** stays parked. **No RF / ML.**
 
-**What we need from you:** Nothing to send. Lab may invent a cheap **A1** check. **A2 / A3 / A4 HOLD.** Send stays **HOLD** until preferably A1 (or A1+A2).
+**What we need from you:** Nothing to send. **GO A2** then **A3** then **A4**; Soften/Harden each. Send stays **HOLD** until the suite digests.
 
 **What this does *not* mean:** A TDOA locator. Claim clearance. A send to Greer. A patent promise of 0.50 m. A multipath-robust 0.50 m. A free per-epoch realtime drift claim. A GATE1 accuracy repair. Hardware **X**. Training started or established. Skill-met. RF fingerprinting. GPS/DGPS as the mobile fix. A product copied from US10135667B1. Reopening cell-tower as live. Reopening SkyMirr. Reopening BIA→weight. Reopening Track B. Reopening llm-gwt R-REPL. Reopening Collatz invent (#45 playground is done; Lab HOLD there).
 
@@ -45,9 +47,9 @@
 
 | ID | One-line | Class | Disposition |
 |----|----------|-------|-------------|
-| greer-tdoa-median-X | ≥3-ref simultaneous-sync TDOA, laptop-feasible sim-only; GPS/DGPS place/time refs only; no RF fingerprint training | Two bars after ingest: patent-facing **≤1 m xy**; scoped **sim X = 0.50 m** under ideal refs + named GEOM0 noise (**median-not-p90**; **not** patent promise). **DGPS ~0.4–0.5 m** absolute floor | **open** — last check: abstract ingest ADMIT; **A1 opened**; write-up **HOLD send**; **not** claim clearance |
-| A1-ref-floor | Ref-floor honesty (absolute vs relative; DGPS ~0.4–0.5 m vs ideal-known-refs sim) | Empirically poseable cheap check | **open** — Rank-1 next; Operator **opened**; not scored |
-| A2-clock-count | Clock-count / TDOA-resolution honesty (abstract high-speed receiver clock; distinct from inter-ref sync string) | Named leftover | **paused** / **HOLD** — after A1 |
+| greer-tdoa-median-X | ≥3-ref simultaneous-sync TDOA, laptop-feasible sim-only; GPS/DGPS place/time refs only; no RF fingerprint training | Two bars: patent-facing **≤1 m xy** stands; **sim X = 0.50 m** perfect-ref only (**median-not-p90**; **not** patent promise; **not** absolute under RN floor). **DGPS ~0.4–0.5 m** absolute floor | **open** — last check: **A1 Soften**; write-up **HOLD send** until suite; **not** claim clearance |
+| A1-ref-floor | Ref-floor honesty (absolute vs relative; DGPS ~0.4–0.5 m vs ideal-known-refs sim) | Scored Soften | **Soften** — last check: 2026-09-05 Operator **ADMIT Soften**; Chan abs **0.691 / 0.832** at 0.4 / 0.5; abs ≤1 m poseable; abs ≤0.50 m **not**; JOINT1 scrape **0.449** rides floor; do **not** Harden absolute **X** |
+| A2-clock-count | Clock-count / TDOA-resolution honesty (abstract high-speed receiver clock; distinct from inter-ref sync string) | Named leftover | **open** — **GO A2** next (user override suite; Soften/Harden) |
 | A3-indoor-first-arrival | Indoor / first-arrival / denied-box radio (not our additive mild-NLOS Soften) | Named leftover | **paused** / **HOLD** — after A2 |
 | A4-realtime-motion | Realtime / central-compute / motion (abstract realtime; our wins were path-batch) | Named leftover | **paused** / **HOLD** — after A2 (with A3) |
 | link-map-overlay | GIS / CAD overlay | Parked | **paused** / **PARKED** |
@@ -60,7 +62,7 @@
 | gate1-pulse | Detect-only refuse OR (G1a_DRIFT1 residual ∨ G1b raw LORO) | Scored Soften | **Soften** / **partial** — last check: 2026-09-05 ingest; FA≈**0.100**; TD σ=10 ≈**0.828**; **not** a repair |
 | multipath-denied-box | Multipath honesty + held-out path inside a GPS-denied box without GPS as the mobile fix | Scored Soften | **restated** / **Soften** — last check: 2026-09-05 MULTIPATH1; poseable under LOS + mild/intermittent NLOS; **not** poseable under strong persistent multipath with frozen Chan alone; no fingerprint rescue; **X** median-not-p90; **later** |
 | multipath-nlos-bias | Multipath / NLOS **positive-bias** injection under the **same frozen Chan (1994) 2D WLS** | Scored Soften | **restated** / **Soften** — last check: 2026-09-05 MULTIPATH1; Kill not triggered; NLOS-scoped 0.50 m; **later** |
-| geometry-bottleneck-sim-0 | #0 geometry-bottleneck sim — laptop; no RF; frozen Chan (1994) 2D WLS | Scored | **hardened** — not the bottleneck; median tracks `c · σ_t`; **sim X = 0.50 m** (**median-not-p90**; 1 ns p90 ≈ **1.16 m**) |
+| geometry-bottleneck-sim-0 | #0 geometry-bottleneck sim — laptop; no RF; frozen Chan (1994) 2D WLS | Scored | **hardened** — not the bottleneck under **perfect refs**; **sim X = 0.50 m** is **perfect-ref scoped sim only** (later A1 Soften; **median-not-p90**; 1 ns p90 ≈ **1.16 m**) |
 
 No other empirically resolvable residuals on this fold.
 
@@ -92,6 +94,7 @@ No other empirically resolvable residuals on this fold.
 | 2026-09-05 | Operator **ADMIT DRIFT1 HARDEN** under the named budget. Batch path-shared τ + linear α restores median ≤ **0.50 m** on SYNC1 drift breakers (drift=3 @ `σ=0` → **0.221 m**; drift=10 → **0.223 m**; **α̂ recovers**). **JOINT1 Soften** (`σ_sync ≲ 3 ns` **fixed offsets**) **still stands**. Honesty: path-shared **batch** model, **not** free per-epoch realtime; **not** multipath-robust; **not** hardware. **GEOM0 HARDEN** + **MULTIPATH1 Soften** + **SYNC1 Soften** still stand. Median-not-p90 honesty remains (1 ns p90 ≈ **1.16 m**). No fingerprint / ML / RF invent. **PARK** hardware **X**. Later the same day: **GATE1 Soften**. Owner-requested **collaboration framing**; **no claim-language copy**. US10135667B1 = custom-beacon substrate, not carrier-mast Amb. Cell-tower stays **PARKED**. BIA stays **CLOSED**. HARDEN ≠ claim clearance. Not a locator. Not skill-met. Not rithm. |
 | 2026-09-05 | Operator **ADMIT GATE1 Soften** (Kill **not** triggered; aim B **Succeed**). Detect-only refuse OR (G1a_DRIFT1 residual ∨ G1b raw LORO). FA `σ≤3` drift0 ≈ **0.100**; FA +matched drift3 ≈ **0.080**; TD σ=10 ≈ **0.828**; TD unmatched drift3 = **1.000**; TD per_epoch σ=3 = **1.000**. Residual-alone misses σ=10 (τ absorbs fixed_trial); raw LORO carries it. Injection-calibrated → Soften not Harden. Use: widen the error bar or refuse a point fix — **not** a magic accuracy repair. **DRIFT1 HARDEN** + **JOINT1 Soften** + **SYNC1 Soften** + **MULTIPATH1 Soften** + **GEOM0 HARDEN** still stand. Write-up on disk: Founder [`GREER_WRITEUP.md`](GREER_WRITEUP.md) **PRIMARY** — **HOLD send** until user OK. Lab audit [`GREER_WRITEUP_DRAFT.md`](GREER_WRITEUP_DRAFT.md). **Lab HOLD invent** pending Greer criteria / user send OK. **PARK** hardware **X**. **Multipath later.** Owner-requested **collaboration framing**; **no claim-language copy**. Cell-tower stays **PARKED**. BIA stays **CLOSED**. Soften ≠ claim clearance. Not a locator. Not skill-met. Not rithm. |
 | 2026-09-05 | Operator **ADMIT ingest** of US10135667B1 **published abstract** as Amb spine ([`SOURCE.md`](SOURCE.md); [`PROPOSED_ABSTRACT_INGEST.md`](PROPOSED_ABSTRACT_INGEST.md); [`ABSTRACT_INGEST_SUMMARY.md`](ABSTRACT_INGEST_SUMMARY.md)). Still **not** claim clearance. **No** claim-language product copy. Copy gate [`COPY_GATE.md`](COPY_GATE.md) **PASS**. Success-bar Soften/Harden: patent-facing **≤1 m xy**; keep **X = 0.50 m** only as scoped sim bar under ideal refs + named noise (GEOM0) — **not** a patent promise; name **DGPS ~0.4–0.5 m** absolute floor. Prior string Soften: SYNC/JOINT/DRIFT/GATE = sync-fragility evidence (**partial**). Soften the claim we fully understood the patent hard-problem set. **HARDEN:** geometry-not-bottleneck under our noise model **stands**. Rank-1 next **locked:** **A1** (ref-floor honesty) first, then **A2**, then **A3/A4**. Link/map **PARKED**. **Greer send HOLD** until ingest + preferably A1 (or A1+A2). Prior write-up = sync-fragility evidence only. **Lab invent HOLD** except **A1 opened**. Hardware **X PARKED**. Cell-tower **PARKED**. BIA **CLOSED**. Ingest ≠ claim clearance. Not a locator. Not skill-met. Not rithm. |
+| 2026-09-05 | Operator **ADMIT A1 Soften** (Kill **not** triggered). Absolute ≤1 m poseable under DGPS-class RN survey error (Chan abs median **0.832 m** @ `σ_ref=0.5 m`, `σ_t=1 ns`). Absolute ≤0.50 m **not** under RN floor (**0.691 / 0.832** at 0.4 / 0.5). **X = 0.50 m** stays **perfect-ref scoped sim only**. JOINT1 scrape abs **0.449** @ `σ_ref=0.5` / `σ_sync=0` rides floor — **do not Harden absolute X**. Patent-facing **≤1 m xy** stands. **DGPS ~0.4–0.5 m** absolute floor named. Silent perfect-ref absolute-≤0.50 language from prior GEOM0 **Softened**. Next locked: **GO A2** then **A3** then **A4**; Soften/Harden each. **Greer send HOLD** until suite digests. **No** claim-language product copy. Score: [`SCORE_A1.md`](SCORE_A1.md). Digestion: [`DIGESTION_A1.md`](DIGESTION_A1.md). Hardware **X PARKED**. Cell-tower **PARKED**. BIA **CLOSED**. Soften ≠ claim clearance. Not a locator. Not skill-met. Not rithm. |
 
 ---
 

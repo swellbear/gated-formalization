@@ -4,7 +4,7 @@
 **lab_admits:** false  
 **Date:** 2026-09-05  
 **Audience:** Greer (by his request) — collaboration technical digest  
-**Not:** a patent write-up, product brief, or claim clearance. **HOLD send** until ingest + preferably A1 (or A1+A2).
+**Not:** a patent write-up, product brief, or claim clearance. **HOLD send** until the A2 → A3 → A4 suite digests. **0.50 m** is perfect-ref scoped sim only (A1 Soften).
 
 ---
 
