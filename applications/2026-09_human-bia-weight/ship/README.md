@@ -1,8 +1,8 @@
 # Ship-A — human BIA→weight S1-B (method practice)
 
-**Status:** **ADMITTED (Operator)** — method-practice ship of the S1 HARDEN (#56) Ridge map.  
+**Status:** **ADMITTED (Operator)** — method-practice demo of the S1 HARDEN (#56) Ridge map (#57). Parent string is **CLOSE**: claim *BIA wearable/sensor = accurate weight (bathroom or farm scale)* is **KILL**.  
 **Model:** S1-B · Cycle C (2003–2004) · `StandardScaler` + `RidgeCV`  
-**This is not a medical device.** Residual **~11 kg RMSE ≠ commercial continuous weighing**. **Not clinical.** **No livestock transfer.** Animal parks stay. NHANES DUA: statistical analysis / **no re-identification**. The bundled example is **synthetic**.
+**This is not a medical device.** Residual **~11 kg / ~25 lb RMSE ≠ bathroom scale or farm scale**. **Not clinical.** **No livestock transfer.** Animal parks stay. **Rithm archive only.** NHANES DUA: statistical analysis / **no re-identification**. The bundled example is **synthetic**.
 
 Parent: [`../STATUS.md`](../STATUS.md) · ledger: [`../NAMED_GAP_LEDGER.md`](../NAMED_GAP_LEDGER.md) · holdout: [`../SCORE_S1_PROPOSED.md`](../SCORE_S1_PROPOSED.md)
 
@@ -67,7 +67,7 @@ S1-B also: MAE **8.783979696023593** · R² **0.7363714213498394**. Ratio S1-B /
 
 ## Limitations (scope locks)
 
-- **~11 kg RMSE** is leftover honesty. This is **not** a bathroom scale and **not** commercial continuous weighing solved.
+- **~11 kg / ~25 lb RMSE** is leftover honesty. This is **not** a bathroom scale and **not** a farm scale and **not** commercial continuous weighing solved. The scale-accuracy claim is **KILL** (see [`../DIGESTION_STRING_CLOSE.md`](../DIGESTION_STRING_CLOSE.md)).
 - **Not clinical.** Not a medical device. Not a diagnosis or treatment tool.
 - **No livestock transfer.** Poultry #47, cattle #49, sheep #51, companion #53 stay **parked**.
 - **NHANES DUA:** statistical analysis / **no re-identification**. **Not CC-BY.**

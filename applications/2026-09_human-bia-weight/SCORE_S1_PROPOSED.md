@@ -57,7 +57,7 @@ This fold does **not** re-download, re-join, or re-fit. Numbers are the gated La
 
 Admitted claim (scoped to this holdout): Ridge on R50+Xc50 + height+sex+age beats height+sex+age alone — **BIA features add weight signal beyond anthro**.
 
-**Ship-A (S1-B) ADMITTED** under method-practice: local predict package at [`ship/`](ship/README.md) (`s1b_pipeline.joblib` + `predict.py`). Dry-run example → **75.2460** kg (synthetic). Machine record: [`ship/meta.json`](ship/meta.json).
+**Ship-A (S1-B) ADMITTED** under method-practice: local predict package at [`ship/`](ship/README.md) (`s1b_pipeline.joblib` + `predict.py`). Dry-run example → **75.2460** kg (synthetic). Machine record: [`ship/meta.json`](ship/meta.json). String **CLOSE**: the product-accuracy claim is **KILL** (~11 kg / ~25 lb RMSE) — [`DIGESTION_STRING_CLOSE.md`](DIGESTION_STRING_CLOSE.md).
 
 ---
 
