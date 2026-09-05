@@ -42,17 +42,19 @@ US10135667B1 — owner-requested **collaboration framing** (bibliographic; custo
 
 ## What this string must do next (locked)
 
-**GO A2** then **A3** then **A4**. Soften/Harden each. User override suite. **Greer send HOLD** until the suite digests. Prior write-up = **sync-fragility evidence only**. **Lab HOLD invent** except that locked suite. Still **no RF / ML**. Do **not** invent a fingerprint rescue. Do **not** Harden absolute **X** off the JOINT1 scrape. Hardware **X** stays **PARKED**.
+**Later the same day:** **A2 Soften (conditional)** scored. See [`DIGESTION_A2.md`](DIGESTION_A2.md).
 
-- **A2** — clock-count / TDOA-resolution honesty (abstract high-speed receiver clock; distinct from inter-ref SYNC/JOINT/DRIFT/GATE).
-- **A3** — indoor / first-arrival / denied-box radio (not our additive mild-NLOS Soften).
-- **A4** — realtime / central-compute / motion (abstract realtime; our wins were path-batch).
+**Next (user override suite):** **GO A3** then **A4**. Soften/Harden each. **Greer send HOLD** until the suite digests. Prior write-up = **sync-fragility evidence only**. **Lab HOLD invent** except **A3 opened**. Still **no RF / ML**. Do **not** invent a fingerprint rescue. Do **not** Harden absolute **X** off the JOINT1 scrape. Hardware **X** stays **PARKED**.
+
+- **A2** — scored Soften (conditional); residual sync vs commercial 1PPS.
+- **A3** — indoor / first-arrival / denied-box radio (not our additive mild-NLOS Soften). **Opened.**
+- **A4** — realtime / central-compute / motion (abstract realtime; our wins were path-batch). **HOLD** until after A3.
 
 ## What stays parked / closed
 
 - **Hardware X** stays **PARKED**.
-- **Send to Greer** stays **HOLD** until the A2→A3→A4 suite digests.
-- **Lab invent** stays **HOLD** except the locked suite.
+- **Send to Greer** stays **HOLD** until the suite digests.
+- **Lab invent** stays **HOLD** except **A3 opened**.
 - **Link/map** GIS/CAD overlay stays **PARKED**.
 - **A3 indoor / first-arrival** is after A2, not this fold. **MULTIPATH1 Soften** still stands.
 - **A4 realtime / motion** is after A2 (with A3), not this fold.

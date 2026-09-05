@@ -28,13 +28,13 @@ Published abstract of US10135667B1 (Kerry L. Greer, 2018) is the **Amb spine**: 
 
 ## Rank-1 next (locked)
 
-**A1 Soften** is scored. Next: **GO A2** (clock-count / TDOA-resolution honesty) then **A3** then **A4** (indoor first-arrival; realtime / central-compute / motion). Soften/Harden each. Link/map **PARKED**.
+**A1 Soften** and **A2 Soften (conditional)** are scored. Next: **GO A3** then **A4**. Soften/Harden each. Link/map **PARKED**.
 
 ## Send / invent
 
-- **Greer send HOLD** until the **A2 → A3 → A4** suite digests.
+- **Greer send HOLD** until the suite digests.
 - Prior write-up = **sync-fragility evidence only**.
-- **Lab invent HOLD** except the locked suite. **A1 Soften** is on the record (not a Harden of absolute **X**).
+- **Lab invent HOLD** except **A3 opened**. **A1 Soften** carried (not a Harden of absolute **X**). **A2 Soften (conditional)** on record.
 
 ## Still true
 

@@ -116,7 +116,9 @@ Do **not** invent fingerprint / ML / RF to rescue the RN floor, loose sync, free
 - **X = 0.50 m** stays **perfect-ref scoped sim only**. Soften silent perfect-ref absolute-≤0.50 language from prior GEOM0.
 - Do **not** Harden absolute **X**.
 
-**NEXT (locked; user override suite):** **GO A2** then **A3** then **A4**. Soften/Harden each.
+**LATER THE SAME DAY:** **A2 Soften (conditional)**. See [`SCORE_A2.md`](SCORE_A2.md). **A1 Soften** still stands.
+
+**NEXT (locked; user override suite):** **GO A3** then **A4**. Soften/Harden each.
 
 **PARK** hardware **X**. Link/map GIS/CAD overlay stays **PARKED**.
 

@@ -2,7 +2,7 @@
 
 **Date:** 2026-09-05  
 **Application:** `2026-09_greer-sync-pulse-tdoa`  
-**String:** first-pulse fog peek **ADMITTED** (Lab `PROPOSED_FOG_PEEK`); **GEOM0 HARDEN**; **MULTIPATH1 Soften**; prior SYNC/JOINT/DRIFT/GATE = **sync-fragility evidence (partial)**; **abstract ingest ADMITTED** as Amb spine; **A1 Soften**  
+**String:** first-pulse fog peek **ADMITTED** (Lab `PROPOSED_FOG_PEEK`); **GEOM0 HARDEN**; **MULTIPATH1 Soften**; prior SYNC/JOINT/DRIFT/GATE = **sync-fragility evidence (partial)**; **abstract ingest ADMITTED** as Amb spine; **A1 Soften**; **A2 Soften (conditional)**  
 **Named gap (this fold):** does a detect-only residual∨LORO refuse belt catch out-of-budget sync / unmatched-drift without blowing in-band FA?  
 **Ledger:** [`NAMED_GAP_LEDGER.md`](NAMED_GAP_LEDGER.md)  
 **Peek digestion:** [`DIGESTION_FIRST_PULSE.md`](DIGESTION_FIRST_PULSE.md)  
@@ -18,8 +18,10 @@
 **GATE1 score:** [`SCORE_GATE1.md`](SCORE_GATE1.md)  
 **GATE1 digestion:** [`DIGESTION_GATE1.md`](DIGESTION_GATE1.md)  
 **Abstract ingest (ADMITTED):** [`SOURCE.md`](SOURCE.md) · [`ABSTRACT_INGEST_SUMMARY.md`](ABSTRACT_INGEST_SUMMARY.md) · [`DIGESTION_ABSTRACT_INGEST.md`](DIGESTION_ABSTRACT_INGEST.md)  
-**A1 score:** [`SCORE_A1.md`](SCORE_A1.md)  
+**A1 score (carried):** [`SCORE_A1.md`](SCORE_A1.md)  
 **A1 digestion:** [`DIGESTION_A1.md`](DIGESTION_A1.md)  
+**A2 score:** [`SCORE_A2.md`](SCORE_A2.md)  
+**A2 digestion:** [`DIGESTION_A2.md`](DIGESTION_A2.md)  
 **Founder write-up (PRIMARY; sync-fragility evidence only; HOLD send until suite digests):** [`GREER_WRITEUP.md`](GREER_WRITEUP.md)  
 **Lab audit draft:** [`GREER_WRITEUP_DRAFT.md`](GREER_WRITEUP_DRAFT.md)
 
@@ -201,7 +203,7 @@ Detect-only refuse OR: **G1a_DRIFT1 residual ∨ G1b raw LORO**. Injection-calib
 
 **LOCK** provisional **sim X = 0.50 m** remains, with **JOINT1 fixed-offset + named DRIFT1 batch α + GATE1 refuse-belt + NLOS** scope. **PARK** hardware **X**. Details: [`SCORE_GATE1.md`](SCORE_GATE1.md).
 
-**HOLD:** Later the same day, Operator **ADMIT ingest** of US10135667B1 published abstract as Amb spine, then **A1 Soften**. See [`ABSTRACT_INGEST_SUMMARY.md`](ABSTRACT_INGEST_SUMMARY.md) and [`SCORE_A1.md`](SCORE_A1.md). Lab invent **HOLD** except **A2 → A3 → A4**. Write-up on disk = **sync-fragility evidence only** — Founder [`GREER_WRITEUP.md`](GREER_WRITEUP.md) **PRIMARY** (**HOLD send** until suite digests). Lab audit [`GREER_WRITEUP_DRAFT.md`](GREER_WRITEUP_DRAFT.md). Still no RF / ML. No fingerprint rescue. **Multipath later.**
+**HOLD:** Later the same day, Operator **ADMIT ingest**, then **A1 Soften**, then **A2 Soften (conditional)**. See [`SCORE_A2.md`](SCORE_A2.md). Lab invent **HOLD** except **A3 opened**. Write-up on disk = **sync-fragility evidence only** — Founder [`GREER_WRITEUP.md`](GREER_WRITEUP.md) **PRIMARY** (**HOLD send** until suite digests). Lab audit [`GREER_WRITEUP_DRAFT.md`](GREER_WRITEUP_DRAFT.md). Still no RF / ML. No fingerprint rescue. **Multipath later.**
 
 ---
 
