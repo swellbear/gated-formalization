@@ -25,3 +25,5 @@ This does not change the scoring rules. It is an operator habit.
 When you are still on the **same** problem, invent a new candidate, test it cheaply, then let the Operator decide: [`docs/INVENT_TEST_HABIT.md`](INVENT_TEST_HABIT.md).
 
 When you are trying to **clear fog**, name one missing piece and invent a check that could move it: [`docs/SOLVE_LOOP_HABIT.md`](SOLVE_LOOP_HABIT.md).
+
+When fog is open, keep one line per named gap so invents point at a real missing piece: [`docs/NAMED_GAP_LEDGER_HABIT.md`](NAMED_GAP_LEDGER_HABIT.md).
