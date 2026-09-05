@@ -1,6 +1,6 @@
 # Digestion — from the parked cell-tower Amb
 
-A short plain note before this new claim. Habit: [`docs/DIGESTION_HABIT.md`](../../docs/DIGESTION_HABIT.md). This does **not** score Greer-style TDOA. It does **not** reopen cell-tower as live. It does **not** reopen BIA→weight. First-pulse fog peek is gated: [`DIGESTION_FIRST_PULSE.md`](DIGESTION_FIRST_PULSE.md). **Later the same day:** Operator **ADMIT #0 HARDEN** — [`DIGESTION_GEOMETRY_0.md`](DIGESTION_GEOMETRY_0.md). Provisional **sim X = 0.50 m**. Hardware **X PARKED**. Lab **HOLD**.
+A short plain note before this new claim. Habit: [`docs/DIGESTION_HABIT.md`](../../docs/DIGESTION_HABIT.md). This does **not** score Greer-style TDOA. It does **not** reopen cell-tower as live. It does **not** reopen BIA→weight. First-pulse fog peek is gated: [`DIGESTION_FIRST_PULSE.md`](DIGESTION_FIRST_PULSE.md). **Later the same day:** Operator **ADMIT #0 HARDEN** — [`DIGESTION_GEOMETRY_0.md`](DIGESTION_GEOMETRY_0.md) — then **MULTIPATH1 Soften** — [`DIGESTION_MULTIPATH1.md`](DIGESTION_MULTIPATH1.md). Provisional **sim X = 0.50 m** (**NLOS-scoped**). Hardware **X PARKED**.
 
 **Last string:** `2026-09_cell-tower-geometry` — first-pulse peek **ADMITTED** (#61), then **PARKED** 2026-09-05 (Founder STOP / user pivot). Cheap checks A→B **halted mid-flight**. Provisional **X = 300 m** and the peek facts stay **on record**. The Amb is **not live**.
 
@@ -24,7 +24,7 @@ Stay a **new** Amb, not cell-tower reopened as live, and not a BIA sequel.
 - Contrast US10135667B1 as prior art for **method practice / explore the idea**. Do **not** copy claims for a product.
 - Do **not** train. Do **not** invent the next pulse this fold. Do **not** write skill-met language.
 - Do **not** reopen `2026-09_cell-tower-geometry` as live.
-- After #0, next pulse is **named** (multipath / NLOS positive-bias injection, same frozen Chan) and is **not run** this fold. Still **no RF / ML**.
+- After #0, **MULTIPATH1 Soften** gated the NLOS leftover. Next pulse is **sync-imperfection** (not this incoming note). Still **no RF / ML**. **No** fingerprint rescue.
 
 ## What stays parked / closed
 

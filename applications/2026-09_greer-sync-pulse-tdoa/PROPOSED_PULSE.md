@@ -2,16 +2,17 @@
 
 **Date:** 2026-09-05  
 **Application:** `2026-09_greer-sync-pulse-tdoa`  
-**String:** first-pulse fog peek **ADMITTED** (Lab `PROPOSED_FOG_PEEK`); later the same day **#0 HARDEN**  
-**Named gap:** can a ≥3-ref simultaneous-sync TDOA test even be posed on a laptop-feasible sim/prototype path?  
+**String:** first-pulse fog peek **ADMITTED** (Lab `PROPOSED_FOG_PEEK`); **#0 HARDEN**; **MULTIPATH1 Soften**; next = **sync-imperfection** (**not this fold**)  
+**Named gap (this fold):** does positive range-bias kill the locked **0.50 m** sim bar, or only scope it?  
 **Ledger:** [`NAMED_GAP_LEDGER.md`](NAMED_GAP_LEDGER.md)  
 **Peek digestion:** [`DIGESTION_FIRST_PULSE.md`](DIGESTION_FIRST_PULSE.md)  
 **#0 score:** [`SCORE_GEOMETRY_0.md`](SCORE_GEOMETRY_0.md)  
-**#0 digestion:** [`DIGESTION_GEOMETRY_0.md`](DIGESTION_GEOMETRY_0.md)
+**MULTIPATH1 score:** [`SCORE_MULTIPATH1.md`](SCORE_MULTIPATH1.md)  
+**MULTIPATH1 digestion:** [`DIGESTION_MULTIPATH1.md`](DIGESTION_MULTIPATH1.md)
 
-Lab invented ranked peek probes. Lab does **not** self-admit. The fog-peek record below is the gated fact set copied from the Method Operator gate (honest docs / public-ref / assumption peek). **#0** later scored a numeric sim **X** — see [`SCORE_GEOMETRY_0.md`](SCORE_GEOMETRY_0.md). Lab scratch for both pulses was **not** on this fold VM.
+Lab invented ranked peek / pulse probes. Lab does **not** self-admit. The fog-peek record below is the gated fact set copied from the Method Operator gate. **#0** later scored a numeric sim **X**. **MULTIPATH1** later **Soften**ed it with an NLOS scope. Lab scratch was **not** on this fold VM.
 
-**What this is not:** A TDOA locator. Claim clearance. Training established. Skill-met. RF fingerprinting. GPS/DGPS as the mobile fix. Reopening cell-tower as live. Reopening BIA→weight. Rithm. A product copied from the named patent. Hardware **X**.
+**What this is not:** A TDOA locator. Claim clearance. A multipath-robust 0.50 m. Training established. Skill-met. RF fingerprinting. Fingerprint rescue. GPS/DGPS as the mobile fix. Reopening cell-tower as live. Reopening BIA→weight. Rithm. A product copied from the named patent. Hardware **X**. A sync-imperfection run (not this fold).
 
 ---
 
@@ -82,13 +83,14 @@ A held-out path inside a GPS-denied box can be **scored** while GPS/DGPS **place
 
 **LOCK:** sim-only path; provisional **X = sim-geometry first**. **PARK** hardware **X**.
 
-**NEXT (admitted here; scored later the same day):** **#0 geometry-bottleneck sim** — see [`SCORE_GEOMETRY_0.md`](SCORE_GEOMETRY_0.md). Operator **ADMIT HARDEN**. Provisional **sim X = 0.50 m** (**median**-based @ 1 ns; **median-not-p90**; 1 ns p90 ≈ **1.16 m**). Hardware **X** stays **PARKED**. After #0, next pulse **named** (not run): multipath / NLOS positive-bias injection, same frozen Chan.
+**NEXT (admitted here; scored later the same day):** **#0 geometry-bottleneck sim** — see [`SCORE_GEOMETRY_0.md`](SCORE_GEOMETRY_0.md). Operator **ADMIT HARDEN**. Provisional **sim X = 0.50 m** (**median**-based @ 1 ns; **median-not-p90**; 1 ns p90 ≈ **1.16 m**). Hardware **X** stays **PARKED**. **Later:** **MULTIPATH1 Soften** — see [`SCORE_MULTIPATH1.md`](SCORE_MULTIPATH1.md). **X** stays 0.50 m, **NLOS-scoped**.
 
 **US10135667B1** = prior-art note only. Cell-tower **PARKED**. BIA **CLOSED**. Peek succeed ≠ claim clearance.
 
 **Hard NO**
 
-- Do **not** run the named next pulse (multipath / NLOS positive-bias injection) in this fold.
+- Do **not** claim a multipath-robust 0.50 m or invent fingerprint rescue.
+- Do **not** run sync-imperfection in this fold.
 - Do **not** treat **sim X = 0.50 m** as a hardware bar or a **p90** bar.
 - Do **not** train an RF fingerprint / radio-map model.
 - Do **not** use GPS / DGPS as the mobile fix.
@@ -109,7 +111,27 @@ A held-out path inside a GPS-denied box can be **scored** while GPS/DGPS **place
 - **No** trained estimator invent. **No** fingerprint.
 - GPS/DGPS **place/time refs only** — **never** the mobile fix.
 - Provisional **sim X = 0.50 m** (**median**-based @ 1 ns: median **0.361 m** + margin). **X is median-not-p90** (1 ns p90 ≈ **1.16 m**). Hardware **X PARKED**.
-- After #0: next pulse **named** (not run) = **multipath / NLOS positive-bias injection** under the same frozen Chan. Still **no RF / ML**.
+- After #0: **MULTIPATH1 Soften** (same day). **X** stays 0.50 m, **NLOS-scoped**. Next leftover: **sync-imperfection**. Still **no RF / ML**.
+
+---
+
+## 6b. MULTIPATH1 (gated Soften — this fold)
+
+Frozen Chan 1994; `σ_t` = 1 ns; **positive range-bias** injection; **same refs / L-path as #0**.
+
+| Condition | Median Euclidean error |
+|-----------|-------------------------|
+| Baseline (LOS @ 1 ns; this pulse) | **0.364 m** |
+| `random_k=1`, `b=0.5` | **0.476 m** |
+| `epoch_f=0.25`, `b=1` | **0.452 m** |
+| Strong persistent `b≥1–2 m` | **0.73–4.7+ m** |
+| LOS p90 @ 1 ns (honesty; **not X**) | **≈ 1.16 m** |
+
+**Soften.** Kill **not** triggered. Poseable under LOS + mild / intermittent NLOS. **Not** poseable under strong persistent multipath with frozen Chan alone. Do **not** claim a multipath-robust 0.50 m. **No** fingerprint rescue. **X** remains **median-not-p90**.
+
+**LOCK** provisional **sim X = 0.50 m** remains, with **NLOS scope annotation**. **PARK** hardware **X**. Details: [`SCORE_MULTIPATH1.md`](SCORE_MULTIPATH1.md).
+
+**NEXT (admitted as next pulse, not run in this PR):** **sync-imperfection**. Still no RF / ML. No fingerprint rescue.
 
 ---
 
@@ -123,4 +145,4 @@ A held-out path inside a GPS-denied box can be **scored** while GPS/DGPS **place
 
 ---
 
-*Docs only. Peek succeed / #0 HARDEN ≠ claim clearance. Provisional sim X ≠ hardware X. Not a locator. Not skill-met. Not a patent-product claim. Not rithm. Lab does not self-admit. Lab scratch was not on this VM; summary copied from the Operator gate.*
+*Docs only. Peek succeed / #0 HARDEN / MULTIPATH1 Soften ≠ claim clearance. NLOS-scoped sim X ≠ multipath-robust X. Not a locator. Not skill-met. Not a patent-product claim. Not rithm. Lab does not self-admit. Lab scratch was not on this VM; summary copied from the Operator gate.*
