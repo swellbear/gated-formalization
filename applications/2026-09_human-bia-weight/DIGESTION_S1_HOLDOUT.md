@@ -58,7 +58,7 @@ That is a method-practice **Amb bite**. It is **not** commercial weighing solved
 
 ## Where invent sits now
 
-**S1 HARDEN is on the record. S2 / S3 parked. Lab HOLD on this bite** unless a Founder opens a new named gap.
+**S1 HARDEN is on the record. Ship-A (S1-B) predict package is ADMITTED under method-practice** ([`ship/`](ship/README.md); dry-run **75.2460** kg, synthetic). S2 / S3 parked. Lab HOLD on this bite unless a Founder opens a new named gap.
 
 Do **not** treat residual ~11 kg RMSE as a green light for a product invent. Do **not** reopen animal parks. Do **not** run S3 for ceremony.
 
