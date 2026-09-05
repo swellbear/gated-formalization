@@ -1,6 +1,6 @@
 # Digestion — from the closed BIA→weight portfolio
 
-A short plain note before this new claim. Habit: [`docs/DIGESTION_HABIT.md`](../../docs/DIGESTION_HABIT.md). This does **not** score cell-tower geometry. It does **not** reopen BIA→weight.
+A short plain note before this new claim. Habit: [`docs/DIGESTION_HABIT.md`](../../docs/DIGESTION_HABIT.md). This does **not** score cell-tower geometry. It does **not** reopen BIA→weight. First-pulse peek is now gated: [`DIGESTION_FIRST_PULSE.md`](DIGESTION_FIRST_PULSE.md).
 
 **Last string:** `2026-09_human-bia-weight` (#59 string CLOSE / scale-accuracy **KILL**), after Step-1 SUCCEED (#55), S1 HARDEN (#56), and Ship-A method-practice demo (#57). Animal parks stay: poultry #47, cattle #49, sheep #51 DATA-BLOCKED; companion #53 Soften.
 
@@ -17,11 +17,11 @@ A short plain note before this new claim. Habit: [`docs/DIGESTION_HABIT.md`](../
 
 Stay a **new Amb**, not a BIA sequel.
 
-- Name the locked geometry / path-loss claim. Keep **X** TBD until after a public-trace peek.
-- First pulse after admit = cheap measurement peeks (traces, mast-source honesty, TA). **Not a model.**
+- Name the locked geometry / path-loss claim. First-pulse peek now **ADMITTED**; provisional **X = 300 m** (urban median; TA + non-fog masts). Soften/Kill if RSSI-only or fog-as-honesty.
 - GPS, if used at all, is **held-out scoring only** — never a fingerprint training target.
 - Say the ceiling out loud: coarse location / GPS-fallback, **not** GPS replacement.
-- Do **not** train yet. Do **not** commit big datasets. Do **not** write skill-met / GPS-replacement language.
+- Do **not** train. Do **not** commit big datasets. Do **not** write skill-met / GPS-replacement language.
+- Next pulse (not the peek fold): invent 2–3 ranked pure geometry / path-loss estimators. This note does **not** invent them.
 
 ## What stays parked / closed
 
