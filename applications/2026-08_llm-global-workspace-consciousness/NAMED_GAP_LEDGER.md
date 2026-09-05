@@ -15,7 +15,8 @@ Habit: [`docs/NAMED_GAP_LEDGER_HABIT.md`](../../docs/NAMED_GAP_LEDGER_HABIT.md).
 
 **Process:** Lab invents 2–3 ranked options per gap (why / cost / kill-vs-harden). Operator admits, rejects, or parks. Lab does **not** self-admit.
 
-**Track B invent** remains **paused** (unchanged).
+**Track B invent** remains **paused** (unchanged).  
+**R-REPL stays paused.** The live leashed invent is the separate app `2026-09_collatz-shortcut-map` (not Collatz proved).
 
 ## Lines
 

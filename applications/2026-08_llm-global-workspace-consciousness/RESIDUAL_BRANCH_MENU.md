@@ -85,6 +85,7 @@ Live remnant checkable-definition string vs retired strong elevations. Offering 
 | 2026-09-05 | Operator **C1 KILL-unrunnable (infra)** on `meta-llama/Llama-3.1-8B-Instruct` (no CUDA / no torch / no HF token). **Not** a hallmark 0/3 fail. No fabricated H scores. C2/C3 **HOLD**. Cite: [`C1_SCORE_PROPOSED.md`](C1_SCORE_PROPOSED.md). |
 | 2026-09-05 | Operator API-redesign gate: **ADMIT A3** standing honesty (locked R1 mech impossible over API; S2 mech-privilege Amb remains); **ADMIT A1** as optional non-elevating R2 behavioral screen only; **REJECT A2** as standalone. Not an R1 pass via API. Cite: [`PROPOSED_R-REPL_API_CHECKS.md`](PROPOSED_R-REPL_API_CHECKS.md). |
 | 2026-09-05 | Founder/user: do **not** pursue access we don’t have. Default = park runs needing new credentials. Local-GPU C1 **paused**. R1 mech on S2 **parked**. A1 **parked** until user voluntarily provisions keys they already own (do not chase keys). No R2 demotion of elevation bar. No workarounds / token scrape. Lab **HOLD** on runs. Track B invent remains paused. Remnant Amb remains open/parked honestly. Not consciousness proved; not Admissible; not A-Strong. |
+| 2026-09-05 | **R-REPL stays parked.** Founder opens separate leashed string `2026-09_collatz-shortcut-map`. This remnant invent does **not** reopen. |
 
 ---
 
