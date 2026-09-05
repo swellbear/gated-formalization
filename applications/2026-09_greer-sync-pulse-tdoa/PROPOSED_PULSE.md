@@ -2,17 +2,19 @@
 
 **Date:** 2026-09-05  
 **Application:** `2026-09_greer-sync-pulse-tdoa`  
-**String:** first-pulse fog peek **ADMITTED** (Lab `PROPOSED_FOG_PEEK`); **#0 HARDEN**; **MULTIPATH1 Soften**; next = **sync-imperfection** (**not this fold**)  
+**String:** first-pulse fog peek **ADMITTED** (Lab `PROPOSED_FOG_PEEK`); **GEOM0 HARDEN**; **MULTIPATH1 Soften**; **SYNC1 Soften**  
 **Named gap (this fold):** does positive range-bias kill the locked **0.50 m** sim bar, or only scope it?  
 **Ledger:** [`NAMED_GAP_LEDGER.md`](NAMED_GAP_LEDGER.md)  
 **Peek digestion:** [`DIGESTION_FIRST_PULSE.md`](DIGESTION_FIRST_PULSE.md)  
 **#0 score:** [`SCORE_GEOMETRY_0.md`](SCORE_GEOMETRY_0.md)  
 **MULTIPATH1 score:** [`SCORE_MULTIPATH1.md`](SCORE_MULTIPATH1.md)  
-**MULTIPATH1 digestion:** [`DIGESTION_MULTIPATH1.md`](DIGESTION_MULTIPATH1.md)
+**MULTIPATH1 digestion:** [`DIGESTION_MULTIPATH1.md`](DIGESTION_MULTIPATH1.md)  
+**SYNC1 score:** [`SCORE_SYNC_1.md`](SCORE_SYNC_1.md)  
+**SYNC1 digestion:** [`DIGESTION_SYNC_1.md`](DIGESTION_SYNC_1.md)
 
 Lab invented ranked peek / pulse probes. Lab does **not** self-admit. The fog-peek record below is the gated fact set copied from the Method Operator gate. **#0** later scored a numeric sim **X**. **MULTIPATH1** later **Soften**ed it with an NLOS scope. Lab scratch was **not** on this fold VM.
 
-**What this is not:** A TDOA locator. Claim clearance. A multipath-robust 0.50 m. Training established. Skill-met. RF fingerprinting. Fingerprint rescue. GPS/DGPS as the mobile fix. Reopening cell-tower as live. Reopening BIA→weight. Rithm. A product copied from the named patent. Hardware **X**. A sync-imperfection run (not this fold).
+**What this is not:** A TDOA locator. Claim clearance. A multipath-robust 0.50 m. Training established. Skill-met. RF fingerprinting. Fingerprint rescue. GPS/DGPS as the mobile fix. Reopening cell-tower as live. Reopening BIA→weight. Rithm. A product copied from the named patent. Hardware **X**.
 
 ---
 
@@ -90,7 +92,7 @@ A held-out path inside a GPS-denied box can be **scored** while GPS/DGPS **place
 **Hard NO**
 
 - Do **not** claim a multipath-robust 0.50 m or invent fingerprint rescue.
-- Do **not** run sync-imperfection in this fold.
+- Do **not** invent the next pulse until Founder / user reopens a parked textbook follow-on.
 - Do **not** treat **sim X = 0.50 m** as a hardware bar or a **p90** bar.
 - Do **not** train an RF fingerprint / radio-map model.
 - Do **not** use GPS / DGPS as the mobile fix.
@@ -111,7 +113,7 @@ A held-out path inside a GPS-denied box can be **scored** while GPS/DGPS **place
 - **No** trained estimator invent. **No** fingerprint.
 - GPS/DGPS **place/time refs only** — **never** the mobile fix.
 - Provisional **sim X = 0.50 m** (**median**-based @ 1 ns: median **0.361 m** + margin). **X is median-not-p90** (1 ns p90 ≈ **1.16 m**). Hardware **X PARKED**.
-- After #0: **MULTIPATH1 Soften** (same day). **X** stays 0.50 m, **NLOS-scoped**. Next leftover: **sync-imperfection**. Still **no RF / ML**.
+- After #0: **MULTIPATH1 Soften** then **SYNC1 Soften** (same day). **X** stays 0.50 m, scoped to near-ideal sync + mild NLOS. Lab **HOLD**. Still **no RF / ML**.
 
 ---
 
@@ -131,7 +133,7 @@ Frozen Chan 1994; `σ_t` = 1 ns; **positive range-bias** injection; **same refs 
 
 **LOCK** provisional **sim X = 0.50 m** remains, with **NLOS scope annotation**. **PARK** hardware **X**. Details: [`SCORE_MULTIPATH1.md`](SCORE_MULTIPATH1.md).
 
-**NEXT (admitted as next pulse, not run in this PR):** **sync-imperfection**. Still no RF / ML. No fingerprint rescue.
+**LATER THE SAME DAY:** **SYNC1 Soften** (Kill not triggered). Combined **X** scope = near-ideal sync + NLOS. Lab **HOLD**. See [`SCORE_SYNC_1.md`](SCORE_SYNC_1.md). Still no RF / ML. No fingerprint rescue.
 
 ---
 

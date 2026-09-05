@@ -25,11 +25,11 @@ That is an **Amb Soften** of the multipath leftover (scope named). It is **not**
 
 Soften is **not** clearance. A scoped 0.50 m sim bar is **not** a field locator. Skill-met is **not** claimed.
 
-## What this string must do next (not this fold)
+## What this string must do next (later the same day: SYNC1)
 
-**Sync-imperfection** is the next pulse and is **not run here**. Still **no RF / ML**. **No** fingerprint rescue.
+Lab later scored **SYNC1 Soften**. See [`DIGESTION_SYNC_1.md`](DIGESTION_SYNC_1.md). **MULTIPATH1 Soften** still stands. Lab **HOLD**. Optional later textbook follow-ons stay **parked** until Founder / user reopens. Still **no RF / ML**. **No** fingerprint rescue.
 
-Clock / sync honesty stays open (#0 and MULTIPATH1 both assumed ideal simultaneous sync). Strong persistent multipath stays named as **out of scope** for frozen Chan + the 0.50 m bar — do **not** silently drop it, and do **not** invent a fingerprint to rescue it.
+Clock / sync leftover is now **SYNC1 Soften** (near-ideal window only). Strong persistent multipath stays named as **out of scope** for frozen Chan + the 0.50 m bar — do **not** silently drop it, and do **not** invent a fingerprint to rescue it.
 
 Stay the **same Amb**. Do **not** unpark hardware **X**. Do **not** train. Do **not** copy patent claims.
 
@@ -42,4 +42,4 @@ Stay the **same Amb**. Do **not** unpark hardware **X**. Do **not** train. Do **
 - **Track B invent** stays **paused**.
 - **llm-gwt R-REPL** stays **parked**.
 
-This note does **not** authorize running sync-imperfection. It does **not** show a TDOA locator. It does **not** start training. It does **not** unpark hardware **X**.
+This note does **not** authorize the next invent. It does **not** show a TDOA locator. It does **not** start training. It does **not** unpark hardware **X**.
