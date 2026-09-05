@@ -144,16 +144,16 @@ Frozen Chan 1994; `σ_t` = 1 ns; **positive range-bias** injection; **same refs 
 
 Founder / Operator **REOPEN** (solve framing — **not** park forever). DIGEST baseline **preserved**.
 
-**Solve-target:** sync fragility for Greer-style GPS-denied sync-beacon locate.
+**Solve-target (kept):** sync fragility for Greer-style GPS-denied sync-beacon locate.
 
 - **(A)** keep provisional **sim X = 0.50 m** under a **named** sync Soften when `σ_sync` goes **beyond 0.3 ns** / drift — **without** fingerprint / ML invent.
 - **(B)** detect **from measurements alone** when sync left the near-ideal band, then Soften / widen **X** or **refuse a point fix**.
 
-GPS / DGPS **refs only**. **No** US10135667B1 claim-language product copy. **Not** a remake of commercial RTLS.
+GPS / DGPS **refs only**. **Do not** invent product claim-language copy. **Not** a remake of commercial RTLS.
+
+**Collaboration-with-owner:** Greer (patent owner) **requested** they solve his problem. The later deliverable is **for him by request**, **not** an unsolicited write-up. Founder **may re-aim** when Greer’s success criteria arrive.
 
 **First pulse after REOPEN (not this fold):** Lab invents **2–3 cheap-check options** for (A)/(B). Founder ranks. Lab **HOLD** lifted for **this invent board only**. Multipath **wave-2** after the sync string clears or parks.
-
-**End artifact later** (not this fold): plain-English write-up for Greer **with pulse evidence**.
 
 This fold does **not** invent those options. Details: [`DIGESTION_REOPEN_SYNC.md`](DIGESTION_REOPEN_SYNC.md).
 
