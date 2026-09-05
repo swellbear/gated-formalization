@@ -13,7 +13,7 @@ Recording a **definitional** lock so “some models” and “the hallmark recip
 
 ## What we need from you
 
-None — informing only. **R-REPL** is no longer definition-blocked, but it is **not authorized** to invent or run until Founder / Operator opens that string.
+None — informing only. **R-REPL** invent is **open** (Founder 2026-09-05) for Lab invent→test under Operator gate. Remnant only. Last check: none yet.
 
 ## What a “yes” / this update means
 
@@ -21,7 +21,7 @@ Meanings are named. Ambiguity is tighter because the remnant is checkable. That 
 
 ## What this does *not* mean
 
-Consciousness is **not** proved. This is **not** an Admissible-band elevation. **A-Strong**, sufficiency, unconstrained scale, and Strong-GNW stay parked. Cleared sub-locks do **not** start R-REPL.
+Consciousness is **not** proved. This is **not** an Admissible-band elevation. **A-Strong**, sufficiency, unconstrained scale, and Strong-GNW stay parked. Opening R-REPL invent does **not** show hallmarks and is **not** clearance.
 
 ---
 
@@ -54,7 +54,7 @@ Consciousness is **not** proved. This is **not** an Admissible-band elevation. *
 | Claim under test | Narrowed A-Weak remnant only (`00_Working_Claim_Branch_A.md`) |
 | Amb | ≈ 2.5 (definitional lock ≠ clearance) |
 | Locks | **ADMIT S1+S2** (S3 rejected); **ADMIT R1+R2** (R3 not Weak pass); sub-locks **COMPLETE** |
-| R-REPL | Open-but-**not-authorized** / park-until-trigger |
+| R-REPL | **open** (invent under Operator gate; remnant only; last check none yet) |
 | Verdict | Still **not** consciousness proved; **not** Admissible elevation; **not** A-Strong |
 
 ---

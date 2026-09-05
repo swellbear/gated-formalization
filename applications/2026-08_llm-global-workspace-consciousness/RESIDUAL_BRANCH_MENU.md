@@ -20,7 +20,7 @@ Live remnant checkable-definition string vs retired strong elevations. Offering 
 |-------------|----------|-------|-------|
 | R-SOME | Name which models count as “some” | Definitional lock **COMPLETE** (S1+S2) | S3 rejected; Qwen S1(b) PASS_WITH_CAVEATS; S2 HF IDs locked |
 | R-RECIPE | Operational hallmark measurement recipe | Definitional lock **COMPLETE** (R1+R2) | R3 not a Weak pass; H-thresholds frozen |
-| R-REPL | Broader replication | Empirically resolvable; **not authorized** | Open-but-not-authorized / park-until-trigger |
+| R-REPL | Broader replication | Empirically resolvable; **open** | Founder opened invent 2026-09-05; Lab invent→test under Operator gate; remnant only |
 | R-MAP | Optional mapping detail | Parked | Low impact for live claim |
 | R-RETIRED | Sufficiency / Strong-GNW / scale / Branch D/P | Parked | New application only |
 
@@ -38,9 +38,9 @@ Live remnant checkable-definition string vs retired strong elevations. Offering 
 
 **Effort:** high  
 
-**Status:** **Not authorized.** No longer definition-blocked. Park-until-trigger until Founder / Operator opens the string.
+**Status:** **Open** (Founder 2026-09-05). Lab invent→test under Operator gate. Remnant only. Last check: none yet. Kill / harden / restate on remnant only.
 
-**Currently:** Definitions locked. Invent / run still **off** until `authorize branch R-REPL`.
+**Currently:** R-SOME + R-RECIPE locks stay. R-REPL invent **open**. Not A-Strong / not sufficiency / not unconstrained scale / not consciousness proved.
 
 ---
 
@@ -48,7 +48,7 @@ Live remnant checkable-definition string vs retired strong elevations. Offering 
 
 | Residual ID | What must be locked first | Then branch could… |
 |-------------|---------------------------|--------------------|
-| *(none remaining)* | R-SOME + R-RECIPE locks **COMPLETE** | R-REPL is empirically resolvable but **not authorized** |
+| *(none remaining)* | R-SOME + R-RECIPE locks **COMPLETE** | R-REPL invent **open** (Founder 2026-09-05); Lab invent→test under Operator gate |
 
 ---
 
@@ -66,8 +66,7 @@ Live remnant checkable-definition string vs retired strong elevations. Offering 
 |-------------|-------------|----------------|
 | R-MAP | drop / low priority | Optional |
 | R-RETIRED | drop | New application only |
-| R-SOME / R-RECIPE | locked (definitional) | Complete 2026-09-05; not a run authorize |
-| R-REPL | **park-until-trigger** | Trigger = Founder / Operator `authorize branch R-REPL` |
+| R-SOME / R-RECIPE | locked (definitional) | Complete 2026-09-05; unchanged after R-REPL invent open |
 
 ---
 
@@ -80,6 +79,7 @@ Live remnant checkable-definition string vs retired strong elevations. Offering 
 | 2026-09-05 | Operator gate: **ADMIT S1+S2**, **REJECT S3**; **ADMIT R1 primary + R2 screen**, **REJECT R3-as-Weak-pass**. Plain card: [`PLAIN_GATE_CARD_R-SOME_R-RECIPE.md`](PLAIN_GATE_CARD_R-SOME_R-RECIPE.md). Not consciousness proved; not Admissible-band elevation; not A-Strong. |
 | 2026-09-05 | Sub-lock gate: Qwen cite audit **PASS_WITH_CAVEATS** (`Qwen/Qwen3.6-27B` in S1(b)); S2 HF IDs **LOCKED**; H-thresholds **FROZEN**. R-SOME + R-RECIPE **COMPLETE**. R-REPL no longer definition-blocked; **not authorized** (park-until-trigger). |
 | 2026-09-05 | H-threshold freeze corrected to Operator-gated Lab numerics after #39 drift. |
+| 2026-09-05 | Founder opens **R-REPL** invent string. Lab invent→test under Operator gate. Remnant only. Last check: none yet. Kill / harden / restate on remnant only. Not A-Strong; not sufficiency; not unconstrained scale; not consciousness proved. R-SOME + R-RECIPE locks stay. Track B invent remains paused. |
 
 ---
 

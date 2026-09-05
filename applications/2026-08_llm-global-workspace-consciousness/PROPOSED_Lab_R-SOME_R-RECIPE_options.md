@@ -47,6 +47,6 @@ Lab invents. Lab does **not** self-admit. This file is the **PROPOSED** board pl
 
 ## After the sub-lock gate
 
-R-SOME + R-RECIPE definitional locks are **COMPLETE**. **R-REPL** is **no longer definition-blocked**, but is **NOT authorized** to invent or run until Founder / Operator opens that string.
+R-SOME + R-RECIPE definitional locks are **COMPLETE**. **Later (2026-09-05):** Founder opens **R-REPL** invent (see [`NAMED_GAP_LEDGER.md`](NAMED_GAP_LEDGER.md)). Remnant only. Last check: none yet.
 
 Track B invent remains **paused** (unchanged).

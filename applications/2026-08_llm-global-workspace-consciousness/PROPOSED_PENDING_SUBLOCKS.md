@@ -84,6 +84,6 @@ Numbers are Gurnee design priors for open-model scoring — **not** a pre-admit 
 2. S2 HF IDs: **LOCKED** (three default IDs above).
 3. H-thresholds: **FROZEN** as §3.
 
-**After this gate:** R-SOME + R-RECIPE definitional locks are **COMPLETE** (Amb toward a checkable remnant). **R-REPL** is **no longer definition-blocked**, but is **NOT authorized** to invent or run until Founder / Operator opens that string.
+**After this gate:** R-SOME + R-RECIPE definitional locks are **COMPLETE** (Amb toward a checkable remnant). **Later (2026-09-05):** Founder opens **R-REPL** invent (see [`NAMED_GAP_LEDGER.md`](NAMED_GAP_LEDGER.md)). Remnant only. Last check: none yet.
 
 Still **not** consciousness proved. Still **not** Admissible elevation. Still **not** A-Strong.
