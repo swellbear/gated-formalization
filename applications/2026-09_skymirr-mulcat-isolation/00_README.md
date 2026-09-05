@@ -3,7 +3,7 @@
 **Application ID:** `2026-09_skymirr-mulcat-isolation`  
 **Opened:** 2026-09-05  
 
-**SURROGATE1 Soften Rank1** + Founder/Operator **Soften Amb DIGEST** on the record. Rank1 **SURR_EO_COUPLED** ΔS21 = **3.32 dB** @ 2 GHz (Ze=70 / Zo=36) — Soften band 3–5; locked **Δ = 5 unmet**. **Do not drop the bar to 3.32.** **Lab HOLD invent.** Further surrogate invent **PARKED**. Reopen later **only** for openEMS / toolchain or user override. Rank2/3 peeks only (NEUTRAL_DN parked as Amb path; **SURR_DGS_EQ Formal DGS Hold**, **not** Amb clear). **FOG_PEEK Soften** still stands. Founder **CLAIM LOCK** recorded. **LOCK:** surrogate-first Soften; provisional **Δ = 5 dB** stands. Full-wave **PARKED**. Alternate Harden **Δ = 10** held. **Do not vanity-freeze 12.** **HFSS Hard NO.** **Surrogate ≠ PCB.** Peek succeed ≠ isolation shown. Greer invent **HOLD**. Greer write-up **hold-send**.
+**SURROGATE1 Soften Rank1** + Method Operator **ADMIT Soften Amb DIGEST + Lab HOLD invent** on the record ([`DIGESTION_SURROGATE1_SOFTEN.md`](DIGESTION_SURROGATE1_SOFTEN.md)). Rank1 **SURR_EO_COUPLED** ΔS21 = **3.32 dB** @ 2 GHz (Ze=70 / Zo=36) — Soften band 3–5; locked **Δ = 5 unmet**. **Do not drop the bar to 3.32.** **Lab HOLD invent.** Further surrogate invent **PARKED**. Reopen later **only** for openEMS / toolchain or user override. Rank2/3 peeks only (NEUTRAL_DN parked as Amb path; **SURR_DGS_EQ Formal DGS Hold**, **not** Amb clear). **FOG_PEEK Soften** still stands. Founder **CLAIM LOCK** recorded. **LOCK:** surrogate-first Soften; provisional **Δ = 5 dB** stands. Full-wave **PARKED**. Alternate Harden **Δ = 10** held. **Do not vanity-freeze 12.** **HFSS Hard NO.** **Surrogate ≠ PCB.** Peek succeed ≠ isolation shown. Greer invent **HOLD**. Greer write-up **hold-send**.
 
 **NEW Amb:** isolation of two closely spaced PCB antennas with multi-layer coupling structures, practiced / explored under gated-formalization. Prior art (bibliographic only): SkyMirr MuLCAT / [US12,719,158 B2](https://patents.google.com/patent/US12719158B2/en) (Youngmin Jo inventor; assignee SkyMirr). **Method practice / explore the isolation idea.** **Do not** copy patent claim language as a product embodiment.
 
@@ -39,16 +39,17 @@ Not a commercial antenna SKU. Not an HFSS campaign. Not a fingerprint / ML rescu
 
 ## Next pulse
 
-**Lab HOLD invent.** Further surrogate invent is **parked**. Reopen later **only** for **openEMS / toolchain** or **user override**. No next pulse was admitted on this fold. See [`PROPOSED_PULSE.md`](PROPOSED_PULSE.md), [`SCORE_SURROGATE1.md`](SCORE_SURROGATE1.md), and [`DIGESTION_SURROGATE1.md`](DIGESTION_SURROGATE1.md).
+**Lab HOLD invent.** Further surrogate invent is **parked**. Reopen later **only** for **openEMS / toolchain** or **user override**. No next pulse was admitted on this fold. See [`DIGESTION_SURROGATE1_SOFTEN.md`](DIGESTION_SURROGATE1_SOFTEN.md), [`PROPOSED_PULSE.md`](PROPOSED_PULSE.md), [`SCORE_SURROGATE1.md`](SCORE_SURROGATE1.md), and [`DIGESTION_SURROGATE1.md`](DIGESTION_SURROGATE1.md).
 
 ## Reading order
 
 1. [`STATUS.md`](STATUS.md) — where we are
 2. [`NAMED_GAP_LEDGER.md`](NAMED_GAP_LEDGER.md) — the open / Soften / parked lines
-3. [`SCORE_SURROGATE1.md`](SCORE_SURROGATE1.md) — SURROGATE1 gated score
-4. [`DIGESTION_SURROGATE1.md`](DIGESTION_SURROGATE1.md) — what Rank1 taught
-5. [`PROPOSED_PULSE.md`](PROPOSED_PULSE.md) — Lab peek + Operator gates
-6. [`DIGESTION_FIRST_PULSE.md`](DIGESTION_FIRST_PULSE.md) — what the fog peek taught
-7. [`DIGESTION_FROM_GREER.md`](DIGESTION_FROM_GREER.md) — what the last string taught
-8. [`RESIDUAL_BRANCH_MENU.md`](RESIDUAL_BRANCH_MENU.md) — decision log
-9. [`notes.md`](notes.md) — one-line pointer
+3. [`DIGESTION_SURROGATE1_SOFTEN.md`](DIGESTION_SURROGATE1_SOFTEN.md) — Operator ADMIT Soften Amb DIGEST (dedicated)
+4. [`SCORE_SURROGATE1.md`](SCORE_SURROGATE1.md) — SURROGATE1 gated score
+5. [`DIGESTION_SURROGATE1.md`](DIGESTION_SURROGATE1.md) — what Rank1 taught
+6. [`PROPOSED_PULSE.md`](PROPOSED_PULSE.md) — Lab peek + Operator gates
+7. [`DIGESTION_FIRST_PULSE.md`](DIGESTION_FIRST_PULSE.md) — what the fog peek taught
+8. [`DIGESTION_FROM_GREER.md`](DIGESTION_FROM_GREER.md) — what the last string taught
+9. [`RESIDUAL_BRANCH_MENU.md`](RESIDUAL_BRANCH_MENU.md) — decision log
+10. [`notes.md`](notes.md) — one-line pointer

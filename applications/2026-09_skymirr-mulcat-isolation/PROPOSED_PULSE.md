@@ -7,7 +7,8 @@
 **Ledger:** [`NAMED_GAP_LEDGER.md`](NAMED_GAP_LEDGER.md)  
 **Peek digestion:** [`DIGESTION_FIRST_PULSE.md`](DIGESTION_FIRST_PULSE.md)  
 **SURROGATE1 score (later same day):** [`SCORE_SURROGATE1.md`](SCORE_SURROGATE1.md)  
-**SURROGATE1 digestion:** [`DIGESTION_SURROGATE1.md`](DIGESTION_SURROGATE1.md)
+**SURROGATE1 digestion:** [`DIGESTION_SURROGATE1.md`](DIGESTION_SURROGATE1.md)  
+**Soften Amb DIGEST (Operator ADMIT; dedicated):** [`DIGESTION_SURROGATE1_SOFTEN.md`](DIGESTION_SURROGATE1_SOFTEN.md)
 
 Lab invented ranked peek probes. Lab does **not** self-admit. Lab scratch was **not** readable on this fold VM. Record below is the gated fact set copied from the Method Operator gate (honest docs / tooling / assumption peek; no models; no EM campaign).
 
@@ -103,7 +104,7 @@ Copied from the Method Operator gate. Metrics live on [`SCORE_SURROGATE1.md`](SC
 
 ## 5c. Founder + Operator addendum — Soften Amb DIGEST (authoritative)
 
-Copied from the Founder + Operator addendum after #75. **Lab HOLD invent.** Further surrogate invent **parked**. **Formal DGS Hold** — **not** Amb clear. Keep **Δ = 5** Soften — **do not drop the bar to 3.32**. Reopen later **only** for **openEMS / toolchain** or **user override**. Greer invent **HOLD**. Greer write-up **hold-send**. Unchanged.
+Copied from the Founder + Operator addendum after #75. Method Operator **ADMIT Soften Amb DIGEST + Lab HOLD invent**. Dedicated artifact: [`DIGESTION_SURROGATE1_SOFTEN.md`](DIGESTION_SURROGATE1_SOFTEN.md). **Lab HOLD invent.** Further surrogate invent **parked**. **Formal DGS Hold** — **not** Amb clear. Keep **Δ = 5** Soften — **do not drop the bar to 3.32**. Reopen later **only** for **openEMS / toolchain** or **user override**. Greer invent **HOLD**. Greer write-up **hold-send**. Unchanged.
 
 **Soften Amb DIGEST:** Rank1 smoke-class EO surrogate is poseable at ΔS21 = 3.32 dB (Soften band 3–5) and does not meet locked Δ = 5. Do not drop the bar to 3.32. Rank2 lumped cancel is the wrong object — parked as an Amb path. Rank3 DGS eq-circuit is Formal DGS Hold (meets 5 on paper; fragile to detune; not Amb clear; not PCB). Further surrogate invent is parked. Lab HOLD invent. Reopen later only for openEMS / toolchain or user override. Full-wave remains parked. HFSS Hard NO. Surrogate ≠ PCB. Peek succeed ≠ isolation shown. Greer invent HOLD; write-up hold-send. BIA CLOSED. Cell-tower PARKED.
 

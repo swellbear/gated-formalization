@@ -4,7 +4,8 @@
 **Application:** `2026-09_skymirr-mulcat-isolation`  
 **String:** SURROGATE1 — documented surrogate (scikit-rf class) with-vs-without isolation peek; Rank1 = **SURR_EO_COUPLED**; Rank2/3 = Soften-carry peeks only  
 **Ledger:** [`NAMED_GAP_LEDGER.md`](NAMED_GAP_LEDGER.md)  
-**Digestion:** [`DIGESTION_SURROGATE1.md`](DIGESTION_SURROGATE1.md)  
+**Digestion (pulse):** [`DIGESTION_SURROGATE1.md`](DIGESTION_SURROGATE1.md)  
+**Soften Amb DIGEST (Operator ADMIT; dedicated):** [`DIGESTION_SURROGATE1_SOFTEN.md`](DIGESTION_SURROGATE1_SOFTEN.md)  
 **Fog peek (prior Soften):** [`PROPOSED_PULSE.md`](PROPOSED_PULSE.md) · [`DIGESTION_FIRST_PULSE.md`](DIGESTION_FIRST_PULSE.md)  
 **Protocol (short):** invent→test habit [`docs/INVENT_TEST_HABIT.md`](../../docs/INVENT_TEST_HABIT.md); named-gap ledger [`docs/NAMED_GAP_LEDGER_HABIT.md`](../../docs/NAMED_GAP_LEDGER_HABIT.md). Lab invents; Operator admits / rejects / parks. Lab does **not** self-admit.
 
