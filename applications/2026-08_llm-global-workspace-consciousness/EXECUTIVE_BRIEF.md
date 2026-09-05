@@ -47,7 +47,7 @@ The **strong original package is not established** (and the strong “sufficient
 
 **Test next (only if authorized):** Name the model set, hallmark recipe, and broader replication for the live remnant only. Retired strong elevations need a **new** application.
 
-**Residual-branch menu:** Offered (`RESIDUAL_BRANCH_MENU.md`) — R-REPL after R-SOME/R-RECIPE locks. **No branch authorized.**
+**Residual-branch menu:** Offered (`RESIDUAL_BRANCH_MENU.md`) — R-REPL invent **open** (Founder 2026-09-05; remnant only; last check none yet). Not consciousness proved.
 
 ---
 
