@@ -1,10 +1,10 @@
 # DRAFT — Lab PROPOSED digest; Lab does not admit; Operator/Founder may edit before send
 
-**Status:** PROPOSED technical summary of sim evidence under named budgets  
+**Status:** PROPOSED technical summary of sim evidence under named budgets. **Sync-fragility evidence only** after abstract ingest — not a patent-hard-problem digest.  
 **lab_admits:** false  
 **Date:** 2026-09-05  
 **Audience:** Greer (by his request) — collaboration technical digest  
-**Not:** a patent write-up, product brief, or claim clearance
+**Not:** a patent write-up, product brief, or claim clearance. **HOLD send** until ingest + preferably A1 (or A1+A2).
 
 ---
 

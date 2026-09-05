@@ -27,7 +27,7 @@ Peek succeed is **not** claim clearance. Sim-geometry-first is **not** a locator
 
 **#0 geometry-bottleneck sim** was **admitted** here and **scored** later the same day. See [`DIGESTION_GEOMETRY_0.md`](DIGESTION_GEOMETRY_0.md).
 
-Stay the **same Amb**. Do **not** unpark hardware **X**. Do **not** train. Do **not** copy patent claims. Do **not** claim a multipath-robust or free per-epoch realtime 0.50 m. After DRIFT1, next named pulse is **GATE1**.
+Stay the **same Amb**. Later the same day the published abstract was **ingested** as spine — [`DIGESTION_ABSTRACT_INGEST.md`](DIGESTION_ABSTRACT_INGEST.md). Do **not** unpark hardware **X**. Do **not** train. Do **not** copy patent claims. Do **not** claim a multipath-robust or free per-epoch realtime 0.50 m. Do **not** read 0.50 m as the patent-facing bar. Next opened leftover is **A1**.
 
 ## What stays parked / closed
 

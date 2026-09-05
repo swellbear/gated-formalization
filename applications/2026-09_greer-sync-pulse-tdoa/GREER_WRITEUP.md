@@ -3,7 +3,7 @@
 **For:** Kerry Greer (at your request)  
 **From:** swellbear / gated-formalization collaboration  
 **Date:** 2026-09-05  
-**Status:** Evidence digest from laptop simulations — not a product pitch, not a patent filing, and not a claim that hardware performance is proven.
+**Status:** **Sync-fragility evidence only.** Not a patent-hard-problem digest. Not a product pitch. Not a patent filing. Not a claim that hardware performance is proven. **HOLD send** until abstract ingest (on disk) **+ preferably A1** (or A1+A2). Patent-facing bar is now **≤1 m xy**; **0.50 m** is the scoped sim bar only. **DGPS ~0.4–0.5 m** is the named absolute floor.
 
 ---
 

@@ -24,7 +24,7 @@ Stay a **new** Amb, not cell-tower reopened as live, and not a BIA sequel.
 - US10135667B1 is owner-requested **collaboration framing** (bibliographic; custom-beacon substrate, **not** a carrier-mast Amb). **No claim-language copy.**
 - Do **not** train. Do **not** write skill-met language.
 - Do **not** reopen `2026-09_cell-tower-geometry` as live.
-- After #0, **MULTIPATH1 Soften**, **SYNC1 Soften**, **JOINT1 Soften**, and **DRIFT1 HARDEN** scoped **X**. Next after DRIFT1: **GATE1**, then a Greer-facing write-up. Still **no RF / ML**. **No** fingerprint rescue. **Multipath later.**
+- After #0, **MULTIPATH1 Soften**, **SYNC1 Soften**, **JOINT1 Soften**, **DRIFT1 HARDEN**, and **GATE1 Soften** scoped the sim bar. Later: Operator **ADMIT ingest** of the published abstract as Amb spine — [`DIGESTION_ABSTRACT_INGEST.md`](DIGESTION_ABSTRACT_INGEST.md). Prior sync string = **partial** evidence. Still **no RF / ML**. **No** fingerprint rescue. **Multipath later.**
 
 ## What stays parked / closed
 

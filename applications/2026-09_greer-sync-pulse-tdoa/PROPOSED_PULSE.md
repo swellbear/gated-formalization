@@ -2,7 +2,7 @@
 
 **Date:** 2026-09-05  
 **Application:** `2026-09_greer-sync-pulse-tdoa`  
-**String:** first-pulse fog peek **ADMITTED** (Lab `PROPOSED_FOG_PEEK`); **GEOM0 HARDEN**; **MULTIPATH1 Soften**; **SYNC1 Soften**; **JOINT1 Soften**; **DRIFT1 HARDEN**; **GATE1 Soften**  
+**String:** first-pulse fog peek **ADMITTED** (Lab `PROPOSED_FOG_PEEK`); **GEOM0 HARDEN**; **MULTIPATH1 Soften**; prior SYNC/JOINT/DRIFT/GATE = **sync-fragility evidence (partial)**; **abstract ingest ADMITTED** as Amb spine  
 **Named gap (this fold):** does a detect-only residual∨LORO refuse belt catch out-of-budget sync / unmatched-drift without blowing in-band FA?  
 **Ledger:** [`NAMED_GAP_LEDGER.md`](NAMED_GAP_LEDGER.md)  
 **Peek digestion:** [`DIGESTION_FIRST_PULSE.md`](DIGESTION_FIRST_PULSE.md)  
@@ -17,7 +17,8 @@
 **DRIFT1 digestion:** [`DIGESTION_DRIFT1.md`](DIGESTION_DRIFT1.md)  
 **GATE1 score:** [`SCORE_GATE1.md`](SCORE_GATE1.md)  
 **GATE1 digestion:** [`DIGESTION_GATE1.md`](DIGESTION_GATE1.md)  
-**Founder write-up (PRIMARY; HOLD send):** [`GREER_WRITEUP.md`](GREER_WRITEUP.md)  
+**Abstract ingest (ADMITTED):** [`SOURCE.md`](SOURCE.md) · [`ABSTRACT_INGEST_SUMMARY.md`](ABSTRACT_INGEST_SUMMARY.md) · [`DIGESTION_ABSTRACT_INGEST.md`](DIGESTION_ABSTRACT_INGEST.md)  
+**Founder write-up (PRIMARY; sync-fragility evidence only; HOLD send):** [`GREER_WRITEUP.md`](GREER_WRITEUP.md)  
 **Lab audit draft:** [`GREER_WRITEUP_DRAFT.md`](GREER_WRITEUP_DRAFT.md)
 
 Lab invented ranked peek / pulse probes. Lab does **not** self-admit. The fog-peek record below is the gated fact set copied from the Method Operator gate. **#0** later scored a numeric sim **X**. **MULTIPATH1** later **Soften**ed it with an NLOS scope. Lab scratch was **not** on this fold VM.
@@ -198,7 +199,7 @@ Detect-only refuse OR: **G1a_DRIFT1 residual ∨ G1b raw LORO**. Injection-calib
 
 **LOCK** provisional **sim X = 0.50 m** remains, with **JOINT1 fixed-offset + named DRIFT1 batch α + GATE1 refuse-belt + NLOS** scope. **PARK** hardware **X**. Details: [`SCORE_GATE1.md`](SCORE_GATE1.md).
 
-**HOLD:** Lab invent pending Greer criteria / user send OK. Write-up on disk — Founder [`GREER_WRITEUP.md`](GREER_WRITEUP.md) **PRIMARY** (**HOLD send**). Lab audit [`GREER_WRITEUP_DRAFT.md`](GREER_WRITEUP_DRAFT.md). Still no RF / ML. No fingerprint rescue. **Multipath later.**
+**HOLD:** Later the same day, Operator **ADMIT ingest** of US10135667B1 published abstract as Amb spine. See [`ABSTRACT_INGEST_SUMMARY.md`](ABSTRACT_INGEST_SUMMARY.md). Lab invent **HOLD** except **A1 opened**. Write-up on disk = **sync-fragility evidence only** — Founder [`GREER_WRITEUP.md`](GREER_WRITEUP.md) **PRIMARY** (**HOLD send** until ingest + preferably A1 or A1+A2). Lab audit [`GREER_WRITEUP_DRAFT.md`](GREER_WRITEUP_DRAFT.md). Still no RF / ML. No fingerprint rescue. **Multipath later.**
 
 ---
 
@@ -212,4 +213,4 @@ Detect-only refuse OR: **G1a_DRIFT1 residual ∨ G1b raw LORO**. Injection-calib
 
 ---
 
-*Docs only. Peek succeed / #0 HARDEN / MULTIPATH1 Soften / SYNC1 Soften / JOINT1 Soften / DRIFT1 HARDEN / GATE1 Soften ≠ claim clearance. Named DRIFT1 batch α ≠ free per-epoch realtime. GATE1 refuse belt ≠ magic repair. JOINT1-scoped sim X ≠ multipath-robust X. Not a locator. Not skill-met. Not a patent-product claim. Not rithm. Lab does not self-admit. Lab scratch was not on this VM; summary copied from the Operator gate. Write-up HOLD send until user OK.*
+*Docs only. Peek succeed / #0 HARDEN / MULTIPATH1 Soften / SYNC1 Soften / JOINT1 Soften / DRIFT1 HARDEN / GATE1 Soften / abstract ingest ≠ claim clearance. Prior SYNC/JOINT/DRIFT/GATE = partial sync-fragility evidence. Named DRIFT1 batch α ≠ free per-epoch realtime. GATE1 refuse belt ≠ magic repair. Scoped sim X ≠ patent-facing ≤1 m xy. Not a locator. Not skill-met. Not a patent-product claim. Not rithm. Lab does not self-admit. Lab scratch was not on this VM; summary copied from the Operator gate. Write-up HOLD send until ingest + preferably A1 (or A1+A2).*
