@@ -8,7 +8,7 @@
 
 ### Plain status
 
-**Step-1 data hunt is parked.** Operator + Founder **ADMIT DATA-BLOCKED park**: no public row-level sheep/lamb/ovine BIA / impedance + body weight under an open license after an honest hunt (Lab + Founder independently agree; same honesty bar as poultry #47 / cattle #49). Nearest-misses are **docs only** — **not** succeed. This is **not** training. Training is **not** established. This is **not** a commercial weighing claim. Commercial weighing is **not** solved. This is **not** rithm. No author outreach. Do **not** reconstruct fake sheep/lamb rows from means. Poultry BIA→weight step-1 stays **parked** (#47). Cattle BIA→weight step-1 stays **parked** (#49). Collatz playground is **done** (#45). Track B invent stays **paused**. llm-gwt R-REPL stays **parked**.
+**Step-1 data hunt is parked.** Operator + Founder **ADMIT DATA-BLOCKED park**: no public row-level sheep/lamb/ovine BIA / impedance + body weight under an open license after an honest hunt (Lab + Founder independently agree; same honesty bar as poultry #47 / cattle #49). Lab hunt nearest-misses are now on this fold. Nearest-misses are **docs only** — **not** succeed. This is **not** training. Training is **not** established. This is **not** a commercial weighing claim. Commercial weighing is **not** solved. This is **not** rithm. No author outreach. Do **not** reconstruct fake sheep/lamb rows from means. Poultry BIA→weight step-1 stays **parked** (#47). Cattle BIA→weight step-1 stays **parked** (#49). Collatz playground is **done** (#45). Track B invent stays **paused**. llm-gwt R-REPL stays **parked**.
 
 ---
 

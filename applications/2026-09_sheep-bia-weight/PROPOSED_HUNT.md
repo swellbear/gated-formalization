@@ -6,7 +6,7 @@
 **Named gap:** public row-level sheep/lamb/ovine BIA (R/X/Z) + body weight under an open license  
 **Ledger:** [`NAMED_GAP_LEDGER.md`](NAMED_GAP_LEDGER.md)
 
-Lab invents ranked hunt probes. Lab does **not** self-admit. Lab scratch `PROPOSED_HUNT.md` was **not** on this fold VM (`/workspace/sheep_bia_lab/PROPOSED_HUNT.md` missing). Record below is the gated fact set (honest hunt; Founder nearest-misses; DATA-BLOCKED). Same honesty bar as poultry #47 / cattle #49.
+Lab invents ranked hunt probes. Lab does **not** self-admit. Lab scratch path `/workspace/sheep_bia_lab/PROPOSED_HUNT.md` was **not readable on this fold VM**; `HUNT_NOTES.md` also absent. Operator forwarded the Lab nearest-miss list onto this fold (below). Same honesty bar as poultry #47 / cattle #49.
 
 **What this is not:** A BIA→weight map. Training established. Commercial weighing solved. Rithm. Succeed on the named gap. Author outreach.
 
@@ -14,7 +14,7 @@ Lab invents ranked hunt probes. Lab does **not** self-admit. Lab scratch `PROPOS
 
 ## 0. Plain-language framing
 
-**What this is:** Lab hunted for a public table that pairs sheep/lamb/ovine BIA (resistance / reactance / impedance) with body weight under an open license. Founder ran an independent check. Operator + Founder gated.
+**What this is:** Lab hunted for a public table that pairs sheep/lamb/ovine BIA (resistance / reactance / impedance) with body weight under an open license. Founder ran an independent check. Operator + Founder gated. Lab hunt nearest-misses are now on this fold.
 
 **What this settles:** The named table is **not** on the public record after an honest hunt. Step-1 is **DATA-BLOCKED park**.
 
@@ -22,7 +22,7 @@ Lab invents ranked hunt probes. Lab does **not** self-admit. Lab scratch `PROPOS
 
 ---
 
-## 1. Lab hunt (summarized)
+## 1. Lab hunt (copied onto this fold)
 
 **Target:** public, row-level sheep/lamb/ovine BIA (R / X / Z) **plus** paired body weight, **open license**.
 
@@ -32,16 +32,16 @@ Nearest-misses below are **docs only**. They do **not** succeed the gap.
 
 ---
 
-## 2. Nearest-misses (docs only — not succeed)
+## 2. Nearest-misses (Lab list — docs only, not succeed)
 
 | # | Cite | What is there | Why it fails the named gap |
 |---|------|---------------|----------------------------|
-| 1 | Lamb in-vivo BIA papers: JAS multi-site BIA [DOI 10.1093/jas/skaf394](https://doi.org/10.1093/jas/skaf394) (n≈204 live lambs; resistance + morphometrics → carcass/meat traits); Harper Adams / UFSM composition (Moro et al. 2018 *Meat Sci.* [DOI 10.1016/j.meatsci.2018.09.013](https://doi.org/10.1016/j.meatsci.2018.09.013); n=31; Rs / Xc + BW **in the study**) | Live-animal BIA + weight appear **in the studies** | Raw typically **not posted open**. |
-| 2 | Soften-only: `pasagropasr` `lambBreeds` ([PAS-AGRO-PAS/pasagropasr](https://github.com/PAS-AGRO-PAS/pasagropasr); carcass morphometrics / tissue composition by breed) | Open carcass / morphometric rows | **No BIA.** |
-| 3 | Soften-only: RDG-style sheep/lamb **weight-only** deposits (e.g. Recherche Data Gouv liveweight / zootechnical performance) | Open weight / performance rows | **No BIA.** |
-| 4 | Soften-only: ovine **tissue permittivity** / dielectric spectroscopy (ex vivo kidney or similar) | Open or published spectra | **No paired live-weight rows.** |
+| 1 | Recherche Data Gouv [DOI 10.57745/OVKXJX](https://doi.org/10.57745/OVKXJX) — lamb zootechnical performance; **Etalab 2.0** | `Poids_*` + `Poids_Carc`; **313 rows** | **No BIA.** |
+| 2 | `pasagropasr` `lambBreeds` ([PAS-AGRO-PAS/pasagropasr](https://github.com/PAS-AGRO-PAS/pasagropasr); **GPL-3**) | HCW + morphometrics | **No Rs/Xc.** |
+| 3 | *Sci. Rep.* ovine muscle permittivity (Sanchez / Kwon line; e.g. [DOI 10.1038/s41598-019-39277-0](https://doi.org/10.1038/s41598-019-39277-0); **CC-BY**) | Tissue σ / εr (ex vivo muscle; supplementary spectra) | **No BW.** |
+| 4 | In-vivo / carcass BIA papers up to **n≈204** (Berg / Neary / Altmann / Hegarty / Silva + Han 2025 *J. Anim. Sci.* [DOI 10.1093/jas/skaf394](https://doi.org/10.1093/jas/skaf394)) | BIA + weight appear **in the studies** | Raw **private** — not a posted open-license table. |
 
-Printed means, equations, or composition R² in those papers are **not** the named table. They are **not** succeed.
+Printed means, equations, or composition R² in those papers are **not** the named table. They are **not** succeed. Soften-only rows (1–3) are **not** succeed.
 
 ---
 
@@ -54,7 +54,7 @@ Honesty, required on the record:
 - No public row-level sheep/lamb/ovine BIA / impedance + body weight under an open license after an honest hunt.
 - Lab and Founder **independently agree**.
 - Same honesty bar as poultry #47 / cattle #49.
-- Nearest-misses stay **docs only**. They do **not** succeed.
+- Lab nearest-misses stay **docs only**. They do **not** succeed.
 
 **Hard NO**
 

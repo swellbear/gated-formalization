@@ -4,7 +4,7 @@ Habit: [`docs/NAMED_GAP_LEDGER_HABIT.md`](../../docs/NAMED_GAP_LEDGER_HABIT.md).
 
 **Opened:** 2026-09-05 — Founder opens the **sheep BIA → weight** step-1 data hunt after poultry #47 and cattle #49 **DATA-BLOCKED**. Lab invents ranked hunt probes. Operator gates.
 
-**Last check:** 2026-09-05 — Operator + Founder **ADMIT DATA-BLOCKED park**. Honest hunt: no public row-level sheep/lamb/ovine BIA / impedance + body weight under an open license. Lab and Founder independently agree. Same honesty bar as poultry #47 / cattle #49. Hunt: [`PROPOSED_HUNT.md`](PROPOSED_HUNT.md).
+**Last check:** 2026-09-05 — Operator + Founder **ADMIT DATA-BLOCKED park**. Honest hunt: no public row-level sheep/lamb/ovine BIA / impedance + body weight under an open license. Lab and Founder independently agree. Same honesty bar as poultry #47 / cattle #49. Lab hunt nearest-misses now on this fold (see [`PROPOSED_HUNT.md`](PROPOSED_HUNT.md)).
 
 **What this is not:** This is **not** rithm. Commercial weighing is **not** solved. Training is **not** established. Nearest-misses are **not** succeed. Reconstructing fake sheep/lamb rows from means is **not** allowed. Author outreach is **not** unlocked.
 
@@ -18,4 +18,4 @@ Habit: [`docs/NAMED_GAP_LEDGER_HABIT.md`](../../docs/NAMED_GAP_LEDGER_HABIT.md).
 
 ## Lines
 
-`public row-level sheep/lamb/ovine BIA (R/X/Z) + body weight under open license` → kill vs succeed: no such public licensed table found → **DATA-BLOCKED park**; a citable URL/DOI + schema + license with those columns → last check: 2026-09-05 honest hunt (Lab + Founder independent agree; same bar as poultry #47 / cattle #49); nearest-misses docs-only in [`PROPOSED_HUNT.md`](PROPOSED_HUNT.md) → status: **paused** / **DATA-BLOCKED**
+`public row-level sheep/lamb/ovine BIA (R/X/Z) + body weight under open license` → kill vs succeed: no such public licensed table found → **DATA-BLOCKED park**; a citable URL/DOI + schema + license with those columns → last check: 2026-09-05 honest hunt (Lab + Founder independent agree; same bar as poultry #47 / cattle #49); Lab nearest-misses docs-only in [`PROPOSED_HUNT.md`](PROPOSED_HUNT.md) → status: **paused** / **DATA-BLOCKED**
