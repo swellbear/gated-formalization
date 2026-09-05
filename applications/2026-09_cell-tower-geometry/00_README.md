@@ -3,15 +3,15 @@
 **Application ID:** `2026-09_cell-tower-geometry`  
 **Opened:** 2026-09-05  
 
-Open **Amb scaffold / awaiting admit**. Separate Amb: can a phone’s location be recovered from **public mast maps + radio observations** by geometry / path-loss — **without** training on GPS-labeled fingerprints?
+**First-pulse peek ADMITTED.** Separate Amb: can a phone’s location be recovered from **public mast maps + radio observations** by geometry / path-loss — **without** training on GPS-labeled fingerprints? Peek1 **PASS**. Peek2 **MIXED** (CID↔ASRN join **PARKED**). Peek3 **PASS**. Provisional **X = 300 m** urban median, with TA + non-fog masts.
 
-This is **not** a trained map. Training is **not** established. This is **not** GPS replacement. This is **not** MLS / OpenCelliD fingerprinting. This is **not** rithm. The BIA→weight Amb portfolio is **CLOSED** (human ship demo + kill of the accurate-weight claim). This app does **not** reopen it. Proposed first-pulse checks are **not** admitted yet. Lab **HOLD** until Method Operator admit.
+This is **not** a trained map. Training is **not** established. This is **not** GPS replacement. This is **not** MLS / OpenCelliD fingerprinting. This is **not** rithm. Peek succeed is **not** claim clearance. The BIA→weight Amb portfolio is **CLOSED**. This app does **not** reopen it. Next pulse (not this fold): invent 2–3 ranked pure geometry / path-loss estimators. Lab **HOLD** on invent until that pulse is authorized.
 
 ## Claim (locked wording)
 
-From public mast coordinates + phone-visible cell IDs (and optional RSSI / Timing Advance), a pure geometry / path-loss estimator can hit median error ≤ X meters on held-out drives — **without training on GPS-labeled fingerprints**.
+From public mast coordinates + phone-visible cell IDs (and optional RSSI / Timing Advance), a pure geometry / path-loss estimator can hit median error ≤ **300 m** on held-out drives — **without training on GPS-labeled fingerprints**.
 
-**X:** TBD after first public-trace peek. Non-heroic urban bar likely 100–500 m median. Fail closed if Timing Advance (or equivalent ranging) is unavailable in public traces and RSSI+ID alone cannot clear a stated weaker bar.
+**X:** **300 m** urban median (provisional). Soften/Kill if the live pack is RSSI-only or fog-as-honesty (OpenCelliD / MLS as the mast map). Fail closed does **not** fire on TA absence — TA is present in Edinburgh / Vienna / DoNext.
 
 ## Intent / reverse framing
 
@@ -19,27 +19,28 @@ Not the usual MLS / OpenCelliD path (GPS drives → fingerprint DB → cell→lo
 
 ## Honest fog (named)
 
-1. OpenCelliD / Mozilla Location Service mast positions are largely GPS-crowdsourced — testing “no GPS in the map lineage” pushes toward regulatory lists (e.g. FCC ASR), which are sparser/messier and may not match the radio site heard.
+1. OpenCelliD / Mozilla Location Service mast positions are GPS-crowdsourced fog — **ablation only**. Prefer regulatory lists (FCC ASR `r_tower.zip` structure lat/lon; Austrian Senderkataster). ASR has **no CID** — CID↔ASRN join **PARKED** (no crowdsourced GPS join). US ASR **Soften** until that join is honesty-cleared. **EU packs first.**
 2. Ceiling is coarse location / GPS-fallback territory, not GPS replacement (~2–5 m). Rural sparse towers → huge uncertainty.
-3. Without TA / multi-tower ranging, RSSI+cell-ID alone is weak.
+3. TA is present in the EU primary packs. RSSI-only (Malaysia GNetTrack) stays Soften — do not silently keep the 300 m bar on an RSSI-only pack.
 
-## Eval rules (if later admitted)
+## Eval rules (locked at peek)
 
 - GPS labels are **held-out scoring only**. They are not training features and not fingerprint targets.
 - Estimator class is geometry / path-loss from mast coordinates + radio observations (cell ID, optional RSSI / TA). **No** GPS-labeled fingerprint training.
-- Metric: median error in meters on held-out drives. **X** stays TBD until after the first public-trace peek.
-- Fail closed if TA (or equivalent ranging) is missing **and** RSSI+ID alone cannot clear a stated weaker bar.
+- Metric: median error in meters on held-out drives. Provisional bar: **X = 300 m** urban median, with TA + non-fog masts.
+- Soften/Kill **X** if RSSI-only or fog-as-honesty.
 - This is **not** a GPS-replacement claim.
 
-## Next pulse (proposed; not admitted)
+## Next pulse (not this fold)
 
-After Method Operator **admit**, first pulse = cheap data / measurement peek on laptop/CPU only. **Not a model.** Three targeted checks: public traces with cell IDs + GPS eval labels; mast-source honesty (FCC ASR vs OpenCelliD); whether TA exists. See [`PROPOSED_PULSE.md`](PROPOSED_PULSE.md).
+Invent 2–3 ranked **pure geometry / path-loss** estimators on the admitted EU packs. Operator gates. See [`PROPOSED_PULSE.md`](PROPOSED_PULSE.md). **No invent on the peek fold.**
 
 ## Reading order
 
 1. [`STATUS.md`](STATUS.md) — where we are
-2. [`NAMED_GAP_LEDGER.md`](NAMED_GAP_LEDGER.md) — the open lines
-3. [`PROPOSED_PULSE.md`](PROPOSED_PULSE.md) — Lab’s 3 checks (awaiting admit)
-4. [`DIGESTION_FROM_BIA.md`](DIGESTION_FROM_BIA.md) — what the last string taught
-5. [`RESIDUAL_BRANCH_MENU.md`](RESIDUAL_BRANCH_MENU.md) — decision log
-6. [`notes.md`](notes.md) — one-line pointer
+2. [`NAMED_GAP_LEDGER.md`](NAMED_GAP_LEDGER.md) — the open / parked / hardened lines
+3. [`PROPOSED_PULSE.md`](PROPOSED_PULSE.md) — Lab peek + Operator gate
+4. [`DIGESTION_FIRST_PULSE.md`](DIGESTION_FIRST_PULSE.md) — what the peek taught
+5. [`DIGESTION_FROM_BIA.md`](DIGESTION_FROM_BIA.md) — what the last string taught
+6. [`RESIDUAL_BRANCH_MENU.md`](RESIDUAL_BRANCH_MENU.md) — decision log
+7. [`notes.md`](notes.md) — one-line pointer
