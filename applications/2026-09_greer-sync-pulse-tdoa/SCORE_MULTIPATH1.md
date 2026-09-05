@@ -20,7 +20,7 @@ Lab scratch was **not** on this fold VM. Metrics below are copied from the **Ope
 
 **What this settles:** Operator **ADMIT Soften**. Kill did **not** fire. Provisional **sim X = 0.50 m** stays **LOCKED**, now with an **NLOS scope annotation**. The 0.50 m bar is poseable under LOS + mild / intermittent NLOS. It is **not** poseable under strong persistent multipath with frozen Chan alone. Do **not** claim a multipath-robust 0.50 m. **No** fingerprint rescue. **X** remains **median-not-p90**. Hardware **X** stays **PARKED**.
 
-**What this is not:** Not a field locator. Not a hardware bar. Not claim clearance. Not a reason to invent RF or ML. Sync-imperfection was later **SYNC1 Soften** — see [`SCORE_SYNC_1.md`](SCORE_SYNC_1.md).
+**What this is not:** Not a field locator. Not a hardware bar. Not claim clearance. Not a reason to invent RF or ML. Sync-imperfection was later **SYNC1 Soften** then **JOINT1 Soften** — see [`SCORE_SYNC_1.md`](SCORE_SYNC_1.md) and [`SCORE_JOINT1.md`](SCORE_JOINT1.md).
 
 ---
 
@@ -71,7 +71,7 @@ This fold does **not** re-run the sim. Numbers are the gated Lab summary copied 
 
 **PARK** hardware **X**.
 
-**NEXT (admitted here; later scored the same day):** **sync-imperfection** became **SYNC1 Soften**. See [`SCORE_SYNC_1.md`](SCORE_SYNC_1.md). Still **no RF / ML**. **No** fingerprint rescue.
+**LATER THE SAME DAY:** **sync-imperfection** became **SYNC1 Soften**, then **JOINT1 Soften**. See [`SCORE_SYNC_1.md`](SCORE_SYNC_1.md) and [`SCORE_JOINT1.md`](SCORE_JOINT1.md). Still **no RF / ML**. **No** fingerprint rescue.
 
 **Honesty locks**
 
@@ -101,7 +101,7 @@ Cell-tower Amb stays **PARKED**. BIA→weight portfolio stays **CLOSED**.
 - Do **not** write skill-met / elevated language.
 - Do **not** reopen `2026-09_cell-tower-geometry` as live.
 - Do **not** reopen the BIA→weight portfolio.
-- Do **not** invent the next pulse until Founder / user reopens a parked textbook follow-on.
+- Do **not** run **DRIFT1** from this MULTIPATH1 note.
 
 ---
 

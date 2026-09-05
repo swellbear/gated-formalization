@@ -18,7 +18,7 @@ Lab scratch was **not** on this fold VM. Metrics below are copied from the **Ope
 
 **What this is:** A cheap sync-imperfection check on the same frozen Chan board as #0. Receiver noise stays `σ_t` = 1 ns. Same refs / L-path. Inter-reference sync error (`σ_sync`) and path drift are injected. No new estimator.
 
-**What this settles:** Kill is **not** triggered. Provisional **sim X = 0.50 m** **remains**, scoped to **near-ideal sync + NLOS**. Near-ideal `σ_sync ≲ 0.3 ns` keeps the **median** **≤ X**. `σ_sync` = 1 ns scrapes over. `≥ 3 ns` / 3 ns path drift **fails X**. **GEOM0 HARDEN** still stands. Prior **MULTIPATH1 Soften** still stands (LOS + mild/intermittent NLOS only). **Median-not-p90** honesty remains (1 ns p90 ≈ **1.16 m** on the #0 board).
+**What this settles:** Kill is **not** triggered. Provisional **sim X = 0.50 m** **remains**, scoped (on this pulse) to **near-ideal Chan-alone sync + NLOS**. Near-ideal `σ_sync ≲ 0.3 ns` keeps the **median** **≤ X**. `σ_sync` = 1 ns scrapes over. `≥ 3 ns` / 3 ns path drift **fails X**. Later **JOINT1** restored the 1 ns scrape under joint clocks — see [`SCORE_JOINT1.md`](SCORE_JOINT1.md). **GEOM0 HARDEN** still stands. Prior **MULTIPATH1 Soften** still stands (LOS + mild/intermittent NLOS only). **Median-not-p90** honesty remains (1 ns p90 ≈ **1.16 m** on the #0 board).
 
 **What this is not:** Not a field locator. Not a hardware bar. Not a p90 bar. Not claim clearance. Not a reason to invent RF, ML, or fingerprints to rescue loose sync. Strong multipath and loose sync still fail Chan alone.
 
@@ -90,9 +90,9 @@ Do **not** invent fingerprint / ML / RF to rescue loose sync.
 - This is **not** skill-met.
 - No fingerprint / ML / RF invent to rescue loose sync.
 
-**HOLD** next Lab invent. Optional later combined mild-NLOS + 0.3 ns sync, or drift-compensation textbook pulses, stay **parked** until Founder / user reopens. Still **no RF / ML**.
+**LATER THE SAME DAY:** **JOINT1 Soften** widened the named sync budget under path-shared joint clocks. See [`SCORE_JOINT1.md`](SCORE_JOINT1.md). **SYNC1 Soften** still stands as the Chan-alone near-ideal window. Still **no RF / ML**.
 
-US10135667B1 remains a **prior-art note only** — custom-beacon substrate, **not** a carrier-mast Amb; method practice / explore the idea; **not** copy claims for a product.
+US10135667B1 — owner-requested **collaboration framing** (bibliographic; custom-beacon substrate, **not** a carrier-mast Amb). **No claim-language copy.**
 
 Cell-tower Amb stays **PARKED**. BIA→weight portfolio stays **CLOSED**.
 
@@ -109,7 +109,7 @@ Cell-tower Amb stays **PARKED**. BIA→weight portfolio stays **CLOSED**.
 - Do **not** write skill-met / elevated language.
 - Do **not** reopen `2026-09_cell-tower-geometry` as live.
 - Do **not** reopen the BIA→weight portfolio.
-- Do **not** invent the next pulse until Founder / user reopens a parked textbook pulse.
+- Do **not** erase the Chan-alone SYNC1 window when reading JOINT1. JOINT1 widens the named budget **under joint clocks**.
 
 ---
 

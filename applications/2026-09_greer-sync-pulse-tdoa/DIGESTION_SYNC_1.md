@@ -4,11 +4,13 @@ A short plain note of what the sync-imperfection pulse taught. Habit: [`docs/DIG
 
 **This pulse:** `2026-09_greer-sync-pulse-tdoa` SYNC1 — Method Operator **ADMIT Soften** (Kill **not** triggered). Lab scratch was **not** on this fold VM; the gated fact set was copied from the Operator gate. Frozen Chan 1994; `σ_t` = 1 ns; same refs / L-path as #0.
 
-**Standing (record all three):** **GEOM0 HARDEN** · prior **MULTIPATH1 Soften** ([`DIGESTION_MULTIPATH1.md`](DIGESTION_MULTIPATH1.md)) · **SYNC1 Soften**.
+**Standing (record; later JOINT1 added a fourth):** **GEOM0 HARDEN** · prior **MULTIPATH1 Soften** ([`DIGESTION_MULTIPATH1.md`](DIGESTION_MULTIPATH1.md)) · **SYNC1 Soften**. Later the same day: **JOINT1 Soften** — [`DIGESTION_JOINT1.md`](DIGESTION_JOINT1.md).
 
-## Founder DIGEST (authoritative)
+## Founder DIGEST (SYNC1-era; later JOINT1 widened the named sync budget)
 
 Geometry+Chan is feasible under ideal sync; provisional sim X=0.50 m is median@1ns RX noise and only honest under mild NLOS + near-ideal inter-ref sync (σ_sync≲0.3 ns); strong multipath or σ_sync≳1 ns / path drift fail Chan alone; remaining live fog = sync fidelity + multipath (not hyperbolic geometry); contrast Greer US10135667B1 remains custom-beacon substrate, not carrier-mast Amb. Lab HOLD; optional later combined mild-NLOS+0.3ns sync or drift-compensation textbook pulses parked until Founder/user reopens. Hardware X PARKED.
+
+**Later the same day:** Operator **ADMIT JOINT1 Soften**. Named sync budget **widened** to `σ_sync ≲ 3 ns` **under JOINT1**. See [`DIGESTION_JOINT1.md`](DIGESTION_JOINT1.md). This SYNC1 note does **not** re-score JOINT1.
 
 ## What the pulse settled
 
@@ -26,20 +28,20 @@ That is an **Amb Soften** of the sync leftover. It is **not** a locator. It is *
 
 ## Combined X scope (locked)
 
-**Sim X = 0.50 m** stays. It is a **median @ 1 ns RX noise** and is only honest under **mild NLOS + near-ideal inter-ref sync** (`σ_sync ≲ 0.3 ns`). Strong multipath or `σ_sync ≳ 1 ns` / path drift fail Chan alone. Remaining live fog = **sync fidelity + multipath** — **not** hyperbolic geometry.
+**Sim X = 0.50 m** stays. Under **Chan alone** (this pulse) it is only honest under **mild NLOS + near-ideal inter-ref sync** (`σ_sync ≲ 0.3 ns`). Strong multipath or `σ_sync ≳ 1 ns` / path drift fail Chan alone. Later **JOINT1** restored the 1 ns scrape and widened the named budget under joint clocks — see [`DIGESTION_JOINT1.md`](DIGESTION_JOINT1.md).
 
 **X is median-not-p90.** Hardware **X PARKED.**
 
-## What this string must do next (HOLD)
+## What this string must do next (later the same day: JOINT1)
 
-Lab **HOLD**. Optional later combined mild-NLOS + 0.3 ns sync, or drift-compensation textbook pulses, stay **parked** until Founder / user reopens. Still **no RF / ML**. Do **not** invent a fingerprint rescue.
+Lab later scored **JOINT1 Soften**. See [`DIGESTION_JOINT1.md`](DIGESTION_JOINT1.md). **SYNC1 Soften** still stands as the Chan-alone near-ideal window. Named sync budget later **widened** to `σ_sync ≲ 3 ns` under JOINT1. Next after JOINT1 (not this note): **DRIFT1**. Still **no RF / ML**. Do **not** invent a fingerprint rescue.
 
-US10135667B1 stays a **custom-beacon substrate** contrast — **not** a carrier-mast Amb. Do **not** copy claims.
+US10135667B1 — owner-requested **collaboration framing** (bibliographic; custom-beacon substrate, **not** a carrier-mast Amb). **No claim-language copy.**
 
 ## What stays parked / closed
 
 - **Hardware X** stays **PARKED**.
-- Optional later textbook pulses (combined mild-NLOS + 0.3 ns sync; drift-compensation) stay **parked** until Founder / user reopens.
+- **DRIFT1** is named after JOINT1 — **not** scored in the SYNC1 fold.
 - **Cell-tower geometry** stays **PARKED**. Do **not** reopen as live.
 - **BIA→weight portfolio** stays **CLOSED**. Do **not** reopen human, poultry, cattle, sheep, or companion BIA apps.
 - **Collatz playground** stays **done** (#45). Lab HOLD there.
