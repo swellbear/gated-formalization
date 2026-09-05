@@ -24,7 +24,7 @@ Stay a **new** Amb, not cell-tower reopened as live, and not a BIA sequel.
 - Contrast US10135667B1 as prior art for **method practice / explore the idea**. Do **not** copy claims for a product.
 - Do **not** train. Do **not** invent the next pulse this fold. Do **not** write skill-met language.
 - Do **not** reopen `2026-09_cell-tower-geometry` as live.
-- After #0, **MULTIPATH1 Soften** and **SYNC1 Soften** scoped **X**. Lab **HOLD**. Still **no RF / ML**. **No** fingerprint rescue.
+- After #0, **MULTIPATH1 Soften** and **SYNC1 Soften** scoped **X**. Later same day: Founder / Operator **REOPEN** — [`DIGESTION_REOPEN_SYNC.md`](DIGESTION_REOPEN_SYNC.md). Still **no RF / ML**. **No** fingerprint rescue.
 
 ## What stays parked / closed
 

@@ -90,7 +90,7 @@ Do **not** invent fingerprint / ML / RF to rescue loose sync.
 - This is **not** skill-met.
 - No fingerprint / ML / RF invent to rescue loose sync.
 
-**HOLD** next Lab invent. Optional later combined mild-NLOS + 0.3 ns sync, or drift-compensation textbook pulses, stay **parked** until Founder / user reopens. Still **no RF / ML**.
+**HOLD** next Lab invent (at SYNC1 close). **Superseded same day:** Founder / Operator **REOPEN** — Lab HOLD lifted for the **invent board only**. See [`DIGESTION_REOPEN_SYNC.md`](DIGESTION_REOPEN_SYNC.md). Still **no RF / ML**.
 
 US10135667B1 remains a **prior-art note only** — custom-beacon substrate, **not** a carrier-mast Amb; method practice / explore the idea; **not** copy claims for a product.
 
@@ -109,7 +109,8 @@ Cell-tower Amb stays **PARKED**. BIA→weight portfolio stays **CLOSED**.
 - Do **not** write skill-met / elevated language.
 - Do **not** reopen `2026-09_cell-tower-geometry` as live.
 - Do **not** reopen the BIA→weight portfolio.
-- Do **not** invent the next pulse until Founder / user reopens a parked textbook pulse.
+- Do **not** invent fingerprint / ML / RF to rescue loose sync (REOPEN does **not** lift that).
+- Do **not** invent the 2–3 cheap-check options on the REOPEN framing fold (next pulse; Founder ranks).
 
 ---
 

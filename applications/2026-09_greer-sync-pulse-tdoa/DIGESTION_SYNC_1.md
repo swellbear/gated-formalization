@@ -6,6 +6,8 @@ A short plain note of what the sync-imperfection pulse taught. Habit: [`docs/DIG
 
 **Standing (record all three):** **GEOM0 HARDEN** · prior **MULTIPATH1 Soften** ([`DIGESTION_MULTIPATH1.md`](DIGESTION_MULTIPATH1.md)) · **SYNC1 Soften**.
 
+**REOPEN (later same day — framing only):** Founder / Operator **REOPEN** the sync-fragility leftover as a solve-target. This DIGEST baseline is **preserved** (not rewritten). See [`DIGESTION_REOPEN_SYNC.md`](DIGESTION_REOPEN_SYNC.md).
+
 ## Founder DIGEST (authoritative)
 
 Geometry+Chan is feasible under ideal sync; provisional sim X=0.50 m is median@1ns RX noise and only honest under mild NLOS + near-ideal inter-ref sync (σ_sync≲0.3 ns); strong multipath or σ_sync≳1 ns / path drift fail Chan alone; remaining live fog = sync fidelity + multipath (not hyperbolic geometry); contrast Greer US10135667B1 remains custom-beacon substrate, not carrier-mast Amb. Lab HOLD; optional later combined mild-NLOS+0.3ns sync or drift-compensation textbook pulses parked until Founder/user reopens. Hardware X PARKED.
@@ -30,16 +32,16 @@ That is an **Amb Soften** of the sync leftover. It is **not** a locator. It is *
 
 **X is median-not-p90.** Hardware **X PARKED.**
 
-## What this string must do next (HOLD)
+## What this string must do next (HOLD — superseded same day)
 
-Lab **HOLD**. Optional later combined mild-NLOS + 0.3 ns sync, or drift-compensation textbook pulses, stay **parked** until Founder / user reopens. Still **no RF / ML**. Do **not** invent a fingerprint rescue.
+Lab **HOLD** was the gate at SYNC1 close. **Superseded same day:** Founder / Operator **REOPEN** — Lab HOLD lifted for the **invent board only**. Multipath wave-2 stays after the sync string. Baseline DIGEST above is **unchanged**. See [`DIGESTION_REOPEN_SYNC.md`](DIGESTION_REOPEN_SYNC.md). Still **no RF / ML**. Do **not** invent a fingerprint rescue.
 
 US10135667B1 stays a **custom-beacon substrate** contrast — **not** a carrier-mast Amb. Do **not** copy claims.
 
 ## What stays parked / closed
 
 - **Hardware X** stays **PARKED**.
-- Optional later textbook pulses (combined mild-NLOS + 0.3 ns sync; drift-compensation) stay **parked** until Founder / user reopens.
+- **Multipath wave-2** stays **parked** until the sync string clears or parks. The prior “optional later textbook pulses parked until reopen” clause is what REOPEN **fires** for the **sync** leftover only.
 - **Cell-tower geometry** stays **PARKED**. Do **not** reopen as live.
 - **BIA→weight portfolio** stays **CLOSED**. Do **not** reopen human, poultry, cattle, sheep, or companion BIA apps.
 - **Collatz playground** stays **done** (#45). Lab HOLD there.

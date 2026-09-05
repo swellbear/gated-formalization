@@ -3,11 +3,11 @@
 **Application ID:** `2026-09_greer-sync-pulse-tdoa`  
 **Opened:** 2026-09-05  
 
-**SYNC1 Soften** on the record (Kill **not** triggered). **GEOM0 HARDEN** and prior **MULTIPATH1 Soften** still stand. First-pulse fog peek **ADMITTED** (C1/C2/C3 SUCCEED). Founder **CLAIM LOCK** recorded. Provisional **sim X = 0.50 m** remains, scoped to **near-ideal sync + NLOS** (**median**-not-p90; 1 ns p90 ≈ **1.16 m**). **PARK** hardware **X**. Lab **HOLD**.
+**REOPEN** (solve framing — **not** park forever). **Solve-target:** sync fragility. **(A)** named Soften beyond 0.3 ns / drift without fingerprint / ML **or (B)** detect from measurements alone and Soften / widen **X** / refuse a point fix. Baseline standing **preserved:** **GEOM0 HARDEN**; **MULTIPATH1 Soften** (mild-NLOS); **SYNC1 Soften** (`σ_sync ≲ 0.3 ns`). First-pulse fog peek **ADMITTED** (C1/C2/C3 SUCCEED). Founder **CLAIM LOCK** recorded. Provisional **sim X = 0.50 m** remains, scoped to **near-ideal sync + NLOS** (**median**-not-p90; 1 ns p90 ≈ **1.16 m**). **PARK** hardware **X**. Lab **HOLD lifted for the invent board only.** Multipath wave-2 after the sync string. **Not** a remake of commercial RTLS.
 
 **NEW Amb:** Greer-style GPS-denied locate via dedicated sync-pulse reference nodes + mobile TDOA (contrast prior art [US10135667B1](https://patents.google.com/patent/US10135667B1/en) — method practice / explore the idea; **not** copy claims for product).
 
-This is **not** a locator. This is **not** a trained map. Training is **not** established. This is **not** RF fingerprinting. This is **not** fingerprint rescue. This is **not** GPS / DGPS as the mobile fix. This is **not** skill-met. This is **not** rithm. This is **not** a product claim copied from the named patent. Soften / HARDEN is **not** claim clearance and is **not** a multipath-robust 0.50 m. Hardware **X** is **not** locked. **X** is **not** a p90 bar. Lab **HOLD**. Optional later combined mild-NLOS + 0.3 ns sync, or drift-compensation textbook pulses, stay **parked** until Founder / user reopens. Do **not** invent fingerprint / ML / RF to rescue loose sync.
+This is **not** a locator. This is **not** a trained map. Training is **not** established. This is **not** RF fingerprinting. This is **not** fingerprint rescue. This is **not** GPS / DGPS as the mobile fix. This is **not** skill-met. This is **not** rithm. This is **not** a product claim copied from the named patent. This is **not** a remake of commercial RTLS. Soften / HARDEN / REOPEN is **not** claim clearance and is **not** a multipath-robust 0.50 m. Hardware **X** is **not** locked. **X** is **not** a p90 bar. Lab HOLD is lifted **only** for the (A)/(B) invent board. Do **not** invent fingerprint / ML / RF to rescue loose sync. Do **not** start multipath wave-2 until the sync string clears or parks. End artifact **later:** a plain-English write-up for Greer with pulse evidence.
 
 The cell-tower Amb (`2026-09_cell-tower-geometry`) is **PARKED** and is **not** reopened as live. The BIA→weight portfolio is **CLOSED**. This app does **not** reopen either.
 
@@ -51,22 +51,23 @@ Operator **ADMIT Soften**. Kill **not** triggered. Frozen Chan 1994; `σ_t` = 1 
 
 Operator **ADMIT Soften**. Kill **not** triggered. Frozen Chan 1994; `σ_t` = 1 ns; same refs / L-path. `σ_sync ≲ 0.3 ns` → median **0.382 m** ≤ X. `σ_sync` = 1 ns scrapes **0.513 m**. `≥ 3 ns` / 3 ns path drift **fails X**. Combined **X** scope = near-ideal sync + prior MULTIPATH1 NLOS scope. See [`SCORE_SYNC_1.md`](SCORE_SYNC_1.md).
 
-## Next (HOLD)
+## Next (REOPEN — invent board authorized, not run)
 
-Lab **HOLD**. Optional later combined mild-NLOS + 0.3 ns sync, or drift-compensation textbook pulses, stay **parked** until Founder / user reopens. Still **no RF / ML**. Fog peek + later gates: [`PROPOSED_PULSE.md`](PROPOSED_PULSE.md).
+Founder / Operator **REOPEN**. Lab invents **2–3 cheap-check options** for **(A) / (B)**; Founder ranks. **Not this fold.** Still **no RF / ML**. Multipath wave-2 after the sync string. Fog peek + later gates: [`PROPOSED_PULSE.md`](PROPOSED_PULSE.md). REOPEN digestion: [`DIGESTION_REOPEN_SYNC.md`](DIGESTION_REOPEN_SYNC.md).
 
 ## Reading order
 
 1. [`STATUS.md`](STATUS.md) — where we are
-2. [`NAMED_GAP_LEDGER.md`](NAMED_GAP_LEDGER.md) — the open / parked / hardened / Soften lines
-3. [`SCORE_SYNC_1.md`](SCORE_SYNC_1.md) — SYNC1 gated metrics
-4. [`DIGESTION_SYNC_1.md`](DIGESTION_SYNC_1.md) — what SYNC1 taught (Founder DIGEST)
-5. [`SCORE_MULTIPATH1.md`](SCORE_MULTIPATH1.md) — MULTIPATH1 gated metrics (prior Soften)
-6. [`DIGESTION_MULTIPATH1.md`](DIGESTION_MULTIPATH1.md) — what MULTIPATH1 taught
-7. [`SCORE_GEOMETRY_0.md`](SCORE_GEOMETRY_0.md) — #0 gated metrics
-8. [`DIGESTION_GEOMETRY_0.md`](DIGESTION_GEOMETRY_0.md) — what #0 taught
-9. [`PROPOSED_PULSE.md`](PROPOSED_PULSE.md) — Lab fog peek + later gates
-10. [`DIGESTION_FIRST_PULSE.md`](DIGESTION_FIRST_PULSE.md) — what the peek taught
-11. [`DIGESTION_FROM_CELL_TOWER.md`](DIGESTION_FROM_CELL_TOWER.md) — what the last string taught
-12. [`RESIDUAL_BRANCH_MENU.md`](RESIDUAL_BRANCH_MENU.md) — decision log
-13. [`notes.md`](notes.md) — one-line pointer
+2. [`NAMED_GAP_LEDGER.md`](NAMED_GAP_LEDGER.md) — the open / parked / hardened / Soften / REOPEN lines
+3. [`DIGESTION_REOPEN_SYNC.md`](DIGESTION_REOPEN_SYNC.md) — REOPEN framing (DIGEST baseline preserved)
+4. [`SCORE_SYNC_1.md`](SCORE_SYNC_1.md) — SYNC1 gated metrics
+5. [`DIGESTION_SYNC_1.md`](DIGESTION_SYNC_1.md) — what SYNC1 taught (Founder DIGEST baseline)
+6. [`SCORE_MULTIPATH1.md`](SCORE_MULTIPATH1.md) — MULTIPATH1 gated metrics (prior Soften)
+7. [`DIGESTION_MULTIPATH1.md`](DIGESTION_MULTIPATH1.md) — what MULTIPATH1 taught
+8. [`SCORE_GEOMETRY_0.md`](SCORE_GEOMETRY_0.md) — #0 gated metrics
+9. [`DIGESTION_GEOMETRY_0.md`](DIGESTION_GEOMETRY_0.md) — what #0 taught
+10. [`PROPOSED_PULSE.md`](PROPOSED_PULSE.md) — Lab fog peek + later gates
+11. [`DIGESTION_FIRST_PULSE.md`](DIGESTION_FIRST_PULSE.md) — what the peek taught
+12. [`DIGESTION_FROM_CELL_TOWER.md`](DIGESTION_FROM_CELL_TOWER.md) — what the last string taught
+13. [`RESIDUAL_BRANCH_MENU.md`](RESIDUAL_BRANCH_MENU.md) — decision log
+14. [`notes.md`](notes.md) — one-line pointer

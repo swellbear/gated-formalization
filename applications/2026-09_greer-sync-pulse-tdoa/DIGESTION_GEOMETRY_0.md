@@ -26,7 +26,7 @@ HARDEN is **not** clearance. A 0.50 m **median** sim bar is **not** a field loca
 
 ## What this string must do next (later gated)
 
-**MULTIPATH1** later **Soften**ed the multipath leftover. **SYNC1** later **Soften**ed sync-imperfection. **X** stays 0.50 m under **sync + NLOS** scope. Lab **HOLD**. Still **no RF / ML**. **No** fingerprint rescue. See [`DIGESTION_SYNC_1.md`](DIGESTION_SYNC_1.md).
+**MULTIPATH1** later **Soften**ed the multipath leftover. **SYNC1** later **Soften**ed sync-imperfection. **X** stays 0.50 m under **sync + NLOS** scope. Later same day: Founder / Operator **REOPEN** — [`DIGESTION_REOPEN_SYNC.md`](DIGESTION_REOPEN_SYNC.md). Still **no RF / ML**. **No** fingerprint rescue. See [`DIGESTION_SYNC_1.md`](DIGESTION_SYNC_1.md).
 
 This #0 note does **not** re-score MULTIPATH1. Geometry under ideal sync + Gaussian Δt remains **not** the bottleneck. See [`DIGESTION_MULTIPATH1.md`](DIGESTION_MULTIPATH1.md).
 
