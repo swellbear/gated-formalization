@@ -4,7 +4,7 @@
 
 **Application:** `2026-08_llm-global-workspace-consciousness`  
 **Last reviewed:** 2026-09-05  
-**Status:** Live remnant definitional locks **complete** (R-SOME S1+S2; R-RECIPE R1+R2); R-REPL invent **open** (Founder 2026-09-05; remnant only; last check none yet). Provisional (stable), Amb ≈ 2.5; A-Strong Not admissible. Not consciousness proved. Not Admissible elevation.
+**Status:** Live remnant definitional locks **complete** (R-SOME S1+S2; R-RECIPE R1+R2); R-REPL **paused** (C1 infra-kill; local-GPU / R1 mech / A1 keys parked; remnant only). Provisional (stable), Amb ≈ 2.5; A-Strong Not admissible. Not consciousness proved. Not Admissible elevation.
 
 **Tags:** `AI-systems` / `uniqueness-preferability`, `descriptive-census` / `forced-deviation`
 
@@ -87,7 +87,7 @@
 | R-MAP | Gap-4-style component-mapping residual | Optional further reduction of non-essential mapping detail (already retired as high-impact for the live claim). |
 | R-RETIRED | Sufficiency / Strong-GNW / unconstrained scale / Branch D/P | Start a **new** application — do not re-inflate this closeout. |
 
-Items R-SOME / R-RECIPE are **hardened / locked** on [`NAMED_GAP_LEDGER.md`](NAMED_GAP_LEDGER.md) (exploration A, 2026-09-05). R-REPL invent is **open** (Founder 2026-09-05; remnant only; last check none yet). This is **not** consciousness proved and does **not** revive A-Strong. Retired elevations still require a **new** application.
+Items R-SOME / R-RECIPE are **hardened / locked** on [`NAMED_GAP_LEDGER.md`](NAMED_GAP_LEDGER.md) (exploration A, 2026-09-05). R-REPL is **paused** (C1 infra-kill; do not chase credentials; remnant only). This is **not** consciousness proved and does **not** revive A-Strong. Retired elevations still require a **new** application.
 
 ---
 
@@ -97,7 +97,7 @@ Items R-SOME / R-RECIPE are **hardened / locked** on [`NAMED_GAP_LEDGER.md`](NAM
 
 **Keep saying:** Some current LLMs show **partial** Weak-functional **access**/reportability hallmarks under Branch A; Strong-GNW equivalence is **not** established; unconstrained scale-strengthening is **not** established; live claim does **not** assert sufficiency; original / D / P / A-Strong Not admissible remain on the record and are not overwritten by the remnant.
 
-**Test next:** R-REPL invent **open** — Lab invent→test under Operator gate; remnant only; last check none yet. R-SOME / R-RECIPE locks stay. Retired elevations require a **new** application.
+**Test next:** R-REPL **paused** — park until the user voluntarily provisions GPU+HF or keys they already own. Do not chase credentials. Lab **HOLD** on runs. R-SOME / R-RECIPE locks stay. Retired elevations require a **new** application.
 
 ---
 
@@ -107,8 +107,8 @@ Items R-SOME / R-RECIPE are **hardened / locked** on [`NAMED_GAP_LEDGER.md`](NAM
 - Reading guide: `00_README.md`; elevation vs retired boundary: `elevation_roadmap.md`.
 - Cycle 4 gate: `02e_Gate_Scoring_Sheet_rescore_cycle4_narrowed.md`; Cycle 3 parallel: `02d_Gate_Scoring_Sheet_rescore_cycle3_parallel.md`.
 - No QI / Contrastive Recommendation / Experimental Generation / separate Claim-Revision Scaffolding run (Cycle 4 narrowing is in-application live-claim lock).
-- **Residual-branch menu:** `RESIDUAL_BRANCH_MENU.md` (R-REPL invent **open**, Founder 2026-09-05; remnant only).
-- **Named-gap ledger (2026-09-05):** R-SOME / R-RECIPE **hardened / locked**; R-REPL **open**. Plain card: `PLAIN_GATE_CARD_R-SOME_R-RECIPE.md`. Lab boards: `PROPOSED_Lab_R-SOME_R-RECIPE_options.md`, `PROPOSED_PENDING_SUBLOCKS.md`. Not consciousness proved; not A-Strong.
+- **Residual-branch menu:** `RESIDUAL_BRANCH_MENU.md` (R-REPL **paused**; remnant only).
+- **Named-gap ledger (2026-09-05):** R-SOME / R-RECIPE **hardened / locked**; R-REPL **paused**. Plain card: `PLAIN_GATE_CARD_R-SOME_R-RECIPE.md`. Lab boards: `PROPOSED_Lab_R-SOME_R-RECIPE_options.md`, `PROPOSED_PENDING_SUBLOCKS.md`, `PROPOSED_R-REPL_CHECKS.md`, `PROPOSED_R-REPL_API_CHECKS.md`, `C1_SCORE_PROPOSED.md`. Not consciousness proved; not A-Strong.
 
 ---
 

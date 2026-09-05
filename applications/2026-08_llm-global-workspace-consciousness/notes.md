@@ -1,6 +1,6 @@
 # Notes
 
-**Status:** see `STATUS.md`. **2026-09-05:** exploration A — R-SOME / R-RECIPE definitional locks **complete**; Founder opens R-REPL invent (remnant only; last check none yet). Not consciousness proved; not Admissible elevation; not A-Strong.
+**Status:** see `STATUS.md`. **2026-09-05:** exploration A — R-SOME / R-RECIPE definitional locks **complete**; R-REPL **paused** (C1 infra-kill; local-GPU / R1 mech / A1 keys parked; do not chase credentials). Not consciousness proved; not Admissible elevation; not A-Strong.
 
 **Application:** 2026-08_llm-global-workspace-consciousness  
 **Date:** 2026-08-11  
