@@ -19,6 +19,8 @@ Burned classes stay burned. A scoped confirm survivor — if there is one — st
 
 Cheap tests die if Lab treats a near-miss as admission, or if a burned class comes back under a new name. The Operator decides. Lab invents and tests.
 
-## Sibling habit
+## Sibling habits
 
 When you switch to a **brand-new claim**, write up what this string taught you first: [`docs/DIGESTION_HABIT.md`](DIGESTION_HABIT.md).
+
+When you are trying to **clear fog**, name one missing piece and invent a check that could move it: [`docs/SOLVE_LOOP_HABIT.md`](SOLVE_LOOP_HABIT.md).

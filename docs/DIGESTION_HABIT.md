@@ -23,3 +23,5 @@ You do not need a new format. A few sentences in any place you already use is en
 This does not change the scoring rules. It is an operator habit.
 
 When you are still on the **same** problem, invent a new candidate, test it cheaply, then let the Operator decide: [`docs/INVENT_TEST_HABIT.md`](INVENT_TEST_HABIT.md).
+
+When you are trying to **clear fog**, name one missing piece and invent a check that could move it: [`docs/SOLVE_LOOP_HABIT.md`](SOLVE_LOOP_HABIT.md).
