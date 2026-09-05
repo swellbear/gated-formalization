@@ -69,8 +69,8 @@ Prior write-up ([`GREER_WRITEUP.md`](GREER_WRITEUP.md) + Lab [`GREER_WRITEUP_DRA
 
 | ID | Leftover | Disposition |
 |----|----------|-------------|
-| **A1** | **Ref-floor honesty** — absolute vs relative; named **DGPS ~0.4–0.5 m** floor vs our ideal-known-refs sim | **OPENED** by Operator. Rank-1 next. Not scored this fold. |
-| **A2** | **Clock-count / TDOA-resolution honesty** — abstract’s high-speed receiver clock “to the resolution needed,” distinct from our inter-ref SYNC/JOINT/DRIFT/GATE string | Named. **HOLD** until after A1. |
+| **A1** | **Ref-floor honesty** — absolute vs relative; named **DGPS ~0.4–0.5 m** floor vs our ideal-known-refs sim | Later **A1 Soften** — [`SCORE_A1.md`](SCORE_A1.md). Not scored on this ingest sheet. |
+| **A2** | **Clock-count / TDOA-resolution honesty** — abstract’s high-speed receiver clock “to the resolution needed,” distinct from our inter-ref SYNC/JOINT/DRIFT/GATE string | Named. **GO A2** next after A1 Soften. |
 | **A3** | **Indoor / first-arrival / denied-box radio** — GPS-denied buildings / enclosed structures; not our additive mild-NLOS Soften | Named. After A2. |
 | **A4** | **Realtime / central-compute / motion** — abstract names realtime as they move; our JOINT1/DRIFT1 wins were path-batch | Named. After A2 (with A3). |
 | **Link/map** | GIS / CAD overlay | **PARKED** |
@@ -122,4 +122,4 @@ Prior write-up ([`GREER_WRITEUP.md`](GREER_WRITEUP.md) + Lab [`GREER_WRITEUP_DRA
 
 ---
 
-*Docs only. ADMIT ingest ≠ claim clearance. Lab does not self-admit. No RF / ML. A1 opened, not scored.*
+*Docs only. ADMIT ingest ≠ claim clearance. Lab does not self-admit. No RF / ML. Later A1 Soften is on SCORE_A1.md.*

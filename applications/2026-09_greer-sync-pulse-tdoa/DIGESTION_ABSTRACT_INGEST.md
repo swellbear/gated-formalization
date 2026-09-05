@@ -1,6 +1,6 @@
 # Digestion — US10135667B1 abstract ingest (Amb spine)
 
-A short plain note of what the abstract ingest taught. Habit: [`docs/DIGESTION_HABIT.md`](../../docs/DIGESTION_HABIT.md). Incoming GATE1: [`DIGESTION_GATE1.md`](DIGESTION_GATE1.md). SOURCE: [`SOURCE.md`](SOURCE.md). Proposed: [`PROPOSED_ABSTRACT_INGEST.md`](PROPOSED_ABSTRACT_INGEST.md). Summary: [`ABSTRACT_INGEST_SUMMARY.md`](ABSTRACT_INGEST_SUMMARY.md). Copy gate: [`COPY_GATE.md`](COPY_GATE.md). This does **not** score a locator. It does **not** copy claims. It does **not** send to Greer. It does **not** score **A1**. It does **not** reopen cell-tower as live. It does **not** reopen BIA.
+A short plain note of what the abstract ingest taught. Habit: [`docs/DIGESTION_HABIT.md`](../../docs/DIGESTION_HABIT.md). Incoming GATE1: [`DIGESTION_GATE1.md`](DIGESTION_GATE1.md). SOURCE: [`SOURCE.md`](SOURCE.md). Proposed: [`PROPOSED_ABSTRACT_INGEST.md`](PROPOSED_ABSTRACT_INGEST.md). Summary: [`ABSTRACT_INGEST_SUMMARY.md`](ABSTRACT_INGEST_SUMMARY.md). Copy gate: [`COPY_GATE.md`](COPY_GATE.md). This does **not** score a locator. It does **not** copy claims. It does **not** send to Greer. Later the same day: **A1 Soften** — [`DIGESTION_A1.md`](DIGESTION_A1.md). It does **not** reopen cell-tower as live. It does **not** reopen BIA.
 
 **This fold:** `2026-09_greer-sync-pulse-tdoa` — Method Operator **ADMIT ingest** of the US10135667B1 **published abstract** as Amb spine. Still **not** claim clearance. **No** claim-language product copy.
 
@@ -31,19 +31,19 @@ Hardware **X PARKED.**
 
 ## What this string must do next
 
-**A1** (ref-floor honesty) is **opened** by Operator. Lab may invent a cheap A1 check. **A2 / A3 / A4 stay HOLD.** Link/map stays **PARKED**.
+Later the same day: **A1 Soften** — [`DIGESTION_A1.md`](DIGESTION_A1.md). Next: **GO A2** then **A3** then **A4**. Link/map stays **PARKED**.
 
-**Greer send HOLD** until this ingest (now on disk) **+ preferably A1** (or A1+A2). [`GREER_WRITEUP.md`](GREER_WRITEUP.md) is **sync-fragility evidence only**.
+**Greer send HOLD** until the suite digests. [`GREER_WRITEUP.md`](GREER_WRITEUP.md) is **sync-fragility evidence only**.
 
 Still **no RF / ML**. Do **not** invent a fingerprint rescue. Do **not** copy claims. **Multipath later** (our MULTIPATH1 Soften is not A3).
 
 ## What stays parked / closed / hold
 
-- **A2 / A3 / A4** invent **HOLD** until after A1.
+- **A2 → A3 → A4** is the locked next suite (Soften/Harden each). **A1 Soften** is scored.
 - **Link/map** (GIS / CAD overlay) **PARKED**.
 - **Hardware X** stays **PARKED**.
-- **Send to Greer** stays **HOLD** until ingest + preferably A1 (or A1+A2).
-- **Lab invent** stays **HOLD** except **A1 opened**.
+- **Send to Greer** stays **HOLD** until the suite digests.
+- **Lab invent** stays **HOLD** except the locked suite.
 - **SkyMirr MuLCAT** stays its own Amb. This note does **not** reopen it.
 - **Cell-tower geometry** stays **PARKED**. Do **not** reopen as live.
 - **BIA→weight portfolio** stays **CLOSED**.
@@ -51,4 +51,4 @@ Still **no RF / ML**. Do **not** invent a fingerprint rescue. Do **not** copy cl
 - **Track B invent** stays **paused**.
 - **llm-gwt R-REPL** stays **parked**.
 
-This note does **not** authorize a send. It does **not** show a TDOA locator. It does **not** start training. It does **not** score A1. It does **not** unpark hardware **X**.
+This note does **not** authorize a send. It does **not** show a TDOA locator. It does **not** start training. Later **A1 Soften** is on [`DIGESTION_A1.md`](DIGESTION_A1.md). It does **not** unpark hardware **X**.

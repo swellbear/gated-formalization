@@ -6,7 +6,7 @@
 **Parent peek:** first-pulse fog naming **ADMITTED** (C1/C2/C3 SUCCEED; sim-only; hardware **X PARKED**) — [`DIGESTION_FIRST_PULSE.md`](DIGESTION_FIRST_PULSE.md)  
 **Ledger:** [`NAMED_GAP_LEDGER.md`](NAMED_GAP_LEDGER.md)  
 **Digestion:** [`DIGESTION_GEOMETRY_0.md`](DIGESTION_GEOMETRY_0.md)  
-**Later checks:** [`SCORE_MULTIPATH1.md`](SCORE_MULTIPATH1.md) (Soften; NLOS-scoped) · [`SCORE_SYNC_1.md`](SCORE_SYNC_1.md) (Soften; Chan-alone) · [`SCORE_JOINT1.md`](SCORE_JOINT1.md) (Soften; **X** stays 0.50 m under JOINT1 fixed-offset + NLOS) · [`SCORE_DRIFT1.md`](SCORE_DRIFT1.md) (HARDEN; named batch α restores SYNC1 drift breakers)  
+**Later checks:** [`SCORE_MULTIPATH1.md`](SCORE_MULTIPATH1.md) (Soften; NLOS-scoped) · [`SCORE_SYNC_1.md`](SCORE_SYNC_1.md) (Soften; Chan-alone) · [`SCORE_JOINT1.md`](SCORE_JOINT1.md) (Soften; **X** stays 0.50 m under JOINT1 fixed-offset + NLOS) · [`SCORE_DRIFT1.md`](SCORE_DRIFT1.md) (HARDEN; named batch α restores SYNC1 drift breakers) · [`SCORE_A1.md`](SCORE_A1.md) (Soften; **X = 0.50 m** perfect-ref only; abs ≤0.50 m not under RN floor)  
 **Protocol (short):** invent→test habit [`docs/INVENT_TEST_HABIT.md`](../../docs/INVENT_TEST_HABIT.md); named-gap ledger [`docs/NAMED_GAP_LEDGER_HABIT.md`](../../docs/NAMED_GAP_LEDGER_HABIT.md). Lab invents; Operator admits / rejects / parks. Lab does **not** self-admit.
 
 Lab scratch was **not** on this fold VM. Metrics below are copied from the **Operator gate** (authoritative). Hunt scripts / Lab notebooks are **not** on master.
@@ -53,7 +53,7 @@ This fold does **not** re-run the sim. Numbers are the gated Lab summary.
 
 Median error tracks `c · σ_t`. At 1 ns the range-scale `σ_d ≈ 0.300 m` sits next to the 0.361 m median. That is the geometry-not-bottleneck bite.
 
-**Honesty on X:** provisional **sim X = 0.50 m** is **median**-based @ 1 ns (0.361 m + margin). The same 1 ns board has **p90 ≈ 1.16 m**. **X is median-not-p90.** Do **not** read 0.50 m as a 90th-percentile bar.
+**Honesty on X:** provisional **sim X = 0.50 m** is **median**-based @ 1 ns (0.361 m + margin) under **perfectly known refs**. The same 1 ns board has **p90 ≈ 1.16 m**. **X is median-not-p90.** Do **not** read 0.50 m as a 90th-percentile bar. Later **A1 Soften** — [`SCORE_A1.md`](SCORE_A1.md) — names this 0.50 m as **perfect-ref scoped sim only**. Do **not** read it as an **absolute** bar under the RN floor.
 
 **HARDEN (Operator):** Under ideal simultaneous sync + Gaussian Δt only, planar TDOA geometry with frozen Chan (1994) 2D WLS is **not** the bottleneck.
 
@@ -63,7 +63,7 @@ Median error tracks `c · σ_t`. At 1 ns the range-scale `σ_d ≈ 0.300 m` sits
 
 **HARDEN.** Geometry is not the bottleneck under the idealizations above.
 
-**LOCK** provisional **sim X = 0.50 m** (**median**-based @ 1 ns + margin). **X is median-not-p90** (1 ns p90 ≈ **1.16 m**).
+**LOCK** provisional **sim X = 0.50 m** (**median**-based @ 1 ns + margin; **perfect-ref**). **X is median-not-p90** (1 ns p90 ≈ **1.16 m**). Later **A1 Soften** Softens silent absolute-≤0.50 reading of this lock.
 
 **PARK** hardware **X** until a sync / multipath gate.
 
@@ -89,7 +89,7 @@ Cell-tower Amb stays **PARKED**. BIA→weight portfolio stays **CLOSED**.
 
 ## 4. Hard NO
 
-- Do **not** treat **0.50 m** as a hardware bar, a field locator, or a **p90** bar.
+- Do **not** treat **0.50 m** as a hardware bar, a field locator, a **p90** bar, or an **absolute** bar under RN survey error (later **A1 Soften**).
 - Do **not** invent the next pulse until Founder / user reopens a parked textbook follow-on. **Later:** MULTIPATH1 Soften and SYNC1 Soften scoped **X**.
 - Do **not** invent RF / ML / fingerprint models.
 - Do **not** use GPS / DGPS as the mobile fix.
