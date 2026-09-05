@@ -2,10 +2,12 @@
 
 **Date:** 2026-09-05  
 **Application:** `2026-09_skymirr-mulcat-isolation`  
-**String:** first-pulse fog peek **ADMITTED Soften**  
-**Named gap:** can a with-vs-without isolation test even be posed on a laptop-feasible open-EM / documented-surrogate path, without commercial HFSS?  
+**String:** first-pulse fog peek **ADMITTED Soften**; later the same day **SURROGATE1 Soften Rank1**  
+**Named gap (this sheet):** can a with-vs-without isolation test even be posed on a laptop-feasible open-EM / documented-surrogate path, without commercial HFSS?  
 **Ledger:** [`NAMED_GAP_LEDGER.md`](NAMED_GAP_LEDGER.md)  
-**Digestion:** [`DIGESTION_FIRST_PULSE.md`](DIGESTION_FIRST_PULSE.md)
+**Peek digestion:** [`DIGESTION_FIRST_PULSE.md`](DIGESTION_FIRST_PULSE.md)  
+**SURROGATE1 score (later same day):** [`SCORE_SURROGATE1.md`](SCORE_SURROGATE1.md)  
+**SURROGATE1 digestion:** [`DIGESTION_SURROGATE1.md`](DIGESTION_SURROGATE1.md)
 
 Lab invented ranked peek probes. Lab does **not** self-admit. Lab scratch was **not** readable on this fold VM. Record below is the gated fact set copied from the Method Operator gate (honest docs / tooling / assumption peek; no models; no EM campaign).
 
@@ -17,7 +19,7 @@ Lab invented ranked peek probes. Lab does **not** self-admit. Lab scratch was **
 
 **What this is:** Three cheap checks that ask whether the locked claim is even poseable. Tooling / docs / assumption peek. No estimator.
 
-**What this settles (gated):** A **surrogate-first** Amb is poseable via **scikit-rf**. openEMS / Meep full-wave is **DATA-BLOCKED** on the Lab box (no toolchain). A 3D fine-mesh campaign is **PARKED** on a 16 GB laptop. Provisional **Δ = 5 dB** is locked (Soften vs the ~12 dB bibliographic S21 story; **do not vanity-freeze 12**). Alternate Harden **Δ = 10** is held. Memory / mesh fog is named. Peek succeed is **not** isolation shown.
+**What this settles (gated):** A **surrogate-first** Amb is poseable via **scikit-rf**. openEMS / Meep full-wave is **DATA-BLOCKED** on the Lab box (no toolchain). A 3D fine-mesh campaign is **PARKED** on a 16 GB laptop. Provisional **Δ = 5 dB** is locked (Soften vs the ~12 dB bibliographic S21 story; **do not vanity-freeze 12**). Alternate Harden **Δ = 10** is held. Memory / mesh fog is named. Peek succeed is **not** isolation shown. **Later the same day:** **SURROGATE1 Soften Rank1** scored Rank1 EO ΔS21 = **3.32 dB** (locked Δ = 5 **unmet**). See [`SCORE_SURROGATE1.md`](SCORE_SURROGATE1.md).
 
 **What this is not:** Not isolation shown. Not a reason to buy HFSS. Not a reason to paste patent claims. Not a design optimizer. Not claim clearance. Not invent of a model.
 
@@ -75,7 +77,7 @@ The original claim-language comparison stays a **Hard NO** (standing constraint,
 
 ---
 
-## 5. Operator gate (authoritative)
+## 5. Operator gate — FOG_PEEK (authoritative; still stands)
 
 **Soften:** surrogate-first Amb poseable via scikit-rf; openEMS/Meep full-wave DATA-BLOCKED on Lab box (no toolchain); park 3D fine-mesh campaign on 16GB laptop.
 
@@ -83,9 +85,27 @@ The original claim-language comparison stays a **Hard NO** (standing constraint,
 
 Peek1 MIXED; Peek2 Δ=5 recommended; Peek3 memory/mesh fog named. AI optimizer claims later wave. HFSS Hard NO. Greer invent HOLD; BIA CLOSED; cell-tower PARKED. No invent models; no claim-language copy. Peek succeed ≠ isolation shown.
 
+---
+
+## 5b. Operator gate — SURROGATE1 Soften Rank1 (authoritative; later the same day)
+
+Copied from the Method Operator gate. Metrics live on [`SCORE_SURROGATE1.md`](SCORE_SURROGATE1.md). Digestion: [`DIGESTION_SURROGATE1.md`](DIGESTION_SURROGATE1.md). Lab scratch was **not** on this fold VM. **No invent scripts** merged.
+
+**Soften Rank1 SURR_EO_COUPLED:** ΔS21=3.32 dB @ 2 GHz under smoke-class mild EO (Ze=70/Zo=36) — Soften band 3–5; locked Δ=5 bar **unmet**. No Soften-param vanity Ze/Zo chase.
+
+**Rank2/3 Soften-carry peeks only** (do NOT Amb Harden / Rank1 clearance):
+- SURR_NEUTRAL_DN Δ=54.19 — textbook lumped cancel; wrong object for MuLCAT multi-layer → Soften-peek / park as Amb path.
+- SURR_DGS_EQ Δ=6.24 — meets bar on eq-circuit; fragile to detune → Soften-carry poseable alternate; not PCB/claim clearance.
+
+**Locks:** provisional Δ=5 Soften stands (alt 10 held); surrogate-first Soften; full-wave parked; HFSS Hard NO; AI optimizer later; Greer HOLD; BIA CLOSED; cell-tower PARKED. Surrogate ≠ PCB. Peek succeed ≠ isolation shown.
+
 **Hard NO**
 
 - Do **not** invent antenna / coupling-structure models on this pulse.
+- Do **not** merge invent scripts unless they are already docs-only pointers.
+- Do **not** vanity-chase Ze/Zo to push Rank1 over Δ = 5.
+- Do **not** Amb Harden or Rank1-clear from Rank2/3 peeks.
+- Do **not** treat surrogate as PCB.
 - Do **not** require or run commercial HFSS.
 - Do **not** train a fingerprint / ML / design-optimizer model.
 - Do **not** copy US12,719,158 B2 claim language or treat this as a product embodiment of that patent.
@@ -112,4 +132,4 @@ Peek1 MIXED; Peek2 Δ=5 recommended; Peek3 memory/mesh fog named. AI optimizer c
 
 ---
 
-*Docs only. Peek succeed ≠ isolation shown. Provisional Δ ≠ a scored S21 campaign. Not a product. Not skill-met. Not commercial clearance. Not a patent-product claim. Not rithm. Lab does not self-admit. Lab scratch was not on this VM; summary copied from the Operator gate. No invent models this fold.*
+*Docs only. Peek succeed ≠ isolation shown. Soften Rank1 ≠ bar-met. Surrogate ≠ PCB. Provisional Δ stands and is unmet on Rank1. Not a product. Not skill-met. Not commercial clearance. Not a patent-product claim. Not rithm. Lab does not self-admit. Lab scratch was not on this VM; summary copied from the Operator gate. No invent models / no invent scripts this fold.*

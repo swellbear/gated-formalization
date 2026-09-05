@@ -1,6 +1,6 @@
 # Digestion — from the Greer sync-locate string
 
-A short plain note before this new claim. Habit: [`docs/DIGESTION_HABIT.md`](../../docs/DIGESTION_HABIT.md). This does **not** score SkyMirr isolation. It does **not** reopen Greer invent. It does **not** send the Greer write-up. It does **not** reopen cell-tower as live. It does **not** reopen BIA→weight. First-pulse fog peek is now gated Soften: [`DIGESTION_FIRST_PULSE.md`](DIGESTION_FIRST_PULSE.md).
+A short plain note before this new claim. Habit: [`docs/DIGESTION_HABIT.md`](../../docs/DIGESTION_HABIT.md). This does **not** score SkyMirr isolation. It does **not** reopen Greer invent. It does **not** send the Greer write-up. It does **not** reopen cell-tower as live. It does **not** reopen BIA→weight. First-pulse fog peek is gated Soften: [`DIGESTION_FIRST_PULSE.md`](DIGESTION_FIRST_PULSE.md). Later the same day **SURROGATE1 Soften Rank1**: [`DIGESTION_SURROGATE1.md`](DIGESTION_SURROGATE1.md).
 
 **Last string:** `2026-09_greer-sync-pulse-tdoa` — first-pulse fog peek **ADMITTED**, then **GEOM0 HARDEN**, **MULTIPATH1 Soften**, **SYNC1 Soften**, **JOINT1 Soften**, **DRIFT1 HARDEN**, **GATE1 Soften**. Provisional **sim X = 0.50 m** (scoped; median-not-p90). Hardware **X PARKED**. Greer-facing write-up is on disk (**hold-send**). Founder now: Greer invent stays **HOLD**. The write-up stays **hold-send**. Draft REOPEN #68 is **not** this work.
 
@@ -19,7 +19,7 @@ Incoming parked / closed strings (still not live): `2026-09_cell-tower-geometry`
 
 Stay a **new** Amb, not Greer invent reopened, not cell-tower reopened as live, and not a BIA sequel.
 
-- Quote the Founder **CLAIM LOCK**. First-pulse fog peek now **ADMITTED Soften**; provisional **Δ = 5 dB**. Live path = **surrogate-first** (scikit-rf).
+- Quote the Founder **CLAIM LOCK**. First-pulse fog peek **ADMITTED Soften**; later **SURROGATE1 Soften Rank1** (Rank1 EO ΔS21 = **3.32 dB**; locked **Δ = 5 unmet**). Provisional **Δ = 5 dB** stands. Live path = **surrogate-first Soften**. Surrogate ≠ PCB.
 - Full-wave openEMS/Meep stays **DATA-BLOCKED** on the Lab box. 3D fine-mesh stays **PARKED** on a 16 GB laptop. **HFSS Hard NO.**
 - Path must stay **laptop-feasible**. **Do not vanity-freeze 12.** Alternate Harden **Δ = 10** is held, not locked.
 - Contrast US12,719,158 B2 / SkyMirr MuLCAT as prior art for **method practice / explore the isolation idea**. Do **not** copy claims as a product embodiment.
