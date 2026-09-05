@@ -43,7 +43,7 @@ Consciousness is **not** proved. This is **not** an Admissible-band elevation. *
 
 1. **Qwen cite audit — cleared.** `Qwen/Qwen3.6-27B` enters S1(b) as **PASS_WITH_CAVEATS** (Bhatia/Blank/Nanda AF/LW 2026-07-20). Caveats stay on the ledger: AF not journal; hybrid DeltaNet+attn; n=25≪1000. Same operational hallmark class.
 2. **S2 Hugging Face IDs — cleared / LOCKED.** Default: `Qwen/Qwen3.6-27B`, `google/gemma-2-27b-it`, `meta-llama/Llama-3.1-8B-Instruct`. Optional later only: `meta-llama/Llama-3.3-70B-Instruct` (not in the default lock).
-3. **H-thresholds — cleared / FROZEN.** H-verb / H-sel / H-bcast as in [`PROPOSED_PENDING_SUBLOCKS.md`](PROPOSED_PENDING_SUBLOCKS.md) §3. Pass = ≥2/3. R2 optional. R3 not a Weak pass.
+3. **H-thresholds — cleared / FROZEN.** Thresholds frozen to the **numeric rules** in [`PROPOSED_PENDING_SUBLOCKS.md`](PROPOSED_PENDING_SUBLOCKS.md) §3 (not kinship gloss). Pass = ≥2/3. R2 optional. R3 not a Weak pass.
 
 ---
 

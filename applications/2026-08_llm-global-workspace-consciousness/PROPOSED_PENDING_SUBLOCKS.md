@@ -8,7 +8,7 @@
 
 Lab invents. Lab does **not** self-admit. This is the in-repo copy of the Lab pending-sublock board plus the **Operator sub-lock gate** after it landed.
 
-Scratch path named by Lab (`/workspace/gwt_remnant_lab/PROPOSED_PENDING_SUBLOCKS.md`) was **not** on this fold VM. Numbers below are the Operator-frozen values plus the public source kinship Lab pointed at. No extra unpublished cutoffs are invented.
+Scratch path named by Lab (`/workspace/gwt_remnant_lab/PROPOSED_PENDING_SUBLOCKS.md`) was **not** on the #39 fold VM, which substituted Gurnee kinship glosses for the gated numeric freeze. This file now restores the Operator-gated Lab numerics from that path. Numbers are Gurnee design priors for open-model scoring — **not** a pre-admit that open models already pass. No extra unpublished cutoffs are invented.
 
 **What this is not:** Consciousness is **not** proved. This is **not** an Admissible-band elevation. **A-Strong**, sufficiency, unconstrained scale, and Strong-GNW stay parked.
 
@@ -48,15 +48,31 @@ Scratch path named by Lab (`/workspace/gwt_remnant_lab/PROPOSED_PENDING_SUBLOCKS
 
 ## 3. H-thresholds FREEZE
 
-**Pass rule:** ≥**2/3** of H-verb / H-sel / H-bcast at the frozen rules below.  
-**R2** remains an optional cheap behavior screen — **not** a substitute for R1.  
-**R3** Ignition Index β̂ remains companion / negative-control only — **not** a Weak pass.
+Shared run protocol:
+- Fit J-lens per model: average Jacobian over ≥25 prompts × ≥128 tokens from named corpus (default `NeelNanda/pile-10k`); document skip-token rule.
+- Workspace band: layers where excess kurtosis / CKA middle-block / occupancy onset agree; interventions default to that band.
+- Pre-register task lists before first scored run.
 
-| ID | Everyday | Frozen pass rule | Key numbers / kinship (not a new admit) |
-|----|----------|------------------|----------------------------------------|
-| **H-verb** | Talk-ready subspace | A privileged verbalizable / J-space set is present in an **intermediate workspace band**, and it is **capacity-limited** (not the whole residual) | Gurnee: occupancy “on the order of **tens** of concepts”; listed sensitivity uses **top-25** J-lens rank. Qwen fit: workspace band talked as ~**30–90%** depth |
-| **H-sel** | Hurts flexible thinking more than automatic | Ablation / swap of that set degrades **flexible / report / multi-step** use **more than** automatic continuation / routine recall | Strict inequality. No least-bad. Gurnee selective-use split (flexible needs J-space; automatic can bypass) |
-| **H-bcast** | Broader influence | J-space directions compose with weights / are broadcast **more broadly** than matched non-J controls | Strict inequality. Gurnee: broader compose than other residual directions; in some network parts a factor of about **100**; broadcast-head check uses **top 1%** heads |
+### H-verb — Pass if all of:
+1. Sparse occupancy: median workspace-band occupancy K̂ ∈ **[8, 40]**
+2. Small variance share: excess variance explained by top-K̂ J-lens vectors **≤ 10%** and **>** matched random-direction control
+3. Report privilege (causal): on frozen think-of/swap or introspection suite: J-space component swap/injection success **≥ 50%** of trials to top-5 (or report-detect), **and** non-J remainder **≤ 15%**, **and** J / non-J success ratio **≥ 3×**
+
+### H-sel — Pass if all of:
+1. Freeze Auto vs Flex task batteries before run (Auto: MMLU-MC/subset, extractive QA, sentiment, acceptability; Flex: multi-hop factual, analogy, free-form grounded gen)
+2. Ablate top-**k=10** J-lens directions over workspace band (exclude clean-pass top-10 output tokens)
+3. Auto: absolute score drop **≤ 5 percentage points** vs clean (or within Wilson CI of clean)
+4. Flex: absolute drop **≥ 15 percentage points** **or** falls below a named smaller-model clean reference run the same day
+
+### H-bcast — Pass if:
+1. Frozen function×argument swap suite (≥**4** categories × ≥**4** functions; report n)
+2. Clamped lens-coordinate swap α=1: target-appropriate top-1 rate **≥ 30%**
+3. Matched random/non-J control: success **≤ half** of J-lens rate **or** non-overlapping 95% CI
+4. Soft secondary only (not required): workspace loading predicts swap success
+
+Aggregate: Weak-hallmark-positive iff **≥ 2 of 3** Hs pass. R2 optional screen; R3 not Weak pass.
+
+Numbers are Gurnee design priors for open-model scoring — **not** a pre-admit that open models already pass.
 
 **Operator gate:** **H-thresholds FREEZE** as this §3. Pass = ≥2/3. R2 optional. R3 not a Weak pass.
 
