@@ -30,14 +30,14 @@ That is an **Amb HARDEN** of the named path-drift leftover. It is **not** a loca
 
 US10135667B1 — owner-requested **collaboration framing** (bibliographic; custom-beacon substrate, **not** a carrier-mast Amb). **No claim-language copy.**
 
-## What this string must do next (not this fold)
+## What this string must do next (later the same day: GATE1)
 
-**GATE1**, then a Greer-facing write-up. Still **no RF / ML**. Do **not** invent a fingerprint rescue. Do **not** treat DRIFT1 as free per-epoch realtime. **Multipath later.**
+Lab later scored **GATE1 Soften**. See [`DIGESTION_GATE1.md`](DIGESTION_GATE1.md). Write-up is on disk — **HOLD send**. Still **no RF / ML**. Do **not** invent a fingerprint rescue. Do **not** treat DRIFT1 as free per-epoch realtime. **Multipath later.**
 
 ## What stays parked / closed
 
 - **Hardware X** stays **PARKED**.
-- **GATE1** and the Greer-facing write-up are named next — **not** scored this fold.
+- **GATE1** later scored **Soften** — [`DIGESTION_GATE1.md`](DIGESTION_GATE1.md). Write-up **HOLD send**.
 - **Multipath** is **later**, not this fold. **MULTIPATH1 Soften** still stands.
 - **Cell-tower geometry** stays **PARKED**. Do **not** reopen as live.
 - **BIA→weight portfolio** stays **CLOSED**. Do **not** reopen human, poultry, cattle, sheep, or companion BIA apps.
@@ -45,4 +45,4 @@ US10135667B1 — owner-requested **collaboration framing** (bibliographic; custo
 - **Track B invent** stays **paused**.
 - **llm-gwt R-REPL** stays **parked**.
 
-This note does **not** authorize running GATE1 in this fold. It does **not** show a TDOA locator. It does **not** start training. It does **not** unpark hardware **X**.
+This DRIFT1 note does **not** re-score GATE1. It does **not** show a TDOA locator. It does **not** start training. It does **not** unpark hardware **X**. Later **GATE1 Soften** and the write-up live on [`DIGESTION_GATE1.md`](DIGESTION_GATE1.md) / [`GREER_WRITEUP.md`](GREER_WRITEUP.md).
