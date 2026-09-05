@@ -47,14 +47,14 @@ This fold does **not** re-run the surrogate. Numbers are the gated Lab summary c
 |------|--------|--------------|------|
 | **1** | **SURR_EO_COUPLED** — smoke-class mild EO (Ze=70 / Zo=36) @ 2 GHz | **3.32 dB** | **Soften Rank1** — Soften band 3–5; locked **Δ = 5** bar **unmet**. No Soften-param vanity Ze/Zo chase |
 | 2 (peek only) | **SURR_NEUTRAL_DN** | **54.19 dB** | Soften-peek / **park as Amb path** — textbook lumped cancel; **wrong object** for MuLCAT multi-layer. Do **not** Amb Harden / Rank1 clearance |
-| 3 (peek only) | **SURR_DGS_EQ** | **6.24 dB** | Soften-carry poseable alternate — meets bar on eq-circuit; **fragile to detune**; **not** PCB / claim clearance. Do **not** Amb Harden / Rank1 clearance |
+| 3 (peek only) | **SURR_DGS_EQ** | **6.24 dB** | **Formal DGS Hold** — meets bar on eq-circuit; **fragile to detune**; **not** Amb clear; **not** PCB / claim clearance. Do **not** Amb Harden / Rank1 clearance |
 
 **Soften Rank1 (Operator).** Locked Δ = 5 **unmet**.
 
 - Rank1 **3.32 dB** is inside the Soften band **3–5**. That is Soften, **not** bar-met, **not** Harden, **not** isolation shown.
 - Do **not** chase Ze/Zo as a Soften-param vanity to push Rank1 over 5.
 - Rank2 **54.19 dB** is the wrong object (textbook lumped cancel ≠ MuLCAT multi-layer). **Park** as an Amb path.
-- Rank3 **6.24 dB** can pose an eq-circuit alternate. It is **fragile to detune**. It is **not** PCB clearance and **not** Rank1 clearance.
+- Rank3 **6.24 dB** can pose an eq-circuit alternate. It is **fragile to detune**. **Formal DGS Hold** — **not** Amb clear, **not** PCB clearance, **not** Rank1 clearance.
 
 Surrogate ≠ PCB. Peek succeed ≠ isolation shown.
 
@@ -66,14 +66,15 @@ Surrogate ≠ PCB. Peek succeed ≠ isolation shown.
 
 **Rank2/3 Soften-carry peeks only** (do NOT Amb Harden / Rank1 clearance):
 - SURR_NEUTRAL_DN Δ=54.19 — textbook lumped cancel; wrong object for MuLCAT multi-layer → Soften-peek / park as Amb path.
-- SURR_DGS_EQ Δ=6.24 — meets bar on eq-circuit; fragile to detune → Soften-carry poseable alternate; not PCB/claim clearance.
+- SURR_DGS_EQ Δ=6.24 — meets bar on eq-circuit; fragile to detune → **Formal DGS Hold**; **not** Amb clear; not PCB/claim clearance.
 
-**Locks:** provisional Δ=5 Soften stands (alt 10 held); surrogate-first Soften; full-wave parked; HFSS Hard NO; AI optimizer later; Greer HOLD; BIA CLOSED; cell-tower PARKED. Surrogate ≠ PCB. Peek succeed ≠ isolation shown.
+**Locks:** provisional Δ=5 Soften stands (alt 10 held; **do not drop bar to 3.32**); surrogate-first Soften; **Lab HOLD invent**; further surrogate invent parked; Formal DGS Hold (not Amb clear); full-wave parked; HFSS Hard NO; AI optimizer later; Greer HOLD; write-up hold-send; BIA CLOSED; cell-tower PARKED. Surrogate ≠ PCB. Peek succeed ≠ isolation shown. Reopen later **only** for openEMS / toolchain or user override.
 
 **Honesty locks**
 
-- Provisional **Δ = 5 dB** Soften **stands**. Alternate Harden **Δ = 10** held.
-- Live path = **surrogate-first**. Full-wave stays **PARKED**. **HFSS Hard NO.**
+- Provisional **Δ = 5 dB** Soften **stands**. **Do not drop the bar to 3.32.** Alternate Harden **Δ = 10** held.
+- Live path = **surrogate-first**. **Lab HOLD invent.** Further surrogate invent **PARKED**. Full-wave stays **PARKED**. **HFSS Hard NO.**
+- **Formal DGS Hold** — **not** Amb clear.
 - AI / design-optimizer claims stay a **later wave**.
 - US12,719,158 B2 / SkyMirr MuLCAT = bibliographic prior art only. **No claim-language copy.**
 - Surrogate ≠ PCB.
@@ -86,8 +87,11 @@ Surrogate ≠ PCB. Peek succeed ≠ isolation shown.
 
 ## 4. Hard NO
 
-- Do **not** treat **3.32 dB** as isolation shown, as PCB isolation, or as bar-met.
+- Do **not** treat **3.32 dB** as isolation shown, as PCB isolation, as bar-met, or as a new **Δ**.
+- Do **not** drop locked **Δ = 5** to Rank1 **3.32**.
 - Do **not** vanity-chase Ze/Zo until Rank1 crosses 5.
+- Do **not** treat Formal DGS Hold as Amb clear.
+- Do **not** invent further surrogate classes while **Lab HOLD invent** is in force (reopen later only for openEMS / toolchain or user override).
 - Do **not** Amb Harden or Rank1-clear from Rank2 **SURR_NEUTRAL_DN** (wrong object) or Rank3 **SURR_DGS_EQ** (eq-circuit; fragile; not PCB).
 - Do **not** vanity-freeze bibliographic ~12 dB as **Δ**.
 - Do **not** unpark full-wave / 3D fine-mesh.

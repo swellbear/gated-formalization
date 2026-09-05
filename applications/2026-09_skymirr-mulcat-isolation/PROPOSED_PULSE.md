@@ -99,11 +99,22 @@ Copied from the Method Operator gate. Metrics live on [`SCORE_SURROGATE1.md`](SC
 
 **Locks:** provisional Δ=5 Soften stands (alt 10 held); surrogate-first Soften; full-wave parked; HFSS Hard NO; AI optimizer later; Greer HOLD; BIA CLOSED; cell-tower PARKED. Surrogate ≠ PCB. Peek succeed ≠ isolation shown.
 
+---
+
+## 5c. Founder + Operator addendum — Soften Amb DIGEST (authoritative)
+
+Copied from the Founder + Operator addendum after #75. **Lab HOLD invent.** Further surrogate invent **parked**. **Formal DGS Hold** — **not** Amb clear. Keep **Δ = 5** Soften — **do not drop the bar to 3.32**. Reopen later **only** for **openEMS / toolchain** or **user override**. Greer invent **HOLD**. Greer write-up **hold-send**. Unchanged.
+
+**Soften Amb DIGEST:** Rank1 smoke-class EO surrogate is poseable at ΔS21 = 3.32 dB (Soften band 3–5) and does not meet locked Δ = 5. Do not drop the bar to 3.32. Rank2 lumped cancel is the wrong object — parked as an Amb path. Rank3 DGS eq-circuit is Formal DGS Hold (meets 5 on paper; fragile to detune; not Amb clear; not PCB). Further surrogate invent is parked. Lab HOLD invent. Reopen later only for openEMS / toolchain or user override. Full-wave remains parked. HFSS Hard NO. Surrogate ≠ PCB. Peek succeed ≠ isolation shown. Greer invent HOLD; write-up hold-send. BIA CLOSED. Cell-tower PARKED.
+
 **Hard NO**
 
 - Do **not** invent antenna / coupling-structure models on this pulse.
 - Do **not** merge invent scripts unless they are already docs-only pointers.
 - Do **not** vanity-chase Ze/Zo to push Rank1 over Δ = 5.
+- Do **not** drop the locked **Δ = 5** bar to Rank1 **3.32**.
+- Do **not** treat Formal DGS Hold as Amb clear.
+- Do **not** invent further surrogate classes while Lab HOLD invent is in force (reopen later only for openEMS / toolchain or user override).
 - Do **not** Amb Harden or Rank1-clear from Rank2/3 peeks.
 - Do **not** treat surrogate as PCB.
 - Do **not** require or run commercial HFSS.
