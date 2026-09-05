@@ -21,7 +21,7 @@ The claim is **poseable** on a laptop-feasible sim-only path. It is **not** clea
 - **Eval protocol:** GPS/DGPS = place/time refs only; **never** the mobile fix. **No** RF fingerprint training.
 - **US10135667B1** = prior-art note only.
 
-Peek succeed is **not** claim clearance. Sim-geometry-first is **not** a locator. A numeric sim **X** was **not** frozen at peek time (**#0** later locked **0.50 m**). Training is **not** established.
+Peek succeed is **not** claim clearance. Sim-geometry-first is **not** a locator. A numeric sim **X** was **not** frozen at peek time (**#0** later locked **0.50 m**, **median**-not-p90; 1 ns p90 ≈ **1.16 m**). Training is **not** established.
 
 ## What this string must do next (later the same day: #0 ran)
 
