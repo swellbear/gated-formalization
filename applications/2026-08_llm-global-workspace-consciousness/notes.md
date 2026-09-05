@@ -1,6 +1,6 @@
 # Notes
 
-**Status:** see `STATUS.md`.
+**Status:** see `STATUS.md`. **2026-09-05:** exploration A — R-SOME / R-RECIPE definitional locks **complete**; R-REPL park-until-trigger (not authorized). Not consciousness proved; not Admissible elevation; not A-Strong.
 
 **Application:** 2026-08_llm-global-workspace-consciousness  
 **Date:** 2026-08-11  
