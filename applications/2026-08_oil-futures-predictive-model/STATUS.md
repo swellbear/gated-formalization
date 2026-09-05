@@ -16,7 +16,7 @@ Deep1 **P1** C-SPOT-CUTOFF-SWEEP and **P2** C-SPOT-VEHICLE are **ADMIT as Amb co
 
 **Founder addendum:** after P4 HARDEN, **Track B invent is paused** (digest). Lab held unless Founder/user locks a new named-gap solve string. Still **not** skill-met. Does **not** elevate. Does **not** null-burn.
 
-**Track B digestion (2026-09-05):** the stalled invent→test / solve-loop string is written up in [`DIGESTION_TrackB_2026-09-05.md`](DIGESTION_TrackB_2026-09-05.md) — what it taught, what stays foggy, what we refuse to claim. Invent remains **paused**. Lab held. Still **not** skill-met. Does **not** elevate. Does **not** null-burn. This paragraph does **not** authorize new invent.
+**Track B digestion (2026-09-05):** the stalled invent→test / solve-loop string is written up in [`DIGESTION_TrackB_2026-09-05.md`](DIGESTION_TrackB_2026-09-05.md) — what it taught, what stays foggy, what we refuse to claim. Invent remains **paused**. Lab held. Still **not** skill-met. Does **not** elevate. Does **not** null-burn. This paragraph does **not** authorize new invent. Opening `2026-09_collatz-shortcut-map` does **not** reopen Track B.
 
 ---
 

@@ -8,7 +8,7 @@
 
 ### Plain status
 
-Exploration A definitional locks for a **checkable remnant** are **complete**. **R-REPL** last check: Operator **C1 KILL-unrunnable (infra)** — not a hallmark fail. Founder/user: do **not** pursue access we don’t have. Local-GPU **paused**. R1 mech on S2 **parked** (A3 honesty). A1 R2 API screen **parked** until the user voluntarily provisions keys they already own (do not chase keys). No R2 demotion. Lab **HOLD** on runs. Remnant Amb stays **open/parked honestly**. This is **not** consciousness proved. This is **not** an Admissible-band elevation. **A-Strong** is **not** admissible and is **not** revived. Sufficiency / unconstrained scale / Strong-GNW stay parked. Track B invent remains **paused**.
+Exploration A definitional locks for a **checkable remnant** are **complete**. **R-REPL** last check: Operator **C1 KILL-unrunnable (infra)** — not a hallmark fail. Founder/user: do **not** pursue access we don’t have. Local-GPU **paused**. R1 mech on S2 **parked** (A3 honesty). A1 R2 API screen **parked** until the user voluntarily provisions keys they already own (do not chase keys). No R2 demotion. Lab **HOLD** on runs. Remnant Amb stays **open/parked honestly**. This is **not** consciousness proved. This is **not** an Admissible-band elevation. **A-Strong** is **not** admissible and is **not** revived. Sufficiency / unconstrained scale / Strong-GNW stay parked. Track B invent remains **paused**. **R-REPL stays parked** — the live leashed invent is the separate app `2026-09_collatz-shortcut-map` (not Collatz proved).
 
 ---
 

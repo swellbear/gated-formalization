@@ -1,6 +1,6 @@
 # Notes
 
-**Status:** see `STATUS.md`. **2026-09-05:** exploration A — R-SOME / R-RECIPE definitional locks **complete**; R-REPL **paused** (C1 infra-kill; local-GPU / R1 mech / A1 keys parked; do not chase credentials). Not consciousness proved; not Admissible elevation; not A-Strong.
+**Status:** see `STATUS.md`. **2026-09-05:** exploration A — R-SOME / R-RECIPE definitional locks **complete**; R-REPL **paused** (C1 infra-kill; local-GPU / R1 mech / A1 keys parked; do not chase credentials). Not consciousness proved; not Admissible elevation; not A-Strong. **R-REPL stays parked** — live leashed invent is separate app `2026-09_collatz-shortcut-map` (not Collatz proved).
 
 **Application:** 2026-08_llm-global-workspace-consciousness  
 **Date:** 2026-08-11  
