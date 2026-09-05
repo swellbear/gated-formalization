@@ -1,6 +1,6 @@
 # Digestion — first-pulse fog peek (surrogate-first Soften; Δ = 5 dB)
 
-A short plain note of what the first-pulse fog peek taught. Habit: [`docs/DIGESTION_HABIT.md`](../../docs/DIGESTION_HABIT.md). Incoming Greer lesson: [`DIGESTION_FROM_GREER.md`](DIGESTION_FROM_GREER.md). Peek sheet: [`PROPOSED_PULSE.md`](PROPOSED_PULSE.md). This does **not** score isolation. It does **not** invent models. It does **not** reopen Greer invent. It does **not** send the Greer write-up. It does **not** reopen cell-tower as live. It does **not** reopen BIA→weight.
+A short plain note of what the first-pulse fog peek taught. Habit: [`docs/DIGESTION_HABIT.md`](../../docs/DIGESTION_HABIT.md). Incoming Greer lesson: [`DIGESTION_FROM_GREER.md`](DIGESTION_FROM_GREER.md). Peek sheet: [`PROPOSED_PULSE.md`](PROPOSED_PULSE.md). **Later the same day:** Operator **ADMIT SURROGATE1 Soften Rank1** — [`DIGESTION_SURROGATE1.md`](DIGESTION_SURROGATE1.md) · [`SCORE_SURROGATE1.md`](SCORE_SURROGATE1.md). Rank1 EO ΔS21 = **3.32 dB**; locked **Δ = 5 unmet**. This does **not** score isolation. It does **not** invent models. It does **not** reopen Greer invent. It does **not** send the Greer write-up. It does **not** reopen cell-tower as live. It does **not** reopen BIA→weight.
 
 **This peek:** `2026-09_skymirr-mulcat-isolation` first pulse — Method Operator **ADMIT FOG_PEEK Soften**. Lab scratch was **not** on this fold VM; the gated fact set was copied from the Operator gate.
 
@@ -26,11 +26,11 @@ The claim is **poseable** on a laptop-feasible **surrogate-first** path. It is *
 
 Peek succeed is **not** isolation shown. A 5 dB bar is **not** a measured S21 campaign. Training is **not** established.
 
-## What this string must do next
+## What this string must do next (later the same day: SURROGATE1)
 
-**Lab HOLD invent models.** No next pulse was admitted on this fold.
+Lab later scored **SURROGATE1 Soften Rank1**. See [`DIGESTION_SURROGATE1.md`](DIGESTION_SURROGATE1.md). **FOG_PEEK Soften** still stands. After SURROGATE1: **Lab HOLD invent**. No next pulse was admitted on that fold.
 
-Stay the **same Amb**. Do **not** unpark 3D fine-mesh. Do **not** smuggle HFSS. Do **not** vanity-freeze 12. Do **not** train. Do **not** copy patent claims. Do **not** pull the AI / design-optimizer later wave forward.
+Stay the **same Amb**. Do **not** unpark 3D fine-mesh. Do **not** smuggle HFSS. Do **not** vanity-freeze 12. Do **not** vanity-chase Ze/Zo. Do **not** train. Do **not** copy patent claims. Do **not** pull the AI / design-optimizer later wave forward.
 
 ## What stays parked / closed / hold
 
