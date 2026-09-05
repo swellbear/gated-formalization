@@ -27,7 +27,7 @@ Peek succeed is **not** claim clearance. Sim-geometry-first is **not** a locator
 
 **#0 geometry-bottleneck sim** was **admitted** here and **scored** later the same day. See [`DIGESTION_GEOMETRY_0.md`](DIGESTION_GEOMETRY_0.md).
 
-Stay the **same Amb**. Do **not** unpark hardware **X**. Do **not** train. Do **not** copy patent claims. After #0, Lab **HOLD** until Founder / Operator opens sync-imperfection or multipath-bias.
+Stay the **same Amb**. Do **not** unpark hardware **X**. Do **not** train. Do **not** copy patent claims. After #0, next pulse is **named** (multipath / NLOS positive-bias injection, same frozen Chan) and is **not run** here.
 
 ## What stays parked / closed
 
