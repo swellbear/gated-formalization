@@ -67,7 +67,7 @@ Live remnant elevation path vs retired strong elevations. Offering ≠ auto elev
 |-------------|-------------|----------------|
 | R-MAP | drop / low priority | Optional |
 | R-RETIRED | drop | New application only |
-| R-SOME / R-RECIPE / R-REPL | pursue (Layer 3) | Only live Admissible-path residual cluster |
+| R-SOME / R-RECIPE / R-REPL | pursue (Layer 3) | Definitional locks only; R-REPL blocked until R-SOME + R-RECIPE lock |
 
 ---
 
@@ -76,6 +76,7 @@ Live remnant elevation path vs retired strong elevations. Offering ≠ auto elev
 | Date | Action |
 |------|--------|
 | 2026-08-12 | Menu offered (retrofit) — no branch authorized |
+| 2026-09-05 | Exploration A opened; R-SOME / R-RECIPE **open** on [`NAMED_GAP_LEDGER.md`](NAMED_GAP_LEDGER.md); R-REPL blocked until both lock; retired elevations (A-Strong / sufficiency / unconstrained scale / Strong-GNW) stay parked. Not consciousness proved. |
 
 ---
 

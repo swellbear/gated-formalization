@@ -1,6 +1,6 @@
 # Notes
 
-**Status:** see `STATUS.md`.
+**Status:** see `STATUS.md`. **2026-09-05:** exploration A opened — R-SOME / R-RECIPE ledger lines `open`; not consciousness proved; not A-Strong.
 
 **Application:** 2026-08_llm-global-workspace-consciousness  
 **Date:** 2026-08-11  

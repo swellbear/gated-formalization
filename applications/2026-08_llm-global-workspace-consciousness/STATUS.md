@@ -3,21 +3,21 @@
 **Update every cycle.** Keep short. Full narrative stays in notes / worksheets.
 
 **Application:** `2026-08_llm-global-workspace-consciousness`  
-**Updated:** 2026-08-12  
+**Updated:** 2026-09-05  
 **Glossary:** `docs/READER_GLOSSARY.md`
 
 ### Plain status
 
-Strong “LLMs are already sufficient for weak consciousness / scaling strengthens that” is **closed as not admissible**. A **narrower live remnant** remains: some models show **partial** weak-functional hallmarks — **not** sufficiency. Further elevation only if newly authorized.
+The live remnant string is **open** for **definitional locks only** (exploration A): name which models count as “some” (**R-SOME**) and a cheap operational hallmark recipe (**R-RECIPE**). Ledger: [`NAMED_GAP_LEDGER.md`](NAMED_GAP_LEDGER.md). This is **not** consciousness proved. **A-Strong** is **not** admissible and is **not** revived. Sufficiency / unconstrained scale / Strong-GNW stay parked. **R-REPL** is blocked until both locks. Track B invent remains **paused**.
 
 ---
 
 | Field | Value |
 |-------|--------|
-| **Phase** | live remnant Provisional-stable (A-Strong Not admissible; original parked) |
-| **Amb** | ≈ 2.5 (narrowed A-Weak remnant) |
+| **Phase** | live remnant string open — definitional locks only (R-SOME / R-RECIPE); A-Strong Not admissible; original parked |
+| **Amb** | ≈ 2.5 (narrowed A-Weak remnant; Amb ≠ clearance) |
 | **Locks in force** | Narrowed A-Weak remnant — Branch A only (`00_Working_Claim_Branch_A.md`); Strong-GNW / sufficiency / unconstrained scale denied |
-| **Next authorization needed** | elevation path only if authorized: R-SOME + R-RECIPE + R-REPL (→ Admissible band); retired elevations require a new application |
+| **Next authorization needed** | Operator admit / reject / park on Lab’s 2–3 ranked options per open gap (none yet); R-REPL blocked; retired elevations require a new application |
 | **Related apps surfaced** | `2026-08_av-e2e-vs-modular-preferability` — over-strong uniqueness elevation; `2026-08_conscience-sketch` — AI/computational sketch domain |
 
 ---
@@ -35,7 +35,7 @@ Strong “LLMs are already sufficient for weak consciousness / scaling strengthe
 - [x] `STATUS.md` current phase recorded (live remnant — **not** full hard stop)
 - [x] `final_verdict.md` (or equivalent)
 
-**Closeout gate:** Original/A-Strong closed; remnant elevation path still live under pursue residuals.
+**Closeout gate:** Original/A-Strong closed; remnant string open for definitional locks only — **not** consciousness proved.
 
 ---
 

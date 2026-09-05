@@ -3,8 +3,8 @@
 **Per-application status card.** Mandatory at closeout. Indexes dissertation/closeout; does **not** replace them. Do not paste full worksheets.
 
 **Application:** `2026-08_llm-global-workspace-consciousness`  
-**Last reviewed:** 2026-08-12  
-**Status:** Live track Provisional (stable), Amb ≈ 2.5; A-Strong Not admissible (closed by `final_verdict.md` Cycle 4)
+**Last reviewed:** 2026-09-05  
+**Status:** Live remnant string open for definitional locks only (R-SOME / R-RECIPE); Provisional (stable), Amb ≈ 2.5; A-Strong Not admissible (closed by `final_verdict.md` Cycle 4). Not consciousness proved.
 
 **Tags:** `AI-systems` / `uniqueness-preferability`, `descriptive-census` / `forced-deviation`
 
@@ -87,7 +87,7 @@
 | R-MAP | Gap-4-style component-mapping residual | Optional further reduction of non-essential mapping detail (already retired as high-impact for the live claim). |
 | R-RETIRED | Sufficiency / Strong-GNW / unconstrained scale / Branch D/P | Start a **new** application — do not re-inflate this closeout. |
 
-Items R-SOME / R-RECIPE / R-REPL are the elevation path Amb ≈ 2.5 → Admissible band (≤ ~2) per `elevation_roadmap.md`, only if authorized.
+Items R-SOME / R-RECIPE are **open** on [`NAMED_GAP_LEDGER.md`](NAMED_GAP_LEDGER.md) (exploration A, 2026-09-05). R-REPL stays **blocked** until both lock. This is **not** consciousness proved and does **not** revive A-Strong. Retired elevations still require a **new** application.
 
 ---
 
@@ -97,7 +97,7 @@ Items R-SOME / R-RECIPE / R-REPL are the elevation path Amb ≈ 2.5 → Admissib
 
 **Keep saying:** Some current LLMs show **partial** Weak-functional **access**/reportability hallmarks under Branch A; Strong-GNW equivalence is **not** established; unconstrained scale-strengthening is **not** established; live claim does **not** assert sufficiency; original / D / P / A-Strong Not admissible remain on the record and are not overwritten by the remnant.
 
-**Test next (only if authorized):** Pin model set + hallmark recipe + broader replication for the live remnant only (`elevation_roadmap.md`). Retired elevations require a **new** application.
+**Test next (only if authorized):** Lab invents 2–3 ranked options on R-SOME and R-RECIPE ([`NAMED_GAP_LEDGER.md`](NAMED_GAP_LEDGER.md)); Operator admits / rejects / parks. R-REPL blocked until both lock. Retired elevations require a **new** application.
 
 ---
 
@@ -108,6 +108,7 @@ Items R-SOME / R-RECIPE / R-REPL are the elevation path Amb ≈ 2.5 → Admissib
 - Cycle 4 gate: `02e_Gate_Scoring_Sheet_rescore_cycle4_narrowed.md`; Cycle 3 parallel: `02d_Gate_Scoring_Sheet_rescore_cycle3_parallel.md`.
 - No QI / Contrastive Recommendation / Experimental Generation / separate Claim-Revision Scaffolding run (Cycle 4 narrowing is in-application live-claim lock).
 - **Residual-branch menu:** `RESIDUAL_BRANCH_MENU.md` (R-REPL after R-SOME/R-RECIPE; no branch authorized).
+- **Named-gap ledger (2026-09-05):** exploration A opened; R-SOME / R-RECIPE `open`; R-REPL blocked; not consciousness proved; not A-Strong. See `NAMED_GAP_LEDGER.md`.
 
 ---
 
