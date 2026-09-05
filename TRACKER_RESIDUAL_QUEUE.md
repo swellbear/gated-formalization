@@ -53,7 +53,6 @@ Only **pursue** items stay in active bands. Parked/dropped listed below.
 | Residual ID + app | Description | Reopen condition | Effort | Value | Dep | Disposition | Note |
 |-------------------|-------------|------------------|--------|-------|-----|-------------|------|
 | **R-F-SKILL** · oil-futures | Next-session CL log-return vs last-settlement RMSE (F-CC + F-ON/F-DAY) | `name horse …` or `live CME / curve tape …` | med once a **new** horse is named | high | H-LAG scored, lost on F-CC; named Yahoo queue empty | **pursue** | H-LAG F-CC loss; burned: SPARSE #10, PRETELL #11, GAP #12, DJT #13, COT #14, INV #20, SEAS #21, DOW #22; **Yahoo queue empty**; H-KS not run; **not** skill-met. Track B #15–#19 + Lab batch 1 (MAG/PERSIST/BREAK/DXY) + Lab batch 2 (SHORT/VOTE/RATES/SPREAD) + Lab batch 3 burns (VIX/THRESH/SKEW; SEAS MOY-DIR / WTI MOY-CONT) + Lab batch 4 burns (SHRINK/VOLTGT/QUANT) stay **separate** (not this leftover). Track B **P3=B** all-day directional invent **parked** (separate leftover); residual live = vehicle/cutoff fragility on Brent **H-SPOT-MOY-CONT** (**FRAGILE**; Deep1 P1/P2 cutoff/vehicle Amb constraints recorded; P4 LOY2023 HARDEN on year-stability; **not** F-SKILL; **not** skill-met; **not** elevated; **not** a null-burn; Lab one-probe allotment DONE) |
-| **R-SOME / R-RECIPE / R-REPL** · llm-gwt | **LLM remnant string open** — definitional locks only | Name models; hallmark recipe; R-REPL blocked until both lock | med | high | data | **pursue** | R-SOME / R-RECIPE `open` on ledger; not consciousness proved; not A-Strong |
 | **WS-MISSING** · foxnews / conscience | Recover worksheets | Recover artifacts or authorize backfill | med | med | data | **pursue** | Prerequisite for those apps |
 | **CLAIM-TEXT** · foxnews | Verbatim original claim | Recover article quote | low | med | data | **pursue** | Cheap unblock |
 
@@ -63,6 +62,7 @@ Only **pursue** items stay in active bands. Parked/dropped listed below.
 
 | Residual ID + app | Description | Trigger | Disposition | Note |
 |-------------------|-------------|---------|-------------|------|
+| **R-REPL** · llm-gwt | Broader remnant re-measurement on locked S1+S2 / R1 | Founder / Operator `authorize branch R-REPL` | **park-until-trigger** | Open-but-not-authorized; R-SOME/R-RECIPE locks complete; not consciousness proved; not Admissible elevation; not A-Strong |
 | **R-V-VALUE** · oil-futures | After-cost paper P/L vs the curve | `name source class …` matching Rank 4 V-VALUE **under V2** | **park-until-trigger** | Operator `leave unnamed`; **V2 named**; book unnamed; not a refute of every book |
 | **R-F-COMBO** · oil-futures | Named night/day switching rule | Rule written in advance **and** F-ON and F-DAY already scored separately | **park-until-trigger** | Third test; does not skip F-ON/F-DAY |
 | **R-L4e-BRIDGE** · SpaceX | Non-conflicted ~$7.9T / M2 bridge | Multi-year realized AI/Starship metrics or independent FV near ~$7.9T | **park-until-trigger** | No short-horizon path |
