@@ -24,6 +24,14 @@ After every **closed application**, or after every **N ≥ 5** REJECT/HOLD decis
 
 ## Entries
 
+### 2026-09-05 | Markets / oil futures | Long null hunt cascade after hard stop (residuals live)
+- **Gate outcome at the time:** Hard stop (residuals live); Amb 1.0; **H-LAG-WF** F-CC loss; **R-F-SKILL** pursue.
+- **Later evidence:** Named Yahoo CL cascade (PRs #10–#14, #20–#22) and a **separate** Track B EIA spot 21-day cascade (PRs #15–#19) all burned or failed confirm. Named Yahoo CL queue **empty**. Track B named queue **empty** separately. F-SKILL still **not established**. H-KS still not run.
+- **Direction of error:** **method-pressure-point** — a long string of honest nulls after hygiene is sealed is easy to misread as either refute-of-all-skill or a reason to pick the least-bad horse. Volume of nulls ≠ refute of every recipe. Discovery beat ≠ confirm. Tiny F-DAY ≠ F-CC promote. Track B ≠ F-SKILL. Empty named queue ≠ leftover closed.
+- **Which rule or judgment contributed:** Named-class pulse (test runs; establishment still stops); Amb≠clearance; stand-in ≠ live; do not pick least-bad; leftover `pursue` survives an emptied named Yahoo queue.
+- **Adjustment made (if any):** None to Amb math. Tracker fold only; hunt scripts and stacked PRs #9–#22 not merged.
+- **Notes:** Skill leftover remains `name horse …` or `live CME / curve tape`. Park/spot-21d stays parked relative to F-SKILL.
+
 ### 2026-08-12 | Official outlook / FOMC June 2026 SEP | Brochure cannot clear P-BaseCase
 - **Gate outcome at the time:** Stable Provisional (split) hard stop (Amb ≈ 1). Census vehicle L3–L10 + G4/G5/G7 **established**. F-ML-BAR on 2026 medians **not established** (L13; not a refute). C-APPROP as vote and F-LR as 2026-on-target **not met**. July 29 **OUT**.
 - **Later evidence:** Named-class pulse L17 (SPF Q2 2026): PCE/core Q4/Q4 **print-match** 3.6 / 3.3; GDP concept mismatch; U 4.5 vs 4.3; bar still **not established**.

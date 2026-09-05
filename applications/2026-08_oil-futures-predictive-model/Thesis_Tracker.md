@@ -3,7 +3,7 @@
 **Per-application status card.** Working copy while the run is open; mandatory complete at closeout.
 
 **Application:** `2026-08_oil-futures-predictive-model`  
-**Last reviewed:** 2026-08-17  
+**Last reviewed:** 2026-09-05  
 **Status:** **Stable Provisional (split) — hard stop (residuals live)** · Phase 1 closeout · D-EXIST-MET-FT · **F-SRC-CME-TAPE** · L-SESS  
 
 **Tags** (see `docs/TRACKER_TAXONOMY.md`):  
@@ -57,7 +57,7 @@ Can a predictive model for oil futures be built?
 
 ## 4. Not established / negatively constrained
 
-- F-SKILL **not established** (H-LAG-WF lost on F-CC; H-KS not run; not a refute of all recipes).
+- F-SKILL **not established** (H-LAG-WF lost on F-CC; later named Yahoo classes burned; **named Yahoo CL queue empty**; H-KS not run; volume of nulls ≠ refute of all recipes).
 - F-ON / F-DAY / F-CC **H-LAG** last 500: 0.01283 / 0.02670 / 0.02888 vs 0-forecast 0.01291 / 0.02663 / 0.02869; **not** skill-met.
 - Kearney–Shang optional re-score **not run**.
 - V-VALUE **not established** (V-VALUE-TEST-0; V-SRC `leave unnamed`; **V2 named**; not a refute of all books).
@@ -84,7 +84,7 @@ None required (D-EXIST remains Minimal). V-VALUE is a marked elevation (Substant
 | [R-DRV](RESIDUAL_BRANCH_MENU.md#r-drv) | Exhaustive mover-list census | **Executed → evaluation** (L-MAP-DRV). Exhaustive list absent; does not fill F-SRC |
 | [R-SESS](RESIDUAL_BRANCH_MENU.md#r-sess) | Night vs day vs whole-trip protocol | **Executed → admitted meanings** (L-SESS). Does not meet skill |
 | [R-V-VALUE-TEST-0](RESIDUAL_BRANCH_MENU.md#r-v-value-test-0) | Named after-cost book | **Executed → not established** |
-| [R-F-SKILL](RESIDUAL_BRANCH_MENU.md#r-f-skill) | Named class for F-SKILL (F-CC + F-ON/F-DAY exhibits) | **H-LAG-WF** scored, **lost** on F-CC. H-KS not run. **not established**. Reopen: other horse or live/curve tape |
+| [R-F-SKILL](RESIDUAL_BRANCH_MENU.md#r-f-skill) | Named class for F-SKILL (F-CC + F-ON/F-DAY exhibits) | **H-LAG-WF** scored, **lost** on F-CC. Later named Yahoo classes burned; **queue empty**. H-KS not run. **not established**. Reopen: `name horse …` (new class) or live/curve tape. Track B empty is **separate** |
 | [R-LIVE-STANDIN](RESIDUAL_BRANCH_MENU.md#r-live-standin) | Live CME vs stand-in | **Executed** (Yahoo `CL=F` stipulated). Reopen: `live CME only` |
 | [R-F-COMBO](RESIDUAL_BRANCH_MENU.md#r-f-combo) | Named switching rule | **park-until-trigger**. Rule in advance; F-ON and F-DAY already scored separately |
 | [R-V-VALUE](RESIDUAL_BRANCH_MENU.md#r-v-value) | Named recipe/book for V-VALUE | **Leave unnamed**. `park-until-trigger`. Reopen: `name source class …` matching V-VALUE **under V2** |
@@ -96,9 +96,9 @@ None required (D-EXIST remains Minimal). V-VALUE is a marked elevation (Substant
 
 **Stop saying:** That EIA STEO or the futures curve is a proven next-session CL model; that spot/12-month results clear this freeze; that anyone should trade; that existence-met is skill-met; that one paper was picked as “the” recipe; that unnamed skill means no model can beat last price.
 
-**Keep saying:** A specified non-no-change futures-target recipe has been written. Yahoo is a **stand-in**; the baseline is **not** a pass. Paper costs are **V2**; that is not a value pass. Skill and after-cost value are not established.
+**Keep saying:** A specified non-no-change futures-target recipe has been written. Yahoo is a **stand-in**; the baseline is **not** a pass. The named Yahoo CL queue is **empty**; skill leftover is still **live**. Paper costs are **V2**; that is not a value pass. Skill and after-cost value are not established.
 
-**Test next (only if authorized):** `leave skill not shown` · `live CME / curve tape …` · `name horse …`. Combo does not skip the queue.
+**Test next (only if authorized):** `leave skill not shown` · `live CME / curve tape …` · `name horse …` (named Yahoo queue is empty). Combo does not skip the queue. Do not pick least-bad.
 
 ---
 

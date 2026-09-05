@@ -1,9 +1,9 @@
 # Notes
 
-**Status:** see `STATUS.md`. Closeout sealed 2026-08-17 as **hard stop (residuals live)**.
+**Status:** see `STATUS.md`. Closeout sealed 2026-08-17 as **hard stop (residuals live)**. Tracker fold 2026-09-05: named Yahoo CL queue **empty**; R-F-SKILL still **pursue**; Track B empty separately.
 
 **Application:** `2026-08_oil-futures-predictive-model`  
-**Date:** 2026-08-17  
+**Date:** 2026-09-05  
 
 ---
 
