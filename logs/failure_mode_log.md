@@ -24,6 +24,14 @@ After every **closed application**, or after every **N ≥ 5** REJECT/HOLD decis
 
 ## Entries
 
+### 2026-09-05 | Markets / oil Track B (spot) | Discovery survivors die at confirm — Lab batch 1 REJECT
+- **Gate outcome at the time:** Track B named queue already **empty** after #15–#19. Spot-trend skill **not established**. Separate from R-F-SKILL / F-CC futures.
+- **Later evidence:** Lab invent→test batch 1 (protocol `Lock_Hunt_Spot_Trend`; FRED EIA `DCOILWTICO` / `DCOILBRENTEU`). Discovery last-500 vs continuation produced survivors (WTI: FRESH 0.592, DXY-INV 0.522 vs cont 0.508; Brent: MAG-WEAK 0.526, FRESH 0.628, DXY-INV 0.524 vs cont 0.506). Confirm 250/500/750 **killed every survivor** (no window set all strictly beat; each fails ≥1 window). BREAK tied continuation on discovery (0 non-continuation calls) and was killed — tie ≠ pick. Gatekeeper **REJECT / burn** all four classes and eight horses. Confirm survivors: **none**. Named Track B queue still **empty**.
+- **Direction of error:** **method-pressure-point** — a discovery beat is easy to misread as a live horse or as a reason to keep the least-bad confirm miss. Discovery beat ≠ confirm. Do **not** pick least-bad. Nothing admitted.
+- **Which rule or judgment contributed:** Confirm windows on survivors only; tie ≠ pick; Track B ≠ F-SKILL; do not revive burned MAG/PERSIST/BREAK/DXY (or prior FLIP/REV, INV, CROSS, LOGIT).
+- **Adjustment made (if any):** None to Amb math. Tracker fold only; Lab hunt scripts not merged.
+- **Notes:** Spot-trend skill still **not established**. Lab may invent **new** classes after merge — must not revive the burned set.
+
 ### 2026-09-05 | Markets / oil futures | Long null hunt cascade after hard stop (residuals live)
 - **Gate outcome at the time:** Hard stop (residuals live); Amb 1.0; **H-LAG-WF** F-CC loss; **R-F-SKILL** pursue.
 - **Later evidence:** Named Yahoo CL cascade (PRs #10–#14, #20–#22) and a **separate** Track B EIA spot 21-day cascade (PRs #15–#19) all burned or failed confirm. Named Yahoo CL queue **empty**. Track B named queue **empty** separately. F-SKILL still **not established**. H-KS still not run.
