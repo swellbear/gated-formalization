@@ -6,8 +6,6 @@
 **Audience:** Greer (by his request) — collaboration technical digest  
 **Not:** a patent write-up, product brief, or claim clearance
 
-**Operator reviewed for structure.** Still **not** claim clearance. Collaboration-with-owner. Lab audit only — Founder-polished send file is [`GREER_WRITEUP.md`](GREER_WRITEUP.md) (**HOLD send** until user OK).
-
 ---
 
 ## 1. Purpose
@@ -124,7 +122,7 @@ If Operator scopes stand, **provisional X = 0.50 m median** currently means roug
 - Bare Chan alone: near-ideal sync **σ_sync ≲ 0.3 ns** (`PROPOSED_SYNC1.md`)
 - With path-shared JOINT1: fixed_trial **σ_sync ≲ 3 ns**; fails at **10 ns** (`PROPOSED_JOINT1.md`)
 - With DRIFT1 matched linear α: SYNC1-style **path drift** (e.g. 3 ns/path) cleared on this grid — **batch / path-shared**, not free realtime (`PROPOSED_DRIFT1.md`)
-- GATE1 Soften refuse when residual∨LORO fires out of that budget (`PROPOSED_GATE1.md`)
+- GATE1 Soften refuse when residual∪LORO fires out of that budget (`PROPOSED_GATE1.md`)
 - **No** RF build, **no** fingerprint/ML, **no** GPS-as-mobile-fix
 
 Drop any of those scopes and the 0.50 m story does not automatically travel with you.
@@ -162,7 +160,7 @@ Drop any of those scopes and the 0.50 m story does not automatically travel with
 ## Audit trail (Operator)
 
 | Pulse | Board | Gate lean |
-|-------|-------|-----------|
+|-------|--------|-----------|
 | Fog peek | `PROPOSED_FOG_PEEK.md` | Admit fog; lock sim-only |
 | Geometry | `PROPOSED_GEOM0.md` | **Harden**; lock X=0.50 m |
 | Multipath | `PROPOSED_MULTIPATH1.md` | **Soften** (mild NLOS scope) |
@@ -175,4 +173,4 @@ Raw medians: `raw/*_metrics.json`.
 
 ---
 
-*DRAFT — Lab PROPOSED. Lab does not admit. Not claim clearance. Operator/Founder may edit before send. **HOLD send** until user OK.*
+*DRAFT — Lab PROPOSED. Lab does not admit. Not claim clearance. Operator/Founder may edit before send.*
