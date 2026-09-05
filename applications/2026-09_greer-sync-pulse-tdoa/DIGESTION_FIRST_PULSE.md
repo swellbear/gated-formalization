@@ -1,6 +1,6 @@
 # Digestion — first-pulse fog peek (sim-first; park hardware X)
 
-A short plain note of what the first-pulse fog peek taught. Habit: [`docs/DIGESTION_HABIT.md`](../../docs/DIGESTION_HABIT.md). Incoming cell-tower lesson: [`DIGESTION_FROM_CELL_TOWER.md`](DIGESTION_FROM_CELL_TOWER.md). Peek sheet: [`PROPOSED_PULSE.md`](PROPOSED_PULSE.md). This does **not** score a TDOA locator. It does **not** reopen cell-tower as live. It does **not** reopen BIA→weight.
+A short plain note of what the first-pulse fog peek taught. Habit: [`docs/DIGESTION_HABIT.md`](../../docs/DIGESTION_HABIT.md). Incoming cell-tower lesson: [`DIGESTION_FROM_CELL_TOWER.md`](DIGESTION_FROM_CELL_TOWER.md). Peek sheet: [`PROPOSED_PULSE.md`](PROPOSED_PULSE.md). **Later the same day:** Operator **ADMIT #0 HARDEN** — see [`DIGESTION_GEOMETRY_0.md`](DIGESTION_GEOMETRY_0.md). Provisional **sim X = 0.50 m**. Hardware **X PARKED**. Lab **HOLD**. This does **not** score a TDOA locator. It does **not** reopen cell-tower as live. It does **not** reopen BIA→weight.
 
 **This peek:** `2026-09_greer-sync-pulse-tdoa` first pulse — Method Operator **ADMIT** fog naming (Lab `PROPOSED_FOG_PEEK`). Lab scratch was **not** on this fold VM; the gated fact set was copied from the Operator gate.
 
@@ -21,18 +21,13 @@ The claim is **poseable** on a laptop-feasible sim-only path. It is **not** clea
 - **Eval protocol:** GPS/DGPS = place/time refs only; **never** the mobile fix. **No** RF fingerprint training.
 - **US10135667B1** = prior-art note only.
 
-Peek succeed is **not** claim clearance. Sim-geometry-first is **not** a locator. A numeric sim **X** is **not** frozen. Training is **not** established.
+Peek succeed is **not** claim clearance. Sim-geometry-first is **not** a locator. A numeric sim **X** was **not** frozen at peek time (**#0** later locked **0.50 m**). Training is **not** established.
 
-## What this string must do next (not this fold)
+## What this string must do next (later the same day: #0 ran)
 
-**#0 geometry-bottleneck sim** is **admitted as the next pulse** and is **not run here**.
+**#0 geometry-bottleneck sim** was **admitted** here and **scored** later the same day. See [`DIGESTION_GEOMETRY_0.md`](DIGESTION_GEOMETRY_0.md).
 
-- Laptop. No RF. Frozen textbook multilateration only.
-- No trained estimator invent. No fingerprint.
-- GPS/DGPS refs only — never the mobile fix.
-- Numeric sim **X** frozen **only after** that scored pulse.
-
-Stay the **same Amb**. Do **not** unpark hardware **X** to freeze the first number. Do **not** train. Do **not** copy patent claims.
+Stay the **same Amb**. Do **not** unpark hardware **X**. Do **not** train. Do **not** copy patent claims. After #0, Lab **HOLD** until Founder / Operator opens sync-imperfection or multipath-bias.
 
 ## What stays parked / closed
 
@@ -44,4 +39,4 @@ Stay the **same Amb**. Do **not** unpark hardware **X** to freeze the first numb
 - **Track B invent** stays **paused**.
 - **llm-gwt R-REPL** stays **parked**.
 
-This note does **not** authorize running #0. It does **not** show a TDOA locator. It does **not** start training. It does **not** invent models.
+This note does **not** show a TDOA locator. It does **not** start training. It does **not** invent the next pulse. It does **not** unpark hardware **X**.
