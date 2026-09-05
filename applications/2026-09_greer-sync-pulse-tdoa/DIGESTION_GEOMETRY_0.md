@@ -9,7 +9,7 @@ A short plain note of what the geometry pulse taught. Habit: [`docs/DIGESTION_HA
 Under **ideal simultaneous sync + Gaussian Δt only**, planar TDOA geometry with frozen Chan (1994) 2D WLS is **not** the bottleneck. Median Euclidean error tracks the `c · σ_t` scale.
 
 - Method: Chan 1994 two-stage WLS; numpy only; 5 refs; L-path **101** samples; **40** MC; seed **20260905**.
-- `σ_t` = **1 ns** → median **0.361 m** (`σ_d` ≈ **0.300 m**).
+- `σ_t` = **1 ns** → median **0.361 m** (`σ_d` ≈ **0.300 m**); **p90 ≈ 1.16 m**.
 - `σ_t` = **3 ns** → median **1.081 m**.
 - Zero-noise sanity ~**1e-14 m**. **0** failures.
 
@@ -17,18 +17,18 @@ That is an **Amb HARDEN** of the geometry leftover. It is **not** a locator. It 
 
 ## What was locked (provisional)
 
-- **Sim X = 0.50 m** (1 ns median + margin). Sim-only. Ideal sync assumed. Multipath not injected.
+- **Sim X = 0.50 m** (**median**-based @ 1 ns + margin). **X is median-not-p90** (1 ns p90 ≈ **1.16 m**). Sim-only. Ideal sync assumed. Multipath not injected.
 - **Hardware X PARKED** until a sync / multipath gate.
 - GPS / DGPS, if used at all, **place and time refs only** — never the mobile fix.
 - US10135667B1 stays a **prior-art note only**.
 
-HARDEN is **not** clearance. A 0.50 m sim bar is **not** a field locator. Skill-met is **not** claimed.
+HARDEN is **not** clearance. A 0.50 m **median** sim bar is **not** a field locator and is **not** a p90 bar. Skill-met is **not** claimed.
 
-## What this string must do next (HOLD)
+## What this string must do next (named; not run)
 
-Lab **HOLD**. Do **not** invent the next pulse until Founder / Operator opens **sync-imperfection** or **multipath-bias**. Still **no RF / ML**.
+**Named next pulse:** **multipath / NLOS positive-bias injection** under the **same frozen Chan (1994) 2D WLS**. **Not run** this fold. Still **no RF / ML**.
 
-Clock / sync honesty stays open (ideal sync was assumed). Multipath honesty stays open (not injected). Those are the leftover fog — not planar geometry under the frozen Chan estimator.
+Clock / sync honesty stays open (ideal sync was assumed). Sync-imperfection is **not** the named next pulse. Multipath honesty stays open (not injected) and is the named leftover. Those are the leftover fog — not planar geometry under the frozen Chan estimator.
 
 ## What stays parked / closed
 

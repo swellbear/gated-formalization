@@ -24,7 +24,7 @@ Stay a **new** Amb, not cell-tower reopened as live, and not a BIA sequel.
 - Contrast US10135667B1 as prior art for **method practice / explore the idea**. Do **not** copy claims for a product.
 - Do **not** train. Do **not** invent the next pulse this fold. Do **not** write skill-met language.
 - Do **not** reopen `2026-09_cell-tower-geometry` as live.
-- After #0, Lab **HOLD** until Founder / Operator opens sync-imperfection or multipath-bias. Still **no RF / ML**.
+- After #0, next pulse is **named** (multipath / NLOS positive-bias injection, same frozen Chan) and is **not run** this fold. Still **no RF / ML**.
 
 ## What stays parked / closed
 

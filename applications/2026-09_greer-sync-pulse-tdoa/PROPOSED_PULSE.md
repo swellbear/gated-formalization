@@ -82,14 +82,14 @@ A held-out path inside a GPS-denied box can be **scored** while GPS/DGPS **place
 
 **LOCK:** sim-only path; provisional **X = sim-geometry first**. **PARK** hardware **X**.
 
-**NEXT (admitted here; scored later the same day):** **#0 geometry-bottleneck sim** — see [`SCORE_GEOMETRY_0.md`](SCORE_GEOMETRY_0.md). Operator **ADMIT HARDEN**. Provisional **sim X = 0.50 m**. Hardware **X** stays **PARKED**.
+**NEXT (admitted here; scored later the same day):** **#0 geometry-bottleneck sim** — see [`SCORE_GEOMETRY_0.md`](SCORE_GEOMETRY_0.md). Operator **ADMIT HARDEN**. Provisional **sim X = 0.50 m** (**median**-based @ 1 ns; **median-not-p90**; 1 ns p90 ≈ **1.16 m**). Hardware **X** stays **PARKED**. After #0, next pulse **named** (not run): multipath / NLOS positive-bias injection, same frozen Chan.
 
 **US10135667B1** = prior-art note only. Cell-tower **PARKED**. BIA **CLOSED**. Peek succeed ≠ claim clearance.
 
 **Hard NO**
 
-- Do **not** invent the next pulse until Founder / Operator opens sync-imperfection or multipath-bias.
-- Do **not** treat **sim X = 0.50 m** as a hardware bar.
+- Do **not** run the named next pulse (multipath / NLOS positive-bias injection) in this fold.
+- Do **not** treat **sim X = 0.50 m** as a hardware bar or a **p90** bar.
 - Do **not** train an RF fingerprint / radio-map model.
 - Do **not** use GPS / DGPS as the mobile fix.
 - Do **not** copy US10135667B1 claim language or treat this as a product embodiment of that patent.
@@ -108,8 +108,8 @@ A held-out path inside a GPS-denied box can be **scored** while GPS/DGPS **place
 - Estimator class = frozen Chan (1994) two-stage WLS (textbook multilateration).
 - **No** trained estimator invent. **No** fingerprint.
 - GPS/DGPS **place/time refs only** — **never** the mobile fix.
-- Provisional **sim X = 0.50 m** (1 ns median **0.361 m** + margin). Hardware **X PARKED**.
-- After #0: Lab **HOLD** until Founder / Operator opens sync-imperfection or multipath-bias. Still **no RF / ML**.
+- Provisional **sim X = 0.50 m** (**median**-based @ 1 ns: median **0.361 m** + margin). **X is median-not-p90** (1 ns p90 ≈ **1.16 m**). Hardware **X PARKED**.
+- After #0: next pulse **named** (not run) = **multipath / NLOS positive-bias injection** under the same frozen Chan. Still **no RF / ML**.
 
 ---
 

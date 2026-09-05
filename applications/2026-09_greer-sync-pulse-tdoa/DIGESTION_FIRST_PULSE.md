@@ -21,13 +21,13 @@ The claim is **poseable** on a laptop-feasible sim-only path. It is **not** clea
 - **Eval protocol:** GPS/DGPS = place/time refs only; **never** the mobile fix. **No** RF fingerprint training.
 - **US10135667B1** = prior-art note only.
 
-Peek succeed is **not** claim clearance. Sim-geometry-first is **not** a locator. A numeric sim **X** was **not** frozen at peek time (**#0** later locked **0.50 m**). Training is **not** established.
+Peek succeed is **not** claim clearance. Sim-geometry-first is **not** a locator. A numeric sim **X** was **not** frozen at peek time (**#0** later locked **0.50 m**, **median**-not-p90; 1 ns p90 ≈ **1.16 m**). Training is **not** established.
 
 ## What this string must do next (later the same day: #0 ran)
 
 **#0 geometry-bottleneck sim** was **admitted** here and **scored** later the same day. See [`DIGESTION_GEOMETRY_0.md`](DIGESTION_GEOMETRY_0.md).
 
-Stay the **same Amb**. Do **not** unpark hardware **X**. Do **not** train. Do **not** copy patent claims. After #0, Lab **HOLD** until Founder / Operator opens sync-imperfection or multipath-bias.
+Stay the **same Amb**. Do **not** unpark hardware **X**. Do **not** train. Do **not** copy patent claims. After #0, next pulse is **named** (multipath / NLOS positive-bias injection, same frozen Chan) and is **not run** here.
 
 ## What stays parked / closed
 
