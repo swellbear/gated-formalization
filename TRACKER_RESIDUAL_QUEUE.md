@@ -1,13 +1,13 @@
 # Tracker Residual Queue (Layer 3)
 
-**Last refreshed:** 2026-09-05 (oil-futures **hard stop (residuals live)**: **R-F-SKILL** still **pursue** after named Yahoo CL null cascade — queue **empty**; H-KS not run; Track B spot-21d queue **empty** separately, not F-SKILL. **R-LIVE-STANDIN** executed; **R-V-VALUE** park-until-trigger (**V2 named**, book unnamed); **R-F-COMBO** park-until-trigger. Park-90d quarterly still due ~2026-11-12 — this refresh does **not** re-churn that card.)  
+**Last refreshed:** 2026-09-05 (oil-futures **hard stop (residuals live)**: **R-F-SKILL** still **pursue** after named Yahoo CL null cascade — queue **empty**; H-KS not run; Track B Lab batch 1 **REJECT / burn**, named queue **empty** separately, not F-SKILL. **R-LIVE-STANDIN** executed; **R-V-VALUE** park-until-trigger (**V2 named**, book unnamed); **R-F-COMBO** park-until-trigger. Park-90d quarterly still due ~2026-11-12 — this refresh does **not** re-churn that card.)  
 **Last park-90d quarterly review:** **2026-08-12** (inaugural = **cadence-existence**, not quarterly proof; next due ~2026-11-12; post-rule addendum same day — still extend-all)  
 **Disposition vocabulary:** `pursue` | `park-90d` | `park-until-trigger` | `drop`  
 Only **pursue** items stay in active bands. Parked/dropped listed below.
 
 **Cadence:** About once per quarter, review **`park-90d` only**.
 
-**Note:** CoreWeave **hard stop sealed**; Zitron Nvidia $500B **hard stop sealed** (restart frame; Squawk/D-APPEAR OUT). Prior Squawk-stand-in R-* rows remain historical/drop. FOMC parent closeout intact; R-FML-INDEP **executed** (SPF Q2 2026; not established; not a refute). Oil-futures **hard stop (residuals live)**; Yahoo `CL=F` stand-in baseline scored; R-F-SKILL **pursue** (H-LAG F-CC loss; named Yahoo classes burned; **queue empty**; H-KS not run; **not** skill-met); Track B named queue **empty** (separate); R-LIVE-STANDIN **executed**.
+**Note:** CoreWeave **hard stop sealed**; Zitron Nvidia $500B **hard stop sealed** (restart frame; Squawk/D-APPEAR OUT). Prior Squawk-stand-in R-* rows remain historical/drop. FOMC parent closeout intact; R-FML-INDEP **executed** (SPF Q2 2026; not established; not a refute). Oil-futures **hard stop (residuals live)**; Yahoo `CL=F` stand-in baseline scored; R-F-SKILL **pursue** (H-LAG F-CC loss; named Yahoo classes burned; **queue empty**; H-KS not run; **not** skill-met); Track B Lab batch 1 **REJECT / burn** (confirm-none; named queue **empty** separately; spot-trend skill **not** established); R-LIVE-STANDIN **executed**.
 
 ---
 
@@ -52,7 +52,7 @@ Only **pursue** items stay in active bands. Parked/dropped listed below.
 
 | Residual ID + app | Description | Reopen condition | Effort | Value | Dep | Disposition | Note |
 |-------------------|-------------|------------------|--------|-------|-----|-------------|------|
-| **R-F-SKILL** · oil-futures | Next-session CL log-return vs last-settlement RMSE (F-CC + F-ON/F-DAY) | `name horse …` or `live CME / curve tape …` | med once a **new** horse is named | high | H-LAG scored, lost on F-CC; named Yahoo queue empty | **pursue** | H-LAG F-CC loss; burned: SPARSE #10, PRETELL #11, GAP #12, DJT #13, COT #14, INV #20, SEAS #21, DOW #22; **Yahoo queue empty**; H-KS not run; **not** skill-met. Track B #15–#19 empty **separately** (not this leftover) |
+| **R-F-SKILL** · oil-futures | Next-session CL log-return vs last-settlement RMSE (F-CC + F-ON/F-DAY) | `name horse …` or `live CME / curve tape …` | med once a **new** horse is named | high | H-LAG scored, lost on F-CC; named Yahoo queue empty | **pursue** | H-LAG F-CC loss; burned: SPARSE #10, PRETELL #11, GAP #12, DJT #13, COT #14, INV #20, SEAS #21, DOW #22; **Yahoo queue empty**; H-KS not run; **not** skill-met. Track B #15–#19 + Lab batch 1 (MAG/PERSIST/BREAK/DXY) empty **separately** (not this leftover) |
 | **R-SOME / R-RECIPE / R-REPL** · llm-gwt | Live remnant → Admissible band | Name models; hallmark recipe; replication | med | high | data | **pursue** | Live Admissible-path residual |
 | **WS-MISSING** · foxnews / conscience | Recover worksheets | Recover artifacts or authorize backfill | med | med | data | **pursue** | Prerequisite for those apps |
 | **CLAIM-TEXT** · foxnews | Verbatim original claim | Recover article quote | low | med | data | **pursue** | Cheap unblock |

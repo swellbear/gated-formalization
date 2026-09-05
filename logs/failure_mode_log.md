@@ -24,6 +24,14 @@ After every **closed application**, or after every **N ≥ 5** REJECT/HOLD decis
 
 ## Entries
 
+### 2026-09-05 | Markets / oil Track B (spot) | Discovery survivors die at confirm — Lab batch 1 REJECT
+- **Gate outcome at the time:** Track B named queue already **empty** after #15–#19. Spot-trend skill **not established**. Separate from R-F-SKILL / F-CC futures.
+- **Later evidence:** Lab invent→test batch 1 (protocol `Lock_Hunt_Spot_Trend`; FRED EIA `DCOILWTICO` / `DCOILBRENTEU`; disc n=500 ≤2023-08-21; cont WTI=0.5080 Brent=0.5060; DXY=DTWEXBGS). MAG-STRONG both killed disc; MAG-WEAK WTI killed disc; MAG-WEAK Brent disc survivor then confirm fail (250 no). PERSIST both killed disc; FRESH both disc survivors then confirm fail (WTI 500/250 no; Brent 250 no). BREAK63/42 both boards disc ties → killed. DXY-INV both disc survivors then confirm fail; DXY-ALIGN both killed disc. Gatekeeper **REJECT / burn** MAG/PERSIST/BREAK/DXY all variants both boards. Confirm survivors: **NONE**. Named Track B queue still **empty**.
+- **Direction of error:** **method-pressure-point** — a discovery beat is easy to misread as a live horse or as a reason to keep the least-bad confirm miss. Discovery beat ≠ confirm. Do **not** pick least-bad. Nothing admitted.
+- **Which rule or judgment contributed:** Confirm windows on survivors only; tie ≠ pick; Track B ≠ F-SKILL; do not revive burned MAG/PERSIST/BREAK/DXY (or prior FLIP/REV, INV, CROSS, LOGIT).
+- **Adjustment made (if any):** None to Amb math. Tracker fold only; Lab hunt scripts not merged.
+- **Notes:** Spot-trend skill still **not established**. Lab may invent **new** classes after merge — must not revive the burned set.
+
 ### 2026-09-05 | Markets / oil futures | Long null hunt cascade after hard stop (residuals live)
 - **Gate outcome at the time:** Hard stop (residuals live); Amb 1.0; **H-LAG-WF** F-CC loss; **R-F-SKILL** pursue.
 - **Later evidence:** Named Yahoo CL cascade (PRs #10–#14, #20–#22) and a **separate** Track B EIA spot 21-day cascade (PRs #15–#19) all burned or failed confirm. Named Yahoo CL queue **empty**. Track B named queue **empty** separately. F-SKILL still **not established**. H-KS still not run.
