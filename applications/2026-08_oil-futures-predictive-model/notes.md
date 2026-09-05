@@ -1,6 +1,6 @@
 # Notes
 
-**Status:** see `STATUS.md`. Closeout sealed 2026-08-17 as **hard stop (residuals live)**. Tracker fold 2026-09-05: named Yahoo CL queue **empty**; R-F-SKILL still **pursue**; Track B Lab batch 1 + batch 2 **REJECT / burn**; batch 3 burns + Brent **H-SPOT-MOY-CONT** scoped confirm pass (**not** skill-met; **not** a null; burned-class invent empty separately).
+**Status:** see `STATUS.md`. Closeout sealed 2026-08-17 as **hard stop (residuals live)**. Tracker fold 2026-09-05: named Yahoo CL queue **empty**; R-F-SKILL still **pursue**; Track B Lab batch 1 + batch 2 **REJECT / burn**; batch 3 burns + Brent **H-SPOT-MOY-CONT** scoped confirm pass; batch 4 burns SHRINK/VOLTGT/QUANT + marks that horse **FRAGILE** (**not** skill-met; **not** elevated; **not** a null; burned-class invent empty separately).
 
 **Application:** `2026-08_oil-futures-predictive-model`  
 **Date:** 2026-09-05  
