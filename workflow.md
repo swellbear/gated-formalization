@@ -53,6 +53,15 @@ Habit only — not a scoring rule. Full note: [`docs/SOLVE_LOOP_HABIT.md`](docs/
 - [ ] If the fog shrinks, keep going; if the missing piece was wrong, pick the next piece
 - [ ] Stop when checks only restate the same FRAGILE / still-foggy result
 
+## When fog is open — keep a named-gap ledger
+
+Habit only — not a scoring rule. Full note: [`docs/NAMED_GAP_LEDGER_HABIT.md`](docs/NAMED_GAP_LEDGER_HABIT.md).
+
+- [ ] One line per open gap: what’s missing → kill vs harden → last check → status (`open` / `killed` / `hardened` / `wrong-piece` / `restated` / `paused`)
+- [ ] Invents that do not point at a ledger line do not run
+- [ ] Wrong-piece counts as progress (that wasn’t the right fog)
+- [ ] Two restates on the same gap → pause that string
+
 ## How choices are presented
 
 Whenever you are asked to choose, options appear **in this chat** as clickable A / B / C choices. Each option shows a short label and one everyday sentence. **Click the option — that click is the reply.** You do not leave the conversation. Canonical rule: **Choice Presentation Standard** in `.cursor/rules/applications-gated-method.mdc`. Typed letters and one-liners remain accepted equivalents. Wording source: [`ui/choice-presenter/catalog.json`](ui/choice-presenter/catalog.json). The HTML/canvas files are an optional demo only; they are not how a live run decides.

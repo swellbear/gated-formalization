@@ -33,3 +33,5 @@ Honesty and naming Ambiguity are not enough if every invent is a lookalike direc
 While still on the **same** problem, invent a new candidate, test it cheaply, then let the Operator decide: [`docs/INVENT_TEST_HABIT.md`](INVENT_TEST_HABIT.md).
 
 When you switch to a **brand-new claim**, write up what this string taught you first: [`docs/DIGESTION_HABIT.md`](DIGESTION_HABIT.md).
+
+When fog is open, keep one line per named gap so invents point at a real missing piece: [`docs/NAMED_GAP_LEDGER_HABIT.md`](NAMED_GAP_LEDGER_HABIT.md).

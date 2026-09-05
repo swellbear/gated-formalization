@@ -24,7 +24,7 @@ This repository is an **operator toolkit**: documentation + reusable worksheets 
 
 See `workflow.md` for the operator checklist.
 
-Before a brand-new claim, write up what the last one taught you: [`docs/DIGESTION_HABIT.md`](docs/DIGESTION_HABIT.md). While still on the same problem, invent a new candidate, test it cheaply, then let the Operator decide: [`docs/INVENT_TEST_HABIT.md`](docs/INVENT_TEST_HABIT.md). When you are trying to clear fog, name one missing piece, invent a cheap check, and stop when the fog does not move: [`docs/SOLVE_LOOP_HABIT.md`](docs/SOLVE_LOOP_HABIT.md).
+Before a brand-new claim, write up what the last one taught you: [`docs/DIGESTION_HABIT.md`](docs/DIGESTION_HABIT.md). While still on the same problem, invent a new candidate, test it cheaply, then let the Operator decide: [`docs/INVENT_TEST_HABIT.md`](docs/INVENT_TEST_HABIT.md). When you are trying to clear fog, name one missing piece, invent a cheap check, and stop when the fog does not move: [`docs/SOLVE_LOOP_HABIT.md`](docs/SOLVE_LOOP_HABIT.md). When fog is open, keep one line per named gap so invents point at a real missing piece: [`docs/NAMED_GAP_LEDGER_HABIT.md`](docs/NAMED_GAP_LEDGER_HABIT.md).
 
 ## Repository Structure
 
@@ -55,6 +55,7 @@ Start from hard-to-dispute anchors. Admit new formal layers only when they pass 
 - `docs/DIGESTION_HABIT.md` — before a brand-new claim, write up what the last one taught you (habit, not a scoring rule)
 - `docs/INVENT_TEST_HABIT.md` — invent a new candidate, test it cheaply, then let the Operator decide (habit, not a scoring rule)
 - `docs/SOLVE_LOOP_HABIT.md` — name one missing piece, invent a cheap check, stop when the fog does not move (habit, not a scoring rule)
+- `docs/NAMED_GAP_LEDGER_HABIT.md` — one line per open gap so invents point at a real missing piece (habit, not a scoring rule)
 - `ui/choice-presenter/catalog.json` — wording catalog for in-chat choices (HTML/canvas demo is optional; does not score)
 - `TRACKER_CLAIM_GRAPH.md` — portfolio claim-graph instance (optional overview)
 - `docs/thesis_final.pdf` — archival frozen Complete Thesis (vFinal consolidated working paper)

@@ -24,3 +24,5 @@ Cheap tests die if Lab treats a near-miss as admission, or if a burned class com
 When you switch to a **brand-new claim**, write up what this string taught you first: [`docs/DIGESTION_HABIT.md`](DIGESTION_HABIT.md).
 
 When you are trying to **clear fog**, name one missing piece and invent a check that could move it: [`docs/SOLVE_LOOP_HABIT.md`](SOLVE_LOOP_HABIT.md).
+
+When fog is open, keep one line per named gap so invents point at a real missing piece: [`docs/NAMED_GAP_LEDGER_HABIT.md`](NAMED_GAP_LEDGER_HABIT.md).
