@@ -2,7 +2,7 @@
 
 **Date:** 2026-09-06  
 **Application:** `2026-09_soften-vanity-thrash-predictor`  
-**Verdict:** **PASS** (scaffold) — own Amb-folder boards only. **No claim-language patent copy.** **No circular self-row.**
+**Verdict:** **PASS** (C0 Soften) — own Amb-folder boards only. **No claim-language patent copy.** **No circular self-row.**
 
 This gate is required because the Amb mines early DIGESTION / SCORE / STATUS / PROPOSED board text across `applications/`. Corpus mining is **not** a license to paste patent claims, to treat another Amb’s DIGEST as vanity without the kill-condition test, or to score **this folder** as a corpus row.
 
@@ -10,11 +10,12 @@ This gate is required because the Amb mines early DIGESTION / SCORE / STATUS / P
 
 | Allowed | Where | Why |
 |---------|-------|-----|
-| Bibliographic pointers to other Amb folders (`applications/2026-09_…`) | STATUS / ledger / digestion / C0 table (after GO) | Corpus citation |
-| Short paraphrase of **board-class** facts (Soften-bearing SCORE/DIGESTION present; dated early window; kill/fail named or not) | C0–C4 sheets after GO | Feature / label coding |
+| Bibliographic pointers to other Amb folders (`applications/2026-09_…`) | STATUS / ledger / digestion / C0 table | Corpus citation |
+| Short paraphrase of **board-class** facts (Soften-bearing SCORE/DIGESTION present; dated early window; kill/fail named or not) | C0 sheet; C1–C4 sheets after later GO | Feature / label coding |
+| C0 inventory table (N=4/37; earliest Soften-bearing D/S; poseable-to-code notes) | [`DIGESTION_C0.md`](DIGESTION_C0.md) | Operator **ADMIT C0 Soften** |
 | Greer TABLED what-taught summary (already Operator-folded on that record) | [`DIGESTION_FROM_GREER.md`](DIGESTION_FROM_GREER.md) | Prior digestion; **not** a Greer reopen |
 | Digestor spine stamp summary | [`DIGESTION_SPINE_STAMP.md`](DIGESTION_SPINE_STAMP.md) | Admit record of PASS |
-| Operator-named freezes (early window; thrash / settle / exogenous-park; SOURCE pointer) | STATUS / ledger / pulse | Locks; **not** patent text |
+| Operator-named freezes (early window; thrash / settle / exogenous-park; SOURCE pointer; companion STATUS Soften out of N; Greer early window = MULTIPATH1) | STATUS / ledger / pulse / C0 | Locks; **not** patent text |
 
 ## Hard NO
 
@@ -24,15 +25,20 @@ This gate is required because the Amb mines early DIGESTION / SCORE / STATUS / P
 - Do **not** treat another Amb’s Soften Amb DIGEST as vanity without the kill-condition test.
 - Do **not** score **this folder** as a corpus row (circular).
 - Do **not** ingest `applications/training/` or `applications/_template_application/` as live Amb rows.
+- Do **not** pull companion **STATUS** Soften into N (STATUS soup ≠ early Soften window).
 - Do **not** paste long boards wholesale into this folder “for convenience.” Cite the path; code the named fields.
 - Do **not** reopen Greer invent or send the Greer write-up from a citation.
+- Do **not** reopen SkyMirr invent from a citation.
 
 ## Check (this fold)
 
+- [`DIGESTION_C0.md`](DIGESTION_C0.md) cites folder paths and short board-class facts (earliest Soften-bearing D/S; git date / commit; kill/fail poseable yes/no). **No claim quotes.** **No** Greer / SkyMirr claim language. This folder is **out of the 37**.
+- Companion STATUS Soften is named as **out of N** (lock), not as a fifth eligible row and not as a BIA reopen.
+- Greer early window is pointed at MULTIPATH1 SCORE/DIGESTION (first Soften ADMIT). **No** claim ingest. Greer stays **TABLED**. Invent **HOLD**.
+- SkyMirr is pointed at FOG_PEEK Soften DIGESTION. Invent **HOLD**.
 - [`DIGESTION_FROM_GREER.md`](DIGESTION_FROM_GREER.md) paraphrases the Operator-folded Greer park what-taught note. **No claim quotes.**
 - [`DIGESTION_SPINE_STAMP.md`](DIGESTION_SPINE_STAMP.md) copies the Digestor PASS summary. **No claim quotes.**
-- [`PROPOSED_PULSE.md`](PROPOSED_PULSE.md) names C0–C4 as docs coding. **Not run.** **No** patent ingest.
 - SOURCE pointer is `applications/*` Amb folders. **Not** an external patent spine.
 - This folder is **out of corpus**.
 
-**PASS.** Still **not** claim clearance. Still **not** a predictor shown.
+**PASS.** Still **not** claim clearance. Still **not** a predictor shown. C0 Soften ≠ Soften-is-bad. Greer Soften Amb is **not** asserted vanity.
