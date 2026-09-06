@@ -349,6 +349,8 @@ An app may show **endpoint reached / hard stop pending** without looking “full
 
 **Closeout checklist (mandatory in `STATUS.md`):** Before labeling a run **hard-stopped**, check off **full 11-section `DISSERTATION.md`** (stubs ≠ done), executive brief, **`SHARE_PACK.md`**, Layer 2 tracker, portfolio row, residual dispositions, residual-branch menu (if residuals), **optional-modes menu (offer applicable UX/CX/CR/QI — offering ≠ running)**, pattern map / calibration if needed, and final verdict. **Unchecked applicable items ⇒ not hard-stopped** (may still be at **endpoint**). `closeout` / `hard stop` does **not** convert named-class obtainable residuals to park/drop. Template: `templates/STATUS.md`.
 
+**Soften docs folds (operator hygiene):** After Operator Soften/Harden/Kill ADMIT, fold docs per [`docs/OPERATOR_SOFTEN_FOLD_HABIT.md`](docs/OPERATOR_SOFTEN_FOLD_HABIT.md) — one fold lane per Amb, Operator-owned STATUS stamp, Founder done/idle handshake, thin honesty checklist. Habit only; not a scoring rule. Does not hire Soften Critic. Do not paste the habit here.
+
 ### Share pack (mandatory at closeout / for sharing)
 
 Produce **`SHARE_PACK.md`** using `templates/SHARE_PACK.md` (or a fixed top section of the executive brief that satisfies the **same contract**). Default partner share surface.
