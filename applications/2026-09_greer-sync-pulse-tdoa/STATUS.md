@@ -17,7 +17,7 @@
 | **Closure state** | **open** — Amb **TABLED / PARKED** (TABLED by user); Send **HOLD**; Lab invent **HOLD**; no next pulse; reopen = user only; DIGEST Soften Amb + GREER_WRITEUP_SEND send-candidate kept as corpus; **not** live; not hard stop; no closeout hygiene this fold |
 | **Phase** | Amb **TABLED / PARKED** — TABLED by user; Send **HOLD**; Lab invent **HOLD**; no next pulse; reopen = user only |
 | **Amb** | **not live.** On record only: suite DIGEST Soften Amb **ADMITTED** (not Harden; not wholesale Kill); ingest + **A1→A4 Soften** wrap; Soften-admit send-candidate on disk (**HOLD**, tabled). Patent-facing **≤1 m**; **X = 0.50 m** perfect-ref only; **DGPS ~0.4–0.5 m** floor named. Hardware **X PARKED**. RF bench **PARKED** |
-| **Locks in force** | on-record only (not a live string): Founder **CLAIM LOCK** · fog peek C1/C2/C3 · **GEOM0 HARDEN** · **MULTIPATH1 Soften** · prior SYNC/JOINT/DRIFT/GATE as **sync-fragility evidence (partial)** · **abstract ingest ADMIT** · **A1 Soften** · **A2 Soften-conditional** · **A3 Soften** · **A4 Soften X/σ_t** · **suite DIGEST Soften Amb ADMIT** · **Soften-admit send-candidate** (**HOLD**, tabled) · **RF bench PARKED** · patent-facing **≤1 m xy** · **X = 0.50 m** perfect-ref only · **DGPS ~0.4–0.5 m** absolute floor · Lab invent **HOLD** · link/map **PARKED** · sim-only path · GPS/DGPS never the mobile fix · no RF fingerprint / ML invent · **no claim-language copy** · **PARKED / TABLED** (user) |
+| **Locks in force** | on-record only (not a live string): Founder **CLAIM LOCK** · fog peek C1/C2/C3 · **GEOM0 HARDEN** · **MULTIPATH1 Soften** · prior SYNC/JOINT/DRIFT/GATE as **sync-fragility evidence (partial)** · **abstract SOURCE ingest ADMIT** (not claim ingest; claims **COPY_GATE** blocked) · **A1 Soften** · **A2 Soften-conditional** · **A3 Soften** · **A4 Soften X/σ_t** · **suite DIGEST Soften Amb ADMIT** · **Soften-admit send-candidate** (**HOLD**, tabled) · **RF bench PARKED** · patent-facing **≤1 m xy** · **X = 0.50 m** perfect-ref only · **DGPS ~0.4–0.5 m** absolute floor · Lab invent **HOLD** · link/map **PARKED** · sim-only path · GPS/DGPS never the mobile fix · no RF fingerprint / ML invent · **no claim-language copy** · **PARKED / TABLED** (user) |
 | **Next authorization needed** | reopen = user only. Send **HOLD**. Lab invent **HOLD**. No next pulse. **Not** auto-clearance; **not** a locator; **not** RF/ML invent; **not** skill-met. Lab does **not** self-admit |
 | **Related apps surfaced** | `2026-09_cell-tower-geometry` — Amb **PARKED** (Founder STOP / user pivot; peek #61 + X=300 m on record; **not live**) · `2026-09_skymirr-mulcat-isolation` — separate Amb (SURROGATE1 Soften); this app does **not** reopen it · `2026-09_human-bia-weight` — string **CLOSE** / scale-accuracy **KILL** (#59); BIA portfolio **CLOSED** |
 | **Optional modes** | none yet (parked open scaffold; not endpoint) |
@@ -36,11 +36,11 @@
 **A2 digestion:** [`DIGESTION_A2.md`](DIGESTION_A2.md)  
 **A1 score (carried Soften):** [`SCORE_A1.md`](SCORE_A1.md)  
 **A1 digestion:** [`DIGESTION_A1.md`](DIGESTION_A1.md)  
-**SOURCE (admitted abstract):** [`SOURCE.md`](SOURCE.md)  
-**Proposed ingest (prior):** [`PROPOSED_ABSTRACT_INGEST.md`](PROPOSED_ABSTRACT_INGEST.md)  
-**Ingest summary (prior):** [`ABSTRACT_INGEST_SUMMARY.md`](ABSTRACT_INGEST_SUMMARY.md)  
-**Copy gate:** [`COPY_GATE.md`](COPY_GATE.md)  
-**Ingest digestion (prior):** [`DIGESTION_ABSTRACT_INGEST.md`](DIGESTION_ABSTRACT_INGEST.md)  
+**SOURCE (admitted primary source; abstract ingest ADMITTED):** [`SOURCE.md`](SOURCE.md)  
+**Ingest digestion (authoritative ADMIT DIGESTION):** [`DIGESTION_ABSTRACT_INGEST.md`](DIGESTION_ABSTRACT_INGEST.md)  
+**Copy gate (claims blocked; not claim ingest admit):** [`COPY_GATE.md`](COPY_GATE.md)  
+**Proposed ingest (Lab-lean; not the admit record):** [`PROPOSED_ABSTRACT_INGEST.md`](PROPOSED_ABSTRACT_INGEST.md)  
+**Ingest summary (Lab-lean; not the admit record):** [`ABSTRACT_INGEST_SUMMARY.md`](ABSTRACT_INGEST_SUMMARY.md)  
 **Founder send-candidate (Soften-admit; HOLD send — tabled, not sent):** [`GREER_WRITEUP_SEND.md`](GREER_WRITEUP_SEND.md)  
 **Prior write-up (sync-fragility evidence only):** [`GREER_WRITEUP.md`](GREER_WRITEUP.md)  
 **Lab audit draft (sync-fragility evidence only):** [`GREER_WRITEUP_DRAFT.md`](GREER_WRITEUP_DRAFT.md)  
@@ -88,7 +88,7 @@ Not claimed this fold. Boxes stay open.
 - [ ] `STATUS.md` set to hard stop
 - [ ] `final_verdict.md`
 
-**Gates:** Amb **TABLED / PARKED**. TABLED by user. Send **HOLD**. Lab invent **HOLD**. No next pulse. Reopen = user only. DIGEST Soften Amb + GREER_WRITEUP_SEND send-candidate kept as corpus. C1 **SUCCEED**. C2 **SUCCEED**. C3 **SUCCEED**. **GEOM0 HARDEN**. **MULTIPATH1 Soften**. Prior SYNC/JOINT/DRIFT/GATE = sync-fragility evidence (**partial**). **Abstract ingest ADMIT.** **A1 Soften**. **A2 Soften-conditional**. **A3 Soften**. **A4 Soften X/σ_t**. **Suite DIGEST Soften Amb ADMIT** (not Harden; not wholesale Kill) — on record, **not** a live string. Patent-facing **≤1 m xy**. **X = 0.50 m** perfect-ref only. **DGPS ~0.4–0.5 m** absolute floor. Hardware **X PARKED**. RF bench **PARKED**. Soften / HARDEN / ingest / DIGEST is **not** claim clearance. GPS-denied TDOA locate is **not** established. Training is **not** established. Skill-met is **not** claimed. Cell-tower stays **PARKED**. BIA stays **CLOSED**.
+**Gates:** Amb **TABLED / PARKED**. TABLED by user. Send **HOLD**. Lab invent **HOLD**. No next pulse. Reopen = user only. DIGEST Soften Amb + GREER_WRITEUP_SEND send-candidate kept as corpus. C1 **SUCCEED**. C2 **SUCCEED**. C3 **SUCCEED**. **GEOM0 HARDEN**. **MULTIPATH1 Soften**. Prior SYNC/JOINT/DRIFT/GATE = sync-fragility evidence (**partial**). **Abstract SOURCE ingest ADMIT** ([`SOURCE.md`](SOURCE.md); [`DIGESTION_ABSTRACT_INGEST.md`](DIGESTION_ABSTRACT_INGEST.md)). Claims **blocked** by [`COPY_GATE.md`](COPY_GATE.md) (not claim ingest admit). **A1 Soften**. **A2 Soften-conditional**. **A3 Soften**. **A4 Soften X/σ_t**. **Suite DIGEST Soften Amb ADMIT** (not Harden; not wholesale Kill) — on record, **not** a live string. Patent-facing **≤1 m xy**. **X = 0.50 m** perfect-ref only. **DGPS ~0.4–0.5 m** absolute floor. Hardware **X PARKED**. RF bench **PARKED**. Soften / HARDEN / ingest / DIGEST is **not** claim clearance. GPS-denied TDOA locate is **not** established. Training is **not** established. Skill-met is **not** claimed. Cell-tower stays **PARKED**. BIA stays **CLOSED**.
 
 ---
 

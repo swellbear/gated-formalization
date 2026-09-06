@@ -13,7 +13,8 @@
 
 | Item | State |
 |------|--------|
-| Abstract + claims ingest | ADMITTED (DIGEST Soften Amb) |
+| Abstract SOURCE ingest | ADMITTED — admitted primary source is `SOURCE.md` (not Lab scratch `SOURCE_US10135667B1.md`). Authoritative admit record: `DIGESTION_ABSTRACT_INGEST.md`. Not a claim ingest admit. |
+| Claims ingest | **blocked by `COPY_GATE.md`** (not claim ingest admit). Do **not** say “Abstract + claims ingest ADMITTED.” |
 | Suite A1→A4 | Softened; suite DIGEST Soften Amb ADMITTED (~#83) |
 | `GREER_WRITEUP_SEND.md` | Soften send-candidate on master (~#84); **cleaned plain language**; **send HOLD** |
 | Outreach SMS draft | See `OUTREACH_TEXT_DRAFT.md` — not sent |
@@ -34,16 +35,18 @@
 ## Read order on reopen
 
 1. This file + repo `STATUS.md`  
-2. `ABSTRACT_INGEST_SUMMARY.md` / `SOURCE_US10135667B1.md`  
+2. Admitted primary source `SOURCE.md` + master ADMIT DIGESTION `DIGESTION_ABSTRACT_INGEST.md` (not Lab-lean `ABSTRACT_INGEST_SUMMARY.md` / `PROPOSED_ABSTRACT_INGEST.md` as the admit record; not Lab scratch `SOURCE_US10135667B1.md`)  
 3. `DIGESTION_A1A4_SUITE.md`  
 4. `GREER_WRITEUP_SEND.md` + `OUTREACH_TEXT_DRAFT.md`  
-5. Boards: `PROPOSED_A1`…`A4`, earlier GEOM0→GATE1 as needed  
+5. Boards: `PROPOSED_A1`…`A4`, earlier GEOM0→GATE1 as needed (Lab local; **not** the admit record)  
 6. `raw/` metrics + plots; `run_*.py` for reproduce  
 
 ---
 
 ## Do not on reopen
 
-- Don’t re-skim the patent — ingest already done  
+- Don’t treat Lab scratch `SOURCE_US10135667B1.md` as the admitted primary source — that is `SOURCE.md`  
+- Don’t promote Lab-lean PROPOSED / `ABSTRACT_INGEST_SUMMARY.md` as the admit record — master `DIGESTION_ABSTRACT_INGEST.md` is authoritative  
+- Don’t re-skim the patent as if claims were ingested — abstract SOURCE ingest is already ADMITTED; claims stay **COPY_GATE** blocked  
 - Don’t send Greer without user OK  
 - Don’t blur claim-language copy vs primary-source ingest  
