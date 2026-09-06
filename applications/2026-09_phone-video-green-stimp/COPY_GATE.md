@@ -2,7 +2,7 @@
 
 **Date:** 2026-09-06  
 **Application:** `2026-09_phone-video-green-stimp`  
-**Verdict:** **PASS** (scaffold) — bibliographic + short paraphrase only. **No product copy.** **No Stimpmeter-stick embodiment.** **No long booklet paste.**
+**Verdict:** **PASS** (Soften S0 + Soften S1) — bibliographic + short paraphrase only. **No product copy.** **No Stimpmeter-stick embodiment.** **No long booklet paste.** **X unset.**
 
 This gate is required because the Amb practices a USGA instrument definition and a published cellphone-video BRD abstract. Method practice is **not** a license to paste the USGA booklet, to ship an iStimp / Stimpmeter clone, or to treat Sommer’s MATLAB recipe as a product spec.
 
@@ -11,10 +11,13 @@ This gate is required because the Amb practices a USGA instrument definition and
 | Allowed | Where | Why |
 |---------|-------|-----|
 | Bibliographic identifiers (USGA booklet 2012; 2013 update; Sommer title/authors/URL; Holmes / Brede / Hubbard cites) | [`SOURCE.md`](SOURCE.md) | Citation |
-| Short paraphrase of Stimpmeter **definition / procedure / named objects** | SOURCE / S0 board (after GO) / STATUS / ledger | Amb spine |
+| Short paraphrase of Stimpmeter **definition / procedure / named objects** | SOURCE / S0 board / STATUS / ledger | Amb spine; Operator **ADMIT Soften S0** |
 | Short paraphrase of Sommer abstract facts (fixed mount; Stimpmeter-launched; Holmes 72 in/s; r²; **6.4 in 95% CI as literature only**) | SOURCE / STATUS / ledger | Prior-art honesty; **not** Amb **X** |
 | Operator-named freezes (name **X** before Soften; scale; launch; handheld vs fixed) | STATUS / ledger / pulse | Locks; **not** product text |
 | Soften-vanity CLOSE what-taught summary (already Operator-folded on that record) | [`DIGESTION_FROM_SOFTEN_VANITY.md`](DIGESTION_FROM_SOFTEN_VANITY.md) | Prior digestion; **not** a Soften-vanity reopen |
+| S0 SOURCE board Soften (definition + procedure + named objects + Sommer literature objects + pointers) | [`DIGESTION_S0.md`](DIGESTION_S0.md) | Operator **ADMIT Soften S0**; **not** green-speed Soften |
+| S1 Sommer gap map Soften (G1–G6) | [`DIGESTION_S1.md`](DIGESTION_S1.md) | Operator **ADMIT Soften S1**; **not** green-speed Soften |
+| Lab DIGEST lean (S0+S1 Soften; copied Operator gate) | [`DIGESTION_S0S1_SOFTEN.md`](DIGESTION_S0S1_SOFTEN.md) | Not product text; **X** unset |
 | Digestor spine stamp summary | [`DIGESTION_SPINE_STAMP.md`](DIGESTION_SPINE_STAMP.md) | Admit record of PASS |
 
 ## Hard NO
@@ -32,9 +35,12 @@ This gate is required because the Amb practices a USGA instrument definition and
 ## Check (this fold)
 
 - [`SOURCE.md`](SOURCE.md) holds bibliographic tables + short paraphrase + named-object list. **No long booklet. No product spec.**
-- [`PROPOSED_PULSE.md`](PROPOSED_PULSE.md) names S0–S4 as docs boards. **Not run.** **No** tracker invent.
+- [`DIGESTION_S0.md`](DIGESTION_S0.md) is COPY_GATE **short paraphrase** of definition / procedure / named objects / Sommer literature objects / bibliographic pointers. **No long booklet. No product spec.**
+- [`DIGESTION_S1.md`](DIGESTION_S1.md) is a gap map. **No product spec. No X invented.**
+- [`DIGESTION_S0S1_SOFTEN.md`](DIGESTION_S0S1_SOFTEN.md) copies the Operator ADMIT. **No product spec.**
+- [`PROPOSED_PULSE.md`](PROPOSED_PULSE.md) locks **S0 = SOURCE**, **S1 = Sommer gap map**, **S2 = kinematics (Hold)**. Scaffold S1=scale is **not** authoritative. **No** tracker invent.
 - Sommer 6.4 in appears only as **literature-only** honesty. **X unset.**
 - [`DIGESTION_FROM_SOFTEN_VANITY.md`](DIGESTION_FROM_SOFTEN_VANITY.md) paraphrases the Operator-folded Soften-vanity park what-taught note. **No claim quotes.**
 - [`DIGESTION_SPINE_STAMP.md`](DIGESTION_SPINE_STAMP.md) copies the Digestor PASS summary.
 
-**PASS.** Still **not** claim clearance. Still **not** green speed shown. Still **not** **X** named.
+**PASS.** Still **not** claim clearance. Still **not** green speed shown. Still **not** **X** named. Soften S0 + Soften S1 ≠ green-speed Soften.

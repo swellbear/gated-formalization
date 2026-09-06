@@ -29,7 +29,7 @@ Stay a **new** physics-practice Amb, not Soften-vanity reopened, not Greer inven
 
 - Quote the Operator **CLAIM LOCK** and Digestor **SPINE STAMP PASS**. See [`DIGESTION_SPINE_STAMP.md`](DIGESTION_SPINE_STAMP.md).
 - Keep the three freezes: name **X** before Soften; scale / launch / mount named; SOURCE = USGA + Sommer + Holmes/Brede/Hubbard.
-- First pulse after **GO S0** = **SOURCE board**. **Not a model.** **Not yet GO this fold.**
+- First pulse **S0 SOURCE board** is now **Operator Soften** ([`DIGESTION_S0.md`](DIGESTION_S0.md)). **S1 = Sommer gap map** is **Operator Soften** ([`DIGESTION_S1.md`](DIGESTION_S1.md)). **Hold S2.** Green-speed claim is **not** Softened. **X unset.**
 - Sommer 6.4 in 95% CI stays **literature only** (fixed-mount, Stimpmeter-launched).
 - Do **not** train. Do **not** invent YOLO / GPU first. Do **not** hire a Soften Critic. Do **not** write skill-met language.
 - Do **not** reopen Soften-vanity. Do **not** reopen Greer invent. Do **not** send the Greer write-up. Do **not** reopen SkyMirr invent. Do **not** reopen `2026-09_cell-tower-geometry` as live.
