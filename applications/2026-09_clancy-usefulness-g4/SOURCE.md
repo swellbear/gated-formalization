@@ -2,12 +2,14 @@
 
 **Date:** 2026-09-06  
 **Application:** `2026-09_clancy-usefulness-g4`  
-**Role:** notes summary. Operator **ADMIT scaffold** after Digestor spine **PASS**. **NOT** Soften of usefulness / verdict. **NOT** this Amb Softened set. Parent Clancy Softened S0+C1+Days 2–21 = **SOURCE carry only**. Prior usefulness_check = **media≠certified** (not a certified Soften).
+**Role:** notes summary. Operator **ADMIT Soften S0** — freeze poseability only. **NOT** Soften of usefulness / verdict. Softened (this Amb): **S0 freeze**. Parent Clancy Softened S0+C1+Days 2–21 = **SOURCE carry only**. Prior usefulness_check = **media≠certified** (not a certified Soften). Evening G5 prior **≠** Soften usefulness.
 
 **Copy gate:** [`COPY_GATE.md`](COPY_GATE.md)  
-**Operator stamp:** [`OPERATOR_STATUS_STAMP.md`](OPERATOR_STATUS_STAMP.md)
+**Operator stamp:** [`OPERATOR_STATUS_STAMP.md`](OPERATOR_STATUS_STAMP.md)  
+**S0 digestion:** [`DIGESTION_S0.md`](DIGESTION_S0.md)  
+**Lab path:** `/workspace/clancy_usefulness_lab/` (pointer only; **not** in this checkout)
 
-This file holds **bibliographic pointers** plus a short paraphrase of what the usefulness check sits on. It does **not** hold the certified court-reporter record. It does **not** hold DIGESTION Soften boards. It is **not** legal advice and **not** claim-language product copy. Long transcript paste stays [`COPY_GATE.md`](COPY_GATE.md) blocked.
+This file holds **bibliographic pointers** plus a short paraphrase of what the usefulness check sits on, plus Lab path pointers. It does **not** hold the certified court-reporter record. It does **not** hold long transcript. It is **not** legal advice and **not** claim-language product copy. Long transcript paste stays [`COPY_GATE.md`](COPY_GATE.md) blocked. S0 freeze digestion lives in [`DIGESTION_S0.md`](DIGESTION_S0.md).
 
 **Method practice only.** Do **not** treat Rev as certified record. Do **not** dump all days. Do **not** Soften verdict / mistrial / retrial. Do **not** treat parent Softened boards as this Amb Soften.
 
@@ -82,7 +84,18 @@ Bibliographic index stays on the parent [`SOURCE.md`](../2026-09_clancy-media-tr
 
 ---
 
-## 5. Honesty locks that sit on SOURCE
+## 5. Lab paths (pointer only)
+
+Lab `/workspace/clancy_usefulness_lab/` is **not** in this checkout. **Pointer only.** **Do not invent a chart.** See [`VIZ.md`](VIZ.md).
+
+| Path | Role | Not |
+|------|------|-----|
+| `/workspace/clancy_usefulness_lab/` | This Amb Lab root | Usefulness Soften; certified record; copied corpus |
+| `/workspace/clancy_usefulness_lab/viz/` | Illustrator bootstraps | Invented chart; usefulness Soften |
+
+---
+
+## 6. Honesty locks that sit on SOURCE
 
 - **Media≠official.** Rev (and similar) ≠ certified court-reporter record. Prior usefulness_check ≠ certified Soften.
 - **Day≠certified / closings≠evidence.** Parent day / closings Softens stay map poseability.
@@ -90,7 +103,9 @@ Bibliographic index stays on the parent [`SOURCE.md`](../2026-09_clancy-media-tr
 - **Parent Softened set ≠ this Amb Softened set.** Carry only.
 - **Bar named ≠ usefulness Soften.** ≥2× time + same theory is the bar, not clearance.
 - **Laptop-only.** Method practice. Not legal advice. Not a product.
+- **Evening G5 prior ≠ Soften usefulness.**
+- **S0 freeze ≠ usefulness Soften.** Softened (this Amb): S0 freeze only.
 
 ---
 
-*Docs only. Scaffold. Not usefulness Soften. Not verdict Soften. Hold C2/C4.*
+*Docs only. Soften S0 freeze poseability. Not usefulness Soften. Not verdict Soften. Hold C2/C4. Lab `/workspace/clancy_usefulness_lab/` pointer only.*

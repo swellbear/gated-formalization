@@ -3,11 +3,11 @@
 **Application ID:** `2026-09_clancy-usefulness-g4`  
 **Opened:** 2026-09-06  
 
-Open **usefulness-only Amb scaffold**. Operator **ADMIT scaffold** 2026-09-06 after Digestor spine **PASS**. Softened set **none yet**. Park DIGEST **none**. Amb **OPEN**. **Hold C2/C4.** Usefulness / verdict **NOT Softened**. Soften Critic **not hired**. `lab_admits=false`. Idle latch **OFF**; Lab invent **GO after Soften+viz** (not this scaffold).
+Open **usefulness-only Amb**. Operator **ADMIT Soften S0** 2026-09-06 — freeze poseability only (**NOT** usefulness Soften). Softened (this Amb): **S0 freeze**. Park DIGEST **none**. Amb **OPEN**. **Hold C2/C4.** Usefulness / verdict **NOT Softened**. Soften Critic **not hired**. `lab_admits=false`. Idle latch **OFF**; Lab invent **GO after Soften+viz**.
 
 **NEW Amb (usefulness-only; replication check):** a laptop-feasible **G4 meds/expert stack** pass vs a **cold Rev** read on a **frozen brief** — succeed if wall time is **≥2×** the cold Rev pass **and** the theory matches the parent Softened G4 meds/expert stack (map poseability; **media≠certified**). **Not** a new day map. **Not** C2/C4. **Not** Soften of usefulness / verdict from scaffold alone.
 
-Parent Clancy Softened **S0 + C1 + Days 2–21** = **SOURCE carry only**, **not** this Amb Softened set. Parent map Amb: [`../2026-09_clancy-media-transcript-gap-map/`](../2026-09_clancy-media-transcript-gap-map/). Parent stamp: [`../2026-09_clancy-media-transcript-gap-map/OPERATOR_STATUS_STAMP.md`](../2026-09_clancy-media-transcript-gap-map/OPERATOR_STATUS_STAMP.md).
+Parent Clancy Softened **S0 + C1 + Days 2–21** = **SOURCE carry only**, **not** this Amb Softened set beyond S0 freeze. Parent map Amb: [`../2026-09_clancy-media-transcript-gap-map/`](../2026-09_clancy-media-transcript-gap-map/). Parent stamp: [`../2026-09_clancy-media-transcript-gap-map/OPERATOR_STATUS_STAMP.md`](../2026-09_clancy-media-transcript-gap-map/OPERATOR_STATUS_STAMP.md). S0 digestion: [`DIGESTION_S0.md`](DIGESTION_S0.md).
 
 This is **not** legal advice. This is **not** a product. This is **not** a trained map. Training is **not** established. This is **not** skill-met. This is **not** rithm. This is **not** a Soften Critic hire. Soften itself is **not** asserted bad. Opening the scaffold does **not** show the usefulness claim and is **not** clearance. **NO C2/C4.** **NO new day mapping.** **NO Soften of usefulness / verdict from scaffold alone.** **No** Soften of parent usefulness. **No** treating Rev as the certified court-reporter record. **No** all-days dump. **No** case-solving. **No** Soften of verdict / mistrial / retrial. **No** Greer reopen. **No** phone-stimp invent reopen. **No** SkyMirr invent reopen. Digestor never Soften / Harden / Kill.
 
@@ -74,10 +74,11 @@ After this scaffold admit: **idle latch OFF**; Lab invent **GO after Soften+viz*
 
 1. [`STATUS.md`](STATUS.md) — points at the stamp
 2. [`OPERATOR_STATUS_STAMP.md`](OPERATOR_STATUS_STAMP.md) — authoritative “where am I?”
-3. [`SOFTENED_SET.md`](SOFTENED_SET.md) — Softened **none yet**; carry string scaffold
-4. [`SOURCE.md`](SOURCE.md) — Digestor spine + parent Softened boards + prior usefulness_check (**media≠certified**)
-5. [`DIGESTION_SPINE_STAMP.md`](DIGESTION_SPINE_STAMP.md) — Digestor spine PASS
-6. [`LIVING_SPINE_INDEX.md`](LIVING_SPINE_INDEX.md) — living board pointer (not park)
-7. [`COPY_GATE.md`](COPY_GATE.md) — SOURCE / method-practice honesty
-8. [`VIZ.md`](VIZ.md) — Illustrator pointer (`/workspace/clancy_usefulness_lab/viz/`)
-9. [`notes.md`](notes.md) — one-line pointer
+3. [`SOFTENED_SET.md`](SOFTENED_SET.md) — Softened (this Amb): **S0 freeze**
+4. [`DIGESTION_S0.md`](DIGESTION_S0.md) — Soften S0 freeze poseability (**NOT** usefulness Soften)
+5. [`SOURCE.md`](SOURCE.md) — Digestor spine + parent Softened boards + Lab `/workspace/clancy_usefulness_lab/` (**media≠certified**)
+6. [`DIGESTION_SPINE_STAMP.md`](DIGESTION_SPINE_STAMP.md) — Digestor spine PASS
+7. [`LIVING_SPINE_INDEX.md`](LIVING_SPINE_INDEX.md) — living board pointer (not park)
+8. [`COPY_GATE.md`](COPY_GATE.md) — SOURCE / method-practice honesty
+9. [`VIZ.md`](VIZ.md) — Illustrator pointer (`/workspace/clancy_usefulness_lab/`)
+10. [`notes.md`](notes.md) — one-line pointer

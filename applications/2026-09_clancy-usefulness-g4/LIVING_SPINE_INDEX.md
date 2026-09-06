@@ -11,7 +11,7 @@ Digestor living spine/index board. **Not** Soften / Harden / Kill. Digestor neve
 
 | Field | Value |
 |-------|--------|
-| **Softened set (IDs / days)** | **none yet** |
+| **Softened set (IDs / days)** | **S0 freeze** |
 | **Digestor park DIGEST** | **none** |
 | **INTERIM mid-run** | **n/a** |
 | **Hold C2/C4 (or Amb equivalents)** | **Hold C2/C4** |
@@ -23,11 +23,12 @@ Digestor living spine/index board. **Not** Soften / Harden / Kill. Digestor neve
 **Spine rows (thin):**
 
 1. **This Amb stamp** — [`OPERATOR_STATUS_STAMP.md`](OPERATOR_STATUS_STAMP.md) — authoritative “where am I?”
-2. **This Amb Softened-set ledger** — [`SOFTENED_SET.md`](SOFTENED_SET.md) — Softened **none yet**
-3. **This Amb Digestor spine PASS** — [`DIGESTION_SPINE_STAMP.md`](DIGESTION_SPINE_STAMP.md)
-4. **Parent Digestor spine PASS (pointer)** — [`../2026-09_clancy-media-transcript-gap-map/DIGESTION_SPINE_STAMP.md`](../2026-09_clancy-media-transcript-gap-map/DIGESTION_SPINE_STAMP.md)
-5. **Parent living spine (pointer; SOURCE carry)** — [`../2026-09_clancy-media-transcript-gap-map/LIVING_SPINE_INDEX.md`](../2026-09_clancy-media-transcript-gap-map/LIVING_SPINE_INDEX.md) — parent Softened S0+C1+Days 2–21; **not** this Amb Softened set
-6. **Parent Operator stamp (pointer; SOURCE carry)** — [`../2026-09_clancy-media-transcript-gap-map/OPERATOR_STATUS_STAMP.md`](../2026-09_clancy-media-transcript-gap-map/OPERATOR_STATUS_STAMP.md)
+2. **This Amb Softened-set ledger** — [`SOFTENED_SET.md`](SOFTENED_SET.md) — Softened (this Amb): **S0 freeze**
+3. **This Amb Soften S0** — [`DIGESTION_S0.md`](DIGESTION_S0.md) — freeze poseability only; **NOT** usefulness Soften
+4. **This Amb Digestor spine PASS** — [`DIGESTION_SPINE_STAMP.md`](DIGESTION_SPINE_STAMP.md)
+5. **Parent Digestor spine PASS (pointer)** — [`../2026-09_clancy-media-transcript-gap-map/DIGESTION_SPINE_STAMP.md`](../2026-09_clancy-media-transcript-gap-map/DIGESTION_SPINE_STAMP.md)
+6. **Parent living spine (pointer; SOURCE carry)** — [`../2026-09_clancy-media-transcript-gap-map/LIVING_SPINE_INDEX.md`](../2026-09_clancy-media-transcript-gap-map/LIVING_SPINE_INDEX.md) — parent Softened S0+C1+Days 2–21; **not** this Amb Softened set
+7. **Parent Operator stamp (pointer; SOURCE carry)** — [`../2026-09_clancy-media-transcript-gap-map/OPERATOR_STATUS_STAMP.md`](../2026-09_clancy-media-transcript-gap-map/OPERATOR_STATUS_STAMP.md)
 
 **Operator stamp:** [`OPERATOR_STATUS_STAMP.md`](OPERATOR_STATUS_STAMP.md) — authoritative “where am I?”
 
