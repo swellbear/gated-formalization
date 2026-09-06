@@ -7,6 +7,8 @@
 
 **Patent:** Kerry L. Greer — US10135667B1 — https://patents.google.com/patent/US10135667B1/en
 
+**What this string taught / still open / SOURCE honesty:** [`DIGESTION_PARK_WHAT_TAUGHT.md`](DIGESTION_PARK_WHAT_TAUGHT.md) (Digestor park digestion; pairs with table-decision [`DIGESTION_PARK.md`](DIGESTION_PARK.md)). Not a Soften/Harden/Kill. Not invent. Not Greer send.
+
 ---
 
 ## Disposition at park
@@ -34,7 +36,7 @@
 
 ## Read order on reopen
 
-1. This file + repo `STATUS.md`  
+1. This file + repo `STATUS.md` + `STATUS_TABLED.md` + table-decision `DIGESTION_PARK.md` + [`DIGESTION_PARK_WHAT_TAUGHT.md`](DIGESTION_PARK_WHAT_TAUGHT.md) (what this string taught / still open / SOURCE honesty)  
 2. Admitted primary source `SOURCE.md` + master ADMIT DIGESTION `DIGESTION_ABSTRACT_INGEST.md` (not Lab-lean `ABSTRACT_INGEST_SUMMARY.md` / `PROPOSED_ABSTRACT_INGEST.md` as the admit record; not Lab scratch `SOURCE_US10135667B1.md`)  
 3. `DIGESTION_A1A4_SUITE.md`  
 4. `GREER_WRITEUP_SEND.md` + `OUTREACH_TEXT_DRAFT.md`  
