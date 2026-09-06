@@ -80,5 +80,5 @@ S0 + C1 + C3 + C3 Day 14 + C3 Day 13 + C3 Day 16 are **Operator Soften**. Soften
 11. [`DIGESTION_FROM_PHONE_STIMP.md`](DIGESTION_FROM_PHONE_STIMP.md) — what the last string taught
 12. [`COPY_GATE.md`](COPY_GATE.md) — SOURCE / method-practice honesty
 13. [`RESIDUAL_BRANCH_MENU.md`](RESIDUAL_BRANCH_MENU.md) — decision log
-14. [`VIZ.md`](VIZ.md) — Illustrator Soften-fold / living-twin pointer **refreshed** after Soften C3 Day 16 (PNG+md not receivable this VM; pointer only, not a new Soften; Day 16 ADMIT stays primary)
+14. [`VIZ.md`](VIZ.md) — Illustrator Soften-fold / living-twin pointer **STATUS-ready** after Soften C3 Day 16 (`soften_fold_c1_c3.png` + `.md`; living `claim_clash_map.png` + `.md`; PNG+md not receivable this VM; pointer only, not a new Soften; Day 16 ADMIT stays primary)
 15. [`notes.md`](notes.md) — one-line pointer
