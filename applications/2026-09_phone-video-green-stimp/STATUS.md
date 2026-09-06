@@ -8,21 +8,22 @@
 
 ### Plain status
 
-Operator **ADMIT Soften S0** + **Soften S1** + **Soften S2** + **Soften of Amb claim scope**. Softened pocket = Stimpmeter-class launch (~Holmes 6 ft/s) **or** named v0 recovery. Out of pocket until solved = unknown casual putt without v0 recovery. This is **scope/pocket** Soften, **not** green-speed **accuracy** Soften. **X unset.** Soften S0–S2 **carry**. **Hold S3 lifted** / awaiting S3 Soften (scale honesty). Do **not** auto-run S3. **Hold S4** (name-**X**) stands. Soften Critic **not met**. Greer stays **TABLED**. This is **not** green speed shown. This is **not** a product. This is **not** skill-met. This is **not** rithm. Digestor never Soften / Harden / Kill.
+Operator **ADMIT Soften S0** + **Soften S1** + **Soften S2** + **Soften S3** + **claim-scope Soften**. S3 Soften = scale honesty leftover nameable / OOM-loud. Claim-scope pocket = Stimpmeter-class launch (~Holmes 6 ft/s) **or** named v0 recovery; unknown casual putt without v0 recovery stays **out** until solved. This is **not** green-speed **accuracy** Soften. **X unset.** Soften S0–S2 + claim-scope **carry**. **Hold S4** until Operator GO. Do **not** auto-GO S4. Do **not** name **X**. Soften Critic **not met**. Greer stays **TABLED**. This is **not** green speed shown. This is **not** skill-met. Digestor never Soften / Harden / Kill.
 
 ---
 
 | Field | Value |
 |-------|--------|
-| **Closure state** | **open** — Operator **ADMIT Soften S0 + S1 + S2** + **claim-scope Soften**; green-speed **accuracy not** Softened; **X unset**; **Hold S3 lifted** / awaiting S3 Soften; **Hold S4**; not hard stop |
-| **Phase** | Soften S0 + S1 + S2 + claim-scope pocket admitted; Lab **GO S3** (scale honesty) recorded — **not auto-run**; awaiting S3 Soften; **Hold S4** (name-**X**) |
-| **Amb** | unset (no scored lock this fold). Named fog open: **X unset**; claim-scope pocket = Stimpmeter-class / named v0; casual-without-v0 **out** until solved; scale honesty awaiting S3. Green-speed **accuracy** / **X** **unset** |
-| **Locks in force** | Operator **CLAIM LOCK** (provisional; **X unset**) · **claim-scope Soften** (pocket = Stimpmeter-class launch ~Holmes 6 ft/s **or** named v0 recovery; casual-without-v0 **out** until solved) · Digestor **SPINE STAMP PASS** · **Soften S0** · **Soften S1** · **Soften S2** · Digestor/Founder **S1 = Sommer gap map** · **S2 = kinematics** (Soften) · **Hold S3 lifted** / awaiting S3 Soften · **Hold S4** (name-**X**) · **name X before Soften** of green-speed **accuracy** · Sommer **6.4 in ≠ Amb X** · USGA **8-in ≠ Amb X** · Soften-vanity **CLOSED** · Soften Critic **not met** · Greer **TABLED** invent **HOLD** · SkyMirr invent **HOLD** · cell-tower **PARKED** · BIA **CLOSED** · no product / YOLO / GPU / Stimpmeter · Digestor never Soften / Harden / Kill |
-| **Next authorization needed** | Lab **GO S3** (scale honesty) — **Hold S3 lifted** / awaiting S3 Soften; **not** auto-run S3 this fold; **not** green-speed accuracy Soften; **not** **X** named. Lab does **not** self-admit |
-| **Related apps surfaced** | `2026-09_soften-vanity-thrash-predictor` — **CLOSED** (Soften Amb DIGEST / string CLOSE; Lab invent **HOLD**; Soften Critic **not met**; holdout-lift **Killed**); this app does **not** reopen it · `2026-09_greer-sync-pulse-tdoa` — **TABLED / PARKED** (user); Send **HOLD**; Lab invent **HOLD**; reopen = user only; this app does **not** reopen Greer |
+| **Closure state** | **open** — Operator **ADMIT Soften S0 + S1 + S2 + S3** + **claim-scope Soften**; green-speed **accuracy not** Softened; **X unset**; **Hold S4**; not hard stop |
+| **Phase** | Soften S0 (SOURCE) + S1 (Sommer gap map) + S2 (kinematics) + S3 (scale honesty) + claim-scope pocket admitted; **Hold S4** (name-**X**) until Operator GO — **not** auto-GO |
+| **Amb** | unset (no scored lock this fold). Named fog open: **X unset**; claim-scope pocket = Stimpmeter-class / named v0; casual-without-v0 **out**; scale leftover OOM-loud (recoverable vs missing). Green-speed **accuracy** / **X** **unset** |
+| **Locks in force** | Operator **CLAIM LOCK** (provisional; **X unset**) · **claim-scope Soften** (pocket = Stimpmeter-class launch ~Holmes 6 ft/s **or** named v0; casual-without-v0 **out**) · Digestor **SPINE STAMP PASS** · **Soften S0** · **Soften S1** · **Soften S2** · **Soften S3** · Digestor/Founder **S1 = Sommer gap map** · **S2 = kinematics** · **S3 = scale honesty** (not scaffold S1=scale) · **Hold S4** (name-**X**) · **name X before Soften** of green-speed **accuracy** · Sommer **6.4 in ≠ Amb X** · USGA **8-in ≠ Amb X** · Soften-vanity **CLOSED** · Soften Critic **not met** · Greer **TABLED** invent **HOLD** · SkyMirr invent **HOLD** · cell-tower **PARKED** · BIA **CLOSED** · no product / YOLO / GPU / Stimpmeter · Digestor never Soften / Harden / Kill |
+| **Next authorization needed** | Operator **GO S4** (name-**X**) or park — **not** auto-GO; **not** green-speed accuracy Soften; **not** **X** named. Lab does **not** self-admit |
+| **Related apps surfaced** | `2026-09_soften-vanity-thrash-predictor` — **CLOSED** (Soften Amb DIGEST / string CLOSE; Lab invent **HOLD**; Soften Critic **not met**); this app does **not** reopen it · `2026-09_greer-sync-pulse-tdoa` — **TABLED / PARKED** (user); Send **HOLD**; Lab invent **HOLD**; reopen = user only; this app does **not** reopen Greer |
 | **Optional modes** | none yet (open; not endpoint) |
 
 **Ledger:** [`NAMED_GAP_LEDGER.md`](NAMED_GAP_LEDGER.md)  
+**S3 digestion:** [`DIGESTION_S3.md`](DIGESTION_S3.md)  
 **Claim-scope digestion:** [`DIGESTION_CLAIM_SCOPE.md`](DIGESTION_CLAIM_SCOPE.md)  
 **S2 digestion:** [`DIGESTION_S2.md`](DIGESTION_S2.md)  
 **Lab DIGEST lean (S0+S1 Soften):** [`DIGESTION_S0S1_SOFTEN.md`](DIGESTION_S0S1_SOFTEN.md)  
@@ -35,9 +36,9 @@ Operator **ADMIT Soften S0** + **Soften S1** + **Soften S2** + **Soften of Amb c
 **Copy gate (SOURCE honesty):** [`COPY_GATE.md`](COPY_GATE.md)  
 **Decision log:** [`RESIDUAL_BRANCH_MENU.md`](RESIDUAL_BRANCH_MENU.md)
 
-**What this fold does not do:** no S3 scale honesty **run** (Hold S3 lifted / awaiting Soften only); no S4 name-**X**; no **X** named; no Soften of green-speed **accuracy**; no Stimpmeter built; no product app; no YOLO / giant GPU first path; no Soften Critic hire; no Greer reopen; no skill-met / elevated language.
+**What this fold does not do:** no S4 name-**X**; no **X** named; no Soften of green-speed **accuracy**; no Stimpmeter built; no product app; no YOLO / giant GPU first path; no Soften Critic hire; no Greer reopen; no skill-met / elevated language.
 
-**Run constraint:** This fold is **docs only**. Do **not** auto-run S3. Awaiting S3 Soften ≠ S3 run. No GPU. No trained models. No Stimpmeter hardware.
+**Run constraint:** This fold is **docs only**. Do **not** auto-GO S4. Do **not** name **X**. No GPU. No trained models. No Stimpmeter hardware.
 
 **Endpoint** = examination done; verdict frozen. This fold is **open**. Do **not** label hard stop.
 
@@ -62,7 +63,7 @@ Not claimed this fold. Boxes stay open.
 - [ ] `STATUS.md` set to hard stop
 - [ ] `final_verdict.md`
 
-**Gates:** Operator **ADMIT Soften S0 + S1 + S2** + **claim-scope Soften**. Green-speed **accuracy** is **not** Softened. **X** is **unset**. **Hold S3 lifted** / awaiting S3 Soften. **Hold S4.** Soften Critic **not met**. Soften-vanity stays **CLOSED**. Greer stays **TABLED**. Cell-tower stays **PARKED**. SkyMirr invent stays **HOLD**. BIA stays **CLOSED**. Skill-met is **not** claimed.
+**Gates:** Operator **ADMIT Soften S0 + S1 + S2 + S3** + **claim-scope Soften**. Green-speed **accuracy** is **not** Softened. **X** is **unset**. **Hold S4.** Soften Critic **not met**. Soften-vanity stays **CLOSED**. Greer stays **TABLED**. Cell-tower stays **PARKED**. SkyMirr invent stays **HOLD**. BIA stays **CLOSED**. Skill-met is **not** claimed.
 
 ---
 

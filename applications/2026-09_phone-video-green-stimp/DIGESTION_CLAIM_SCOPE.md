@@ -11,9 +11,9 @@
 **Ledger:** [`NAMED_GAP_LEDGER.md`](NAMED_GAP_LEDGER.md)  
 **STATUS:** [`STATUS.md`](STATUS.md)
 
-Founder+Operator **ADMIT Soften of Amb claim scope**. This is Soften of claim **scope / pocket**, **NOT** Soften of green-speed **accuracy**, and **NOT** naming **X**. **X remains unset.** Soften S0–S2 pulse Softens **carry**.
+Founder+Operator **ADMIT Soften of Amb claim scope**. This is Soften of claim **scope / pocket**, **NOT** Soften of green-speed **accuracy**, and **NOT** naming **X**. **X remains unset.** Soften S0–S3 pulse Softens **carry**.
 
-This does **not** Soften green-speed accuracy. It does **not** name **X**. It does **not** run S3. It does **not** hire a Soften Critic. It does **not** reopen Greer.
+This does **not** Soften green-speed accuracy. It does **not** name **X**. It does **not** hire a Soften Critic. It does **not** reopen Greer.
 
 ---
 
@@ -26,7 +26,9 @@ Out of Soften pocket until solved = unknown casual putt without v0 recovery.
 
 This is Soften of claim **scope/pocket**, NOT Soften of green-speed accuracy and NOT naming X. X remains unset. Soften S0–S2 pulse Softens carry.
 
-**Next:** Lab **GO S3** (scale honesty). Do **not** auto-run S3 this fold. **Hold S3 lifted** / awaiting S3 Soften. Soften Critic **not met**. Greer **TABLED**.
+**Next (as admitted):** Lab **GO S3** (scale honesty). Soften Critic **not met**. Greer **TABLED**.
+
+**Later the same day:** Operator **ADMIT Soften S3**. Hold S3 is no longer awaiting. **Hold S4.** See [`DIGESTION_S3.md`](DIGESTION_S3.md).
 
 ---
 
@@ -50,19 +52,19 @@ S2 already named the two launch classes (Holmes 6.00 ft/s = 72 in/s vs unknown c
 - Soften of **green-speed accuracy**. Accuracy is **not** Softened.
 - Naming Amb **X**. **X unset.**
 - Treating Sommer 6.4 in or the USGA 8-inch cluster as **X**.
-- S3 scale honesty run. **Hold S3 lifted** / awaiting S3 Soften. Do **not** auto-run S3.
+- S3 scale honesty (later **ADMITTED** the same day — leftover nameable/OOM-loud; **not** accuracy Soften). See [`DIGESTION_S3.md`](DIGESTION_S3.md).
 - S4 name-**X**. **Hold S4** stands.
 - Soften Critic hire. Soften-vanity reopen. Greer reopen.
 
-**S0 Soften + S1 Soften + S2 Soften carry.**
+**S0 Soften + S1 Soften + S2 Soften + S3 Soften carry.**
 
 ---
 
 ## 3. Next (Operator-gated)
 
-**Lab GO S3** (scale honesty). **Hold S3 is lifted.** STATUS = awaiting S3 Soften. Do **not** auto-run S3 on this fold. Lab does **not** self-admit S3.
+**Later the same day:** Operator **ADMIT Soften S3**. Scale leftover nameable/OOM-loud. **NOT** accuracy Soften. **X unset.** See [`DIGESTION_S3.md`](DIGESTION_S3.md).
 
-**Hold S4** (name-**X**) stays Hold until Operator GO.
+**Hold S4** (name-**X**) stays Hold until Operator GO. Do **not** auto-GO S4.
 
 ---
 
@@ -71,11 +73,11 @@ S2 already named the two launch classes (Holmes 6.00 ft/s = 72 in/s vs unknown c
 - Do **not** treat claim-scope Soften as green-speed accuracy Soften.
 - Do **not** name **X**.
 - Do **not** pull unknown casual putt without v0 recovery into the Soften pocket.
-- Do **not** auto-run S3. Awaiting S3 Soften ≠ S3 run.
+- Do **not** auto-GO S4. **Hold S4.**
 - Do **not** hire a Soften Critic. Soften Critic **not met**.
 - Do **not** reopen Greer. Greer **TABLED**.
 - Digestor never Soften / Harden / Kill. Lab does **not** self-admit.
 
 ---
 
-*Docs only. Founder+Operator ADMIT Soften of Amb claim scope/pocket. Softened pocket = Stimpmeter-class launch (~Holmes 6 ft/s) OR named v0 recovery. Casual-without-v0 out until solved. NOT green-speed accuracy Soften. X unset. S0–S2 carry. Hold S3 lifted / awaiting S3 Soften. Soften Critic not met. Greer TABLED.*
+*Docs only. Founder+Operator ADMIT Soften of Amb claim scope/pocket. Softened pocket = Stimpmeter-class launch (~Holmes 6 ft/s) OR named v0 recovery. Casual-without-v0 out until solved. NOT green-speed accuracy Soften. X unset. S0–S3 carry. Later: Soften S3. Hold S4. Soften Critic not met. Greer TABLED.*

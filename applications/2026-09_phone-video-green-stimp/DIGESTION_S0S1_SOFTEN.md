@@ -78,6 +78,8 @@ Hold S2 until Operator GO. Do **not** auto-GO S2 on this fold. STATUS next = awa
 
 ---
 
-**Later the same day (Operator ADMIT Soften S2):** launch-class honesty + constant-decel leftover nameable/OOM-loud. **NOT** green-speed Soften. **X unset.** **Hold S3 / S4.** Lab invent **HOLD**. See [`DIGESTION_S2.md`](DIGESTION_S2.md).
+**Later the same day (Operator ADMIT Soften S2):** launch-class honesty + constant-decel leftover nameable/OOM-loud. **NOT** green-speed Soften. **X unset.** See [`DIGESTION_S2.md`](DIGESTION_S2.md).
 
-*Docs only. Lab DIGEST lean. Operator ADMIT Soften S0 + Soften S1. Later: Soften S2. DIGEST copied. NOT green-speed Soften. X unset. Hold S3/S4. Soften Critic not met. Greer TABLED. Lab does not self-admit.*
+**Later the same day (Operator ADMIT Soften S3):** scale honesty leftover nameable/OOM-loud. **NOT** accuracy Soften. **X unset.** **Hold S4.** See [`DIGESTION_S3.md`](DIGESTION_S3.md).
+
+*Docs only. Lab DIGEST lean. Operator ADMIT Soften S0 + Soften S1. Later: Soften S2 + Soften S3. DIGEST copied. NOT green-speed Soften. X unset. Hold S4. Soften Critic not met. Greer TABLED. Lab does not self-admit.*

@@ -3,11 +3,11 @@
 **Application ID:** `2026-09_phone-video-green-stimp`  
 **Opened:** 2026-09-06  
 
-Operator **ADMIT Soften S0** + **Soften S1** + **Soften S2** + **claim-scope Soften**. Softened pocket = Stimpmeter-class launch (~Holmes 6 ft/s) **or** named v0 recovery. Out of pocket until solved = unknown casual putt without v0 recovery. **X unset.** Green-speed **accuracy** is **not** Softened. **Hold S3 lifted** / awaiting S3 Soften. Do **not** auto-run S3. **Hold S4** stands. Soften Critic **not met**. Greer **TABLED**.
+Operator **ADMIT Soften S0** + **Soften S1** + **Soften S2** + **Soften S3** + **claim-scope Soften**. Softened pocket = Stimpmeter-class launch (~Holmes 6 ft/s) **or** named v0 recovery. Out of pocket until solved = unknown casual putt without v0 recovery. S3 Soften = scale honesty leftover nameable/OOM-loud. **X unset.** Green-speed **accuracy** is **not** Softened. **Hold S4** stands. Do **not** auto-GO S4. Soften Critic **not met**. Greer **TABLED**.
 
 **NEW Amb:** from a short phone video of a golf ball rolling on a putting green — with known approximate distance or recoverable scale — a laptop-feasible method Softens green speed (Stimpmeter-equivalent ball-roll distance, BRD, in feet) to within a named error bar **X** vs a real Stimpmeter reading, **without** building a Stimpmeter and **without** giant GPU models. **X is not frozen yet** — name **X** before Soften / Harden. Digestor spine **PASS**. Prior: Soften-vanity **CLOSE** [`DIGESTION_PARK_WHAT_TAUGHT.md`](../2026-09_soften-vanity-thrash-predictor/DIGESTION_PARK_WHAT_TAUGHT.md) (on master; Operator-folded). Greer **TABLED** stays parked.
 
-This is **not** a Stimpmeter. This is **not** a product app. This is **not** a trained map. Training is **not** established. This is **not** skill-met. This is **not** rithm. This is **not** a Soften Critic hire. Soften itself is **not** asserted bad. Soften S0 / S1 / S2 does **not** show green speed and is **not** clearance. S3 / S4 are **not run**. **X** is **unset**. **No YOLO / giant GPU first path.** **No Greer reopen.** **No SkyMirr invent reopen.** Digestor never Soften / Harden / Kill.
+This is **not** a Stimpmeter. This is **not** a product app. This is **not** a trained map. Training is **not** established. This is **not** skill-met. This is **not** rithm. This is **not** a Soften Critic hire. Soften itself is **not** asserted bad. Soften S0 / S1 / S2 / S3 does **not** show green speed and is **not** clearance. S4 is **not run**. **X** is **unset**. **No YOLO / giant GPU first path.** **No Greer reopen.** **No SkyMirr invent reopen.** Digestor never Soften / Harden / Kill.
 
 The Soften-vanity Amb (`2026-09_soften-vanity-thrash-predictor`) is **CLOSED** (Soften Amb DIGEST / string CLOSE; Lab invent **HOLD**; Soften Critic **not met**; holdout-lift limb **Killed**). This app does **not** reopen it. The Greer sync-locate Amb (`2026-09_greer-sync-pulse-tdoa`) stays **TABLED / PARKED**. Send **HOLD**. Lab invent **HOLD**. Reopen = user only. The cell-tower Amb is **PARKED** and is **not** reopened as live. SkyMirr stays its own Amb (invent **HOLD**). The BIA→weight portfolio is **CLOSED**. The golf-offshoot betting folder is a **different object** and is **not** this Amb. This app does **not** reopen those strings.
 
@@ -47,23 +47,24 @@ Not a commercial green-speed SKU. Not an iStimp / Stimpmeter clone. Not a YOLO t
 - Launch class and mount class must be **named** (Stimpmeter-exit vs casual putt; fixed-level vs handheld / non-level).
 - This is **not** a product claim and **not** a skill-met claim.
 
-## Next pulse (Hold S3 lifted / awaiting S3 Soften)
+## Next pulse (Hold S4)
 
-Claim-scope Soften — [`DIGESTION_CLAIM_SCOPE.md`](DIGESTION_CLAIM_SCOPE.md). S0 / S1 / S2 Soften stand. **Hold S3 lifted** / awaiting S3 Soften (scale honesty). Do **not** auto-run S3. **Hold S4** (name-**X**) stands. See [`PROPOSED_PULSE.md`](PROPOSED_PULSE.md).
+S3 Soften — [`DIGESTION_S3.md`](DIGESTION_S3.md). Claim-scope Soften — [`DIGESTION_CLAIM_SCOPE.md`](DIGESTION_CLAIM_SCOPE.md). S0 / S1 / S2 Soften stand. **Hold S4** (name-**X**) until Operator GO. Do **not** auto-GO S4. See [`PROPOSED_PULSE.md`](PROPOSED_PULSE.md).
 
 ## Reading order
 
 1. [`STATUS.md`](STATUS.md) — where we are
 2. [`NAMED_GAP_LEDGER.md`](NAMED_GAP_LEDGER.md) — the open lines + freezes
-3. [`DIGESTION_CLAIM_SCOPE.md`](DIGESTION_CLAIM_SCOPE.md) — claim-scope / pocket Soften
-4. [`DIGESTION_S2.md`](DIGESTION_S2.md) — S2 kinematics / launch-class honesty Soften
-5. [`DIGESTION_S0S1_SOFTEN.md`](DIGESTION_S0S1_SOFTEN.md) — Lab DIGEST lean (S0+S1 Soften)
-6. [`DIGESTION_S0.md`](DIGESTION_S0.md) — S0 SOURCE board Soften
-7. [`DIGESTION_S1.md`](DIGESTION_S1.md) — S1 Sommer gap map Soften
-8. [`PROPOSED_PULSE.md`](PROPOSED_PULSE.md) — Digestor menu (S0=SOURCE, S1=gap map, S2=kinematics Soften, S3 awaiting Soften, S4 Hold)
-9. [`SOURCE.md`](SOURCE.md) — USGA + Sommer abstract + physics pointers (notes summary)
-10. [`DIGESTION_SPINE_STAMP.md`](DIGESTION_SPINE_STAMP.md) — Digestor spine PASS summary
-11. [`DIGESTION_FROM_SOFTEN_VANITY.md`](DIGESTION_FROM_SOFTEN_VANITY.md) — what the last string taught
-12. [`COPY_GATE.md`](COPY_GATE.md) — SOURCE / method-practice honesty
-13. [`RESIDUAL_BRANCH_MENU.md`](RESIDUAL_BRANCH_MENU.md) — decision log
-14. [`notes.md`](notes.md) — one-line pointer
+3. [`DIGESTION_S3.md`](DIGESTION_S3.md) — S3 scale honesty Soften
+4. [`DIGESTION_CLAIM_SCOPE.md`](DIGESTION_CLAIM_SCOPE.md) — claim-scope / pocket Soften
+5. [`DIGESTION_S2.md`](DIGESTION_S2.md) — S2 kinematics / launch-class honesty Soften
+6. [`DIGESTION_S0S1_SOFTEN.md`](DIGESTION_S0S1_SOFTEN.md) — Lab DIGEST lean (S0+S1 Soften)
+7. [`DIGESTION_S0.md`](DIGESTION_S0.md) — S0 SOURCE board Soften
+8. [`DIGESTION_S1.md`](DIGESTION_S1.md) — S1 Sommer gap map Soften
+9. [`PROPOSED_PULSE.md`](PROPOSED_PULSE.md) — Digestor menu (S0=SOURCE, S1=gap map, S2=kinematics Soften, S3 scale Soften, S4 Hold)
+10. [`SOURCE.md`](SOURCE.md) — USGA + Sommer abstract + physics pointers (notes summary)
+11. [`DIGESTION_SPINE_STAMP.md`](DIGESTION_SPINE_STAMP.md) — Digestor spine PASS summary
+12. [`DIGESTION_FROM_SOFTEN_VANITY.md`](DIGESTION_FROM_SOFTEN_VANITY.md) — what the last string taught
+13. [`COPY_GATE.md`](COPY_GATE.md) — SOURCE / method-practice honesty
+14. [`RESIDUAL_BRANCH_MENU.md`](RESIDUAL_BRANCH_MENU.md) — decision log
+15. [`notes.md`](notes.md) — one-line pointer
