@@ -1,6 +1,6 @@
 # Notes
 
-**Status:** see [`STATUS.md`](STATUS.md). **2026-09-06:** Operator ADMIT Soften S0 + Soften S1 + Soften S2. S0 SOURCE board poseable/citable. S1 Sommer gap map G1–G6 honest. S2 launch-class honesty + constant-decel leftover nameable/OOM-loud (Holmes 6.00 ft/s = 72 in/s vs unknown casual putt; OOMs on DIGESTION_S2.md). X unset. Green-speed claim not Softened. Hold S3 (scale honesty) / Hold S4 (name-X) until Operator GO. Lab invent HOLD. Soften Critic not met. Soften-vanity CLOSED. Greer TABLED invent HOLD. SkyMirr invent HOLD. Cell-tower PARKED. BIA CLOSED. No product / YOLO / GPU / Stimpmeter / tracker. Digestor never Soften/Harden/Kill. Lab does not self-admit. DIGEST: DIGESTION_S2.md · DIGESTION_S0S1_SOFTEN.md · DIGESTION_S0.md · DIGESTION_S1.md.
+**Status:** see [`STATUS.md`](STATUS.md). **2026-09-06:** Soften S0–S3 honesty scopes ADMITTED. Claim-scope pocket = recoverable scale pin AND Stimpmeter-class / named v0; missing scale and casual-without-v0 out. Soften DIGEST honesty string S0–S3 ADMITTED (park-taught Operator-folded). Soften Amb DIGEST honesty string ADMITTED. Soften S4 protocol ADMITTED (recipe poseable; X = ___ ft). Accuracy NOT Softened. X unset. Amb open. Hold S4 eval. Soften Critic not hired. Greer TABLED. DIGEST: DIGESTION_STRING.md · DIGESTION_PARK_WHAT_TAUGHT.md · PARK_INDEX.md · DIGESTION_S0S3_SOFTEN.md · DIGESTION_S4_PROTOCOL.md · DIGESTION_S3.md · DIGESTION_CLAIM_SCOPE.md.
 
 **Application:** `2026-09_phone-video-green-stimp`  
 **Date:** 2026-09-06

@@ -132,4 +132,8 @@ These OOMs **name the leftover**. They do **not** name Amb **X**. They do **not*
 
 ---
 
-*Docs only. Operator **ADMIT Soften S2**. Launch-class honesty + constant-decel leftover nameable/OOM-loud. NOT Soften of the green-speed claim. X unset. Sommer 6.4 in ≠ X. USGA 8-in ≠ X. Hold S3/S4. Lab invent HOLD. Soften Critic not met. Greer TABLED. Lab does not self-admit. Digestor never Soften/Harden/Kill.*
+**Later the same day (Founder+Operator ADMIT claim-scope Soften):** Softened pocket = Stimpmeter-class launch (~Holmes 6 ft/s) **or** named v0 recovery. Casual-without-v0 **out** until solved. **NOT** accuracy Soften. **X unset.** See [`DIGESTION_CLAIM_SCOPE.md`](DIGESTION_CLAIM_SCOPE.md).
+
+**Later the same day (Operator ADMIT Soften S3):** scale honesty leftover nameable/OOM-loud. Recoverable (1.68 in ball): BRD ~9.63 ft vs true 10 ft toy, Δ ≈ −4.5 in; missing scale under-determined. **NOT** accuracy Soften. **X unset.** **Hold S4.** See [`DIGESTION_S3.md`](DIGESTION_S3.md).
+
+*Docs only. Operator **ADMIT Soften S2**. Launch-class honesty + constant-decel leftover nameable/OOM-loud. NOT Soften of the green-speed claim. X unset. Sommer 6.4 in ≠ X. USGA 8-in ≠ X. Later: claim-scope Soften + Soften S3. Hold S4. Soften Critic not met. Greer TABLED. Lab does not self-admit. Digestor never Soften/Harden/Kill.*
