@@ -19,6 +19,7 @@ This gate is required because the Amb practices public **media / unofficial** da
 | C1 census + G1–G7 poseability (8 claims; short fair-use spans) | [`DIGESTION_C1.md`](DIGESTION_C1.md) | Operator **ADMIT Soften C1**; clash ≠ Soften of either side |
 | C3 Day 18 day-pulse (10 day claims; G4-D18 / G5-D18 / G2-D18 / G6-D18; short fair-use spans) | [`DIGESTION_C3.md`](DIGESTION_C3.md) | Operator **ADMIT Soften C3**; **not** Day 18 as certified fact; clash ≠ Soften of either side |
 | Digestor spine stamp summary | [`DIGESTION_SPINE_STAMP.md`](DIGESTION_SPINE_STAMP.md) | Admit record of PASS |
+| Illustrator Soften-fold / living-twin **pointer** (Lab workspace paths; PNG+md not copied) | [`VIZ.md`](VIZ.md) | Operator-folded pointer; honesty caption stays; **not** a new Soften |
 
 ## Hard NO
 
@@ -41,5 +42,6 @@ This gate is required because the Amb practices public **media / unofficial** da
 - Success bar appears only as **unnamed**. Do **not** invent it.
 - [`DIGESTION_FROM_PHONE_STIMP.md`](DIGESTION_FROM_PHONE_STIMP.md) paraphrases the Operator-folded phone-stimp TABLE park what-taught note. **No claim quotes.**
 - [`DIGESTION_SPINE_STAMP.md`](DIGESTION_SPINE_STAMP.md) copies the Digestor PASS summary.
+- [`VIZ.md`](VIZ.md) is an **Illustrator board; Operator-folded pointer** to Lab workspace paths. **No PNG copied.** **No** long transcript. Honesty caption stays. **Not** a new Soften.
 
 **PASS.** Still **not** claim clearance. Still **not** the usefulness claim shown. Still **not** the success bar named. Still **not** legal advice. Soften S0 + Soften C1 + Soften C3 ≠ usefulness Soften. Soften C3 ≠ Day 18 as certified fact. Clash ≠ Soften of either side. Not case-solving.

@@ -31,6 +31,7 @@ Operator **ADMIT Soften S0** + **Soften C1** + **Soften C3**. S0 Soften = SOURCE
 **Digestor spine stamp (PASS summary):** [`DIGESTION_SPINE_STAMP.md`](DIGESTION_SPINE_STAMP.md)  
 **Digestion of last string:** [`DIGESTION_FROM_PHONE_STIMP.md`](DIGESTION_FROM_PHONE_STIMP.md)  
 **Copy gate (SOURCE honesty):** [`COPY_GATE.md`](COPY_GATE.md)  
+**Illustrator viz pointer:** [`VIZ.md`](VIZ.md) — Soften-fold chart + living twin (Lab workspace paths; PNG+md **not receivable** this VM). **Illustrator board; Operator-folded pointer.** Honesty caption: Media≠certified · Closings≠evidence · Day≠certified · no Soften of verdict · Soften Critic not hired · map poseability only.  
 **Decision log:** [`RESIDUAL_BRANCH_MENU.md`](RESIDUAL_BRANCH_MENU.md)
 
 **What this fold does not do:** no C2 / C4; no further-day dump; no success bar named; no Soften / Harden / Kill of the usefulness claim; no Soften of Day 18 as certified fact; no Soften of either argument side; no case-solving; no legal advice; no Soften of verdict / mistrial / retrial; no treating Rev as certified record; no all-days dump; no long transcript paste; no Soften Critic hire; no Greer reopen; no phone-stimp invent reopen; no reopen of Soften-vanity; no skill-met / elevated language.
