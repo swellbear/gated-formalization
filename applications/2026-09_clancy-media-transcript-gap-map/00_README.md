@@ -80,5 +80,5 @@ S0 + C1 + C3 + C3 Day 14 + C3 Day 7 + C3 Day 11 + C3 Day 2 + C3 Day 4 + C3 Day 1
 16. [`DIGESTION_FROM_PHONE_STIMP.md`](DIGESTION_FROM_PHONE_STIMP.md) — what the last string taught
 17. [`COPY_GATE.md`](COPY_GATE.md) — SOURCE / method-practice honesty
 18. [`RESIDUAL_BRANCH_MENU.md`](RESIDUAL_BRANCH_MENU.md) — decision log
-19. [`VIZ.md`](VIZ.md) — Illustrator Soften-fold / living-twin pointer **refreshed** after Soften C3 Day 15 (PNG+md not receivable this VM; pointer only to Lab `/workspace/clancy_lab/viz/soften_fold_c1_c3.png` + `.md` and living twin `claim_clash_map.png`). **Not** a new Soften. Do **not** invent a chart.
+19. [`VIZ.md`](VIZ.md) — Illustrator Soften-fold / living-twin pointer **refreshed** after Soften C3 Day 15 (STATUS-ready; PNG+md not receivable this VM; pointer only to Lab `/workspace/clancy_lab/viz/soften_fold_c1_c3.png` + `.md` and living twin `claim_clash_map.png`). **Not** a new Soften. Do **not** invent a chart.
 20. [`notes.md`](notes.md) — one-line pointer
