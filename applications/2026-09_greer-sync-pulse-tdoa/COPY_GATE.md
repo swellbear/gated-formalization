@@ -27,7 +27,7 @@ This gate is required because the owner asked us to ingest the published abstrac
 - Do **not** write a 1PPS / F9T / DGPS product embodiment.
 - Do **not** paste long description / figure / waveform / link-budget blocks.
 - Do **not** treat abstract ingest as claim clearance or as a product embodiment of US10135667B1.
-- Do **not** send the prior write-up as if it were a patent-hard-problem digest. Prior write-up = **sync-fragility evidence only**. **HOLD send** until Founder rewrite + user OK. Suite DIGEST **Soften Amb ADMITTED**.
+- Do **not** send the prior write-up as if it were a patent-hard-problem digest. Prior write-up = **sync-fragility evidence only**. Founder send-candidate [`GREER_WRITEUP_SEND.md`](GREER_WRITEUP_SEND.md) is **Soften-admit** only. **HOLD send** until user OK. Suite DIGEST **Soften Amb ADMITTED**.
 - A4 Soften X/σ_t (50 kHz phase-flip jitter; J_mid / J_stretch) is Operator-named honesty, **not** claim-language product copy. **RF bench PARKED.**
 
 ## Check (this fold)
@@ -37,5 +37,6 @@ This gate is required because the owner asked us to ingest the published abstrac
 - [`SCORE_A1.md`](SCORE_A1.md) / [`SCORE_A2.md`](SCORE_A2.md) / [`SCORE_A3.md`](SCORE_A3.md) use Operator-named bars and public timing classes. **No claim quotes.** **No** 1PPS product copy.
 - **≤1 m xy**, **DGPS ~0.4–0.5 m**, **F9T-class ~2.5 ns**, commodity / common-view / absolute-only classes, and the brutal lock appear as Operator-named honesty, **not** as claim language.
 - [`GREER_WRITEUP.md`](GREER_WRITEUP.md) banner restates **sync-fragility evidence only**. Body is not rewritten into claim-product copy.
+- [`GREER_WRITEUP_SEND.md`](GREER_WRITEUP_SEND.md) is the Founder-rewritten **Soften-admit send-candidate**. Exact body as provided. **No claim-language product copy.** **HOLD send** until user OK.
 
 **PASS.** Still **not** claim clearance.
