@@ -18,6 +18,7 @@ This gate is required because the Amb practices a USGA instrument definition and
 | S0 SOURCE board Soften (definition + procedure + named objects + Sommer literature objects + pointers) | [`DIGESTION_S0.md`](DIGESTION_S0.md) | Operator **ADMIT Soften S0**; **not** green-speed Soften |
 | S1 Sommer gap map Soften (G1–G6) | [`DIGESTION_S1.md`](DIGESTION_S1.md) | Operator **ADMIT Soften S1**; **not** green-speed Soften |
 | S2 kinematics Soften (launch-class honesty + constant-decel OOMs) | [`DIGESTION_S2.md`](DIGESTION_S2.md) | Operator **ADMIT Soften S2**; **not** green-speed Soften; OOMs ≠ **X** |
+| Claim-scope / pocket Soften (Founder+Operator) | [`DIGESTION_CLAIM_SCOPE.md`](DIGESTION_CLAIM_SCOPE.md) | Scope Soften **not** accuracy Soften; **X** unset |
 | Lab DIGEST lean (S0+S1 Soften; copied Operator gate) | [`DIGESTION_S0S1_SOFTEN.md`](DIGESTION_S0S1_SOFTEN.md) | Not product text; **X** unset |
 | Digestor spine stamp summary | [`DIGESTION_SPINE_STAMP.md`](DIGESTION_SPINE_STAMP.md) | Admit record of PASS |
 

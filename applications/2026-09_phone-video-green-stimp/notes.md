@@ -1,6 +1,6 @@
 # Notes
 
-**Status:** see [`STATUS.md`](STATUS.md). **2026-09-06:** Operator ADMIT Soften S0 + Soften S1 + Soften S2. S0 SOURCE board poseable/citable. S1 Sommer gap map G1–G6 honest. S2 launch-class honesty + constant-decel leftover nameable/OOM-loud (Holmes 6.00 ft/s = 72 in/s vs unknown casual putt; OOMs on DIGESTION_S2.md). X unset. Green-speed claim not Softened. Hold S3 (scale honesty) / Hold S4 (name-X) until Operator GO. Lab invent HOLD. Soften Critic not met. Soften-vanity CLOSED. Greer TABLED invent HOLD. SkyMirr invent HOLD. Cell-tower PARKED. BIA CLOSED. No product / YOLO / GPU / Stimpmeter / tracker. Digestor never Soften/Harden/Kill. Lab does not self-admit. DIGEST: DIGESTION_S2.md · DIGESTION_S0S1_SOFTEN.md · DIGESTION_S0.md · DIGESTION_S1.md.
+**Status:** see [`STATUS.md`](STATUS.md). **2026-09-06:** Founder+Operator ADMIT Soften of Amb claim scope/pocket. Softened pocket = Stimpmeter-class launch (~Holmes 6 ft/s) OR named v0 recovery. Out of pocket until solved = unknown casual putt without v0 recovery. Scope Soften ≠ green-speed accuracy Soften. X unset. Soften S0–S2 carry. Hold S3 lifted / awaiting S3 Soften (do not auto-run S3). Hold S4 stands. Soften Critic not met. Greer TABLED. DIGEST: DIGESTION_CLAIM_SCOPE.md · DIGESTION_S2.md · DIGESTION_S0.md · DIGESTION_S1.md.
 
 **Application:** `2026-09_phone-video-green-stimp`  
 **Date:** 2026-09-06
