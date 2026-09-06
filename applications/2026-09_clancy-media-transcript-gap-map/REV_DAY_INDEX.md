@@ -46,7 +46,7 @@ Rev page stamps below are **media** when already on [`SOURCE.md`](SOURCE.md). Ne
 | Day 9 | day | https://www.rev.com/transcripts/ma-v-lindsay-clancy-day-9 | **live** | **Softened** — C3 Day 9 (on master **#117**; board **untouched** this fold) |
 | Day 10 | day | https://www.rev.com/transcripts/ma-v-lindsay-clancy-day-10 | **live** | **Softened** — C3 Day 10 (on master **#118**; board **untouched** this fold) |
 | Day 11 | day | https://www.rev.com/transcripts/ma-v-lindsay-clancy-day-11 | **live** | **Softened** — C3 Day 11 (on master **#110**; board **untouched** this fold) |
-| Day 12 | day | https://www.rev.com/transcripts/ma-v-lindsay-clancy-day-12 | **live** | **Softened** — C3 Day 12 (**ADMITTED**; board **untouched** this fold) |
+| Day 12 | day | https://www.rev.com/transcripts/ma-v-lindsay-clancy-day-12 | **live** | **Softened** — C3 Day 12 counselor/scene backup ([`DIGESTION_C3_DAY12.md`](DIGESTION_C3_DAY12.md); digest landed this revision) |
 | Day 13 | day | https://www.rev.com/transcripts/ma-v-lindsay-clancy-day-13 | **live** | **Softened** — C3 Day 13 cyber-forensic-examiner backup (on master **#120**; board **untouched**) |
 | Day 14 | day | https://www.rev.com/transcripts/ma-v-lindsay-clancy-day-14 | **live** | **Softened** — C3 Day 14 digital-evidence backup |
 | Day 15 | day | https://www.rev.com/transcripts/ma-v-lindsay-clancy-day-15 | **live** | **Softened** — C3 Day 15 psychopharm-only / NO SoC / NO CR opinion (on master **#121**; board **untouched**) |
