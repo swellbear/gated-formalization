@@ -36,4 +36,6 @@ Copy into `viz/` later if Operator can receive the files. Until then, **do not**
 - **Not** a rewrite of the Day 18 board.
 - **Hold C2 / C4.** **Hold further days (7 / 11 / 19–21).** Soften Critic **not hired**.
 
-*Docs only. Illustrator board; Operator-folded pointer. Refreshed after Soften C3 Day 14. Honesty caption unchanged. Map poseability only.*
+**Later the same day (Digestor index expand):** Operator **ADMIT Digestor index expand**. Days 2–21 + closings live. This pointer is **not** a new chart. Softened days on the refreshed board stay **14** + **18**. Index-live ≠ Soften. Honesty caption **unchanged**. See [`REV_DAY_INDEX.md`](REV_DAY_INDEX.md).
+
+*Docs only. Illustrator board; Operator-folded pointer. Refreshed after Soften C3 Day 14. Honesty caption unchanged. Map poseability only. Digestor index expand admitted (not a new Soften of other days).*

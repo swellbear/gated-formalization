@@ -2,7 +2,7 @@
 
 **Date:** 2026-09-06  
 **Application:** `2026-09_clancy-media-transcript-gap-map`  
-**Verdict:** **PASS** (Soften S0 + Soften C1 + Soften C3 + Soften C3 Day 14) — bibliographic + short paraphrase + **short fair-use spans** only. **No long transcript paste.** **No certified-record pretence.** **No legal-advice copy.** **Success bar unset.**
+**Verdict:** **PASS** (Soften S0 + Soften C1 + Soften C3 + Soften C3 Day 14 + Digestor index expand) — bibliographic + short paraphrase + **short fair-use spans** + **live/404** only. **No long transcript paste.** **No certified-record pretence.** **No legal-advice copy.** **Success bar unset.** **LOUD media≠certified.**
 
 This gate is required because the Amb practices public **media / unofficial** day + closings transcripts. Method practice is **not** a license to paste Rev (or similar) pages, to treat them as the certified court-reporter record, or to ship legal advice / verdict-prediction product copy.
 
@@ -19,6 +19,7 @@ This gate is required because the Amb practices public **media / unofficial** da
 | C1 census + G1–G7 poseability (8 claims; short fair-use spans) | [`DIGESTION_C1.md`](DIGESTION_C1.md) | Operator **ADMIT Soften C1**; clash ≠ Soften of either side |
 | C3 Day 18 day-pulse (10 day claims; G4-D18 / G5-D18 / G2-D18 / G6-D18; short fair-use spans) | [`DIGESTION_C3.md`](DIGESTION_C3.md) | Operator **ADMIT Soften C3**; **not** Day 18 as certified fact; clash ≠ Soften of either side; board **untouched** this fold |
 | C3 Day 14 day-pulse #2 (9 day claims; G5-D14 PRIMARY / G4-D14 touch / G6-D14; short fair-use spans) | [`DIGESTION_C3_DAY14.md`](DIGESTION_C3_DAY14.md) | Operator **ADMIT Soften C3 Day 14**; **not** Day 14 / digital timeline as certified fact; digital timeline ≠ Soften of planning / psychosis as fact; clash ≠ Soften of either side |
+| Digestor expanded SOURCE day index (Days 2–21 + closings live; Day 2 typo slug; Day 1 not found; Days 22+ 404) | [`REV_DAY_INDEX.md`](REV_DAY_INDEX.md) · [`DIGESTION_INDEX_EXPAND.md`](DIGESTION_INDEX_EXPAND.md) | Operator **ADMIT Digestor index expand**; **LOUD media≠certified**; index-live ≠ Soften; Soften Critic **not hired** |
 | Digestor spine stamp summary | [`DIGESTION_SPINE_STAMP.md`](DIGESTION_SPINE_STAMP.md) | Admit record of PASS |
 | Illustrator Soften-fold / living-twin **pointer** (Lab workspace paths; PNG+md not copied; **refreshed** after Soften C3 Day 14) | [`VIZ.md`](VIZ.md) | Operator-folded pointer; shows Day 14 G5-D14 PRIMARY / G4-D14 touch / G6-D14; Day 18 G4-D18 PRIMARY / G5-D18 TOUCH stay; honesty caption unchanged; **not** a new Soften |
 
@@ -40,10 +41,11 @@ This gate is required because the Amb practices public **media / unofficial** da
 - [`DIGESTION_C1.md`](DIGESTION_C1.md) is COPY_GATE **short fair-use spans** + paraphrase of an 8-claim census + G1–G7. **No long transcript. No certified-record pretence. No legal-advice copy.**
 - [`DIGESTION_C3.md`](DIGESTION_C3.md) is COPY_GATE **short fair-use spans** + paraphrase of a 10-claim Day 18 census + G4-D18 / G5-D18 / G2-D18 / G6-D18. **No long transcript. No certified-record pretence. No legal-advice copy. No Day-18-as-certified-fact.** Board **untouched** this fold.
 - [`DIGESTION_C3_DAY14.md`](DIGESTION_C3_DAY14.md) is COPY_GATE **short fair-use spans** + paraphrase of a 9-claim Day 14 digital-evidence census + G5-D14 / G4-D14 / G6-D14. **No long transcript. No certified-record pretence. No legal-advice copy. No Day-14-as-certified-fact. No digital-timeline-as-planning/psychosis-fact.**
+- [`REV_DAY_INDEX.md`](REV_DAY_INDEX.md) / [`DIGESTION_INDEX_EXPAND.md`](DIGESTION_INDEX_EXPAND.md) are COPY_GATE **bibliographic + live/404**. **No long transcript.** **LOUD media≠certified.** Index-live ≠ Soften.
 - [`PROPOSED_PULSE.md`](PROPOSED_PULSE.md) locks **S0 = SOURCE (Soften)**, **C1 = census + G1–G7 poseable (Soften)**, **C3 = Day 18 named backup (Soften; board untouched) + Day 14 digital-evidence backup (Soften)**, **C2 / C4 = Hold**. **Hold further days 7 / 11 / 19–21.** **No** all-days dump. **Digestor IDs authoritative.**
 - Success bar appears only as **unnamed**. Do **not** invent it.
 - [`DIGESTION_FROM_PHONE_STIMP.md`](DIGESTION_FROM_PHONE_STIMP.md) paraphrases the Operator-folded phone-stimp TABLE park what-taught note. **No claim quotes.**
 - [`DIGESTION_SPINE_STAMP.md`](DIGESTION_SPINE_STAMP.md) copies the Digestor PASS summary.
 - [`VIZ.md`](VIZ.md) is an **Illustrator board; Operator-folded pointer** to Lab workspace paths **refreshed** after Soften C3 Day 14. **No PNG copied.** **No** long transcript. Honesty caption **unchanged**. **Not** a new Soften.
 
-**PASS.** Still **not** claim clearance. Still **not** the usefulness claim shown. Still **not** the success bar named. Still **not** legal advice. Soften S0 + Soften C1 + Soften C3 + Soften C3 Day 14 ≠ usefulness Soften. Soften C3 ≠ Day 18 as certified fact. Soften C3 Day 14 ≠ Day 14 / digital timeline as certified fact. Digital timeline ≠ Soften of planning / psychosis as fact. Clash ≠ Soften of either side. Not case-solving.
+**PASS.** Still **not** claim clearance. Still **not** the usefulness claim shown. Still **not** the success bar named. Still **not** legal advice. Soften S0 + Soften C1 + Soften C3 + Soften C3 Day 14 + Digestor index expand ≠ usefulness Soften. Index-live ≠ Soften of those days. Softened days so far: 14, 18. **LOUD media≠certified.** Clash ≠ Soften of either side. Not case-solving.

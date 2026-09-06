@@ -2,7 +2,9 @@
 
 **Date:** 2026-09-06  
 **Application:** `2026-09_clancy-media-transcript-gap-map`  
-**Role:** notes summary. Operator **ADMIT Soften S0** locks the board as poseable/citable — [`DIGESTION_S0.md`](DIGESTION_S0.md). Later same day: Soften C1 + Soften C3 + Soften C3 Day 14. **NOT** Soften of the parent usefulness claim. **Success bar unset.** **NOT** Soften of Day 14 / Day 18 / digital timeline as certified fact.  
+**Role:** notes summary. Operator **ADMIT Soften S0** locks the board as poseable/citable — [`DIGESTION_S0.md`](DIGESTION_S0.md). Later same day: Soften C1 + Soften C3 + Soften C3 Day 14 + **Digestor index expand**. **NOT** Soften of the parent usefulness claim. **Success bar unset.** **NOT** Soften of Day 14 / Day 18 / digital timeline as certified fact. **LOUD media≠certified.**  
+
+**Expanded index:** [`REV_DAY_INDEX.md`](REV_DAY_INDEX.md) · [`DIGESTION_INDEX_EXPAND.md`](DIGESTION_INDEX_EXPAND.md)
 
 **Copy gate:** [`COPY_GATE.md`](COPY_GATE.md)  
 **Proposed pulse:** [`PROPOSED_PULSE.md`](PROPOSED_PULSE.md)
@@ -37,8 +39,9 @@ This file holds **bibliographic pointers** plus a short paraphrase of what a Rev
 | `[inaudible]` markers | **Inaudible** class — not clean certified text |
 | Media≠official caveat | Freeze 1; sits on every later “what was said” Soften |
 | Founder starter index | Days 7 / 11 / 14 / 18 + Closing Arguments |
-| Noted (not starter) | Days 19–21 |
-| Expand rule | Named day backup for a named closing claim — **not** an all-days dump |
+| Digestor expanded index | Days **2–21** + Closing Arguments **live** — [`REV_DAY_INDEX.md`](REV_DAY_INDEX.md) |
+| Off-corpus | Day 1 **not found**; Days **22+** **404**; Day 2 typo slug `ma-v-linsday-clancy-day-2` |
+| Expand rule | Named day backup for a named leftover — **not** an all-days dump. Standing GO continues named-day pulses across Digestor index |
 
 ### What this SOURCE licenses
 
@@ -57,10 +60,10 @@ This file holds **bibliographic pointers** plus a short paraphrase of what a Rev
 
 ## 2. Starter index (from Digestor; Founder starter set)
 
-**Index incomplete honesty.** Other days may exist on Rev (or similar). This table is **not** a census of the trial. Do **not** expand to an all-days dump as first invent.
+**Index expand admitted.** Digestor corpus is now on [`REV_DAY_INDEX.md`](REV_DAY_INDEX.md). This starter table is **not** a census of the trial. Do **not** dump the expanded index.
 
 **Founder starter set** = Days **7 / 11 / 14 / 18** + **Closing Arguments**.  
-**Noted, not starter** = Days **19–21** (expand only as a named day backup after GO).
+**Digestor expanded corpus** = Days **2–21** + Closing Arguments **live**. Softened so far = **14**, **18**. Standing GO = named-day pulses across the Digestor index.
 
 Rev page dates below are **Rev page stamps** (media), **not** a certified court calendar.
 
@@ -80,8 +83,8 @@ Rev page dates below are **Rev page stamps** (media), **not** a certified court 
 1. First invent after **GO S0** is the **SOURCE board**, not a day dump. **S0 ran** (Operator Soften). Next invent after **GO C1** is the closings census, not a day dump. **C1 ran.** Next invent after **GO C3** is **one named day** backup.
 2. **C3 ran.** ONE named Day 18 backup for Softened C1 G4 (primary) + G5 (touch). See [`DIGESTION_C3.md`](DIGESTION_C3.md). **Day≠certified.** Closings still ≠ evidence. Board **untouched** this fold.
 3. **C3 Day 14 ran.** ONE named Day 14 digital-evidence backup for Softened C1 G5 (primary) + G4 (touch). See [`DIGESTION_C3_DAY14.md`](DIGESTION_C3_DAY14.md). **Day≠certified.** Closings still ≠ evidence. Digital timeline ≠ Soften of planning / psychosis as fact.
-4. Prefer the Founder starter set. **Hold further days (7 / 11 / 19–21).** Days 19–21 stay **noted**. Do **not** dump them from this fold.
-5. Other Rev (or similar) day pages, if found, stay **off-index** until Operator expands the index. Finding them is **not** a license to dump them.
+4. **Index expand ran.** Operator **ADMIT Digestor index expand**. Days 2–21 + closings live. Day 2 typo slug named. Day 1 not found. Days 22+ 404. See [`REV_DAY_INDEX.md`](REV_DAY_INDEX.md) · [`DIGESTION_INDEX_EXPAND.md`](DIGESTION_INDEX_EXPAND.md). **LOUD media≠certified.** Index-live ≠ Soften.
+5. **Standing GO** continues **named-day pulses** across the Digestor index. Softened so far = **14**, **18**. Do **not** dump the index.
 6. Similar unofficial media transcripts (non-Rev) stay the same **media / unofficial** class. They do **not** become certified record by substitution.
 
 ---
@@ -118,7 +121,7 @@ Mistrial ~Sep 4 is a **public-report pointer** so the claim window is named. It 
 - **Day≠certified.** A named day page (Day 18 + Day 14 this string) is **not** the certified court-reporter record.
 - **Closings≠evidence.** Argument / instructions; a named day-pulse backup does **not** convert a closing line into trial fact.
 - **Success bar unset.** Operator/Founder names it before claim Soften.
-- **Index incomplete.** Starter set + noted days only. No all-days dump.
+- **Index expanded (Digestor corpus).** Days 2–21 + closings live. Day 1 not found. Days 22+ 404. Index-live ≠ Soften. No all-days dump.
 - **Laptop-only.** Method practice. Not legal advice. Not a product.
 
-S0 is **Operator Soften** (poseable/citable). Later same day: Soften C1 + Soften C3 + Soften C3 Day 14. This is **not** usefulness Soften. **Success bar** stays unset. **Hold C2 / C4.** **Hold further days (7 / 11 / 19–21).** Lab invent **HOLD**.
+S0 is **Operator Soften** (poseable/citable). Later same day: Soften C1 + Soften C3 + Soften C3 Day 14 + Digestor index expand. This is **not** usefulness Soften. **Success bar** stays unset. **Hold C2 / C4.** Standing GO continues named-day pulses across Digestor index. Lab invent **HOLD** for C2 / C4.
