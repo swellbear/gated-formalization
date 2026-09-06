@@ -5,6 +5,8 @@
 **String:** Founder+Operator addendum after **C0 Soften**  
 **Habit:** [`docs/DIGESTION_HABIT.md`](../../docs/DIGESTION_HABIT.md)  
 **C0 digestion (stands):** [`DIGESTION_C0.md`](DIGESTION_C0.md)  
+**Later same day — C1 Soften:** [`DIGESTION_C1.md`](DIGESTION_C1.md)  
+**Later same day — Soften Amb DIGEST / string CLOSE:** [`DIGESTION_STRING.md`](DIGESTION_STRING.md)  
 **Ledger:** [`NAMED_GAP_LEDGER.md`](NAMED_GAP_LEDGER.md)  
 **STATUS:** [`STATUS.md`](STATUS.md)
 
@@ -52,10 +54,12 @@ This does **not** reopen C0. It does **not** Harden a thrash predictor. It does 
 
 ---
 
-## 2. Next
+## 2. Next (later **CLOSED**)
 
-**GO C1** on the **4 eligible only** — code vanity Soften vs scoped Soften (early-window + kill-condition yes / no / unclear). **C2+ HOLD.** C3/C4 holdout path **killed** with this limb.
+**As of this addendum:** **GO C1** on the **4 eligible only**. **C2+ HOLD.** C3/C4 holdout path **killed** with this limb.
+
+**Later the same day:** Operator **ADMIT Soften C1** and **ADMIT Soften Amb DIGEST / string CLOSE**. This Kill **stands**. Lab invent **HOLD**. See [`DIGESTION_C1.md`](DIGESTION_C1.md) · [`DIGESTION_STRING.md`](DIGESTION_STRING.md).
 
 ---
 
-*Docs only. Founder+Operator addendum. Holdout-lift limb Killed as unposeable (N=4; 2 exogenous). Do not Harden vanity→thrash. Purpose = vanity Soften vs scoped Soften. Not held-out AUC. C0 Soften + freezes stand.*
+*Docs only. Founder+Operator addendum. Holdout-lift limb Killed as unposeable (N=4; 2 exogenous). String CLOSE carries the Kill. Do not Harden vanity→thrash. Purpose = vanity Soften vs scoped Soften. Not held-out AUC. C0 Soften + freezes stand.*
