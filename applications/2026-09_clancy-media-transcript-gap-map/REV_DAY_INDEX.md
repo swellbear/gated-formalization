@@ -34,13 +34,13 @@ Rev page stamps below are **media** when already on [`SOURCE.md`](SOURCE.md). Ne
 | Page | Class | Rev URL | Live? | Role |
 |------|-------|---------|-------|------|
 | Day 1 | — | https://www.rev.com/transcripts/ma-v-lindsay-clancy-day-1 | **not found** (404) | off-corpus |
-| Day 2 | day | https://www.rev.com/transcripts/ma-v-linsday-clancy-day-2 | **live** (typo slug) | **Softened** — C3 Day 2 (parallel; board **untouched** this fold) |
+| Day 2 | day | https://www.rev.com/transcripts/ma-v-linsday-clancy-day-2 | **live** (typo slug) | **Softened** — C3 Day 2 (on master **#111**; board **untouched** this fold) |
 | Day 2 (canonical slug) | — | https://www.rev.com/transcripts/ma-v-lindsay-clancy-day-2 | **404** | typo leftover named |
 | Day 3 | day | https://www.rev.com/transcripts/ma-v-lindsay-clancy-day-3 | **live** | **Softened** — C3 Day 3 (**ADMITTED**, not PROPOSED; board **untouched** this fold) |
 | Day 4 | day | https://www.rev.com/transcripts/ma-v-lindsay-clancy-day-4 | **live** | **Softened** — C3 Day 4 hospital/scene backup |
 | Day 5 | day | https://www.rev.com/transcripts/ma-v-lindsay-clancy-day-5 | **live** | Digestor index; **not Softened** |
 | Day 6 | day | https://www.rev.com/transcripts/ma-v-lindsay-clancy-day-6 | **live** | Digestor index; **not Softened** |
-| Day 7 | day | https://www.rev.com/transcripts/ma-v-lindsay-clancy-day-7 | **live** | **Softened** — C3 Day 7 (parallel; board **untouched** this fold) |
+| Day 7 | day | https://www.rev.com/transcripts/ma-v-lindsay-clancy-day-7 | **live** | **Softened** — C3 Day 7 (on master **#109**; board **untouched** this fold) |
 | Day 8 | day | https://www.rev.com/transcripts/ma-v-lindsay-clancy-day-8 | **live** | Digestor index; **not Softened** |
 | Day 9 | day | https://www.rev.com/transcripts/ma-v-lindsay-clancy-day-9 | **live** | Digestor index; **not Softened** |
 | Day 10 | day | https://www.rev.com/transcripts/ma-v-lindsay-clancy-day-10 | **live** | Digestor index; **not Softened** |

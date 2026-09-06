@@ -71,8 +71,9 @@ Rev page dates below are **Rev page stamps** (media), **not** a certified court 
 | Page | Class | Rev URL | Rev page stamp (media) | Role |
 |------|-------|---------|------------------------|------|
 | Closing Arguments | closings (argument / instructions) | https://www.rev.com/transcripts/ma-v-lindsay-clancy-closing-arguments | 2026-08-28 | **Founder starter** |
+| Day 2 | day | https://www.rev.com/transcripts/ma-v-linsday-clancy-day-2 | — | **Founder starter** — C3 Day 2 (on master **#111**; board **untouched**; typo slug) |
 | Day 4 | day | https://www.rev.com/transcripts/ma-v-lindsay-clancy-day-4 | 2026-08-02 | Digestor index — C3 Day 4 named hospital/scene backup (**Soften**; **day≠certified**) |
-| Day 7 | day | https://www.rev.com/transcripts/ma-v-lindsay-clancy-day-7 | 2026-08-06 | **Founder starter** — C3 Day 7 (**Soften**; parallel; board **untouched**) |
+| Day 7 | day | https://www.rev.com/transcripts/ma-v-lindsay-clancy-day-7 | 2026-08-06 | **Founder starter** — C3 Day 7 (on master **#109**; board **untouched**) |
 | Day 11 | day | https://www.rev.com/transcripts/ma-v-lindsay-clancy-day-11 | 2026-08-12 | **Founder starter** — C3 Day 11 (**Soften**; parallel; board **untouched**) |
 | Day 14 | day | https://www.rev.com/transcripts/ma-v-lindsay-clancy-day-14 | 2026-08-18 | **Founder starter** — C3 Day 14 named digital-evidence backup (**Soften**; **day≠certified**; board **untouched**) |
 | Day 18 | day | https://www.rev.com/transcripts/ma-v-lindsay-clancy-day-18 | 2026-08-23 | **Founder starter** — C3 named backup (**Soften**; **day≠certified**; board **untouched**) |
@@ -127,4 +128,4 @@ Mistrial ~Sep 4 is a **public-report pointer** so the claim window is named. It 
 - **Index expanded (Digestor corpus).** Days 2–21 + closings live. Day 1 not found. Days 22+ 404. Index-live ≠ Soften. No all-days dump.
 - **Laptop-only.** Method practice. Not legal advice. Not a product.
 
-S0 is **Operator Soften** (poseable/citable). Later same day: Soften C1 + Soften C3 + Soften C3 Day 14 + Soften C3 Day 4 + Digestor index expand + Digestor INTERIM mid-run (**not** park). This is **not** usefulness Soften. **Success bar** stays unset. **Hold C2 / C4** only. Standing GO → Lab invent/hand **Day 5** next. Softened Day 2 / 3 / 7 / 11 **ADMITTED** (parallel; boards untouched).
+S0 is **Operator Soften** (poseable/citable). Later same day: Soften C1 + Soften C3 + Soften C3 Day 14 + Soften C3 Day 4 + Digestor index expand + Digestor INTERIM mid-run (**not** park). This is **not** usefulness Soften. **Success bar** stays unset. **Hold C2 / C4** only. Standing GO → Lab invent/hand **Day 5** next. Softened Day 2 / 3 / 7 / 11 **ADMITTED** (Day 2 + Day 7 on master as **#111** / **#109**; Days 3 / 11 parallel; boards untouched).
