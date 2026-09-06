@@ -86,7 +86,7 @@
 
 **Later the same day (Soften C3 Day 4):** Operator **ADMIT Soften C3 Day 4** (#113). Digest [`DIGESTION_C3_DAY4.md`](DIGESTION_C3_DAY4.md). INTERIM still **NOT** park.
 
-**Later the same day (Soften C3 Day 3 DIGEST):** Operator **ADMIT Soften C3 Day 3**. DIGEST now on this fold — [`DIGESTION_C3_DAY3.md`](DIGESTION_C3_DAY3.md). G3-D3 PRIMARY / G5-D3 touch / G6-D3. First-responder obs ≠ Soften of suicide / planning as fact. INTERIM still **NOT** park.
+**Later the same day (Soften C3 Day 3):** Operator **ADMIT Soften C3 Day 3** (#112). Digest [`DIGESTION_C3_DAY3.md`](DIGESTION_C3_DAY3.md) on master; board **untouched** this fold. G3-D3 PRIMARY / G5-D3 touch / G6-D3. First-responder obs ≠ Soften of suicide / planning as fact. INTERIM still **NOT** park.
 
 **Later the same day (Soften C3 Day 10):** Operator **ADMIT Soften C3 Day 10** (#118). Digest [`DIGESTION_C3_DAY10.md`](DIGESTION_C3_DAY10.md). INTERIM still **NOT** park.
 
@@ -95,5 +95,11 @@
 **Later the same day (Soften C3 Day 13):** Operator **ADMIT Soften C3 Day 13**. Digest [`DIGESTION_C3_DAY13.md`](DIGESTION_C3_DAY13.md). Remaining live days after Day 13: **15–17, 19–21**. INTERIM still **NOT** park. Amb **open**. Softened set: **2–13, 14, 18**. Standing GO Lab invent/hand **Day 15** next.
 
 **Later the same day (Soften C3 Day 5):** Operator **ADMIT Soften C3 Day 5**. Remaining live days after this fold: **6, 8–10, 12–13, 15–17, 19–21**. INTERIM still **NOT** park. Amb **open**. Softened days so far: **2**, **3**, **4**, **5**, **7**, **11**, **14**, **18**. Standing GO Lab invent/hand **Day 6** next. **Medical kids death ≠ Soften guilt.** See [`DIGESTION_C3_DAY5.md`](DIGESTION_C3_DAY5.md).
+
+**Later the same day (Soften C3 Day 15):** Operator **ADMIT Soften C3 Day 15** (#121). Digest [`DIGESTION_C3_DAY15.md`](DIGESTION_C3_DAY15.md) on master; board **untouched** this fold. Condie/Susan ≠ Soften of meds-cause / capacity / guilt / CR / civil negligence. INTERIM still **NOT** park.
+
+**Later the same day (Soften C3 Day 16):** Operator **ADMIT Soften C3 Day 16** (#122). Digest [`DIGESTION_C3_DAY16.md`](DIGESTION_C3_DAY16.md) on master; board **untouched** this fold. CR opinion ≠ Soften of capacity / guilt / CR as certified fact. INTERIM still **NOT** park.
+
+**Later the same day (Soften C3 Day 19):** Operator **ADMIT Soften C3 Day 19**. Digest [`DIGESTION_C3_DAY19.md`](DIGESTION_C3_DAY19.md). Remaining live days after Day 19: **20–21**. INTERIM still **NOT** park. Amb **open**. Softened set: **2–19**. Standing GO leftover remaining-live **20–21**. Illustrator Soften-fold pointer last **refreshed** after Day 5 — [`VIZ.md`](VIZ.md).
 
 *Interim note ≠ Soften of corpus-done. Soften Critic hire not met. INTERIM still NOT park. Amb open.*
