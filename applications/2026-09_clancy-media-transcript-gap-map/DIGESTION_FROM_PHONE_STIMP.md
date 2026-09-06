@@ -31,7 +31,7 @@ Stay a **new** method-practice Amb, not phone-stimp invent reopened, not Soften-
 
 - Quote the Operator **CLAIM LOCK** and Digestor **SPINE STAMP PASS**. See [`DIGESTION_SPINE_STAMP.md`](DIGESTION_SPINE_STAMP.md).
 - Keep the four freezes: media≠official; closings-first; success bar unnamed; first pulse S0 SOURCE board.
-- First pulse after **GO S0** = **SOURCE board**. **Not a model.** **Not yet GO this fold.**
+- First pulse after **GO S0** = **SOURCE board**. **Later same day:** Operator **ADMIT Soften S0**. Next = **GO C1**. **Hold C2–C4.** **Not a model.**
 - Rev (and similar) stays **media / unofficial**. Closings stay argument / instructions.
 - Do **not** train. Do **not** dump all days. Do **not** hire a Soften Critic. Do **not** write skill-met language. Do **not** give legal advice. Do **not** Soften verdict / mistrial / retrial prediction.
 - Do **not** reopen phone-stimp invent. Do **not** reopen Soften-vanity. Do **not** reopen Greer invent. Do **not** send the Greer write-up. Do **not** reopen SkyMirr invent. Do **not** reopen `2026-09_cell-tower-geometry` as live.
