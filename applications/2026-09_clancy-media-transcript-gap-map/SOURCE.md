@@ -2,9 +2,10 @@
 
 **Date:** 2026-09-06  
 **Application:** `2026-09_clancy-media-transcript-gap-map`  
-**Role:** notes summary. Operator **ADMIT Soften S0** locks the board as poseable/citable — [`DIGESTION_S0.md`](DIGESTION_S0.md). Later same day: Soften C1 + Soften C3 + Soften C3 Day 14 + **Digestor index expand**. **NOT** Soften of the parent usefulness claim. **Success bar unset.** **NOT** Soften of Day 14 / Day 18 / digital timeline as certified fact. **LOUD media≠certified.**  
+**Role:** notes summary. Operator **ADMIT Soften S0** locks the board as poseable/citable — [`DIGESTION_S0.md`](DIGESTION_S0.md). Later same day: Soften C1 + Soften C3 + Soften C3 Day 14 + **Digestor index expand** + **Digestor INTERIM mid-run** (**not** park). **NOT** Soften of the parent usefulness claim. **Success bar unset.** **NOT** Soften of Day 14 / Day 18 / digital timeline as certified fact. **LOUD media≠certified.** Day 1 missing / Days 22+ 404 = corpus **EDGE**.  
 
-**Expanded index:** [`REV_DAY_INDEX.md`](REV_DAY_INDEX.md) · [`DIGESTION_INDEX_EXPAND.md`](DIGESTION_INDEX_EXPAND.md)
+**Expanded index:** [`REV_DAY_INDEX.md`](REV_DAY_INDEX.md) · [`DIGESTION_INDEX_EXPAND.md`](DIGESTION_INDEX_EXPAND.md)  
+**Interim mid-run (not park):** [`DIGESTION_INTERIM_MID_RUN.md`](DIGESTION_INTERIM_MID_RUN.md) · [`INTERIM_INDEX.md`](INTERIM_INDEX.md) — **NOT** `DIGESTION_PARK_WHAT_TAUGHT`. Amb **open**.
 
 **Copy gate:** [`COPY_GATE.md`](COPY_GATE.md)  
 **Proposed pulse:** [`PROPOSED_PULSE.md`](PROPOSED_PULSE.md)
@@ -124,4 +125,4 @@ Mistrial ~Sep 4 is a **public-report pointer** so the claim window is named. It 
 - **Index expanded (Digestor corpus).** Days 2–21 + closings live. Day 1 not found. Days 22+ 404. Index-live ≠ Soften. No all-days dump.
 - **Laptop-only.** Method practice. Not legal advice. Not a product.
 
-S0 is **Operator Soften** (poseable/citable). Later same day: Soften C1 + Soften C3 + Soften C3 Day 14 + Digestor index expand. This is **not** usefulness Soften. **Success bar** stays unset. **Hold C2 / C4.** Standing GO continues named-day pulses across Digestor index. Lab invent **HOLD** for C2 / C4.
+S0 is **Operator Soften** (poseable/citable). Later same day: Soften C1 + Soften C3 + Soften C3 Day 14 + Digestor index expand + Digestor INTERIM mid-run (**not** park). This is **not** usefulness Soften. **Success bar** stays unset. **Hold C2 / C4** only. Standing GO continues named-day Softens (Day 7 in flight → 11 → rest of Digestor index one day at a time).

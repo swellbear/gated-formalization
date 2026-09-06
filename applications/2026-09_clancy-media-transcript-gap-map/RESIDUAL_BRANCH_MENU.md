@@ -4,7 +4,7 @@
 
 **Date:** 2026-09-06  
 **Application:** `2026-09_clancy-media-transcript-gap-map`  
-**Status:** Operator **ADMIT Soften S0 + Soften C1 + Soften C3 + Soften C3 Day 14 + Digestor index expand** / usefulness **not** Softened / **success bar unset** / **Hold C2 / C4** / standing GO named-day pulses  
+**Status:** Operator **ADMIT Soften S0 + Soften C1 + Soften C3 + Soften C3 Day 14 + Digestor index expand + Digestor INTERIM mid-run** (**not** park; Amb **open**) / usefulness **not** Softened / **success bar unset** / **Hold C2 / C4** / standing GO named-day Softens  
 
 **Glossary:** `docs/READER_GLOSSARY.md`  
 **Ledger:** [`NAMED_GAP_LEDGER.md`](NAMED_GAP_LEDGER.md)  
@@ -13,6 +13,7 @@
 **C3 digestion (Day 18; board untouched):** [`DIGESTION_C3.md`](DIGESTION_C3.md)  
 **C3 Day 14 digestion:** [`DIGESTION_C3_DAY14.md`](DIGESTION_C3_DAY14.md)  
 **Index expand:** [`REV_DAY_INDEX.md`](REV_DAY_INDEX.md) · [`DIGESTION_INDEX_EXPAND.md`](DIGESTION_INDEX_EXPAND.md)  
+**Interim mid-run (not park):** [`DIGESTION_INTERIM_MID_RUN.md`](DIGESTION_INTERIM_MID_RUN.md) · [`INTERIM_INDEX.md`](INTERIM_INDEX.md)  
 **Proposed pulse:** [`PROPOSED_PULSE.md`](PROPOSED_PULSE.md)  
 **SOURCE notes:** [`SOURCE.md`](SOURCE.md)  
 **Spine stamp:** [`DIGESTION_SPINE_STAMP.md`](DIGESTION_SPINE_STAMP.md)
@@ -21,7 +22,7 @@
 
 ## 0. Plain-language framing
 
-**What we’re doing:** Operator **ADMIT Soften S0 + Soften C1 + Soften C3 + Soften C3 Day 14 + Digestor index expand**. SOURCE board poseable/citable. Softened days so far: **14**, **18**. Digestor corpus Days 2–21 + closings live. **LOUD media≠certified.** Index-live ≠ Soften. Digestor IDs remain authoritative. **Hold C2 / C4.** Standing GO named-day pulses across Digestor index. **No models this fold.** Whole-trial claim/clash map **practice** (**not** case-solving).
+**What we’re doing:** Operator **ADMIT Soften S0 + Soften C1 + Soften C3 + Soften C3 Day 14 + Digestor index expand + Digestor INTERIM mid-run** (**not** park; Amb **open**). SOURCE board poseable/citable. Softened days so far: **14**, **18**. Remaining live days **2–13, 15–17, 19–21**. Digestor corpus Days 2–21 + closings live. **LOUD media≠certified.** Index-live ≠ Soften. Digestor IDs remain authoritative. **Hold C2 / C4.** Standing GO named-day Softens (Day 7 in flight → 11 → rest). **No models this fold.** Whole-trial claim/clash map **practice** (**not** case-solving).
 
 **What we need from you:** standing GO **named-day pulse** across the Digestor index **or** later **GO C2** (or park). Do **not** auto-GO C2 / C4. Do **not** dump the index. Do **not** rewrite the Day 18 board. Lab HOLD.
 
@@ -44,7 +45,8 @@
 | c4-success-bar | Operator/Founder names the bar vs casual AI **before** claim Soften | Definition-blocked until Operator/Founder names the bar | **Hold** — last check: none; do **not** invent a bar this fold; **Hold C2 / C4** |
 | media-not-official | Standing honesty — Rev (and similar) ≠ certified court-reporter record | Constraint | **Soften** (S0+C3+C3-D14; **day≠certified** stands) |
 | closings-not-evidence | Standing honesty — closings are argument / instructions; named day backup does not convert closings into evidence | Constraint | **Soften** (S0+C3+C3-D14; constraint stands) |
-| index-incomplete | Founder starter set + noted 19–21; other days may exist; no all-days dump; C3 used Day 18; C3 Day 14 used Day 14 | Constraint | **Soften** (S0+C3+C3-D14; **Hold further days 7 / 11 / 19–21**) |
+| index-incomplete | Digestor corpus Days 2–21 + closings live; Day 1 missing / 22+ 404 = EDGE; no all-days dump; C3 used Day 18; C3 Day 14 used Day 14 | Constraint | **Soften** (S0+C3+C3-D14; standing GO named-day Softens; remaining live days **2–13, 15–17, 19–21**) |
+| digestor-interim-mid-run | Digestor INTERIM mid-run honesty note — **not** park / **not** corpus-done | Honesty fold (Operator **ADMIT INTERIM mid-run**) | **Admitted** — [`DIGESTION_INTERIM_MID_RUN.md`](DIGESTION_INTERIM_MID_RUN.md) · [`INTERIM_INDEX.md`](INTERIM_INDEX.md); **NOT** `DIGESTION_PARK_WHAT_TAUGHT`; Amb **open** |
 | legal-advice-later | Legal advice; Soften of verdict / mistrial / retrial prediction | Parked — later wave | **paused** / **later wave** — **not** S0 |
 | illustrator-soften-fold | Soften-fold chart + living twin (Lab viz; **refreshed** after Soften C3 Day 14) | Pointer only — PNG+md not receivable this VM | **pointer** — [`VIZ.md`](VIZ.md); shows Day 14 G5-D14 PRIMARY / G4-D14 touch / G6-D14; Day 18 G4-D18 PRIMARY / G5-D18 TOUCH stay; honesty caption unchanged; **not** a new Soften |
 
@@ -80,6 +82,7 @@ No other empirically resolvable residuals on this fold.
 | 2026-09-06 | Operator **ADMIT Soften C3 Day 14** (day-pulse #2 map-extension). Scope = Softened C1 G5 (primary) + G4 (touch) extendable with ONE named Day 14 digital-evidence backup under media≠certified + day≠certified + closings≠evidence. 9 day claims; extending gaps G5-D14 PRIMARY / G4-D14 touch / G6-D14. Short fair-use spans only. COPY_GATE. Softened Day 18 board **untouched**. **NOT** Soften of parent usefulness. **Success bar unset.** **NOT** Soften of verdict/mistrial/retrial. **NOT** Soften of Day 14 / digital timeline as certified fact. Closings still ≠ evidence. Digital timeline ≠ Soften of planning/psychosis as fact. Argument clash named as clash, **not** Soften of either side. **Hold C2 / C4.** **Hold further days (7 / 11 / 19–21).** Soften Critic **not hired**. Greer **TABLED** invent **HOLD**. phone-stimp **TABLED** invent **HOLD**. Soften-vanity **CLOSED**. Whole-trial claim/clash map practice (**not** case-solving). Kill/DATA-BLOCKED not triggered. See [`DIGESTION_C3_DAY14.md`](DIGESTION_C3_DAY14.md). Do **not** auto-GO C2 / C4. Do **not** dump further days. Do **not** rewrite the Day 18 board. Usefulness claim is **not** established. Success bar is **not** named. Not legal advice. Not skill-met. Not rithm. |
 | 2026-09-06 | Operator-folded **Illustrator Soften-fold pointer (refreshed after Soften C3 Day 14)**. Lab Soften-fold chart (`/workspace/clancy_lab/viz/soften_fold_c1_c3.png` + `.md`) + living twin (`claim_clash_map.png` + `.md`) **not receivable** on this Operator VM. Pointer: [`VIZ.md`](VIZ.md). Refreshed board shows Softened Day 14 G5-D14 PRIMARY / G4-D14 touch / G6-D14; Softened Day 18 G4-D18 PRIMARY / G5-D18 TOUCH **stay**. Honesty caption **unchanged**: Media≠certified · Closings≠evidence · Day≠certified · no Soften of verdict · Soften Critic not hired · map poseability only. **Not** a new Soften. Soften C3 Day 14 **stands**. Day 18 board **untouched**. **Hold C2 / C4.** **Hold further days (7 / 11 / 19–21).** |
 | 2026-09-06 | Operator **ADMIT Digestor index expand**. Digestor corpus: Days 2–21 + Closing Arguments **live**; Day 2 URL typo slug `ma-v-linsday-clancy-day-2` (canonical slug 404); Day 1 **not found**; Days 22+ **404**. **LOUD media≠certified.** Softened days so far: **14**, **18**. Index-live ≠ Soften. Standing GO continues named-day pulses across Digestor index. Soften Critic **not hired**. **Hold C2 / C4.** Day 18 board **untouched**. See [`REV_DAY_INDEX.md`](REV_DAY_INDEX.md) · [`DIGESTION_INDEX_EXPAND.md`](DIGESTION_INDEX_EXPAND.md). Do **not** dump the index. Usefulness claim is **not** established. Success bar is **not** named. Not legal advice. Not skill-met. Not rithm. |
+| 2026-09-06 | Operator **ADMIT Digestor INTERIM mid-run** (honesty fold only). **REJECT** park / `DIGESTION_PARK_WHAT_TAUGHT` / corpus-done. Softened so far: S0 · C1 · C3 Day 18 · C3 Day 14. Remaining live days **2–13, 15–17, 19–21**. Day 1 missing / 22+ 404 = corpus **EDGE**. **Standing GO** continues named-day Softens (Day 7 in flight → 11 → rest of Digestor index one day at a time). **Hold C2 / C4** only. Usefulness **NOT Softened**. Success bar **unset**. Soften Critic **not hired**. Greer / phone-stimp **TABLED**. Soften-vanity **CLOSED**. See [`DIGESTION_INTERIM_MID_RUN.md`](DIGESTION_INTERIM_MID_RUN.md) · [`INTERIM_INDEX.md`](INTERIM_INDEX.md) · [`REV_DAY_INDEX.md`](REV_DAY_INDEX.md). Amb **open**. Not legal advice. Not skill-met. Not rithm. |
 
 ---
 

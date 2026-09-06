@@ -2,13 +2,14 @@
 
 **Date:** 2026-09-06  
 **Application:** `2026-09_clancy-media-transcript-gap-map`  
-**String:** Operator **ADMIT Soften S0** + **Soften C1** + **Soften C3** + **Soften C3 Day 14** + **Digestor index expand** / usefulness claim **not** Softened / **success bar unset** / **Hold C2 / C4** / standing GO named-day pulses  
+**String:** Operator **ADMIT Soften S0** + **Soften C1** + **Soften C3** + **Soften C3 Day 14** + **Digestor index expand** + **Digestor INTERIM mid-run** (**not** park; Amb **open**) / usefulness claim **not** Softened / **success bar unset** / **Hold C2 / C4** / standing GO named-day Softens  
 **Named gap:** SOURCE board poseable; 8-claim census + G1–G7 poseable; Day 18 + Day 14 named backups poseable; Digestor index Days 2–21 + closings live. **NOT** usefulness Soften. **NOT** index-live as Soften. **LOUD media≠certified.**  
 **S0 digestion:** [`DIGESTION_S0.md`](DIGESTION_S0.md)  
 **C1 digestion:** [`DIGESTION_C1.md`](DIGESTION_C1.md)  
 **C3 digestion (Day 18; board untouched):** [`DIGESTION_C3.md`](DIGESTION_C3.md)  
 **C3 Day 14 digestion:** [`DIGESTION_C3_DAY14.md`](DIGESTION_C3_DAY14.md)  
 **Index expand:** [`REV_DAY_INDEX.md`](REV_DAY_INDEX.md) · [`DIGESTION_INDEX_EXPAND.md`](DIGESTION_INDEX_EXPAND.md)  
+**Interim mid-run (not park):** [`DIGESTION_INTERIM_MID_RUN.md`](DIGESTION_INTERIM_MID_RUN.md) · [`INTERIM_INDEX.md`](INTERIM_INDEX.md)  
 **Ledger:** [`NAMED_GAP_LEDGER.md`](NAMED_GAP_LEDGER.md)  
 **SOURCE notes:** [`SOURCE.md`](SOURCE.md)  
 **Spine stamp:** [`DIGESTION_SPINE_STAMP.md`](DIGESTION_SPINE_STAMP.md)
@@ -178,4 +179,4 @@ Do **not** remap these IDs. Digestor IDs override any later scaffold remapping.
 
 ---
 
-*Docs only. **S0 Soften** + **C1 Soften** + **C3 Soften** + **C3 Day 14 Soften** + **Digestor index expand** admitted. Usefulness **not** Softened. Success bar unset. LOUD media≠certified. Day≠certified. Closings≠evidence. Softened days so far: 14, 18. Index-live ≠ Soften. Not legal advice. Not skill-met. Not case-solving. Hold C2/C4. Standing GO named-day pulses. Day 18 board untouched. Lab does not self-admit. Digestor never Soften / Harden / Kill.*
+*Docs only. **S0 Soften** + **C1 Soften** + **C3 Soften** + **C3 Day 14 Soften** + **Digestor index expand** + **Digestor INTERIM mid-run** admitted (**not** park; Amb **open**). Usefulness **not** Softened. Success bar unset. LOUD media≠certified. Day≠certified. Closings≠evidence. Softened days so far: 14, 18. Index-live ≠ Soften. Not legal advice. Not skill-met. Not case-solving. Hold C2/C4. Standing GO named-day Softens. Day 18 board untouched. Lab does not self-admit. Digestor never Soften / Harden / Kill.*
