@@ -4,6 +4,7 @@
 **Application:** `2026-09_soften-vanity-thrash-predictor`  
 **String:** Soften Amb DIGEST / string **CLOSE**  
 **Habit:** [`docs/DIGESTION_HABIT.md`](../../docs/DIGESTION_HABIT.md)  
+**Lab DIGEST lean:** [`DIGESTION_C0C1_SOFTEN.md`](DIGESTION_C0C1_SOFTEN.md)  
 **C1 digestion:** [`DIGESTION_C1.md`](DIGESTION_C1.md)  
 **C0 digestion (stands):** [`DIGESTION_C0.md`](DIGESTION_C0.md)  
 **Claim-limb addendum (stands):** [`DIGESTION_CLAIM_LIMB.md`](DIGESTION_CLAIM_LIMB.md)  
@@ -126,6 +127,7 @@ This note does **not** authorize those strings. It does **not** show a thrash pr
 |--------|------------|
 | [`STATUS.md`](STATUS.md) | Soften Amb DIGEST / CLOSE; Lab HOLD |
 | [`NAMED_GAP_LEDGER.md`](NAMED_GAP_LEDGER.md) | Scoreboard, including the killed lift limb |
+| [`DIGESTION_C0C1_SOFTEN.md`](DIGESTION_C0C1_SOFTEN.md) | Lab DIGEST lean (C0+C1 Soften) |
 | [`DIGESTION_C1.md`](DIGESTION_C1.md) | C1 Soften coding sheet |
 | [`DIGESTION_C0.md`](DIGESTION_C0.md) | C0 Soften census (stands) |
 | [`DIGESTION_CLAIM_LIMB.md`](DIGESTION_CLAIM_LIMB.md) | Holdout-lift limb Kill (stands) |

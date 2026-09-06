@@ -6,6 +6,7 @@
 **Habit:** [`docs/DIGESTION_HABIT.md`](../../docs/DIGESTION_HABIT.md)  
 **C0 digestion (stands):** [`DIGESTION_C0.md`](DIGESTION_C0.md)  
 **Claim-limb addendum (stands):** [`DIGESTION_CLAIM_LIMB.md`](DIGESTION_CLAIM_LIMB.md)  
+**Lab DIGEST lean:** [`DIGESTION_C0C1_SOFTEN.md`](DIGESTION_C0C1_SOFTEN.md)  
 **String CLOSE:** [`DIGESTION_STRING.md`](DIGESTION_STRING.md)  
 **Pulse menu:** [`PROPOSED_PULSE.md`](PROPOSED_PULSE.md)  
 **Ledger:** [`NAMED_GAP_LEDGER.md`](NAMED_GAP_LEDGER.md)  

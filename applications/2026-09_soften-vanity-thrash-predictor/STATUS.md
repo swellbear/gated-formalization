@@ -23,8 +23,9 @@
 | **Optional modes** | none yet (endpoint; not hard stop; no optional-modes menu this fold) |
 
 **Ledger:** [`NAMED_GAP_LEDGER.md`](NAMED_GAP_LEDGER.md)  
-**String DIGEST (this fold):** [`DIGESTION_STRING.md`](DIGESTION_STRING.md)  
-**C1 digestion (this fold):** [`DIGESTION_C1.md`](DIGESTION_C1.md)  
+**Lab DIGEST lean (C0+C1 Soften):** [`DIGESTION_C0C1_SOFTEN.md`](DIGESTION_C0C1_SOFTEN.md)  
+**String DIGEST:** [`DIGESTION_STRING.md`](DIGESTION_STRING.md)  
+**C1 digestion:** [`DIGESTION_C1.md`](DIGESTION_C1.md)  
 **Claim-limb addendum (stands):** [`DIGESTION_CLAIM_LIMB.md`](DIGESTION_CLAIM_LIMB.md)  
 **C0 digestion (stands):** [`DIGESTION_C0.md`](DIGESTION_C0.md)  
 **Proposed pulse (C0–C4):** [`PROPOSED_PULSE.md`](PROPOSED_PULSE.md)  

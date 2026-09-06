@@ -8,6 +8,7 @@
 
 **Glossary:** `docs/READER_GLOSSARY.md`  
 **Ledger:** [`NAMED_GAP_LEDGER.md`](NAMED_GAP_LEDGER.md)  
+**Lab DIGEST lean:** [`DIGESTION_C0C1_SOFTEN.md`](DIGESTION_C0C1_SOFTEN.md)  
 **String DIGEST:** [`DIGESTION_STRING.md`](DIGESTION_STRING.md)  
 **C1 digestion:** [`DIGESTION_C1.md`](DIGESTION_C1.md)  
 **Claim-limb addendum:** [`DIGESTION_CLAIM_LIMB.md`](DIGESTION_CLAIM_LIMB.md)  
@@ -64,6 +65,7 @@ No other empirically resolvable residuals on this fold.
 
 | Date | Action |
 |------|--------|
+| 2026-09-06 | Lab DIGEST lean folded: [`DIGESTION_C0C1_SOFTEN.md`](DIGESTION_C0C1_SOFTEN.md). Operator DIGEST copied. Soften C0 + Soften C1 carried. Soften Amb DIGEST + string CLOSE. Soften-without-named-kill = 0; Soften-with = 3; unclear = 1 (human-bia). Soften Critic deferred. Lab invent HOLD. Hold C2+. Greer TABLED invent HOLD. SkyMirr invent HOLD. Soften ≠ Soften-is-bad. Greer Soften Amb not vanity. |
 | 2026-09-06 | Operator **ADMIT Soften Amb DIGEST / string CLOSE**. Purpose Softened: **operationalize vanity Soften vs scoped Soften**. **Kill** held-out thrash-predictor lift limb (N=4 unposeable; 2 exogenous). Almost all early Softens already named kill. **Hold C2+.** **Lab invent HOLD** after DIGEST. **C0 Soften carried.** Freezes: companion out of N; Greer early window MULTIPATH1; Greer TABLED invent HOLD; SkyMirr invent HOLD; no Soften Critic; no ML. DIGEST: [`DIGESTION_STRING.md`](DIGESTION_STRING.md). Not a predictor. Not skill-met. Not rithm. Not hard stop. |
 | 2026-09-06 | Operator **ADMIT Soften C1**. Coding sheet works on **4 eligible**. Soften-without-named-kill = **0**. **1 unclear** (human-bia). **3 scoped Soften** (Greer / SkyMirr / cell-tower). Held-out lift limb stays **Kill / unposeable**. Soften Critic **deferred** (C1 does not trip hire). **C0 Soften carried.** **C2+ HOLD.** **No ML.** **No Greer reopen.** DIGEST: [`DIGESTION_C1.md`](DIGESTION_C1.md). |
 | 2026-09-06 | Founder+Operator addendum. **Kill** held-out thrash-predictor lift limb as **unposeable** at **N=4** Soften DIGESTION/SCORE (**2 exogenous**). Do **not** Harden vanity→thrash. Purpose restated: **operationalize vanity Soften vs scoped Soften**. **Not** held-out AUC. **C0 Soften + freezes stand.** DIGEST: [`DIGESTION_CLAIM_LIMB.md`](DIGESTION_CLAIM_LIMB.md). |

@@ -10,7 +10,8 @@
 **Copy gate:** [`COPY_GATE.md`](COPY_GATE.md)  
 **Spine stamp (prior PASS):** [`DIGESTION_SPINE_STAMP.md`](DIGESTION_SPINE_STAMP.md)  
 **Later same day — C1 Soften:** [`DIGESTION_C1.md`](DIGESTION_C1.md)  
-**Later same day — Soften Amb DIGEST / string CLOSE:** [`DIGESTION_STRING.md`](DIGESTION_STRING.md)
+**Later same day — Soften Amb DIGEST / string CLOSE:** [`DIGESTION_STRING.md`](DIGESTION_STRING.md)  
+**Lab DIGEST lean (C0+C1 Soften):** [`DIGESTION_C0C1_SOFTEN.md`](DIGESTION_C0C1_SOFTEN.md)
 
 Method Operator **ADMIT C0 Soften**. Census is **poseable**. **N eligible Soften-bearing DIGESTION/SCORE = 4/37** Amb folders under `applications/` (exclude `training/`, `_template_application/`, **this folder**). **Too-thin for holdout** stays **named**. **Not Harden.** **Not Kill / DATA-BLOCKED** on no-folder-list. Soften ≠ Soften-is-bad. Greer Soften Amb is **not** asserted vanity.
 
