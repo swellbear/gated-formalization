@@ -61,9 +61,9 @@ Claim-scope Soften — [`DIGESTION_CLAIM_SCOPE.md`](DIGESTION_CLAIM_SCOPE.md). S
 6. [`DIGESTION_S0.md`](DIGESTION_S0.md) — S0 SOURCE board Soften
 7. [`DIGESTION_S1.md`](DIGESTION_S1.md) — S1 Sommer gap map Soften
 8. [`PROPOSED_PULSE.md`](PROPOSED_PULSE.md) — Digestor menu (S0=SOURCE, S1=gap map, S2=kinematics Soften, S3 awaiting Soften, S4 Hold)
-8. [`SOURCE.md`](SOURCE.md) — USGA + Sommer abstract + physics pointers (notes summary)
-9. [`DIGESTION_SPINE_STAMP.md`](DIGESTION_SPINE_STAMP.md) — Digestor spine PASS summary
-10. [`DIGESTION_FROM_SOFTEN_VANITY.md`](DIGESTION_FROM_SOFTEN_VANITY.md) — what the last string taught
-11. [`COPY_GATE.md`](COPY_GATE.md) — SOURCE / method-practice honesty
-12. [`RESIDUAL_BRANCH_MENU.md`](RESIDUAL_BRANCH_MENU.md) — decision log
-13. [`notes.md`](notes.md) — one-line pointer
+9. [`SOURCE.md`](SOURCE.md) — USGA + Sommer abstract + physics pointers (notes summary)
+10. [`DIGESTION_SPINE_STAMP.md`](DIGESTION_SPINE_STAMP.md) — Digestor spine PASS summary
+11. [`DIGESTION_FROM_SOFTEN_VANITY.md`](DIGESTION_FROM_SOFTEN_VANITY.md) — what the last string taught
+12. [`COPY_GATE.md`](COPY_GATE.md) — SOURCE / method-practice honesty
+13. [`RESIDUAL_BRANCH_MENU.md`](RESIDUAL_BRANCH_MENU.md) — decision log
+14. [`notes.md`](notes.md) — one-line pointer
