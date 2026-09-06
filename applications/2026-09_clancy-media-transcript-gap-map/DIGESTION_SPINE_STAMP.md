@@ -67,4 +67,6 @@ Digestor never Soften / Harden / Kill. Digestor stamps whether a new Amb spine i
 
 **Later the same day (Operator ADMIT Soften S0):** SOURCE board Softened (poseable/citable). Usefulness claim **not** Softened. **Success bar unset.** **NOT** Soften of “what was said.” **Hold C2–C4.** Lab invent **HOLD** until **GO C1**. See [`DIGESTION_S0.md`](DIGESTION_S0.md).
 
-*Digestor spine stamp Operator-folded. PASS stands. Later same day: Soften S0. Hold C2–C4. Lab HOLD until GO C1.*
+**Later the same day (Operator ADMIT Soften C1):** 8-claim census + G1–G7 poseable. Clash named as clash, **not** Soften of either side. Usefulness claim **not** Softened. **Success bar unset.** **Hold C2–C4.** See [`DIGESTION_C1.md`](DIGESTION_C1.md).
+
+*Digestor spine stamp Operator-folded. PASS stands. Later same day: Soften S0 + Soften C1. Hold C2–C4.*
