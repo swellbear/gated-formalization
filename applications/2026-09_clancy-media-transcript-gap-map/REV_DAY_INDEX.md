@@ -11,7 +11,7 @@
 
 **LOUD: media≠certified.** Every row is a Rev (or similar) **media / unofficial** page. This is **not** the certified court-reporter record. Rev page dates are **media stamps**, not a certified court calendar. Speaker labels can be wrong. Words can be missed. **Day≠certified.** Closings still ≠ evidence.
 
-This index names **which pages are live / not-found / 404**. It does **not** Soften those days. It does **not** dump those days. Softened set = **2–21** (+closings C1). Day 6 **#115** + Day 12 **#119** digest on this tree (boards **untouched**). Day 17 is **ADMITTED** (parallel; no digest on this tree; not PROPOSED). Day 5 **HAS** digest this fold. Day 8 digest on master #116. Day 20 digest on master #127. Day 21 digest on master #126. Park DIGEST **already on master #124 (this Soften PR does NOT write/rewrite it)**. Soften Critic **not hired**.
+This index names **which pages are live / not-found / 404**. It does **not** Soften those days. It does **not** dump those days. Softened set = **2–21** (+closings C1). Day 6 **#115** + Day 12 **#119** digest on this tree (boards **untouched**). Day 17 **#125** digest on this tree (board **untouched**). Day 5 **HAS** digest this fold. Day 8 digest on master #116. Day 20 digest on master #127. Day 21 digest on master #126. Park DIGEST **already on master #124 (this Soften PR does NOT write/rewrite it)**. Soften Critic **not hired**.
 
 **Later the same day (Soften C3 Day 7):** Operator **ADMIT Soften C3 Day 7**. Day 7 leaves the remaining-open list. This expand snapshot is **not** rewritten as a park DIGEST. See [`DIGESTION_C3_DAY7.md`](DIGESTION_C3_DAY7.md).
 
@@ -50,7 +50,7 @@ This index names **which pages are live / not-found / 404**. It does **not** Sof
 | Day **1** | **not found** (`ma-v-lindsay-clancy-day-1` = **404**) | Proof no Day 1 existed in court |
 | Days **22+** | **404** (checked Day 22 / Day 23) | Proof the trial ended on Day 21 |
 
-**Index expand ≠ all-days dump.** Softened set **2–21** complete. Day 5 **HAS** digest this fold. Day 6 #115 + Day 12 #119 on master (boards **untouched**). Day 17 Operator-ADMITTED parallel (no digest on this tree). Digestor park DIGEST **already on master #124 (this Soften PR does NOT write/rewrite it)**. **Hold C2 / C4.**
+**Index expand ≠ all-days dump.** Softened set **2–21** complete. Day 5 **HAS** digest this fold. Day 6 #115 + Day 12 #119 on master (boards **untouched**). Day 17 #125 on master (board **untouched**). Digestor park DIGEST **already on master #124 (this Soften PR does NOT write/rewrite it)**. **Hold C2 / C4.**
 
 ---
 
@@ -77,7 +77,7 @@ Rev page stamps below are **media** when already on [`SOURCE.md`](SOURCE.md). Ne
 | Day 14 | day | https://www.rev.com/transcripts/ma-v-lindsay-clancy-day-14 | **live** | **Softened** — C3 Day 14 digital-evidence backup |
 | Day 15 | day | https://www.rev.com/transcripts/ma-v-lindsay-clancy-day-15 | **live** | **Softened** — C3 Day 15 (on master **#121**; board **untouched** this fold) |
 | Day 16 | day | https://www.rev.com/transcripts/ma-v-lindsay-clancy-day-16 | **live** | **Softened** — C3 Day 16 Condie (on master **#122**; board **untouched** this fold) |
-| Day 17 | day | https://www.rev.com/transcripts/ma-v-lindsay-clancy-day-17 | **live** | **Softened** — C3 Day 17 Cavanaugh (**ADMITTED**; no digest on this tree; board **untouched** this fold) |
+| Day 17 | day | https://www.rev.com/transcripts/ma-v-lindsay-clancy-day-17 | **live** | **Softened** — C3 Day 17 Cavanaugh chaplain-collateral backup (master #125; board **untouched**; chaplain collateral ≠ Soften of capacity / guilt / CR / voices-as-certified-fact) |
 | Day 18 | day | https://www.rev.com/transcripts/ma-v-lindsay-clancy-day-18 | **live** | **Softened** — C3 Day 18 named backup (board **untouched**) |
 | Day 19 | day | https://www.rev.com/transcripts/ma-v-lindsay-clancy-day-19 | **live** | **Softened** — C3 Day 19 Commonwealth rebuttal CR-opinion backup (master #123; board **untouched** this fold) |
 | Day 20 | day | https://www.rev.com/transcripts/ma-v-lindsay-clancy-day-20 | **live** | **Softened** — C3 Day 20 Heilbrun (on master **#127**; board **untouched** this fold) |
@@ -92,7 +92,7 @@ Rev page stamps below are **media** when already on [`SOURCE.md`](SOURCE.md). Ne
 
 | Set | Days | Status |
 |-----|------|--------|
-| **Softened** | **2–21** (+closings C1) | C3 Day 5 hospital/medical (this fold; **HAS** digest; **PRIMARY**) + Day 8 (master #116) + Day 20 (master #127) + Day 21 (master #126) + Day 15 (master #121) + Day 16 (master #122) + Day 19 (master #123) + Day 3 (master #112) + Day 13 (master #120) + Day 9 (master #117) + Day 10 (master #118) + Day 4 (master #113) + Day 2 (master #111) + Day 11 (master #110) + Day 7 + Day 14 + Day 18 named backups poseable; Day 6 #115 + Day 12 #119 on master (boards **untouched**). Day 17 Operator-ADMITTED (parallel; no digest on this tree). **Day≠certified.** **Medical kids death ≠ Soften guilt.** Softened Days 2–21 boards **untouched** except Day 5 **PRIMARY**. **LAST Digestor live day Softened.** |
+| **Softened** | **2–21** (+closings C1) | C3 Day 5 hospital/medical (this fold; **HAS** digest; **PRIMARY**) + Day 8 (master #116) + Day 20 (master #127) + Day 21 (master #126) + Day 15 (master #121) + Day 16 (master #122) + Day 19 (master #123) + Day 3 (master #112) + Day 13 (master #120) + Day 9 (master #117) + Day 10 (master #118) + Day 4 (master #113) + Day 2 (master #111) + Day 11 (master #110) + Day 7 + Day 14 + Day 18 named backups poseable; Day 6 #115 + Day 12 #119 on master (boards **untouched**). Day 17 #125 on master (board **untouched**). **Day≠certified.** **Medical kids death ≠ Soften guilt.** Softened Days 2–21 boards **untouched** except Day 5 **PRIMARY**. **LAST Digestor live day Softened.** |
 | **Indexed, not Softened** | none remaining | Softened set **2–21** complete. Digestor park DIGEST **already on master #124 (this Soften PR does NOT write/rewrite it)**. |
 | **Off-corpus** | Day 1 (not found); Days 22+ (404) | Do **not** invent pages |
 

@@ -1,6 +1,6 @@
 # Clancy media-transcript gap-map — INTERIM mid-run index (2026-09-06)
 
-> **SUPERSEDED history** (park DIGEST already on master **#124**). Softened set after Day 5 fold + Day 8 #116 + Day 20 #127 + Day 21 #126 + park #124: S0, C1 closings, C3 Days **2–21**. **LAST Digestor live day Softened.** Remaining live days: **none**. Day 1 missing / 22+ 404 = corpus EDGE. Day 5 **HAS** digest this fold (**PRIMARY**). Days 6 / 12 / 17 Operator-**ADMITTED** (parallel; no digest files on this tree). This Soften PR does **NOT** rewrite park DIGEST / `DIGESTION_PARK_WHAT_TAUGHT`. Keep INTERIM as history. Do **not** convert back to live interim as if park never happened.
+> **SUPERSEDED history** (park DIGEST already on master **#124**). Softened set after Day 5 fold + Day 8 #116 + Day 20 #127 + Day 21 #126 + park #124: S0, C1 closings, C3 Days **2–21**. **LAST Digestor live day Softened.** Remaining live days: **none**. Day 1 missing / 22+ 404 = corpus EDGE. Day 5 **HAS** digest this fold (**PRIMARY**). Day 6 #115 + Day 12 #119 + Day 17 #125 now on master (boards **untouched**; leftover after this snapshot). This Soften PR does **NOT** rewrite park DIGEST / `DIGESTION_PARK_WHAT_TAUGHT`. Keep INTERIM as history. Do **not** convert back to live interim as if park never happened.
 
 **Status:** Interim Digestor index only. Usefulness **NOT Softened**. Success bar **unset**. Soften Critic **not hired**. Greer/phone-stimp **TABLED**.
 **Repo:** `applications/2026-09_clancy-media-transcript-gap-map`
@@ -67,3 +67,9 @@ Named-day live pulses: **none remaining**. Softened set **2–21** complete. Clo
 - Invent Day 1 cold
 - Invent `DIGESTION_C3_DAY6.md` / `DAY12.md` / `DAY17.md`
 - Hire Soften Critic / reopen Greer or phone-stimp
+
+**Later the same day (Soften C3 Day 17):** Day 17 digest lands after Day 21 **#126**. This fold does **not** rewrite INTERIM or park DIGEST. INTERIM remains history / **interim (NOT park)** this fold. See [`DIGESTION_C3_DAY17.md`](DIGESTION_C3_DAY17.md).
+
+**Later the same day (Soften C3 Day 6 on master #115):** Day 17 digest lands after Day 6 **#115**. This fold does **not** rewrite Day 6 or park DIGEST. See [`DIGESTION_C3_DAY17.md`](DIGESTION_C3_DAY17.md).
+
+**Later the same day (Soften C3 Day 12 on master #119):** Day 17 digest lands after Day 12 **#119**. This fold does **not** rewrite Day 12 or park DIGEST. See [`DIGESTION_C3_DAY17.md`](DIGESTION_C3_DAY17.md).
