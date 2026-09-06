@@ -29,21 +29,20 @@ That is an **Amb Soften** of the named A2 leftover under a **conditional** windo
 
 Hardware **X PARKED.** F9T-class is an **Operator-named public timing class**, not a product used in this folder.
 
-## What this string must do next (user override suite)
+## What this string must do next (user override suite; later satisfied)
 
-Later the same day: **A3 Soften** scored ([`DIGESTION_A3.md`](DIGESTION_A3.md); mild LE survives ≤1 m; persistent `B_lb` / `B_dense` fail) and **A4 Soften X/σ_t** ([`DIGESTION_A4.md`](DIGESTION_A4.md)). Next: **DIGEST + Founder fold**. Link/map stays **PARKED**.
+Later the same day: **A3 Soften** scored ([`DIGESTION_A3.md`](DIGESTION_A3.md); mild LE survives ≤1 m; persistent `B_lb` / `B_dense` fail), **A4 Soften X/σ_t** ([`DIGESTION_A4.md`](DIGESTION_A4.md)), suite DIGEST Soften Amb **ADMIT**. See [`DIGESTION_A1A4_SUITE.md`](DIGESTION_A1A4_SUITE.md). Link/map stays **PARKED**.
 
-**Greer send HOLD** until the suite digests. [`GREER_WRITEUP.md`](GREER_WRITEUP.md) stays **sync-fragility evidence only**.
+**Greer send HOLD** until Founder rewrite + user OK. [`GREER_WRITEUP.md`](GREER_WRITEUP.md) stays **sync-fragility evidence only**. **Lab HOLD invent** (no named next pulse).
 
 Still **no RF / ML**. Do **not** invent a fingerprint rescue. Do **not** copy claims. Do **not** treat commercial 1PPS as the Soften window. Our MULTIPATH1 Soften is not A3.
 
 ## What stays parked / closed / hold
 
-- **DIGEST + Founder fold** is the locked next. **A3** and **A4** are scored.
 - **Link/map** (GIS / CAD overlay) **PARKED**.
 - **Hardware X** stays **PARKED**.
-- **Send to Greer** stays **HOLD** until the A1–A4 suite digests.
-- **Lab invent** stays **HOLD**.
+- **Send to Greer** stays **HOLD** until Founder rewrite + user OK.
+- **Lab invent** stays **HOLD** (no named next pulse).
 - **SkyMirr MuLCAT** stays its own Amb. This note does **not** reopen it.
 - **Cell-tower geometry** stays **PARKED**. Do **not** reopen as live.
 - **BIA→weight portfolio** stays **CLOSED**.
@@ -51,4 +50,4 @@ Still **no RF / ML**. Do **not** invent a fingerprint rescue. Do **not** copy cl
 - **Track B invent** stays **paused**.
 - **llm-gwt R-REPL** stays **parked**.
 
-This note does **not** authorize a send. It does **not** show a TDOA locator. It does **not** start training. Later **A3 Soften** is on [`DIGESTION_A3.md`](DIGESTION_A3.md). It does **not** unpark hardware **X**.
+This note does **not** authorize a send. It does **not** show a TDOA locator. It does **not** start training. Later **A3 Soften** is on [`DIGESTION_A3.md`](DIGESTION_A3.md). It does **not** unpark hardware **X**. Later the same day: suite DIGEST Soften Amb **ADMITTED**.

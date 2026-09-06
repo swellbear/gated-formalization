@@ -1,6 +1,6 @@
 # Digestion — A3 Soften (mild LE bias; persistent B_lb fails ≤1 m)
 
-A short plain note of what the leading-edge residual pulse taught. Habit: [`docs/DIGESTION_HABIT.md`](../../docs/DIGESTION_HABIT.md). Incoming A2: [`DIGESTION_A2.md`](DIGESTION_A2.md). Incoming A1: [`DIGESTION_A1.md`](DIGESTION_A1.md). Incoming ingest: [`DIGESTION_ABSTRACT_INGEST.md`](DIGESTION_ABSTRACT_INGEST.md). Incoming GATE1: [`DIGESTION_GATE1.md`](DIGESTION_GATE1.md). Incoming DRIFT1: [`DIGESTION_DRIFT1.md`](DIGESTION_DRIFT1.md). Incoming JOINT1: [`DIGESTION_JOINT1.md`](DIGESTION_JOINT1.md). Incoming SYNC1: [`DIGESTION_SYNC_1.md`](DIGESTION_SYNC_1.md). Incoming MULTIPATH1: [`DIGESTION_MULTIPATH1.md`](DIGESTION_MULTIPATH1.md). Incoming #0: [`DIGESTION_GEOMETRY_0.md`](DIGESTION_GEOMETRY_0.md). Score: [`SCORE_A3.md`](SCORE_A3.md). Founder-polished send file: [`GREER_WRITEUP.md`](GREER_WRITEUP.md) (**HOLD send** until the suite digests). Lab audit: [`GREER_WRITEUP_DRAFT.md`](GREER_WRITEUP_DRAFT.md). This does **not** score a locator. It does **not** lock a hardware **X**. It does **not** Harden indoor / first-arrival. It does **not** Kill ≤1 m wholesale. It does **not** authorize a send to Greer. It does **not** reopen cell-tower as live. It does **not** reopen BIA→weight.
+A short plain note of what the leading-edge residual pulse taught. Habit: [`docs/DIGESTION_HABIT.md`](../../docs/DIGESTION_HABIT.md). Incoming A2: [`DIGESTION_A2.md`](DIGESTION_A2.md). Incoming A1: [`DIGESTION_A1.md`](DIGESTION_A1.md). Incoming ingest: [`DIGESTION_ABSTRACT_INGEST.md`](DIGESTION_ABSTRACT_INGEST.md). Incoming GATE1: [`DIGESTION_GATE1.md`](DIGESTION_GATE1.md). Incoming DRIFT1: [`DIGESTION_DRIFT1.md`](DIGESTION_DRIFT1.md). Incoming JOINT1: [`DIGESTION_JOINT1.md`](DIGESTION_JOINT1.md). Incoming SYNC1: [`DIGESTION_SYNC_1.md`](DIGESTION_SYNC_1.md). Incoming MULTIPATH1: [`DIGESTION_MULTIPATH1.md`](DIGESTION_MULTIPATH1.md). Incoming #0: [`DIGESTION_GEOMETRY_0.md`](DIGESTION_GEOMETRY_0.md). Score: [`SCORE_A3.md`](SCORE_A3.md). Founder-polished send file: [`GREER_WRITEUP.md`](GREER_WRITEUP.md) (**HOLD send** until Founder rewrite + user OK). Suite DIGEST: [`DIGESTION_A1A4_SUITE.md`](DIGESTION_A1A4_SUITE.md). Lab audit: [`GREER_WRITEUP_DRAFT.md`](GREER_WRITEUP_DRAFT.md). This does **not** score a locator. It does **not** lock a hardware **X**. It does **not** Harden indoor / first-arrival. It does **not** Kill ≤1 m wholesale. It does **not** authorize a send to Greer. It does **not** reopen cell-tower as live. It does **not** reopen BIA→weight.
 
 **This pulse:** `2026-09_greer-sync-pulse-tdoa` A3 — Method Operator **ADMIT Soften** (Kill **not** triggered wholesale; Harden **unsupported**). Lab scratch was **not** on this fold VM; the gated fact set was copied from the Operator gate. Leading-edge residual (`B_lb`) / dense (`B_dense`) on the frozen Chan + RN `σ_ref=0.5` stack; absolute vs patent-facing **≤1 m**.
 
@@ -44,15 +44,15 @@ US10135667B1 — owner-requested **collaboration framing** (bibliographic; custo
 
 ## What this string must do next (locked)
 
-**A4 Soften X/σ_t** is already on the record ([`DIGESTION_A4.md`](DIGESTION_A4.md)). Next: **DIGEST + Founder fold**. **Greer send HOLD** until then. Prior write-up = **sync-fragility evidence only**. **Lab HOLD invent.** Still **no RF / ML**. Do **not** invent a fingerprint rescue. Do **not** Harden indoor / first-arrival. Do **not** Harden absolute **X**. Hardware **X** stays **PARKED**. RF bench **PARKED**.
+**A4 Soften X/σ_t** is already on the record ([`DIGESTION_A4.md`](DIGESTION_A4.md)). Suite DIGEST Soften Amb **ADMITTED** ([`DIGESTION_A1A4_SUITE.md`](DIGESTION_A1A4_SUITE.md)). **Greer send HOLD** until Founder rewrite + user OK. Prior write-up = **sync-fragility evidence only**. **Lab HOLD invent** (no named next pulse). Still **no RF / ML**. Do **not** invent a fingerprint rescue. Do **not** Harden indoor / first-arrival. Do **not** Harden absolute **X**. Hardware **X** stays **PARKED**. RF bench **PARKED**.
 
 - **A4 Soften X/σ_t** — scored (honest 50 kHz phase-flip detection jitter ≫ 1 ns; distinct from this fold’s `c/B` ~6 km resolution caution).
-- Then **DIGEST + Founder fold**.
+- Suite DIGEST Soften Amb **ADMITTED**. **HOLD send** until Founder rewrite + user OK.
 
 ## What stays parked / closed
 
 - **Hardware X** stays **PARKED**.
-- **Send to Greer** stays **HOLD** until the suite digests.
+- **Send to Greer** stays **HOLD** until Founder rewrite + user OK.
 - **Lab invent** stays **HOLD**.
 - **Link/map** GIS/CAD overlay stays **PARKED**.
 - **RF bench** stays **PARKED**.

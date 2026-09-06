@@ -3,7 +3,7 @@
 **Application ID:** `2026-09_greer-sync-pulse-tdoa`  
 **Opened:** 2026-09-05  
 
-**A4 Soften X/σ_t** on the record (Kill not wholesale). Honest **50 kHz** phase-flip detection jitter **≫ GEOM0 1 ns** (**J_mid ~100–500 ns → tens of meters**; **J_stretch ~10 ns → ~3.8 m fails ≤1 m**). **JOINT1 does not cancel detection jitter.** **Harden unsupported.** **RF bench PARKED.** Suite Soften wrap **A1→A4**: A1 Soften (abs ≤1 m under RN floor; X=0.50 perfect-ref only; DGPS floor named) · A2 Soften-conditional (JOINT1+~2.5 ns; Kill bare Chan/commodity) · A3 Soften (mild/intermittent LE only for ≤1 m; persistent B_lb fails) · A4 Soften (Soften X/σ_t; RF PARKED). Abstract ingest **ADMITTED** as Amb spine ([`SOURCE.md`](SOURCE.md)). Prior SYNC/JOINT/DRIFT/GATE = **sync-fragility evidence (partial)**. **GEOM0 HARDEN** stands (named 1 ns model; silent honest-phase-flip Softened). Link/map **PARKED**. First-pulse fog peek **ADMITTED** (C1/C2/C3 SUCCEED). Founder **CLAIM LOCK** recorded. Honesty: **path-shared batch**, **not** free per-epoch realtime. **Not** multipath-robust. **Not** hardware. **PARK** hardware **X**. Greer-facing write-up **on disk** = **sync-fragility evidence only**: Founder [`GREER_WRITEUP.md`](GREER_WRITEUP.md) is **PRIMARY** — **HOLD send** until DIGEST + Founder fold. Lab audit: [`GREER_WRITEUP_DRAFT.md`](GREER_WRITEUP_DRAFT.md). Suite scaffold: [`DIGESTION_A1A4_SUITE.md`](DIGESTION_A1A4_SUITE.md). **Lab HOLD invent.**
+**Suite DIGEST Soften Amb ADMITTED** (not Harden; not wholesale Kill). After ingest + **A1→A4 Soften wrap**: A1 Soften · A2 Soften-conditional (JOINT1+~2.5 ns) · A3 Soften (mild/intermittent LE) · A4 Soften X/σ_t (jitter ≫1 ns; RF PARKED). Bars: patent-facing **≤1 m**; **X=0.50** perfect-ref only; **DGPS RN floor ~0.4–0.5 m** named. DIGEST: [`DIGESTION_A1A4_SUITE.md`](DIGESTION_A1A4_SUITE.md). Abstract ingest **ADMITTED** as Amb spine ([`SOURCE.md`](SOURCE.md)). Prior SYNC/JOINT/DRIFT/GATE = **sync-fragility evidence (partial)**. **GEOM0 HARDEN** stands. Link/map **PARKED**. First-pulse fog peek **ADMITTED** (C1/C2/C3 SUCCEED). Founder **CLAIM LOCK** recorded. Honesty: **path-shared batch**, **not** free per-epoch realtime. **Not** hardware. **PARK** hardware **X**. **PARK** RF bench. Greer-facing write-up **on disk** = **sync-fragility evidence only**: Founder [`GREER_WRITEUP.md`](GREER_WRITEUP.md) is **PRIMARY** — **HOLD send** until Founder rewrite + user OK. Lab audit: [`GREER_WRITEUP_DRAFT.md`](GREER_WRITEUP_DRAFT.md). **Lab HOLD invent** (no named next pulse).
 
 **NEW Amb (spine now the published abstract):** Greer-style GPS-denied locate via dedicated sync-pulse reference nodes + mobile TDOA. Owner-requested **collaboration framing** with [US10135667B1](https://patents.google.com/patent/US10135667B1/en) (published abstract ingested; custom-beacon substrate, **not** a carrier-mast Amb). **No claim-language copy.**
 
@@ -29,7 +29,7 @@ Not opportunistic cellular fingerprinting. Not GPS-crowdsourced mast maps. Not u
 2. **Clock / sync.** **C2 SUCCEED** (story named). **#0 and MULTIPATH1 assumed** ideal sync. **SYNC1 Soften** — Chan-alone bar survives only at `σ_sync ≲ 0.3 ns` (median **0.382 m**); 1 ns scrapes **0.513 m**. **JOINT1 Soften** — path-shared joint clocks restore X under fixed_trial `σ_sync ≲ 3 ns` (**0.231 m** @ 1 ns; **0.439 m** @ 3 ns). 10 ns fails (**1.816 m**). **DRIFT1 HARDEN** — batch path-shared τ + linear α restores SYNC1 drift breakers (drift=3 @ `σ=0` → **0.221 m**; drift=10 → **0.223 m**; **α̂ recovers**).
 3. **Multipath.** **C3 SUCCEED** — scoring poseable. **MULTIPATH1 Soften** — poseable under LOS + mild / intermittent NLOS; **not** poseable under strong persistent multipath with frozen Chan alone. Do **not** claim a multipath-robust 0.50 m. **No** fingerprint rescue. **Later.**
 
-Remaining live leftover is **Founder fold / send HOLD**. Suite **A1→A4 Soften** is scored (scaffold [`DIGESTION_A1A4_SUITE.md`](DIGESTION_A1A4_SUITE.md)). Link/map **PARKED**. RF bench **PARKED**. Our **MULTIPATH1** leftover stays **later** (not a substitute for A3). Prior GATE1 is scored as **partial** sync-fragility evidence.
+Remaining live leftover is **Founder rewrite / send HOLD**. Suite **A1→A4 Soften Amb DIGEST ADMITTED** ([`DIGESTION_A1A4_SUITE.md`](DIGESTION_A1A4_SUITE.md)). Link/map **PARKED**. RF bench **PARKED**. Our **MULTIPATH1** leftover stays **later** (not a substitute for A3). Prior GATE1 is scored as **partial** sync-fragility evidence.
 
 ## Eval rules (locked at peek)
 
@@ -81,16 +81,16 @@ Operator **ADMIT Soften**. Kill **not** triggered wholesale. Harden **unsupporte
 
 ## A4 (gated Soften X/σ_t)
 
-Operator **ADMIT Soften X/σ_t**. Kill **not** wholesale. Honest 50 kHz phase-flip detection jitter **≫ GEOM0 1 ns** (J_mid ~100–500 ns → tens of meters; J_stretch ~10 ns → ~3.8 m fails ≤1 m). JOINT1 does not cancel detection jitter. Harden unsupported. **RF bench PARKED.** See [`SCORE_A4.md`](SCORE_A4.md). Suite scaffold: [`DIGESTION_A1A4_SUITE.md`](DIGESTION_A1A4_SUITE.md).
+Operator **ADMIT Soften X/σ_t**. Kill **not** wholesale. Honest 50 kHz phase-flip detection jitter **≫ GEOM0 1 ns** (J_mid ~100–500 ns → tens of meters; J_stretch ~10 ns → ~3.8 m fails ≤1 m). JOINT1 does not cancel detection jitter. Harden unsupported. **RF bench PARKED.** See [`SCORE_A4.md`](SCORE_A4.md). Suite DIGEST: [`DIGESTION_A1A4_SUITE.md`](DIGESTION_A1A4_SUITE.md).
 
 ## Greer-facing write-up (on disk; sync-fragility evidence only; HOLD send)
 
-Founder-polished [`GREER_WRITEUP.md`](GREER_WRITEUP.md) is **PRIMARY**. It is **sync-fragility evidence only**. **HOLD send** until DIGEST + Founder fold. Lab audit: [`GREER_WRITEUP_DRAFT.md`](GREER_WRITEUP_DRAFT.md). **Lab HOLD invent.** Still **no RF / ML**. Fog peek + later gates: [`PROPOSED_PULSE.md`](PROPOSED_PULSE.md).
+Founder-polished [`GREER_WRITEUP.md`](GREER_WRITEUP.md) is **PRIMARY**. It is **sync-fragility evidence only**. **HOLD send** until Founder rewrite + user OK. Lab audit: [`GREER_WRITEUP_DRAFT.md`](GREER_WRITEUP_DRAFT.md). **Lab HOLD invent** (no named next pulse). Still **no RF / ML**. Fog peek + later gates: [`PROPOSED_PULSE.md`](PROPOSED_PULSE.md).
 
 ## Reading order
 
 1. [`STATUS.md`](STATUS.md) — where we are
-2. [`DIGESTION_A1A4_SUITE.md`](DIGESTION_A1A4_SUITE.md) — A1→A4 suite Soften wrap (scaffold; Lab DIGEST may follow-on)
+2. [`DIGESTION_A1A4_SUITE.md`](DIGESTION_A1A4_SUITE.md) — A1→A4 suite DIGEST Soften Amb **ADMITTED**
 3. [`SCORE_A4.md`](SCORE_A4.md) — A4 gated metrics (phase-flip jitter; Soften X/σ_t)
 4. [`DIGESTION_A4.md`](DIGESTION_A4.md) — what A4 taught
 5. [`SCORE_A1.md`](SCORE_A1.md) — A1 gated metrics (RN floor)
@@ -102,7 +102,7 @@ Founder-polished [`GREER_WRITEUP.md`](GREER_WRITEUP.md) is **PRIMARY**. It is **
 7. [`ABSTRACT_INGEST_SUMMARY.md`](ABSTRACT_INGEST_SUMMARY.md) — gated ingest
 8. [`SOURCE.md`](SOURCE.md) — published abstract (not claims)
 9. [`DIGESTION_ABSTRACT_INGEST.md`](DIGESTION_ABSTRACT_INGEST.md) — what ingest taught
-10. [`GREER_WRITEUP.md`](GREER_WRITEUP.md) — Founder-polished send file (**sync-fragility evidence only**; **HOLD send** until DIGEST + Founder fold)
+10. [`GREER_WRITEUP.md`](GREER_WRITEUP.md) — Founder-polished send file (**sync-fragility evidence only**; **HOLD send** until Founder rewrite + user OK)
 11. [`GREER_WRITEUP_DRAFT.md`](GREER_WRITEUP_DRAFT.md) — Lab audit draft
 12. [`NAMED_GAP_LEDGER.md`](NAMED_GAP_LEDGER.md) — the open / parked / hardened / Soften lines
 13. [`COPY_GATE.md`](COPY_GATE.md) — no claim-language product copy

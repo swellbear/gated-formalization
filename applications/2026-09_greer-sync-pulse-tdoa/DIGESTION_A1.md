@@ -1,6 +1,6 @@
 # Digestion — A1 Soften (RN floor; abs ≤1 m; X=0.50 perfect-ref only)
 
-A short plain note of what the ref-floor pulse taught. Habit: [`docs/DIGESTION_HABIT.md`](../../docs/DIGESTION_HABIT.md). Incoming ingest: [`DIGESTION_ABSTRACT_INGEST.md`](DIGESTION_ABSTRACT_INGEST.md). Incoming GATE1: [`DIGESTION_GATE1.md`](DIGESTION_GATE1.md). Incoming DRIFT1: [`DIGESTION_DRIFT1.md`](DIGESTION_DRIFT1.md). Incoming JOINT1: [`DIGESTION_JOINT1.md`](DIGESTION_JOINT1.md). Incoming SYNC1: [`DIGESTION_SYNC_1.md`](DIGESTION_SYNC_1.md). Incoming MULTIPATH1: [`DIGESTION_MULTIPATH1.md`](DIGESTION_MULTIPATH1.md). Incoming #0: [`DIGESTION_GEOMETRY_0.md`](DIGESTION_GEOMETRY_0.md). Score: [`SCORE_A1.md`](SCORE_A1.md). Founder-polished send file: [`GREER_WRITEUP.md`](GREER_WRITEUP.md) (**HOLD send** until DIGEST + Founder fold). Later the same day: suite wrap [`DIGESTION_A1A4_SUITE.md`](DIGESTION_A1A4_SUITE.md). Lab audit: [`GREER_WRITEUP_DRAFT.md`](GREER_WRITEUP_DRAFT.md). This does **not** score a locator. It does **not** lock a hardware **X**. It does **not** claim an absolute 0.50 m. It does **not** Harden absolute **X**. It does **not** authorize a send to Greer. It does **not** reopen cell-tower as live. It does **not** reopen BIA→weight.
+A short plain note of what the ref-floor pulse taught. Habit: [`docs/DIGESTION_HABIT.md`](../../docs/DIGESTION_HABIT.md). Incoming ingest: [`DIGESTION_ABSTRACT_INGEST.md`](DIGESTION_ABSTRACT_INGEST.md). Incoming GATE1: [`DIGESTION_GATE1.md`](DIGESTION_GATE1.md). Incoming DRIFT1: [`DIGESTION_DRIFT1.md`](DIGESTION_DRIFT1.md). Incoming JOINT1: [`DIGESTION_JOINT1.md`](DIGESTION_JOINT1.md). Incoming SYNC1: [`DIGESTION_SYNC_1.md`](DIGESTION_SYNC_1.md). Incoming MULTIPATH1: [`DIGESTION_MULTIPATH1.md`](DIGESTION_MULTIPATH1.md). Incoming #0: [`DIGESTION_GEOMETRY_0.md`](DIGESTION_GEOMETRY_0.md). Score: [`SCORE_A1.md`](SCORE_A1.md). Founder-polished send file: [`GREER_WRITEUP.md`](GREER_WRITEUP.md) (**HOLD send** until Founder rewrite + user OK). Later the same day: suite DIGEST **ADMITTED** [`DIGESTION_A1A4_SUITE.md`](DIGESTION_A1A4_SUITE.md). Lab audit: [`GREER_WRITEUP_DRAFT.md`](GREER_WRITEUP_DRAFT.md). This does **not** score a locator. It does **not** lock a hardware **X**. It does **not** claim an absolute 0.50 m. It does **not** Harden absolute **X**. It does **not** authorize a send to Greer. It does **not** reopen cell-tower as live. It does **not** reopen BIA→weight.
 
 **This pulse:** `2026-09_greer-sync-pulse-tdoa` A1 — Method Operator **ADMIT Soften** (Kill **not** triggered). Lab scratch was **not** on this fold VM; the gated fact set was copied from the Operator gate. RN survey error (`σ_ref`) on the frozen Chan board; absolute median vs truth.
 
@@ -42,14 +42,14 @@ US10135667B1 — owner-requested **collaboration framing** (bibliographic; custo
 
 ## What this string must do next (locked)
 
-Later the same day the suite scored: **A2 Soften-conditional**, **A3 Soften**, **A4 Soften X/σ_t**. See [`DIGESTION_A1A4_SUITE.md`](DIGESTION_A1A4_SUITE.md). **Greer send HOLD** until DIGEST + Founder fold. Prior write-up = **sync-fragility evidence only**. **Lab HOLD invent.** Still **no RF / ML**. Do **not** invent a fingerprint rescue. Do **not** Harden absolute **X** off the JOINT1 scrape. Hardware **X** stays **PARKED**. RF bench **PARKED**.
+Later the same day the suite scored: **A2 Soften-conditional**, **A3 Soften**, **A4 Soften X/σ_t**. Suite DIGEST Soften Amb **ADMITTED**: [`DIGESTION_A1A4_SUITE.md`](DIGESTION_A1A4_SUITE.md). **Greer send HOLD** until Founder rewrite + user OK. Prior write-up = **sync-fragility evidence only**. **Lab HOLD invent** (no named next pulse). Still **no RF / ML**. Do **not** invent a fingerprint rescue. Do **not** Harden absolute **X** off the JOINT1 scrape. Hardware **X** stays **PARKED**. RF bench **PARKED**.
 
 ## What stays parked / closed
 
 - **Hardware X** stays **PARKED**.
 - **RF bench** stays **PARKED**.
-- **Send to Greer** stays **HOLD** until DIGEST + Founder fold.
-- **Lab invent** stays **HOLD**.
+- **Send to Greer** stays **HOLD** until Founder rewrite + user OK.
+- **Lab invent** stays **HOLD** (no named next pulse).
 - **Link/map** GIS/CAD overlay stays **PARKED**.
 - Later the same day: **A2 / A3 / A4** scored — [`DIGESTION_A1A4_SUITE.md`](DIGESTION_A1A4_SUITE.md). **MULTIPATH1 Soften** still stands.
 - **Cell-tower geometry** stays **PARKED**. Do **not** reopen as live.
@@ -59,4 +59,4 @@ Later the same day the suite scored: **A2 Soften-conditional**, **A3 Soften**, *
 - **Track B invent** stays **paused**.
 - **llm-gwt R-REPL** stays **parked**.
 
-This note does **not** authorize sending the write-up. It does **not** show a TDOA locator. It does **not** start training. It does **not** unpark hardware **X**. It does **not** Harden absolute **X**. Later suite wrap: [`DIGESTION_A1A4_SUITE.md`](DIGESTION_A1A4_SUITE.md).
+This note does **not** authorize sending the write-up. It does **not** show a TDOA locator. It does **not** start training. It does **not** unpark hardware **X**. It does **not** Harden absolute **X**. Later suite DIGEST **ADMITTED**: [`DIGESTION_A1A4_SUITE.md`](DIGESTION_A1A4_SUITE.md).

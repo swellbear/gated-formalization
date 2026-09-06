@@ -26,7 +26,7 @@ Lab scratch was **not** on this fold VM. Metrics below are copied from the **Ope
 
 **What this settles:** **Soften** (Kill **not** triggered wholesale). Only **mild / intermittent** leading-edge residual (~**0.5–1 m** bias, or intermittent `f≈0.25`) survives patent-facing **≤1 m** under Chan + RN `σ_ref=0.5`. Persistent `B_lb ≳ 2 m` and `B_dense` **fail ≤1 m**. **Harden unsupported.** Carry **A1 Soften** + **A2 Soften (conditional)**. 50 kHz `c/B` ~**6 km** stays a **resolution caution only** — **not** injected as fix error.
 
-**What this is not:** Not a field locator. Not a hardware bar. Not a p90 bar. Not claim clearance. Not a multipath-robust claim. Not free per-epoch realtime. Not a reason to invent RF, ML, or fingerprints. Not a send to Greer (write-up is **HOLD** until the suite digests). Not a rewrite of MULTIPATH1.
+**What this is not:** Not a field locator. Not a hardware bar. Not a p90 bar. Not claim clearance. Not a multipath-robust claim. Not free per-epoch realtime. Not a reason to invent RF, ML, or fingerprints. Not a send to Greer (write-up is **HOLD** until Founder rewrite + user OK). Not a rewrite of MULTIPATH1.
 
 ---
 
@@ -68,7 +68,7 @@ This fold does **not** re-run the sim. Numbers are the gated Lab summary.
 - Carry **A1 Soften** (RN floor; **X = 0.50 m** perfect-ref only; abs ≤1 m poseable under DGPS-class `σ_ref`).
 - Carry **A2 Soften (conditional)**. 50 kHz `c/B` ~**6 km** = **resolution caution only**, **not** injected as fix error.
 
-Do **not** claim hardware. Do **not** send the Greer write-up until the suite digests. Do **not** copy patent claim language.
+Do **not** claim hardware. Do **not** send the Greer write-up until Founder rewrite + user OK. Do **not** copy patent claim language.
 
 ---
 
@@ -130,11 +130,11 @@ Do **not** invent fingerprint / ML / RF to rescue persistent first-arrival, the 
 - 50 kHz `c/B` ~**6 km** = **resolution caution only**. **Not** injected as fix error.
 - **X = 0.50 m** stays **perfect-ref scoped sim only**. Do **not** Harden absolute **X**.
 
-**NEXT:** **A4 Soften X/σ_t** is already on the record ([`SCORE_A4.md`](SCORE_A4.md)). Locked leftover = **DIGEST + Founder fold**. Greer send **HOLD** until then.
+**NEXT:** **A4 Soften X/σ_t** is already on the record ([`SCORE_A4.md`](SCORE_A4.md)). Suite DIGEST Soften Amb **ADMITTED** ([`DIGESTION_A1A4_SUITE.md`](DIGESTION_A1A4_SUITE.md)). Greer send **HOLD** until Founder rewrite + user OK.
 
 **PARK** hardware **X**. Link/map GIS/CAD overlay stays **PARKED**.
 
-**HOLD** Lab invent. **HOLD send** of [`GREER_WRITEUP.md`](GREER_WRITEUP.md) until DIGEST + Founder fold. Prior write-up = **sync-fragility evidence only**.
+**HOLD** Lab invent (no named next pulse). **HOLD send** of [`GREER_WRITEUP.md`](GREER_WRITEUP.md) until Founder rewrite + user OK. Prior write-up = **sync-fragility evidence only**.
 
 **Honesty locks**
 
@@ -181,9 +181,9 @@ Cell-tower Amb stays **PARKED**. BIA→weight portfolio stays **CLOSED**. SkyMir
 - Do **not** write skill-met / elevated language.
 - Do **not** reopen `2026-09_cell-tower-geometry` as live.
 - Do **not** reopen the BIA→weight portfolio.
-- Do **not** send [`GREER_WRITEUP.md`](GREER_WRITEUP.md) until DIGEST + Founder fold.
+- Do **not** send [`GREER_WRITEUP.md`](GREER_WRITEUP.md) until Founder rewrite + user OK.
 - Do **not** unpark hardware **X**. Do **not** unpark link/map. Do **not** unpark RF bench. Lab invent is **HOLD**.
 
 ---
 
-*Docs only. Soften ≠ claim clearance. Mild LE window ≠ Harden. Persistent B_lb / B_dense ≠ pass. RN floor ≠ locator. Perfect-ref sim X ≠ absolute X. Patent-facing ≤1 m stands, A3-scoped; is not hardware. 50 kHz c/B ~6 km is resolution caution only. Provisional sim X is median-not-p90 and perfect-ref only. Provisional sim X ≠ hardware X. Not skill-met. Not a patent-product claim. Not rithm. No claim-language product copy. Lab does not self-admit. Lab scratch was not on this VM; summary copied from the Operator gate. Write-up HOLD send until A4 + DIGEST suite digests.*
+*Docs only. Soften ≠ claim clearance. Mild LE window ≠ Harden. Persistent B_lb / B_dense ≠ pass. RN floor ≠ locator. Perfect-ref sim X ≠ absolute X. Patent-facing ≤1 m stands, A3-scoped; is not hardware. 50 kHz c/B ~6 km is resolution caution only. Provisional sim X is median-not-p90 and perfect-ref only. Provisional sim X ≠ hardware X. Not skill-met. Not a patent-product claim. Not rithm. No claim-language product copy. Lab does not self-admit. Lab scratch was not on this VM; summary copied from the Operator gate. Write-up HOLD send until Founder rewrite + user OK. Suite DIGEST Soften Amb ADMITTED.*
