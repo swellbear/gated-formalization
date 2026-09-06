@@ -1,6 +1,6 @@
 # Clancy media-transcript gap-map — park index (2026-09-06)
 
-**Status:** Digestor **true park DIGEST ADMITTED** (Operator 2026-09-06). Available-day Softens complete: Softened Days **2–21** + Softened C1 closings. Interim mid-run **SUPERSEDED** (keep as history). **Hold C2/C4.** Parent usefulness / verdict / mistrial / retrial **NOT Softened.** Success bar **unset.** Soften Critic **not hired.** Greer/phone-stimp **TABLED.** Soften day folds may still be landing — do **not** overwrite those boards.
+**Status:** Digestor **true park DIGEST ADMITTED** (Operator 2026-09-06). Available-day Softens complete **Operator-side**: Softened Days **2–21** + Softened C1 closings. Softened set **on master** through Day **19** (+ earlier). Days **20–21** Soften folds may still be landing — do **not** overwrite those boards. Interim mid-run **SUPERSEDED** (keep as history). **Hold C2/C4.** Parent usefulness / verdict / mistrial / retrial **NOT Softened.** Success bar **unset.** Soften Critic **not hired.** Greer/phone-stimp **TABLED.**
 
 **Repo:** `applications/2026-09_clancy-media-transcript-gap-map` on `swellbear/gated-formalization` (base: current master)
 

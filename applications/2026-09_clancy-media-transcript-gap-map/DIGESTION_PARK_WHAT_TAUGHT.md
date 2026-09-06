@@ -21,7 +21,7 @@ This note records **what available-day map practice taught** and **what is still
 | Digestor `REV_DAY_INDEX.md` | **Full available media** — Day 2 (typo-slug) + Days 3–21 + Closing Arguments. Honesty class **unchanged** (media≠certified · day≠certified · closings≠evidence) |
 | Soften S0 SOURCE | **ADMITTED** (#101) — day/closings page class; media≠certified |
 | Soften C1 closings census | **ADMITTED** (#102) — 8 claims; G1–G7 poseable; closings≠evidence |
-| Soften C3 Days **2–21** | **ADMITTED** (Operator; available-day set complete). Softened day boards **untouched** this park fold. Some Soften day-fold boards may still be landing on master |
+| Soften C3 Days **2–21** | **ADMITTED** (Operator; available-day set complete). Softened set **on master** through Day **19** (+ earlier). Days **20–21** Soften folds may still be landing. Softened day boards **untouched** this park fold |
 | Soften C3 Day 18 backup | **ADMITTED** (#103) — named day-pulse map extension; board **untouched** |
 | Soften C3 Day 14 backup | **ADMITTED** (#105) — digital-evidence backup; board **untouched** |
 | Digestor index expand | **ADMITTED** (#107) — Days 2–21 + closings live; Day 1 missing / 22+ 404 = corpus **EDGE** |
