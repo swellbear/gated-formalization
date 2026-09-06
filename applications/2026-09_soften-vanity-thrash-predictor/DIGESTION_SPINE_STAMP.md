@@ -45,6 +45,8 @@ Digestor never Soften / Harden / Kill. Digestor stamps whether a new Amb spine i
 
 **First pulse (locked lean, not yet GO to Lab):** C0 inventory after this scaffold admit.
 
+**Later the same day:** Operator **ADMIT C0 Soften**, **Soften C1**, and Soften Amb **DIGEST / string CLOSE**. See [`DIGESTION_C0.md`](DIGESTION_C0.md) · [`DIGESTION_C1.md`](DIGESTION_C1.md) · [`DIGESTION_STRING.md`](DIGESTION_STRING.md).
+
 **C0–C4 menu:** see [`PROPOSED_PULSE.md`](PROPOSED_PULSE.md).
 
 ---

@@ -8,7 +8,9 @@
 **Ledger:** [`NAMED_GAP_LEDGER.md`](NAMED_GAP_LEDGER.md)  
 **STATUS:** [`STATUS.md`](STATUS.md)  
 **Copy gate:** [`COPY_GATE.md`](COPY_GATE.md)  
-**Spine stamp (prior PASS):** [`DIGESTION_SPINE_STAMP.md`](DIGESTION_SPINE_STAMP.md)
+**Spine stamp (prior PASS):** [`DIGESTION_SPINE_STAMP.md`](DIGESTION_SPINE_STAMP.md)  
+**Later same day — C1 Soften:** [`DIGESTION_C1.md`](DIGESTION_C1.md)  
+**Later same day — Soften Amb DIGEST / string CLOSE:** [`DIGESTION_STRING.md`](DIGESTION_STRING.md)
 
 Method Operator **ADMIT C0 Soften**. Census is **poseable**. **N eligible Soften-bearing DIGESTION/SCORE = 4/37** Amb folders under `applications/` (exclude `training/`, `_template_application/`, **this folder**). **Too-thin for holdout** stays **named**. **Not Harden.** **Not Kill / DATA-BLOCKED** on no-folder-list. Soften ≠ Soften-is-bad. Greer Soften Amb is **not** asserted vanity.
 
@@ -37,6 +39,8 @@ This does **not** score a thrash predictor. It does **not** run C1 coding. It do
 **Next (as of C0):** Operator **GO C1** on the **4 eligible only** (early-window + kill-condition coding). **C2+ HOLD.**
 
 **Later the same day (Founder+Operator addendum):** holdout-lift limb **Killed** as unposeable (N=4; 2 exogenous). Purpose restated to vanity Soften vs scoped Soften. **Not** held-out AUC. Do **not** Harden vanity→thrash. **C0 Soften + freezes stand.** See [`DIGESTION_CLAIM_LIMB.md`](DIGESTION_CLAIM_LIMB.md).
+
+**Later the same day (Soften C1 + Soften Amb DIGEST / string CLOSE):** Operator **ADMIT Soften C1** — coding sheet works on 4 eligible; Soften-without-named-kill = 0; 1 unclear (human-bia); Soften Critic deferred. Operator **ADMIT Soften Amb DIGEST / string CLOSE**. **Hold C2+.** **Lab invent HOLD.** **C0 Soften carried.** See [`DIGESTION_C1.md`](DIGESTION_C1.md) · [`DIGESTION_STRING.md`](DIGESTION_STRING.md).
 
 ---
 
@@ -158,13 +162,11 @@ Sketches only. **Not** thrash / settle / exogenous-park coding. **C2+ HOLD.**
 
 ---
 
-## 6. Next (Operator-gated)
+## 6. Next (Operator-gated; later **CLOSED**)
 
-**GO C1 on the 4 eligible only** — vanity Soften vs scoped Soften (early-window + kill-condition coding: yes / no / unclear). **Not** end-state STATUS Soften soup. **Not** companion STATUS Soften. **Not** held-out AUC.
+**As of C0:** **GO C1 on the 4 eligible only** — vanity Soften vs scoped Soften. **C2+ HOLD.**
 
-**C2+ HOLD.** No label sheet. C3/C4 holdout path **killed** (Founder+Operator addendum). No ML. No Soften Critic. Do **not** Harden vanity→thrash.
-
-Lab does **not** self-admit. Lab invent **HOLD** until Operator **GO C1**.
+**Later the same day:** C1 **Soften** ([`DIGESTION_C1.md`](DIGESTION_C1.md)). Soften Amb DIGEST / string **CLOSE** ([`DIGESTION_STRING.md`](DIGESTION_STRING.md)). **C2+ HOLD.** Lab invent **HOLD**. No named next pulse. Do **not** Harden vanity→thrash.
 
 ---
 
@@ -190,4 +192,4 @@ Lab does **not** self-admit. Lab invent **HOLD** until Operator **GO C1**.
 
 ---
 
-*Docs only. Operator **ADMIT C0 Soften** (stands). Later same day: holdout-lift limb Killed as unposeable (N=4; 2 exogenous). Purpose = vanity Soften vs scoped Soften. Not held-out AUC. Do not Harden vanity→thrash. Soften ≠ Soften-is-bad. Greer Soften Amb not asserted vanity. Not a predictor. Not C1. Not C2. No ML. No Soften Critic. Greer TABLED invent HOLD. SkyMirr invent HOLD.*
+*Docs only. Operator **ADMIT C0 Soften** (stands; carried). Later same day: holdout-lift limb Killed as unposeable (N=4; 2 exogenous). Later same day: Soften C1 + Soften Amb DIGEST / string CLOSE. Purpose = vanity Soften vs scoped Soften. Not held-out AUC. Do not Harden vanity→thrash. Soften ≠ Soften-is-bad. Greer Soften Amb not asserted vanity. Not a predictor. C2+ HOLD. Lab invent HOLD. No ML. No Soften Critic. Greer TABLED invent HOLD. SkyMirr invent HOLD.*

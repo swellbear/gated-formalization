@@ -29,7 +29,7 @@ Stay a **new** meta Amb, not Greer invent reopened, not cell-tower reopened as l
 
 - Quote the Operator **CLAIM LOCK** and Digestor **SPINE STAMP PASS**. See [`DIGESTION_SPINE_STAMP.md`](DIGESTION_SPINE_STAMP.md).
 - Keep the three freezes: early Soften window; thrash / settle / exogenous-park; SOURCE = `applications/*`.
-- First pulse after **GO C0** = **inventory**. **Not a model.** **Not yet GO this fold.**
+- First pulse after **GO C0** = **inventory**. **Not a model.** Later same day: **C0 Soften** + **Soften C1** + Soften Amb **DIGEST / string CLOSE**. Lab invent **HOLD**.
 - Soften itself is **not** asserted bad. Greer Soften Amb is **not** asserted vanity.
 - Do **not** train. Do **not** invent ML first. Do **not** hire a Soften Critic. Do **not** write skill-met language.
 - Do **not** reopen Greer invent. Do **not** send the Greer write-up. Do **not** reopen `2026-09_cell-tower-geometry` as live.
