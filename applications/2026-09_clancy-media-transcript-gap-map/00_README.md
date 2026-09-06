@@ -68,4 +68,5 @@ S0 + C1 + C3 are **Operator Soften**. **Hold C2 / C4** until later GO. **Hold fu
 9. [`DIGESTION_FROM_PHONE_STIMP.md`](DIGESTION_FROM_PHONE_STIMP.md) — what the last string taught
 10. [`COPY_GATE.md`](COPY_GATE.md) — SOURCE / method-practice honesty
 11. [`RESIDUAL_BRANCH_MENU.md`](RESIDUAL_BRANCH_MENU.md) — decision log
-12. [`notes.md`](notes.md) — one-line pointer
+12. [`VIZ.md`](VIZ.md) — Illustrator Soften-fold / living-twin pointer (PNG+md not receivable this VM)
+13. [`notes.md`](notes.md) — one-line pointer

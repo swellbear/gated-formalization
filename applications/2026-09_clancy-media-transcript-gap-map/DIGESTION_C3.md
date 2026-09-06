@@ -177,4 +177,6 @@ C3 Soften does **not** license a product, a certified-record ingest, or legal ad
 
 ---
 
+**Later the same day (Illustrator Soften-fold pointer):** Operator-folded pointer to Lab Soften-fold chart + living twin. PNG+md **not receivable** on this VM. See [`VIZ.md`](VIZ.md). Honesty caption stays: Media≠certified · Closings≠evidence · Day≠certified · no Soften of verdict · Soften Critic not hired · map poseability only. **Not** a new Soften. Soften C3 **stands**.
+
 *Docs only. Operator **ADMIT Soften C3**. ONE named Day 18 backup. 10 day claims by class. G4-D18 / G5-D18 / G2-D18 / G6-D18 named as clashes, not Soften of either side. NOT Soften of the parent usefulness claim. Success bar unset. NOT Soften of verdict/mistrial/retrial. NOT Soften of Day 18 as certified fact. Closings still ≠ evidence. Hold C2/C4. Hold further days (7/11/14/19–21). Soften Critic not hired. Greer TABLED invent HOLD. phone-stimp TABLED invent HOLD. Soften-vanity CLOSED. Whole-trial claim/clash map practice (not case-solving). Lab does not self-admit. Digestor never Soften/Harden/Kill.*
