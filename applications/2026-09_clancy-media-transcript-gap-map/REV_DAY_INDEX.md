@@ -4,13 +4,14 @@
 **Application:** `2026-09_clancy-media-transcript-gap-map`  
 **Role:** Digestor SOURCE-index expand. Operator **ADMIT Digestor index expand**.  
 **Digestion:** [`DIGESTION_INDEX_EXPAND.md`](DIGESTION_INDEX_EXPAND.md)  
-**Interim mid-run (Operator ADMIT; not park):** [`DIGESTION_INTERIM_MID_RUN.md`](DIGESTION_INTERIM_MID_RUN.md) · [`INTERIM_INDEX.md`](INTERIM_INDEX.md) — **NOT** `DIGESTION_PARK_WHAT_TAUGHT`. Amb **open**.  
+**Park DIGEST (Operator ADMIT; authoritative):** [`DIGESTION_PARK_WHAT_TAUGHT.md`](DIGESTION_PARK_WHAT_TAUGHT.md) · [`PARK_INDEX.md`](PARK_INDEX.md)  
+**Interim mid-run (SUPERSEDED; keep as history):** [`DIGESTION_INTERIM_MID_RUN.md`](DIGESTION_INTERIM_MID_RUN.md) · [`INTERIM_INDEX.md`](INTERIM_INDEX.md)  
 **SOURCE notes:** [`SOURCE.md`](SOURCE.md)  
 **Copy gate:** [`COPY_GATE.md`](COPY_GATE.md)
 
 **LOUD: media≠certified.** Every row is a Rev (or similar) **media / unofficial** page. This is **not** the certified court-reporter record. Rev page dates are **media stamps**, not a certified court calendar. Speaker labels can be wrong. Words can be missed. **Day≠certified.** Closings still ≠ evidence.
 
-This index names **which pages are live / not-found / 404**. It does **not** dump those days. Softened set after Day 19 fold = **2–19**. Softened Days 2–18 boards **untouched**. Soften Critic **not hired**.
+This index names **which pages are live / not-found / 404**. It does **not** dump those days. Honesty class **unchanged**. Softened set (Operator park DIGEST) = **2–21** (+closings C1). Softened day boards **untouched** this park fold. Soften day folds may still be landing. Soften Critic **not hired**.
 
 ---
 
@@ -23,7 +24,7 @@ This index names **which pages are live / not-found / 404**. It does **not** dum
 | Day **1** | **not found** (`ma-v-lindsay-clancy-day-1` = **404**) | Proof no Day 1 existed in court |
 | Days **22+** | **404** (checked Day 22 / Day 23) | Proof the trial ended on Day 21 |
 
-**Index expand ≠ all-days dump.** **Index expand ≠ Soften of remaining live days 20–21.** Standing GO continues **named-day pulses** (C3 class; Lab invent/hand **Day 20** next; **Hold Day 21** until after Day 20) across this Digestor index. **Hold C2 / C4.**
+**Index expand ≠ all-days dump.** **Index expand ≠ usefulness Soften.** Available-day Softens complete (Operator park DIGEST). Soften day-fold boards may still be landing — this index does **not** invent those boards. **Hold C2 / C4.**
 
 ---
 
@@ -53,8 +54,8 @@ Rev page stamps below are **media** when already on [`SOURCE.md`](SOURCE.md). Ne
 | Day 17 | day | https://www.rev.com/transcripts/ma-v-lindsay-clancy-day-17 | **live** | **Softened** — C3 Day 17 Cavanaugh (**ADMITTED**; board **untouched** this fold) |
 | Day 18 | day | https://www.rev.com/transcripts/ma-v-lindsay-clancy-day-18 | **live** | **Softened** — C3 Day 18 named backup (board **untouched**) |
 | Day 19 | day | https://www.rev.com/transcripts/ma-v-lindsay-clancy-day-19 | **live** | **Softened** — C3 Day 19 Commonwealth rebuttal CR-opinion backup |
-| Day 20 | day | https://www.rev.com/transcripts/ma-v-lindsay-clancy-day-20 | **live** | Digestor index; **not Softened** |
-| Day 21 | day | https://www.rev.com/transcripts/ma-v-lindsay-clancy-day-21 | **live** | Digestor index; **not Softened** |
+| Day 20 | day | https://www.rev.com/transcripts/ma-v-lindsay-clancy-day-20 | **live** | **Softened** — Operator park DIGEST (available-day complete); Soften day-fold board may still be landing; this index does **not** invent that board |
+| Day 21 | day | https://www.rev.com/transcripts/ma-v-lindsay-clancy-day-21 | **live** | **Softened** — Operator park DIGEST (available-day complete); Soften day-fold board may still be landing; this index does **not** invent that board |
 | Closing Arguments | closings | https://www.rev.com/transcripts/ma-v-lindsay-clancy-closing-arguments | **live** | Founder starter; C1 Softened (closings census); closings ≠ evidence |
 | Day 22 | — | https://www.rev.com/transcripts/ma-v-lindsay-clancy-day-22 | **404** | off-corpus |
 | Day 23 | — | https://www.rev.com/transcripts/ma-v-lindsay-clancy-day-23 | **404** | off-corpus; Days **22+** |
@@ -65,17 +66,15 @@ Rev page stamps below are **media** when already on [`SOURCE.md`](SOURCE.md). Ne
 
 | Set | Days | Status |
 |-----|------|--------|
-| **Softened** | **2–19** | Named-day backups poseable. Softened Days 2–18 **ADMITTED** (not PROPOSED). **Day≠certified.** Softened Days 2–18 boards **untouched** this fold. |
-| **Indexed, not Softened** | 20–21 | Live media pages. Standing GO = Lab invent/hand **Day 20** next. **Hold Day 21** until after Day 20. |
+| **Softened** | **2–21** | Named-day backups poseable (Operator park DIGEST; available-day complete). **Day≠certified.** Softened day boards **untouched** this park fold. Some Soften day-fold boards may still be landing. |
 | **Off-corpus** | Day 1 (not found); Days 22+ (404) | Do **not** invent pages |
 
 ---
 
 ## 3. What this index does *not* mean
 
-- **NOT** Soften of remaining live days 20–21.
+- **NOT** Soften of parent usefulness. Park DIGEST ≠ usefulness Soften. **Success bar unset.**
 - **NOT** an all-days dump.
-- **NOT** Soften of parent usefulness. **Success bar unset.**
 - **NOT** Soften of verdict / mistrial / retrial.
 - **NOT** Soften of Day 14 / Day 18 / digital timeline as certified fact.
 - **LOUD media≠certified.** Rev ≠ court-reporter record.
