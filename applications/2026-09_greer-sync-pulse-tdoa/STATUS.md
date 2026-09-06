@@ -8,20 +8,23 @@
 
 ### Plain status
 
-**PARKED / TABLED** 2026-09-06 (user; tables **all** Greer work). Lab invent **HOLD**. **No A5+.** **No Greer send.** **No further Greer folds** unless the user reopens. Corpus **kept** (not deleted): suite DIGEST Soften Amb (A1→A4, #83) + [`GREER_WRITEUP_SEND.md`](GREER_WRITEUP_SEND.md) Soften send-candidate (#84) + prior Soften/HARDEN record. Send remains **HOLD** (tabled, not sent). This is **not** a locator. This is **not** training. This is **not** skill-met. This is **not** rithm. Do **not** invent fingerprint / ML / RF. GPS is **never** the mobile fix. **No claim-language product copy.**
+**TABLED / PARKED.** TABLED by user. Send **HOLD**. Lab invent **HOLD**. No next pulse. Reopen = user only. DIGEST Soften Amb + [`GREER_WRITEUP_SEND.md`](GREER_WRITEUP_SEND.md) send-candidate kept as corpus. Founder park files: [`STATUS_TABLED.md`](STATUS_TABLED.md) · [`PARK_INDEX.md`](PARK_INDEX.md) · [`OUTREACH_TEXT_DRAFT.md`](OUTREACH_TEXT_DRAFT.md) (draft not sent). This is **not** a locator. This is **not** training. This is **not** skill-met. This is **not** rithm. Do **not** invent fingerprint / ML / RF. GPS is **never** the mobile fix. **No claim-language product copy.**
 
 ---
 
 | Field | Value |
 |-------|--------|
-| **Closure state** | **open** — Amb **PARKED / TABLED** (user); corpus **kept**; send **HOLD** (tabled, not sent); Lab invent **HOLD**; **not** live; not hard stop; no closeout hygiene this fold |
-| **Phase** | Amb **PARKED / TABLED** — reopen **only** by user; Lab **HOLD** invent (no named next pulse; **no A5+**; **no Greer send**; **no further Greer folds** unless user reopens) |
+| **Closure state** | **open** — Amb **TABLED / PARKED** (TABLED by user); Send **HOLD**; Lab invent **HOLD**; no next pulse; reopen = user only; DIGEST Soften Amb + GREER_WRITEUP_SEND send-candidate kept as corpus; **not** live; not hard stop; no closeout hygiene this fold |
+| **Phase** | Amb **TABLED / PARKED** — TABLED by user; Send **HOLD**; Lab invent **HOLD**; no next pulse; reopen = user only |
 | **Amb** | **not live.** On record only: suite DIGEST Soften Amb **ADMITTED** (not Harden; not wholesale Kill); ingest + **A1→A4 Soften** wrap; Soften-admit send-candidate on disk (**HOLD**, tabled). Patent-facing **≤1 m**; **X = 0.50 m** perfect-ref only; **DGPS ~0.4–0.5 m** floor named. Hardware **X PARKED**. RF bench **PARKED** |
 | **Locks in force** | on-record only (not a live string): Founder **CLAIM LOCK** · fog peek C1/C2/C3 · **GEOM0 HARDEN** · **MULTIPATH1 Soften** · prior SYNC/JOINT/DRIFT/GATE as **sync-fragility evidence (partial)** · **abstract ingest ADMIT** · **A1 Soften** · **A2 Soften-conditional** · **A3 Soften** · **A4 Soften X/σ_t** · **suite DIGEST Soften Amb ADMIT** · **Soften-admit send-candidate** (**HOLD**, tabled) · **RF bench PARKED** · patent-facing **≤1 m xy** · **X = 0.50 m** perfect-ref only · **DGPS ~0.4–0.5 m** absolute floor · Lab invent **HOLD** · link/map **PARKED** · sim-only path · GPS/DGPS never the mobile fix · no RF fingerprint / ML invent · **no claim-language copy** · **PARKED / TABLED** (user) |
-| **Next authorization needed** | **reopen only by user.** Lab invent **HOLD**. **No A5+.** **No Greer send.** **No further Greer folds** unless the user reopens. **Not** auto-clearance; **not** a locator; **not** RF/ML invent; **not** skill-met. Lab does **not** self-admit |
+| **Next authorization needed** | reopen = user only. Send **HOLD**. Lab invent **HOLD**. No next pulse. **Not** auto-clearance; **not** a locator; **not** RF/ML invent; **not** skill-met. Lab does **not** self-admit |
 | **Related apps surfaced** | `2026-09_cell-tower-geometry` — Amb **PARKED** (Founder STOP / user pivot; peek #61 + X=300 m on record; **not live**) · `2026-09_skymirr-mulcat-isolation` — separate Amb (SURROGATE1 Soften); this app does **not** reopen it · `2026-09_human-bia-weight` — string **CLOSE** / scale-accuracy **KILL** (#59); BIA portfolio **CLOSED** |
 | **Optional modes** | none yet (parked open scaffold; not endpoint) |
 
+**Founder TABLED status:** [`STATUS_TABLED.md`](STATUS_TABLED.md)  
+**Park index:** [`PARK_INDEX.md`](PARK_INDEX.md)  
+**Outreach draft (not sent):** [`OUTREACH_TEXT_DRAFT.md`](OUTREACH_TEXT_DRAFT.md)  
 **Park digestion:** [`DIGESTION_PARK.md`](DIGESTION_PARK.md)  
 **Ledger:** [`NAMED_GAP_LEDGER.md`](NAMED_GAP_LEDGER.md)  
 **Suite DIGEST (ADMITTED Soften Amb; corpus kept):** [`DIGESTION_A1A4_SUITE.md`](DIGESTION_A1A4_SUITE.md)  
@@ -85,7 +88,7 @@ Not claimed this fold. Boxes stay open.
 - [ ] `STATUS.md` set to hard stop
 - [ ] `final_verdict.md`
 
-**Gates:** Amb **PARKED / TABLED** (user; tables all Greer work). Corpus **kept**. Send **HOLD** (tabled, not sent). Lab invent **HOLD**. **No A5+.** **No Greer send.** Reopen **only** by user. C1 **SUCCEED**. C2 **SUCCEED**. C3 **SUCCEED**. **GEOM0 HARDEN**. **MULTIPATH1 Soften**. Prior SYNC/JOINT/DRIFT/GATE = sync-fragility evidence (**partial**). **Abstract ingest ADMIT.** **A1 Soften**. **A2 Soften-conditional**. **A3 Soften**. **A4 Soften X/σ_t**. **Suite DIGEST Soften Amb ADMIT** (not Harden; not wholesale Kill) — on record, **not** a live string. Patent-facing **≤1 m xy**. **X = 0.50 m** perfect-ref only. **DGPS ~0.4–0.5 m** absolute floor. Hardware **X PARKED**. RF bench **PARKED**. Soften / HARDEN / ingest / DIGEST is **not** claim clearance. GPS-denied TDOA locate is **not** established. Training is **not** established. Skill-met is **not** claimed. Cell-tower stays **PARKED**. BIA stays **CLOSED**.
+**Gates:** Amb **TABLED / PARKED**. TABLED by user. Send **HOLD**. Lab invent **HOLD**. No next pulse. Reopen = user only. DIGEST Soften Amb + GREER_WRITEUP_SEND send-candidate kept as corpus. C1 **SUCCEED**. C2 **SUCCEED**. C3 **SUCCEED**. **GEOM0 HARDEN**. **MULTIPATH1 Soften**. Prior SYNC/JOINT/DRIFT/GATE = sync-fragility evidence (**partial**). **Abstract ingest ADMIT.** **A1 Soften**. **A2 Soften-conditional**. **A3 Soften**. **A4 Soften X/σ_t**. **Suite DIGEST Soften Amb ADMIT** (not Harden; not wholesale Kill) — on record, **not** a live string. Patent-facing **≤1 m xy**. **X = 0.50 m** perfect-ref only. **DGPS ~0.4–0.5 m** absolute floor. Hardware **X PARKED**. RF bench **PARKED**. Soften / HARDEN / ingest / DIGEST is **not** claim clearance. GPS-denied TDOA locate is **not** established. Training is **not** established. Skill-met is **not** claimed. Cell-tower stays **PARKED**. BIA stays **CLOSED**.
 
 ---
 
