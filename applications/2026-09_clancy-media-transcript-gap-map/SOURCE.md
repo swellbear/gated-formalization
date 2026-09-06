@@ -2,10 +2,11 @@
 
 **Date:** 2026-09-06  
 **Application:** `2026-09_clancy-media-transcript-gap-map`  
-**Role:** notes summary. Operator **ADMIT Soften S0** locks the board as poseable/citable — [`DIGESTION_S0.md`](DIGESTION_S0.md). Later same day: Soften C1 + Soften C3 + Soften C3 Day 14 + Soften C3 Day 13 + **Soften C3 Day 19** + **Digestor index expand** + **Digestor INTERIM mid-run** (**not** park). **NOT** Soften of the parent usefulness claim. **Success bar unset.** **NOT** Soften of any Day 19 line / Mack CR / Day 18 as certified fact. Mack CR ≠ Soften of capacity / guilt / CR as certified fact. **LOUD media≠certified.** Day 1 missing / Days 22+ 404 = corpus **EDGE**. Softened set: **2–19**.  
+**Role:** notes summary. Operator **ADMIT Soften S0** locks the board as poseable/citable — [`DIGESTION_S0.md`](DIGESTION_S0.md). Later same day: Soften C1 + Soften C3 available-day set + **Digestor index expand** + **Digestor true park DIGEST ADMITTED**. INTERIM mid-run **SUPERSEDED**. **NOT** Soften of the parent usefulness claim. **Success bar unset.** **LOUD media≠certified.** **Day≠certified.** **Closings≠evidence.** Day 1 missing / Days 22+ 404 = corpus **EDGE**. Softened set: **2–21** (+closings C1). Honesty class **unchanged**.
 
+**Park DIGEST (authoritative):** [`DIGESTION_PARK_WHAT_TAUGHT.md`](DIGESTION_PARK_WHAT_TAUGHT.md) · [`PARK_INDEX.md`](PARK_INDEX.md)  
 **Expanded index:** [`REV_DAY_INDEX.md`](REV_DAY_INDEX.md) · [`DIGESTION_INDEX_EXPAND.md`](DIGESTION_INDEX_EXPAND.md)  
-**Interim mid-run (not park):** [`DIGESTION_INTERIM_MID_RUN.md`](DIGESTION_INTERIM_MID_RUN.md) · [`INTERIM_INDEX.md`](INTERIM_INDEX.md) — **NOT** `DIGESTION_PARK_WHAT_TAUGHT`. Amb **open**.
+**Interim mid-run (SUPERSEDED; keep as history):** [`DIGESTION_INTERIM_MID_RUN.md`](DIGESTION_INTERIM_MID_RUN.md) · [`INTERIM_INDEX.md`](INTERIM_INDEX.md)
 
 **Copy gate:** [`COPY_GATE.md`](COPY_GATE.md)  
 **Proposed pulse:** [`PROPOSED_PULSE.md`](PROPOSED_PULSE.md)

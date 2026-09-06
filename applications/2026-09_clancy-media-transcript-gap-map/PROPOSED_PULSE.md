@@ -2,8 +2,10 @@
 
 **Date:** 2026-09-06  
 **Application:** `2026-09_clancy-media-transcript-gap-map`  
-**String:** Operator **ADMIT Soften S0** + **Soften C1** + **Soften C3** + **Soften C3 Day 14** + **Soften C3 Day 19** + **Digestor index expand** + **Digestor INTERIM mid-run** (**not** park; Amb **open**) / usefulness claim **not** Softened / **success bar unset** / **Hold C2 / C4** / standing GO Lab invent/hand Day 20 next / Hold Day 21 until after Day 20  
-**Named gap:** SOURCE board poseable; 8-claim census + G1–G7 poseable; Day 18 + Day 14 + Day 19 named backups poseable; Softened set 2–19. **NOT** usefulness Soften. **NOT** index-live as Soften. **LOUD media≠certified.** Mack CR ≠ capacity/guilt/CR Soften.  
+**String:** Operator **ADMIT Digestor true park DIGEST** (available-day Softens complete: Softened Days **2–21** + Softened C1 closings) / INTERIM mid-run **SUPERSEDED** / usefulness claim **not** Softened / **success bar unset** / **Hold C2 / C4**  
+**Named gap:** SOURCE board poseable; 8-claim census + G1–G7 poseable; Softened set 2–21. **NOT** usefulness Soften. Park DIGEST ≠ Soften of usefulness or case outcome. **LOUD media≠certified.**  
+**Park DIGEST (authoritative):** [`DIGESTION_PARK_WHAT_TAUGHT.md`](DIGESTION_PARK_WHAT_TAUGHT.md) · [`PARK_INDEX.md`](PARK_INDEX.md)  
+**INTERIM (SUPERSEDED):** [`DIGESTION_INTERIM_MID_RUN.md`](DIGESTION_INTERIM_MID_RUN.md) · [`INTERIM_INDEX.md`](INTERIM_INDEX.md)  
 **S0 digestion:** [`DIGESTION_S0.md`](DIGESTION_S0.md)  
 **C1 digestion:** [`DIGESTION_C1.md`](DIGESTION_C1.md)  
 **C3 digestion (Day 18; board untouched):** [`DIGESTION_C3.md`](DIGESTION_C3.md)  
