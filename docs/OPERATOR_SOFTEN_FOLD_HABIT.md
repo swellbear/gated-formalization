@@ -10,7 +10,7 @@ After the Operator Soften / Harden / Kill **ADMIT**s a Lab board, fold that admi
 
 For a given Amb, launch **at most one** Soften docs fold cloud agent / PR at a time.
 
-- Do **not** open N Soften day/pulse PRs in parallel for the same Amb.
+- Do **not** open N Soften day/pulse PRs in parallel for the same Amb. The lane stays **one-at-a-time** so the Illustrator Softened index does **not** race parallel Soften PRs.
 - The next Soften fold launches only after the prior Soften PR is **CLEAN + squash-merged** (or closed).
 - Lab may still invent the next board while a fold lands. The Operator may Soften-admit that board in chat. **Queue** the docs fold until the lane is free.
 - **Exception:** a tiny VIZ-pointer-only amend to an already-merged Soften may ride as its own short PR **only if** it does not rewrite `STATUS.md` as “this fold.” Prefer amending the in-flight Soften PR before merge.
@@ -64,6 +64,16 @@ On every Soften / Kill / park DIGEST ADMIT, the Operator updates the Amb’s `SO
 Template: [`templates/SOFTENED_SET_TEMPLATE.md`](../templates/SOFTENED_SET_TEMPLATE.md).
 
 Do **not** rely on chat Softened lists for Lab invent carry.
+
+### Illustrator Softened-state hygiene (Founder lock)
+
+- The **Soften-fold** is the authoritative Softened state for living viz + suite. Illustrator does **not** invent Softened state.
+- Illustrator keeps the Amb `viz/softened_index.json` updated **from Soften-folds**.
+- On park DIGEST ADMIT, the Operator pings Illustrator with the path **or** updates `viz/PARK_DIGEST_PATH.md`.
+- Lab Soften-flip races are a **no-op** if the index is already Softened.
+- Soften-fold lane stays **one-at-a-time** (section A) so the Illustrator index does **not** race parallel Soften PRs.
+
+This does **not** hire a Soften Critic. It does **not** Soften usefulness / verdict. It does **not** authorize elevate / skill-met.
 
 ## Why
 
