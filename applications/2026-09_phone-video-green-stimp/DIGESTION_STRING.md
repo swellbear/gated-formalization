@@ -5,8 +5,8 @@
 **String:** Soften DIGEST honesty string S0–S3 / Soften Amb DIGEST (honesty string)  
 **Habit:** [`docs/DIGESTION_HABIT.md`](../../docs/DIGESTION_HABIT.md)  
 **Lab DIGEST lean:** [`DIGESTION_S0S3_SOFTEN.md`](DIGESTION_S0S3_SOFTEN.md)  
-**Park-taught (Operator-folded):** [`DIGESTION_PARK_WHAT_TAUGHT.md`](DIGESTION_PARK_WHAT_TAUGHT.md)  
-**Honesty-stack index:** [`PARK_INDEX.md`](PARK_INDEX.md)  
+**Park-taught (Operator-folded TABLE digestion):** [`DIGESTION_PARK_WHAT_TAUGHT.md`](DIGESTION_PARK_WHAT_TAUGHT.md)  
+**Park index (TABLED 2026-09-06):** [`PARK_INDEX.md`](PARK_INDEX.md)  
 **S0 digestion:** [`DIGESTION_S0.md`](DIGESTION_S0.md)  
 **S1 digestion:** [`DIGESTION_S1.md`](DIGESTION_S1.md)  
 **S2 digestion:** [`DIGESTION_S2.md`](DIGESTION_S2.md)  
@@ -16,9 +16,11 @@
 **Ledger:** [`NAMED_GAP_LEDGER.md`](NAMED_GAP_LEDGER.md)  
 **STATUS:** [`STATUS.md`](STATUS.md)
 
-Method Operator **ADMIT Soften DIGEST honesty string S0–S3** and **ADMIT Soften Amb DIGEST (honesty string)**. Scope = Soften S0–S3 honesty Softens + claim-scope Soften (**BOTH** limbs). This is the endpoint of the **honesty string so far**. **NOT** Soften of green-speed **accuracy**. **X unset.** Amb remains **open**. **Hold S4 eval** until paired clip / Operator GO + **X** named. Soften Critic **not met**. Soften-vanity **CLOSED**. Greer **TABLED**. Lab invent **HOLD** on S4 eval.
+Method Operator **ADMIT Soften DIGEST honesty string S0–S3** and **ADMIT Soften Amb DIGEST (honesty string)**. Scope = Soften S0–S3 honesty Softens + claim-scope Soften (**BOTH** limbs). This is the endpoint of the **honesty string so far**. **NOT** Soften of green-speed **accuracy**. **X unset.** Soften Critic **not met**. Soften-vanity **CLOSED**. Greer **TABLED**. Lab invent **HOLD**. S4 eval **HOLD**.
 
-This does **not** Soften green-speed accuracy. It does **not** name **X**. It does **not** TABLE / park the Amb. It does **not** hire a Soften Critic. It does **not** reopen Greer.
+**Later park (Operator; 2026-09-06):** Amb **TABLED / PARKED** (user; until Stimpmeter + golf course access). Honesty Softens **stay on master as record**. Reopen = **user/Founder only**. This honesty-string ADMIT did **not** TABLE the Amb; a later Operator park did.
+
+This does **not** Soften green-speed accuracy. It does **not** name **X**. It does **not** hire a Soften Critic. It does **not** reopen Greer.
 
 ---
 
@@ -29,7 +31,7 @@ This does **not** Soften green-speed accuracy. It does **not** name **X**. It do
 
 Scope = Soften S0–S3 honesty Softens + claim-scope Soften (**BOTH** limbs: recoverable scale pin **AND** Stimpmeter-class launch / named v0). Fold Lab DIGEST lean substance into this string and [`DIGESTION_S0S3_SOFTEN.md`](DIGESTION_S0S3_SOFTEN.md).
 
-**NOT** Soften of green-speed accuracy. **X unset.** Soften Critic **not met**. Soften-vanity **CLOSED**. Greer **TABLED**. Amb remains **open**. Hold S4 **eval**.
+**NOT** Soften of green-speed accuracy. **X unset.** Soften Critic **not met**. Soften-vanity **CLOSED**. Greer **TABLED**. Hold S4 **eval**. Later Operator park: Amb **TABLED / PARKED** (user). This ADMIT stays as honesty-string record.
 
 ---
 
@@ -53,11 +55,11 @@ Scope = Soften S0–S3 honesty Softens + claim-scope Soften (**BOTH** limbs: rec
 - Claim-scope pocket requires **BOTH** limbs. Launch-only pocket is **superseded**.
 - Green-speed **accuracy is not Softened**.
 - **X unset.** Name **X** before Soften of green-speed accuracy stands.
-- Amb remains **open**. This DIGEST is **not** Amb TABLE / park.
-- **Hold S4 eval** until paired clip + Operator GO + **X** named. Soften S4 **protocol** (poseability) is a separate ADMIT — [`DIGESTION_S4_PROTOCOL.md`](DIGESTION_S4_PROTOCOL.md).
+- This DIGEST is the **honesty-string record**. A later Operator act **TABLED / PARKED** the Amb (user; until Stimpmeter + course). Honesty Softens stay on master.
+- **Hold S4 eval** (S4 eval **HOLD**). Soften S4 **protocol** (poseability) is a separate ADMIT — [`DIGESTION_S4_PROTOCOL.md`](DIGESTION_S4_PROTOCOL.md). **NOT** paired eval run.
 - Soften Critic **not met** / **not hired**. Soften-vanity **CLOSED**. Greer **TABLED** invent **HOLD**.
 - Digestor S0–S3 ID lock stands. Scaffold S1=scale remap **ignored**.
-- Lab invent **HOLD** on S4 eval. Lab does **not** self-admit.
+- Lab invent **HOLD**. S4 eval **HOLD**. Reopen = **user/Founder only**. Lab does **not** self-admit.
 
 ---
 
@@ -67,7 +69,7 @@ Scope = Soften S0–S3 honesty Softens + claim-scope Soften (**BOTH** limbs: rec
 - Greer sync-locate stays **TABLED / PARKED**. Send **HOLD**. Lab invent **HOLD**. Reopen = user only.
 - SkyMirr invent **HOLD**. Cell-tower **PARKED**. BIA **CLOSED**.
 - YOLO / product / Stimpmeter-stick / tracker stay **later wave**.
-- **Hold S4 eval.** Do **not** auto-GO eval. Do **not** name **X**.
+- **Hold S4 eval.** S4 eval **HOLD**. Lab invent **HOLD**. Do **not** auto-GO eval. Do **not** name **X**. Reopen = user/Founder only.
 
 This note does **not** authorize those strings. It does **not** show green speed. It does **not** start training.
 
@@ -76,12 +78,13 @@ This note does **not** authorize those strings. It does **not** show green speed
 ## 4. Hard NO
 
 - Do **not** treat this honesty-string DIGEST as green-speed accuracy Soften.
-- Do **not** treat this DIGEST as Amb TABLE / park. Amb stays **open**.
+- Do **not** treat this honesty-string DIGEST as the TABLE act. Amb is **TABLED / PARKED** by a later Operator park (user). Honesty Softens stay on master as record.
 - Do **not** name **X**.
 - Do **not** drop either pocket limb.
-- Do **not** auto-GO S4 eval.
+- Do **not** auto-GO S4 eval. S4 eval **HOLD**. Lab invent **HOLD**.
 - Do **not** hire a Soften Critic. Soften-vanity stays **CLOSED**.
 - Do **not** reopen Greer. Greer **TABLED**.
+- Do **not** unpark this Amb from Digestor or Lab. Reopen = **user/Founder only**.
 - Digestor never Soften / Harden / Kill. Lab does **not** self-admit.
 
 ---
@@ -90,13 +93,13 @@ This note does **not** authorize those strings. It does **not** show green speed
 
 | Record | What it is |
 |--------|------------|
-| [`STATUS.md`](STATUS.md) | Soften DIGEST honesty string S0–S3; Hold S4 eval |
-| [`DIGESTION_PARK_WHAT_TAUGHT.md`](DIGESTION_PARK_WHAT_TAUGHT.md) | Digestor what S0–S3 honesty Softens taught (Operator-folded) |
-| [`PARK_INDEX.md`](PARK_INDEX.md) | Honesty Softens stack read-order (**not** TABLED Amb park) |
+| [`STATUS.md`](STATUS.md) | **TABLED / PARKED** (user); Lab invent **HOLD**; S4 eval **HOLD**; reopen = user |
+| [`DIGESTION_PARK_WHAT_TAUGHT.md`](DIGESTION_PARK_WHAT_TAUGHT.md) | Digestor TABLE park digestion (what TABLED taught) |
+| [`PARK_INDEX.md`](PARK_INDEX.md) | TABLED 2026-09-06 reopen map |
 | [`DIGESTION_S0S3_SOFTEN.md`](DIGESTION_S0S3_SOFTEN.md) | Lab DIGEST lean (S0–S3 + pocket BOTH) |
 | [`DIGESTION_S4_PROTOCOL.md`](DIGESTION_S4_PROTOCOL.md) | Soften S4 capture-protocol poseability |
 | [`NAMED_GAP_LEDGER.md`](NAMED_GAP_LEDGER.md) | Scoreboard |
 
 ---
 
-*Docs only. Operator ADMIT Soften DIGEST honesty string S0–S3 + Soften Amb DIGEST (honesty string). BOTH pocket limbs. NOT accuracy Soften. X unset. Amb open. Hold S4 eval. Soften Critic not met. Greer TABLED. Lab does not self-admit. Digestor never Soften/Harden/Kill.*
+*Docs only. Operator ADMIT Soften DIGEST honesty string S0–S3 + Soften Amb DIGEST (honesty string). BOTH pocket limbs. NOT accuracy Soften. X unset. Later Operator park: Amb TABLED / PARKED (user). Lab invent HOLD. S4 eval HOLD. Reopen = user/Founder only. Soften Critic not met. Greer TABLED. Lab does not self-admit. Digestor never Soften/Harden/Kill.*
