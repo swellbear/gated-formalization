@@ -45,3 +45,9 @@ Named-day live pulses: **none remaining**. Softened set **2–21** complete. Clo
 - Soften suicide / meds as fact from hospital / scene / tox-preserve
 - Invent Day 1 cold
 - Hire Soften Critic / reopen Greer or phone-stimp
+
+**Later the same day (Soften C3 Day 17):** Day 17 digest lands after Day 21 **#126**. This fold does **not** rewrite INTERIM or park DIGEST. INTERIM remains history / **interim (NOT park)** this fold. See [`DIGESTION_C3_DAY17.md`](DIGESTION_C3_DAY17.md).
+
+**Later the same day (Soften C3 Day 6 on master #115):** Day 17 digest lands after Day 6 **#115**. This fold does **not** rewrite Day 6 or park DIGEST. See [`DIGESTION_C3_DAY17.md`](DIGESTION_C3_DAY17.md).
+
+**Later the same day (Soften C3 Day 12 on master #119):** Day 17 digest lands after Day 12 **#119**. This fold does **not** rewrite Day 12 or park DIGEST. See [`DIGESTION_C3_DAY17.md`](DIGESTION_C3_DAY17.md).

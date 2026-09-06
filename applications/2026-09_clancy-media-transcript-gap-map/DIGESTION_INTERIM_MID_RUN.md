@@ -107,3 +107,9 @@
 **Later the same day (Soften C3 Day 20):** Operator **ADMIT Soften C3 Day 20**. Digest [`DIGESTION_C3_DAY20.md`](DIGESTION_C3_DAY20.md) landed after the #124 park stamp. Softened set on this fold: **2–20**. Remaining Digestor live day: **21**. Softened Days 2–19 boards **untouched**. Softened Day 19 Mack **untouched**. This fold ADMIT keeps INTERIM **interim (NOT park)** and does **not** rewrite the #124 park ADMIT body. Standing GO Lab invent/hand **Day 21** next. Illustrator Soften-fold pointer **STATUS-ready** after Day 20 — [`VIZ.md`](VIZ.md).
 
 *SUPERSEDED by park DIGEST (prior #124). Later same day Day 20 fold ADMIT keeps INTERIM interim (NOT park). Soften Critic hire not met. Usefulness not Softened. Amb open.*
+
+**Later the same day (Soften C3 Day 17):** Day 17 digest lands after Day 20 **#127**. This fold does **not** rewrite INTERIM or park DIGEST. INTERIM remains history / **interim (NOT park)** this fold. See [`DIGESTION_C3_DAY17.md`](DIGESTION_C3_DAY17.md).
+
+**Later the same day (Soften C3 Day 6 on master #115):** Day 17 digest lands after Day 6 **#115**. This fold does **not** rewrite Day 6 or park DIGEST. See [`DIGESTION_C3_DAY17.md`](DIGESTION_C3_DAY17.md).
+
+**Later the same day (Soften C3 Day 12 on master #119):** Day 17 digest lands after Day 12 **#119**. This fold does **not** rewrite Day 12 or park DIGEST. See [`DIGESTION_C3_DAY17.md`](DIGESTION_C3_DAY17.md).
