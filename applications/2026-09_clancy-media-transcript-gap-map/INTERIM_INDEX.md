@@ -20,7 +20,9 @@ Days **15–17, 19–21** (one named day at a time). Next = Lab invent/hand **Da
 
 **Later the same day (Soften C3 Day 7 + Day 11 + Day 2):** Day 7 (#109) + Day 11 ([`DIGESTION_C3_DAY11.md`](DIGESTION_C3_DAY11.md)) + Day 2 (#111) landed **after** this snapshot. Remaining live days: **3–6, 8–10, 12–13, 15–17, 19–21**. INTERIM still **NOT** park. Amb **open**. Softened days so far: **2**, **7**, **11**, **14**, **18**.
 
-**Later the same day (Soften C3 Day 13):** Day 13 ([`DIGESTION_C3_DAY13.md`](DIGESTION_C3_DAY13.md)) landed **after** this snapshot. Softened set: **2–13, 14, 18**. Remaining live days: **15–17, 19–21**. INTERIM still **NOT** park. Amb **open**. Standing GO Lab invent/hand **Day 15** next.
+**Later the same day (Soften C3 Day 9):** Day 9 (#117; [`DIGESTION_C3_DAY9.md`](DIGESTION_C3_DAY9.md)) landed **after** this snapshot. INTERIM still **NOT** park.
+
+**Later the same day (Soften C3 Day 13):** Day 13 ([`DIGESTION_C3_DAY13.md`](DIGESTION_C3_DAY13.md)) landed **after** this snapshot. Softened set: **2–13, 14, 18**. Remaining live days: **15–17, 19–21**. INTERIM still **NOT** park. Amb **open**. Standing GO Lab invent/hand **Day 15** next. Illustrator Soften-fold pointer **refreshed** after Day 13 (STATUS-ready) — [`VIZ.md`](VIZ.md).
 
 ## Do not
 

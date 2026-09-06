@@ -13,6 +13,7 @@
 **C3 Day 11 digestion (on master #110; board untouched):** [`DIGESTION_C3_DAY11.md`](DIGESTION_C3_DAY11.md)  
 **C3 Day 4 digestion (on master #113; board untouched):** [`DIGESTION_C3_DAY4.md`](DIGESTION_C3_DAY4.md)  
 **C3 Day 10 digestion (on master #118; board untouched):** [`DIGESTION_C3_DAY10.md`](DIGESTION_C3_DAY10.md)  
+**C3 Day 9 digestion (on master #117; board untouched):** [`DIGESTION_C3_DAY9.md`](DIGESTION_C3_DAY9.md)  
 **C3 Day 13 digestion (primary):** [`DIGESTION_C3_DAY13.md`](DIGESTION_C3_DAY13.md)  
 **Index expand:** [`REV_DAY_INDEX.md`](REV_DAY_INDEX.md) · [`DIGESTION_INDEX_EXPAND.md`](DIGESTION_INDEX_EXPAND.md)  
 **Interim mid-run (not park):** [`DIGESTION_INTERIM_MID_RUN.md`](DIGESTION_INTERIM_MID_RUN.md) · [`INTERIM_INDEX.md`](INTERIM_INDEX.md)  

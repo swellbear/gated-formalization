@@ -74,6 +74,7 @@ Rev page dates below are **Rev page stamps** (media), **not** a certified court 
 | Day 2 | day | https://www.rev.com/transcripts/ma-v-linsday-clancy-day-2 | 2026-07-30 | **Founder starter** — C3 Day 2 (on master **#111**; board **untouched**; typo slug) |
 | Day 4 | day | https://www.rev.com/transcripts/ma-v-lindsay-clancy-day-4 | 2026-08-02 | Digestor index — C3 Day 4 named hospital/scene backup (**Soften**; **day≠certified**) |
 | Day 7 | day | https://www.rev.com/transcripts/ma-v-lindsay-clancy-day-7 | 2026-08-06 | **Founder starter** — C3 Day 7 (on master **#109**; board **untouched**) |
+| Day 9 | day | https://www.rev.com/transcripts/ma-v-lindsay-clancy-day-9 | 2026-08-10 | Digestor index — C3 Day 9 (on master **#117**; board **untouched**) |
 | Day 10 | day | https://www.rev.com/transcripts/ma-v-lindsay-clancy-day-10 | 2026-08-11 | Digestor index — C3 Day 10 (on master **#118**; board **untouched**) |
 | Day 11 | day | https://www.rev.com/transcripts/ma-v-lindsay-clancy-day-11 | 2026-08-12 | **Founder starter** — C3 Day 11 (on master **#110**; board **untouched**) |
 | Day 13 | day | https://www.rev.com/transcripts/ma-v-lindsay-clancy-day-13 | 2026-08-17 | Digestor index — C3 Day 13 named cyber-forensic-examiner backup (**Soften**; **day≠certified**) |

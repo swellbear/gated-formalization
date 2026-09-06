@@ -86,6 +86,8 @@
 
 **Later the same day (Soften C3 Day 10):** Operator **ADMIT Soften C3 Day 10** (#118). Digest [`DIGESTION_C3_DAY10.md`](DIGESTION_C3_DAY10.md). INTERIM still **NOT** park.
 
-**Later the same day (Soften C3 Day 13):** Operator **ADMIT Soften C3 Day 13**. Digest [`DIGESTION_C3_DAY13.md`](DIGESTION_C3_DAY13.md). Remaining live days after Day 13: **15–17, 19–21**. INTERIM still **NOT** park. Amb **open**. Softened set: **2–13, 14, 18**. Standing GO Lab invent/hand **Day 15** next.
+**Later the same day (Soften C3 Day 9):** Operator **ADMIT Soften C3 Day 9** (#117). Digest [`DIGESTION_C3_DAY9.md`](DIGESTION_C3_DAY9.md). INTERIM still **NOT** park.
+
+**Later the same day (Soften C3 Day 13):** Operator **ADMIT Soften C3 Day 13**. Digest [`DIGESTION_C3_DAY13.md`](DIGESTION_C3_DAY13.md). Remaining live days after Day 13: **15–17, 19–21**. INTERIM still **NOT** park. Amb **open**. Softened set: **2–13, 14, 18**. Standing GO Lab invent/hand **Day 15** next. Illustrator Soften-fold pointer **refreshed** after Day 13 (STATUS-ready) — [`VIZ.md`](VIZ.md).
 
 *Interim note ≠ Soften of corpus-done. Soften Critic hire not met. INTERIM still NOT park. Amb open.*

@@ -4,7 +4,7 @@
 **Application:** `2026-09_clancy-media-transcript-gap-map`  
 **String:** C3 Day 13 day-pulse #14 (G5 primary + G3 touch light + G4 light + G6 honesty; cyber-forensic-examiner backup) — Operator **Soften**  
 **Habit:** [`docs/DIGESTION_HABIT.md`](../../docs/DIGESTION_HABIT.md)  
-**Parent:** Soften S0 #101 · Soften C1 #102 · Soften C3 Day 18 #103 · Soften C3 Day 14 #105 / SHA `98fcbae` (viz #104 / #106; Digestor index expand #107 / `3d883ae`; Digestor INTERIM mid-run #108 / `4b8e53d` — **not** park; Amb **open**; Soften C3 Day 7 #109 / `3fbd76f`; Soften C3 Day 2 #111 / `490932d`; Soften C3 Day 11 #110 / `59e99e9`; Soften C3 Day 4 #113 / `a78db54`; Soften C3 Day 10 #118 / `803862f`)  
+**Parent:** Soften S0 #101 · Soften C1 #102 · Soften C3 Day 18 #103 · Soften C3 Day 14 #105 / SHA `98fcbae` (viz #104 / #106; Digestor index expand #107 / `3d883ae`; Digestor INTERIM mid-run #108 / `4b8e53d` — **not** park; Amb **open**; Soften C3 Day 7 #109 / `3fbd76f`; Soften C3 Day 2 #111 / `490932d`; Soften C3 Day 11 #110 / `59e99e9`; Soften C3 Day 4 #113 / `a78db54`; Soften C3 Day 10 #118 / `803862f`; Soften C3 Day 9 #117 / `60941d8`)  
 **S0 digestion (stands):** [`DIGESTION_S0.md`](DIGESTION_S0.md)  
 **C1 digestion (stands):** [`DIGESTION_C1.md`](DIGESTION_C1.md)  
 **C3 Day 18 digestion (stands; board untouched):** [`DIGESTION_C3.md`](DIGESTION_C3.md)  
@@ -14,6 +14,7 @@
 **C3 Day 11 digestion (on master #110; board untouched):** [`DIGESTION_C3_DAY11.md`](DIGESTION_C3_DAY11.md)  
 **C3 Day 4 digestion (on master #113; board untouched):** [`DIGESTION_C3_DAY4.md`](DIGESTION_C3_DAY4.md)  
 **C3 Day 10 digestion (on master #118; board untouched):** [`DIGESTION_C3_DAY10.md`](DIGESTION_C3_DAY10.md)  
+**C3 Day 9 digestion (on master #117; board untouched):** [`DIGESTION_C3_DAY9.md`](DIGESTION_C3_DAY9.md)  
 **Pulse menu:** [`PROPOSED_PULSE.md`](PROPOSED_PULSE.md)  
 **Ledger:** [`NAMED_GAP_LEDGER.md`](NAMED_GAP_LEDGER.md)  
 **STATUS:** [`STATUS.md`](STATUS.md)  
@@ -29,7 +30,7 @@ This is **whole-trial claim/clash map practice**, **not** case-solving. Argument
 ## 0. Operator ADMIT (copied verbatim)
 
 **Application:** `applications/2026-09_clancy-media-transcript-gap-map/`  
-**Parent:** Soften S0 #101 · Soften C1 #102 · Soften C3 Day 18 #103 · Soften C3 Day 14 #105 · Soften C3 Day 7 #109 · Soften C3 Day 2 #111 · Soften C3 Day 11 #110 · Soften C3 Day 4 #113 · Soften C3 Day 10 #118
+**Parent:** Soften S0 #101 · Soften C1 #102 · Soften C3 Day 18 #103 · Soften C3 Day 14 #105 · Soften C3 Day 7 #109 · Soften C3 Day 2 #111 · Soften C3 Day 11 #110 · Soften C3 Day 4 #113 · Soften C3 Day 10 #118 · Soften C3 Day 9 #117
 
 Soften C3 Day 13 ADMITTED 2026-09-06 (pulse only / map-extension poseability only):
 • G5-D13 PRIMARY — NEW cyber-forensic-examiner kind: Kyle Pavao MSP Cyber Crime Surface Pro (Patrick) EnCase/Chrome Aug 23 2022 path (Facebook lind.say.969 → Spotify Tom Hall → Wikipedia Death hyperlink → Suicide Methods shooting Ex 232–233 → Grafton Bridge Ex 234; Wayback; cannot ID who sat at keyboard LOUD; no “ways to kill” search) PLUS Timothy Chiappini MSP SPDU Lindsay iPhone Cellebrite advanced logical (Nov–Dec timeline / medical-leave download / Oct 25 notes SHORT / Jan 23 evening photo mods / Jan 24 4–8pm ThreeV+Maps+MiraLAX/Pedia-Lax+CVS+Pat texts / calendar / mommy texts / multi-category parse honesty / hash). NEW kind after Softened D8 Chiachio + Softened D14 Whiffin.
@@ -43,7 +44,7 @@ Honesty LOUD: digital path/notes/photos/searches ≠ Soften of planning/capacity
 - Soften C1 **ADMITTED** (stands)
 - Soften C3 Day 18 **ADMITTED** (stands; board **untouched**)
 - Soften C3 Day 14 **ADMITTED** (stands; board **untouched**)
-- Soften C3 Days **2–12** **ADMITTED** (boards **untouched**; Day 2 / 4 / 7 / 10 / 11 on master as **#111** / **#113** / **#109** / **#118** / **#110**; Days 3 / 5 / 6 / 8 / 9 / 12 parallel — digest not yet on master where absent; **ADMITTED**, **not** PROPOSED)
+- Soften C3 Days **2–12** **ADMITTED** (boards **untouched**; Day 2 / 4 / 7 / 9 / 10 / 11 on master as **#111** / **#113** / **#109** / **#117** / **#118** / **#110**; Days 3 / 5 / 6 / 8 / 12 parallel — digest not yet on master where absent; **ADMITTED**, **not** PROPOSED)
 - Digestor index expand **ADMITTED** (stands)
 - Digestor INTERIM mid-run **ADMITTED** — remains **interim (NOT park)**; Amb **open**
 - Soften Critic **not hired**
@@ -207,6 +208,8 @@ C3 Day 13 Soften does **not** license a product, a certified-record ingest, or l
 - Digestor never Soften / Harden / Kill. Lab does **not** self-admit (`lab_admits=false`).
 
 ---
+
+**Later the same day (Illustrator Soften-fold pointer refreshed):** Operator-folded pointer to Lab Soften-fold chart + living twin **refreshed** after Soften C3 Day 13 (STATUS-ready). PNG+md **not receivable** on this VM. See [`VIZ.md`](VIZ.md). Pointers: `/workspace/clancy_lab/viz/soften_fold_c1_c3.png` + `soften_fold_c1_c3.md`; living `/workspace/clancy_lab/viz/claim_clash_map.png`. Refreshed board shows Softened Day 13 **G5-D13 PRIMARY · G3-D13 TOUCH light · G4-D13 LIGHT · G6-D13**; Softened **D2–D12 / D14 / D18 stay**. Honesty caption: Media≠certified · Closings≠evidence · Day≠certified · digital path/notes/photos/searches≠planning/capacity/guilt Soften · who-at-keyboard unknown · no Soften of verdict · Soften Critic not hired · map poseability only. **Not** a new Soften. Soften C3 Day 13 **stands** (primary). VIZ is **pointer-only**. Prior Softened boards **untouched**. Day 9 already on master as **#117**.
 
 **Later the same day (Digestor index expand + INTERIM mid-run + Softened Days 2–12 + 14 + 18 already on the string):** Operator **ADMIT Digestor index expand** (#107) and **Digestor INTERIM mid-run** (#108; **not** park; Amb **open**) landed **before** this Day 13 Soften. Softened Days 2–12 + 14 + 18 boards stay **untouched**. Days 2–21 + Closing Arguments live; Day 2 typo slug named; Day 1 not found; Days 22+ 404. **LOUD media≠certified.** Those snapshots are **not** rewritten here and are **still NOT park**. Day 13 Soften landed **after** those snapshots. Softened set after this fold: **2–13, 14, 18** (+closings C1). Remaining live days **15–17, 19–21**. Standing GO Lab invent/hand **Day 15** next. See [`REV_DAY_INDEX.md`](REV_DAY_INDEX.md) · [`DIGESTION_INDEX_EXPAND.md`](DIGESTION_INDEX_EXPAND.md) · [`DIGESTION_INTERIM_MID_RUN.md`](DIGESTION_INTERIM_MID_RUN.md) · [`INTERIM_INDEX.md`](INTERIM_INDEX.md).
 

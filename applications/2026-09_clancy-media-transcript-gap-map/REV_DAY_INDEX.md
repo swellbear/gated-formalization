@@ -42,7 +42,7 @@ Rev page stamps below are **media** when already on [`SOURCE.md`](SOURCE.md). Ne
 | Day 6 | day | https://www.rev.com/transcripts/ma-v-lindsay-clancy-day-6 | **live** | **Softened** — C3 Day 6 (**ADMITTED**; board **untouched** this fold) |
 | Day 7 | day | https://www.rev.com/transcripts/ma-v-lindsay-clancy-day-7 | **live** | **Softened** — C3 Day 7 (on master **#109**; board **untouched** this fold) |
 | Day 8 | day | https://www.rev.com/transcripts/ma-v-lindsay-clancy-day-8 | **live** | **Softened** — C3 Day 8 Chiachio (**ADMITTED**; board **untouched** this fold) |
-| Day 9 | day | https://www.rev.com/transcripts/ma-v-lindsay-clancy-day-9 | **live** | **Softened** — C3 Day 9 (**ADMITTED**; board **untouched** this fold) |
+| Day 9 | day | https://www.rev.com/transcripts/ma-v-lindsay-clancy-day-9 | **live** | **Softened** — C3 Day 9 (on master **#117**; board **untouched** this fold) |
 | Day 10 | day | https://www.rev.com/transcripts/ma-v-lindsay-clancy-day-10 | **live** | **Softened** — C3 Day 10 (on master **#118**; board **untouched** this fold) |
 | Day 11 | day | https://www.rev.com/transcripts/ma-v-lindsay-clancy-day-11 | **live** | **Softened** — C3 Day 11 (on master **#110**; board **untouched** this fold) |
 | Day 12 | day | https://www.rev.com/transcripts/ma-v-lindsay-clancy-day-12 | **live** | **Softened** — C3 Day 12 (**ADMITTED**; board **untouched** this fold) |

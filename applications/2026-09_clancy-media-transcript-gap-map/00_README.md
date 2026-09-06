@@ -68,6 +68,7 @@ S0 + C1 + C3 + C3 Day 14 + C3 Day 13 are **Operator Soften**. Softened Days 2–
 6a3. [`DIGESTION_C3_DAY11.md`](DIGESTION_C3_DAY11.md) — C3 Day 11 day-pulse #4 map-extension Soften (on master **#110**; board **untouched**)
 6b. [`DIGESTION_C3_DAY4.md`](DIGESTION_C3_DAY4.md) — C3 Day 4 day-pulse #7 map-extension Soften (on master **#113**; board **untouched**)
 6b2. [`DIGESTION_C3_DAY10.md`](DIGESTION_C3_DAY10.md) — C3 Day 10 day-pulse #12 map-extension Soften (on master **#118**; board **untouched**)
+6b3. [`DIGESTION_C3_DAY9.md`](DIGESTION_C3_DAY9.md) — C3 Day 9 day-pulse #11 map-extension Soften (on master **#117**; board **untouched**)
 6c. [`DIGESTION_C3_DAY13.md`](DIGESTION_C3_DAY13.md) — C3 Day 13 day-pulse #14 map-extension Soften (primary)
 7. [`REV_DAY_INDEX.md`](REV_DAY_INDEX.md) · [`DIGESTION_INDEX_EXPAND.md`](DIGESTION_INDEX_EXPAND.md) — Digestor index expand
 7b. [`DIGESTION_INTERIM_MID_RUN.md`](DIGESTION_INTERIM_MID_RUN.md) · [`INTERIM_INDEX.md`](INTERIM_INDEX.md) — Digestor INTERIM mid-run (**not** park; Amb **open**)
@@ -77,5 +78,5 @@ S0 + C1 + C3 + C3 Day 14 + C3 Day 13 are **Operator Soften**. Softened Days 2–
 11. [`DIGESTION_FROM_PHONE_STIMP.md`](DIGESTION_FROM_PHONE_STIMP.md) — what the last string taught
 12. [`COPY_GATE.md`](COPY_GATE.md) — SOURCE / method-practice honesty
 13. [`RESIDUAL_BRANCH_MENU.md`](RESIDUAL_BRANCH_MENU.md) — decision log
-14. [`VIZ.md`](VIZ.md) — Illustrator Soften-fold / living-twin pointer **refreshed** after Soften C3 Day 13 (PNG+md not receivable this VM; pointer only, not a new Soften)
+14. [`VIZ.md`](VIZ.md) — Illustrator Soften-fold / living-twin pointer **refreshed** after Soften C3 Day 13 (STATUS-ready; PNG+md not receivable this VM; pointer only, not a new Soften; Day 13 ADMIT stays primary)
 15. [`notes.md`](notes.md) — one-line pointer

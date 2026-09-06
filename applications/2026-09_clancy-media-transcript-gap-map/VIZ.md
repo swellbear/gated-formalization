@@ -2,8 +2,10 @@
 
 **Date:** 2026-09-06  
 **Application:** `2026-09_clancy-media-transcript-gap-map`  
-**Role:** STATUS pointer. **Illustrator board; Operator-folded pointer.** Last **refreshed** after Soften C3 Day 13. PNG + md **not receivable** this VM — **pointer only**; **do not invent a chart**. **Not** a new Soften. Soften C3 Day 13 ADMIT digestion stays **primary**.  
+**Role:** STATUS pointer. **Illustrator board; Operator-folded pointer.** Last **refreshed** after Soften C3 Day 13 (STATUS-ready). PNG + md **not receivable** this VM — **pointer only**; **do not invent a chart**. **Not** a new Soften. Soften C3 Day 13 ADMIT digestion stays **primary**.  
 **C3 Day 13 digestion (ADMITTED; primary):** [`DIGESTION_C3_DAY13.md`](DIGESTION_C3_DAY13.md)  
+**C3 Day 9 digestion (ADMITTED on master #117; board untouched):** [`DIGESTION_C3_DAY9.md`](DIGESTION_C3_DAY9.md)  
+**C3 Day 10 digestion (ADMITTED on master #118; board untouched):** [`DIGESTION_C3_DAY10.md`](DIGESTION_C3_DAY10.md)  
 **C3 Day 4 digestion (ADMITTED on master #113; board untouched):** [`DIGESTION_C3_DAY4.md`](DIGESTION_C3_DAY4.md)  
 **C3 Day 2 digestion (ADMITTED on master #111; board untouched):** [`DIGESTION_C3_DAY2.md`](DIGESTION_C3_DAY2.md)  
 **C3 Day 7 digestion (ADMITTED on master #109; board untouched):** [`DIGESTION_C3_DAY7.md`](DIGESTION_C3_DAY7.md)  
@@ -12,7 +14,7 @@
 **C3 digestion (Day 18; board untouched):** [`DIGESTION_C3.md`](DIGESTION_C3.md)  
 **STATUS:** [`STATUS.md`](STATUS.md)
 
-PNG + md were **not receivable** on this Operator VM. Lab `/workspace/clancy_lab/viz/` is **not** in this checkout. This file is a **pointer**, not a copied board and **not** a new Soften. Soften C3 Day 13 **stands**. Softened Days 2–12 + 14 + 18 boards stay **untouched**. **Not** a new Soften. **Not** usefulness Soften.
+PNG + md were **not receivable** on this Operator VM. Lab `/workspace/clancy_lab/viz/` is **not** in this checkout. This file is a **pointer**, not a copied board and **not** a new Soften. Soften C3 Day 13 **stands**. Softened Days 2–12 + 14 + 18 boards stay **untouched**. Soften Day 9 is already on master as **#117**. Soften Day 10 is already on master as **#118**. **Not** a new Soften. **Not** usefulness Soften.
 
 **Honesty caption (must stay):** Media≠certified · Closings≠evidence · Day≠certified · digital path/notes/photos/searches≠planning/capacity/guilt Soften · who-at-keyboard unknown · no Soften of verdict · Soften Critic not hired · map poseability only.
 
@@ -44,6 +46,6 @@ Copy into `viz/` later if Operator can receive the files. Until then, **do not**
 - **Not** an invented Day 13 chart. Pointer only.
 - **Hold C2 / C4.** Standing GO → Lab invent/hand **Day 15** next. Soften Critic **not hired**.
 
-**Later the same day (Softened Days 2–12 + 14 + 18 already on the string):** Softened Days 2–12 + 14 + 18 boards stay **untouched**. Softened set: **2–13, 14, 18**. Honesty caption as named above. See [`DIGESTION_C3_DAY13.md`](DIGESTION_C3_DAY13.md).
+**Later the same day (Softened Days 2–12 + 14 + 18 already on the string):** Softened Days 2–12 + 14 + 18 boards stay **untouched**. Soften Day 9 **stands** on master as **#117**. Soften Day 10 **stands** on master as **#118**. Softened set: **2–13, 14, 18**. Honesty caption as named above. See [`DIGESTION_C3_DAY13.md`](DIGESTION_C3_DAY13.md) · [`DIGESTION_C3_DAY9.md`](DIGESTION_C3_DAY9.md).
 
-*Docs only. Illustrator board; Operator-folded pointer. Last refreshed after Soften C3 Day 13. PNG+md not receivable this VM — pointer only. Shows Softened Day 13 G5-D13 PRIMARY · G3-D13 TOUCH light · G4-D13 LIGHT · G6-D13; Softened D2–D12 / D14 / D18 stay. Honesty caption: Media≠certified · Closings≠evidence · Day≠certified · digital path/notes/photos/searches≠planning/capacity/guilt Soften · who-at-keyboard unknown · no Soften of verdict · Soften Critic not hired · map poseability only. Not a new Soften. Not usefulness Soften. Soften C3 Day 13 ADMIT digestion remains primary.*
+*Docs only. Illustrator board; Operator-folded pointer. Last refreshed after Soften C3 Day 13 (STATUS-ready). PNG+md not receivable this VM — pointer only. Shows Softened Day 13 G5-D13 PRIMARY · G3-D13 TOUCH light · G4-D13 LIGHT · G6-D13; Softened D2–D12 / D14 / D18 stay. Honesty caption: Media≠certified · Closings≠evidence · Day≠certified · digital path/notes/photos/searches≠planning/capacity/guilt Soften · who-at-keyboard unknown · no Soften of verdict · Soften Critic not hired · map poseability only. Not a new Soften. Not usefulness Soften. Soften C3 Day 13 ADMIT digestion remains primary. Day 9 already on master as #117. Day 10 already on master as #118.*
