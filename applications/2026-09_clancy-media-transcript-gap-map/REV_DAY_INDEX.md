@@ -36,7 +36,7 @@ Rev page stamps below are **media** when already on [`SOURCE.md`](SOURCE.md). Ne
 | Page | Class | Rev URL | Live? | Role |
 |------|-------|---------|-------|------|
 | Day 1 | — | https://www.rev.com/transcripts/ma-v-lindsay-clancy-day-1 | **not found** (404) | off-corpus |
-| Day 2 | day | https://www.rev.com/transcripts/ma-v-linsday-clancy-day-2 | **live** (typo slug) | Digestor index; **not Softened** |
+| Day 2 | day | https://www.rev.com/transcripts/ma-v-linsday-clancy-day-2 | **live** (typo slug) | **Softened** — C3 Day 2 fact-witness backup (#111; board **untouched**) |
 | Day 2 (canonical slug) | — | https://www.rev.com/transcripts/ma-v-lindsay-clancy-day-2 | **404** | typo leftover named |
 | Day 3 | day | https://www.rev.com/transcripts/ma-v-lindsay-clancy-day-3 | **live** | Digestor index; **not Softened** |
 | Day 4 | day | https://www.rev.com/transcripts/ma-v-lindsay-clancy-day-4 | **live** | Digestor index; **not Softened** |
@@ -46,7 +46,7 @@ Rev page stamps below are **media** when already on [`SOURCE.md`](SOURCE.md). Ne
 | Day 8 | day | https://www.rev.com/transcripts/ma-v-lindsay-clancy-day-8 | **live** | Digestor index; **not Softened** |
 | Day 9 | day | https://www.rev.com/transcripts/ma-v-lindsay-clancy-day-9 | **live** | Digestor index; **not Softened** |
 | Day 10 | day | https://www.rev.com/transcripts/ma-v-lindsay-clancy-day-10 | **live** | Digestor index; **not Softened** |
-| Day 11 | day | https://www.rev.com/transcripts/ma-v-lindsay-clancy-day-11 | **live** | Founder starter; **not Softened** |
+| Day 11 | day | https://www.rev.com/transcripts/ma-v-lindsay-clancy-day-11 | **live** | **Softened** — C3 Day 11 perinatal-meds backup ([`DIGESTION_C3_DAY11.md`](DIGESTION_C3_DAY11.md)) |
 | Day 12 | day | https://www.rev.com/transcripts/ma-v-lindsay-clancy-day-12 | **live** | Digestor index; **not Softened** |
 | Day 13 | day | https://www.rev.com/transcripts/ma-v-lindsay-clancy-day-13 | **live** | Digestor index; **not Softened** |
 | Day 14 | day | https://www.rev.com/transcripts/ma-v-lindsay-clancy-day-14 | **live** | **Softened** — C3 Day 14 digital-evidence backup |
@@ -67,15 +67,15 @@ Rev page stamps below are **media** when already on [`SOURCE.md`](SOURCE.md). Ne
 
 | Set | Days | Status |
 |-----|------|--------|
-| **Softened** | **7**, **14**, **18** | C3 Day 7 + C3 Day 14 + C3 Day 18 named backups poseable. **Day≠certified.** Day 7 landed after this index-expand snapshot. |
-| **Indexed, not Softened** | 2–6, 8–13, 15–17, 19–21 | Live media pages. Standing GO next = Lab **GO Day 11**, then remaining index **one named day at a time**. |
+| **Softened** | **2**, **7**, **11**, **14**, **18** | C3 Day 2 + Day 7 + Day 11 + Day 14 + Day 18 named backups poseable. **Day≠certified.** Day 7 (#109) + Day 11 + Day 2 (#111) landed after this index-expand snapshot. |
+| **Indexed, not Softened** | 3–6, 8–10, 12–13, 15–17, 19–21 | Live media pages. Standing GO next = Lab invent/hand **Day 3**, then remaining index **one named day at a time**. |
 | **Off-corpus** | Day 1 (not found); Days 22+ (404) | Do **not** invent pages |
 
 ---
 
 ## 3. What this index does *not* mean
 
-- **NOT** Soften of Days 2–6 / 8–13 / 15–17 / 19–21.
+- **NOT** Soften of remaining live days **3–6, 8–10, 12–13, 15–17, 19–21**.
 - **NOT** an all-days dump.
 - **NOT** Soften of parent usefulness. **Success bar unset.**
 - **NOT** Soften of verdict / mistrial / retrial.

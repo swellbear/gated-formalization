@@ -73,7 +73,7 @@ Rev page dates below are **Rev page stamps** (media), **not** a certified court 
 | Closing Arguments | closings (argument / instructions) | https://www.rev.com/transcripts/ma-v-lindsay-clancy-closing-arguments | 2026-08-28 | **Founder starter** |
 | Day 2 | day | https://www.rev.com/transcripts/ma-v-linsday-clancy-day-2 | 2026-07-30 | Digestor index — C3 Day 2 named fact-witness backup (**Soften**; **day≠certified**; slug typo `linsday`; **Court TV commentary ≠ trial testimony**) |
 | Day 7 | day | https://www.rev.com/transcripts/ma-v-lindsay-clancy-day-7 | 2026-08-06 | **Founder starter** — C3 Day 7 named meds/tox + suicide-injury backup (**Soften** #109; **day≠certified**; tox ≠ capacity Soften; board **untouched**) |
-| Day 11 | day | https://www.rev.com/transcripts/ma-v-lindsay-clancy-day-11 | 2026-08-12 | **Founder starter** — Operator-**ADMITTED** Soften (parallel #110; **no** digest file on this tree; board **untouched**; **not** only PROPOSED) |
+| Day 11 | day | https://www.rev.com/transcripts/ma-v-lindsay-clancy-day-11 | 2026-08-12 | **Founder starter** — Operator-**ADMITTED** Soften (parallel #110; digest [`DIGESTION_C3_DAY11.md`](DIGESTION_C3_DAY11.md); board **untouched**; **not** only PROPOSED) |
 | Day 14 | day | https://www.rev.com/transcripts/ma-v-lindsay-clancy-day-14 | 2026-08-18 | **Founder starter** — C3 Day 14 named digital-evidence backup (**Soften**; **day≠certified**; board **untouched**) |
 | Day 18 | day | https://www.rev.com/transcripts/ma-v-lindsay-clancy-day-18 | 2026-08-23 | **Founder starter** — C3 named backup (**Soften**; **day≠certified**; board **untouched**) |
 | Day 19 | day | https://www.rev.com/transcripts/ma-v-lindsay-clancy-day-19 | 2026-08-25 | **noted** — not starter |

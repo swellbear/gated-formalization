@@ -38,8 +38,8 @@ Copy into `viz/` later if Operator can receive the files. Until then, **do not**
 - **Not** a copied PNG. **Not** a Lab reopen. **Not** a new pulse.
 - **Not** a rewrite of the Day 14 or Day 18 boards.
 - **Not** an invented Day 7 chart. Pointer only.
-- **Hold C2 / C4.** Standing GO → Lab **GO Day 11** next. Soften Critic **not hired**.
+- **Hold C2 / C4.** Standing GO Lab invent/hand **Day 3** next. Soften Critic **not hired**. Request later refresh for Day 2 + Day 11 — **do not invent chart**.
 
-**Later the same day (Digestor index expand + INTERIM mid-run already on master):** Operator **ADMIT Digestor index expand** (#107) + **Digestor INTERIM mid-run** (#108; **not** park; Amb **open**). Days 2–21 + closings live. This pointer is **not** a new chart and **not** a new Soften. Softened days so far: **7**, **14**, **18**. Honesty caption **unchanged**. See [`REV_DAY_INDEX.md`](REV_DAY_INDEX.md) · [`DIGESTION_INTERIM_MID_RUN.md`](DIGESTION_INTERIM_MID_RUN.md).
+**Later the same day:** Day 7 (#109) + Day 11 ([`DIGESTION_C3_DAY11.md`](DIGESTION_C3_DAY11.md)) + Day 2 (#111) landed. This pointer is **not** a new chart. Request later refresh for Day 2 + Day 11. Softened days so far: **2**, **7**, **11**, **14**, **18**. Honesty caption **unchanged**. See [`REV_DAY_INDEX.md`](REV_DAY_INDEX.md) · [`DIGESTION_INTERIM_MID_RUN.md`](DIGESTION_INTERIM_MID_RUN.md).
 
 *Docs only. Illustrator board; Operator-folded pointer. Last refreshed after Soften C3 Day 7. PNG+md not receivable this VM — pointer only. Shows G4-D7 PRIMARY · G3-D7 TOUCH · G6-D7; Softened D14 G5-D14 PRIMARY / G4-D14 touch stay; Softened D18 G4-D18 PRIMARY / G5-D18 TOUCH stay. Honesty caption unchanged. Map poseability only. Not a new Soften. Not usefulness Soften. Soften C3 Day 7 admitted. Day 14 + Day 18 boards untouched.*
