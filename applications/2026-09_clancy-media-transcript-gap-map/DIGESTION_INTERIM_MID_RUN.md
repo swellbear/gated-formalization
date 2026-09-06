@@ -78,4 +78,6 @@
 2. Keep STATUS: Amb **open**; remaining live days **not** done; usefulness **not** Softened; Soften Critic not hired.  
 3. True `DIGESTION_PARK_WHAT_TAUGHT` arrives only after Lab finishes last remaining live day.
 
-*Interim note ≠ Soften of corpus-done. Soften Critic hire not met.*
+**Later the same day (Soften C3 Day 7):** Operator **ADMIT Soften C3 Day 7**. Day 7 Soften landed **after** this INTERIM snapshot; Day 7 **leaves** the remaining-open list. Remaining live days after Day 7: **2–6, 8–13, 15–17, 19–21**. Snapshot remaining-open (**2–13, 15–17, 19–21**; Day 7 in flight) is **not** rewritten as park. INTERIM still **NOT** park. Amb **open**. Softened days so far: **7**, **14**, **18**. Standing GO → Lab **GO Day 11** next. See [`DIGESTION_C3_DAY7.md`](DIGESTION_C3_DAY7.md).
+
+*Interim note ≠ Soften of corpus-done. Soften Critic hire not met. INTERIM still NOT park. Amb open.*
