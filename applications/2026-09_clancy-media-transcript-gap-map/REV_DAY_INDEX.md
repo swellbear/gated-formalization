@@ -38,7 +38,7 @@ Rev page stamps below are **media** when already on [`SOURCE.md`](SOURCE.md). Ne
 | Page | Class | Rev URL | Live? | Role |
 |------|-------|---------|-------|------|
 | Day 1 | — | https://www.rev.com/transcripts/ma-v-lindsay-clancy-day-1 | **not found** (404) | off-corpus |
-| Day 2 | day | https://www.rev.com/transcripts/ma-v-linsday-clancy-day-2 | **live** (typo slug) | **Softened** — Operator-ADMITTED (parallel; board **untouched**) |
+| Day 2 | day | https://www.rev.com/transcripts/ma-v-linsday-clancy-day-2 | **live** (typo slug) | **Softened** — C3 Day 2 fact-witness backup (master #111; board **untouched**; **Court TV commentary ≠ trial testimony**) |
 | Day 2 (canonical slug) | — | https://www.rev.com/transcripts/ma-v-lindsay-clancy-day-2 | **404** | typo leftover named |
 | Day 3 | day | https://www.rev.com/transcripts/ma-v-lindsay-clancy-day-3 | **live** | **Softened** — Operator-ADMITTED (parallel; board **untouched**) |
 | Day 4 | day | https://www.rev.com/transcripts/ma-v-lindsay-clancy-day-4 | **live** | **Softened** — Operator-ADMITTED (parallel; board **untouched**) |
@@ -69,7 +69,7 @@ Rev page stamps below are **media** when already on [`SOURCE.md`](SOURCE.md). Ne
 
 | Set | Days | Status |
 |-----|------|--------|
-| **Softened** | **2**, **3**, **4**, **5**, **7**, **11**, **14**, **18** (+closings C1) | C3 Day 5 hospital/medical + Day 7 + Day 14 + Day 18 named backups poseable; Day 2/3/4/11 Operator-ADMITTED (parallel). **Day≠certified.** **Medical kids death ≠ Soften guilt.** |
+| **Softened** | **2**, **3**, **4**, **5**, **7**, **11**, **14**, **18** (+closings C1) | C3 Day 5 hospital/medical + Day 2 (master #111) + Day 7 + Day 14 + Day 18 named backups poseable; Day 3/4/11 Operator-ADMITTED (parallel). **Day≠certified.** **Medical kids death ≠ Soften guilt.** |
 | **Indexed, not Softened** | 6, 8–10, 12–13, 15–17, 19–21 | Live media pages. Standing GO next = Lab invent/hand **Day 6**, then remaining index **one named day at a time**. |
 | **Off-corpus** | Day 1 (not found); Days 22+ (404) | Do **not** invent pages |
 

@@ -4,13 +4,14 @@
 **Application:** `2026-09_clancy-media-transcript-gap-map`  
 **String:** C3 Day 5 day-pulse #8 (G3 primary + G4 light touch + G6 honesty; hospital/medical backup) — Operator **Soften**  
 **Habit:** [`docs/DIGESTION_HABIT.md`](../../docs/DIGESTION_HABIT.md)  
-**Parent:** Soften S0 #101 · Soften C1 #102 · Soften C3 Day 18 #103 · Soften C3 Day 14 #105 · Soften C3 Day 7 #109 / SHA `3fbd76f` (viz #104 / #106; Digestor index expand #107 / `3d883ae`; Digestor INTERIM mid-run #108 / `4b8e53d` — **not** park; Amb **open**)  
+**Parent:** Soften S0 #101 · Soften C1 #102 · Soften C3 Day 18 #103 · Soften C3 Day 14 #105 · Soften C3 Day 7 #109 / SHA `3fbd76f` · Soften C3 Day 2 #111 (board **untouched**) (viz #104 / #106; Digestor index expand #107 / `3d883ae`; Digestor INTERIM mid-run #108 / `4b8e53d` — **not** park; Amb **open**)  
 **S0 digestion (stands):** [`DIGESTION_S0.md`](DIGESTION_S0.md)  
 **C1 digestion (stands):** [`DIGESTION_C1.md`](DIGESTION_C1.md)  
 **C3 Day 18 digestion (stands; board untouched):** [`DIGESTION_C3.md`](DIGESTION_C3.md)  
 **C3 Day 14 digestion (stands; board untouched):** [`DIGESTION_C3_DAY14.md`](DIGESTION_C3_DAY14.md)  
 **C3 Day 7 digestion (stands; board untouched):** [`DIGESTION_C3_DAY7.md`](DIGESTION_C3_DAY7.md)  
-**Softened Day 2 + Day 3 + Day 4 + Day 11 boards:** Operator-**ADMITTED** (parallel folds; boards **untouched** this fold — **not** only PROPOSED)  
+**C3 Day 2 digestion (stands; board untouched; master #111):** [`DIGESTION_C3_DAY2.md`](DIGESTION_C3_DAY2.md)  
+**Softened Day 3 + Day 4 + Day 11 boards:** Operator-**ADMITTED** (parallel folds; boards **untouched** this fold — **not** only PROPOSED; Day 11 **no** digest file on this tree)  
 **Pulse menu:** [`PROPOSED_PULSE.md`](PROPOSED_PULSE.md)  
 **Ledger:** [`NAMED_GAP_LEDGER.md`](NAMED_GAP_LEDGER.md)  
 **STATUS:** [`STATUS.md`](STATUS.md)  
