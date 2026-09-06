@@ -2,17 +2,19 @@
 
 **Date:** 2026-09-06  
 **Application:** `2026-09_clancy-usefulness-g4`  
-**Role:** notes summary. Operator **ADMIT Soften S0** — freeze poseability only. Operator **ADMIT Soften C1** — Softened-G4 inventory poseability only. Operator **ADMIT Soften C2** — timed COMPARISON record only (overall exit FAIL). **NOT** Soften of usefulness / verdict / capacity / guilt / CR. Usefulness **unproven**. Softened (this Amb): **S0 freeze + C1 Softened-G4 inventory + C2 timed-run**. Parent Clancy Softened S0+C1+Days 2–21 = **SOURCE carry only**. Prior usefulness_check = **media≠certified** (not a certified Soften). Evening G5 prior **≠** Soften usefulness.
+**Role:** notes summary. Operator **ADMIT Digestor true park DIGEST** — park **authoritative**; INTERIM **n/a**. Operator **ADMIT Soften S0** — freeze poseability only. Operator **ADMIT Soften C1** — Softened-G4 inventory poseability only. Operator **ADMIT Soften C2** — timed COMPARISON record only (overall exit FAIL). **NOT** Soften of usefulness / verdict / capacity / guilt / CR. Usefulness **NOT Softened — unproven**. Softened (this Amb): **S0 freeze + C1 Softened-G4 inventory + C2 timed-run**. Parent Clancy Softened S0+C1+Days 2–21 = **SOURCE carry only**. Prior usefulness_check = **media≠certified** (not a certified Soften). Evening G5 prior **≠** Soften usefulness.
 
 **Copy gate:** [`COPY_GATE.md`](COPY_GATE.md)  
 **Operator stamp:** [`OPERATOR_STATUS_STAMP.md`](OPERATOR_STATUS_STAMP.md)  
 **S0 digestion:** [`DIGESTION_S0.md`](DIGESTION_S0.md)  
 **C1 digestion:** [`DIGESTION_C1.md`](DIGESTION_C1.md)  
 **C2 digestion:** [`DIGESTION_C2.md`](DIGESTION_C2.md)  
+**Park DIGEST (authoritative):** [`DIGESTION_PARK_WHAT_TAUGHT.md`](DIGESTION_PARK_WHAT_TAUGHT.md) · [`PARK_INDEX.md`](PARK_INDEX.md)  
 **Lab path:** `/workspace/clancy_usefulness_lab/` (pointer only; **not** in this checkout)  
-**Lab COMPARISON:** `/workspace/clancy_usefulness_lab/usefulness_check/COMPARISON.md`
+**Lab COMPARISON:** `/workspace/clancy_usefulness_lab/usefulness_check/COMPARISON.md`  
+**Lab viz:** `/workspace/clancy_usefulness_lab/viz/` exit / park charts
 
-This file holds **bibliographic pointers** plus a short paraphrase of what the usefulness check sits on, plus Lab path pointers. It does **not** hold the certified court-reporter record. It does **not** hold long transcript. It is **not** legal advice and **not** claim-language product copy. Long transcript paste stays [`COPY_GATE.md`](COPY_GATE.md) blocked. S0 freeze digestion lives in [`DIGESTION_S0.md`](DIGESTION_S0.md). C1 Softened-G4 inventory digestion lives in [`DIGESTION_C1.md`](DIGESTION_C1.md). C2 timed-run digestion lives in [`DIGESTION_C2.md`](DIGESTION_C2.md).
+This file holds **bibliographic pointers** plus a short paraphrase of what the usefulness check sits on, plus Lab path pointers. It does **not** hold the certified court-reporter record. It does **not** hold long transcript. It is **not** legal advice and **not** claim-language product copy. Long transcript paste stays [`COPY_GATE.md`](COPY_GATE.md) blocked. S0 freeze digestion lives in [`DIGESTION_S0.md`](DIGESTION_S0.md). C1 Softened-G4 inventory digestion lives in [`DIGESTION_C1.md`](DIGESTION_C1.md). C2 timed-run digestion lives in [`DIGESTION_C2.md`](DIGESTION_C2.md). Park DIGEST (authoritative) lives in [`DIGESTION_PARK_WHAT_TAUGHT.md`](DIGESTION_PARK_WHAT_TAUGHT.md) · [`PARK_INDEX.md`](PARK_INDEX.md). INTERIM **n/a**.
 
 **Method practice only.** Do **not** treat Rev as certified record. Do **not** dump all days. Do **not** Soften verdict / mistrial / retrial. Do **not** treat parent Softened boards as this Amb Soften.
 
@@ -129,6 +131,7 @@ Lab `/workspace/clancy_usefulness_lab/` is **not** in this checkout. **Pointer o
 | Path | Role | Not |
 |------|------|-----|
 | `/workspace/clancy_usefulness_lab/` | This Amb Lab root | Usefulness Soften; certified record; copied corpus |
+| `/workspace/clancy_usefulness_lab/viz/` exit / park charts | Illustrator exit + park boards this park fold points at | Invented chart; usefulness Soften; copied PNG |
 | `/workspace/clancy_usefulness_lab/viz/` | Illustrator bootstraps | Invented chart; usefulness Soften |
 | `/workspace/clancy_usefulness_lab/PROPOSED_C1.md` | Lab C1 proposal board (not receivable this VM) | Copied file; invented JSON IDs; usefulness Soften |
 | `/workspace/clancy_usefulness_lab/raw/c1_g4_inventory.json` | Lab inventory dump (not receivable this VM) | Copied / invented JSON; invented object IDs |
@@ -147,8 +150,9 @@ Lab `/workspace/clancy_usefulness_lab/` is **not** in this checkout. **Pointer o
 - **Evening G5 prior ≠ Soften usefulness.**
 - **S0 freeze ≠ usefulness Soften.** Softened (this Amb): S0 freeze + C1 Softened-G4 inventory + C2 timed-run.
 - **C1 inventory ≠ usefulness Soften.** Parent Softened G4 objects remain carry; inventory is poseability only. Do **not** invent lab JSON IDs.
-- **C2 timed-run ≠ usefulness Soften.** Usefulness stays **unproven**. Idle latch **ON**. Lab invent **STOP**.
+- **C2 timed-run ≠ usefulness Soften.** Usefulness stays **NOT Softened — unproven**. Idle latch **ON**. Lab invent **STOP**. Clancy invent **STOP** until Founder GO.
+- **Park DIGEST ≠ usefulness Soften.** Park is **authoritative**. INTERIM **n/a**.
 
 ---
 
-*Docs only. Soften S0 freeze + C1 Softened-G4 inventory + C2 timed-run. Usefulness unproven. Not usefulness Soften. Not verdict Soften. Hold Amb C2/C4. Lab `/workspace/clancy_usefulness_lab/usefulness_check/COMPARISON.md` pointer only.*
+*Docs only. Soften S0 freeze + C1 Softened-G4 inventory + C2 timed-run. Park DIGEST ADMITTED (authoritative). Usefulness NOT Softened — unproven. Not usefulness Soften. Not verdict Soften. Hold Amb C2/C4. Lab viz exit / park charts pointer only.*
