@@ -3,7 +3,7 @@
 **For:** Kerry Greer (at your request)  
 **From:** swellbear / gated-formalization collaboration  
 **Date:** 2026-09-05  
-**Status:** **Sync-fragility evidence only.** Not a patent-hard-problem digest. Not a product pitch. Not a patent filing. Not a claim that hardware performance is proven. **HOLD send** until the A1–A4 suite digests. **A1 Soften** carried (≤1 m poseable; X=0.50 perfect-ref; RN floor named). **A2 Soften (conditional)** on record — JOINT1 + ~2.5 ns F9T-class path-shared relative-clock named; commercial 1PPS killed on both curves. Patent simultaneous-via-DGPS-1PPS ≠ commercial 1PPS reality.
+**Status:** **Sync-fragility evidence only.** Not a patent-hard-problem digest. Not a product pitch. Not a patent filing. Not a claim that hardware performance is proven. **HOLD send** until DIGEST + Founder fold. Suite **A1→A4 Soften** is on the record. Patent-facing bar **≤1 m xy** stands as object — **A4 J_stretch ~10 ns → ~3.8 m fails it**. **0.50 m** is **perfect-ref scoped sim only** — **Soften X/σ_t** as honest 50 kHz phase-flip (not GEOM0 1 ns). **DGPS ~0.4–0.5 m** is the named absolute floor. **RF bench PARKED.**
 
 ---
 
@@ -114,6 +114,8 @@ Drop a condition and the half-meter story does not automatically follow. The pat
 - Real hardware accuracy — not measured  
 - Free per-sample clocks with no batch structure — not claimed  
 - **Your success criteria** — please confirm or replace our provisional 0.50 m (perfect-ref sim) and ≤1 m (patent-facing) bars  
+- **Phase-flip detection jitter (A4)** — honest 50 kHz J_stretch ~10 ns is already ~3.8 m (fails ≤1 m); J_mid is tens of meters; JOINT1 does not cancel it; RF bench parked  
+
 
 ---
 

@@ -2,7 +2,7 @@
 
 **Date:** 2026-09-05  
 **Application:** `2026-09_greer-sync-pulse-tdoa`  
-**String:** first-pulse fog peek **ADMITTED** (Lab `PROPOSED_FOG_PEEK`); **GEOM0 HARDEN**; **MULTIPATH1 Soften**; prior SYNC/JOINT/DRIFT/GATE = **sync-fragility evidence (partial)**; **abstract ingest ADMITTED** as Amb spine; **A1 Soften**; **A2 Soften (conditional)**  
+**String:** first-pulse fog peek **ADMITTED** (Lab `PROPOSED_FOG_PEEK`); **GEOM0 HARDEN**; **MULTIPATH1 Soften**; prior SYNC/JOINT/DRIFT/GATE = **sync-fragility evidence (partial)**; **abstract ingest ADMITTED** as Amb spine; **A1 Soften**; suite **A2 Soften-conditional** / **A3 Soften** / **A4 Soften X/σ_t**  
 **Named gap (this fold):** does a detect-only residual∨LORO refuse belt catch out-of-budget sync / unmatched-drift without blowing in-band FA?  
 **Ledger:** [`NAMED_GAP_LEDGER.md`](NAMED_GAP_LEDGER.md)  
 **Peek digestion:** [`DIGESTION_FIRST_PULSE.md`](DIGESTION_FIRST_PULSE.md)  
@@ -20,9 +20,12 @@
 **Abstract ingest (ADMITTED):** [`SOURCE.md`](SOURCE.md) · [`ABSTRACT_INGEST_SUMMARY.md`](ABSTRACT_INGEST_SUMMARY.md) · [`DIGESTION_ABSTRACT_INGEST.md`](DIGESTION_ABSTRACT_INGEST.md)  
 **A1 score (carried):** [`SCORE_A1.md`](SCORE_A1.md)  
 **A1 digestion:** [`DIGESTION_A1.md`](DIGESTION_A1.md)  
+**A4 score:** [`SCORE_A4.md`](SCORE_A4.md)  
+**A4 digestion:** [`DIGESTION_A4.md`](DIGESTION_A4.md)  
 **A2 score:** [`SCORE_A2.md`](SCORE_A2.md)  
 **A2 digestion:** [`DIGESTION_A2.md`](DIGESTION_A2.md)  
-**Founder write-up (PRIMARY; sync-fragility evidence only; HOLD send until suite digests):** [`GREER_WRITEUP.md`](GREER_WRITEUP.md)  
+**Suite scaffold (A1→A4):** [`DIGESTION_A1A4_SUITE.md`](DIGESTION_A1A4_SUITE.md)  
+**Founder write-up (PRIMARY; sync-fragility evidence only; HOLD send until DIGEST + Founder fold):** [`GREER_WRITEUP.md`](GREER_WRITEUP.md)  
 **Lab audit draft:** [`GREER_WRITEUP_DRAFT.md`](GREER_WRITEUP_DRAFT.md)
 
 Lab invented ranked peek / pulse probes. Lab does **not** self-admit. The fog-peek record below is the gated fact set copied from the Method Operator gate. **#0** later scored a numeric sim **X**. **MULTIPATH1** later **Soften**ed it with an NLOS scope. Lab scratch was **not** on this fold VM.
@@ -203,7 +206,7 @@ Detect-only refuse OR: **G1a_DRIFT1 residual ∨ G1b raw LORO**. Injection-calib
 
 **LOCK** provisional **sim X = 0.50 m** remains, with **JOINT1 fixed-offset + named DRIFT1 batch α + GATE1 refuse-belt + NLOS** scope. **PARK** hardware **X**. Details: [`SCORE_GATE1.md`](SCORE_GATE1.md).
 
-**HOLD:** Later the same day, Operator **ADMIT ingest**, then **A1 Soften**, then **A2 Soften (conditional)**. See [`SCORE_A2.md`](SCORE_A2.md). Lab invent **HOLD** except **A3 opened**. Write-up on disk = **sync-fragility evidence only** — Founder [`GREER_WRITEUP.md`](GREER_WRITEUP.md) **PRIMARY** (**HOLD send** until suite digests). Lab audit [`GREER_WRITEUP_DRAFT.md`](GREER_WRITEUP_DRAFT.md). Still no RF / ML. No fingerprint rescue. **Multipath later.**
+**HOLD:** Later the same day, Operator **ADMIT ingest** of US10135667B1 published abstract as Amb spine, then **A1 Soften**, then suite **A2 / A3 / A4**. See [`ABSTRACT_INGEST_SUMMARY.md`](ABSTRACT_INGEST_SUMMARY.md), [`SCORE_A1.md`](SCORE_A1.md), and [`DIGESTION_A1A4_SUITE.md`](DIGESTION_A1A4_SUITE.md). Lab invent **HOLD**. Write-up on disk = **sync-fragility evidence only** — Founder [`GREER_WRITEUP.md`](GREER_WRITEUP.md) **PRIMARY** (**HOLD send** until DIGEST + Founder fold). Lab audit [`GREER_WRITEUP_DRAFT.md`](GREER_WRITEUP_DRAFT.md). Still no RF / ML. No fingerprint rescue.
 
 ---
 
@@ -221,7 +224,27 @@ RN survey / ref-floor honesty. Frozen Chan absolute median vs truth under DGPS-c
 
 **LOCK** patent-facing **≤1 m xy** stands. **DGPS ~0.4–0.5 m** floor named. **X = 0.50 m** perfect-ref only. **PARK** hardware **X**. Details: [`SCORE_A1.md`](SCORE_A1.md).
 
-**NEXT:** **GO A2** then **A3** then **A4**. Soften/Harden each. **HOLD send** until suite digests.
+**NEXT:** Later the same day: **A2 Soften-conditional**, **A3 Soften**, **A4 Soften X/σ_t**. See [`DIGESTION_A1A4_SUITE.md`](DIGESTION_A1A4_SUITE.md).
+
+---
+
+## 6g. A4 (gated Soften X/σ_t — this fold)
+
+Honest 50 kHz phase-flip detection jitter vs GEOM0 1 ns.
+
+| Class | Operator-named map |
+|-------|--------------------|
+| GEOM0 model | **1 ns** — **X = 0.50 m** perfect-ref; **not** honest phase-flip |
+| **J_stretch** | **~10 ns → ~3.8 m** — **fails ≤1 m** |
+| **J_mid** | **~100–500 ns → tens of meters** |
+| JOINT1 | does **not** cancel detection jitter |
+| RF bench | **PARKED** |
+
+**Soften X/σ_t.** Kill **not** wholesale. Laptop model **remains**. Harden unsupported.
+
+**LOCK** Soften X/σ_t. **PARK** RF bench. **PARK** hardware **X**. Details: [`SCORE_A4.md`](SCORE_A4.md). Suite wrap: [`DIGESTION_A1A4_SUITE.md`](DIGESTION_A1A4_SUITE.md).
+
+**HOLD send** until DIGEST + Founder fold. **Lab HOLD invent.**
 
 ---
 
@@ -235,4 +258,4 @@ RN survey / ref-floor honesty. Frozen Chan absolute median vs truth under DGPS-c
 
 ---
 
-*Docs only. Peek succeed / #0 HARDEN / MULTIPATH1 Soften / SYNC1 Soften / JOINT1 Soften / DRIFT1 HARDEN / GATE1 Soften / abstract ingest / A1 Soften ≠ claim clearance. Prior SYNC/JOINT/DRIFT/GATE = partial sync-fragility evidence. Named DRIFT1 batch α ≠ free per-epoch realtime. GATE1 refuse belt ≠ magic repair. Perfect-ref sim X ≠ absolute X. Scoped sim X ≠ patent-facing ≤1 m xy. Not a locator. Not skill-met. Not a patent-product claim. Not rithm. Lab does not self-admit. Lab scratch was not on this VM; summary copied from the Operator gate. Write-up HOLD send until A2→A3→A4 suite digests.*
+*Docs only. Peek succeed / #0 HARDEN / MULTIPATH1 Soften / SYNC1 Soften / JOINT1 Soften / DRIFT1 HARDEN / GATE1 Soften / abstract ingest / A1 Soften / A2 Soften-conditional / A3 Soften / A4 Soften X/σ_t ≠ claim clearance. Prior SYNC/JOINT/DRIFT/GATE = partial sync-fragility evidence. Named DRIFT1 batch α ≠ free per-epoch realtime. GATE1 refuse belt ≠ magic repair. Perfect-ref sim X ≠ absolute X. Soften X/σ_t ≠ 1 ns Harden. JOINT1 ≠ detector-jitter cancel. Scoped sim X ≠ patent-facing ≤1 m xy. Not a locator. Not skill-met. Not a patent-product claim. Not rithm. Lab does not self-admit. Lab scratch / Lab DIGEST was not on this VM; summary copied from the Operator gate. Write-up HOLD send until DIGEST + Founder fold.*

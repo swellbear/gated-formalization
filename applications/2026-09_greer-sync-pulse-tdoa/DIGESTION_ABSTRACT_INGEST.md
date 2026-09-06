@@ -31,19 +31,20 @@ Hardware **X PARKED.**
 
 ## What this string must do next
 
-Later the same day: **A1 Soften** — [`DIGESTION_A1.md`](DIGESTION_A1.md). Next: **GO A2** then **A3** then **A4**. Link/map stays **PARKED**.
+Later the same day: **A1 Soften** — [`DIGESTION_A1.md`](DIGESTION_A1.md). Later still: suite **A1→A4 Soften** wrap — [`DIGESTION_A1A4_SUITE.md`](DIGESTION_A1A4_SUITE.md). Link/map stays **PARKED**.
 
-**Greer send HOLD** until the suite digests. [`GREER_WRITEUP.md`](GREER_WRITEUP.md) is **sync-fragility evidence only**.
+**Greer send HOLD** until DIGEST + Founder fold. [`GREER_WRITEUP.md`](GREER_WRITEUP.md) is **sync-fragility evidence only**.
 
 Still **no RF / ML**. Do **not** invent a fingerprint rescue. Do **not** copy claims. **Multipath later** (our MULTIPATH1 Soften is not A3).
 
 ## What stays parked / closed / hold
 
-- **A2 → A3 → A4** is the locked next suite (Soften/Harden each). **A1 Soften** is scored.
+- Suite **A1→A4 Soften** is scored — [`DIGESTION_A1A4_SUITE.md`](DIGESTION_A1A4_SUITE.md).
 - **Link/map** (GIS / CAD overlay) **PARKED**.
 - **Hardware X** stays **PARKED**.
-- **Send to Greer** stays **HOLD** until the suite digests.
-- **Lab invent** stays **HOLD** except the locked suite.
+- **RF bench** stays **PARKED**.
+- **Send to Greer** stays **HOLD** until DIGEST + Founder fold.
+- **Lab invent** stays **HOLD**.
 - **SkyMirr MuLCAT** stays its own Amb. This note does **not** reopen it.
 - **Cell-tower geometry** stays **PARKED**. Do **not** reopen as live.
 - **BIA→weight portfolio** stays **CLOSED**.
