@@ -58,13 +58,14 @@ C0 inventory is **Operator Soften** — [`DIGESTION_C0.md`](DIGESTION_C0.md). C1
 
 1. [`STATUS.md`](STATUS.md) — where we are
 2. [`NAMED_GAP_LEDGER.md`](NAMED_GAP_LEDGER.md) — the lines + freezes
-3. [`DIGESTION_STRING.md`](DIGESTION_STRING.md) — Soften Amb DIGEST / string CLOSE
-4. [`DIGESTION_C1.md`](DIGESTION_C1.md) — C1 Soften coding sheet
-5. [`DIGESTION_CLAIM_LIMB.md`](DIGESTION_CLAIM_LIMB.md) — holdout-lift limb Kill (stands)
-6. [`DIGESTION_C0.md`](DIGESTION_C0.md) — C0 Soften census (N=4/37; stands)
-7. [`PROPOSED_PULSE.md`](PROPOSED_PULSE.md) — Digestor C0–C4 menu (C0/C1 Soften; C3/C4 holdout killed; C2+ HOLD)
-8. [`DIGESTION_SPINE_STAMP.md`](DIGESTION_SPINE_STAMP.md) — Digestor spine PASS summary
-9. [`DIGESTION_FROM_GREER.md`](DIGESTION_FROM_GREER.md) — what the last string taught
-10. [`COPY_GATE.md`](COPY_GATE.md) — corpus-mining honesty
-11. [`RESIDUAL_BRANCH_MENU.md`](RESIDUAL_BRANCH_MENU.md) — decision log
-12. [`notes.md`](notes.md) — one-line pointer
+3. [`DIGESTION_C0C1_SOFTEN.md`](DIGESTION_C0C1_SOFTEN.md) — Lab DIGEST lean (C0+C1 Soften)
+4. [`DIGESTION_STRING.md`](DIGESTION_STRING.md) — Soften Amb DIGEST / string CLOSE
+5. [`DIGESTION_C1.md`](DIGESTION_C1.md) — C1 Soften coding sheet
+6. [`DIGESTION_CLAIM_LIMB.md`](DIGESTION_CLAIM_LIMB.md) — holdout-lift limb Kill (stands)
+7. [`DIGESTION_C0.md`](DIGESTION_C0.md) — C0 Soften census (N=4/37; stands)
+8. [`PROPOSED_PULSE.md`](PROPOSED_PULSE.md) — Digestor C0–C4 menu (C0/C1 Soften; C3/C4 holdout killed; C2+ HOLD)
+9. [`DIGESTION_SPINE_STAMP.md`](DIGESTION_SPINE_STAMP.md) — Digestor spine PASS summary
+10. [`DIGESTION_FROM_GREER.md`](DIGESTION_FROM_GREER.md) — what the last string taught
+11. [`COPY_GATE.md`](COPY_GATE.md) — corpus-mining honesty
+12. [`RESIDUAL_BRANCH_MENU.md`](RESIDUAL_BRANCH_MENU.md) — decision log
+13. [`notes.md`](notes.md) — one-line pointer

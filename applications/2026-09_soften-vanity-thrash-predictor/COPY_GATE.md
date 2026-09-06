@@ -15,6 +15,7 @@ This gate is required because the Amb mines early DIGESTION / SCORE / STATUS / P
 | C0 inventory table (N=4/37; earliest Soften-bearing D/S; poseable-to-code notes) | [`DIGESTION_C0.md`](DIGESTION_C0.md) | Operator **ADMIT C0 Soften** (stands) |
 | C1 coding sheet (4 eligible; scoped / vanity / unclear) | [`DIGESTION_C1.md`](DIGESTION_C1.md) | Operator **ADMIT Soften C1** |
 | Soften Amb DIGEST / string CLOSE (copied Operator gate) | [`DIGESTION_STRING.md`](DIGESTION_STRING.md) | Not patent text; not AUC |
+| Lab DIGEST lean (C0+C1 Soften; copied Operator gate) | [`DIGESTION_C0C1_SOFTEN.md`](DIGESTION_C0C1_SOFTEN.md) | Not patent text; not AUC |
 | Founder+Operator claim-limb addendum (holdout-lift **Killed**; purpose restated) | [`DIGESTION_CLAIM_LIMB.md`](DIGESTION_CLAIM_LIMB.md) | Not patent text; not AUC |
 | Greer TABLED what-taught summary (already Operator-folded on that record) | [`DIGESTION_FROM_GREER.md`](DIGESTION_FROM_GREER.md) | Prior digestion; **not** a Greer reopen |
 | Digestor spine stamp summary | [`DIGESTION_SPINE_STAMP.md`](DIGESTION_SPINE_STAMP.md) | Admit record of PASS |
@@ -35,6 +36,7 @@ This gate is required because the Amb mines early DIGESTION / SCORE / STATUS / P
 
 ## Check (this fold)
 
+- [`DIGESTION_C0C1_SOFTEN.md`](DIGESTION_C0C1_SOFTEN.md) copies the Operator Soften Amb DIGEST + string CLOSE (Lab DIGEST lean). **No claim quotes.** **No** AUC numbers invented.
 - [`DIGESTION_STRING.md`](DIGESTION_STRING.md) copies the Operator Soften Amb DIGEST / string CLOSE. **No claim quotes.** **No** AUC numbers invented.
 - [`DIGESTION_C1.md`](DIGESTION_C1.md) cites folder paths and short board-class facts (earliest Soften-bearing D/S; named kill/fail yes / no / unclear). **No claim quotes.** **No** Greer / SkyMirr claim language. Soften-without-named-kill = 0; 1 unclear (human-bia). This folder is **out of the 37**.
 - [`DIGESTION_CLAIM_LIMB.md`](DIGESTION_CLAIM_LIMB.md) restates purpose and kills the holdout-lift limb. **No claim quotes.** **No** AUC numbers invented.
