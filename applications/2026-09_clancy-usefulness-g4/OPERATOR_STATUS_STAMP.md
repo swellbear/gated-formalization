@@ -8,7 +8,7 @@ Short Operator-owned “where am I?” Soften folds **point to** this stamp. The
 | Field | Value |
 |-------|--------|
 | **Softened set (IDs / days)** | **S0 freeze + C1 Softened-G4 inventory + C2 timed-run** |
-| **Digestor park DIGEST** | **ADMITTED** (this fold) — [`DIGESTION_PARK_WHAT_TAUGHT.md`](DIGESTION_PARK_WHAT_TAUGHT.md) · [`PARK_INDEX.md`](PARK_INDEX.md) |
+| **Digestor park DIGEST** | **ADMITTED** #135 (this fold) — [`DIGESTION_PARK_WHAT_TAUGHT.md`](DIGESTION_PARK_WHAT_TAUGHT.md) · [`PARK_INDEX.md`](PARK_INDEX.md) |
 | **Amb** | **OPEN** (park DIGEST admitted; usefulness **NOT Softened — unproven**; **not** hard stop) |
 | **Hold C2/C4 (or Amb equivalents)** | **Hold Amb C2/C4** (Soften C2 = timed-run record only; **not** Amb C2/C4 GO) |
 | **Parent usefulness Softened?** | **N** — **NOT Softened — unproven** (this Amb usefulness / parent map usefulness / verdict / capacity / guilt / CR **NOT** Softened) |

@@ -9,7 +9,7 @@
 | S0 freeze #131 | Soften | 2026-09-06 | freeze poseability only; **NOT** usefulness Soften |
 | C1 Softened-G4 inventory #132 | Soften | 2026-09-06 | inventory poseability only; **NOT** usefulness Soften |
 | C2 timed-run #134 | Soften | 2026-09-06 | walls + theory match/fail documentation only; overall exit **FAIL**; **NOT** usefulness Soften |
-| Digestor true park DIGEST (this fold) | park DIGEST | 2026-09-06 | authoritative park; INTERIM **n/a**; usefulness **NOT Softened — unproven**; **not** a Soften |
+| Digestor true park DIGEST #135 | park DIGEST | 2026-09-06 | authoritative park; INTERIM **n/a**; usefulness **NOT Softened — unproven**; **not** a Soften |
 
 **Softened carry (Lab invent):** Softened (this Amb): S0 freeze + C1 Softened-G4 inventory + C2 timed-run  
 **Hold / TABLE:** **Hold Amb C2/C4**. **NO new day mapping.** Usefulness **NOT Softened — unproven**. Verdict / capacity / guilt / CR **NOT Softened**. Soften Critic **deferred**. Lab invent **STOP**. Clancy invent **STOP** until Founder GO. Evening G5 prior **≠** Soften usefulness. Greer / phone-stimp **TABLED**. Soften-vanity **CLOSED**. Parent map Amb stays its own record (S0+C1+Days 2–21 = **SOURCE carry only**).  

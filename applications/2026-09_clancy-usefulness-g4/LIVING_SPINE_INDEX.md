@@ -12,7 +12,7 @@ Digestor living spine/index board. **Not** Soften / Harden / Kill. Digestor neve
 | Field | Value |
 |-------|--------|
 | **Softened set (IDs / days)** | **S0 freeze + C1 Softened-G4 inventory + C2 timed-run** |
-| **Digestor park DIGEST** | **ADMITTED** (this fold) — [`DIGESTION_PARK_WHAT_TAUGHT.md`](DIGESTION_PARK_WHAT_TAUGHT.md) · [`PARK_INDEX.md`](PARK_INDEX.md) |
+| **Digestor park DIGEST** | **ADMITTED** #135 (this fold) — [`DIGESTION_PARK_WHAT_TAUGHT.md`](DIGESTION_PARK_WHAT_TAUGHT.md) · [`PARK_INDEX.md`](PARK_INDEX.md) |
 | **INTERIM mid-run** | **n/a** |
 | **Hold C2/C4 (or Amb equivalents)** | **Hold Amb C2/C4** (Soften C2 = timed-run record only) |
 | **Parent usefulness Softened?** | **N** — **NOT Softened — unproven** |
