@@ -4,6 +4,7 @@
 **Application:** `2026-09_clancy-media-transcript-gap-map`  
 **Role:** Digestor SOURCE-index expand. Operator **ADMIT Digestor index expand**.  
 **Digestion:** [`DIGESTION_INDEX_EXPAND.md`](DIGESTION_INDEX_EXPAND.md)  
+**Interim mid-run (Operator ADMIT; not park):** [`DIGESTION_INTERIM_MID_RUN.md`](DIGESTION_INTERIM_MID_RUN.md) · [`INTERIM_INDEX.md`](INTERIM_INDEX.md) — **NOT** `DIGESTION_PARK_WHAT_TAUGHT`. Amb **open**.  
 **SOURCE notes:** [`SOURCE.md`](SOURCE.md)  
 **Copy gate:** [`COPY_GATE.md`](COPY_GATE.md)
 
