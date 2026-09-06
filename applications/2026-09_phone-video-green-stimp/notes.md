@@ -1,6 +1,6 @@
 # Notes
 
-**Status:** see [`STATUS.md`](STATUS.md). **2026-09-06:** Operator ADMIT Soften S3 (scale honesty leftover nameable/OOM-loud). Recoverable 1.68 in ball: BRD ~9.63 ft vs true 10 ft toy, Δ ≈ −4.5 in; missing scale: absolute feet under-determined (~6.4–28.8 ft under arbitrary ppf). S3 = scale honesty (not scaffold S1=scale). NOT green-speed accuracy Soften. X unset. Soften S0–S2 + claim-scope pocket carry (Stimpmeter-class / named v0; casual-without-v0 out). Hold S4 until Operator GO — do not auto-GO; do not name X. Soften Critic not met. Greer TABLED. DIGEST: DIGESTION_S3.md · DIGESTION_CLAIM_SCOPE.md · DIGESTION_S2.md · DIGESTION_S0.md · DIGESTION_S1.md.
+**Status:** see [`STATUS.md`](STATUS.md). **2026-09-06:** Soften S0–S3 honesty scopes ADMITTED. Claim-scope pocket = recoverable scale pin AND Stimpmeter-class / named v0; missing scale and casual-without-v0 out. Soften DIGEST honesty string S0–S3 ADMITTED (park-taught Operator-folded). Soften Amb DIGEST honesty string ADMITTED. Soften S4 protocol ADMITTED (recipe poseable; X = ___ ft). Accuracy NOT Softened. X unset. Amb open. Hold S4 eval. Soften Critic not hired. Greer TABLED. DIGEST: DIGESTION_STRING.md · DIGESTION_PARK_WHAT_TAUGHT.md · PARK_INDEX.md · DIGESTION_S0S3_SOFTEN.md · DIGESTION_S4_PROTOCOL.md · DIGESTION_S3.md · DIGESTION_CLAIM_SCOPE.md.
 
 **Application:** `2026-09_phone-video-green-stimp`  
 **Date:** 2026-09-06

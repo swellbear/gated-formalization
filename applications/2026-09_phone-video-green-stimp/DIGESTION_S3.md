@@ -17,7 +17,9 @@ Method Operator **ADMIT Soften S3**. Soften scope = **scale honesty leftover nam
 
 Digestor / Founder pulse ID lock: **S3 = scale honesty** (ignore scaffold [`PROPOSED_PULSE.md`](PROPOSED_PULSE.md) remapping of S1=scale). Scale was **G3** on the S1 gap map; this pulse codes it loud.
 
-**Carry:** Soften S0–S2 + claim-scope Soften pocket (Stimpmeter-class / named v0; casual-without-v0 **out**). Soften Critic **not met**. Greer **TABLED**. **Hold S4** until Operator GO. Do **not** auto-GO S4. Do **not** name **X**.
+**Carry:** Soften S0–S2 + claim-scope Soften pocket. Soften Critic **not met**. Greer **TABLED**. **Hold S4 eval** until Operator GO. Do **not** auto-GO eval. Do **not** name **X**.
+
+**Later the same day:** Founder+Operator **ADMIT add** — pocket now **BOTH** limbs (recoverable scale pin **AND** Stimpmeter-class / named v0). Missing scale **out**. See [`DIGESTION_CLAIM_SCOPE.md`](DIGESTION_CLAIM_SCOPE.md). Soften DIGEST honesty string + Soften S4 protocol recorded separately.
 
 This does **not** Soften green-speed accuracy. It does **not** name **X**. It does **not** run S4. It does **not** hire a Soften Critic. It does **not** reopen Greer.
 
@@ -34,7 +36,7 @@ OOMs:
 
 Digestor S3=scale honesty ID locked (scaffold S1=scale remap ignored).
 
-Carry: Soften S0–S2 + claim-scope Soften pocket (Stimpmeter-class / named v0; casual-without-v0 out). Soften Critic not met. Greer TABLED. Hold S4 until Operator GO (do not auto-GO; do not name X).
+Carry: Soften S0–S2 + claim-scope Soften pocket (later BOTH limbs). Soften Critic not met. Greer TABLED. Hold S4 eval until Operator GO (do not auto-GO; do not name X).
 
 ---
 
@@ -75,8 +77,8 @@ These OOMs **name the leftover**. They do **not** name Amb **X**. They do **not*
 - Green-speed **accuracy** Soften / Harden / Kill.
 - Naming Amb **X**.
 - Treating the −4.5 in blob OOM, Sommer 6.4 in, or the USGA 8-inch cluster as **X**.
-- S4 name-**X** / eval. **Hold S4** until Operator GO. Do **not** auto-GO S4.
-- Pulling unknown casual putt without v0 recovery into the claim-scope pocket.
+- S4 eval. **Hold S4 eval** until Operator GO + **X** named. Soften S4 **protocol** is a separate poseability ADMIT.
+- Pulling unknown casual putt without v0 recovery, or missing scale, into the claim-scope pocket.
 - Soften Critic hire. Soften-vanity reopen. Greer reopen.
 
 ---
@@ -87,7 +89,7 @@ These OOMs **name the leftover**. They do **not** name Amb **X**. They do **not*
 - **X unset.** Name **X** before Soften of green-speed accuracy stands.
 - Recoverable-ball **~9.63 ft / −4.5 in** is an **OOM**, not **X**.
 - Missing-scale **~6.4–28.8 ft** span is **under-determination**, not a bar.
-- **Not** S4 run. **Hold S4**. Do **not** auto-GO S4.
+- **Not** S4 eval. **Hold S4 eval**. Do **not** auto-GO eval.
 - **Not** Soften Critic. Soften Critic **not met**. Soften-vanity stays **CLOSED**.
 - **Not** Greer reopen. Greer **TABLED**.
 - **Not** skill-met. **Not** rithm. **Not** claim clearance.
@@ -101,11 +103,11 @@ These OOMs **name the leftover**. They do **not** name Amb **X**. They do **not*
 - Do **not** leave scaffold S1=scale as authoritative. **S3 = scale honesty.**
 - Do **not** treat a recoverable-ball blob leftover as **X**.
 - Do **not** invent absolute feet when scale is missing.
-- Do **not** auto-GO S4. **Hold S4** until Operator GO.
+- Do **not** auto-GO S4 eval. **Hold S4 eval** until Operator GO.
 - Do **not** hire a Soften Critic. Soften Critic **not met**.
 - Do **not** reopen Greer. Greer **TABLED**.
 - Digestor never Soften / Harden / Kill. Lab does **not** self-admit.
 
 ---
 
-*Docs only. Operator **ADMIT Soften S3**. Scale honesty leftover nameable/OOM-loud. NOT Soften of green-speed accuracy. X unset. S3 = scale honesty (not scaffold S1=scale). S0–S2 + claim-scope pocket carry. Hold S4. Soften Critic not met. Greer TABLED. Lab does not self-admit. Digestor never Soften/Harden/Kill.*
+*Docs only. Operator **ADMIT Soften S3**. Scale honesty leftover nameable/OOM-loud. NOT Soften of green-speed accuracy. X unset. S3 = scale honesty (not scaffold S1=scale). Later: pocket BOTH limbs + honesty string + S4 protocol. Hold S4 eval. Soften Critic not met. Greer TABLED. Lab does not self-admit. Digestor never Soften/Harden/Kill.*

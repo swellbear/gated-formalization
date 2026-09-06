@@ -2,21 +2,26 @@
 
 **Date:** 2026-09-06  
 **Application:** `2026-09_phone-video-green-stimp`  
-**String:** Operator **ADMIT Soften S0** + **Soften S1** + **Soften S2** + **Soften S3** + **claim-scope Soften** / **X unset** / green-speed **accuracy not** Softened / **Hold S4**  
-**Named gap:** SOURCE board poseable; Sommer gap map honest; launch-class honesty OOM-loud; claim-scope pocket = Stimpmeter-class / named v0; scale honesty leftover nameable/OOM-loud  
+**String:** Operator **ADMIT Soften S0–S3** + **claim-scope Soften (BOTH limbs)** + **Soften DIGEST honesty string S0–S3** + **Soften S4 protocol** / **X unset** / green-speed **accuracy not** Softened / **Hold S4 eval**  
+**Named gap:** SOURCE board poseable; Sommer gap map honest; launch-class honesty OOM-loud; scale leftover OOM-loud; pocket = scale pin **AND** Stimpmeter-class / named v0  
 **S0 digestion:** [`DIGESTION_S0.md`](DIGESTION_S0.md)  
 **S1 digestion:** [`DIGESTION_S1.md`](DIGESTION_S1.md)  
 **S2 digestion:** [`DIGESTION_S2.md`](DIGESTION_S2.md)  
 **S3 digestion:** [`DIGESTION_S3.md`](DIGESTION_S3.md)  
 **Claim-scope digestion:** [`DIGESTION_CLAIM_SCOPE.md`](DIGESTION_CLAIM_SCOPE.md)  
-**Lab DIGEST lean:** [`DIGESTION_S0S1_SOFTEN.md`](DIGESTION_S0S1_SOFTEN.md)  
+**Honesty string:** [`DIGESTION_STRING.md`](DIGESTION_STRING.md)  
+**Lab DIGEST lean (S0–S3):** [`DIGESTION_S0S3_SOFTEN.md`](DIGESTION_S0S3_SOFTEN.md)  
+**S4 protocol:** [`DIGESTION_S4_PROTOCOL.md`](DIGESTION_S4_PROTOCOL.md)  
+**Park-taught:** [`DIGESTION_PARK_WHAT_TAUGHT.md`](DIGESTION_PARK_WHAT_TAUGHT.md)  
+**Honesty-stack index:** [`PARK_INDEX.md`](PARK_INDEX.md)  
+**Lab DIGEST lean (S0+S1):** [`DIGESTION_S0S1_SOFTEN.md`](DIGESTION_S0S1_SOFTEN.md)  
 **Ledger:** [`NAMED_GAP_LEDGER.md`](NAMED_GAP_LEDGER.md)  
 **SOURCE notes:** [`SOURCE.md`](SOURCE.md)  
 **Spine stamp:** [`DIGESTION_SPINE_STAMP.md`](DIGESTION_SPINE_STAMP.md)
 
-Digestor proposed pulses. Lab does **not** self-admit. **S0 Soften** admitted. **S1 Soften** admitted. **S2 Soften** admitted. **S3 Soften** admitted. **Claim-scope Soften** admitted. **Hold S4** (name-**X**) stands. Do **not** auto-GO S4. **Not a model.** Do **not** treat Sommer 6.4 in as Amb **X**. Do **not** hire a Soften Critic. Do **not** reopen Greer.
+Digestor proposed pulses. Lab does **not** self-admit. **S0–S3 Soften** admitted. **Claim-scope Soften (BOTH limbs)** admitted. **Soften DIGEST honesty string S0–S3** admitted. **Soften S4 protocol** admitted. **Hold S4 eval** stands. Do **not** auto-GO eval. **Not a model.** Do **not** treat Sommer 6.4 in as Amb **X**. Do **not** hire a Soften Critic. Do **not** reopen Greer.
 
-**ID lock (Digestor / Founder; overrides scaffold remapping):** **S0 = SOURCE**, **S1 = Sommer gap map**, **S2 = kinematics**, **S3 = scale honesty (Soften)**, **S4 = name-X (Hold)**. The #95 scaffold table that set **S1 = scale** is **not** authoritative.
+**ID lock (Digestor / Founder; overrides scaffold remapping):** **S0 = SOURCE**, **S1 = Sommer gap map**, **S2 = kinematics**, **S3 = scale honesty (Soften)**, **S4 protocol = capture recipe poseability (Soften)**, **S4 eval = name-X / paired clip (Hold)**. The #95 scaffold table that set **S1 = scale** is **not** authoritative.
 
 **What this is not:** Green speed shown. Green-speed claim Softened. **X** named. Training established. Skill-met. A product app. A Stimpmeter stick. A YOLO / giant GPU first path. Treating Sommer CI as handheld **X**. Reopening Soften-vanity. Reopening Greer invent. Sending the Greer write-up. Reopening SkyMirr invent. Reopening cell-tower as live. Reopening BIA→weight. Reopening golf-offshoot. Rithm. A Soften Critic hire.
 
@@ -24,7 +29,7 @@ Digestor proposed pulses. Lab does **not** self-admit. **S0 Soften** admitted. *
 
 ## 0. Plain-language framing
 
-**What this is:** Cheap pulses. S0 / S1 / S2 / S3 are **Operator Soften**. Claim-scope pocket is **Founder+Operator Soften**. **Hold S4** stands. Do **not** auto-GO S4.
+**What this is:** Cheap pulses. S0 / S1 / S2 / S3 are **Operator Soften**. Claim-scope pocket is **Founder+Operator Soften** (BOTH limbs). Honesty string is **Operator Soften**. S4 protocol is **Operator Soften**. **Hold S4 eval** stands. Do **not** auto-GO eval.
 
 **What S0 settled:** USGA Stimpmeter definition + procedure + named objects can be written as a citable board, with Sommer abstract objects and Holmes / Brede / Hubbard as pointers. **Not** **X**. **Not** a tracker. **Not** green-speed Soften.
 
@@ -32,11 +37,13 @@ Digestor proposed pulses. Lab does **not** self-admit. **S0 Soften** admitted. *
 
 **What S2 settled:** Launch-class honesty + constant-decel leftover nameable / OOM-loud. Stimpmeter-exit Holmes **6.00 ft/s = 72 in/s** vs unknown casual putt (toy grid 3–5 ft/s; ≠ Holmes). OOMs on [`DIGESTION_S2.md`](DIGESTION_S2.md). **Not** green-speed accuracy Soften. **Not** **X**.
 
-**What claim-scope Soften settled:** Softened pocket = Stimpmeter-class launch (~Holmes 6 ft/s) **or** named v0 recovery. Out of pocket until solved = unknown casual putt without v0 recovery. **Not** accuracy Soften. **Not** **X**. See [`DIGESTION_CLAIM_SCOPE.md`](DIGESTION_CLAIM_SCOPE.md).
+**What claim-scope Soften settled:** Softened pocket requires **BOTH** (1) recoverable scale pin (regulation ball diameter **or** known ground mark) **AND** (2) Stimpmeter-class launch (~Holmes 6 ft/s) **or** named v0 recovery. Out of pocket until solved = missing scale; unknown casual putt without v0 recovery. **Not** accuracy Soften. **Not** **X**. See [`DIGESTION_CLAIM_SCOPE.md`](DIGESTION_CLAIM_SCOPE.md).
 
 **What S3 settled:** Scale honesty leftover nameable / OOM-loud. Recoverable (known 1.68 in ball): BRD **~9.63 ft** vs true 10 ft toy, **Δ ≈ −4.5 in** (~**3.7%** blob); oracle pin **~0**. Missing scale: absolute feet under-determined (same px → **~6.4–28.8 ft** under arbitrary ppf); relative px OK. **Not** accuracy Soften. **Not** **X**. See [`DIGESTION_S3.md`](DIGESTION_S3.md).
 
-**What this is not:** Not green-speed accuracy shown. Not a reason to treat Sommer 6.4 in as handheld **X**. Not claim clearance. Not auto-GO S4.
+**What S4 protocol settled:** Docs capture recipe poseable (both pocket limbs, mount leftover, Stimpmeter GT objects, clip constraints, data sheet, refusal conditions). Placeholder `X = ___ ft` only. **Not** paired eval. **Not** accuracy Soften. **Not** naming **X**. See [`DIGESTION_S4_PROTOCOL.md`](DIGESTION_S4_PROTOCOL.md).
+
+**What this is not:** Not green-speed accuracy shown. Not a reason to treat Sommer 6.4 in as handheld **X**. Not claim clearance. Not Amb TABLE / park. Not auto-GO S4 eval.
 
 ---
 
@@ -48,9 +55,10 @@ Digestor proposed pulses. Lab does **not** self-admit. **S0 Soften** admitted. *
 | **S1** | **Sommer gap map** G1–G6 | **Operator Soften** — [`DIGESTION_S1.md`](DIGESTION_S1.md) |
 | **S2** | **kinematics** / launch-class honesty | **Operator Soften** — [`DIGESTION_S2.md`](DIGESTION_S2.md) |
 | **S3** | **scale honesty** | **Operator Soften** — [`DIGESTION_S3.md`](DIGESTION_S3.md) |
-| **S4** | **name X** | **Hold** until Operator GO. Do **not** auto-GO |
+| **S4 protocol** | **capture recipe poseability** | **Operator Soften** — [`DIGESTION_S4_PROTOCOL.md`](DIGESTION_S4_PROTOCOL.md) |
+| **S4 eval** | **name X / paired clip** | **Hold** until Operator GO + **X** named. Do **not** auto-GO |
 
-Scaffold #95 had remapped **S1 = scale**, **S2 = launch**, **S3 = mount**, **S4 = name X**. Digestor / Founder IDs **override** that remapping for S0–S3. Live S3 is **scale honesty** (G3), not mount. Live S4 is **name-X** (freeze stands; **not** this fold).
+Scaffold #95 had remapped **S1 = scale**, **S2 = launch**, **S3 = mount**, **S4 = name X**. Digestor / Founder IDs **override** that remapping for S0–S3. Live S3 is **scale honesty** (G3), not mount. Live S4 **protocol** is capture-recipe poseability (**Soften**). Live S4 **eval** is name-**X** / paired clip (**Hold**; freeze stands).
 
 ---
 
@@ -62,7 +70,8 @@ Scaffold #95 had remapped **S1 = scale**, **S2 = launch**, **S3 = mount**, **S4 
 | **S1** (**Operator Soften**; **Sommer gap map**) | **Gap map G1–G6** — mount / launch / scale / FOV / decel / CI-scope. First-class Softens nameable. **Not** a scale-sheet-as-S1. | Digestor/Founder ID lock. Honest leftovers vs Sommer literature condition. | Low (docs gap map) | **ADMIT Soften** — map honest; G1–G3 first-class Softens named. Not green-speed Soften. See [`DIGESTION_S1.md`](DIGESTION_S1.md). |
 | **S2** (**Operator Soften**; kinematics) | **Launch-class honesty + constant-decel leftover** — Stimpmeter-exit Holmes **6.00 ft/s = 72 in/s** vs unknown casual putt (toy grid 3–5 ft/s; ≠ Holmes). Constant-decel `s=v0^2/(2a)` leftover OOM-loud. | G2 / G5 first-class. Casual putt ≠ Stimpmeter launch. Holmes smuggle is feet-loud. | Low (docs OOM sheet) | **ADMIT Soften** — classes named; leftover nameable/OOM-loud. Not green-speed Soften. Not **X**. See [`DIGESTION_S2.md`](DIGESTION_S2.md). |
 | **S3** (**Operator Soften**; scale honesty) | **Scale honesty leftover nameable/OOM-loud** — recoverable (known 1.68 in ball) vs missing scale. | G3 first-class. Absolute feet need a scale pin. Scaffold S1=scale is **not** the pulse ID. | Low (docs OOM sheet) | **ADMIT Soften** — leftover nameable/OOM-loud. Recoverable: BRD ~9.63 ft vs true 10 ft toy, Δ ≈ −4.5 in (~3.7% blob); oracle pin ~0. Missing scale: same px → ~6.4–28.8 ft under arbitrary ppf; relative px OK. Not accuracy Soften. Not **X**. See [`DIGESTION_S3.md`](DIGESTION_S3.md). |
-| **S4** (**Hold**) | **Name X (ft)** before Soften of the green-speed claim. Do **not** steal Sommer 6.4 in or the USGA 8-inch cluster. | Freeze 1. Soften / Harden of the claim cannot fire while **X** is unset. | Low (docs bar freeze) | **HOLD**. Do **not** auto-GO. Kill = no honest **X** without stealing literature CI. Succeed later = named **X** (ft). **Not** green speed shown. |
+| **S4 protocol** (**Operator Soften**) | **Capture recipe poseable** — both pocket limbs, mount leftover, Stimpmeter GT objects, clip constraints, data sheet, refusal conditions. Placeholder `X = ___ ft`. | Eval cannot run from an unposeable recipe. | Low (docs) | **ADMIT Soften** — recipe poseable. Not eval. Not accuracy Soften. Not naming **X**. See [`DIGESTION_S4_PROTOCOL.md`](DIGESTION_S4_PROTOCOL.md). |
+| **S4 eval** (**Hold**) | **Name X (ft)** + paired clip before Soften of green-speed **accuracy**. Do **not** steal Sommer 6.4 in or the USGA 8-inch cluster. | Freeze 1. Soften / Harden of accuracy cannot fire while **X** is unset. | Low (docs bar freeze + later paired clip) | **HOLD**. Do **not** auto-GO. Kill = no honest **X** without stealing literature CI. Succeed later = named **X** (ft) + scored clip. **Not** green speed shown. |
 
 **Later / not this fold:** YOLO / detector train; giant GPU; product app; Stimpmeter-stick build; Soften Critic hire. Do **not** run, peek, or invent those on S0 / S1 / S2 / S3 / S4. Lab invent **HOLD**.
 
@@ -115,11 +124,11 @@ Scaffold #95 had remapped **S1 = scale**, **S2 = launch**, **S3 = mount**, **S4 
 
 **Status:** **ADMITTED** — Soften of claim **scope/pocket**. **Not** green-speed **accuracy** Soften. **X unset.**
 
-**In the pocket:** Stimpmeter-class launch (~Holmes 6 ft/s) **or** named v0 recovery.
+**In the pocket (BOTH limbs):** (1) recoverable scale pin (regulation ball diameter **or** known ground mark) **AND** (2) Stimpmeter-class launch (~Holmes 6 ft/s) **or** named v0 recovery.
 
-**Out until solved:** unknown casual putt without v0 recovery.
+**Out until solved:** missing scale; unknown casual putt without v0 recovery.
 
-Carry Soften S0–S3. Hold S4 until Operator GO. Soften Critic **not** met. Greer **TABLED**.
+Carry Soften S0–S3. Hold S4 eval until Operator GO + **X** named. Soften Critic **not hired**. Greer **TABLED**.
 
 **`DIGESTION_CLAIM_SCOPE.md`.**
 
@@ -133,18 +142,26 @@ Carry Soften S0–S3. Hold S4 until Operator GO. Soften Critic **not** met. Gree
 
 **Missing scale:** absolute feet under-determined (same px → **~6.4–28.8 ft** under arbitrary ppf); relative px OK.
 
-Digestor S3=scale honesty ID locked (scaffold S1=scale remap ignored). Carry Soften S0–S2 + claim-scope Soften. Hold S4 until Operator GO (do not auto-GO; do not name X). Soften Critic **not** met. Greer **TABLED**.
+Digestor S3=scale honesty ID locked (scaffold S1=scale remap ignored). Carry Soften S0–S2 + claim-scope Soften (BOTH limbs). Hold S4 eval until Operator GO (do not auto-GO; do not name X). Soften Critic **not hired**. Greer **TABLED**.
 
 **`DIGESTION_S3.md`.**
 
 ---
 
-## 4. Hard NO (after Soften S0 + Soften S1 + Soften S2 + Soften S3)
+## 3f. Soften DIGEST honesty string S0–S3 + Soften S4 protocol
 
-- Do **not** auto-GO S4. **Hold S4** stands.
+**Honesty string:** **ADMITTED**. Endpoint of honesty string so far. Amb **open**. **Not** accuracy Soften. **Not** Amb TABLE. See [`DIGESTION_STRING.md`](DIGESTION_STRING.md) · [`DIGESTION_S0S3_SOFTEN.md`](DIGESTION_S0S3_SOFTEN.md) · [`DIGESTION_PARK_WHAT_TAUGHT.md`](DIGESTION_PARK_WHAT_TAUGHT.md).
+
+**S4 protocol:** **ADMITTED**. Capture recipe poseable. Placeholder `X = ___ ft`. **Not** paired eval. **Not** naming **X**. See [`DIGESTION_S4_PROTOCOL.md`](DIGESTION_S4_PROTOCOL.md).
+
+---
+
+## 4. Hard NO (after Soften S0–S3 + pocket BOTH + S4 protocol)
+
+- Do **not** auto-GO S4 eval. **Hold S4 eval** stands.
 - Do **not** leave S1=scale as authoritative. **S3 = scale honesty.**
 - Do **not** treat Soften S0 or Soften S1 or Soften S2 or Soften S3 as green-speed accuracy Soften.
-- Do **not** name **X** on S0 / S1 / S2 / S3. **Hold S4**.
+- Do **not** name **X** on S0 / S1 / S2 / S3 / S4 protocol. **Hold S4 eval**. Do **not** fill `X = ___ ft`.
 - Do **not** treat the recoverable-ball −4.5 in blob OOM as **X**.
 - Do **not** invent absolute feet when scale is missing.
 - Do **not** smuggle Holmes 6.00 ft/s onto an unknown casual putt.
@@ -183,4 +200,4 @@ Digestor S3=scale honesty ID locked (scaffold S1=scale remap ignored). Carry Sof
 
 ---
 
-*Docs only. Operator ADMIT Soften S0 + S1 + S2 + S3 + claim-scope Soften. Pocket = Stimpmeter-class / named v0; casual-without-v0 out. NOT accuracy Soften. X unset. Hold S4. Soften Critic not met. Greer TABLED. Lab does not self-admit. Digestor never Soften / Harden / Kill.*
+*Docs only. Operator ADMIT Soften S0–S3 + claim-scope Soften BOTH limbs + honesty string + S4 protocol. Pocket = scale pin AND Stimpmeter-class / named v0. NOT accuracy Soften. X unset. Amb open. Hold S4 eval. Soften Critic not hired. Greer TABLED. Lab does not self-admit. Digestor never Soften / Harden / Kill.*
