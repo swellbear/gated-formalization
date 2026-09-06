@@ -3,7 +3,7 @@
 **Status:** TABLED by user. No Greer send. Lab invent HOLD. Reopen only if user asks.
 
 **Repo:** `applications/2026-09_greer-sync-pulse-tdoa` on `swellbear/gated-formalization` (master)  
-**Local working copy:** `/workspace/greer_tdoa_lab/` (sims, PREPs, PROPOSED boards, raw metrics/plots)
+**Local Lab scratch (not master admit record):** `/workspace/greer_tdoa_lab/` — sims, PREPs, local-only `PROPOSED_*` boards, `raw/`, `run_*.py`
 
 **Patent:** Kerry L. Greer — US10135667B1 — https://patents.google.com/patent/US10135667B1/en
 
@@ -38,8 +38,8 @@
 2. Admitted primary source `SOURCE.md` + master ADMIT DIGESTION `DIGESTION_ABSTRACT_INGEST.md` (not Lab-lean `ABSTRACT_INGEST_SUMMARY.md` / `PROPOSED_ABSTRACT_INGEST.md` as the admit record; not Lab scratch `SOURCE_US10135667B1.md`)  
 3. `DIGESTION_A1A4_SUITE.md`  
 4. `GREER_WRITEUP_SEND.md` + `OUTREACH_TEXT_DRAFT.md`  
-5. Boards: `PROPOSED_A1`…`A4`, earlier GEOM0→GATE1 as needed (Lab local; **not** the admit record)  
-6. `raw/` metrics + plots; `run_*.py` for reproduce  
+5. Boards: `PROPOSED_A1`…`A4`, earlier GEOM0→GATE1 as needed — **local Lab scratch** (not master admit record)  
+6. `raw/` metrics + plots; `run_*.py` for reproduce — **local Lab scratch** (not master admit record)  
 
 ---
 
@@ -50,3 +50,14 @@
 - Don’t re-skim the patent as if claims were ingested — abstract SOURCE ingest is already ADMITTED; claims stay **COPY_GATE** blocked  
 - Don’t send Greer without user OK  
 - Don’t blur claim-language copy vs primary-source ingest  
+
+---
+
+## Founder confirm addendum (2026-09-06) — honesty Soften
+
+Founder confirms the PARK_INDEX honesty Soften. Greer **TABLED**. Lab invent **HOLD**. Unchanged.
+
+1. **Abstract Amb spine admit ≠ claims admit.** Published-abstract SOURCE ingest is ADMITTED as Amb spine. Claims stay **COPY_GATE** blocked. Not a claim ingest admit.
+2. **Canonical source is `SOURCE.md`.** Not Lab scratch `SOURCE_US10135667B1.md`.
+3. **Repo DIGESTION ADMIT over local PROPOSED.** Master `DIGESTION_ABSTRACT_INGEST.md` is the admit record. Local / Lab-lean `PROPOSED_*` / `ABSTRACT_INGEST_SUMMARY.md` are **not**.
+4. **Local-only `PROPOSED` / `raw/` / `run_*.py` paths are local Lab scratch** (`/workspace/greer_tdoa_lab/`). They are **not** the master admit record.  

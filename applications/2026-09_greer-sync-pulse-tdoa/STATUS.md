@@ -23,7 +23,7 @@
 | **Optional modes** | none yet (parked open scaffold; not endpoint) |
 
 **Founder TABLED status:** [`STATUS_TABLED.md`](STATUS_TABLED.md)  
-**Park index:** [`PARK_INDEX.md`](PARK_INDEX.md)  
+**Park index:** [`PARK_INDEX.md`](PARK_INDEX.md) — Founder confirm addendum (honesty Soften): abstract Amb spine admit ≠ claims admit; canonical [`SOURCE.md`](SOURCE.md); repo DIGESTION ADMIT over local PROPOSED; local-only PROPOSED/`raw/`/`run_*.py` = Lab scratch (not master admit record)  
 **Outreach draft (not sent):** [`OUTREACH_TEXT_DRAFT.md`](OUTREACH_TEXT_DRAFT.md)  
 **Park digestion:** [`DIGESTION_PARK.md`](DIGESTION_PARK.md)  
 **Ledger:** [`NAMED_GAP_LEDGER.md`](NAMED_GAP_LEDGER.md)  
