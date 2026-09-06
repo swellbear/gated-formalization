@@ -3,7 +3,7 @@
 **For:** Kerry Greer (at your request)  
 **From:** swellbear / gated-formalization collaboration  
 **Date:** 2026-09-05  
-**Status:** **Sync-fragility evidence only.** Not a patent-hard-problem digest. Not a product pitch. Not a patent filing. Not a claim that hardware performance is proven. **HOLD send** until DIGEST + Founder fold. Suite **A1→A4 Soften** is on the record. Patent-facing bar **≤1 m xy** stands as object — **A4 J_stretch ~10 ns → ~3.8 m fails it**. **0.50 m** is **perfect-ref scoped sim only** — **Soften X/σ_t** as honest 50 kHz phase-flip (not GEOM0 1 ns). **DGPS ~0.4–0.5 m** is the named absolute floor. **RF bench PARKED.**
+**Status:** **Sync-fragility evidence only.** Not a patent-hard-problem digest. Not a product pitch. Not a patent filing. Not a claim that hardware performance is proven. **HOLD send** until Founder rewrite + user OK. Suite DIGEST **Soften Amb ADMITTED**. Patent-facing bar **≤1 m xy** stands as object — **A4 J_stretch ~10 ns → ~3.8 m fails it**. **0.50 m** is **perfect-ref scoped sim only** — **Soften X/σ_t** as honest 50 kHz phase-flip (not GEOM0 1 ns). **DGPS ~0.4–0.5 m** is the named absolute floor. **RF bench PARKED.**
 
 ---
 

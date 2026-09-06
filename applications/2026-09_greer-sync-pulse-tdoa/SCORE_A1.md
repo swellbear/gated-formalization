@@ -7,9 +7,10 @@
 **Ledger:** [`NAMED_GAP_LEDGER.md`](NAMED_GAP_LEDGER.md)  
 **Digestion:** [`DIGESTION_A1.md`](DIGESTION_A1.md)  
 **Later the same day:** **A2 Soften (conditional)** (carried) · **A3 Soften** ([`SCORE_A3.md`](SCORE_A3.md); [`DIGESTION_A3.md`](DIGESTION_A3.md)) · **A4 Soften X/σ_t** ([`SCORE_A4.md`](SCORE_A4.md))  
+**Suite DIGEST (ADMITTED Soften Amb):** [`DIGESTION_A1A4_SUITE.md`](DIGESTION_A1A4_SUITE.md)
 **Ingest triad (prior):** [`ABSTRACT_INGEST_SUMMARY.md`](ABSTRACT_INGEST_SUMMARY.md) · [`PROPOSED_ABSTRACT_INGEST.md`](PROPOSED_ABSTRACT_INGEST.md) · [`SOURCE.md`](SOURCE.md)  
 **Copy gate (prior):** [`COPY_GATE.md`](COPY_GATE.md)  
-**Greer-facing write-up (Founder PRIMARY; HOLD send until suite digests):** [`GREER_WRITEUP.md`](GREER_WRITEUP.md)  
+**Greer-facing write-up (Founder PRIMARY; HOLD send until Founder rewrite + user OK):** [`GREER_WRITEUP.md`](GREER_WRITEUP.md)  
 **Lab audit draft:** [`GREER_WRITEUP_DRAFT.md`](GREER_WRITEUP_DRAFT.md)  
 **Protocol (short):** invent→test habit [`docs/INVENT_TEST_HABIT.md`](../../docs/INVENT_TEST_HABIT.md); named-gap ledger [`docs/NAMED_GAP_LEDGER_HABIT.md`](../../docs/NAMED_GAP_LEDGER_HABIT.md). Lab invents; Operator admits / rejects / parks. Lab does **not** self-admit.
 
@@ -25,7 +26,7 @@ Lab scratch was **not** on this fold VM. Metrics below are copied from the **Ope
 
 **What this settles:** **Soften** (Kill **not** triggered). Patent-facing **absolute ≤1 m** is poseable under DGPS-class RN survey error. **Absolute ≤0.50 m is not** under that RN floor. **X = 0.50 m** stays **perfect-ref scoped sim only**. JOINT1 can scrape under 0.50 m absolute while riding the floor — **do not Harden absolute X**. Silent perfect-ref “absolute ≤0.50” language from prior GEOM0 is **Softened**.
 
-**What this is not:** Not a field locator. Not a hardware bar. Not a p90 bar. Not claim clearance. Not a multipath-robust claim. Not free per-epoch realtime. Not a reason to invent RF, ML, or fingerprints. Not a send to Greer (write-up is **HOLD** until the A2→A3→A4 suite digests).
+**What this is not:** Not a field locator. Not a hardware bar. Not a p90 bar. Not claim clearance. Not a multipath-robust claim. Not free per-epoch realtime. Not a reason to invent RF, ML, or fingerprints. Not a send to Greer (write-up is **HOLD** until Founder rewrite + user OK).
 
 ---
 
@@ -63,7 +64,7 @@ This fold does **not** re-run the sim. Numbers are the gated Lab summary.
 - JOINT1 scrape abs **0.449** @ `σ_ref = 0.5` / `σ_sync = 0` rides the floor — **do not Harden absolute X**.
 - **Not Kill.**
 
-Do **not** claim hardware. Do **not** send the Greer write-up until the A2→A3→A4 suite digests. Do **not** copy patent claim language.
+Do **not** claim hardware. Do **not** send the Greer write-up until Founder rewrite + user OK. Do **not** copy patent claim language.
 
 ---
 
@@ -108,7 +109,7 @@ Do **not** invent fingerprint / ML / RF to rescue the RN floor, loose sync, free
 >
 > Locks: patent-facing ≤1 m stands; DGPS ~0.4–0.5 m absolute floor named; Soften silent perfect-ref absolute-≤0.50 language from prior GEOM0.
 >
-> Next locked (user override suite): GO A2 then A3 then A4; Soften/Harden each. Greer send HOLD until suite digests.
+> Next locked (user override suite; later satisfied): GO A2 then A3 then A4; Soften/Harden each. Greer send HOLD until suite digests. Later the same day: suite DIGEST Soften Amb ADMITTED; remaining HOLD = Founder rewrite + user OK.
 
 **LOCK**
 
@@ -119,11 +120,11 @@ Do **not** invent fingerprint / ML / RF to rescue the RN floor, loose sync, free
 
 **LATER THE SAME DAY:** **A2 Soften (conditional)** ([`SCORE_A2.md`](SCORE_A2.md)), **A3 Soften** ([`SCORE_A3.md`](SCORE_A3.md)), and **A4 Soften X/σ_t** ([`SCORE_A4.md`](SCORE_A4.md)). **A1 Soften** still stands.
 
-**NEXT (locked):** **DIGEST + Founder fold**. Greer send **HOLD** until then.
+**NEXT (locked; later satisfied):** suite DIGEST Soften Amb **ADMITTED**. Greer send **HOLD** until Founder rewrite + user OK.
 
 **PARK** hardware **X**. Link/map GIS/CAD overlay stays **PARKED**.
 
-**HOLD** Lab invent except the locked A2→A3→A4 suite. **HOLD send** of [`GREER_WRITEUP.md`](GREER_WRITEUP.md) until the suite digests. Prior write-up = **sync-fragility evidence only**.
+**HOLD** Lab invent (no named next pulse). **HOLD send** of [`GREER_WRITEUP.md`](GREER_WRITEUP.md) until Founder rewrite + user OK. Suite DIGEST Soften Amb **ADMITTED**. Prior write-up = **sync-fragility evidence only**.
 
 **Honesty locks**
 
@@ -165,9 +166,9 @@ Cell-tower Amb stays **PARKED**. BIA→weight portfolio stays **CLOSED**. SkyMir
 - Do **not** write skill-met / elevated language.
 - Do **not** reopen `2026-09_cell-tower-geometry` as live.
 - Do **not** reopen the BIA→weight portfolio.
-- Do **not** send [`GREER_WRITEUP.md`](GREER_WRITEUP.md) until the A2→A3→A4 suite digests.
-- Do **not** unpark hardware **X**. Do **not** unpark link/map. A2 is next; A3/A4 after. Lab invent otherwise is **HOLD**.
+- Do **not** send [`GREER_WRITEUP.md`](GREER_WRITEUP.md) until Founder rewrite + user OK.
+- Do **not** unpark hardware **X**. Do **not** unpark link/map. Lab invent **HOLD** (no named next pulse).
 
 ---
 
-*Docs only. Soften ≠ claim clearance. RN floor ≠ locator. Perfect-ref sim X ≠ absolute X. Patent-facing ≤1 m stands; is not hardware. Provisional sim X is median-not-p90 and perfect-ref only. Provisional sim X ≠ hardware X. Not skill-met. Not a patent-product claim. Not rithm. No claim-language product copy. Lab does not self-admit. Lab scratch was not on this VM; summary copied from the Operator gate. Write-up HOLD send until A2→A3→A4 suite digests.*
+*Docs only. Soften ≠ claim clearance. RN floor ≠ locator. Perfect-ref sim X ≠ absolute X. Patent-facing ≤1 m stands; is not hardware. Provisional sim X is median-not-p90 and perfect-ref only. Provisional sim X ≠ hardware X. Suite DIGEST Soften Amb ADMITTED. Not skill-met. Not a patent-product claim. Not rithm. No claim-language product copy. Lab does not self-admit. Lab scratch was not on this VM; summary copied from the Operator gate. Write-up HOLD send until Founder rewrite + user OK.*

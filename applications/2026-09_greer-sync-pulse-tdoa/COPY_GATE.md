@@ -27,7 +27,7 @@ This gate is required because the owner asked us to ingest the published abstrac
 - Do **not** write a 1PPS / F9T / DGPS product embodiment.
 - Do **not** paste long description / figure / waveform / link-budget blocks.
 - Do **not** treat abstract ingest as claim clearance or as a product embodiment of US10135667B1.
-- Do **not** send the prior write-up as if it were a patent-hard-problem digest. Prior write-up = **sync-fragility evidence only**. **HOLD send** until DIGEST + Founder fold.
+- Do **not** send the prior write-up as if it were a patent-hard-problem digest. Prior write-up = **sync-fragility evidence only**. **HOLD send** until Founder rewrite + user OK. Suite DIGEST **Soften Amb ADMITTED**.
 - A4 Soften X/σ_t (50 kHz phase-flip jitter; J_mid / J_stretch) is Operator-named honesty, **not** claim-language product copy. **RF bench PARKED.**
 
 ## Check (this fold)
