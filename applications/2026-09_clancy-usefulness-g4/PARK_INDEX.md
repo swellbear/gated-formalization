@@ -1,6 +1,6 @@
 # Clancy usefulness G4 — park index (2026-09-06)
 
-**Status:** Digestor **true park DIGEST ADMITTED** (Operator 2026-09-06). Softened this Amb: **S0 freeze + C1 Softened-G4 inventory + C2 timed-run record.** Exit **FAIL** (1.2× · same theory **PASS** · ≥2× miss) → parent usefulness **NOT Softened — unproven**. Idle latch **ON**. Lab invent **STOP**. Clancy invent **STOP** until Founder GO. **Hold Amb C2/C4.** Soften Critic **deferred**. INTERIM **n/a**. Park DIGEST **authoritative**.
+**Status:** Digestor **true park DIGEST ADMITTED** (Operator 2026-09-06). Amb **TABLED** (usefulness unproven). Softened this Amb: **S0 freeze + C1 Softened-G4 inventory + C2 timed-run record.** Exit **FAIL** (1.2× · same theory **PASS** · ≥2× miss) → parent usefulness **NOT Softened — unproven**. Idle latch **ON**. Lab invent **STOP**. Clancy invent **STOP** until Founder GO. **Hold Amb C2/C4.** Soften Critic **deferred**. INTERIM **n/a**. Park DIGEST **authoritative**.
 
 **Repo:** `applications/2026-09_clancy-usefulness-g4` on `swellbear/gated-formalization` (base: current master after Soften C2 #134)
 
@@ -16,7 +16,7 @@ Media≠certified · day≠certified · closings≠evidence. Digestor proposes o
 
 | Item | State |
 |------|--------|
-| Amb | **open** (park DIGEST admitted; usefulness **NOT Softened — unproven**; **not** hard stop; **not** claim shown) |
+| Amb | **TABLED** (usefulness unproven; park DIGEST admitted; **NOT** Softened; **not** hard stop; **not** claim shown) |
 | Soften S0 freeze | **ADMITTED** (#131) — stay on master as record; board **untouched** this park fold |
 | Soften C1 Softened-G4 inventory | **ADMITTED** (#132) — stay on master as record; board **untouched** this park fold |
 | Soften C2 timed-run | **ADMITTED** (#134) — stay on master as record; overall exit **FAIL**; board **untouched** this park fold |

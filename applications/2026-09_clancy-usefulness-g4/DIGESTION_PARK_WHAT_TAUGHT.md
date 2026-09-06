@@ -2,11 +2,11 @@
 
 ### Operator ADMIT (STATUS)
 
-**Digestor true park DIGEST ADMITTED 2026-09-06 (Operator).** Softened this Amb: **S0 freeze + C1 Softened-G4 inventory + C2 timed-run record.** Exit **FAIL** (1.2× · same theory **PASS** · ≥2× miss) → parent usefulness **NOT Softened — unproven**. Idle latch **ON** · Lab invent **STOP** · Clancy invent **STOP** until Founder GO. **Hold Amb C2/C4.** Soften Critic **deferred**. Digestor never Soften/Harden/Kill. Park DIGEST ≠ Soften of usefulness. Digestor proposes only — Operator admits.
+**Digestor true park DIGEST ADMITTED 2026-09-06 (Operator).** Amb **TABLED** (usefulness unproven). Softened this Amb: **S0 freeze + C1 Softened-G4 inventory + C2 timed-run record.** Exit **FAIL** (1.2× · same theory **PASS** · ≥2× miss) → parent usefulness **NOT Softened — unproven**. Idle latch **ON** · Lab invent **STOP** · Clancy invent **STOP** until Founder GO. **Hold Amb C2/C4.** Soften Critic **deferred**. Digestor never Soften/Harden/Kill. Park DIGEST ≠ Soften of usefulness. Digestor proposes only — Operator admits.
 
 **Date:** 2026-09-06  
 **Amb:** `2026-09_clancy-usefulness-g4`  
-**Status:** Digestor **true park DIGEST** — **Operator ADMITTED**. Not Soften/Harden/Kill by Digestor. **NOT** usefulness Soften. **NOT** Soften of parent usefulness. **NOT** Soften of verdict / capacity / guilt / CR. Success bar **named** (not met). Soften Critic **not hired** (deferred).  
+**Status:** Digestor **true park DIGEST** — **Operator ADMITTED**. Amb **TABLED** (usefulness unproven). Not Soften/Harden/Kill by Digestor. **NOT** usefulness Soften. **NOT** Soften of parent usefulness. **NOT** Soften of verdict / capacity / guilt / CR. Success bar **named** (not met). Soften Critic **not hired** (deferred).  
 **Pairs with:** [`PARK_INDEX.md`](PARK_INDEX.md) (park index + Soften stack + do-not list) · [`OPERATOR_STATUS_STAMP.md`](OPERATOR_STATUS_STAMP.md) · [`STATUS.md`](STATUS.md)  
 **INTERIM mid-run:** **n/a** (this Amb never wrote an INTERIM snapshot). This park DIGEST is **authoritative**.
 
@@ -23,6 +23,7 @@ This note records **what the named-bar timed-run taught** and **what is still op
 | Soften S0 freeze | **ADMITTED** (#131) — freeze poseability only; board **untouched** this park fold |
 | Soften C1 Softened-G4 inventory | **ADMITTED** (#132) — inventory poseability only; board **untouched** this park fold |
 | Soften C2 timed-run | **ADMITTED** (#134) — walls + theory match/fail documentation only; overall exit **FAIL**; board **untouched** this park fold |
+| Amb | **TABLED** (usefulness unproven) |
 | Softened carry (this Amb) | **S0 freeze + C1 Softened-G4 inventory + C2 timed-run** |
 | Timed-run record | Side A map+charts **2.0 min** · Side B cold Rev **2.4 min** · ratio **1.2×** · same theory **PASS** · ≥2× wall **FAIL** · overall exit **FAIL** |
 | Parent usefulness | **NOT Softened — unproven** |

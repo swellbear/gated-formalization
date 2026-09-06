@@ -2,7 +2,7 @@
 
 **Amb:** `applications/2026-09_clancy-usefulness-g4`  
 **Updated:** 2026-09-06  
-**Operator idle latch:** **ON** (S0+C1+C2 Softened; park DIGEST **ADMITTED**; usefulness **NOT Softened — unproven**; Lab invent **STOP**; Clancy invent **STOP** until Founder GO)
+**Operator idle latch:** **ON** (Amb **TABLED** (usefulness unproven); S0+C1+C2 Softened; park DIGEST **ADMITTED**; usefulness **NOT Softened — unproven**; Lab invent **STOP**; Clancy invent **STOP** until Founder GO)
 
 | Admit | Kind | Date | Notes |
 |-------|------|------|-------|
@@ -12,7 +12,7 @@
 | Digestor true park DIGEST #135 | park DIGEST | 2026-09-06 | authoritative park; INTERIM **n/a**; usefulness **NOT Softened — unproven**; **not** a Soften |
 
 **Softened carry (Lab invent):** Softened (this Amb): S0 freeze + C1 Softened-G4 inventory + C2 timed-run  
-**Hold / TABLE:** **Hold Amb C2/C4**. **NO new day mapping.** Usefulness **NOT Softened — unproven**. Verdict / capacity / guilt / CR **NOT Softened**. Soften Critic **deferred**. Lab invent **STOP**. Clancy invent **STOP** until Founder GO. Evening G5 prior **≠** Soften usefulness. Greer / phone-stimp **TABLED**. Soften-vanity **CLOSED**. Parent map Amb stays its own record (S0+C1+Days 2–21 = **SOURCE carry only**).  
+**Hold / TABLE:** Amb **TABLED** (usefulness unproven). **Hold Amb C2/C4**. **NO new day mapping.** Usefulness **NOT Softened — unproven**. Verdict / capacity / guilt / CR **NOT Softened**. Soften Critic **deferred**. Lab invent **STOP**. Clancy invent **STOP** until Founder GO. Evening G5 prior **≠** Soften usefulness. Greer / phone-stimp **TABLED**. Soften-vanity **CLOSED**. Parent map Amb stays its own record (S0+C1+Days 2–21 = **SOURCE carry only**).  
 **Authority:** Operator writes Soften/Kill/park admits here; Lab reads at invent start + before finalize. Do **not** rely on chat Softened lists. Idle latch **ON** = invent **STOP** (not GO). Park DIGEST **authoritative**: [`DIGESTION_PARK_WHAT_TAUGHT.md`](DIGESTION_PARK_WHAT_TAUGHT.md) · [`PARK_INDEX.md`](PARK_INDEX.md).
 
 **Operator stamp:** [`OPERATOR_STATUS_STAMP.md`](OPERATOR_STATUS_STAMP.md)  
