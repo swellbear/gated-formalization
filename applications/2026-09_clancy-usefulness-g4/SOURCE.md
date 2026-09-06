@@ -2,14 +2,15 @@
 
 **Date:** 2026-09-06  
 **Application:** `2026-09_clancy-usefulness-g4`  
-**Role:** notes summary. Operator **ADMIT Soften S0** — freeze poseability only. **NOT** Soften of usefulness / verdict. Softened (this Amb): **S0 freeze**. Parent Clancy Softened S0+C1+Days 2–21 = **SOURCE carry only**. Prior usefulness_check = **media≠certified** (not a certified Soften). Evening G5 prior **≠** Soften usefulness.
+**Role:** notes summary. Operator **ADMIT Soften S0** — freeze poseability only. Operator **ADMIT Soften C1** — Softened-G4 inventory poseability only. **NOT** Soften of usefulness / verdict / capacity / guilt. Softened (this Amb): **S0 freeze + C1 Softened-G4 inventory**. Parent Clancy Softened S0+C1+Days 2–21 = **SOURCE carry only**. Prior usefulness_check = **media≠certified** (not a certified Soften). Evening G5 prior **≠** Soften usefulness.
 
 **Copy gate:** [`COPY_GATE.md`](COPY_GATE.md)  
 **Operator stamp:** [`OPERATOR_STATUS_STAMP.md`](OPERATOR_STATUS_STAMP.md)  
 **S0 digestion:** [`DIGESTION_S0.md`](DIGESTION_S0.md)  
+**C1 digestion:** [`DIGESTION_C1.md`](DIGESTION_C1.md)  
 **Lab path:** `/workspace/clancy_usefulness_lab/` (pointer only; **not** in this checkout)
 
-This file holds **bibliographic pointers** plus a short paraphrase of what the usefulness check sits on, plus Lab path pointers. It does **not** hold the certified court-reporter record. It does **not** hold long transcript. It is **not** legal advice and **not** claim-language product copy. Long transcript paste stays [`COPY_GATE.md`](COPY_GATE.md) blocked. S0 freeze digestion lives in [`DIGESTION_S0.md`](DIGESTION_S0.md).
+This file holds **bibliographic pointers** plus a short paraphrase of what the usefulness check sits on, plus Lab path pointers. It does **not** hold the certified court-reporter record. It does **not** hold long transcript. It is **not** legal advice and **not** claim-language product copy. Long transcript paste stays [`COPY_GATE.md`](COPY_GATE.md) blocked. S0 freeze digestion lives in [`DIGESTION_S0.md`](DIGESTION_S0.md). C1 Softened-G4 inventory digestion lives in [`DIGESTION_C1.md`](DIGESTION_C1.md).
 
 **Method practice only.** Do **not** treat Rev as certified record. Do **not** dump all days. Do **not** Soften verdict / mistrial / retrial. Do **not** treat parent Softened boards as this Amb Soften.
 
@@ -62,6 +63,19 @@ Parent Amb: `2026-09_clancy-media-transcript-gap-map`. Parent Softened **S0 + C1
 
 ---
 
+## 2b. This Amb C1 Softened-G4 inventory (poseability)
+
+Operator **ADMIT Soften C1**. Inventory rows = the parent Softened G4 objects already listed in §2, weighted on the S0 freeze spine (primary 10,11,15,16,18,19,20,21 · support 6,7,9,12 · light 2,4,5,8,13,14). Census + IDs live in [`DIGESTION_C1.md`](DIGESTION_C1.md). **No new day mapping.** **No invented JSON object IDs.**
+
+| Lab source (requested) | This VM |
+|------------------------|---------|
+| `/workspace/clancy_usefulness_lab/PROPOSED_C1.md` | **not receivable** — pointer only |
+| `/workspace/clancy_usefulness_lab/raw/c1_g4_inventory.json` | **not receivable** — do **not** invent the JSON |
+
+C1 Soften ≠ usefulness Soften. C1 Soften ≠ Soften of those parent days as this Amb Softened set beyond S0+C1 inventory poseability.
+
+---
+
 ## 3. Prior usefulness_check (media≠certified)
 
 | Field | Value |
@@ -92,6 +106,8 @@ Lab `/workspace/clancy_usefulness_lab/` is **not** in this checkout. **Pointer o
 |------|------|-----|
 | `/workspace/clancy_usefulness_lab/` | This Amb Lab root | Usefulness Soften; certified record; copied corpus |
 | `/workspace/clancy_usefulness_lab/viz/` | Illustrator bootstraps | Invented chart; usefulness Soften |
+| `/workspace/clancy_usefulness_lab/PROPOSED_C1.md` | Lab C1 proposal board (not receivable this VM) | Copied file; invented JSON IDs; usefulness Soften |
+| `/workspace/clancy_usefulness_lab/raw/c1_g4_inventory.json` | Lab inventory dump (not receivable this VM) | Copied / invented JSON; invented object IDs |
 
 ---
 
@@ -104,8 +120,9 @@ Lab `/workspace/clancy_usefulness_lab/` is **not** in this checkout. **Pointer o
 - **Bar named ≠ usefulness Soften.** ≥2× time + same theory is the bar, not clearance.
 - **Laptop-only.** Method practice. Not legal advice. Not a product.
 - **Evening G5 prior ≠ Soften usefulness.**
-- **S0 freeze ≠ usefulness Soften.** Softened (this Amb): S0 freeze only.
+- **S0 freeze ≠ usefulness Soften.** Softened (this Amb): S0 freeze + C1 Softened-G4 inventory.
+- **C1 inventory ≠ usefulness Soften.** Parent Softened G4 objects remain carry; inventory is poseability only. Do **not** invent lab JSON IDs.
 
 ---
 
-*Docs only. Soften S0 freeze poseability. Not usefulness Soften. Not verdict Soften. Hold C2/C4. Lab `/workspace/clancy_usefulness_lab/` pointer only.*
+*Docs only. Soften S0 freeze + C1 Softened-G4 inventory poseability. Not usefulness Soften. Not verdict Soften. Hold Amb C2/C4. Lab `/workspace/clancy_usefulness_lab/` pointer only.*
