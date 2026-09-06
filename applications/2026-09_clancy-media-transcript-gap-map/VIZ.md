@@ -29,7 +29,7 @@ PNG + md were **not receivable** on this Operator VM. Lab `/workspace/clancy_lab
 | Board | Lab path | What the refreshed board shows | What it is not |
 |-------|----------|--------------------------------|----------------|
 | Soften-fold chart | `/workspace/clancy_lab/viz/soften_fold_c1_c3.png` + `soften_fold_c1_c3.md` | Illustrator Soften-fold of C1 → C3. **Softened Day 19 G4-D19 PRIMARY · G6-D19 TOUCH · G2-D19 LIGHT · G5-D19 LIGHT.** Softened **D2–D18 stay.** | Usefulness Soften; certified fact; verdict; capacity/guilt/CR Soften; rewrite of Softened D2–D18; invented chart |
-| Living twin | `/workspace/clancy_lab/viz/claim_clash_map.png` + `claim_clash_map.md` | Illustrator living twin of the claim/clash map (same G4-D19 PRIMARY · G6-D19 TOUCH · G2-D19 LIGHT · G5-D19 LIGHT; Softened D2–D18 stay) | Case-solving; Soften of either side |
+| Living Softened D19 twin | `/workspace/clancy_lab/viz/claim_clash_map.png` + `claim_clash_map.md` | Illustrator living Softened D19 claim/clash map (G4-D19 PRIMARY · G6-D19 TOUCH · G2-D19 LIGHT · G5-D19 LIGHT; Softened D2–D18 stay) | Case-solving; Soften of either side |
 
 Copy into `viz/` later if Operator can receive the files. Until then, **do not** invent a replacement chart. This is a **pointer refresh**, not a new Soften.
 
