@@ -48,7 +48,7 @@ Rev page stamps below are **media** when already on [`SOURCE.md`](SOURCE.md). Ne
 | Day 12 | day | https://www.rev.com/transcripts/ma-v-lindsay-clancy-day-12 | **live** | **Softened** — C3 Day 12 (**ADMITTED**; board **untouched** this fold) |
 | Day 13 | day | https://www.rev.com/transcripts/ma-v-lindsay-clancy-day-13 | **live** | **Softened** — C3 Day 13 cyber-forensic-examiner backup (on master **#120**; board **untouched**) |
 | Day 14 | day | https://www.rev.com/transcripts/ma-v-lindsay-clancy-day-14 | **live** | **Softened** — C3 Day 14 digital-evidence backup |
-| Day 15 | day | https://www.rev.com/transcripts/ma-v-lindsay-clancy-day-15 | **live** | **Softened** — C3 Day 15 psychopharm-only / NO SoC / NO CR opinion (**ADMITTED**; board **untouched**; **no** digest invent this fold) |
+| Day 15 | day | https://www.rev.com/transcripts/ma-v-lindsay-clancy-day-15 | **live** | **Softened** — C3 Day 15 psychopharm-only / NO SoC / NO CR opinion (on master **#121**; board **untouched**) |
 | Day 16 | day | https://www.rev.com/transcripts/ma-v-lindsay-clancy-day-16 | **live** | **Softened** — C3 Day 16 Condie continued-direct CR-opinion backup (stamp **2026-08-20**) |
 | Day 17 | day | https://www.rev.com/transcripts/ma-v-lindsay-clancy-day-17 | **live** | Digestor index; **not Softened** |
 | Day 18 | day | https://www.rev.com/transcripts/ma-v-lindsay-clancy-day-18 | **live** | **Softened** — C3 Day 18 named backup (board **untouched**) |

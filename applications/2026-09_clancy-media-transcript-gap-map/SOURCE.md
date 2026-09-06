@@ -80,6 +80,7 @@ Rev page dates below are **Rev page stamps** (media), **not** a certified court 
 | Day 11 | day | https://www.rev.com/transcripts/ma-v-lindsay-clancy-day-11 | 2026-08-12 | **Founder starter** — C3 Day 11 (on master **#110**; board **untouched**) |
 | Day 13 | day | https://www.rev.com/transcripts/ma-v-lindsay-clancy-day-13 | 2026-08-17 | Digestor index — C3 Day 13 named cyber-forensic-examiner backup (**Soften**; **day≠certified**; on master **#120**; board **untouched**) |
 | Day 14 | day | https://www.rev.com/transcripts/ma-v-lindsay-clancy-day-14 | 2026-08-18 | **Founder starter** — C3 Day 14 named digital-evidence backup (**Soften**; **day≠certified**; board **untouched**) |
+| Day 15 | day | https://www.rev.com/transcripts/ma-v-lindsay-clancy-day-15 | 2026-08-20 | Digestor index — C3 Day 15 named Condie psychopharm-expert + Susan MIL backup (**Soften**; **day≠certified**; on master **#121**; board **untouched**) |
 | Day 16 | day | https://www.rev.com/transcripts/ma-v-lindsay-clancy-day-16 | 2026-08-20 | Digestor index — C3 Day 16 named Condie continued-direct CR-opinion backup (**Soften**; **day≠certified**; stamp **2026-08-20**) |
 | Day 18 | day | https://www.rev.com/transcripts/ma-v-lindsay-clancy-day-18 | 2026-08-23 | **Founder starter** — C3 named backup (**Soften**; **day≠certified**; board **untouched**) |
 | Day 19 | day | https://www.rev.com/transcripts/ma-v-lindsay-clancy-day-19 | 2026-08-25 | **noted** — not starter |

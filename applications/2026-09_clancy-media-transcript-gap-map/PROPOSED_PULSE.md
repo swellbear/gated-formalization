@@ -16,6 +16,7 @@
 **C3 Day 9 digestion (on master #117; board untouched):** [`DIGESTION_C3_DAY9.md`](DIGESTION_C3_DAY9.md)  
 **C3 Day 3 digestion (on master #112; board untouched):** [`DIGESTION_C3_DAY3.md`](DIGESTION_C3_DAY3.md)  
 **C3 Day 13 digestion (on master #120; board untouched):** [`DIGESTION_C3_DAY13.md`](DIGESTION_C3_DAY13.md)  
+**C3 Day 15 digestion (on master #121; board untouched):** [`DIGESTION_C3_DAY15.md`](DIGESTION_C3_DAY15.md)  
 **C3 Day 16 digestion (primary):** [`DIGESTION_C3_DAY16.md`](DIGESTION_C3_DAY16.md)  
 **Index expand:** [`REV_DAY_INDEX.md`](REV_DAY_INDEX.md) · [`DIGESTION_INDEX_EXPAND.md`](DIGESTION_INDEX_EXPAND.md)  
 **Interim mid-run (not park):** [`DIGESTION_INTERIM_MID_RUN.md`](DIGESTION_INTERIM_MID_RUN.md) · [`INTERIM_INDEX.md`](INTERIM_INDEX.md)  
@@ -185,7 +186,7 @@ Do **not** remap these IDs. Digestor IDs override any later scaffold remapping.
 2. Named **13 day claims** (defense-condie-continued / commonwealth-cross / media-honesty separate).
 3. Named extending gaps **G4-D16 PRIMARY / G6-D16 TOUCH heavy / G2-D16 LIGHT / G5-D16 LIGHT** as clashes, not Soften of either side.
 4. Locked **day≠certified**. Closings still ≠ evidence. **CR opinion ≠ Soften of capacity / guilt / CR as certified fact.** **NOT** a Softened D15 or D18 duplicate.
-5. Left Softened Days **2–15 + 18** boards **untouched**. Softened Day 15 psychopharm-only / NO SoC **untouched**. Day 13 already on master as **#120**.
+5. Left Softened Days **2–15 + 18** boards **untouched**. Softened Day 15 psychopharm-only / NO SoC **untouched**. Day 13 already on master as **#120**. Day 15 already on master as **#121**.
 6. Stayed [`COPY_GATE.md`](COPY_GATE.md) **short fair-use spans**. CR opinion **SHORT**. Tewksbury Ex ~283 **SUMMARY**.
 7. Did **not** name the success bar. Did **not** run C2. Did **not** dump further days. Did **not** park INTERIM.
 

@@ -4,7 +4,7 @@
 **Application:** `2026-09_clancy-media-transcript-gap-map`  
 **String:** C3 Day 16 day-pulse #16 (G4 PRIMARY new defense CR-opinion kind + G6 TOUCH heavy + G2 LIGHT + G5 LIGHT; Condie continued-direct / CW credential-role / Tewksbury Ex ~283 SUMMARY) — Operator **Soften**  
 **Habit:** [`docs/DIGESTION_HABIT.md`](../../docs/DIGESTION_HABIT.md)  
-**Parent:** Soften S0 #101 · Soften C1 #102 · Soften C3 Day 18 #103 · Soften C3 Day 14 #105 · Soften C3 Day 7 #109 · Soften C3 Day 11 #110 · Soften C3 Day 2 #111 · Soften C3 Day 3 #112 · Soften C3 Day 4 #113 · Soften C3 Day 10 #118 · Soften C3 Day 9 #117 · Soften C3 Day 13 #120  
+**Parent:** Soften S0 #101 · Soften C1 #102 · Soften C3 Day 18 #103 · Soften C3 Day 14 #105 · Soften C3 Day 7 #109 · Soften C3 Day 11 #110 · Soften C3 Day 2 #111 · Soften C3 Day 3 #112 · Soften C3 Day 4 #113 · Soften C3 Day 10 #118 · Soften C3 Day 9 #117 · Soften C3 Day 13 #120 · Soften C3 Day 15 #121  
 **S0 digestion (stands):** [`DIGESTION_S0.md`](DIGESTION_S0.md)  
 **C1 digestion (stands):** [`DIGESTION_C1.md`](DIGESTION_C1.md)  
 **C3 Day 18 digestion (stands; board untouched):** [`DIGESTION_C3.md`](DIGESTION_C3.md)  
@@ -17,7 +17,8 @@
 **C3 Day 9 digestion (stands; on master #117; board untouched):** [`DIGESTION_C3_DAY9.md`](DIGESTION_C3_DAY9.md)  
 **C3 Day 3 digestion (stands; on master #112; board untouched):** [`DIGESTION_C3_DAY3.md`](DIGESTION_C3_DAY3.md)  
 **C3 Day 13 digestion (stands; on master #120; board untouched):** [`DIGESTION_C3_DAY13.md`](DIGESTION_C3_DAY13.md)  
-**Softened Days 2–15 + 18 boards:** Operator-**ADMITTED** (Day 15 = psychopharm-only / NO SoC / NO CR opinion; **no** rewrite this fold). Days 3 / 5 / 6 / 8 / 12 / 15 may land in parallel (**no** invent of those digest files this fold).  
+**C3 Day 15 digestion (stands; on master #121; board untouched):** [`DIGESTION_C3_DAY15.md`](DIGESTION_C3_DAY15.md) — psychopharm-only / NO SoC / NO CR opinion  
+**Softened Days 2–15 + 18 boards:** Operator-**ADMITTED** (Day 15 = psychopharm-only / NO SoC / NO CR opinion; **no** rewrite this fold). Days 5 / 6 / 8 / 12 may land in parallel (**no** invent of those digest files this fold).  
 **Pulse menu:** [`PROPOSED_PULSE.md`](PROPOSED_PULSE.md)  
 **Ledger:** [`NAMED_GAP_LEDGER.md`](NAMED_GAP_LEDGER.md)  
 **STATUS:** [`STATUS.md`](STATUS.md)  
@@ -33,7 +34,7 @@ This is **whole-trial claim/clash map practice**, **not** case-solving. Argument
 ## 0. Operator ADMIT (copied verbatim)
 
 **Application:** `applications/2026-09_clancy-media-transcript-gap-map/`  
-**Parent:** Soften S0 #101 · Soften C1 #102 · Soften C3 Day 18 #103 · Soften C3 Day 14 #105 · Soften C3 Day 7 #109 · Soften C3 Day 11 #110 · Soften C3 Day 2 #111 · Soften C3 Day 3 #112 · Soften C3 Day 4 #113 · Soften C3 Day 10 #118 · Soften C3 Day 9 #117 · Soften C3 Day 13 #120
+**Parent:** Soften S0 #101 · Soften C1 #102 · Soften C3 Day 18 #103 · Soften C3 Day 14 #105 · Soften C3 Day 7 #109 · Soften C3 Day 11 #110 · Soften C3 Day 2 #111 · Soften C3 Day 3 #112 · Soften C3 Day 4 #113 · Soften C3 Day 10 #118 · Soften C3 Day 9 #117 · Soften C3 Day 13 #120 · Soften C3 Day 15 #121
 
 Soften C3 Day 16 ADMITTED 2026-09-06 (pulse only / map-extension poseability only):
 • G4-D16 PRIMARY — NEW defense CR-opinion kind: Condie continued direct after Softened Day 15 psychopharm-only / NO SoC / NO CR opinion — Nov 29 dissociation/derealization; Dec 2 South Shore; Aspire ×2; Seroquel/Remeron/Klonopin zombie/anhedonia; W&I/MGH/McLean taper; Jan voices/Google; Jan 24 everyday tasks ≠ rules out psychosis; Hare PCL → no ASPD; CR opinion SHORT (bipolar + postpartum psychosis; unable to conform; no appreciation of wrongfulness). NEW kind after Softened D15 psychopharm-only AND after Softened D18 Resnick/Mack — NOT a Softened D15 or D18 duplicate.
@@ -58,7 +59,8 @@ Standing GO: Lab invent/hand **Day 17** next, then remaining Digestor live days 
 - Soften C3 Day 9 **ADMITTED** (#117; board **untouched**)
 - Soften C3 Day 3 **ADMITTED** (#112; board **untouched**)
 - Soften C3 Day 13 **ADMITTED** (#120; board **untouched**)
-- Soften C3 Days 5 / 6 / 8 / 12 / 15 **ADMITTED** by Operator even if folds land in parallel (boards **untouched**; Day 15 = psychopharm-only / NO SoC / NO CR opinion — **no** Day 15 rewrite)
+- Soften C3 Day 15 **ADMITTED** (#121; board **untouched**; psychopharm-only / NO SoC / NO CR opinion — **no** Day 15 rewrite)
+- Soften C3 Days 5 / 6 / 8 / 12 **ADMITTED** by Operator even if folds land in parallel (boards **untouched**)
 - Digestor index expand **ADMITTED** (stands; still **NOT** park)
 - Digestor INTERIM mid-run **ADMITTED** (stands; remains **interim (NOT park)**)
 - Soften Critic **not hired**

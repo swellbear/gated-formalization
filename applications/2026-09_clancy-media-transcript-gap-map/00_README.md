@@ -71,6 +71,7 @@ S0 + C1 + C3 + C3 Day 14 + C3 Day 13 + C3 Day 16 are **Operator Soften**. Soften
 6b3. [`DIGESTION_C3_DAY9.md`](DIGESTION_C3_DAY9.md) — C3 Day 9 day-pulse #11 map-extension Soften (on master **#117**; board **untouched**)
 6b4. [`DIGESTION_C3_DAY3.md`](DIGESTION_C3_DAY3.md) — C3 Day 3 day-pulse #6 map-extension Soften (on master **#112**; board **untouched**)
 6c. [`DIGESTION_C3_DAY13.md`](DIGESTION_C3_DAY13.md) — C3 Day 13 day-pulse #14 map-extension Soften (on master **#120**; board **untouched**)
+6c2. [`DIGESTION_C3_DAY15.md`](DIGESTION_C3_DAY15.md) — C3 Day 15 day-pulse #15 map-extension Soften (on master **#121**; board **untouched**; psychopharm-only / NO SoC / NO CR opinion)
 6d. [`DIGESTION_C3_DAY16.md`](DIGESTION_C3_DAY16.md) — C3 Day 16 day-pulse #16 map-extension Soften (primary)
 7. [`REV_DAY_INDEX.md`](REV_DAY_INDEX.md) · [`DIGESTION_INDEX_EXPAND.md`](DIGESTION_INDEX_EXPAND.md) — Digestor index expand
 7b. [`DIGESTION_INTERIM_MID_RUN.md`](DIGESTION_INTERIM_MID_RUN.md) · [`INTERIM_INDEX.md`](INTERIM_INDEX.md) — Digestor INTERIM mid-run (**not** park; Amb **open**)
