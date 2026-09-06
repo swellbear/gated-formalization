@@ -15,7 +15,7 @@
 
 Method Operator **ADMIT suite DIGEST Soften Amb**. **Not Harden. Not wholesale Kill.** Lab scratch / Lab DIGEST was **not** on the prior fold VM; this file was first scaffolded from the Operator gate and is now the **admitted** suite DIGEST. A1–A4 individual SCORE / DIGESTION are on disk. This does **not** score a locator. It does **not** copy claims. It does **not** send to Greer.
 
-**What this is not:** A locator. Claim clearance. Harden of the Amb. Wholesale Kill of the laptop model. Hardware **X**. An RF bench. Skill-met. Training. Rithm. A Founder rewrite. A send.
+**What this is not:** A locator. Claim clearance. Harden of the Amb. Wholesale Kill of the laptop model. Hardware **X**. An RF bench. Skill-met. Training. Rithm. A send (send-candidate is Soften-admit only; **HOLD send** until user OK).
 
 ---
 
@@ -27,7 +27,7 @@ Method Operator **ADMIT suite DIGEST Soften Amb**. **Not Harden. Not wholesale K
 - Bars: **≤1 m** patent-facing; **X=0.50** perfect-ref only; **DGPS RN floor ~0.4–0.5 m** named.
 - **A1 Soften** · **A2 Soften-conditional** (JOINT1+~2.5 ns) · **A3 Soften** (mild/intermittent LE) · **A4 Soften X/σ_t** (jitter ≫1 ns; RF PARKED).
 - **Lab invent HOLD** (no named next pulse).
-- **Greer send HOLD** until DIGEST + **Founder rewrite** + **user OK**.
+- **Greer send HOLD** until **user OK**. Founder rewrite is on disk as [`GREER_WRITEUP_SEND.md`](GREER_WRITEUP_SEND.md) (**Soften-admit send-candidate**).
 - Prior write-up = **sync-fragility evidence only**.
 
 **No** claim-language product copy.
@@ -42,7 +42,7 @@ Method Operator **ADMIT suite DIGEST Soften Amb**. **Not Harden. Not wholesale K
 - **DGPS RN floor ~0.4–0.5 m** named.
 - A1 Soften · A2 Soften-conditional (JOINT1+~2.5 ns) · A3 Soften (mild/intermittent LE) · A4 Soften X/σ_t (jitter ≫1 ns; RF PARKED).
 - Lab invent **HOLD** — **no named next pulse**.
-- Greer send **HOLD** until this DIGEST + Founder rewrite + user OK.
+- Greer send **HOLD** until user OK. Founder rewrite on disk: [`GREER_WRITEUP_SEND.md`](GREER_WRITEUP_SEND.md) (**Soften-admit send-candidate**).
 - Prior write-up = sync-fragility evidence only.
 
 ---
@@ -130,14 +130,14 @@ US10135667B1 — owner-requested **collaboration framing**. Published abstract i
 
 **Lab invent HOLD** — **no named next pulse**. Still **no RF / ML**. Do **not** invent a fingerprint rescue. Do **not** copy claims. Do **not** unpark an RF bench.
 
-**Greer send HOLD** until this DIGEST + **Founder rewrite** + **user OK**. [`GREER_WRITEUP.md`](GREER_WRITEUP.md) stays **sync-fragility evidence only**. This DIGEST is **not** the Founder send file.
+**Greer send HOLD** until **user OK**. Founder rewrite is on disk as [`GREER_WRITEUP_SEND.md`](GREER_WRITEUP_SEND.md) (**Soften-admit send-candidate**). [`GREER_WRITEUP.md`](GREER_WRITEUP.md) stays **sync-fragility evidence only**. This DIGEST is **not** the Founder send file.
 
 ## What stays parked / closed / hold
 
 - **RF bench** **PARKED**.
 - **Hardware X** stays **PARKED**.
 - **Link/map** **PARKED**.
-- **Send to Greer** stays **HOLD** until Founder rewrite + user OK.
+- **Send to Greer** stays **HOLD** until user OK. Send-candidate is on disk.
 - **Lab invent** stays **HOLD** (no named next pulse).
 - **SkyMirr MuLCAT** stays its own Amb.
 - **Cell-tower geometry** stays **PARKED**.
@@ -146,8 +146,8 @@ US10135667B1 — owner-requested **collaboration framing**. Published abstract i
 - **Track B invent** stays **paused**.
 - **llm-gwt R-REPL** stays **parked**.
 
-This note does **not** authorize a send. It does **not** show a TDOA locator. It does **not** start training. It does **not** Harden the Amb. It does **not** Kill the laptop model wholesale. It does **not** unpark hardware **X**.
+This note does **not** authorize a send. The send-candidate is **Soften-admit** only. It does **not** show a TDOA locator. It does **not** start training. It does **not** Harden the Amb. It does **not** Kill the laptop model wholesale. It does **not** unpark hardware **X**.
 
 ---
 
-*Operator ADMIT suite DIGEST Soften Amb. Soften ≠ Harden. Soften ≠ wholesale Kill. Soften ≠ claim clearance. Soften X/σ_t ≠ 1 ns Harden. Prior write-up = sync-fragility evidence only. No claim-language product copy. Not skill-met. Not rithm. Lab does not self-admit. Lab invent HOLD (no named next pulse). Greer send HOLD until Founder rewrite + user OK.*
+*Operator ADMIT suite DIGEST Soften Amb. Soften ≠ Harden. Soften ≠ wholesale Kill. Soften ≠ claim clearance. Soften X/σ_t ≠ 1 ns Harden. Soften-admit send-candidate on disk. Prior write-up = sync-fragility evidence only. No claim-language product copy. Not skill-met. Not rithm. Lab does not self-admit. Lab invent HOLD (no named next pulse). Greer send HOLD until user OK.*
