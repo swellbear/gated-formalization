@@ -193,4 +193,6 @@ Mistrial ~Sep 4 is a **public-report pointer** so the claim window is named. It 
 
 **Later the same day (Operator ADMIT Soften C1):** 8-claim census + G1–G7 poseable. **NOT** usefulness Soften. **Success bar unset.** **Hold C2–C4.** See [`DIGESTION_C1.md`](DIGESTION_C1.md).
 
-*Docs only. Operator **ADMIT Soften S0**. Later same day: Soften C1. SOURCE board poseable/citable. NOT Soften of the parent usefulness claim. Success bar unset. Hold C2–C4. Soften Critic not hired. Greer TABLED invent HOLD. phone-stimp TABLED invent HOLD. Soften-vanity CLOSED. Lab does not self-admit. Digestor never Soften/Harden/Kill.*
+**Later the same day (Operator ADMIT Soften C3):** ONE named Day 18 backup for Softened C1 G4 (primary) + G5 (touch). 10 day claims by class. Extending gaps G4-D18 / G5-D18 / G2-D18 / G6-D18. **NOT** usefulness Soften. **Success bar unset.** **NOT** Day 18 as certified fact. Closings still ≠ evidence. **Hold C2 / C4.** **Hold further days.** See [`DIGESTION_C3.md`](DIGESTION_C3.md).
+
+*Docs only. Operator **ADMIT Soften S0**. Later same day: Soften C1 + Soften C3. SOURCE board poseable/citable. NOT Soften of the parent usefulness claim. Success bar unset. Hold C2/C4. Hold further days. Soften Critic not hired. Greer TABLED invent HOLD. phone-stimp TABLED invent HOLD. Soften-vanity CLOSED. Lab does not self-admit. Digestor never Soften/Harden/Kill.*

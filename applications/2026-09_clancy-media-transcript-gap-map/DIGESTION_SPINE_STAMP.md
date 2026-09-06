@@ -69,4 +69,6 @@ Digestor never Soften / Harden / Kill. Digestor stamps whether a new Amb spine i
 
 **Later the same day (Operator ADMIT Soften C1):** 8-claim census + G1–G7 poseable. Clash named as clash, **not** Soften of either side. Usefulness claim **not** Softened. **Success bar unset.** **Hold C2–C4.** See [`DIGESTION_C1.md`](DIGESTION_C1.md).
 
-*Digestor spine stamp Operator-folded. PASS stands. Later same day: Soften S0 + Soften C1. Hold C2–C4.*
+**Later the same day (Operator ADMIT Soften C3):** ONE named Day 18 backup for Softened C1 G4 (primary) + G5 (touch). 10 day claims by class. Extending gaps G4-D18 / G5-D18 / G2-D18 / G6-D18. Usefulness claim **not** Softened. **Success bar unset.** **NOT** Day 18 as certified fact. Closings still ≠ evidence. **Hold C2 / C4.** **Hold further days.** See [`DIGESTION_C3.md`](DIGESTION_C3.md).
+
+*Digestor spine stamp Operator-folded. PASS stands. Later same day: Soften S0 + Soften C1 + Soften C3. Hold C2/C4. Hold further days.*

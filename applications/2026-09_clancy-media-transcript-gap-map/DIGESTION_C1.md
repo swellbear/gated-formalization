@@ -170,4 +170,6 @@ C1 Soften does **not** license a product, a certified-record ingest, or legal ad
 
 ---
 
-*Docs only. Operator **ADMIT Soften C1**. 8-claim census poseable; G1–G7 poseable. Argument clash named as clash, not Soften of either side. NOT Soften of the parent usefulness claim. Success bar unset. NOT Soften of verdict/mistrial/retrial. NOT Soften of “what was said” as certified fact. Closings≠evidence. Hold C2–C4. Soften Critic not hired. Greer TABLED invent HOLD. phone-stimp TABLED invent HOLD. Soften-vanity CLOSED. Lab does not self-admit. Digestor never Soften/Harden/Kill.*
+**Later the same day (Operator ADMIT Soften C3):** ONE named Day 18 backup for Softened C1 G4 (primary) + G5 (touch). 10 day claims by class. Extending gaps G4-D18 / G5-D18 / G2-D18 / G6-D18. **NOT** usefulness Soften. **Success bar unset.** **NOT** Day 18 as certified fact. Closings still ≠ evidence. **Hold C2 / C4.** **Hold further days.** See [`DIGESTION_C3.md`](DIGESTION_C3.md).
+
+*Docs only. Operator **ADMIT Soften C1**. Later same day: Soften C3. 8-claim census poseable; G1–G7 poseable. Argument clash named as clash, not Soften of either side. NOT Soften of the parent usefulness claim. Success bar unset. NOT Soften of verdict/mistrial/retrial. NOT Soften of “what was said” as certified fact. Closings≠evidence. Hold C2/C4. Hold further days. Soften Critic not hired. Greer TABLED invent HOLD. phone-stimp TABLED invent HOLD. Soften-vanity CLOSED. Lab does not self-admit. Digestor never Soften/Harden/Kill.*
