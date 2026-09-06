@@ -126,4 +126,6 @@ Bibliographic HEAD / fetch only. **No** day census. **No** long paste.
 
 **Later the same day (Soften C3 Day 20):** Operator **ADMIT Soften C3 Day 20**. Digest [`DIGESTION_C3_DAY20.md`](DIGESTION_C3_DAY20.md). Softened set: **2–20**. Remaining live day: **21**. This expand ADMIT **stands**. Prior #124 park DIGEST stays as prior record (**not** rewritten). This fold ADMIT keeps INTERIM **interim (NOT park)**. Standing GO Lab invent/hand **Day 21** next.
 
+**Later the same day (Soften C3 Day 12 digest landed):** Operator **ADMIT Soften C3 Day 12**. Day 12 digest now on this tree — [`DIGESTION_C3_DAY12.md`](DIGESTION_C3_DAY12.md). Soften C3 Day 12 ADMIT stays **verbatim**. Softened Day 6 **#115** **untouched**. Softened Day 19 **#123** **untouched**. Softened Day 21 **#126** **untouched**. Softened Day 20 **#127** **untouched**. This expand ADMIT **stands**. **Hold C2 / C4.** Days 5 / 17 DIGEST files **not invented**.
+
 *Docs only. Operator **ADMIT Digestor index expand**. Days 2–21 + closings live. Day 2 typo slug named. Day 1 not found. Days 22+ 404. LOUD media≠certified. Softened days at this snapshot: 14, 18. Later same day: Day 7 Soften landed; Day 7 leaves remaining-open list. Standing GO continues named-day pulses across Digestor index. Soften Critic not hired. Hold C2/C4. Lab does not self-admit. Digestor never Soften/Harden/Kill.*
