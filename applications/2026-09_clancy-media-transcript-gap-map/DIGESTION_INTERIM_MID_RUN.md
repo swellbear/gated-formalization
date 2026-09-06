@@ -84,6 +84,14 @@
 
 **Later the same day (Soften C3 Day 2):** Operator **ADMIT Soften C3 Day 2** (#111). Remaining live days after Day 2 + Day 7 + Day 11: **3–6, 8–10, 12–13, 15–17, 19–21**. INTERIM still **NOT** park. Amb **open**. Softened days so far: **2**, **7**, **11**, **14**, **18**. Standing GO Lab invent/hand **Day 3** next. See [`DIGESTION_C3_DAY2.md`](DIGESTION_C3_DAY2.md).
 
-**Later the same day (Soften C3 Day 15):** Operator **ADMIT Soften C3 Day 15** (day-pulse #15). Digest [`DIGESTION_C3_DAY15.md`](DIGESTION_C3_DAY15.md). Softened set after Day 15: **2–15, 18**. Remaining live days **16–17, 19–21**. Standing GO Lab invent/hand **Day 16** next. INTERIM still **NOT** park. Amb **open**.
+**Later the same day (Soften C3 Day 10):** Operator **ADMIT Soften C3 Day 10** (#118). Digest [`DIGESTION_C3_DAY10.md`](DIGESTION_C3_DAY10.md). INTERIM still **NOT** park.
+
+**Later the same day (Soften C3 Day 9):** Operator **ADMIT Soften C3 Day 9** (#117). Digest [`DIGESTION_C3_DAY9.md`](DIGESTION_C3_DAY9.md). INTERIM still **NOT** park.
+
+**Later the same day (Soften C3 Day 13):** Operator **ADMIT Soften C3 Day 13**. Digest [`DIGESTION_C3_DAY13.md`](DIGESTION_C3_DAY13.md). Remaining live days after Day 13: **15–17, 19–21**. INTERIM still **NOT** park. Amb **open**. Softened set: **2–13, 14, 18**. Standing GO Lab invent/hand **Day 15** next. Illustrator Soften-fold pointer **refreshed** after Day 13 (STATUS-ready) — [`VIZ.md`](VIZ.md).
+
+**Later the same day (Soften C3 Day 3):** Operator **ADMIT Soften C3 Day 3** (#112). Digest [`DIGESTION_C3_DAY3.md`](DIGESTION_C3_DAY3.md). INTERIM still **NOT** park.
+
+**Later the same day (Soften C3 Day 16):** Operator **ADMIT Soften C3 Day 16**. Digest [`DIGESTION_C3_DAY16.md`](DIGESTION_C3_DAY16.md). Remaining live days after Day 16: **17, 19–21**. INTERIM still **NOT** park. Amb **open**. Softened set: **2–16, 18**. Standing GO Lab invent/hand **Day 17** next. Softened Day 15 psychopharm-only / NO SoC **untouched**. Illustrator Soften-fold pointer **refreshed** after Day 16 — [`VIZ.md`](VIZ.md).
 
 *Interim note ≠ Soften of corpus-done. Soften Critic hire not met. INTERIM still NOT park. Amb open.*
