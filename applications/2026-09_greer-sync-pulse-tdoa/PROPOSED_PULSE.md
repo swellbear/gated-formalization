@@ -22,6 +22,8 @@
 **A1 digestion:** [`DIGESTION_A1.md`](DIGESTION_A1.md)  
 **A4 score:** [`SCORE_A4.md`](SCORE_A4.md)  
 **A4 digestion:** [`DIGESTION_A4.md`](DIGESTION_A4.md)  
+**A3 score:** [`SCORE_A3.md`](SCORE_A3.md)  
+**A3 digestion:** [`DIGESTION_A3.md`](DIGESTION_A3.md)  
 **A2 score:** [`SCORE_A2.md`](SCORE_A2.md)  
 **A2 digestion:** [`DIGESTION_A2.md`](DIGESTION_A2.md)  
 **Suite scaffold (A1→A4):** [`DIGESTION_A1A4_SUITE.md`](DIGESTION_A1A4_SUITE.md)  

@@ -8,7 +8,7 @@
 
 ### Plain status
 
-**A4 Soften X/σ_t** is on the record (Kill not wholesale). Honest **50 kHz** phase-flip detection jitter **≫ GEOM0 1 ns** (**J_mid ~100–500 ns → tens of meters**; **J_stretch ~10 ns → ~3.8 m fails ≤1 m**). **JOINT1 does not cancel detection jitter.** Laptop model **remains**. **Harden unsupported.** **RF bench PARKED.** Suite Soften wrap **A1→A4** is on the record: **A1 Soften** (abs ≤1 m under RN floor; X=0.50 perfect-ref only; DGPS floor named) · **A2 Soften-conditional** (JOINT1+~2.5 ns; Kill bare Chan/commodity) · **A3 Soften** (mild/intermittent LE only for ≤1 m; persistent B_lb fails) · **A4 Soften** (Soften X/σ_t; RF PARKED). Abstract ingest still **ADMITTED**. **GEOM0 HARDEN** stands (named 1 ns model). Prior SYNC/JOINT/DRIFT/GATE = **partial** sync-fragility. Greer write-up = **sync-fragility evidence only** — **HOLD send** until DIGEST + Founder fold. Suite scaffold: [`DIGESTION_A1A4_SUITE.md`](DIGESTION_A1A4_SUITE.md) (Lab DIGEST was **not** on this VM; Operator may follow-on). **Lab HOLD invent.** Hardware **X PARKED.** Link/map **PARKED.** Cell-tower **PARKED.** BIA **CLOSED.** This is **not** a locator. This is **not** training. This is **not** skill-met. This is **not** rithm. Do **not** invent fingerprint / ML / RF. GPS is **never** the mobile fix. **No claim-language product copy.**
+**A4 Soften X/σ_t** is on the record (Kill not wholesale). Honest **50 kHz** phase-flip detection jitter **≫ GEOM0 1 ns** (**J_mid ~100–500 ns → tens of meters**; **J_stretch ~10 ns → ~3.8 m fails ≤1 m**). **JOINT1 does not cancel detection jitter.** Laptop model **remains**. **Harden unsupported.** **RF bench PARKED.** Suite Soften wrap **A1→A4** is on the record: **A1 Soften** (abs ≤1 m under RN floor; X=0.50 perfect-ref only; DGPS floor named) · **A2 Soften-conditional** (JOINT1+~2.5 ns; Kill bare Chan/commodity) · **A3 Soften** (mild/intermittent LE ~0.5–1 m / `f≈0.25` survives ≤1 m; persistent `B_lb ≳ 2 m` / `B_dense` fail — `b=2` → **1.34 / 1.52**; `b=5` → ~**3.9**) · **A4 Soften** (Soften X/σ_t; RF PARKED). Abstract ingest still **ADMITTED**. **GEOM0 HARDEN** stands (named 1 ns model). Prior SYNC/JOINT/DRIFT/GATE = **partial** sync-fragility. Greer write-up = **sync-fragility evidence only** — **HOLD send** until DIGEST + Founder fold. Suite scaffold: [`DIGESTION_A1A4_SUITE.md`](DIGESTION_A1A4_SUITE.md) (Lab DIGEST was **not** on this VM; Operator may follow-on). **Lab HOLD invent.** Hardware **X PARKED.** Link/map **PARKED.** Cell-tower **PARKED.** BIA **CLOSED.** This is **not** a locator. This is **not** training. This is **not** skill-met. This is **not** rithm. Do **not** invent fingerprint / ML / RF. GPS is **never** the mobile fix. **No claim-language product copy.**
 
 ---
 
@@ -26,6 +26,8 @@
 **Suite scaffold (A1→A4):** [`DIGESTION_A1A4_SUITE.md`](DIGESTION_A1A4_SUITE.md)  
 **A4 score (gated):** [`SCORE_A4.md`](SCORE_A4.md)  
 **A4 digestion:** [`DIGESTION_A4.md`](DIGESTION_A4.md)  
+**A3 score (gated Soften):** [`SCORE_A3.md`](SCORE_A3.md)  
+**A3 digestion:** [`DIGESTION_A3.md`](DIGESTION_A3.md)  
 **A2 score (gated Soften-conditional):** [`SCORE_A2.md`](SCORE_A2.md)  
 **A2 digestion:** [`DIGESTION_A2.md`](DIGESTION_A2.md)  
 **A1 score (carried Soften):** [`SCORE_A1.md`](SCORE_A1.md)  

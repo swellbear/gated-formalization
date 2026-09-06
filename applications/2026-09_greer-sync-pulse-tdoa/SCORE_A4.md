@@ -3,7 +3,7 @@
 **Date:** 2026-09-05  
 **Application:** `2026-09_greer-sync-pulse-tdoa`  
 **String:** A4 — honest 50 kHz phase-flip detection jitter vs GEOM0 1 ns; **Soften X/σ_t**  
-**Parent:** abstract ingest **ADMITTED** · **A1 Soften carried** ([`SCORE_A1.md`](SCORE_A1.md)) · **A2 Soften-conditional** ([`SCORE_A2.md`](SCORE_A2.md)) · **A3 Soften** (Operator-gated; individual SCORE may land from the A3 fold) · prior SYNC/JOINT/DRIFT/GATE = **partial** sync-fragility  
+**Parent:** abstract ingest **ADMITTED** · **A1 Soften carried** ([`SCORE_A1.md`](SCORE_A1.md)) · **A2 Soften-conditional** ([`SCORE_A2.md`](SCORE_A2.md)) · **A3 Soften** ([`SCORE_A3.md`](SCORE_A3.md); mild/intermittent LE ~0.5–1 m / `f≈0.25` survives ≤1 m; persistent `B_lb` / `B_dense` fail) · prior SYNC/JOINT/DRIFT/GATE = **partial** sync-fragility  
 **Ledger:** [`NAMED_GAP_LEDGER.md`](NAMED_GAP_LEDGER.md)  
 **Digestion (this pulse):** [`DIGESTION_A4.md`](DIGESTION_A4.md)  
 **Suite scaffold:** [`DIGESTION_A1A4_SUITE.md`](DIGESTION_A1A4_SUITE.md)  

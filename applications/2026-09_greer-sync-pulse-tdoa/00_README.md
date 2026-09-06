@@ -75,9 +75,9 @@ Operator **ADMIT Soften**. Kill **not** triggered. RN survey error on frozen Cha
 
 Operator **ADMIT Soften-conditional**. JOINT1+~2.5 ns Soften; **Kill** bare Chan/commodity. Harden unsupported. Brutal lock: patent simultaneous-via-DGPS-1PPS ≠ commercial 1PPS. See [`SCORE_A2.md`](SCORE_A2.md) · [`DIGESTION_A2.md`](DIGESTION_A2.md). Suite wrap: [`DIGESTION_A1A4_SUITE.md`](DIGESTION_A1A4_SUITE.md).
 
-## A3 (gated Soften; suite gate)
+## A3 (gated Soften)
 
-Operator **ADMIT Soften**. Mild/intermittent LE only for **≤1 m**. Persistent **B_lb** fails. Individual SCORE may land from the A3 fold. Suite wrap: [`DIGESTION_A1A4_SUITE.md`](DIGESTION_A1A4_SUITE.md).
+Operator **ADMIT Soften**. Kill **not** triggered wholesale. Harden **unsupported**. Frozen Chan + RN `σ_ref=0.5` stack. Only mild/intermittent leading-edge residual (~**0.5–1 m** bias, or intermittent `f≈0.25`) survives patent **≤1 m**. Persistent `B_lb ≳ 2 m` and `B_dense` fail ≤1 m (`b=2` → abs **1.34 / 1.52**; `b=5` → ~**3.9**). 50 kHz `c/B` ~**6 km** = resolution caution only, **not** injected as fix error (distinct from A4 phase-flip detection jitter). See [`SCORE_A3.md`](SCORE_A3.md) · [`DIGESTION_A3.md`](DIGESTION_A3.md). Suite wrap: [`DIGESTION_A1A4_SUITE.md`](DIGESTION_A1A4_SUITE.md).
 
 ## A4 (gated Soften X/σ_t)
 
@@ -97,6 +97,8 @@ Founder-polished [`GREER_WRITEUP.md`](GREER_WRITEUP.md) is **PRIMARY**. It is **
 6. [`DIGESTION_A1.md`](DIGESTION_A1.md) — what A1 taught
 6b. [`SCORE_A2.md`](SCORE_A2.md) — A2 gated metrics (JOINT1+~2.5 ns; Kill bare Chan/commodity)
 6c. [`DIGESTION_A2.md`](DIGESTION_A2.md) — what A2 taught
+6d. [`SCORE_A3.md`](SCORE_A3.md) — A3 gated metrics (mild LE residual)
+6e. [`DIGESTION_A3.md`](DIGESTION_A3.md) — what A3 taught
 7. [`ABSTRACT_INGEST_SUMMARY.md`](ABSTRACT_INGEST_SUMMARY.md) — gated ingest
 8. [`SOURCE.md`](SOURCE.md) — published abstract (not claims)
 9. [`DIGESTION_ABSTRACT_INGEST.md`](DIGESTION_ABSTRACT_INGEST.md) — what ingest taught

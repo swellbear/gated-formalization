@@ -4,7 +4,7 @@ A short plain note of what A2 taught. Habit: [`docs/DIGESTION_HABIT.md`](../../d
 
 **This pulse:** `2026-09_greer-sync-pulse-tdoa` A2 — Method Operator **ADMIT Soften (conditional)**. Lab scratch was **not** on this fold VM; the gated fact set was copied from the Operator gate.
 
-**Standing (record):** **GEOM0 HARDEN** · **MULTIPATH1 Soften** (later; **not** A3) · prior SYNC/JOINT/DRIFT/GATE = **sync-fragility evidence (partial)** · abstract ingest **ADMITTED** · **A1 Soften** (carried) · **A2 Soften (conditional)**.
+**Standing (record):** **GEOM0 HARDEN** · **MULTIPATH1 Soften** (later; **not** A3) · prior SYNC/JOINT/DRIFT/GATE = **sync-fragility evidence (partial)** · abstract ingest **ADMITTED** · **A1 Soften** (carried) · **A2 Soften (conditional)**. Later the same day: **A3 Soften** ([`DIGESTION_A3.md`](DIGESTION_A3.md)).
 
 ## What the pulse settled
 
@@ -31,19 +31,19 @@ Hardware **X PARKED.** F9T-class is an **Operator-named public timing class**, n
 
 ## What this string must do next (user override suite)
 
-**GO A3** then **A4**. Soften/Harden **each**. Lab may invent a cheap **A3** check (indoor / first-arrival / denied-box radio). **A4 HOLD** until after A3. Link/map stays **PARKED**.
+Later the same day: **A3 Soften** scored ([`DIGESTION_A3.md`](DIGESTION_A3.md); mild LE survives ≤1 m; persistent `B_lb` / `B_dense` fail) and **A4 Soften X/σ_t** ([`DIGESTION_A4.md`](DIGESTION_A4.md)). Next: **DIGEST + Founder fold**. Link/map stays **PARKED**.
 
 **Greer send HOLD** until the suite digests. [`GREER_WRITEUP.md`](GREER_WRITEUP.md) stays **sync-fragility evidence only**.
 
-Still **no RF / ML**. Do **not** invent a fingerprint rescue. Do **not** copy claims. Do **not** treat commercial 1PPS as the Soften window. **Multipath later** (our MULTIPATH1 Soften is not A3).
+Still **no RF / ML**. Do **not** invent a fingerprint rescue. Do **not** copy claims. Do **not** treat commercial 1PPS as the Soften window. Our MULTIPATH1 Soften is not A3.
 
 ## What stays parked / closed / hold
 
-- **A4** invent **HOLD** until after A3.
+- **DIGEST + Founder fold** is the locked next. **A3** and **A4** are scored.
 - **Link/map** (GIS / CAD overlay) **PARKED**.
 - **Hardware X** stays **PARKED**.
 - **Send to Greer** stays **HOLD** until the A1–A4 suite digests.
-- **Lab invent** stays **HOLD** except **A3 opened**.
+- **Lab invent** stays **HOLD**.
 - **SkyMirr MuLCAT** stays its own Amb. This note does **not** reopen it.
 - **Cell-tower geometry** stays **PARKED**. Do **not** reopen as live.
 - **BIA→weight portfolio** stays **CLOSED**.
@@ -51,4 +51,4 @@ Still **no RF / ML**. Do **not** invent a fingerprint rescue. Do **not** copy cl
 - **Track B invent** stays **paused**.
 - **llm-gwt R-REPL** stays **parked**.
 
-This note does **not** authorize a send. It does **not** show a TDOA locator. It does **not** start training. It does **not** score A3. It does **not** unpark hardware **X**.
+This note does **not** authorize a send. It does **not** show a TDOA locator. It does **not** start training. Later **A3 Soften** is on [`DIGESTION_A3.md`](DIGESTION_A3.md). It does **not** unpark hardware **X**.

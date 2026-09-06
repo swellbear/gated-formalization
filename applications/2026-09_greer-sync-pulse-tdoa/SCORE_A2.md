@@ -96,9 +96,9 @@ Do **not** invent fingerprint / ML / RF to rescue commodity 1PPS.
 
 **A1 Soften carried** (≤1 m; X=0.50 perfect-ref; RN floor named).
 
-**Next (user override suite):** **GO A3** then **A4**; Soften/Harden each. Greer send **HOLD** until the suite digests.
+**Later the same day:** **A3 Soften** ([`SCORE_A3.md`](SCORE_A3.md)) and **A4 Soften X/σ_t** ([`SCORE_A4.md`](SCORE_A4.md)). **Next:** **DIGEST + Founder fold**. Greer send **HOLD** until then.
 
-**PARK** hardware **X**. **Lab HOLD invent** except **A3 opened**. Link/map stays **PARKED**.
+**PARK** hardware **X**. **Lab HOLD invent.** Link/map stays **PARKED**. RF bench **PARKED**.
 
 **Honesty locks**
 
@@ -139,7 +139,7 @@ Cell-tower Amb stays **PARKED**. BIA→weight portfolio stays **CLOSED**. SkyMir
 - Do **not** commit Lab scratch / hunt scripts as established.
 - Do **not** write skill-met / elevated language.
 - Do **not** send [`GREER_WRITEUP.md`](GREER_WRITEUP.md) until the A1–A4 suite digests.
-- Do **not** invent **A4** before **A3**.
+- Do **not** skip **A4** or the **DIGEST** suite.
 - Do **not** unpark hardware **X** or link/map.
 - Do **not** reopen cell-tower as live. Do **not** reopen BIA. Do **not** reopen SkyMirr invent.
 
