@@ -2,16 +2,17 @@
 
 **Date:** 2026-09-06  
 **Application:** `2026-09_clancy-media-transcript-gap-map`  
-**String:** Operator **ADMIT Soften S0** + **Soften C1** + **Soften C3** / usefulness claim **not** Softened / **success bar unset** / **Hold C2 / C4** / **Hold further days**  
-**Named gap:** SOURCE board poseable; 8-claim census + G1–G7 poseable; Day 18 named backup poseable. **NOT** usefulness Soften. **NOT** Day 18 as certified fact.  
+**String:** Operator **ADMIT Soften S0** + **Soften C1** + **Soften C3** + **Soften C3 Day 14** / usefulness claim **not** Softened / **success bar unset** / **Hold C2 / C4** / **Hold further days (7 / 11 / 19–21)**  
+**Named gap:** SOURCE board poseable; 8-claim census + G1–G7 poseable; Day 18 named backup poseable (board untouched); Day 14 digital-evidence backup poseable. **NOT** usefulness Soften. **NOT** Day 14 / Day 18 / digital timeline as certified fact.  
 **S0 digestion:** [`DIGESTION_S0.md`](DIGESTION_S0.md)  
 **C1 digestion:** [`DIGESTION_C1.md`](DIGESTION_C1.md)  
-**C3 digestion:** [`DIGESTION_C3.md`](DIGESTION_C3.md)  
+**C3 digestion (Day 18; board untouched):** [`DIGESTION_C3.md`](DIGESTION_C3.md)  
+**C3 Day 14 digestion:** [`DIGESTION_C3_DAY14.md`](DIGESTION_C3_DAY14.md)  
 **Ledger:** [`NAMED_GAP_LEDGER.md`](NAMED_GAP_LEDGER.md)  
 **SOURCE notes:** [`SOURCE.md`](SOURCE.md)  
 **Spine stamp:** [`DIGESTION_SPINE_STAMP.md`](DIGESTION_SPINE_STAMP.md)
 
-Digestor proposed **S0 + C1–C4**. **Digestor IDs authoritative**. Lab does **not** self-admit. **S0 Soften** admitted. **C1 Soften** admitted. **C3 Soften** admitted. **Hold C2 / C4** until later GO. **Hold further days (7 / 11 / 14 / 19–21).** Do **not** auto-GO C2 / C4. **Not a model.** Do **not** train. Do **not** dump all days. Do **not** treat Rev as certified record. Do **not** name the success bar. Do **not** Soften Day 18 as certified fact. Do **not** Soften either argument side. Do **not** hire a Soften Critic. Do **not** reopen Greer. Do **not** reopen phone-stimp invent. Whole-trial claim/clash map **practice** (**not** case-solving).
+Digestor proposed **S0 + C1–C4**. **Digestor IDs authoritative**. Lab does **not** self-admit. **S0 Soften** admitted. **C1 Soften** admitted. **C3 Soften** admitted (Day 18 board **untouched**). **C3 Day 14 Soften** admitted. **Hold C2 / C4** until later GO. **Hold further days (7 / 11 / 19–21).** Do **not** auto-GO C2 / C4. **Not a model.** Do **not** train. Do **not** dump all days. Do **not** treat Rev as certified record. Do **not** name the success bar. Do **not** Soften Day 14 / Day 18 / digital timeline as certified fact. Do **not** Soften planning / psychosis as fact from the digital timeline. Do **not** Soften either argument side. Do **not** hire a Soften Critic. Do **not** reopen Greer. Do **not** reopen phone-stimp invent. Whole-trial claim/clash map **practice** (**not** case-solving).
 
 **What this is not:** Claim shown. Usefulness Soften. Success bar named. “What was said” Soften. Training established. Skill-met. Legal advice. A product. Treating Rev as certified record. Soften of verdict / mistrial / retrial prediction. An all-days dump. Reopening phone-stimp invent. Reopening Soften-vanity. Reopening Greer invent. Sending the Greer write-up. Reopening SkyMirr invent. Reopening cell-tower as live. Reopening BIA→weight. Rithm. A Soften Critic hire.
 
@@ -19,15 +20,17 @@ Digestor proposed **S0 + C1–C4**. **Digestor IDs authoritative**. Lab does **n
 
 ## 0. Plain-language framing
 
-**What this is:** Five cheap pulses. **S0** is **Operator Soften**. **C1** is **Operator Soften**. **C3** is **Operator Soften**. **C2 / C4** stay **Hold** until later GO. Further days stay **Hold**.
+**What this is:** Five cheap pulses. **S0** is **Operator Soften**. **C1** is **Operator Soften**. **C3** is **Operator Soften** (Day 18 stands; Day 14 this fold). **C2 / C4** stay **Hold** until later GO. Further days (7 / 11 / 19–21) stay **Hold**.
 
 **What S0 settled:** A Rev (or similar) day / closings page can be written as a citable board. **Not** the usefulness claim.
 
 **What C1 settled:** An 8-claim census (court / defense / Commonwealth separate) plus G1–G7 are **poseable** under media≠certified + closings≠evidence. Clash named as clash, **not** Soften of either side. **Not** the usefulness claim. **Not** “what was said” as certified fact.
 
-**What C3 settled:** ONE named Day 18 backup for Softened C1 G4 (primary) + G5 (touch) is **poseable**. 10 day claims by class. Extending gaps G4-D18 / G5-D18 / G2-D18 / G6-D18 named as clashes. **Not** the usefulness claim. **Not** Day 18 as certified fact. Closings still ≠ evidence.
+**What C3 settled:** ONE named Day 18 backup for Softened C1 G4 (primary) + G5 (touch) is **poseable**. 10 day claims by class. Extending gaps G4-D18 / G5-D18 / G2-D18 / G6-D18 named as clashes. **Not** the usefulness claim. **Not** Day 18 as certified fact. Closings still ≠ evidence. Board **untouched** this fold.
 
-**What this is not:** Not the claim shown. Not a reason to treat Rev as the certified record. Not claim clearance. Not case-solving. Not auto-GO C2 / C4. Not a further-day dump.
+**What C3 Day 14 settled:** ONE named Day 14 digital-evidence backup for Softened C1 G5 (primary) + G4 (touch) is **poseable**. 9 day claims. Extending gaps G5-D14 PRIMARY / G4-D14 touch / G6-D14 named as clashes. **Not** the usefulness claim. **Not** Day 14 / digital timeline as certified fact. Digital timeline ≠ Soften of planning / psychosis as fact. Closings still ≠ evidence.
+
+**What this is not:** Not the claim shown. Not a reason to treat Rev as the certified record. Not claim clearance. Not case-solving. Not auto-GO C2 / C4. Not a further-day dump. Not a rewrite of the Day 18 board.
 
 ---
 
@@ -38,7 +41,7 @@ Digestor proposed **S0 + C1–C4**. **Digestor IDs authoritative**. Lab does **n
 | **S0** | **SOURCE** board (Rev day / closings page; media≠certified; starter index + expand; inaudible / speaker-error / media-date stamp) | **Operator Soften** — [`DIGESTION_S0.md`](DIGESTION_S0.md) |
 | **C1** | **Closings claim census** + G1–G7 poseability (argument / instructions objects; not evidence) | **Operator Soften** — [`DIGESTION_C1.md`](DIGESTION_C1.md) |
 | **C2** | **Claim-tied gap / clash map** on closings text (not casual “find issues”) | **Hold** until later GO. Do **not** auto-GO |
-| **C3** | **Day-pulse only-as-needed** (named day backup for a named closing claim; no all-days dump) | **Operator Soften** — [`DIGESTION_C3.md`](DIGESTION_C3.md) |
+| **C3** | **Day-pulse only-as-needed** (named day backup for a named closing claim; no all-days dump) | **Operator Soften** — Day 18 [`DIGESTION_C3.md`](DIGESTION_C3.md) (board **untouched**); Day 14 [`DIGESTION_C3_DAY14.md`](DIGESTION_C3_DAY14.md) |
 | **C4** | **Success-bar / casual-AI contrast** (Operator/Founder names the bar first) | **Hold** until later GO / bar named. Do **not** auto-GO |
 
 Do **not** remap these IDs. Digestor IDs override any later scaffold remapping.
@@ -52,7 +55,7 @@ Do **not** remap these IDs. Digestor IDs override any later scaffold remapping.
 | **S0** (**Operator Soften**; stands) | **SOURCE board** — what a Rev day / closings page *is*. Name media≠certified (unofficial; not court-reporter record). Name Founder starter index (Days 7 / 11 / 14 / 18 + Closing Arguments) and expand rules (Days 19–21 noted; other days may exist; expand = named day backup, not all-days dump). Name inaudible / speaker-error / media-date stamp classes. No success bar. No gap map. | Freeze 1 + first-pulse lock. The lock needed a named page-object before closings census / clash map / bar. | Low (docs; laptop) | **ADMIT Soften** — board poseable/citable. Not usefulness Soften. Not Harden. Kill/DATA-BLOCKED not triggered. See [`DIGESTION_S0.md`](DIGESTION_S0.md). |
 | **C1** (**Operator Soften**; stands) | **Closings claim census** — 8 claims; court / defense / Commonwealth classes separate. G1–G7 poseable. Short fair-use spans. Closings stay **argument / instructions**, not evidence. | Freeze 2. Claim-first needs named closing claims before a later C2 map. | Low (docs coding sheet) | **ADMIT Soften** — census + map poseable. Not usefulness Soften. Clash ≠ Soften of either side. See [`DIGESTION_C1.md`](DIGESTION_C1.md). |
 | **C2** (**Hold**) | **Claim-tied gap / clash map** — map gaps / clashes in the closings text **to the C1 claims**. Not a casual “find issues” pass. Media≠official caveat on every “what was said” line. | The parent claim is claim-tied, not issue-soup. | Low (docs gap map) | **HOLD** until later GO. Do **not** auto-GO. Kill = map is un-tied “find issues” **or** drops media≠official → fail closed. Succeed later = a claim-tied map; still not the bar; still not clearance. |
-| **C3** (**Operator Soften**; this fold) | **Day-pulse only-as-needed** — ONE named Day 18 backup for Softened C1 G4 (primary) + G5 (touch). 10 day claims by class. Extending gaps G4-D18 / G5-D18 / G2-D18 / G6-D18. Do **not** dump all days. Do **not** treat the day page as certified record. | Freeze 2 + no-all-days Hard NO. Closing rhetoric is not trial fact without backup. | Low (docs; one named day) | **ADMIT Soften** — named Day 18 backup poseable. Not usefulness Soften. Not Day 18 as certified fact. Clash ≠ Soften of either side. See [`DIGESTION_C3.md`](DIGESTION_C3.md). |
+| **C3** (**Operator Soften**; Day 18 stands + Day 14 this fold) | **Day-pulse only-as-needed** — Day 18: ONE named backup for Softened C1 G4 (primary) + G5 (touch); 10 day claims; G4-D18 / G5-D18 / G2-D18 / G6-D18 (board **untouched**). Day 14: ONE named digital-evidence backup for Softened C1 G5 (primary) + G4 (touch); 9 day claims; G5-D14 PRIMARY / G4-D14 touch / G6-D14. Do **not** dump all days. Do **not** treat the day page / digital timeline as certified record. Do **not** Soften planning / psychosis as fact. | Freeze 2 + no-all-days Hard NO. Closing rhetoric is not trial fact without backup. | Low (docs; named days) | **ADMIT Soften** — named Day 18 backup poseable; named Day 14 digital-evidence backup poseable. Not usefulness Soften. Not Day 14 / Day 18 / digital timeline as certified fact. Clash ≠ Soften of either side. See [`DIGESTION_C3.md`](DIGESTION_C3.md) · [`DIGESTION_C3_DAY14.md`](DIGESTION_C3_DAY14.md). |
 | **C4** (**Hold**) | **Name the success bar** vs a casual “find issues” AI pass **before** any Soften / Harden of the claim. Do **not** invent the bar. Operator/Founder names it. | Freeze 3. Soften / Harden cannot fire while the bar is unset. “More usefully than casual AI” is unfalsifiable until named. | Low (docs bar freeze) | **HOLD** until later GO / bar named. Do **not** auto-GO. Kill = no honest bar can be named without inventing one → bar stays unset (do not invent). Succeed later = named bar under the lock. **Not** the claim shown. **Not** Soften. |
 
 **Later wave (not this pulse):** legal-advice product; Soften of verdict / mistrial / retrial prediction; all-days dump; Soften Critic hire. Do **not** run, peek, or invent those on S0 / C1.
@@ -103,19 +106,37 @@ Do **not** remap these IDs. Digestor IDs override any later scaffold remapping.
 5. Stayed [`COPY_GATE.md`](COPY_GATE.md) **short fair-use spans**.
 6. Did **not** name the success bar. Did **not** run C2. Did **not** dump further days.
 
-**C3 Soften ≠ usefulness Soften.** C3 Soften ≠ Day 18 as certified fact. **C3 Soften stands.** **Hold C2 / C4.** **Hold further days (7 / 11 / 14 / 19–21).**
+**C3 Soften ≠ usefulness Soften.** C3 Soften ≠ Day 18 as certified fact. **C3 Soften stands.** Board **untouched** this fold.
 
 ---
 
-## 4. Hard NO (after Soften S0 + Soften C1 + Soften C3)
+## 3d. C3 Day 14 day-pulse #2 (**Operator Soften**; this fold)
+
+**Ran as Operator ADMIT Soften C3 Day 14.** See [`DIGESTION_C3_DAY14.md`](DIGESTION_C3_DAY14.md).
+
+1. Named **ONE** Day 14 digital-evidence backup for Softened C1 **G5 (primary)** + **G4 (touch)**.
+2. Named **9 day claims** (court / defense / Commonwealth separate).
+3. Named extending gaps **G5-D14 PRIMARY / G4-D14 touch / G6-D14** as clashes, not Soften of either side.
+4. Locked **day≠certified**. Closings still ≠ evidence. Digital timeline ≠ Soften of planning / psychosis as fact.
+5. Left the Softened Day 18 board **untouched**.
+6. Stayed [`COPY_GATE.md`](COPY_GATE.md) **short fair-use spans**.
+7. Did **not** name the success bar. Did **not** run C2. Did **not** dump further days.
+
+**C3 Day 14 Soften ≠ usefulness Soften.** C3 Day 14 Soften ≠ Day 14 / digital timeline as certified fact. **C3 Day 14 Soften stands.** **Hold C2 / C4.** **Hold further days (7 / 11 / 19–21).**
+
+---
+
+## 4. Hard NO (after Soften S0 + Soften C1 + Soften C3 + Soften C3 Day 14)
 
 - Do **not** auto-GO C2 / C4. **Hold C2 / C4** until later GO.
-- Do **not** dump further days. **Hold** Days 7 / 11 / 14 / 19–21.
-- Do **not** name the success bar on S0 / C1 / C3.
+- Do **not** dump further days. **Hold** Days 7 / 11 / 19–21.
+- Do **not** name the success bar on S0 / C1 / C3 / C3 Day 14.
 - Do **not** Soften either side of a named clash.
 - Do **not** treat “more usefully than casual AI” as a falsifiable bar.
-- Do **not** treat S0 / C1 / C3 Soften as usefulness Soften.
-- Do **not** Soften Day 18 as certified fact.
+- Do **not** treat S0 / C1 / C3 / C3 Day 14 Soften as usefulness Soften.
+- Do **not** Soften Day 14 / Day 18 / digital timeline as certified fact.
+- Do **not** Soften planning / psychosis as fact from the digital timeline.
+- Do **not** rewrite the Day 18 board.
 - Do **not** treat Rev (or similar) as the certified court-reporter record.
 - Do **not** drop the media≠official / day≠certified caveat.
 - Do **not** smuggle closing rhetoric as trial fact. A named day backup does **not** convert closings into evidence.
@@ -154,4 +175,4 @@ Do **not** remap these IDs. Digestor IDs override any later scaffold remapping.
 
 ---
 
-*Docs only. **S0 Soften** + **C1 Soften** + **C3 Soften** admitted. Usefulness **not** Softened. Success bar unset. Media≠official. Day≠certified. Closings≠evidence. Not legal advice. Not skill-met. Not case-solving. Hold C2/C4. Hold further days. Lab does not self-admit. Digestor never Soften / Harden / Kill.*
+*Docs only. **S0 Soften** + **C1 Soften** + **C3 Soften** + **C3 Day 14 Soften** admitted. Usefulness **not** Softened. Success bar unset. Media≠official. Day≠certified. Closings≠evidence. Digital timeline ≠ planning/psychosis fact. Not legal advice. Not skill-met. Not case-solving. Hold C2/C4. Hold further days 7/11/19–21. Day 18 board untouched. Lab does not self-admit. Digestor never Soften / Harden / Kill.*

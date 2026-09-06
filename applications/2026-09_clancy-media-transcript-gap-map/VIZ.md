@@ -3,10 +3,11 @@
 **Date:** 2026-09-06  
 **Application:** `2026-09_clancy-media-transcript-gap-map`  
 **Role:** STATUS pointer. **Illustrator board; Operator-folded pointer.**  
-**C3 digestion (stands):** [`DIGESTION_C3.md`](DIGESTION_C3.md)  
+**C3 digestion (Day 18; board untouched):** [`DIGESTION_C3.md`](DIGESTION_C3.md)  
+**C3 Day 14 digestion (ADMITTED):** [`DIGESTION_C3_DAY14.md`](DIGESTION_C3_DAY14.md)  
 **STATUS:** [`STATUS.md`](STATUS.md)
 
-PNG + md were **not receivable** on this Operator VM. Lab `/workspace/clancy_lab/viz/` is **not** in this checkout. This file is a **pointer**, not a copied board and **not** a new Soften.
+PNG + md were **not receivable** on this Operator VM. Lab `/workspace/clancy_lab/viz/` is **not** in this checkout. This file is a **pointer**, not a copied board and **not** a new Soften. Soften C3 Day 14 is **ADMITTED** on the docs boards; this pointer does **not** invent a Day 14 chart. Softened Day 18 board stays **untouched**.
 
 **Honesty caption (must stay):** Media≠certified · Closings≠evidence · Day≠certified · no Soften of verdict · Soften Critic not hired · map poseability only.
 
@@ -26,10 +27,11 @@ Copy into `viz/` later if Operator can receive the files. Until then, **do not**
 ## What this pointer does *not* mean
 
 - **Not** Soften of the parent usefulness claim.
-- **Not** Soften of Day 18 as certified fact.
+- **Not** Soften of Day 14 / Day 18 / digital timeline as certified fact.
+- **Not** Soften of planning / psychosis as fact.
 - **Not** Soften of verdict / mistrial / retrial.
 - **Not** Soften of either argument side.
-- **Not** a copied PNG. **Not** a Lab reopen. **Not** a new pulse.
-- **Hold C2 / C4.** **Hold further days.** Soften Critic **not hired**.
+- **Not** a copied PNG. **Not** a Lab reopen. **Not** a new pulse. **Not** a Day 14 replacement chart.
+- **Hold C2 / C4.** **Hold further days (7 / 11 / 19–21).** Soften Critic **not hired**. Soften C3 Day 14 **ADMITTED**. Day 18 board **untouched**.
 
-*Docs only. Illustrator board; Operator-folded pointer. Honesty caption stays. Map poseability only.*
+*Docs only. Illustrator board; Operator-folded pointer. Soften C3 Day 14 ADMITTED. Honesty caption stays. Map poseability only.*
