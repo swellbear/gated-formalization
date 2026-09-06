@@ -73,5 +73,5 @@ S0 + C1 + C3 + C3 Day 14 + C3 Day 7 + C3 Day 5 are **Operator Soften**. Day 2/3/
 14. [`DIGESTION_FROM_PHONE_STIMP.md`](DIGESTION_FROM_PHONE_STIMP.md) — what the last string taught
 15. [`COPY_GATE.md`](COPY_GATE.md) — SOURCE / method-practice honesty
 16. [`RESIDUAL_BRANCH_MENU.md`](RESIDUAL_BRANCH_MENU.md) — decision log
-17. [`VIZ.md`](VIZ.md) — Illustrator Soften-fold / living-twin pointer last refreshed after Soften C3 Day 7 (PNG+md not receivable this VM; request later Day 5 refresh — do not invent chart)
+17. [`VIZ.md`](VIZ.md) — Illustrator Soften-fold / living-twin pointer last refreshed after Soften C3 Day 5 (PNG+md not receivable this VM; shows G3-D5 PRIMARY · G4-D5 LIGHT · G6-D5; Softened D4 G3-D4 PRIMARY stay; Softened D2/D3/D7/D11/D14/D18 stay — do not invent chart)
 18. [`notes.md`](notes.md) — one-line pointer
