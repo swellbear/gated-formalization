@@ -73,3 +73,5 @@ Parallel Soften PRs rewrite the same STATUS as if each fold owns the whole Amb. 
 ## Related
 
 When you switch to a **brand-new claim**, write up what the last string taught you first: [`docs/DIGESTION_HABIT.md`](DIGESTION_HABIT.md).
+
+**Related — Digestor living spine / index:** Digestor keeps a living spine/index board per Amb (`LIVING_SPINE_INDEX.md`). Write a true `DIGESTION_PARK_WHAT_TAUGHT.md` only after Operator **LAST-live ADMIT** or **TABLE**. Authority order: Operator ADMIT chat → master `STATUS.md` / `OPERATOR_STATUS_STAMP.md` → Founder/Lab paraphrase. Digestor never Soften / Harden / Kill. Habit: [`docs/DIGESTOR_LIVING_SPINE_INDEX_HABIT.md`](DIGESTOR_LIVING_SPINE_INDEX_HABIT.md). Template: [`templates/LIVING_SPINE_INDEX_TEMPLATE.md`](../templates/LIVING_SPINE_INDEX_TEMPLATE.md).

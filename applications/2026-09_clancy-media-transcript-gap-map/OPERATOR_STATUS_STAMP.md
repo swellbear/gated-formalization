@@ -18,7 +18,8 @@ Short Operator-owned “where am I?” Soften folds **point to** this stamp. The
 
 **Notes:** Greer / phone-stimp **TABLED**. Soften-vanity **CLOSED**. Media≠certified · day≠certified · closings≠evidence. Park DIGEST #124 is already on master — do **not** re-ask Operator for a second admit.
 
-**STATUS pointer:** [`STATUS.md`](STATUS.md) (keep; do not delete). Narrative / day-fold pointers stay there. This stamp is the authoritative “where am I?”
+**STATUS pointer:** [`STATUS.md`](STATUS.md) (keep; do not delete). Narrative / day-fold pointers stay there. This stamp is the authoritative “where am I?”  
+**Digestor living spine / index:** [`LIVING_SPINE_INDEX.md`](LIVING_SPINE_INDEX.md) — living board only; **not** park DIGEST; Digestor never Soften / Harden / Kill.
 
 ---
 
