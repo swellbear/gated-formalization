@@ -44,9 +44,9 @@ Digestor never Soften / Harden / Kill. Digestor stamps whether a new Amb spine i
 - Digestor never Soften / Harden / Kill.
 - Lab invent HOLD until Operator GO S0.
 
-**First pulse (stamp-time locked lean):** S0 SOURCE board — Stimpmeter definition + procedure + named objects. **Later same day:** Soften S0 + Soften S1 admitted; **Hold S2.**
+**First pulse (stamp-time locked lean):** S0 SOURCE board — Stimpmeter definition + procedure + named objects. **Later same day:** Soften S0 + Soften S1 + Soften S2 admitted; **Hold S3 / S4.**
 
-**Pulse IDs after Soften S0+S1:** **S0 = SOURCE**, **S1 = Sommer gap map**, **S2 = kinematics (Hold)**. Scaffold S1=scale is **not** authoritative. See [`PROPOSED_PULSE.md`](PROPOSED_PULSE.md).
+**Pulse IDs after Soften S0+S1+S2:** **S0 = SOURCE**, **S1 = Sommer gap map**, **S2 = kinematics (Soften)**, **S3 = scale honesty (Hold)**, **S4 = name-X (Hold)**. Scaffold S1=scale is **not** authoritative. See [`PROPOSED_PULSE.md`](PROPOSED_PULSE.md).
 
 ---
 
@@ -61,6 +61,8 @@ Digestor never Soften / Harden / Kill. Digestor stamps whether a new Amb spine i
 
 ---
 
-**Later the same day (Operator ADMIT Soften S0 + Soften S1):** SOURCE board Softened; Sommer gap map Softened. Green-speed claim **not** Softened. **X unset.** **Hold S2.** Digestor/Founder IDs: S0=SOURCE, S1=Sommer gap map, S2=kinematics (Hold). See [`DIGESTION_S0S1_SOFTEN.md`](DIGESTION_S0S1_SOFTEN.md).
+**Later the same day (Operator ADMIT Soften S0 + Soften S1):** SOURCE board Softened; Sommer gap map Softened. Green-speed claim **not** Softened. **X unset.** See [`DIGESTION_S0S1_SOFTEN.md`](DIGESTION_S0S1_SOFTEN.md).
 
-*Digestor spine stamp Operator-folded. PASS stands. Later same day: Soften S0 + Soften S1. Hold S2.*
+**Later the same day (Operator ADMIT Soften S2):** launch-class honesty + constant-decel leftover nameable/OOM-loud. Green-speed claim still **not** Softened. **X unset.** **Hold S3 / S4.** Lab invent **HOLD**. Digestor/Founder IDs: S0=SOURCE, S1=Sommer gap map, S2=kinematics (Soften), S3=scale honesty (Hold), S4=name-X (Hold). See [`DIGESTION_S2.md`](DIGESTION_S2.md).
+
+*Digestor spine stamp Operator-folded. PASS stands. Later same day: Soften S0 + Soften S1 + Soften S2. Hold S3/S4.*

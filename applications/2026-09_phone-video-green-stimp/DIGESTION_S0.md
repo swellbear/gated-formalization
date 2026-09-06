@@ -169,4 +169,6 @@ S0 Soften does **not** license a product app or a Stimpmeter-stick build.
 
 ---
 
-*Docs only. Operator **ADMIT Soften S0**. SOURCE board poseable/citable. NOT Soften of the green-speed claim. X unset. Sommer 6.4 in CI ≠ Amb X. USGA 8-inch cluster ≠ Amb X. Kill/DATA-BLOCKED not triggered. Same-day Soften S1. Hold S2. Lab does not self-admit. Digestor never Soften/Harden/Kill.*
+**Later the same day (Operator ADMIT Soften S2):** launch-class honesty coded. Green-speed claim still **not** Softened. **X unset.** **Hold S3 / S4.** See [`DIGESTION_S2.md`](DIGESTION_S2.md).
+
+*Docs only. Operator **ADMIT Soften S0**. SOURCE board poseable/citable. NOT Soften of the green-speed claim. X unset. Sommer 6.4 in CI ≠ Amb X. USGA 8-inch cluster ≠ Amb X. Kill/DATA-BLOCKED not triggered. Same-day Soften S1 + Soften S2. Hold S3/S4. Lab does not self-admit. Digestor never Soften/Harden/Kill.*

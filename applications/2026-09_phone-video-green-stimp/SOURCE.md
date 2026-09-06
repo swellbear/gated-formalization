@@ -105,4 +105,4 @@ These are **pointers**, not ingested papers and not a product physics engine.
 - Launch must be **named** (Stimpmeter ~6 ft/s vs unknown casual putt).
 - Handheld / non-level is **first-class Soften** vs Sommer’s fixed level mount.
 
-S0 is **Operator Soften** (poseable/citable). This is **not** green-speed Soften. **X** stays unset. **Hold S2.**
+S0 is **Operator Soften** (poseable/citable). S2 is **Operator Soften** (launch-class honesty). This is **not** green-speed Soften. **X** stays unset. **Hold S3 / S4.**

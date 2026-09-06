@@ -4,10 +4,11 @@
 
 **Date:** 2026-09-06  
 **Application:** `2026-09_phone-video-green-stimp`  
-**Status:** Operator **ADMIT Soften S0** + **Soften S1** / **X unset** / green-speed claim **not** Softened / **Hold S2** (kinematics; **not** auto-GO)  
+**Status:** Operator **ADMIT Soften S0** + **Soften S1** + **Soften S2** / **X unset** / green-speed claim **not** Softened / **Hold S3 / S4** (scale honesty / name-**X**; **not** auto-GO)  
 
 **Glossary:** `docs/READER_GLOSSARY.md`  
 **Ledger:** [`NAMED_GAP_LEDGER.md`](NAMED_GAP_LEDGER.md)  
+**S2 digestion:** [`DIGESTION_S2.md`](DIGESTION_S2.md)  
 **Lab DIGEST lean:** [`DIGESTION_S0S1_SOFTEN.md`](DIGESTION_S0S1_SOFTEN.md)  
 **S0 digestion:** [`DIGESTION_S0.md`](DIGESTION_S0.md)  
 **S1 digestion:** [`DIGESTION_S1.md`](DIGESTION_S1.md)  
@@ -19,11 +20,11 @@
 
 ## 0. Plain-language framing
 
-**What we’re doing:** Operator **ADMIT Soften S0** + **Soften S1**. SOURCE board poseable/citable. Sommer gap map G1–G6 honest; first-class Softens G1–G3 nameable. **S1 = Sommer gap map** (not scale). Green-speed claim **not** Softened. **X unset.** **Hold S2** (kinematics).
+**What we’re doing:** Operator **ADMIT Soften S0** + **Soften S1** + **Soften S2**. SOURCE board poseable/citable. Sommer gap map G1–G6 honest. Launch-class honesty + constant-decel leftover nameable / OOM-loud. Green-speed claim **not** Softened. **X unset.** **Hold S3 / S4**. Lab invent **HOLD**.
 
-**What we need from you:** **GO S2** (or park). Do **not** auto-GO S2. Lab does **not** self-admit.
+**What we need from you:** **GO S3** (scale honesty) or **GO S4** (name-**X**), or park. Do **not** auto-GO S3 or S4. Lab does **not** self-admit.
 
-**What this does *not* mean:** Green speed shown. Green-speed claim Softened. **X** named. Sommer 6.4 in adopted as handheld **X**. Training started or established. Skill-met. A product app. A Stimpmeter stick. A YOLO / giant GPU first path. A Soften Critic hire. Auto-GO S2. Reopening Soften-vanity. Reopening Greer invent. Sending the Greer write-up. Reopening SkyMirr invent. Reopening cell-tower as live. Reopening BIA→weight. Reopening golf-offshoot. Reopening Track B. Reopening llm-gwt R-REPL. Reopening Collatz invent (#45 playground is done; Lab HOLD there).
+**What this does *not* mean:** Green speed shown. Green-speed claim Softened. **X** named. Sommer 6.4 in adopted as handheld **X**. Training started or established. Skill-met. A product app. A Stimpmeter stick. A YOLO / giant GPU first path. A Soften Critic hire. Auto-GO S3 / S4. Reopening Soften-vanity. Reopening Greer invent. Sending the Greer write-up. Reopening SkyMirr invent. Reopening cell-tower as live. Reopening BIA→weight. Reopening golf-offshoot. Reopening Track B. Reopening llm-gwt R-REPL. Reopening Collatz invent (#45 playground is done; Lab HOLD there).
 
 ---
 
@@ -31,16 +32,18 @@
 
 | ID | One-line | Class | Disposition |
 |----|----------|-------|-------------|
-| phone-video-stimp-x | Laptop-feasible phone-video Softens Stimpmeter-equivalent BRD to within named **X** ft vs a real Stimpmeter, without a stick and without giant GPU | Definition-blocked until **X** named + later kinematics / comparison | **open** — last check: Soften S0 + Soften S1; green-speed claim **not** Softened; **X unset**; awaiting **GO S2** (or park) |
+| phone-video-stimp-x | Laptop-feasible phone-video Softens Stimpmeter-equivalent BRD to within named **X** ft vs a real Stimpmeter, without a stick and without giant GPU | Definition-blocked until **X** named + later scale honesty / comparison | **open** — last check: Soften S0 + S1 + S2; green-speed claim **not** Softened; **X unset**; **Hold S3 / S4** |
 | s0-source-board | Stimpmeter definition + procedure + named objects; Sommer abstract objects; Holmes / Brede / Hubbard pointers | Empirically resolved this fold | **Soften** — last check: Operator ADMIT Soften S0; [`DIGESTION_S0.md`](DIGESTION_S0.md) |
 | s1-sommer-gap-map | Gap map G1–G6 honest; first-class Softens nameable (mount / launch / scale / FOV / decel / CI-scope) | Empirically resolved this fold | **Soften** — last check: Operator ADMIT Soften S1; S1 = Sommer gap map (not scale); [`DIGESTION_S1.md`](DIGESTION_S1.md) |
 | g1-mount | Fixed 42 in vs handheld / not-level first-class Soften | Named first-class Soften on S1 map | **Soften** (G1) — Sommer said additional tests needed |
-| g2-launch | Stimpmeter ~6 ft/s vs unknown casual putt | Named first-class Soften; coding Hold S2 | **Soften** (G2 named) / **Hold S2** |
+| g2-launch | Stimpmeter-exit Holmes 6.00 ft/s = 72 in/s vs unknown casual putt (toy grid 3–5 ft/s) | Named first-class Soften; S2 coded | **Soften** (S2; G2 coded) |
 | g3-scale | ~48 ppi + ball diameter vs known-approx / recoverable | Named first-class Soften on S1 map; **not** scale-sheet-as-S1 | **Soften** (G3) |
 | g4-fov | Stimpmeter end out of frame vs phone partial / unknown launch geometry | Named leftover | **open** (G4 named) |
-| g5-decel | Constant-decel idealization vs Hubbard non-constant | Named leftover | **open** (G5 named) |
+| g5-decel | Constant-decel idealization vs Hubbard non-constant | Named leftover; S2 OOM-loud | **Soften** (S2; leftover nameable/OOM-loud) |
 | g6-ci-scope | 6.4 in ≠ Amb **X** ≠ handheld **X** | Constraint | **open** (G6; constraint) |
-| s2-kinematics | Launch-class / invert coding under the named G2 leftover | Empirically resolvable **after** Operator **GO S2** | **paused** — **Hold S2**; do **not** auto-GO |
+| s2-kinematics | Launch-class honesty + constant-decel leftover nameable/OOM-loud | Empirically resolved this fold | **Soften** — last check: Operator ADMIT Soften S2; [`DIGESTION_S2.md`](DIGESTION_S2.md) |
+| s3-scale-honesty | Known-approx or recoverable scale (G3) coded as scale-honesty sheet | Empirically resolvable **after** Operator **GO S3** | **paused** — **Hold S3**; do **not** auto-GO |
+| s4-name-x | Name **X** (ft) before Soften of the green-speed claim | Definition-blocked until Operator **GO S4** | **paused** — **Hold S4**; do **not** invent a number this fold |
 | sommer-64-in-not-x | Standing honesty — Sommer 6.4 in 95% CI is fixed-mount Stimpmeter-launched literature only | Constraint | **open** (constraint) |
 | yolo-product-later | YOLO / giant GPU first path; product app; Stimpmeter-stick build | Parked — later wave | **paused** / **later wave** — **not** S0 / S1 / S2 |
 
@@ -68,6 +71,7 @@ No other empirically resolvable residuals on this fold.
 
 | Date | Action |
 |------|--------|
+| 2026-09-06 | Operator **ADMIT Soften S2** (kinematics / launch-class honesty). Scope = launch-class honesty + constant-decel leftover nameable/OOM-loud. **NOT** Soften of the green-speed claim. **X unset.** Sommer 6.4 in ≠ **X**. USGA 8-in ≠ **X**. Named classes: Stimpmeter-exit Holmes 6.00 ft/s = 72 in/s; unknown casual putt = named unknown (toy grid 3–5 ft/s; ≠ Holmes). OOMs (true 10 ft green, Holmes 6.00; `s=v0^2/(2a)`): 4 ft/s smuggle ≈ −5.6 ft; casual 3–5 ft/s typically ~3–7.5 ft under-report; ±10% Holmes ≈ ±2 ft; Hubbard ±10% a inches-to-low-feet (~4–5 in path-integral; ~7 in–1.5 ft if lock a to launch/stop). Soften S0 + S1 **carried**. **Hold S3 / S4** (scale honesty / name-**X**) until Operator GO. Lab invent **HOLD**. Soften Critic **not met**. Greer **TABLED**. DIGEST: [`DIGESTION_S2.md`](DIGESTION_S2.md). Not green speed shown. Not skill-met. Not rithm. Not hard stop. |
 | 2026-09-06 | Operator **ADMIT Soften S0 + Soften S1**. Lab DIGEST lean folded: [`DIGESTION_S0S1_SOFTEN.md`](DIGESTION_S0S1_SOFTEN.md). S0 SOURCE board poseable/citable (definition + procedure + named objects + Sommer literature objects + Holmes/Brede/Hubbard). S1 Sommer gap map G1–G6 honest; first-class Softens G1–G3 nameable. Pulse IDs: **S0 = SOURCE**, **S1 = Sommer gap map**, **S2 = kinematics (Hold)**. Scaffold S1=scale **not** authoritative. **NOT** Soften of the green-speed claim. **X unset.** Sommer 6.4 in CI ≠ Amb **X**. USGA 8-inch cluster ≠ Amb **X**. Kill/DATA-BLOCKED not triggered. Soften-vanity **CLOSED**; Soften Critic **not met**; Lab invent **HOLD** there. Greer **TABLED** invent **HOLD**. SkyMirr invent **HOLD**. Cell-tower **PARKED**. BIA **CLOSED**. No product / YOLO / GPU / Stimpmeter / tracker. Digestor never Soften/Harden/Kill. Lab does not self-admit. Name **X** before Soften of green-speed claim stands. Next = awaiting Operator **GO S2** (or park). Do **not** auto-GO S2. DIGEST: [`DIGESTION_S0.md`](DIGESTION_S0.md) · [`DIGESTION_S1.md`](DIGESTION_S1.md). Not green speed shown. Not skill-met. Not rithm. Not hard stop. |
 | 2026-09-06 | Operator **ADMIT Digestor SPINE STAMP PASS + freezes** opens this string as a **new** Amb (phone-video green stimp; no Stimpmeter stick). Claim wording locked (provisional; **X unset**). Freezes locked: name **X** before Soften; scale / launch / mount named; SOURCE = USGA + Sommer + Holmes/Brede/Hubbard. Sommer 6.4 in CI = literature only, not Amb **X**. First pulse = **S0 SOURCE board** (locked lean; later **GO** + Soften this same day). YOLO / product / stick-build = **later wave**. Digestor never Soften / Harden / Kill. Soften-vanity **CLOSED** (not reopened; Soften Critic not met). Greer **TABLED** (not reopened; send HOLD). SkyMirr invent **HOLD**. Cell-tower Amb **PARKED** (not reopened as live). BIA→weight portfolio **CLOSED**. Golf-offshoot not this Amb. Collatz playground **done** (#45). Track B **paused**. llm-gwt R-REPL stays **parked**. Green speed is **not** established. **X** is **not** named. Training is **not** established. Not skill-met. Not rithm. |
 

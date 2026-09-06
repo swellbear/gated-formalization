@@ -2,7 +2,7 @@
 
 **Date:** 2026-09-06  
 **Application:** `2026-09_phone-video-green-stimp`  
-**Verdict:** **PASS** (Soften S0 + Soften S1) — bibliographic + short paraphrase only. **No product copy.** **No Stimpmeter-stick embodiment.** **No long booklet paste.** **X unset.**
+**Verdict:** **PASS** (Soften S0 + Soften S1 + Soften S2) — bibliographic + short paraphrase only. **No product copy.** **No Stimpmeter-stick embodiment.** **No long booklet paste.** **X unset.**
 
 This gate is required because the Amb practices a USGA instrument definition and a published cellphone-video BRD abstract. Method practice is **not** a license to paste the USGA booklet, to ship an iStimp / Stimpmeter clone, or to treat Sommer’s MATLAB recipe as a product spec.
 
@@ -17,6 +17,7 @@ This gate is required because the Amb practices a USGA instrument definition and
 | Soften-vanity CLOSE what-taught summary (already Operator-folded on that record) | [`DIGESTION_FROM_SOFTEN_VANITY.md`](DIGESTION_FROM_SOFTEN_VANITY.md) | Prior digestion; **not** a Soften-vanity reopen |
 | S0 SOURCE board Soften (definition + procedure + named objects + Sommer literature objects + pointers) | [`DIGESTION_S0.md`](DIGESTION_S0.md) | Operator **ADMIT Soften S0**; **not** green-speed Soften |
 | S1 Sommer gap map Soften (G1–G6) | [`DIGESTION_S1.md`](DIGESTION_S1.md) | Operator **ADMIT Soften S1**; **not** green-speed Soften |
+| S2 kinematics Soften (launch-class honesty + constant-decel OOMs) | [`DIGESTION_S2.md`](DIGESTION_S2.md) | Operator **ADMIT Soften S2**; **not** green-speed Soften; OOMs ≠ **X** |
 | Lab DIGEST lean (S0+S1 Soften; copied Operator gate) | [`DIGESTION_S0S1_SOFTEN.md`](DIGESTION_S0S1_SOFTEN.md) | Not product text; **X** unset |
 | Digestor spine stamp summary | [`DIGESTION_SPINE_STAMP.md`](DIGESTION_SPINE_STAMP.md) | Admit record of PASS |
 
@@ -37,10 +38,11 @@ This gate is required because the Amb practices a USGA instrument definition and
 - [`SOURCE.md`](SOURCE.md) holds bibliographic tables + short paraphrase + named-object list. **No long booklet. No product spec.**
 - [`DIGESTION_S0.md`](DIGESTION_S0.md) is COPY_GATE **short paraphrase** of definition / procedure / named objects / Sommer literature objects / bibliographic pointers. **No long booklet. No product spec.**
 - [`DIGESTION_S1.md`](DIGESTION_S1.md) is a gap map. **No product spec. No X invented.**
+- [`DIGESTION_S2.md`](DIGESTION_S2.md) names launch classes + Operator OOMs. **No product spec. No X invented.** OOMs ≠ **X**.
 - [`DIGESTION_S0S1_SOFTEN.md`](DIGESTION_S0S1_SOFTEN.md) copies the Operator ADMIT. **No product spec.**
-- [`PROPOSED_PULSE.md`](PROPOSED_PULSE.md) locks **S0 = SOURCE**, **S1 = Sommer gap map**, **S2 = kinematics (Hold)**. Scaffold S1=scale is **not** authoritative. **No** tracker invent.
+- [`PROPOSED_PULSE.md`](PROPOSED_PULSE.md) locks **S0 = SOURCE**, **S1 = Sommer gap map**, **S2 = kinematics (Soften)**, **S3 / S4 Hold**. Scaffold S1=scale is **not** authoritative. **No** tracker invent.
 - Sommer 6.4 in appears only as **literature-only** honesty. **X unset.**
 - [`DIGESTION_FROM_SOFTEN_VANITY.md`](DIGESTION_FROM_SOFTEN_VANITY.md) paraphrases the Operator-folded Soften-vanity park what-taught note. **No claim quotes.**
 - [`DIGESTION_SPINE_STAMP.md`](DIGESTION_SPINE_STAMP.md) copies the Digestor PASS summary.
 
-**PASS.** Still **not** claim clearance. Still **not** green speed shown. Still **not** **X** named. Soften S0 + Soften S1 ≠ green-speed Soften.
+**PASS.** Still **not** claim clearance. Still **not** green speed shown. Still **not** **X** named. Soften S0 + Soften S1 + Soften S2 ≠ green-speed Soften.

@@ -1,19 +1,20 @@
-# First pulse — S0 / S1 / S2 menu (Digestor; Operator-gated)
+# First pulse — S0 / S1 / S2 / S3 / S4 menu (Digestor; Operator-gated)
 
 **Date:** 2026-09-06  
 **Application:** `2026-09_phone-video-green-stimp`  
-**String:** Operator **ADMIT Soften S0** + **Soften S1** / **X unset** / green-speed claim **not** Softened / **Hold S2** (kinematics)  
-**Named gap:** SOURCE board poseable; Sommer gap map G1–G6 honest; first-class Softens nameable; S2 kinematics held  
+**String:** Operator **ADMIT Soften S0** + **Soften S1** + **Soften S2** / **X unset** / green-speed claim **not** Softened / **Hold S3 / S4**  
+**Named gap:** SOURCE board poseable; Sommer gap map honest; launch-class honesty + constant-decel leftover OOM-loud; scale honesty / name-**X** held  
 **S0 digestion:** [`DIGESTION_S0.md`](DIGESTION_S0.md)  
 **S1 digestion:** [`DIGESTION_S1.md`](DIGESTION_S1.md)  
+**S2 digestion:** [`DIGESTION_S2.md`](DIGESTION_S2.md)  
 **Lab DIGEST lean:** [`DIGESTION_S0S1_SOFTEN.md`](DIGESTION_S0S1_SOFTEN.md)  
 **Ledger:** [`NAMED_GAP_LEDGER.md`](NAMED_GAP_LEDGER.md)  
 **SOURCE notes:** [`SOURCE.md`](SOURCE.md)  
 **Spine stamp:** [`DIGESTION_SPINE_STAMP.md`](DIGESTION_SPINE_STAMP.md)
 
-Digestor proposed pulses. Lab does **not** self-admit. **S0 Soften** admitted. **S1 Soften** admitted. **Hold S2** until Operator **GO S2**. Do **not** auto-GO S2. After GO S2: kinematics only if Operator says so. **Not a model.** Do **not** train. Do **not** build a Stimpmeter. Do **not** treat Sommer 6.4 in as Amb **X**. Do **not** hire a Soften Critic. Do **not** reopen Greer. Do **not** reopen SkyMirr invent.
+Digestor proposed pulses. Lab does **not** self-admit. **S0 Soften** admitted. **S1 Soften** admitted. **S2 Soften** admitted. **Hold S3** (scale honesty) and **Hold S4** (name-**X**) until Operator GO. Lab invent **HOLD**. Do **not** auto-GO S3 or S4. **Not a model.** Do **not** train. Do **not** build a Stimpmeter. Do **not** treat Sommer 6.4 in as Amb **X**. Do **not** hire a Soften Critic. Do **not** reopen Greer. Do **not** reopen SkyMirr invent.
 
-**ID lock (Digestor / Founder; overrides scaffold remapping):** **S0 = SOURCE**, **S1 = Sommer gap map**, **S2 = kinematics (Hold)**. The #95 scaffold table that set **S1 = scale** is **not** authoritative. Scale is **G3** on the S1 gap map.
+**ID lock (Digestor / Founder; overrides scaffold remapping):** **S0 = SOURCE**, **S1 = Sommer gap map**, **S2 = kinematics**, **S3 = scale honesty (Hold)**, **S4 = name-X (Hold)**. The #95 scaffold table that set **S1 = scale** is **not** authoritative.
 
 **What this is not:** Green speed shown. Green-speed claim Softened. **X** named. Training established. Skill-met. A product app. A Stimpmeter stick. A YOLO / giant GPU first path. Treating Sommer CI as handheld **X**. Reopening Soften-vanity. Reopening Greer invent. Sending the Greer write-up. Reopening SkyMirr invent. Reopening cell-tower as live. Reopening BIA→weight. Reopening golf-offshoot. Rithm. A Soften Critic hire.
 
@@ -21,13 +22,15 @@ Digestor proposed pulses. Lab does **not** self-admit. **S0 Soften** admitted. *
 
 ## 0. Plain-language framing
 
-**What this is:** Cheap pulses. S0 SOURCE board is **Operator Soften**. S1 Sommer gap map is **Operator Soften**. **S2 kinematics HOLD.** Do **not** auto-GO S2.
+**What this is:** Cheap pulses. S0 SOURCE board is **Operator Soften**. S1 Sommer gap map is **Operator Soften**. S2 kinematics is **Operator Soften**. **S3 / S4 HOLD.** Lab invent **HOLD**. Do **not** auto-GO S3 or S4.
 
 **What S0 settled:** USGA Stimpmeter definition + procedure + named objects can be written as a citable board, with Sommer abstract objects and Holmes / Brede / Hubbard as pointers. **Not** **X**. **Not** a tracker. **Not** green-speed Soften.
 
 **What S1 settled:** Gap map G1–G6 is honest. First-class Softens nameable (mount / launch / scale / FOV / decel / CI-scope). **S1 = Sommer gap map**, not scale. **Not** green-speed Soften.
 
-**What this is not:** Not green speed shown. Not a reason to treat Sommer 6.4 in as handheld **X**. Not a reason to build a Stimpmeter. Not claim clearance. Not auto-GO S2.
+**What S2 settled:** Launch-class honesty + constant-decel leftover nameable / OOM-loud. Stimpmeter-exit Holmes **6.00 ft/s = 72 in/s** vs unknown casual putt (toy grid 3–5 ft/s; ≠ Holmes). OOMs on [`DIGESTION_S2.md`](DIGESTION_S2.md). **Not** green-speed Soften. **Not** **X**.
+
+**What this is not:** Not green speed shown. Not a reason to treat Sommer 6.4 in as handheld **X**. Not a reason to build a Stimpmeter. Not claim clearance. Not auto-GO S3 or S4.
 
 ---
 
@@ -37,9 +40,11 @@ Digestor proposed pulses. Lab does **not** self-admit. **S0 Soften** admitted. *
 |-------|------------------|--------|
 | **S0** | **SOURCE** Stimpmeter board | **Operator Soften** — [`DIGESTION_S0.md`](DIGESTION_S0.md) |
 | **S1** | **Sommer gap map** G1–G6 | **Operator Soften** — [`DIGESTION_S1.md`](DIGESTION_S1.md) |
-| **S2** | **kinematics** | **Hold** until Operator GO (or park). Do **not** auto-GO |
+| **S2** | **kinematics** / launch-class honesty | **Operator Soften** — [`DIGESTION_S2.md`](DIGESTION_S2.md) |
+| **S3** | **scale honesty** | **Hold** until Operator GO. Do **not** auto-GO |
+| **S4** | **name X** | **Hold** until Operator GO. Do **not** auto-GO |
 
-Scaffold #95 had remapped **S1 = scale**, **S2 = launch**, **S3 = mount**, **S4 = name X**. Digestor / Founder IDs **override** that remapping. Scale / launch / mount sit on the S1 gap map as **G3 / G2 / G1** (first-class Softens). Name-**X** freeze **stands** and is **not** this fold.
+Scaffold #95 had remapped **S1 = scale**, **S2 = launch**, **S3 = mount**, **S4 = name X**. Digestor / Founder IDs **override** that remapping for S0–S2. Live S3 is **scale honesty** (G3), not mount. Live S4 is **name-X** (freeze stands; **not** this fold).
 
 ---
 
@@ -49,9 +54,11 @@ Scaffold #95 had remapped **S1 = scale**, **S2 = launch**, **S3 = mount**, **S4 
 |-------|-------|-----|------|-----------------|
 | **S0** (**Operator Soften**; stands) | **SOURCE board** — Stimpmeter definition + procedure + named objects. Census USGA objects (bar ~36 in, V-groove, 1X/2X notches, ~20° release, ~6 ft/s exit, 3+3 opposed rolls, 8-inch same-direction cluster, BRD in feet). Name Sommer abstract objects (fixed-level 42 in mount, Stimpmeter-launched, Holmes 72 in/s, 6.4 in 95% CI as literature only). Name Holmes / Brede / Hubbard as physics pointers. No **X**. No tracker. | The lock needs a named Stimpmeter object before kinematics / **X**. | Low (docs; laptop) | **ADMIT Soften** — board poseable/citable. Not green-speed Soften. Not Harden. Kill/DATA-BLOCKED not triggered. See [`DIGESTION_S0.md`](DIGESTION_S0.md). |
 | **S1** (**Operator Soften**; **Sommer gap map**) | **Gap map G1–G6** — mount / launch / scale / FOV / decel / CI-scope. First-class Softens nameable. **Not** a scale-sheet-as-S1. | Digestor/Founder ID lock. Honest leftovers vs Sommer literature condition. | Low (docs gap map) | **ADMIT Soften** — map honest; G1–G3 first-class Softens named. Not green-speed Soften. See [`DIGESTION_S1.md`](DIGESTION_S1.md). |
-| **S2** (**Hold**) | **Kinematics** — launch-class coding (Stimpmeter ~6 ft/s vs unknown casual putt) and related invert assumptions. G2 names the leftover; coding waits on Operator GO. | G2 first-class Soften already named. Casual putt ≠ Stimpmeter launch. | Low (docs coding sheet) | **HOLD**. Do **not** auto-GO. Kill if launch left unnamed **or** Holmes 72 in/s smuggled onto a casual putt. Succeed later = launch class coded under GO. |
+| **S2** (**Operator Soften**; kinematics) | **Launch-class honesty + constant-decel leftover** — Stimpmeter-exit Holmes **6.00 ft/s = 72 in/s** vs unknown casual putt (toy grid 3–5 ft/s; ≠ Holmes). Constant-decel `s=v0^2/(2a)` leftover OOM-loud. | G2 / G5 first-class. Casual putt ≠ Stimpmeter launch. Holmes smuggle is feet-loud. | Low (docs OOM sheet) | **ADMIT Soften** — classes named; leftover nameable/OOM-loud. Not green-speed Soften. Not **X**. See [`DIGESTION_S2.md`](DIGESTION_S2.md). |
+| **S3** (**Hold**) | **Scale honesty** — known-approx or recoverable scale (G3). | Scale still required for the locked claim. Not S1. | Low (docs) | **HOLD**. Do **not** auto-GO. Kill = neither known nor recoverable. Succeed later = scale class coded under GO. |
+| **S4** (**Hold**) | **Name X (ft)** before Soften of the green-speed claim. Do **not** steal Sommer 6.4 in or the USGA 8-inch cluster. | Freeze 1. Soften / Harden of the claim cannot fire while **X** is unset. | Low (docs bar freeze) | **HOLD**. Do **not** auto-GO. Kill = no honest **X** without stealing literature CI. Succeed later = named **X** (ft). **Not** green speed shown. |
 
-**Later / not this fold:** name **X** (ft) before Soften of the green-speed claim (freeze stands). YOLO / detector train; giant GPU; product app; Stimpmeter-stick build; Soften Critic hire. Do **not** run, peek, or invent those on S0 / S1 / S2.
+**Later / not this fold:** YOLO / detector train; giant GPU; product app; Stimpmeter-stick build; Soften Critic hire. Do **not** run, peek, or invent those on S0 / S1 / S2 / S3 / S4. Lab invent **HOLD**.
 
 ---
 
@@ -79,18 +86,32 @@ Scaffold #95 had remapped **S1 = scale**, **S2 = launch**, **S3 = mount**, **S4 
 - First-class Softens **G1 mount / G2 launch / G3 scale** nameable.
 - G4 FOV / G5 decel / G6 CI-scope named as honesty.
 - **S1 = Sommer gap map.** Scaffold S1=scale is **not** authoritative.
-- G2 coding **Hold S2**. Do **not** auto-GO S2.
+- G2 / G5 later coded on **S2 Soften**.
 
 **S1 Soften ≠ green-speed Soften.** S1 Soften ≠ **X** named.
 
 ---
 
-## 4. Hard NO (after Soften S0 + Soften S1)
+## 3c. S2 kinematics (**Operator Soften**; this fold)
 
-- Do **not** auto-GO S2. Hold S2 (kinematics) until Operator GO (or park).
+**Ran as Operator ADMIT Soften S2.** See [`DIGESTION_S2.md`](DIGESTION_S2.md).
+
+- Launch classes named: Stimpmeter-exit Holmes **6.00 ft/s = 72 in/s** vs unknown casual putt (toy grid 3–5 ft/s; ≠ Holmes).
+- Constant-decel leftover nameable / OOM-loud (Hubbard ±10% **a**: inches-to-low-feet).
+- Key OOMs (true 10 ft green, Holmes 6.00; `s=v0^2/(2a)`): 4 ft/s smuggle ≈ **−5.6 ft**; casual 3–5 ft/s typically **~3–7.5 ft** under-report; ±10% Holmes ≈ **±2 ft**.
+- **Not** green-speed Soften. **X unset.** Sommer 6.4 in ≠ **X**. USGA 8-in ≠ **X**.
+
+**S2 Soften ≠ green-speed Soften.** S2 Soften ≠ **X** named.
+
+---
+
+## 4. Hard NO (after Soften S0 + Soften S1 + Soften S2)
+
+- Do **not** auto-GO S3 or S4. **Hold S3 / S4** until Operator GO. Lab invent **HOLD**.
 - Do **not** leave S1=scale as authoritative.
-- Do **not** treat Soften S0 or Soften S1 as green-speed Soften.
-- Do **not** name **X** on S0 / S1 / while S2 is Hold unless Operator later names it.
+- Do **not** treat Soften S0 or Soften S1 or Soften S2 as green-speed Soften.
+- Do **not** name **X** on S0 / S1 / S2. **Hold S4**.
+- Do **not** smuggle Holmes 6.00 ft/s onto an unknown casual putt.
 - Do **not** treat Sommer ~6.4 in 95% CI as Amb **X** or as handheld **X**.
 - Do **not** vanity-freeze the USGA 8-inch same-direction cluster as **X**.
 - Do **not** build a Stimpmeter stick.
@@ -126,4 +147,4 @@ Scaffold #95 had remapped **S1 = scale**, **S2 = launch**, **S3 = mount**, **S4 
 
 ---
 
-*Docs only. Operator ADMIT Soften S0 + Soften S1. S0=SOURCE. S1=Sommer gap map (not scale). S2=kinematics Hold. Not green-speed Soften. X unset. Do not auto-GO S2. Soften Critic not met. Greer TABLED. Not a product. Not skill-met. Not rithm. Lab does not self-admit. No invent models this fold. Digestor never Soften / Harden / Kill.*
+*Docs only. Operator ADMIT Soften S0 + Soften S1 + Soften S2. S0=SOURCE. S1=Sommer gap map (not scale). S2=kinematics Soften. Hold S3/S4. Lab invent HOLD. Not green-speed Soften. X unset. Soften Critic not met. Greer TABLED. Not a product. Not skill-met. Not rithm. Lab does not self-admit. No invent models this fold. Digestor never Soften / Harden / Kill.*
