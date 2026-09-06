@@ -4,6 +4,7 @@
 **Application:** `2026-09_clancy-media-transcript-gap-map`  
 **Role:** STATUS pointer. **Illustrator board; Operator-folded pointer.** **FINAL** Soften-fold + living map **ready** for Softened Day 21 (LAST Digestor live day). PNG + md **not receivable** this VM — **pointer only**; **do not invent or generate a chart**. **Not** a new Soften. Soften C3 Day 21 ADMIT digestion stays **primary**.  
 **C3 Day 21 digestion (ADMITTED; primary; LAST Digestor live day):** [`DIGESTION_C3_DAY21.md`](DIGESTION_C3_DAY21.md)  
+**C3 Day 20 digestion (ADMITTED on master #127; board untouched):** [`DIGESTION_C3_DAY20.md`](DIGESTION_C3_DAY20.md)  
 **C3 Day 8 digestion (ADMITTED on master #116; board untouched):** [`DIGESTION_C3_DAY8.md`](DIGESTION_C3_DAY8.md)  
 **C3 Day 19 digestion (ADMITTED on master #123; board untouched):** [`DIGESTION_C3_DAY19.md`](DIGESTION_C3_DAY19.md)  
 **C3 Day 16 digestion (ADMITTED on master #122; board untouched):** [`DIGESTION_C3_DAY16.md`](DIGESTION_C3_DAY16.md)  

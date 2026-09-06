@@ -4,7 +4,7 @@
 **Application:** `2026-09_clancy-media-transcript-gap-map`  
 **String:** C3 Day 21 day-pulse #20 (G4 PRIMARY new Saathoff CW psychiatrist CR-finish / suicide-capability-theory kind + G6 TOUCH + G2 LIGHT + G5 LIGHT) — **LAST Digestor live day** — Operator **Soften**  
 **Habit:** [`docs/DIGESTION_HABIT.md`](../../docs/DIGESTION_HABIT.md)  
-**Parent:** Soften S0 #101 · Soften C1 #102 · Soften C3 Day 18 #103 · Soften C3 Day 14 #105 · Soften C3 Day 7 #109 · Soften C3 Day 11 #110 · Soften C3 Day 2 #111 · Soften C3 Day 3 #112 · Soften C3 Day 4 #113 · Soften C3 Day 10 #118 · Soften C3 Day 9 #117 · Soften C3 Day 8 #116 · Soften C3 Day 13 #120 · Soften C3 Day 15 #121 · Soften C3 Day 16 #122 · Soften C3 Day 19 #123 · Digestor park DIGEST #124 (ADMITTED separately; not written here)  
+**Parent:** Soften S0 #101 · Soften C1 #102 · Soften C3 Day 18 #103 · Soften C3 Day 14 #105 · Soften C3 Day 7 #109 · Soften C3 Day 11 #110 · Soften C3 Day 2 #111 · Soften C3 Day 3 #112 · Soften C3 Day 4 #113 · Soften C3 Day 10 #118 · Soften C3 Day 9 #117 · Soften C3 Day 8 #116 · Soften C3 Day 13 #120 · Soften C3 Day 15 #121 · Soften C3 Day 16 #122 · Soften C3 Day 19 #123 · Soften C3 Day 20 #127 · Digestor park DIGEST #124 (ADMITTED separately; not written here)  
 **S0 digestion (stands):** [`DIGESTION_S0.md`](DIGESTION_S0.md)  
 **C1 digestion (stands; closings already Softened — do NOT remap):** [`DIGESTION_C1.md`](DIGESTION_C1.md)  
 **C3 Day 18 digestion (stands; board untouched):** [`DIGESTION_C3.md`](DIGESTION_C3.md)  
@@ -12,7 +12,8 @@
 **C3 Day 16 digestion (stands; on master #122; board untouched):** [`DIGESTION_C3_DAY16.md`](DIGESTION_C3_DAY16.md)  
 **C3 Day 8 digestion (stands; on master #116; board untouched):** [`DIGESTION_C3_DAY8.md`](DIGESTION_C3_DAY8.md)  
 **C3 Day 19 digestion (stands; on master #123; board untouched):** [`DIGESTION_C3_DAY19.md`](DIGESTION_C3_DAY19.md)  
-**Softened Days 2–20 boards:** Operator-**ADMITTED** (boards **untouched** this fold). Day 8 on master as **#116**. Days 5 / 6 / 12 / 17 / 20 may land in parallel (**no** invent of those digest files this fold; **ADMITTED**, **not** PROPOSED). Softened **D19 Mack** + Softened **D20 Heilbrun** **untouched**. **≠** either duplicate.  
+**C3 Day 20 digestion (stands; on master #127; board untouched):** [`DIGESTION_C3_DAY20.md`](DIGESTION_C3_DAY20.md)  
+**Softened Days 2–20 boards:** Operator-**ADMITTED** (boards **untouched** this fold). Day 8 on master as **#116**. Day 20 Heilbrun on master as **#127**. Days 5 / 6 / 12 / 17 may land in parallel (**no** invent of those digest files this fold; **ADMITTED**, **not** PROPOSED). Softened **D19 Mack** + Softened **D20 Heilbrun** **untouched**. **≠** either duplicate.  
 **Pulse menu:** [`PROPOSED_PULSE.md`](PROPOSED_PULSE.md)  
 **Ledger:** [`NAMED_GAP_LEDGER.md`](NAMED_GAP_LEDGER.md)  
 **STATUS:** [`STATUS.md`](STATUS.md)  
@@ -45,7 +46,7 @@ Digestor park DIGEST **already on master #124** (this Soften PR does **NOT** wri
 - Soften C1 **ADMITTED** (stands; closings **already Softened** — **do NOT remap**)
 - Soften C3 Day 18 **ADMITTED** (stands; board **untouched**)
 - Soften C3 Day 14 **ADMITTED** (stands; board **untouched**)
-- Soften C3 Days **2–20** **ADMITTED** (boards **untouched**; Days 2 / 3 / 4 / 7 / 8 / 9 / 10 / 11 / 13 / 15 / 16 / 19 on master as **#111** / **#112** / **#113** / **#109** / **#116** / **#117** / **#118** / **#110** / **#120** / **#121** / **#122** / **#123**; Days 5 / 6 / 12 / 17 / 20 parallel — digest not yet on master where absent; **ADMITTED**, **not** PROPOSED)
+- Soften C3 Days **2–20** **ADMITTED** (boards **untouched**; Days 2 / 3 / 4 / 7 / 8 / 9 / 10 / 11 / 13 / 15 / 16 / 19 / 20 on master as **#111** / **#112** / **#113** / **#109** / **#116** / **#117** / **#118** / **#110** / **#120** / **#121** / **#122** / **#123** / **#127**; Days 5 / 6 / 12 / 17 parallel — digest not yet on master where absent; **ADMITTED**, **not** PROPOSED)
 - Softened D19 Mack **ADMITTED** (#123; board **untouched**; **≠** this fold)
 - Softened D20 Heilbrun **ADMITTED** (board **untouched**; **≠** this fold)
 - Digestor index expand **ADMITTED** (stands)

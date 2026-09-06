@@ -54,7 +54,7 @@ Rev page stamps below are **media** when already on [`SOURCE.md`](SOURCE.md). Ne
 | Day 17 | day | https://www.rev.com/transcripts/ma-v-lindsay-clancy-day-17 | **live** | **Softened** — C3 Day 17 (**ADMITTED**; board **untouched** this fold) |
 | Day 18 | day | https://www.rev.com/transcripts/ma-v-lindsay-clancy-day-18 | **live** | **Softened** — C3 Day 18 named backup (board **untouched**) |
 | Day 19 | day | https://www.rev.com/transcripts/ma-v-lindsay-clancy-day-19 | **live** | **Softened** — C3 Day 19 Mack (on master **#123**; board **untouched**) |
-| Day 20 | day | https://www.rev.com/transcripts/ma-v-lindsay-clancy-day-20 | **live** | **Softened** — C3 Day 20 Heilbrun (**ADMITTED**; board **untouched** this fold) |
+| Day 20 | day | https://www.rev.com/transcripts/ma-v-lindsay-clancy-day-20 | **live** | **Softened** — C3 Day 20 Heilbrun (on master **#127**; board **untouched** this fold) |
 | Day 21 | day | https://www.rev.com/transcripts/ma-v-lindsay-clancy-day-21 | **live** | **Softened** — C3 Day 21 Saathoff CW psychiatrist CR-finish / suicide-capability-theory backup (stamp **2026-08-27**; LAST Digestor live day) |
 | Closing Arguments | closings | https://www.rev.com/transcripts/ma-v-lindsay-clancy-closing-arguments | **live** | Founder starter; C1 Softened (closings census); closings ≠ evidence |
 | Day 22 | — | https://www.rev.com/transcripts/ma-v-lindsay-clancy-day-22 | **404** | off-corpus |
