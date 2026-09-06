@@ -197,6 +197,20 @@ Do **not** remap these IDs. Digestor IDs override any later scaffold remapping.
 
 ---
 
+
+## 3h. C3 Day 8 day-pulse #10 (**Operator Soften**; this fold)
+
+**Ran as Operator ADMIT Soften C3 Day 8.** See [`DIGESTION_C3_DAY8.md`](DIGESTION_C3_DAY8.md).
+
+1. Named **ONE** Day 8 surveillance/digital/demeanor/motion backup for Softened C1 **G5 (primary)** + **G4 (touch)** + **G2 (touch)** + **G3 (light)** + **G6 honesty**.
+2. Named **10 day claims**.
+3. Named extending gaps **G5-D8 PRIMARY / G4-D8 / G2-D8 / G3-D8 light / G6-D8**.
+4. Demeanor / Facebook / surveillance / motion-gate obs ≠ Soften of planning / capacity / guilt as fact.
+5. Left Softened Days 2–7 + 9–19 boards **untouched**. Days 5 / 6 / 12 / 17 DIGEST not invented.
+
+**C3 Day 8 Soften stands.** Park **#124** authoritative. **Hold C2 / C4.** Later **GO C2** or name the success bar before **C4**. Days 20–21 may still be landing — do not invent.
+
+---
 ## 4. Hard NO (after Soften S0 + Soften C1 + Soften C3 + Soften C3 Day 14 + Soften C3 Day 19)
 
 - Do **not** auto-GO C2 / C4. **Hold C2 / C4** until later GO.
