@@ -19,6 +19,8 @@ Days **2–13, 15–17, 19–21** (one named day at a time). Closings already C1
 
 **Later the same day (Soften C3 Day 7):** Day 7 Soften landed **after** this snapshot; Day 7 **leaves** remaining-open. Remaining live days after Day 7: **2–6, 8–13, 15–17, 19–21**. INTERIM still **NOT** park. Amb **open**. Softened days so far: **7**, **14**, **18**. See [`DIGESTION_C3_DAY7.md`](DIGESTION_C3_DAY7.md).
 
+**Later the same day (Soften C3 Day 5):** Day 5 Soften landed **after** this snapshot. Softened Day 2 + Day 3 + Day 4 + Day 11 Operator-ADMITTED (parallel). Remaining live days after this fold: **6, 8–10, 12–13, 15–17, 19–21**. INTERIM still **NOT** park. Amb **open**. Softened days so far: **2**, **3**, **4**, **5**, **7**, **11**, **14**, **18** (+closings C1). **Medical kids death ≠ Soften guilt.** See [`DIGESTION_C3_DAY5.md`](DIGESTION_C3_DAY5.md).
+
 ## Do not
 
 - Treat interim note as park DIGEST / corpus-done

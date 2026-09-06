@@ -10,9 +10,11 @@
 
 **LOUD: media≠certified.** Every row is a Rev (or similar) **media / unofficial** page. This is **not** the certified court-reporter record. Rev page dates are **media stamps**, not a certified court calendar. Speaker labels can be wrong. Words can be missed. **Day≠certified.** Closings still ≠ evidence.
 
-This index names **which pages are live / not-found / 404**. It does **not** Soften those days. It does **not** dump those days. Softened days so far = **7**, **14**, and **18**. Soften Critic **not hired**.
+This index names **which pages are live / not-found / 404**. It does **not** Soften those days. It does **not** dump those days. Softened days so far = **2**, **3**, **4**, **5**, **7**, **11**, **14**, and **18** (+closings C1). Soften Critic **not hired**.
 
 **Later the same day (Soften C3 Day 7):** Operator **ADMIT Soften C3 Day 7**. Day 7 leaves the remaining-open list. This expand snapshot is **not** rewritten as a park DIGEST. See [`DIGESTION_C3_DAY7.md`](DIGESTION_C3_DAY7.md).
+
+**Later the same day (Soften C3 Day 5):** Operator **ADMIT Soften C3 Day 5**. Day 5 hospital/medical backup poseable. **LOUD: medical kids death ≠ Soften guilt.** Softened Day 2 + Day 3 + Day 4 + Day 7 + Day 11 + Day 14 + Day 18 boards **untouched**. INTERIM still **NOT** park. See [`DIGESTION_C3_DAY5.md`](DIGESTION_C3_DAY5.md).
 
 ---
 
@@ -36,17 +38,17 @@ Rev page stamps below are **media** when already on [`SOURCE.md`](SOURCE.md). Ne
 | Page | Class | Rev URL | Live? | Role |
 |------|-------|---------|-------|------|
 | Day 1 | — | https://www.rev.com/transcripts/ma-v-lindsay-clancy-day-1 | **not found** (404) | off-corpus |
-| Day 2 | day | https://www.rev.com/transcripts/ma-v-linsday-clancy-day-2 | **live** (typo slug) | Digestor index; **not Softened** |
+| Day 2 | day | https://www.rev.com/transcripts/ma-v-linsday-clancy-day-2 | **live** (typo slug) | **Softened** — Operator-ADMITTED (parallel; board **untouched**) |
 | Day 2 (canonical slug) | — | https://www.rev.com/transcripts/ma-v-lindsay-clancy-day-2 | **404** | typo leftover named |
-| Day 3 | day | https://www.rev.com/transcripts/ma-v-lindsay-clancy-day-3 | **live** | Digestor index; **not Softened** |
-| Day 4 | day | https://www.rev.com/transcripts/ma-v-lindsay-clancy-day-4 | **live** | Digestor index; **not Softened** |
-| Day 5 | day | https://www.rev.com/transcripts/ma-v-lindsay-clancy-day-5 | **live** | Digestor index; **not Softened** |
+| Day 3 | day | https://www.rev.com/transcripts/ma-v-lindsay-clancy-day-3 | **live** | **Softened** — Operator-ADMITTED (parallel; board **untouched**) |
+| Day 4 | day | https://www.rev.com/transcripts/ma-v-lindsay-clancy-day-4 | **live** | **Softened** — Operator-ADMITTED (parallel; board **untouched**) |
+| Day 5 | day | https://www.rev.com/transcripts/ma-v-lindsay-clancy-day-5 | **live** | **Softened** — C3 Day 5 hospital/medical backup (**Medical kids death ≠ Soften guilt**) |
 | Day 6 | day | https://www.rev.com/transcripts/ma-v-lindsay-clancy-day-6 | **live** | Digestor index; **not Softened** |
 | Day 7 | day | https://www.rev.com/transcripts/ma-v-lindsay-clancy-day-7 | **live** | **Softened** — C3 Day 7 meds/tox + suicide-injury backup (landed after index-expand snapshot) |
 | Day 8 | day | https://www.rev.com/transcripts/ma-v-lindsay-clancy-day-8 | **live** | Digestor index; **not Softened** |
 | Day 9 | day | https://www.rev.com/transcripts/ma-v-lindsay-clancy-day-9 | **live** | Digestor index; **not Softened** |
 | Day 10 | day | https://www.rev.com/transcripts/ma-v-lindsay-clancy-day-10 | **live** | Digestor index; **not Softened** |
-| Day 11 | day | https://www.rev.com/transcripts/ma-v-lindsay-clancy-day-11 | **live** | Founder starter; **not Softened** |
+| Day 11 | day | https://www.rev.com/transcripts/ma-v-lindsay-clancy-day-11 | **live** | **Softened** — Operator-ADMITTED (parallel; board **untouched**) |
 | Day 12 | day | https://www.rev.com/transcripts/ma-v-lindsay-clancy-day-12 | **live** | Digestor index; **not Softened** |
 | Day 13 | day | https://www.rev.com/transcripts/ma-v-lindsay-clancy-day-13 | **live** | Digestor index; **not Softened** |
 | Day 14 | day | https://www.rev.com/transcripts/ma-v-lindsay-clancy-day-14 | **live** | **Softened** — C3 Day 14 digital-evidence backup |
@@ -67,15 +69,15 @@ Rev page stamps below are **media** when already on [`SOURCE.md`](SOURCE.md). Ne
 
 | Set | Days | Status |
 |-----|------|--------|
-| **Softened** | **7**, **14**, **18** | C3 Day 7 + C3 Day 14 + C3 Day 18 named backups poseable. **Day≠certified.** Day 7 landed after this index-expand snapshot. |
-| **Indexed, not Softened** | 2–6, 8–13, 15–17, 19–21 | Live media pages. Standing GO next = Lab **GO Day 11**, then remaining index **one named day at a time**. |
+| **Softened** | **2**, **3**, **4**, **5**, **7**, **11**, **14**, **18** (+closings C1) | C3 Day 5 hospital/medical + Day 7 + Day 14 + Day 18 named backups poseable; Day 2/3/4/11 Operator-ADMITTED (parallel). **Day≠certified.** **Medical kids death ≠ Soften guilt.** |
+| **Indexed, not Softened** | 6, 8–10, 12–13, 15–17, 19–21 | Live media pages. Standing GO next = Lab invent/hand **Day 6**, then remaining index **one named day at a time**. |
 | **Off-corpus** | Day 1 (not found); Days 22+ (404) | Do **not** invent pages |
 
 ---
 
 ## 3. What this index does *not* mean
 
-- **NOT** Soften of Days 2–6 / 8–13 / 15–17 / 19–21.
+- **NOT** Soften of Days 6 / 8–10 / 12–13 / 15–17 / 19–21.
 - **NOT** an all-days dump.
 - **NOT** Soften of parent usefulness. **Success bar unset.**
 - **NOT** Soften of verdict / mistrial / retrial.
