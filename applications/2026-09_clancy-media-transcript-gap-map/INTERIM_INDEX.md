@@ -17,7 +17,7 @@
 
 Days **2–13, 15–17, 19–21** (one named day at a time). Closings already C1.
 
-**Later the same day (Soften C3 Day 7):** Day 7 Soften landed **after** this snapshot; Day 7 **leaves** remaining-open. Remaining live days after Day 7: **2–6, 8–13, 15–17, 19–21**. INTERIM still **NOT** park. Amb **open**. Softened days so far: **7**, **14**, **18**. See [`DIGESTION_C3_DAY7.md`](DIGESTION_C3_DAY7.md).
+**Later the same day (Soften C3 Day 7 + Day 11 + Day 2):** Day 7 (#109) + Day 11 ([`DIGESTION_C3_DAY11.md`](DIGESTION_C3_DAY11.md)) + Day 2 (#111) landed **after** this snapshot. Remaining live days: **3–6, 8–10, 12–13, 15–17, 19–21**. INTERIM still **NOT** park. Amb **open**. Softened days so far: **2**, **7**, **11**, **14**, **18**.
 
 ## Do not
 
