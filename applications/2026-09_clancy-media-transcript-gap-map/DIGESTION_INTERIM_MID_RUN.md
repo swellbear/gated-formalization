@@ -1,11 +1,13 @@
 # Digestion — Clancy INTERIM mid-run note (Digestor)
 
-> **INTERIM MID-RUN (Founder 2026-09-06) — Amb NOT complete.** Lab Softened only **S0 + C1 closings + C3 Day 18 + C3 Day 14**. Remaining live days still open: **2–13, 15–17, 19–21**. Day 1 missing / 22+ 404 = corpus **EDGE**, not completion. This is **not** `DIGESTION_PARK_WHAT_TAUGHT`. True park DIGEST only after Lab finishes last remaining live day. Do **not** Soften Operator that the corpus map is done.
+> **SUPERSEDED 2026-09-06 (Operator ADMIT Digestor true park DIGEST).** Keep as history. Do **not** delete. Authoritative park DIGEST: [`DIGESTION_PARK_WHAT_TAUGHT.md`](DIGESTION_PARK_WHAT_TAUGHT.md) · [`PARK_INDEX.md`](PARK_INDEX.md). This INTERIM snapshot is **not** the admit record.
+
+> **INTERIM MID-RUN (Founder 2026-09-06) — historical snapshot.** Lab Softened only **S0 + C1 closings + C3 Day 18 + C3 Day 14** at first write. Remaining live days at first write: **2–13, 15–17, 19–21**. Day 1 missing / 22+ 404 = corpus **EDGE**. Later same day: Operator **ADMIT** true park DIGEST (available-day Softens complete). Do **not** treat this file as current park.
 
 
 **Date:** 2026-09-06  
 **Amb:** `2026-09_clancy-media-transcript-gap-map`  
-**Status:** Digestor **interim mid-run note** — **not** Operator park ADMIT. **not** completion. Not Soften/Harden/Kill by Digestor. Not Amb TABLE (unless Founder/Operator tables). Not usefulness Soften. **Success bar unset.** Soften Critic **not hired**.  
+**Status:** Digestor **interim mid-run note** — **SUPERSEDED** by Operator-admitted park DIGEST. Historical snapshot only. Not Soften/Harden/Kill by Digestor. Not usefulness Soften. **Success bar unset.** Soften Critic **not hired**.  
 **Founder cue:** Full Rev day index expanded; Lab Softened available Days **2–21** + **closings** as C1 map corpus; Day 1 missing / 22+ 404 = **corpus edge**. media≠certified locked.
 
 ---
@@ -102,4 +104,10 @@
 
 **Later the same day (Soften C3 Day 19):** Operator **ADMIT Soften C3 Day 19**. Digest [`DIGESTION_C3_DAY19.md`](DIGESTION_C3_DAY19.md). Remaining live days after Day 19: **20–21**. INTERIM still **NOT** park. Amb **open**. Softened set: **2–19**. Standing GO leftover remaining-live **20–21**. Illustrator Soften-fold pointer last **refreshed** after Day 5 — [`VIZ.md`](VIZ.md).
 
-*Interim note ≠ Soften of corpus-done. Soften Critic hire not met. INTERIM still NOT park. Amb open.*
+**Later the same day (Digestor true park DIGEST):** Operator **ADMIT Digestor true park DIGEST**. Available-day Softens complete: Softened Days **2–21** + Softened C1 closings. This INTERIM file is **SUPERSEDED**. Keep as history. See [`DIGESTION_PARK_WHAT_TAUGHT.md`](DIGESTION_PARK_WHAT_TAUGHT.md) · [`PARK_INDEX.md`](PARK_INDEX.md). Usefulness / verdict / mistrial / retrial still **NOT Softened**. **Hold C2 / C4.** Soften Critic **not hired**.
+
+**Later the same day (Soften C3 Day 8):** Operator **ADMIT Soften C3 Day 8** (#116). Digest [`DIGESTION_C3_DAY8.md`](DIGESTION_C3_DAY8.md) on master; board **untouched** this fold. Demeanor/Facebook/surveillance/motion-gate obs ≠ Soften of planning / capacity / guilt as fact.
+
+**Later the same day (Soften C3 Day 20):** Operator **ADMIT Soften C3 Day 20**. Digest [`DIGESTION_C3_DAY20.md`](DIGESTION_C3_DAY20.md) landed after the #124 park stamp. Softened set on this fold: **2–20**. Remaining Digestor live day: **21**. Softened Days 2–19 boards **untouched**. Softened Day 19 Mack **untouched**. This fold ADMIT keeps INTERIM **interim (NOT park)** and does **not** rewrite the #124 park ADMIT body. Standing GO Lab invent/hand **Day 21** next. Illustrator Soften-fold pointer **STATUS-ready** after Day 20 — [`VIZ.md`](VIZ.md).
+
+*SUPERSEDED by park DIGEST (prior #124). Later same day Day 20 fold ADMIT keeps INTERIM interim (NOT park). Soften Critic hire not met. Usefulness not Softened. Amb open.*
