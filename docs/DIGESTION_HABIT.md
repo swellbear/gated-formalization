@@ -27,3 +27,5 @@ When you are still on the **same** problem, invent a new candidate, test it chea
 When you are trying to **clear fog**, name one missing piece and invent a check that could move it: [`docs/SOLVE_LOOP_HABIT.md`](SOLVE_LOOP_HABIT.md).
 
 When fog is open, keep one line per named gap so invents point at a real missing piece: [`docs/NAMED_GAP_LEDGER_HABIT.md`](NAMED_GAP_LEDGER_HABIT.md).
+
+**Related:** Operator Soften-fold habit (one lane, STATUS stamp, idle handshake, honesty checklist): [`docs/OPERATOR_SOFTEN_FOLD_HABIT.md`](OPERATOR_SOFTEN_FOLD_HABIT.md).
