@@ -52,7 +52,7 @@ Not a hire of a Soften Critic. Not a giant ML / LLM first path. Not a claim-lang
 
 ## Next pulse (string CLOSE; Lab HOLD)
 
-C0 inventory is **Operator Soften** — [`DIGESTION_C0.md`](DIGESTION_C0.md). C1 coding is **Operator Soften** — [`DIGESTION_C1.md`](DIGESTION_C1.md). Holdout-lift limb **Killed** — [`DIGESTION_CLAIM_LIMB.md`](DIGESTION_CLAIM_LIMB.md). Soften Amb DIGEST / string CLOSE — [`DIGESTION_STRING.md`](DIGESTION_STRING.md). **C2+ HOLD.** **Lab invent HOLD.** No named next pulse.
+C0 inventory is **Operator Soften** — [`DIGESTION_C0.md`](DIGESTION_C0.md). C1 coding is **Operator Soften** — [`DIGESTION_C1.md`](DIGESTION_C1.md). Holdout-lift limb **Killed** — [`DIGESTION_CLAIM_LIMB.md`](DIGESTION_CLAIM_LIMB.md). Soften Amb DIGEST / string CLOSE — [`DIGESTION_STRING.md`](DIGESTION_STRING.md) · Lab DIGEST lean [`DIGESTION_C0C1_SOFTEN.md`](DIGESTION_C0C1_SOFTEN.md). **C2+ HOLD.** **Lab invent HOLD.** No named next pulse.
 
 ## Reading order
 
