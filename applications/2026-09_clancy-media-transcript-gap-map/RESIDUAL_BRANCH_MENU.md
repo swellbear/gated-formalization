@@ -4,7 +4,7 @@
 
 **Date:** 2026-09-06  
 **Application:** `2026-09_clancy-media-transcript-gap-map`  
-**Status:** Operator **ADMIT Soften C3 Day 12** digest landed this fold (plus Soften S0 + Soften C1 + Soften C3 + Softened Days 2–11 / 13–21 + Soften C3 Day 6 **#115** + Digestor index expand + Digestor INTERIM mid-run snapshot) / usefulness **not** Softened / **success bar unset** / **Hold C2 / C4** / Softened set **2–21** complete / LAST Digestor live day Softened / park DIGEST **already on master #124 (this Soften PR does NOT write/rewrite it)** / INTERIM snapshot **not** converted to park / VIZ last **STATUS-ready refreshed** after Soften C3 Day 12 (Day 12 ADMIT digestion stays primary for that digest; Day 6 #115 stays)
+**Status:** Operator **ADMIT Soften C3 Day 17** this fold (Day 12 **#119** board **untouched**; Day 6 **#115** board **untouched**) (plus Soften S0 + Soften C1 + Soften C3 + Softened Days 2–16 / 18–21 + Digestor index expand + Digestor INTERIM mid-run snapshot) / usefulness **not** Softened / **success bar unset** / **Hold C2 / C4** / Softened set **2–21** complete / LAST Digestor live day Softened / park DIGEST **already on master #124 (this Soften PR does NOT write/rewrite it)** / INTERIM snapshot **not** converted to park / VIZ **STATUS-ready** after Soften C3 Day 17 (Day 17 ADMIT stays primary; Day 12 **#119** untouched; Day 6 **#115** untouched)
 
 **Glossary:** `docs/READER_GLOSSARY.md`  
 **Ledger:** [`NAMED_GAP_LEDGER.md`](NAMED_GAP_LEDGER.md)  
@@ -19,9 +19,10 @@
 **C3 Day 16 digestion (board untouched):** [`DIGESTION_C3_DAY16.md`](DIGESTION_C3_DAY16.md)  
 **C3 Day 19 digestion (on master #123; board untouched):** [`DIGESTION_C3_DAY19.md`](DIGESTION_C3_DAY19.md)  
 **C3 Day 21 digestion (on master #126; board untouched):** [`DIGESTION_C3_DAY21.md`](DIGESTION_C3_DAY21.md)  
+**C3 Day 17 digestion (this fold):** [`DIGESTION_C3_DAY17.md`](DIGESTION_C3_DAY17.md)  
+**C3 Day 12 digestion (on master #119; board untouched):** [`DIGESTION_C3_DAY12.md`](DIGESTION_C3_DAY12.md)  
 **C3 Day 6 digestion (on master #115; board untouched):** [`DIGESTION_C3_DAY6.md`](DIGESTION_C3_DAY6.md)  
-**C3 Day 12 digestion (digest landed this fold; ADMIT verbatim):** [`DIGESTION_C3_DAY12.md`](DIGESTION_C3_DAY12.md)  
-**Illustrator viz pointer (last STATUS-ready refreshed after Soften C3 Day 12; Day 12 ADMIT digestion stays primary for that digest):** [`VIZ.md`](VIZ.md)  
+**Illustrator viz pointer (STATUS-ready after Soften C3 Day 17; Day 17 ADMIT digestion stays primary):** [`VIZ.md`](VIZ.md)  
 **Index expand:** [`REV_DAY_INDEX.md`](REV_DAY_INDEX.md) · [`DIGESTION_INDEX_EXPAND.md`](DIGESTION_INDEX_EXPAND.md)  
 **Interim mid-run (SUPERSEDED history; keep):** [`DIGESTION_INTERIM_MID_RUN.md`](DIGESTION_INTERIM_MID_RUN.md) · [`INTERIM_INDEX.md`](INTERIM_INDEX.md)  
 **Park DIGEST (already on master #124; this Soften PR does NOT write/rewrite it):** [`DIGESTION_PARK_WHAT_TAUGHT.md`](DIGESTION_PARK_WHAT_TAUGHT.md) · [`PARK_INDEX.md`](PARK_INDEX.md)  
@@ -33,7 +34,7 @@
 
 ## 0. Plain-language framing
 
-**What we’re doing:** Operator **ADMIT Soften C3 Day 6** this fold. SOURCE board poseable/citable. Softened set: **2–21** (+closings C1). **LAST Digestor live day Softened.** Softened Days 2–5 + 7–21 **ADMITTED** (not PROPOSED; boards **untouched**). Softened D8 / D19 Mack / D20 Heilbrun / D21 Saathoff **untouched**. Digestor corpus Days 2–21 + closings live. **LOUD media≠certified.** **LOUD: bottle inventory ≠ Soften meds-cause or guilt.** **Saathoff CR ≠ Soften of capacity / guilt / CR as certified.** Index-live ≠ Soften. Digestor IDs remain authoritative. **Hold C2 / C4.** Digestor park DIGEST **already on master #124 (this Soften PR does NOT write/rewrite it)**. INTERIM snapshot **not** converted to park. **No models this fold.** VIZ last **refreshed** after Soften C3 Day 6 (Day 6 ADMIT digestion stays primary; shows G4-D6 PRIMARY · G3-D6 TOUCH · G5-D6 LIGHT · G6-D6; Softened D21 G4-D21 PRIMARY stay · D20 stay · D19 G4-D19 PRIMARY stay · D13 G5-D13 PRIMARY stay · D8 G5-D8 PRIMARY stay). Whole-trial claim/clash map **practice** (**not** case-solving).
+**What we’re doing:** Operator **ADMIT Soften C3 Day 17** this fold. SOURCE board poseable/citable. Softened set: **2–21** (+closings C1). **LAST Digestor live day Softened.** Softened Days 2–16 + 18–21 **ADMITTED** (not PROPOSED; boards **untouched**). Day 12 **#119** **untouched**. Day 6 **#115** **untouched**. Softened D8 / D19 Mack / D20 Heilbrun / D21 Saathoff **untouched**. Digestor corpus Days 2–21 + closings live. **LOUD media≠certified.** **LOUD: chaplain collateral ≠ Soften of capacity / guilt / CR / voices-as-certified-fact.** **LOUD: bottle inventory ≠ Soften meds-cause or guilt.** **Saathoff CR ≠ Soften of capacity / guilt / CR as certified.** Index-live ≠ Soften. Digestor IDs remain authoritative. **Hold C2 / C4.** Digestor park DIGEST **already on master #124 (this Soften PR does NOT write/rewrite it)**. INTERIM snapshot **not** converted to park. **No models this fold.** VIZ **STATUS-ready** after Soften C3 Day 17 (Day 17 ADMIT digestion stays primary; shows G4-D17 PRIMARY · G6-D17 TOUCH heavy · G2-D17 LIGHT · G3-D17 LIGHT; Day 12 G4-D12 stay · Day 6 G4-D6 stay · Softened D21 G4-D21 PRIMARY stay · D20 stay · D19 G4-D19 PRIMARY stay · D13 G5-D13 PRIMARY stay · D8 G5-D8 PRIMARY stay). Whole-trial claim/clash map **practice** (**not** case-solving).
 
 **What we need from you:** later **GO C2** or name the bar before **C4**. Park DIGEST is **already on master #124** (this Soften PR does **NOT** write/rewrite it). Do **not** auto-GO C2 / C4. Do **not** dump the index. Do **not** rewrite Softened Days 2–5 / 7–21 boards. Lab HOLD.
 
