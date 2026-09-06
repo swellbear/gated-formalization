@@ -6,6 +6,7 @@
 **Parent:** abstract ingest **ADMITTED** · **A1 Soften carried** ([`SCORE_A1.md`](SCORE_A1.md); abs ≤1 m poseable; X=0.50 perfect-ref only; RN floor named; do **not** Harden absolute **X**) · prior SYNC/JOINT/DRIFT/GATE = **partial** sync-fragility  
 **Ledger:** [`NAMED_GAP_LEDGER.md`](NAMED_GAP_LEDGER.md)  
 **Digestion:** [`DIGESTION_A2.md`](DIGESTION_A2.md)  
+**Suite DIGEST (ADMITTED Soften Amb):** [`DIGESTION_A1A4_SUITE.md`](DIGESTION_A1A4_SUITE.md)  
 **Copy gate:** [`COPY_GATE.md`](COPY_GATE.md)  
 **A1 (carried):** [`SCORE_A1.md`](SCORE_A1.md) · [`DIGESTION_A1.md`](DIGESTION_A1.md)  
 **Protocol (short):** invent→test habit [`docs/INVENT_TEST_HABIT.md`](../../docs/INVENT_TEST_HABIT.md); named-gap ledger [`docs/NAMED_GAP_LEDGER_HABIT.md`](../../docs/NAMED_GAP_LEDGER_HABIT.md). Lab invents; Operator admits / rejects / parks. Lab does **not** self-admit.
@@ -96,9 +97,9 @@ Do **not** invent fingerprint / ML / RF to rescue commodity 1PPS.
 
 **A1 Soften carried** (≤1 m; X=0.50 perfect-ref; RN floor named).
 
-**Later the same day:** **A3 Soften** ([`SCORE_A3.md`](SCORE_A3.md)) and **A4 Soften X/σ_t** ([`SCORE_A4.md`](SCORE_A4.md)). **Next:** **DIGEST + Founder fold**. Greer send **HOLD** until then.
+**Later the same day:** **A3 Soften** ([`SCORE_A3.md`](SCORE_A3.md)) and **A4 Soften X/σ_t** ([`SCORE_A4.md`](SCORE_A4.md)). Suite DIGEST Soften Amb **ADMIT**. Greer send **HOLD** until Founder rewrite + user OK. Lab invent **HOLD** (no named next pulse).
 
-**PARK** hardware **X**. **Lab HOLD invent.** Link/map stays **PARKED**. RF bench **PARKED**.
+**PARK** hardware **X**. **Lab HOLD invent** (no named next pulse). Link/map stays **PARKED**. RF bench **PARKED**.
 
 **Honesty locks**
 
@@ -138,8 +139,7 @@ Cell-tower Amb stays **PARKED**. BIA→weight portfolio stays **CLOSED**. SkyMir
 - Do **not** copy US10135667B1 claim language.
 - Do **not** commit Lab scratch / hunt scripts as established.
 - Do **not** write skill-met / elevated language.
-- Do **not** send [`GREER_WRITEUP.md`](GREER_WRITEUP.md) until the A1–A4 suite digests.
-- Do **not** skip **A4** or the **DIGEST** suite.
+- Do **not** send [`GREER_WRITEUP.md`](GREER_WRITEUP.md) until Founder rewrite + user OK.
 - Do **not** unpark hardware **X** or link/map.
 - Do **not** reopen cell-tower as live. Do **not** reopen BIA. Do **not** reopen SkyMirr invent.
 
@@ -159,4 +159,4 @@ Cell-tower Amb stays **PARKED**. BIA→weight portfolio stays **CLOSED**. SkyMir
 
 ---
 
-*Docs only. Soften (conditional) ≠ claim clearance. Kill bare Chan ≠ full-string kill. F9T-class named ≠ product used. Patent simultaneous-via-DGPS-1PPS ≠ commercial 1PPS. A1 Soften carried. Not skill-met. Not a patent-product claim. Not rithm. Lab does not self-admit. Lab scratch was not on this VM; summary copied from the Operator gate. Greer send HOLD until the suite digests.*
+*Docs only. Soften (conditional) ≠ claim clearance. Kill bare Chan ≠ full-string kill. F9T-class named ≠ product used. Patent simultaneous-via-DGPS-1PPS ≠ commercial 1PPS. A1 Soften carried. Suite DIGEST Soften Amb ADMITTED. Not skill-met. Not a patent-product claim. Not rithm. Lab does not self-admit. Lab scratch was not on this VM; summary copied from the Operator gate. Greer send HOLD until Founder rewrite + user OK.*

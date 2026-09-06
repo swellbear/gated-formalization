@@ -33,7 +33,7 @@ Hardware **X PARKED.**
 
 Later the same day: **A1 Soften** — [`DIGESTION_A1.md`](DIGESTION_A1.md). **A2 Soften (conditional)** — [`DIGESTION_A2.md`](DIGESTION_A2.md). **A3 Soften** — [`DIGESTION_A3.md`](DIGESTION_A3.md). **A4 Soften X/σ_t** — [`DIGESTION_A4.md`](DIGESTION_A4.md). Suite wrap — [`DIGESTION_A1A4_SUITE.md`](DIGESTION_A1A4_SUITE.md). Link/map stays **PARKED**.
 
-**Greer send HOLD** until DIGEST + Founder fold. [`GREER_WRITEUP.md`](GREER_WRITEUP.md) is **sync-fragility evidence only**.
+**Greer send HOLD** until Founder rewrite + user OK. [`GREER_WRITEUP.md`](GREER_WRITEUP.md) is **sync-fragility evidence only**. Suite DIGEST Soften Amb **ADMITTED**: [`DIGESTION_A1A4_SUITE.md`](DIGESTION_A1A4_SUITE.md).
 
 Still **no RF / ML**. Do **not** invent a fingerprint rescue. Do **not** copy claims. **Multipath later** (our MULTIPATH1 Soften is not A3).
 
@@ -43,7 +43,7 @@ Still **no RF / ML**. Do **not** invent a fingerprint rescue. Do **not** copy cl
 - **Link/map** (GIS / CAD overlay) **PARKED**.
 - **Hardware X** stays **PARKED**.
 - **RF bench** stays **PARKED**.
-- **Send to Greer** stays **HOLD** until DIGEST + Founder fold.
+- **Send to Greer** stays **HOLD** until Founder rewrite + user OK.
 - **Lab invent** stays **HOLD**.
 - **SkyMirr MuLCAT** stays its own Amb. This note does **not** reopen it.
 - **Cell-tower geometry** stays **PARKED**. Do **not** reopen as live.

@@ -4,7 +4,7 @@
 **lab_admits:** false  
 **Date:** 2026-09-05  
 **Audience:** Greer (by his request) — collaboration technical digest  
-**Not:** a patent write-up, product brief, or claim clearance. **HOLD send** until DIGEST + Founder fold. Suite **A1→A4 Soften** on record. **0.50 m** is perfect-ref scoped sim only (A1 Soften; A4 Soften X/σ_t as honest phase-flip). **RF bench PARKED.**
+**Not:** a patent write-up, product brief, or claim clearance. **HOLD send** until Founder rewrite + user OK. Suite DIGEST **Soften Amb ADMITTED**. **0.50 m** is perfect-ref scoped sim only (A1 Soften; A4 Soften X/σ_t as honest phase-flip). **RF bench PARKED.**
 
 ---
 

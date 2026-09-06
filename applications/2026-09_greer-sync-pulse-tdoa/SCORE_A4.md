@@ -6,12 +6,12 @@
 **Parent:** abstract ingest **ADMITTED** · **A1 Soften carried** ([`SCORE_A1.md`](SCORE_A1.md)) · **A2 Soften-conditional** ([`SCORE_A2.md`](SCORE_A2.md)) · **A3 Soften** ([`SCORE_A3.md`](SCORE_A3.md); mild/intermittent LE ~0.5–1 m / `f≈0.25` survives ≤1 m; persistent `B_lb` / `B_dense` fail) · prior SYNC/JOINT/DRIFT/GATE = **partial** sync-fragility  
 **Ledger:** [`NAMED_GAP_LEDGER.md`](NAMED_GAP_LEDGER.md)  
 **Digestion (this pulse):** [`DIGESTION_A4.md`](DIGESTION_A4.md)  
-**Suite scaffold:** [`DIGESTION_A1A4_SUITE.md`](DIGESTION_A1A4_SUITE.md)  
+**Suite DIGEST (ADMITTED Soften Amb):** [`DIGESTION_A1A4_SUITE.md`](DIGESTION_A1A4_SUITE.md)  
 **A1 (carried):** [`SCORE_A1.md`](SCORE_A1.md) · [`DIGESTION_A1.md`](DIGESTION_A1.md)  
 **Copy gate:** [`COPY_GATE.md`](COPY_GATE.md)  
 **Protocol (short):** invent→test habit [`docs/INVENT_TEST_HABIT.md`](../../docs/INVENT_TEST_HABIT.md); named-gap ledger [`docs/NAMED_GAP_LEDGER_HABIT.md`](../../docs/NAMED_GAP_LEDGER_HABIT.md). Lab invents; Operator admits / rejects / parks. Lab does **not** self-admit.
 
-Lab scratch / Lab DIGEST was **not** on this fold VM. Metrics and class names below are copied from the **Operator gate** (authoritative). Hunt scripts / Lab notebooks are **not** on master. Operator may follow-on when Lab DIGEST lands.
+Lab scratch / Lab DIGEST was **not** on this fold VM. Metrics and class names below are copied from the **Operator gate** (authoritative). Hunt scripts / Lab notebooks are **not** on master. Later the same day: suite DIGEST Soften Amb **ADMITTED**.
 
 **What this is not:** A locator. Claim clearance. Hardware **X**. Skill-met. RF / ML / fingerprint invent. An RF bench. GPS/DGPS as the mobile fix. Claim-language product copy. A send to Greer. A Harden of GEOM0 1 ns. A wholesale Kill of the laptop model. Reopening cell-tower as live. Reopening BIA. SkyMirr invent reopen. A p90 bar.
 
@@ -102,9 +102,9 @@ Do **not** invent fingerprint / ML / RF to rescue detection jitter.
 - **A3 Soften:** mild/intermittent LE only for ≤1 m; persistent B_lb fails
 - **A4 Soften:** Soften X/σ_t; RF PARKED
 
-**Greer send HOLD** until DIGEST + Founder fold. **No** claim-language product copy.
+**Greer send HOLD** until Founder rewrite + user OK. **No** claim-language product copy.
 
-**PARK** hardware **X**. **PARK** RF bench. **Lab HOLD invent.** Link/map stays **PARKED**.
+**PARK** hardware **X**. **PARK** RF bench. **Lab HOLD invent** (no named next pulse). Link/map stays **PARKED**.
 
 **Honesty locks**
 
@@ -148,7 +148,7 @@ Cell-tower Amb stays **PARKED**. BIA→weight portfolio stays **CLOSED**. SkyMir
 - Do **not** copy US10135667B1 claim language.
 - Do **not** commit Lab scratch / hunt scripts as established.
 - Do **not** write skill-met / elevated language.
-- Do **not** send [`GREER_WRITEUP.md`](GREER_WRITEUP.md) until DIGEST + Founder fold.
+- Do **not** send [`GREER_WRITEUP.md`](GREER_WRITEUP.md) until Founder rewrite + user OK.
 - Do **not** unpark hardware **X** or link/map.
 - Do **not** reopen cell-tower as live. Do **not** reopen BIA. Do **not** reopen SkyMirr invent.
 
@@ -168,4 +168,4 @@ Cell-tower Amb stays **PARKED**. BIA→weight portfolio stays **CLOSED**. SkyMir
 
 ---
 
-*Docs only. Soften X/σ_t ≠ claim clearance. Not Kill wholesale ≠ 1 ns Harden. J_stretch ~10 ns ≠ ≤1 m. JOINT1 ≠ detector-jitter cancel. RF bench PARKED. A1–A3 Soften carried. Not skill-met. Not a patent-product claim. Not rithm. Lab does not self-admit. Lab scratch / Lab DIGEST was not on this VM; summary copied from the Operator gate. Greer send HOLD until DIGEST + Founder fold.*
+*Docs only. Soften X/σ_t ≠ claim clearance. Not Kill wholesale ≠ 1 ns Harden. J_stretch ~10 ns ≠ ≤1 m. JOINT1 ≠ detector-jitter cancel. RF bench PARKED. A1–A3 Soften carried. Suite DIGEST Soften Amb ADMITTED. Not skill-met. Not a patent-product claim. Not rithm. Lab does not self-admit. Lab scratch / Lab DIGEST was not on this VM; summary copied from the Operator gate. Greer send HOLD until Founder rewrite + user OK.*

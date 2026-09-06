@@ -1,6 +1,6 @@
 # Digestion — GATE1 Soften (refuse belt)
 
-A short plain note of what the refuse-belt pulse taught. Habit: [`docs/DIGESTION_HABIT.md`](../../docs/DIGESTION_HABIT.md). Incoming DRIFT1: [`DIGESTION_DRIFT1.md`](DIGESTION_DRIFT1.md). Incoming JOINT1: [`DIGESTION_JOINT1.md`](DIGESTION_JOINT1.md). Incoming SYNC1: [`DIGESTION_SYNC_1.md`](DIGESTION_SYNC_1.md). Incoming MULTIPATH1: [`DIGESTION_MULTIPATH1.md`](DIGESTION_MULTIPATH1.md). Incoming #0: [`DIGESTION_GEOMETRY_0.md`](DIGESTION_GEOMETRY_0.md). Score: [`SCORE_GATE1.md`](SCORE_GATE1.md). Founder-polished send file: [`GREER_WRITEUP.md`](GREER_WRITEUP.md) (**sync-fragility evidence only**; **HOLD send** until the suite digests). Later A1: [`DIGESTION_A1.md`](DIGESTION_A1.md). Later A3: [`DIGESTION_A3.md`](DIGESTION_A3.md). Lab audit: [`GREER_WRITEUP_DRAFT.md`](GREER_WRITEUP_DRAFT.md). Later ingest: [`DIGESTION_ABSTRACT_INGEST.md`](DIGESTION_ABSTRACT_INGEST.md). This does **not** score a locator. It does **not** lock a hardware **X**. It does **not** claim a multipath-robust 0.50 m. It does **not** claim free per-epoch realtime. It does **not** authorize a send to Greer. It does **not** reopen cell-tower as live. It does **not** reopen BIA→weight.
+A short plain note of what the refuse-belt pulse taught. Habit: [`docs/DIGESTION_HABIT.md`](../../docs/DIGESTION_HABIT.md). Incoming DRIFT1: [`DIGESTION_DRIFT1.md`](DIGESTION_DRIFT1.md). Incoming JOINT1: [`DIGESTION_JOINT1.md`](DIGESTION_JOINT1.md). Incoming SYNC1: [`DIGESTION_SYNC_1.md`](DIGESTION_SYNC_1.md). Incoming MULTIPATH1: [`DIGESTION_MULTIPATH1.md`](DIGESTION_MULTIPATH1.md). Incoming #0: [`DIGESTION_GEOMETRY_0.md`](DIGESTION_GEOMETRY_0.md). Score: [`SCORE_GATE1.md`](SCORE_GATE1.md). Founder-polished send file: [`GREER_WRITEUP.md`](GREER_WRITEUP.md) (**sync-fragility evidence only**; **HOLD send** until Founder rewrite + user OK). Later A1: [`DIGESTION_A1.md`](DIGESTION_A1.md). Later A3: [`DIGESTION_A3.md`](DIGESTION_A3.md). Lab audit: [`GREER_WRITEUP_DRAFT.md`](GREER_WRITEUP_DRAFT.md). Later ingest: [`DIGESTION_ABSTRACT_INGEST.md`](DIGESTION_ABSTRACT_INGEST.md). This does **not** score a locator. It does **not** lock a hardware **X**. It does **not** claim a multipath-robust 0.50 m. It does **not** claim free per-epoch realtime. It does **not** authorize a send to Greer. It does **not** reopen cell-tower as live. It does **not** reopen BIA→weight.
 
 **This pulse:** `2026-09_greer-sync-pulse-tdoa` GATE1 — Method Operator **ADMIT Soften** (Kill **not** triggered; aim B **Succeed**). Lab scratch was **not** on this fold VM; the gated fact set was copied from the Operator gate. Detect-only refuse OR: **G1a_DRIFT1 residual ∨ G1b raw LORO**.
 
@@ -40,13 +40,13 @@ US10135667B1 — owner-requested **collaboration framing** (bibliographic; custo
 
 Later the same day: Operator **ADMIT ingest** of US10135667B1 published abstract as Amb spine. See [`DIGESTION_ABSTRACT_INGEST.md`](DIGESTION_ABSTRACT_INGEST.md). This GATE1 note does **not** re-score the ingest. GATE1 stays **partial sync-fragility evidence**.
 
-**Lab HOLD invent.** Write-up is **on disk** and is **sync-fragility evidence only**: Founder-polished [`GREER_WRITEUP.md`](GREER_WRITEUP.md) is **PRIMARY** — **HOLD send** until DIGEST + Founder fold. Lab audit stays on [`GREER_WRITEUP_DRAFT.md`](GREER_WRITEUP_DRAFT.md). Still **no RF / ML**. Do **not** invent a fingerprint rescue. Do **not** treat GATE1 as a repair. Hardware **X** stays **PARKED**.
+**Lab HOLD invent** (no named next pulse). Later the same day: **A1 Soften**, suite **A2 / A3 / A4**, suite DIGEST Soften Amb **ADMIT**. Write-up is **on disk** and is **sync-fragility evidence only**: Founder-polished [`GREER_WRITEUP.md`](GREER_WRITEUP.md) is **PRIMARY** — **HOLD send** until Founder rewrite + user OK. Lab audit stays on [`GREER_WRITEUP_DRAFT.md`](GREER_WRITEUP_DRAFT.md). Still **no RF / ML**. Do **not** invent a fingerprint rescue. Do **not** treat GATE1 as a repair. **Multipath later.** Hardware **X** stays **PARKED**.
 
 ## What stays parked / closed
 
 - **Hardware X** stays **PARKED**.
-- **Send to Greer** stays **HOLD** until the suite digests. Prior write-up = sync-fragility evidence only.
-- **Lab invent** stays **HOLD**. **A1–A4** are scored. Next is **DIGEST + Founder fold**.
+- **Send to Greer** stays **HOLD** until Founder rewrite + user OK. Prior write-up = sync-fragility evidence only.
+- **Lab invent** stays **HOLD** (no named next pulse). **A1–A4** are scored. Suite DIGEST **ADMITTED**.
 - **Multipath** is **later**, not this fold. **MULTIPATH1 Soften** still stands.
 - **Cell-tower geometry** stays **PARKED**. Do **not** reopen as live.
 - **BIA→weight portfolio** stays **CLOSED**. Do **not** reopen human, poultry, cattle, sheep, or companion BIA apps.
