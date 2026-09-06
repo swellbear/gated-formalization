@@ -72,6 +72,7 @@ Rev page dates below are **Rev page stamps** (media), **not** a certified court 
 |------|-------|---------|------------------------|------|
 | Closing Arguments | closings (argument / instructions) | https://www.rev.com/transcripts/ma-v-lindsay-clancy-closing-arguments | 2026-08-28 | **Founder starter** |
 | Day 2 | day | https://www.rev.com/transcripts/ma-v-linsday-clancy-day-2 | 2026-07-30 | **Founder starter** — C3 Day 2 (on master **#111**; board **untouched**; typo slug) |
+| Day 3 | day | https://www.rev.com/transcripts/ma-v-lindsay-clancy-day-3 | 2026-08-02 | Digestor index — C3 Day 3 named first-responder backup (**Soften**; DIGEST this fold; **day≠certified**; first-responder obs ≠ Soften of suicide / planning as fact) |
 | Day 4 | day | https://www.rev.com/transcripts/ma-v-lindsay-clancy-day-4 | 2026-08-02 | Digestor index — C3 Day 4 named hospital/scene backup (**Soften**; **day≠certified**) |
 | Day 7 | day | https://www.rev.com/transcripts/ma-v-lindsay-clancy-day-7 | 2026-08-06 | **Founder starter** — C3 Day 7 (on master **#109**; board **untouched**) |
 | Day 9 | day | https://www.rev.com/transcripts/ma-v-lindsay-clancy-day-9 | 2026-08-10 | Digestor index — C3 Day 9 (on master **#117**; board **untouched**) |
