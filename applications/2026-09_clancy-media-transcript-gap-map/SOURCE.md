@@ -2,7 +2,8 @@
 
 **Date:** 2026-09-06  
 **Application:** `2026-09_clancy-media-transcript-gap-map`  
-**Role:** notes summary (scaffold). **Not** Operator ADMIT of a scored SOURCE board — that is **S0 after GO**.  
+**Role:** notes summary. Operator **ADMIT Soften S0** locks the board as poseable/citable — [`DIGESTION_S0.md`](DIGESTION_S0.md). **NOT** Soften of the parent usefulness claim. **Success bar unset.** **NOT** Soften of “what was said.”  
+
 **Copy gate:** [`COPY_GATE.md`](COPY_GATE.md)  
 **Proposed pulse:** [`PROPOSED_PULSE.md`](PROPOSED_PULSE.md)
 
@@ -42,7 +43,7 @@ This file holds **bibliographic pointers** plus a short paraphrase of what a Rev
 ### What this SOURCE licenses
 
 - Bibliographic citation of public Rev (and similar) **media / unofficial** day + closings pages.
-- A later S0 board that names page-class, index, expand rules, and error classes.
+- The S0 board that names page-class, index, expand rules, and error classes — now Operator **ADMIT Soften S0**.
 
 ### What this SOURCE does not license
 
@@ -76,8 +77,8 @@ Rev page dates below are **Rev page stamps** (media), **not** a certified court 
 
 ### Expand rules (S0 lock)
 
-1. First invent after **GO S0** is the **SOURCE board**, not a day dump.
-2. After a later **GO C3**, expand **one named day** as backup for **one named closing claim**.
+1. First invent after **GO S0** is the **SOURCE board**, not a day dump. **S0 ran** (Operator Soften). Next invent after **GO C1** is the closings census, not a day dump.
+2. After a later **GO C3**, expand **one named day** as backup for **one named closing claim**. C3 stays **Hold** this fold.
 3. Prefer the Founder starter set. Days 19–21 are **noted** for later named backup only.
 4. Other Rev (or similar) day pages, if found, stay **off-index** until Operator expands the index. Finding them is **not** a license to dump them.
 5. Similar unofficial media transcripts (non-Rev) stay the same **media / unofficial** class. They do **not** become certified record by substitution.
@@ -92,7 +93,7 @@ Rev page dates below are **Rev page stamps** (media), **not** a certified court 
 | **Speaker-error** | Wrong, unstable, or misspelled speaker labels on the media page | A certified appearance list |
 | **Media-date stamp** | Date printed on the Rev (or similar) page | Official court calendar / certified proceeding date |
 
-S0 after GO would **name** these classes. This fold does **not** code a sheet and does **not** quote examples at length.
+S0 **named** these classes. This fold does **not** code a sheet and does **not** quote examples at length.
 
 ---
 
@@ -118,4 +119,4 @@ Mistrial ~Sep 4 is a **public-report pointer** so the claim window is named. It 
 - **Index incomplete.** Starter set + noted days only. No all-days dump.
 - **Laptop-only.** Method practice. Not legal advice. Not a product.
 
-S0 after **GO** would lock this board. This fold does **not** run S0.
+S0 is **Operator Soften** (poseable/citable). This is **not** usefulness Soften. **Success bar** stays unset. **Hold C2–C4.** Lab invent **HOLD** until **GO C1**.
