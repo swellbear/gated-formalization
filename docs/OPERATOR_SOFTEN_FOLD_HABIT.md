@@ -57,6 +57,14 @@ Every Soften docs PR must include this checklist in DIGESTION or the PR body (th
 
 Short template: [`templates/SOFTEN_PR_HONESTY_CHECKLIST.md`](../templates/SOFTEN_PR_HONESTY_CHECKLIST.md).
 
+### Softened-set ledger (required)
+
+On every Soften / Kill / park DIGEST ADMIT, the Operator updates the Amb’s `SOFTENED_SET.md` (**not** chat-only). Lab reads Softened carry from that file at invent start **and** before finalize.
+
+Template: [`templates/SOFTENED_SET_TEMPLATE.md`](../templates/SOFTENED_SET_TEMPLATE.md).
+
+Do **not** rely on chat Softened lists for Lab invent carry.
+
 ## Why
 
 Parallel Soften PRs rewrite the same STATUS as if each fold owns the whole Amb. A stamp the folds point to, one lane, one idle handshake, and a thin checklist keep the record honest without hiring a Soften Critic.
