@@ -34,7 +34,9 @@ This does **not** score a thrash predictor. It does **not** run C1 coding. It do
 3. **Disposition sketches are preliminary (not C2).** Do **not** treat the sketches below as thrash / settle / exogenous-park coding.
 4. **Exogenous-park third class stands.** User TABLED / Founder STOP / portfolio pivot stay a third class. Do **not** collapse them into thrash.
 
-**Next:** Operator **GO C1** on the **4 eligible only** (early-window + kill-condition coding). **C2+ HOLD.**
+**Next (as of C0):** Operator **GO C1** on the **4 eligible only** (early-window + kill-condition coding). **C2+ HOLD.**
+
+**Later the same day (Founder+Operator addendum):** holdout-lift limb **Killed** as unposeable (N=4; 2 exogenous). Purpose restated to vanity Soften vs scoped Soften. **Not** held-out AUC. Do **not** Harden vanity→thrash. **C0 Soften + freezes stand.** See [`DIGESTION_CLAIM_LIMB.md`](DIGESTION_CLAIM_LIMB.md).
 
 ---
 
@@ -113,13 +115,13 @@ These folders are in the 37. They do **not** add to N. Thin-N honesty includes t
 
 ---
 
-## 3. Too-thin for holdout (named; not a C0 kill)
+## 3. Too-thin for holdout (named at C0; later **Killed** as a claim limb)
 
-C0 succeed = a citable inventory. That succeeded.
+C0 succeed = a citable inventory. That succeeded. **C0 Soften stands.**
 
-C4 holdout lift needs enough dated early Soften boards to split train / holdout under the lock. **N = 4 is too thin for that.** Name it. Do **not** silently treat C0 Soften as C4 poseable. Do **not** invent a holdout metric this fold. Do **not** flip C0 to DATA-BLOCKED because holdout is thin — the folder list exists.
+C4 holdout lift would need enough dated early Soften boards to split train / holdout. **N = 4 is too thin for that.** Name it. Do **not** silently treat C0 Soften as C4 poseable. Do **not** flip C0 to DATA-BLOCKED because holdout is thin — the folder list exists.
 
-**Named leftover:** holdout remains **too-thin** until N grows or the Operator later accepts a different (still-honest) comparison. That is C3/C4 fog, **not** a C0 no-folder-list.
+**Later the same day:** Founder+Operator **Kill** the held-out thrash-predictor lift limb as **unposeable** at N=4 Soften DIGESTION/SCORE (**2 exogenous**). Do **not** Harden vanity→thrash. Purpose is **not** held-out AUC. See [`DIGESTION_CLAIM_LIMB.md`](DIGESTION_CLAIM_LIMB.md).
 
 ---
 
@@ -158,9 +160,9 @@ Sketches only. **Not** thrash / settle / exogenous-park coding. **C2+ HOLD.**
 
 ## 6. Next (Operator-gated)
 
-**GO C1 on the 4 eligible only** — early-window + kill-condition coding (yes / no / unclear). **Not** end-state STATUS Soften soup. **Not** companion STATUS Soften.
+**GO C1 on the 4 eligible only** — vanity Soften vs scoped Soften (early-window + kill-condition coding: yes / no / unclear). **Not** end-state STATUS Soften soup. **Not** companion STATUS Soften. **Not** held-out AUC.
 
-**C2+ HOLD.** No label sheet. No dumb baseline. No holdout arithmetic. No ML. No Soften Critic.
+**C2+ HOLD.** No label sheet. C3/C4 holdout path **killed** (Founder+Operator addendum). No ML. No Soften Critic. Do **not** Harden vanity→thrash.
 
 Lab does **not** self-admit. Lab invent **HOLD** until Operator **GO C1**.
 
@@ -182,8 +184,10 @@ Lab does **not** self-admit. Lab invent **HOLD** until Operator **GO C1**.
 - Do **not** reopen cell-tower as live.
 - Do **not** reopen the BIA→weight portfolio.
 - Do **not** write skill-met / elevated language.
+- Do **not** reopen the killed holdout-lift / AUC limb (Founder+Operator addendum).
+- Do **not** Harden vanity→thrash.
 - Digestor never Soften / Harden / Kill. Lab does **not** self-admit.
 
 ---
 
-*Docs only. Operator **ADMIT C0 Soften**. Census poseable. N=4/37. Too-thin for holdout named. Not Harden. Not Kill/DATA-BLOCKED on no-folder-list. Soften ≠ Soften-is-bad. Greer Soften Amb not asserted vanity. Not a predictor. Not C1. Not C2. No ML. No Soften Critic. Greer TABLED invent HOLD. SkyMirr invent HOLD.*
+*Docs only. Operator **ADMIT C0 Soften** (stands). Later same day: holdout-lift limb Killed as unposeable (N=4; 2 exogenous). Purpose = vanity Soften vs scoped Soften. Not held-out AUC. Do not Harden vanity→thrash. Soften ≠ Soften-is-bad. Greer Soften Amb not asserted vanity. Not a predictor. Not C1. Not C2. No ML. No Soften Critic. Greer TABLED invent HOLD. SkyMirr invent HOLD.*

@@ -2,7 +2,7 @@
 
 **Date:** 2026-09-06  
 **Application:** `2026-09_soften-vanity-thrash-predictor`  
-**Verdict:** **PASS** (C0 Soften) — own Amb-folder boards only. **No claim-language patent copy.** **No circular self-row.**
+**Verdict:** **PASS** (C0 Soften + claim-limb addendum) — own Amb-folder boards only. **No claim-language patent copy.** **No circular self-row.** **No held-out AUC invent.**
 
 This gate is required because the Amb mines early DIGESTION / SCORE / STATUS / PROPOSED board text across `applications/`. Corpus mining is **not** a license to paste patent claims, to treat another Amb’s DIGEST as vanity without the kill-condition test, or to score **this folder** as a corpus row.
 
@@ -12,7 +12,8 @@ This gate is required because the Amb mines early DIGESTION / SCORE / STATUS / P
 |---------|-------|-----|
 | Bibliographic pointers to other Amb folders (`applications/2026-09_…`) | STATUS / ledger / digestion / C0 table | Corpus citation |
 | Short paraphrase of **board-class** facts (Soften-bearing SCORE/DIGESTION present; dated early window; kill/fail named or not) | C0 sheet; C1–C4 sheets after later GO | Feature / label coding |
-| C0 inventory table (N=4/37; earliest Soften-bearing D/S; poseable-to-code notes) | [`DIGESTION_C0.md`](DIGESTION_C0.md) | Operator **ADMIT C0 Soften** |
+| C0 inventory table (N=4/37; earliest Soften-bearing D/S; poseable-to-code notes) | [`DIGESTION_C0.md`](DIGESTION_C0.md) | Operator **ADMIT C0 Soften** (stands) |
+| Founder+Operator claim-limb addendum (holdout-lift **Killed**; purpose restated) | [`DIGESTION_CLAIM_LIMB.md`](DIGESTION_CLAIM_LIMB.md) | Not patent text; not AUC |
 | Greer TABLED what-taught summary (already Operator-folded on that record) | [`DIGESTION_FROM_GREER.md`](DIGESTION_FROM_GREER.md) | Prior digestion; **not** a Greer reopen |
 | Digestor spine stamp summary | [`DIGESTION_SPINE_STAMP.md`](DIGESTION_SPINE_STAMP.md) | Admit record of PASS |
 | Operator-named freezes (early window; thrash / settle / exogenous-park; SOURCE pointer; companion STATUS Soften out of N; Greer early window = MULTIPATH1) | STATUS / ledger / pulse / C0 | Locks; **not** patent text |
@@ -32,6 +33,7 @@ This gate is required because the Amb mines early DIGESTION / SCORE / STATUS / P
 
 ## Check (this fold)
 
+- [`DIGESTION_CLAIM_LIMB.md`](DIGESTION_CLAIM_LIMB.md) restates purpose and kills the holdout-lift limb. **No claim quotes.** **No** AUC numbers invented.
 - [`DIGESTION_C0.md`](DIGESTION_C0.md) cites folder paths and short board-class facts (earliest Soften-bearing D/S; git date / commit; kill/fail poseable yes/no). **No claim quotes.** **No** Greer / SkyMirr claim language. This folder is **out of the 37**.
 - Companion STATUS Soften is named as **out of N** (lock), not as a fifth eligible row and not as a BIA reopen.
 - Greer early window is pointed at MULTIPATH1 SCORE/DIGESTION (first Soften ADMIT). **No** claim ingest. Greer stays **TABLED**. Invent **HOLD**.
@@ -41,4 +43,4 @@ This gate is required because the Amb mines early DIGESTION / SCORE / STATUS / P
 - SOURCE pointer is `applications/*` Amb folders. **Not** an external patent spine.
 - This folder is **out of corpus**.
 
-**PASS.** Still **not** claim clearance. Still **not** a predictor shown. C0 Soften ≠ Soften-is-bad. Greer Soften Amb is **not** asserted vanity.
+**PASS.** Still **not** claim clearance. Still **not** a predictor shown. C0 Soften ≠ Soften-is-bad. Greer Soften Amb is **not** asserted vanity. Holdout-lift limb is **Killed**. Do **not** Harden vanity→thrash.
