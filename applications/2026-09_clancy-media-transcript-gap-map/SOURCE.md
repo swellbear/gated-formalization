@@ -2,11 +2,11 @@
 
 **Date:** 2026-09-06  
 **Application:** `2026-09_clancy-media-transcript-gap-map`  
-**Role:** notes summary. Operator **ADMIT Soften S0** locks the board as poseable/citable — [`DIGESTION_S0.md`](DIGESTION_S0.md). Later same day: Soften C1 + Soften C3 available-day set + **Digestor index expand** + **Digestor true park DIGEST ADMITTED** + **Soften C3 Day 8**. INTERIM mid-run **SUPERSEDED**. **NOT** Soften of the parent usefulness claim. **NOT** Soften of any Day 8 line as certified trial fact. **NOT** Soften of demeanor / Facebook / surveillance / motion-gate leftovers as planning / capacity / guilt as fact. **Success bar unset.** **LOUD media≠certified.** **Day≠certified.** **Closings≠evidence.** Day 1 missing / Days 22+ 404 = corpus **EDGE**. Softened set: **2–21** (+closings C1). Honesty class **unchanged**.
+**Role:** notes summary. Operator **ADMIT Soften S0** locks the board as poseable/citable — [`DIGESTION_S0.md`](DIGESTION_S0.md). Later same day: Soften C1 + Soften C3 + Soften C3 Day 14 + Soften C3 Day 13 + Soften C3 Day 19 #123 + **Soften C3 Day 20** + **Digestor index expand**. Prior #124 park DIGEST stays as prior record (**not** rewritten). This fold ADMIT keeps INTERIM **interim (NOT park)**. **NOT** Soften of the parent usefulness claim. **Success bar unset.** **NOT** Soften of any Day 20 line / Heilbrun CR as certified fact. Heilbrun CR ≠ Soften of capacity / guilt / CR as certified fact. Peri-traumatic / altruistic-filicide ≠ Soften of filicide-as-fact / altruistic-motive. **LOUD media≠certified.** Day 1 missing / Days 22+ 404 = corpus **EDGE**. Softened set: **2–20**. Remaining Digestor day **21**.  
 
-**Park DIGEST (authoritative):** [`DIGESTION_PARK_WHAT_TAUGHT.md`](DIGESTION_PARK_WHAT_TAUGHT.md) · [`PARK_INDEX.md`](PARK_INDEX.md)  
 **Expanded index:** [`REV_DAY_INDEX.md`](REV_DAY_INDEX.md) · [`DIGESTION_INDEX_EXPAND.md`](DIGESTION_INDEX_EXPAND.md)  
-**Interim mid-run (SUPERSEDED; keep as history):** [`DIGESTION_INTERIM_MID_RUN.md`](DIGESTION_INTERIM_MID_RUN.md) · [`INTERIM_INDEX.md`](INTERIM_INDEX.md)
+**Prior #124 park DIGEST (not rewritten this fold):** [`DIGESTION_PARK_WHAT_TAUGHT.md`](DIGESTION_PARK_WHAT_TAUGHT.md) · [`PARK_INDEX.md`](PARK_INDEX.md)  
+**Interim mid-run (this fold ADMIT keeps it interim; NOT park):** [`DIGESTION_INTERIM_MID_RUN.md`](DIGESTION_INTERIM_MID_RUN.md) · [`INTERIM_INDEX.md`](INTERIM_INDEX.md) — Amb **open**.
 
 **Copy gate:** [`COPY_GATE.md`](COPY_GATE.md)  
 **Proposed pulse:** [`PROPOSED_PULSE.md`](PROPOSED_PULSE.md)
@@ -65,7 +65,7 @@ This file holds **bibliographic pointers** plus a short paraphrase of what a Rev
 **Index expand admitted.** Digestor corpus is now on [`REV_DAY_INDEX.md`](REV_DAY_INDEX.md). This starter table is **not** a census of the trial. Do **not** dump the expanded index.
 
 **Founder starter set** = Days **7 / 11 / 14 / 18** + **Closing Arguments**.  
-**Digestor expanded corpus** = Days **2–21** + Closing Arguments **live**. Softened set = **2–19**. Standing GO = Lab invent/hand **Day 20** next. **Hold Day 21** until after Day 20.
+**Digestor expanded corpus** = Days **2–21** + Closing Arguments **live**. Softened set = **2–20**. Standing GO = Lab invent/hand **Day 21** next.
 
 Rev page dates below are **Rev page stamps** (media), **not** a certified court calendar.
 
@@ -76,6 +76,7 @@ Rev page dates below are **Rev page stamps** (media), **not** a certified court 
 | Day 3 | day | https://www.rev.com/transcripts/ma-v-lindsay-clancy-day-3 | 2026-08-02 | Digestor index — C3 Day 3 named first-responder backup (**Soften**; on master **#112**; board **untouched**; **day≠certified**; first-responder obs ≠ Soften of suicide / planning as fact) |
 | Day 4 | day | https://www.rev.com/transcripts/ma-v-lindsay-clancy-day-4 | 2026-08-02 | Digestor index — C3 Day 4 named hospital/scene backup (**Soften**; **day≠certified**) |
 | Day 7 | day | https://www.rev.com/transcripts/ma-v-lindsay-clancy-day-7 | 2026-08-06 | **Founder starter** — C3 Day 7 (on master **#109**; board **untouched**) |
+| Day 8 | day | https://www.rev.com/transcripts/ma-v-lindsay-clancy-day-8 | 2026-08-10 | Digestor index — C3 Day 8 named surveillance/digital/demeanor/motion backup (**Soften**; on master **#116**; board **untouched**; **day≠certified**; demeanor/FB/surveillance/motion-gate ≠ Soften of planning / capacity / guilt as fact) |
 | Day 9 | day | https://www.rev.com/transcripts/ma-v-lindsay-clancy-day-9 | 2026-08-10 | Digestor index — C3 Day 9 (on master **#117**; board **untouched**) |
 | Day 10 | day | https://www.rev.com/transcripts/ma-v-lindsay-clancy-day-10 | 2026-08-11 | Digestor index — C3 Day 10 (on master **#118**; board **untouched**) |
 | Day 11 | day | https://www.rev.com/transcripts/ma-v-lindsay-clancy-day-11 | 2026-08-12 | **Founder starter** — C3 Day 11 (on master **#110**; board **untouched**) |
@@ -83,10 +84,9 @@ Rev page dates below are **Rev page stamps** (media), **not** a certified court 
 | Day 14 | day | https://www.rev.com/transcripts/ma-v-lindsay-clancy-day-14 | 2026-08-18 | **Founder starter** — C3 Day 14 named digital-evidence backup (**Soften**; **day≠certified**; board **untouched**) |
 | Day 15 | day | https://www.rev.com/transcripts/ma-v-lindsay-clancy-day-15 | 2026-08-20 | Digestor index — C3 Day 15 named Condie psychopharm-expert + Susan MIL backup (**Soften**; on master **#121**; board **untouched**; **day≠certified**; Condie/Susan ≠ Soften of meds-cause / capacity / guilt / CR / civil negligence) |
 | Day 16 | day | https://www.rev.com/transcripts/ma-v-lindsay-clancy-day-16 | 2026-08-20 | Digestor index — C3 Day 16 named Condie continued-direct / CW credential-role / Tewksbury Ex ~283 SUMMARY backup (**Soften**; on master **#122**; board **untouched**; **day≠certified**; stamp **2026-08-20**; CR opinion ≠ Soften of capacity / guilt / CR as certified fact) |
-| Day 8 | day | https://www.rev.com/transcripts/ma-v-lindsay-clancy-day-8 | 2026-08-10 | Digestor index — C3 Day 8 named surveillance/digital/demeanor/motion backup (**Soften**; **day≠certified**; demeanor/FB/surveillance/motion-gate ≠ planning/capacity/guilt Soften) |
 | Day 18 | day | https://www.rev.com/transcripts/ma-v-lindsay-clancy-day-18 | 2026-08-23 | **Founder starter** — C3 named backup (**Soften**; **day≠certified**; board **untouched**) |
-| Day 19 | day | https://www.rev.com/transcripts/ma-v-lindsay-clancy-day-19 | 2026-08-25 | Digestor index — C3 Day 19 named Commonwealth rebuttal CR-opinion backup (**Soften**; **day≠certified**) |
-| Day 20 | day | https://www.rev.com/transcripts/ma-v-lindsay-clancy-day-20 | 2026-08-26 | **noted** — not starter |
+| Day 19 | day | https://www.rev.com/transcripts/ma-v-lindsay-clancy-day-19 | 2026-08-25 | Digestor index — C3 Day 19 named Commonwealth rebuttal CR-opinion backup (**Soften**; on master **#123**; board **untouched**; **day≠certified**; Mack CR ≠ Soften of capacity / guilt / CR as certified fact) |
+| Day 20 | day | https://www.rev.com/transcripts/ma-v-lindsay-clancy-day-20 | 2026-08-26 | Digestor index — C3 Day 20 named Commonwealth psychologist CR / altruistic-filicide backup (**Soften**; **day≠certified**; stamp **2026-08-26**; Heilbrun CR ≠ Soften of capacity / guilt / CR as certified fact) |
 | Day 21 | day | https://www.rev.com/transcripts/ma-v-lindsay-clancy-day-21 | 2026-08-27 | **noted** — not starter |
 
 ### Expand rules (S0 lock)
@@ -96,11 +96,14 @@ Rev page dates below are **Rev page stamps** (media), **not** a certified court 
 3. **C3 Day 14 ran.** ONE named Day 14 digital-evidence backup for Softened C1 G5 (primary) + G4 (touch). See [`DIGESTION_C3_DAY14.md`](DIGESTION_C3_DAY14.md). **Day≠certified.** Closings still ≠ evidence. Digital timeline ≠ Soften of planning / psychosis as fact. Board **untouched** this fold.
 4. **C3 Day 4 ran.** ONE named Day 4 hospital/scene backup for Softened C1 G3 (primary) + G4 (light touch) + G6 honesty. See [`DIGESTION_C3_DAY4.md`](DIGESTION_C3_DAY4.md). **Day≠certified.** Closings still ≠ evidence. Hospital/scene/tox-preserve obs ≠ Soften of suicide / meds as fact. Board **untouched** this fold.
 5. **C3 Day 13 ran.** ONE named Day 13 cyber-forensic-examiner backup for Softened C1 G5 (primary) + G3 (touch light) + G4 (light) + G6 honesty. See [`DIGESTION_C3_DAY13.md`](DIGESTION_C3_DAY13.md). **Day≠certified.** Board **untouched** this fold.
-6. **C3 Day 8 ran.** ONE named Day 8 surveillance/digital/demeanor/motion backup. See [`DIGESTION_C3_DAY8.md`](DIGESTION_C3_DAY8.md). **Day≠certified.** Demeanor / Facebook / surveillance / motion-gate obs ≠ Soften of planning / capacity / guilt as fact.
-7. **C3 Day 19 ran.** ONE named Day 19 Commonwealth rebuttal CR-opinion backup for Softened C1 G4 (primary) + G6 (touch) + G2 (light) + G5 (light). See [`DIGESTION_C3_DAY19.md`](DIGESTION_C3_DAY19.md). **Day≠certified.** Closings still ≠ evidence. Mack CR ≠ Soften of capacity / guilt / CR as certified fact. **≠ Softened D18 duplicate.**
-8. **Index expand ran.** Operator **ADMIT Digestor index expand**. Days 2–21 + closings live. Day 2 typo slug named. Day 1 not found. Days 22+ 404. See [`REV_DAY_INDEX.md`](REV_DAY_INDEX.md) · [`DIGESTION_INDEX_EXPAND.md`](DIGESTION_INDEX_EXPAND.md). **LOUD media≠certified.** Index-live ≠ Soften.
-9. **Standing GO** continues **named-day pulses** across the Digestor index. Softened set = **2–19**. Next = Lab invent/hand **Day 20**. **Hold Day 21** until after Day 20. Do **not** dump the index.
-10. Similar unofficial media transcripts (non-Rev) stay the same **media / unofficial** class. They do **not** become certified record by substitution.
+6. **C3 Day 8 ran.** ONE named Day 8 surveillance/digital/demeanor/motion backup. See [`DIGESTION_C3_DAY8.md`](DIGESTION_C3_DAY8.md). **Day≠certified.** Demeanor / Facebook / surveillance / motion-gate obs ≠ Soften of planning / capacity / guilt as fact. Board **untouched** this fold (on master **#116**).
+7. **C3 Day 19 ran.** ONE named Day 19 Commonwealth rebuttal CR-opinion backup for Softened C1 G4 (primary) + G6 (touch) + G2 (light) + G5 (light). See [`DIGESTION_C3_DAY19.md`](DIGESTION_C3_DAY19.md). **Day≠certified.** Closings still ≠ evidence. Mack CR ≠ Soften of capacity / guilt / CR as certified fact. **≠ Softened D18 duplicate.** Board **untouched** this fold.
+8. **C3 Day 20 ran.** ONE named Day 20 Commonwealth psychologist CR / altruistic-filicide backup for Softened C1 G4 (PRIMARY — NEW kind after Softened D19 Mack psychiatrist CR) + G6 TOUCH + G2 LIGHT + G5 LIGHT. See [`DIGESTION_C3_DAY20.md`](DIGESTION_C3_DAY20.md). **Day≠certified.** Closings still ≠ evidence. **Heilbrun CR ≠ Soften of capacity / guilt / CR as certified fact.** Peri-traumatic / altruistic-filicide ≠ Soften of filicide-as-fact / altruistic-motive. Stamp **2026-08-26**. **≠ Softened D19 duplicate.**
+9. **Index expand ran.** Operator **ADMIT Digestor index expand**. Days 2–21 + closings live. Day 2 typo slug named. Day 1 not found. Days 22+ 404. See [`REV_DAY_INDEX.md`](REV_DAY_INDEX.md) · [`DIGESTION_INDEX_EXPAND.md`](DIGESTION_INDEX_EXPAND.md). **LOUD media≠certified.** Index-live ≠ Soften.
+10. **Standing GO** continues **named-day pulses** across the Digestor index. Softened set = **2–20**. Next = Lab invent/hand **Day 21**. Do **not** dump the index.
+11. Similar unofficial media transcripts (non-Rev) stay the same **media / unofficial** class. They do **not** become certified record by substitution.
+12. Softened Day 19 Mack psychiatrist CR stays **untouched**. Softened Day 8 Chiachio stays **untouched**. This fold is **NOT** a D19 duplicate.
+13. Honesty lock: Heilbrun CR ≠ Soften of capacity / guilt / CR as certified fact. Peri-traumatic / altruistic-filicide ≠ Soften of filicide-as-fact / altruistic-motive. Media≠certified · day≠certified · closings≠evidence.
 
 ---
 
@@ -133,10 +136,10 @@ Mistrial ~Sep 4 is a **public-report pointer** so the claim window is named. It 
 ## 5. Honesty locks that sit on SOURCE
 
 - **Media≠official.** Rev (and similar) ≠ certified court-reporter record.
-- **Day≠certified.** A named day page (Day 19 + Day 18 + Day 14 + Day 13 this string) is **not** the certified court-reporter record.
+- **Day≠certified.** A named day page (Day 20 + Day 19 + Day 18 + Day 14 + Day 13 this string) is **not** the certified court-reporter record.
 - **Closings≠evidence.** Argument / instructions; a named day-pulse backup does **not** convert a closing line into trial fact.
 - **Success bar unset.** Operator/Founder names it before claim Soften.
 - **Index expanded (Digestor corpus).** Days 2–21 + closings live. Day 1 not found. Days 22+ 404. Index-live ≠ Soften. No all-days dump.
 - **Laptop-only.** Method practice. Not legal advice. Not a product.
 
-S0 is **Operator Soften** (poseable/citable). Later same day: Soften C1 + Soften C3 + Soften C3 Day 14 + Soften C3 Day 13 + Soften C3 Day 19 + Digestor index expand + Digestor INTERIM mid-run (**not** park). This is **not** usefulness Soften. **Success bar** stays unset. **Hold C2 / C4** only. Standing GO → Lab invent/hand **Day 20** next. **Hold Day 21** until after Day 20. Softened Days 2–18 **ADMITTED** (boards untouched).
+S0 is **Operator Soften** (poseable/citable). Later same day: Soften C1 + Soften C3 + Soften C3 Day 14 + Soften C3 Day 13 + Soften C3 Day 19 + Soften C3 Day 20 + Digestor index expand + Digestor INTERIM mid-run (**not** park). This is **not** usefulness Soften. **Success bar** stays unset. **Hold C2 / C4** only. Standing GO Lab invent/hand **Day 21** next. Softened Days 2–19 **ADMITTED** (boards untouched). **Heilbrun CR ≠ Soften of capacity / guilt / CR as certified fact.**

@@ -104,4 +104,6 @@ INTERIM asked: **do not** ADMIT mid-run as park / completion DIGEST. Operator no
 3. Keep STATUS: **Hold C2/C4**; usefulness / verdict / mistrial / retrial **NOT Softened**; success bar unset; Soften Critic not hired; Greer/phone-stimp **TABLED**. Soften day folds may still be landing.  
 4. Park DIGEST ≠ Soften of usefulness or case outcome. Media≠certified · day≠certified · closings≠evidence. Digestor proposes only — Operator admits. Digestor never Soften/Harden/Kill.
 
-*Digestor true park DIGEST Operator-ADMITTED. Available-day Softens complete. INTERIM SUPERSEDED. Usefulness not Softened. Soften Critic not hired.*
+**Later the same day (Soften C3 Day 20):** Operator **ADMIT Soften C3 Day 20**. Digest [`DIGESTION_C3_DAY20.md`](DIGESTION_C3_DAY20.md) landed. Softened set on this fold: **2–20**. Remaining Digestor live day: **21**. Softened Days 2–19 boards **untouched**. Softened Day 19 Mack **untouched**. This fold ADMIT keeps INTERIM **interim (NOT park)** and does **not** rewrite the #124 park ADMIT body above. Standing GO Lab invent/hand **Day 21** next.
+
+*Digestor true park DIGEST Operator-ADMITTED. Available-day Softens complete. INTERIM SUPERSEDED. Later same day Day 20 fold ADMIT keeps INTERIM interim (NOT park). Usefulness not Softened. Soften Critic not hired.*

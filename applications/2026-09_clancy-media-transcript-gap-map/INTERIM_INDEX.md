@@ -37,6 +37,10 @@ Days **20–21** (one named day at a time). Next = Lab invent/hand **Day 20**. *
 
 **Later the same day (Digestor true park DIGEST):** Operator **ADMIT Digestor true park DIGEST**. Available-day Softens complete: Softened Days **2–21** + Softened C1 closings. This INTERIM index is **SUPERSEDED**. See [`DIGESTION_PARK_WHAT_TAUGHT.md`](DIGESTION_PARK_WHAT_TAUGHT.md) · [`PARK_INDEX.md`](PARK_INDEX.md). Usefulness still **NOT Softened**. **Hold C2 / C4.** Soften day folds may still be landing.
 
+**Later the same day (Soften C3 Day 8):** Day 8 (#116; [`DIGESTION_C3_DAY8.md`](DIGESTION_C3_DAY8.md)) on master; board **untouched** this fold.
+
+**Later the same day (Soften C3 Day 20):** Day 20 ([`DIGESTION_C3_DAY20.md`](DIGESTION_C3_DAY20.md)) landed after the #124 park stamp. Softened set on this fold: **2–20**. Remaining live day: **21**. Softened Days 2–19 boards **untouched**. Softened Day 19 Mack **untouched**. This fold ADMIT keeps INTERIM **interim (NOT park)** and does **not** rewrite the #124 park ADMIT body. Standing GO Lab invent/hand **Day 21** next. Illustrator Soften-fold pointer **STATUS-ready** after Day 20 — [`VIZ.md`](VIZ.md).
+
 ## Do not
 
 - Treat this SUPERSEDED interim note as the current park DIGEST admit record

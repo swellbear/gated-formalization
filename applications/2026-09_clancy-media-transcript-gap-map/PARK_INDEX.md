@@ -73,3 +73,5 @@ Media≠certified · day≠certified · closings≠evidence. Digestor proposes o
 - Do **not** reopen Greer / phone-stimp invent / SkyMirr invent / cell-tower as live / BIA
 - Do **not** dump all days. Do **not** paste long transcript
 - Digestor never Soften / Harden / Kill. Lab does **not** self-admit
+
+**Later the same day (Soften C3 Day 20):** Operator **ADMIT Soften C3 Day 20**. Digest [`DIGESTION_C3_DAY20.md`](DIGESTION_C3_DAY20.md) landed. Softened set on this fold: **2–20**. Remaining Digestor live day: **21**. Softened Days 2–19 boards **untouched**. Softened Day 19 Mack **untouched**. This fold ADMIT keeps INTERIM **interim (NOT park)** and does **not** rewrite the #124 park ADMIT body above. Standing GO Lab invent/hand **Day 21** next. Pointer: [`VIZ.md`](VIZ.md).
