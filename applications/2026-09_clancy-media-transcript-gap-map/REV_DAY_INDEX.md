@@ -44,7 +44,7 @@ Rev page stamps below are **media** when already on [`SOURCE.md`](SOURCE.md). Ne
 | Day 8 | day | https://www.rev.com/transcripts/ma-v-lindsay-clancy-day-8 | **live** | Digestor index; **not Softened** |
 | Day 9 | day | https://www.rev.com/transcripts/ma-v-lindsay-clancy-day-9 | **live** | Digestor index; **not Softened** |
 | Day 10 | day | https://www.rev.com/transcripts/ma-v-lindsay-clancy-day-10 | **live** | Digestor index; **not Softened** |
-| Day 11 | day | https://www.rev.com/transcripts/ma-v-lindsay-clancy-day-11 | **live** | **Softened** — C3 Day 11 (parallel; board **untouched** this fold) |
+| Day 11 | day | https://www.rev.com/transcripts/ma-v-lindsay-clancy-day-11 | **live** | **Softened** — C3 Day 11 (on master **#110**; board **untouched** this fold) |
 | Day 12 | day | https://www.rev.com/transcripts/ma-v-lindsay-clancy-day-12 | **live** | Digestor index; **not Softened** |
 | Day 13 | day | https://www.rev.com/transcripts/ma-v-lindsay-clancy-day-13 | **live** | Digestor index; **not Softened** |
 | Day 14 | day | https://www.rev.com/transcripts/ma-v-lindsay-clancy-day-14 | **live** | **Softened** — C3 Day 14 digital-evidence backup |
