@@ -84,6 +84,8 @@
 
 **Later the same day (Soften C3 Day 2):** Operator **ADMIT Soften C3 Day 2** (#111). Remaining live days after Day 2 + Day 7 + Day 11: **3–6, 8–10, 12–13, 15–17, 19–21**. INTERIM still **NOT** park. Amb **open**. Softened days so far: **2**, **7**, **11**, **14**, **18**. Standing GO Lab invent/hand **Day 3** next. See [`DIGESTION_C3_DAY2.md`](DIGESTION_C3_DAY2.md).
 
+**Later the same day (Soften C3 Day 3 DIGEST):** Operator **ADMIT Soften C3 Day 3**. DIGEST now on this fold — [`DIGESTION_C3_DAY3.md`](DIGESTION_C3_DAY3.md). G3-D3 PRIMARY / G5-D3 touch / G6-D3. First-responder obs ≠ Soften of suicide / planning as fact. INTERIM still **NOT** park.
+
 **Later the same day (Soften C3 Day 10):** Operator **ADMIT Soften C3 Day 10** (#118). Digest [`DIGESTION_C3_DAY10.md`](DIGESTION_C3_DAY10.md). INTERIM still **NOT** park.
 
 **Later the same day (Soften C3 Day 9):** Operator **ADMIT Soften C3 Day 9** (#117). Digest [`DIGESTION_C3_DAY9.md`](DIGESTION_C3_DAY9.md). INTERIM still **NOT** park.

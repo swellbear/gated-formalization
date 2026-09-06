@@ -4,6 +4,7 @@
 **Application:** `2026-09_clancy-media-transcript-gap-map`  
 **Role:** STATUS pointer. **Illustrator board; Operator-folded pointer.** Last **refreshed** after Soften C3 Day 13 (STATUS-ready). PNG + md **not receivable** this VM — **pointer only**; **do not invent a chart**. **Not** a new Soften. Soften C3 Day 13 ADMIT digestion stays **primary**.  
 **C3 Day 13 digestion (ADMITTED; primary):** [`DIGESTION_C3_DAY13.md`](DIGESTION_C3_DAY13.md)  
+**C3 Day 3 digestion (ADMITTED; DIGEST this fold):** [`DIGESTION_C3_DAY3.md`](DIGESTION_C3_DAY3.md)  
 **C3 Day 9 digestion (ADMITTED on master #117; board untouched):** [`DIGESTION_C3_DAY9.md`](DIGESTION_C3_DAY9.md)  
 **C3 Day 10 digestion (ADMITTED on master #118; board untouched):** [`DIGESTION_C3_DAY10.md`](DIGESTION_C3_DAY10.md)  
 **C3 Day 4 digestion (ADMITTED on master #113; board untouched):** [`DIGESTION_C3_DAY4.md`](DIGESTION_C3_DAY4.md)  
