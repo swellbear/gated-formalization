@@ -44,9 +44,9 @@ Digestor never Soften / Harden / Kill. Digestor stamps whether a new Amb spine i
 - Digestor never Soften / Harden / Kill.
 - Lab invent HOLD until Operator GO S0.
 
-**First pulse (locked lean, not yet GO to Lab):** S0 SOURCE board — Stimpmeter definition + procedure + named objects.
+**First pulse (stamp-time locked lean):** S0 SOURCE board — Stimpmeter definition + procedure + named objects. **Later same day:** Soften S0 + Soften S1 admitted; **Hold S2.**
 
-**S0–S4 menu:** see [`PROPOSED_PULSE.md`](PROPOSED_PULSE.md).
+**Pulse IDs after Soften S0+S1:** **S0 = SOURCE**, **S1 = Sommer gap map**, **S2 = kinematics (Hold)**. Scaffold S1=scale is **not** authoritative. See [`PROPOSED_PULSE.md`](PROPOSED_PULSE.md).
 
 ---
 
@@ -61,4 +61,6 @@ Digestor never Soften / Harden / Kill. Digestor stamps whether a new Amb spine i
 
 ---
 
-*Digestor spine stamp Operator-folded. PASS stands. Lab HOLD until GO S0.*
+**Later the same day (Operator ADMIT Soften S0 + Soften S1):** SOURCE board Softened; Sommer gap map Softened. Green-speed claim **not** Softened. **X unset.** **Hold S2.** Digestor/Founder IDs: S0=SOURCE, S1=Sommer gap map, S2=kinematics (Hold). See [`DIGESTION_S0S1_SOFTEN.md`](DIGESTION_S0S1_SOFTEN.md).
+
+*Digestor spine stamp Operator-folded. PASS stands. Later same day: Soften S0 + Soften S1. Hold S2.*

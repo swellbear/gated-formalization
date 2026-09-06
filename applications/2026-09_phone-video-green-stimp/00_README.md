@@ -3,11 +3,11 @@
 **Application ID:** `2026-09_phone-video-green-stimp`  
 **Opened:** 2026-09-06  
 
-Open **Amb scaffold**. Operator **ADMIT Digestor SPINE STAMP PASS + freezes**. First pulse is **S0 SOURCE board** — locked lean, **not yet GO to Lab**. Lab invent **HOLD** until Operator **GO S0**.
+Operator **ADMIT Soften S0** + **Soften S1**. S0 Soften = SOURCE Stimpmeter board poseable/citable. S1 Soften = Sommer gap map G1–G6 honest; first-class Softens nameable. Digestor / Founder ID lock: **S1 = Sommer gap map** (not scaffold S1=scale). **X unset.** Green-speed claim is **not** Softened. **Hold S2** (kinematics) until Operator **GO S2** (or park). Do **not** auto-GO S2.
 
 **NEW Amb:** from a short phone video of a golf ball rolling on a putting green — with known approximate distance or recoverable scale — a laptop-feasible method Softens green speed (Stimpmeter-equivalent ball-roll distance, BRD, in feet) to within a named error bar **X** vs a real Stimpmeter reading, **without** building a Stimpmeter and **without** giant GPU models. **X is not frozen yet** — name **X** before Soften / Harden. Digestor spine **PASS**. Prior: Soften-vanity **CLOSE** [`DIGESTION_PARK_WHAT_TAUGHT.md`](../2026-09_soften-vanity-thrash-predictor/DIGESTION_PARK_WHAT_TAUGHT.md) (on master; Operator-folded). Greer **TABLED** stays parked.
 
-This is **not** a Stimpmeter. This is **not** a product app. This is **not** a trained map. Training is **not** established. This is **not** skill-met. This is **not** rithm. This is **not** a Soften Critic hire. Soften itself is **not** asserted bad. Opening the scaffold does **not** show green speed and is **not** clearance. Proposed S0–S4 pulses are **not run**. **X** is **unset**. **No YOLO / giant GPU first path.** **No Greer reopen.** **No SkyMirr invent reopen.** Digestor never Soften / Harden / Kill.
+This is **not** a Stimpmeter. This is **not** a product app. This is **not** a trained map. Training is **not** established. This is **not** skill-met. This is **not** rithm. This is **not** a Soften Critic hire. Soften itself is **not** asserted bad. Soften S0 / S1 does **not** show green speed and is **not** clearance. S2 is **not run**. **X** is **unset**. **No YOLO / giant GPU first path.** **No Greer reopen.** **No SkyMirr invent reopen.** Digestor never Soften / Harden / Kill.
 
 The Soften-vanity Amb (`2026-09_soften-vanity-thrash-predictor`) is **CLOSED** (Soften Amb DIGEST / string CLOSE; Lab invent **HOLD**; Soften Critic **not met**; holdout-lift limb **Killed**). This app does **not** reopen it. The Greer sync-locate Amb (`2026-09_greer-sync-pulse-tdoa`) stays **TABLED / PARKED**. Send **HOLD**. Lab invent **HOLD**. Reopen = user only. The cell-tower Amb is **PARKED** and is **not** reopened as live. SkyMirr stays its own Amb (invent **HOLD**). The BIA→weight portfolio is **CLOSED**. The golf-offshoot betting folder is a **different object** and is **not** this Amb. This app does **not** reopen those strings.
 
@@ -43,22 +43,25 @@ Not a commercial green-speed SKU. Not an iStimp / Stimpmeter clone. Not a YOLO t
 - Path stays **laptop-feasible**. **No** Stimpmeter stick built. **No** YOLO / giant GPU first path.
 - Input = short phone video of a golf ball rolling on a putting green, plus **known approx or recoverable** ground scale.
 - Comparison = video-predicted Stimpmeter-equivalent BRD (ft) vs a **real** Stimpmeter reading on the same surface / window.
-- Metric = named error bar **X** (ft). **X unset** until named (S4 after GO). Sommer 6.4 in CI is **not** that bar.
+- Metric = named error bar **X** (ft). **X unset** until named. Sommer 6.4 in CI is **not** that bar. Name **X** before Soften of the green-speed claim stands.
 - Launch class and mount class must be **named** (Stimpmeter-exit vs casual putt; fixed-level vs handheld / non-level).
 - This is **not** a product claim and **not** a skill-met claim.
 
-## Next pulse (locked lean; not yet GO to Lab)
+## Next pulse (Hold S2)
 
-After this scaffold admit, first pulse = **S0 SOURCE board** (Stimpmeter definition + procedure + named objects). Lab invent **HOLD** until Operator **GO S0**. S1–S4 stay on the Digestor menu. **Not run this fold.** See [`PROPOSED_PULSE.md`](PROPOSED_PULSE.md).
+S0 SOURCE board is **Operator Soften** — [`DIGESTION_S0.md`](DIGESTION_S0.md). S1 Sommer gap map is **Operator Soften** — [`DIGESTION_S1.md`](DIGESTION_S1.md). Lab DIGEST lean — [`DIGESTION_S0S1_SOFTEN.md`](DIGESTION_S0S1_SOFTEN.md). **Hold S2** (kinematics) until Operator **GO S2** (or park). Do **not** auto-GO S2. See [`PROPOSED_PULSE.md`](PROPOSED_PULSE.md).
 
 ## Reading order
 
 1. [`STATUS.md`](STATUS.md) — where we are
 2. [`NAMED_GAP_LEDGER.md`](NAMED_GAP_LEDGER.md) — the open lines + freezes
-3. [`PROPOSED_PULSE.md`](PROPOSED_PULSE.md) — Digestor S0–S4 menu (S0 locked lean; **not GO**)
-4. [`SOURCE.md`](SOURCE.md) — USGA + Sommer abstract + physics pointers (notes summary)
-5. [`DIGESTION_SPINE_STAMP.md`](DIGESTION_SPINE_STAMP.md) — Digestor spine PASS summary
-6. [`DIGESTION_FROM_SOFTEN_VANITY.md`](DIGESTION_FROM_SOFTEN_VANITY.md) — what the last string taught
-7. [`COPY_GATE.md`](COPY_GATE.md) — SOURCE / method-practice honesty
-8. [`RESIDUAL_BRANCH_MENU.md`](RESIDUAL_BRANCH_MENU.md) — decision log
-9. [`notes.md`](notes.md) — one-line pointer
+3. [`DIGESTION_S0S1_SOFTEN.md`](DIGESTION_S0S1_SOFTEN.md) — Lab DIGEST lean (S0+S1 Soften)
+4. [`DIGESTION_S0.md`](DIGESTION_S0.md) — S0 SOURCE board Soften
+5. [`DIGESTION_S1.md`](DIGESTION_S1.md) — S1 Sommer gap map Soften
+6. [`PROPOSED_PULSE.md`](PROPOSED_PULSE.md) — Digestor menu (S0=SOURCE, S1=gap map, S2=kinematics Hold)
+7. [`SOURCE.md`](SOURCE.md) — USGA + Sommer abstract + physics pointers (notes summary)
+8. [`DIGESTION_SPINE_STAMP.md`](DIGESTION_SPINE_STAMP.md) — Digestor spine PASS summary
+9. [`DIGESTION_FROM_SOFTEN_VANITY.md`](DIGESTION_FROM_SOFTEN_VANITY.md) — what the last string taught
+10. [`COPY_GATE.md`](COPY_GATE.md) — SOURCE / method-practice honesty
+11. [`RESIDUAL_BRANCH_MENU.md`](RESIDUAL_BRANCH_MENU.md) — decision log
+12. [`notes.md`](notes.md) — one-line pointer

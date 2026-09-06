@@ -2,7 +2,7 @@
 
 **Date:** 2026-09-06  
 **Application:** `2026-09_phone-video-green-stimp`  
-**Role:** notes summary (scaffold). **Not** Operator ADMIT of a scored SOURCE board — that is **S0 after GO**.  
+**Role:** notes summary. Operator **ADMIT Soften S0** locks the board as poseable/citable — [`DIGESTION_S0.md`](DIGESTION_S0.md). **NOT** Soften of the green-speed claim. **X unset.**  
 **Copy gate:** [`COPY_GATE.md`](COPY_GATE.md)  
 **Proposed pulse:** [`PROPOSED_PULSE.md`](PROPOSED_PULSE.md)
 
@@ -105,4 +105,4 @@ These are **pointers**, not ingested papers and not a product physics engine.
 - Launch must be **named** (Stimpmeter ~6 ft/s vs unknown casual putt).
 - Handheld / non-level is **first-class Soften** vs Sommer’s fixed level mount.
 
-S0 after **GO** would lock this board. This fold does **not** run S0.
+S0 is **Operator Soften** (poseable/citable). This is **not** green-speed Soften. **X** stays unset. **Hold S2.**
