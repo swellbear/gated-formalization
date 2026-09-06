@@ -25,7 +25,7 @@ This gate is required because the Amb practices public **media / unofficial** da
 | Digestor expanded SOURCE day index (Days 2–21 + closings live; Day 2 typo slug; Day 1 not found; Days 22+ 404) | [`REV_DAY_INDEX.md`](REV_DAY_INDEX.md) · [`DIGESTION_INDEX_EXPAND.md`](DIGESTION_INDEX_EXPAND.md) | Operator **ADMIT Digestor index expand**; **LOUD media≠certified**; index-live ≠ Soften; Soften Critic **not hired** |
 | Digestor INTERIM mid-run honesty note (**not** park; Amb **open**) | [`DIGESTION_INTERIM_MID_RUN.md`](DIGESTION_INTERIM_MID_RUN.md) · [`INTERIM_INDEX.md`](INTERIM_INDEX.md) | Operator **ADMIT INTERIM mid-run**; **NOT** `DIGESTION_PARK_WHAT_TAUGHT`; Day 7 Soften landed after snapshot |
 | Digestor spine stamp summary | [`DIGESTION_SPINE_STAMP.md`](DIGESTION_SPINE_STAMP.md) | Admit record of PASS |
-| Illustrator Soften-fold / living-twin **pointer** (Lab workspace paths; PNG+md not copied; **refreshed** after Soften C3 Day 7) | [`VIZ.md`](VIZ.md) | Operator-folded pointer; shows **G4-D7 PRIMARY · G3-D7 TOUCH · G6-D7**; Softened D14 G5-D14 PRIMARY / G4-D14 touch **stay**; Softened D18 G4-D18 PRIMARY / G5-D18 TOUCH **stay**; honesty caption unchanged; **not** a new Soften; **not** usefulness Soften |
+| Illustrator Soften-fold / living-twin **pointer** (Lab workspace paths; PNG+md not copied; **refreshed** after Soften C3 Day 4) | [`VIZ.md`](VIZ.md) | Operator-folded pointer; shows **G3-D4 PRIMARY · G4-D4 LIGHT · G6-D4**; Softened D3 G3-D3 PRIMARY **stay**; Softened D2 / D7 / D11 / D14 / D18 **stay**; **not** a new Soften; **not** usefulness Soften |
 
 ## Hard NO
 
@@ -52,6 +52,6 @@ This gate is required because the Amb practices public **media / unofficial** da
 - [`DIGESTION_FROM_PHONE_STIMP.md`](DIGESTION_FROM_PHONE_STIMP.md) paraphrases the Operator-folded phone-stimp TABLE park what-taught note. **No claim quotes.**
 - [`DIGESTION_SPINE_STAMP.md`](DIGESTION_SPINE_STAMP.md) copies the Digestor PASS summary.
 - [`DIGESTION_INTERIM_MID_RUN.md`](DIGESTION_INTERIM_MID_RUN.md) / [`INTERIM_INDEX.md`](INTERIM_INDEX.md) are COPY_GATE **honesty fold** only. **NOT** park. **NOT** corpus-done. Day 7 Soften landed after snapshot.
-- [`VIZ.md`](VIZ.md) is an **Illustrator board; Operator-folded pointer** to Lab workspace paths **refreshed** after Soften C3 Day 7. **No PNG copied.** **No** long transcript. Honesty caption **unchanged**. **Not** a new Soften. **Not** usefulness Soften.
+- [`VIZ.md`](VIZ.md) is an **Illustrator board; Operator-folded pointer** to Lab workspace paths **refreshed** after Soften C3 Day 4. **No PNG copied.** **No** long transcript. Honesty caption named. **Not** a new Soften. **Not** usefulness Soften. Soften C3 Day 4 ADMIT digestion stays **primary**.
 
 **PASS.** Still **not** claim clearance. Still **not** the usefulness claim shown. Still **not** the success bar named. Still **not** legal advice. Soften S0 + Soften C1 + Soften C3 + Soften C3 Day 14 + Soften C3 Day 7 + Digestor index expand + Digestor INTERIM mid-run ≠ usefulness Soften. INTERIM **not** park. Index-live ≠ Soften of those days. Softened days so far: 7, 14, 18. Softened Day 14 + Day 18 boards **untouched**. **LOUD media≠certified.** **tox≠capacity Soften.** Clash ≠ Soften of either side. Not case-solving.
