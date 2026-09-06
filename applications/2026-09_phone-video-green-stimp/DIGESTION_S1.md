@@ -111,4 +111,6 @@ Name whether the Sommer literature condition and the locked phone-video claim ar
 
 ---
 
-*Docs only. Operator **ADMIT Soften S1**. Gap map G1–G6 honest. First-class Softens nameable (G1 mount / G2 launch / G3 scale). S1 = Sommer gap map (not scale). NOT Soften of the green-speed claim. X unset. Hold S2 (kinematics). Lab does not self-admit. Digestor never Soften/Harden/Kill.*
+**Later the same day (Operator ADMIT Soften S2):** G2 launch classes coded; G5 leftover OOM-loud. Green-speed claim still **not** Softened. **X unset.** **Hold S3 / S4.** See [`DIGESTION_S2.md`](DIGESTION_S2.md).
+
+*Docs only. Operator **ADMIT Soften S1**. Gap map G1–G6 honest. First-class Softens nameable (G1 mount / G2 launch / G3 scale). S1 = Sommer gap map (not scale). NOT Soften of the green-speed claim. X unset. Later: Soften S2. Hold S3/S4. Lab does not self-admit. Digestor never Soften/Harden/Kill.*
