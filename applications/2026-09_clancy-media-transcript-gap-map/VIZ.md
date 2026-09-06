@@ -10,6 +10,7 @@
 **C3 Day 21 digestion (on master #126; board untouched):** [`DIGESTION_C3_DAY21.md`](DIGESTION_C3_DAY21.md)  
 **C3 Day 20 digestion (on master #127; board untouched):** [`DIGESTION_C3_DAY20.md`](DIGESTION_C3_DAY20.md)  
 **C3 Day 8 digestion (on master #116; board untouched):** [`DIGESTION_C3_DAY8.md`](DIGESTION_C3_DAY8.md)  
+
 **Park DIGEST (on master #124; board untouched):** [`DIGESTION_PARK_WHAT_TAUGHT.md`](DIGESTION_PARK_WHAT_TAUGHT.md) · [`PARK_INDEX.md`](PARK_INDEX.md)  
 **STATUS:** [`STATUS.md`](STATUS.md)
 
