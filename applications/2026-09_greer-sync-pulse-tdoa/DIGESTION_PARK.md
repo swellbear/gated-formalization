@@ -2,6 +2,8 @@
 
 A short plain note of the park. Habit: [`docs/DIGESTION_HABIT.md`](../../docs/DIGESTION_HABIT.md). Suite DIGEST: [`DIGESTION_A1A4_SUITE.md`](DIGESTION_A1A4_SUITE.md). Send-candidate: [`GREER_WRITEUP_SEND.md`](GREER_WRITEUP_SEND.md). This does **not** score a locator. It does **not** send to Greer. It does **not** delete corpus. It does **not** reopen this Amb as live.
 
+**This file** records **that** the Amb was TABLED (table decision). **What this string taught / still open / SOURCE honesty:** [`DIGESTION_PARK_WHAT_TAUGHT.md`](DIGESTION_PARK_WHAT_TAUGHT.md) (Digestor park digestion). That note is **not** a Soften/Harden/Kill. **Not** invent. **Not** Greer send.
+
 **This fold:** `2026-09_greer-sync-pulse-tdoa` **PARKED / TABLED** 2026-09-06 — user tables **all** Greer work.
 
 ## What was decided
