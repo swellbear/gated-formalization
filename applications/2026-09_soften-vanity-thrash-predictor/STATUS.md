@@ -23,6 +23,8 @@
 | **Optional modes** | none yet (endpoint; not hard stop; no optional-modes menu this fold) |
 
 **Ledger:** [`NAMED_GAP_LEDGER.md`](NAMED_GAP_LEDGER.md)  
+**Park digestion (what Soften-vanity CLOSE taught):** [`DIGESTION_PARK_WHAT_TAUGHT.md`](DIGESTION_PARK_WHAT_TAUGHT.md) (Digestor; Operator-folded; not Soften/Harden/Kill — already CLOSE; Soften Critic hire not met; Lab invent HOLD)  
+**Park index:** [`PARK_INDEX.md`](PARK_INDEX.md) — CLOSED reopen map  
 **Lab DIGEST lean (C0+C1 Soften):** [`DIGESTION_C0C1_SOFTEN.md`](DIGESTION_C0C1_SOFTEN.md)  
 **String DIGEST:** [`DIGESTION_STRING.md`](DIGESTION_STRING.md)  
 **C1 digestion:** [`DIGESTION_C1.md`](DIGESTION_C1.md)  

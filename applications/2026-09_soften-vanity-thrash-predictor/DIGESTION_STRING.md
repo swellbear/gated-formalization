@@ -10,6 +10,8 @@
 **Claim-limb addendum (stands):** [`DIGESTION_CLAIM_LIMB.md`](DIGESTION_CLAIM_LIMB.md)  
 **Ledger:** [`NAMED_GAP_LEDGER.md`](NAMED_GAP_LEDGER.md)  
 **STATUS:** [`STATUS.md`](STATUS.md)  
+**Park digestion:** [`DIGESTION_PARK_WHAT_TAUGHT.md`](DIGESTION_PARK_WHAT_TAUGHT.md) (Digestor; Operator-folded; not Soften/Harden/Kill — already CLOSE; Soften Critic hire not met; Lab invent HOLD)  
+**Park index:** [`PARK_INDEX.md`](PARK_INDEX.md) — CLOSED reopen map  
 **Copy gate:** [`COPY_GATE.md`](COPY_GATE.md)
 
 Method Operator **ADMIT Soften Amb DIGEST / string CLOSE**. Lab invent **HOLD** after DIGEST. Lab scratch was **not** on this fold VM. The DIGEST summary and the Soften C1 gate below are **copied** from the Operator (authoritative). This file is the dedicated string DIGEST.
@@ -126,6 +128,8 @@ This note does **not** authorize those strings. It does **not** show a thrash pr
 | Record | What it is |
 |--------|------------|
 | [`STATUS.md`](STATUS.md) | Soften Amb DIGEST / CLOSE; Lab HOLD |
+| [`DIGESTION_PARK_WHAT_TAUGHT.md`](DIGESTION_PARK_WHAT_TAUGHT.md) | Digestor park digestion (Operator-folded; not Soften/Harden/Kill) |
+| [`PARK_INDEX.md`](PARK_INDEX.md) | CLOSED reopen map |
 | [`NAMED_GAP_LEDGER.md`](NAMED_GAP_LEDGER.md) | Scoreboard, including the killed lift limb |
 | [`DIGESTION_C0C1_SOFTEN.md`](DIGESTION_C0C1_SOFTEN.md) | Lab DIGEST lean (C0+C1 Soften) |
 | [`DIGESTION_C1.md`](DIGESTION_C1.md) | C1 Soften coding sheet |
@@ -135,4 +139,4 @@ This note does **not** authorize those strings. It does **not** show a thrash pr
 
 ---
 
-*Docs only. Operator ADMIT Soften Amb DIGEST / string CLOSE. DIGEST copied. C1 Soften copied. C0 Soften carried. Lab invent HOLD. Soften ≠ Soften-is-bad. Greer Soften Amb not asserted vanity. Not a predictor. Not C2. No ML. No Soften Critic. Lab does not self-admit.*
+*Docs only. Operator ADMIT Soften Amb DIGEST / string CLOSE. Digestor park digestion Operator-folded. Soften Critic hire not met. Lab invent HOLD. Not Soften/Harden/Kill of Amb (already CLOSE). DIGEST copied. C1 Soften copied. C0 Soften carried. Soften ≠ Soften-is-bad. Greer Soften Amb not asserted vanity. Not a predictor. Not C2. No ML. No Soften Critic. Lab does not self-admit.*
