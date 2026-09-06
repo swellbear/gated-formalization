@@ -20,7 +20,7 @@ This gate is required because the Amb practices public **media / unofficial** da
 | C3 Day 18 day-pulse (10 day claims; G4-D18 / G5-D18 / G2-D18 / G6-D18; short fair-use spans) | [`DIGESTION_C3.md`](DIGESTION_C3.md) | Operator **ADMIT Soften C3**; **not** Day 18 as certified fact; clash ≠ Soften of either side; board **untouched** this fold |
 | C3 Day 14 day-pulse #2 (9 day claims; G5-D14 PRIMARY / G4-D14 touch / G6-D14; short fair-use spans) | [`DIGESTION_C3_DAY14.md`](DIGESTION_C3_DAY14.md) | Operator **ADMIT Soften C3 Day 14**; **not** Day 14 / digital timeline as certified fact; digital timeline ≠ Soften of planning / psychosis as fact; clash ≠ Soften of either side |
 | Digestor spine stamp summary | [`DIGESTION_SPINE_STAMP.md`](DIGESTION_SPINE_STAMP.md) | Admit record of PASS |
-| Illustrator Soften-fold / living-twin **pointer** (Lab workspace paths; PNG+md not copied) | [`VIZ.md`](VIZ.md) | Operator-folded pointer; honesty caption stays; **not** a new Soften |
+| Illustrator Soften-fold / living-twin **pointer** (Lab workspace paths; PNG+md not copied; **refreshed** after Soften C3 Day 14) | [`VIZ.md`](VIZ.md) | Operator-folded pointer; shows Day 14 G5-D14 PRIMARY / G4-D14 touch / G6-D14; Day 18 G4-D18 PRIMARY / G5-D18 TOUCH stay; honesty caption unchanged; **not** a new Soften |
 
 ## Hard NO
 
@@ -44,6 +44,6 @@ This gate is required because the Amb practices public **media / unofficial** da
 - Success bar appears only as **unnamed**. Do **not** invent it.
 - [`DIGESTION_FROM_PHONE_STIMP.md`](DIGESTION_FROM_PHONE_STIMP.md) paraphrases the Operator-folded phone-stimp TABLE park what-taught note. **No claim quotes.**
 - [`DIGESTION_SPINE_STAMP.md`](DIGESTION_SPINE_STAMP.md) copies the Digestor PASS summary.
-- [`VIZ.md`](VIZ.md) is an **Illustrator board; Operator-folded pointer** to Lab workspace paths. **No PNG copied.** **No** long transcript. Honesty caption stays. **Not** a new Soften.
+- [`VIZ.md`](VIZ.md) is an **Illustrator board; Operator-folded pointer** to Lab workspace paths **refreshed** after Soften C3 Day 14. **No PNG copied.** **No** long transcript. Honesty caption **unchanged**. **Not** a new Soften.
 
 **PASS.** Still **not** claim clearance. Still **not** the usefulness claim shown. Still **not** the success bar named. Still **not** legal advice. Soften S0 + Soften C1 + Soften C3 + Soften C3 Day 14 ≠ usefulness Soften. Soften C3 ≠ Day 18 as certified fact. Soften C3 Day 14 ≠ Day 14 / digital timeline as certified fact. Digital timeline ≠ Soften of planning / psychosis as fact. Clash ≠ Soften of either side. Not case-solving.
