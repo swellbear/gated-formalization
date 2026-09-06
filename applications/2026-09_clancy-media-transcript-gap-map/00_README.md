@@ -83,5 +83,5 @@ S0 + C1 + C3 available-day set (Days **2–21**) are **Operator Soften**. **Dige
 11. [`DIGESTION_FROM_PHONE_STIMP.md`](DIGESTION_FROM_PHONE_STIMP.md) — what the last string taught
 12. [`COPY_GATE.md`](COPY_GATE.md) — SOURCE / method-practice honesty
 13. [`RESIDUAL_BRANCH_MENU.md`](RESIDUAL_BRANCH_MENU.md) — decision log
-14. [`VIZ.md`](VIZ.md) — Illustrator Soften-fold / living-twin pointer last **STATUS-ready** after park **#124** (FINAL D2–21). **Day 8 landed this fold; pointer refresh is a later same-day commit on this branch.** **Not** a new Soften. Day 8 ADMIT digestion stays primary.
+14. [`VIZ.md`](VIZ.md) — Illustrator Soften-fold / living-twin pointer **refreshed** after Soften C3 Day 8 (PNG+md not receivable this VM; pointer only to Lab `/workspace/clancy_lab/viz/soften_fold_c1_c3.png` + `.md` and living twin `claim_clash_map.png`). **Not** a new Soften. Day 8 ADMIT digestion stays primary. Shows G5-D8 PRIMARY · G4-D8 · G2-D8 · G3-D8 light · G6-D8; park FINAL D2–21 stay; Softened D19 G4-D19 stay; Softened D16 G4-D16 stay; Softened D15 stay; Softened D13 G5-D13 stay; Softened D10 G4-D10 stay; Softened D9 stay; Softened D6 G4-D6 PRIMARY stay. Do **not** invent a chart.
 15. [`notes.md`](notes.md) — one-line pointer

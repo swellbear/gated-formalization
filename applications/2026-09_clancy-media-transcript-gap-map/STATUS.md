@@ -35,7 +35,7 @@ Standing GO: Lab invent/hand Day 9 next, then remaining Digestor live days one a
 - **Days 5 / 6 / 12 / 17:** Operator-ADMITTED parallel. **Do not invent DIGEST files.**
 - **Days 20–21:** Soften folds may still be landing. **Do not invent.**
 - **INTERIM:** [`DIGESTION_INTERIM_MID_RUN.md`](DIGESTION_INTERIM_MID_RUN.md) is **SUPERSEDED** history (do not delete).
-- **Viz:** Park FINAL D2–21 last on master. Day 8 ADMIT landed this fold. Pointer refresh is the later same-day VIZ commit (not this ADMIT).
+- **Viz:** Illustrator Soften-fold pointer **refreshed** after Soften C3 Day 8 (`VIZ.md`). Shows **G5-D8 PRIMARY · G4-D8 · G2-D8 · G3-D8 light · G6-D8**; park FINAL **D2–21 stay**; Softened D19 **G4-D19 stay**; Softened D16 **G4-D16 stay**; Softened D15 stay; Softened D13 **G5-D13 stay**; Softened D10 **G4-D10 stay**; Softened D9 stay; Softened D6 **G4-D6 PRIMARY stay**. Pointer only. PNG+md not receivable. **Not** a new Soften. Day 8 ADMIT digestion stays **primary**.
 
 ## Hard NO (this fold)
 
@@ -50,4 +50,4 @@ Standing GO: Lab invent/hand Day 9 next, then remaining Digestor live days one a
 
 ## Pointers
 
-[`DIGESTION_C3_DAY8.md`](DIGESTION_C3_DAY8.md) · [`DIGESTION_PARK_WHAT_TAUGHT.md`](DIGESTION_PARK_WHAT_TAUGHT.md) · [`PARK_INDEX.md`](PARK_INDEX.md) · [`DIGESTION_C3_DAY19.md`](DIGESTION_C3_DAY19.md) · [`DIGESTION_C3_DAY16.md`](DIGESTION_C3_DAY16.md) · [`DIGESTION_C3_DAY15.md`](DIGESTION_C3_DAY15.md) · [`00_README.md`](00_README.md) · [`NAMED_GAP_LEDGER.md`](NAMED_GAP_LEDGER.md) · [`PROPOSED_PULSE.md`](PROPOSED_PULSE.md) · [`RESIDUAL_BRANCH_MENU.md`](RESIDUAL_BRANCH_MENU.md) · [`SOURCE.md`](SOURCE.md) · [`COPY_GATE.md`](COPY_GATE.md) · [`notes.md`](notes.md)
+[`DIGESTION_C3_DAY8.md`](DIGESTION_C3_DAY8.md) · [`DIGESTION_PARK_WHAT_TAUGHT.md`](DIGESTION_PARK_WHAT_TAUGHT.md) · [`PARK_INDEX.md`](PARK_INDEX.md) · [`DIGESTION_C3_DAY19.md`](DIGESTION_C3_DAY19.md) · [`DIGESTION_C3_DAY16.md`](DIGESTION_C3_DAY16.md) · [`DIGESTION_C3_DAY15.md`](DIGESTION_C3_DAY15.md) · [`00_README.md`](00_README.md) · [`NAMED_GAP_LEDGER.md`](NAMED_GAP_LEDGER.md) · [`PROPOSED_PULSE.md`](PROPOSED_PULSE.md) · [`RESIDUAL_BRANCH_MENU.md`](RESIDUAL_BRANCH_MENU.md) · [`SOURCE.md`](SOURCE.md) · [`COPY_GATE.md`](COPY_GATE.md) · [`notes.md`](notes.md) · [`VIZ.md`](VIZ.md)

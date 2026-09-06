@@ -19,7 +19,7 @@
 **C3 Day 15 digestion (on master #121; board untouched):** [`DIGESTION_C3_DAY15.md`](DIGESTION_C3_DAY15.md)  
 **C3 Day 16 digestion (on master #122; board untouched):** [`DIGESTION_C3_DAY16.md`](DIGESTION_C3_DAY16.md)  
 **C3 Day 19 digestion:** [`DIGESTION_C3_DAY19.md`](DIGESTION_C3_DAY19.md)  
-**Illustrator viz pointer (STATUS-ready after Day 19):** [`VIZ.md`](VIZ.md)  
+**Illustrator viz pointer (STATUS-ready after Day 8 refresh):** [`VIZ.md`](VIZ.md)  
 **Index expand:** [`REV_DAY_INDEX.md`](REV_DAY_INDEX.md) · [`DIGESTION_INDEX_EXPAND.md`](DIGESTION_INDEX_EXPAND.md)  
 **Interim mid-run (not park):** [`DIGESTION_INTERIM_MID_RUN.md`](DIGESTION_INTERIM_MID_RUN.md) · [`INTERIM_INDEX.md`](INTERIM_INDEX.md)  
 **Proposed pulse:** [`PROPOSED_PULSE.md`](PROPOSED_PULSE.md)  
@@ -61,7 +61,7 @@
 | digestor-interim-mid-run | Digestor INTERIM mid-run honesty note — **not** park / **not** corpus-done | Honesty fold (Operator **ADMIT INTERIM mid-run**) | **Admitted** — [`DIGESTION_INTERIM_MID_RUN.md`](DIGESTION_INTERIM_MID_RUN.md) · [`INTERIM_INDEX.md`](INTERIM_INDEX.md); **NOT** `DIGESTION_PARK_WHAT_TAUGHT`; Amb **open** |
 | legal-advice-later | Legal advice; Soften of verdict / mistrial / retrial prediction | Parked — later wave | **paused** / **later wave** — **not** S0 |
 | c3-day8-surv-digital | Named Day 8 surveillance/digital/demeanor/motion backup; G5-D8 PRIMARY / G4-D8 / G2-D8 / G3-D8 light / G6-D8 | Empirically resolved as **poseable** (Operator **ADMIT Soften C3 Day 8**) | **Soften** — [`DIGESTION_C3_DAY8.md`](DIGESTION_C3_DAY8.md); demeanor/FB/surveillance ≠ planning/capacity/guilt Soften |
-| illustrator-soften-fold | Soften-fold chart + living twin (Lab viz; **refreshed** after Soften C3 Day 19) | Pointer only — PNG+md not receivable this VM | **pointer** — [`VIZ.md`](VIZ.md); shows Day 19 G4-D19 PRIMARY · G6-D19 TOUCH · G2-D19 LIGHT · G5-D19 LIGHT; Softened D2–D18 stay; **not** a new Soften; Day 19 ADMIT digestion remains primary |
+| illustrator-soften-fold | Soften-fold chart + living twin (Lab viz; **refreshed** after Soften C3 Day 8) | Pointer only — PNG+md not receivable this VM | **pointer** — [`VIZ.md`](VIZ.md); Lab `/workspace/clancy_lab/viz/soften_fold_c1_c3.png` + `.md` and living twin `claim_clash_map.png` + `.md`; shows Softened Day 8 G5-D8 PRIMARY · G4-D8 · G2-D8 · G3-D8 light · G6-D8; Softened D6 G4-D6 PRIMARY stay; Softened D19 G4-D19 stay; Softened D16 G4-D16 stay; Softened D15 stay; Softened D13 G5-D13 stay; Softened D3 G3-D3 stay; Softened D10 G4-D10 stay; Softened D9 stay; Softened D2–D5 / D7 / D11 / D14 / D18 stay; honesty caption: Media≠certified · Closings≠evidence · Day≠certified · demeanor/FB/surveillance≠planning/capacity/guilt Soften · Mack CR≠capacity/guilt/CR Soften · no Soften of verdict · Soften Critic not hired · map poseability only; **not** a new Soften; **not** usefulness Soften; Soften C3 Day 8 ADMIT digestion stays primary |
 
 No other empirically resolvable residuals on this fold.
 
@@ -104,6 +104,8 @@ No other empirically resolvable residuals on this fold.
 | 2026-09-06 | Operator-folded **Illustrator Soften-fold pointer (refreshed after Soften C3 Day 19; STATUS-ready)**. Lab Soften-fold chart (`/workspace/clancy_lab/viz/soften_fold_c1_c3.png` + `.md`) + living Softened D19 twin (`claim_clash_map.png` + `.md`) **not receivable** on this Operator VM. Pointer: [`VIZ.md`](VIZ.md). Refreshed board shows Softened Day 19 **G4-D19 PRIMARY · G6-D19 TOUCH · G2-D19 LIGHT · G5-D19 LIGHT**; Softened **D2–D18 stay**. Honesty caption: Media≠certified · Closings≠evidence · Day≠certified · Mack CR≠capacity/guilt/CR Soften · no Soften of verdict · Soften Critic not hired · map poseability only. **Not** a new Soften. Soften C3 Day 19 ADMIT digestion stays **primary**. Softened Days 2–18 boards **untouched**. **Hold C2 / C4.** Standing GO Day 20 next. **Hold Day 21** until after Day 20. |
 
 | 2026-09-06 | Operator **ADMIT Soften C3 Day 8** (day-pulse #10 map-extension). 10 claims; G5-D8 PRIMARY / G4-D8 / G2-D8 / G3-D8 light / G6-D8. Softened Days 2–7 + 9–19 boards **untouched**. Standing GO **Day 20**. **Hold Day 21**. See [`DIGESTION_C3_DAY8.md`](DIGESTION_C3_DAY8.md). |
+
+| 2026-09-06 | Operator-folded **Illustrator Soften-fold pointer (refreshed after Soften C3 Day 8)**. Lab Soften-fold chart (`/workspace/clancy_lab/viz/soften_fold_c1_c3.png` + `.md`) + living twin (`claim_clash_map.png` + `.md`) **not receivable** on this Operator VM. Pointer: [`VIZ.md`](VIZ.md). Refreshed board shows Softened Day 8 G5-D8 PRIMARY · G4-D8 · G2-D8 · G3-D8 light · G6-D8; Softened D6 G4-D6 PRIMARY **stay**; Softened D19 G4-D19 **stay**; Softened D16 G4-D16 **stay**; Softened D15 stay; Softened D13 G5-D13 **stay**; Softened D10 G4-D10 **stay**; Softened D9 stay; Softened D2–D5 / D7 / D11 / D14 / D18 **stay**. Honesty caption: Media≠certified · Closings≠evidence · Day≠certified · demeanor/FB/surveillance≠planning/capacity/guilt Soften · Mack CR≠capacity/guilt/CR Soften · no Soften of verdict · Soften Critic not hired · map poseability only. **Not** a new Soften. Soften C3 Day 8 ADMIT digestion **stays primary**. Day 2–7 / Day 9–19 boards **untouched**. **Hold C2 / C4.** Standing GO Lab invent/hand **Day 20** next. **Hold Day 21** until after Day 20. |
 
 ---
 
