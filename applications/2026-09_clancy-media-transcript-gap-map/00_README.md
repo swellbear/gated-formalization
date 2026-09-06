@@ -63,7 +63,8 @@ S0 + C1 + C3 + C3 Day 14 + C3 Day 4 are **Operator Soften**. Softened Day 2 / 3 
 4. [`DIGESTION_C1.md`](DIGESTION_C1.md) — C1 census + G1–G7 poseability Soften
 5. [`DIGESTION_C3.md`](DIGESTION_C3.md) — C3 Day 18 day-pulse map-extension Soften (board **untouched**)
 6. [`DIGESTION_C3_DAY14.md`](DIGESTION_C3_DAY14.md) — C3 Day 14 day-pulse #2 map-extension Soften (board **untouched**)
-6b. [`DIGESTION_C3_DAY4.md`](DIGESTION_C3_DAY4.md) — C3 Day 4 day-pulse #7 map-extension Soften
+6a. [`DIGESTION_C3_DAY7.md`](DIGESTION_C3_DAY7.md) — C3 Day 7 day-pulse #3 map-extension Soften (on master **#109**; board **untouched**)
+6b. [`DIGESTION_C3_DAY4.md`](DIGESTION_C3_DAY4.md) — C3 Day 4 day-pulse #7 map-extension Soften (primary)
 7. [`REV_DAY_INDEX.md`](REV_DAY_INDEX.md) · [`DIGESTION_INDEX_EXPAND.md`](DIGESTION_INDEX_EXPAND.md) — Digestor index expand
 7b. [`DIGESTION_INTERIM_MID_RUN.md`](DIGESTION_INTERIM_MID_RUN.md) · [`INTERIM_INDEX.md`](INTERIM_INDEX.md) — Digestor INTERIM mid-run (**not** park; Amb **open**)
 8. [`PROPOSED_PULSE.md`](PROPOSED_PULSE.md) — Digestor menu (S0 + C1 + C3 + C3 Day 14 + C3 Day 4 Soften + index expand + INTERIM mid-run; Hold C2 / C4; standing GO Day 5 next)
@@ -72,5 +73,5 @@ S0 + C1 + C3 + C3 Day 14 + C3 Day 4 are **Operator Soften**. Softened Day 2 / 3 
 11. [`DIGESTION_FROM_PHONE_STIMP.md`](DIGESTION_FROM_PHONE_STIMP.md) — what the last string taught
 12. [`COPY_GATE.md`](COPY_GATE.md) — SOURCE / method-practice honesty
 13. [`RESIDUAL_BRANCH_MENU.md`](RESIDUAL_BRANCH_MENU.md) — decision log
-14. [`VIZ.md`](VIZ.md) — Illustrator Soften-fold / living-twin pointer **refreshed** after Soften C3 Day 14 (PNG+md not receivable this VM)
+14. [`VIZ.md`](VIZ.md) — Illustrator Soften-fold / living-twin pointer **refreshed** after Soften C3 Day 4 (PNG+md not receivable this VM; pointer only, not a new Soften)
 15. [`notes.md`](notes.md) — one-line pointer
