@@ -191,4 +191,6 @@ Mistrial ~Sep 4 is a **public-report pointer** so the claim window is named. It 
 
 ---
 
-*Docs only. Operator **ADMIT Soften S0**. SOURCE board poseable/citable. NOT Soften of the parent usefulness claim. Success bar unset. NOT Soften of verdict/mistrial/retrial. NOT Soften of “what was said.” Closings≠evidence. Hold C2–C4. Lab invent HOLD until GO C1. Soften Critic not hired. Greer TABLED. phone-stimp TABLED invent HOLD. Soften-vanity CLOSED. Kill/DATA-BLOCKED not triggered. Lab does not self-admit. Digestor never Soften/Harden/Kill.*
+**Later the same day (Operator ADMIT Soften C1):** 8-claim census + G1–G7 poseable. **NOT** usefulness Soften. **Success bar unset.** **Hold C2–C4.** See [`DIGESTION_C1.md`](DIGESTION_C1.md).
+
+*Docs only. Operator **ADMIT Soften S0**. Later same day: Soften C1. SOURCE board poseable/citable. NOT Soften of the parent usefulness claim. Success bar unset. Hold C2–C4. Soften Critic not hired. Greer TABLED invent HOLD. phone-stimp TABLED invent HOLD. Soften-vanity CLOSED. Lab does not self-admit. Digestor never Soften/Harden/Kill.*
