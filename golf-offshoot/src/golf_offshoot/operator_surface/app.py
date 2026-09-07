@@ -226,7 +226,7 @@ def render_html(surface: dict) -> str:
   <pre>{shadow}</pre>
   <h2>Calibration</h2>
   <pre>{calib}</pre>
-  <h2>Illustrator viz-wall (Ill 1 / Ill 2)</h2>
+  <h2>Illustrator viz-wall (Ill 1 / Ill 2 / WC1 dated record)</h2>
   <p>Read-only PNGs when present. Missing charts stay {html.escape('not yet available')} — never invented. Phone is notify-first; this hub is local.</p>
   {''.join(viz_blocks)}
 </main>

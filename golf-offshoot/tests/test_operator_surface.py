@@ -51,7 +51,7 @@ from golf_offshoot.operator_surface.runner import (
     run_live,
     run_loop,
 )
-from golf_offshoot.operator_surface.viz import NOT_YET_AVAILABLE, load_viz_wall
+from golf_offshoot.operator_surface.viz import NOT_YET_AVAILABLE, VIZ_BADGES, load_viz_wall, viz_file_for_serve
 from golf_offshoot.ranking.leftover import leftover_from_audit
 
 import pytest
@@ -264,11 +264,27 @@ def test_viz_missing_is_not_invented(tmp_path):
     wall = load_viz_wall(roots)
     assert wall.slot("shadow_honesty_strip").status == NOT_YET_AVAILABLE
     assert wall.slot("calibration_weather").status == NOT_YET_AVAILABLE
+    wc1 = wall.slot("wc1_dated_record")
+    assert wc1 is not None
+    assert wc1.status == NOT_YET_AVAILABLE
+    assert wc1.path is None
+    assert viz_file_for_serve("wc1_dated_record", wall) is None
     assert "not invented" in wall.slot("shadow_honesty_strip").note or "not yet available" in wall.slot("shadow_honesty_strip").note
+    assert "not invented" in wc1.note or "not yet available" in wc1.note
     assert wall.slot("shadow_honesty_strip").title == "Shadow honesty strip"
     assert wall.slot("calibration_weather").title == "Calibration weather"
+    assert wc1.title == "WC1 dated record"
     assert "not settled PnL" in wall.slot("shadow_honesty_strip").subline
     assert "keep_expert" in wall.slot("calibration_weather").subline
+    assert wc1.subline == "FAIL / park unproven · NOT edge"
+    assert wc1.badges == VIZ_BADGES
+    assert wall.slot("shadow_honesty_strip").badges == VIZ_BADGES
+    assert wall.slot("calibration_weather").badges == VIZ_BADGES
+    wc1_copy = " ".join((wc1.title, wc1.subline, *wc1.badges, wc1.note))
+    assert "banked-edge" not in wc1_copy
+    assert "SETTLE_PENDING" not in wc1_copy
+    assert "edge established" not in wc1_copy.lower()
+    assert "NOT EDGE ESTABLISHED" not in wc1.badges
 
 
 def test_viz_renders_existing_png_and_mtime(tmp_path):
@@ -277,10 +293,15 @@ def test_viz_renders_existing_png_and_mtime(tmp_path):
     png = viz / "shadow_honesty_strip.png"
     png.write_bytes(b"\x89PNG\r\n\x1a\n")
     (viz / "calibration_weather.png").write_bytes(b"\x89PNG\r\n\x1a\n")
+    wc1_png = viz / "wc1_dated_record.png"
+    wc1_png.write_bytes(b"\x89PNG\r\n\x1a\n")
     roots = resolve_roots(artifact_root=tmp_path, viz_root=viz)
     wall = load_viz_wall(roots)
     assert wall.slot("shadow_honesty_strip").status == "available"
     assert wall.slot("shadow_honesty_strip").mtime == png.stat().st_mtime
+    assert wall.slot("wc1_dated_record").status == "available"
+    assert wall.slot("wc1_dated_record").path == wc1_png
+    assert viz_file_for_serve("wc1_dated_record", wall) == wc1_png
     png.write_bytes(b"\x89PNG\r\n\x1a\nmore")
     os.utime(png, (png.stat().st_atime, png.stat().st_mtime + 5))
     wall2 = load_viz_wall(roots)
@@ -390,6 +411,10 @@ def test_shell_text_and_html_include_walls(tmp_path):
     assert "NOT ARMED" in text
     assert "Shadow honesty strip" in text
     assert "Calibration weather" in page
+    assert "WC1 dated record" in text
+    assert "WC1 dated record" in page
+    assert "FAIL / park unproven · NOT edge" in page
+    assert "NOT EDGE ESTABLISHED" not in page
     assert "NEVER DEPOSITS" in page
     assert "PAPER OBSERVATION ONLY" in page
     assert "not trading armed" in page
@@ -646,13 +671,21 @@ def test_hub_html_renders_viz_pngs_when_present(tmp_path):
     viz.mkdir()
     (viz / "shadow_honesty_strip.png").write_bytes(b"\x89PNG\r\n\x1a\n")
     (viz / "calibration_weather.png").write_bytes(b"\x89PNG\r\n\x1a\n")
+    (viz / "wc1_dated_record.png").write_bytes(b"\x89PNG\r\n\x1a\n")
     page = render_html(build_surface(artifact_root=tmp_path, viz_root=viz))
-    assert page.count("<img ") == 2
+    assert page.count("<img ") == 3
     assert "/viz/shadow_honesty_strip.png" in page
     assert "/viz/calibration_weather.png" in page
+    assert "/viz/wc1_dated_record.png" in page
     assert 'class="missing"' not in page
     assert "Shadow honesty strip" in page
     assert "Calibration weather" in page
+    assert "WC1 dated record" in page
+    assert "FAIL / park unproven · NOT edge" in page
+    assert "NOT EDGE ESTABLISHED" not in page
+    assert "PHASE 1 OBSERVATION" in page
+    assert "AI: NO CASH IN/OUT" in page
+    assert "PAPER OBSERVATION ONLY" in page
 
 
 def test_hub_http_serves_viz_pngs(tmp_path):
@@ -667,6 +700,7 @@ def test_hub_http_serves_viz_pngs(tmp_path):
     payload = b"\x89PNG\r\n\x1a\nHUB"
     (viz / "shadow_honesty_strip.png").write_bytes(payload)
     (viz / "calibration_weather.png").write_bytes(payload)
+    (viz / "wc1_dated_record.png").write_bytes(payload)
     state = {
         "event_id": "",
         "artifact_root": tmp_path,
@@ -686,10 +720,59 @@ def test_hub_http_serves_viz_pngs(tmp_path):
         body = resp.read()
         assert resp.status == 200
         assert body == payload
+        conn.request("GET", "/viz/wc1_dated_record.png")
+        wc1 = conn.getresponse()
+        assert wc1.status == 200
+        assert wc1.read() == payload
         conn.request("GET", "/")
         page = conn.getresponse().read().decode("utf-8")
         assert "<img " in page
         assert "/viz/shadow_honesty_strip.png" in page
+        assert "/viz/wc1_dated_record.png" in page
+        conn.close()
+    finally:
+        httpd.shutdown()
+        httpd.server_close()
+
+
+def test_hub_http_missing_wc1_is_not_invented(tmp_path):
+    from http.client import HTTPConnection
+    from http.server import ThreadingHTTPServer
+    from threading import Thread
+
+    from golf_offshoot.operator_surface.app import OperatorHandler
+
+    viz = tmp_path / "viz"
+    viz.mkdir()
+    (viz / "shadow_honesty_strip.png").write_bytes(b"\x89PNG\r\n\x1a\n")
+    (viz / "calibration_weather.png").write_bytes(b"\x89PNG\r\n\x1a\n")
+    surface = build_surface(artifact_root=tmp_path, viz_root=viz)
+    page = render_html(surface)
+    assert "/viz/shadow_honesty_strip.png" in page
+    assert "/viz/calibration_weather.png" in page
+    assert "/viz/wc1_dated_record.png" not in page
+    assert "WC1 dated record" in page
+    assert "not yet available" in page
+    assert "Chart not invented" in page or "not yet available" in page
+    state = {
+        "event_id": "",
+        "artifact_root": tmp_path,
+        "viz_root": viz,
+        "odds_book": "auto",
+        "surface": surface,
+    }
+    httpd = ThreadingHTTPServer(("127.0.0.1", 0), OperatorHandler)
+    httpd.surface_state = state  # type: ignore[attr-defined]
+    thread = Thread(target=httpd.serve_forever, daemon=True)
+    thread.start()
+    try:
+        host, port = httpd.server_address[:2]
+        conn = HTTPConnection(host, port, timeout=5)
+        conn.request("GET", "/viz/wc1_dated_record.png")
+        resp = conn.getresponse()
+        body = resp.read()
+        assert resp.status == 404
+        assert body == b"not yet available\n"
         conn.close()
     finally:
         httpd.shutdown()
@@ -727,7 +810,8 @@ def test_viz_root_prefers_live_illustrator_ops_over_repo_fallbacks(tmp_path, mon
     (ops / "calibration_weather.png").write_bytes(b"\x89PNG\r\n\x1a\n")
     (ops / "viz_wall_manifest.json").write_text(
         '{"slots":{"shadow_honesty_strip":{"path":"shadow_honesty_strip.png"},'
-        '"calibration_weather":{"path":"calibration_weather.png"}}}',
+        '"calibration_weather":{"path":"calibration_weather.png"},'
+        '"wc1_dated_record":{"path":"wc1_dated_record.png"}}}',
         encoding="utf-8",
     )
     offshoot = tmp_path / "offshoot"

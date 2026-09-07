@@ -8,12 +8,13 @@ Illustrator owns regeneration. The operator surface **renders files that exist**
 |------|-------|---------|
 | `shadow_honesty_strip` | Shadow honesty strip | Live-book paper journal — not settled PnL · not Kalshi demo |
 | `calibration_weather` | Calibration weather | All freezes keep_expert (v1→v3) — not edge established |
+| `wc1_dated_record` | WC1 dated record | FAIL / park unproven · NOT edge |
 
-Permanent badges on both slots:
+Permanent badges on every slot (Phase 1 trio only):
 
 `PHASE 1 OBSERVATION` · `AI: NO CASH IN/OUT` · `PAPER OBSERVATION ONLY`
 
-Hard NO: demo/mock edge language on this wall.
+Hard NO on the WC1 panel language: `banked-edge` / `edge established` / `SETTLE_PENDING`. Demo/mock edge language stays barred on the whole wall.
 
 ## Path precedence
 
@@ -26,12 +27,13 @@ Hardcoded `/workspace/...` is a local operator default only. It will not exist e
 5. Repo-root fallback `docs/viz/golf_offshoot_dryrun_2026-09-07/` (Illustrator **PR #140**, preferred over #138)
 6. `golf-offshoot/data/viz/` (documented hook location; may be empty)
 
-An empty shared `/workspace/illustrator_ops/golf_offshoot/` directory does not hide a fallback that actually has `shadow_honesty_strip.png` / `calibration_weather.png`. The hub renders those PNGs as images. Missing stays `not yet available`. Charts are never invented.
+An empty shared `/workspace/illustrator_ops/golf_offshoot/` directory does not hide a fallback that actually has `shadow_honesty_strip.png` / `calibration_weather.png` / `wc1_dated_record.png`. The hub renders those PNGs as images. Missing stays `not yet available`. Charts are never invented.
 
 Expected filenames at the resolved root:
 
 - `shadow_honesty_strip.png`
 - `calibration_weather.png`
+- `wc1_dated_record.png`
 - optional `viz_wall_manifest.json`
 
 ## Optional manifest
@@ -40,7 +42,8 @@ Expected filenames at the resolved root:
 {
   "slots": {
     "shadow_honesty_strip": {"path": "shadow_honesty_strip.png"},
-    "calibration_weather": {"path": "calibration_weather.png"}
+    "calibration_weather": {"path": "calibration_weather.png"},
+    "wc1_dated_record": {"path": "wc1_dated_record.png"}
   }
 }
 ```
