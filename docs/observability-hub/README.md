@@ -4,8 +4,7 @@ A static, link-shareable window onto what the system has already published: char
 paper ledger summary, the settle banner, the WC1 dated FAIL record, lane badges, and
 last-run honesty. One page, two lanes, no controls.
 
-**Intended live URL** (once Pages is on):
-`https://swellbear.github.io/gated-formalization/observability-hub/`
+**Live URL:** <https://swellbear.github.io/gated-formalization/observability-hub/>
 
 Deep links per lane: append `#golf` or `#learning_lane_15m`.
 
@@ -122,29 +121,30 @@ gitignored and stays unpublished.
 
 ---
 
-## Turning Pages on
+## Pages
 
-Pages is **not** enabled on this repository yet, so the URL above 404s until Founder
-switches it on. The site ships complete and needs no build step.
+Pages is **live**. Current configuration, under Settings → Pages → Build and deployment:
 
-**Settings → Pages → Build and deployment**
+| Setting | Value |
+| --- | --- |
+| Source | Deploy from a branch |
+| Branch | `master` |
+| Folder | `/docs` |
 
-- Source: **Deploy from a branch**
-- Branch: **`master`**, folder: **`/docs`**
-- Save.
-
-That serves `docs/` as the site root, so the hub lands at
-`https://swellbear.github.io/gated-formalization/observability-hub/` and the golf boards
-under `docs/viz/…` resolve without being duplicated.
+That serves `docs/` as the site root, so the hub is at
+<https://swellbear.github.io/gated-formalization/observability-hub/> and the golf boards
+under `docs/viz/…` resolve without being duplicated into this directory. A push to `master`
+republishes; the first build after a push takes a minute or two.
 
 Notes:
 
-- No GitHub Actions workflow is added. Branch-folder publishing needs none, and it keeps
-  this PR thin.
-- `docs/.nojekyll` is included so files are served verbatim rather than run through Jekyll.
-- Everything under `docs/` becomes browsable. The repository is already public, so this
-  exposes nothing new — but it is worth knowing that the method documents and PDFs in
-  `docs/` will be reachable too.
+- No GitHub Actions workflow is involved. Branch-folder publishing needs none, which keeps
+  the setup thin.
+- `docs/.nojekyll` makes Pages serve these files verbatim rather than running them through
+  Jekyll. Every path inside the hub is relative, so moving the Pages source folder would
+  change only the URL to share, not anything in the hub.
+- Everything under `docs/` is browsable, including the method documents and PDFs. The
+  repository is already public, so this exposes nothing new, but it is worth knowing.
 - The page sets `robots: noindex`. It is meant to be shared by link, not found by search.
 - Pages is public for a public repository. Do not treat this URL as private.
 
