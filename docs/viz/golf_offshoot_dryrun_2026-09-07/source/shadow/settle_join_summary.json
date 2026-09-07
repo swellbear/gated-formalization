@@ -1,0 +1,17 @@
+{
+  "path": "/workspace/golf_offshoot_real_exports/shadow/advises.jsonl",
+  "n": 162,
+  "settle_status_all": {
+    "paper_lose": 88,
+    "paper_win": 34,
+    "null": 40
+  },
+  "settle_status_relevant": {
+    "paper_lose": 88,
+    "paper_win": 34,
+    "null": 2
+  },
+  "relevant_n": 124,
+  "SETTLE_PENDING_cleared": false,
+  "note": "backfill from real paper ledger + ESPN official finals + settled paper books; never invented; round-leader markets never_settled"
+}

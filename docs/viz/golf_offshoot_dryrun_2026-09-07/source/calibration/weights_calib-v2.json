@@ -1,0 +1,265 @@
+{
+  "version_id": "golf-offshoot-0.6.0-calib-v2",
+  "created_at": "2026-08-13T19:37:32.646308+00:00",
+  "no_future_leakage": true,
+  "train_event_ids": [
+    "401811951",
+    "401811952",
+    "401811953",
+    "401811954",
+    "401811955",
+    "401811956",
+    "401811957",
+    "401811958"
+  ],
+  "holdout_event_ids": [
+    "401811959",
+    "401811960",
+    "401811961"
+  ],
+  "expert_alpha": {
+    "talent_prior": 0.55,
+    "course_fit": 0.28,
+    "recent_form": 0.22,
+    "short_term_trend": 0.1,
+    "sg_match": 0.32,
+    "weather_suitability": 0.16,
+    "health_setup": 0.4,
+    "narrative_momentum": 0.08,
+    "course_history": 0.18,
+    "driving_distance": 0.12,
+    "driving_accuracy": 0.14,
+    "approach_sg": 0.26,
+    "around_green": 0.12,
+    "putting": 0.14,
+    "scrambling": 0.1,
+    "bogey_avoidance": 0.12,
+    "par5_scoring": 0.08,
+    "wind_history": 0.12,
+    "rest_travel": 0.08,
+    "comparable_player_borrow": 0.1,
+    "venue_cluster_borrow": 0.1,
+    "field_interaction": 0.14,
+    "live_position": 0.85,
+    "live_tee_pairing": 0.06
+  },
+  "calibrated_alpha": {
+    "talent_prior": 0.55,
+    "course_fit": 0.3486477335345605,
+    "recent_form": 0.26797582696300304,
+    "short_term_trend": 0.0,
+    "sg_match": 0.43159122759220214,
+    "weather_suitability": 0.13871719128144672,
+    "health_setup": 0.4,
+    "narrative_momentum": 0.08,
+    "course_history": 0.11310223911502154,
+    "driving_distance": 0.12,
+    "driving_accuracy": 0.14,
+    "approach_sg": 0.025492274858161995,
+    "around_green": 0.14606511140492148,
+    "putting": 0.18505571494662193,
+    "scrambling": 0.1,
+    "bogey_avoidance": 0.12,
+    "par5_scoring": 0.08,
+    "wind_history": 0.12,
+    "rest_travel": 0.08,
+    "comparable_player_borrow": 0.04868005859324312,
+    "venue_cluster_borrow": 0.1,
+    "field_interaction": 0.4381796458565792,
+    "live_position": 0.85,
+    "live_tee_pairing": 0.06
+  },
+  "ard_scale": {
+    "talent_prior": 1.0,
+    "course_fit": 0.0931715484216641,
+    "recent_form": 0.05,
+    "short_term_trend": 0.05,
+    "sg_match": 0.05,
+    "weather_suitability": 0.05,
+    "health_setup": 1.0,
+    "narrative_momentum": 1.0,
+    "course_history": 0.05,
+    "driving_distance": 1.0,
+    "driving_accuracy": 1.0,
+    "approach_sg": 0.05,
+    "around_green": 0.05,
+    "putting": 0.05,
+    "scrambling": 1.0,
+    "bogey_avoidance": 1.0,
+    "par5_scoring": 1.0,
+    "wind_history": 1.0,
+    "rest_travel": 1.0,
+    "comparable_player_borrow": 0.05,
+    "venue_cluster_borrow": 1.0,
+    "field_interaction": 0.05,
+    "live_position": 1.0,
+    "live_tee_pairing": 1.0
+  },
+  "ard_relevance": {
+    "recent_form": 0.0,
+    "short_term_trend": 0.0,
+    "course_history": 0.0,
+    "course_fit": 0.7039095367301366,
+    "weather_suitability": 0.0,
+    "field_interaction": 0.0,
+    "comparable_player_borrow": 0.0,
+    "sg_match": 0.0,
+    "approach_sg": 0.042110117664263175,
+    "around_green": 0.14060271017116263,
+    "putting": 0.11337763543443757
+  },
+  "ard_loo_delta_loss": {
+    "recent_form": -0.00045342411512333536,
+    "short_term_trend": 0.0,
+    "course_history": -6.163727161570542e-05,
+    "course_fit": 0.00041097761438560476,
+    "weather_suitability": 0.0,
+    "field_interaction": -9.475326384117411e-05,
+    "comparable_player_borrow": 0.0,
+    "sg_match": -0.0005853329264769169,
+    "approach_sg": 2.458599407467732e-05,
+    "around_green": 8.209089859859131e-05,
+    "putting": 6.619553750042417e-05
+  },
+  "ard_notes": [
+    "recent_form: near-zero leave-one-out relevance (ARD shrink)",
+    "short_term_trend: near-zero leave-one-out relevance (ARD shrink)",
+    "course_history: near-zero leave-one-out relevance (ARD shrink)",
+    "course_fit: near-zero leave-one-out relevance (ARD shrink)",
+    "weather_suitability: near-zero leave-one-out relevance (ARD shrink)",
+    "field_interaction: near-zero leave-one-out relevance (ARD shrink)",
+    "comparable_player_borrow: near-zero leave-one-out relevance (ARD shrink)",
+    "sg_match: near-zero leave-one-out relevance (ARD shrink)",
+    "approach_sg: near-zero leave-one-out relevance (ARD shrink)",
+    "around_green: near-zero leave-one-out relevance (ARD shrink)",
+    "putting: near-zero leave-one-out relevance (ARD shrink)"
+  ],
+  "bounds": [
+    0.0,
+    1.2
+  ],
+  "bounds_hit": [
+    "short_term_trend"
+  ],
+  "n_evals": 32,
+  "recommendation": "keep_expert",
+  "notes": [
+    "Search is Bayesian in the sense of sampling from an independent-Gaussian prior centered on expert \u03b1, then updating per-coordinate mean/variance (ARD).",
+    "Hold-out events are never used to accept a candidate.",
+    "Fitted keys: recent_form, short_term_trend, course_history, course_fit, weather_suitability, field_interaction, comparable_player_borrow, sg_match, approach_sg, around_green, putting.",
+    "SG category weights are in the search because as-of THROUGH_EVENT coverage is real.",
+    "Hold-out did not clearly beat expert \u03b1; default recommendation is to keep expert weights in production and store the fitted vector for comparison."
+  ],
+  "metrics": {
+    "train_expert": {
+      "n": 1119,
+      "brier": {
+        "make_cut": 0.20731086388259007,
+        "top_20": 0.1302636738812334,
+        "top_10": 0.07413862591332829,
+        "top_5": 0.0414697492102254,
+        "win": 0.0077738282991259185
+      },
+      "logloss": {
+        "make_cut": 0.5847724533699131,
+        "top_20": 0.421669248882365,
+        "top_10": 0.27292732245852647,
+        "top_5": 0.1898560486770411,
+        "win": 0.08835469289522127
+      }
+    },
+    "train_fitted": {
+      "n": 1119,
+      "brier": {
+        "make_cut": 0.2070097406341454,
+        "top_20": 0.13019341143864954,
+        "top_10": 0.0740002277264182,
+        "top_5": 0.04142312489098203,
+        "win": 0.007791477944454135
+      },
+      "logloss": {
+        "make_cut": 0.5841006686167655,
+        "top_20": 0.4217040582689159,
+        "top_10": 0.27333732348628337,
+        "top_5": 0.18994434332823726,
+        "win": 0.0883658910548303
+      }
+    },
+    "holdout_expert": {
+      "n": 438,
+      "brier": {
+        "make_cut": 0.23555508524397414,
+        "top_20": 0.12437248257327622,
+        "top_10": 0.0736025069286974,
+        "top_5": 0.040223318216175356,
+        "win": 0.006888708322835307
+      },
+      "logloss": {
+        "make_cut": 0.6622092555376367,
+        "top_20": 0.4003647955154596,
+        "top_10": 0.2653625366341657,
+        "top_5": 0.17126407726415624,
+        "win": 0.057066905564992394
+      }
+    },
+    "holdout_fitted": {
+      "n": 438,
+      "brier": {
+        "make_cut": 0.23613398841017888,
+        "top_20": 0.12435606366003192,
+        "top_10": 0.07374869404551944,
+        "top_5": 0.04027111782984799,
+        "win": 0.00690260351054002
+      },
+      "logloss": {
+        "make_cut": 0.663548181325324,
+        "top_20": 0.4001746643860747,
+        "top_10": 0.2664695622775923,
+        "top_5": 0.17397458502832308,
+        "win": 0.057074959355194486
+      }
+    }
+  },
+  "weight_hash_expert": "0f362d77c51c0bfe",
+  "weight_hash_calibrated": "ddab51b73b8ecd15",
+  "extra": {
+    "train_names": [
+      "RBC Canadian Open",
+      "U.S. Open",
+      "Travelers Championship",
+      "John Deere Classic",
+      "Genesis Scottish Open",
+      "ISCO Championship",
+      "The Open",
+      "Corales Puntacana Championship"
+    ],
+    "holdout_names": [
+      "3M Open",
+      "Rocket Classic",
+      "Wyndham Championship"
+    ],
+    "skipped": [],
+    "history_completed": 82,
+    "max_train_events": 8,
+    "asof_coverage": {
+      "n_player_starts": 1557.0,
+      "recent_sg": 0.7418111753371869,
+      "long_term_sg": 0.6037251123956326
+    },
+    "search_ran": true,
+    "fitted_keys": [
+      "recent_form",
+      "short_term_trend",
+      "course_history",
+      "course_fit",
+      "weather_suitability",
+      "field_interaction",
+      "comparable_player_borrow",
+      "sg_match",
+      "approach_sg",
+      "around_green",
+      "putting"
+    ]
+  },
+  "search_ran": true
+}
