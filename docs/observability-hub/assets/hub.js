@@ -15,9 +15,9 @@
  *      "not yet available". No chart is invented, ever.
  *   5. Only a chart whose PNG loaded is clickable to enlarge. A
  *      "not yet available" slot has no button, no pointer, and no overlay.
- *   6. The standing Hard NOs are stated once, in the footer strip of index.html.
- *      A chart's manifest badges stay data the validator checks; they are not
- *      redrawn as chips on every card.
+ *   6. The standing Hard NOs are enforced, not displayed. This file refuses the
+ *      affordances outright and validate_hub.py checks the manifest carries the
+ *      posture; neither one paints a badge wall or a footer strip on the page.
  *
  * Keep it dependency-free. No framework, no bundler, no build step.
  */

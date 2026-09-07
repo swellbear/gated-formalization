@@ -17,7 +17,6 @@ from golf_offshoot.learning_lane_15m.paths import LANE_15M, LANE_GOLF
 from golf_offshoot.operator_surface.artifacts import HonestyBundle, load_honesty
 from golf_offshoot.operator_surface.lanes import SELECTOR_FIELD, lane_header_name, parse_lane
 from golf_offshoot.operator_surface.modes import (
-    AI_NO_CASH,
     CASH_BADGE,
     NOT_ARMED,
     PAPER_ONLY,
@@ -77,13 +76,6 @@ SLOT_PLAIN_HELP = {
         "and nothing was proved."
     ),
 }
-
-#: The one place the standing Hard NOs are stated as UI chrome. Enforcement lives in
-#: ``modes``/``runner``; the page says it once, quietly, instead of on every card.
-HARD_NO_STRIP = (
-    f"Trading {NOT_ARMED} · {PAPER_ONLY} · {AI_NO_CASH} — {CASH_BADGE} · "
-    "no Kalshi account, key, or wallet scope"
-)
 
 #: (POST action value, button label, one-line help). POST values stay unchanged.
 ACTION_BUTTONS = (
@@ -229,7 +221,6 @@ def _viz_lightbox_html(viz: VizWall) -> str:
         '<div class="lightbox-bar">'
         '<span class="lightbox-title" id="viz-lightbox-title"></span>'
         f'<span class="lightbox-hint" id="viz-lightbox-hint">{html.escape(ZOOM_HINT_FIT)}</span>'
-        f'<span class="badge">{html.escape(CASH_BADGE)}</span>'
         '<button type="button" class="lightbox-close" id="viz-lightbox-close">Close (Esc)</button>'
         "</div>"
         '<img id="viz-lightbox-img" src="" alt=""/>'
@@ -332,7 +323,7 @@ def render_html(surface: dict) -> str:
     lane = parse_lane(surface.get("lane"))
     wall_class = "mock" if walls.is_mock else "ops"
     # A barred MOCK/DEMO path still states itself in full. The operating path does not:
-    # it is an observation page, and the standing Hard NOs are the one footer strip.
+    # it is an observation page, and the standing Hard NOs are enforced, not displayed.
     wall_lines = "".join(f"<div>{html.escape(line)}</div>" for line in walls.lines) if walls.is_mock else ""
     lane_line = f"Active lane: {lane_header_name(lane)}"
     if lane == LANE_15M:
@@ -363,10 +354,6 @@ def render_html(surface: dict) -> str:
             "<h2>Paper observation (not trading)</h2>"
             '<p class="help">A pretend bankroll kept so the model can be scored later. '
             "No ticket is placed, no money moves, and nothing here needs approval.</p>"
-            f'<p class="loud">{html.escape(PAPER_ONLY)} · Trading {html.escape(NOT_ARMED)} · '
-            f"{html.escape(CASH_BADGE)}</p>"
-            '<p class="help">Paper bankroll auto-apply is paper observation only — it is '
-            "not trading armed. No deposit, withdraw, transfer, cash-out, or one-tap bet control exists here.</p>"
             f"<pre>{html.escape(last.paper)}</pre>"
             "</section>"
         )
@@ -432,7 +419,6 @@ def render_html(surface: dict) -> str:
  header h1 {{ margin: 0; font-size: 26px; letter-spacing: 1px; }}
  header div {{ font-size: 14px; margin-top: 8px; }}
  header .lane-line {{ font-size: 13px; opacity: 0.85; margin-top: 6px; }}
- .badge {{ display: inline-block; margin: 4px 6px 0 0; padding: 3px 8px; background: #0e1f29; color: #f2e27a; font-size: 12px; font-weight: 700; }}
  main {{ padding: 0 20px 56px; max-width: 1100px; margin: 0 auto; }}
  form.row {{ display: flex; flex-wrap: wrap; gap: 8px; align-items: end; margin: 4px 0 10px; }}
  form.lane-form fieldset {{ border: 1px solid #c9c2b2; padding: 8px 10px; }}
@@ -445,7 +431,6 @@ def render_html(surface: dict) -> str:
  button.warn {{ background: #7a0c0c; }}
  pre {{ white-space: pre-wrap; background: #fff; border: 1px solid #c9c2b2; padding: 12px; font-size: 13px; }}
  .missing {{ background: #f8e0a0; padding: 10px; border: 1px solid #c9a227; }}
- .hard-no {{ position: sticky; bottom: 0; background: #1b1b1b; color: #d8d2c2; padding: 6px 16px; font-size: 12px; }}
  .settle {{ background: #7a0c0c; color: #fff; padding: 12px 20px; font-size: 15px; }}
  .settle.clear {{ background: #14532d; }}
  .settle .tally {{ display: block; margin-top: 4px; font-size: 13px; opacity: 0.9; }}
@@ -493,10 +478,8 @@ def render_html(surface: dict) -> str:
   </section>
   <section class="panel">
     <h2>What you can do here</h2>
-    <p class="help">Five buttons, all read-and-recompute. Phase 1 observation only. Trading is
-    {html.escape(NOT_ARMED)}. Paper bankroll auto-apply on live and on all-three is
-    {html.escape(PAPER_ONLY)} — not trading armed. There is no deposit, withdraw, transfer,
-    cash-out, or one-tap bet control on this page.</p>
+    <p class="help">Five buttons, all read-and-recompute. Each one re-reads files or re-runs a
+    calculation; none of them places anything.</p>
     {actions}
   </section>
   <section class="panel">
@@ -506,7 +489,6 @@ def render_html(surface: dict) -> str:
   {paper_html}
   {lane_body}
 </main>
-<div class="hard-no">{html.escape(HARD_NO_STRIP)}</div>
 {viz_lightbox}
 <script>
 (function(){{

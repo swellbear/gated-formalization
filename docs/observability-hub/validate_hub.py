@@ -31,8 +31,8 @@ NOT_YET = "not yet available"
 CANONICAL_LANES = ("golf", "learning_lane_15m")
 LANE_BADGE = {"golf": "PHASE 1 OBSERVATION", "learning_lane_15m": "LEARNING LANE"}
 
-# The standing posture. Hard-coded in index.html's quiet Hard-NO strip so no export
-# can suppress it; the manifest must agree with it rather than replace it.
+# The standing posture. It is not printed on the page: it is enforced here, against
+# the manifest, and by the affordance checks below. An export must carry it verbatim.
 REQUIRED_GLOBAL_BADGES = (
     "READ ONLY",
     "TRADING NOT ARMED",
@@ -40,15 +40,33 @@ REQUIRED_GLOBAL_BADGES = (
     "AI: NO CASH IN/OUT",
 )
 
-# Strings index.html must keep carrying, whatever the data feed says. Presence is what
-# is enforced, not loudness: one quiet strip satisfies this, a badge wall is not needed.
+# The cash wall, and the topics the global Hard NO list has to spell out. Checked
+# against global.hard_nos plus global.wall_lines, which are data, not chrome.
+REQUIRED_GLOBAL_CASH_LINE = "AI NEVER DEPOSITS / WITHDRAWS / TRANSFERS CASH"
+REQUIRED_GLOBAL_HARD_NO_TOPICS = (
+    "deposit",
+    "withdraw",
+    "transfer",
+    "trade arming",
+    "cash movement",
+    "kalshi",
+)
+
+# Strings index.html must keep carrying, whatever the data feed says. The posture is
+# deliberately absent: the reader is not lectured, the export is.
 REQUIRED_STATIC_STRINGS = (
+    "READ ONLY",
+    "127.0.0.1:8765",
+)
+
+# A page element reciting several posture strings at once is a Hard-NO strip growing
+# back. Enforcement belongs in this file and in the manifest, not in the chrome.
+POSTURE_STRINGS = (
     "READ ONLY",
     "TRADING NOT ARMED",
     "PAPER OBSERVATION ONLY",
     "AI: NO CASH IN/OUT",
-    "AI NEVER DEPOSITS / WITHDRAWS / TRANSFERS CASH",
-    "127.0.0.1:8765",
+    REQUIRED_GLOBAL_CASH_LINE,
 )
 
 # Markup that would make the page a control surface. Checked against the whole
@@ -463,9 +481,14 @@ def check_static_site(report: Report) -> None:
             report.error("index.html", f"contains {needle!r} -- {why}")
     for needle in REQUIRED_STATIC_STRINGS:
         if needle not in html:
+            report.error("index.html", f"the static markup must keep carrying {needle!r}")
+    for number, line in enumerate(html.splitlines(), start=1):
+        if sum(needle in line for needle in POSTURE_STRINGS) > 1:
             report.error(
                 "index.html",
-                f"the static Hard-NO strip must keep carrying {needle!r}",
+                f"line {number} recites the standing posture as page chrome; the "
+                "posture is enforced against the manifest and by this validator, "
+                "and must not come back as a Hard-NO strip",
             )
 
     for asset in sorted((HUB_DIR / "assets").glob("*")):
@@ -554,11 +577,21 @@ def main() -> int:
         if list(badges) != list(REQUIRED_GLOBAL_BADGES):
             report.error(
                 "global.badges",
-                "must match the static wall in index.html exactly: "
-                f"{list(REQUIRED_GLOBAL_BADGES)}",
+                f"must carry the standing posture exactly: {list(REQUIRED_GLOBAL_BADGES)}",
             )
-        if not global_block.get("hard_nos"):
+        hard_nos = global_block.get("hard_nos") or []
+        if not hard_nos:
             report.error("global.hard_nos", "the Hard NO list must be present")
+        wall_lines = global_block.get("wall_lines") or []
+        posture = "\n".join(str(item) for item in list(hard_nos) + list(wall_lines))
+        if REQUIRED_GLOBAL_CASH_LINE not in posture:
+            report.error(
+                "global",
+                f"hard_nos/wall_lines must still state {REQUIRED_GLOBAL_CASH_LINE!r}",
+            )
+        for topic in REQUIRED_GLOBAL_HARD_NO_TOPICS:
+            if topic not in posture.lower():
+                report.error("global.hard_nos", f"must still refuse {topic!r}")
 
     lanes = manifest.get("lanes")
     if not isinstance(lanes, list) or not lanes:

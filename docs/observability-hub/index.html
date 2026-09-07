@@ -13,17 +13,15 @@
 <!--
   READ-ONLY VIEWER. See README.md in this directory before changing anything.
 
-  The Hard-NO strip in the footer is static on purpose. It is not read from
-  data/manifest.json, so no export can ever suppress it, and validate_hub.py
-  fails if those strings go missing. Do not move them into the manifest.
-
-  Hard NOs, enforced here and in assets/hub.js:
+  Hard NOs, enforced by assets/hub.js and validate_hub.py:
     no ingest/live/shadow/loop/refresh control, no paper deposit/withdraw/transfer,
     no trade arming, no one-tap bet, no Kalshi keys, no cash movement UI,
     no API keys or secrets, and missing charts stay "not yet available".
 
-  Enforcement is not chrome: the page states the posture once, quietly, instead of
-  as a badge wall repeated on every card.
+  Enforcement is not chrome. The page carries no posture strip: those strings are
+  asserted against data/manifest.json's global block and against the markup itself
+  (validate_hub.py fails on any control, cash, or secret affordance). Do not add a
+  Hard-NO banner back to the page.
 -->
 
 <a class="skip" href="#lane-panel">Skip to lane view</a>
@@ -114,7 +112,6 @@
 </div>
 
 <footer class="foot">
-  <p class="foot-hard-no">READ ONLY · TRADING NOT ARMED · PAPER OBSERVATION ONLY · AI: NO CASH IN/OUT · AI NEVER DEPOSITS / WITHDRAWS / TRANSFERS CASH</p>
   <p>
     Missing charts stay <em>not yet available</em> and are never invented. Edge is not established
     and is not claimed. The control surface is the operator's local shell at
