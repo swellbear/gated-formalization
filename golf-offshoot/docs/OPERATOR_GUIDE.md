@@ -287,7 +287,7 @@ Open the latest PDF from `golf-offshoot/data/exports/` in Edge, Chrome, or Adobe
 
 ### Shadow journaling
 
-Operating runs with strategy enabled and `persist=True` append advises to `data/shadow/advises.jsonl` when the layer emits `new_bet` / add / reduce / exit / reallocate. `hold` and `no_action` are not logged.
+Operating runs with strategy enabled and `persist=True` append advises to `data/shadow/advises.jsonl` when the layer emits `new_bet` / add / reduce / exit / reallocate. `hold` and `no_action` are not logged. The honesty adapter joins `settle_status` onto those rows from official ESPN / paper-ledger evidence; it does not invent settles.
 
 ```bash
 python -m golf_offshoot shadow
@@ -406,7 +406,7 @@ Suggested stake is fractional Kelly on a **range-haircut** probability, times qu
 
 ### What it logs
 
-Operating-path strategy advises: `new_bet`, `add`, `reduce`, `exit`, `reallocate`. Each line includes tournament, player, market, posted decimal (current coupon, never opening), model p + range, suggested stake, mode, run mode, reason, odds as-of, and `never_auto_bet=true`.
+Operating-path strategy advises: `new_bet`, `add`, `reduce`, `exit`, `reallocate`. Each line includes tournament, player, market, posted decimal (current coupon, never opening), model p + range, suggested stake, mode, run mode, reason, odds as-of, and `never_auto_bet=true`. Optional join fields: `settle_status` (`paper_win` / `paper_lose` / `never_settled`), `settled_at`, `settle_source`.
 
 Demo/mock runs do **not** write here.
 
@@ -418,7 +418,12 @@ Demo/mock runs do **not** write here.
 
 ```bash
 python -m golf_offshoot shadow
+python -m golf_offshoot shadow --artifact-root /workspace/golf_offshoot_real_exports
+python -m golf_offshoot shadow --join-settles
+python -m golf_offshoot shadow --backfill-settles
 ```
+
+The honesty adapter joins `settle_status` from lived paper-ledger tickets, official ESPN finals (exactly one winner), or a settled lived paper book's winner name (`win` only). Missing/unofficial stays `SETTLE_PENDING`. Official but unscoreable (unknown finish, round-leader) is `never_settled`. Demo/mock and Kalshi fills cannot invent settles. `--backfill-settles` writes `paper_win` / `paper_lose` only when that join already knows a real settle.
 
 ### How to learn without fooling yourself
 
@@ -585,7 +590,7 @@ Missing/empty banners (never silent demo fill):
 
 - shadow file missing → `SHADOW_MISSING` (not zero-edge)
 - empty journal → `SHADOW_EMPTY`
-- no `settle_status` yet → `SETTLE_PENDING`
+- no `paper_win`/`paper_lose` yet on every relevant advise (`win` / `top_5` / `top_10` / `top_20` / `make_cut`) → `SETTLE_PENDING` (also if any relevant row is `never_settled` or missing `settle_status`). Clears only when every relevant advise is `paper_win` or `paper_lose` from official ESPN / paper-ledger / settled lived paper-book evidence. Not Kalshi. Not demo.
 - no `weights_calib-v*.json` → `CALIB_MISSING`
 - no real LIVE table → `LIVE_TABLE_MISSING`
 - empty field / no posted odds / no paper book possible → `PAPER_EMPTY_FIELD` (not a demo book; not a silent demo fill)
@@ -623,7 +628,7 @@ The shell does not add Kalshi auth, API trade keys, wallet/bank scopes, NFL/NBA,
 | **line_role** | `current` vs `opening` on a quote. |
 | **Consider / pass** | Decision-layer advice. Never execute. |
 | **new_bet / hold / reduce / exit / add / reallocate** | Strategy suggestions. Advisory. |
-| **Shadow journal** | JSONL paper log of some strategy advises. Not a bankroll. |
+| **Shadow journal** | JSONL paper log of some strategy advises. Not a bankroll. Settle fields are a join, not a fill. |
 | **Operating path** | Real ingest/live/calibrate/pressure-test. No mocks. |
 | **keep_expert** | Calibration recommendation: do not put fitted weights into production. |
 | **Hole-dampen** | Live leaderboard evidence scaled by holes completed so early boards cannot dominate. |

@@ -9,6 +9,12 @@ from datetime import datetime
 from pathlib import Path
 from typing import Any
 
+from golf_offshoot.audit.shadow_settle import (
+    join_shadow_settles,
+    normalize_settle_status,
+    settle_banner_for_rows,
+    settle_counts,
+)
 from golf_offshoot.operator_surface.modes import is_mock_or_demo_text
 from golf_offshoot.operator_surface.paths import ResolvedRoots, resolve_roots, safe_existing_file
 from golf_offshoot.operating import format_inventory
@@ -55,6 +61,7 @@ class ShadowHonesty:
     rows: list[dict[str, Any]] = field(default_factory=list)
     missing_fields: list[str] = field(default_factory=list)
     settle_banner: str | None = None
+    settle_counts: dict[str, int] = field(default_factory=dict)
     text: str = ""
     barred_mock: bool = False
 
@@ -120,6 +127,7 @@ def load_honesty(
     shadow_path: Path | None = None,
     environ: dict[str, str] | None = None,
     event_id: str | None = None,
+    inspect_events=None,
 ) -> HonestyBundle:
     roots = resolve_roots(
         artifact_root=artifact_root,
@@ -129,7 +137,12 @@ def load_honesty(
     )
     return HonestyBundle(
         roots=roots,
-        shadow=load_shadow_honesty(roots.shadow_path, source=roots.shadow_source),
+        shadow=load_shadow_honesty(
+            roots.shadow_path,
+            source=roots.shadow_source,
+            artifact_root=roots.artifact_root,
+            inspect_events=inspect_events,
+        ),
         calibration=load_calibration_honesty(roots.artifact_root),
         ranked=load_ranked_live_export(roots.artifact_root, event_id=event_id),
         leftover=load_leftover_view(roots.artifact_root, event_id=event_id),
@@ -137,7 +150,13 @@ def load_honesty(
     )
 
 
-def load_shadow_honesty(path: Path, *, source: str = "artifact_root") -> ShadowHonesty:
+def load_shadow_honesty(
+    path: Path,
+    *,
+    source: str = "artifact_root",
+    artifact_root: Path | None = None,
+    inspect_events=None,
+) -> ShadowHonesty:
     if not path.is_file():
         return ShadowHonesty(
             status=SHADOW_MISSING,
@@ -183,8 +202,13 @@ def load_shadow_honesty(path: Path, *, source: str = "artifact_root") -> ShadowH
             missing_fields=missing,
             text=f"{SHADOW_EMPTY}: journal exists at {path} but has no advise rows.",
         )
-    settle_missing = any(_settle_status(row) is None for row in rows)
-    settle = SETTLE_PENDING if settle_missing else None
+    rows = join_shadow_settles(
+        rows,
+        artifact_root=artifact_root,
+        inspect_events=inspect_events,
+    )
+    settle = settle_banner_for_rows(rows)
+    counts = settle_counts(rows)
     return ShadowHonesty(
         status="SHADOW_OK",
         path=path,
@@ -192,27 +216,45 @@ def load_shadow_honesty(path: Path, *, source: str = "artifact_root") -> ShadowH
         rows=rows,
         missing_fields=missing,
         settle_banner=settle,
-        text=_format_shadow_rows(rows, settle=settle, missing=missing),
+        settle_counts=counts,
+        text=_format_shadow_rows(rows, settle=settle, missing=missing, counts=counts),
     )
 
 
 def _settle_status(row: dict[str, Any]) -> str | None:
-    raw = row.get("settle_status")
-    if raw is None or raw == "":
-        return None
-    value = str(raw).strip()
-    if value in SETTLE_STATUS_VALUES:
-        return value
-    return None
+    return normalize_settle_status(row.get("settle_status"))
 
 
-def _format_shadow_rows(rows: list[dict[str, Any]], *, settle: str | None, missing: list[str]) -> str:
+def _format_shadow_rows(
+    rows: list[dict[str, Any]],
+    *,
+    settle: str | None,
+    missing: list[str],
+    counts: dict[str, int] | None = None,
+) -> str:
     lines = [
         "SHADOW JOURNAL (paper observation only — never auto-bet)",
         f"n={len(rows)}",
     ]
+    counts = counts or settle_counts(rows)
+    lines.append(
+        "settle join: relevant="
+        f"{counts.get('relevant', 0)} paper_win={counts.get('paper_win', 0)} "
+        f"paper_lose={counts.get('paper_lose', 0)} never_settled={counts.get('never_settled', 0)} "
+        f"missing={counts.get('missing', 0)}"
+    )
     if settle:
-        lines.append(f"{settle}: settlement fields are not on these rows yet. Honesty strip is not settled PnL.")
+        lines.append(
+            f"{settle}: SETTLE_PENDING clears only when every relevant advise "
+            "(win / top_5 / top_10 / top_20 / make_cut) is paper_win or paper_lose. "
+            "never_settled and missing settle_status keep the weekly operating claim blocked. "
+            "Honesty strip is not settled cash PnL."
+        )
+    else:
+        lines.append(
+            "settle banner off: every relevant advise is paper_win or paper_lose "
+            "from official ESPN / paper-ledger / settled lived paper-book evidence."
+        )
     for row in rows[-40:]:
         posted = row.get("posted_decimal")
         posted_s = f"{float(posted):.2f}" if isinstance(posted, (int, float)) else "n/a"
@@ -223,10 +265,16 @@ def _format_shadow_rows(rows: list[dict[str, Any]], *, settle: str | None, missi
         rng = ""
         if isinstance(lo, (int, float)) and isinstance(hi, (int, float)):
             rng = f" [{float(lo):.3f},{float(hi):.3f}]"
+        settle_s = _settle_status(row) or "SETTLE_PENDING"
+        source = row.get("settle_source") or ""
+        source_s = f" source={source}" if source else ""
+        settled_at = row.get("settled_at") or ""
+        settled_s = f" settled_at={settled_at}" if settled_at else ""
         lines.append(
             f"{row.get('timestamp')} {row.get('mode')} {row.get('action_kind')} "
             f"{row.get('player')} {row.get('market')} posted={posted_s} model_p={p_s}{rng} "
-            f"stake={row.get('suggested_stake')} odds_as_of={row.get('odds_as_of')}"
+            f"stake={row.get('suggested_stake')} odds_as_of={row.get('odds_as_of')} "
+            f"settle_status={settle_s}{settled_s}{source_s}"
         )
         lines.append(
             f"    {row.get('tournament')} id={row.get('tournament_id')} "
