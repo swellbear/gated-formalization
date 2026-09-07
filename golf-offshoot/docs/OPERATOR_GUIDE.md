@@ -559,12 +559,12 @@ python -m golf_offshoot shell --print --event 401811963
 
 | Path | Role |
 |------|------|
-| `golf-offshoot/scripts/windows/Open-Phase1-Hub.bat` | Starts `python -m golf_offshoot shell --host 127.0.0.1 --port 8765` and opens the local hub |
+| `golf-offshoot/scripts/windows/Open-Phase1-Hub.bat` | Starts `python -m golf_offshoot shell --host 127.0.0.1 --port 8765` and opens `http://127.0.0.1:8765` in your default browser (the console is not the hub) |
 | `golf-offshoot/scripts/windows/Install-Desktop-Shortcut.bat` | Double-click once → writes `Desktop\Golf Offshoot Phase 1 Hub.lnk` |
 | `golf-offshoot/scripts/windows/Install-Desktop-Shortcut.ps1` | Same installer, called by the `.bat` |
 | `golf-offshoot/scripts/open-phase1-hub.sh` | Optional Unix helper |
 
-The hub binds **127.0.0.1:8765**. Tailscale / phone remote UI is **not required** and is **not** in this shell. Phone is notify-first (`NTFY_TOPIC` on run completion). A later thin remote view is out of scope.
+The hub binds **127.0.0.1:8765**. Start opens that URL in your default browser — the console window only keeps the process alive. Pass `--no-browser` to skip. After `git pull` or honesty/viz artifact writes, the hub reloads itself (soft UI refresh for artifacts; clean re-exec when git tip or hub modules change) so you do not restart by hand. Tailscale / phone remote UI is **not required** and is **not** in this shell. Phone is notify-first (`NTFY_TOPIC` on run completion). A later thin remote view is out of scope.
 
 The shell can pin an ESPN event, trigger `ingest` → `live` → `shadow`, load an existing real export, and show run status. Shell `live` / `loop` **auto-applies strategy advises to the paper book / paper bankroll** using the existing `maybe_apply_paper` path. If no observation paper book exists, the shell locks one so apply can run. That is **paper observation only**. It is **not** trading armed. The shell does **not** expose user-facing `paper-deposit` / `paper-withdraw`, cash-out quotes, or cash transfer controls.
 

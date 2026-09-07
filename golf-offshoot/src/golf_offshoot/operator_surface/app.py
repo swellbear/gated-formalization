@@ -5,7 +5,9 @@ from __future__ import annotations
 import argparse
 import html
 import json
+import os
 import sys
+import threading
 import webbrowser
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 from pathlib import Path
@@ -14,7 +16,17 @@ from urllib.parse import parse_qs, urlparse
 from golf_offshoot.operator_surface.artifacts import HonestyBundle, load_honesty
 from golf_offshoot.operator_surface.modes import CASH_BADGE, NOT_ARMED, PAPER_ONLY, build_mode_walls
 from golf_offshoot.operator_surface.notify import notify_run_complete
-from golf_offshoot.operator_surface.paths import ResolvedRoots, resolve_roots, safe_existing_file
+from golf_offshoot.operator_surface.paths import resolve_roots, safe_existing_file
+from golf_offshoot.operator_surface.reload import (
+    DEFAULT_DEBOUNCE_S,
+    DEFAULT_POLL_S,
+    REEXEC_CODE,
+    HubWatcher,
+    collect_snapshot,
+    hub_child_command,
+    is_hub_child,
+    supervise_hub_child,
+)
 from golf_offshoot.operator_surface.runner import (
     OperatorSafetyError,
     RunRecord,
@@ -219,6 +231,19 @@ def render_html(surface: dict) -> str:
   {''.join(viz_blocks)}
 </main>
 <div class="cash">{html.escape(CASH_BADGE)}</div>
+<script>
+(function(){{
+  var gen = null;
+  function tick(){{
+    fetch('/api/watch', {{cache:'no-store'}}).then(function(r){{return r.json();}}).then(function(s){{
+      if (gen === null) {{ gen = s.generation; return; }}
+      if (s.generation !== gen) location.reload();
+    }}).catch(function(){{}});
+  }}
+  setInterval(tick, 3000);
+  tick();
+}})();
+</script>
 </body>
 </html>
 """
@@ -244,6 +269,9 @@ class OperatorHandler(BaseHTTPRequestHandler):
             return
         if parsed.path == "/api/state":
             self._send(200, "application/json", json.dumps(_public_state(self._state()["surface"])).encode("utf-8"))
+            return
+        if parsed.path == "/api/watch":
+            self._send(200, "application/json", json.dumps(_watch_state(self._state())).encode("utf-8"))
             return
         if parsed.path == "/export/html":
             honesty: HonestyBundle = self._state()["surface"]["honesty"]
@@ -347,12 +375,121 @@ def _public_state(surface: dict) -> dict:
     }
 
 
+def _watch_state(state: dict) -> dict:
+    return {
+        "generation": int(state.get("generation") or 0),
+        "kind": str(state.get("reload_kind") or "ok"),
+    }
+
+
+def hub_url(host: str, port: int) -> str:
+    return f"http://{host}:{port}/"
+
+
+def open_hub_browser(url: str) -> bool:
+    """Open the hub in the default browser. Windows prefers os.startfile."""
+    if sys.platform == "win32":
+        startfile = getattr(os, "startfile", None)
+        if callable(startfile):
+            try:
+                startfile(url)
+                return True
+            except OSError:
+                pass
+    try:
+        return bool(webbrowser.open(url, new=0, autoraise=True))
+    except Exception:
+        return False
+
+
+def maybe_open_hub_browser(url: str, *, enabled: bool) -> bool:
+    if not enabled:
+        return False
+    print(f"Opening hub in your default browser: {url}")
+    print("This console keeps the hub running — it is not the hub UI.")
+    return open_hub_browser(url)
+
+
+def rebuild_surface(state: dict, *, last_run: RunRecord | None | object = ...) -> None:
+    keep = state["surface"].get("last_run") if last_run is ... else last_run
+    state["surface"] = build_surface(
+        event_id=state.get("event_id") or None,
+        artifact_root=state.get("artifact_root"),
+        viz_root=state.get("viz_root"),
+        last_run=keep,
+    )
+
+
+class _HubServer(ThreadingHTTPServer):
+    allow_reuse_address = True
+
+
+def _watch_loop(httpd: ThreadingHTTPServer, state: dict, stop: threading.Event) -> None:
+    poll_s = float(os.environ.get("GOLF_OFFSHOOT_HUB_POLL") or DEFAULT_POLL_S)
+    debounce_s = float(os.environ.get("GOLF_OFFSHOOT_HUB_DEBOUNCE") or DEFAULT_DEBOUNCE_S)
+
+    def _snap():
+        return collect_snapshot(
+            roots=resolve_roots(
+                artifact_root=state.get("artifact_root"),
+                viz_root=state.get("viz_root"),
+            )
+        )
+
+    watcher = HubWatcher(debounce_s=debounce_s, snapshot_fn=_snap)
+    watcher.seed()
+    while not stop.wait(max(0.2, poll_s)):
+        decision = watcher.poll()
+        if decision.kind == "none":
+            continue
+        if decision.should_reexec:
+            state["reload_kind"] = "code"
+            state["generation"] = int(state.get("generation") or 0) + 1
+            sys.stderr.write("shell: git/code updated; restarting hub\n")
+            httpd.shutdown()
+            return
+        if decision.should_soft_reload:
+            rebuild_surface(state)
+            state["reload_kind"] = "artifacts"
+            state["generation"] = int(state.get("generation") or 0) + 1
+            sys.stderr.write("shell: artifacts updated; UI will refresh\n")
+
+
 def serve(
     *,
     host: str = DEFAULT_HOST,
     port: int = DEFAULT_PORT,
     event_id: str | None = None,
-    open_browser: bool = False,
+    open_browser: bool = True,
+    artifact_root: Path | None = None,
+    viz_root: Path | None = None,
+) -> int:
+    if not is_hub_child():
+        cmd = hub_child_command(
+            host=host,
+            port=port,
+            event_id=event_id,
+            open_browser=open_browser,
+            artifact_root=artifact_root,
+            viz_root=viz_root,
+        )
+        return supervise_hub_child(cmd)
+    return run_http_server(
+        host=host,
+        port=port,
+        event_id=event_id,
+        open_browser=open_browser,
+        artifact_root=artifact_root,
+        viz_root=viz_root,
+    )
+
+
+def run_http_server(
+    *,
+    host: str = DEFAULT_HOST,
+    port: int = DEFAULT_PORT,
+    event_id: str | None = None,
+    open_browser: bool = True,
     artifact_root: Path | None = None,
     viz_root: Path | None = None,
 ) -> int:
@@ -361,20 +498,32 @@ def serve(
         "artifact_root": artifact_root,
         "viz_root": viz_root,
         "odds_book": "auto",
+        "generation": 0,
+        "reload_kind": "ok",
         "surface": build_surface(event_id=event_id, artifact_root=artifact_root, viz_root=viz_root),
     }
-    httpd = ThreadingHTTPServer((host, port), OperatorHandler)
+    httpd = _HubServer((host, port), OperatorHandler)
     httpd.surface_state = state  # type: ignore[attr-defined]
-    url = f"http://{host}:{port}/"
+    url = hub_url(host, port)
     print(build_mode_walls(live_data=True).render_text())
     print(f"operator shell {url}")
     print(f"PHASE 1 OBSERVATION. Trading {NOT_ARMED}. {PAPER_ONLY}. {CASH_BADGE}")
-    if open_browser:
-        webbrowser.open(url)
+    maybe_open_hub_browser(url, enabled=open_browser)
+    stop = threading.Event()
+    watcher = threading.Thread(target=_watch_loop, args=(httpd, state, stop), daemon=True, name="hub-watch")
+    watcher.start()
     try:
         httpd.serve_forever()
     except KeyboardInterrupt:
         print("shell stopped")
+        stop.set()
+        httpd.shutdown()
+        return 0
+    finally:
+        stop.set()
+        httpd.server_close()
+    if state.get("reload_kind") == "code":
+        return REEXEC_CODE
     return 0
 
 
@@ -389,7 +538,11 @@ def main(argv: list[str] | None = None) -> int:
         action="store_true",
         help="write a Desktop launcher for the Phase 1 hub and exit",
     )
-    parser.add_argument("--no-browser", action="store_true")
+    parser.add_argument(
+        "--no-browser",
+        action="store_true",
+        help="do not open the default browser (the browser is the hub UI)",
+    )
     parser.add_argument("--artifact-root", default="", help="override data/artifact SoT root")
     parser.add_argument("--viz-root", default="", help="override Illustrator viz-wall root")
     args = parser.parse_args(argv)
@@ -416,3 +569,7 @@ def main(argv: list[str] | None = None) -> int:
         artifact_root=artifact,
         viz_root=viz,
     )
+
+
+if __name__ == "__main__":
+    sys.exit(main())
