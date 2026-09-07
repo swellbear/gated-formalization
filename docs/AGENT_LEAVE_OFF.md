@@ -11,13 +11,14 @@ Chat transcripts are not. A later Grok / Cursor cloud agent will not see a prior
 | Local Windows tree for this interim | `C:\Users\bearh\gated-formalization-master-hub` |
 | Do **not** treat as SoT | `C:\Users\bearh\gated-formalization` on `cursor/eia-window-job2` (stale + dirty) |
 | Active track | `learning_lane_15m` (KXBTC15M paper loop) + Phase 1 desktop hub |
+| Crew | `docs/agents/` — CoS routes; desk is live board |
 | Trading | **NOT ARMED** |
 
 ## Required closeout (every session)
 
 Before stopping, the agent that just worked **must**:
 
-1. Update the table and sections below so they match **committed** truth.
+1. Update this file **and** `docs/agents/DESK.md` so they match **committed** truth.
 2. Commit this file with the work (or a docs-only follow-up if the work already landed).
 3. Push the branch / open or update the PR so `master` (or the open PR) is what the next bot clones.
 
@@ -57,7 +58,7 @@ Golf Phase 1 (do not reopen unless asked):
 
 ## Next (safe, in order)
 
-1. Refresh the 15m Pages manifest after Kalshi posts `result` on `KXBTC15M-26SEP071500-00`. Stay `SETTLE_PENDING` until then.
+1. Founder GO on the desk: run `lane-15m` → `systems` → `validator` **only if** Kalshi posted `result` on `KXBTC15M-26SEP071500-00`. Else stay `SETTLE_PENDING`.
 2. Only if asked: leftovers in `LEARNING_LANE_15M.md` (Digestor digest, 15m viz wall, weekly honesty, expand past `KXBTC15M`, CFB websocket observe-only).
 
 ## Hard NOs
