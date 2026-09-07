@@ -15,8 +15,14 @@ from urllib.parse import parse_qs, urlparse
 
 from golf_offshoot.learning_lane_15m.paths import LANE_15M, LANE_GOLF
 from golf_offshoot.operator_surface.artifacts import HonestyBundle, load_honesty
-from golf_offshoot.operator_surface.lanes import SELECTOR_FIELD, parse_lane
-from golf_offshoot.operator_surface.modes import CASH_BADGE, NOT_ARMED, PAPER_ONLY, build_mode_walls
+from golf_offshoot.operator_surface.lanes import SELECTOR_FIELD, lane_header_name, parse_lane
+from golf_offshoot.operator_surface.modes import (
+    AI_NO_CASH,
+    CASH_BADGE,
+    NOT_ARMED,
+    PAPER_ONLY,
+    build_mode_walls,
+)
 from golf_offshoot.operator_surface.notify import notify_run_complete
 from golf_offshoot.operator_surface.paths import resolve_roots, safe_existing_file
 from golf_offshoot.operator_surface.reload import (
@@ -71,6 +77,13 @@ SLOT_PLAIN_HELP = {
         "and nothing was proved."
     ),
 }
+
+#: The one place the standing Hard NOs are stated as UI chrome. Enforcement lives in
+#: ``modes``/``runner``; the page says it once, quietly, instead of on every card.
+HARD_NO_STRIP = (
+    f"Trading {NOT_ARMED} · {PAPER_ONLY} · {AI_NO_CASH} — {CASH_BADGE} · "
+    "no Kalshi account, key, or wallet scope"
+)
 
 #: (POST action value, button label, one-line help). POST values stay unchanged.
 ACTION_BUTTONS = (
@@ -184,13 +197,11 @@ def _viz_wall_html(viz: VizWall) -> str:
             body = f'<p class="missing">{html.escape(slot.note)}</p>'
         plain = SLOT_PLAIN_HELP.get(slot.slot_id)
         plain_html = f'<p class="plain">{html.escape(plain)}</p>' if plain else ""
-        slot_badges = "".join(f'<span class="badge">{html.escape(b)}</span>' for b in slot.badges)
         cards.append(
             f'<section class="viz" id="viz-slot-{html.escape(slot.slot_id)}">'
             f"<h3>{html.escape(slot.title)}</h3>"
             f"{plain_html}"
             f'<p class="sub">{html.escape(slot.subline)}</p>'
-            f'<p class="badges">{slot_badges}</p>'
             f"{body}</section>"
         )
     trailer = ""
@@ -320,12 +331,12 @@ def render_html(surface: dict) -> str:
     event = html.escape(str(surface.get("event_id") or ""))
     lane = parse_lane(surface.get("lane"))
     wall_class = "mock" if walls.is_mock else "ops"
-    badge_list = list(walls.badges)
-    if lane == LANE_15M and "LEARNING LANE" not in badge_list:
-        badge_list.append("LEARNING LANE")
-    badges = "".join(f'<span class="badge">{html.escape(b)}</span>' for b in badge_list)
-    wall_lines = "".join(f"<div>{html.escape(line)}</div>" for line in walls.lines)
+    # A barred MOCK/DEMO path still states itself in full. The operating path does not:
+    # it is an observation page, and the standing Hard NOs are the one footer strip.
+    wall_lines = "".join(f"<div>{html.escape(line)}</div>" for line in walls.lines) if walls.is_mock else ""
+    lane_line = f"Active lane: {lane_header_name(lane)}"
     if lane == LANE_15M:
+        lane_line = f"{lane_line} — LEARNING LANE"
         viz_wall = (
             '<p class="missing">not yet available — 15-min lane is observation-only. '
             "No golf WC1 / Ill charts here.</p>"
@@ -418,10 +429,10 @@ def render_html(surface: dict) -> str:
  body {{ font-family: Segoe UI, Helvetica, Arial, sans-serif; margin: 0; background: #f4f1ea; color: #1b1b1b; }}
  header.ops {{ background: #1f3b4d; color: #fff; padding: 16px 20px; }}
  header.mock {{ background: #7a0c0c; color: #fff; padding: 16px 20px; }}
- header h1 {{ margin: 0 0 8px; font-size: 26px; letter-spacing: 1px; }}
- header div {{ font-size: 14px; }}
+ header h1 {{ margin: 0; font-size: 26px; letter-spacing: 1px; }}
+ header div {{ font-size: 14px; margin-top: 8px; }}
+ header .lane-line {{ font-size: 13px; opacity: 0.85; margin-top: 6px; }}
  .badge {{ display: inline-block; margin: 4px 6px 0 0; padding: 3px 8px; background: #0e1f29; color: #f2e27a; font-size: 12px; font-weight: 700; }}
- header.mock .badge {{ background: #3b0000; color: #ffd2d2; }}
  main {{ padding: 0 20px 56px; max-width: 1100px; margin: 0 auto; }}
  form.row {{ display: flex; flex-wrap: wrap; gap: 8px; align-items: end; margin: 4px 0 10px; }}
  form.lane-form fieldset {{ border: 1px solid #c9c2b2; padding: 8px 10px; }}
@@ -434,7 +445,7 @@ def render_html(surface: dict) -> str:
  button.warn {{ background: #7a0c0c; }}
  pre {{ white-space: pre-wrap; background: #fff; border: 1px solid #c9c2b2; padding: 12px; font-size: 13px; }}
  .missing {{ background: #f8e0a0; padding: 10px; border: 1px solid #c9a227; }}
- .cash {{ position: sticky; bottom: 0; background: #111; color: #f2e27a; padding: 8px 16px; font-weight: 700; }}
+ .hard-no {{ position: sticky; bottom: 0; background: #1b1b1b; color: #d8d2c2; padding: 6px 16px; font-size: 12px; }}
  .settle {{ background: #7a0c0c; color: #fff; padding: 12px 20px; font-size: 15px; }}
  .settle.clear {{ background: #14532d; }}
  .settle .tally {{ display: block; margin-top: 4px; font-size: 13px; opacity: 0.9; }}
@@ -447,8 +458,7 @@ def render_html(surface: dict) -> str:
  .viz {{ margin: 0; padding: 12px; background: #fff; border: 1px solid #c9c2b2; }}
  .viz h3 {{ margin: 0 0 6px; font-size: 17px; }}
  .viz .plain {{ font-size: 13px; color: #333; margin: 0 0 6px; }}
- .viz .sub {{ font-size: 12px; color: #4a4a4a; margin: 0 0 6px; }}
- .viz .badges {{ margin: 0 0 8px; }}
+ .viz .sub {{ font-size: 12px; color: #4a4a4a; margin: 0 0 8px; }}
  .viz img {{ display: block; width: 100%; max-width: 100%; height: auto; border: 1px solid #c9c2b2; background: #111; }}
  .viz a.zoom {{ display: block; cursor: zoom-in; color: inherit; text-decoration: none; }}
  .viz a.zoom:focus-visible {{ outline: 3px solid #1f3b4d; outline-offset: 2px; }}
@@ -469,8 +479,8 @@ def render_html(surface: dict) -> str:
 <body>
 <header class="{wall_class}">
   <h1>{html.escape(walls.title)}</h1>
+  <div class="lane-line">{html.escape(lane_line)}</div>
   {wall_lines}
-  <div>{badges}</div>
 </header>
 {settle_banner}
 <main>
@@ -496,7 +506,7 @@ def render_html(surface: dict) -> str:
   {paper_html}
   {lane_body}
 </main>
-<div class="cash">{html.escape(CASH_BADGE)}</div>
+<div class="hard-no">{html.escape(HARD_NO_STRIP)}</div>
 {viz_lightbox}
 <script>
 (function(){{

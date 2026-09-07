@@ -14,8 +14,8 @@ Deep links per lane: append `#golf` or `#learning_lane_15m`.
 | This hub | **view only.** Shareable. Cannot start a run or move a cent. |
 | The operator shell at `127.0.0.1:8765` | **the control surface.** Local, unchanged by this hub, not linked from it. |
 
-This PR does not touch `operator_surface` behaviour. The local golf operator UX is a
-separate concern on its own PR.
+This hub changes no `operator_surface` behaviour. The local shell keeps its own UX; the
+only thing the two pages share is the posture they state.
 
 ---
 
@@ -43,7 +43,7 @@ Where each one is enforced:
 | No write requests | `validate_hub.py` fails if `hub.js` issues anything but the one GET of `data/manifest.json` |
 | No markup injection from data | every manifest value reaches the DOM as a text node; `validate_hub.py` fails if `hub.js` starts assigning markup |
 | No invented charts | a chart is drawn only after its PNG actually loads in the reader's browser; a 404, a non-PNG, or an off-site path degrades to `not yet available` |
-| Standing wall cannot be suppressed | the badge wall is hard-coded in `index.html`, not read from the manifest; `validate_hub.py` fails if those strings go missing |
+| Standing posture cannot be suppressed | the quiet Hard-NO strip is hard-coded in `index.html`'s footer, not read from the manifest; `validate_hub.py` fails if those strings go missing |
 | Lanes stay separate | `validate_hub.py` fails if a golf-only marker (`0.279`, `34/122`, `WC1`, `Mitchell`, an ESPN id) appears in a non-golf lane's displayed figures |
 | No edge claims | `validate_hub.py` fails on "edge established", "banked edge", "validated edge" and friends, unless the sentence is denying one |
 
@@ -59,9 +59,9 @@ Standard library only. Exit 0 means publishable.
 
 ## Lanes
 
-Canonical ids. The tabs are the loudest thing on the page after the wall.
+Canonical ids. The tabs are the loudest thing on the page.
 
-| `lane_id` | Lane | Loud badge | State today |
+| `lane_id` | Lane | Lane badge | State today |
 | --- | --- | --- | --- |
 | `golf` | Golf offshoot, Phase 1 observation | `PHASE 1 OBSERVATION` | Real committed exports. Settle banner up, WC1 dated **FAIL**, two charts published. |
 | `learning_lane_15m` | 15-minute Kalshi learning lane (`KXBTC15M`) | `LEARNING LANE` | First fill `KXBTC15M-26SEP071445-45` is settled `paper_win` (Kalshi result=yes, finalized). Live `KXBTC15M-26SEP071500-00` stays `SETTLE_PENDING`. No 15m charts. |
@@ -154,7 +154,7 @@ Notes:
 
 | Path | Role |
 | --- | --- |
-| `index.html` | page shell. Carries the standing badge wall and the lane tabs statically, so no data feed can suppress them. |
+| `index.html` | page shell. Carries the quiet Hard-NO strip and the lane tabs statically, so no data feed can suppress them. |
 | `assets/hub.css` | styling. No framework, CSS custom properties, per-lane accent colour. |
 | `assets/hub.js` | renderer, Hard-NO enforcement, and the enlarge overlay. ~600 lines, no dependencies. |
 | `data/manifest.json` | the only data file the viewer reads. Currently a fixture. |

@@ -58,7 +58,7 @@ a:hover { text-decoration-thickness: 2px; }
   border: 2px solid var(--fg);
 }
 
-/* ---------- standing wall ---------- */
+/* ---------- title band ---------- */
 
 .wall {
   background: var(--wall);
@@ -81,17 +81,13 @@ a:hover { text-decoration-thickness: 2px; }
 }
 
 .wall h1 {
-  margin: 0 0 0.4rem;
+  margin: 0;
   font-size: 1.85rem;
   line-height: 1.15;
 }
 
-.lede {
-  margin: 0 0 0.9rem;
-  max-width: 46rem;
-  color: #dfe8ed;
-}
-
+/* Lane posture chips. Quiet outlines: the standing Hard NOs are the footer strip,
+   not something to restate loudly on every card. */
 .badges {
   display: flex;
   flex-wrap: wrap;
@@ -102,37 +98,15 @@ a:hover { text-decoration-thickness: 2px; }
 }
 
 .badge {
-  font-size: 0.72rem;
-  font-weight: 700;
-  letter-spacing: 0.05em;
+  font-size: 0.7rem;
+  letter-spacing: 0.04em;
   text-transform: uppercase;
-  padding: 0.28rem 0.55rem;
+  padding: 0.16rem 0.4rem;
   border-radius: 3px;
-  background: #2f4f63;
-  color: #fff;
-  border: 1px solid rgba(255, 255, 255, 0.28);
+  background: none;
+  color: var(--muted);
+  border: 1px solid var(--line);
 }
-
-.badge-ro { background: var(--ro); }
-.badge-no { background: var(--no); }
-.badge-paper { background: var(--paper); }
-.badge-cash { background: var(--cash); }
-
-.wall-lines {
-  margin: 0 0 0.8rem;
-  padding-left: 1.15rem;
-  color: #e6eef2;
-  font-size: 0.94rem;
-}
-.wall-lines li { margin-bottom: 0.2rem; }
-
-.wall-foot {
-  margin: 0;
-  font-size: 0.88rem;
-  color: #b8cbd6;
-  max-width: 46rem;
-}
-.wall-foot code { background: rgba(255, 255, 255, 0.14); color: #fff; }
 
 /* ---------- lane switch ---------- */
 
@@ -251,7 +225,7 @@ main {
 .lane-summary { margin: 0.3rem 0 0.6rem; max-width: 48rem; }
 
 .lane-badges { margin-bottom: 0.5rem; }
-.lane-badges .badge { background: var(--lane); border-color: rgba(0, 0, 0, 0.2); }
+.lane-badges .badge { color: var(--lane); border-color: var(--lane); }
 
 .lane-source {
   margin: 0;
@@ -603,16 +577,16 @@ body.lightbox-open { overflow: hidden; }
   border-top: 1px solid var(--line);
   margin-top: 1rem;
 }
-.foot-cash {
+.foot-hard-no {
   margin: 0;
-  padding: 0.65rem 1.25rem;
+  padding: 0.55rem 1.25rem;
   background: var(--cash);
-  color: #fff;
+  color: #ded8cc;
   text-align: center;
-  font-size: 0.82rem;
-  letter-spacing: 0.06em;
+  font-size: 0.78rem;
+  letter-spacing: 0.03em;
 }
-.foot > p:not(.foot-cash) {
+.foot > p:not(.foot-hard-no) {
   max-width: 62rem;
   margin: 0.7rem auto;
   padding: 0 1.25rem;

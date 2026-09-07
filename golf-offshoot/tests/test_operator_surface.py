@@ -20,6 +20,7 @@ from golf_offshoot.models.strategy import (
     new_id,
 )
 from golf_offshoot.operator_surface.app import (
+    HARD_NO_STRIP,
     SLOT_PLAIN_HELP,
     ZOOM_HINT_FIT,
     ZOOM_HINT_FULL,
@@ -706,6 +707,44 @@ def test_hub_html_renders_viz_pngs_when_present(tmp_path):
     assert "PAPER OBSERVATION ONLY" in page
 
 
+def test_hub_states_hard_nos_once_and_quietly(tmp_path):
+    viz = tmp_path / "viz"
+    viz.mkdir()
+    (viz / "shadow_honesty_strip.png").write_bytes(b"\x89PNG\r\n\x1a\n")
+    (viz / "calibration_weather.png").write_bytes(b"\x89PNG\r\n\x1a\n")
+    page = render_html(build_surface(artifact_root=tmp_path, viz_root=viz))
+    header = page[page.index("<header") : page.index("</header>")]
+    assert "PHASE 1 OBSERVATION" in header
+    assert "Operating path. Rankings are observation" not in header
+    assert "badge" not in header
+    assert page.count('class="hard-no"') == 1
+    assert HARD_NO_STRIP in page
+    for hard_no in ("NOT ARMED", PAPER_ONLY, "AI: NO CASH IN/OUT", CASH_BADGE, "Kalshi"):
+        assert hard_no in HARD_NO_STRIP
+    # No badge chip restates the Hard NOs on every chart card.
+    assert 'class="badges"' not in page
+    assert _viz_wall_block(page).count('class="badge"') == 0
+    # The lane selector and the active-lane line survive the cut.
+    assert "Active lane: Golf Phase 1" in header
+    assert 'name="lane"' in page
+    assert 'value="golf"' in page
+    assert 'value="learning_lane_15m"' in page
+    # The text dump and the state API still carry the full wall.
+    surface = build_surface(artifact_root=tmp_path, viz_root=viz)
+    assert "PAPER OBSERVATION ONLY" in render_text(surface)
+    assert surface["viz"].slot("shadow_honesty_strip").badges == VIZ_BADGES
+
+
+def test_hub_mock_mode_still_states_the_whole_wall(tmp_path):
+    (tmp_path / "shadow").mkdir()
+    (tmp_path / "shadow" / "advises.jsonl").write_text("OFFLINE DEMO — MOCK DATA\n", encoding="utf-8")
+    page = render_html(build_surface(artifact_root=tmp_path, viz_root=tmp_path / "viz"))
+    header = page[page.index("<header") : page.index("</header>")]
+    assert "OFFLINE DEMO — MOCK DATA" in header
+    assert "not operating evidence" in header
+    assert CASH_BADGE in header
+
+
 def test_hub_puts_viz_wall_above_dense_blocks(tmp_path):
     viz = tmp_path / "viz"
     viz.mkdir()
@@ -720,7 +759,8 @@ def test_hub_puts_viz_wall_above_dense_blocks(tmp_path):
     assert wall < page.index("Ranked table")
     assert wall < page.index("Paper journal (shadow log)")
     assert page.index("PHASE 1 OBSERVATION") < wall
-    assert page.index(CASH_BADGE) < wall
+    # The Hard NOs are one quiet footer strip now, so they sit below the charts.
+    assert page.index(CASH_BADGE) > wall
 
 
 def test_hub_viz_wall_anchors_are_display_only(tmp_path):

@@ -12,13 +12,17 @@
 <!--
   READ-ONLY VIEWER. See README.md in this directory before changing anything.
 
-  This wall is static on purpose. It is not read from data/manifest.json, so no
-  export can ever suppress it. Do not move these strings into the manifest.
+  The Hard-NO strip in the footer is static on purpose. It is not read from
+  data/manifest.json, so no export can ever suppress it, and validate_hub.py
+  fails if those strings go missing. Do not move them into the manifest.
 
   Hard NOs, enforced here and in assets/hub.js:
     no ingest/live/shadow/loop/refresh control, no paper deposit/withdraw/transfer,
     no trade arming, no one-tap bet, no Kalshi keys, no cash movement UI,
     no API keys or secrets, and missing charts stay "not yet available".
+
+  Enforcement is not chrome: the page states the posture once, quietly, instead of
+  as a badge wall repeated on every card.
 -->
 
 <a class="skip" href="#lane-panel">Skip to lane view</a>
@@ -27,26 +31,6 @@
   <div class="wall-inner">
     <p class="eyebrow">swellbear / gated-formalization</p>
     <h1>Observability hub</h1>
-    <p class="lede">A read-only window onto what the system has already published. Nothing on this page can start a run, move money, or place a bet.</p>
-
-    <ul class="badges" aria-label="Standing posture">
-      <li class="badge badge-ro">READ ONLY</li>
-      <li class="badge badge-no">TRADING NOT ARMED</li>
-      <li class="badge badge-paper">PAPER OBSERVATION ONLY</li>
-      <li class="badge badge-cash">AI: NO CASH IN/OUT</li>
-    </ul>
-
-    <ul class="wall-lines">
-      <li>This page is a viewer. It has no ingest, live, shadow, loop, or refresh control.</li>
-      <li>No paper deposit, withdraw, or transfer. No cash movement of any kind.</li>
-      <li>No trade arming, no one-tap bet, no Kalshi account, key, or wallet scope.</li>
-      <li><strong>AI NEVER DEPOSITS / WITHDRAWS / TRANSFERS CASH.</strong></li>
-    </ul>
-
-    <p class="wall-foot">
-      The control surface is the operator's own local shell at <code>127.0.0.1:8765</code>. It is not
-      reachable from here and is not linked from here. This hub is view only.
-    </p>
   </div>
 </header>
 
@@ -129,10 +113,11 @@
 </div>
 
 <footer class="foot">
-  <p class="foot-cash"><strong>AI NEVER DEPOSITS / WITHDRAWS / TRANSFERS CASH</strong></p>
+  <p class="foot-hard-no">READ ONLY · TRADING NOT ARMED · PAPER OBSERVATION ONLY · AI: NO CASH IN/OUT · AI NEVER DEPOSITS / WITHDRAWS / TRANSFERS CASH</p>
   <p>
-    Read-only observability hub. Paper observation only, trading not armed, edge not established
-    and not claimed. Missing charts stay <em>not yet available</em> and are never invented.
+    Missing charts stay <em>not yet available</em> and are never invented. Edge is not established
+    and is not claimed. The control surface is the operator's local shell at
+    <code>127.0.0.1:8765</code>, which is not reachable from here and not linked from here.
   </p>
   <p class="foot-meta">
     Source: <code>docs/observability-hub/</code> ·
