@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta name="robots" content="noindex" />
+<title>Observability hub — read only · gated-formalization</title>
+<link rel="stylesheet" href="assets/hub.css" />
+</head>
+<body data-lane="golf">
+
+<!--
+  READ-ONLY VIEWER. See README.md in this directory before changing anything.
+
+  This wall is static on purpose. It is not read from data/manifest.json, so no
+  export can ever suppress it. Do not move these strings into the manifest.
+
+  Hard NOs, enforced here and in assets/hub.js:
+    no ingest/live/shadow/loop/refresh control, no paper deposit/withdraw/transfer,
+    no trade arming, no one-tap bet, no Kalshi keys, no cash movement UI,
+    no API keys or secrets, and missing charts stay "not yet available".
+-->
+
+<a class="skip" href="#lane-panel">Skip to lane view</a>
+
+<header class="wall">
+  <div class="wall-inner">
+    <p class="eyebrow">swellbear / gated-formalization</p>
+    <h1>Observability hub</h1>
+    <p class="lede">A read-only window onto what the system has already published. Nothing on this page can start a run, move money, or place a bet.</p>
+
+    <ul class="badges" aria-label="Standing posture">
+      <li class="badge badge-ro">READ ONLY</li>
+      <li class="badge badge-no">TRADING NOT ARMED</li>
+      <li class="badge badge-paper">PAPER OBSERVATION ONLY</li>
+      <li class="badge badge-cash">AI: NO CASH IN/OUT</li>
+    </ul>
+
+    <ul class="wall-lines">
+      <li>This page is a viewer. It has no ingest, live, shadow, loop, or refresh control.</li>
+      <li>No paper deposit, withdraw, or transfer. No cash movement of any kind.</li>
+      <li>No trade arming, no one-tap bet, no Kalshi account, key, or wallet scope.</li>
+      <li><strong>AI NEVER DEPOSITS / WITHDRAWS / TRANSFERS CASH.</strong></li>
+    </ul>
+
+    <p class="wall-foot">
+      The control surface is the operator's own local shell at <code>127.0.0.1:8765</code>. It is not
+      reachable from here and is not linked from here. This hub is view only.
+    </p>
+  </div>
+</header>
+
+<nav class="lanes" aria-label="Lane">
+  <p class="lanes-label" id="lane-switch-label">Pick a lane. The lanes are separate systems and their records never mix.</p>
+  <div class="lane-tabs" role="tablist" aria-labelledby="lane-switch-label">
+    <button
+      class="lane-tab lane-tab-golf"
+      role="tab"
+      id="tab-golf"
+      data-lane-id="golf"
+      aria-controls="lane-panel"
+      aria-selected="true">
+      <span class="lane-tab-kicker">Lane <code>golf</code></span>
+      <span class="lane-tab-name">Golf · Phase 1</span>
+      <span class="lane-tab-badge">PHASE 1 OBSERVATION</span>
+    </button>
+    <button
+      class="lane-tab lane-tab-learning_lane_15m"
+      role="tab"
+      id="tab-learning_lane_15m"
+      data-lane-id="learning_lane_15m"
+      aria-controls="lane-panel"
+      aria-selected="false">
+      <span class="lane-tab-kicker">Lane <code>learning_lane_15m</code></span>
+      <span class="lane-tab-name">15-min Kalshi · Learning</span>
+      <span class="lane-tab-badge">LEARNING LANE</span>
+    </button>
+  </div>
+  <p class="lanes-sep">
+    Golf Phase 1 and the 15-minute learning lane are <strong>not</strong> the same system. The golf
+    WC1 dated FAIL is a golf record. It is never shown as a 15-minute result, and 15-minute
+    figures are never folded into golf.
+  </p>
+</nav>
+
+<main id="lane-panel" role="tabpanel" aria-labelledby="tab-golf" tabindex="-1">
+  <div id="hub-status" class="notice notice-loading" role="status">
+    Loading published artifacts&hellip;
+  </div>
+  <noscript>
+    <div class="notice notice-warn">
+      <p><strong>This viewer needs JavaScript to read <code>data/manifest.json</code>.</strong></p>
+      <p>
+        Nothing is hidden by that: the manifest is plain JSON in this directory and the charts are
+        plain PNGs. Read them directly if you would rather not run scripts. Whatever you cannot see
+        here is <em>not yet available</em> — the page never fills a gap with an invented value.
+      </p>
+    </div>
+  </noscript>
+  <div id="lane-content"></div>
+</main>
+
+<!--
+  Enlarge overlay. Purely a bigger view of a PNG that is already on the page: it
+  fetches nothing, and it is only ever opened from a chart whose image loaded.
+-->
+<div
+  id="lightbox"
+  class="lightbox"
+  role="dialog"
+  aria-modal="true"
+  aria-labelledby="lightbox-title"
+  hidden
+  data-zoom="fit">
+  <div class="lightbox-bar">
+    <p class="lightbox-title" id="lightbox-title"></p>
+    <span class="lightbox-badge">READ ONLY</span>
+    <button type="button" class="lightbox-btn" id="lightbox-zoom" aria-pressed="false">Actual size</button>
+    <button type="button" class="lightbox-btn" id="lightbox-close">Close (Esc)</button>
+  </div>
+  <div
+    class="lightbox-stage"
+    id="lightbox-stage"
+    tabindex="0"
+    aria-label="Enlarged chart. Scroll to pan when showing actual size.">
+    <img id="lightbox-image" alt="" />
+  </div>
+  <p class="lightbox-foot" id="lightbox-caption"></p>
+</div>
+
+<footer class="foot">
+  <p class="foot-cash"><strong>AI NEVER DEPOSITS / WITHDRAWS / TRANSFERS CASH</strong></p>
+  <p>
+    Read-only observability hub. Paper observation only, trading not armed, edge not established
+    and not claimed. Missing charts stay <em>not yet available</em> and are never invented.
+  </p>
+  <p class="foot-meta">
+    Source: <code>docs/observability-hub/</code> ·
+    <a href="https://github.com/swellbear/gated-formalization/blob/master/docs/observability-hub/README.md">how this page is fed</a> ·
+    <a href="data/manifest.json">raw manifest</a>
+  </p>
+</footer>
+
+<script src="assets/hub.js"></script>
+</body>
+</html>
