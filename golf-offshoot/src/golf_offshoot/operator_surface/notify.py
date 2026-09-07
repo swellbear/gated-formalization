@@ -24,6 +24,7 @@ def notify_run_complete(
     topic: str | None = None,
     dry_run: bool = False,
     environ: dict[str, str] | None = None,
+    lane: str = "",
 ) -> CompletionNotice:
     """Ping once on completion. Does not run on progress lines. Safe when topic absent."""
     env = environ if environ is not None else os.environ
@@ -35,14 +36,31 @@ def notify_run_complete(
     except WatchConfigError as exc:
         return CompletionNotice(sent=False, reason=str(exc))
     status = "ok" if ok else "failed"
-    title = f"golf-offshoot {command} {status}"
-    if event_id:
-        title = f"{title} {event_id}"
+    from golf_offshoot.operator_surface.lanes import parse_lane
+    from golf_offshoot.learning_lane_15m.paths import LANE_15M
+
+    lane_id = parse_lane(lane) if lane else ""
+    if lane_id == LANE_15M:
+        title = f"golf-offshoot learning_lane_15m {command} {status}"
+        if event_id:
+            title = f"{title} {event_id}"
+        posture = (
+            "LEARNING LANE. KXBTC15M. PAPER OBSERVATION ONLY.",
+            "PHASE 1 OBSERVATION. Trading NOT ARMED.",
+            "AI NEVER DEPOSITS / WITHDRAWS / TRANSFERS CASH",
+        )
+    else:
+        title = f"golf-offshoot {command} {status}"
+        if event_id:
+            title = f"{title} {event_id}"
+        posture = (
+            "PHASE 1 OBSERVATION. Trading NOT ARMED.",
+            "AI NEVER DEPOSITS / WITHDRAWS / TRANSFERS CASH",
+        )
     body = "\n".join(
         [
             title,
-            "PHASE 1 OBSERVATION. Trading NOT ARMED.",
-            "AI NEVER DEPOSITS / WITHDRAWS / TRANSFERS CASH",
+            *posture,
             detail.strip(),
         ]
     ).strip()
