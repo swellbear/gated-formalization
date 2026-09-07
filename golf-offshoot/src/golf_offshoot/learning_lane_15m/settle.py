@@ -221,9 +221,14 @@ def classify_settle(
     )
 
 
-def _event_ticker_from_book_id(book_id: str) -> str:
+def event_ticker_from_book_id(book_id: str) -> str:
+    """Window books are keyed by window_id. The event ticker is the prefix before __."""
     token = str(book_id or "")
     return token.split("__", 1)[0] if token else ""
+
+
+def _event_ticker_from_book_id(book_id: str) -> str:
+    return event_ticker_from_book_id(book_id)
 
 
 def _event_for_book(
@@ -395,8 +400,21 @@ def _apply_official_settle(
     save_book(rec)
 
 
-def _write_join_artifact(event_ticker: str, rows: list[SettleJoinRow]) -> Path:
-    dest = settlements_dir_15m() / f"{event_ticker}.json"
+def _write_join_artifact(book_id: str, rows: list[SettleJoinRow]) -> Path:
+    """Write one join file per window book. Top-level event_ticker is the event, not window_id."""
+    event_ticker = ""
+    window = str(book_id or "")
+    for row in rows:
+        if row.event_ticker:
+            event_ticker = row.event_ticker
+            break
+        if row.window_id:
+            window = row.window_id
+    if not event_ticker:
+        event_ticker = _event_ticker_from_book_id(book_id)
+    if not window:
+        window = str(book_id or event_ticker)
+    dest = settlements_dir_15m() / f"{book_id}.json"
     assert_not_golf_path(dest)
     dest.write_text(
         json.dumps(
@@ -404,6 +422,7 @@ def _write_join_artifact(event_ticker: str, rows: list[SettleJoinRow]) -> Path:
                 "lane": LANE_15M,
                 "series": PRIMARY_SERIES,
                 "event_ticker": event_ticker,
+                "window_id": window,
                 "trading_armed": False,
                 "digestor_source_hook": (
                     "Digestor owns SOURCE honesty digest later. "

@@ -19,7 +19,7 @@ from golf_offshoot.learning_lane_15m.paths import (
     latest_dir_15m,
     settlements_dir_15m,
 )
-from golf_offshoot.learning_lane_15m.settle import SETTLE_PENDING
+from golf_offshoot.learning_lane_15m.settle import SETTLE_PENDING, event_ticker_from_book_id
 from golf_offshoot.localtime import isoformat_now
 
 SCHEMA_VERSION = 1
@@ -189,7 +189,7 @@ def _golf_lane_fallback() -> dict[str, Any]:
     }
 
 
-def _settle_rows() -> list[dict[str, Any]]:
+def _settle_payloads() -> list[dict[str, Any]]:
     root = settlements_dir_15m()
     out: list[dict[str, Any]] = []
     if not root.is_dir():
@@ -199,10 +199,109 @@ def _settle_rows() -> list[dict[str, Any]]:
             payload = json.loads(path.read_text(encoding="utf-8"))
         except (OSError, ValueError):
             continue
+        if isinstance(payload, dict):
+            out.append(payload)
+    return out
+
+
+def _settle_rows() -> list[dict[str, Any]]:
+    out: list[dict[str, Any]] = []
+    for payload in _settle_payloads():
         for row in payload.get("rows") or []:
             if isinstance(row, dict):
                 out.append(row)
     return out
+
+
+def collect_journal_windows(
+    markets: list[dict[str, Any]] | None = None,
+) -> list[dict[str, str]]:
+    """Windows for latest/journal.json: live snapshot plus paper/settlement books.
+
+    Live markets alone can be empty (initialized-only feed). Paper books and
+    settlement joins still name the observed windows.
+    """
+    by_key: dict[str, dict[str, str]] = {}
+
+    def _put(row: dict[str, Any]) -> None:
+        ticker = _as_str(row.get("ticker"))
+        event_ticker = _as_str(row.get("event_ticker"))
+        window = _as_str(row.get("window_id"))
+        if not event_ticker and window:
+            event_ticker = event_ticker_from_book_id(window)
+        if not event_ticker and ticker:
+            event_ticker = event_ticker_from_book_id(ticker)
+        key = window or ticker or event_ticker
+        if not key:
+            return
+        prev = by_key.get(key, {})
+        by_key[key] = {
+            "ticker": ticker or prev.get("ticker") or "",
+            "event_ticker": event_ticker or prev.get("event_ticker") or "",
+            "window_id": window or prev.get("window_id") or "",
+            "status": _as_str(row.get("status") or prev.get("status") or ""),
+            "result": _as_str(row.get("result") or row.get("kalshi_result") or prev.get("result") or ""),
+        }
+
+    for market in markets or []:
+        if isinstance(market, dict):
+            _put(market)
+
+    for rec in iter_books():
+        window = str(rec.tournament_id or "")
+        event_ticker = event_ticker_from_book_id(window)
+        status = "settled" if rec.settled_at is not None else "open"
+        positions = list(rec.book.positions)
+        if positions:
+            for pos in positions:
+                _put(
+                    {
+                        "ticker": pos.player_id,
+                        "event_ticker": event_ticker,
+                        "window_id": window,
+                        "status": status,
+                        "result": "",
+                    }
+                )
+        else:
+            _put(
+                {
+                    "ticker": "",
+                    "event_ticker": event_ticker,
+                    "window_id": window,
+                    "status": status,
+                    "result": "",
+                }
+            )
+
+    for payload in _settle_payloads():
+        top_event = _as_str(payload.get("event_ticker"))
+        top_window = _as_str(payload.get("window_id"))
+        rows = payload.get("rows") or []
+        if not rows:
+            _put(
+                {
+                    "ticker": "",
+                    "event_ticker": top_event,
+                    "window_id": top_window,
+                    "status": "",
+                    "result": "",
+                }
+            )
+            continue
+        for row in rows:
+            if not isinstance(row, dict):
+                continue
+            _put(
+                {
+                    "ticker": row.get("ticker"),
+                    "event_ticker": row.get("event_ticker") or top_event,
+                    "window_id": row.get("window_id") or top_window,
+                    "status": row.get("status") or row.get("settle_status"),
+                    "result": row.get("kalshi_result") or row.get("result") or "",
+                }
+            )
+    return list(by_key.values())
 
 
 def _build_15m_lane(
@@ -310,13 +409,14 @@ def _build_15m_lane(
         )
     banner_state = "pending" if pending or not settled else "off"
     banner = SETTLE_PENDING if banner_state == "pending" else "settled"
+    journal_windows = collect_journal_windows(markets)
     window_rows = []
-    for mkt in markets or []:
+    for mkt in journal_windows:
         window_rows.append(
             {
-                "label": _as_str(mkt.get("ticker") or mkt.get("window_id")),
+                "label": _as_str(mkt.get("ticker") or mkt.get("window_id") or mkt.get("event_ticker")),
                 "value": _as_str(mkt.get("status") or ""),
-                "note": _as_str(mkt.get("window_id") or ""),
+                "note": _as_str(mkt.get("window_id") or mkt.get("event_ticker") or ""),
             }
         )
     return {
@@ -342,7 +442,7 @@ def _build_15m_lane(
                 {"label": "CFB websocket average", "value": "observe only"},
                 {"label": "never_auto_bet", "value": "true"},
                 {"label": "paper_observation_only", "value": "true"},
-                {"label": "Windows in this snapshot", "value": _as_str(len(markets or []))},
+                {"label": "Windows in this snapshot", "value": _as_str(len(journal_windows))},
             ],
             "notes": [
                 "Official settle is Kalshi result matched to documented CF Benchmarks SOURCE.",
@@ -404,7 +504,11 @@ def _hub_block(*, source_kind: str, generated_at: str) -> dict[str, Any]:
         "source_note": (
             "Systems export bound to docs/observability-hub/data/SCHEMA.md (PR #151). "
             "Golf figures stay the published Hub fixture unless already on disk. "
-            "15m journals stay under /workspace/kalshi_15m_exports/ until published here."
+            + (
+                "learning_lane_15m paper journal is published in this Pages manifest."
+                if source_kind == "export"
+                else "15m journals stay under /workspace/kalshi_15m_exports/ until published here."
+            )
         ),
         "control_surface_note": (
             "The control surface is the local operator shell at 127.0.0.1:8765 "
@@ -491,16 +595,7 @@ def write_observability_exports(
         "cfb_ws_average_role": "observe_only",
         "generated_at": payload["hub"]["generated_at"],
         "note": "Live 15m journal. Not the Hub UI contract. Hub reads only manifest.json.",
-        "windows": [
-            {
-                "ticker": _as_str(m.get("ticker")),
-                "event_ticker": _as_str(m.get("event_ticker")),
-                "window_id": _as_str(m.get("window_id")),
-                "status": _as_str(m.get("status")),
-                "result": _as_str(m.get("result") or ""),
-            }
-            for m in (markets or [])
-        ],
+        "windows": collect_journal_windows(markets),
     }
     _walk_forbidden(journal)
     latest = latest_dir_15m() / "journal.json"

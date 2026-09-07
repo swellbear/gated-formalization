@@ -230,12 +230,29 @@ def public_mid_or_last(
 
 def market_is_open(market: dict[str, Any]) -> bool:
     status = str(market.get("status") or "").strip().lower()
-    if status in {"finalized", "settled", "closed", "determined", "initialized"}:
+    if status in {"finalized", "settled", "closed", "determined", "initialized", "unopened"}:
         return False
-    if status in {"active", "open", "unopened"}:
+    if status in {"active", "open"}:
         return True
     # Tradable ask is enough to treat as live observation.
     return parse_dollar_unit(market.get("yes_ask_dollars")) is not None
+
+
+def is_paper_autobet_candidate(market: dict[str, Any]) -> bool:
+    """Open/active book with a usable mark. Skip initialized / null-price rows."""
+    status = str(market.get("status") or "").strip().lower()
+    if status == "initialized":
+        return False
+    if not market.get("is_open") and status not in {"active", "open"}:
+        return False
+    mark = market.get("paper_mark")
+    if mark is None:
+        mark = market.get("yes_ask")
+    try:
+        yes_f = float(mark) if mark is not None else None
+    except (TypeError, ValueError):
+        return False
+    return yes_f is not None and 0.0 < yes_f < 1.0
 
 
 def parse_event(raw: dict[str, Any]) -> dict[str, Any]:
@@ -410,7 +427,7 @@ class Kalshi15mFeed(DataFeed[dict[str, Any]]):
         return payload, q
 
     def _get_series(self, *, ttl_seconds: float, refresh: bool) -> dict[str, Any]:
-        url = f"{KALSHI_PUBLIC_BASE}/series/{ALLOWED_SERIES}"
+        url = f"{KALSHI_PUBLIC_BASE}/series/{ALLOWED_SERIES}?include_volume=true"
         body = self._get(url, label="kalshi_15m_series", ttl_seconds=ttl_seconds, refresh=refresh)
         raw = body.get("series") if isinstance(body, dict) else None
         if not isinstance(raw, dict):
@@ -431,49 +448,75 @@ class Kalshi15mFeed(DataFeed[dict[str, Any]]):
             "fee_multiplier": parse_optional_float(raw.get("fee_multiplier")) or FEE_MULTIPLIER,
             "contract_terms_url": str(raw.get("contract_terms_url") or ""),
             "cf_index_id": CF_INDEX_ID,
+            "volume": parse_optional_float(raw.get("volume_fp") or raw.get("volume")),
         }
 
     def _get_events(self, *, limit: int, ttl_seconds: float, refresh: bool) -> list[dict[str, Any]]:
-        url = (
-            f"{KALSHI_PUBLIC_BASE}/events"
-            f"?series_ticker={ALLOWED_SERIES}&limit={limit}"
+        return self._get_status_pages(
+            path="events",
+            list_key="events",
+            parse=parse_event,
+            id_field="event_ticker",
+            limit=limit,
+            ttl_seconds=ttl_seconds,
+            refresh=refresh,
+            label_prefix="kalshi_15m_events",
         )
-        body = self._get(url, label="kalshi_15m_events", ttl_seconds=ttl_seconds, refresh=refresh)
-        rows = body.get("events") if isinstance(body, dict) else None
-        if not isinstance(rows, list):
-            return []
-        out: list[dict[str, Any]] = []
-        for row in rows:
-            if not isinstance(row, dict):
-                continue
-            try:
-                parsed = parse_event(row)
-            except (TickerParseError, SeriesNotAllowedError):
-                continue
-            if parsed["event_ticker"]:
-                out.append(parsed)
-        return out
 
     def _get_markets(self, *, limit: int, ttl_seconds: float, refresh: bool) -> list[dict[str, Any]]:
-        url = (
-            f"{KALSHI_PUBLIC_BASE}/markets"
-            f"?series_ticker={ALLOWED_SERIES}&limit={limit}"
+        return self._get_status_pages(
+            path="markets",
+            list_key="markets",
+            parse=parse_market,
+            id_field="ticker",
+            limit=limit,
+            ttl_seconds=ttl_seconds,
+            refresh=refresh,
+            label_prefix="kalshi_15m_markets",
         )
-        body = self._get(url, label="kalshi_15m_markets", ttl_seconds=ttl_seconds, refresh=refresh)
-        rows = body.get("markets") if isinstance(body, dict) else None
-        if not isinstance(rows, list):
-            return []
-        out: list[dict[str, Any]] = []
-        for row in rows:
-            if not isinstance(row, dict):
+
+    def _get_status_pages(
+        self,
+        *,
+        path: str,
+        list_key: str,
+        parse,
+        id_field: str,
+        limit: int,
+        ttl_seconds: float,
+        refresh: bool,
+        label_prefix: str,
+    ) -> list[dict[str, Any]]:
+        """Prefer status=open, then merge settled for settle-join."""
+        seen: dict[str, dict[str, Any]] = {}
+        order: list[str] = []
+        for status in ("open", "settled"):
+            url = (
+                f"{KALSHI_PUBLIC_BASE}/{path}"
+                f"?series_ticker={ALLOWED_SERIES}&status={status}&limit={limit}"
+            )
+            body = self._get(
+                url,
+                label=f"{label_prefix}_{status}",
+                ttl_seconds=ttl_seconds,
+                refresh=refresh,
+            )
+            rows = body.get(list_key) if isinstance(body, dict) else None
+            if not isinstance(rows, list):
                 continue
-            try:
-                parsed = parse_market(row)
-            except (TickerParseError, SeriesNotAllowedError):
-                continue
-            if parsed["ticker"]:
-                out.append(parsed)
-        return out
+            for row in rows:
+                if not isinstance(row, dict):
+                    continue
+                try:
+                    parsed = parse(row)
+                except (TickerParseError, SeriesNotAllowedError):
+                    continue
+                key = str(parsed.get(id_field) or "")
+                if not key or key in seen:
+                    continue
+                seen[key] = parsed
+                order.append(key)
+        return [seen[key] for key in order]
 
     def _get(self, url: str, *, label: str, ttl_seconds: float, refresh: bool) -> Any:
         assert_public_read_url(url)

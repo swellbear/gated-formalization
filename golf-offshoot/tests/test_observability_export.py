@@ -1,9 +1,12 @@
 from golf_offshoot.learning_lane_15m.paths import LANE_15M, LANE_GOLF, set_15m_root_override
 from golf_offshoot.operator_surface.observability import (
     FORBIDDEN_KEYS,
+    HUB_MANIFEST_REL,
     SCHEMA_VERSION,
     WC1_STATUS,
     build_hub_manifest,
+    collect_journal_windows,
+    hub_manifest_path,
     write_observability_exports,
 )
 
@@ -60,11 +63,48 @@ def test_hub_manifest_matches_pr151_schema(tmp_path, monkeypatch):
                     walk_keys(item)
 
         walk_keys(payload)
+        assert HUB_MANIFEST_REL.as_posix() == "docs/observability-hub/data/manifest.json"
+        assert str(hub_manifest_path()).endswith("docs/observability-hub/data/manifest.json")
 
         paths = write_observability_exports(markets=[], hub_dir=tmp_path / "hub")
         assert (tmp_path / "hub" / "manifest.json").is_file()
         assert "hub_manifest" in paths
         assert "learning_lane_15m_journal" in paths
         assert not str(paths["learning_lane_15m_journal"]).startswith(str(tmp_path / "golf"))
+    finally:
+        set_15m_root_override(None)
+
+
+def test_collect_journal_windows_from_paper_when_live_empty(tmp_path, monkeypatch):
+    from golf_offshoot.data_feeds.kalshi_15m import parse_event, parse_market
+    from golf_offshoot.learning_lane_15m.paper import paper_autobet_open_markets
+
+    monkeypatch.setattr("golf_offshoot.strategy.paper_book.package_data_dir", lambda: tmp_path / "golf")
+    set_15m_root_override(tmp_path / "kalshi_15m")
+    try:
+        ev = parse_event(
+            {
+                "event_ticker": "KXBTC15M-26SEP071445",
+                "series_ticker": "KXBTC15M",
+                "settlement_sources": [{"name": "CF Benchmarks", "url": "https://www.cfbenchmarks.com/"}],
+            }
+        )
+        market = parse_market(
+            {
+                "ticker": "KXBTC15M-26SEP071445-45",
+                "event_ticker": "KXBTC15M-26SEP071445",
+                "status": "active",
+                "yes_ask_dollars": "0.4000",
+                "yes_bid_dollars": "0.3800",
+                "open_time": "2026-09-07T14:45:00Z",
+                "close_time": "2026-09-07T15:00:00Z",
+            },
+            event=ev,
+        )
+        paper_autobet_open_markets([market])
+        windows = collect_journal_windows([])
+        assert windows
+        assert any(w["event_ticker"] == "KXBTC15M-26SEP071445" for w in windows)
+        assert any(w["ticker"] == "KXBTC15M-26SEP071445-45" for w in windows)
     finally:
         set_15m_root_override(None)

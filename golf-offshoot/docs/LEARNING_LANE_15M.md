@@ -37,7 +37,7 @@ Paper ledger, shadow advises, and settlements for this lane live under the 15m r
 
 ## Public adapter
 
-Read-only Kalshi elections API: `https://api.elections.kalshi.com/trade-api/v2/` (`events`, `markets`, `series/KXBTC15M`).
+Read-only Kalshi elections API: `https://api.elections.kalshi.com/trade-api/v2/` (`events`, `markets`, `series/KXBTC15M`). Markets and events fetch `status=open` first, then merge `settled` / `closed` so settle-join still sees official results. Series GET uses `include_volume=true`. `initialized` rows with null marks are not paper-autobet candidates. `latest/journal.json` windows come from paper books and settlement joins, not only the live snapshot.
 
 Settlement source: CF Benchmarks, as documented on event `settlement_sources`. CF index id is pinned `BRTI` (from `rules_primary`).
 
@@ -90,7 +90,7 @@ Hub UI SoT is PR #151: `docs/observability-hub/data/manifest.json` + [SCHEMA.md]
 
 ## Hub
 
-Operator surface owns a single selector field: `lane=golf|learning_lane_15m` (canonical Hub UI SoT). `15m` is accepted as an alias that normalizes to `learning_lane_15m`. Default is `golf`. Unknown → golf. Switching reloads that lane’s artifacts only.
+Operator surface owns a single selector field: `lane=golf|learning_lane_15m` (canonical Hub UI SoT). No bare `15m` alias. Default is `golf`. Unknown → golf. Journal display label `15m` and CLI command `lane-15m` are not selector values. Switching reloads that lane’s artifacts only.
 
 ## Week-1 leftovers (PROPOSED — not Softened)
 

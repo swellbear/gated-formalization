@@ -7,6 +7,7 @@ from golf_offshoot.data_feeds.kalshi_15m import (
     SeriesNotAllowedError,
     TickerParseError,
     assert_public_read_url,
+    is_paper_autobet_candidate,
     parse_dollar_unit,
     parse_event,
     parse_event_ticker,
@@ -36,6 +37,17 @@ OPEN_MARKET = {
     "yes_ask_dollars": "0.5200",
     "yes_bid_dollars": "0.4800",
     "last_price_dollars": "0.5100",
+    "title": "BTC price up in next 15 mins?",
+}
+
+INITIALIZED_MARKET = {
+    "ticker": "KXBTC15M-26SEP071600-00",
+    "event_ticker": "KXBTC15M-26SEP071600",
+    "status": "initialized",
+    "result": "",
+    "yes_ask_dollars": None,
+    "yes_bid_dollars": None,
+    "last_price_dollars": None,
     "title": "BTC price up in next 15 mins?",
 }
 
@@ -156,6 +168,19 @@ def test_window_id_from_utc_open_close_not_edt_title():
     assert moved.endswith("2026-09-07T14:12:00Z")
 
 
+def test_initialized_null_mark_is_not_paper_candidate():
+    initialized = parse_market(INITIALIZED_MARKET, event=EVENT)
+    assert initialized["status"] == "initialized"
+    assert initialized["is_open"] is False
+    assert initialized["paper_mark"] is None
+    assert initialized["yes_ask"] is None
+    assert is_paper_autobet_candidate(initialized) is False
+    open_m = parse_market(OPEN_MARKET, event=EVENT)
+    assert open_m["is_open"] is True
+    assert open_m["paper_mark"] is not None
+    assert is_paper_autobet_candidate(open_m) is True
+
+
 def test_parse_open_and_settled_market():
     open_m = parse_market(OPEN_MARKET, event=EVENT)
     assert open_m["is_open"] is True
@@ -220,19 +245,33 @@ def test_public_url_guard():
 
 def test_feed_fetch_uses_injected_payload(monkeypatch):
     feed = Kalshi15mFeed()
+    urls: list[str] = []
 
     def fake_get(url, *, label, ttl_seconds, refresh):
+        urls.append(url)
         if "/series/" in url:
-            return {"series": SERIES}
-        if "events" in url:
+            return {"series": {**SERIES, "volume_fp": "1234.0"}}
+        if "/events" in url:
             return {"events": [EVENT]}
-        return {"markets": [OPEN_MARKET]}
+        if "status=open" in url:
+            return {"markets": [OPEN_MARKET]}
+        if "status=settled" in url:
+            return {"markets": [SETTLED_MARKET]}
+        return {"markets": [INITIALIZED_MARKET]}
 
     monkeypatch.setattr(feed, "_get", fake_get)
     payload, q = feed.fetch()
     assert payload["series"] == "KXBTC15M"
     assert payload["trading_armed"] is False
-    assert len(payload["markets"]) == 1
+    assert any("/series/KXBTC15M?include_volume=true" in u for u in urls)
+    assert any("/markets?" in u and "status=open" in u for u in urls)
+    assert any("/markets?" in u and "status=settled" in u for u in urls)
+    assert any("/events?" in u and "status=open" in u for u in urls)
+    assert payload["series_meta"].get("volume") == 1234.0
+    tickers = [m["ticker"] for m in payload["markets"]]
+    assert OPEN_MARKET["ticker"] in tickers
+    assert SETTLED_MARKET["ticker"] in tickers
+    assert INITIALIZED_MARKET["ticker"] not in tickers
     assert payload["markets"][0]["source_is_cf_benchmarks"] is True
     assert q.source_kind == SourceKind.REAL_LIVE
     try:
@@ -243,6 +282,27 @@ def test_feed_fetch_uses_injected_payload(monkeypatch):
     assert payload["cf_index_id"] == "BRTI"
     assert payload["cfb_ws_average_role"] == CFB_WS_AVERAGE_ROLE == "observe_only"
     assert payload["fee_type"] == "quadratic"
+
+
+def test_feed_prefers_open_over_initialized_default(monkeypatch):
+    feed = Kalshi15mFeed()
+
+    def fake_get(url, *, label, ttl_seconds, refresh):
+        if "/series/" in url:
+            return {"series": SERIES}
+        if "/events" in url:
+            return {"events": [EVENT]}
+        if "status=open" in url:
+            return {"markets": [OPEN_MARKET]}
+        if "status=settled" in url:
+            return {"markets": []}
+        return {"markets": [INITIALIZED_MARKET]}
+
+    monkeypatch.setattr(feed, "_get", fake_get)
+    payload, _q = feed.fetch()
+    assert [m["ticker"] for m in payload["markets"]] == [OPEN_MARKET["ticker"]]
+    assert payload["markets"][0]["status"] == "active"
+    assert is_paper_autobet_candidate(payload["markets"][0]) is True
 
 
 def test_feed_skips_foreign_series_tickers(monkeypatch):

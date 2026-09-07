@@ -64,7 +64,7 @@ Canonical ids. The tabs are the loudest thing on the page after the wall.
 | `lane_id` | Lane | Loud badge | State today |
 | --- | --- | --- | --- |
 | `golf` | Golf offshoot, Phase 1 observation | `PHASE 1 OBSERVATION` | Real committed exports. Settle banner up, WC1 dated **FAIL**, two charts published. |
-| `learning_lane_15m` | 15-minute Kalshi learning lane (`KXBTC15M`) | `LEARNING LANE` | **Nothing published yet.** Every panel reads `not yet available`. |
+| `learning_lane_15m` | 15-minute Kalshi learning lane (`KXBTC15M`) | `LEARNING LANE` | Pages export published. Live paper fill `KXBTC15M-26SEP071445-45` is `SETTLE_PENDING`. No 15m charts. |
 
 The 15-minute lane is deliberately empty rather than pre-filled. There are no KXBTC15M
 artifacts in this repository yet, so there is nothing honest to show — and a placeholder
