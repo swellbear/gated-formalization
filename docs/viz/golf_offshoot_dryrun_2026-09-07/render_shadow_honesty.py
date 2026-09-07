@@ -1,15 +1,27 @@
 #!/usr/bin/env python3
-"""Ill 1 — Shadow honesty strip.
+"""Ill 1 — Shadow honesty strip (settle-joined refresh).
 
-Renders ``shadow_honesty_strip.png`` from the real operating export
+Renders ``shadow_honesty_strip.png`` from the real operating exports
 ``source/shadow/advises.jsonl`` (162 paper-observation rows, FedEx St. Jude ->
-BMW -> TOUR Championship).
+BMW -> TOUR Championship) and ``source/shadow/settle_join_summary.json``.
 
-What the board is allowed to say: what was observed, in which market, in which
-advisory mode, and how the model's stated probability sat against the posted
-price. What it must never say: that anything settled, won, lost, paid, or
-established an edge. The export carries no settlement fields at all, so every
-settle/result column is drawn as PENDING / join later.
+The earlier cut of this board drew every settlement column as PENDING because the
+export genuinely had none. A real settle join has since landed, so the board now
+reads the settle fields that actually exist: ``settle_status``, ``settle_source``,
+``settled_at``. Nothing else. There is still no payout, stake-settled, closing-line,
+CLV, or ROI column anywhere in the export, so no money or edge figure is drawn.
+
+Denominator convention (founder Option A, Digestor digest is source of truth):
+
+* 122 **settleable** advises -> 88 ``paper_lose`` / 34 ``paper_win``, nothing pending
+  inside the denominator. There is no board-level SETTLE_PENDING badge.
+* 2 BMW place advises stay ``SETTLE_PENDING`` because their finish is unknown (the
+  player is absent from the official final field). They are held outside the
+  denominator rather than guessed at: not wins, not losses, never defaulted.
+* 38 round-leader in-play advises are ``never_settled`` by design. Honest nulls, not losses.
+
+The paper hit rate is only ever drawn with an OBSERVATION / NOT EDGE ESTABLISHED /
+NOT BANKED chip row attached to the figure itself.
 
 Usage:
     python render_shadow_honesty.py
@@ -30,6 +42,7 @@ import render_kit as kit
 
 HERE = Path(__file__).resolve().parent
 ADVISES = HERE / "source" / "shadow" / "advises.jsonl"
+SUMMARY = HERE / "source" / "shadow" / "settle_join_summary.json"
 OUT = HERE / "shadow_honesty_strip.png"
 
 TOURNAMENT_ORDER = [
@@ -42,6 +55,25 @@ MARKET_ORDER = ["win", "win_after_r1", "win_after_r2", "win_after_r3", "top_5", 
 
 ACTION_ORDER = ["new_bet", "exit", "add", "reallocate", "reduce"]
 
+# Markets whose result comes off the official final leaderboard. The round-leader
+# markets are deliberately absent: they resolve intra-tournament and the operating
+# system never settles them.
+SETTLEABLE_MARKETS = {"win", "top_5", "top_10", "top_20"}
+ROUND_LEADER_MARKETS = {"win_after_r1", "win_after_r2", "win_after_r3"}
+
+# The only two values the export ever carries, and the only two it is allowed to.
+ALLOWED_STATUS = {"paper_win", "paper_lose"}
+ALLOWED_SOURCES = {"paper_ledger_ticket", "espn_official_final"}
+
+# The 2 place advises that stay SETTLE_PENDING: Keith Mitchell did not appear in the
+# BMW Championship official final field, so there is no finish to settle against. They
+# keep the pending state and stay outside the settleable denominator; they are never
+# defaulted to a loss to make the board look finished.
+SETTLE_PENDING_KEYS = {
+    ("401811963", "8906", "top_10"),
+    ("401811963", "8906", "top_20"),
+}
+
 MARKET_COLOR = {
     "win": kit.ACCENT,
     "win_after_r1": "#8fd3f4",
@@ -52,41 +84,91 @@ MARKET_COLOR = {
     "top_20": "#f9dcae",
 }
 
-# Columns a settlement join would eventually supply. None of them exist in the
-# export, and none of them are being guessed at here.
-SETTLEMENT_COLUMNS = [
-    "settled_at",
-    "outcome / result",
-    "won / lost",
+# Categories, not profit and loss. Cyan/orange deliberately instead of green/red so a
+# glance at the settle panel cannot be read as money made or money lost.
+STATUS_COLOR = {"paper_win": kit.ACCENT, "paper_lose": kit.ACCENT_2}
+
+# Columns a money or edge claim would need. None of them exist in the export, and none
+# of them are being derived from the ones that do.
+ABSENT_COLUMNS = [
     "payout",
     "realized_pnl",
     "closing_line",
     "clv",
     "roi",
+    "stake_settled",
 ]
 
+MONEY_FIELD_HINTS = ("payout", "pnl", "profit", "clv", "roi", "closing_line", "stake_settled", "bankroll")
 
-SETTLEMENT_FIELD_HINTS = ("settle", "outcome", "result", "payout", "pnl", "profit", "clv", "roi", "won", "lost")
+
+def row_key(row: dict) -> tuple[str, str, str]:
+    return (row["tournament_id"], row["player_id"], row["market"])
 
 
-def load_rows() -> list[dict]:
+def load_rows() -> tuple[list[dict], dict]:
     with ADVISES.open() as fh:
         rows = [json.loads(line) for line in fh if line.strip()]
+    summary = json.loads(SUMMARY.read_text())
 
-    # The PENDING / join later panel is only honest while the export really has no
-    # settlement data. If one ever lands, fail loudly rather than redraw a false claim.
+    # ---- Honesty invariants. Each one guards a caption drawn on the board. ----
+
+    # 1. Only the three real settle fields, and only the two allowed vocabularies.
+    statuses = {r.get("settle_status") for r in rows} - {None}
+    sources = {r.get("settle_source") for r in rows} - {None}
+    assert statuses <= ALLOWED_STATUS, f"unexpected settle_status values: {sorted(statuses)}"
+    assert sources <= ALLOWED_SOURCES, f"unexpected settle_source values: {sorted(sources)}"
+
+    # 2. No money- or edge-shaped column has appeared. The board claims none exists.
     present = {k for r in rows for k in r}
-    leaked = sorted(k for k in present if any(h in k.lower() for h in SETTLEMENT_FIELD_HINTS))
-    assert not leaked, f"settlement-shaped fields appeared in the export: {leaked}"
-    return rows
+    leaked = sorted(k for k in present if any(h in k.lower() for h in MONEY_FIELD_HINTS))
+    assert not leaked, f"money/edge-shaped fields appeared in the export: {leaked}"
+
+    # 3. No status without a source, and no source without a status: nothing invented.
+    orphans = [r for r in rows if (r.get("settle_status") is None) != (r.get("settle_source") is None)]
+    assert not orphans, f"{len(orphans)} rows carry a settle status/source without the other"
+
+    # 4. Round-leader markets stay never_settled. Their nulls are by design, not losses.
+    leader_settled = [r for r in rows if r["market"] in ROUND_LEADER_MARKETS and r.get("settle_status")]
+    assert not leader_settled, f"{len(leader_settled)} round-leader rows got settled; they never should be"
+
+    # 5. The settleable denominator is fully settled and the only rows outside it are
+    #    the two adjudicated non-settleable place advises.
+    unsettled = {row_key(r) for r in rows if r["market"] in SETTLEABLE_MARKETS and not r.get("settle_status")}
+    assert unsettled == SETTLE_PENDING_KEYS, f"unexpected unsettled settleable rows: {sorted(unsettled)}"
+
+    # 6. The staged join summary and the raw rows have to agree, or one of them is stale.
+    counted = Counter(r.get("settle_status") for r in rows)
+    assert summary["n"] == len(rows), f"summary n={summary['n']} but export has {len(rows)} rows"
+    for key, expected in summary["settle_status_all"].items():
+        got = counted[None if key == "null" else key]
+        assert got == expected, f"summary settle_status_all[{key}]={expected} but export has {got}"
+
+    return rows, summary
 
 
-def hbar(ax, labels, values, colors, *, total, note=None):
+def buckets(rows: list[dict]) -> dict:
+    """Split the 162 rows into the four mutually exclusive settle buckets."""
+    pending = [r for r in rows if row_key(r) in SETTLE_PENDING_KEYS]
+    settled = [r for r in rows if r.get("settle_status")]
+    never_settled = [r for r in rows if r["market"] in ROUND_LEADER_MARKETS]
+    out = {
+        "settled": settled,
+        "settle_pending": pending,
+        "never_settled": never_settled,
+    }
+    assert len(settled) + len(pending) + len(never_settled) == len(rows), "buckets do not partition the export"
+    return out
+
+
+def hbar(ax, labels, values, colors, *, total, note=None, note_color=None, labelsize=None):
     y = np.arange(len(labels))[::-1]
     ax.barh(y, values, color=colors, height=0.62, zorder=3)
     ax.set_yticks(y)
     ax.set_yticklabels(labels)
-    ax.set_xlim(0, max(values) * 1.28)
+    if labelsize:
+        ax.tick_params(axis="y", labelsize=labelsize)
+    ax.set_xlim(0, max(values) * 1.30)
     ax.set_xticks([])
     ax.xaxis.grid(False)
     for yi, v in zip(y, values):
@@ -101,15 +183,29 @@ def hbar(ax, labels, values, colors, *, total, note=None):
             fontweight="bold",
         )
     if note:
+        # va="top" so a multi-line note always hangs below the panel; matplotlib
+        # otherwise anchors the block at its bottom line and pushes the rest inside.
         ax.annotate(
             note,
             xy=(0, 0),
             xycoords="axes fraction",
-            xytext=(0, -30),
+            xytext=(0, -22),
             textcoords="offset points",
+            va="top",
             fontsize=14,
-            color=kit.DIM,
+            color=note_color or kit.DIM,
+            linespacing=1.5,
         )
+
+
+def chip_row(ax, x, y, items, *, fontsize=12, gap=0.016):
+    """Lay chips left-to-right inside an axes, measuring each one as it is placed."""
+    fig = ax.get_figure()
+    for label, color in items:
+        t = kit.chip(ax, x, y, label, color, fontsize=fontsize, pad=0.28)
+        fig.canvas.draw()
+        width = t.get_window_extent(renderer=fig.canvas.get_renderer()).width
+        x += width / ax.get_window_extent().width + gap
 
 
 def draw_coverage(ax, rows):
@@ -142,7 +238,7 @@ def draw_markets(ax, rows):
         values,
         [MARKET_COLOR[m] for m in MARKET_ORDER],
         total=len(rows),
-        note="top_5 / top_10 / top_20 are place markets, not settled placings",
+        note="win / top_5 / top_10 / top_20 settle off the official final;\nwin_after_rN never settles",
     )
 
 
@@ -200,8 +296,9 @@ def draw_cadence(ax, rows):
         "not a fixed schedule · gaps are weeks with nothing worth writing down",
         xy=(0, 0),
         xycoords="axes fraction",
-        xytext=(0, -66),
+        xytext=(0, -52),
         textcoords="offset points",
+        va="top",
         fontsize=14,
         color=kit.DIM,
     )
@@ -219,7 +316,147 @@ def draw_actions(ax, rows):
         [kit.ACCENT if a == "new_bet" else kit.PENDING if a == "exit" else kit.ACCENT_3 for a in order],
         total=len(rows),
         note="an 'exit' is an advised exit from a paper position that was\n"
-        "never placed — it is not a realised loss and not a settlement",
+        "never placed — settling it on paper realised nothing",
+    )
+
+
+def draw_settle_mix(ax, rows):
+    settled = [r for r in rows if r.get("settle_status")]
+    counts = Counter(r["settle_status"] for r in settled)
+    order = ["paper_lose", "paper_win"]
+    n = len(settled)
+    hit = counts["paper_win"] / n
+    kit.panel(
+        ax,
+        f"Settle mix — the settleable {n}",
+        "real settle_status only · paper outcomes of tickets that were never placed",
+    )
+    hbar(
+        ax,
+        order,
+        [counts[s] for s in order],
+        [STATUS_COLOR[s] for s in order],
+        total=n,
+        note=f"{n}/{n} settleable advises carry a real settle_status · 0 pending inside\n"
+        "the denominator · colours are categories, not profit and loss",
+        note_color=kit.MUTED,
+    )
+    # Room under the bars for the hit rate, so the figure never appears without the
+    # chips that qualify it.
+    ax.set_ylim(-2.05, 1.5)
+    ax.text(
+        0.022,
+        0.235,
+        f"paper hit rate  {counts['paper_win']}/{n} ≈ {hit:.3f}",
+        transform=ax.transAxes,
+        va="center",
+        fontsize=19,
+        color=kit.TEXT,
+        fontweight="bold",
+    )
+    chip_row(
+        ax,
+        0.022,
+        0.10,
+        [
+            ("OBSERVATION", kit.WALL),
+            ("NOT EDGE ESTABLISHED", kit.WARN),
+            ("NOT BANKED", kit.WARN),
+        ],
+        fontsize=11,
+        gap=0.014,
+    )
+
+
+def draw_settle_sources(ax, rows):
+    counts = Counter(r.get("settle_source") for r in rows)
+    order = ["espn_official_final", "paper_ledger_ticket"]
+    values = [counts[s] for s in order]
+    dated = sum(1 for r in rows if r.get("settled_at"))
+    kit.panel(
+        ax,
+        "Where the settle came from",
+        "two sources, both real records · nothing inferred, nothing modelled",
+    )
+    hbar(
+        ax,
+        ["espn_official\n_final", "paper_ledger\n_ticket"],
+        values,
+        [kit.WALL, kit.ACCENT_3],
+        total=sum(values),
+        note=f"{sum(values)} settled rows · {dated} carry an explicit settled_at\n"
+        "(the paper-ledger tickets); the ESPN-final rows carry\nthe source, not a stamp",
+        labelsize=14,
+    )
+
+
+def draw_out_of_denominator(ax, rows):
+    leader = Counter(r["market"] for r in rows if r["market"] in ROUND_LEADER_MARKETS)
+    labels = ["win_after_r1", "win_after_r2", "win_after_r3", "SETTLE\n_PENDING"]
+    values = [leader["win_after_r1"], leader["win_after_r2"], leader["win_after_r3"], len(SETTLE_PENDING_KEYS)]
+    kit.panel(
+        ax,
+        "Outside the settle denominator",
+        "rows with no settle_status, and the honest reason each one has none",
+    )
+    hbar(
+        ax,
+        labels,
+        values,
+        [MARKET_COLOR["win_after_r1"], MARKET_COLOR["win_after_r2"], MARKET_COLOR["win_after_r3"], kit.PENDING],
+        total=sum(values),
+        note=f"{sum(values) - len(SETTLE_PENDING_KEYS)} round-leader rows are never_settled by design;\n"
+        f"the {len(SETTLE_PENDING_KEYS)} SETTLE_PENDING rows are the BMW top_10 + top_20\n"
+        "place advises · none of these is a loss and none is counted",
+    )
+
+
+def draw_residual(ax):
+    kit.text_panel(
+        ax,
+        "Residual: 2 advises still SETTLE_PENDING, held outside the denominator",
+        "kept pending on purpose — not a win, not a loss, not defaulted, not invented",
+    )
+    ax.text(
+        0.030,
+        0.855,
+        "Keith Mitchell · BMW Championship (401811963) · 2026-08-17 · both action_kind=new_bet",
+        transform=ax.transAxes,
+        va="center",
+        fontsize=19,
+        color=kit.TEXT,
+        fontweight="bold",
+    )
+    entries = [
+        ("top_10", "rec-2853b9e721", "posted 10.0 · model p 0.149"),
+        ("top_20", "rec-9643405947", "posted 10.0 · model p 0.301"),
+    ]
+    for i, (market, rec, detail) in enumerate(entries):
+        y = 0.700 - i * 0.145
+        kit.chip(ax, 0.030, y, "SETTLE_PENDING", kit.PENDING, fontsize=15, pad=0.32)
+        ax.text(
+            0.215,
+            y,
+            f"{market:<7}  {rec}",
+            transform=ax.transAxes,
+            va="center",
+            fontsize=18,
+            color=kit.TEXT,
+            family="DejaVu Sans Mono",
+        )
+        ax.text(0.530, y, f"finish_unknown · {detail}", transform=ax.transAxes, va="center", fontsize=17, color=kit.MUTED)
+    ax.text(
+        0.030,
+        0.435,
+        "Keith Mitchell is absent from the BMW official final field, so no place finish exists to settle these two\n"
+        "against. They keep the SETTLE_PENDING state rather than being defaulted to a loss to make the board look\n"
+        "finished, and they are held outside the settleable denominator so they cannot inflate or deflate the paper\n"
+        "hit rate. Pending means unset here: nothing was written where nothing is known.",
+        transform=ax.transAxes,
+        va="top",
+        fontsize=17,
+        color=kit.PENDING,
+        linespacing=1.55,
     )
 
 
@@ -270,18 +507,20 @@ def draw_spread(ax, rows):
         fontsize=15,
     )
     ax.annotate(
-        f"{missing} exit rows carry no posted price and are excluded from this panel · "
-        "spread is a disagreement in stated probability, NOT an established edge",
+        f"{missing} exit rows carry no posted price and are excluded from this panel · spread is a disagreement in\n"
+        "stated probability, NOT an established edge · the settle join does not turn it into one",
         xy=(0, 0),
         xycoords="axes fraction",
-        xytext=(0, -66),
+        xytext=(0, -52),
         textcoords="offset points",
+        va="top",
         fontsize=14,
         color=kit.DIM,
     )
 
 
 def draw_gap(ax, rows):
+    settled = sum(1 for r in rows if r.get("settle_status"))
     paired = [r for r in rows if r["posted_decimal"] and r["model_probability"] is not None]
     gaps = np.array([r["model_probability"] - 1.0 / r["posted_decimal"] for r in paired])
     kit.panel(
@@ -311,40 +550,59 @@ def draw_gap(ax, rows):
         linespacing=1.6,
     )
     ax.annotate(
-        "no outcome is attached to any bar",
+        f"bars are not split by settle_status — {settled} paper outcomes\nare too few to calibrate this, and it is not attempted",
         xy=(0, 0),
         xycoords="axes fraction",
-        xytext=(0, -66),
+        xytext=(0, -56),
         textcoords="offset points",
+        va="top",
         fontsize=14,
         color=kit.DIM,
+        linespacing=1.5,
     )
 
 
 def draw_walls(ax, rows):
     n = len(rows)
+    settled = [r for r in rows if r.get("settle_status")]
     kit.text_panel(
         ax,
         "Honesty walls held on every row",
         "field-by-field check against the export, not a claim about intent",
     )
     walls = [
-        ("paper_observation_only = true", sum(1 for r in rows if r["paper_observation_only"] is True)),
-        ("never_auto_bet = true", sum(1 for r in rows if r["never_auto_bet"] is True)),
-        ("run_mode = live (real book, paper record)", sum(1 for r in rows if r["run_mode"] == "live")),
-        ("uncertainty interval present (model_p_low/high)", sum(1 for r in rows if r.get("model_p_low") is not None)),
+        ("paper_observation_only = true", sum(1 for r in rows if r["paper_observation_only"] is True), n),
+        ("never_auto_bet = true", sum(1 for r in rows if r["never_auto_bet"] is True), n),
+        ("run_mode = live (real book, paper record)", sum(1 for r in rows if r["run_mode"] == "live"), n),
+        ("uncertainty interval present (model_p_low/high)", sum(1 for r in rows if r.get("model_p_low") is not None), n),
+        (
+            "settle_status ∈ {paper_win, paper_lose} only",
+            sum(1 for r in settled if r["settle_status"] in ALLOWED_STATUS),
+            len(settled),
+        ),
+        (
+            "settle_source ∈ {paper_ledger_ticket, espn_official_final}",
+            sum(1 for r in settled if r["settle_source"] in ALLOWED_SOURCES),
+            len(settled),
+        ),
+        (
+            "SETTLE_PENDING rows left unset, never defaulted to a loss",
+            sum(1 for r in rows if row_key(r) in SETTLE_PENDING_KEYS and r.get("settle_status") is None),
+            len(SETTLE_PENDING_KEYS),
+        ),
+        ("no payout / pnl / clv / roi / stake_settled column exists", n, n),
     ]
-    for i, (label, count) in enumerate(walls):
-        y = 0.86 - i * 0.235
-        held = count == n
-        kit.chip(ax, 0.035, y, f"{count}/{n}", kit.WALL if held else kit.WARN, fontsize=18)
+    for i, (label, count, denom) in enumerate(walls):
+        y = 0.915 - i * 0.116
+        held = count == denom
+        kit.chip(ax, 0.028, y, f"{count}/{denom}", kit.WALL if held else kit.WARN, fontsize=16)
         ax.text(
-            0.20,
+            0.185,
             y,
             label,
             transform=ax.transAxes,
             va="center",
-            fontsize=19,
+            fontsize=18,
             color=kit.TEXT,
         )
         ax.text(
@@ -360,46 +618,77 @@ def draw_walls(ax, rows):
         )
 
 
-def draw_pending(ax):
+def draw_columns(ax, rows):
+    settled = sum(1 for r in rows if r.get("settle_status"))
+    dated = sum(1 for r in rows if r.get("settled_at"))
     kit.text_panel(
         ax,
-        "Settlement columns: PENDING / join later",
-        "advises.jsonl has no settle, outcome, or PnL field — these are deliberately blank, not zero",
+        "What the join delivered — and what is still not in the export",
+        "the settle fields are read as-is; the money and edge columns remain absent, not zero",
     )
-    columns = (SETTLEMENT_COLUMNS[:4], SETTLEMENT_COLUMNS[4:])
-    for col, items in zip((0.035, 0.52), columns):
-        for i, name in enumerate(items):
-            y = 0.87 - i * 0.183
-            kit.chip(ax, col, y, "PENDING / join later", kit.PENDING, fontsize=14, pad=0.3)
-            ax.text(
-                col + 0.215,
-                y,
-                name,
-                transform=ax.transAxes,
-                va="center",
-                fontsize=18,
-                color=kit.TEXT,
-                family="DejaVu Sans Mono",
-            )
+    state_color = {"JOINED": kit.WALL, "PARTIAL": kit.PENDING, "PENDING": kit.PENDING}
+    joined = [
+        (f"settle_status ({settled}/{len(rows)})", "JOINED"),
+        (f"settle_source ({settled}/{len(rows)})", "JOINED"),
+        (f"settled_at ({dated}/{len(rows)})", "PARTIAL"),
+        (f"still unset ({len(SETTLE_PENDING_KEYS)}/{len(rows)})", "PENDING"),
+    ]
+    for i, (name, state) in enumerate(joined):
+        y = 0.900 - i * 0.165
+        kit.chip(ax, 0.028, y, state, state_color[state], fontsize=14, pad=0.3)
+        ax.text(
+            0.150,
+            y,
+            name,
+            transform=ax.transAxes,
+            va="center",
+            fontsize=16,
+            color=kit.TEXT,
+            family="DejaVu Sans Mono",
+        )
+    for i, name in enumerate(ABSENT_COLUMNS):
+        col = 0.455 if i < 3 else 0.725
+        y = 0.900 - (i % 3) * 0.165
+        kit.chip(ax, col, y, "ABSENT", kit.WARN, fontsize=14, pad=0.3)
+        ax.text(
+            col + 0.095,
+            y,
+            name,
+            transform=ax.transAxes,
+            va="center",
+            fontsize=16,
+            color=kit.TEXT,
+            family="DejaVu Sans Mono",
+        )
     ax.text(
-        0.035,
-        0.085,
-        "Any win/loss, hit rate, ROI, CLV, or profit number for this window would have to be invented. None is shown.",
+        0.028,
+        0.285,
+        "So: a paper win/lose count exists and is shown, and 2 rows stay unset.\n"
+        "Payout, PnL, ROI, CLV, and closing line do not exist and are not derived from it.",
         transform=ax.transAxes,
-        va="center",
-        fontsize=17,
+        va="top",
+        fontsize=16,
         color=kit.PENDING,
         fontweight="bold",
+        linespacing=1.5,
     )
 
 
-def draw_plain_english(ax):
+def draw_plain_english(ax, rows):
+    settled = [r for r in rows if r.get("settle_status")]
+    wins = sum(1 for r in settled if r["settle_status"] == "paper_win")
     kit.text_panel(ax, "In plain English", None)
     lines = [
         ("These are observations of a live sportsbook,", kit.TEXT),
         ("written down on paper. No money moved.", kit.TEXT),
         ("", kit.TEXT),
-        ("Not settled bets. Not a track record.", kit.PENDING),
+        ("The paper outcomes are now joined:", kit.TEXT),
+        (f"{wins} paper wins, {len(settled) - wins} paper losses, of {len(settled)}.", kit.TEXT),
+        ("Two are still pending and stay that way.", kit.TEXT),
+        ("", kit.TEXT),
+        ("That is a record of what would have", kit.PENDING),
+        ("happened to tickets nobody bought.", kit.PENDING),
+        ("Not banked money. Not a track record.", kit.PENDING),
         ("Not a Kalshi demo or mock feed —", kit.PENDING),
         ("this is the real operating export.", kit.PENDING),
         ("", kit.TEXT),
@@ -409,7 +698,7 @@ def draw_plain_english(ax):
     for i, (line, color) in enumerate(lines):
         ax.text(
             0.045,
-            0.90 - i * 0.098,
+            0.945 - i * 0.0655,
             line,
             transform=ax.transAxes,
             va="center",
@@ -421,28 +710,46 @@ def draw_plain_english(ax):
 
 def main() -> None:
     kit.apply_style()
-    rows = load_rows()
+    rows, summary = load_rows()
+    parts = buckets(rows)
+    settled = parts["settled"]
+    wins = sum(1 for r in settled if r["settle_status"] == "paper_win")
 
-    height = 25.0
+    height = 37.5
     fig = plt.figure(figsize=(24, height))
+    banner_top = kit.HEADER_BLOCK_IN
+    banner_h = 2.02
     gs = fig.add_gridspec(
-        5,
+        7,
         3,
         left=0.082,
         right=0.985,
-        top=1.0 - kit.HEADER_BLOCK_IN / height,
-        bottom=(kit.FOOTER_BLOCK_IN + 0.15) / height,
-        hspace=0.80,
-        wspace=0.32,
-        height_ratios=[1.0, 1.05, 1.30, 0.80, 0.84],
+        top=1.0 - (banner_top + banner_h + 1.05) / height,
+        bottom=3.72 / height,
+        hspace=1.10,
+        wspace=0.38,
+        height_ratios=[1.0, 1.05, 1.30, 1.05, 1.20, 1.05, 1.15],
     )
 
     kit.header(
         fig,
-        "GOLF-OFFSHOOT DRY RUN · ILL 1 OF 2 · 2026-09-07",
+        "GOLF-OFFSHOOT DRY RUN · ILL 1 OF 2 · 2026-09-07 · SETTLE-JOINED REFRESH",
         "Shadow honesty strip",
-        f"{len(rows)} paper-observation rows from the real operating shadow export. "
-        "Live book, paper record, no settlement joined yet.",
+        f"{len(rows)} paper-observation rows from the real operating shadow export, now with a real settle join. "
+        "Live book, paper record, no cash in or out.",
+    )
+    kit.banner(
+        fig,
+        banner_top,
+        banner_h,
+        f"SETTLE JOIN COMPLETE ON THE SETTLEABLE {len(settled)} — {wins} paper_win · {len(settled) - wins} paper_lose · "
+        "0 pending inside the denominator",
+        f"Denominator is {len(settled)} settleable advises. {len(parts['settle_pending'])} BMW place advises stay SETTLE_PENDING "
+        "(finish_unknown — Keith Mitchell is absent from the official final),\n"
+        f"and {len(parts['never_settled'])} round-leader in-play advises are never_settled by design. All "
+        f"{len(parts['settle_pending']) + len(parts['never_settled'])} are held outside the denominator, never defaulted to a loss.\n"
+        f"Paper hit rate {wins}/{len(settled)} ≈ {wins / len(settled):.3f} is an OBSERVATION of unplaced paper tickets: "
+        "NOT an edge, NOT ROI, NOT banked money.",
     )
 
     draw_coverage(fig.add_subplot(gs[0, 0]), rows)
@@ -455,24 +762,50 @@ def main() -> None:
     draw_spread(fig.add_subplot(gs[2, 0:2]), rows)
     draw_gap(fig.add_subplot(gs[2, 2]), rows)
 
-    draw_walls(fig.add_subplot(gs[3, 0:2]), rows)
-    draw_plain_english(fig.add_subplot(gs[3:5, 2]))
+    draw_settle_mix(fig.add_subplot(gs[3, 0]), rows)
+    draw_settle_sources(fig.add_subplot(gs[3, 1]), rows)
+    draw_out_of_denominator(fig.add_subplot(gs[3, 2]), rows)
 
-    draw_pending(fig.add_subplot(gs[4, 0:2]))
+    draw_residual(fig.add_subplot(gs[4, 0:2]))
+    draw_plain_english(fig.add_subplot(gs[4:7, 2]), rows)
 
-    kit.badge_strip(fig)
+    draw_walls(fig.add_subplot(gs[5, 0:2]), rows)
+    draw_columns(fig.add_subplot(gs[6, 0:2]), rows)
+
+    kit.badge_strip(
+        fig,
+        y_in=2.74,
+        extra=[
+            ("NOT EDGE ESTABLISHED", kit.WARN),
+            ("NOT BANKED MONEY", kit.WARN),
+            ("SETTLE SOURCES: paper_ledger_ticket + espn_official_final", kit.ACCENT_3),
+        ],
+    )
     kit.footer(
         fig,
         [
             "Source: docs/viz/golf_offshoot_dryrun_2026-09-07/source/shadow/advises.jsonl "
-            "(162 rows, run_mode=live, paper_observation_only=true, never_auto_bet=true).",
-            "Rendered by render_shadow_honesty.py. Counts are read straight from the export; "
-            "no win/loss, edge-established, or buy/sell language is derived or implied.",
+            f"({len(rows)} rows, run_mode=live, paper_observation_only=true, never_auto_bet=true)",
+            "+ source/shadow/settle_join_summary.json. Both staged exports are unmodified. Settle fields are read "
+            "as-is: settle_status ∈ {paper_win, paper_lose},",
+            "settle_source ∈ {paper_ledger_ticket, espn_official_final}. The summary's overall null count of "
+            f"{summary['settle_status_all']['null']} is {len(parts['never_settled'])} never_settled round-leader rows",
+            f"plus the {len(parts['settle_pending'])} SETTLE_PENDING place advises. The summary records "
+            f"SETTLE_PENDING_cleared=false against its own {summary['relevant_n']}-row relevant denominator, and those",
+            f"{len(parts['settle_pending'])} rows do stay pending — they are held outside the {len(settled)}-row settleable "
+            "denominator, which is itself fully joined. Neither row is defaulted to a loss.",
+            "Rendered by render_shadow_honesty.py. No payout, PnL, ROI, CLV, closing-line, edge-established, or "
+            "buy/sell figure is derived or implied from the paper win/lose counts.",
         ],
+        y_in=2.35,
     )
 
     w, h = kit.save(fig, OUT)
-    print(f"wrote {OUT} ({w}x{h}px) from {len(rows)} rows")
+    print(
+        f"wrote {OUT} ({w}x{h}px) from {len(rows)} rows · "
+        f"settleable {len(settled)} ({wins} paper_win / {len(settled) - wins} paper_lose, 0 pending inside) · "
+        f"held outside: {len(parts['settle_pending'])} SETTLE_PENDING + {len(parts['never_settled'])} never_settled"
+    )
 
 
 if __name__ == "__main__":

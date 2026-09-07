@@ -153,30 +153,86 @@ def header(fig, kicker: str, title: str, standfirst: str) -> None:
     fig.text(0.012, _from_top(fig, 1.30), standfirst, fontsize=19, color=MUTED, va="top", linespacing=1.45)
 
 
-def badge_strip(fig, y_in: float = 1.10) -> None:
-    """The shared honesty badges. Identical on every board in this set."""
+def banner(
+    fig,
+    y_in: float,
+    height_in: float,
+    headline: str,
+    body: str,
+    color: str = WALL,
+    facecolor: str = "#10202b",
+) -> None:
+    """Full-width callout box measured in inches down from the top of the figure."""
+    x0, x1 = 0.012, 0.988
+    fig.patches.append(
+        FancyBboxPatch(
+            (x0, _from_top(fig, y_in + height_in)),
+            x1 - x0,
+            height_in / fig.get_figheight(),
+            boxstyle="round,pad=0,rounding_size=0.006",
+            transform=fig.transFigure,
+            facecolor=facecolor,
+            edgecolor=color,
+            linewidth=2.4,
+            zorder=1,
+        )
+    )
+    fig.text(
+        x0 + 0.012,
+        _from_top(fig, y_in + 0.34),
+        headline,
+        fontsize=24,
+        color=color,
+        fontweight="bold",
+        va="center",
+        zorder=2,
+    )
+    fig.text(
+        x0 + 0.012,
+        _from_top(fig, y_in + 0.72),
+        body,
+        fontsize=17,
+        color=TEXT,
+        va="top",
+        linespacing=1.5,
+        zorder=2,
+    )
+
+
+def _badge_row(fig, y_in: float, labels: list[tuple[str, str]], fontsize: int) -> None:
     x = 0.012
     y = _from_bottom(fig, y_in)
-    for label in BADGES:
+    for label, color in labels:
         t = fig.text(
             x,
             y,
             label,
-            fontsize=16,
-            color=WALL,
+            fontsize=fontsize,
+            color=color,
             fontweight="bold",
             va="center",
             ha="left",
             bbox=dict(
                 boxstyle="round,pad=0.42",
                 facecolor="#10202b",
-                edgecolor=WALL,
+                edgecolor=color,
                 linewidth=1.6,
             ),
         )
         fig.canvas.draw()
         bbox = t.get_window_extent(renderer=fig.canvas.get_renderer())
         x += bbox.width / fig.bbox.width + 0.014
+
+
+def badge_strip(fig, y_in: float = 1.10, extra: list[tuple[str, str]] | None = None) -> None:
+    """The shared honesty badges. Identical on every board in this set.
+
+    ``extra`` adds a second, board-specific row above the shared one. A board that
+    passes nothing gets a byte-identical strip to every other board here.
+    """
+    _badge_row(fig, y_in, [(label, WALL) for label in BADGES], 16)
+    if extra:
+        _badge_row(fig, y_in + 0.62, extra, 16)
 
 
 def footer(fig, lines: list[str], y_in: float = 0.72) -> None:
