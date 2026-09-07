@@ -19,7 +19,7 @@ Journals stay isolated. Golf paper/shadow never write into the 15m root. Live `g
 
 ## Contract locks
 
-- Canonical lane ids: `golf` | `learning_lane_15m` (Hub UI SoT). `15m` aliases to `learning_lane_15m`.
+- Canonical lane ids: `golf` | `learning_lane_15m` exact. No short `15m` alias.
 - `lanes` is an **array**.
 - Operating figures are **strings**.
 - Forbidden control / cash / secret **keys** are refused (including `bankroll` and `autobet` as keys). Paper counts go under `paper_ledger.rows` labels/values.

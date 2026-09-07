@@ -90,7 +90,7 @@ Hub UI SoT is PR #151: `docs/observability-hub/data/manifest.json` + [SCHEMA.md]
 
 ## Hub
 
-Operator surface owns a single selector field: `lane=golf|learning_lane_15m` (canonical Hub UI SoT). `15m` is accepted as an alias that normalizes to `learning_lane_15m`. Default is `golf`. Unknown → golf. Switching reloads that lane’s artifacts only.
+Operator surface owns a single selector field: `lane=golf|learning_lane_15m` (exact). No short `15m` alias. Default is `golf`. Unknown → golf. Switching reloads that lane’s artifacts only.
 
 ## Week-1 leftovers (PROPOSED — not Softened)
 
