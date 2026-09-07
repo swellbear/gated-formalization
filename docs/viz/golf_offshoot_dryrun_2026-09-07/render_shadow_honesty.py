@@ -15,9 +15,10 @@ Denominator convention (founder Option A, Digestor digest is source of truth):
 
 * 122 **settleable** advises -> 88 ``paper_lose`` / 34 ``paper_win``, nothing pending
   inside the denominator. There is no board-level SETTLE_PENDING badge.
-* 2 BMW place advises stay ``SETTLE_PENDING`` because their finish is unknown (the
-  player is absent from the official final field). They are held outside the
-  denominator rather than guessed at: not wins, not losses, never defaulted.
+* 2 BMW place advises are **excluded** as ``absent_from_official_field``: the player is
+  not on the official STATUS_FINAL finisher list, so no finish exists to settle them
+  against. Non-settleable, dropped from the pending denominator — not board
+  SETTLE_PENDING, not wins, not losses, never defaulted.
 * 38 round-leader in-play advises are ``never_settled`` by design. Honest nulls, not losses.
 
 The paper hit rate is only ever drawn with an OBSERVATION / NOT EDGE ESTABLISHED /
@@ -65,11 +66,13 @@ ROUND_LEADER_MARKETS = {"win_after_r1", "win_after_r2", "win_after_r3"}
 ALLOWED_STATUS = {"paper_win", "paper_lose"}
 ALLOWED_SOURCES = {"paper_ledger_ticket", "espn_official_final"}
 
-# The 2 place advises that stay SETTLE_PENDING: Keith Mitchell did not appear in the
-# BMW Championship official final field, so there is no finish to settle against. They
-# keep the pending state and stay outside the settleable denominator; they are never
-# defaulted to a loss to make the board look finished.
-SETTLE_PENDING_KEYS = {
+# The 2 place advises excluded as absent_from_official_field: Keith Mitchell did not
+# appear in the BMW Championship official final field, so there is no finish to settle
+# against. Founder Option A adjudicates them never_settled / absent-from-field —
+# non-settleable, dropped from the pending denominator, and never defaulted to a loss to
+# make the board look finished. The staged export leaves their settle fields unset.
+ABSENT_FIELD_TOKEN = "absent_from_official_field"
+ABSENT_FIELD_KEYS = {
     ("401811963", "8906", "top_10"),
     ("401811963", "8906", "top_20"),
 }
@@ -135,7 +138,7 @@ def load_rows() -> tuple[list[dict], dict]:
     # 5. The settleable denominator is fully settled and the only rows outside it are
     #    the two adjudicated non-settleable place advises.
     unsettled = {row_key(r) for r in rows if r["market"] in SETTLEABLE_MARKETS and not r.get("settle_status")}
-    assert unsettled == SETTLE_PENDING_KEYS, f"unexpected unsettled settleable rows: {sorted(unsettled)}"
+    assert unsettled == ABSENT_FIELD_KEYS, f"unexpected unsettled settleable rows: {sorted(unsettled)}"
 
     # 6. The staged join summary and the raw rows have to agree, or one of them is stale.
     counted = Counter(r.get("settle_status") for r in rows)
@@ -148,16 +151,16 @@ def load_rows() -> tuple[list[dict], dict]:
 
 
 def buckets(rows: list[dict]) -> dict:
-    """Split the 162 rows into the four mutually exclusive settle buckets."""
-    pending = [r for r in rows if row_key(r) in SETTLE_PENDING_KEYS]
+    """Split the 162 rows into the three mutually exclusive settle buckets."""
+    excluded = [r for r in rows if row_key(r) in ABSENT_FIELD_KEYS]
     settled = [r for r in rows if r.get("settle_status")]
     never_settled = [r for r in rows if r["market"] in ROUND_LEADER_MARKETS]
     out = {
         "settled": settled,
-        "settle_pending": pending,
+        "excluded_absent_field": excluded,
         "never_settled": never_settled,
     }
-    assert len(settled) + len(pending) + len(never_settled) == len(rows), "buckets do not partition the export"
+    assert len(settled) + len(excluded) + len(never_settled) == len(rows), "buckets do not partition the export"
     return out
 
 
@@ -392,8 +395,8 @@ def draw_settle_sources(ax, rows):
 
 def draw_out_of_denominator(ax, rows):
     leader = Counter(r["market"] for r in rows if r["market"] in ROUND_LEADER_MARKETS)
-    labels = ["win_after_r1", "win_after_r2", "win_after_r3", "SETTLE\n_PENDING"]
-    values = [leader["win_after_r1"], leader["win_after_r2"], leader["win_after_r3"], len(SETTLE_PENDING_KEYS)]
+    labels = ["win_after_r1", "win_after_r2", "win_after_r3", "absent_from\n_official_field"]
+    values = [leader["win_after_r1"], leader["win_after_r2"], leader["win_after_r3"], len(ABSENT_FIELD_KEYS)]
     kit.panel(
         ax,
         "Outside the settle denominator",
@@ -405,17 +408,19 @@ def draw_out_of_denominator(ax, rows):
         values,
         [MARKET_COLOR["win_after_r1"], MARKET_COLOR["win_after_r2"], MARKET_COLOR["win_after_r3"], kit.PENDING],
         total=sum(values),
-        note=f"{sum(values) - len(SETTLE_PENDING_KEYS)} round-leader rows are never_settled by design;\n"
-        f"the {len(SETTLE_PENDING_KEYS)} SETTLE_PENDING rows are the BMW top_10 + top_20\n"
-        "place advises · none of these is a loss and none is counted",
+        note=f"{sum(values) - len(ABSENT_FIELD_KEYS)} round-leader rows are never_settled by design;\n"
+        f"the {len(ABSENT_FIELD_KEYS)} excluded rows are the BMW top_10 + top_20 place\n"
+        "advises, absent from the official final field ·\n"
+        "none of these is a loss and none is counted",
+        labelsize=14,
     )
 
 
 def draw_residual(ax):
     kit.text_panel(
         ax,
-        "Residual: 2 advises still SETTLE_PENDING, held outside the denominator",
-        "kept pending on purpose — not a win, not a loss, not defaulted, not invented",
+        f"Residual: 2 advises excluded as {ABSENT_FIELD_TOKEN}, outside the denominator",
+        "non-settleable — not board SETTLE_PENDING, not a win, not a loss, not invented",
     )
     ax.text(
         0.030,
@@ -433,9 +438,9 @@ def draw_residual(ax):
     ]
     for i, (market, rec, detail) in enumerate(entries):
         y = 0.700 - i * 0.145
-        kit.chip(ax, 0.030, y, "SETTLE_PENDING", kit.PENDING, fontsize=15, pad=0.32)
+        kit.chip(ax, 0.030, y, "EXCLUDED", kit.PENDING, fontsize=15, pad=0.32)
         ax.text(
-            0.215,
+            0.160,
             y,
             f"{market:<7}  {rec}",
             transform=ax.transAxes,
@@ -444,14 +449,22 @@ def draw_residual(ax):
             color=kit.TEXT,
             family="DejaVu Sans Mono",
         )
-        ax.text(0.530, y, f"finish_unknown · {detail}", transform=ax.transAxes, va="center", fontsize=17, color=kit.MUTED)
+        ax.text(
+            0.470,
+            y,
+            f"{ABSENT_FIELD_TOKEN} · {detail}",
+            transform=ax.transAxes,
+            va="center",
+            fontsize=17,
+            color=kit.MUTED,
+        )
     ax.text(
         0.030,
         0.435,
-        "Keith Mitchell is absent from the BMW official final field, so no place finish exists to settle these two\n"
-        "against. They keep the SETTLE_PENDING state rather than being defaulted to a loss to make the board look\n"
-        "finished, and they are held outside the settleable denominator so they cannot inflate or deflate the paper\n"
-        "hit rate. Pending means unset here: nothing was written where nothing is known.",
+        "Keith Mitchell is not on the BMW official final field, so no place finish exists to settle these two\n"
+        "against. Founder Option A adjudicates them never_settled / absent_from_official_field — non-settleable,\n"
+        "so they are dropped from the pending denominator and held outside the settleable 122. They are not\n"
+        "board SETTLE_PENDING, and never defaulted to a loss: the staged export leaves them unset.",
         transform=ax.transAxes,
         va="top",
         fontsize=17,
@@ -586,9 +599,9 @@ def draw_walls(ax, rows):
             len(settled),
         ),
         (
-            "SETTLE_PENDING rows left unset, never defaulted to a loss",
-            sum(1 for r in rows if row_key(r) in SETTLE_PENDING_KEYS and r.get("settle_status") is None),
-            len(SETTLE_PENDING_KEYS),
+            "excluded absent-from-field rows left unset, never defaulted to a loss",
+            sum(1 for r in rows if row_key(r) in ABSENT_FIELD_KEYS and r.get("settle_status") is None),
+            len(ABSENT_FIELD_KEYS),
         ),
         ("no payout / pnl / clv / roi / stake_settled column exists", n, n),
     ]
@@ -626,12 +639,12 @@ def draw_columns(ax, rows):
         "What the join delivered — and what is still not in the export",
         "the settle fields are read as-is; the money and edge columns remain absent, not zero",
     )
-    state_color = {"JOINED": kit.WALL, "PARTIAL": kit.PENDING, "PENDING": kit.PENDING}
+    state_color = {"JOINED": kit.WALL, "PARTIAL": kit.PENDING, "EXCLUDED": kit.PENDING}
     joined = [
         (f"settle_status ({settled}/{len(rows)})", "JOINED"),
         (f"settle_source ({settled}/{len(rows)})", "JOINED"),
         (f"settled_at ({dated}/{len(rows)})", "PARTIAL"),
-        (f"still unset ({len(SETTLE_PENDING_KEYS)}/{len(rows)})", "PENDING"),
+        (f"unset ({len(ABSENT_FIELD_KEYS)}/{len(rows)})", "EXCLUDED"),
     ]
     for i, (name, state) in enumerate(joined):
         y = 0.900 - i * 0.165
@@ -663,7 +676,7 @@ def draw_columns(ax, rows):
     ax.text(
         0.028,
         0.285,
-        "So: a paper win/lose count exists and is shown, and 2 rows stay unset.\n"
+        "So: a paper win/lose count exists and is shown, and 2 absent-from-field rows stay unset and excluded.\n"
         "Payout, PnL, ROI, CLV, and closing line do not exist and are not derived from it.",
         transform=ax.transAxes,
         va="top",
@@ -684,7 +697,7 @@ def draw_plain_english(ax, rows):
         ("", kit.TEXT),
         ("The paper outcomes are now joined:", kit.TEXT),
         (f"{wins} paper wins, {len(settled) - wins} paper losses, of {len(settled)}.", kit.TEXT),
-        ("Two are still pending and stay that way.", kit.TEXT),
+        ("Two are excluded: not on the final field.", kit.TEXT),
         ("", kit.TEXT),
         ("That is a record of what would have", kit.PENDING),
         ("happened to tickets nobody bought.", kit.PENDING),
@@ -744,10 +757,10 @@ def main() -> None:
         banner_h,
         f"SETTLE JOIN COMPLETE ON THE SETTLEABLE {len(settled)} — {wins} paper_win · {len(settled) - wins} paper_lose · "
         "0 pending inside the denominator",
-        f"Denominator is {len(settled)} settleable advises. {len(parts['settle_pending'])} BMW place advises stay SETTLE_PENDING "
-        "(finish_unknown — Keith Mitchell is absent from the official final),\n"
+        f"Denominator is {len(settled)} settleable advises. {len(parts['excluded_absent_field'])} BMW place advises are excluded as "
+        f"{ABSENT_FIELD_TOKEN} (Keith Mitchell is not on the official final field),\n"
         f"and {len(parts['never_settled'])} round-leader in-play advises are never_settled by design. All "
-        f"{len(parts['settle_pending']) + len(parts['never_settled'])} are held outside the denominator, never defaulted to a loss.\n"
+        f"{len(parts['excluded_absent_field']) + len(parts['never_settled'])} are held outside the denominator, never defaulted to a loss.\n"
         f"Paper hit rate {wins}/{len(settled)} ≈ {wins / len(settled):.3f} is an OBSERVATION of unplaced paper tickets: "
         "NOT an edge, NOT ROI, NOT banked money.",
     )
@@ -790,10 +803,12 @@ def main() -> None:
             "as-is: settle_status ∈ {paper_win, paper_lose},",
             "settle_source ∈ {paper_ledger_ticket, espn_official_final}. The summary's overall null count of "
             f"{summary['settle_status_all']['null']} is {len(parts['never_settled'])} never_settled round-leader rows",
-            f"plus the {len(parts['settle_pending'])} SETTLE_PENDING place advises. The summary records "
-            f"SETTLE_PENDING_cleared=false against its own {summary['relevant_n']}-row relevant denominator, and those",
-            f"{len(parts['settle_pending'])} rows do stay pending — they are held outside the {len(settled)}-row settleable "
-            "denominator, which is itself fully joined. Neither row is defaulted to a loss.",
+            f"plus the {len(parts['excluded_absent_field'])} absent-from-field place advises. The staged summary predates founder "
+            "Option A: it records SETTLE_PENDING_cleared=false against its own",
+            f"{summary['relevant_n']}-row relevant denominator, which still counts those "
+            f"{len(parts['excluded_absent_field'])} rows. Option A excludes {ABSENT_FIELD_TOKEN} rows from that denominator, leaving",
+            f"the {len(settled)}-row settleable denominator, which is fully joined — so no board-level SETTLE_PENDING is claimed "
+            "and neither row is defaulted to a loss.",
             "Rendered by render_shadow_honesty.py. No payout, PnL, ROI, CLV, closing-line, edge-established, or "
             "buy/sell figure is derived or implied from the paper win/lose counts.",
         ],
@@ -804,7 +819,8 @@ def main() -> None:
     print(
         f"wrote {OUT} ({w}x{h}px) from {len(rows)} rows · "
         f"settleable {len(settled)} ({wins} paper_win / {len(settled) - wins} paper_lose, 0 pending inside) · "
-        f"held outside: {len(parts['settle_pending'])} SETTLE_PENDING + {len(parts['never_settled'])} never_settled"
+        f"held outside: {len(parts['excluded_absent_field'])} excluded {ABSENT_FIELD_TOKEN} "
+        f"+ {len(parts['never_settled'])} never_settled"
     )
 
 
