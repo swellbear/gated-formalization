@@ -12,6 +12,7 @@ from golf_offshoot.operator_surface.paths import PathUnsafeError, ResolvedRoots,
 
 SLOT_SHADOW = "shadow_honesty_strip"
 SLOT_CALIBRATION = "calibration_weather"
+SLOT_WC1_DATED_RECORD = "wc1_dated_record"
 NOT_YET_AVAILABLE = "not yet available"
 
 VIZ_BADGES = (
@@ -30,6 +31,11 @@ SLOT_SPECS = {
         "title": "Calibration weather",
         "filename": "calibration_weather.png",
         "subline": "All freezes keep_expert (v1→v3) — not edge established",
+    },
+    SLOT_WC1_DATED_RECORD: {
+        "title": "WC1 dated record",
+        "filename": "wc1_dated_record.png",
+        "subline": "Operator ADMIT FAIL / park unproven · never banked-edge",
     },
 }
 

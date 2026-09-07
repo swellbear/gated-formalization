@@ -15,7 +15,11 @@ ENV_SHADOW_PATH = "GOLF_OFFSHOOT_SHADOW_PATH"
 DEFAULT_EXTERNAL_ARTIFACT_ROOT = Path("/workspace/golf_offshoot_real_exports")
 DEFAULT_EXTERNAL_VIZ_ROOT = Path("/workspace/illustrator_ops/golf_offshoot")
 REPO_VIZ_FALLBACK = Path("docs") / "viz" / "golf_offshoot_dryrun_2026-09-07"
-ILL_PNG_NAMES = ("shadow_honesty_strip.png", "calibration_weather.png")
+ILL_PNG_NAMES = (
+    "shadow_honesty_strip.png",
+    "calibration_weather.png",
+    "wc1_dated_record.png",
+)
 
 
 class PathUnsafeError(ValueError):
