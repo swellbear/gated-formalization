@@ -16,6 +16,10 @@ Permanent badges on every slot (Phase 1 trio only):
 
 Hard NO on the WC1 panel language: `banked-edge` / `edge established` / `SETTLE_PENDING`. Demo/mock edge language stays barred on the whole wall.
 
+The hub renders the wall **above the fold** — directly after the `PHASE 1 OBSERVATION` header/badges and the settle banner, before the action buttons and the long `pre` blocks. Each slot also carries a plain-English one-liner next to (never instead of) the honest subline above; that one-liner obeys the same Hard NO language rules as the slot it sits under. Placement and copy are display only: the wall stays a read-only file render, and a missing slot stays `not yet available`.
+
+Stable anchors for future auto-reload targeting: the chart grid is `id="viz-wall"` and each slot is `id="viz-slot-<slot_id>"`. They are markup hooks only — the wall block carries no script and no inline handlers of its own.
+
 ## Path precedence
 
 Hardcoded `/workspace/...` is a local operator default only. It will not exist everywhere.

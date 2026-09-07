@@ -18,7 +18,7 @@ from golf_offshoot.models.strategy import (
     StrategyStatusSummary,
     new_id,
 )
-from golf_offshoot.operator_surface.app import build_surface, render_html, render_text
+from golf_offshoot.operator_surface.app import SLOT_PLAIN_HELP, build_surface, render_html, render_text
 from golf_offshoot.operator_surface.artifacts import (
     CALIB_MISSING,
     LIVE_TABLE_MISSING,
@@ -51,7 +51,13 @@ from golf_offshoot.operator_surface.runner import (
     run_live,
     run_loop,
 )
-from golf_offshoot.operator_surface.viz import NOT_YET_AVAILABLE, VIZ_BADGES, load_viz_wall, viz_file_for_serve
+from golf_offshoot.operator_surface.viz import (
+    NOT_YET_AVAILABLE,
+    SLOT_WC1_DATED_RECORD,
+    VIZ_BADGES,
+    load_viz_wall,
+    viz_file_for_serve,
+)
 from golf_offshoot.ranking.leftover import leftover_from_audit
 
 import pytest
@@ -686,6 +692,70 @@ def test_hub_html_renders_viz_pngs_when_present(tmp_path):
     assert "PHASE 1 OBSERVATION" in page
     assert "AI: NO CASH IN/OUT" in page
     assert "PAPER OBSERVATION ONLY" in page
+
+
+def test_hub_puts_viz_wall_above_dense_blocks(tmp_path):
+    viz = tmp_path / "viz"
+    viz.mkdir()
+    (viz / "shadow_honesty_strip.png").write_bytes(b"\x89PNG\r\n\x1a\n")
+    (viz / "calibration_weather.png").write_bytes(b"\x89PNG\r\n\x1a\n")
+    (viz / "wc1_dated_record.png").write_bytes(b"\x89PNG\r\n\x1a\n")
+    (tmp_path / "latest").mkdir()
+    (tmp_path / "latest" / "401811963_live_x.txt").write_text("real live table\nnever auto-bet\n", encoding="utf-8")
+    page = render_html(build_surface(event_id="401811963", artifact_root=tmp_path, viz_root=viz))
+    wall = page.index('id="viz-wall"')
+    assert wall < page.index("What you can do here")
+    assert wall < page.index("Ranked table")
+    assert wall < page.index("Paper journal (shadow log)")
+    assert page.index("PHASE 1 OBSERVATION") < wall
+    assert page.index(CASH_BADGE) < wall
+
+
+def test_hub_viz_wall_anchors_are_display_only(tmp_path):
+    viz = tmp_path / "viz"
+    viz.mkdir()
+    (viz / "shadow_honesty_strip.png").write_bytes(b"\x89PNG\r\n\x1a\n")
+    page = render_html(build_surface(artifact_root=tmp_path, viz_root=viz))
+    assert 'id="viz-wall"' in page
+    for slot_id in ("shadow_honesty_strip", "calibration_weather", "wc1_dated_record"):
+        assert f'id="viz-slot-{slot_id}"' in page
+    block = page[page.index('id="viz-wall"') : page.index("What you can do here")]
+    assert "<script" not in block
+    assert "onclick" not in block
+    assert "onload" not in block
+    wc1_copy = SLOT_PLAIN_HELP[SLOT_WC1_DATED_RECORD]
+    assert wc1_copy in block
+    assert "banked-edge" not in wc1_copy
+    assert "SETTLE_PENDING" not in wc1_copy
+    assert "edge established" not in wc1_copy.lower()
+
+
+def test_hub_action_labels_are_plain_and_post_values_unchanged(tmp_path):
+    page = render_html(build_surface(artifact_root=tmp_path, viz_root=tmp_path / "viz"))
+    for value in ("ingest", "live", "shadow", "loop", "refresh"):
+        assert f'value="{value}"' in page
+    for label in ("Pull latest data", "Update live ranks", "Check paper journal", "Do all three", "Reload files"):
+        assert label in page
+    assert ">ingest<" not in page
+    assert ">shadow<" not in page
+    assert "reload artifacts" not in page
+
+
+def test_hub_settle_banner_is_loud(tmp_path):
+    missing = render_html(build_surface(artifact_root=tmp_path, viz_root=tmp_path / "viz"))
+    assert 'class="settle"' in missing
+    assert SHADOW_MISSING in missing
+    assert "not zero edge" in missing
+    _write_jsonl(tmp_path / "shadow" / "advises.jsonl", [_shadow_row()])
+    pending = render_html(build_surface(artifact_root=tmp_path, viz_root=tmp_path / "viz"))
+    assert 'class="settle"' in pending
+    assert SETTLE_PENDING in pending
+    assert "not settled cash" in pending
+    assert "paper wins 0" in pending
+    (tmp_path / "shadow" / "advises.jsonl").write_text("OFFLINE DEMO — MOCK DATA\n", encoding="utf-8")
+    barred = render_html(build_surface(artifact_root=tmp_path, viz_root=tmp_path / "viz"))
+    assert "SHADOW_BARRED_MOCK" in barred
+    assert "barred from the honesty wall" in barred
 
 
 def test_hub_http_serves_viz_pngs(tmp_path):
