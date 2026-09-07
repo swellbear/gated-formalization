@@ -176,6 +176,13 @@ def _settle_banner_html(honesty: HonestyBundle) -> str:
         f"paper wins {counts.get('paper_win', 0)} · paper losses {counts.get('paper_lose', 0)} · "
         f"never settled {counts.get('never_settled', 0)} · no result yet {counts.get('missing', 0)}"
     )
+    if shadow.barred_mock:
+        return (
+            '<div class="settle">'
+            f"<strong>{html.escape(shadow.status)}</strong> — the paper journal is labelled MOCK/DEMO, so it is "
+            "barred from the honesty wall. Nothing in it settles anything."
+            "</div>"
+        )
     if shadow.status != "SHADOW_OK":
         return (
             '<div class="settle">'

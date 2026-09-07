@@ -691,6 +691,10 @@ def test_hub_settle_banner_is_loud(tmp_path):
     assert SETTLE_PENDING in pending
     assert "not settled cash" in pending
     assert "paper wins 0" in pending
+    (tmp_path / "shadow" / "advises.jsonl").write_text("OFFLINE DEMO — MOCK DATA\n", encoding="utf-8")
+    barred = render_html(build_surface(artifact_root=tmp_path, viz_root=tmp_path / "viz"))
+    assert "SHADOW_BARRED_MOCK" in barred
+    assert "barred from the honesty wall" in barred
 
 
 def test_hub_http_serves_viz_pngs(tmp_path):
