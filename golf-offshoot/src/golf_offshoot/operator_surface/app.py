@@ -25,10 +25,38 @@ from golf_offshoot.operator_surface.runner import (
     run_loop,
     run_shadow,
 )
-from golf_offshoot.operator_surface.viz import VizWall, load_viz_wall, viz_file_for_serve
+from golf_offshoot.operator_surface.viz import (
+    SLOT_CALIBRATION,
+    SLOT_SHADOW,
+    VizWall,
+    load_viz_wall,
+    viz_file_for_serve,
+)
 
 DEFAULT_HOST = "127.0.0.1"
 DEFAULT_PORT = 8765
+
+#: Plain-English one-liner per viz slot. The honest sublines in ``viz.py`` are the
+#: display contract; these only translate them for a non-engineer reader.
+SLOT_PLAIN_HELP = {
+    SLOT_SHADOW: (
+        "What the paper journal has been advising, and how honest those calls look so far. "
+        "Not money and not settled results."
+    ),
+    SLOT_CALIBRATION: (
+        "Whether re-fitted weights ever beat the hand-set expert weights. "
+        "Every freeze so far says keep the expert weights."
+    ),
+}
+
+#: (POST action value, button label, one-line help). POST values stay unchanged.
+ACTION_BUTTONS = (
+    ("ingest", "Pull latest data", "Pre-tournament run: fetch the field and build the ranked table."),
+    ("live", "Update live ranks", "Live run on current scores and posted prices. Observation, not a bet."),
+    ("shadow", "Check paper journal", "Re-read the paper (shadow) journal. Nothing is placed."),
+    ("loop", "Do all three", "Pull data, then update live, then re-read the paper journal. One alert at the end."),
+    ("refresh", "Reload files", "Re-read charts and saved files from disk. No run is started."),
+)
 
 
 def build_surface(
@@ -109,6 +137,87 @@ def render_text(surface: dict) -> str:
     return "\n".join(lines)
 
 
+def _viz_wall_html(viz: VizWall) -> str:
+    """Read-only chart wall. Missing slots stay 'not yet available'. Never invented."""
+    cards = []
+    for slot in viz.slots:
+        if slot.path is not None:
+            cache = int(slot.mtime or 0)
+            body = (
+                f'<img src="/viz/{html.escape(slot.slot_id)}.png?t={cache}" '
+                f'alt="{html.escape(slot.title)}" width="1200"/>'
+            )
+        else:
+            body = f'<p class="missing">{html.escape(slot.note)}</p>'
+        plain = SLOT_PLAIN_HELP.get(slot.slot_id, "")
+        slot_badges = "".join(f'<span class="badge">{html.escape(b)}</span>' for b in slot.badges)
+        cards.append(
+            '<section class="viz">'
+            f"<h3>{html.escape(slot.title)}</h3>"
+            f'<p class="plain">{html.escape(plain)}</p>'
+            f'<p class="sub">{html.escape(slot.subline)}</p>'
+            f'<p class="badges">{slot_badges}</p>'
+            f"{body}</section>"
+        )
+    trailer = ""
+    if viz.manifest_error:
+        trailer = (
+            f'<p class="missing">Chart list rejected: {html.escape(viz.manifest_error)}. '
+            "No chart was invented in its place.</p>"
+        )
+    return f'<div class="viz-wall">{"".join(cards)}</div>{trailer}'
+
+
+def _settle_banner_html(honesty: HonestyBundle) -> str:
+    """Louder display of the existing settle rule. Does not change the rule."""
+    shadow = honesty.shadow
+    counts = shadow.settle_counts or {}
+    tally = (
+        f"paper wins {counts.get('paper_win', 0)} · paper losses {counts.get('paper_lose', 0)} · "
+        f"never settled {counts.get('never_settled', 0)} · no result yet {counts.get('missing', 0)}"
+    )
+    if shadow.status != "SHADOW_OK":
+        return (
+            '<div class="settle">'
+            f"<strong>{html.escape(shadow.status)}</strong> — there is no usable paper journal to settle. "
+            "That is not zero edge and not a claim of no advises."
+            "</div>"
+        )
+    if shadow.settle_banner:
+        return (
+            '<div class="settle">'
+            f"<strong>{html.escape(shadow.settle_banner)}</strong> — some paper advises still have no official "
+            "win or loss result, so this week stays an unsettled claim. Nothing here is settled cash."
+            f'<span class="tally">{html.escape(tally)}</span>'
+            "</div>"
+        )
+    return (
+        '<div class="settle clear">'
+        "<strong>SETTLED ON PAPER</strong> — every relevant paper advise has a paper win or paper loss result. "
+        "Still paper observation. Still not cash."
+        f'<span class="tally">{html.escape(tally)}</span>'
+        "</div>"
+    )
+
+
+def _actions_html(event: str) -> str:
+    buttons = []
+    help_rows = []
+    for value, label, blurb in ACTION_BUTTONS:
+        css = ' class="soft"' if value == "refresh" else ""
+        buttons.append(f'<button{css} name="action" value="{value}">{html.escape(label)}</button>')
+        help_rows.append(f"<li><b>{html.escape(label)}</b> — {html.escape(blurb)}</li>")
+    return (
+        '<form class="row" method="post" action="/run">'
+        "<label>Tournament id (ESPN)"
+        f'<input name="event" type="text" value="{event}" placeholder="401811963"/>'
+        "</label>"
+        f"{''.join(buttons)}"
+        "</form>"
+        f'<ul class="help">{"".join(help_rows)}</ul>'
+    )
+
+
 def render_html(surface: dict) -> str:
     walls = surface["walls"]
     honesty: HonestyBundle = surface["honesty"]
@@ -116,34 +225,25 @@ def render_html(surface: dict) -> str:
     last: RunRecord | None = surface.get("last_run")
     event = html.escape(str(surface.get("event_id") or ""))
     wall_class = "mock" if walls.is_mock else "ops"
-    badges = "".join(f"<span class='badge'>{html.escape(b)}</span>" for b in walls.badges)
+    badges = "".join(f'<span class="badge">{html.escape(b)}</span>' for b in walls.badges)
     wall_lines = "".join(f"<div>{html.escape(line)}</div>" for line in walls.lines)
-    viz_blocks = []
-    for slot in viz.slots:
-        img = ""
-        if slot.path is not None:
-            cache = int(slot.mtime or 0)
-            img = (
-                f"<img src='/viz/{html.escape(slot.slot_id)}.png?t={cache}' "
-                f"alt='{html.escape(slot.title)}' width='1200'/>"
-            )
-        else:
-            img = f"<p class='missing'>{html.escape(slot.note)}</p>"
-        viz_blocks.append(
-            "<section class='viz'>"
-            f"<h3>{html.escape(slot.title)}</h3>"
-            f"<p class='sub'>{html.escape(slot.subline)}</p>"
-            f"<p class='badges'>{html.escape(' · '.join(slot.badges))}</p>"
-            f"{img}</section>"
-        )
+    viz_wall = _viz_wall_html(viz)
+    settle_banner = _settle_banner_html(honesty)
+    actions = _actions_html(event)
     last_html = html.escape(format_run_record(last)) if last else "no operator run this session"
     paper_html = ""
     if last is not None and last.paper:
         paper_html = (
+            '<section class="panel">'
             "<h2>Paper observation (not trading)</h2>"
-            f"<p>Paper bankroll auto-apply is {html.escape(PAPER_ONLY)} — not trading armed. "
-            f"{html.escape(NOT_ARMED)}. {html.escape(CASH_BADGE)}.</p>"
+            '<p class="help">A pretend bankroll kept so the model can be scored later. '
+            "No ticket is placed, no money moves, and nothing here needs approval.</p>"
+            f'<p class="loud">{html.escape(PAPER_ONLY)} · Trading {html.escape(NOT_ARMED)} · '
+            f"{html.escape(CASH_BADGE)}</p>"
+            '<p class="help">Paper bankroll auto-apply is paper observation only — it is '
+            "not trading armed. No deposit, withdraw, transfer, cash-out, or one-tap bet control exists here.</p>"
             f"<pre>{html.escape(last.paper)}</pre>"
+            "</section>"
         )
     ranked = html.escape(honesty.ranked.text)
     leftover = html.escape(honesty.leftover.text)
@@ -153,7 +253,7 @@ def render_html(surface: dict) -> str:
     html_link = ""
     if honesty.ranked.html_path:
         html_link = (
-            f"<p>HTML: <a href='/export/html'>{html.escape(str(honesty.ranked.html_path))}</a></p>"
+            f'<p>Full export: <a href="/export/html">{html.escape(str(honesty.ranked.html_path))}</a></p>'
         )
     return f"""<!DOCTYPE html>
 <html lang="en">
@@ -165,20 +265,35 @@ def render_html(surface: dict) -> str:
  body {{ font-family: Segoe UI, Helvetica, Arial, sans-serif; margin: 0; background: #f4f1ea; color: #1b1b1b; }}
  header.ops {{ background: #1f3b4d; color: #fff; padding: 16px 20px; }}
  header.mock {{ background: #7a0c0c; color: #fff; padding: 16px 20px; }}
- .badge {{ display: inline-block; margin: 4px 6px 0 0; padding: 3px 8px; background: #0e1f29; color: #f2e27a; font-size: 12px; }}
+ header h1 {{ margin: 0 0 8px; font-size: 26px; letter-spacing: 1px; }}
+ header div {{ font-size: 14px; }}
+ .badge {{ display: inline-block; margin: 4px 6px 0 0; padding: 3px 8px; background: #0e1f29; color: #f2e27a; font-size: 12px; font-weight: 700; }}
  header.mock .badge {{ background: #3b0000; color: #ffd2d2; }}
- main {{ padding: 16px 20px 48px; max-width: 1200px; }}
- form.row {{ display: flex; flex-wrap: wrap; gap: 8px; align-items: end; margin: 12px 0 20px; }}
- label {{ font-size: 13px; display: block; }}
+ main {{ padding: 0 20px 56px; max-width: 1100px; margin: 0 auto; }}
+ form.row {{ display: flex; flex-wrap: wrap; gap: 8px; align-items: end; margin: 4px 0 10px; }}
+ label {{ font-size: 13px; display: flex; flex-direction: column; gap: 4px; }}
  input[type=text] {{ padding: 6px 8px; min-width: 180px; }}
- button {{ padding: 8px 12px; background: #1f3b4d; color: #fff; border: 0; cursor: pointer; }}
+ button {{ padding: 8px 12px; background: #1f3b4d; color: #fff; border: 0; cursor: pointer; font-size: 14px; }}
+ button.soft {{ background: #55606b; }}
  button.warn {{ background: #7a0c0c; }}
- pre {{ white-space: pre-wrap; background: #fff; border: 1px solid #c9c2b2; padding: 12px; }}
+ pre {{ white-space: pre-wrap; background: #fff; border: 1px solid #c9c2b2; padding: 12px; font-size: 13px; }}
  .missing {{ background: #f8e0a0; padding: 10px; border: 1px solid #c9a227; }}
  .cash {{ position: sticky; bottom: 0; background: #111; color: #f2e27a; padding: 8px 16px; font-weight: 700; }}
- .viz {{ margin: 16px 0 28px; padding: 12px; background: #fff; border: 1px solid #c9c2b2; }}
+ .settle {{ background: #7a0c0c; color: #fff; padding: 12px 20px; font-size: 15px; }}
+ .settle.clear {{ background: #14532d; }}
+ .settle .tally {{ display: block; margin-top: 4px; font-size: 13px; opacity: 0.9; }}
+ .panel {{ background: #fff; border: 1px solid #c9c2b2; padding: 14px 16px; margin: 18px 0; }}
+ .panel h2 {{ margin: 0; font-size: 20px; }}
+ .panel .help {{ font-size: 13px; color: #4a4a4a; margin: 6px 0 10px; }}
+ ul.help {{ font-size: 13px; color: #4a4a4a; margin: 6px 0 0; padding-left: 20px; }}
+ .loud {{ font-weight: 700; margin: 6px 0; }}
+ .viz-wall {{ display: grid; grid-template-columns: repeat(auto-fit, minmax(420px, 1fr)); gap: 16px; }}
+ .viz {{ margin: 0; padding: 12px; background: #fff; border: 1px solid #c9c2b2; }}
+ .viz h3 {{ margin: 0 0 6px; font-size: 17px; }}
+ .viz .plain {{ font-size: 13px; color: #333; margin: 0 0 6px; }}
+ .viz .sub {{ font-size: 12px; color: #4a4a4a; margin: 0 0 6px; }}
+ .viz .badges {{ margin: 0 0 8px; }}
  .viz img {{ display: block; width: 100%; max-width: 100%; height: auto; border: 1px solid #c9c2b2; background: #111; }}
- h2 {{ margin-top: 28px; }}
 </style>
 </head>
 <body>
@@ -187,36 +302,55 @@ def render_html(surface: dict) -> str:
   {wall_lines}
   <div>{badges}</div>
 </header>
+{settle_banner}
 <main>
-  <form class="row" method="post" action="/run">
-    <label>ESPN event id
-      <input name="event" type="text" value="{event}" placeholder="401811963"/>
-    </label>
-    <button name="action" value="ingest">ingest</button>
-    <button name="action" value="live">live</button>
-    <button name="action" value="shadow">shadow</button>
-    <button name="action" value="loop">ingest → live → shadow</button>
-    <button name="action" value="refresh">reload artifacts</button>
-  </form>
-  <p>Phase 1 observation only. Trading {html.escape('NOT ARMED')}. Paper bankroll auto-apply on live/loop is {html.escape('PAPER OBSERVATION ONLY')} — not trading armed. No deposit / withdraw / transfer / one-tap bet / cash-out controls.</p>
-  <h2>Last run</h2>
-  <pre>{last_html}</pre>
+  <section class="panel">
+    <h2>Charts first — read-only chart wall</h2>
+    <p class="help">These two charts are what to look at before any table. Illustrator owns them; the hub only
+    shows the files that exist. A missing chart stays {html.escape('not yet available')} and is never invented,
+    and no edge badge is ever added. Phone alerts are notify-first; this hub stays local.</p>
+    {viz_wall}
+  </section>
+  <section class="panel">
+    <h2>What you can do here</h2>
+    <p class="help">Five buttons, all read-and-recompute. Phase 1 observation only. Trading is
+    {html.escape(NOT_ARMED)}. Paper bankroll auto-apply on live and on all-three is
+    {html.escape(PAPER_ONLY)} — not trading armed. There is no deposit, withdraw, transfer,
+    cash-out, or one-tap bet control on this page.</p>
+    {actions}
+  </section>
+  <section class="panel">
+    <h2>What the last run did</h2>
+    <pre>{last_html}</pre>
+  </section>
   {paper_html}
-  <h2>Latest real LIVE ranked table</h2>
-  <p>{html.escape(honesty.ranked.banner)}</p>
-  {html_link}
-  <pre>{ranked}</pre>
-  <h2>Leftover callout (display only)</h2>
-  <pre>{leftover}</pre>
-  <h2>Source inventory</h2>
-  <pre>{inventory}</pre>
-  <h2>Shadow journal</h2>
-  <pre>{shadow}</pre>
-  <h2>Calibration</h2>
-  <pre>{calib}</pre>
-  <h2>Illustrator viz-wall (Ill 1 / Ill 2)</h2>
-  <p>Read-only PNGs when present. Missing charts stay {html.escape('not yet available')} — never invented. Phone is notify-first; this hub is local.</p>
-  {''.join(viz_blocks)}
+  <section class="panel">
+    <h2>Ranked table — latest real live run</h2>
+    <p class="loud">{html.escape(honesty.ranked.banner)}</p>
+    {html_link}
+    <pre>{ranked}</pre>
+  </section>
+  <section class="panel">
+    <h2>Still unmeasured (display only)</h2>
+    <p class="help">Things the model cannot see yet. Listed so they are not quietly folded into a rating.</p>
+    <pre>{leftover}</pre>
+  </section>
+  <section class="panel">
+    <h2>Where the numbers came from</h2>
+    <pre>{inventory}</pre>
+  </section>
+  <section class="panel">
+    <h2>Paper journal (shadow log)</h2>
+    <p class="help">A written log of past paper advises and whether each one has an official result yet.
+    It is not a bankroll and not settled cash.</p>
+    <pre>{shadow}</pre>
+  </section>
+  <section class="panel">
+    <h2>Calibration check</h2>
+    <p class="help">Re-fitted weights are stored, not used, while the recommendation stays keep_expert.
+    Edge is not established.</p>
+    <pre>{calib}</pre>
+  </section>
 </main>
 <div class="cash">{html.escape(CASH_BADGE)}</div>
 </body>

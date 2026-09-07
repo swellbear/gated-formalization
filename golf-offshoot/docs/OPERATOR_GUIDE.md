@@ -566,6 +566,18 @@ python -m golf_offshoot shell --print --event 401811963
 
 The hub binds **127.0.0.1:8765**. Tailscale / phone remote UI is **not required** and is **not** in this shell. Phone is notify-first (`NTFY_TOPIC` on run completion). A later thin remote view is out of scope.
 
+Hub page order (observation first): loud `PHASE 1 OBSERVATION` header and badges → settle banner → **read-only chart wall** → what you can do here → last run → paper observation → ranked table → the long text blocks. The charts sit above the fold on purpose so nobody has to scroll past dense `pre` output to see them.
+
+Buttons read as plain verbs; the POST action values are unchanged:
+
+| Button | POST `action` | What it does |
+|--------|---------------|--------------|
+| Pull latest data | `ingest` | Pre-tournament run: fetch the field, build the ranked table |
+| Update live ranks | `live` | Live run on current scores and posted prices |
+| Check paper journal | `shadow` | Re-read the paper (shadow) journal |
+| Do all three | `loop` | `ingest` → `live` → `shadow`, one completion alert |
+| Reload files | `refresh` | Re-read charts and saved files from disk; starts no run |
+
 The shell can pin an ESPN event, trigger `ingest` → `live` → `shadow`, load an existing real export, and show run status. Shell `live` / `loop` **auto-applies strategy advises to the paper book / paper bankroll** using the existing `maybe_apply_paper` path. If no observation paper book exists, the shell locks one so apply can run. That is **paper observation only**. It is **not** trading armed. The shell does **not** expose user-facing `paper-deposit` / `paper-withdraw`, cash-out quotes, or cash transfer controls.
 
 Loud walls are always on:

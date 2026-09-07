@@ -15,6 +15,8 @@ Permanent badges on both slots:
 
 Hard NO: demo/mock edge language on this wall.
 
+The hub renders the wall **above the fold** — directly after the `PHASE 1 OBSERVATION` header/badges and the settle banner, before the action buttons and the long `pre` blocks. Each slot also carries a plain-English one-liner next to (never instead of) the honest subline above. Placement and copy are display only: the wall stays a read-only file render, and a missing slot stays `not yet available`.
+
 ## Path precedence
 
 Hardcoded `/workspace/...` is a local operator default only. It will not exist everywhere.

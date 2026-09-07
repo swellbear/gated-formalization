@@ -653,6 +653,46 @@ def test_hub_html_renders_viz_pngs_when_present(tmp_path):
     assert "Calibration weather" in page
 
 
+def test_hub_puts_viz_wall_above_dense_blocks(tmp_path):
+    viz = tmp_path / "viz"
+    viz.mkdir()
+    (viz / "shadow_honesty_strip.png").write_bytes(b"\x89PNG\r\n\x1a\n")
+    (viz / "calibration_weather.png").write_bytes(b"\x89PNG\r\n\x1a\n")
+    (tmp_path / "latest").mkdir()
+    (tmp_path / "latest" / "401811963_live_x.txt").write_text("real live table\nnever auto-bet\n", encoding="utf-8")
+    page = render_html(build_surface(event_id="401811963", artifact_root=tmp_path, viz_root=viz))
+    wall = page.index('class="viz-wall"')
+    assert wall < page.index("What you can do here")
+    assert wall < page.index("Ranked table")
+    assert wall < page.index("Paper journal (shadow log)")
+    assert page.index("PHASE 1 OBSERVATION") < wall
+    assert page.index(CASH_BADGE) < wall
+
+
+def test_hub_action_labels_are_plain_and_post_values_unchanged(tmp_path):
+    page = render_html(build_surface(artifact_root=tmp_path, viz_root=tmp_path / "viz"))
+    for value in ("ingest", "live", "shadow", "loop", "refresh"):
+        assert f'value="{value}"' in page
+    for label in ("Pull latest data", "Update live ranks", "Check paper journal", "Do all three", "Reload files"):
+        assert label in page
+    assert ">ingest<" not in page
+    assert ">shadow<" not in page
+    assert "reload artifacts" not in page
+
+
+def test_hub_settle_banner_is_loud(tmp_path):
+    missing = render_html(build_surface(artifact_root=tmp_path, viz_root=tmp_path / "viz"))
+    assert 'class="settle"' in missing
+    assert SHADOW_MISSING in missing
+    assert "not zero edge" in missing
+    _write_jsonl(tmp_path / "shadow" / "advises.jsonl", [_shadow_row()])
+    pending = render_html(build_surface(artifact_root=tmp_path, viz_root=tmp_path / "viz"))
+    assert 'class="settle"' in pending
+    assert SETTLE_PENDING in pending
+    assert "not settled cash" in pending
+    assert "paper wins 0" in pending
+
+
 def test_hub_http_serves_viz_pngs(tmp_path):
     from http.client import HTTPConnection
     from http.server import ThreadingHTTPServer
