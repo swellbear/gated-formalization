@@ -550,12 +550,13 @@ python -m golf_offshoot shell --event 401811963
 python -m golf_offshoot shell --print --event 401811963
 ```
 
-The shell can pin an ESPN event, trigger `ingest` → `live` → `shadow`, load an existing real export, and show run status. `live` here is observation-only: it does **not** `--lock-paper`, `--apply-paper`, take cash-out quotes, or move paper cash.
+The shell can pin an ESPN event, trigger `ingest` → `live` → `shadow`, load an existing real export, and show run status. Shell `live` / `loop` **auto-applies strategy advises to the paper book / paper bankroll** using the existing `maybe_apply_paper` path. If no observation paper book exists, the shell locks one so apply can run. That is **paper observation only**. It is **not** trading armed. The shell does **not** expose user-facing `paper-deposit` / `paper-withdraw`, cash-out quotes, or cash transfer controls.
 
 Loud walls are always on:
 
 - `PHASE 1 OBSERVATION`
 - `LIVE DATA` is not a ticket. Trading is `NOT ARMED`.
+- `PAPER OBSERVATION ONLY` — paper bankroll auto-apply ≠ trading armed
 - `AI NEVER DEPOSITS / WITHDRAWS / TRANSFERS CASH`
 - `OFFLINE DEMO — MOCK DATA` is a separate mode and is barred from edge/honesty displays
 
@@ -576,6 +577,10 @@ Missing/empty banners (never silent demo fill):
 - no `settle_status` yet → `SETTLE_PENDING`
 - no `weights_calib-v*.json` → `CALIB_MISSING`
 - no real LIVE table → `LIVE_TABLE_MISSING`
+- empty field / no posted odds / no paper book possible → `PAPER_EMPTY_FIELD` (not a demo book; not a silent demo fill)
+- no strategy advises → `PAPER_ADVICE_EMPTY` (or `PAPER_LOCKED` if an observation book was created this run)
+- paper advises applied to the paper book → `PAPER_APPLIED`
+- MOCK/DEMO result → `PAPER_BARRED_MOCK` (not written into the paper book)
 
 Ranked LIVE table is read from `latest/*_live_*.txt` (HTML sibling if present) or existing `data/exports/*_live_*.txt`. Leftover is display-only (unconstrained / held-ticket / do-not-stuff-theta). Calibration shows latest `keep_expert` freeze, `no_future_leakage`, hashes, and metrics. Edge is not established.
 

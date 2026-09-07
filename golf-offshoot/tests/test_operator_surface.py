@@ -3,7 +3,7 @@ from pathlib import Path
 
 from golf_offshoot.audit.journal import build_audit
 from golf_offshoot.demo import demo_tournament
-from golf_offshoot.models.enums import Horizon, RunMode, SourceKind
+from golf_offshoot.models.enums import BetType, Horizon, RunMode, SourceKind, StrategyActionKind, StrategyMode
 from golf_offshoot.models.schemas import (
     HorizonProbability,
     PlayerOutput,
@@ -11,6 +11,12 @@ from golf_offshoot.models.schemas import (
     ReliabilityScore,
     SourceInventoryItem,
     TournamentRunResult,
+)
+from golf_offshoot.models.strategy import (
+    StrategyAction,
+    StrategyRecommendation,
+    StrategyStatusSummary,
+    new_id,
 )
 from golf_offshoot.operator_surface.app import build_surface, render_html, render_text
 from golf_offshoot.operator_surface.artifacts import (
@@ -21,7 +27,21 @@ from golf_offshoot.operator_surface.artifacts import (
     SHADOW_MISSING,
     load_honesty,
 )
-from golf_offshoot.operator_surface.modes import CASH_BADGE, MODE_MOCK, MODE_OPERATING, build_mode_walls
+from golf_offshoot.operator_surface.modes import (
+    CASH_BADGE,
+    MODE_MOCK,
+    MODE_OPERATING,
+    PAPER_ONLY,
+    build_mode_walls,
+)
+from golf_offshoot.operator_surface.paper import (
+    PAPER_ADVICE_EMPTY,
+    PAPER_APPLIED,
+    PAPER_BARRED_MOCK,
+    PAPER_EMPTY_FIELD,
+    PAPER_LOCKED,
+    apply_observation_paper,
+)
 from golf_offshoot.operator_surface.notify import notify_run_complete
 from golf_offshoot.operator_surface.paths import PathUnsafeError, resolve_roots, safe_under
 from golf_offshoot.operator_surface.runner import (
@@ -94,7 +114,9 @@ def test_mode_walls_operating_vs_mock():
     assert ops.trading_armed is False
     assert "PHASE 1 OBSERVATION" in ops.badges
     assert "NOT ARMED" in ops.badges
+    assert PAPER_ONLY in ops.badges
     assert CASH_BADGE in ops.badges
+    assert "not trading armed" in ops.render_text().lower()
     assert "LIVE DATA" in ops.render_text()
     mock = build_mode_walls(mock=True)
     assert mock.mode == MODE_MOCK
@@ -338,7 +360,7 @@ def test_shell_flow_ingest_live_shadow(monkeypatch, tmp_path):
         return result
 
     monkeypatch.setattr("golf_offshoot.operator_surface.runner.run_operating", _fake_operating)
-    monkeypatch.setattr("golf_offshoot.operator_surface.runner.load_paper_book", lambda *_a, **_k: None)
+    monkeypatch.setattr("golf_offshoot.strategy.paper_book.package_data_dir", lambda: tmp_path)
     monkeypatch.delenv("NTFY_TOPIC", raising=False)
     ingest = run_ingest(event_id="401811963", notify=True)
     assert ingest.ok
@@ -369,8 +391,12 @@ def test_shell_text_and_html_include_walls(tmp_path):
     assert "Shadow honesty strip" in text
     assert "Calibration weather" in page
     assert "NEVER DEPOSITS" in page
+    assert "PAPER OBSERVATION ONLY" in page
+    assert "not trading armed" in page
     assert 'value="deposit"' not in page
     assert 'value="paper-deposit"' not in page
+    assert 'value="paper-withdraw"' not in page
+    assert 'value="cash-out"' not in page
     assert "Kalshi" in page
 
 
@@ -395,3 +421,173 @@ def test_cli_shell_print(tmp_path):
         ]
     )
     assert code == 0
+
+
+def _posted_row(pid: str, name: str, win: float, *, edge: float, posted: float) -> PlayerOutput:
+    row = _row(pid, name, win)
+    row.edge_by_bet = {"win": edge}
+    row.posted_odds_by_bet = {"win": posted}
+    row.market_implied_by_bet = {"win": 1.0 / posted}
+    return row
+
+
+def _strategy_status() -> StrategyStatusSummary:
+    return StrategyStatusSummary(
+        open_exposure=0.0,
+        exposure_frac=0.0,
+        unrealized_pnl=0.0,
+        unrealized_edge_weighted=0.0,
+        biggest_concentration="",
+        biggest_concentration_frac=0.0,
+        posture=StrategyMode.STAY_SELECTIVE,
+        cooling_off=False,
+        n_positions=0,
+        n_suggested_actions=1,
+    )
+
+
+def _live_result(rows, *, operating: bool = True, strategy=None, event_id="401811963"):
+    t = demo_tournament()
+    t.espn_event_id = event_id
+    t.name = "BMW Championship"
+    audit = build_audit(event_id, RunMode.LIVE, rows, "shell-paper")
+    audit.extra["operating"] = operating
+    audit.extra["bankroll"] = 250.0
+    audit.extra["odds_book"] = "bovada"
+    return TournamentRunResult(
+        run_id=audit.run_id,
+        tournament=t,
+        mode=RunMode.LIVE,
+        ranked=rows,
+        audit=audit,
+        never_auto_bet=True,
+        strategy=strategy,
+    )
+
+
+def test_observation_paper_empty_field_is_loud(tmp_path, monkeypatch):
+    monkeypatch.setattr("golf_offshoot.strategy.paper_book.package_data_dir", lambda: tmp_path)
+    result = _live_result([])
+    note = apply_observation_paper(result)
+    assert note.status == PAPER_EMPTY_FIELD
+    assert note.record is None
+    assert not list((tmp_path / "paper").glob("401811963.json")) if (tmp_path / "paper").exists() else True
+    assert "not a demo book" in note.text
+    assert "NOT ARMED" in note.text
+
+
+def test_observation_paper_no_posted_odds_is_not_silent_demo(tmp_path, monkeypatch):
+    monkeypatch.setattr("golf_offshoot.strategy.paper_book.package_data_dir", lambda: tmp_path)
+    rows = [_row("p1", "Scottie Scheffler", 0.11)]
+    note = apply_observation_paper(_live_result(rows, strategy=None))
+    assert note.status == PAPER_EMPTY_FIELD
+    assert note.record is None
+    assert not (tmp_path / "paper" / "401811963.json").exists()
+    assert "silent demo fill" in note.text
+    assert "NOT ARMED" in note.text
+
+
+def test_observation_paper_empty_advice_locks_honestly(tmp_path, monkeypatch):
+    monkeypatch.setattr("golf_offshoot.strategy.paper_book.package_data_dir", lambda: tmp_path)
+    rows = [_posted_row("kita", "Kurt Kitayama", 0.089, edge=0.044, posted=17.0)]
+    result = _live_result(rows, strategy=None)
+    note = apply_observation_paper(result)
+    assert note.status == PAPER_LOCKED
+    assert note.locked is True
+    assert note.applied is False
+    assert note.record is not None
+    assert "PAPER OBSERVATION ONLY" in note.text
+    assert "NOT ARMED" in note.text
+    assert any("shell auto-lock" in n for n in note.record.notes)
+
+
+def test_observation_paper_barred_demo_does_not_write(tmp_path, monkeypatch):
+    monkeypatch.setattr("golf_offshoot.strategy.paper_book.package_data_dir", lambda: tmp_path)
+    rows = [_posted_row("kita", "Kurt Kitayama", 0.089, edge=0.044, posted=17.0)]
+    result = _live_result(rows, operating=False)
+    note = apply_observation_paper(result)
+    assert note.status == PAPER_BARRED_MOCK
+    assert note.record is None
+    assert not (tmp_path / "paper" / "401811963.json").exists()
+
+
+def test_shell_live_auto_applies_paper_advises(tmp_path, monkeypatch):
+    monkeypatch.setattr("golf_offshoot.strategy.paper_book.package_data_dir", lambda: tmp_path)
+    rows = [_posted_row("kita", "Kurt Kitayama", 0.089, edge=0.044, posted=17.0)]
+    first = apply_observation_paper(_live_result(rows, strategy=None))
+    assert first.status == PAPER_LOCKED
+    pos = first.record.book.positions[0]
+    before = pos.stake
+    strategy = StrategyRecommendation(
+        recommendation_id=new_id("sr"),
+        mode=StrategyMode.STAY_SELECTIVE,
+        run_mode=RunMode.LIVE,
+        actions=[
+            StrategyAction(
+                action_id=new_id("act"),
+                kind=StrategyActionKind.ADD,
+                player_id=pos.player_id,
+                player_name=pos.player_name,
+                bet_type=BetType.WIN,
+                position_id=pos.position_id,
+                suggested_stake_delta=1.25,
+                reason="paper observation add",
+            )
+        ],
+        status=_strategy_status(),
+    )
+    second = apply_observation_paper(_live_result(rows, strategy=strategy))
+    assert second.status == PAPER_APPLIED
+    assert second.applied is True
+    assert second.record.book.positions[0].stake > before
+    assert "NOT ARMED" in second.text
+    assert "PAPER OBSERVATION ONLY" in second.text
+    assert CASH_BADGE in second.text
+
+
+def test_shell_live_wires_paper_apply(monkeypatch, tmp_path):
+    monkeypatch.setattr("golf_offshoot.strategy.paper_book.package_data_dir", lambda: tmp_path)
+    rows = [_posted_row("kita", "Kurt Kitayama", 0.089, edge=0.044, posted=17.0)]
+    result = _live_result(rows, strategy=None)
+
+    def _fake_operating(**kwargs):
+        return result
+
+    monkeypatch.setattr("golf_offshoot.operator_surface.runner.run_operating", _fake_operating)
+    monkeypatch.delenv("NTFY_TOPIC", raising=False)
+    live = run_live(event_id="401811963", notify=False)
+    assert live.ok
+    assert live.extras.get("paper_status") in {PAPER_LOCKED, PAPER_ADVICE_EMPTY, PAPER_APPLIED}
+    assert live.paper
+    assert "NOT ARMED" in live.paper
+    assert "deposit" not in live.extras
+    ingest = run_ingest(event_id="401811963", notify=False)
+    assert ingest.ok
+    assert ingest.paper == ""
+    assert "paper_status" not in ingest.extras
+    loop = run_loop(event_id="401811963", notify=False)
+    assert loop.ok
+    assert loop.command == "loop"
+    assert loop.extras.get("paper_status") in {PAPER_LOCKED, PAPER_ADVICE_EMPTY, PAPER_APPLIED}
+    assert loop.paper
+    page = render_html(
+        build_surface(
+            event_id="401811963",
+            artifact_root=tmp_path,
+            viz_root=tmp_path / "viz",
+            last_run=live,
+        )
+    )
+    assert "Paper observation (not trading)" in page
+    assert PAPER_ONLY in page
+    assert 'value="paper-deposit"' not in page
+    assert 'value="paper-withdraw"' not in page
+    assert 'value="cash-out"' not in page
+
+
+def test_cash_controls_still_blocked_after_paper_apply():
+    for action in ("paper-deposit", "paper-withdraw", "deposit", "withdraw", "cash-out", "transfer"):
+        with pytest.raises(OperatorSafetyError) as exc:
+            refuse_forbidden(action)
+        assert "NOT ARMED" in str(exc.value)
+        assert "NEVER DEPOSITS" in str(exc.value)

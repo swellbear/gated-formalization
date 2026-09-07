@@ -78,9 +78,16 @@ def build_mode_walls(*, mock: bool = False, live_data: bool = False) -> ModeWall
         lines=(
             live_line,
             f"Trading is {NOT_ARMED}. No place / cancel / auto-bet / one-tap bet.",
+            f"Paper bankroll auto-apply is {PAPER_ONLY}. It is not trading armed.",
             f"{CASH_BADGE}",
             "Kalshi is future public-read language only. No account, key, or wallet scope.",
         ),
-        badges=(PHASE_1_OBSERVATION, LIVE_DATA if live_data else "OPERATING PATH", NOT_ARMED, CASH_BADGE),
+        badges=(
+            PHASE_1_OBSERVATION,
+            LIVE_DATA if live_data else "OPERATING PATH",
+            NOT_ARMED,
+            PAPER_ONLY,
+            CASH_BADGE,
+        ),
         is_mock=False,
     )

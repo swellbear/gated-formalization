@@ -12,7 +12,7 @@ from pathlib import Path
 from urllib.parse import parse_qs, urlparse
 
 from golf_offshoot.operator_surface.artifacts import HonestyBundle, load_honesty
-from golf_offshoot.operator_surface.modes import CASH_BADGE, build_mode_walls
+from golf_offshoot.operator_surface.modes import CASH_BADGE, NOT_ARMED, PAPER_ONLY, build_mode_walls
 from golf_offshoot.operator_surface.notify import notify_run_complete
 from golf_offshoot.operator_surface.paths import ResolvedRoots, resolve_roots, safe_existing_file
 from golf_offshoot.operator_surface.runner import (
@@ -104,6 +104,8 @@ def render_text(surface: dict) -> str:
         lines.append(f"manifest error: {viz.manifest_error}")
     if last is not None:
         lines.extend(["", "-- last operator run --", format_run_record(last)])
+        if last.paper:
+            lines.extend(["", "-- paper observation (not trading) --", last.paper])
     return "\n".join(lines)
 
 
@@ -135,6 +137,14 @@ def render_html(surface: dict) -> str:
             f"{img}</section>"
         )
     last_html = html.escape(format_run_record(last)) if last else "no operator run this session"
+    paper_html = ""
+    if last is not None and last.paper:
+        paper_html = (
+            "<h2>Paper observation (not trading)</h2>"
+            f"<p>Paper bankroll auto-apply is {html.escape(PAPER_ONLY)} — not trading armed. "
+            f"{html.escape(NOT_ARMED)}. {html.escape(CASH_BADGE)}.</p>"
+            f"<pre>{html.escape(last.paper)}</pre>"
+        )
     ranked = html.escape(honesty.ranked.text)
     leftover = html.escape(honesty.leftover.text)
     inventory = html.escape(honesty.inventory.text)
@@ -187,9 +197,10 @@ def render_html(surface: dict) -> str:
     <button name="action" value="loop">ingest → live → shadow</button>
     <button name="action" value="refresh">reload artifacts</button>
   </form>
-  <p>Phase 1 observation only. Trading {html.escape('NOT ARMED')}. No deposit / withdraw / transfer / one-tap bet.</p>
+  <p>Phase 1 observation only. Trading {html.escape('NOT ARMED')}. Paper bankroll auto-apply on live/loop is {html.escape('PAPER OBSERVATION ONLY')} — not trading armed. No deposit / withdraw / transfer / one-tap bet / cash-out controls.</p>
   <h2>Last run</h2>
   <pre>{last_html}</pre>
+  {paper_html}
   <h2>Latest real LIVE ranked table</h2>
   <p>{html.escape(honesty.ranked.banner)}</p>
   {html_link}
@@ -355,7 +366,7 @@ def serve(
     url = f"http://{host}:{port}/"
     print(build_mode_walls(live_data=True).render_text())
     print(f"operator shell {url}")
-    print("PHASE 1 OBSERVATION. Trading NOT ARMED. " + CASH_BADGE)
+    print(f"PHASE 1 OBSERVATION. Trading {NOT_ARMED}. {PAPER_ONLY}. {CASH_BADGE}")
     if open_browser:
         webbrowser.open(url)
     try:

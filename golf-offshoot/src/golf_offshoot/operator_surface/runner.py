@@ -9,9 +9,9 @@ from typing import Any
 from golf_offshoot.models.enums import RunMode
 from golf_offshoot.operating import format_inventory, run_operating
 from golf_offshoot.operator_surface.notify import CompletionNotice, notify_run_complete
+from golf_offshoot.operator_surface.paper import PaperApplyResult, apply_observation_paper
 from golf_offshoot.ranking.display import format_table
 from golf_offshoot.ranking.leftover import format_leftover_callout
-from golf_offshoot.strategy.paper_book import load_paper_book
 
 FORBIDDEN_ACTIONS = frozenset(
     {
@@ -46,6 +46,7 @@ class RunRecord:
     summary: str = ""
     leftover: str = ""
     inventory: str = ""
+    paper: str = ""
     table: str = ""
     export_html: str = ""
     export_txt: str = ""
@@ -111,7 +112,7 @@ def run_live(
     notify_topic: str | None = None,
     dry_run_notify: bool = False,
 ) -> RunRecord:
-    """Operating live, observation only. Does not lock/apply paper or take cash-out quotes."""
+    """Operating live. Auto-applies paper-observation advises. Trading stays NOT ARMED."""
     refuse_forbidden("live")
     try:
         result = run_operating(
@@ -163,7 +164,7 @@ def run_loop(
     notify_topic: str | None = None,
     dry_run_notify: bool = False,
 ) -> RunRecord:
-    """ingest → live → shadow. One completion notify. No paper lock/apply."""
+    """ingest → live → shadow. Live auto-applies paper observation. One completion notify."""
     refuse_forbidden("loop")
     parts: list[str] = []
     ingest = run_ingest(
@@ -213,9 +214,19 @@ def _from_result(
 
         items = [SourceInventoryItem.model_validate(x) for x in inv_raw]
         inventory = format_inventory(items)
-    paper = load_paper_book(tid) if tid and command == "live" else None
-    leftover = format_leftover_callout(result, paper)
+    paper_note: PaperApplyResult | None = None
+    open_book = None
+    if command in {"live", "loop"}:
+        paper_note = apply_observation_paper(result, event_hint=tid)
+        if paper_note.record is not None:
+            open_book = paper_note.record.book
+    leftover = format_leftover_callout(result, open_book)
     table = format_table(result.ranked, n=len(result.ranked))
+    extras = {"never_auto_bet": result.never_auto_bet, "mode": result.mode.value}
+    if paper_note is not None:
+        extras["paper_status"] = paper_note.status
+        extras["paper_applied"] = paper_note.applied
+        extras["paper_locked"] = paper_note.locked
     rec = RunRecord(
         command=command,
         ok=True,
@@ -224,14 +235,16 @@ def _from_result(
         summary=(
             f"{command} {result.tournament.name} id={tid} n={len(result.ranked)} "
             f"run={result.run_id} mode={result.mode.value}"
+            + (f" paper={paper_note.status}" if paper_note else "")
         ),
         leftover=leftover,
         inventory=inventory,
+        paper=paper_note.text if paper_note else "",
         table=table,
         export_html=str(result.audit.extra.get("export_html") or ""),
         export_txt=str(result.audit.extra.get("export_txt") or ""),
         export_pdf=str(result.audit.extra.get("export_pdf") or ""),
-        extras={"never_auto_bet": result.never_auto_bet, "mode": result.mode.value},
+        extras=extras,
     )
     rec.notice = _maybe_notify(rec, notify=notify, topic=topic, dry_run=dry_run)
     return rec
@@ -269,6 +282,8 @@ def format_run_record(rec: RunRecord) -> str:
         buf.write("\n" + rec.table + "\n")
     if rec.leftover:
         buf.write("\n" + rec.leftover + "\n")
+    if rec.paper:
+        buf.write("\n" + rec.paper + "\n")
     for label, path in (
         ("HTML", rec.export_html),
         ("txt", rec.export_txt),
