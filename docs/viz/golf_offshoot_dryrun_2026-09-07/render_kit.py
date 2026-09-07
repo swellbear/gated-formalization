@@ -133,15 +133,30 @@ def chip(ax, x, y, label, color, *, fontsize=15, pad=0.34):
     )
 
 
+# Chrome is positioned in inches from the figure edge, not in figure fractions,
+# so boards of different heights get identical headers and badge strips.
+HEADER_BLOCK_IN = 2.60
+FOOTER_BLOCK_IN = 1.41
+
+
+def _from_top(fig, inches: float) -> float:
+    return 1.0 - inches / fig.get_figheight()
+
+
+def _from_bottom(fig, inches: float) -> float:
+    return inches / fig.get_figheight()
+
+
 def header(fig, kicker: str, title: str, standfirst: str) -> None:
-    fig.text(0.012, 0.988, kicker, fontsize=17, color=ACCENT, fontweight="bold", va="top")
-    fig.text(0.012, 0.966, title, fontsize=41, color=TEXT, fontweight="bold", va="top")
-    fig.text(0.012, 0.929, standfirst, fontsize=19, color=MUTED, va="top", linespacing=1.45)
+    fig.text(0.012, _from_top(fig, 0.30), kicker, fontsize=17, color=ACCENT, fontweight="bold", va="top")
+    fig.text(0.012, _from_top(fig, 0.58), title, fontsize=41, color=TEXT, fontweight="bold", va="top")
+    fig.text(0.012, _from_top(fig, 1.30), standfirst, fontsize=19, color=MUTED, va="top", linespacing=1.45)
 
 
-def badge_strip(fig, y: float = 0.072) -> None:
+def badge_strip(fig, y_in: float = 1.10) -> None:
     """The shared honesty badges. Identical on every board in this set."""
     x = 0.012
+    y = _from_bottom(fig, y_in)
     for label in BADGES:
         t = fig.text(
             x,
@@ -164,8 +179,16 @@ def badge_strip(fig, y: float = 0.072) -> None:
         x += bbox.width / fig.bbox.width + 0.014
 
 
-def footer(fig, lines: list[str], y: float = 0.045) -> None:
-    fig.text(0.012, y, "\n".join(lines), fontsize=15, color=DIM, va="top", linespacing=1.5)
+def footer(fig, lines: list[str], y_in: float = 0.72) -> None:
+    fig.text(
+        0.012,
+        _from_bottom(fig, y_in),
+        "\n".join(lines),
+        fontsize=15,
+        color=DIM,
+        va="top",
+        linespacing=1.5,
+    )
 
 
 def save(fig, path, min_px: int = 2400) -> tuple[int, int]:

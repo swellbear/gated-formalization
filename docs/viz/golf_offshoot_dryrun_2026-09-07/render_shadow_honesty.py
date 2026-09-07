@@ -19,8 +19,10 @@ from __future__ import annotations
 
 import json
 from collections import Counter
+from datetime import datetime, timezone
 from pathlib import Path
 
+import matplotlib.dates as mdates
 import matplotlib.pyplot as plt
 import numpy as np
 
@@ -37,6 +39,8 @@ TOURNAMENT_ORDER = [
 ]
 
 MARKET_ORDER = ["win", "win_after_r1", "win_after_r2", "win_after_r3", "top_5", "top_10", "top_20"]
+
+ACTION_ORDER = ["new_bet", "exit", "add", "reallocate", "reduce"]
 
 MARKET_COLOR = {
     "win": kit.ACCENT,
@@ -154,6 +158,68 @@ def draw_modes(ax, rows):
         [kit.GOOD if m == "stay_selective" else kit.ACCENT_2 for m in order],
         total=len(rows),
         note="mode = advisor posture, not an instruction anyone followed",
+    )
+
+
+def parse_ts(value: str) -> datetime:
+    """Rows mix trailing Z with explicit offsets; normalise everything to UTC."""
+    return datetime.fromisoformat(value.replace("Z", "+00:00")).astimezone(timezone.utc)
+
+
+def draw_cadence(ax, rows):
+    kit.panel(
+        ax,
+        "When the observations were written",
+        "one dot per row, placed on its own timestamp · lanes are the three events",
+    )
+    lanes = {t: i for i, t in enumerate(reversed(TOURNAMENT_ORDER))}
+    rng = np.random.default_rng(7)
+    for market in MARKET_ORDER:
+        pts = [r for r in rows if r["market"] == market]
+        if not pts:
+            continue
+        ax.scatter(
+            [parse_ts(r["timestamp"]) for r in pts],
+            [lanes[r["tournament"]] + rng.uniform(-0.17, 0.17) for r in pts],
+            s=110,
+            alpha=0.8,
+            color=MARKET_COLOR[market],
+            edgecolors=kit.BG,
+            linewidths=0.9,
+            zorder=3,
+        )
+    ax.set_yticks(list(lanes.values()))
+    ax.set_yticklabels(["TOUR Champ.", "BMW", "FedEx St. Jude"])
+    ax.set_ylim(-0.6, len(lanes) - 0.4)
+    ax.xaxis.set_major_locator(mdates.DayLocator(interval=2))
+    ax.xaxis.set_major_formatter(mdates.DateFormatter("%b %d"))
+    ax.grid(True, axis="x", alpha=0.5, zorder=1)
+    ax.set_xlabel("observation timestamp (UTC)")
+    ax.annotate(
+        f"{len({r['run_id'] for r in rows})} runs over 17 days · clusters are tournament weeks, "
+        "not a fixed schedule · gaps are weeks with nothing worth writing down",
+        xy=(0, 0),
+        xycoords="axes fraction",
+        xytext=(0, -66),
+        textcoords="offset points",
+        fontsize=14,
+        color=kit.DIM,
+    )
+
+
+def draw_actions(ax, rows):
+    counts = Counter(r["action_kind"] for r in rows)
+    order = [a for a in ACTION_ORDER if counts[a]]
+    values = [counts[a] for a in order]
+    kit.panel(ax, "Action kind mix", "what each row was advising")
+    hbar(
+        ax,
+        order,
+        values,
+        [kit.ACCENT if a == "new_bet" else kit.PENDING if a == "exit" else kit.ACCENT_3 for a in order],
+        total=len(rows),
+        note="an 'exit' is an advised exit from a paper position that was\n"
+        "never placed — it is not a realised loss and not a settlement",
     )
 
 
@@ -357,17 +423,18 @@ def main() -> None:
     kit.apply_style()
     rows = load_rows()
 
-    fig = plt.figure(figsize=(24, 19))
+    height = 25.0
+    fig = plt.figure(figsize=(24, height))
     gs = fig.add_gridspec(
-        4,
+        5,
         3,
         left=0.082,
         right=0.985,
-        top=0.855,
-        bottom=0.115,
-        hspace=0.90,
+        top=1.0 - kit.HEADER_BLOCK_IN / height,
+        bottom=(kit.FOOTER_BLOCK_IN + 0.15) / height,
+        hspace=0.80,
         wspace=0.32,
-        height_ratios=[1.0, 1.35, 0.86, 0.90],
+        height_ratios=[1.0, 1.05, 1.30, 0.80, 0.84],
     )
 
     kit.header(
@@ -382,13 +449,16 @@ def main() -> None:
     draw_markets(fig.add_subplot(gs[0, 1]), rows)
     draw_modes(fig.add_subplot(gs[0, 2]), rows)
 
-    draw_spread(fig.add_subplot(gs[1, 0:2]), rows)
-    draw_gap(fig.add_subplot(gs[1, 2]), rows)
+    draw_cadence(fig.add_subplot(gs[1, 0:2]), rows)
+    draw_actions(fig.add_subplot(gs[1, 2]), rows)
 
-    draw_walls(fig.add_subplot(gs[2, 0:2]), rows)
-    draw_plain_english(fig.add_subplot(gs[2:4, 2]))
+    draw_spread(fig.add_subplot(gs[2, 0:2]), rows)
+    draw_gap(fig.add_subplot(gs[2, 2]), rows)
 
-    draw_pending(fig.add_subplot(gs[3, 0:2]))
+    draw_walls(fig.add_subplot(gs[3, 0:2]), rows)
+    draw_plain_english(fig.add_subplot(gs[3:5, 2]))
+
+    draw_pending(fig.add_subplot(gs[4, 0:2]))
 
     kit.badge_strip(fig)
     kit.footer(

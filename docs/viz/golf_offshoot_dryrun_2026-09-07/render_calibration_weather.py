@@ -259,14 +259,16 @@ def main() -> None:
     recs = {v: calib[v]["recommendation"] for v in VERSIONS}
     assert set(recs.values()) == {"keep_expert"}, f"unexpected recommendations: {recs}"
 
-    fig = plt.figure(figsize=(24, 20))
+    height = 20.0
+    fig = plt.figure(figsize=(24, height))
     gs = fig.add_gridspec(
         3,
         3,
         left=0.068,
         right=0.985,
-        top=0.862,
-        bottom=0.150,
+        top=1.0 - kit.HEADER_BLOCK_IN / height,
+        # row 3 hangs a note ~1.25in below its axes, so the footer block needs clearance
+        bottom=(kit.FOOTER_BLOCK_IN + 1.25) / height,
         hspace=0.62,
         wspace=0.34,
         height_ratios=[1.02, 1.30, 1.06],

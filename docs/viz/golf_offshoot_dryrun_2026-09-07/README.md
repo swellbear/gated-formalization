@@ -8,22 +8,40 @@ recomputed from this directory alone.
 **Shared badges on both boards:**
 `PHASE 1 OBSERVATION` · `AI: NO CASH IN/OUT` · `SOURCE: real operating exports (not demo)` · `paper observation only`
 
+**Source path.** Both scripts read *only* from [`source/`](source/) in this directory.
+Neither one reads, requires, or inspects the live operating journal at
+`golf-offshoot/data/shadow/` — that path is the system's own working record and is
+none of a docs board's business. Nothing here renders conditionally on whether it
+exists.
+
 ---
 
 ## Ill 1 — Shadow honesty strip
 
 ![Shadow honesty strip](shadow_honesty_strip.png)
 
-`shadow_honesty_strip.png` (2640 × 2090 px) · rendered by
+`shadow_honesty_strip.png` (2640 × 2750 px) · rendered by
 [`render_shadow_honesty.py`](render_shadow_honesty.py) from
 [`source/shadow/advises.jsonl`](source/shadow/advises.jsonl).
 
 **Honesty caption.** 162 paper-observation rows written against a **live** sportsbook
 across three FedExCup playoff events (FedEx St. Jude → BMW → TOUR Championship,
-2026-08-13 → 2026-08-30). Every row carries `run_mode=live`,
-`paper_observation_only=true`, and `never_auto_bet=true`. "Live" describes the book
-the prices came from, not money at risk: nothing was staked, so there is nothing to
-settle. The advisory posture was `stay_selective` on 158 of 162 rows.
+2026-08-13 → 2026-08-30), from 56 runs covering 37 players. Every row carries
+`run_mode=live`, `paper_observation_only=true`, and `never_auto_bet=true`. "Live"
+describes the book the prices came from, not money at risk: nothing was staked, so
+there is nothing to settle. The advisory posture was `stay_selective` on 158 of 162
+rows.
+
+**An `exit` is not a loss.** 52 of the 162 rows have `action_kind=exit`, and many of
+those carry a negative `suggested_stake`. Read carelessly, that looks like a book of
+closed-out positions. It is not. Every exit is an *advised* exit from a paper position
+that was never placed, so it realised nothing — no loss, no gain, no settlement. The
+action-kind panel says so directly, because this is the single easiest thing on the
+board to misread.
+
+**Cadence is clustered, not scheduled.** The timeline panel places each row on its own
+timestamp. Observations bunch into tournament weeks and go quiet between them; the
+gaps are weeks with nothing worth writing down, not missing data.
 
 **Settlement columns are PENDING / join later.** `advises.jsonl` has no settle,
 outcome, or PnL field of any kind — no `settled_at`, `outcome`, `won/lost`, `payout`,
@@ -53,6 +71,11 @@ everywhere else.
 events), `calib-v2` (8), `calib-v3` (12, latest) — and all three landed on the same
 recommendation: **`keep_expert`**. All three record `no_future_leakage=true`, and the
 hold-out events were never used to accept a candidate weight vector.
+
+Reading all three freezes matters more than reading the latest one. A single
+`keep_expert` could be one unlucky search. Three in a row, across a train set that grew
+from 8 events to 12 and a search that ran 22 → 32 → 30 evaluations, is a pattern: the
+fit keeps failing to beat the expert prior even as the panel gets stronger.
 
 **The hold-out did not clearly beat expert α.** That sentence is quoted from the
 exports' own notes, and the score panels show why. Expert and fitted Brier scores sit
@@ -97,10 +120,19 @@ python render_calibration_weather.py
 ```
 
 Both scripts read only from `source/`, print the pixel dimensions they wrote, and
-assert the honesty invariants they depend on (all three calibration freezes must still
-read `keep_expert`; the v3 hold-out note must still begin "Hold-out did not clearly
-beat expert"). If an export is ever replaced with one that contradicts a caption, the
-render fails instead of quietly redrawing a false claim.
+assert the honesty invariant each board's captions depend on:
+
+- `render_shadow_honesty.py` fails if any settlement-shaped field (`settle`, `outcome`,
+  `result`, `payout`, `pnl`, `profit`, `clv`, `roi`, `won`, `lost`) ever appears in
+  `advises.jsonl`, because the `PENDING / join later` badges would then be a lie.
+- `render_calibration_weather.py` fails if any of the three freezes stops reading
+  `keep_expert`, or if the v3 hold-out note stops beginning "Hold-out did not clearly
+  beat expert".
+
+If an export is ever replaced with one that contradicts a caption, the render fails
+instead of quietly redrawing a false claim. Note that these are assertions about the
+*source files in this directory* — neither script branches on the presence or absence
+of anything outside `source/`.
 
 Shared style and the badge strip live in [`render_kit.py`](render_kit.py), so both
 boards carry byte-identical badges.
