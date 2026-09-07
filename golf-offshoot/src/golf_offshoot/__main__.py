@@ -74,7 +74,7 @@ def main(argv: list[str] | None = None) -> int:
         "command",
         nargs="?",
         default="demo",
-        choices=["demo", "board", "explain", "strategy", "ingest", "calibrate", "pressure-test", "live", "watch", "shadow", "shell", "paper-export", "paper-ledger", "paper-deposit", "paper-withdraw", "paper-settle", "paper-fill", "compare-replay"],
+        choices=["demo", "board", "explain", "strategy", "ingest", "calibrate", "pressure-test", "live", "watch", "shadow", "shell", "paper-export", "paper-ledger", "paper-deposit", "paper-withdraw", "paper-settle", "paper-fill", "compare-replay", "hub", "lane-15m", "observability-export"],
     )
     parser.add_argument("--course-type", default="parkland")
     parser.add_argument("--player", default="p01")
@@ -219,6 +219,17 @@ def main(argv: list[str] | None = None) -> int:
         dest="backfill_settles",
         help="shadow: write paper_win/paper_lose onto the journal only when a real settle is known",
     )
+    parser.add_argument(
+        "--lane",
+        default="golf",
+        choices=["golf", "learning_lane_15m", "15m"],
+        help="operator_surface selector (hub). Canonical lane=golf|learning_lane_15m (15m aliases to learning_lane_15m). Default golf.",
+    )
+    parser.add_argument(
+        "--serve",
+        action="store_true",
+        help="hub: serve the thin HTML selector on --port",
+    )
     args = parser.parse_args(argv)
 
     if args.command == "board":
@@ -254,6 +265,12 @@ def main(argv: list[str] | None = None) -> int:
         return _cmd_paper_fill(args)
     if args.command == "compare-replay":
         return _cmd_compare_replay(args)
+    if args.command == "hub":
+        return _cmd_hub(args)
+    if args.command == "lane-15m":
+        return _cmd_lane_15m(args)
+    if args.command == "observability-export":
+        return _cmd_observability_export(args)
 
     print(DEMO_BANNER)
     ct = CourseType(args.course_type)
@@ -952,10 +969,53 @@ def _cmd_paper_ledger(args) -> int:
     return 0
 
 
+def _cmd_hub(args) -> int:
+    from golf_offshoot.operator_surface.hub import render_hub
+    from golf_offshoot.operator_surface.lanes import parse_lane
+
+    lane = parse_lane(args.lane)
+    html = render_hub(lane)
+    if args.serve:
+        from golf_offshoot.operator_surface.server import serve_hub
+
+        httpd = serve_hub(port=args.port)
+        host, port = httpd.server_address[:2]
+        print(f"hub lane={lane} trading NOT ARMED  http://{host}:{port}/?lane={lane}")
+        try:
+            httpd.serve_forever()
+        except KeyboardInterrupt:
+            return 0
+        return 0
+    print(html)
+    return 0
+
+
+def _cmd_lane_15m(args) -> int:
+    from golf_offshoot.learning_lane_15m.loop import format_loop_report, run_loop
+
+    result = run_loop(refresh=args.refresh)
+    print(format_loop_report(result))
+    return 0
+
+
+def _cmd_observability_export(_args) -> int:
+    from golf_offshoot.operator_surface.observability import write_observability_exports
+
+    paths = write_observability_exports()
+    print("shareable observability export (Hub UI manifest; read-only; no controls)")
+    for key, path in paths.items():
+        print(f"  {key}: {path}")
+    return 0
+
+
 def _cmd_paper_deposit(args) -> int:
+    from golf_offshoot.operator_surface.lanes import parse_lane
     from golf_offshoot.strategy.paper_ledger import format_ledger, record_deposit
     from golf_offshoot.strategy.paper_pack import export_paper_pack
 
+    if parse_lane(args.lane) == "learning_lane_15m":
+        print("AI never deposit/withdraw/transfer. 15-min lane has no cash UI. Trading NOT ARMED.")
+        return 2
     if args.amount <= 0:
         print("paper-deposit requires --amount greater than 0")
         return 2
@@ -976,9 +1036,13 @@ def _cmd_paper_deposit(args) -> int:
 
 
 def _cmd_paper_withdraw(args) -> int:
+    from golf_offshoot.operator_surface.lanes import parse_lane
     from golf_offshoot.strategy.paper_ledger import format_ledger, record_withdrawal
     from golf_offshoot.strategy.paper_pack import export_paper_pack
 
+    if parse_lane(args.lane) == "learning_lane_15m":
+        print("AI never deposit/withdraw/transfer. 15-min lane has no cash UI. Trading NOT ARMED.")
+        return 2
     if args.amount <= 0:
         print("paper-withdraw requires --amount greater than 0")
         return 2
