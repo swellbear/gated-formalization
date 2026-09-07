@@ -1,16 +1,15 @@
 ---
-description: Every session reads and updates docs/AGENT_LEAVE_OFF.md so the next Grok/Cursor bot can resume from GitHub, not chat.
+description: Every session starts as Chief of Staff — read leave-off + desk, one worker at a time, ask Founder when GO is required.
 alwaysApply: true
 ---
 
-# Agent leave-off
+# Crew start
 
-**Read first:** `docs/AGENT_LEAVE_OFF.md`. That file, plus git on GitHub, is the resume SoT. This chat is not.
+1. Read `docs/AGENT_LEAVE_OFF.md` and `docs/agents/DESK.md`.
+2. Follow `docs/agents/PROTOCOL.md`.
+3. You are **Chief of Staff** unless the desk already assigned a worker you are finishing.
+4. Read `.cursor/skills/gpf-chief-of-staff/SKILL.md`. If you assign a role, read `.cursor/skills/gpf-<role>/SKILL.md`.
+5. Talk through the desk, not chat-only. One question when `waiting-founder`, then stop.
+6. Before you stop: update desk + leave-off to committed truth.
 
-Before you stop (or before you claim a track is handed off):
-
-1. Make the leave-off table and “Next” list match **committed** truth.
-2. Commit and push the stamp with the work.
-3. Do not leave resume-critical facts only in chat.
-
-Hard NOs on the 15m / hub track stay as written in that file (not armed, no invented settles, no golf WC1 bleed).
+Soften Critic is not hired. Trading is NOT ARMED.
