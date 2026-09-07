@@ -64,11 +64,12 @@ Canonical ids. The tabs are the loudest thing on the page after the wall.
 | `lane_id` | Lane | Loud badge | State today |
 | --- | --- | --- | --- |
 | `golf` | Golf offshoot, Phase 1 observation | `PHASE 1 OBSERVATION` | Real committed exports. Settle banner up, WC1 dated **FAIL**, two charts published. |
-| `learning_lane_15m` | 15-minute Kalshi learning lane (`KXBTC15M`) | `LEARNING LANE` | Pages export published. First paper fill `KXBTC15M-26SEP071445-45` is settled / `paper_win`. No 15m charts. |
+| `learning_lane_15m` | 15-minute Kalshi learning lane (`KXBTC15M`) | `LEARNING LANE` | Live open-market export after `status=open`. Paper fill `KXBTC15M-26SEP071500-00` is `SETTLE_PENDING`. Official Kalshi `KXBTC15M-26SEP071445-45` is finalized / yes. No 15m charts. |
 
-The 15-minute lane now has a Pages export: first paper fill `KXBTC15M-26SEP071445-45`
-is settled / `paper_win`. Charts stay `not yet available`. The golf WC1 FAIL is a golf
-record and does not transfer here.
+The 15-minute lane now has a Pages live export after `status=open`: this box paper-filled
+`KXBTC15M-26SEP071500-00` (`SETTLE_PENDING`). Official Kalshi `KXBTC15M-26SEP071445-45`
+is finalized / yes. Charts stay `not yet available`. The golf WC1 FAIL is a golf record
+and does not transfer here.
 
 Adding a future lane means adding its id to `CANONICAL_LANES` in both `assets/hub.js` and
 `validate_hub.py`, and adding a tab to `index.html`. An unrecognised `lane_id` is skipped

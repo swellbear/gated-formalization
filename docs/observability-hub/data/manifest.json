@@ -3,9 +3,9 @@
   "hub": {
     "title": "gated-formalization \u2014 observability hub",
     "subtitle": "Read-only mirror of published artifacts. No controls, no cash, no keys.",
-    "generated_at": "2026-09-07T14:48:29.483802-04:00",
+    "generated_at": "2026-09-07T14:50:25.252103-04:00",
     "source_kind": "export",
-    "source_note": "Pages manifest refresh bound to docs/observability-hub/data/SCHEMA.md (PR #151). Golf figures stay the published Hub fixture/export already on disk. learning_lane_15m first paper fill KXBTC15M-26SEP071445-45 is settled / paper_win (Kalshi result=yes, finalized, CF Benchmarks matched). Trading NOT ARMED.",
+    "source_note": "Pages live open-market export bound to docs/observability-hub/data/SCHEMA.md (PR #151). Golf figures stay the published Hub fixture/export already on disk. learning_lane_15m journal from status=open fetch: paper fill KXBTC15M-26SEP071500-00 is SETTLE_PENDING. Trading NOT ARMED.",
     "control_surface_note": "The control surface is the local operator shell at 127.0.0.1:8765 on the operator's own machine. It is deliberately not reachable from this page and is not linked from it."
   },
   "global": {
@@ -344,7 +344,7 @@
       "lane_scope_note": "Everything in this tab is learning_lane_15m. Golf WC1 / Ill do not transfer.",
       "last_run": {
         "status": "published export",
-        "headline": "15-min first paper fill settled. Observation only. Not a golf WC1 edge.",
+        "headline": "Live open-market export after status=open. Paper fill KXBTC15M-26SEP071500-00 is SETTLE_PENDING. Observation only.",
         "fields": [
           {
             "label": "Series",
@@ -368,63 +368,60 @@
           },
           {
             "label": "Windows in this snapshot",
-            "value": "1"
+            "value": "21"
           },
           {
-            "label": "Ticker",
+            "label": "Live paper fill",
+            "value": "KXBTC15M-26SEP071500-00"
+          },
+          {
+            "label": "Live paper fill status",
+            "value": "SETTLE_PENDING"
+          },
+          {
+            "label": "Official Kalshi window in snapshot",
             "value": "KXBTC15M-26SEP071445-45"
           },
           {
-            "label": "Paper outcome",
-            "value": "paper_win"
-          },
-          {
-            "label": "Kalshi result",
+            "label": "Kalshi result (1445)",
             "value": "yes"
           },
           {
-            "label": "Kalshi status",
+            "label": "Kalshi status (1445)",
             "value": "finalized"
           },
           {
-            "label": "settlement_ts",
+            "label": "settlement_ts (1445)",
             "value": "2026-09-07T18:45:05Z"
           },
           {
-            "label": "expiration_value",
+            "label": "expiration_value (1445)",
             "value": "79148.63"
           },
           {
-            "label": "SOURCE",
+            "label": "SOURCE (1445)",
             "value": "CF Benchmarks matched"
-          },
-          {
-            "label": "Paper observation P/L",
-            "value": "+1.67"
-          },
-          {
-            "label": "Paper observation bankroll after",
-            "value": "101.67"
           }
         ],
         "notes": [
-          "Official settle is Kalshi result=yes matched to documented CF Benchmarks SOURCE.",
-          "Paper P/L and bankroll-after are observation strings, not a cash UI. Trading NOT ARMED.",
+          "Live public KXBTC15M fetch used status=open plus settled merge. Trading NOT ARMED.",
+          "This box paper-filled KXBTC15M-26SEP071500-00. Official Kalshi result on KXBTC15M-26SEP071445-45 is yes / finalized.",
+          "Official settle is Kalshi result matched to documented CF Benchmarks SOURCE.",
           "A CFB websocket / DIY 60s average is observe-only."
         ]
       },
       "settle": {
-        "banner": "settled",
-        "banner_state": "off",
-        "headline": "First KXBTC15M paper fill settled. Kalshi result=yes, finalized, CF Benchmarks SOURCE matched. paper_win.",
+        "banner": "SETTLE_PENDING",
+        "banner_state": "pending",
+        "headline": "SETTLE_PENDING until Kalshi result. can_close_early: wait; if close_time moves the window re-keys.",
         "counts": [
           {
             "label": "Pending windows",
-            "value": "0"
+            "value": "1"
           },
           {
             "label": "Settled windows",
-            "value": "1"
+            "value": "0"
           }
         ],
         "sources": [
@@ -435,15 +432,14 @@
         ],
         "residual": [
           {
-            "label": "KXBTC15M-26SEP071445-45",
-            "value": "paper_win",
-            "note": "settled. Kalshi result=yes, status=finalized, settlement_ts=2026-09-07T18:45:05Z, expiration_value=79148.63, CF Benchmarks matched. Paper observation P/L +1.67; paper observation bankroll after 101.67. Not a cash movement. Trading NOT ARMED."
+            "label": "KXBTC15M-26SEP071500-00",
+            "value": "SETTLE_PENDING",
+            "note": "Live paper fill after status=open. SETTLE_PENDING until Kalshi result on this window. Hard NO invent win/lose."
           }
         ],
         "observation": null,
         "notes": [
-          "Do not invent win/lose. This window now has an official Kalshi result.",
-          "Display prices are not settle evidence."
+          "Do not invent win/lose. Display prices are not settle evidence."
         ]
       },
       "paper_ledger": {
@@ -452,23 +448,19 @@
         "rows": [
           {
             "label": "Open books",
-            "value": "0"
-          },
-          {
-            "label": "Settled books",
             "value": "1"
           },
           {
+            "label": "Settled books",
+            "value": "0"
+          },
+          {
             "label": "Ledger entries",
-            "value": "3"
+            "value": "2"
           },
           {
             "label": "Series",
             "value": "KXBTC15M"
-          },
-          {
-            "label": "Paper outcome",
-            "value": "paper_win"
           }
         ],
         "absent_fields": [
