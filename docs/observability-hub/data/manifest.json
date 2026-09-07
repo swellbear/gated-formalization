@@ -1,0 +1,270 @@
+{
+  "schema_version": 1,
+  "hub": {
+    "title": "gated-formalization — observability hub",
+    "subtitle": "Read-only mirror of published artifacts. No controls, no cash, no keys.",
+    "generated_at": "2026-09-07T00:00:00Z",
+    "source_kind": "fixture",
+    "source_note": "Checked-in fixture. Every golf number below is recomputed from the exports committed under docs/viz/golf_offshoot_dryrun_2026-09-07/source/. Nothing here is invented, and no live feed is polled.",
+    "control_surface_note": "The control surface is the local operator shell at 127.0.0.1:8765 on the operator's own machine. It is deliberately not reachable from this page and is not linked from it."
+  },
+  "global": {
+    "badges": [
+      "READ ONLY",
+      "TRADING NOT ARMED",
+      "PAPER OBSERVATION ONLY",
+      "AI: NO CASH IN/OUT"
+    ],
+    "wall_lines": [
+      "This page is a viewer. It has no ingest, live, shadow, loop, or refresh control.",
+      "No paper deposit, withdraw, or transfer. No cash movement of any kind.",
+      "No trade arming, no one-tap bet, no Kalshi account, key, or wallet scope.",
+      "AI NEVER DEPOSITS / WITHDRAWS / TRANSFERS CASH."
+    ],
+    "hard_nos": [
+      "No ingest / live / shadow / loop / refresh controls",
+      "No paper deposit / withdraw / transfer",
+      "No trade arming, one-tap bet, or Kalshi trade keys",
+      "No cash movement UI",
+      "No API keys, secrets, or .env values on the page or in the committed client JS",
+      "Missing charts stay \"not yet available\" — never invented",
+      "Never claim edge / banked edge / \"edge established\"",
+      "Never blur the golf WC1 FAIL into the 15-minute learning lane"
+    ]
+  },
+  "lanes": [
+    {
+      "lane_id": "golf",
+      "label": "Golf — Phase 1 observation",
+      "tab_label": "Golf · Phase 1",
+      "lane_badge": "PHASE 1 OBSERVATION",
+      "badges": [
+        "PHASE 1 OBSERVATION",
+        "NOT ARMED",
+        "PAPER OBSERVATION ONLY",
+        "AI: NO CASH IN/OUT",
+        "NOT EDGE ESTABLISHED",
+        "NOT BANKED MONEY"
+      ],
+      "summary_line": "Golf-offshoot Phase 1 dry run. Real operating exports, paper observation only. Edge is not established and is not claimed.",
+      "source_kind": "real operating exports (not demo, not mock, not a Kalshi sandbox)",
+      "lane_scope_note": "Everything in this tab is the golf lane. The WC1 dated FAIL below belongs to this lane only and does not transfer to any other lane.",
+      "last_run": {
+        "status": "published export",
+        "headline": "Last published golf export: TOUR Championship live table, printed 2026-08-30 10:37 EDT.",
+        "fields": [
+          { "label": "Run id", "value": "20260830_ET103754-eeccf6b9" },
+          { "label": "Event", "value": "TOUR Championship (ESPN 401811964)" },
+          { "label": "Run mode", "value": "live" },
+          { "label": "Model", "value": "golf-offshoot-0.7.0" },
+          { "label": "Rows in table", "value": "30" },
+          { "label": "never_auto_bet", "value": "true" },
+          { "label": "paper_observation_only", "value": "true" },
+          { "label": "Printed", "value": "2026-08-30 10:37 EDT" }
+        ],
+        "notes": [
+          "\"Live\" describes the sportsbook the prices came from, not money at risk. Nothing was staked.",
+          "This is the newest export Systems has published into this tree. It is not the operator shell's live state — if the operator has run since, this page does not know it.",
+          "The hub polls nothing and refreshes nothing on its own. What you see is whatever was last committed."
+        ]
+      },
+      "settle": {
+        "banner": "SETTLE_PENDING",
+        "banner_state": "pending",
+        "headline": "Settle banner is up. SETTLE_PENDING_cleared is false: two place advises are still unsettled for want of an official finish.",
+        "counts": [
+          { "label": "Advises observed", "value": "162", "note": "56 runs, 37 players, 3 events, 2026-08-13 → 2026-08-30" },
+          { "label": "Settleable denominator", "value": "122", "note": "fully joined — 0 pending inside the denominator" },
+          { "label": "paper_win", "value": "34" },
+          { "label": "paper_lose", "value": "88" },
+          { "label": "SETTLE_PENDING (held outside denominator)", "value": "2", "note": "finish unknown — player absent from the official final field" },
+          { "label": "never_settled by design", "value": "38", "note": "win_after_r1/r2/r3 round-leader markets, never settled by the operating system" }
+        ],
+        "sources": [
+          { "label": "paper_ledger_ticket", "value": "33 rows" },
+          { "label": "espn_official_final", "value": "89 rows" }
+        ],
+        "residual": [
+          { "label": "Keith Mitchell · BMW Championship (401811963) · top_10", "value": "rec-2853b9e721", "note": "SETTLE_PENDING · finish unknown" },
+          { "label": "Keith Mitchell · BMW Championship (401811963) · top_20", "value": "rec-9643405947", "note": "SETTLE_PENDING · finish unknown" }
+        ],
+        "observation": {
+          "label": "Paper hit rate",
+          "value": "34/122 ≈ 0.279",
+          "chips": ["OBSERVATION", "NOT EDGE ESTABLISHED", "NOT BANKED"],
+          "note": "The share of unplaced paper tickets that would have come in. Not edge, not a validated edge, not ROI, not a track record, not banked money."
+        },
+        "notes": [
+          "The two pending rows keep SETTLE_PENDING rather than being defaulted to a loss to make the page look finished. Their finishes are not invented.",
+          "They are held outside the settleable denominator so they can neither inflate nor deflate the paper hit rate.",
+          "The staged export settle_join_summary.json records SETTLE_PENDING_cleared: false against its own 124-row relevant denominator. Both statements are true of different denominators; the export is not edited to make them agree."
+        ]
+      },
+      "paper_ledger": {
+        "status": "counts only — no cash figures published",
+        "headline": "Paper ticket counts. No bankroll, balance, or money figure is published on this page.",
+        "rows": [
+          { "label": "Settleable paper tickets", "value": "122" },
+          { "label": "Would have come in", "value": "34" },
+          { "label": "Would not have come in", "value": "88" },
+          { "label": "Still pending", "value": "2" },
+          { "label": "Never settled by design", "value": "38" },
+          { "label": "Positions actually placed", "value": "0" },
+          { "label": "Money actually staked", "value": "0" }
+        ],
+        "absent_fields": [
+          "payout",
+          "realized_pnl",
+          "closing_line",
+          "clv",
+          "roi",
+          "stake_settled",
+          "bankroll"
+        ],
+        "notes": [
+          "The money-shaped fields above are absent from the export entirely. They are marked absent rather than blank, and none of them is derived from the win/lose counts.",
+          "The operator's lifetime mock ledger lives at data/paper/ledger.json on the operator's own machine, is gitignored, and is deliberately not published here.",
+          "There is no deposit, withdraw, transfer, or cash-out affordance on this page. There is none in the operator shell either."
+        ]
+      },
+      "records": [
+        {
+          "record_id": "WC1",
+          "title": "WC1 weekly operating claim — admitted 2026-09-07 as a dated record only",
+          "verdict": "FAIL",
+          "lean": "park unproven",
+          "lane_scope_note": "This is a golf-lane record. It says nothing about learning_lane_15m or any future lane, and must never be shown as though it did.",
+          "rows": [
+            { "label": "Exit", "value": "FAIL" },
+            { "label": "Lean", "value": "park unproven" },
+            { "label": "SETTLE_PENDING_cleared", "value": "false" },
+            { "label": "Residual", "value": "2 (Mitchell BMW top_10 + top_20, finish_unknown)" },
+            { "label": "Paper hit", "value": "34/122 ≈ 0.279 — observation only" },
+            { "label": "Edge Softened?", "value": "N — edge not established" }
+          ],
+          "hard_nos": [
+            "Never claim edge / banked edge / \"edge established\"",
+            "Never elevate 0.279 or keep_expert to production-edge proof",
+            "Never invent Keith Mitchell / absent-from-final finishes",
+            "Do not rewrite WC1 FAIL into PASS under Founder option A",
+            "Do not Soften WC2 (parked / rejected idle-breach)"
+          ],
+          "links": [
+            {
+              "label": "ADMITTED_WC1_DATED_RECORD.md",
+              "href": "https://github.com/swellbear/gated-formalization/blob/master/golf-offshoot/docs/phase1_dryrun/ADMITTED_WC1_DATED_RECORD.md"
+            },
+            {
+              "label": "SOFTENED_SET.md",
+              "href": "https://github.com/swellbear/gated-formalization/blob/master/golf-offshoot/docs/phase1_dryrun/SOFTENED_SET.md"
+            },
+            {
+              "label": "OPERATOR_STATUS_STAMP.md",
+              "href": "https://github.com/swellbear/gated-formalization/blob/master/golf-offshoot/docs/phase1_dryrun/OPERATOR_STATUS_STAMP.md"
+            }
+          ]
+        }
+      ],
+      "charts": [
+        {
+          "slot_id": "shadow_honesty_strip",
+          "title": "Shadow honesty strip",
+          "subline": "Live-book paper journal — not settled PnL · not Kalshi demo",
+          "badges": ["PHASE 1 OBSERVATION", "AI: NO CASH IN/OUT", "PAPER OBSERVATION ONLY"],
+          "status": "available",
+          "path": "../viz/golf_offshoot_dryrun_2026-09-07/shadow_honesty_strip.png",
+          "pixel_size": "2640 × 4125",
+          "note": "read-only PNG · rendered by Illustrator from the committed source exports",
+          "doc_href": "https://github.com/swellbear/gated-formalization/blob/master/docs/viz/golf_offshoot_dryrun_2026-09-07/README.md"
+        },
+        {
+          "slot_id": "calibration_weather",
+          "title": "Calibration weather",
+          "subline": "All freezes keep_expert (v1→v3) — not edge established",
+          "badges": ["PHASE 1 OBSERVATION", "AI: NO CASH IN/OUT", "PAPER OBSERVATION ONLY"],
+          "status": "available",
+          "path": "../viz/golf_offshoot_dryrun_2026-09-07/calibration_weather.png",
+          "pixel_size": "2640 × 2200",
+          "note": "read-only PNG · rendered by Illustrator from the committed calibration freezes",
+          "doc_href": "https://github.com/swellbear/gated-formalization/blob/master/docs/viz/golf_offshoot_dryrun_2026-09-07/README.md"
+        },
+        {
+          "slot_id": "wc1_dated_record",
+          "title": "WC1 dated record",
+          "subline": "FAIL / park unproven · NOT edge",
+          "badges": ["PHASE 1 OBSERVATION", "AI: NO CASH IN/OUT", "PAPER OBSERVATION ONLY"],
+          "status": "not yet available",
+          "note": "not yet available — Illustrator owns regeneration. No chart generated. The WC1 record itself is above, in text."
+        }
+      ],
+      "docs": [
+        {
+          "label": "Illustrator board notes (what each chart does and does not claim)",
+          "href": "https://github.com/swellbear/gated-formalization/blob/master/docs/viz/golf_offshoot_dryrun_2026-09-07/README.md"
+        },
+        {
+          "label": "Phase 1 dry-run index",
+          "href": "https://github.com/swellbear/gated-formalization/blob/master/golf-offshoot/docs/phase1_dryrun/README.md"
+        },
+        {
+          "label": "Operator guide (the local control surface, not this page)",
+          "href": "https://github.com/swellbear/gated-formalization/blob/master/golf-offshoot/docs/OPERATOR_GUIDE.md"
+        }
+      ]
+    },
+    {
+      "lane_id": "learning_lane_15m",
+      "label": "15-minute Kalshi — learning lane",
+      "tab_label": "15-min Kalshi · Learning",
+      "lane_badge": "LEARNING LANE",
+      "badges": [
+        "LEARNING LANE",
+        "NOT ARMED",
+        "PAPER OBSERVATION ONLY",
+        "AI: NO CASH IN/OUT",
+        "NOT EDGE ESTABLISHED",
+        "NO EXPORTS PUBLISHED YET"
+      ],
+      "summary_line": "KXBTC15M learning lane. No exports have been published into this tree yet, so this lane has nothing to show.",
+      "source_kind": "not yet available — no export published",
+      "lane_scope_note": "This lane has no weekly operating record of its own. The golf WC1 dated FAIL is a golf-lane record and does not apply here, in either direction.",
+      "last_run": {
+        "status": "not yet available",
+        "headline": "No run has been published for this lane.",
+        "fields": [],
+        "notes": [
+          "Systems has not yet fed a 15-minute snapshot into the published tree. Until it does, this stays not yet available.",
+          "No run time, count, or outcome is shown here, because none exists to show."
+        ]
+      },
+      "settle": {
+        "banner": null,
+        "banner_state": "not_available",
+        "headline": "No settle summary published for this lane.",
+        "counts": [],
+        "sources": [],
+        "residual": [],
+        "observation": null,
+        "notes": [
+          "There is no settle join, no denominator, and no hit rate for this lane yet. None is estimated.",
+          "The golf lane's settle banner and its 0.279 paper observation are golf figures. They are not this lane's numbers and are not shown on this tab."
+        ]
+      },
+      "paper_ledger": {
+        "status": "not yet available",
+        "headline": "No paper ledger summary published for this lane.",
+        "rows": [],
+        "absent_fields": [],
+        "notes": [
+          "No paper tickets, counts, or money figures exist for this lane in the published tree.",
+          "When counts do arrive they will be counts. No bankroll, deposit, withdraw, or transfer figure will be published here, and no cash control will ever appear on this page."
+        ]
+      },
+      "records": [],
+      "records_note": "No weekly operating record exists for this lane. Do not read the golf WC1 FAIL as this lane's result.",
+      "charts": [],
+      "charts_note": "No chart slots have been declared for this lane yet. Slot names arrive with the first published export — the hub does not invent them.",
+      "docs": []
+    }
+  ]
+}
