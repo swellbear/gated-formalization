@@ -8,7 +8,9 @@ Trading is never armed. AI never deposit / withdraw / transfer.
 from __future__ import annotations
 
 import json
+from pathlib import Path
 
+from golf_offshoot.data_feeds.kalshi_15m import is_paper_autobet_candidate
 from golf_offshoot.learning_lane_15m.paths import (
     LANE_15M,
     PRIMARY_SERIES,
@@ -191,7 +193,7 @@ def paper_autobet_open_markets(
         book_id = str(market.get("window_id") or event_ticker)
         if not ticker:
             continue
-        if not market.get("is_open"):
+        if not is_paper_autobet_candidate(market):
             continue
         mark = market.get("paper_mark")
         if mark is None:
@@ -267,6 +269,24 @@ def paper_autobet_open_markets(
         rec.movements = list(rec.movements) + [mv]
         rec.latest_advice = [mv]
         save_book(rec)
+        ledger.entries.append(
+            LedgerEntry(
+                entry_id=new_id("led"),
+                kind="paper_fill",
+                amount=0.0,
+                bankroll_after=ledger.bankroll,
+                event_id=event_ticker,
+                event_name=str(market.get("title") or event_ticker),
+                player_name=ticker,
+                note=(
+                    f"PAPER OBSERVATION fill position_id={pos.position_id} "
+                    f"ticker={ticker} window_id={book_id} mark={yes_f}. "
+                    "never_auto_bet. Not a deposit. Trading NOT ARMED."
+                ),
+                never_auto_bet=True,
+            )
+        )
+        save_ledger(ledger)
         append_shadow_advise(
             {
                 "action_kind": "new_bet",
