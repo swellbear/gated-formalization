@@ -10,7 +10,9 @@ recomputed from this directory alone.
 
 Ill 1 carries three additional board-specific badges, because it is the board that
 now has settled paper outcomes on it: `NOT EDGE ESTABLISHED` · `NOT BANKED MONEY` ·
-`SETTLE SOURCES: paper_ledger_ticket + espn_official_final`.
+`SETTLE SOURCES: paper_ledger_ticket + espn_official_final`. There is deliberately no
+board-level `SETTLE_PENDING` badge — the two rows that are still pending say so in
+place, next to their own row identifiers.
 
 **Source path.** Both scripts read *only* from [`source/`](source/) in this directory.
 Neither one reads, requires, or inspects the live operating journal at
@@ -45,23 +47,26 @@ board now reads the settle fields that actually exist — `settle_status`,
 back-filled by the renderer.
 
 **Denominator convention.** The settleable denominator is **122** advises, and it is
-fully joined: **34 `paper_win` / 88 `paper_lose` / 0 pending**. There is no
-`SETTLE_PENDING` state left on this board, and the badge is gone. All 162 rows are
-accounted for, with the honest reason each unsettled row carries no status:
+fully joined: **34 `paper_win` / 88 `paper_lose` / 0 pending inside the denominator**.
+There is no board-level `SETTLE_PENDING` badge. All 162 rows are accounted for, with
+the honest reason each unsettled row carries no status:
 
 | bucket | rows | why |
 | --- | --- | --- |
 | settled | 122 | `win` / `top_5` / `top_10` / `top_20`, settled off the real records |
-| `finish_unknown` | 2 | player absent from the official final field → **non-settleable** |
+| `SETTLE_PENDING` | 2 | finish unknown — player absent from the official final field |
 | `never_settled` | 38 | `win_after_r1/r2/r3` round-leader markets, never settled by design |
 
-**The residual, named.** The two non-settleable rows are both **Keith Mitchell** at the
-**BMW Championship (`401811963`)** on 2026-08-17 — `top_10` (`rec-2853b9e721`) and
-`top_20` (`rec-9643405947`), both `action_kind=new_bet`. He does not appear in the BMW
-official final field, so no place finish exists to settle them against. They are
-therefore excluded from the denominator rather than defaulted to a loss, and they are
-not counted as wins, losses, or pending. Nothing was invented to fill them. The board
-carries this as an explicit residual callout panel, not as a pending badge.
+**The residual, named and still pending.** The two `SETTLE_PENDING` rows are both
+**Keith Mitchell** at the **BMW Championship (`401811963`)** on 2026-08-17 — `top_10`
+(`rec-2853b9e721`) and `top_20` (`rec-9643405947`), both `action_kind=new_bet`. He does
+not appear in the BMW official final field, so no place finish exists to settle them
+against. They **keep** the `SETTLE_PENDING` state rather than being defaulted to a loss
+to make the board look finished, and they are held *outside* the settleable denominator
+so they cannot inflate or deflate the paper hit rate. Pending means unset here: nothing
+was written where nothing is known. The board carries them as their own residual
+callout panel, as a row in the out-of-denominator panel, and as an honesty wall
+asserting both rows are still unset — but not as a board-level badge.
 
 **Round-leader nulls are not losses.** The 38 `win_after_rN` rows resolve
 intra-tournament and the operating system never settles them. Their null status is by
@@ -69,26 +74,30 @@ design. The board shows them in their own out-of-denominator panel and counts th
 nothing; the renderer asserts that none of them ever acquires a `settle_status`.
 
 **The hit rate is an observation, not an edge.** 34/122 ≈ **0.279** is the share of
-*unplaced paper tickets* that would have come in. It is labelled observation-only
-everywhere it appears on the board. It is not an edge, not a validated edge, not ROI,
-not a track record, and not banked money — no position was ever placed, so nothing was
-won or paid. The settle-mix panel is deliberately coloured cyan/orange rather than
-green/red so a glance at it cannot read as profit and loss.
+*unplaced paper tickets* that would have come in. Wherever the figure is drawn it
+carries an `OBSERVATION` · `NOT EDGE ESTABLISHED` · `NOT BANKED` chip row attached to
+the number itself, so it cannot be screenshotted away from its qualifiers. It is not an
+edge, not a validated edge, not ROI, not a track record, and not banked money — no
+position was ever placed, so nothing was won or paid. The settle-mix panel is
+deliberately coloured cyan/orange rather than green/red so a glance at it cannot read
+as profit and loss.
 
 **Reconciling with the staged summary.** `settle_join_summary.json` records
-`SETTLE_PENDING_cleared: false` against its own 124-row `relevant` denominator, which
-still counted the two `finish_unknown` advises as settleable. Under the locked
-denominator convention those two are non-settleable, so on the 122-row settleable
-denominator the join *is* complete. The staged export is **not** edited to match the
-board — the difference is a denominator definition, and the board states it in the
-footer so a reader comparing the two files is not left guessing.
+`SETTLE_PENDING_cleared: false` against its own 124-row `relevant` denominator, and
+those two rows genuinely do stay pending — the board agrees with the summary on that.
+What the board does differently is hold them *outside* its 122-row settleable
+denominator, which is itself fully joined. So "the join is complete" and "two rows are
+still pending" are both true at once, of different denominators. The staged export is
+**not** edited to make the two agree; the board states the reconciliation in its footer
+so a reader comparing the files is not left guessing.
 
 **What the join delivered, and what is still absent.** `settle_status` and
 `settle_source` are present on all 122 settled rows; `settled_at` is partial (33 of
 162 — the `paper_ledger_ticket` rows carry an explicit stamp, the ESPN-final rows carry
-the source but not one). Still absent from the export entirely: `payout`,
-`realized_pnl`, `closing_line`, `clv`, `roi`, `stake_settled`. The board marks those
-`ABSENT` rather than blank, and derives none of them from the win/lose counts.
+the source but not one); 2 of 162 are still unset. Absent from the export entirely:
+`payout`, `realized_pnl`, `closing_line`, `clv`, `roi`, `stake_settled`. The board
+marks those `ABSENT` rather than blank, and derives none of them from the win/lose
+counts.
 
 ### Reading the rest of the board
 
@@ -163,8 +172,8 @@ near-zero leave-one-out relevance.
   probabilities and the settle join does not convert it into an edge; the calibration
   deltas on Ill 2 are a search result that did not beat the expert prior.
 - **Not a complete settlement of everything observed.** 38 round-leader advises are
-  never settled by design and 2 place advises are non-settleable for want of an
-  official finish. Those 40 rows are excluded from the denominator and are counted as
+  never settled by design and 2 place advises are still `SETTLE_PENDING` for want of an
+  official finish. Those 40 rows are held outside the denominator and counted as
   nothing — never as losses.
 - **Not advice.** Nothing here is a buy, sell, back, lay, or stake recommendation.
 - **Not demo or mock data.** These are the real operating exports. The offshoot's
@@ -198,7 +207,8 @@ assert the honesty invariant each board's captions depend on:
   - any round-leader (`win_after_rN`) row acquires a `settle_status`, which would break
     the never-settled-by-design claim;
   - the set of unsettled settleable rows stops being exactly the two named Keith
-    Mitchell BMW place advises, so the residual callout can never go stale;
+    Mitchell BMW place advises — so neither can be quietly defaulted to a loss or a win,
+    and the residual callout can never go stale;
   - the staged `settle_join_summary.json` counts stop agreeing with the raw rows.
 - `render_calibration_weather.py` fails if any of the three freezes stops reading
   `keep_expert`, or if the v3 hold-out note stops beginning "Hold-out did not clearly
