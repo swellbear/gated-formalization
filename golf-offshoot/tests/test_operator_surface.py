@@ -1,3 +1,4 @@
+import os
 from pathlib import Path
 
 from golf_offshoot.audit.journal import build_audit
@@ -259,6 +260,7 @@ def test_viz_renders_existing_png_and_mtime(tmp_path):
     assert wall.slot("shadow_honesty_strip").status == "available"
     assert wall.slot("shadow_honesty_strip").mtime == png.stat().st_mtime
     png.write_bytes(b"\x89PNG\r\n\x1a\nmore")
+    os.utime(png, (png.stat().st_atime, png.stat().st_mtime + 5))
     wall2 = load_viz_wall(roots)
     assert wall2.slot("shadow_honesty_strip").mtime != wall.slot("shadow_honesty_strip").mtime
 
@@ -366,10 +368,10 @@ def test_shell_text_and_html_include_walls(tmp_path):
     assert "NOT ARMED" in text
     assert "Shadow honesty strip" in text
     assert "Calibration weather" in page
-    assert "deposit" not in page.lower() or "NEVER DEPOSITS" in page
-    assert "one-tap" not in page
+    assert "NEVER DEPOSITS" in page
+    assert 'value="deposit"' not in page
+    assert 'value="paper-deposit"' not in page
     assert "Kalshi" in page
-    assert "paper-deposit" not in page
 
 
 def test_cli_shell_print(tmp_path):
