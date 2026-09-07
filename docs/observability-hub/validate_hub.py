@@ -31,8 +31,8 @@ NOT_YET = "not yet available"
 CANONICAL_LANES = ("golf", "learning_lane_15m")
 LANE_BADGE = {"golf": "PHASE 1 OBSERVATION", "learning_lane_15m": "LEARNING LANE"}
 
-# The standing wall. Hard-coded in index.html so no export can suppress it; the
-# manifest must agree with it rather than replace it.
+# The standing posture. Hard-coded in index.html's quiet Hard-NO strip so no export
+# can suppress it; the manifest must agree with it rather than replace it.
 REQUIRED_GLOBAL_BADGES = (
     "READ ONLY",
     "TRADING NOT ARMED",
@@ -40,7 +40,8 @@ REQUIRED_GLOBAL_BADGES = (
     "AI: NO CASH IN/OUT",
 )
 
-# Strings index.html must keep carrying, whatever the data feed says.
+# Strings index.html must keep carrying, whatever the data feed says. Presence is what
+# is enforced, not loudness: one quiet strip satisfies this, a badge wall is not needed.
 REQUIRED_STATIC_STRINGS = (
     "READ ONLY",
     "TRADING NOT ARMED",
@@ -464,7 +465,7 @@ def check_static_site(report: Report) -> None:
         if needle not in html:
             report.error(
                 "index.html",
-                f"the static wall must keep carrying {needle!r}",
+                f"the static Hard-NO strip must keep carrying {needle!r}",
             )
 
     for asset in sorted((HUB_DIR / "assets").glob("*")):

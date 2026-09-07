@@ -42,10 +42,11 @@ it stops being read-only.
 | `wall_lines` | the standing no-controls statement |
 | `hard_nos` | the enforced Hard NO list |
 
-`global` is **documentation and a cross-check, not a source**. The standing wall is
-hard-coded in `index.html` precisely so that no export can suppress it. The validator
-checks that `global.badges` still matches the wall; a mismatch is an error in the
-manifest, not a reason to change the wall.
+`global` is **documentation and a cross-check, not a source**. The page never renders it:
+the standing posture is the quiet Hard-NO strip hard-coded in `index.html`'s footer,
+precisely so that no export can suppress it. The validator checks that `global.badges`
+still matches those strings; a mismatch is an error in the manifest, not a reason to drop
+the strip.
 
 ---
 
@@ -181,6 +182,9 @@ a new dated record instead.
 ```
 
 `status` is `available` or `not yet available`. Omit `path` when unavailable.
+
+A chart's `badges` are kept as data the validator can check. The viewer does not draw
+them: the Hard NOs are the one footer strip, not a chip row repeated on every card.
 
 `path` rules, enforced in the browser and by the validator:
 

@@ -15,6 +15,9 @@
  *      "not yet available". No chart is invented, ever.
  *   5. Only a chart whose PNG loaded is clickable to enlarge. A
  *      "not yet available" slot has no button, no pointer, and no overlay.
+ *   6. The standing Hard NOs are stated once, in the footer strip of index.html.
+ *      A chart's manifest badges stay data the validator checks; they are not
+ *      redrawn as chips on every card.
  *
  * Keep it dependency-free. No framework, no bundler, no build step.
  */
@@ -550,9 +553,6 @@
     box.appendChild(el("h4", null, str(chart.title) || str(chart.slot_id)));
     if (str(chart.subline)) {
       box.appendChild(el("p", "chart-subline", str(chart.subline)));
-    }
-    if (list(chart.badges).length) {
-      box.appendChild(badgeList(chart.badges, "lane-badges"));
     }
 
     var declared = str(chart.status);
