@@ -991,11 +991,11 @@ def _cmd_hub(args) -> int:
 
 
 def _cmd_lane_15m(args) -> int:
-    from golf_offshoot.learning_lane_15m.loop import format_loop_report, run_loop
+    from golf_offshoot.operator_surface.runner import format_run_record, run_15m_loop
 
-    result = run_loop(refresh=args.refresh)
-    print(format_loop_report(result))
-    return 0
+    rec = run_15m_loop(refresh=args.refresh, notify=True)
+    print(format_run_record(rec))
+    return 0 if rec.ok else 2
 
 
 def _cmd_observability_export(_args) -> int:
@@ -1310,6 +1310,9 @@ def _cmd_shell(args) -> int:
         argv.extend(["--artifact-root", args.artifact_root])
     if getattr(args, "viz_root", ""):
         argv.extend(["--viz-root", args.viz_root])
+    lane = getattr(args, "lane", None)
+    if lane:
+        argv.extend(["--lane", str(lane)])
     return shell_main(argv)
 
 

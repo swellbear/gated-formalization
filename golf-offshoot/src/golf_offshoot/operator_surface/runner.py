@@ -266,7 +266,170 @@ def _maybe_notify(
         detail=rec.error or rec.summary,
         topic=topic,
         dry_run=dry_run,
+        lane=str((rec.extras or {}).get("lane") or ""),
     )
+
+
+def run_15m_ingest(
+    *,
+    refresh: bool = True,
+    notify: bool = True,
+    notify_topic: str | None = None,
+    dry_run_notify: bool = False,
+    feed=None,
+) -> RunRecord:
+    """Public KXBTC15M fetch. Observation only. One completion notify."""
+    refuse_forbidden("ingest")
+    from golf_offshoot.learning_lane_15m.loop import ingest
+    from golf_offshoot.learning_lane_15m.paths import LANE_15M, PRIMARY_SERIES
+
+    try:
+        payload = ingest(refresh=refresh, feed=feed)
+    except Exception as exc:
+        rec = RunRecord(
+            command="ingest",
+            ok=False,
+            event_id=PRIMARY_SERIES,
+            error=str(exc),
+            extras={"lane": LANE_15M},
+        )
+        rec.notice = _maybe_notify(rec, notify=notify, topic=notify_topic, dry_run=dry_run_notify)
+        return rec
+    rec = RunRecord(
+        command="ingest",
+        ok=True,
+        event_id=PRIMARY_SERIES,
+        summary=(
+            f"learning_lane_15m ingest series={PRIMARY_SERIES} "
+            f"markets={len(payload.get('markets') or [])} "
+            f"events={len(payload.get('events') or [])}"
+        ),
+        table=payload.get("banner") or "",
+        extras={"lane": LANE_15M, "markets": len(payload.get("markets") or [])},
+    )
+    rec.notice = _maybe_notify(rec, notify=notify, topic=notify_topic, dry_run=dry_run_notify)
+    return rec
+
+
+def run_15m_live(
+    *,
+    refresh: bool = True,
+    notify: bool = True,
+    notify_topic: str | None = None,
+    dry_run_notify: bool = False,
+    feed=None,
+) -> RunRecord:
+    """15m live refresh + paper autobet + settle join. One completion notify."""
+    refuse_forbidden("live")
+    from golf_offshoot.learning_lane_15m.loop import live, paper_autobet, settle_join
+    from golf_offshoot.learning_lane_15m.paths import LANE_15M, PRIMARY_SERIES
+
+    try:
+        live_state = live(refresh=refresh, feed=feed)
+        markets = live_state.get("markets") or []
+        events = live_state.get("events") or []
+        paper = paper_autobet(markets)
+        joined = settle_join(markets, events)
+    except Exception as exc:
+        rec = RunRecord(
+            command="live",
+            ok=False,
+            event_id=PRIMARY_SERIES,
+            error=str(exc),
+            extras={"lane": LANE_15M},
+        )
+        rec.notice = _maybe_notify(rec, notify=notify, topic=notify_topic, dry_run=dry_run_notify)
+        return rec
+    rec = RunRecord(
+        command="live",
+        ok=True,
+        event_id=PRIMARY_SERIES,
+        summary=(
+            f"learning_lane_15m live series={PRIMARY_SERIES} "
+            f"fills={paper.get('fills', 0)} settled={joined.get('settled', 0)} "
+            f"pending={joined.get('pending', 0)}"
+        ),
+        paper=paper.get("ledger") or joined.get("ledger") or "",
+        table=(
+            f"paper autobet fills={paper.get('fills', 0)}\n"
+            f"settle settled={joined.get('settled', 0)} pending={joined.get('pending', 0)}"
+        ),
+        extras={
+            "lane": LANE_15M,
+            "paper_fills": paper.get("fills", 0),
+            "settled": joined.get("settled", 0),
+            "pending": joined.get("pending", 0),
+        },
+    )
+    rec.notice = _maybe_notify(rec, notify=notify, topic=notify_topic, dry_run=dry_run_notify)
+    return rec
+
+
+def run_15m_shadow(*, notify: bool = False, notify_topic: str | None = None, dry_run_notify: bool = False) -> RunRecord:
+    refuse_forbidden("shadow")
+    from golf_offshoot.learning_lane_15m.paper import format_15m_ledger, latest_shadow_lines
+    from golf_offshoot.learning_lane_15m.paths import LANE_15M, PRIMARY_SERIES
+
+    rec = RunRecord(
+        command="shadow",
+        ok=True,
+        event_id=PRIMARY_SERIES,
+        summary="learning_lane_15m shadow viewed",
+        table="\n".join([format_15m_ledger(), *latest_shadow_lines(12)]),
+        extras={"lane": LANE_15M},
+    )
+    if notify:
+        rec.notice = _maybe_notify(rec, notify=True, topic=notify_topic, dry_run=dry_run_notify)
+    return rec
+
+
+def run_15m_loop(
+    *,
+    refresh: bool = True,
+    notify: bool = True,
+    notify_topic: str | None = None,
+    dry_run_notify: bool = False,
+    feed=None,
+) -> RunRecord:
+    """ingest → live → paper autobet → settle join. One completion notify."""
+    refuse_forbidden("loop")
+    from golf_offshoot.learning_lane_15m.loop import format_loop_report, run_loop as lane_loop
+    from golf_offshoot.learning_lane_15m.paths import LANE_15M, PRIMARY_SERIES
+
+    try:
+        payload = lane_loop(refresh=refresh, feed=feed)
+    except Exception as exc:
+        rec = RunRecord(
+            command="loop",
+            ok=False,
+            event_id=PRIMARY_SERIES,
+            error=str(exc),
+            extras={"lane": LANE_15M},
+        )
+        rec.notice = _maybe_notify(rec, notify=notify, topic=notify_topic, dry_run=dry_run_notify)
+        return rec
+    paper = payload.get("paper_autobet") or {}
+    joined = payload.get("settle_join") or {}
+    rec = RunRecord(
+        command="loop",
+        ok=True,
+        event_id=PRIMARY_SERIES,
+        summary=(
+            f"learning_lane_15m loop series={PRIMARY_SERIES} "
+            f"fills={paper.get('fills', 0)} settled={joined.get('settled', 0)} "
+            f"pending={joined.get('pending', 0)}"
+        ),
+        paper=paper.get("ledger") or joined.get("ledger") or "",
+        table=format_loop_report(payload),
+        extras={
+            "lane": LANE_15M,
+            "paper_fills": paper.get("fills", 0),
+            "settled": joined.get("settled", 0),
+            "pending": joined.get("pending", 0),
+        },
+    )
+    rec.notice = _maybe_notify(rec, notify=notify, topic=notify_topic, dry_run=dry_run_notify)
+    return rec
 
 
 def format_run_record(rec: RunRecord) -> str:
