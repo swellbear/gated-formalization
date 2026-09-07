@@ -4,10 +4,23 @@ A static, link-shareable window onto what the system has already published: char
 paper ledger summary, the settle banner, the WC1 dated FAIL record, lane badges, and
 last-run honesty. One page, two lanes, no controls.
 
-**Intended live URL** (once Pages is on):
-`https://swellbear.github.io/gated-formalization/observability-hub/`
+## Proposed live URL
+
+Pages is **not enabled on this repository yet**, so nothing is live until Founder switches
+it on. The site is complete and needs no build step. The URL depends on which folder is
+picked as the Pages source, and **the hub works unchanged either way** — every path inside
+it is relative:
+
+| Pages source | Live URL |
+| --- | --- |
+| branch `master`, folder **`/docs`** — recommended | **`https://swellbear.github.io/gated-formalization/observability-hub/`** |
+| branch `master`, folder **`/ (root)`** | `https://swellbear.github.io/gated-formalization/docs/observability-hub/` |
 
 Deep links per lane: append `#golf` or `#learning_lane_15m`.
+
+The hub lives under `docs/`, not under `golf-offshoot/`, because it is a whole-system view:
+golf Phase 1 is one lane on it, the 15-minute Kalshi learning lane is another, and future
+lanes join the same page. Filing it under `golf-offshoot/` would imply it is golf-only.
 
 | | |
 | --- | --- |
@@ -124,25 +137,28 @@ gitignored and stays unpublished.
 
 ## Turning Pages on
 
-Pages is **not** enabled on this repository yet, so the URL above 404s until Founder
-switches it on. The site ships complete and needs no build step.
-
 **Settings → Pages → Build and deployment**
 
 - Source: **Deploy from a branch**
 - Branch: **`master`**, folder: **`/docs`**
-- Save.
+- Save. First publish takes a minute or two.
 
 That serves `docs/` as the site root, so the hub lands at
 `https://swellbear.github.io/gated-formalization/observability-hub/` and the golf boards
-under `docs/viz/…` resolve without being duplicated.
+under `docs/viz/…` resolve without being duplicated into the hub directory.
+
+Picking `/ (root)` instead also works — the hub then sits at
+`…/gated-formalization/docs/observability-hub/`, and the chart paths still resolve, because
+they are relative to the page rather than to the site root. The only difference is which
+URL to share.
 
 Notes:
 
 - No GitHub Actions workflow is added. Branch-folder publishing needs none, and it keeps
   this PR thin.
-- `docs/.nojekyll` is included so files are served verbatim rather than run through Jekyll.
-- Everything under `docs/` becomes browsable. The repository is already public, so this
+- `.nojekyll` is included at both the repository root and in `docs/`, so files are served
+  verbatim rather than run through Jekyll under either source folder.
+- Whichever folder is chosen becomes browsable. The repository is already public, so this
   exposes nothing new — but it is worth knowing that the method documents and PDFs in
   `docs/` will be reachable too.
 - The page sets `robots: noindex`. It is meant to be shared by link, not found by search.
