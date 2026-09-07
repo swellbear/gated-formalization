@@ -59,6 +59,7 @@ SERIES = {
     "ticker": "KXBTC15M",
     "fee_type": "quadratic",
     "fee_multiplier": 1,
+    "volume_fp": "12345.00",
     "settlement_sources": [{"name": "CF Benchmarks", "url": "https://www.cfbenchmarks.com/"}],
 }
 
@@ -181,6 +182,9 @@ def test_public_url_guard():
     assert_public_read_url(
         "https://api.elections.kalshi.com/trade-api/v2/markets?series_ticker=KXBTC15M"
     )
+    assert_public_read_url(
+        "https://api.elections.kalshi.com/trade-api/v2/series/KXBTC15M?include_volume=true"
+    )
     try:
         assert_public_read_url(
             "https://api.elections.kalshi.com/trade-api/v2/portfolio/orders"
@@ -220,9 +224,11 @@ def test_public_url_guard():
 
 def test_feed_fetch_uses_injected_payload(monkeypatch):
     feed = Kalshi15mFeed()
+    series_urls: list[str] = []
 
     def fake_get(url, *, label, ttl_seconds, refresh):
         if "/series/" in url:
+            series_urls.append(url)
             return {"series": SERIES}
         if "events" in url:
             return {"events": [EVENT]}
@@ -230,6 +236,9 @@ def test_feed_fetch_uses_injected_payload(monkeypatch):
 
     monkeypatch.setattr(feed, "_get", fake_get)
     payload, q = feed.fetch()
+    assert series_urls
+    assert all("include_volume=true" in url for url in series_urls)
+    assert payload["series_meta"]["volume"] == 12345.0
     assert payload["series"] == "KXBTC15M"
     assert payload["trading_armed"] is False
     assert len(payload["markets"]) == 1

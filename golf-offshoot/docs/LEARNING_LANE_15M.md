@@ -37,7 +37,7 @@ Paper ledger, shadow advises, and settlements for this lane live under the 15m r
 
 ## Public adapter
 
-Read-only Kalshi elections API: `https://api.elections.kalshi.com/trade-api/v2/` (`events`, `markets`, `series/KXBTC15M`).
+Read-only Kalshi elections API: `https://api.elections.kalshi.com/trade-api/v2/` (`events`, `markets`, `series/KXBTC15M?include_volume=true`). Bare series GET can return `volume_fp=null`.
 
 Settlement source: CF Benchmarks, as documented on event `settlement_sources`. CF index id is pinned `BRTI` (from `rules_primary`).
 

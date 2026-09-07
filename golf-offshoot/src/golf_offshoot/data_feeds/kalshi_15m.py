@@ -418,7 +418,9 @@ class Kalshi15mFeed(DataFeed[dict[str, Any]]):
         return payload, q
 
     def _get_series(self, *, ttl_seconds: float, refresh: bool) -> dict[str, Any]:
-        url = f"{KALSHI_PUBLIC_BASE}/series/{ALLOWED_SERIES}"
+        # Bare GET /series/{ticker} can return volume_fp=null. Liquidity ranking
+        # needs include_volume=true (Kalshi Micro). Public read-only.
+        url = f"{KALSHI_PUBLIC_BASE}/series/{ALLOWED_SERIES}?include_volume=true"
         body = self._get(url, label="kalshi_15m_series", ttl_seconds=ttl_seconds, refresh=refresh)
         raw = body.get("series") if isinstance(body, dict) else None
         if not isinstance(raw, dict):
@@ -428,6 +430,7 @@ class Kalshi15mFeed(DataFeed[dict[str, Any]]):
                 "fee_type": FEE_TYPE,
                 "fee_multiplier": FEE_MULTIPLIER,
                 "cf_index_id": CF_INDEX_ID,
+                "volume": None,
             }
         sources = parse_settlement_sources(raw.get("settlement_sources"))
         return {
@@ -439,6 +442,7 @@ class Kalshi15mFeed(DataFeed[dict[str, Any]]):
             "fee_multiplier": parse_optional_float(raw.get("fee_multiplier")) or FEE_MULTIPLIER,
             "contract_terms_url": str(raw.get("contract_terms_url") or ""),
             "cf_index_id": CF_INDEX_ID,
+            "volume": parse_optional_float(raw.get("volume_fp") or raw.get("volume")),
         }
 
     def _get_events(self, *, limit: int, ttl_seconds: float, refresh: bool) -> list[dict[str, Any]]:
