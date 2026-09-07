@@ -614,6 +614,8 @@ Ranked LIVE table is read from `latest/*_live_*.txt` (HTML sibling if present) o
 
 Viz-wall hook: [VIZ_WALL_HOOK.md](VIZ_WALL_HOOK.md). The hub **renders Ill 1 / Ill 2 / WC1 dated-record PNGs as images** when they exist (not text-only). Prefer `/workspace/illustrator_ops/golf_offshoot/{shadow_honesty_strip,calibration_weather,wc1_dated_record}.png` plus optional `viz_wall_manifest.json`. Also accept `golf-offshoot/docs/viz/golf_offshoot_dryrun_2026-09-07/` and repo-root `docs/viz/golf_offshoot_dryrun_2026-09-07/` (Illustrator PR #140, preferred over #138). Missing ⇒ `not yet available`. Never invent charts. Refresh on mtime. Path traversal is rejected. Illustrator owns regeneration.
 
+Each rendered chart is **click-to-enlarge**: click it for a fullscreen view, click the enlarged chart again for full size (the charts are tall dashboards, so full size is what makes the small print readable), and press Esc, click outside the chart, or use `Close (Esc)` to dismiss. A `not yet available` slot is not clickable. This is display only — no trade, bet, or cash control is added.
+
 One optional ntfy ping when an **operator-triggered** ingest/live/loop **finishes** (success or failure). Progress lines do not ping. Empty `NTFY_TOPIC` keeps notify off. Existing `watch` trigger behavior is unchanged. That is the Phase 1 phone path — not a remote trading UI, not one-tap bets from a phone.
 
 The shell does not add Kalshi auth, API trade keys, wallet/bank scopes, NFL/NBA, theta retune, or cash controls.

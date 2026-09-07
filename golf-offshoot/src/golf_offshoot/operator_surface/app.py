@@ -193,6 +193,12 @@ def _viz_wall_html(viz: VizWall) -> str:
     return f'<div class="viz-wall" id="viz-wall">{"".join(cards)}</div>{trailer}'
 
 
+#: Overlay hints. The charts are tall dashboards, so fit-on-screen is only an
+#: overview; full size is what actually makes the small print readable.
+ZOOM_HINT_FIT = "Click the chart for full size · Esc or click outside to close"
+ZOOM_HINT_FULL = "Click the chart to fit it on screen · Esc or click outside to close"
+
+
 def _viz_lightbox_html(viz: VizWall) -> str:
     """Enlarged-chart overlay. Omitted entirely when no chart exists to enlarge."""
     if not any(slot.path is not None for slot in viz.slots):
@@ -202,6 +208,7 @@ def _viz_lightbox_html(viz: VizWall) -> str:
         'aria-label="Enlarged chart">'
         '<div class="lightbox-bar">'
         '<span class="lightbox-title" id="viz-lightbox-title"></span>'
+        f'<span class="lightbox-hint" id="viz-lightbox-hint">{html.escape(ZOOM_HINT_FIT)}</span>'
         f'<span class="badge">{html.escape(CASH_BADGE)}</span>'
         '<button type="button" class="lightbox-close" id="viz-lightbox-close">Close (Esc)</button>'
         "</div>"
@@ -348,12 +355,15 @@ def render_html(surface: dict) -> str:
  .viz a.zoom:focus-visible {{ outline: 3px solid #1f3b4d; outline-offset: 2px; }}
  .viz .zoom-hint {{ display: block; margin-top: 6px; font-size: 12px; color: #4a4a4a; }}
  .viz a.zoom:hover .zoom-hint, .viz a.zoom:focus .zoom-hint {{ color: #1f3b4d; text-decoration: underline; }}
- .lightbox {{ position: fixed; top: 0; right: 0; bottom: 0; left: 0; z-index: 100; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 10px; padding: 14px; background: rgba(12, 14, 16, 0.94); cursor: zoom-out; }}
+ .lightbox {{ position: fixed; top: 0; right: 0; bottom: 0; left: 0; z-index: 100; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 10px; padding: 0 14px 14px; overflow: hidden; background: rgba(12, 14, 16, 0.94); }}
  .lightbox[hidden] {{ display: none; }}
- .lightbox-bar {{ display: flex; flex-wrap: wrap; gap: 12px; align-items: center; justify-content: space-between; width: 100%; max-width: 1400px; color: #f4f1ea; font-size: 14px; }}
+ .lightbox.full {{ justify-content: flex-start; overflow: auto; }}
+ .lightbox-bar {{ position: sticky; top: 0; z-index: 1; display: flex; flex-wrap: wrap; gap: 12px; align-items: center; justify-content: space-between; width: 100%; padding: 10px 0; background: rgba(12, 14, 16, 0.94); color: #f4f1ea; font-size: 14px; }}
  .lightbox-title {{ font-weight: 700; }}
+ .lightbox-hint {{ font-size: 12px; opacity: 0.85; }}
  .lightbox-close {{ background: #55606b; }}
- .lightbox img {{ max-width: 98vw; max-height: 86vh; width: auto; height: auto; border: 1px solid #c9c2b2; background: #111; }}
+ .lightbox img {{ max-width: 100%; max-height: 86vh; width: auto; height: auto; cursor: zoom-in; border: 1px solid #c9c2b2; background: #111; }}
+ .lightbox.full img {{ width: 100%; max-width: 100%; max-height: none; height: auto; cursor: zoom-out; }}
  body.viz-zoomed {{ overflow: hidden; }}
 </style>
 </head>
@@ -421,10 +431,17 @@ def render_html(surface: dict) -> str:
   if (!box) return;
   var shown = document.getElementById('viz-lightbox-img');
   var caption = document.getElementById('viz-lightbox-title');
+  var hint = document.getElementById('viz-lightbox-hint');
+  function setFull(on){{
+    box.classList.toggle('full', on);
+    hint.textContent = on ? {json.dumps(ZOOM_HINT_FULL)} : {json.dumps(ZOOM_HINT_FIT)};
+    box.scrollTop = 0;
+  }}
   function openBox(href, title){{
     shown.setAttribute('src', href);
     shown.setAttribute('alt', title);
     caption.textContent = title;
+    setFull(false);
     box.hidden = false;
     document.body.classList.add('viz-zoomed');
   }}
@@ -435,7 +452,11 @@ def render_html(surface: dict) -> str:
     document.body.classList.remove('viz-zoomed');
   }}
   document.addEventListener('click', function(ev){{
-    if (!box.hidden) {{ closeBox(); return; }}
+    if (!box.hidden) {{
+      if (ev.target === shown) setFull(!box.classList.contains('full'));
+      else closeBox();
+      return;
+    }}
     if (ev.button || ev.metaKey || ev.ctrlKey || ev.shiftKey || ev.altKey) return;
     var link = ev.target && ev.target.closest ? ev.target.closest('a.zoom') : null;
     if (!link) return;

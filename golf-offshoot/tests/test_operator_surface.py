@@ -1,3 +1,4 @@
+import json
 import os
 from pathlib import Path
 
@@ -18,7 +19,14 @@ from golf_offshoot.models.strategy import (
     StrategyStatusSummary,
     new_id,
 )
-from golf_offshoot.operator_surface.app import SLOT_PLAIN_HELP, build_surface, render_html, render_text
+from golf_offshoot.operator_surface.app import (
+    SLOT_PLAIN_HELP,
+    ZOOM_HINT_FIT,
+    ZOOM_HINT_FULL,
+    build_surface,
+    render_html,
+    render_text,
+)
 from golf_offshoot.operator_surface.artifacts import (
     CALIB_MISSING,
     LIVE_TABLE_MISSING,
@@ -755,6 +763,10 @@ def test_hub_charts_are_click_to_enlarge(tmp_path):
     assert page.index('id="viz-wall"') < page.index('id="viz-lightbox"')
     assert 'value="paper-deposit"' not in page
     assert CASH_BADGE in page
+    # Fit-on-screen is only an overview for these tall charts, so full size must be reachable.
+    assert ZOOM_HINT_FIT in page
+    assert json.dumps(ZOOM_HINT_FULL) in page
+    assert ".lightbox.full img" in page
 
 
 def test_hub_missing_charts_are_not_clickable(tmp_path):
