@@ -607,6 +607,8 @@ def test_windows_hub_launcher_files_are_observation_only():
     bat = paths["open_hub_bat"].read_text(encoding="utf-8")
     assert "python -m golf_offshoot shell" in bat
     assert "127.0.0.1" in bat
+    assert "--no-browser" not in bat
+    assert "browser page" in bat.lower()
     assert "NOT ARMED" in bat
     assert "PAPER OBSERVATION ONLY" in bat
     assert "NEVER DEPOSITS" in bat
