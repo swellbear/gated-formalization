@@ -714,3 +714,45 @@ def test_viz_root_prefers_repo_root_pngs_over_empty_shared(tmp_path, monkeypatch
     root, src = pathmod.resolve_viz_root(environ={})
     assert root == root_docs.resolve()
     assert src == "repo_root_docs_viz"
+
+
+def test_viz_root_prefers_live_illustrator_ops_over_repo_fallbacks(tmp_path, monkeypatch):
+    from golf_offshoot.operator_surface import paths as pathmod
+
+    ops = tmp_path / "illustrator_ops" / "golf_offshoot"
+    ops.mkdir(parents=True)
+    (ops / "shadow_honesty_strip.png").write_bytes(b"\x89PNG\r\n\x1a\n")
+    (ops / "calibration_weather.png").write_bytes(b"\x89PNG\r\n\x1a\n")
+    (ops / "viz_wall_manifest.json").write_text(
+        '{"slots":{"shadow_honesty_strip":{"path":"shadow_honesty_strip.png"},'
+        '"calibration_weather":{"path":"calibration_weather.png"}}}',
+        encoding="utf-8",
+    )
+    offshoot = tmp_path / "offshoot"
+    offshoot_docs = offshoot / "docs" / "viz" / "golf_offshoot_dryrun_2026-09-07"
+    offshoot_docs.mkdir(parents=True)
+    (offshoot_docs / "shadow_honesty_strip.png").write_bytes(b"\x89PNG\r\n\x1a\nOLD")
+    repo = tmp_path / "repo"
+    root_docs = repo / "docs" / "viz" / "golf_offshoot_dryrun_2026-09-07"
+    root_docs.mkdir(parents=True)
+    (root_docs / "shadow_honesty_strip.png").write_bytes(b"\x89PNG\r\n\x1a\nROOT")
+    (root_docs / "calibration_weather.png").write_bytes(b"\x89PNG\r\n\x1a\nROOT")
+    monkeypatch.setattr(pathmod, "DEFAULT_EXTERNAL_VIZ_ROOT", ops)
+    monkeypatch.setattr(pathmod, "package_root", lambda: offshoot)
+    monkeypatch.setattr(pathmod, "git_repo_root", lambda start=None: repo)
+    root, src = pathmod.resolve_viz_root(environ={})
+    assert root == ops.resolve()
+    assert src == "illustrator_ops"
+
+
+def test_repo_viz_candidates_include_offshoot_and_pr140_root():
+    from golf_offshoot.operator_surface.paths import REPO_VIZ_FALLBACK, _repo_viz_candidates, git_repo_root, package_root
+
+    labels = {label: path for path, label in _repo_viz_candidates()}
+    assert "repo_docs_viz" in labels
+    assert labels["repo_docs_viz"] == (package_root() / REPO_VIZ_FALLBACK).resolve()
+    repo = git_repo_root()
+    if repo is not None:
+        assert "repo_root_docs_viz" in labels
+        assert labels["repo_root_docs_viz"] == (repo / REPO_VIZ_FALLBACK).resolve()
+        assert labels["repo_root_docs_viz"] != labels["repo_docs_viz"]
