@@ -1,3 +1,5 @@
+import pytest
+
 from golf_offshoot.learning_lane_15m.paths import set_15m_root_override
 from golf_offshoot.operator_surface.hub import GOLF_VIZ_SLOTS, render_hub
 from golf_offshoot.operator_surface.lanes import (
@@ -44,6 +46,7 @@ def test_hub_golf_default_chrome(tmp_path):
     assert 'name="lane"' in page
     assert 'value="golf"' in page
     assert 'value="learning_lane_15m"' in page
+    assert 'value="15m"' not in page
     assert "15-min Kalshi (learning)" in page
 
 
@@ -91,6 +94,12 @@ def test_hub_cli_lane_15m(capsys, tmp_path):
     assert "LEARNING LANE" in out
 
 
+def test_hub_cli_rejects_short_15m_alias():
+    with pytest.raises(SystemExit) as exc:
+        main(["hub", "--lane", "15m"])
+    assert exc.value.code == 2
+
+
 def test_paper_deposit_refused_on_15m(capsys):
     assert main(["paper-deposit", "--lane", "learning_lane_15m", "--amount", "10"]) == 2
     assert "never deposit/withdraw/transfer" in capsys.readouterr().out.lower()
@@ -112,6 +121,8 @@ def test_desktop_shell_html_has_lane_selector_and_hides_golf_viz_on_15m(tmp_path
         set_15m_root_override(None)
     assert 'name="lane"' in golf
     assert 'value="learning_lane_15m"' in golf
+    assert 'value="15m"' not in golf
+    assert 'value="15m"' not in page
     assert "LEARNING LANE" in page
     assert "KXBTC15M" in page
     assert "paper autobet" in page.lower()

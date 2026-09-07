@@ -7,7 +7,7 @@ last-run honesty. One page, two lanes, no controls.
 **Intended live URL** (once Pages is on):
 `https://swellbear.github.io/gated-formalization/observability-hub/`
 
-Deep links per lane: append `#golf` or `#learning_lane_15m`.
+Deep links per lane: append `#golf` or `#learning_lane_15m` only. `#15m` is not a lane id and falls back to `golf`.
 
 | | |
 | --- | --- |
