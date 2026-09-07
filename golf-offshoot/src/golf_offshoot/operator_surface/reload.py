@@ -322,6 +322,7 @@ def hub_child_command(
     artifact_root: Path | None = None,
     viz_root: Path | None = None,
     executable: str | None = None,
+    lane: str | None = None,
 ) -> list[str]:
     """Windows-friendly `python -m golf_offshoot shell` relaunch argv."""
     cmd = [executable or sys.executable, "-m", "golf_offshoot", "shell", "--host", str(host), "--port", str(port)]
@@ -333,6 +334,8 @@ def hub_child_command(
         cmd.extend(["--artifact-root", str(artifact_root)])
     if viz_root is not None:
         cmd.extend(["--viz-root", str(viz_root)])
+    if lane and str(lane) != "golf":
+        cmd.extend(["--lane", str(lane)])
     return cmd
 
 

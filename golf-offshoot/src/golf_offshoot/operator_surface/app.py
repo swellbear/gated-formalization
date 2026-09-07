@@ -13,7 +13,9 @@ from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 from pathlib import Path
 from urllib.parse import parse_qs, urlparse
 
+from golf_offshoot.learning_lane_15m.paths import LANE_15M, LANE_GOLF
 from golf_offshoot.operator_surface.artifacts import HonestyBundle, load_honesty
+from golf_offshoot.operator_surface.lanes import SELECTOR_FIELD, parse_lane
 from golf_offshoot.operator_surface.modes import CASH_BADGE, NOT_ARMED, PAPER_ONLY, build_mode_walls
 from golf_offshoot.operator_surface.notify import notify_run_complete
 from golf_offshoot.operator_surface.paths import resolve_roots, safe_existing_file
@@ -32,6 +34,10 @@ from golf_offshoot.operator_surface.runner import (
     RunRecord,
     format_run_record,
     refuse_forbidden,
+    run_15m_ingest,
+    run_15m_live,
+    run_15m_loop,
+    run_15m_shadow,
     run_ingest,
     run_live,
     run_loop,
@@ -84,6 +90,7 @@ def build_surface(
     shadow_path: Path | None = None,
     environ: dict[str, str] | None = None,
     last_run: RunRecord | None = None,
+    lane: str | None = None,
 ) -> dict:
     honesty = load_honesty(
         artifact_root=artifact_root,
@@ -103,6 +110,7 @@ def build_surface(
         "viz": viz,
         "event_id": event_id or "",
         "last_run": last_run,
+        "lane": parse_lane(lane),
     }
 
 
@@ -114,6 +122,7 @@ def render_text(surface: dict) -> str:
     lines = [
         walls.render_text(),
         "",
+        f"lane={surface.get('lane') or LANE_GOLF}",
         f"event_id={surface.get('event_id') or '(none pinned)'}",
         f"artifact_root={honesty.roots.artifact_root} ({honesty.roots.artifact_source})",
         f"viz_root={honesty.roots.viz_root} ({honesty.roots.viz_source})",
@@ -256,18 +265,47 @@ def _settle_banner_html(honesty: HonestyBundle) -> str:
     )
 
 
-def _actions_html(event: str) -> str:
+def _lane_switch_html(lane: str) -> str:
+    golf_css = ' class="active"' if lane != LANE_15M else ""
+    m15_css = ' class="active"' if lane == LANE_15M else ""
+    return (
+        f'<form class="row lane-form" method="get" action="/">'
+        f"<fieldset><legend>Lane</legend>"
+        f'<button type="submit" name="{SELECTOR_FIELD}" value="{LANE_GOLF}"{golf_css}>Golf Phase 1</button>'
+        f'<button type="submit" name="{SELECTOR_FIELD}" value="{LANE_15M}"{m15_css}>15-min Kalshi (learning)</button>'
+        f"</fieldset></form>"
+    )
+
+
+def _actions_html(event: str, lane: str = LANE_GOLF) -> str:
     buttons = []
     help_rows = []
-    for value, label, blurb in ACTION_BUTTONS:
+    blurbs = ACTION_BUTTONS
+    if lane == LANE_15M:
+        blurbs = (
+            ("ingest", "Pull latest data", "Public KXBTC15M fetch. Observation only."),
+            ("live", "Update live ranks", "Refresh 15m prices, then paper autobet and settle join."),
+            ("shadow", "Check paper journal", "Re-read the 15m paper journal. Nothing is placed."),
+            ("loop", "Do all three", "ingest → live → paper autobet → settle join. One alert at the end."),
+            ("refresh", "Reload files", "Re-read saved files from disk. No run is started."),
+        )
+    for value, label, blurb in blurbs:
         css = ' class="soft"' if value == "refresh" else ""
         buttons.append(f'<button{css} name="action" value="{value}">{html.escape(label)}</button>')
         help_rows.append(f"<li><b>{html.escape(label)}</b> — {html.escape(blurb)}</li>")
+    if lane != LANE_15M:
+        event_field = (
+            "<label>Tournament id (ESPN)"
+            f'<input name="event" type="text" value="{event}" placeholder="401811963"/>'
+            "</label>"
+        )
+    else:
+        event_field = '<p class="help">Series <code>KXBTC15M</code>. No ESPN pin. No Kalshi cash UI.</p>'
     return (
-        '<form class="row" method="post" action="/run">'
-        "<label>Tournament id (ESPN)"
-        f'<input name="event" type="text" value="{event}" placeholder="401811963"/>'
-        "</label>"
+        _lane_switch_html(lane)
+        + '<form class="row" method="post" action="/run">'
+        f'<input type="hidden" name="{SELECTOR_FIELD}" value="{html.escape(lane)}"/>'
+        f"{event_field}"
         f"{''.join(buttons)}"
         "</form>"
         f'<ul class="help">{"".join(help_rows)}</ul>'
@@ -280,13 +318,32 @@ def render_html(surface: dict) -> str:
     viz: VizWall = surface["viz"]
     last: RunRecord | None = surface.get("last_run")
     event = html.escape(str(surface.get("event_id") or ""))
+    lane = parse_lane(surface.get("lane"))
     wall_class = "mock" if walls.is_mock else "ops"
-    badges = "".join(f'<span class="badge">{html.escape(b)}</span>' for b in walls.badges)
+    badge_list = list(walls.badges)
+    if lane == LANE_15M and "LEARNING LANE" not in badge_list:
+        badge_list.append("LEARNING LANE")
+    badges = "".join(f'<span class="badge">{html.escape(b)}</span>' for b in badge_list)
     wall_lines = "".join(f"<div>{html.escape(line)}</div>" for line in walls.lines)
-    viz_wall = _viz_wall_html(viz)
-    viz_lightbox = _viz_lightbox_html(viz)
-    settle_banner = _settle_banner_html(honesty)
-    actions = _actions_html(event)
+    if lane == LANE_15M:
+        viz_wall = (
+            '<p class="missing">not yet available — 15-min lane is observation-only. '
+            "No golf WC1 / Ill charts here.</p>"
+        )
+        viz_lightbox = ""
+        settle_banner = (
+            '<div class="settle">'
+            "<strong>SETTLE_PENDING until Kalshi result</strong> — "
+            "paper autobet + settle join stay on this lane. "
+            "Official settle is Kalshi result matched to CF Benchmarks SOURCE. "
+            "Not a golf WC1 edge."
+            "</div>"
+        )
+    else:
+        viz_wall = _viz_wall_html(viz)
+        viz_lightbox = _viz_lightbox_html(viz)
+        settle_banner = _settle_banner_html(honesty)
+    actions = _actions_html(event, lane)
     last_html = html.escape(format_run_record(last)) if last else "no operator run this session"
     paper_html = ""
     if last is not None and last.paper:
@@ -312,6 +369,45 @@ def render_html(surface: dict) -> str:
         html_link = (
             f'<p>Full export: <a href="/export/html">{html.escape(str(honesty.ranked.html_path))}</a></p>'
         )
+    if lane == LANE_15M:
+        lane_body = (
+            '<section class="panel">'
+            "<h2>15-min Kalshi journal</h2>"
+            '<p class="help">Paper observation only. Not live cash. Not a golf WC1 edge. '
+            "Leftovers stay documented PROPOSED (not Softened).</p>"
+            f"<pre>{last_html}</pre>"
+            "</section>"
+        )
+    else:
+        lane_body = (
+            '<section class="panel">'
+            "<h2>Ranked table — latest real live run</h2>"
+            f'<p class="loud">{html.escape(honesty.ranked.banner)}</p>'
+            f"{html_link}"
+            f"<pre>{ranked}</pre>"
+            "</section>"
+            '<section class="panel">'
+            "<h2>Still unmeasured (display only)</h2>"
+            '<p class="help">Things the model cannot see yet. Listed so they are not quietly folded into a rating.</p>'
+            f"<pre>{leftover}</pre>"
+            "</section>"
+            '<section class="panel">'
+            "<h2>Where the numbers came from</h2>"
+            f"<pre>{inventory}</pre>"
+            "</section>"
+            '<section class="panel">'
+            "<h2>Paper journal (shadow log)</h2>"
+            '<p class="help">A written log of past paper advises and whether each one has an official result yet. '
+            "It is not a bankroll and not settled cash.</p>"
+            f"<pre>{shadow}</pre>"
+            "</section>"
+            '<section class="panel">'
+            "<h2>Calibration check</h2>"
+            '<p class="help">Re-fitted weights are stored, not used, while the recommendation stays keep_expert. '
+            "Edge is not established.</p>"
+            f"<pre>{calib}</pre>"
+            "</section>"
+        )
     return f"""<!DOCTYPE html>
 <html lang="en">
 <head>
@@ -328,6 +424,9 @@ def render_html(surface: dict) -> str:
  header.mock .badge {{ background: #3b0000; color: #ffd2d2; }}
  main {{ padding: 0 20px 56px; max-width: 1100px; margin: 0 auto; }}
  form.row {{ display: flex; flex-wrap: wrap; gap: 8px; align-items: end; margin: 4px 0 10px; }}
+ form.lane-form fieldset {{ border: 1px solid #c9c2b2; padding: 8px 10px; }}
+ form.lane-form legend {{ font-size: 13px; font-weight: 700; }}
+ form.lane-form button.active {{ outline: 2px solid #f2e27a; }}
  label {{ font-size: 13px; display: flex; flex-direction: column; gap: 4px; }}
  input[type=text] {{ padding: 6px 8px; min-width: 180px; }}
  button {{ padding: 8px 12px; background: #1f3b4d; color: #fff; border: 0; cursor: pointer; font-size: 14px; }}
@@ -395,33 +494,7 @@ def render_html(surface: dict) -> str:
     <pre>{last_html}</pre>
   </section>
   {paper_html}
-  <section class="panel">
-    <h2>Ranked table — latest real live run</h2>
-    <p class="loud">{html.escape(honesty.ranked.banner)}</p>
-    {html_link}
-    <pre>{ranked}</pre>
-  </section>
-  <section class="panel">
-    <h2>Still unmeasured (display only)</h2>
-    <p class="help">Things the model cannot see yet. Listed so they are not quietly folded into a rating.</p>
-    <pre>{leftover}</pre>
-  </section>
-  <section class="panel">
-    <h2>Where the numbers came from</h2>
-    <pre>{inventory}</pre>
-  </section>
-  <section class="panel">
-    <h2>Paper journal (shadow log)</h2>
-    <p class="help">A written log of past paper advises and whether each one has an official result yet.
-    It is not a bankroll and not settled cash.</p>
-    <pre>{shadow}</pre>
-  </section>
-  <section class="panel">
-    <h2>Calibration check</h2>
-    <p class="help">Re-fitted weights are stored, not used, while the recommendation stays keep_expert.
-    Edge is not established.</p>
-    <pre>{calib}</pre>
-  </section>
+  {lane_body}
 </main>
 <div class="cash">{html.escape(CASH_BADGE)}</div>
 {viz_lightbox}
@@ -496,6 +569,10 @@ class OperatorHandler(BaseHTTPRequestHandler):
     def do_GET(self) -> None:
         parsed = urlparse(self.path)
         if parsed.path == "/":
+            qs = parse_qs(parsed.query)
+            if qs.get(SELECTOR_FIELD):
+                self._state()["lane"] = parse_lane(qs.get(SELECTOR_FIELD)[0])
+                rebuild_surface(self._state())
             self._send_html(render_html(self._state()["surface"]))
             return
         if parsed.path == "/text":
@@ -541,6 +618,8 @@ class OperatorHandler(BaseHTTPRequestHandler):
         form = parse_qs(raw)
         action = (form.get("action") or ["refresh"])[0]
         event = (form.get("event") or [self._state().get("event_id") or ""])[0].strip()
+        lane = parse_lane((form.get(SELECTOR_FIELD) or [self._state().get("lane") or LANE_GOLF])[0])
+        self._state()["lane"] = lane
         last = None
         try:
             if action != "refresh":
@@ -554,6 +633,7 @@ class OperatorHandler(BaseHTTPRequestHandler):
                 event_id=event,
                 detail=str(exc),
                 dry_run=True,
+                lane=lane,
             )
         self._state()["event_id"] = event
         self._state()["surface"] = build_surface(
@@ -561,9 +641,10 @@ class OperatorHandler(BaseHTTPRequestHandler):
             artifact_root=self._state()["artifact_root"],
             viz_root=self._state()["viz_root"],
             last_run=last,
+            lane=lane,
         )
         self.send_response(303)
-        self.send_header("Location", "/")
+        self.send_header("Location", f"/?{SELECTOR_FIELD}={lane}")
         self.end_headers()
 
     def _send_html(self, page: str) -> None:
@@ -579,6 +660,16 @@ class OperatorHandler(BaseHTTPRequestHandler):
 
 
 def _dispatch(action: str, event: str, state: dict) -> RunRecord:
+    if parse_lane(state.get("lane")) == LANE_15M:
+        if action == "ingest":
+            return run_15m_ingest(notify=True, refresh=True)
+        if action == "live":
+            return run_15m_live(notify=True, refresh=True)
+        if action == "shadow":
+            return run_15m_shadow(notify=False)
+        if action == "loop":
+            return run_15m_loop(notify=True, refresh=True)
+        raise OperatorSafetyError(f"unknown operator action {action!r}")
     kwargs = {
         "event_id": event or None,
         "odds_book": state.get("odds_book") or "auto",
@@ -600,6 +691,7 @@ def _public_state(surface: dict) -> dict:
     viz: VizWall = surface["viz"]
     return {
         "event_id": surface.get("event_id"),
+        "lane": surface.get("lane") or LANE_GOLF,
         "mode": surface["walls"].mode,
         "badges": list(surface["walls"].badges),
         "shadow": honesty.shadow.status,
@@ -652,6 +744,7 @@ def rebuild_surface(state: dict, *, last_run: RunRecord | None | object = ...) -
         artifact_root=state.get("artifact_root"),
         viz_root=state.get("viz_root"),
         last_run=keep,
+        lane=state.get("lane") or LANE_GOLF,
     )
 
 
@@ -698,6 +791,7 @@ def serve(
     open_browser: bool = True,
     artifact_root: Path | None = None,
     viz_root: Path | None = None,
+    lane: str | None = None,
 ) -> int:
     if not is_hub_child():
         cmd = hub_child_command(
@@ -707,6 +801,7 @@ def serve(
             open_browser=open_browser,
             artifact_root=artifact_root,
             viz_root=viz_root,
+            lane=lane,
         )
         return supervise_hub_child(cmd)
     return run_http_server(
@@ -716,6 +811,7 @@ def serve(
         open_browser=open_browser,
         artifact_root=artifact_root,
         viz_root=viz_root,
+        lane=lane,
     )
 
 
@@ -727,15 +823,23 @@ def run_http_server(
     open_browser: bool = True,
     artifact_root: Path | None = None,
     viz_root: Path | None = None,
+    lane: str | None = None,
 ) -> int:
+    start_lane = parse_lane(lane)
     state = {
         "event_id": event_id or "",
         "artifact_root": artifact_root,
         "viz_root": viz_root,
         "odds_book": "auto",
+        "lane": start_lane,
         "generation": 0,
         "reload_kind": "ok",
-        "surface": build_surface(event_id=event_id, artifact_root=artifact_root, viz_root=viz_root),
+        "surface": build_surface(
+            event_id=event_id,
+            artifact_root=artifact_root,
+            viz_root=viz_root,
+            lane=start_lane,
+        ),
     }
     httpd = _HubServer((host, port), OperatorHandler)
     httpd.surface_state = state  # type: ignore[attr-defined]
@@ -780,10 +884,17 @@ def main(argv: list[str] | None = None) -> int:
     )
     parser.add_argument("--artifact-root", default="", help="override data/artifact SoT root")
     parser.add_argument("--viz-root", default="", help="override Illustrator viz-wall root")
+    parser.add_argument(
+        "--lane",
+        default=LANE_GOLF,
+        choices=[LANE_GOLF, LANE_15M],
+        help="exact lane=golf|learning_lane_15m. No bare 15m alias.",
+    )
     args = parser.parse_args(argv)
     artifact = Path(args.artifact_root) if args.artifact_root else None
     viz = Path(args.viz_root) if args.viz_root else None
     event = args.event or None
+    lane = parse_lane(args.lane)
     if args.install_desktop_shortcut:
         from golf_offshoot.operator_surface.desktop import SHORTCUT_STEM, write_desktop_launcher
 
@@ -794,7 +905,7 @@ def main(argv: list[str] | None = None) -> int:
         print(f"{SHORTCUT_STEM}: PHASE 1 OBSERVATION. Trading NOT ARMED. {CASH_BADGE}")
         return 0
     if args.dump:
-        print(render_text(build_surface(event_id=event, artifact_root=artifact, viz_root=viz)))
+        print(render_text(build_surface(event_id=event, artifact_root=artifact, viz_root=viz, lane=lane)))
         return 0
     return serve(
         host=args.host,
@@ -803,6 +914,7 @@ def main(argv: list[str] | None = None) -> int:
         open_browser=not args.no_browser,
         artifact_root=artifact,
         viz_root=viz,
+        lane=lane,
     )
 
 

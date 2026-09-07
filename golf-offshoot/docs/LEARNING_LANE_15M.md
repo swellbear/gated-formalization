@@ -72,7 +72,7 @@ Hard NOs for settle join:
 
 If Kalshi `result` is not yet available, settle join leaves `SETTLE_PENDING` / `never_settled`.
 
-Desktop finish notify reuses golf `publish_ntfy` (same `.env` `NTFY_TOPIC`). 15m watch state stays under the 15m paper root.
+Desktop finish notify reuses golf `publish_ntfy` / `notify_run_complete` (same `.env` `NTFY_TOPIC`). Operator-triggered ingest/live/loop from the Phase 1 Desktop hub (`Open-Phase1-Hub.bat` → `python -m golf_offshoot shell`) and `lane-15m` ping once on run finish for `lane=learning_lane_15m` too. Live and loop still run paper autobet + settle join. 15m watch state stays under the 15m paper root. Not a new trading UI.
 
 ## Ticker / window parse
 

@@ -226,6 +226,9 @@ def test_hub_child_command_windows_module_form():
     assert "--no-browser" not in cmd
     skipped = hub_child_command(host="127.0.0.1", port=9000, open_browser=False)
     assert "--no-browser" in skipped
+    assert "--lane" not in cmd
+    with_lane = hub_child_command(host="127.0.0.1", port=8765, lane="learning_lane_15m")
+    assert with_lane[with_lane.index("--lane") + 1] == "learning_lane_15m"
 
 
 def test_supervise_restarts_only_on_reexec_code():
