@@ -12,9 +12,9 @@ CANONICAL_LANES = (LANE_GOLF, LANE_15M)
 
 
 def parse_lane(raw: Any) -> str:
-    """Exact `golf` | `learning_lane_15m`. Unknown or missing → golf. No `15m` alias."""
+    """Canonical: `golf` | `learning_lane_15m`. `15m` aliases to `learning_lane_15m`. Unknown → golf."""
     key = str(raw or "").strip()
-    if key == LANE_15M:
+    if key in {LANE_15M, "15m"}:
         return LANE_15M
     return LANE_GOLF
 

@@ -222,8 +222,8 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument(
         "--lane",
         default="golf",
-        choices=["golf", "learning_lane_15m"],
-        help="operator_surface selector (hub). Exact lane=golf|learning_lane_15m. Default golf.",
+        choices=["golf", "learning_lane_15m", "15m"],
+        help="operator_surface selector (hub). Canonical lane=golf|learning_lane_15m (15m aliases to learning_lane_15m). Default golf.",
     )
     parser.add_argument(
         "--serve",

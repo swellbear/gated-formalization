@@ -15,10 +15,11 @@ def test_default_lane_is_golf():
     assert parse_lane(None) == "golf"
     assert parse_lane("") == "golf"
     assert parse_lane("unknown") == "golf"
-    assert parse_lane("15m") == "golf"
+    assert parse_lane("15m") == "learning_lane_15m"
     assert parse_lane("learning_lane_15m") == "learning_lane_15m"
     assert parse_lane_from_mapping({}) == "golf"
     assert parse_lane_from_mapping({SELECTOR_FIELD: "learning_lane_15m"}) == "learning_lane_15m"
+    assert parse_lane_from_mapping({SELECTOR_FIELD: "15m"}) == "learning_lane_15m"
 
 
 def test_hub_golf_default_chrome(tmp_path):
@@ -69,7 +70,7 @@ def test_hub_15m_no_golf_viz(tmp_path):
 def test_lane_header_copy():
     assert lane_header_name("golf") == "Golf Phase 1"
     assert lane_header_name("learning_lane_15m") == "15-min Kalshi (learning)"
-    assert lane_header_name("15m") == "Golf Phase 1"
+    assert lane_header_name("15m") == "15-min Kalshi (learning)"
 
 
 def test_hub_cli_prints_golf_html(capsys):
