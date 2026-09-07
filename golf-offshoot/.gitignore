@@ -9,12 +9,17 @@ data/snapshots/*.json
 data/cache/
 data/shadow/*.jsonl
 data/paper/*.json
+data/learning_lane_15m/paper/
+data/learning_lane_15m/shadow/
+data/learning_lane_15m/snapshots/
+data/learning_lane_15m/settlements/
 data/openings/*.json
 data/exports/*.pdf
 data/exports/*.html
 data/exports/*.txt
 data/exports/_preview/
 data/exports/packs/
+data/exports/observability/
 .venv/
 .env
 .env.*

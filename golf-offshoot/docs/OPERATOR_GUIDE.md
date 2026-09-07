@@ -4,7 +4,7 @@ How to run Golf Betting Offshoot week to week. Model `golf-offshoot-0.7.0`.
 
 This is an operations manual, not a sales page. If a field is missing, treat it as missing. If strategy returns no action, that is often the correct output.
 
-Related internals: [Architecture](ARCHITECTURE.md), [Data feeds](DATA_FEEDS.md), [Strategy layer](STRATEGY_LAYER.md), [Known limitations](KNOWN_LIMITATIONS.md), [Shadow journal](SHADOW_JOURNAL.md), [Calibration](CALIBRATION.md), [Compare method](COMPARE_METHOD.md).
+Related internals: [Architecture](ARCHITECTURE.md), [Data feeds](DATA_FEEDS.md), [Strategy layer](STRATEGY_LAYER.md), [Known limitations](KNOWN_LIMITATIONS.md), [Shadow journal](SHADOW_JOURNAL.md), [Calibration](CALIBRATION.md), [Compare method](COMPARE_METHOD.md). Separate learning lane (not a golf sidecar): [15-min Kalshi](LEARNING_LANE_15M.md) (`lane=learning_lane_15m`, series `KXBTC15M`, paper observation only).
 
 ---
 

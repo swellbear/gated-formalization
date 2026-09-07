@@ -1,0 +1,70 @@
+from golf_offshoot.learning_lane_15m.paths import LANE_15M, LANE_GOLF, set_15m_root_override
+from golf_offshoot.operator_surface.observability import (
+    FORBIDDEN_KEYS,
+    SCHEMA_VERSION,
+    WC1_STATUS,
+    build_hub_manifest,
+    write_observability_exports,
+)
+
+
+def _lane(payload, lane_id):
+    found = [ln for ln in payload["lanes"] if ln["lane_id"] == lane_id]
+    assert len(found) == 1
+    return found[0]
+
+
+def test_hub_manifest_matches_pr151_schema(tmp_path, monkeypatch):
+    monkeypatch.setattr("golf_offshoot.strategy.paper_book.package_data_dir", lambda: tmp_path / "golf")
+    set_15m_root_override(tmp_path / "kalshi_15m")
+    try:
+        payload = build_hub_manifest(
+            markets=[
+                {
+                    "ticker": "KXBTC15M-26SEP071415-15",
+                    "event_ticker": "KXBTC15M-26SEP071400",
+                    "window_id": "KXBTC15M-26SEP071400__2026-09-07T14:00:00Z__2026-09-07T14:15:00Z",
+                    "status": "active",
+                    "result": "",
+                }
+            ]
+        )
+        assert payload["schema_version"] == SCHEMA_VERSION
+        assert isinstance(payload["lanes"], list)
+        assert [ln["lane_id"] for ln in payload["lanes"]] == [LANE_GOLF, LANE_15M]
+        golf = _lane(payload, LANE_GOLF)
+        lane15 = _lane(payload, LANE_15M)
+        assert golf["lane_badge"] == "PHASE 1 OBSERVATION"
+        assert any(rec.get("record_id") == "WC1" for rec in golf["records"])
+        assert golf["records"][0]["verdict"] == "FAIL"
+        assert WC1_STATUS.split(" / ")[0] == "FAIL"
+        assert "wc1" not in lane15
+        assert lane15["lane_badge"] == "LEARNING LANE"
+        assert "LEARNING LANE" in lane15["badges"]
+        assert not any(str(rec.get("record_id") or "").lower() == "wc1" for rec in lane15["records"])
+        field_values = {row["label"]: row["value"] for row in lane15["last_run"]["fields"]}
+        assert field_values["Series"] == "KXBTC15M"
+        assert field_values["CF index"] == "BRTI"
+        assert field_values["CFB websocket average"] == "observe only"
+        assert all(isinstance(row["value"], str) for row in lane15["paper_ledger"]["rows"])
+        assert "bankroll" not in lane15["paper_ledger"]
+        assert "autobet" not in lane15
+
+        def walk_keys(node):
+            if isinstance(node, dict):
+                for key, value in node.items():
+                    assert key.lower() not in FORBIDDEN_KEYS
+                    walk_keys(value)
+            elif isinstance(node, list):
+                for item in node:
+                    walk_keys(item)
+
+        walk_keys(payload)
+
+        paths = write_observability_exports(markets=[], hub_dir=tmp_path / "hub")
+        assert (tmp_path / "hub" / "manifest.json").is_file()
+        assert "hub_manifest" in paths
+        assert "learning_lane_15m_journal" in paths
+        assert not str(paths["learning_lane_15m_journal"]).startswith(str(tmp_path / "golf"))
+    finally:
+        set_15m_root_override(None)
