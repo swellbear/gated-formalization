@@ -52,7 +52,7 @@ manifest, not a reason to change the wall.
 ## Lane object
 
 `lane_id` must be one of the canonical ids. A lane with any other id is skipped by the
-viewer and rejected by the validator.
+viewer and rejected by the validator. `15m` is not a lane id.
 
 | `lane_id` | Lane |
 | --- | --- |

@@ -706,6 +706,7 @@
   var panel = document.getElementById("lane-panel");
 
   function laneFromHash() {
+    /* Exact ids only: golf | learning_lane_15m. A short 15m hash is unknown. */
     var hash = window.location.hash.replace(/^#/, "");
     return CANONICAL_LANES.indexOf(hash) !== -1 ? hash : null;
   }
@@ -757,7 +758,11 @@
 
     window.addEventListener("hashchange", function () {
       var laneId = laneFromHash();
-      if (laneId && byId[laneId]) { select(laneId, false); }
+      if (laneId && byId[laneId]) {
+        select(laneId, false);
+      } else {
+        select("golf", false);
+      }
     });
 
     if (str(manifest.hub && manifest.hub.source_kind) === "fixture") {
