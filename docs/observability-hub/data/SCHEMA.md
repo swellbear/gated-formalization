@@ -42,11 +42,12 @@ it stops being read-only.
 | `wall_lines` | the standing no-controls statement |
 | `hard_nos` | the enforced Hard NO list |
 
-`global` is **documentation and a cross-check, not a source**. The page never renders it:
-the standing posture is the quiet Hard-NO strip hard-coded in `index.html`'s footer,
-precisely so that no export can suppress it. The validator checks that `global.badges`
-still matches those strings; a mismatch is an error in the manifest, not a reason to drop
-the strip.
+`global` is **documentation and a cross-check, not a source**. The page never renders it,
+and there is no Hard-NO strip in the chrome either: the posture is enforced rather than
+recited. `validate_hub.py` requires `global.badges` to match those strings exactly, and
+requires `hard_nos`/`wall_lines` to keep stating the cash wall and to keep refusing
+deposits, withdrawals, transfers, trade arming, cash movement, and Kalshi scope. A
+mismatch is an error in the manifest, not a reason to print a banner.
 
 ---
 
@@ -184,7 +185,7 @@ a new dated record instead.
 `status` is `available` or `not yet available`. Omit `path` when unavailable.
 
 A chart's `badges` are kept as data the validator can check. The viewer does not draw
-them: the Hard NOs are the one footer strip, not a chip row repeated on every card.
+them: the Hard NOs are enforced in code, not repeated as chrome on every card.
 
 `path` rules, enforced in the browser and by the validator:
 

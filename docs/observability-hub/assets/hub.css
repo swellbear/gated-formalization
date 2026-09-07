@@ -579,16 +579,7 @@ body.lightbox-open { overflow: hidden; }
   border-top: 1px solid var(--line);
   margin-top: 1rem;
 }
-.foot-hard-no {
-  margin: 0;
-  padding: 0.55rem 1.25rem;
-  background: var(--cash);
-  color: #ded8cc;
-  text-align: center;
-  font-size: 0.78rem;
-  letter-spacing: 0.03em;
-}
-.foot > p:not(.foot-hard-no) {
+.foot > p {
   max-width: 62rem;
   margin: 0.7rem auto;
   padding: 0 1.25rem;

@@ -42,7 +42,7 @@ Where each one is enforced:
 | No write requests | `validate_hub.py` fails if `hub.js` issues anything but the one GET of `data/manifest.json` |
 | No markup injection from data | every manifest value reaches the DOM as a text node; `validate_hub.py` fails if `hub.js` starts assigning markup |
 | No invented charts | a chart is drawn only after its PNG actually loads in the reader's browser; a 404, a non-PNG, or an off-site path degrades to `not yet available` |
-| Standing posture cannot be suppressed | the quiet Hard-NO strip is hard-coded in `index.html`'s footer, not read from the manifest; `validate_hub.py` fails if those strings go missing |
+| Standing posture cannot be suppressed | it is enforced, not printed: `validate_hub.py` fails if `global.badges` stops matching the posture exactly, if `global.hard_nos`/`wall_lines` stop stating the cash wall, or if the page grows a Hard-NO strip that recites it back at the reader |
 | Lanes stay separate | `validate_hub.py` fails if a golf-only marker (`0.279`, `34/122`, `WC1`, `Mitchell`, an ESPN id) appears in a non-golf lane's displayed figures |
 | No edge claims | `validate_hub.py` fails on "edge established", "banked edge", "validated edge" and friends, unless the sentence is denying one |
 
@@ -154,7 +154,7 @@ Notes:
 
 | Path | Role |
 | --- | --- |
-| `index.html` | page shell. Carries the quiet Hard-NO strip and the lane tabs statically, so no data feed can suppress them. |
+| `index.html` | page shell. Carries the lane tabs statically, so no data feed can suppress them. No posture strip: the Hard NOs are enforced, not displayed. |
 | `assets/hub.css` | styling. No framework, CSS custom properties, per-lane accent colour. |
 | `assets/hub.js` | renderer, Hard-NO enforcement, and the enlarge overlay. ~600 lines, no dependencies. |
 | `data/manifest.json` | the only data file the viewer reads. Currently a fixture. |
