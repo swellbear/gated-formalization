@@ -48,6 +48,7 @@ Start from hard-to-dispute anchors. Admit new formal layers only when they pass 
 
 ## Key Documents
 
+- [docs/AGENT_LEAVE_OFF.md](docs/AGENT_LEAVE_OFF.md) — **agent resume SoT** (read/update before stopping; chat is not memory)
 - `.cursor/rules/applications-gated-method.mdc` — canonical standing rule
 - `docs/00_method_overview.md` — living core method
 - `docs/01_operational_upgrade.md` — sharpened gates, claim-type, checklists, calibration, optional toolbox (§§9–14)
