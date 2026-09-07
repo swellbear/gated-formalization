@@ -74,7 +74,7 @@ def main(argv: list[str] | None = None) -> int:
         "command",
         nargs="?",
         default="demo",
-        choices=["demo", "board", "explain", "strategy", "ingest", "calibrate", "pressure-test", "live", "watch", "shadow", "paper-export", "paper-ledger", "paper-deposit", "paper-withdraw", "paper-settle", "paper-fill", "compare-replay"],
+        choices=["demo", "board", "explain", "strategy", "ingest", "calibrate", "pressure-test", "live", "watch", "shadow", "shell", "paper-export", "paper-ledger", "paper-deposit", "paper-withdraw", "paper-settle", "paper-fill", "compare-replay"],
     )
     parser.add_argument("--course-type", default="parkland")
     parser.add_argument("--player", default="p01")
@@ -180,6 +180,33 @@ def main(argv: list[str] | None = None) -> int:
         dest="ntfy_topic",
         help="watch: ntfy topic (default NTFY_TOPIC from .env)",
     )
+    parser.add_argument(
+        "--print",
+        action="store_true",
+        dest="dump_shell",
+        help="shell: print the operator surface and exit",
+    )
+    parser.add_argument("--host", default="127.0.0.1", help="shell: bind host")
+    parser.add_argument("--port", type=int, default=8765, help="shell: bind port")
+    parser.add_argument("--no-browser", action="store_true", help="shell: do not open a browser")
+    parser.add_argument(
+        "--install-desktop-shortcut",
+        action="store_true",
+        dest="install_desktop_shortcut",
+        help="shell: write a Desktop launcher for the Phase 1 hub and exit",
+    )
+    parser.add_argument(
+        "--artifact-root",
+        default="",
+        dest="artifact_root",
+        help="shell: operator data/artifact SoT root (else GOLF_OFFSHOOT_ARTIFACT_ROOT)",
+    )
+    parser.add_argument(
+        "--viz-root",
+        default="",
+        dest="viz_root",
+        help="shell: Illustrator viz-wall root (else GOLF_OFFSHOOT_VIZ_ROOT)",
+    )
     args = parser.parse_args(argv)
 
     if args.command == "board":
@@ -199,6 +226,8 @@ def main(argv: list[str] | None = None) -> int:
         return _cmd_watch(args)
     if args.command == "shadow":
         return _cmd_shadow(args)
+    if args.command == "shell":
+        return _cmd_shell(args)
     if args.command == "paper-export":
         return _cmd_paper_export(args)
     if args.command == "paper-ledger":
@@ -1165,6 +1194,31 @@ def _cmd_shadow(_args) -> int:
     print(format_shadow_review(rows))
     print(f"n={len(rows)} paper-observation only; never auto-bet")
     return 0
+
+
+def _cmd_shell(args) -> int:
+    from golf_offshoot.operator_surface.app import main as shell_main
+
+    argv = []
+    if args.event:
+        argv.extend(["--event", args.event])
+    if getattr(args, "dump_shell", False):
+        argv.append("--print")
+    if getattr(args, "no_browser", False):
+        argv.append("--no-browser")
+    if getattr(args, "install_desktop_shortcut", False):
+        argv.append("--install-desktop-shortcut")
+    host = getattr(args, "host", None)
+    if host:
+        argv.extend(["--host", str(host)])
+    port = getattr(args, "port", None)
+    if port is not None:
+        argv.extend(["--port", str(port)])
+    if getattr(args, "artifact_root", ""):
+        argv.extend(["--artifact-root", args.artifact_root])
+    if getattr(args, "viz_root", ""):
+        argv.extend(["--viz-root", args.viz_root])
+    return shell_main(argv)
 
 
 if __name__ == "__main__":

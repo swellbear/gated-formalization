@@ -10,7 +10,7 @@ from golf_offshoot.models.schemas import (
     TournamentRunResult,
 )
 from golf_offshoot.models.strategy import PortfolioState, StrategyPosition
-from golf_offshoot.ranking.leftover import format_leftover_callout
+from golf_offshoot.ranking.leftover import format_leftover_callout, leftover_from_audit
 
 
 def _hp(horizon: Horizon, central: float) -> HorizonProbability:
@@ -159,6 +159,14 @@ def test_leftover_has_four_sections():
     assert "HumanOverride" in text
     assert "\u03b8" not in text
     assert "none held" in text
+
+
+def test_leftover_from_audit_matches_display_block():
+    result = _result(RunMode.LIVE, [_row("p1", "Held One", 0.12)])
+    text = leftover_from_audit(result.audit, result.tournament.name)
+    assert "== still unconstrained ==" in text
+    assert "== on held tickets ==" in text
+    assert "== do not stuff into theta ==" in text
 
 
 def test_ingest_prints_none_held():

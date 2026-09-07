@@ -375,6 +375,11 @@ def leftover_from_snapshot(
     return format_leftover_callout(result, record)
 
 
+def leftover_from_audit(audit, event_name: str = "", open_book=None) -> str:
+    """Display leftover from a persisted audit. Missing inventory stays unconstrained, not invented."""
+    return format_leftover_callout(_result_from_audit(audit, event_name), open_book)
+
+
 def _result_from_audit(audit, event_name: str) -> TournamentRunResult:
     course = Course(course_id="n/a", name="n/a", course_type=CourseType.PARKLAND)
     tournament = Tournament(

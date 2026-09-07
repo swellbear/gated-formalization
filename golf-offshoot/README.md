@@ -28,6 +28,11 @@ python -m golf_offshoot calibrate              # historical BO+ARD, pre-event fe
 python -m golf_offshoot pressure-test
 python -m golf_offshoot live
 python -m golf_offshoot shadow              # review paper-observation advises
+python -m golf_offshoot shell --print     # Phase 1 operator surface (text)
+python -m golf_offshoot shell --event 401811963   # local UI over ingest/live/shadow
+# Windows desktop icon: golf-offshoot/scripts/windows/Install-Desktop-Shortcut.bat
+# then double-click Desktop "Golf Offshoot Phase 1 Hub" (or Open-Phase1-Hub.bat)
+# shell live/loop auto-applies paper-observation advises (not trading armed; no cash controls)
 ```
 
 The `demo` / `explain` / `strategy` commands print an **OFFLINE DEMO — MOCK DATA** banner. They are not the operating path.
@@ -50,6 +55,7 @@ golf-offshoot/
     data_feeds/          real ESPN / Open-Meteo / Bovada / Hard Rock Bet (Odds API) / PGA SG / opening archive + mocks (demo/tests only)
     calibration/         leakage-safe dataset + BO/ARD weight fit
     operating.py         real-path ingest / pressure-test helpers
+    operator_surface/    Phase 1 local shell (observation only; paper auto-apply ≠ armed; no cash/trade)
     bayesian_engine/     prior → evidence updates → MC horizons
     clustering/          comparable players, venue clusters
     field_effects/       this-week field composition
