@@ -532,6 +532,8 @@ All commands: `python -m golf_offshoot <command> ...` from `golf-offshoot/`.
 | **Mock** live strategy after demo book | `python -m golf_offshoot strategy --live --mode press_edges` |
 | Factor catalog JSON (not a live field) | `python -m golf_offshoot board --course-type parkland` |
 | Tests | `pytest` |
+| Phase 1 operator surface (one place) | `python -m golf_offshoot shell --event <id>` |
+| Same, text dump / no server | `python -m golf_offshoot shell --print --event <id>` |
 
 `--mode` values: `protect_profits` \| `press_edges` \| `stay_selective`.  
 `--risk` (demo strategy): `conservative` \| `normal` \| `aggressive`.  
@@ -539,7 +541,53 @@ All commands: `python -m golf_offshoot <command> ...` from `golf-offshoot/`.
 
 ---
 
-## 14. Glossary
+## 14. Operator shell (Phase 1)
+
+One local control surface over the existing weekly loop. It is **not** an Amb birth, not a rewrite, and not a trading console.
+
+```bash
+python -m golf_offshoot shell --event 401811963
+python -m golf_offshoot shell --print --event 401811963
+```
+
+The shell can pin an ESPN event, trigger `ingest` → `live` → `shadow`, load an existing real export, and show run status. `live` here is observation-only: it does **not** `--lock-paper`, `--apply-paper`, take cash-out quotes, or move paper cash.
+
+Loud walls are always on:
+
+- `PHASE 1 OBSERVATION`
+- `LIVE DATA` is not a ticket. Trading is `NOT ARMED`.
+- `AI NEVER DEPOSITS / WITHDRAWS / TRANSFERS CASH`
+- `OFFLINE DEMO — MOCK DATA` is a separate mode and is barred from edge/honesty displays
+
+Honesty SoT (Digestor). Prefer an operator-configured root, then the local dry-run tree if it exists, then repo `data/`.
+
+| Env / flag | Role |
+|------------|------|
+| `GOLF_OFFSHOOT_ARTIFACT_ROOT` or `--artifact-root` | Data/artifact root |
+| `GOLF_OFFSHOOT_SHADOW_PATH` | Override `shadow/advises.jsonl` |
+| `GOLF_OFFSHOOT_VIZ_ROOT` or `--viz-root` | Illustrator PNG root |
+
+Current dry-run external artifact SoT: `/workspace/golf_offshoot_real_exports/`. Repo `data/shadow/` may be empty/gitignored — that is **not** “no advises” if the configured or external SoT has rows.
+
+Missing/empty banners (never silent demo fill):
+
+- shadow file missing → `SHADOW_MISSING` (not zero-edge)
+- empty journal → `SHADOW_EMPTY`
+- no `settle_status` yet → `SETTLE_PENDING`
+- no `weights_calib-v*.json` → `CALIB_MISSING`
+- no real LIVE table → `LIVE_TABLE_MISSING`
+
+Ranked LIVE table is read from `latest/*_live_*.txt` (HTML sibling if present) or existing `data/exports/*_live_*.txt`. Leftover is display-only (unconstrained / held-ticket / do-not-stuff-theta). Calibration shows latest `keep_expert` freeze, `no_future_leakage`, hashes, and metrics. Edge is not established.
+
+Viz-wall hook: [VIZ_WALL_HOOK.md](VIZ_WALL_HOOK.md). Read-only PNGs. Refresh on mtime. Path traversal is rejected. Illustrator owns regeneration.
+
+One optional ntfy ping when an **operator-triggered** ingest/live/loop **finishes** (success or failure). Progress lines do not ping. Empty `NTFY_TOPIC` keeps notify off. Existing `watch` trigger behavior is unchanged.
+
+The shell does not add Kalshi auth, API trade keys, wallet/bank scopes, NFL/NBA, theta retune, or cash controls.
+
+---
+
+## 15. Glossary
 
 | Term | Plain meaning |
 |------|----------------|
