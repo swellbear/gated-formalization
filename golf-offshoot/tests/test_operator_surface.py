@@ -51,13 +51,7 @@ from golf_offshoot.operator_surface.runner import (
     run_live,
     run_loop,
 )
-from golf_offshoot.operator_surface.viz import (
-    NOT_YET_AVAILABLE,
-    VIZ_BADGES,
-    WC1_BADGES,
-    load_viz_wall,
-    viz_file_for_serve,
-)
+from golf_offshoot.operator_surface.viz import NOT_YET_AVAILABLE, VIZ_BADGES, load_viz_wall, viz_file_for_serve
 from golf_offshoot.ranking.leftover import leftover_from_audit
 
 import pytest
@@ -282,15 +276,15 @@ def test_viz_missing_is_not_invented(tmp_path):
     assert wc1.title == "WC1 dated record"
     assert "not settled PnL" in wall.slot("shadow_honesty_strip").subline
     assert "keep_expert" in wall.slot("calibration_weather").subline
-    assert wc1.subline == "FAIL / park unproven · edge NOT established · observation only"
-    assert wc1.badges == WC1_BADGES
-    assert wc1.badges == VIZ_BADGES + ("NOT EDGE ESTABLISHED",)
+    assert wc1.subline == "FAIL / park unproven · NOT edge"
+    assert wc1.badges == VIZ_BADGES
     assert wall.slot("shadow_honesty_strip").badges == VIZ_BADGES
     assert wall.slot("calibration_weather").badges == VIZ_BADGES
     wc1_copy = " ".join((wc1.title, wc1.subline, *wc1.badges, wc1.note))
     assert "banked-edge" not in wc1_copy
     assert "SETTLE_PENDING" not in wc1_copy
-    assert "edge established" not in wc1.subline.lower()
+    assert "edge established" not in wc1_copy.lower()
+    assert "NOT EDGE ESTABLISHED" not in wc1.badges
 
 
 def test_viz_renders_existing_png_and_mtime(tmp_path):
@@ -419,8 +413,8 @@ def test_shell_text_and_html_include_walls(tmp_path):
     assert "Calibration weather" in page
     assert "WC1 dated record" in text
     assert "WC1 dated record" in page
-    assert "FAIL / park unproven · edge NOT established · observation only" in page
-    assert "NOT EDGE ESTABLISHED" in page
+    assert "FAIL / park unproven · NOT edge" in page
+    assert "NOT EDGE ESTABLISHED" not in page
     assert "NEVER DEPOSITS" in page
     assert "PAPER OBSERVATION ONLY" in page
     assert "not trading armed" in page
@@ -685,8 +679,8 @@ def test_hub_html_renders_viz_pngs_when_present(tmp_path):
     assert "Shadow honesty strip" in page
     assert "Calibration weather" in page
     assert "WC1 dated record" in page
-    assert "FAIL / park unproven · edge NOT established · observation only" in page
-    assert "NOT EDGE ESTABLISHED" in page
+    assert "FAIL / park unproven · NOT edge" in page
+    assert "NOT EDGE ESTABLISHED" not in page
     assert "PHASE 1 OBSERVATION" in page
     assert "AI: NO CASH IN/OUT" in page
     assert "PAPER OBSERVATION ONLY" in page

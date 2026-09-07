@@ -8,13 +8,11 @@ Illustrator owns regeneration. The operator surface **renders files that exist**
 |------|-------|---------|
 | `shadow_honesty_strip` | Shadow honesty strip | Live-book paper journal — not settled PnL · not Kalshi demo |
 | `calibration_weather` | Calibration weather | All freezes keep_expert (v1→v3) — not edge established |
-| `wc1_dated_record` | WC1 dated record | FAIL / park unproven · edge NOT established · observation only |
+| `wc1_dated_record` | WC1 dated record | FAIL / park unproven · NOT edge |
 
-Permanent badges on Ill 1 / Ill 2:
+Permanent badges on every slot (Phase 1 trio only):
 
 `PHASE 1 OBSERVATION` · `AI: NO CASH IN/OUT` · `PAPER OBSERVATION ONLY`
-
-WC1 dated-record badges: that Phase 1 trio **plus** `NOT EDGE ESTABLISHED`.
 
 Hard NO on the WC1 panel language: `banked-edge` / `edge established` / `SETTLE_PENDING`. Demo/mock edge language stays barred on the whole wall.
 

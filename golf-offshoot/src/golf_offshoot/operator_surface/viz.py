@@ -20,7 +20,6 @@ VIZ_BADGES = (
     "AI: NO CASH IN/OUT",
     "PAPER OBSERVATION ONLY",
 )
-WC1_BADGES = VIZ_BADGES + ("NOT EDGE ESTABLISHED",)
 
 SLOT_SPECS = {
     SLOT_SHADOW: {
@@ -36,8 +35,7 @@ SLOT_SPECS = {
     SLOT_WC1_DATED_RECORD: {
         "title": "WC1 dated record",
         "filename": "wc1_dated_record.png",
-        "subline": "FAIL / park unproven · edge NOT established · observation only",
-        "badges": WC1_BADGES,
+        "subline": "FAIL / park unproven · NOT edge",
     },
 }
 
