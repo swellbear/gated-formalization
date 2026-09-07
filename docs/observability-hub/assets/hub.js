@@ -576,12 +576,30 @@
     box.appendChild(pending);
 
     var img = new Image();
-    img.alt = (str(chart.title) || str(chart.slot_id)) +
-      " \u2014 read-only chart. Enlarge for detail.";
+    img.alt = (str(chart.title) || str(chart.slot_id)) + " \u2014 read-only chart";
 
     img.addEventListener("load", function () {
       var figure = el("figure", "chart-figure");
-      figure.appendChild(img);
+
+      /* Only a chart that got this far is clickable. The button wraps the image
+         and the hint -- both phrasing content, so the markup stays valid -- and
+         the caption is a sibling, outside the control. */
+      if (lightbox.available) {
+        var trigger = el("button", "chart-zoom");
+        trigger.type = "button";
+        trigger.setAttribute(
+          "aria-label",
+          "Enlarge chart: " + (str(chart.title) || str(chart.slot_id))
+        );
+        trigger.appendChild(img);
+        trigger.appendChild(el("span", "zoom-hint", "Click to enlarge"));
+        trigger.addEventListener("click", function () {
+          lightbox.open(chart, img, trigger);
+        });
+        figure.appendChild(trigger);
+      } else {
+        figure.appendChild(img);
+      }
 
       var caption = el("figcaption");
       var captionBits = [];
@@ -590,24 +608,8 @@
       caption.textContent = captionBits.join(" \u00b7 ");
       figure.appendChild(caption);
 
-      var mounted = figure;
-      if (lightbox.available) {
-        var trigger = el("button", "chart-zoom");
-        trigger.type = "button";
-        trigger.setAttribute(
-          "aria-label",
-          "Enlarge chart: " + (str(chart.title) || str(chart.slot_id))
-        );
-        trigger.appendChild(figure);
-        trigger.appendChild(el("span", "zoom-hint", "Click to enlarge"));
-        trigger.addEventListener("click", function () {
-          lightbox.open(chart, img, trigger);
-        });
-        mounted = trigger;
-      }
-
       var docLink = safeDocHref(chart.doc_href);
-      box.replaceChild(mounted, pending);
+      box.replaceChild(figure, pending);
       if (docLink) {
         var linkWrap = el("ul", "links");
         var li = el("li");

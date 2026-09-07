@@ -413,6 +413,8 @@ section.card > h3 {
   background: none;
   border: 0;
   cursor: zoom-in;
+  -webkit-appearance: none;
+  appearance: none;
 }
 .chart-zoom:focus-visible { outline: 3px solid var(--fg); outline-offset: 3px; }
 .chart-zoom:hover img { border-color: var(--fg); }
