@@ -22,8 +22,11 @@ SOURCE_ESPN_OFFICIAL = "espn_official_final"
 SOURCE_PAPER_BOOK_WINNER = "paper_book_official_winner"
 SOURCE_FINISH_UNKNOWN = "espn_official_final:finish_unknown"
 SOURCE_ROUND_LEADER = "espn_official_final:round_leader_not_72_hole"
+SOURCE_ABSENT_FIELD = "espn_official_final:absent_from_official_field"
+SOURCE_ABSENT_FIELD_SHORT = "absent_from_official_field"
 
 SETTLEABLE_MARKETS = frozenset({"win", "top_5", "top_10", "top_20", "make_cut"})
+ABSENT_FIELD_SOURCES = frozenset({SOURCE_ABSENT_FIELD, SOURCE_ABSENT_FIELD_SHORT})
 
 _KALSHI_MARKERS = ("KALSHI", "KALSHI_DEMO", "KALSHI DEMO")
 
@@ -41,19 +44,47 @@ def normalize_settle_status(raw: Any) -> str | None:
     return None
 
 
-def is_relevant_advise(row: Mapping[str, Any]) -> bool:
+def is_settleable_market(row: Mapping[str, Any]) -> bool:
     """72-hole markets that can take paper_win / paper_lose from an official finish."""
     return str(row.get("market") or "").strip().lower() in SETTLEABLE_MARKETS
 
 
-def settle_banner_for_rows(rows: list[Mapping[str, Any]]) -> str | None:
-    """SETTLE_PENDING unless every relevant advise is paper_win or paper_lose.
+def is_absent_from_official_field(row: Mapping[str, Any]) -> bool:
+    """True when the join marked this advise absent from the official STATUS_FINAL field.
 
-    never_settled and missing settle_status both keep the weekly operating claim
-    blocked. Round-leader / non-settleable markets are not relevant.
+    Token: ``espn_official_final:absent_from_official_field`` (short form
+    ``absent_from_official_field`` also accepted on disk).
+    """
+    if normalize_settle_status(row.get("settle_status")) != SETTLE_NEVER:
+        return False
+    source = str(row.get("settle_source") or "").strip()
+    return source in ABSENT_FIELD_SOURCES
+
+
+def is_relevant_advise(row: Mapping[str, Any]) -> bool:
+    """Banner-denominator relevance: settleable 72-hole market, not absent-from-field.
+
+    Place/win advises whose player_id is absent from the official ESPN
+    STATUS_FINAL finisher list are never_settled (not paper_win / paper_lose)
+    and are excluded from the SETTLE_PENDING denominator.
+    """
+    return is_settleable_market(row) and not is_absent_from_official_field(row)
+
+
+def settle_banner_for_rows(rows: list[Mapping[str, Any]]) -> str | None:
+    """SETTLE_PENDING unless every banner-relevant advise is paper_win or paper_lose.
+
+    never_settled and missing settle_status keep the weekly operating claim
+    blocked, except never_settled + espn_official_final:absent_from_official_field
+    (player_id not on the official STATUS_FINAL finisher list). Those rows stay
+    visible but are excluded from the denominator. Round-leader / non-settleable
+    markets are not relevant. If the only 72-hole rows are absent-from-field,
+    the banner clears (they must not keep the weekly claim blocked).
     """
     relevant = [row for row in rows if is_relevant_advise(row)]
     if not relevant:
+        if any(is_settleable_market(row) and is_absent_from_official_field(row) for row in rows):
+            return None
         return "SETTLE_PENDING"
     if all(normalize_settle_status(row.get("settle_status")) in {SETTLE_PAPER_WIN, SETTLE_PAPER_LOSE} for row in relevant):
         return None
@@ -68,9 +99,12 @@ def settle_counts(rows: list[Mapping[str, Any]]) -> dict[str, int]:
         "missing": 0,
         "relevant": 0,
         "irrelevant": 0,
+        "absent_from_official_field": 0,
     }
     for row in rows:
         status = normalize_settle_status(row.get("settle_status"))
+        if is_absent_from_official_field(row):
+            counts["absent_from_official_field"] += 1
         if is_relevant_advise(row):
             counts["relevant"] += 1
         else:
@@ -98,6 +132,9 @@ def join_shadow_settles(
 
     Unofficial / playoff / inspect failure → leave unset (SETTLE_PENDING).
     Official but finish unknown or round-leader market → never_settled.
+    Official STATUS_FINAL field (completed + exactly one winner) but player_id
+    absent from the finisher list → never_settled,
+    source espn_official_final:absent_from_official_field (not paper_win / paper_lose).
     MOCK/DEMO and Kalshi-shaped blobs are not sources.
     """
     if not rows:
@@ -244,8 +281,11 @@ def _apply_official_inspect(
         row["settle_source"] = SOURCE_ROUND_LEADER
         return row
     if player_id not in inspect.finishes:
+        # Official final field exists; this player_id is not on it. Honest
+        # never_settled — do not invent paper_win / paper_lose (including
+        # "missed cut" guesses for place markets).
         row["settle_status"] = SETTLE_NEVER
-        row["settle_source"] = SOURCE_FINISH_UNKNOWN
+        row["settle_source"] = SOURCE_ABSENT_FIELD
         return row
     place, _name = inspect.finishes[player_id]
     if place is None:

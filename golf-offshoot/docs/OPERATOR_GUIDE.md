@@ -423,7 +423,7 @@ python -m golf_offshoot shadow --join-settles
 python -m golf_offshoot shadow --backfill-settles
 ```
 
-The honesty adapter joins `settle_status` from lived paper-ledger tickets, official ESPN finals (exactly one winner), or a settled lived paper book's winner name (`win` only). Missing/unofficial stays `SETTLE_PENDING`. Official but unscoreable (unknown finish, round-leader) is `never_settled`. Demo/mock and Kalshi fills cannot invent settles. `--backfill-settles` writes `paper_win` / `paper_lose` only when that join already knows a real settle.
+The honesty adapter joins `settle_status` from lived paper-ledger tickets, official ESPN finals (exactly one winner), or a settled lived paper book's winner name (`win` only). Missing/unofficial stays `SETTLE_PENDING`. Official but unscoreable (unknown finish, round-leader) is `never_settled`. If an advise `player_id` is absent from the official ESPN STATUS_FINAL finisher list (`completed=True` and exactly one official winner / final field), the join marks `never_settled` with `settle_source=espn_official_final:absent_from_official_field` and does **not** invent `paper_win` / `paper_lose`. Those rows stay visible and are excluded from the `SETTLE_PENDING` banner denominator. Demo/mock and Kalshi fills cannot invent settles. `--backfill-settles` writes `paper_win` / `paper_lose` only when that join already knows a real settle.
 
 ### How to learn without fooling yourself
 
@@ -590,7 +590,7 @@ Missing/empty banners (never silent demo fill):
 
 - shadow file missing → `SHADOW_MISSING` (not zero-edge)
 - empty journal → `SHADOW_EMPTY`
-- no `paper_win`/`paper_lose` yet on every relevant advise (`win` / `top_5` / `top_10` / `top_20` / `make_cut`) → `SETTLE_PENDING` (also if any relevant row is `never_settled` or missing `settle_status`). Clears only when every relevant advise is `paper_win` or `paper_lose` from official ESPN / paper-ledger / settled lived paper-book evidence. Not Kalshi. Not demo.
+- no `paper_win`/`paper_lose` yet on every relevant advise (`win` / `top_5` / `top_10` / `top_20` / `make_cut`) → `SETTLE_PENDING` (also if any relevant row is `never_settled` or missing `settle_status`). Clears only when every relevant advise is `paper_win` or `paper_lose` from official ESPN / paper-ledger / settled lived paper-book evidence. **Exception:** `never_settled` with `settle_source=espn_official_final:absent_from_official_field` is excluded from that denominator (player_id not on the official STATUS_FINAL finisher list; row stays visible; no invented win/lose). Not Kalshi. Not demo.
 - no `weights_calib-v*.json` → `CALIB_MISSING`
 - no real LIVE table → `LIVE_TABLE_MISSING`
 - empty field / no posted odds / no paper book possible → `PAPER_EMPTY_FIELD` (not a demo book; not a silent demo fill)

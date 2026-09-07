@@ -4,14 +4,18 @@ from pathlib import Path
 
 from golf_offshoot.audit.shadow import ShadowAdvise, load_shadow
 from golf_offshoot.audit.shadow_settle import (
+    SOURCE_ABSENT_FIELD,
     SOURCE_ESPN_OFFICIAL,
     SOURCE_FINISH_UNKNOWN,
     SOURCE_LEDGER_TICKET,
     SOURCE_PAPER_BOOK_WINNER,
     SOURCE_ROUND_LEADER,
     backfill_shadow_settles,
+    is_absent_from_official_field,
+    is_relevant_advise,
     join_shadow_settles,
     settle_banner_for_rows,
+    settle_counts,
 )
 from golf_offshoot.operator_surface.artifacts import SETTLE_PENDING, load_honesty
 from golf_offshoot.strategy.paper_book import PaperBookFile
@@ -162,19 +166,38 @@ def test_playoff_two_winners_stays_pending():
     assert settle_banner_for_rows(rows) == SETTLE_PENDING
 
 
-def test_unknown_finish_is_never_settled():
+def test_unknown_finish_place_none_is_never_settled_and_blocks():
     inspect = EventInspect(
         completed=True,
-        finishes={"fleet": (12, "Tommy Fleetwood")},
-        winner_ids=["other"],
+        finishes={"kita": (None, "Kurt Kitayama"), "fleet": (12, "Tommy Fleetwood")},
+        winner_ids=["fleet"],
+        event_name="FedEx St. Jude Championship",
         status_note="state=post name=STATUS_FINAL",
     )
-    # one official winner, advise player missing from finish table
-    inspect.winner_ids = ["fleet"]
     rows = join_shadow_settles([_advise()], inspect_events=inspect)
     assert rows[0]["settle_status"] == "never_settled"
     assert rows[0]["settle_source"] == SOURCE_FINISH_UNKNOWN
+    assert rows[0]["settle_status"] != "paper_win"
+    assert rows[0]["settle_status"] != "paper_lose"
+    assert is_relevant_advise(rows[0]) is True
     assert settle_banner_for_rows(rows) == SETTLE_PENDING
+
+
+def test_absent_from_official_field_win_is_never_settled_excluded_from_banner():
+    inspect = EventInspect(
+        completed=True,
+        finishes={"fleet": (12, "Tommy Fleetwood")},
+        winner_ids=["fleet"],
+        status_note="state=post name=STATUS_FINAL",
+    )
+    rows = join_shadow_settles([_advise()], inspect_events=inspect)
+    assert rows[0]["settle_status"] == "never_settled"
+    assert rows[0]["settle_source"] == SOURCE_ABSENT_FIELD
+    assert "paper_win" not in (rows[0].get("settle_status"),)
+    assert rows[0].get("settle_status") != "paper_lose"
+    assert is_absent_from_official_field(rows[0]) is True
+    assert is_relevant_advise(rows[0]) is False
+    assert settle_banner_for_rows(rows) is None
 
 
 def test_round_leader_is_never_settled():
@@ -197,6 +220,131 @@ def test_place_market_uses_ticket_hit():
     )
     assert rows[0]["settle_status"] == "paper_win"
     assert rows[1]["settle_status"] == "paper_lose"
+
+
+def _official_bmw() -> EventInspect:
+    return EventInspect(
+        completed=True,
+        finishes={
+            "scheffler": (1, "Scottie Scheffler"),
+            "mcilroy": (4, "Rory McIlroy"),
+        },
+        winner_ids=["scheffler"],
+        event_name="BMW Championship",
+        status_note="state=post name=STATUS_FINAL",
+    )
+
+
+def _keith_bmw_place(market: str, rec: str) -> dict:
+    return _advise(
+        tournament="BMW Championship",
+        tournament_id="401734784",
+        player="Keith Mitchell",
+        player_id="keith-mitchell",
+        market=market,
+        recommendation_id=rec,
+    )
+
+
+def test_keith_mitchell_bmw_place_absent_from_official_field():
+    inspect = _official_bmw()
+    winner = _advise(
+        tournament="BMW Championship",
+        tournament_id="401734784",
+        player="Scottie Scheffler",
+        player_id="scheffler",
+        market="win",
+        recommendation_id="rec-win",
+    )
+    keith_rows = [
+        _keith_bmw_place(market, f"rec-{market}")
+        for market in ("top_5", "top_10", "top_20", "make_cut")
+    ]
+    rows = join_shadow_settles([winner, *keith_rows], inspect_events=inspect)
+    assert len(rows) == 5
+    assert rows[0]["settle_status"] == "paper_win"
+    assert rows[0]["settle_source"] == SOURCE_ESPN_OFFICIAL
+    keith = [row for row in rows if row["player"] == "Keith Mitchell"]
+    assert len(keith) == 4
+    for row in keith:
+        assert row["settle_status"] == "never_settled"
+        assert row["settle_source"] == SOURCE_ABSENT_FIELD
+        assert row["settle_status"] not in {"paper_win", "paper_lose"}
+        assert is_relevant_advise(row) is False
+    counts = settle_counts(rows)
+    assert counts["relevant"] == 1
+    assert counts["absent_from_official_field"] == 4
+    assert counts["never_settled"] == 4
+    assert settle_banner_for_rows(rows) is None
+
+
+def test_keith_mitchell_bmw_place_only_does_not_block_banner():
+    rows = join_shadow_settles(
+        [_keith_bmw_place(market, f"rec-{market}") for market in ("top_5", "top_10", "top_20", "make_cut")],
+        inspect_events=_official_bmw(),
+    )
+    assert len(rows) == 4
+    assert all(row["settle_status"] == "never_settled" for row in rows)
+    assert all(row["settle_source"] == SOURCE_ABSENT_FIELD for row in rows)
+    assert settle_banner_for_rows(rows) is None
+
+
+def test_keith_mitchell_bmw_honesty_strip_keeps_rows_clears_banner(tmp_path):
+    root = tmp_path
+    (root / "settlements").mkdir()
+    (root / "settlements" / "401734784.json").write_text(
+        json.dumps(
+            {
+                "event_id": "401734784",
+                "completed": True,
+                "finishes": {
+                    "scheffler": [1, "Scottie Scheffler"],
+                    "mcilroy": [4, "Rory McIlroy"],
+                },
+                "winner_ids": ["scheffler"],
+                "event_name": "BMW Championship",
+                "status_note": "state=post name=STATUS_FINAL",
+            }
+        ),
+        encoding="utf-8",
+    )
+    _write_jsonl(
+        root / "shadow" / "advises.jsonl",
+        [
+            _advise(
+                tournament="BMW Championship",
+                tournament_id="401734784",
+                player="Scottie Scheffler",
+                player_id="scheffler",
+                market="win",
+                recommendation_id="rec-win",
+            ),
+            _keith_bmw_place("top_10", "rec-km-t10"),
+        ],
+    )
+    honesty = load_honesty(artifact_root=root, viz_root=tmp_path / "viz")
+    assert len(honesty.shadow.rows) == 2
+    keith = next(row for row in honesty.shadow.rows if row["player"] == "Keith Mitchell")
+    assert keith["settle_status"] == "never_settled"
+    assert keith["settle_source"] == SOURCE_ABSENT_FIELD
+    assert keith["settle_status"] not in {"paper_win", "paper_lose"}
+    assert honesty.shadow.settle_banner is None
+    assert SETTLE_PENDING not in honesty.shadow.text
+    assert "Keith Mitchell" in honesty.shadow.text
+    assert SOURCE_ABSENT_FIELD in honesty.shadow.text
+    assert "absent_from_official_field=" in honesty.shadow.text
+    assert "excluded from that denominator" in honesty.shadow.text
+
+
+def test_on_disk_absent_source_short_form_excluded_from_banner():
+    rows = [
+        _advise(settle_status="paper_win", settle_source=SOURCE_ESPN_OFFICIAL),
+        _keith_bmw_place("top_10", "rec-km"),
+    ]
+    rows[1]["settle_status"] = "never_settled"
+    rows[1]["settle_source"] = "absent_from_official_field"
+    assert is_absent_from_official_field(rows[1]) is True
+    assert settle_banner_for_rows(rows) is None
 
 
 def test_ledger_ticket_join_and_honesty_clears(tmp_path):
