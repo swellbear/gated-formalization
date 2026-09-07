@@ -1,5 +1,7 @@
 # Learning lane: 15-min Kalshi
 
+Resume / leave-off SoT: [docs/AGENT_LEAVE_OFF.md](../../docs/AGENT_LEAVE_OFF.md)
+
 Lane name: `learning_lane_15m`
 
 Primary series: `KXBTC15M`
