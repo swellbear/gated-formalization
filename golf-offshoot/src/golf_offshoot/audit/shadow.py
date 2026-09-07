@@ -44,6 +44,9 @@ class ShadowAdvise(BaseModel):
     action_kind: str
     never_auto_bet: bool = True
     paper_observation_only: bool = True
+    settle_status: str | None = None
+    settled_at: datetime | None = None
+    settle_source: str | None = None
 
 
 def default_shadow_path() -> Path:
@@ -107,16 +110,21 @@ def format_shadow_review(rows: list[ShadowAdvise], *, n: int = 40) -> str:
         if row.model_p_low is not None and row.model_p_high is not None:
             rng = f" [{row.model_p_low:.3f},{row.model_p_high:.3f}]"
         odds_at = row.odds_as_of.isoformat() if row.odds_as_of else "unavailable"
+        settle = row.settle_status or "SETTLE_PENDING"
+        source = f" source={row.settle_source}" if row.settle_source else ""
+        settled_at = f" settled_at={row.settled_at.isoformat()}" if row.settled_at else ""
         lines.append(
             f"{row.timestamp.isoformat()} {row.mode} {row.action_kind} "
             f"{row.player} {row.market} posted={dec} model_p={p}{rng} "
-            f"stake={row.suggested_stake:.2f} odds_as_of={odds_at}"
+            f"stake={row.suggested_stake:.2f} odds_as_of={odds_at} "
+            f"settle_status={settle}{settled_at}{source}"
         )
         lines.append(f"    {row.tournament} run={row.run_id} — {row.reason}")
     lines.append("")
     lines.append(
         "Review later: compare posted_decimal at odds_as_of to the settlement result "
-        "for that player/market. This file is not a betting bot ledger."
+        "for that player/market. settle_status is a join onto official ESPN / paper "
+        "settle evidence — not a fill, not invented PnL. This file is not a betting bot ledger."
     )
     return "\n".join(lines)
 

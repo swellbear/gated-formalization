@@ -207,6 +207,18 @@ def main(argv: list[str] | None = None) -> int:
         dest="viz_root",
         help="shell: Illustrator viz-wall root (else GOLF_OFFSHOOT_VIZ_ROOT)",
     )
+    parser.add_argument(
+        "--join-settles",
+        action="store_true",
+        dest="join_settles",
+        help="shadow: also inspect official ESPN finals for unset advise settles (never invents)",
+    )
+    parser.add_argument(
+        "--backfill-settles",
+        action="store_true",
+        dest="backfill_settles",
+        help="shadow: write paper_win/paper_lose onto the journal only when a real settle is known",
+    )
     args = parser.parse_args(argv)
 
     if args.command == "board":
@@ -1187,12 +1199,28 @@ def _cmd_watch(args) -> int:
             return 0
 
 
-def _cmd_shadow(_args) -> int:
-    from golf_offshoot.audit.shadow import format_shadow_review, load_shadow
+def _cmd_shadow(args) -> int:
+    from pathlib import Path
 
-    rows = load_shadow()
-    print(format_shadow_review(rows))
-    print(f"n={len(rows)} paper-observation only; never auto-bet")
+    from golf_offshoot.audit.shadow_settle import backfill_shadow_settles
+    from golf_offshoot.operator_surface.artifacts import load_honesty
+
+    artifact = Path(args.artifact_root) if getattr(args, "artifact_root", "") else None
+    inspect = None
+    if getattr(args, "join_settles", False):
+        from golf_offshoot.strategy.paper_ledger import inspect_espn_event
+
+        inspect = inspect_espn_event
+    honesty = load_honesty(artifact_root=artifact, inspect_events=inspect)
+    print(honesty.shadow.text)
+    print(f"n={len(honesty.shadow.rows)} paper-observation only; never auto-bet")
+    if getattr(args, "backfill_settles", False) and honesty.shadow.path is not None:
+        n = backfill_shadow_settles(
+            honesty.shadow.path,
+            artifact_root=honesty.roots.artifact_root,
+            inspect_events=inspect,
+        )
+        print(f"backfilled {n} rows with known paper_win/paper_lose (never invented)")
     return 0
 
 
