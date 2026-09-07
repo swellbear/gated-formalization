@@ -278,6 +278,46 @@ def test_feed_skips_foreign_series_tickers(monkeypatch):
     assert all(not str(m["ticker"]).startswith("KXBTC-") for m in payload["markets"])
 
 
+def test_series_registry_ships_kxbtc15m_only():
+    from golf_offshoot.learning_lane_15m.series_registry import (
+        SHIPPED_SERIES,
+        SeriesNotShippedError,
+        SeriesSpec,
+        get_series,
+        register_series,
+        require_shipped_series,
+        shipped_series_ticker,
+    )
+
+    assert shipped_series_ticker() == "KXBTC15M" == SHIPPED_SERIES
+    spec = require_shipped_series()
+    assert spec.cf_index_id == "BRTI"
+    assert spec.shipped is True
+    try:
+        require_shipped_series("KXETH15M")
+        raise AssertionError("ETH must stay unshipped")
+    except SeriesNotShippedError:
+        pass
+    later = SeriesSpec(series_ticker="KXETH15M", cf_index_id="ETHUSD_RTI", shipped=False)
+    register_series(later)
+    try:
+        assert get_series("KXETH15M") is later
+        try:
+            require_shipped_series("KXETH15M")
+            raise AssertionError("registered unshipped series must not fetch")
+        except SeriesNotShippedError:
+            pass
+        try:
+            register_series(SeriesSpec(series_ticker="KXETH15M", cf_index_id="x", shipped=True))
+            raise AssertionError("must not ship another series in this PR")
+        except SeriesNotShippedError:
+            pass
+    finally:
+        from golf_offshoot.learning_lane_15m.series_registry import _REGISTRY
+
+        _REGISTRY.pop("KXETH15M", None)
+
+
 def test_public_mid_or_last():
     assert public_mid_or_last(yes_bid=0.40, yes_ask=0.50, last=0.42) == 0.45
     assert public_mid_or_last(yes_bid=None, yes_ask=0.50, last=0.42) == 0.42

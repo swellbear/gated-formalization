@@ -7,20 +7,24 @@ Settlement SOURCE is CF Benchmarks as documented on event settlement_sources.
 
 from __future__ import annotations
 
-import re
 from typing import Any
 
 from golf_offshoot.data_feeds.base import DataFeed, FeedError, unavailable_quality
 from golf_offshoot.data_feeds.http import DEFAULT_APP_UA, HttpCache
-from golf_offshoot.learning_lane_15m.paths import PRIMARY_SERIES
+from golf_offshoot.learning_lane_15m.series_registry import (
+    SHIPPED_SERIES,
+    SeriesNotShippedError,
+    require_shipped_series,
+)
 from golf_offshoot.localtime import format_eastern, now
 from golf_offshoot.models.enums import DataRole, SourceKind
 from golf_offshoot.models.schemas import DataQuality
 
 KALSHI_PUBLIC_BASE = "https://api.elections.kalshi.com/trade-api/v2"
-ALLOWED_SERIES = PRIMARY_SERIES
-EXPECTED_SOURCE_NAME = "CF Benchmarks"
-EXPECTED_SOURCE_HOST = "cfbenchmarks.com"
+_SHIPPED = require_shipped_series(SHIPPED_SERIES)
+ALLOWED_SERIES = _SHIPPED.series_ticker
+EXPECTED_SOURCE_NAME = _SHIPPED.expected_source_name
+EXPECTED_SOURCE_HOST = _SHIPPED.expected_source_host
 
 # Hard NO: any private / cash / order path. Public events+markets only.
 _FORBIDDEN_PATH_FRAGMENTS = (
@@ -45,15 +49,15 @@ _PUBLIC_PATH_PREFIXES = (
 TRADING_ARMED = False
 # Pinned from KXBTC15M rules_primary (CF Benchmarks Bitcoin Real-Time Index).
 # A CFB websocket / DIY 60s average is observe-only — never official settle.
-CF_INDEX_ID = "BRTI"
-CFB_WS_AVERAGE_ROLE = "observe_only"
-# Event: KXBTC15M-YYMONDDHHMM. Market may append -MM (minute label, not series).
-_EVENT_TICKER_RE = re.compile(r"^KXBTC15M-(\d{2}[A-Z]{3}\d{6})$")
-_MARKET_TICKER_RE = re.compile(r"^KXBTC15M-(\d{2}[A-Z]{3}\d{6})(?:-(\d{2}))?$")
+CF_INDEX_ID = _SHIPPED.cf_index_id
+CFB_WS_AVERAGE_ROLE = _SHIPPED.cfb_ws_average_role
+# Event: {series}-YYMONDDHHMM. Market may append -MM (minute label, not series).
+_EVENT_TICKER_RE = _SHIPPED.compiled_event_re()
+_MARKET_TICKER_RE = _SHIPPED.compiled_market_re()
 _FORBIDDEN_SERIES = frozenset({"KXBTC", "KXETH15M", "KXETH", "KXAG15M", "KXAU15M", "KXMETAL"})
-FEE_TYPE = "quadratic"
-FEE_MULTIPLIER = 1
-PRICE_LEVEL_STRUCTURE = "tapered_deci_cent"
+FEE_TYPE = _SHIPPED.fee_type
+FEE_MULTIPLIER = _SHIPPED.fee_multiplier
+PRICE_LEVEL_STRUCTURE = _SHIPPED.price_level_structure
 DISPLAY_ONLY_FIELDS = ("yes_bid", "yes_ask", "last", "volume")
 
 
@@ -344,7 +348,11 @@ class Kalshi15mFeed(DataFeed[dict[str, Any]]):
 
     def fetch(self, **kwargs: Any) -> tuple[dict[str, Any], DataQuality]:
         series = str(kwargs.get("series") or ALLOWED_SERIES)
-        if series != ALLOWED_SERIES:
+        try:
+            spec = require_shipped_series(series)
+        except SeriesNotShippedError as exc:
+            raise SeriesNotAllowedError(str(exc)) from exc
+        if spec.series_ticker != ALLOWED_SERIES:
             raise SeriesNotAllowedError(
                 f"do not widen past {ALLOWED_SERIES} in this PR (got {series!r})"
             )

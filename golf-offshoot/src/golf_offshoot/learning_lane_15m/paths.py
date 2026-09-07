@@ -5,11 +5,12 @@ from __future__ import annotations
 from pathlib import Path
 
 from golf_offshoot.data_feeds.http import package_data_dir
+from golf_offshoot.learning_lane_15m.series_registry import SHIPPED_SERIES
 
 LANE_GOLF = "golf"
 LANE_15M = "learning_lane_15m"
 LANE_NAME = "learning_lane_15m"
-PRIMARY_SERIES = "KXBTC15M"
+PRIMARY_SERIES = SHIPPED_SERIES
 
 # External default for this lane only. Golf paper/shadow stay under golf-offshoot/data/.
 EXTERNAL_15M_ROOT = Path("/workspace/kalshi_15m_exports")
