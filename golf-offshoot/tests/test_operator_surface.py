@@ -114,6 +114,10 @@ def _write_jsonl(path: Path, rows: list[dict]) -> None:
     path.write_text("".join(__import__("json").dumps(r) + "\n" for r in rows), encoding="utf-8")
 
 
+def _viz_wall_block(page: str) -> str:
+    return page[page.index('id="viz-wall"') : page.index("What you can do here")]
+
+
 def test_mode_walls_operating_vs_mock():
     ops = build_mode_walls(live_data=True)
     assert ops.mode == MODE_OPERATING
@@ -679,7 +683,7 @@ def test_hub_html_renders_viz_pngs_when_present(tmp_path):
     (viz / "calibration_weather.png").write_bytes(b"\x89PNG\r\n\x1a\n")
     (viz / "wc1_dated_record.png").write_bytes(b"\x89PNG\r\n\x1a\n")
     page = render_html(build_surface(artifact_root=tmp_path, viz_root=viz))
-    assert page.count("<img ") == 3
+    assert _viz_wall_block(page).count("<img ") == 3
     assert "/viz/shadow_honesty_strip.png" in page
     assert "/viz/calibration_weather.png" in page
     assert "/viz/wc1_dated_record.png" in page
@@ -719,7 +723,7 @@ def test_hub_viz_wall_anchors_are_display_only(tmp_path):
     assert 'id="viz-wall"' in page
     for slot_id in ("shadow_honesty_strip", "calibration_weather", "wc1_dated_record"):
         assert f'id="viz-slot-{slot_id}"' in page
-    block = page[page.index('id="viz-wall"') : page.index("What you can do here")]
+    block = _viz_wall_block(page)
     assert "<script" not in block
     assert "onclick" not in block
     assert "onload" not in block
@@ -728,6 +732,44 @@ def test_hub_viz_wall_anchors_are_display_only(tmp_path):
     assert "banked-edge" not in wc1_copy
     assert "SETTLE_PENDING" not in wc1_copy
     assert "edge established" not in wc1_copy.lower()
+
+
+def test_hub_charts_are_click_to_enlarge(tmp_path):
+    viz = tmp_path / "viz"
+    viz.mkdir()
+    (viz / "shadow_honesty_strip.png").write_bytes(b"\x89PNG\r\n\x1a\n")
+    (viz / "calibration_weather.png").write_bytes(b"\x89PNG\r\n\x1a\n")
+    (viz / "wc1_dated_record.png").write_bytes(b"\x89PNG\r\n\x1a\n")
+    page = render_html(build_surface(artifact_root=tmp_path, viz_root=viz))
+    block = _viz_wall_block(page)
+    assert block.count('<a class="zoom"') == 3
+    assert block.count("Click to enlarge") == 3
+    for slot_id in ("shadow_honesty_strip", "calibration_weather", "wc1_dated_record"):
+        assert f'<a class="zoom" href="/viz/{slot_id}.png' in block
+    assert 'aria-label="Enlarge Shadow honesty strip"' in block
+    assert "onclick" not in block
+    assert 'id="viz-lightbox"' in page
+    assert 'id="viz-lightbox-img"' in page
+    assert "Close (Esc)" in page
+    assert "cursor: zoom-in" in page
+    assert page.index('id="viz-wall"') < page.index('id="viz-lightbox"')
+    assert 'value="paper-deposit"' not in page
+    assert CASH_BADGE in page
+
+
+def test_hub_missing_charts_are_not_clickable(tmp_path):
+    viz = tmp_path / "viz"
+    viz.mkdir()
+    (viz / "shadow_honesty_strip.png").write_bytes(b"\x89PNG\r\n\x1a\n")
+    partial = _viz_wall_block(render_html(build_surface(artifact_root=tmp_path, viz_root=viz)))
+    assert partial.count('<a class="zoom"') == 1
+    wc1 = partial[partial.index('id="viz-slot-wc1_dated_record"') :]
+    assert "zoom" not in wc1
+    assert NOT_YET_AVAILABLE in wc1
+    bare = render_html(build_surface(artifact_root=tmp_path, viz_root=tmp_path / "none"))
+    assert "<img " not in bare
+    assert 'id="viz-lightbox"' not in bare
+    assert 'class="zoom"' not in bare
 
 
 def test_hub_action_labels_are_plain_and_post_values_unchanged(tmp_path):
