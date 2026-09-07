@@ -8,14 +8,17 @@ Illustrator owns regeneration. The operator surface **renders files that exist**
 |------|-------|---------|
 | `shadow_honesty_strip` | Shadow honesty strip | Live-book paper journal — not settled PnL · not Kalshi demo |
 | `calibration_weather` | Calibration weather | All freezes keep_expert (v1→v3) — not edge established |
+| `wc1_dated_record` | WC1 dated record | FAIL / park unproven · NOT edge |
 
-Permanent badges on both slots:
+Permanent badges on every slot (Phase 1 trio only):
 
 `PHASE 1 OBSERVATION` · `AI: NO CASH IN/OUT` · `PAPER OBSERVATION ONLY`
 
-Hard NO: demo/mock edge language on this wall.
+Hard NO on the WC1 panel language: `banked-edge` / `edge established` / `SETTLE_PENDING`. Demo/mock edge language stays barred on the whole wall.
 
-The hub renders the wall **above the fold** — directly after the `PHASE 1 OBSERVATION` header/badges and the settle banner, before the action buttons and the long `pre` blocks. Each slot also carries a plain-English one-liner next to (never instead of) the honest subline above. Placement and copy are display only: the wall stays a read-only file render, and a missing slot stays `not yet available`.
+The hub renders the wall **above the fold** — directly after the `PHASE 1 OBSERVATION` header/badges and the settle banner, before the action buttons and the long `pre` blocks. Each slot also carries a plain-English one-liner next to (never instead of) the honest subline above; that one-liner obeys the same Hard NO language rules as the slot it sits under. Placement and copy are display only: the wall stays a read-only file render, and a missing slot stays `not yet available`.
+
+Stable anchors for future auto-reload targeting: the chart grid is `id="viz-wall"` and each slot is `id="viz-slot-<slot_id>"`. They are markup hooks only — the wall block carries no script and no inline handlers of its own.
 
 ## Path precedence
 
@@ -28,12 +31,13 @@ Hardcoded `/workspace/...` is a local operator default only. It will not exist e
 5. Repo-root fallback `docs/viz/golf_offshoot_dryrun_2026-09-07/` (Illustrator **PR #140**, preferred over #138)
 6. `golf-offshoot/data/viz/` (documented hook location; may be empty)
 
-An empty shared `/workspace/illustrator_ops/golf_offshoot/` directory does not hide a fallback that actually has `shadow_honesty_strip.png` / `calibration_weather.png`. The hub renders those PNGs as images. Missing stays `not yet available`. Charts are never invented.
+An empty shared `/workspace/illustrator_ops/golf_offshoot/` directory does not hide a fallback that actually has `shadow_honesty_strip.png` / `calibration_weather.png` / `wc1_dated_record.png`. The hub renders those PNGs as images. Missing stays `not yet available`. Charts are never invented.
 
 Expected filenames at the resolved root:
 
 - `shadow_honesty_strip.png`
 - `calibration_weather.png`
+- `wc1_dated_record.png`
 - optional `viz_wall_manifest.json`
 
 ## Optional manifest
@@ -42,7 +46,8 @@ Expected filenames at the resolved root:
 {
   "slots": {
     "shadow_honesty_strip": {"path": "shadow_honesty_strip.png"},
-    "calibration_weather": {"path": "calibration_weather.png"}
+    "calibration_weather": {"path": "calibration_weather.png"},
+    "wc1_dated_record": {"path": "wc1_dated_record.png"}
   }
 }
 ```

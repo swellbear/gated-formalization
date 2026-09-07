@@ -22,7 +22,8 @@ if not defined PY (
 )
 
 echo Starting python -m golf_offshoot shell on http://127.0.0.1:8765
-echo Close this window to stop the hub.
+echo The hub is the browser page, not this window. Leave this console open.
+echo After git pull / artifact updates the hub reloads itself.
 %PY% -m golf_offshoot shell --host 127.0.0.1 --port 8765 %*
 set "ERR=%ERRORLEVEL%"
 if not "%ERR%"=="0" (

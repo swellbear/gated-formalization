@@ -423,7 +423,7 @@ python -m golf_offshoot shadow --join-settles
 python -m golf_offshoot shadow --backfill-settles
 ```
 
-The honesty adapter joins `settle_status` from lived paper-ledger tickets, official ESPN finals (exactly one winner), or a settled lived paper book's winner name (`win` only). Missing/unofficial stays `SETTLE_PENDING`. Official but unscoreable (unknown finish, round-leader) is `never_settled`. Demo/mock and Kalshi fills cannot invent settles. `--backfill-settles` writes `paper_win` / `paper_lose` only when that join already knows a real settle.
+The honesty adapter joins `settle_status` from lived paper-ledger tickets, official ESPN finals (exactly one winner), or a settled lived paper book's winner name (`win` only). Missing/unofficial stays `SETTLE_PENDING`. Official but unscoreable (unknown finish, round-leader) is `never_settled`. If an advise `player_id` is absent from the official ESPN STATUS_FINAL finisher list (`completed=True` and exactly one official winner / final field), the join marks `never_settled` with `settle_source=espn_official_final:absent_from_official_field` and does **not** invent `paper_win` / `paper_lose`. Those rows stay visible and are excluded from the `SETTLE_PENDING` banner denominator. Demo/mock and Kalshi fills cannot invent settles. `--backfill-settles` writes `paper_win` / `paper_lose` only when that join already knows a real settle.
 
 ### How to learn without fooling yourself
 
@@ -559,14 +559,14 @@ python -m golf_offshoot shell --print --event 401811963
 
 | Path | Role |
 |------|------|
-| `golf-offshoot/scripts/windows/Open-Phase1-Hub.bat` | Starts `python -m golf_offshoot shell --host 127.0.0.1 --port 8765` and opens the local hub |
+| `golf-offshoot/scripts/windows/Open-Phase1-Hub.bat` | Starts `python -m golf_offshoot shell --host 127.0.0.1 --port 8765` and opens `http://127.0.0.1:8765` in your default browser (the console is not the hub) |
 | `golf-offshoot/scripts/windows/Install-Desktop-Shortcut.bat` | Double-click once → writes `Desktop\Golf Offshoot Phase 1 Hub.lnk` |
 | `golf-offshoot/scripts/windows/Install-Desktop-Shortcut.ps1` | Same installer, called by the `.bat` |
 | `golf-offshoot/scripts/open-phase1-hub.sh` | Optional Unix helper |
 
-The hub binds **127.0.0.1:8765**. Tailscale / phone remote UI is **not required** and is **not** in this shell. Phone is notify-first (`NTFY_TOPIC` on run completion). A later thin remote view is out of scope.
+The hub binds **127.0.0.1:8765**. Start opens that URL in your default browser — the console window only keeps the process alive. Pass `--no-browser` to skip. After `git pull` or honesty/viz artifact writes, the hub reloads itself (soft UI refresh for artifacts; clean re-exec when git tip or hub modules change) so you do not restart by hand. Tailscale / phone remote UI is **not required** and is **not** in this shell. Phone is notify-first (`NTFY_TOPIC` on run completion). A later thin remote view is out of scope.
 
-Hub page order (observation first): loud `PHASE 1 OBSERVATION` header and badges → settle banner → **read-only chart wall** → what you can do here → last run → paper observation → ranked table → the long text blocks. The charts sit above the fold on purpose so nobody has to scroll past dense `pre` output to see them.
+Hub page order (observation first): loud `PHASE 1 OBSERVATION` header and badges → settle banner → **read-only chart wall** → what you can do here → last run → paper observation → ranked table → the long text blocks. The charts sit above the fold on purpose so nobody has to scroll past dense `pre` output to see them. The chart grid carries `id="viz-wall"` and each slot `id="viz-slot-<slot_id>"` as stable anchors; those are markup hooks only.
 
 Buttons read as plain verbs; the POST action values are unchanged:
 
@@ -602,7 +602,7 @@ Missing/empty banners (never silent demo fill):
 
 - shadow file missing → `SHADOW_MISSING` (not zero-edge)
 - empty journal → `SHADOW_EMPTY`
-- no `paper_win`/`paper_lose` yet on every relevant advise (`win` / `top_5` / `top_10` / `top_20` / `make_cut`) → `SETTLE_PENDING` (also if any relevant row is `never_settled` or missing `settle_status`). Clears only when every relevant advise is `paper_win` or `paper_lose` from official ESPN / paper-ledger / settled lived paper-book evidence. Not Kalshi. Not demo.
+- no `paper_win`/`paper_lose` yet on every relevant advise (`win` / `top_5` / `top_10` / `top_20` / `make_cut`) → `SETTLE_PENDING` (also if any relevant row is `never_settled` or missing `settle_status`). Clears only when every relevant advise is `paper_win` or `paper_lose` from official ESPN / paper-ledger / settled lived paper-book evidence. **Exception:** `never_settled` with `settle_source=espn_official_final:absent_from_official_field` is excluded from that denominator (player_id not on the official STATUS_FINAL finisher list; row stays visible; no invented win/lose). Not Kalshi. Not demo.
 - no `weights_calib-v*.json` → `CALIB_MISSING`
 - no real LIVE table → `LIVE_TABLE_MISSING`
 - empty field / no posted odds / no paper book possible → `PAPER_EMPTY_FIELD` (not a demo book; not a silent demo fill)
@@ -612,7 +612,7 @@ Missing/empty banners (never silent demo fill):
 
 Ranked LIVE table is read from `latest/*_live_*.txt` (HTML sibling if present) or existing `data/exports/*_live_*.txt`. Leftover is display-only (unconstrained / held-ticket / do-not-stuff-theta). Calibration shows latest `keep_expert` freeze, `no_future_leakage`, hashes, and metrics. Edge is not established.
 
-Viz-wall hook: [VIZ_WALL_HOOK.md](VIZ_WALL_HOOK.md). The hub **renders Ill 1 / Ill 2 PNGs as images** when they exist (not text-only). Prefer `/workspace/illustrator_ops/golf_offshoot/{shadow_honesty_strip,calibration_weather}.png` plus optional `viz_wall_manifest.json`. Also accept `golf-offshoot/docs/viz/golf_offshoot_dryrun_2026-09-07/` and repo-root `docs/viz/golf_offshoot_dryrun_2026-09-07/` (Illustrator PR #140, preferred over #138). Missing ⇒ `not yet available`. Never invent charts. Refresh on mtime. Path traversal is rejected. Illustrator owns regeneration.
+Viz-wall hook: [VIZ_WALL_HOOK.md](VIZ_WALL_HOOK.md). The hub **renders Ill 1 / Ill 2 / WC1 dated-record PNGs as images** when they exist (not text-only). Prefer `/workspace/illustrator_ops/golf_offshoot/{shadow_honesty_strip,calibration_weather,wc1_dated_record}.png` plus optional `viz_wall_manifest.json`. Also accept `golf-offshoot/docs/viz/golf_offshoot_dryrun_2026-09-07/` and repo-root `docs/viz/golf_offshoot_dryrun_2026-09-07/` (Illustrator PR #140, preferred over #138). Missing ⇒ `not yet available`. Never invent charts. Refresh on mtime. Path traversal is rejected. Illustrator owns regeneration.
 
 One optional ntfy ping when an **operator-triggered** ingest/live/loop **finishes** (success or failure). Progress lines do not ping. Empty `NTFY_TOPIC` keeps notify off. Existing `watch` trigger behavior is unchanged. That is the Phase 1 phone path — not a remote trading UI, not one-tap bets from a phone.
 

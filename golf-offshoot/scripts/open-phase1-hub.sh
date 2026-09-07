@@ -10,4 +10,5 @@ fi
 echo "PHASE 1 OBSERVATION. Trading NOT ARMED. PAPER OBSERVATION ONLY."
 echo "AI NEVER DEPOSITS / WITHDRAWS / TRANSFERS CASH."
 echo "Starting python -m golf_offshoot shell on http://127.0.0.1:8765"
+echo "The hub is the browser page, not this window."
 exec python3 -m golf_offshoot shell --host 127.0.0.1 --port 8765 "$@"

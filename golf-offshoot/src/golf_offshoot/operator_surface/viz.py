@@ -12,6 +12,7 @@ from golf_offshoot.operator_surface.paths import PathUnsafeError, ResolvedRoots,
 
 SLOT_SHADOW = "shadow_honesty_strip"
 SLOT_CALIBRATION = "calibration_weather"
+SLOT_WC1_DATED_RECORD = "wc1_dated_record"
 NOT_YET_AVAILABLE = "not yet available"
 
 VIZ_BADGES = (
@@ -30,6 +31,11 @@ SLOT_SPECS = {
         "title": "Calibration weather",
         "filename": "calibration_weather.png",
         "subline": "All freezes keep_expert (v1→v3) — not edge established",
+    },
+    SLOT_WC1_DATED_RECORD: {
+        "title": "WC1 dated record",
+        "filename": "wc1_dated_record.png",
+        "subline": "FAIL / park unproven · NOT edge",
     },
 }
 
@@ -123,9 +129,17 @@ def _read_manifest(path: Path, root: Path) -> tuple[dict[str, Any], Path]:
     return cleaned, path
 
 
-def _render_slot(root: Path, slot_id: str, spec: dict[str, str], filename: str) -> VizSlot:
+def _slot_badges(spec: dict[str, Any]) -> tuple[str, ...]:
+    declared = spec.get("badges")
+    if declared:
+        return tuple(declared)
+    return VIZ_BADGES
+
+
+def _render_slot(root: Path, slot_id: str, spec: dict[str, Any], filename: str) -> VizSlot:
     title = spec["title"]
     subline = spec["subline"]
+    badges = _slot_badges(spec)
     try:
         candidate = safe_under(Path(filename), root)
     except PathUnsafeError:
@@ -133,7 +147,7 @@ def _render_slot(root: Path, slot_id: str, spec: dict[str, str], filename: str) 
             slot_id=slot_id,
             title=title,
             subline=subline,
-            badges=VIZ_BADGES,
+            badges=badges,
             status=NOT_YET_AVAILABLE,
             path=None,
             mtime=None,
@@ -144,7 +158,7 @@ def _render_slot(root: Path, slot_id: str, spec: dict[str, str], filename: str) 
             slot_id=slot_id,
             title=title,
             subline=subline,
-            badges=VIZ_BADGES,
+            badges=badges,
             status=NOT_YET_AVAILABLE,
             path=None,
             mtime=None,
@@ -155,7 +169,7 @@ def _render_slot(root: Path, slot_id: str, spec: dict[str, str], filename: str) 
             slot_id=slot_id,
             title=title,
             subline=subline,
-            badges=VIZ_BADGES,
+            badges=badges,
             status=NOT_YET_AVAILABLE,
             path=None,
             mtime=None,
@@ -165,7 +179,7 @@ def _render_slot(root: Path, slot_id: str, spec: dict[str, str], filename: str) 
         slot_id=slot_id,
         title=title,
         subline=subline,
-        badges=VIZ_BADGES,
+        badges=badges,
         status="available",
         path=candidate,
         mtime=candidate.stat().st_mtime,

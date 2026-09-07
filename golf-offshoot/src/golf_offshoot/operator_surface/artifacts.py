@@ -241,19 +241,25 @@ def _format_shadow_rows(
         "settle join: relevant="
         f"{counts.get('relevant', 0)} paper_win={counts.get('paper_win', 0)} "
         f"paper_lose={counts.get('paper_lose', 0)} never_settled={counts.get('never_settled', 0)} "
+        f"absent_from_official_field={counts.get('absent_from_official_field', 0)} "
         f"missing={counts.get('missing', 0)}"
     )
     if settle:
         lines.append(
             f"{settle}: SETTLE_PENDING clears only when every relevant advise "
             "(win / top_5 / top_10 / top_20 / make_cut) is paper_win or paper_lose. "
-            "never_settled and missing settle_status keep the weekly operating claim blocked. "
+            "never_settled and missing settle_status keep the weekly operating claim blocked, "
+            "except never_settled source=espn_official_final:absent_from_official_field "
+            "(player_id absent from the official STATUS_FINAL finisher list), which is "
+            "excluded from the banner denominator and stays visible here. "
             "Honesty strip is not settled cash PnL."
         )
     else:
         lines.append(
             "settle banner off: every relevant advise is paper_win or paper_lose "
-            "from official ESPN / paper-ledger / settled lived paper-book evidence."
+            "from official ESPN / paper-ledger / settled lived paper-book evidence. "
+            "never_settled espn_official_final:absent_from_official_field rows are "
+            "excluded from that denominator and remain visible on this strip."
         )
     for row in rows[-40:]:
         posted = row.get("posted_decimal")

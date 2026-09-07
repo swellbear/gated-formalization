@@ -1,0 +1,53 @@
+TOUR Championship  (live)
+id=401811964  n=30  run=20260830_ET103754-eeccf6b9
+model=golf-offshoot-0.7.0  never_auto_bet=true  observation only
+printed 2026-08-30 10:37 EDT
+movement vs pre-tournament snapshot 20260827_ET122930-55f58fbb (dRnk + = climbed; dWin + = Win% up). Not opening-line movement.
+
+  # Player                                  Win    dWin  Pre#  dRnk        T10        Cut    EdgeW   Rel Flags
+--------------------------------------------------------------------------------------------------------------
+  1 Viktor Hovland           0.449  [0.39-0.51]  +0.434    21   +20      0.997      1.000   +0.085  0.65 
+  2 Ryan Gerard              0.223  [0.19-0.26]  +0.203    17   +15      0.976      1.000   +0.045  0.67 course history missing
+  3 Scottie Scheffler        0.135  [0.12-0.15]  -0.054     1    -2      0.973      1.000   -0.044  0.66 
+  4 Chris Gotterup           0.070  [0.04-0.10]  +0.035    12    +8      0.918      1.000   -0.001  0.70 
+  5 Ludvig Åberg             0.057  [0.02-0.09]  +0.028    15   +10      0.900      1.000   -0.018  0.66 
+  6 Adam Scott               0.043  [0.03-0.06]  +0.031    24   +18      0.875      1.000   -0.004  0.61 course history missing
+  7 Cameron Young            0.007  [0.00-0.01]  -0.029    11    +4      0.624      1.000   -0.010  0.68 
+  8 Rory McIlroy             0.005  [0.00-0.01]  -0.033    10    +2      0.629      1.000   -0.027  0.63 
+  9 Min Woo Lee              0.004  [0.00-0.01]  -0.011    22   +13      0.346      1.000   +0.000  0.63 course history missing
+ 10 Jacob Bridgeman          0.003  [0.00-0.01]  -0.016    18    +8      0.353      1.000   -0.000  0.71 
+ 11 Russell Henley           0.001  [0.00-0.00]  -0.045     5    -6      0.485      1.000   -0.003  0.67 
+ 12 Sam Burns                0.001  [0.00-0.00]  -0.041     7    -5      0.439      1.000   -0.005  0.69 
+ 13 Si Woo Kim               0.001  [0.00-0.00]  -0.040     8    -5      0.278      1.000   -0.001  0.69 course history missing
+ 14 Matt Fitzpatrick         0.001  [0.00-0.00]  -0.064     3   -11      0.294      1.000   -0.001  0.64 course history missing
+ 15 Xander Schauffele        0.000  [0.00-0.00]  -0.037     9    -6      0.015      1.000   -0.001  0.66 course history missing
+ 16 J.J. Spaun               0.000  [0.00-0.00]  -0.016    20    +4      0.000      1.000      n/a  0.73 
+ 17 Collin Morikawa          0.000  [0.00-0.00]  -0.029    14    -3      0.115      1.000   -0.001  0.68 
+ 18 Wyndham Clark            0.000  [0.00-0.00]  -0.046     6   -12      0.133      1.000   -0.001  0.67 course history missing
+ 19 Robert MacIntyre         0.000  [0.00-0.00]  -0.017    19    +0      0.006      1.000   -0.001  0.73 
+ 20 Gary Woodland            0.000  [0.00-0.00]  -0.012    26    +6      0.013      1.000   -0.001  0.68 course history missing
+ 21 Ryan Fox                 0.000  [0.00-0.00]  -0.011    27    +6      0.036      1.000   -0.001  0.66 course history missing
+ 22 Kristoffer Reitan        0.000  [0.00-0.00]  -0.010    28    +6      0.000      1.000   -0.001  0.64 course history missing
+ 23 Alex Fitzpatrick         0.000  [0.00-0.00]  -0.007    30    +7      0.097      1.000   -0.001  0.58 course history missing
+ 24 Akshay Bhatia            0.000  [0.00-0.00]  -0.008    29    +5      0.011      1.000   -0.001  0.72 
+ 25 Tom Kim                  0.000  [0.00-0.00]  -0.027    16    -9      0.130      1.000   -0.001  0.68 course history missing
+ 26 Tommy Fleetwood          0.000  [0.00-0.00]  -0.067     2   -24      0.169      1.000   -0.001  0.69 
+ 27 Justin Rose              0.000  [0.00-0.00]  -0.013    25    -2      0.178      1.000   -0.002  0.67 
+ 28 Hideki Matsuyama         0.000  [0.00-0.00]  -0.033    13   -15      0.003      1.000   -0.001  0.74 
+ 29 Patrick Cantlay          0.000  [0.00-0.00]  -0.049     4   -25      0.007      1.000   -0.001  0.72 
+ 30 Alex Smalley             0.000  [0.00-0.00]  -0.015    23    -7      0.003      1.000   -0.001  0.71 course history missing
+
+Column index
+  #        Rank by Win central. #1 is the highest Win%, not the best bet.
+  Player   Player name on this field.
+  Win      Chance they win. First number is the central estimate; [low-high] is the range.
+  dWin     Live Win central minus pre-ingest Win. Plus means up. Not opening-line movement.
+  Pre#     Their rank on that pre-tournament ingest.
+  dRnk     Pre rank minus live rank. Plus means climbed (18 to 3 is +15).
+  T10      Chance they finish top 10 (central).
+  Cut      Chance they make the cut (central). No-cut fields stay near 1.00 except WD.
+  EdgeW    Model Win minus the book's fair Win%. Not a ticket. n/a = no matching price.
+  Rel      Trust in the inputs (0-1). Not how tight the Win range is.
+  Flags    Warnings. sparse_data and thin_sample_overconfidence are hard passes. course_history_missing is not (Rel haircut only).
+  n/a      Missing or unmatched. Not the same as zero.
+  Note     Observation only. The system never auto-bets.
