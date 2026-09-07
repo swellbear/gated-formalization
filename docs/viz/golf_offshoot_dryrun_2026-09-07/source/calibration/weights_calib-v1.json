@@ -1,0 +1,234 @@
+{
+  "version_id": "golf-offshoot-0.3.0-calib-v1",
+  "created_at": "2026-08-13T17:53:57.477063+00:00",
+  "no_future_leakage": true,
+  "train_event_ids": [
+    "401811951",
+    "401811952",
+    "401811953",
+    "401811954",
+    "401811955",
+    "401811956",
+    "401811957",
+    "401811958"
+  ],
+  "holdout_event_ids": [
+    "401811959",
+    "401811960",
+    "401811961"
+  ],
+  "expert_alpha": {
+    "talent_prior": 0.55,
+    "course_fit": 0.28,
+    "recent_form": 0.22,
+    "short_term_trend": 0.1,
+    "sg_match": 0.32,
+    "weather_suitability": 0.16,
+    "health_setup": 0.4,
+    "narrative_momentum": 0.08,
+    "course_history": 0.18,
+    "driving_distance": 0.12,
+    "driving_accuracy": 0.14,
+    "approach_sg": 0.26,
+    "around_green": 0.12,
+    "putting": 0.14,
+    "scrambling": 0.1,
+    "bogey_avoidance": 0.12,
+    "par5_scoring": 0.08,
+    "wind_history": 0.12,
+    "rest_travel": 0.08,
+    "comparable_player_borrow": 0.1,
+    "venue_cluster_borrow": 0.1,
+    "field_interaction": 0.14,
+    "live_position": 0.85,
+    "live_tee_pairing": 0.06
+  },
+  "calibrated_alpha": {
+    "talent_prior": 0.55,
+    "course_fit": 0.5400687003253413,
+    "recent_form": 0.0,
+    "short_term_trend": 0.0,
+    "sg_match": 0.32,
+    "weather_suitability": 0.24715241646755906,
+    "health_setup": 0.4,
+    "narrative_momentum": 0.08,
+    "course_history": 0.3104320440136837,
+    "driving_distance": 0.12,
+    "driving_accuracy": 0.14,
+    "approach_sg": 0.26,
+    "around_green": 0.12,
+    "putting": 0.14,
+    "scrambling": 0.1,
+    "bogey_avoidance": 0.12,
+    "par5_scoring": 0.08,
+    "wind_history": 0.12,
+    "rest_travel": 0.08,
+    "comparable_player_borrow": 0.0,
+    "venue_cluster_borrow": 0.1,
+    "field_interaction": 0.032992901626745036,
+    "live_position": 0.85,
+    "live_tee_pairing": 0.06
+  },
+  "ard_scale": {
+    "talent_prior": 1.0,
+    "course_fit": 0.19085020656567306,
+    "recent_form": 0.05,
+    "short_term_trend": 0.05,
+    "sg_match": 1.0,
+    "weather_suitability": 0.05,
+    "health_setup": 1.0,
+    "narrative_momentum": 1.0,
+    "course_history": 0.054610616582363894,
+    "driving_distance": 1.0,
+    "driving_accuracy": 1.0,
+    "approach_sg": 1.0,
+    "around_green": 1.0,
+    "putting": 1.0,
+    "scrambling": 1.0,
+    "bogey_avoidance": 1.0,
+    "par5_scoring": 1.0,
+    "wind_history": 1.0,
+    "rest_travel": 1.0,
+    "comparable_player_borrow": 0.05,
+    "venue_cluster_borrow": 1.0,
+    "field_interaction": 0.05,
+    "live_position": 1.0,
+    "live_tee_pairing": 1.0
+  },
+  "ard_relevance": {
+    "recent_form": 0.0,
+    "short_term_trend": 0.0,
+    "course_history": 0.19672767409566305,
+    "course_fit": 0.803272325904337,
+    "weather_suitability": 0.0,
+    "field_interaction": 0.0,
+    "comparable_player_borrow": 0.0
+  },
+  "ard_loo_delta_loss": {
+    "recent_form": 0.0,
+    "short_term_trend": 0.0,
+    "course_history": 0.00023106084134325022,
+    "course_fit": 0.0009434604475674901,
+    "weather_suitability": 0.0,
+    "field_interaction": 0.0,
+    "comparable_player_borrow": 0.0
+  },
+  "ard_notes": [
+    "recent_form: near-zero leave-one-out relevance (ARD shrink)",
+    "short_term_trend: near-zero leave-one-out relevance (ARD shrink)",
+    "course_history: near-zero leave-one-out relevance (ARD shrink)",
+    "course_fit: near-zero leave-one-out relevance (ARD shrink)",
+    "weather_suitability: near-zero leave-one-out relevance (ARD shrink)",
+    "field_interaction: near-zero leave-one-out relevance (ARD shrink)",
+    "comparable_player_borrow: near-zero leave-one-out relevance (ARD shrink)"
+  ],
+  "bounds": [
+    0.0,
+    1.2
+  ],
+  "bounds_hit": [
+    "recent_form",
+    "short_term_trend",
+    "comparable_player_borrow"
+  ],
+  "n_evals": 22,
+  "recommendation": "keep_expert",
+  "notes": [
+    "Search is Bayesian in the sense of sampling from an independent-Gaussian prior centered on expert \u03b1, then updating per-coordinate mean/variance (ARD).",
+    "Hold-out events are never used to accept a candidate.",
+    "SG category weights are not moved: those inputs are unavailable in this dataset.",
+    "Hold-out did not clearly beat expert \u03b1; default recommendation is to keep expert weights in production and store the fitted vector for comparison."
+  ],
+  "metrics": {
+    "train_expert": {
+      "n": 1119,
+      "brier": {
+        "make_cut": 0.2083028946692637,
+        "top_20": 0.13117124905517763,
+        "top_10": 0.07446101553869411,
+        "top_5": 0.04161509571777429,
+        "win": 0.007731129959106149
+      },
+      "logloss": {
+        "make_cut": 0.5866179580954981,
+        "top_20": 0.42464453160764404,
+        "top_10": 0.2732042706286153,
+        "top_5": 0.18172463808893763,
+        "win": 0.08088020807986127
+      }
+    },
+    "train_fitted": {
+      "n": 1119,
+      "brier": {
+        "make_cut": 0.20766959767525245,
+        "top_20": 0.12955209096459097,
+        "top_10": 0.07429013484311103,
+        "top_5": 0.04171370937263794,
+        "win": 0.007741089719363528
+      },
+      "logloss": {
+        "make_cut": 0.5856909891247154,
+        "top_20": 0.41949026812703677,
+        "top_10": 0.271976588305598,
+        "top_5": 0.18156313628395954,
+        "win": 0.08873265197832808
+      }
+    },
+    "holdout_expert": {
+      "n": 438,
+      "brier": {
+        "make_cut": 0.23598461829176118,
+        "top_20": 0.1249201142185269,
+        "top_10": 0.07402589653145208,
+        "top_5": 0.040624527588813304,
+        "win": 0.006841059880742421
+      },
+      "logloss": {
+        "make_cut": 0.6632854734762704,
+        "top_20": 0.40252749735896615,
+        "top_10": 0.2695195185847553,
+        "top_5": 0.17566075983407103,
+        "win": 0.057039789334754176
+      }
+    },
+    "holdout_fitted": {
+      "n": 438,
+      "brier": {
+        "make_cut": 0.23409250860838168,
+        "top_20": 0.12441833795246493,
+        "top_10": 0.07360034013605442,
+        "top_5": 0.04077275552196186,
+        "win": 0.006850377928949357
+      },
+      "logloss": {
+        "make_cut": 0.6591564910502479,
+        "top_20": 0.40048784920307695,
+        "top_10": 0.26643773521776587,
+        "top_5": 0.18014983539072682,
+        "win": 0.057044716136535854
+      }
+    }
+  },
+  "weight_hash_expert": "0f362d77c51c0bfe",
+  "weight_hash_calibrated": "eaf4dbd52ff7a3d9",
+  "extra": {
+    "train_names": [
+      "RBC Canadian Open",
+      "U.S. Open",
+      "Travelers Championship",
+      "John Deere Classic",
+      "Genesis Scottish Open",
+      "ISCO Championship",
+      "The Open",
+      "Corales Puntacana Championship"
+    ],
+    "holdout_names": [
+      "3M Open",
+      "Rocket Classic",
+      "Wyndham Championship"
+    ],
+    "skipped": [],
+    "history_completed": 82,
+    "max_train_events": 8
+  }
+}
