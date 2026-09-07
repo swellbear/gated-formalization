@@ -20,7 +20,6 @@ from golf_offshoot.models.strategy import (
     new_id,
 )
 from golf_offshoot.operator_surface.app import (
-    HARD_NO_STRIP,
     SLOT_PLAIN_HELP,
     ZOOM_HINT_FIT,
     ZOOM_HINT_FULL,
@@ -434,14 +433,14 @@ def test_shell_text_and_html_include_walls(tmp_path):
     assert "WC1 dated record" in page
     assert "FAIL / park unproven · NOT edge" in page
     assert "NOT EDGE ESTABLISHED" not in page
-    assert "NEVER DEPOSITS" in page
-    assert "PAPER OBSERVATION ONLY" in page
-    assert "not trading armed" in page
+    # The wall is stated in the text dump, not recited back at the operator in the page.
+    assert "NEVER DEPOSITS" in text
+    assert "PAPER OBSERVATION ONLY" in text
+    assert "NEVER DEPOSITS" not in page
     assert 'value="deposit"' not in page
     assert 'value="paper-deposit"' not in page
     assert 'value="paper-withdraw"' not in page
     assert 'value="cash-out"' not in page
-    assert "Kalshi" in page
     assert "not yet available" in page
     assert "notify-first" in page
     assert "<img " not in page
@@ -626,7 +625,9 @@ def test_shell_live_wires_paper_apply(monkeypatch, tmp_path):
         )
     )
     assert "Paper observation (not trading)" in page
-    assert PAPER_ONLY in page
+    # The run's own paper text still carries the wall; the panel adds no posture strip.
+    assert PAPER_ONLY in live.paper
+    assert "not trading armed. No deposit" not in page
     assert 'value="paper-deposit"' not in page
     assert 'value="paper-withdraw"' not in page
     assert 'value="cash-out"' not in page
@@ -703,11 +704,11 @@ def test_hub_html_renders_viz_pngs_when_present(tmp_path):
     assert "FAIL / park unproven · NOT edge" in page
     assert "NOT EDGE ESTABLISHED" not in page
     assert "PHASE 1 OBSERVATION" in page
-    assert "AI: NO CASH IN/OUT" in page
-    assert "PAPER OBSERVATION ONLY" in page
+    assert "AI: NO CASH IN/OUT" not in page
+    assert "PAPER OBSERVATION ONLY" not in page
 
 
-def test_hub_states_hard_nos_once_and_quietly(tmp_path):
+def test_hub_carries_no_hard_no_strip(tmp_path):
     viz = tmp_path / "viz"
     viz.mkdir()
     (viz / "shadow_honesty_strip.png").write_bytes(b"\x89PNG\r\n\x1a\n")
@@ -717,10 +718,10 @@ def test_hub_states_hard_nos_once_and_quietly(tmp_path):
     assert "PHASE 1 OBSERVATION" in header
     assert "Operating path. Rankings are observation" not in header
     assert "badge" not in header
-    assert page.count('class="hard-no"') == 1
-    assert HARD_NO_STRIP in page
-    for hard_no in ("NOT ARMED", PAPER_ONLY, "AI: NO CASH IN/OUT", CASH_BADGE, "Kalshi"):
-        assert hard_no in HARD_NO_STRIP
+    # No sticky cash bar, and no posture strip anywhere else on the operating page.
+    assert "hard-no" not in page
+    for hard_no in ("NOT ARMED", PAPER_ONLY, "AI: NO CASH IN/OUT", CASH_BADGE):
+        assert hard_no not in page
     # No badge chip restates the Hard NOs on every chart card.
     assert 'class="badges"' not in page
     assert _viz_wall_block(page).count('class="badge"') == 0
@@ -731,7 +732,9 @@ def test_hub_states_hard_nos_once_and_quietly(tmp_path):
     assert 'value="learning_lane_15m"' in page
     # The text dump and the state API still carry the full wall.
     surface = build_surface(artifact_root=tmp_path, viz_root=viz)
-    assert "PAPER OBSERVATION ONLY" in render_text(surface)
+    text = render_text(surface)
+    assert "PAPER OBSERVATION ONLY" in text
+    assert CASH_BADGE in text
     assert surface["viz"].slot("shadow_honesty_strip").badges == VIZ_BADGES
 
 
@@ -759,8 +762,8 @@ def test_hub_puts_viz_wall_above_dense_blocks(tmp_path):
     assert wall < page.index("Ranked table")
     assert wall < page.index("Paper journal (shadow log)")
     assert page.index("PHASE 1 OBSERVATION") < wall
-    # The Hard NOs are one quiet footer strip now, so they sit below the charts.
-    assert page.index(CASH_BADGE) > wall
+    # Nothing pushes the charts down: there is no posture strip left to scroll past.
+    assert CASH_BADGE not in page
 
 
 def test_hub_viz_wall_anchors_are_display_only(tmp_path):
@@ -802,7 +805,8 @@ def test_hub_charts_are_click_to_enlarge(tmp_path):
     assert "cursor: zoom-in" in page
     assert page.index('id="viz-wall"') < page.index('id="viz-lightbox"')
     assert 'value="paper-deposit"' not in page
-    assert CASH_BADGE in page
+    # The enlarge overlay is a bigger chart, not somewhere to hang a cash badge.
+    assert CASH_BADGE not in page
     # Fit-on-screen is only an overview for these tall charts, so full size must be reachable.
     assert ZOOM_HINT_FIT in page
     assert json.dumps(ZOOM_HINT_FULL) in page
