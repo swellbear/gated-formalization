@@ -125,7 +125,7 @@ def render_html(surface: dict) -> str:
             cache = int(slot.mtime or 0)
             img = (
                 f"<img src='/viz/{html.escape(slot.slot_id)}.png?t={cache}' "
-                f"alt='{html.escape(slot.title)}'/>"
+                f"alt='{html.escape(slot.title)}' width='1200'/>"
             )
         else:
             img = f"<p class='missing'>{html.escape(slot.note)}</p>"
@@ -176,7 +176,8 @@ def render_html(surface: dict) -> str:
  pre {{ white-space: pre-wrap; background: #fff; border: 1px solid #c9c2b2; padding: 12px; }}
  .missing {{ background: #f8e0a0; padding: 10px; border: 1px solid #c9a227; }}
  .cash {{ position: sticky; bottom: 0; background: #111; color: #f2e27a; padding: 8px 16px; font-weight: 700; }}
- .viz img {{ max-width: 100%; border: 1px solid #c9c2b2; background: #fff; }}
+ .viz {{ margin: 16px 0 28px; padding: 12px; background: #fff; border: 1px solid #c9c2b2; }}
+ .viz img {{ display: block; width: 100%; max-width: 100%; height: auto; border: 1px solid #c9c2b2; background: #111; }}
  h2 {{ margin-top: 28px; }}
 </style>
 </head>
@@ -213,7 +214,8 @@ def render_html(surface: dict) -> str:
   <pre>{shadow}</pre>
   <h2>Calibration</h2>
   <pre>{calib}</pre>
-  <h2>Illustrator viz-wall</h2>
+  <h2>Illustrator viz-wall (Ill 1 / Ill 2)</h2>
+  <p>Read-only PNGs when present. Missing charts stay {html.escape('not yet available')} — never invented. Phone is notify-first; this hub is local.</p>
   {''.join(viz_blocks)}
 </main>
 <div class="cash">{html.escape(CASH_BADGE)}</div>
@@ -382,6 +384,11 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument("--host", default=DEFAULT_HOST)
     parser.add_argument("--port", type=int, default=DEFAULT_PORT)
     parser.add_argument("--print", action="store_true", dest="dump", help="print the surface and exit")
+    parser.add_argument(
+        "--install-desktop-shortcut",
+        action="store_true",
+        help="write a Desktop launcher for the Phase 1 hub and exit",
+    )
     parser.add_argument("--no-browser", action="store_true")
     parser.add_argument("--artifact-root", default="", help="override data/artifact SoT root")
     parser.add_argument("--viz-root", default="", help="override Illustrator viz-wall root")
@@ -389,6 +396,15 @@ def main(argv: list[str] | None = None) -> int:
     artifact = Path(args.artifact_root) if args.artifact_root else None
     viz = Path(args.viz_root) if args.viz_root else None
     event = args.event or None
+    if args.install_desktop_shortcut:
+        from golf_offshoot.operator_surface.desktop import SHORTCUT_STEM, write_desktop_launcher
+
+        desktop = Path.home() / "Desktop"
+        path = write_desktop_launcher(desktop=desktop)
+        print(f"wrote Desktop launcher: {path}")
+        print(f"Windows .lnk installer: scripts/windows/Install-Desktop-Shortcut.bat")
+        print(f"{SHORTCUT_STEM}: PHASE 1 OBSERVATION. Trading NOT ARMED. {CASH_BADGE}")
+        return 0
     if args.dump:
         print(render_text(build_surface(event_id=event, artifact_root=artifact, viz_root=viz)))
         return 0

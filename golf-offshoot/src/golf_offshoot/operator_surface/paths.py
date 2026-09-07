@@ -15,6 +15,7 @@ ENV_SHADOW_PATH = "GOLF_OFFSHOOT_SHADOW_PATH"
 DEFAULT_EXTERNAL_ARTIFACT_ROOT = Path("/workspace/golf_offshoot_real_exports")
 DEFAULT_EXTERNAL_VIZ_ROOT = Path("/workspace/illustrator_ops/golf_offshoot")
 REPO_VIZ_FALLBACK = Path("docs") / "viz" / "golf_offshoot_dryrun_2026-09-07"
+ILL_PNG_NAMES = ("shadow_honesty_strip.png", "calibration_weather.png")
 
 
 class PathUnsafeError(ValueError):
@@ -33,6 +34,39 @@ class ResolvedRoots:
 
 def package_root() -> Path:
     return package_data_dir().parent
+
+
+def git_repo_root(start: Path | None = None) -> Path | None:
+    cur = (start or package_root()).resolve()
+    for _ in range(8):
+        if (cur / ".git").exists():
+            return cur
+        if cur.parent == cur:
+            break
+        cur = cur.parent
+    return None
+
+
+def viz_dir_has_pngs(root: Path) -> bool:
+    return any((root / name).is_file() for name in ILL_PNG_NAMES)
+
+
+def _repo_viz_candidates() -> list[tuple[Path, str]]:
+    seen: set[Path] = set()
+    out: list[tuple[Path, str]] = []
+    repo = git_repo_root()
+    for raw, label in (
+        (package_root() / REPO_VIZ_FALLBACK, "repo_docs_viz"),
+        ((repo / REPO_VIZ_FALLBACK) if repo is not None else None, "repo_root_docs_viz"),
+    ):
+        if raw is None:
+            continue
+        path = raw.resolve()
+        if path in seen:
+            continue
+        seen.add(path)
+        out.append((path, label))
+    return out
 
 
 def _expand(raw: str | Path) -> Path:
@@ -60,17 +94,27 @@ def resolve_artifact_root(*, explicit: Path | None = None, environ: dict[str, st
 
 
 def resolve_viz_root(*, explicit: Path | None = None, environ: dict[str, str] | None = None) -> tuple[Path, str]:
-    """Prefer env, then Illustrator shared dir, then committed dry-run fallback."""
+    """Prefer env, then Illustrator shared dir, then committed dry-run fallbacks.
+
+    Shared SoT `/workspace/illustrator_ops/golf_offshoot/` wins when it has Ill
+    PNGs. An empty shared directory does not hide a fallback that actually has
+    the charts. Repo fallbacks: `golf-offshoot/docs/viz/...` and repo-root
+    `docs/viz/golf_offshoot_dryrun_2026-09-07/` (Illustrator PR #140).
+    """
     if explicit is not None:
         return _expand(explicit), "explicit"
     configured = _env_path(ENV_VIZ_ROOT, environ)
     if configured is not None:
         return configured, f"env:{ENV_VIZ_ROOT}"
+    discovered: list[tuple[Path, str]] = []
     if DEFAULT_EXTERNAL_VIZ_ROOT.is_dir():
-        return DEFAULT_EXTERNAL_VIZ_ROOT.resolve(), "illustrator_ops"
-    repo = (package_root() / REPO_VIZ_FALLBACK).resolve()
-    if repo.is_dir():
-        return repo, "repo_docs_viz"
+        discovered.append((DEFAULT_EXTERNAL_VIZ_ROOT.resolve(), "illustrator_ops"))
+    discovered.extend((path, label) for path, label in _repo_viz_candidates() if path.is_dir())
+    with_pngs = [(path, label) for path, label in discovered if viz_dir_has_pngs(path)]
+    if with_pngs:
+        return with_pngs[0]
+    if discovered:
+        return discovered[0]
     return (package_data_dir() / "viz").resolve(), "repo_data_viz"
 
 

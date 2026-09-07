@@ -30,6 +30,8 @@ python -m golf_offshoot live
 python -m golf_offshoot shadow              # review paper-observation advises
 python -m golf_offshoot shell --print     # Phase 1 operator surface (text)
 python -m golf_offshoot shell --event 401811963   # local UI over ingest/live/shadow
+# Windows desktop icon: golf-offshoot/scripts/windows/Install-Desktop-Shortcut.bat
+# then double-click Desktop "Golf Offshoot Phase 1 Hub" (or Open-Phase1-Hub.bat)
 # shell live/loop auto-applies paper-observation advises (not trading armed; no cash controls)
 ```
 

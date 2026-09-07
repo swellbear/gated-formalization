@@ -398,6 +398,9 @@ def test_shell_text_and_html_include_walls(tmp_path):
     assert 'value="paper-withdraw"' not in page
     assert 'value="cash-out"' not in page
     assert "Kalshi" in page
+    assert "not yet available" in page
+    assert "notify-first" in page
+    assert "<img " not in page
 
 
 def test_cli_shell_print(tmp_path):
@@ -591,3 +594,123 @@ def test_cash_controls_still_blocked_after_paper_apply():
             refuse_forbidden(action)
         assert "NOT ARMED" in str(exc.value)
         assert "NEVER DEPOSITS" in str(exc.value)
+
+
+def test_windows_hub_launcher_files_are_observation_only():
+    from golf_offshoot.operator_surface.app import DEFAULT_HOST
+    from golf_offshoot.operator_surface.desktop import launcher_paths
+
+    assert DEFAULT_HOST == "127.0.0.1"
+    paths = launcher_paths()
+    for key in ("open_hub_bat", "install_ps1", "install_bat", "open_hub_sh"):
+        assert paths[key].is_file(), key
+    bat = paths["open_hub_bat"].read_text(encoding="utf-8")
+    assert "python -m golf_offshoot shell" in bat
+    assert "127.0.0.1" in bat
+    assert "NOT ARMED" in bat
+    assert "PAPER OBSERVATION ONLY" in bat
+    assert "NEVER DEPOSITS" in bat
+    assert "paper-deposit" not in bat.lower()
+    assert "kalshi" not in bat.lower()
+    ps1 = paths["install_ps1"].read_text(encoding="utf-8")
+    assert "Golf Offshoot Phase 1 Hub.lnk" in ps1
+    assert "Open-Phase1-Hub.bat" in ps1
+    assert "WScript.Shell" in ps1
+    assert "NOT ARMED" in ps1
+
+
+def test_write_desktop_launcher(tmp_path):
+    from golf_offshoot.operator_surface.desktop import SHORTCUT_STEM, write_desktop_launcher
+
+    dest = write_desktop_launcher(desktop=tmp_path / "Desktop")
+    assert dest.name == f"{SHORTCUT_STEM}.bat"
+    text = dest.read_text(encoding="utf-8")
+    assert "Open-Phase1-Hub.bat" in text
+    assert "NOT ARMED" in text
+    assert (tmp_path / "Desktop" / f"{SHORTCUT_STEM}.command").is_file()
+
+
+def test_cli_install_desktop_shortcut(tmp_path, monkeypatch):
+    from golf_offshoot.__main__ import main
+    from golf_offshoot.operator_surface.desktop import SHORTCUT_STEM
+
+    monkeypatch.setattr(Path, "home", classmethod(lambda cls: tmp_path))
+    assert main(["shell", "--install-desktop-shortcut"]) == 0
+    assert (tmp_path / "Desktop" / f"{SHORTCUT_STEM}.bat").is_file()
+
+
+def test_hub_html_renders_viz_pngs_when_present(tmp_path):
+    viz = tmp_path / "viz"
+    viz.mkdir()
+    (viz / "shadow_honesty_strip.png").write_bytes(b"\x89PNG\r\n\x1a\n")
+    (viz / "calibration_weather.png").write_bytes(b"\x89PNG\r\n\x1a\n")
+    page = render_html(build_surface(artifact_root=tmp_path, viz_root=viz))
+    assert page.count("<img ") == 2
+    assert "/viz/shadow_honesty_strip.png" in page
+    assert "/viz/calibration_weather.png" in page
+    assert 'class="missing"' not in page
+    assert "Shadow honesty strip" in page
+    assert "Calibration weather" in page
+
+
+def test_hub_http_serves_viz_pngs(tmp_path):
+    from http.client import HTTPConnection
+    from http.server import ThreadingHTTPServer
+    from threading import Thread
+
+    from golf_offshoot.operator_surface.app import OperatorHandler
+
+    viz = tmp_path / "viz"
+    viz.mkdir()
+    payload = b"\x89PNG\r\n\x1a\nHUB"
+    (viz / "shadow_honesty_strip.png").write_bytes(payload)
+    (viz / "calibration_weather.png").write_bytes(payload)
+    state = {
+        "event_id": "",
+        "artifact_root": tmp_path,
+        "viz_root": viz,
+        "odds_book": "auto",
+        "surface": build_surface(artifact_root=tmp_path, viz_root=viz),
+    }
+    httpd = ThreadingHTTPServer(("127.0.0.1", 0), OperatorHandler)
+    httpd.surface_state = state  # type: ignore[attr-defined]
+    thread = Thread(target=httpd.serve_forever, daemon=True)
+    thread.start()
+    try:
+        host, port = httpd.server_address[:2]
+        conn = HTTPConnection(host, port, timeout=5)
+        conn.request("GET", "/viz/shadow_honesty_strip.png")
+        resp = conn.getresponse()
+        body = resp.read()
+        assert resp.status == 200
+        assert body == payload
+        conn.request("GET", "/")
+        page = conn.getresponse().read().decode("utf-8")
+        assert "<img " in page
+        assert "/viz/shadow_honesty_strip.png" in page
+        conn.close()
+    finally:
+        httpd.shutdown()
+        httpd.server_close()
+
+
+def test_viz_root_prefers_repo_root_pngs_over_empty_shared(tmp_path, monkeypatch):
+    from golf_offshoot.operator_surface import paths as pathmod
+
+    empty_ops = tmp_path / "illustrator_ops" / "golf_offshoot"
+    empty_ops.mkdir(parents=True)
+    offshoot = tmp_path / "offshoot"
+    offshoot_docs = offshoot / "docs" / "viz" / "golf_offshoot_dryrun_2026-09-07"
+    offshoot_docs.mkdir(parents=True)
+    (offshoot_docs / "README.md").write_text("no pngs yet\n", encoding="utf-8")
+    repo = tmp_path / "repo"
+    root_docs = repo / "docs" / "viz" / "golf_offshoot_dryrun_2026-09-07"
+    root_docs.mkdir(parents=True)
+    (root_docs / "shadow_honesty_strip.png").write_bytes(b"\x89PNG\r\n\x1a\n")
+    (root_docs / "calibration_weather.png").write_bytes(b"\x89PNG\r\n\x1a\n")
+    monkeypatch.setattr(pathmod, "DEFAULT_EXTERNAL_VIZ_ROOT", empty_ops)
+    monkeypatch.setattr(pathmod, "package_root", lambda: offshoot)
+    monkeypatch.setattr(pathmod, "git_repo_root", lambda start=None: repo)
+    root, src = pathmod.resolve_viz_root(environ={})
+    assert root == root_docs.resolve()
+    assert src == "repo_root_docs_viz"

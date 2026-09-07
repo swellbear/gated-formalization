@@ -190,6 +190,12 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument("--port", type=int, default=8765, help="shell: bind port")
     parser.add_argument("--no-browser", action="store_true", help="shell: do not open a browser")
     parser.add_argument(
+        "--install-desktop-shortcut",
+        action="store_true",
+        dest="install_desktop_shortcut",
+        help="shell: write a Desktop launcher for the Phase 1 hub and exit",
+    )
+    parser.add_argument(
         "--artifact-root",
         default="",
         dest="artifact_root",
@@ -1200,6 +1206,8 @@ def _cmd_shell(args) -> int:
         argv.append("--print")
     if getattr(args, "no_browser", False):
         argv.append("--no-browser")
+    if getattr(args, "install_desktop_shortcut", False):
+        argv.append("--install-desktop-shortcut")
     host = getattr(args, "host", None)
     if host:
         argv.extend(["--host", str(host)])

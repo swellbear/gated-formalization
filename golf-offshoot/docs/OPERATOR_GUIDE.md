@@ -550,6 +550,17 @@ python -m golf_offshoot shell --event 401811963
 python -m golf_offshoot shell --print --event 401811963
 ```
 
+**Windows desktop icon (primary).** Do not hand-wire a shortcut:
+
+| Path | Role |
+|------|------|
+| `golf-offshoot/scripts/windows/Open-Phase1-Hub.bat` | Starts `python -m golf_offshoot shell --host 127.0.0.1 --port 8765` and opens the local hub |
+| `golf-offshoot/scripts/windows/Install-Desktop-Shortcut.bat` | Double-click once → writes `Desktop\Golf Offshoot Phase 1 Hub.lnk` |
+| `golf-offshoot/scripts/windows/Install-Desktop-Shortcut.ps1` | Same installer, called by the `.bat` |
+| `golf-offshoot/scripts/open-phase1-hub.sh` | Optional Unix helper |
+
+The hub binds **127.0.0.1:8765**. Tailscale / phone remote UI is **not required** and is **not** in this shell. Phone is notify-first (`NTFY_TOPIC` on run completion). A later thin remote view is out of scope.
+
 The shell can pin an ESPN event, trigger `ingest` → `live` → `shadow`, load an existing real export, and show run status. Shell `live` / `loop` **auto-applies strategy advises to the paper book / paper bankroll** using the existing `maybe_apply_paper` path. If no observation paper book exists, the shell locks one so apply can run. That is **paper observation only**. It is **not** trading armed. The shell does **not** expose user-facing `paper-deposit` / `paper-withdraw`, cash-out quotes, or cash transfer controls.
 
 Loud walls are always on:
@@ -584,9 +595,9 @@ Missing/empty banners (never silent demo fill):
 
 Ranked LIVE table is read from `latest/*_live_*.txt` (HTML sibling if present) or existing `data/exports/*_live_*.txt`. Leftover is display-only (unconstrained / held-ticket / do-not-stuff-theta). Calibration shows latest `keep_expert` freeze, `no_future_leakage`, hashes, and metrics. Edge is not established.
 
-Viz-wall hook: [VIZ_WALL_HOOK.md](VIZ_WALL_HOOK.md). Read-only PNGs. Refresh on mtime. Path traversal is rejected. Illustrator owns regeneration.
+Viz-wall hook: [VIZ_WALL_HOOK.md](VIZ_WALL_HOOK.md). The hub **renders Ill 1 / Ill 2 PNGs as images** when they exist (not text-only). Prefer `/workspace/illustrator_ops/golf_offshoot/{shadow_honesty_strip,calibration_weather}.png` plus optional `viz_wall_manifest.json`. Also accept `golf-offshoot/docs/viz/golf_offshoot_dryrun_2026-09-07/` and repo-root `docs/viz/golf_offshoot_dryrun_2026-09-07/` (Illustrator PR #140). Missing ⇒ `not yet available`. Never invent charts. Refresh on mtime. Path traversal is rejected. Illustrator owns regeneration.
 
-One optional ntfy ping when an **operator-triggered** ingest/live/loop **finishes** (success or failure). Progress lines do not ping. Empty `NTFY_TOPIC` keeps notify off. Existing `watch` trigger behavior is unchanged.
+One optional ntfy ping when an **operator-triggered** ingest/live/loop **finishes** (success or failure). Progress lines do not ping. Empty `NTFY_TOPIC` keeps notify off. Existing `watch` trigger behavior is unchanged. That is the Phase 1 phone path — not a remote trading UI, not one-tap bets from a phone.
 
 The shell does not add Kalshi auth, API trade keys, wallet/bank scopes, NFL/NBA, theta retune, or cash controls.
 
