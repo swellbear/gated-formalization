@@ -528,13 +528,13 @@ def test_shell_live_auto_applies_paper_advises(tmp_path, monkeypatch):
         actions=[
             StrategyAction(
                 action_id=new_id("act"),
-                kind=StrategyActionKind.ADD,
+                kind=StrategyActionKind.REDUCE,
                 player_id=pos.player_id,
                 player_name=pos.player_name,
                 bet_type=BetType.WIN,
                 position_id=pos.position_id,
-                suggested_stake_delta=1.25,
-                reason="paper observation add",
+                suggested_stake_delta=-1.25,
+                reason="paper observation reduce",
             )
         ],
         status=_strategy_status(),
@@ -542,7 +542,7 @@ def test_shell_live_auto_applies_paper_advises(tmp_path, monkeypatch):
     second = apply_observation_paper(_live_result(rows, strategy=strategy))
     assert second.status == PAPER_APPLIED
     assert second.applied is True
-    assert second.record.book.positions[0].stake > before
+    assert second.record.book.positions[0].stake < before
     assert "NOT ARMED" in second.text
     assert "PAPER OBSERVATION ONLY" in second.text
     assert CASH_BADGE in second.text
