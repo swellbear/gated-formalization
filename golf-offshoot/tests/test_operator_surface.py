@@ -276,7 +276,7 @@ def test_viz_missing_is_not_invented(tmp_path):
     assert wc1.title == "WC1 dated record"
     assert "not settled PnL" in wall.slot("shadow_honesty_strip").subline
     assert "keep_expert" in wall.slot("calibration_weather").subline
-    assert wc1.subline == "Operator ADMIT FAIL / park unproven · never banked-edge"
+    assert wc1.subline == "FAIL / park unproven · NOT edge"
     assert wc1.badges == VIZ_BADGES
 
 
@@ -406,7 +406,7 @@ def test_shell_text_and_html_include_walls(tmp_path):
     assert "Calibration weather" in page
     assert "WC1 dated record" in text
     assert "WC1 dated record" in page
-    assert "never banked-edge" in page
+    assert "FAIL / park unproven · NOT edge" in page
     assert "NEVER DEPOSITS" in page
     assert "PAPER OBSERVATION ONLY" in page
     assert "not trading armed" in page
@@ -671,7 +671,7 @@ def test_hub_html_renders_viz_pngs_when_present(tmp_path):
     assert "Shadow honesty strip" in page
     assert "Calibration weather" in page
     assert "WC1 dated record" in page
-    assert "never banked-edge" in page
+    assert "FAIL / park unproven · NOT edge" in page
     assert "PHASE 1 OBSERVATION" in page
     assert "AI: NO CASH IN/OUT" in page
     assert "PAPER OBSERVATION ONLY" in page

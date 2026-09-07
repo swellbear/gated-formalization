@@ -8,7 +8,7 @@ Illustrator owns regeneration. The operator surface **renders files that exist**
 |------|-------|---------|
 | `shadow_honesty_strip` | Shadow honesty strip | Live-book paper journal — not settled PnL · not Kalshi demo |
 | `calibration_weather` | Calibration weather | All freezes keep_expert (v1→v3) — not edge established |
-| `wc1_dated_record` | WC1 dated record | Operator ADMIT FAIL / park unproven · never banked-edge |
+| `wc1_dated_record` | WC1 dated record | FAIL / park unproven · NOT edge |
 
 Permanent badges on every slot:
 

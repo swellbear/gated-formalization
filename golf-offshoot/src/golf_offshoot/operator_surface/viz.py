@@ -35,7 +35,7 @@ SLOT_SPECS = {
     SLOT_WC1_DATED_RECORD: {
         "title": "WC1 dated record",
         "filename": "wc1_dated_record.png",
-        "subline": "Operator ADMIT FAIL / park unproven · never banked-edge",
+        "subline": "FAIL / park unproven · NOT edge",
     },
 }
 
