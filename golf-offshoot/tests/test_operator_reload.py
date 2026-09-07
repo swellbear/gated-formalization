@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import os
 from pathlib import Path
 from types import SimpleNamespace
 
@@ -35,7 +36,7 @@ from golf_offshoot.operator_surface.reload import (
 
 def _git_repo(root: Path, *, ref: str = "refs/heads/master", sha: str = "aaa111") -> Path:
     git = root / ".git"
-    git.mkdir()
+    git.mkdir(parents=True)
     (git / "HEAD").write_text(f"ref: {ref}\n", encoding="utf-8")
     ref_path = git / ref
     ref_path.parent.mkdir(parents=True, exist_ok=True)
@@ -174,10 +175,13 @@ def test_collect_snapshot_sees_hub_and_artifact_mtimes(tmp_path):
     assert not any(is_noise_name(Path(name.rstrip("/")).name) and not name.endswith("/") for name, _ in snap.artifacts)
 
     live.write_text("live2\n", encoding="utf-8")
+    os.utime(live, ns=(live.stat().st_mtime_ns + 2_000_000, live.stat().st_mtime_ns + 2_000_000))
     later = collect_snapshot(repo=repo, code_files=hub_code_files(pkg), roots=roots)
     assert classify_change(snap, later).kind == "artifacts"
 
-    (pkg / "operator_surface" / "app.py").write_text("# hub v2\n", encoding="utf-8")
+    app_py = pkg / "operator_surface" / "app.py"
+    app_py.write_text("# hub v2\n", encoding="utf-8")
+    os.utime(app_py, ns=(app_py.stat().st_mtime_ns + 2_000_000, app_py.stat().st_mtime_ns + 2_000_000))
     code_later = collect_snapshot(repo=repo, code_files=hub_code_files(pkg), roots=roots)
     assert classify_change(later, code_later).kind == "code"
 
