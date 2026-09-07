@@ -160,9 +160,16 @@ def _viz_wall_html(viz: VizWall) -> str:
     for slot in viz.slots:
         if slot.path is not None:
             cache = int(slot.mtime or 0)
+            src = f"/viz/{html.escape(slot.slot_id)}.png?t={cache}"
+            title = html.escape(slot.title)
+            # Plain link to the PNG, so the chart still enlarges when the overlay script
+            # is unavailable. The overlay intercepts the click when it is available.
             body = (
-                f'<img src="/viz/{html.escape(slot.slot_id)}.png?t={cache}" '
-                f'alt="{html.escape(slot.title)}" width="1200"/>'
+                f'<a class="zoom" href="{src}" data-viz-zoom="1" data-viz-title="{title}" '
+                f'aria-label="Enlarge {title}">'
+                f'<img src="{src}" alt="{title}" width="1200"/>'
+                f'<span class="zoom-hint">Click to enlarge</span>'
+                f"</a>"
             )
         else:
             body = f'<p class="missing">{html.escape(slot.note)}</p>'
@@ -184,6 +191,23 @@ def _viz_wall_html(viz: VizWall) -> str:
             "No chart was invented in its place.</p>"
         )
     return f'<div class="viz-wall" id="viz-wall">{"".join(cards)}</div>{trailer}'
+
+
+def _viz_lightbox_html(viz: VizWall) -> str:
+    """Enlarged-chart overlay. Omitted entirely when no chart exists to enlarge."""
+    if not any(slot.path is not None for slot in viz.slots):
+        return ""
+    return (
+        '<div class="lightbox" id="viz-lightbox" hidden role="dialog" aria-modal="true" '
+        'aria-label="Enlarged chart">'
+        '<div class="lightbox-bar">'
+        '<span class="lightbox-title" id="viz-lightbox-title"></span>'
+        f'<span class="badge">{html.escape(CASH_BADGE)}</span>'
+        '<button type="button" class="lightbox-close" id="viz-lightbox-close">Close (Esc)</button>'
+        "</div>"
+        '<img id="viz-lightbox-img" src="" alt=""/>'
+        "</div>"
+    )
 
 
 def _settle_banner_html(honesty: HonestyBundle) -> str:
@@ -253,6 +277,7 @@ def render_html(surface: dict) -> str:
     badges = "".join(f'<span class="badge">{html.escape(b)}</span>' for b in walls.badges)
     wall_lines = "".join(f"<div>{html.escape(line)}</div>" for line in walls.lines)
     viz_wall = _viz_wall_html(viz)
+    viz_lightbox = _viz_lightbox_html(viz)
     settle_banner = _settle_banner_html(honesty)
     actions = _actions_html(event)
     last_html = html.escape(format_run_record(last)) if last else "no operator run this session"
@@ -319,6 +344,17 @@ def render_html(surface: dict) -> str:
  .viz .sub {{ font-size: 12px; color: #4a4a4a; margin: 0 0 6px; }}
  .viz .badges {{ margin: 0 0 8px; }}
  .viz img {{ display: block; width: 100%; max-width: 100%; height: auto; border: 1px solid #c9c2b2; background: #111; }}
+ .viz a.zoom {{ display: block; cursor: zoom-in; color: inherit; text-decoration: none; }}
+ .viz a.zoom:focus-visible {{ outline: 3px solid #1f3b4d; outline-offset: 2px; }}
+ .viz .zoom-hint {{ display: block; margin-top: 6px; font-size: 12px; color: #4a4a4a; }}
+ .viz a.zoom:hover .zoom-hint, .viz a.zoom:focus .zoom-hint {{ color: #1f3b4d; text-decoration: underline; }}
+ .lightbox {{ position: fixed; top: 0; right: 0; bottom: 0; left: 0; z-index: 100; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 10px; padding: 14px; background: rgba(12, 14, 16, 0.94); cursor: zoom-out; }}
+ .lightbox[hidden] {{ display: none; }}
+ .lightbox-bar {{ display: flex; flex-wrap: wrap; gap: 12px; align-items: center; justify-content: space-between; width: 100%; max-width: 1400px; color: #f4f1ea; font-size: 14px; }}
+ .lightbox-title {{ font-weight: 700; }}
+ .lightbox-close {{ background: #55606b; }}
+ .lightbox img {{ max-width: 98vw; max-height: 86vh; width: auto; height: auto; border: 1px solid #c9c2b2; background: #111; }}
+ body.viz-zoomed {{ overflow: hidden; }}
 </style>
 </head>
 <body>
@@ -378,7 +414,38 @@ def render_html(surface: dict) -> str:
   </section>
 </main>
 <div class="cash">{html.escape(CASH_BADGE)}</div>
+{viz_lightbox}
 <script>
+(function(){{
+  var box = document.getElementById('viz-lightbox');
+  if (!box) return;
+  var shown = document.getElementById('viz-lightbox-img');
+  var caption = document.getElementById('viz-lightbox-title');
+  function openBox(href, title){{
+    shown.setAttribute('src', href);
+    shown.setAttribute('alt', title);
+    caption.textContent = title;
+    box.hidden = false;
+    document.body.classList.add('viz-zoomed');
+  }}
+  function closeBox(){{
+    if (box.hidden) return;
+    box.hidden = true;
+    shown.setAttribute('src', '');
+    document.body.classList.remove('viz-zoomed');
+  }}
+  document.addEventListener('click', function(ev){{
+    if (!box.hidden) {{ closeBox(); return; }}
+    if (ev.button || ev.metaKey || ev.ctrlKey || ev.shiftKey || ev.altKey) return;
+    var link = ev.target && ev.target.closest ? ev.target.closest('a.zoom') : null;
+    if (!link) return;
+    ev.preventDefault();
+    openBox(link.getAttribute('href'), link.getAttribute('data-viz-title') || '');
+  }});
+  document.addEventListener('keydown', function(ev){{
+    if (ev.key === 'Escape' || ev.key === 'Esc') closeBox();
+  }});
+}})();
 (function(){{
   var gen = null;
   function tick(){{
