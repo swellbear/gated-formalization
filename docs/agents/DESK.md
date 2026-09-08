@@ -6,18 +6,26 @@ Thread lines are **one sentence, newest first, max 10**. Long findings belong in
 
 | Field | Value |
 |-------|--------|
-| Updated | 2026-09-08 14:45 ET |
-| Active role | chief-of-staff |
-| Job | crew_tick doorbell landed. Automation draft in COS_AUTOMATION.md. Lab not assigned. |
-| Status | idle |
+| Updated | 2026-09-08 14:58 ET |
+| Active role | lab |
+| Job | One PROPOSED selection rule on KXBTC15M paper only. Load burned classes. Do not revive R-SKIP-COINFLIP or retune its band. Do not score. Do not bind. |
+| Status | assigned |
 | Handoff | — |
-| Waiting on Founder | **Y** — create **15m CoS crew tick** (every 15 minutes) from `golf-offshoot/docs/COS_AUTOMATION.md` |
+| Waiting on Founder | **N** |
+
+## last_cos (CoS stamp — doorbell silence)
+
+| Field | Value |
+|-------|--------|
+| last_cos_at | 2026-09-08T14:58:00-04:00 |
+| last_cos_commit | 7e15c76 |
+| handled_reason_ids | A_idle_uncovered_judicial, B_new_judicial, E_idle_unassigned |
 
 **Branch note.** `origin/master` is still `b063f56` (#175). Factory Turns 1–3 live only on `cursor/part-a-clerical-trust-boundary` at `5dc4f24` (CRITIC 02 `4090983` → Systems `0a480d4` → Operator `5dc4f24`). Branching from `origin/master` would discard all of it. Work continues on this branch; [#176](https://github.com/swellbear/gated-formalization/pull/176) is OPEN and MERGEABLE.
 
 ## Ask Founder
 
-Create the Cursor Automation **15m CoS crew tick**, every 15 minutes, from `golf-offshoot/docs/COS_AUTOMATION.md`. An agent cannot silently arm it.
+(none)
 
 ## Publish gap (named so nobody assumes Pages is self-maintaining)
 
@@ -48,6 +56,7 @@ Two suites, both on the tick.
 
 ## Thread
 
+- 2026-09-08 14:58 ET  chief-of-staff → lab: one PROPOSED selection rule after decide() is live; do not revive R-SKIP-COINFLIP. next=lab
 - 2026-09-08 14:45 ET  chief-of-staff: crew_tick doorbell on the wake; suite 573; automation drafted in COS_AUTOMATION.md. next=Founder (create the 15m timer)
 - 2026-09-08 14:22 ET  chief-of-staff: full suite 565 passed on Turn 3 bytes (`5dc4f24`). Prior 565 was Turn 2 only. Binding stays false. Lab not assigned.
 - 2026-09-08 14:18 ET  chief-of-staff: Turn 3 closed at `5dc4f24`. CRITIC 02 answered; bar names the three functions; binding / founder_read_once stay false; X7 did not heartbeat-clear. Lab not assigned.
@@ -57,5 +66,4 @@ Two suites, both on the tick.
 - 2026-09-08 12:50 ET  chief-of-staff: expansion SoT is `golf-offshoot/docs/LEARNING_LANE_EXPANSION.md` — lifting the HOLD opens a new lane, not a ticker on this one. HOLD stands. Bar bytes not touched. next=soften-critic
 - 2026-09-08 12:01 ET  chief-of-staff: full ratchet loop closed — flaw found mechanically, upheld by the Critic, fixed by Operator, and the same check now passes. Bar stays not binding on an unpinned fee hash; the fetch returned 429 and nobody wrote a placeholder. next=founder (read-once, when ready)
 - 2026-09-08 11:58 ET  systems → chief-of-staff: Operator was right that X7 was only half fixed — `_critic_token` reached the human proof path but `serve_role` still compared raw fingerprints, so the runner kept clearing the Critic on a heartbeat. Fixed at the same place `systems` gets its material test. next=chief-of-staff
-- 2026-09-08 11:55 ET  operator → chief-of-staff: admit pass done, 7 SUSTAINED / 7 SUSTAINED IN PART, none dismissed. Overruled the Critic's claim that the spread is worst at 50/50 — `s/(p+s)` runs the *same* direction as the fee, so the rule avoids neither cost's worst region. next=chief-of-staff
 *Older lines rolled off at the 10-line cap. Full history is in the git log for `docs/agents/DESK.md`.*
