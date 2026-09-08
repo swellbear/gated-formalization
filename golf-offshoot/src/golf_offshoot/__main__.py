@@ -185,7 +185,7 @@ def main(argv: list[str] | None = None) -> int:
         help="learn-15m-runner: dry-run (default) or armed (refused until Founder writes latest/RUNNER_ARMED)",
     )
     parser.add_argument(
-        "--once",
+        "--runner-once",
         action="store_true",
         dest="runner_once",
         help="learn-15m-runner: one pass then exit (tests/debug). Default is every watch tick until the kill file",
