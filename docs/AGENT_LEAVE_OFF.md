@@ -5,9 +5,9 @@ Chat transcripts are not. A later Grok / Cursor cloud agent will not see a prior
 
 | Field | Value |
 |-------|--------|
-| Updated | 2026-09-07 22:25 EDT (runner armed locally after continuous/human-proof land; Pages publish still manual) |
+| Updated | 2026-09-07 22:30 EDT (runner armed locally; Pages publish still manual) |
 | Interim operator | Cursor chat (Grok bot usage exhausted until **2026-09-13**) |
-| Repo SoT | **`origin/master` @ `6f36844`** (PR #167 merged). Pages still reads the last *published* snapshot (`generated_at` `2026-09-07T21:28:39-04:00` on `be04ebe`). A local export is not a publish. |
+| Repo SoT | **`origin/master` @ `c6354cc`** (PR #168 merged). Pages still reads the last *published* snapshot (`generated_at` `2026-09-07T21:28:39-04:00` on `be04ebe`). A local export is not a publish. |
 | Local Windows tree for this interim | `C:\Users\bearh\gated-formalization-master-hub` |
 | Do **not** treat as SoT | `C:\Users\bearh\gated-formalization` on `cursor/eia-window-job2` (stale + dirty) |
 | Active track | `learning_lane_15m` (KXBTC15M paper loop) + Phase 1 desktop hub |
@@ -28,11 +28,11 @@ If it is not in git on GitHub, the next bot does not have it.
 
 **`origin/master` is the public SoT.** GitHub Pages serves that commit only. A local export, a desktop hub, or an unmerged PR is **not** published.
 
-`origin/master` is `6f36844` (PR #167 merged 2026-09-07). That commit has the serve-on-proof executor and the `RUNNER_KILL` file switch. `#166` (`2fea8d8`) is also on master: RUN-ONLY, park classes, CLOSED unreachable rows, PROPOSED 01 note. GitHub Pages still serves the last *published* snapshot (`be04ebe`, `generated_at` `2026-09-07T21:28:39-04:00`) until someone manually publishes again.
+`origin/master` is `c6354cc` (PR #168 merged 2026-09-07). That commit arms the clerical runner on every PaperWatch tick, clears owed roles from disk proof with permanent `served_kind`, and names the Pages publish gap. `#167` (`6f36844`) is the serve-on-proof executor + kill file. `#166` (`2fea8d8`) is RUN-ONLY, park classes, CLOSED unreachable rows, PROPOSED 01 note. GitHub Pages still serves the last *published* snapshot (`be04ebe`, `generated_at` `2026-09-07T21:28:39-04:00`) until someone manually publishes again.
 
-**On `master` now:** learning wake, digest, park file with RUN-ONLY / classes, Lab PROPOSED 01 (RUN-ONLY, not admitted), export guard, serve-on-proof runner, kill file.
+**On `master` now:** learning wake, digest, park file with RUN-ONLY / classes, Lab PROPOSED 01 (RUN-ONLY, not admitted), export guard, serve-on-proof runner, kill file, continuous PaperWatch invoke, human artifact-proof.
 
-**This arming pass (continuous PaperWatch invoke, human artifact-proof, `execute=True` scratch-only, publish-gap named on the desk):** land it, then write local `latest/RUNNER_ARMED` (gitignored). The runner still does not commit or push. The public page is **not** self-maintaining.
+**Armed locally:** `golf-offshoot/data/learning_lane_15m/latest/RUNNER_ARMED` (gitignored). The runner still does not commit or push. The public page is **not** self-maintaining. Restart the 15m hub if the running PaperWatch predates `c6354cc`.
 
 Do not write branch state as if it were landed. If Pages `generated_at` is more than one 15-minute window behind now, the public page should say so itself.
 
