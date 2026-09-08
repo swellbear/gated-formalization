@@ -3,13 +3,13 @@
   "lane": "learning_lane_15m",
   "series": "KXBTC15M",
   "drafted_at": "2026-09-08T08:30:00-04:00",
-  "amended_at": "2026-09-08T19:12:00-04:00",
+  "amended_at": "2026-09-08T19:52:00-04:00",
   "amended_by": "operator",
-  "amendment": "admit pass on Soften Critic CRITIC 06; see LEARNING_LANE_15M_EVIDENCE_BAR_OPERATOR_ANSWER_06.md",
+  "amendment": "admit pass on Soften Critic CRITIC 07; see LEARNING_LANE_15M_EVIDENCE_BAR_OPERATOR_ANSWER_07.md",
   "prior_amendment": {
-    "amended_at": "2026-09-08T18:45:00-04:00",
-    "commit": "0b2f5e9",
-    "note": "CRITIC 05 admit pass. Struck L2 after-L1-increment (L2 shares next-look 0.504), set X2 registry flag true, labeled lived honoring unproven this turn, rewrote clause (2) to increment after an L2 look only. Binding condition 1 was left met:false on those new bytes — CRITIC 06 attacks them."
+    "amended_at": "2026-09-08T19:12:00-04:00",
+    "commit": "de8ec95",
+    "note": "CRITIC 06 admit pass. Struck 'L2 look only' as the increment rule; clause (2) increments on declaration and after an L2 look. Binding condition 1 was left met:false on those new bytes — CRITIC 07 attacks them."
   },
   "binding": false,
   "binding_rule": "Becomes binding only after (1) a Soften Critic written attack from a session that did not draft the bar, with Operator sustaining or explicitly overruling every objection with a stated reason in a separate turn, attack and answers both linked from the bar; (2) critic-invariants passing on the bytes proposed to bind, or every failing check named on the bar's face with Operator's reason for binding anyway; and (3) Founder read-once acknowledgement.",
@@ -17,22 +17,22 @@
     {
       "id": "critic_answered",
       "met": false,
-      "detail": "An answer that amends the bar does not close condition 1 on the amended text. LEARNING_LANE_15M_EVIDENCE_BAR_OPERATOR_ANSWER_06.md answers CRITIC 06 (bytes 8BF8F1D8…) on the ANSWER 05 hashes E2E9FC40… / 471A1A16…. These bytes are not that digest. Soften Critic is re-owed on this amendment. CRITIC 05 remains answered in OPERATOR_ANSWER_05.md for its own hashes. CRITIC 04 remains answered in OPERATOR_ANSWER_04.md for its own hashes. CRITIC 03 remains answered in OPERATOR_ANSWER_03.md for its own hashes. CRITIC 02 remains answered in OPERATOR_ANSWER_02.md for its own hashes. CRITIC 01 remains answered in OPERATOR_ANSWER_01.md.",
-      "critic_file": "golf-offshoot/docs/LEARNING_LANE_15M_EVIDENCE_BAR_CRITIC_06.md",
-      "critic_sha256_bytes": "8bf8f1d8633f384994e5019078ac684c9d7b77507e1798730d96ce38ca28c654",
-      "answer_file": "golf-offshoot/docs/LEARNING_LANE_15M_EVIDENCE_BAR_OPERATOR_ANSWER_06.md",
-      "answered_bar_md_sha256": "e2e9fc400df4b6903be323586408d8d84a5cbbd2ba631c0e8072b6554b4b3c3c",
-      "answered_bar_json_sha256": "471a1a1604ddbdde424b3d0d0e3634d5b818d7ce4931595224c99cb3e3cead80",
+      "detail": "An answer that amends the bar does not close condition 1 on the amended text. LEARNING_LANE_15M_EVIDENCE_BAR_OPERATOR_ANSWER_07.md answers CRITIC 07 (bytes CAD08432…) on the ANSWER 06 hashes 9F72AF66… / 726FF992…. These bytes are not that digest. Soften Critic is re-owed on this amendment. CRITIC 06 remains answered in OPERATOR_ANSWER_06.md for its own hashes. CRITIC 05 remains answered in OPERATOR_ANSWER_05.md for its own hashes. CRITIC 04 remains answered in OPERATOR_ANSWER_04.md for its own hashes. CRITIC 03 remains answered in OPERATOR_ANSWER_03.md for its own hashes. CRITIC 02 remains answered in OPERATOR_ANSWER_02.md for its own hashes. CRITIC 01 remains answered in OPERATOR_ANSWER_01.md.",
+      "critic_file": "golf-offshoot/docs/LEARNING_LANE_15M_EVIDENCE_BAR_CRITIC_07.md",
+      "critic_sha256_bytes": "cad08432192a23954f7657badb27c7af12e3d3e315e6a92f7c47c5e47a63b14c",
+      "answer_file": "golf-offshoot/docs/LEARNING_LANE_15M_EVIDENCE_BAR_OPERATOR_ANSWER_07.md",
+      "answered_bar_md_sha256": "9f72af662b69d5d36561e3ae85db499506aa7b5091273f2007f6d86da778da5d",
+      "answered_bar_json_sha256": "726ff992bf60811c9ef2bbde0ea7143cdbf2d5569204aac8aa25b730b26cc06c",
       "prior_pair": {
-        "critic_file": "golf-offshoot/docs/LEARNING_LANE_15M_EVIDENCE_BAR_CRITIC_05.md",
-        "answer_file": "golf-offshoot/docs/LEARNING_LANE_15M_EVIDENCE_BAR_OPERATOR_ANSWER_05.md",
-        "critic_sha256_bytes": "03157e7de8fcfdb8d4c14ab2ae7b90be8562c84269a2a23bc382839a3923ed6f"
+        "critic_file": "golf-offshoot/docs/LEARNING_LANE_15M_EVIDENCE_BAR_CRITIC_06.md",
+        "answer_file": "golf-offshoot/docs/LEARNING_LANE_15M_EVIDENCE_BAR_OPERATOR_ANSWER_06.md",
+        "critic_sha256_bytes": "8bf8f1d8633f384994e5019078ac684c9d7b77507e1798730d96ce38ca28c654"
       }
     },
     {
       "id": "critic_invariants_pass",
       "met": false,
-      "detail": "The last findings file (ran_at 2026-09-08T12:02:45-04:00) reviews 5F2AA5F5… / 2611C255… / CD25DD72… — not the ANSWER 05 hashes E2E9FC40… / 471A1A16… / 1DDD3CCE… and not these bytes. The 14:04 failing_set_at_last_operator_read of [fee_schedule_hash_recorded] described other bytes and is struck as a picture of this file. Copied arithmetic of check_delta_above_detection_floor on the ANSWER 03 hashes would name mde / reject_if_mean_d_exceeds / alpha_first_look / both power effects. After ANSWER 04 restated the four design numbers at next-look alpha, that function would still compare alpha_first_look 0.025 to current alpha_k 0.008333 (checker/key mismatch owed to Systems). Standing named fail: fee_schedule_hash_recorded (empty sha256 after HTTP 429). honesty_stamp_is_fresh is a desk check and does not set passed. write_critic_findings() was not called.",
+      "detail": "The last findings file (ran_at 2026-09-08T12:02:45-04:00) reviews 5F2AA5F5… / 2611C255… / CD25DD72… — not the ANSWER 06 hashes 9F72AF66… / 726FF992… / 1DDD3CCE… and not these bytes. The 14:04 failing_set_at_last_operator_read of [fee_schedule_hash_recorded] described other bytes and is struck as a picture of this file. Copied arithmetic of check_delta_above_detection_floor on the ANSWER 03 hashes would name mde / reject_if_mean_d_exceeds / alpha_first_look / both power effects. After ANSWER 04 restated the four design numbers at next-look alpha, that function would still compare alpha_first_look 0.025 to current alpha_k 0.008333 (checker/key mismatch owed to Systems). Standing named fail: fee_schedule_hash_recorded (empty sha256 after HTTP 429). honesty_stamp_is_fresh is a desk check and does not set passed. write_critic_findings() was not called.",
       "note": "critic.py records the newline-normalised digest, not the raw byte hash. Compare the digest the checker actually read.",
       "last_findings_cover_these_bytes": false,
       "last_findings_ran_at": "2026-09-08T12:02:45.460786-04:00",
@@ -197,7 +197,7 @@
     },
     "clauses": [
       "(1) one-sided paired t-test, H0: mean(d) <= delta, reject only if p < alpha_k",
-      "(2) multiplicity: alpha_k = 0.05 / (k(k+1)), k = trials_to_date + 1, increment on declaration and after an L2 look; L1 scoring does not increment",
+      "(2) multiplicity: alpha_k = 0.05 / (k(k+1)), k = trials_to_date + 1, increment on declaration and after an L2 look; L1 scoring does not increment; alpha_1 = 0.025 is the schedule's first term, spent on declaration, historical; first scoring look is k=2 / alpha=0.008333",
       "(3) effect floor delta = 0.28 * stake, absorbed into clause (1) as the null",
       "(4) positive side: mean(pnl_rule_fee_adj) > 0 on those same n windows — binding, not conditional prose",
       "(5) matched-exposure permutation control, fixed skip count, >=10,000 draws, seed 20260908"
