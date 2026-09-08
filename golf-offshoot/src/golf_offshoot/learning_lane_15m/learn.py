@@ -23,7 +23,7 @@ Writes: ``latest/learning_wake.json`` only, which is gitignored.
 from __future__ import annotations
 
 import json
-from datetime import datetime
+from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any, Iterable, Sequence
 
@@ -43,14 +43,22 @@ WAKE_FILE = "learning_wake.json"
 
 REL_MANIFEST = Path("docs") / "observability-hub" / "data" / "manifest.json"
 REL_DESK = Path("docs") / "agents" / "DESK.md"
+REL_PNG = Path("docs") / "observability-hub" / "data" / "charts" / "learning_lane_15m" / "paper_window_strip.png"
 
 #: Protocol order for the learning tick. Lab is not in it by default.
 ROLE_ORDER = ("digestor", "operator", "systems", "validator")
+ILLUSTRATOR_ROLE = "illustrator"
 LAB_ROLE = "lab"
+_ROLE_RANK = ROLE_ORDER + (ILLUSTRATOR_ROLE, LAB_ROLE)
 
 EVENT_NEW_SETTLE = "new_settle"
 EVENT_NEW_FILL = "new_fill"
 EVENT_PENDING_CLEARED = "pending_cleared"
+EVENT_BOARD_STALE = "board_stale"
+
+#: The board may trail the live journal by the current open window. Two or more
+#: windows ahead of the PNG is a lag — Illustrator is owed, not optional.
+BOARD_LAG_WINDOWS = 1
 
 HEARTBEAT_NOTE = "no new settle; watch still running"
 
@@ -485,6 +493,174 @@ def scan_learning_evidence(*, manifest_path: Path | None = None) -> dict[str, An
     }
 
 
+# ----------------------------------------------------------------- board lag
+
+
+_MONTHS = {
+    "JAN": 1,
+    "FEB": 2,
+    "MAR": 3,
+    "APR": 4,
+    "MAY": 5,
+    "JUN": 6,
+    "JUL": 7,
+    "AUG": 8,
+    "SEP": 9,
+    "OCT": 10,
+    "NOV": 11,
+    "DEC": 12,
+}
+
+
+def _parse_window_close_stamp(text: str) -> float | None:
+    raw = str(text or "").strip()
+    if not raw:
+        return None
+    for fmt in ("%Y-%m-%dT%H:%M:%SZ", "%Y-%m-%dT%H-%M-%SZ"):
+        try:
+            return datetime.strptime(raw, fmt).replace(tzinfo=timezone.utc).timestamp()
+        except ValueError:
+            continue
+    parsed = _parse_iso(raw)
+    if parsed is None:
+        return None
+    if parsed.tzinfo is None:
+        parsed = parsed.replace(tzinfo=timezone.utc)
+    return parsed.timestamp()
+
+
+def _ticker_close_epoch(ticker: str) -> float | None:
+    """Close clock from a KXBTC15M-YYMONDDHHMM[-MM] ticker. ET, not invented."""
+    try:
+        from golf_offshoot.data_feeds.kalshi_15m import parse_market_ticker
+
+        token = parse_market_ticker(ticker)["window_token"]
+    except Exception:
+        return None
+    if len(token) < 11:
+        return None
+    mon = _MONTHS.get(token[2:5])
+    if mon is None:
+        return None
+    try:
+        from zoneinfo import ZoneInfo
+
+        close = datetime(
+            2000 + int(token[:2]),
+            mon,
+            int(token[5:7]),
+            int(token[7:9]),
+            int(token[9:11]),
+            tzinfo=ZoneInfo("America/New_York"),
+        )
+    except (ValueError, OSError):
+        return None
+    return close.timestamp()
+
+
+def _window_close_epoch(window_id: str, ticker: str) -> float | None:
+    parts = str(window_id or "").split("__")
+    if len(parts) >= 3:
+        stamp = _parse_window_close_stamp(parts[-1])
+        if stamp is not None:
+            return stamp
+    return _ticker_close_epoch(ticker)
+
+
+def _evidence_windows(scan: dict[str, Any]) -> list[dict[str, str]]:
+    """Every journal/settlement/pending window the board should be able to name."""
+    seen: dict[str, dict[str, str]] = {}
+    for ticker, row in (scan.get("settled") or {}).items():
+        seen[ticker] = {
+            "ticker": ticker,
+            "window_id": _as_str(row.get("window_id")),
+            "kind": "settled",
+        }
+    for row in scan.get("pending") or []:
+        ticker = _as_str(row.get("ticker")) or _as_str(row.get("window_id"))
+        if ticker and ticker not in seen:
+            seen[ticker] = {
+                "ticker": ticker,
+                "window_id": _as_str(row.get("window_id")),
+                "kind": "pending",
+            }
+    for window in _journal_rows():
+        ticker = _as_str(window.get("ticker")).strip()
+        if not ticker or ticker in seen:
+            continue
+        seen[ticker] = {
+            "ticker": ticker,
+            "window_id": _as_str(window.get("window_id")),
+            "kind": "journal",
+        }
+    return list(seen.values())
+
+
+def board_lag(scan: dict[str, Any] | None = None) -> dict[str, Any]:
+    """How many live windows closed after the PNG was written.
+
+    One window of trail is the open window and is allowed. Two or more means
+    the board has fallen behind the journal/settlements and Illustrator is owed.
+    File mtimes on the JSON are ignored — PaperWatch rewrites them every cycle.
+    """
+    evidence = scan if scan is not None else scan_learning_evidence()
+    png = repo_root() / REL_PNG
+    exists = png.is_file()
+    png_ts = float(png.stat().st_mtime) if exists else None
+    behind: list[str] = []
+    unknown = 0
+    for row in _evidence_windows(evidence):
+        close = _window_close_epoch(row.get("window_id", ""), row.get("ticker", ""))
+        if close is None:
+            unknown += 1
+            continue
+        if png_ts is None or close > png_ts:
+            behind.append(row["ticker"])
+    lag = len(behind)
+    stale = lag > BOARD_LAG_WINDOWS
+    if not exists:
+        note = (
+            f"no PNG on disk; {lag} window(s) of journal/settlement evidence"
+            + ("; illustrator is owed" if stale else "")
+        )
+    elif stale:
+        note = (
+            f"PNG lags live journal/settlements by {lag} windows "
+            f"(more than {BOARD_LAG_WINDOWS}); illustrator is owed"
+        )
+    else:
+        note = f"PNG is current ({lag} window(s) ahead of the board; one is allowed)"
+    return {
+        "png_exists": exists,
+        "png_path": REL_PNG.as_posix(),
+        "lag_windows": lag,
+        "lag_tickers": behind,
+        "unknown_close": unknown,
+        "stale": stale,
+        "note": note,
+    }
+
+
+def _board_stale_event(lag: dict[str, Any], *, at: str) -> dict[str, Any]:
+    tickers = lag.get("lag_tickers") or []
+    named = ", ".join(tickers[:4])
+    if len(tickers) > 4:
+        named += f" (+{len(tickers) - 4} more)"
+    return {
+        "kind": EVENT_BOARD_STALE,
+        "ticker": tickers[0] if tickers else "",
+        "window_id": "",
+        "at": at,
+        "lane": LANE_15M,
+        "series": PRIMARY_SERIES,
+        "detail": lag.get("note") or "PNG lags the live journal/settlements",
+        "lag_windows": lag.get("lag_windows"),
+        "lag_tickers": tickers,
+        "roles_owed": [ILLUSTRATOR_ROLE],
+        "roles_owed_is_a_request": True,
+    }
+
+
 # ----------------------------------------------------------------------- events
 
 
@@ -598,7 +774,7 @@ def _merge_roles_owed(
             entry["reasons"] = reasons[-MAX_REASONS:]
 
     out: list[dict[str, Any]] = []
-    for role in sorted(order, key=lambda r: (ROLE_ORDER + (LAB_ROLE,)).index(r) if r in ROLE_ORDER + (LAB_ROLE,) else 99):
+    for role in sorted(order, key=lambda r: _ROLE_RANK.index(r) if r in _ROLE_RANK else 99):
         entry = by_role[role]
         age = _age_s(_as_str(entry.get("owed_since")) or at, at_dt)
         entry["age_s"] = int(age)
@@ -715,6 +891,14 @@ def record_learning_tick(
         )
         event["roles_owed_is_a_request"] = True
 
+    lag = board_lag(scan)
+    already_owed = {
+        _as_str(entry.get("role")).lower()
+        for entry in ((state or {}).get("roles_owed") or [])
+    }
+    if lag["stale"] and ILLUSTRATOR_ROLE not in already_owed:
+        events.append(_board_stale_event(lag, at=at))
+
     if watch_status is None:
         from golf_offshoot.learning_lane_15m.watch import load_watch_status
 
@@ -760,6 +944,7 @@ def record_learning_tick(
         "roles_owed": owed,
         "served": list((state or {}).get("served") or [])[:MAX_SERVED],
         "heartbeat": heartbeat,
+        "board": lag,
         "lab_gate": _lab_gate_block(gate, operator_residual_posted=operator_residual_posted),
     }
     save_wake_state(new_state)
@@ -911,6 +1096,12 @@ def format_wake_tick(state: dict[str, Any] | None) -> str:
     lines.append(
         f"  {LAB_ROLE:<10} {'owed' if gate.get('lab_owed') else 'NOT owed'} — {gate.get('why')}"
     )
+    board = state.get("board") or {}
+    if board:
+        flag = "owed" if any(_as_str(e.get("role")) == ILLUSTRATOR_ROLE for e in owed) else (
+            "owed" if board.get("stale") else "NOT owed"
+        )
+        lines.append(f"  {ILLUSTRATOR_ROLE:<10} {flag} — {board.get('note')}")
 
     pending = scan.get("pending") or []
     lines.append("")
@@ -1011,6 +1202,11 @@ def learning_status_block(state: dict[str, Any] | None = None) -> dict[str, Any]
                 for row in kept
             )
             or "none",
+        },
+        {
+            "label": "Board lag",
+            "value": _as_str((payload.get("board") or {}).get("lag_windows") or 0),
+            "note": _as_str((payload.get("board") or {}).get("note")),
         },
     ]
     headline = (

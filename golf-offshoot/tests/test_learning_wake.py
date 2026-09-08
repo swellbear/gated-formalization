@@ -1,16 +1,19 @@
 """The learning wake: evidence in, owed roles out, and nothing claimed on a role's behalf."""
 
 import json
+from datetime import datetime, timezone
 
 import pytest
 
 from golf_offshoot.data_feeds.kalshi_15m import parse_event, parse_market
 from golf_offshoot.learning_lane_15m import learn
 from golf_offshoot.learning_lane_15m.learn import (
+    EVENT_BOARD_STALE,
     EVENT_NEW_FILL,
     EVENT_NEW_SETTLE,
     EVENT_PENDING_CLEARED,
     HEARTBEAT_NOTE,
+    ILLUSTRATOR_ROLE,
     LAB_ROLE,
     ROLE_ORDER,
     STATE_OFFICIAL_NO_BOOK,
@@ -159,6 +162,30 @@ def _write_journal(windows):
     _write(latest_dir_15m() / "journal.json", {"lane": "learning_lane_15m", "windows": windows})
 
 
+def _write_png(repo, *, mtime: float | None = None):
+    """A board file the wake can age against. Contents are not read.
+
+    Default mtime is far in the future so a 'current' fixture PNG is never
+    behind the 26SEP07 fixture tickers, regardless of when the test runs.
+    """
+    import os
+
+    dest = (
+        repo
+        / "docs"
+        / "observability-hub"
+        / "data"
+        / "charts"
+        / "learning_lane_15m"
+        / "paper_window_strip.png"
+    )
+    dest.parent.mkdir(parents=True, exist_ok=True)
+    dest.write_bytes(b"png")
+    when = mtime if mtime is not None else datetime(2099, 1, 1, tzinfo=timezone.utc).timestamp()
+    os.utime(dest, (when, when))
+    return dest
+
+
 def _journal_row(ticker, result, status="finalized"):
     return {
         "ticker": ticker,
@@ -181,6 +208,7 @@ def lane(tmp_path, monkeypatch):
     _write_manifest(repo, PUBLISHED_LANE)
     _write_desk(repo, DESK_FAILING)
     _write_journal([_journal_row(ORPHAN_TICKER, "yes"), _journal_row(PUBLISHED_TICKER, "yes")])
+    _write_png(repo)
     try:
         yield repo
     finally:
@@ -680,3 +708,72 @@ def test_learning_status_is_honest_when_no_wake_has_been_recorded(lane):
     assert block["rows"] == []
     assert block["roles_owed"] == []
     assert "not been recorded" in block["headline"]
+
+
+def test_illustrator_is_owed_when_png_lags_more_than_one_window(lane):
+    _write_png(lane, mtime=1.0)
+
+    state = record_learning_tick()
+
+    stale = _events_of(state, EVENT_BOARD_STALE)
+    assert stale
+    assert stale[0]["roles_owed"] == [ILLUSTRATOR_ROLE]
+    assert [row["role"] for row in state["roles_owed"]] == [ILLUSTRATOR_ROLE]
+    assert state["board"]["stale"] is True
+    assert state["board"]["lag_windows"] > 1
+
+
+def test_one_window_of_trail_does_not_owe_illustrator(lane):
+    # Between the 14:45 and 15:00 ET closes (EDT = UTC-4).
+    mid = datetime(2026, 9, 7, 18, 50, tzinfo=timezone.utc).timestamp()
+    _write_png(lane, mtime=mid)
+
+    state = record_learning_tick()
+
+    assert not _events_of(state, EVENT_BOARD_STALE)
+    assert ILLUSTRATOR_ROLE not in [row["role"] for row in state["roles_owed"]]
+    assert state["board"]["stale"] is False
+    assert state["board"]["lag_windows"] <= 1
+
+
+def test_missing_png_with_two_windows_owes_illustrator(lane):
+    png = (
+        lane
+        / "docs"
+        / "observability-hub"
+        / "data"
+        / "charts"
+        / "learning_lane_15m"
+        / "paper_window_strip.png"
+    )
+    png.unlink()
+
+    state = record_learning_tick()
+
+    assert _events_of(state, EVENT_BOARD_STALE)
+    assert ILLUSTRATOR_ROLE in [row["role"] for row in state["roles_owed"]]
+    assert state["board"]["png_exists"] is False
+
+
+def test_serving_illustrator_without_a_new_png_re_owes_on_the_next_tick(lane):
+    _write_png(lane, mtime=1.0)
+    record_learning_tick()
+    mark_roles_served([ILLUSTRATOR_ROLE])
+
+    later = record_learning_tick()
+
+    assert _events_of(later, EVENT_BOARD_STALE)
+    assert ILLUSTRATOR_ROLE in [row["role"] for row in later["roles_owed"]]
+
+
+def test_fresh_png_clears_the_lag_and_does_not_re_owe(lane):
+    _write_png(lane, mtime=1.0)
+    record_learning_tick()
+    mark_roles_served([ILLUSTRATOR_ROLE])
+    _write_png(lane)
+
+    later = record_learning_tick()
+
+    assert not _events_of(later, EVENT_BOARD_STALE)
+    assert ILLUSTRATOR_ROLE not in [row["role"] for row in later["roles_owed"]]
+    assert later["board"]["stale"] is False

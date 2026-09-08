@@ -73,7 +73,7 @@ PaperWatch alone is **not learning.** Learning has not begun until settled outco
 4. `systems` — `manifest.json` merge; never drop published `paper_win`, never invent pending
 5. `validator` — `python docs/observability-hub/validate_hub.py --strict`
 6. `hub-ui` — only if display is wrong or stale. No number invention
-7. `illustrator` — only if real join/journal files can drive a PNG; else leave the prior real board
+7. `illustrator` — **owed by the wake** when the PNG lags live journal/settlements by more than one window (or there is no PNG and two or more windows of evidence exist). Claude Opus 5; real files only. One window of trail is allowed (the open window). Do not leave this optional
 8. `lab` — only after Operator posts a clear residual **and** the honesty checklist passes. One **PROPOSED** cheap test, paper-only, then `operator`. Never self-admit
 9. CoS schedules the next tick. Do not ping Founder.
 

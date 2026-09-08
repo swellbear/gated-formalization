@@ -121,7 +121,7 @@ Golf WC1 FAIL does **not** transfer into this lane, and nothing on this lane ret
 
 **Start every turn by running the tick.** `python -m golf_offshoot learn-15m` tells you which roles are owed and why. Serve them in the Protocol learning-tick order below; do not ping Founder to approve any of it.
 
-1. **The learning tick order is `lane-15m` → `digestor` → `operator` → `systems` → `validator`.** `hub-ui` runs only if the display is wrong or stale; `illustrator` only if real files can drive a PNG. **`lab` runs only after the honesty gate passes** — see item 5. A tick fires on a new official settle, a new paper fill, or a pending window clearing.
+1. **The learning tick order is `lane-15m` → `digestor` → `operator` → `systems` → `validator`.** `hub-ui` runs only if the display is wrong or stale. **`illustrator` is owed by the wake** when the PNG lags live journal/settlements by more than one window (one window of trail is the open window and is allowed). **`lab` runs only after the honesty gate passes** — see item 5. A tick fires on a new official settle, a new paper fill, a pending window clearing, or a stale board.
    - `lane-15m` — confirm the watch is healthy, do not double-start hubs, stay `SETTLE_PENDING` where there is no Kalshi `result`
    - `digestor` — refresh the SOURCE honesty digest from real files only
    - `operator` — park/Soften only what the spine supports; put leave-off + desk on committed truth
