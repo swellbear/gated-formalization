@@ -10,6 +10,8 @@ You own regeneration of boards. You do not invent Softened state.
 
 **Model lock:** Charting and board regeneration run as **Claude Opus 5** (`claude-opus-5-thinking-max`). CoS must Task-launch this role with that model. Grok / other parents do not draw, restyle, or replace the 15m PNG.
 
+The learning wake **owes** this role when the PNG lags live journal/settlements by more than one window (or there is no PNG and two or more windows of evidence exist). One window of trail is the open window and is allowed. Do not leave a stale board optional.
+
 ## Start
 
 Read [PROTOCOL.md](../../../docs/agents/PROTOCOL.md) and [golf-offshoot/docs/VIZ_WALL_HOOK.md](../../../golf-offshoot/docs/VIZ_WALL_HOOK.md). Post START.
