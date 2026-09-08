@@ -92,6 +92,24 @@
     return typeof value === "string" ? value : "";
   }
 
+  function snapshotAgeMinutes(iso) {
+    var t = Date.parse(iso);
+    if (!iso || isNaN(t)) { return null; }
+    return Math.max(0, Math.round((Date.now() - t) / 60000));
+  }
+
+  function snapshotAgeText(iso) {
+    var mins = snapshotAgeMinutes(iso);
+    if (mins === null) { return ""; }
+    if (mins < 60) {
+      return mins + " minute" + (mins === 1 ? "" : "s") + " old";
+    }
+    var hours = Math.floor(mins / 60);
+    var rem = mins % 60;
+    return hours + " hour" + (hours === 1 ? "" : "s") +
+      (rem ? " " + rem + "m" : "") + " old";
+  }
+
   function list(value) {
     return Array.isArray(value) ? value : [];
   }
@@ -775,7 +793,17 @@
           "every figure here is traceable to a file already committed in this repository."
       ]);
     } else {
-      statusNode.classList.add("is-hidden");
+      var generated = str(manifest.hub && manifest.hub.generated_at);
+      var age = snapshotAgeText(generated);
+      var minsBehind = snapshotAgeMinutes(generated);
+      var behindOneWindow = minsBehind !== null && minsBehind > 15;
+      showNotice(statusNode, behindOneWindow ? "warn" : "info", null, [
+        "Published snapshot generated_at " + (generated || "(missing)") +
+          (age ? " — " + age : "") + ".",
+        behindOneWindow
+          ? "This snapshot is more than one KXBTC15M window behind a live 15-minute loop. A ticker marked pending here is what was true at generated_at, not the current window."
+          : "This page is a snapshot of a live 15-minute loop. A KXBTC15M window rotates about every 15 minutes. A ticker marked pending here is what was true at generated_at, not necessarily the current window."
+      ]);
     }
 
     select(laneFromHash() || str(lanes[0].lane_id), false);

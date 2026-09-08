@@ -1161,7 +1161,10 @@ def _hub_block(*, source_kind: str, generated_at: str) -> dict[str, Any]:
             "Systems export bound to docs/observability-hub/data/SCHEMA.md (PR #151). "
             "Golf figures stay the published Hub fixture unless already on disk. "
             + (
-                "learning_lane_15m paper journal is published in this Pages manifest."
+                "learning_lane_15m paper journal is published in this Pages manifest. "
+                "This file is a snapshot of a live 15-minute loop; generated_at is when "
+                "it was written. A KXBTC15M window rotates about every 15 minutes, so a "
+                "pending ticker here is what was true at generated_at, not necessarily now."
                 if source_kind == "export"
                 else "15m journals stay under /workspace/kalshi_15m_exports/ until published here."
             )
@@ -1221,6 +1224,80 @@ def build_hub_manifest(
         raise RuntimeError(f"canonical lane ids must be golf then learning_lane_15m, got {ids}")
     _walk_forbidden(payload)
     return payload
+
+
+def _lane_publish_fingerprint(lane: dict[str, Any] | None) -> dict[str, Any]:
+    """The fields a reader can mistake for live truth. Not heartbeat / age / generated_at."""
+    lane = lane or {}
+    settle = lane.get("settle") or {}
+    last = lane.get("last_run") or {}
+    learn = lane.get("learning_status") or {}
+    charts = lane.get("charts") or []
+    return {
+        "headline": str(settle.get("headline") or ""),
+        "last_headline": str(last.get("headline") or ""),
+        "residual": tuple(
+            (str(row.get("label") or ""), str(row.get("value") or ""), str(row.get("note") or ""))
+            for row in (settle.get("residual") or [])
+            if isinstance(row, dict)
+        ),
+        "counts": tuple(
+            (str(row.get("label") or ""), str(row.get("value") or ""))
+            for row in (settle.get("counts") or [])
+            if isinstance(row, dict)
+        ),
+        "missing_joins": tuple(
+            (str(row.get("label") or ""), str(row.get("value") or ""))
+            for row in (learn.get("missing_paper_joins") or [])
+            if isinstance(row, dict)
+        ),
+        "pending": tuple(
+            str(row.get("label") or row.get("ticker") or "")
+            for row in (learn.get("pending_windows") or [])
+            if isinstance(row, dict)
+        ),
+        "published": tuple(
+            (
+                str(row.get("label") or ""),
+                str(row.get("value") or ""),
+                str(row.get("published_paper_pnl") or ""),
+            )
+            for row in (learn.get("published_history") or [])
+            if isinstance(row, dict)
+        ),
+        "charts": tuple(
+            (str(slot.get("slot_id") or ""), str(slot.get("status") or ""), str(slot.get("path") or ""))
+            for slot in charts
+            if isinstance(slot, dict)
+        ),
+    }
+
+
+def material_publish_reasons(
+    published: dict[str, Any] | None,
+    candidate: dict[str, Any],
+) -> list[str]:
+    """Why this export should ship to Pages. Empty means heartbeat — do not publish."""
+    if not published:
+        return ["no published manifest to compare"]
+    old = _lane_publish_fingerprint(_lane_by_id(published, LANE_15M))
+    new = _lane_publish_fingerprint(_lane_by_id(candidate, LANE_15M))
+    reasons: list[str] = []
+    if old["headline"] != new["headline"] or old["last_headline"] != new["last_headline"]:
+        reasons.append("settle-status wording changed")
+    if old["residual"] != new["residual"]:
+        reasons.append("settle residual changed")
+    if old["counts"] != new["counts"]:
+        reasons.append("lineage or settle counts changed")
+    if old["missing_joins"] != new["missing_joins"]:
+        reasons.append("missing-paper-join residual changed")
+    if old["pending"] != new["pending"]:
+        reasons.append("pending window identity changed")
+    if old["published"] != new["published"]:
+        reasons.append("published paper history changed")
+    if old["charts"] != new["charts"]:
+        reasons.append("chart slot changed")
+    return reasons
 
 
 def build_observability_payload(

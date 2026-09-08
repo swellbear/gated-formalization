@@ -63,12 +63,12 @@ Canonical ids. The tabs are the loudest thing on the page.
 | `lane_id` | Lane | Lane badge | State today |
 | --- | --- | --- | --- |
 | `golf` | Golf offshoot, Phase 1 observation | `PHASE 1 OBSERVATION` | Real committed exports. Settle banner up, WC1 dated **FAIL**, two charts published. |
-| `learning_lane_15m` | 15-minute Kalshi learning lane (`KXBTC15M`) | `LEARNING LANE` | First fill `KXBTC15M-26SEP071445-45` is settled `paper_win` (Kalshi result=yes, finalized). Live `KXBTC15M-26SEP071500-00` stays `SETTLE_PENDING`. No 15m charts. |
+| `learning_lane_15m` | 15-minute Kalshi learning lane (`KXBTC15M`) | `LEARNING LANE` | Published lineage B: `KXBTC15M-26SEP071445-45` `paper_win` `+1.67`. `KXBTC15M-26SEP071500-00` is a **missing paper join** (Kalshi settled `yes`; paper book not on this tree; no pnl invented) — not a pending window. Charts from real files when present. |
 
-The 15-minute lane publishes the settled first fill (`KXBTC15M-26SEP071445-45`,
-`paper_win`) and keeps the later live fill `KXBTC15M-26SEP071500-00` as
-`SETTLE_PENDING`. Charts stay `not yet available` and are not invented. The golf WC1
-FAIL is a golf record and does not transfer here.
+The 15-minute lane keeps the published first fill (`KXBTC15M-26SEP071445-45`,
+`paper_win`) and states `KXBTC15M-26SEP071500-00` as a missing paper join, not
+`SETTLE_PENDING`. The golf WC1 FAIL is a golf record and does not transfer here.
+The page names `hub.generated_at` and that it is a snapshot of a live loop.
 
 Adding a future lane means adding its id to `CANONICAL_LANES` in both `assets/hub.js` and
 `validate_hub.py`, and adding a tab to `index.html`. An unrecognised `lane_id` is skipped

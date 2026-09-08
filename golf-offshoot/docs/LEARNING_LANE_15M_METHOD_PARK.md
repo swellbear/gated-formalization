@@ -1,7 +1,7 @@
 # Operator — 15m method leftovers PARK (not Softened)
 
 **Track:** `learning_lane_15m` · series `KXBTC15M` only
-**Updated:** 2026-09-07 18:30 EDT (Operator fold of the first real SOURCE digest)
+**Updated:** 2026-09-07 21:13 EDT (Operator PARK of Lab PROPOSED 01 — not an ADMIT)
 **State:** **PARK.** No dated ADMIT on this lane. No Soften. No edge claim. `lab_admits=false` · Trading **NOT ARMED**
 **Golf idle:** stays **ON** (WC3+ only on a new settled week). This file does not clear it, does not touch golf θ, and does not rewrite `phase1_dryrun/OPERATOR_STATUS_STAMP.md`.
 
@@ -107,9 +107,9 @@ This fold does **not** lift the HOLD and is not evidence toward lifting it.
 
 | | |
 |---|---|
-| **Parked state** | **Not opened.** Lab is gated by CoS. `lab_gate.honesty_gate_passed` is false; the wake reports Lab **NOT owed** with `why`: *"honesty gate has not passed -- not passed: `KXBTC15M-26SEP071500-00` honestly joined or pending with a true reason"* |
-| **Trigger to reopen** | Both: CoS re-stamps the checklist **all-PASS**, **and** Operator posts a clear residual on the desk. Then Lab may bring **one** cheap paper-only **PROPOSED** test → back to `operator`. Lab never self-admits |
-| **Under golf idle** | A new PROPOSED invent arriving *without* that gate is an **idle-breach REJECT**, not a Soften |
+| **Parked state** | **Named horse not opened.** The one cheap paper-only PROPOSED slot opened after the honesty gate and is **PARKED** as row 10 — not a named horse, not a board, not an admit |
+| **Trigger to reopen** | Both already fired (CoS all-PASS 19:58 ET **and** Operator residual on desk). Lab brought **one** cheap paper-only PROPOSED — it is **PARKED** as row 10, **not** admitted. A **second** PROPOSED is not owed |
+| **Under golf idle** | A new **named-horse** invent (WC3+ / new board) arriving without a fresh Founder GO that names it is still an **idle-breach REJECT**, not a Soften. Row 10 is not that invent |
 
 ### 9. Zero-edge fills — the observation gap (residual, not a board)
 
@@ -117,8 +117,23 @@ This fold does **not** lift the HOLD and is not evidence toward lifting it.
 |---|---|
 | **Parked state** | `src/golf_offshoot/learning_lane_15m/paper.py` hardcodes `entry_edge=0.0` on the position and `edge_w=0.0` / `posted_edge=0.0` on the movement, and takes every fill at `paper_mark` (public mid, else `yes_ask`). `model_win` equals the mark — **the model is the market.** Nothing is being selected, so the win/lose split across settled windows measures the market's own noise, not a method |
 | **Why it is parked** | It is the honest reason this lane cannot produce an edge claim no matter how many windows join. It is a **residual**, stated so a later bot does not read the settled table as a hit rate |
-| **Trigger to reopen** | Row 8's gate opens (checklist all-PASS **and** an Operator residual on the desk). Only then may Lab bring one cheap **paper-only** test against it |
-| **Not opened here** | This row is **not** a PROPOSED board, **not** a test design, and **not** an admit. Operator does not propose Lab's test for it |
+| **Trigger to reopen** | Row 8's gate opened; Lab brought one cheap paper-only test against this residual. That candidate is **PARKED** as row 10 — **not** admitted, **not** scheduled |
+| **Not opened here** | This row stays the residual, not the test. The test design lives in [`LEARNING_LANE_15M_LAB_PROPOSED_01.md`](LEARNING_LANE_15M_LAB_PROPOSED_01.md) and the Operator decision is row 10 |
+
+### 10. Lab PROPOSED 01 — charge the documented fee, read the hurdle (**PARK**, not ADMIT)
+
+Candidate: [`LEARNING_LANE_15M_LAB_PROPOSED_01.md`](LEARNING_LANE_15M_LAB_PROPOSED_01.md) (Lab, 2026-09-07 20:05 EDT). Spine this folds against: digest §3f / §6 and park row 9.
+
+| | |
+|---|---|
+| **Parked state** | Lab PROPOSED a cheap paper-only **arithmetic** test: charge the documented `fee_type=quadratic × fee_multiplier=1` against settled books already on disk and read the per-fill hurdle the current zero-fee pnl omits. **PARK.** Not an ADMIT. Not Softened. Not scheduled. Not a board. Not a named horse |
+| **What Lab found (cite, not re-derived as an admit)** | The lane **records** the fee regime as metadata (`fee_type=quadratic`, `fee_multiplier=1` in `data_feeds/kalshi_15m.py:54`–`:55`, copied into books/movements) and settle pays `payout = stake × decimal_odds` / `pnl = payout − stake` with **no fee term** (`settle.py:345`–`:346`). Cited from the PROPOSED §1; Operator does not re-derive it as an admit and did **not** run the arithmetic this fold |
+| **Falsifiers (stay attached)** | All four from the PROPOSED §3. **Especially F1:** if `k` is not on a **public** Kalshi document, the test dies — no coefficient invented, no fee-accurate number published, no key requested. F2: fee rounds to $0.00/fill at the $1 unit → cosmetic. F3: total fee < 1% of stake → immaterial. F4: fee-accurate pnl is not strictly ≤ recorded pnl on some window → model wrong, withdraw |
+| **Trigger to reopen** | A **public URL + retrieval date** for `k`, **or** a Founder **GO that names this test** |
+| **Not a trigger** | Inventing `k` · running the arithmetic with an unsourced coefficient · Lab self-admit · a tidy tick · restating park facts · enough windows accumulating |
+| **Not run this fold** | `k` is unsourced in the PROPOSED on purpose. Operator does not source it, does not invent it, and does not compute a hurdle |
+
+`lab_admits=false`. Paper fills are not admits; this PROPOSED is not an admit. Golf idle stays **ON**. Founder HOLD (row 7) stands. No θ. No WC3+. Golf Operator stamp untouched.
 
 ---
 
@@ -130,7 +145,8 @@ This fold does **not** lift the HOLD and is not evidence toward lifting it.
 - Retune golf θ from this lane · rewrite the golf Operator stamp · reopen WC3+ · clear golf idle
 - Hire a Soften Critic (**not hired** — do not invent the role)
 - Lift the Founder HOLD (row 7) · expand past `KXBTC15M` · arm trading, keys, orders or cash
+- Invent `k` · run the fee arithmetic without a public URL + retrieval date · treat row 10 as scheduled or as an ADMIT
 
 ## Handoff
 
-`systems` re-words `manifest.json` (row 5) → `validator --strict`. `illustrator` re-renders only from current real files, else the prior real board stands. CoS keeps the learning tick looping; Lab stays idle until row 8's trigger fires.
+CoS: Lab PROPOSED 01 is **PARKED** as row 10 — not admitted, not scheduled. Reopen only on a public URL + retrieval date for `k`, or a Founder GO that names this test. Lab does not bring a second PROPOSED. `systems` / `illustrator` still own row 5 if those surfaces are stale. Golf idle stays **ON**. Founder HOLD (row 7) stands.

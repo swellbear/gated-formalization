@@ -3,9 +3,9 @@
   "hub": {
     "title": "gated-formalization \u2014 observability hub",
     "subtitle": "Read-only mirror of published artifacts. No controls, no cash, no keys.",
-    "generated_at": "2026-09-07T20:04:08.172737-04:00",
+    "generated_at": "2026-09-07T21:28:39.336203-04:00",
     "source_kind": "export",
-    "source_note": "Systems export bound to docs/observability-hub/data/SCHEMA.md (PR #151). Golf figures stay the published Hub fixture unless already on disk. learning_lane_15m paper journal is published in this Pages manifest.",
+    "source_note": "Systems export bound to docs/observability-hub/data/SCHEMA.md (PR #151). Golf figures stay the published Hub fixture unless already on disk. learning_lane_15m paper journal is published in this Pages manifest. This file is a snapshot of a live 15-minute loop; generated_at is when it was written. A KXBTC15M window rotates about every 15 minutes, so a pending ticker here is what was true at generated_at, not necessarily now.",
     "control_surface_note": "The control surface is the local operator shell at 127.0.0.1:8765 on the operator's own machine. It is deliberately not reachable from this page and is not linked from it."
   },
   "global": {
@@ -344,7 +344,7 @@
       "lane_scope_note": "Everything in this tab is learning_lane_15m. Golf WC1 / Ill do not transfer.",
       "last_run": {
         "status": "published export",
-        "headline": "Lineage B published KXBTC15M-26SEP071445-45 paper_win +1.67. KXBTC15M-26SEP071500-00: The published lineage names a paper book for this window and the book is not on this tree. No official result for it is on this tree either. Nothing is inferred in either direction. Lineage A holds 19 paper books on this tree, counted apart from lineage B and never added to it. Observation only.",
+        "headline": "Lineage B published KXBTC15M-26SEP071445-45 paper_win +1.67. KXBTC15M-26SEP071500-00: The published lineage names a paper book for this window and the book is not on this tree. No official result for it is on this tree either. Nothing is inferred in either direction. Lineage A holds 24 paper books on this tree, counted apart from lineage B and never added to it. Observation only.",
         "fields": [
           {
             "label": "Series",
@@ -418,16 +418,16 @@
           {
             "label": "Learning wake",
             "value": "crew work owed",
-            "note": "Crew work is owed: digestor, operator, systems, validator."
+            "note": "Crew work is owed: digestor, operator, systems, validator, illustrator."
           },
           {
             "label": "Crew roles owed",
-            "value": "digestor, operator, systems, validator",
-            "note": "digestor owed 1h 46m; operator owed 1h 31m; systems owed 16m 51s; validator owed 1m 32s"
+            "value": "digestor, operator, systems, validator, illustrator",
+            "note": "digestor owed 3h 11m; operator owed 2h 55m; systems owed 1h 41m; validator owed 1h 26m; illustrator owed 6m 38s"
           },
           {
             "label": "Wake checked",
-            "value": "2026-09-07 20:02:36 EDT"
+            "value": "2026-09-07 21:27:07 EDT"
           }
         ],
         "notes": [
@@ -442,7 +442,7 @@
       "settle": {
         "banner": "SETTLE_PENDING",
         "banner_state": "pending",
-        "headline": "KXBTC15M-26SEP071500-00 is a missing paper join, not a pending window: Kalshi settled it and the result is on the tape, the paper book the published lineage names is not on this tree, so there is no paper pnl here and none is invented. KXBTC15M-26SEP072015-15 is SETTLE_PENDING for want of a Kalshi result. can_close_early: wait; if close_time moves the window re-keys. Lineage B still publishes KXBTC15M-26SEP071445-45 paper_win +1.67. Lineage A and lineage B are two separate paper books over the same series. Their counts and pnl figures are never added together.",
+        "headline": "KXBTC15M-26SEP071500-00 is a missing paper join, not a pending window: Kalshi settled it and the result is on the tape, the paper book the published lineage names is not on this tree, so there is no paper pnl here and none is invented. KXBTC15M-26SEP072130-30 is SETTLE_PENDING for want of a Kalshi result. can_close_early: wait; if close_time moves the window re-keys. Lineage B still publishes KXBTC15M-26SEP071445-45 paper_win +1.67. Lineage A and lineage B are two separate paper books over the same series. Their counts and pnl figures are never added together.",
         "counts": [
           {
             "label": "Pending windows",
@@ -450,7 +450,7 @@
           },
           {
             "label": "Settled windows",
-            "value": "18",
+            "value": "23",
             "note": "Official Kalshi settle files on this tree. Not lineage B's book, and not a denominator for the lineage B paper_win below it."
           },
           {
@@ -592,6 +592,31 @@
           },
           {
             "label": "KXBTC15M-26SEP072015-15",
+            "value": "settled",
+            "note": "official Kalshi result=no matched to CF Benchmarks. CRYPTO15M: official and final value is the simple average of 60 CF Benchmarks RTI prints in the last minute before expiration, rounded to 2 decimals. This adapter records the rule. It does not DIY that average as a settle."
+          },
+          {
+            "label": "KXBTC15M-26SEP072030-30",
+            "value": "settled",
+            "note": "official Kalshi result=no matched to CF Benchmarks. CRYPTO15M: official and final value is the simple average of 60 CF Benchmarks RTI prints in the last minute before expiration, rounded to 2 decimals. This adapter records the rule. It does not DIY that average as a settle."
+          },
+          {
+            "label": "KXBTC15M-26SEP072045-45",
+            "value": "settled",
+            "note": "official Kalshi result=yes matched to CF Benchmarks. CRYPTO15M: official and final value is the simple average of 60 CF Benchmarks RTI prints in the last minute before expiration, rounded to 2 decimals. This adapter records the rule. It does not DIY that average as a settle."
+          },
+          {
+            "label": "KXBTC15M-26SEP072100-00",
+            "value": "settled",
+            "note": "official Kalshi result=yes matched to CF Benchmarks. CRYPTO15M: official and final value is the simple average of 60 CF Benchmarks RTI prints in the last minute before expiration, rounded to 2 decimals. This adapter records the rule. It does not DIY that average as a settle."
+          },
+          {
+            "label": "KXBTC15M-26SEP072115-15",
+            "value": "settled",
+            "note": "official Kalshi result=yes matched to CF Benchmarks. CRYPTO15M: official and final value is the simple average of 60 CF Benchmarks RTI prints in the last minute before expiration, rounded to 2 decimals. This adapter records the rule. It does not DIY that average as a settle."
+          },
+          {
+            "label": "KXBTC15M-26SEP072130-30",
             "value": "SETTLE_PENDING",
             "note": "SETTLE_PENDING"
           }
@@ -642,11 +667,11 @@
           },
           {
             "label": "Lineage A \u00b7 settled paper books on this tree",
-            "value": "18"
+            "value": "23"
           },
           {
             "label": "Lineage A \u00b7 ledger entries on this tree",
-            "value": "38"
+            "value": "48"
           }
         ],
         "absent_fields": [
@@ -664,21 +689,21 @@
       "records_note": "No weekly operating record exists for this lane. Do not read the golf WC1 FAIL as this lane's result.",
       "learning_status": {
         "status": "crew work owed",
-        "headline": "Crew work is owed: digestor, operator, systems, validator.",
-        "updated_at": "2026-09-07T20:02:36.048222-04:00",
-        "updated_text": "2026-09-07 20:02:36 EDT",
+        "headline": "Crew work is owed: digestor, operator, systems, validator, illustrator.",
+        "updated_at": "2026-09-07T21:27:07.334594-04:00",
+        "updated_text": "2026-09-07 21:27:07 EDT",
         "rows": [
           {
             "label": "Roles owed",
-            "value": "4"
+            "value": "5"
           },
           {
             "label": "Settled windows seen on this tree",
-            "value": "20"
+            "value": "23"
           },
           {
             "label": "Paper books on this tree",
-            "value": "19"
+            "value": "24"
           },
           {
             "label": "Pending windows on this tree",
@@ -693,28 +718,38 @@
             "label": "Published paper history kept",
             "value": "1",
             "note": "KXBTC15M-26SEP071445-45 paper_win +1.67"
+          },
+          {
+            "label": "Board lag",
+            "value": "1",
+            "note": "PNG is current (1 window(s) ahead of the board; one is allowed)"
           }
         ],
         "roles_owed": [
           {
             "label": "digestor",
-            "value": "owed 1h 46m",
-            "note": "new_fill KXBTC15M-26SEP071945-45; pending_cleared KXBTC15M-26SEP071930-30; new_settle KXBTC15M-26SEP071945-45; new_fill KXBTC15M-26SEP072000-00; pending_cleared KXBTC15M-26SEP071945-45; new_fill KXBTC15M-26SEP072015-15; new_settle KXBTC15M-26SEP072000-00; pending_cleared KXBTC15M-26SEP072000-00"
+            "value": "owed 3h 11m",
+            "note": "new_fill KXBTC15M-26SEP072100-00; pending_cleared KXBTC15M-26SEP072045-45; new_settle KXBTC15M-26SEP072100-00; new_fill KXBTC15M-26SEP072115-15; pending_cleared KXBTC15M-26SEP072100-00; new_settle KXBTC15M-26SEP072115-15; new_fill KXBTC15M-26SEP072130-30; pending_cleared KXBTC15M-26SEP072115-15"
           },
           {
             "label": "operator",
-            "value": "owed 1h 31m",
-            "note": "new_fill KXBTC15M-26SEP071945-45; pending_cleared KXBTC15M-26SEP071930-30; new_settle KXBTC15M-26SEP071945-45; new_fill KXBTC15M-26SEP072000-00; pending_cleared KXBTC15M-26SEP071945-45; new_fill KXBTC15M-26SEP072015-15; new_settle KXBTC15M-26SEP072000-00; pending_cleared KXBTC15M-26SEP072000-00"
+            "value": "owed 2h 55m",
+            "note": "new_fill KXBTC15M-26SEP072100-00; pending_cleared KXBTC15M-26SEP072045-45; new_settle KXBTC15M-26SEP072100-00; new_fill KXBTC15M-26SEP072115-15; pending_cleared KXBTC15M-26SEP072100-00; new_settle KXBTC15M-26SEP072115-15; new_fill KXBTC15M-26SEP072130-30; pending_cleared KXBTC15M-26SEP072115-15"
           },
           {
             "label": "systems",
-            "value": "owed 16m 51s",
-            "note": "new_settle KXBTC15M-26SEP071945-45; new_fill KXBTC15M-26SEP072000-00; pending_cleared KXBTC15M-26SEP071945-45; new_fill KXBTC15M-26SEP072015-15; new_settle KXBTC15M-26SEP072000-00; pending_cleared KXBTC15M-26SEP072000-00"
+            "value": "owed 1h 41m",
+            "note": "new_fill KXBTC15M-26SEP072100-00; pending_cleared KXBTC15M-26SEP072045-45; new_settle KXBTC15M-26SEP072100-00; new_fill KXBTC15M-26SEP072115-15; pending_cleared KXBTC15M-26SEP072100-00; new_settle KXBTC15M-26SEP072115-15; new_fill KXBTC15M-26SEP072130-30; pending_cleared KXBTC15M-26SEP072115-15"
           },
           {
             "label": "validator",
-            "value": "owed 1m 32s",
-            "note": "new_fill KXBTC15M-26SEP072015-15; new_settle KXBTC15M-26SEP072000-00; pending_cleared KXBTC15M-26SEP072000-00"
+            "value": "owed 1h 26m",
+            "note": "new_fill KXBTC15M-26SEP072100-00; pending_cleared KXBTC15M-26SEP072045-45; new_settle KXBTC15M-26SEP072100-00; new_fill KXBTC15M-26SEP072115-15; pending_cleared KXBTC15M-26SEP072100-00; new_settle KXBTC15M-26SEP072115-15; new_fill KXBTC15M-26SEP072130-30; pending_cleared KXBTC15M-26SEP072115-15"
+          },
+          {
+            "label": "illustrator",
+            "value": "owed 6m 38s",
+            "note": "board_stale KXBTC15M-26SEP072115-15"
           }
         ],
         "lab": "no Operator residual was passed in; Lab never starts from a scan alone",
@@ -731,7 +766,7 @@
         ],
         "pending_windows": [
           {
-            "label": "KXBTC15M-26SEP072015-15",
+            "label": "KXBTC15M-26SEP072130-30",
             "value": "SETTLE_PENDING",
             "note": "SETTLE_PENDING: can_close_early is set. Wait for the Kalshi result. Do not invent from close_time or a DIY CFB average.",
             "kind": "awaiting_kalshi_result"

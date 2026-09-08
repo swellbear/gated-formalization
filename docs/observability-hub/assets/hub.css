@@ -567,6 +567,7 @@ body.lightbox-open { overflow: hidden; }
 .notice p { margin: 0 0 0.4rem; }
 .notice p:last-child { margin-bottom: 0; }
 .notice-loading { color: var(--muted); }
+.notice-info { border-color: var(--line); border-left: 5px solid var(--line); color: var(--muted); }
 .notice-warn { border-color: var(--pending); border-left: 5px solid var(--pending); background: #fdf6e3; }
 .notice-refusal { border-color: var(--no); border-left: 5px solid var(--no); background: #fdeaea; }
 .notice-refusal h2 { margin: 0 0 0.4rem; font-size: 1.1rem; color: var(--no); }
