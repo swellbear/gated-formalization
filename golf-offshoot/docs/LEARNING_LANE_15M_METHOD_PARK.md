@@ -43,6 +43,8 @@ Numbers move while the watch runs. This file names **states and triggers**, not 
 
 Three CLOSED-unreachable rows means this file had been carrying more closed business than open business under a deferral label. That is now named.
 
+After cleanup, **3 of 5 open parks are founder** and **1 is crew** (row 9). The aging clock has one row to work on. Do not mistake that for load-bearing crew work.
+
 ---
 
 ## Open parks

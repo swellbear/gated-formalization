@@ -77,6 +77,8 @@ n = **24** settled `paper/KXBTC15M-*.json` with a `settled_at`. Stake is $1.00 o
 
 **Hurdle.** At the $1 unit, any later selection rule on this lane has to beat about **four cents a fill** (more on cheap marks, less on marks near 1.0) before a positive paper pnl means anything against this omitted cost. That is bookkeeping. It is not a method result.
 
+**Consequence (still this note only).** Recorded `settlement_pnl` on disk was computed with **no fee term** (`settle.py` pays `stake × decimal_odds`). Every pnl figure on this tree is therefore **optimistic by a known amount** — the ceil-cent fee in the table above, $0.01–$0.05 per fill, $0.94 across these 24 books. That includes the live ledger's running total. The number on disk is not the number a taker would have booked. This sentence does not restate those pnl figures on the hub, does not change a paper file, is not an ADMIT, and is not evidence toward lifting the HOLD.
+
 ---
 
 ## Falsifiers

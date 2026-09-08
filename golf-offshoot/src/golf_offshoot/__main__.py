@@ -182,7 +182,18 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument(
         "--runner-mode",
         default="",
-        help="learn-15m-runner: dry-run (default), off (kill switch), or armed (refused until Founder arms it)",
+        help="learn-15m-runner: dry-run (default) or armed (refused until Founder writes latest/RUNNER_ARMED)",
+    )
+    parser.add_argument(
+        "--passes",
+        type=int,
+        default=1,
+        help="learn-15m-runner: how many passes; the kill file is re-read at the start of each",
+    )
+    parser.add_argument(
+        "--kill-runner",
+        action="store_true",
+        help="learn-15m-runner: write latest/RUNNER_KILL and stop (does not touch PaperWatch)",
     )
     parser.add_argument(
         "--dry-run",
@@ -1038,14 +1049,25 @@ def _cmd_learn_15m(args) -> int:
 
 def _cmd_learn_15m_runner(args) -> int:
     """Clerical runner. Dry-run until Founder arms it. Never writes a claim."""
-    from golf_offshoot.learning_lane_15m.runner import format_runner_line, run_once
+    from golf_offshoot.learning_lane_15m.runner import (
+        format_runner_line,
+        run_once,
+        run_passes,
+        write_kill_switch,
+    )
 
-    mode = str(getattr(args, "runner_mode", "") or "").strip() or None
-    entry = run_once(mode=mode)
-    if getattr(args, "as_json", False):
-        print(json.dumps(entry, indent=2))
+    if getattr(args, "kill_runner", False):
+        path = write_kill_switch()
+        print(f"learning runner  KILL FILE {path}")
         return 0
-    print(format_runner_line(entry))
+    mode = str(getattr(args, "runner_mode", "") or "").strip() or None
+    passes = max(1, int(getattr(args, "passes", 1) or 1))
+    entries = run_passes(passes, mode=mode) if passes > 1 else [run_once(mode=mode)]
+    if getattr(args, "as_json", False):
+        print(json.dumps(entries if passes > 1 else entries[0], indent=2))
+        return 0
+    for entry in entries:
+        print(format_runner_line(entry))
     return 0
 
 
