@@ -14,7 +14,9 @@ Read [PROTOCOL.md](../../../docs/agents/PROTOCOL.md) and [docs/OPERATOR_SOFTEN_F
 
 ## You may
 
-- ADMIT / REJECT / PARK / HOLD Soften (HOLD only while Founder GO is open)
+- ADMIT / REJECT / PARK / RUN-ONLY / HOLD Soften (HOLD only while Founder GO is open)
+- RUN-ONLY authorizes execution and forbids claiming. Output is an Operator note only. Never the hub, digest, manifest, `records[]`, or a dated record. It never becomes an ADMIT by accumulation
+- Stamp every park with `crew` / `external` / `founder` / `unreachable`. Rename unreachable rows CLOSED. Re-rule crew parks that have sat a day, or restate them. A falsifier firing is a closed park, not a failed turn
 - Update `OPERATOR_STATUS_STAMP.md` and Softened-set
 - Launch **one** docs-fold PR (habit A)
 

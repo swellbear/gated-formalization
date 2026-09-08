@@ -1,6 +1,6 @@
 # Lab — PROPOSED 01: charge the documented fee, and read the hurdle it prints
 
-**State:** **PARKED** by `operator` 2026-09-07 21:13 EDT. **Not** Softened, **not** admitted, **not** scheduled, **not** a board. Decision: [`LEARNING_LANE_15M_METHOD_PARK.md`](LEARNING_LANE_15M_METHOD_PARK.md) row 10. Reopen: public URL + retrieval date for `k`, or Founder GO naming this test.
+**State:** **RUN-ONLY** by `operator` 2026-09-07 21:40 EDT. **Not** Softened, **not** admitted, **not** a board, **not** a dashboard figure. Decision and hurdle: [`LEARNING_LANE_15M_OPERATOR_NOTE_PROPOSED_01.md`](LEARNING_LANE_15M_OPERATOR_NOTE_PROPOSED_01.md). Public `k` URL: `https://kalshi.com/docs/kalshi-fee-schedule.pdf` retrieved 2026-09-07. F1–F4 did not fire. Promotion still requires the normal ADMIT gate.
 **Lane:** `learning_lane_15m` · series `KXBTC15M` only
 **Role:** `lab` — `lab_admits=false`. Lab never admits its own candidate ([`.cursor/skills/gpf-lab/SKILL.md`](../../.cursor/skills/gpf-lab/SKILL.md)).
 **Admit?** N · **Soften?** N · **Trading ARMED?** N · **Keys / orders / cash?** none

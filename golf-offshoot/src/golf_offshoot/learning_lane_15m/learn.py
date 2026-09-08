@@ -956,8 +956,17 @@ def mark_roles_served(
     *,
     by: str = "",
     note: str = "",
+    served_kind: str = "human",
 ) -> dict[str, Any] | None:
-    """Clear owed roles. Only a role that really ran calls this; the loop never does."""
+    """Clear owed roles. Only a role that really ran calls this; the loop never does.
+
+    ``served_kind`` is permanent provenance: ``human`` or ``auto``. The runner
+    may pass ``auto`` only after the artifact it was asked to produce actually
+    changed on disk.
+    """
+    kind = str(served_kind or "human").strip().lower()
+    if kind not in {"human", "auto"}:
+        raise ValueError("served_kind must be 'human' or 'auto'")
     state = load_wake_state()
     if state is None:
         return None
@@ -976,6 +985,7 @@ def mark_roles_served(
                     "served_at": at,
                     "served_by": by or _as_str(entry.get("role")),
                     "served_note": note,
+                    "served_kind": kind,
                 },
             )
         else:

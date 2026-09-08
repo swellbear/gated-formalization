@@ -84,6 +84,14 @@ Nothing new on a tick: CoS posts **one** desk heartbeat line (no new settle; wat
 
 The wake path detects evidence and names which roles are owed. It never writes a Digestor / Operator / Lab thread line, never Softens, and never ADMITs. The desk shows a role only when that role actually ran.
 
+### Clerical runner (dry-run until Founder arms it)
+
+`python -m golf_offshoot learn-15m-runner` may serve **only** the named whitelist: Illustrator re-render, Systems publish, Digestor digest. Everything else stays owed for a human. Judicial work (ADMIT, RUN-ONLY, closing a park, lifting the HOLD) is never on the list.
+
+It ships in **dry-run**. It logs what it would serve and serves nothing. `GOLF_OFFSHOOT_LEARNING_RUNNER=off` (or `--runner-mode off`) is the kill switch and stops it dead. It goes live only on Founder's explicit word. When later armed, it may call `mark_roles_served` only after the artifact actually changed on disk, with `served_kind=auto`. Exit code 0 is not proof. Auto-served and human-served turns stay distinguishable forever.
+
+Do not automate publication until publication is a verified tick step.
+
 ### Honesty gate before Lab invents
 
 CoS stamps these on the desk first. Any box failing ⇒ `digestor` + `operator` fix honesty and Lab stays idle.
@@ -92,6 +100,54 @@ CoS stamps these on the desk first. Any box failing ⇒ `digestor` + `operator` 
 - `KXBTC15M-26SEP071500-00` honestly joined, or pending with its true reason (original book not on this tree / no invent)
 - No invented charts or pnl
 - One hub process for `learning_lane_15m`
+
+### Operator verdicts (claims vs arithmetic)
+
+Operator has **three** verdicts on a Lab PROPOSED. Lab, CoS, and the wake issue none of them.
+
+| Verdict | Authorizes | Forbids | Where the output lives |
+|---|---|---|---|
+| **ADMIT** | A dated claim | Nothing about the claim once dated | Dated record. Still requires a real dated result. `lab_admits=false` |
+| **RUN-ONLY** | Execution | Claiming. Never becomes an ADMIT by accumulation | An Operator note only. Never `manifest.json`, never the digest, never the hub, never `records[]`, never a dated record |
+| **PARK** | Waiting | Execution and claiming | Method park, with a trigger class |
+
+Promotion from RUN-ONLY to a claim uses the normal ADMIT gate, exactly as strict as today. A falsifier firing is a **complete, successful outcome**: record it as a park closed on that falsifier. Do not delete it silently. Do not score a dead test as a failed turn.
+
+The method gates **claims**, not arithmetic. "Cannot admit" is not "cannot compute."
+
+### CoS routing for a PROPOSED
+
+Route a PROPOSED to **RUN-ONLY** rather than park when all four hold, unless Operator names a **specific** objection:
+
+1. Deterministic — no new data collection, no waiting to accumulate n
+2. Adds no code to the running loop
+3. Output is quarantined to an Operator note
+4. It carries at least one live falsifier
+
+"Let us be careful" is not an objection. "That document read is outside public-read-only posture" is. A well-falsified cheap test is easier to authorize than a vague one. A test pre-committed to dying is the safest thing available to authorize.
+
+### Park trigger classes
+
+Every park row is stamped with exactly one class:
+
+| Class | Meaning |
+|---|---|
+| **crew** | The crew can make the trigger fire on this tree |
+| **external** | Needs an outside event or a recovery outside crew control |
+| **founder** | Founder alone |
+| **unreachable** | Cannot fire, ever. These are renamed **CLOSED** with the reason and are not listed as open parks |
+
+A park whose trigger can never fire is a rejection wearing a deferral's clothes. That is an honesty defect.
+
+### Park aging (re-rule, never a forced conclusion)
+
+Any **crew** park that has not been re-ruled within roughly one day of active loop returns to Operator for **one line**: restate the trigger, reclassify it, or close it. Restating is legitimate. Silence is what is ruled against, not deferral. Never pressure a role toward a verdict.
+
+**external** and **founder** rows age without pressure. They are not the crew's to fire.
+
+### Park ledger
+
+Systems owns the counts. The ledger is an honesty instrument, not a productivity metric: total open parks, count in each class, how many triggers fired since the last stamp, how many closed on a falsifier. If nothing has fired in a long stretch, that stays visible. Validator checks the framing does not read as progress theater.
 
 ## Routing
 
@@ -102,7 +158,7 @@ CoS stamps these on the desk first. Any box failing ⇒ `digestor` + `operator` 
 | Write `manifest.json` / export | `systems` | `validator` |
 | Hub chrome, tabs, enlarge, copy | `hub-ui` (Claude Opus 5 when the job is a chart/board) | `validator` |
 | `validate_hub.py` + Hard-NO language | `validator` | CoS |
-| Soften / dated-record ADMIT / stamp | `operator` | Digestor or Illustrator if needed |
+| Soften / dated-record ADMIT / RUN-ONLY / park class / stamp | `operator` | Digestor or Illustrator if needed |
 | Invent / cheap-test (never admit) | `lab` | `operator` |
 | SOURCE honesty / living spine | `digestor` | `operator` |
 | Charts from real files only | `illustrator` (**Claude Opus 5**) | `hub-ui` or `validator` |
