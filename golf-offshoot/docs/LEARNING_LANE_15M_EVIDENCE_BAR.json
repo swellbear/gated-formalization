@@ -3,13 +3,13 @@
   "lane": "learning_lane_15m",
   "series": "KXBTC15M",
   "drafted_at": "2026-09-08T08:30:00-04:00",
-  "amended_at": "2026-09-08T18:20:00-04:00",
+  "amended_at": "2026-09-08T18:45:00-04:00",
   "amended_by": "operator",
-  "amendment": "admit pass on Soften Critic CRITIC 04; see LEARNING_LANE_15M_EVIDENCE_BAR_OPERATOR_ANSWER_04.md",
+  "amendment": "admit pass on Soften Critic CRITIC 05; see LEARNING_LANE_15M_EVIDENCE_BAR_OPERATOR_ANSWER_05.md",
   "prior_amendment": {
-    "amended_at": "2026-09-08T17:42:00-04:00",
-    "commit": "9fb75e2",
-    "note": "CRITIC 03 admit pass. Named R-SKIP-2TO1-FAVORITE and the missing favorite_odds=2 preregistration row. Binding condition 1 was left met:false on those new bytes — CRITIC 04 attacks them."
+    "amended_at": "2026-09-08T18:20:00-04:00",
+    "commit": "1ea689e",
+    "note": "CRITIC 04 admit pass. Restated next-look reject 0.504, struck failing_set as other bytes, removed conventional-prior dies_if, dropped 0a480d4 live-tip, labeled lived/replay prose-only. Binding condition 1 was left met:false on those new bytes — CRITIC 05 attacks them."
   },
   "binding": false,
   "binding_rule": "Becomes binding only after (1) a Soften Critic written attack from a session that did not draft the bar, with Operator sustaining or explicitly overruling every objection with a stated reason in a separate turn, attack and answers both linked from the bar; (2) critic-invariants passing on the bytes proposed to bind, or every failing check named on the bar's face with Operator's reason for binding anyway; and (3) Founder read-once acknowledgement.",
@@ -17,22 +17,22 @@
     {
       "id": "critic_answered",
       "met": false,
-      "detail": "An answer that amends the bar does not close condition 1 on the amended text. LEARNING_LANE_15M_EVIDENCE_BAR_OPERATOR_ANSWER_04.md answers CRITIC 04 (bytes E7DD9DE5…) on the ANSWER 03 hashes 2732552E… / 1269395C…. These bytes are not that digest. Soften Critic is re-owed on this amendment. CRITIC 03 remains answered in OPERATOR_ANSWER_03.md for its own hashes. CRITIC 02 remains answered in OPERATOR_ANSWER_02.md for its own hashes. CRITIC 01 remains answered in OPERATOR_ANSWER_01.md.",
-      "critic_file": "golf-offshoot/docs/LEARNING_LANE_15M_EVIDENCE_BAR_CRITIC_04.md",
-      "critic_sha256_bytes": "e7dd9de5bce5e0387ae0524a14023288324a9a2040d0d3a594bb69af18402566",
-      "answer_file": "golf-offshoot/docs/LEARNING_LANE_15M_EVIDENCE_BAR_OPERATOR_ANSWER_04.md",
-      "answered_bar_md_sha256": "2732552e66ebc97c273fda46b662b12c1a348bdedb6c4c7e40bb38c69413277d",
-      "answered_bar_json_sha256": "1269395c12b789444176e580a8915ef4f2bc4fd383b809398bd5c585cb0fcac6",
+      "detail": "An answer that amends the bar does not close condition 1 on the amended text. LEARNING_LANE_15M_EVIDENCE_BAR_OPERATOR_ANSWER_05.md answers CRITIC 05 (bytes 03157E7D…) on the ANSWER 04 hashes D9B484FD… / 48EAE5D1…. These bytes are not that digest. Soften Critic is re-owed on this amendment. CRITIC 04 remains answered in OPERATOR_ANSWER_04.md for its own hashes. CRITIC 03 remains answered in OPERATOR_ANSWER_03.md for its own hashes. CRITIC 02 remains answered in OPERATOR_ANSWER_02.md for its own hashes. CRITIC 01 remains answered in OPERATOR_ANSWER_01.md.",
+      "critic_file": "golf-offshoot/docs/LEARNING_LANE_15M_EVIDENCE_BAR_CRITIC_05.md",
+      "critic_sha256_bytes": "03157e7de8fcfdb8d4c14ab2ae7b90be8562c84269a2a23bc382839a3923ed6f",
+      "answer_file": "golf-offshoot/docs/LEARNING_LANE_15M_EVIDENCE_BAR_OPERATOR_ANSWER_05.md",
+      "answered_bar_md_sha256": "d9b484fdebffe3f5e5f8ffffa63c445f17e6dc9641c18e89433c12867c635ba7",
+      "answered_bar_json_sha256": "48eae5d10f2894205603dcb0665dbf2aadcf73c15b9fa4553728faabc722d2af",
       "prior_pair": {
-        "critic_file": "golf-offshoot/docs/LEARNING_LANE_15M_EVIDENCE_BAR_CRITIC_03.md",
-        "answer_file": "golf-offshoot/docs/LEARNING_LANE_15M_EVIDENCE_BAR_OPERATOR_ANSWER_03.md",
-        "critic_sha256_bytes": "5a241513011e577c8fc160df5000c025eb90440d4849fcaea8fa1badbb62304e"
+        "critic_file": "golf-offshoot/docs/LEARNING_LANE_15M_EVIDENCE_BAR_CRITIC_04.md",
+        "answer_file": "golf-offshoot/docs/LEARNING_LANE_15M_EVIDENCE_BAR_OPERATOR_ANSWER_04.md",
+        "critic_sha256_bytes": "e7dd9de5bce5e0387ae0524a14023288324a9a2040d0d3a594bb69af18402566"
       }
     },
     {
       "id": "critic_invariants_pass",
       "met": false,
-      "detail": "The last findings file (ran_at 2026-09-08T12:02:45-04:00) reviews 5F2AA5F5… / 2611C255… / CD25DD72… — not the ANSWER 03 hashes 2732552E… / 1269395C… / 5C6A61F7… and not these bytes. The 14:04 failing_set_at_last_operator_read of [fee_schedule_hash_recorded] described other bytes and is struck as a picture of this file. Copied arithmetic of check_delta_above_detection_floor on the ANSWER 03 hashes would name mde / reject_if_mean_d_exceeds / alpha_first_look / both power effects. After this amendment restates the four design numbers at next-look alpha, that function would still compare alpha_first_look 0.025 to current alpha_k 0.008333 (checker/key mismatch owed to Systems). Standing named fail: fee_schedule_hash_recorded (empty sha256 after HTTP 429). honesty_stamp_is_fresh is a desk check and does not set passed. write_critic_findings() was not called.",
+      "detail": "The last findings file (ran_at 2026-09-08T12:02:45-04:00) reviews 5F2AA5F5… / 2611C255… / CD25DD72… — not the ANSWER 04 hashes D9B484FD… / 48EAE5D1… / 1DDD3CCE… and not these bytes. The 14:04 failing_set_at_last_operator_read of [fee_schedule_hash_recorded] described other bytes and is struck as a picture of this file. Copied arithmetic of check_delta_above_detection_floor on the ANSWER 03 hashes would name mde / reject_if_mean_d_exceeds / alpha_first_look / both power effects. After ANSWER 04 restated the four design numbers at next-look alpha, that function would still compare alpha_first_look 0.025 to current alpha_k 0.008333 (checker/key mismatch owed to Systems). Standing named fail: fee_schedule_hash_recorded (empty sha256 after HTTP 429). honesty_stamp_is_fresh is a desk check and does not set passed. write_critic_findings() was not called.",
       "note": "critic.py records the newline-normalised digest, not the raw byte hash. Compare the digest the checker actually read.",
       "last_findings_cover_these_bytes": false,
       "last_findings_ran_at": "2026-09-08T12:02:45.460786-04:00",
@@ -121,9 +121,12 @@
       "n": 70,
       "h0": "mean(d) <= delta",
       "delta": "the same delta in force when L1 was scored; it does not move between looks",
-      "alpha": "alpha_k from the same schedule, using the counter value after L1's increment",
+      "alpha": "alpha_k from the same schedule, using the counter as it stands after the declaration increment. L1 scoring does not increment. With trials_to_date=1, L2 shares the next-look set (k=2, alpha=0.008333, reject 0.504, MDE 0.2243, 50% 0.504, 80% 0.583). Clause (2) increment-after-the-look does not apply to L1 scoring; record_trial accepts only declaration and l2_look.",
       "clauses_binding": [1, 3, 4, 5],
       "increments_trials_counter": true,
+      "increments_after": "l2_look_only",
+      "l1_score_does_not_increment": true,
+      "shares_next_look_set": true,
       "requires_lived_execution": true
     }
   },
@@ -146,10 +149,10 @@
     "alpha_fourteenth_look": 0.000238,
     "fwer_14_looks_old_scheme": 0.152,
     "fwer_14_looks_new_scheme": 0.046,
-    "trials_counter": "LEARNING_LANE_15M_RULES.json trials_to_date; increments on DECLARATION of a selection rule, not on score; L2 looks increment too; writer is golf_offshoot.learning_lane_15m.rules.record_trial; baseline naming is not a trial",
+    "trials_counter": "LEARNING_LANE_15M_RULES.json trials_to_date; increments on DECLARATION of a selection rule, not on an L1 score; L2 looks increment after the L2 look; writer is golf_offshoot.learning_lane_15m.rules.record_trial (kinds declaration and l2_look only); baseline naming is not a trial",
     "trials_counter_is_prose": false,
     "trials_to_date": 1,
-    "trials_counter_owed": "record_trial and trials_log landed at 0a480d4. R-SKIP-COINFLIP's pre-mechanism declaration is not backfilled. R-SKIP-2TO1-FAVORITE declaration spent the first slot (trials_to_date=1). Next look is k=2, alpha=0.008333. alpha_first_look 0.025 is the schedule's first term, now historical. The reject/MDE/power numbers a later score will be compared against are the next-look set (0.504 / 0.2243 / 0.504 / 0.583), not the spent first-look set. Do not increment the counter in this turn.",
+    "trials_counter_owed": "record_trial and trials_log landed at 0a480d4. R-SKIP-COINFLIP's pre-mechanism declaration is not backfilled. R-SKIP-2TO1-FAVORITE declaration spent the first slot (trials_to_date=1). Next look is k=2, alpha=0.008333. L2 shares that set: an L1 score does not increment. alpha_first_look 0.025 is the schedule's first term, now historical. The reject/MDE/power numbers a later score will be compared against are the next-look set (0.504 / 0.2243 / 0.504 / 0.583), not the spent first-look set. Do not increment the counter in this turn.",
     "effect_floor_usd_per_window": 0.28,
     "effect_floor_as_fraction_of_stake": 0.28,
     "effect_floor_rationale": "delta is NOT derived from the critical value. Detection floor at n=70 with sd ~0.784 (the 95% upper confidence bound on the 0.66 point estimate from 56 calibration windows, since delta is linear in sd). Spent first look (alpha=0.025): 1.960 * SE_70 = 0.1837, delta/MDE 1.52. Next look (k=2, alpha=0.008333): 2.394 * SE_70 = 0.2243, delta/MDE 1.25. A later score uses the next-look set. At the drafted n=40 the ratio was 0.997 and the floor was the rejection threshold relabeled.",
@@ -194,7 +197,7 @@
     },
     "clauses": [
       "(1) one-sided paired t-test, H0: mean(d) <= delta, reject only if p < alpha_k",
-      "(2) multiplicity: alpha_k = 0.05 / (k(k+1)), k = trials_to_date + 1, increment after the look",
+      "(2) multiplicity: alpha_k = 0.05 / (k(k+1)), k = trials_to_date + 1, increment after an L2 look only; L1 scoring does not increment",
       "(3) effect floor delta = 0.28 * stake, absorbed into clause (1) as the null",
       "(4) positive side: mean(pnl_rule_fee_adj) > 0 on those same n windows — binding, not conditional prose",
       "(5) matched-exposure permutation control, fixed skip count, >=10,000 draws, seed 20260908"
@@ -302,8 +305,8 @@
     "critic_01_finding_6_multiplicity": "trials_counter_is_consistent requires record_trial and a trials_log; delta_above_detection_floor uses alpha=0.05/(k(k+1))",
     "critic_01_finding_7_fee_adjust": "fee_adjusted_book_is_binding requires adjustment_function, reproduces the RUN-ONLY table, and reads the payout expression not a substring of settle.py",
     "critic_01_x1_spread": "no mechanical check of the half-spread profile exists; empirical profile owed. Unconditional 'avoids neither worst region' is withdrawn until that profile exists",
-    "critic_01_x2_reachable": "currently_reachable stays false; R-SKIP-2TO1-FAVORITE exists and is executing; pre-registration / binding / fee hash / Founder read-once still block. A source-call check that paper.py calls decide() is possible and not yet a method-suite member",
-    "critic_01_x3_l2_test": "looks.l2_test is on the face; no check yet fails when n/h0/delta/alpha are missing. Possible, not written",
+    "critic_01_x2_reachable": "currently_reachable stays false; R-SKIP-2TO1-FAVORITE registry execution is true; lived honoring is unproven on this tree this turn (no tip, no cited decision row); pre-registration / binding / fee hash / Founder read-once still block. A source-call check that paper.py calls decide() is possible and not yet a method-suite member",
+    "critic_01_x3_l2_test": "looks.l2_test is on the face; L2 alpha is the declaration-counter k and shares the next-look set; no check yet fails when n/h0/delta/alpha are missing. Possible, not written",
     "critic_01_x4_trials_on_declaration": "record_trial increments on declaration and L2 looks; baseline naming raises",
     "critic_01_x5_sustain_or_overrule": "binding condition 1 is prose; a file check cannot read an admit-pass verdict without a structured verdicts array. Impossible as a hash check today",
     "critic_01_x6_delta_is_fraction": "effect_floor_as_fraction_of_stake is on the face; PAPER_UNIT != 1.0 invariant still owed",
