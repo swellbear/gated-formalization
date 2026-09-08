@@ -5,9 +5,9 @@ Chat transcripts are not. A later Grok / Cursor cloud agent will not see a prior
 
 | Field | Value |
 |-------|--------|
-| Updated | 2026-09-08 08:32 EDT (evidence bar draft + Soften Critic hire; bar **not binding**) |
+| Updated | 2026-09-08 08:52 EDT (Part 0: live digest + validator report + publish in flight) |
 | Interim operator | Cursor chat (Grok bot usage exhausted until **2026-09-13**) |
-| Repo SoT | **`origin/master` was `b8b4d12` (#173) before this fold.** Last *published* Pages snapshot is still older until a manual publish. A local export is not a publish. |
+| Repo SoT | **This fold publishes.** Validator report must hash-match the committed `manifest.json`. |
 | Local Windows tree for this interim | `C:\Users\bearh\gated-formalization-master-hub` |
 | Do **not** treat as SoT | `C:\Users\bearh\gated-formalization` on `cursor/eia-window-job2` (stale + dirty) |
 | Active track | `learning_lane_15m` (KXBTC15M paper loop) + Phase 1 desktop hub |
@@ -145,7 +145,8 @@ Golf WC1 FAIL does **not** transfer into this lane, and nothing on this lane ret
 4. **Illustrator:** the wake owes a re-render when the PNG lags more than one window. Re-render from current files before a material publish. Never invent a chart. Do not put golf WC1 / Ill on this lane.
 5. **`lab` PROPOSED 01 is RUN-ONLY**, not parked. Hurdle lives only in `golf-offshoot/docs/LEARNING_LANE_15M_OPERATOR_NOTE_PROPOSED_01.md`. Not an ADMIT. Not a dashboard figure. Lab does not bring a second PROPOSED. Lab never self-admits. The clerical runner is armed by local `latest/RUNNER_ARMED` (gitignored). Whitelist is illustrator / systems / digestor only. Digestor on that list means the as-of stamp, not the SOURCE digest. Judicial work never joins it. Publish stays **manual**.
 6. **`KXBTC15M-26SEP072245` does not exist.** 22:25–22:50 EDT `--once` argparse outage. Do not backfill. 56 locked lineage-A events is not an unbroken run. Digest §3g.
-7. **Evidence bar is drafted and not binding.** Files: `LEARNING_LANE_15M_EVIDENCE_BAR.md` / `.json`, `LEARNING_LANE_15M_BURNED_CLASSES.json`. It binds only after a Soften Critic attack in a **separate session**, Operator answers, and Founder acknowledgement. Do not score `R-SKIP-COINFLIP` before n=40 (~15:56 EDT earliest). `trials_to_date` starts at 0. Promotion into the gated method has **not** fired.
+7. **Evidence bar is drafted and not binding.** Soften Critic is hired. Do not score `R-SKIP-COINFLIP` (11 eligible closed as of 08:42; n=40). Promotion has **not** fired.
+7b. **SOURCE digest is split.** Figures are generated (`python -m golf_offshoot digest-15m`). Standing caveats live in `LEARNING_LANE_15M_SOURCE_DIGEST_CAVEATS.md` and must not be rewritten by the generator. Validator has a hash-stamped report artifact (`docs/observability-hub/data/validator_report.json`). Validator is **not** on the clerical whitelist yet. Auto-publish is **not** armed.
 8. **Soften Critic is hired.** Skill `.cursor/skills/gpf-soften-critic/SKILL.md`. Not on the clerical whitelist. Next owed after this fold: a separate-session attack on the bar.
 8b. **Hub autostart scripts are on `master` (`b8b4d12`) and still not registered.** Task `GatedFormalization-15mLearningHub` does not exist. Founder, elevated local PowerShell, `Register-15m-Learning-Hub-Task.ps1`. An agent cannot elevate. Same exposure that cost `072245`.
 9. **Founder HOLD 2026-09-07 stands: no series other than `KXBTC15M` until this loop is honest.** Only Founder lifts it — not Operator, not CoS, not a later bot reading a tidy tick. Everything else parked (weekly honesty rollup, expanding the series, CFB websocket observe-only) is in `golf-offshoot/docs/LEARNING_LANE_15M_METHOD_PARK.md` with the explicit trigger that would reopen it.

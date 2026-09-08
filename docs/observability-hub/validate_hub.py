@@ -16,9 +16,11 @@ Standard library only. No build step, no dependencies.
 from __future__ import annotations
 
 import argparse
+import hashlib
 import json
 import re
 import sys
+from datetime import datetime, timezone
 from pathlib import Path
 
 HUB_DIR = Path(__file__).resolve().parent
@@ -510,6 +512,11 @@ def main() -> int:
         action="store_true",
         help="treat warnings as failures",
     )
+    parser.add_argument(
+        "--write-report",
+        default="",
+        help="write a JSON report with exit code, findings, and the SHA-256 of the exact bytes validated",
+    )
     args = parser.parse_args()
 
     report = Report()
@@ -518,8 +525,10 @@ def main() -> int:
     if not manifest_path.is_file():
         print(f"FAIL  manifest not found: {manifest_path}")
         return 1
+    raw = manifest_path.read_bytes()
+    digest = hashlib.sha256(raw).hexdigest()
     try:
-        manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
+        manifest = json.loads(raw.decode("utf-8"))
     except json.JSONDecodeError as exc:
         print(f"FAIL  manifest is not valid JSON: {exc}")
         return 1
@@ -586,6 +595,24 @@ def main() -> int:
         print(f"ERROR {error}")
 
     failed = bool(report.errors) or (args.strict and bool(report.warnings))
+    exit_code = 1 if failed else 0
+    if args.write_report:
+        payload = {
+            "schema": 1,
+            "role": "validator",
+            "validated_at": datetime.now(timezone.utc).astimezone().isoformat(),
+            "manifest_path": str(manifest_path.resolve()),
+            "byte_len": len(raw),
+            "sha256": digest,
+            "strict": bool(args.strict),
+            "exit_code": exit_code,
+            "errors": list(report.errors),
+            "warnings": list(report.warnings),
+        }
+        out = Path(args.write_report)
+        out.parent.mkdir(parents=True, exist_ok=True)
+        out.write_text(json.dumps(payload, indent=2) + "\n", encoding="utf-8")
+        print(f"REPORT {out} sha256={digest} exit_code={exit_code}")
     if failed:
         print(
             f"\nFAIL  {len(report.errors)} error(s), {len(report.warnings)} warning(s). "

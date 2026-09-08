@@ -74,7 +74,7 @@ def main(argv: list[str] | None = None) -> int:
         "command",
         nargs="?",
         default="demo",
-        choices=["demo", "board", "explain", "strategy", "ingest", "calibrate", "pressure-test", "live", "watch", "shadow", "shell", "paper-export", "paper-ledger", "paper-deposit", "paper-withdraw", "paper-settle", "paper-fill", "compare-replay", "hub", "lane-15m", "learn-15m", "learn-15m-runner", "observability-export"],
+        choices=["demo", "board", "explain", "strategy", "ingest", "calibrate", "pressure-test", "live", "watch", "shadow", "shell", "paper-export", "paper-ledger", "paper-deposit", "paper-withdraw", "paper-settle", "paper-fill", "compare-replay", "hub", "lane-15m", "learn-15m", "learn-15m-runner", "digest-15m", "observability-export"],
     )
     parser.add_argument("--course-type", default="parkland")
     parser.add_argument("--player", default="p01")
@@ -306,6 +306,8 @@ def main(argv: list[str] | None = None) -> int:
         return _cmd_learn_15m(args)
     if args.command == "learn-15m-runner":
         return _cmd_learn_15m_runner(args)
+    if args.command == "digest-15m":
+        return _cmd_digest_15m(args)
     if args.command == "observability-export":
         return _cmd_observability_export(args)
 
@@ -1082,6 +1084,15 @@ def _cmd_learn_15m_runner(args) -> int:
 
     print("learning runner  continuous  one pass every PaperWatch tick  kill file stops it")
     run_forever(mode=mode)
+    return 0
+
+
+def _cmd_digest_15m(_args) -> int:
+    from golf_offshoot.learning_lane_15m.digest import caveats_path, write_digest
+
+    path = write_digest()
+    print(f"SOURCE digest figures refreshed: {path}")
+    print(f"standing caveats concatenated verbatim: {caveats_path()}")
     return 0
 
 
