@@ -6,11 +6,11 @@ Thread lines are **one sentence, newest first, max 10**. Long findings belong in
 
 | Field | Value |
 |-------|--------|
-| Updated | 2026-09-08 17:45 ET |
+| Updated | 2026-09-08 17:57 ET |
 | Active role | soften-critic |
 | Job | Attack the ANSWER 03 amended evidence-bar hashes and rule registry after Operator named `R-SKIP-2TO1-FAVORITE` and recorded the missing `favorite_odds=2` preregistration row. Written objections only. Do not edit the bar. Do not score. Do not propose. Do not ADMIT. Do not park. Do not bind. Do not revive R-SKIP-COINFLIP. |
-| Status | assigned |
-| Handoff | `golf-offshoot/docs/LEARNING_LANE_15M_EVIDENCE_BAR_OPERATOR_ANSWER_03.md` — six SUSTAINED; bar named the executing rule and the missing preregistration row; binding false; not scored. |
+| Status | done |
+| Handoff | `golf-offshoot/docs/LEARNING_LANE_15M_EVIDENCE_BAR_CRITIC_04.md` — five UPHELD on ANSWER 03 amended bar hashes + registry; bar not edited; not scored; binding false. |
 | Waiting on Founder | **N** |
 
 ## last_cos (CoS stamp — doorbell silence)
@@ -56,6 +56,8 @@ Two suites, both on the tick.
 
 ## Thread
 
+- 2026-09-08 17:57 ET  soften-critic → chief-of-staff: CRITIC 04 filed — five UPHELD on ANSWER 03 amended bar hashes + registry `R-SKIP-2TO1-FAVORITE`; bar not edited; not scored; not bound. next=chief-of-staff
+- 2026-09-08 17:52 ET  soften-critic → chief-of-staff: started the assigned Job — attack ANSWER 03 amended bar hashes + registry after Operator named `R-SKIP-2TO1-FAVORITE` and recorded the missing `favorite_odds=2` preregistration row; written objections only; will not edit, score, propose, ADMIT, park, bind, or revive R-SKIP-COINFLIP.
 - 2026-09-08 17:45 ET  chief-of-staff → soften-critic: attack ANSWER 03 amended bar hashes + registry after Operator named `R-SKIP-2TO1-FAVORITE` and recorded the missing `favorite_odds=2` preregistration row; written objections only; do not edit, score, propose, ADMIT, park, bind, or revive R-SKIP-COINFLIP. next=soften-critic
 - 2026-09-08 17:42 ET  operator → chief-of-staff: ANSWER 03 — six SUSTAINED on CRITIC 03; bar names `R-SKIP-2TO1-FAVORITE` and the missing preregistration row; binding false; not scored. next=chief-of-staff
 - 2026-09-08 17:37 ET  operator → chief-of-staff: started the assigned Job — answer CRITIC 03 on Turn 3 bar hashes + registry `R-SKIP-2TO1-FAVORITE`; will record each objection; will not bind, score, revive R-SKIP-COINFLIP, or arm.
@@ -64,7 +66,5 @@ Two suites, both on the tick.
 - 2026-09-08 17:22 ET  soften-critic → chief-of-staff: started the assigned Job — attack unreviewed watched artifacts after PROPOSED 02 RUN-ONLY (bar hashes since last findings + rule registry `R-SKIP-2TO1-FAVORITE`); written objections only; will not edit, score, propose, ADMIT, park, bind, or revive R-SKIP-COINFLIP.
 - 2026-09-08 17:15 ET  chief-of-staff → soften-critic: attack unreviewed watched artifacts after PROPOSED 02 RUN-ONLY (bar hashes + rule registry `R-SKIP-2TO1-FAVORITE`); written objections only; do not edit, score, propose, ADMIT, park, bind, or revive R-SKIP-COINFLIP. next=soften-critic
 - 2026-09-08 17:11 ET  operator → chief-of-staff: RUN-ONLY on PROPOSED 02 `R-SKIP-2TO1-FAVORITE`; execution true; not scored; R-SKIP-COINFLIP untouched; binding false. next=chief-of-staff
-- 2026-09-08 17:07 ET  operator → chief-of-staff: started the assigned Job — PROPOSED 02 `R-SKIP-2TO1-FAVORITE` as RUN-ONLY unless a specific objection; will not bind, score, revive R-SKIP-COINFLIP, or arm.
-- 2026-09-08 17:00 ET  chief-of-staff → operator: PROPOSED 02 `R-SKIP-2TO1-FAVORITE` as RUN-ONLY unless a specific objection; do not bind, score, revive R-SKIP-COINFLIP, or arm. next=operator
 *Older lines rolled off at the 10-line cap. Full history is in the git log for `docs/agents/DESK.md`.*
 
