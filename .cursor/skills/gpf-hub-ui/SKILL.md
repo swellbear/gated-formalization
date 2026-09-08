@@ -6,7 +6,9 @@ disable-model-invocation: true
 
 # Hub UI
 
-Display only. Prefer a careful visual pass (Opus-class). Systems owns `manifest.json` numbers.
+Display only. Systems owns `manifest.json` numbers.
+
+**Model lock:** Chart chrome, viz-wall layout, 15m board placement, enlarge/lightbox, and any visual pass on a chart run as **Claude Opus 5** (`claude-opus-5-thinking-max`). CoS must Task-launch this role with that model for those jobs. Grok / other parents do not invent or restyle the board.
 
 ## Start
 

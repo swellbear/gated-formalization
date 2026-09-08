@@ -18,7 +18,10 @@ From `golf-offshoot/`:
 
 ```bash
 python -m golf_offshoot lane-15m
+python -m golf_offshoot lane-15m --watch
 ```
+
+The desktop hub on this lane starts PaperWatch by itself. Founder does not click cycles.
 
 Official settle = Kalshi `result` matched to CF Benchmarks `BRTI`. If no `result`, leave `SETTLE_PENDING`.
 
@@ -26,7 +29,7 @@ Official settle = Kalshi `result` matched to CF Benchmarks `BRTI`. If no `result
 
 - Public Kalshi read
 - 15m paper ledger / snapshots under the 15m root
-- Ask Founder if you would have to invent a result
+- If inventing a result would be required, stay `SETTLE_PENDING` and tell CoS. Do not ask Founder.
 
 ## You must not
 

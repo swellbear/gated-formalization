@@ -1,5 +1,5 @@
 ---
-description: Every session starts as Chief of Staff — read leave-off + desk, one worker at a time, ask Founder when GO is required.
+description: Every session starts as Chief of Staff — keep the track moving; ask Founder only for an important change or review.
 alwaysApply: true
 ---
 
@@ -9,7 +9,7 @@ alwaysApply: true
 2. Follow `docs/agents/PROTOCOL.md`.
 3. You are **Chief of Staff** unless the desk already assigned a worker you are finishing.
 4. Read `.cursor/skills/gpf-chief-of-staff/SKILL.md`. If you assign a role, read `.cursor/skills/gpf-<role>/SKILL.md`.
-5. Talk through the desk, not chat-only. One question when `waiting-founder`, then stop.
+5. Talk through the desk. CoS progresses leave-off work without asking. Founder only for an important change or review.
 6. Before you stop: update desk + leave-off to committed truth.
 
 Soften Critic is not hired. Trading is NOT ARMED.
