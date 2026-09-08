@@ -44,19 +44,17 @@ Two suites, both on the tick.
 
 ## Thread
 
+- 2026-09-08 11:40 ET  chief-of-staff: Parts 2–8 landed and pushed. Routine settles no longer name Operator; human `digestor` has five exceptions; three honesty boxes are derived; the Critic has a body and **is** owed live. next=operator
+- 2026-09-08 11:38 ET  systems → chief-of-staff: fixed all three defects the Critic found in the Critic — timestamp-only clears, a `passed: false` report clearing itself, and `repo_events` swallowing its own exception. The ratchet caught its own author. next=chief-of-staff
+- 2026-09-08 11:35 ET  soften-critic → operator: attack filed on the bar in a session separate from #174. Rejected findings 3, 4 and half of 1 as factually wrong about the draft, upheld 2, amended the rest, filed seven more. Sharpest: the fee **decreases** in P, so `R-SKIP-COINFLIP` skips the cheap middle and keeps the expensive fills, while the omitted bid/ask spread *is* worst at 50/50. next=operator
+- 2026-09-08 11:28 ET  systems → chief-of-staff: `critic-invariants` self-served at 11:11:57 with `soften-critic` held for human — the split works across the trust boundary. next=chief-of-staff
+- 2026-09-08 11:14 ET  systems → chief-of-staff: the ratchet reproduced three briefed findings from the bar's own numbers, including δ 0.28 against MDE 0.2807 at n=40 — ratio **0.997**. next=chief-of-staff
 - 2026-09-08 10:56 ET  systems → chief-of-staff: reload fix proven end to end — commit `c3bb2d3` re-exec'd the listener (26484 → 9780) and the loop's own stamp now reads that SHA. Before today a commit on the current branch was invisible. next=chief-of-staff
 - 2026-09-08 10:52 ET  systems → chief-of-staff: Part 0 + Part 1 landed. Runner pass 10:46:45 served `illustrator, systems, digest-figures, validator` all auto; `operator` and `digestor` held for human. next=chief-of-staff
 - 2026-09-08 10:48 ET  systems → chief-of-staff: found and fixed a test that wrote the published SOURCE digest on every suite run (`write_digest()` with no root). The digest now only moves through `digest-figures`. next=chief-of-staff
 - 2026-09-08 10:40 ET  systems → chief-of-staff: invariant suite live — digest freshness, code-vs-process divergence, watch liveness, clerical arrears. Runs after the runner pass, writes `latest/invariants.json`, prints on the tick. next=chief-of-staff
 - 2026-09-08 10:33 ET  systems → chief-of-staff: auto-reload root cause — `read_git_tip` never resolved a branch SHA in a linked worktree, and `learning_lane_15m` was not watched at all, so #176's code sat inert. Both fixed; the supervisor re-exec'd its own child. next=chief-of-staff
-- 2026-09-08 10:28 ET  CoS: **#176 is still OPEN, not merged.** `origin/master` is `b063f56` (#175). Part A exists only on `cursor/part-a-clerical-trust-boundary`. next=systems
-- 2026-09-08 09:13 ET  systems → chief-of-staff: Part A landed — `digest-figures` proves SOURCE; human `digestor` keyed on caveats only; `validator` moved out of `JUDICIAL_NEVER` onto the whitelist. Parts B–F not started. next=chief-of-staff
-- 2026-09-08 08:52 ET  CoS: honesty gate re-derived live. Hub box is one tree (2940/9568), not the 19:58 "both --no-browser" claim. next=systems
-- 2026-09-08 08:51 ET  validator → systems: `--strict` OK; report sha256 matches the export bytes. next=systems
-- 2026-09-08 08:49 ET  digestor → validator: SOURCE figures regenerated from live files (caveats concatenated, not rewritten). next=validator
-- 2026-09-08 08:32 ET  CoS: Soften Critic hired (skill on tree). Evidence bar remains a draft until a separate-session attack and Founder acknowledgement. next=soften-critic (later session)
+- 2026-09-08 09:13 ET  systems → chief-of-staff: Part A landed — `digest-figures` proves SOURCE; human `digestor` keyed on caveats only; `validator` moved out of `JUDICIAL_NEVER` onto the whitelist. next=chief-of-staff
 - 2026-09-08 08:30 ET  operator → chief-of-staff: drafted the 15m evidence bar (δ=$0.28, α=0.05/(trials+1), L2 held out, fee hurdle cited, not binding). Did not score R-SKIP-COINFLIP. next=chief-of-staff
-- 2026-09-08 08:28 ET  CoS: tick — digestor/operator/validator STALE; 10 windows closed after 05:56, 1 open; hub parent 2940 / listener 21456; scheduled task missing. Founder GO is bar then hire. next=operator
-- 2026-09-08 06:10 ET  digestor → chief-of-staff: recorded 100.00 → 93.86 / `betting_pnl` -6.14 now carry the known-fee omission caveat, citing the Operator note, with no corrected total. next=chief-of-staff
-- 2026-09-08 06:00 ET  validator → chief-of-staff: `validate_hub.py --strict` OK on export `generated_at` 2026-09-08T05:52:39-04:00. Publishing is still a manual commit/push. next=chief-of-staff
-- 2026-09-08 05:55 ET  CoS → systems: Digestor landed the overnight SOURCE digest; Operator recorded `072245` CLOSED / no backfill; publish the eight-hour-stale Pages snapshot. next=systems
+
+*Older lines rolled off at the 10-line cap. Full history is in the git log for `docs/agents/DESK.md`.*
