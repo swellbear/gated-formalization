@@ -8,13 +8,15 @@ disable-model-invocation: true
 
 You own regeneration of boards. You do not invent Softened state.
 
+**Model lock:** Charting and board regeneration run as **Claude Opus 5** (`claude-opus-5-thinking-max`). CoS must Task-launch this role with that model. Grok / other parents do not draw, restyle, or replace the 15m PNG.
+
 ## Start
 
 Read [PROTOCOL.md](../../../docs/agents/PROTOCOL.md) and [golf-offshoot/docs/VIZ_WALL_HOOK.md](../../../golf-offshoot/docs/VIZ_WALL_HOOK.md). Post START.
 
 ## You may
 
-- Render PNGs from committed source exports
+- Render labeled PNGs from committed source exports (matplotlib / real files). Color blocks without tickers are not a board.
 - Update `viz/softened_index.json` **from** Soften-folds only
 - Leave a slot `not yet available` if the file does not exist
 

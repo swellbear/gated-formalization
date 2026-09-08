@@ -5,7 +5,7 @@ Chat transcripts are not. A later Grok / Cursor cloud agent will not see a prior
 
 | Field | Value |
 |-------|--------|
-| Updated | 2026-09-07 |
+| Updated | 2026-09-07 18:20 EDT (Operator docs fold of the first real 15m SOURCE digest) |
 | Interim operator | Cursor chat (Grok bot usage exhausted until **2026-09-13**) |
 | Repo SoT | `origin/master` @ `352b967` (PR #163) |
 | Local Windows tree for this interim | `C:\Users\bearh\gated-formalization-master-hub` |
@@ -44,41 +44,123 @@ Desktop hub (control surface):
 - Public read only. Official settle = Kalshi `result` matched to CF Benchmarks `BRTI`.
 - Landed: PRs #151, #153, #156–#159, #161, #162.
 
-Published hub snapshot (`docs/observability-hub/data/manifest.json`, generated 2026-09-07T18:56:00Z):
-
-- Settled: `KXBTC15M-26SEP071445-45` — `result=yes`, finalized, CF Benchmarks matched, **paper_win**, paper pnl `+1.67`
-- Pending: `KXBTC15M-26SEP071500-00` — live paper fill, **SETTLE_PENDING** (do not invent win/lose)
-- 15m charts: **not yet available**
-- Golf WC1 FAIL does **not** transfer into this lane
+Windows path fix (this branch): settlement filenames sanitize `:` (`safe_artifact_stem`). `window_id` inside JSON still keeps colons. Export keeps a published 15m settle history when the local journal would drop `Settled windows` / `paper_win`.
 
 Golf Phase 1 (do not reopen unless asked):
 
 - Stamp: `golf-offshoot/docs/phase1_dryrun/OPERATOR_STATUS_STAMP.md`
 - WC1 admitted FAIL / park unproven. WC2 parked/rejected. Edge **not** established. Idle on WC3+ until a new settled week.
+- **Golf idle is ON** and nothing on the 15m lane clears it, retunes golf θ, rewrites that stamp, or reopens WC1 / WC2 / WC3+.
+
+## Learning is now **on** (this is the change since the last leave-off)
+
+> **Not yet on master.** The learning wake, the watch and the three 15m docs below live on branch `cursor/agent-leave-off-handoff` and were **uncommitted** at the time of this stamp (`learning_lane_15m/learn.py`, `learning_lane_15m/watch.py`, `LEARNING_LANE_15M_SOURCE_DIGEST.md`, `LEARNING_LANE_15M_SOURCE_CONFLICT.md`, `LEARNING_LANE_15M_METHOD_PARK.md`, `docs/observability-hub/data/charts/`). A bot that clones `origin/master` will not have them until that branch is committed and pushed. If `learn-15m` is an unknown command after you clone, that is why.
+
+PaperWatch alone was never learning. Two halves now run together:
+
+1. **PaperWatch** — the researcher/export half, one cycle roughly every **90 seconds** (`DEFAULT_INTERVAL_S = 90.0`, `golf-offshoot/src/golf_offshoot/learning_lane_15m/watch.py`). Public fetch → paper autobet → settle join → export. It starts itself with the 15m hub.
+2. **The learning wake** — the crew half. It scans settlements / paper / journal / manifest, raises `new_settle` / `new_fill` / `pending_cleared` events, and **names which roles are owed a turn.**
+
+Run the tick:
+
+```powershell
+cd golf-offshoot
+$env:PYTHONPATH = "src"
+python -m golf_offshoot learn-15m          # human-readable
+python -m golf_offshoot learn-15m --json   # same tick as JSON
+```
+
+Wake state file: `golf-offshoot/data/learning_lane_15m/latest/learning_wake.json` (gitignored, derived, **never authoritative** — the files on disk are).
+
+**Python names owed roles. It never marks one served, never writes a desk thread line, never Softens, never ADMITs, and never invents a win, a lose or a pnl.** A role clears its own line only after it really ran:
+
+```powershell
+python -c "from golf_offshoot.learning_lane_15m.learn import mark_roles_served; mark_roles_served(['operator'], by='operator', note='what you actually did')"
+```
+
+Read these two before touching the lane:
+
+- **SOURCE honesty digest (living spine, every claim cited to a file):** `golf-offshoot/docs/LEARNING_LANE_15M_SOURCE_DIGEST.md`
+- **Operator method park (residuals + explicit reopen triggers):** `golf-offshoot/docs/LEARNING_LANE_15M_METHOD_PARK.md`
+- Standing conflict flag: `golf-offshoot/docs/LEARNING_LANE_15M_SOURCE_CONFLICT.md`
+
+## Published hub snapshot — corrected against the digest and live files
+
+**These numbers move.** The loop is live, so a window settles and the book changes roughly every 15 minutes. Figures below are as of **2026-09-07 18:19 EDT**. Do not trust them as current — re-read them with `learn-15m` and from `golf-offshoot/data/learning_lane_15m/`.
+
+**Two paper lineages exist. They are two separate books, not two views of one book. Never sum them.**
+
+*Lineage A — the local paper book on this tree* (`golf-offshoot/data/learning_lane_15m/paper/` + `paper/ledger.json`):
+
+- Seed `starting_bankroll` 100.00 → `bankroll` **95.59** · `betting_pnl` **-4.41** · `deposits` 0.00 · `withdrawals` 0.00 · 24 entries · 11 settled events
+- 12 settle files and 12 paper books on disk: **11 joined and settled, 1 open**
+- Windows joined run `KXBTC15M-26SEP071545-45` onward. Each row's pnl comes off its own `paper/<stem>.json` `settlement_pnl` — e.g. `071600-00` is `+0.42` (the previous leave-off's `$+0.44` was wrong), `071615-15` is `-1.00`
+- The recorded pnl figures reconcile the `bankroll_before` → `bankroll_after` chain in `ledger.json`. Nothing is recomputed or averaged
+
+*Lineage B — the published Pages export* (`docs/observability-hub/data/manifest.json` `$.lanes[1]`):
+
+- `KXBTC15M-26SEP071445-45` — official `result=yes`, **paper_win**, paper pnl `+1.67`. **Kept as published history.** The book that produced it is not on this tree, so `+1.67` is never re-derived here and never added into lineage A
+- Why they are split, cited to code: `learning_lane_15m/paths.py` `artifact_root_15m()` prefers `/workspace/kalshi_15m_exports` and falls back to the repo root when `/workspace` is absent, as it is on this Windows tree. Same code, different machine, different book
+
+**The two residual states that look alike on a dashboard and are not alike:**
+
+- **Pending for want of a Kalshi result** — a true pending window. Kalshi has not spoken; the paper book here is open. There is normally exactly one, and it **rotates every ~15 minutes** — it was `071815-15` at 18:03 EDT, `071830-30` at 18:20 and `071845-45` at 18:32. **Read the current one off `learn-15m`, never off this file.** A ticker that has left this state did not fail; it settled, and its pnl is on its own book
+- **`KXBTC15M-26SEP071500-00` is a missing paper join, NOT a pending window.** Kalshi settled it **`yes`** (`latest/journal.json`, `status` `finalized`). The paper book the published lineage names is **not on this tree**, so there is **no paper pnl here and none is invented.** `SETTLE_PENDING` is the wrong banner — it says "Kalshi has not spoken," and Kalshi has. `result=yes` does not license a win, a `+pnl`, a `0`, or a loss here. A window with no book has no pnl; that is a true statement, not a missing number
+
+**Still stale on the published surface (owned by `systems`, not by whoever reads this):** `manifest.json` still carries *"SETTLE_PENDING until Kalshi result"* for `071500-00` at `$.lanes[1].settle.headline`, `$.lanes[1].settle.residual[0].note`, `$.lanes[1].last_run.headline` and `$.lanes[1].last_run.notes[2]` — while the **same file** already states the honest version at `$.lanes[1].settle.counts[5].note`. That re-word is Systems' job.
+
+**Unmeasured tape:** a handful of windows are `finalized` with an official result in `latest/journal.json` but have no settle file and no paper book anywhere on this tree — they closed before the local book seeded at 15:42:37 EDT. The digest named 8 of them at 18:03 EDT; `071315-15` has already rolled off, leaving `071330-30`, `071345-45`, `071400-00`, `071415-15`, `071430-30`, `071515-15`, `071530-30` at 18:28 EDT. **`latest/journal.json` is a rolling 21-window tape, not an archive** — the oldest window falls off as a new one opens, so this list shrinks from the front. A shrinking list means windows are being *forgotten*, not resolved. **Unmeasured is not lost and not losses.** Do not backfill them from their results and do not count them in a denominator.
+
+**15m charts now exist:** `docs/observability-hub/data/charts/learning_lane_15m/paper_window_strip.png` is a real, labeled board rendered from real files, drawing lineage A apart from lineage B with a *never summed* note. It is **behind**, not invented — its header stamps `journal generated_at=2026-09-07T17:10:08`, and its `071500-00` cell still prints `SETTLE_PENDING`. The old "charts not yet available" leftover is stale.
+
+**No edge, no track record.** Every fill is taken at the posted mark with `entry_edge=0.0`; the model is the market. Paper fills are not admits (`lab_admits=false`). This lane has no dated record — `manifest.json` `$.lanes[1].records` is `[]`.
+
+Golf WC1 FAIL does **not** transfer into this lane, and nothing on this lane retunes golf θ.
 
 ## Next (safe, in order)
 
-1. Founder GO on the desk: run `lane-15m` → `systems` → `validator` **only if** Kalshi posted `result` on `KXBTC15M-26SEP071500-00`. Else stay `SETTLE_PENDING`.
-2. Only if asked: leftovers in `LEARNING_LANE_15M.md` (Digestor digest, 15m viz wall, weekly honesty, expand past `KXBTC15M`, CFB websocket observe-only).
+**Start every turn by running the tick.** `python -m golf_offshoot learn-15m` tells you which roles are owed and why. Serve them in the Protocol learning-tick order below; do not ping Founder to approve any of it.
+
+1. **The learning tick order is `lane-15m` → `digestor` → `operator` → `systems` → `validator`.** `hub-ui` runs only if the display is wrong or stale; `illustrator` only if real files can drive a PNG. **`lab` runs only after the honesty gate passes** — see item 5. A tick fires on a new official settle, a new paper fill, or a pending window clearing.
+   - `lane-15m` — confirm the watch is healthy, do not double-start hubs, stay `SETTLE_PENDING` where there is no Kalshi `result`
+   - `digestor` — refresh the SOURCE honesty digest from real files only
+   - `operator` — park/Soften only what the spine supports; put leave-off + desk on committed truth
+   - `systems` — `manifest.json` merge; never drop the published `paper_win`, never invent a pending, never sum the lineages
+   - `validator` — `python docs/observability-hub/validate_hub.py --strict`
+2. **Owed right now:** `systems`, then `validator`. Systems re-words `manifest.json` off *"SETTLE_PENDING until Kalshi result"* for `KXBTC15M-26SEP071500-00` at the four paths named in the snapshot above, onto the missing-paper-join wording the same file already uses at `$.lanes[1].settle.counts[5].note`. Keep the published `paper_win` `+1.67`. The genuine pending window (whichever one `learn-15m` currently names) stays a real `SETTLE_PENDING`.
+3. **Never collapse the two residual states.** A window pending for want of a Kalshi `result` is not the same as `KXBTC15M-26SEP071500-00`, which has an official `result=yes` and no book on this tree. Do not invent pnl for either. Do not merge lineage A and lineage B.
+4. **Illustrator:** the 15m board exists and is real — it is just behind. A later tick may re-render `paper_window_strip.png` from **current** files (live lineage A window count and bankroll; the `071500-00` cell carrying the missing-paper-join wording). If real files cannot drive it, leave the prior real board standing. Never invent a chart. Do not put golf WC1 / Ill on this lane.
+5. **`lab` stays idle.** The wake reports Lab **NOT owed** while `lab_gate.honesty_gate_passed` is false. Lab opens only when CoS re-stamps the honesty checklist **all-PASS** *and* Operator posts a clear residual on the desk. Then Lab brings **one** cheap paper-only **PROPOSED** test back to `operator`. Lab never self-admits.
+6. **Founder HOLD 2026-09-07 stands: no series other than `KXBTC15M` until this loop is honest.** Only Founder lifts it — not Operator, not CoS, not a later bot reading a tidy tick. Everything else parked (weekly honesty rollup, expanding the series, CFB websocket observe-only) is in `golf-offshoot/docs/LEARNING_LANE_15M_METHOD_PARK.md` with the explicit trigger that would reopen it.
+7. **Golf idle stays ON** (WC3+ only on a new settled week, on a fresh Founder GO that names the next invent). Nothing on the 15m lane clears it, retunes golf θ, or rewrites `golf-offshoot/docs/phase1_dryrun/OPERATOR_STATUS_STAMP.md`.
 
 ## Hard NOs
 
 - No Kalshi API keys, cash scopes, orders, or private endpoints
 - AI never deposit / withdraw / transfer
 - Do not retune golf θ from 15-min
-- Do not invent win/lose or use DIY CFB averages as official settle
+- Do not invent win/lose or use DIY CFB averages as official settle. Display prices (`yes_bid` / `yes_ask` / `last_price`) are not settle evidence
 - Do not put golf WC1 / Ill under `learning_lane_15m`
-- Missing charts stay `not yet available`
+- Charts render from real files only. A chart no real file can drive stays `not yet available` — never invented, never back-filled
+- Do not merge, sum, net or average the two paper lineages, and do not drop lineage B's published `paper_win` `+1.67` to make one clean story
+- Do not Soften the SOURCE CONFLICT away. Either one readable lineage story or an explicitly labeled dual lineage — a silent merge fails the honesty gate
+- Paper fills are not ADMITs (`lab_admits=false`). No edge established / banked edge / skill-met / productize on this lane
+- Do not expand past `KXBTC15M` while the Founder HOLD stands, and do not lift it on the crew's own authority
+- Soften Critic is **not hired** — do not invent the role
 - Do not merge leftover oil-hunt / `cursor/eia-window-job2` dirt into this track
 
 ## Resume commands
 
-```bash
+```powershell
 cd golf-offshoot
-python -m golf_offshoot hub --lane learning_lane_15m
-python -m golf_offshoot lane-15m
-python -m golf_offshoot observability-export
-python3 docs/observability-hub/validate_hub.py --strict   # from repo root
+$env:PYTHONPATH = "src"
+python -m golf_offshoot learn-15m                        # learning tick — what is owed and why (start here)
+python -m golf_offshoot shell --lane learning_lane_15m   # PaperWatch starts itself (~90s cycle)
+# Windows: golf-offshoot/scripts/windows/Open-15m-Learning-Hub.bat
+python -m golf_offshoot lane-15m --watch                 # CLI-only repeat, same cadence
+python docs/observability-hub/validate_hub.py --strict   # from repo root
 ```
+
+One hub process only. A hub may already be live on `127.0.0.1:8765` — check before starting another, and never kill a running one to start your own.
 
 Public viewer: `docs/observability-hub/` (read-only; no controls).
