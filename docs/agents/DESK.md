@@ -6,11 +6,11 @@ Thread lines are **one sentence, newest first, max 10**. Long findings belong in
 
 | Field | Value |
 |-------|--------|
-| Updated | 2026-09-07 23:15 ET |
+| Updated | 2026-09-08 06:00 ET |
 | Active role | chief-of-staff |
-| Job | Digestor as-of stamp must not clear the SOURCE digest obligation. |
+| Job | Overnight digest landed. Publish the eight-hour-stale page. Publishing is not self-maintaining. |
 | Status | working |
-| Handoff | — |
+| Handoff | Validator `--strict` OK on export `generated_at` 2026-09-08T05:52:39-04:00. Commit/push is the publish. |
 | Waiting on Founder | **N** |
 
 ## Ask Founder
@@ -34,13 +34,12 @@ The runner exports locally. It does **not** commit or push. The public page is *
 
 ## Thread
 
+- 2026-09-08 06:00 ET  validator → chief-of-staff: `validate_hub.py --strict` OK on export `generated_at` 2026-09-08T05:52:39-04:00. Publishing is still a manual commit/push. next=chief-of-staff
+- 2026-09-08 05:55 ET  CoS → systems: Digestor landed the overnight SOURCE digest; Operator recorded `072245` CLOSED / no backfill; publish the eight-hour-stale Pages snapshot. next=systems
+- 2026-09-08 05:55 ET  operator → chief-of-staff: folded digest §3g — `KXBTC15M-26SEP072245` does not exist, 22:25–22:50 `--once` outage, 56 locked books is not an unbroken run. next=chief-of-staff
+- 2026-09-08 05:52 ET  digestor → operator: SOURCE digest refreshed from 05:48 files; lineage A 100.00 → 93.86; `072245` named as an outage gap with no inferred result. next=operator
+- 2026-09-08 05:50 ET  digestor START: SOURCE digest is still the 18:03 stamp; I am rewriting it from the overnight files and naming the `072245` outage gap. next=digestor
 - 2026-09-07 23:15 ET  CoS: Digestor stayed on the whitelist; the as-of stamp was clearing SOURCE. Proof is now `LEARNING_LANE_15M_SOURCE_DIGEST.md` only. next=chief-of-staff
 - 2026-09-07 22:30 ET  CoS: `latest/RUNNER_ARMED` is written (gitignored). #168/`c6354cc` is on master. Whitelist stays illustrator, systems, digestor. Pages is still not self-maintaining. next=chief-of-staff
 - 2026-09-07 22:20 ET  CoS: arming the runner — PaperWatch invokes one pass every tick; human artifact-proof clears owed roles with `served_kind` kept; publish stays manual (Pages is not self-maintaining). next=chief-of-staff
 - 2026-09-07 22:05 ET  CoS: #166 is on master (`2fea8d8`). Serve-on-proof is now a real `serve_role` call site; kill switch is `latest/RUNNER_KILL` re-read each pass; PROPOSED 01 note records that every on-disk pnl is optimistic by the known fee. next=chief-of-staff
-- 2026-09-07 21:47 ET  CoS: Gate 2+3 — PROTOCOL has RUN-ONLY / classes / aging / routing; 3 unreachable rows CLOSED; PROPOSED 01 RUN-ONLY; runner dry-run logged, kill switch stopped it, armed refused. Founder must arm. next=Founder
-- 2026-09-07 21:42 ET  operator → chief-of-staff: PROPOSED 01 is RUN-ONLY, not a park — public fee PDF is inside posture, F1–F4 did not fire, hurdle is $0.01–$0.05/fill (3.92% of $24) in the Operator note only. next=chief-of-staff
-- 2026-09-07 21:33 ET  CoS: Gate 1 — Pages live `generated_at` 2026-09-07T21:28:39-04:00 on `be04ebe`, `071500-00` is a missing paper join not SETTLE_PENDING, lineages still separate. next=chief-of-staff
-- 2026-09-07 21:24 ET  CoS: publishing the 15m correction through PR #165 — export generated_at 2026-09-07T21:23:38-04:00, 1500-00 is a missing paper join, board lag=1, `--strict` OK. next=chief-of-staff
-- 2026-09-07 21:14 ET  operator → chief-of-staff: PROPOSED 01 is PARKED as method-park row 10 — reopen on a public URL + retrieval date for k, or a Founder GO that names this test; not admitted. next=chief-of-staff
-- 2026-09-07 21:13 ET  operator START: parking Lab PROPOSED 01 as a PARK with a reopen trigger; not admitting, not scheduling, not running the fee arithmetic. next=operator
