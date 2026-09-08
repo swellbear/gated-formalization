@@ -13,8 +13,10 @@ from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 from pathlib import Path
 from urllib.parse import parse_qs, urlparse
 
-from golf_offshoot.learning_lane_15m.paths import LANE_15M, LANE_GOLF
+from golf_offshoot.learning_lane_15m.paths import LANE_15M, LANE_GOLF, PRIMARY_SERIES
+from golf_offshoot.learning_lane_15m.watch import PaperWatch, load_watch_status
 from golf_offshoot.operator_surface.artifacts import HonestyBundle, load_honesty
+from golf_offshoot.operator_surface.hub_browser import refresh_existing_hub_window
 from golf_offshoot.operator_surface.lanes import SELECTOR_FIELD, lane_header_name, parse_lane
 from golf_offshoot.operator_surface.modes import (
     AI_NO_CASH,
@@ -220,8 +222,13 @@ ZOOM_HINT_FULL = "Click the chart to fit it on screen · Esc or click outside to
 
 
 def _viz_lightbox_html(viz: VizWall) -> str:
+    """Enlarged-chart overlay for the golf viz wall."""
+    return _lightbox_html(any(slot.path is not None for slot in viz.slots))
+
+
+def _lightbox_html(has_chart: bool) -> str:
     """Enlarged-chart overlay. Omitted entirely when no chart exists to enlarge."""
-    if not any(slot.path is not None for slot in viz.slots):
+    if not has_chart:
         return ""
     return (
         '<div class="lightbox" id="viz-lightbox" hidden role="dialog" aria-modal="true" '
@@ -233,6 +240,131 @@ def _viz_lightbox_html(viz: VizWall) -> str:
         '<button type="button" class="lightbox-close" id="viz-lightbox-close">Close (Esc)</button>'
         "</div>"
         '<img id="viz-lightbox-img" src="" alt=""/>'
+        "</div>"
+    )
+
+
+#: 15m board chrome. Display copy describing the PNG the Illustrator renders from
+#: the join files — this module never derives a settle, a result or a bankroll.
+CHART_15M_TITLE = "KXBTC15M paper windows — 15-minute board"
+CHART_15M_PLAIN = (
+    "One row per KXBTC15M window: the ticker, the settle status found on disk, and the official "
+    "Kalshi result once Kalshi posts one. A window with no result on disk stays SETTLE_PENDING."
+)
+CHART_15M_SUB = (
+    "Read-only PNG rendered from settlements/*.json, latest/journal.json and paper/*.json in "
+    "learning_lane_15m. No bankroll, payout or PnL is drawn. Not a golf WC1 / Ill board."
+)
+CHART_15M_MISSING = (
+    "15m chart not yet available. The Illustrator regenerates it from the join files; nothing is "
+    "drawn in its place. No golf WC1 / Ill here."
+)
+#: How many windows the caption names before it falls back to a count.
+CHART_15M_NAMED = 6
+
+
+def _chart_15m_path() -> Path | None:
+    """The Illustrator's 15m PNG, when it is actually on disk."""
+    try:
+        from golf_offshoot.learning_lane_15m.illustrate import chart_png_path
+
+        path = chart_png_path()
+    except Exception:
+        return None
+    return path if path.is_file() else None
+
+
+def _window_rows_15m() -> list:
+    """Window rows as the Illustrator reads them. Display copy only, never written."""
+    try:
+        from golf_offshoot.learning_lane_15m.illustrate import collect_rows
+
+        paper_rows, tape_rows = collect_rows()
+    except Exception:
+        return []
+    return list(paper_rows) + list(tape_rows)
+
+
+def _window_summary_15m(rows: list, *, limit: int = CHART_15M_NAMED) -> tuple[str, str]:
+    """(counts line, named-windows line) for the caption.
+
+    Every figure here is copied from a file. ``yes``/``no`` are Kalshi results that
+    already exist on disk; anything else counts as pending rather than being guessed.
+    """
+    if not rows:
+        return ("", "")
+    yes = no = pending = 0
+    named: list[str] = []
+    for row in rows:
+        result = str(getattr(row, "kalshi_result", "") or "").strip().lower()
+        status = str(getattr(row, "settle_status", "") or "").strip() or "unknown"
+        ticker = str(getattr(row, "ticker", "") or "")
+        if result == "yes":
+            yes += 1
+        elif result == "no":
+            no += 1
+        else:
+            pending += 1
+        if ticker and len(named) < max(0, int(limit)):
+            if result in ("yes", "no"):
+                named.append(f"{ticker} · {status} · result={result}")
+            elif status.upper() == "SETTLE_PENDING":
+                named.append(f"{ticker} · SETTLE_PENDING")
+            else:
+                named.append(f"{ticker} · {status} · SETTLE_PENDING")
+    joins = sum(1 for row in rows if getattr(row, "paper_join", False))
+    counts = (
+        f"{len(rows)} {PRIMARY_SERIES} window(s) on the board — {joins} paper-book join(s), "
+        f"{len(rows) - joins} Kalshi-only journal row(s) · "
+        f"settled result=yes {yes} · settled result=no {no} · SETTLE_PENDING {pending}"
+    )
+    if not named:
+        return (counts, "")
+    rest = len(rows) - len(named)
+    tail = f" · +{rest} more on the board" if rest > 0 else ""
+    return (counts, "Windows: " + "; ".join(named) + tail)
+
+
+def _viz_wall_15m_html() -> str:
+    """The 15m board as a labelled figure. Missing stays 'not yet available'."""
+    path = _chart_15m_path()
+    if path is None:
+        return f'<p class="missing">{html.escape(CHART_15M_MISSING)}</p>'
+    try:
+        cache = int(path.stat().st_mtime)
+    except OSError:
+        cache = 0
+    src = f"/viz15/paper_window_strip.png?t={cache}"
+    title = CHART_15M_TITLE
+    counts, windows = _window_summary_15m(_window_rows_15m())
+    caption_bits = []
+    if counts:
+        caption_bits.append(f'<span class="counts">{html.escape(counts)}</span>')
+    if windows:
+        caption_bits.append(f'<span class="windows">{html.escape(windows)}</span>')
+    caption_bits.append(
+        '<span class="src">Source: learning_lane_15m join files · click the board to enlarge</span>'
+    )
+    badges = "".join(
+        f'<span class="badge">{html.escape(text)}</span>'
+        for text in ("LEARNING LANE", PAPER_ONLY, AI_NO_CASH)
+    )
+    return (
+        '<div class="viz-wall" id="viz-wall">'
+        '<section class="viz wide" id="viz-slot-paper-window-strip">'
+        f"<h3>{html.escape(title)}</h3>"
+        f'<div class="badge-row">{badges}</div>'
+        f'<p class="plain">{html.escape(CHART_15M_PLAIN)}</p>'
+        f'<p class="sub">{html.escape(CHART_15M_SUB)}</p>'
+        "<figure>"
+        f'<a class="zoom" href="{src}" data-viz-zoom="1" data-viz-title="{html.escape(title)}" '
+        f'aria-label="Enlarge {html.escape(title)}">'
+        f'<img src="{src}" alt="{html.escape(title)} — read-only board" width="1700"/>'
+        '<span class="zoom-hint">Click to enlarge</span>'
+        "</a>"
+        f'<figcaption>{"".join(caption_bits)}</figcaption>'
+        "</figure>"
+        "</section>"
         "</div>"
     )
 
@@ -296,8 +428,8 @@ def _actions_html(event: str, lane: str = LANE_GOLF) -> str:
         blurbs = (
             ("ingest", "Pull latest data", "Public KXBTC15M fetch. Observation only."),
             ("live", "Update live ranks", "Refresh 15m prices, then paper autobet and settle join."),
-            ("shadow", "Check paper journal", "Re-read the 15m paper journal. Nothing is placed."),
-            ("loop", "Do all three", "ingest → live → paper autobet → settle join. One alert at the end."),
+            ("shadow", "Check paper journal", "Re-read the 15m journal."),
+            ("loop", "Do all three", "One extra cycle now. The 15m watch already repeats researcher → systems by itself."),
             ("refresh", "Reload files", "Re-read saved files from disk. No run is started."),
         )
     for value, label, blurb in blurbs:
@@ -331,23 +463,32 @@ def render_html(surface: dict) -> str:
     event = html.escape(str(surface.get("event_id") or ""))
     lane = parse_lane(surface.get("lane"))
     wall_class = "mock" if walls.is_mock else "ops"
+    body_class = "lane-15m" if lane == LANE_15M else "lane-golf"
+    charts_help = (
+        "KXBTC15M windows from the join files. No golf WC1 / Ill here."
+        if lane == LANE_15M
+        else (
+            "Illustrator boards that exist on disk. A missing chart stays not yet available and is "
+            "never invented, and no edge badge is ever added. Phone alerts are notify-first; this "
+            "hub stays local."
+        )
+    )
     # A barred MOCK/DEMO path still states itself in full. The operating path does not:
     # it is an observation page, and the standing Hard NOs are the one footer strip.
     wall_lines = "".join(f"<div>{html.escape(line)}</div>" for line in walls.lines) if walls.is_mock else ""
     lane_line = f"Active lane: {lane_header_name(lane)}"
     if lane == LANE_15M:
         lane_line = f"{lane_line} — LEARNING LANE"
-        viz_wall = (
-            '<p class="missing">not yet available — 15-min lane is observation-only. '
-            "No golf WC1 / Ill charts here.</p>"
-        )
-        viz_lightbox = ""
+        viz_wall = _viz_wall_15m_html()
+        # The 15m board carries its own overlay. Deriving it from the golf viz wall
+        # left this lane with no lightbox at all whenever golf had no chart on disk.
+        viz_lightbox = _lightbox_html(_chart_15m_path() is not None)
+        watch = load_watch_status()
+        watch_bit = "WATCH ON" if watch.get("running") else "WATCH OFF"
         settle_banner = (
-            '<div class="settle">'
-            "<strong>SETTLE_PENDING until Kalshi result</strong> — "
-            "paper autobet + settle join stay on this lane. "
-            "Official settle is Kalshi result matched to CF Benchmarks SOURCE. "
-            "Not a golf WC1 edge."
+            f'<div class="settle">'
+            f"<strong>{watch_bit}</strong> — settle when Kalshi posts result. "
+            f"{html.escape(str(watch.get('last_summary') or ''))}"
             "</div>"
         )
     else:
@@ -381,12 +522,40 @@ def render_html(surface: dict) -> str:
             f'<p>Full export: <a href="/export/html">{html.escape(str(honesty.ranked.html_path))}</a></p>'
         )
     if lane == LANE_15M:
+        from golf_offshoot.learning_lane_15m.learn import format_wake_line, load_wake_state
+        from golf_offshoot.learning_lane_15m.paper import format_15m_observation_board
+
+        watch = load_watch_status()
+        watch_line = (
+            f"watch running={watch.get('running')} interval_s={watch.get('interval_s')} "
+            f"cycles={watch.get('cycles')} last={watch.get('last_summary') or 'none'}"
+        )
+        # The observation surface, not chrome: whether crew work is owed belongs
+        # beside the journal the founder already reads.
+        journal_board = html.escape(
+            "\n\n".join(
+                (
+                    watch_line,
+                    format_wake_line(load_wake_state()),
+                    format_15m_observation_board(),
+                )
+            )
+        )
+        last_block = (
+            f"<h3>Last operator cycle</h3><pre>{last_html}</pre>"
+            if last
+            else "<p class=\"help\">No operator cycle in this shell session yet. Journal below is from disk.</p>"
+        )
+        paper_html = ""
         lane_body = (
             '<section class="panel">'
             "<h2>15-min Kalshi journal</h2>"
-            '<p class="help">Paper observation only. Not live cash. Not a golf WC1 edge. '
-            "Leftovers stay documented PROPOSED (not Softened).</p>"
-            f"<pre>{last_html}</pre>"
+            '<p class="help">'
+            '<a href="https://swellbear.github.io/gated-formalization/observability-hub/">'
+            "Public observability hub</a></p>"
+            f"{last_block}"
+            "<h3>Journal</h3>"
+            f"<pre>{journal_board}</pre>"
             "</section>"
         )
     else:
@@ -434,6 +603,9 @@ def render_html(surface: dict) -> str:
  header .lane-line {{ font-size: 13px; opacity: 0.85; margin-top: 6px; }}
  .badge {{ display: inline-block; margin: 4px 6px 0 0; padding: 3px 8px; background: #0e1f29; color: #f2e27a; font-size: 12px; font-weight: 700; }}
  main {{ padding: 0 20px 56px; max-width: 1100px; margin: 0 auto; }}
+ /* The 15m board is a wide table-and-strip figure. Give it room to be read in
+    place instead of making the lightbox the only legible view. */
+ body.lane-15m main {{ max-width: 1560px; }}
  form.row {{ display: flex; flex-wrap: wrap; gap: 8px; align-items: end; margin: 4px 0 10px; }}
  form.lane-form fieldset {{ border: 1px solid #c9c2b2; padding: 8px 10px; }}
  form.lane-form legend {{ font-size: 13px; font-weight: 700; }}
@@ -460,6 +632,14 @@ def render_html(surface: dict) -> str:
  .viz .plain {{ font-size: 13px; color: #333; margin: 0 0 6px; }}
  .viz .sub {{ font-size: 12px; color: #4a4a4a; margin: 0 0 8px; }}
  .viz img {{ display: block; width: 100%; max-width: 100%; height: auto; border: 1px solid #c9c2b2; background: #111; }}
+ .viz.wide {{ grid-column: 1 / -1; }}
+ .viz .badge-row {{ margin: 0 0 8px; }}
+ .viz figure {{ margin: 0; }}
+ .viz figcaption {{ margin-top: 8px; font-size: 12px; color: #4a4a4a; line-height: 1.55; }}
+ .viz figcaption span {{ display: block; }}
+ .viz figcaption .counts {{ margin-bottom: 4px; font-size: 13px; font-weight: 700; color: #1b1b1b; }}
+ .viz figcaption .windows {{ margin-bottom: 4px; font-family: Consolas, "Courier New", monospace; color: #333; }}
+ .viz figcaption .src {{ font-style: italic; }}
  .viz a.zoom {{ display: block; cursor: zoom-in; color: inherit; text-decoration: none; }}
  .viz a.zoom:focus-visible {{ outline: 3px solid #1f3b4d; outline-offset: 2px; }}
  .viz .zoom-hint {{ display: block; margin-top: 6px; font-size: 12px; color: #4a4a4a; }}
@@ -476,7 +656,7 @@ def render_html(surface: dict) -> str:
  body.viz-zoomed {{ overflow: hidden; }}
 </style>
 </head>
-<body>
+<body class="{body_class}">
 <header class="{wall_class}">
   <h1>{html.escape(walls.title)}</h1>
   <div class="lane-line">{html.escape(lane_line)}</div>
@@ -486,17 +666,12 @@ def render_html(surface: dict) -> str:
 <main>
   <section class="panel">
     <h2>Charts first — read-only chart wall</h2>
-    <p class="help">These charts are what to look at before any table. Illustrator owns them; the hub only
-    shows the files that exist. A missing chart stays {html.escape('not yet available')} and is never invented,
-    and no edge badge is ever added. Phone alerts are notify-first; this hub stays local.</p>
+    <p class="help">{html.escape(charts_help)}</p>
     {viz_wall}
   </section>
   <section class="panel">
     <h2>What you can do here</h2>
-    <p class="help">Five buttons, all read-and-recompute. Phase 1 observation only. Trading is
-    {html.escape(NOT_ARMED)}. Paper bankroll auto-apply on live and on all-three is
-    {html.escape(PAPER_ONLY)} — not trading armed. There is no deposit, withdraw, transfer,
-    cash-out, or one-tap bet control on this page.</p>
+    <p class="help">{"Watch is already looping this lane. Buttons are extras." if lane == LANE_15M else f"Five buttons. Trading is {html.escape(NOT_ARMED)}. Paper bankroll auto-apply is {html.escape(PAPER_ONLY)} — not trading armed. No deposit, withdraw, transfer, cash-out, or one-tap bet control exists on this page."}</p>
     {actions}
   </section>
   <section class="panel">
@@ -551,14 +726,21 @@ def render_html(surface: dict) -> str:
   }});
 }})();
 (function(){{
+  // Same-tab refresh. Nobody clicks reload: a hub restart bounces /api/watch,
+  // and this tab reloads itself as soon as the port answers again.
   var gen = null;
+  var lost = false;
   function tick(){{
-    fetch('/api/watch', {{cache:'no-store'}}).then(function(r){{return r.json();}}).then(function(s){{
+    fetch('/api/watch', {{cache:'no-store'}}).then(function(r){{
+      if (!r.ok) throw new Error('hub ' + r.status);
+      return r.json();
+    }}).then(function(s){{
+      if (lost) {{ location.reload(); return; }}
       if (gen === null) {{ gen = s.generation; return; }}
       if (s.generation !== gen) location.reload();
-    }}).catch(function(){{}});
+    }}).catch(function(){{ lost = true; }});
   }}
-  setInterval(tick, 3000);
+  setInterval(tick, 1500);
   tick();
 }})();
 </script>
@@ -582,6 +764,7 @@ class OperatorHandler(BaseHTTPRequestHandler):
             qs = parse_qs(parsed.query)
             if qs.get(SELECTOR_FIELD):
                 self._state()["lane"] = parse_lane(qs.get(SELECTOR_FIELD)[0])
+                _sync_paper_watch(self._state())
                 rebuild_surface(self._state())
             self._send_html(render_html(self._state()["surface"]))
             return
@@ -606,6 +789,15 @@ class OperatorHandler(BaseHTTPRequestHandler):
                 self._send(404, "text/plain; charset=utf-8", b"export path rejected\n")
                 return
             self._send(200, "text/html; charset=utf-8", safe.read_bytes())
+            return
+        if parsed.path == "/viz15/paper_window_strip.png":
+            from golf_offshoot.learning_lane_15m.illustrate import chart_png_path
+
+            path = chart_png_path()
+            if path.is_file():
+                self._send(200, "image/png", path.read_bytes())
+            else:
+                self._send(404, "text/plain; charset=utf-8", b"not yet available\n")
             return
         if parsed.path.startswith("/viz/") and parsed.path.endswith(".png"):
             slot_id = Path(parsed.path).stem
@@ -724,15 +916,19 @@ def hub_url(host: str, port: int) -> str:
 
 
 def open_hub_browser(url: str) -> bool:
-    """Open the hub in the default browser. Windows prefers os.startfile."""
-    if sys.platform == "win32":
-        startfile = getattr(os, "startfile", None)
-        if callable(startfile):
-            try:
-                startfile(url)
-                return True
-            except OSError:
-                pass
+    """Refresh the tab that is already open. Only open a new one as a last resort.
+
+    Windows startfile on http:// always opens a new tab, which stacked pages
+    every hub re-exec. Even webbrowser.open(..., new=0) is only a request — most
+    browsers ignore it and add a tab anyway. So look for the hub window first and
+    drive it with F5; that is the path that actually reuses the founder's tab.
+    """
+    try:
+        if refresh_existing_hub_window(url):
+            print(f"Refreshed the hub tab already open at {url}")
+            return True
+    except Exception:
+        pass
     try:
         return bool(webbrowser.open(url, new=0, autoraise=True))
     except Exception:
@@ -742,9 +938,52 @@ def open_hub_browser(url: str) -> bool:
 def maybe_open_hub_browser(url: str, *, enabled: bool) -> bool:
     if not enabled:
         return False
+    if is_hub_child():
+        # A re-exec child inherits the parent's argv, and a parent started before
+        # --no-browser existed hands down open_browser=True forever. The child is
+        # a restart of a hub the founder is already looking at, so it never gets
+        # to launch a browser regardless of what argv said.
+        print("Hub restarted in place. Reusing the tab you already have open.")
+        return False
     print(f"Opening hub in your default browser: {url}")
     print("This console keeps the hub running — it is not the hub UI.")
     return open_hub_browser(url)
+
+
+def _sync_paper_watch(state: dict) -> None:
+    """15m lane keeps the paper watch on. Golf turns it off. Founder does not click."""
+    watch = state.get("paper_watch")
+    if watch is None:
+
+        def _on_cycle(payload: dict) -> None:
+            meta = payload.get("watch") or {}
+            # The cycle records the wake itself. The journal panel draws the
+            # current one, so this record only carries which roles it asked for.
+            wake = payload.get("learning_wake") or {}
+            rec = RunRecord(
+                command="watch",
+                ok=bool(meta.get("last_ok", True)),
+                event_id=PRIMARY_SERIES,
+                summary=str(meta.get("last_summary") or "15m watch cycle"),
+                table=str(payload.get("report") or ""),
+                error=str(meta.get("last_error") or ""),
+                extras={
+                    "lane": LANE_15M,
+                    "watch_cycles": meta.get("cycles"),
+                    "roles_owed": [str(row.get("role")) for row in wake.get("roles_owed") or []],
+                    "wake_events": len(wake.get("new_events") or []),
+                },
+            )
+            rebuild_surface(state, last_run=rec)
+            state["reload_kind"] = "artifacts"
+            state["generation"] = int(state.get("generation") or 0) + 1
+
+        watch = PaperWatch(on_cycle=_on_cycle)
+        state["paper_watch"] = watch
+    if parse_lane(state.get("lane")) == LANE_15M:
+        watch.start()
+    else:
+        watch.stop_watch()
 
 
 def rebuild_surface(state: dict, *, last_run: RunRecord | None | object = ...) -> None:
@@ -804,11 +1043,15 @@ def serve(
     lane: str | None = None,
 ) -> int:
     if not is_hub_child():
+        # Parent opens the browser once. Children never do — a code re-exec
+        # used to call startfile again and spawn a new Chrome tab every time.
+        if open_browser:
+            maybe_open_hub_browser(hub_url(host, port), enabled=True)
         cmd = hub_child_command(
             host=host,
             port=port,
             event_id=event_id,
-            open_browser=open_browser,
+            open_browser=False,
             artifact_root=artifact_root,
             viz_root=viz_root,
             lane=lane,
@@ -850,7 +1093,9 @@ def run_http_server(
             viz_root=viz_root,
             lane=start_lane,
         ),
+        "paper_watch": None,
     }
+    _sync_paper_watch(state)
     httpd = _HubServer((host, port), OperatorHandler)
     httpd.surface_state = state  # type: ignore[attr-defined]
     url = hub_url(host, port)

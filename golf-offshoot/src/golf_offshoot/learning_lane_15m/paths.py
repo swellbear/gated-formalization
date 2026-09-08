@@ -92,6 +92,12 @@ def settlements_dir_15m() -> Path:
     return d
 
 
+def safe_artifact_stem(name: str, *, fallback: str = "event") -> str:
+    """Filesystem stem. window_id may keep ':' in JSON; Windows paths cannot."""
+    safe = "".join(ch if ch.isalnum() or ch in "-_" else "-" for ch in str(name or ""))
+    return safe.strip("-") or fallback
+
+
 def assert_not_golf_path(path: Path) -> None:
     """Hard NO: 15-min writes must not land in the golf paper/shadow trees."""
     resolved = path.resolve()

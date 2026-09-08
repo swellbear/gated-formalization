@@ -5,7 +5,12 @@ from __future__ import annotations
 import html
 from pathlib import Path
 
-from golf_offshoot.learning_lane_15m.paper import format_15m_ledger, latest_shadow_lines, load_ledger
+from golf_offshoot.learning_lane_15m.paper import (
+    format_15m_ledger,
+    format_15m_observation_board,
+    latest_shadow_lines,
+    load_ledger,
+)
 from golf_offshoot.learning_lane_15m.paths import (
     LANE_15M,
     artifact_root_15m,
@@ -76,7 +81,7 @@ def _golf_journal_html() -> str:
 
 def _m15_journal_html() -> str:
     led = load_ledger()
-    body = format_15m_ledger(led) if led.entries else "15m paper ledger not yet available"
+    body = format_15m_observation_board() if led.entries else format_15m_ledger(led)
     shadow = latest_shadow_lines(8)
     shadow_html = (
         "<pre>" + _esc("\n".join(shadow)) + "</pre>"
@@ -87,10 +92,12 @@ def _m15_journal_html() -> str:
 <section class="journal" data-journal="15m">
   <h2>Journal: 15m</h2>
   <p class="scope">Artifact root: {_esc(artifact_root_15m())}</p>
+  <p>Public viewer (read-only):
+  <a href="https://swellbear.github.io/gated-formalization/observability-hub/">observability-hub</a></p>
   <pre>{_esc(body)}</pre>
   <h3>Shadow (15m only)</h3>
   {shadow_html}
-  <p>No combined golf+15m totals. No Kalshi cash in or out.</p>
+  <p>No combined golf+15m totals. No Kalshi cash in or out. Charts stay not yet available until Illustrator has a real PNG.</p>
 </section>
 """
 

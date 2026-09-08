@@ -183,6 +183,16 @@ def artifact_watch_files(roots: ResolvedRoots) -> list[Path]:
             candidate = viz / name
             if candidate.is_file():
                 files.append(candidate)
+    # The 15m board is published under docs/, not viz_root. Watch it too, so a
+    # regenerated board refreshes the open tab without anyone clicking reload.
+    try:
+        from golf_offshoot.learning_lane_15m.illustrate import chart_png_path
+
+        board = chart_png_path()
+    except Exception:
+        board = None
+    if board is not None and board.is_file():
+        files.append(board)
     # unique, stable
     seen: set[Path] = set()
     out: list[Path] = []

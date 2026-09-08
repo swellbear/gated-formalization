@@ -16,6 +16,7 @@ from golf_offshoot.learning_lane_15m.paths import (
     PRIMARY_SERIES,
     assert_not_golf_path,
     paper_dir_15m,
+    safe_artifact_stem,
     shadow_dir_15m,
 )
 from golf_offshoot.localtime import now
@@ -40,8 +41,7 @@ def ledger_path() -> Path:
 
 
 def book_path(event_ticker: str) -> Path:
-    safe = "".join(ch if ch.isalnum() or ch in "-_" else "-" for ch in str(event_ticker))
-    path = paper_dir_15m() / f"{safe or 'event'}.json"
+    path = paper_dir_15m() / f"{safe_artifact_stem(event_ticker)}.json"
     assert_not_golf_path(path)
     return path
 
@@ -301,13 +301,72 @@ def paper_autobet_open_markets(
     return applied
 
 
+def format_15m_observation_board() -> str:
+    """Desktop journal: paper fills and official joins already on disk. No invented result."""
+    from golf_offshoot.learning_lane_15m.paths import latest_dir_15m, settlements_dir_15m
+
+    lines = [format_15m_ledger(), "", "Paper books"]
+    books = list(iter_books())
+    if not books:
+        lines.append("  none yet")
+    for rec in books:
+        status = "settled" if rec.settled_at is not None else "open / SETTLE_PENDING"
+        tickers = [pos.player_id for pos in rec.book.positions]
+        label = tickers[0] if tickers else event_ticker_from_book(rec)
+        extra = (
+            f" pnl={float(rec.settlement_pnl or 0):+.2f}" if rec.settled_at is not None else ""
+        )
+        lines.append(f"  {label} {status}{extra}")
+    journal = latest_dir_15m() / "journal.json"
+    if journal.is_file():
+        try:
+            payload = json.loads(journal.read_text(encoding="utf-8"))
+        except (OSError, ValueError):
+            payload = {}
+        rows = [w for w in (payload.get("windows") or []) if isinstance(w, dict)]
+        interesting = [
+            w
+            for w in rows
+            if w.get("ticker")
+            and (w.get("result") or w.get("status") in {"active", "finalized", "settled", "open"})
+        ]
+        if interesting:
+            lines.extend(["", "Kalshi windows in latest journal (display, not extra settles)"])
+            for window in interesting[:12]:
+                lines.append(
+                    f"  {window.get('ticker')} status={window.get('status') or ''} "
+                    f"result={window.get('result') or 'n/a'}"
+                )
+    settles = sorted(settlements_dir_15m().glob("*.json"))
+    if settles:
+        lines.extend(["", "Official settle joins"])
+        for path in settles[-8:]:
+            try:
+                payload = json.loads(path.read_text(encoding="utf-8"))
+            except (OSError, ValueError):
+                continue
+            for row in payload.get("rows") or []:
+                if not isinstance(row, dict):
+                    continue
+                lines.append(
+                    f"  {row.get('ticker') or path.stem} "
+                    f"{row.get('settle_status') or ''} "
+                    f"kalshi_result={row.get('kalshi_result') or 'n/a'}"
+                )
+    return "\n".join(lines)
+
+
+def event_ticker_from_book(rec) -> str:
+    from golf_offshoot.learning_lane_15m.settle import event_ticker_from_book_id
+
+    return event_ticker_from_book_id(str(rec.tournament_id or ""))
+
+
 def format_15m_ledger(ledger: PaperLedger | None = None) -> str:
     led = ledger if ledger is not None else load_ledger()
     lines = [
-        "PAPER LEDGER  journal=15m  lane=learning_lane_15m",
-        f"bankroll=${led.bankroll:.2f}  never_auto_bet=true  PAPER OBSERVATION ONLY",
-        "Trading NOT ARMED. AI: NO CASH IN/OUT. Not a golf total.",
-        f"starting ${led.starting_bankroll:.2f}  betting P/L ${led.betting_pnl:+.2f}",
+        "PAPER LEDGER  journal=15m",
+        f"bankroll=${led.bankroll:.2f}  P/L ${led.betting_pnl:+.2f}  start ${led.starting_bankroll:.2f}",
     ]
     if led.events:
         lines.append("Windows")

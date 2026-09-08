@@ -64,13 +64,51 @@ def test_hub_manifest_matches_pr151_schema(tmp_path, monkeypatch):
 
         walk_keys(payload)
         assert HUB_MANIFEST_REL.as_posix() == "docs/observability-hub/data/manifest.json"
-        assert str(hub_manifest_path()).endswith("docs/observability-hub/data/manifest.json")
+        assert hub_manifest_path().as_posix().endswith(
+            "docs/observability-hub/data/manifest.json"
+        )
 
         paths = write_observability_exports(markets=[], hub_dir=tmp_path / "hub")
         assert (tmp_path / "hub" / "manifest.json").is_file()
         assert "hub_manifest" in paths
         assert "learning_lane_15m_journal" in paths
         assert not str(paths["learning_lane_15m_journal"]).startswith(str(tmp_path / "golf"))
+    finally:
+        set_15m_root_override(None)
+
+
+def test_export_keeps_published_15m_when_local_journal_is_thinner(tmp_path, monkeypatch):
+    monkeypatch.setattr("golf_offshoot.strategy.paper_book.package_data_dir", lambda: tmp_path / "golf")
+    set_15m_root_override(tmp_path / "kalshi_15m")
+    try:
+        existing = {
+            "lanes": [
+                {"lane_id": LANE_GOLF, "records": []},
+                {
+                    "lane_id": LANE_15M,
+                    "settle": {
+                        "counts": [
+                            {"label": "Pending windows", "value": "1"},
+                            {"label": "Settled windows", "value": "1"},
+                            {"label": "paper_win", "value": "1"},
+                        ]
+                    },
+                    "last_run": {"status": "published export"},
+                    "records": [],
+                },
+            ]
+        }
+        payload = build_hub_manifest(markets=[], existing=existing)
+        lane15 = _lane(payload, LANE_15M)
+        # Published paper rows now name their book, so match on the base label.
+        counts = {
+            row["label"].removeprefix("Lineage B · "): row["value"]
+            for row in lane15["settle"]["counts"]
+        }
+        assert counts["Settled windows"] == "1"
+        assert counts["paper_win"] == "1"
+        labels = [row["label"] for row in lane15["settle"]["counts"]]
+        assert "Lineage B · paper_win" in labels
     finally:
         set_15m_root_override(None)
 

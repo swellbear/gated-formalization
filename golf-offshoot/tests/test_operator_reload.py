@@ -9,6 +9,7 @@ from types import SimpleNamespace
 from golf_offshoot.operator_surface.app import (
     DEFAULT_HOST,
     DEFAULT_PORT,
+    _window_summary_15m,
     build_surface,
     hub_url,
     maybe_open_hub_browser,
@@ -17,6 +18,11 @@ from golf_offshoot.operator_surface.app import (
     render_html,
 )
 from golf_offshoot.operator_surface.app import main as shell_main
+from golf_offshoot.operator_surface.hub_browser import (
+    choose_hub_window,
+    hub_window_hints,
+    refresh_existing_hub_window,
+)
 from golf_offshoot.operator_surface.paths import resolve_roots
 from golf_offshoot.operator_surface.reload import (
     REEXEC_CODE,
@@ -292,12 +298,16 @@ def test_cli_shell_forwards_no_browser(monkeypatch):
     assert seen[1]["open_browser"] is False
 
 
-def test_open_hub_browser_windows_startfile(monkeypatch):
-    opened: list[str] = []
-    monkeypatch.setattr("golf_offshoot.operator_surface.app.sys.platform", "win32")
-    monkeypatch.setattr("golf_offshoot.operator_surface.app.os.startfile", lambda url: opened.append(url), raising=False)
+def test_open_hub_browser_reuses_window(monkeypatch):
+    opened: list[tuple[str, int]] = []
+    monkeypatch.setattr(
+        "golf_offshoot.operator_surface.app.webbrowser.open",
+        lambda url, new=0, autoraise=True: opened.append((url, new)) or True,
+    )
+    # No hub window on screen, so this falls through to the browser.
+    monkeypatch.setattr("golf_offshoot.operator_surface.app.refresh_existing_hub_window", lambda url: False)
     assert open_hub_browser("http://127.0.0.1:8765/") is True
-    assert opened == ["http://127.0.0.1:8765/"]
+    assert opened == [("http://127.0.0.1:8765/", 0)]
 
 
 def test_maybe_open_hub_browser_respects_opt_out(monkeypatch):
@@ -312,6 +322,193 @@ def test_maybe_open_hub_browser_respects_opt_out(monkeypatch):
 def test_hub_url_uses_configured_host_port():
     assert hub_url("127.0.0.1", 8765) == "http://127.0.0.1:8765/"
     assert hub_url("127.0.0.1", 9001) == "http://127.0.0.1:9001/"
+
+
+# --- hub restarts without the founder clicking anything -----------------------
+
+
+def test_hub_child_never_opens_browser_even_when_argv_omitted_no_browser(monkeypatch, capsys):
+    """The reported bug: a re-exec child stacked a Chrome tab on every restart.
+
+    A parent started before ``--no-browser`` existed hands ``open_browser=True``
+    down forever, so the opt-out cannot live in argv alone. Being a child is the
+    thing that bars the browser.
+    """
+    opened: list[str] = []
+    monkeypatch.setattr(
+        "golf_offshoot.operator_surface.app.open_hub_browser",
+        lambda url: opened.append(url) or True,
+    )
+    monkeypatch.setenv("GOLF_OFFSHOOT_HUB_CHILD", "1")
+    assert maybe_open_hub_browser("http://127.0.0.1:8765/", enabled=True) is False
+    assert opened == []
+    assert "Opening hub in your default browser" not in capsys.readouterr().out
+
+    # The parent, which the founder actually started, still gets its one window.
+    monkeypatch.delenv("GOLF_OFFSHOOT_HUB_CHILD")
+    assert maybe_open_hub_browser("http://127.0.0.1:8765/", enabled=True) is True
+    assert opened == ["http://127.0.0.1:8765/"]
+
+
+def test_open_hub_browser_prefers_refreshing_existing_window(monkeypatch):
+    """Refresh the tab that is open. Only open a new one when there is none."""
+    opened: list[str] = []
+    monkeypatch.setattr(
+        "golf_offshoot.operator_surface.app.webbrowser.open",
+        lambda url, new=0, autoraise=True: opened.append(url) or True,
+    )
+    monkeypatch.setattr("golf_offshoot.operator_surface.app.refresh_existing_hub_window", lambda url: True)
+    assert open_hub_browser("http://127.0.0.1:8765/") is True
+    assert opened == []
+
+    monkeypatch.setattr("golf_offshoot.operator_surface.app.refresh_existing_hub_window", lambda url: False)
+    assert open_hub_browser("http://127.0.0.1:8765/") is True
+    assert opened == ["http://127.0.0.1:8765/"]
+
+
+def test_choose_hub_window_matches_browser_and_skips_console():
+    hints = hub_window_hints("http://127.0.0.1:8765/")
+    assert "golf-offshoot operator shell" in hints
+    assert "127.0.0.1:8765" in hints
+
+    # The console running the hub carries the same words in its title bar. Sending
+    # it F5 would type into a terminal, so class has to agree with title.
+    console = (11, "golf-offshoot operator shell - powershell", "ConsoleWindowClass")
+    terminal = (12, "python -m golf_offshoot shell --port 8765", "CASCADIA_HOSTING_WINDOW_CLASS")
+    chrome = (13, "golf-offshoot operator shell - Google Chrome", "Chrome_WidgetWin_1")
+    assert choose_hub_window([console, terminal, chrome], hints) == 13
+    assert choose_hub_window([console, terminal], hints) is None
+
+    # A browser showing something else is not the hub.
+    other = (14, "Inbox - Gmail - Google Chrome", "Chrome_WidgetWin_1")
+    assert choose_hub_window([other], hints) is None
+    # Falling back to the bare address still finds the tab when the title is absent.
+    bare = (15, "127.0.0.1:8765/?lane=learning_lane_15m", "MozillaWindowClass")
+    assert choose_hub_window([other, bare], hints) == 15
+
+
+def test_refresh_existing_hub_window_uses_found_window():
+    seen: list[int] = []
+
+    def lister():
+        return [(21, "golf-offshoot operator shell - Google Chrome", "Chrome_WidgetWin_1")]
+
+    def refresher(hwnd):
+        seen.append(hwnd)
+        return True
+
+    assert refresh_existing_hub_window("http://127.0.0.1:8765/", lister=lister, refresher=refresher) is True
+    assert seen == [21]
+
+    # No hub window on screen: report nothing to reuse instead of poking a window.
+    assert refresh_existing_hub_window("http://127.0.0.1:8765/", lister=list, refresher=refresher) is False
+    assert seen == [21]
+
+    # Opt-out never touches the desktop at all.
+    assert (
+        refresh_existing_hub_window(
+            "http://127.0.0.1:8765/",
+            lister=lister,
+            refresher=refresher,
+            environ={"GOLF_OFFSHOOT_HUB_NO_FOCUS": "1"},
+        )
+        is False
+    )
+    assert seen == [21]
+
+
+def test_html_watch_script_reloads_same_tab_after_reconnect(tmp_path):
+    """Hub bounces -> poll fails -> poll succeeds -> this tab reloads itself."""
+    page = render_html(build_surface(artifact_root=tmp_path, viz_root=tmp_path / "viz"))
+    assert "/api/watch" in page
+    # A failed poll is remembered rather than swallowed.
+    assert "catch(function(){ lost = true; })" in page
+    assert "if (lost) { location.reload(); return; }" in page
+    # A generation change still reloads even if the poll never failed.
+    assert "if (s.generation !== gen) location.reload();" in page
+    # A non-200 counts as a failure, not as valid JSON.
+    assert "if (!r.ok) throw new Error" in page
+
+
+# --- 15m board chrome ---------------------------------------------------------
+
+
+def test_15m_lane_shows_labelled_window_board(monkeypatch, tmp_path):
+    png = tmp_path / "paper_window_strip.png"
+    png.write_bytes(b"\x89PNG\r\n")
+    monkeypatch.setattr("golf_offshoot.operator_surface.app._chart_15m_path", lambda: png)
+    monkeypatch.setattr(
+        "golf_offshoot.operator_surface.app._window_rows_15m",
+        lambda: [
+            SimpleNamespace(
+                ticker="KXBTC15M-26SEP071445-45",
+                settle_status="settled",
+                kalshi_result="yes",
+                paper_join=True,
+            ),
+            SimpleNamespace(
+                ticker="KXBTC15M-26SEP071500-00",
+                settle_status="SETTLE_PENDING",
+                kalshi_result="",
+                paper_join=True,
+            ),
+        ],
+    )
+    page = render_html(build_surface(lane="learning_lane_15m", artifact_root=tmp_path, viz_root=tmp_path / "viz"))
+
+    # A titled figure, not an unlabelled colour block.
+    assert "<figure>" in page and "<figcaption>" in page
+    assert "KXBTC15M paper windows" in page
+    # The caption names the windows: ticker, status, result.
+    assert "KXBTC15M-26SEP071445-45 · settled · result=yes" in page
+    assert "KXBTC15M-26SEP071500-00 · SETTLE_PENDING" in page
+    assert "settled result=yes 1 · settled result=no 0 · SETTLE_PENDING 1" in page
+    # Enlarge still works on this lane even though golf has no chart on disk.
+    assert 'id="viz-lightbox"' in page
+    assert 'data-viz-zoom="1"' in page
+    # No golf boards leak onto the learning lane.
+    for slot in ("shadow_honesty_strip", "calibration_weather", "wc1_dated_record"):
+        assert f"viz-slot-{slot}" not in page
+
+
+def test_15m_missing_png_stays_not_yet_available(monkeypatch, tmp_path):
+    monkeypatch.setattr("golf_offshoot.operator_surface.app._chart_15m_path", lambda: None)
+    page = render_html(build_surface(lane="learning_lane_15m", artifact_root=tmp_path, viz_root=tmp_path / "viz"))
+    assert "not yet available" in page
+    # Nothing is drawn in its place, and there is no overlay to open.
+    assert "/viz15/paper_window_strip.png" not in page
+    assert 'id="viz-lightbox"' not in page
+
+
+def test_15m_window_summary_never_invents_a_result():
+    """A window with no result on disk is pending. It is never scored win or lose."""
+    rows = [
+        SimpleNamespace(ticker="A-1", settle_status="settled", kalshi_result="no", paper_join=True),
+        SimpleNamespace(ticker="A-2", settle_status="active", kalshi_result="", paper_join=False),
+        SimpleNamespace(ticker="A-3", settle_status="", kalshi_result=None, paper_join=False),
+    ]
+    counts, windows = _window_summary_15m(rows)
+    assert "settled result=yes 0 · settled result=no 1 · SETTLE_PENDING 2" in counts
+    assert "1 paper-book join(s), 2 Kalshi-only journal row(s)" in counts
+    assert "A-1 · settled · result=no" in windows
+    assert "A-2 · active · SETTLE_PENDING" in windows
+    # A row with no result on disk carries no verdict of any kind.
+    assert "A-2 · active · result=" not in windows
+    assert "A-3 · unknown · SETTLE_PENDING" in windows
+    for verdict in ("paper_win", "paper_lose", "settle_win", "won", "lost"):
+        assert verdict not in windows.lower()
+    assert _window_summary_15m([]) == ("", "")
+
+
+def test_15m_caption_caps_named_windows():
+    rows = [
+        SimpleNamespace(ticker=f"KXBTC15M-{i}", settle_status="settled", kalshi_result="yes", paper_join=False)
+        for i in range(9)
+    ]
+    counts, windows = _window_summary_15m(rows, limit=4)
+    assert counts.startswith("9 KXBTC15M window(s)")
+    assert windows.count(";") == 3
+    assert "+5 more on the board" in windows
 
 
 def test_api_watch_generation_and_soft_reload(tmp_path):
