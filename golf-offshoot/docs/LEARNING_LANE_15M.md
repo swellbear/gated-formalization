@@ -24,7 +24,7 @@ Hub viz for this lane is not yet available (empty / observation-only). Do not in
 - AI never deposit / withdraw / transfer. There is no 15-min cash UI.
 - Paper money only. `PAPER OBSERVATION ONLY`.
 - Do **not** retune golf θ from 15-min.
-- Do **not** widen past `KXBTC15M` in this PR (the adapter is shaped to expand later).
+- Do **not** widen past `KXBTC15M`. Expansion is a new lane, not a wider allow-list. Procedure: [`LEARNING_LANE_EXPANSION.md`](LEARNING_LANE_EXPANSION.md).
 - No geo. No LIVE cash. No invented edge / banked-edge claims.
 - 15-min Kalshi is not live trading and not a golf WC1 edge.
 

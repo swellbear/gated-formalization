@@ -41,7 +41,7 @@ Only if something **important must change or be reviewed**. One question, then w
 Ask:
 
 - C2 / C4 / TABLE / reopen WC3+
-- Expand past `KXBTC15M` or retune golf θ
+- Expand past `KXBTC15M` or retune golf θ. Expansion is a **new lane**, not a second ticker on `learning_lane_15m`. Procedure: [`golf-offshoot/docs/LEARNING_LANE_EXPANSION.md`](../../golf-offshoot/docs/LEARNING_LANE_EXPANSION.md). Do not add a series to this lane’s ledger, bar, or globs.
 - Arm trading, cash, Kalshi keys
 - Change a Hard NO, or put golf WC1 / Ill on the 15m lane
 - A new dated-record ADMIT / REJECT that would rewrite the Operator stamp

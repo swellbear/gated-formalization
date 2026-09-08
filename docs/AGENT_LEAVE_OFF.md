@@ -5,7 +5,7 @@ Chat transcripts are not. A later Grok / Cursor cloud agent will not see a prior
 
 | Field | Value |
 |-------|--------|
-| Updated | 2026-09-08 12:05 EDT (Parts 0–8: the ratchet closed a full loop — it found the flaw, the Critic upheld it, Operator fixed the bar, and the same check now passes) |
+| Updated | 2026-09-08 12:50 EDT (expansion SoT landed: `LEARNING_LANE_EXPANSION.md`. HOLD stands. Bar bytes not touched — Critic 02 is in flight.) |
 | Interim operator | Cursor chat (Grok bot usage exhausted until **2026-09-13**) |
 | Repo SoT | **PR [#176](https://github.com/swellbear/gated-formalization/pull/176) is OPEN, not merged.** `origin/master` is still `b063f56` (#175). Part A + Parts 0/1 live only on `cursor/part-a-clerical-trust-boundary`. |
 | Local Windows tree for this interim | `C:\Users\bearh\gated-formalization-master-hub` |
@@ -185,7 +185,7 @@ Golf WC1 FAIL does **not** transfer into this lane, and nothing on this lane ret
    - **Not landed: `score_rule` + a scorecard artifact.** Deliberate. `critic-invariants` currently fails `matched_exposure_control`, `delta_above_detection_floor` and `holdout_is_forward_only` against the bar's own numbers. A scoring function written now would score against a bar that cannot distinguish selection from volume and whose δ sits at ratio 0.997 of its own detection floor. **Fix the bar, then write the scorer.** `R-SKIP-COINFLIP` remains unscored and `paper.py` still hardcodes `entry_edge=0.0`, so no rule selects anything — report the eligible count and nothing else.
    - **Partly landed: a runtime for Operator.** Part 4 gave Operator six enumerated triggers and a materiality test on its clear, which is most of a runtime. What it still lacks is a place to exercise ADMIT authority on this lane, and that is blocked behind a binding bar.
    - **Not landed: promoting `learning_lane_15m` into the gated method.** Blocked as written — the bar is not binding, and the Critic just gave four mechanical reasons why it should not become binding as drafted.
-9. **Founder HOLD 2026-09-07 stands: no series other than `KXBTC15M` until this loop is honest.** Only Founder lifts it — not Operator, not CoS, not a later bot reading a tidy tick. Everything else parked (weekly honesty rollup, expanding the series, CFB websocket observe-only) is in `golf-offshoot/docs/LEARNING_LANE_15M_METHOD_PARK.md` with the explicit trigger that would reopen it.
+9. **Founder HOLD 2026-09-07 stands: no series other than `KXBTC15M` until this loop is honest.** Only Founder lifts it — not Operator, not CoS, not a later bot reading a tidy tick. Lifting it opens a **new lane**; it does not add a ticker here. Procedure: `golf-offshoot/docs/LEARNING_LANE_EXPANSION.md`. Everything else parked (weekly honesty rollup, expanding the series, CFB websocket observe-only) is in `golf-offshoot/docs/LEARNING_LANE_15M_METHOD_PARK.md` with the explicit trigger that would reopen it.
 10. **Golf idle stays ON** (WC3+ only on a new settled week, on a fresh Founder GO that names the next invent). Nothing on the 15m lane clears it, retunes golf θ, or rewrites `golf-offshoot/docs/phase1_dryrun/OPERATOR_STATUS_STAMP.md`.
 
 ## Hard NOs
@@ -199,7 +199,7 @@ Golf WC1 FAIL does **not** transfer into this lane, and nothing on this lane ret
 - Do not merge, sum, net or average the two paper lineages, and do not drop lineage B's published `paper_win` `+1.67` to make one clean story
 - Do not Soften the SOURCE CONFLICT away. Either one readable lineage story or an explicitly labeled dual lineage — a silent merge fails the honesty gate
 - Paper fills are not ADMITs (`lab_admits=false`). No edge established / banked edge / skill-met / productize on this lane
-- Do not expand past `KXBTC15M` while the Founder HOLD stands, and do not lift it on the crew's own authority
+- Do not expand past `KXBTC15M` while the Founder HOLD stands, and do not lift it on the crew's own authority. Do not add a second series to this lane’s ledger, bar, or globs. Expansion procedure: `golf-offshoot/docs/LEARNING_LANE_EXPANSION.md`
 - Soften Critic **is hired** — do not skip it, do not let it share the authoring session, do not put it on the clerical whitelist
 - Do not merge leftover oil-hunt / `cursor/eia-window-job2` dirt into this track
 

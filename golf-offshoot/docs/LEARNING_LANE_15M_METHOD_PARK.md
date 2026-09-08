@@ -78,10 +78,10 @@ After cleanup, **3 of 5 open parks are founder** and **1 is crew** (row 9). The 
 | **Class** | `founder` |
 | **Last re-ruled** | 2026-09-07 21:40 EDT |
 | **Parked state** | **HOLD**, set by Founder 2026-09-07: no series other than `KXBTC15M` until this loop is honest |
-| **Trigger** | **Founder lifts it.** Only trigger |
+| **Trigger** | **Founder lifts it.** Only trigger. The lift checklist is [`LEARNING_LANE_EXPANSION.md`](LEARNING_LANE_EXPANSION.md) — a new lane, not a ticker on this one. |
 | **Who may lift it** | Founder. Not Operator, not CoS, not Lab, not a later bot |
 
-This fold does **not** lift the HOLD and is not evidence toward lifting it. A RUN-ONLY fee hurdle is not evidence toward lifting it.
+This fold does **not** lift the HOLD and is not evidence toward lifting it. A RUN-ONLY fee hurdle is not evidence toward lifting it. Citing the expansion file is not evidence toward lifting it.
 
 ### 8. Lab — new named horse on this lane
 
