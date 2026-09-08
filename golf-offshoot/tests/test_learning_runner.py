@@ -34,11 +34,13 @@ from golf_offshoot.learning_lane_15m.runner import (
 from golf_offshoot.operator_surface.observability import repo_root
 
 
-def _wake(tmp_path, roles):
+def _wake(tmp_path, roles, *, reasons=None):
     latest = tmp_path / "latest"
     latest.mkdir(parents=True, exist_ok=True)
     payload = {
-        "roles_owed": [{"role": role} for role in roles],
+        "roles_owed": [
+            {"role": role, "reasons": list((reasons or {}).get(role) or [])} for role in roles
+        ],
         "served": [],
     }
     (latest / "learning_wake.json").write_text(json.dumps(payload), encoding="utf-8")
@@ -57,6 +59,7 @@ def test_plan_serves_only_the_named_whitelist():
             {"role": "systems"},
             {"role": "digest-figures"},
             {"role": "validator"},
+            {"role": "critic-invariants"},
             {"role": "digestor"},
             {"role": "operator"},
             {"role": "lab"},
@@ -64,14 +67,23 @@ def test_plan_serves_only_the_named_whitelist():
         ]
     }
     plan = plan_from_wake(state)
-    assert CLERICAL_WHITELIST == ("illustrator", "systems", "digest-figures", "validator")
+    assert CLERICAL_WHITELIST == (
+        "illustrator",
+        "systems",
+        "digest-figures",
+        "validator",
+        "critic-invariants",
+    )
     assert "validator" not in JUDICIAL_NEVER
     assert "digestor" in JUDICIAL_NEVER
     assert plan["would_serve"] == list(CLERICAL_WHITELIST)
     assert plan["held_for_human"] == ["digestor", "operator", "lab", "soften-critic"]
     assert "operator" not in plan["would_serve"]
     assert "digestor" not in plan["would_serve"]
+    # The mechanical half self-serves; the written attack never does.
+    assert "critic-invariants" in plan["would_serve"]
     assert "soften-critic" not in plan["would_serve"]
+    assert "soften-critic" in JUDICIAL_NEVER
     assert "validator" in plan["would_serve"]
     assert "digest-figures" in plan["would_serve"]
 
@@ -366,7 +378,11 @@ def test_arm_file_is_enough_to_execute(tmp_path):
 def test_human_artifact_change_clears_owed_and_keeps_kind(tmp_path):
     set_15m_root_override(tmp_path)
     try:
-        _wake(tmp_path, ["operator", "systems", "validator", "lab"])
+        _wake(
+            tmp_path,
+            ["operator", "systems", "validator", "lab"],
+            reasons={"operator": ["park_aged R-SKIP-COINFLIP"]},
+        )
         park = tmp_path / PARK_REL
         park.parent.mkdir(parents=True, exist_ok=True)
         park.write_text("park v1\n", encoding="utf-8")
@@ -378,7 +394,7 @@ def test_human_artifact_change_clears_owed_and_keeps_kind(tmp_path):
         still = [row["role"] for row in (load_wake_state() or {}).get("roles_owed") or []]
         assert still == ["operator", "systems", "validator", "lab"]
 
-        park.write_text("park v2 — operator ran\n", encoding="utf-8")
+        park.write_text("park v2 — ruled R-SKIP-COINFLIP\n", encoding="utf-8")
         manifest.write_text(
             json.dumps(_lane_manifest(headline="changed")),
             encoding="utf-8",

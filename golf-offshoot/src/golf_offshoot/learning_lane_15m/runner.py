@@ -68,7 +68,15 @@ ARM_NAME = "RUNNER_ARMED"
 # joins the whitelist. Human digestor leaves the whitelist — its proof is
 # the caveats file, not SOURCE as a whole. A figures generator that wrote
 # SOURCE into the digestor slot would clear digestor every tick and undo #171.
-CLERICAL_WHITELIST = ("illustrator", "systems", "digest-figures", "validator")
+CLERICAL_WHITELIST = (
+    "illustrator",
+    "systems",
+    "digest-figures",
+    "validator",
+    # Mechanical half of the Critic: run the check suite, write the findings
+    # artifact. The adversarial turn is soften-critic and stays judicial.
+    "critic-invariants",
+)
 JUDICIAL_NEVER = (
     "operator",
     "lab",
@@ -89,6 +97,9 @@ CAVEATS_REL = Path("golf-offshoot") / "docs" / "LEARNING_LANE_15M_SOURCE_DIGEST_
 PARK_REL = Path("golf-offshoot") / "docs" / "LEARNING_LANE_15M_METHOD_PARK.md"
 MANIFEST_REL = Path("docs") / "observability-hub" / "data" / "manifest.json"
 VALIDATOR_REPORT_REL = Path("docs") / "observability-hub" / "data" / "validator_report.json"
+CRITIC_FINDINGS_REL = (
+    Path("golf-offshoot") / "docs" / "LEARNING_LANE_15M_CRITIC_FINDINGS.json"
+)
 PNG_REL = (
     Path("docs")
     / "observability-hub"
@@ -203,6 +214,7 @@ def artifact_path(role: str, *, root: Path | None = None) -> Path:
         "systems": MANIFEST_REL,
         "digest-figures": DIGEST_REL,
         "validator": VALIDATOR_REPORT_REL,
+        "critic-invariants": CRITIC_FINDINGS_REL,
         "operator": PARK_REL,
     }.get(role)
     if rel is None:
@@ -227,7 +239,14 @@ def owned_artifact_paths(role: str, *, root: Path | None = None) -> list[Path]:
     """Files whose change proves that role ran. Lab owns none."""
     if role == "digestor":
         return [proof_artifact_path(role, root=root)]
-    if role in {"illustrator", "systems", "digest-figures", "validator", "operator"}:
+    if role in {
+        "illustrator",
+        "systems",
+        "digest-figures",
+        "validator",
+        "critic-invariants",
+        "operator",
+    }:
         return [artifact_path(role, root=root)]
     return []
 
@@ -348,6 +367,12 @@ def _default_do_digest_figures() -> Path:
     return write_digest()
 
 
+def _default_do_critic_invariants() -> Path:
+    from golf_offshoot.learning_lane_15m.critic import write_critic_findings
+
+    return write_critic_findings()
+
+
 def _default_do_validator() -> Path:
     import subprocess
     import sys
@@ -414,6 +439,7 @@ def serve_role(
         "systems": _default_do_systems,
         "digest-figures": _default_do_digest_figures,
         "validator": _default_do_validator,
+        "critic-invariants": _default_do_critic_invariants,
     }
     worker = do_work or workers[role]
     try:
@@ -451,6 +477,78 @@ def serve_role(
     return result
 
 
+def operator_write_addresses_owed(
+    state: dict[str, Any] | None,
+    *,
+    root: Path | None = None,
+) -> dict[str, Any]:
+    """Does this park write address what Operator was actually owed for?
+
+    Operator used to clear whenever the method park changed, whoever changed it
+    and for whatever reason. #174 edited the park to reconcile the Soften Critic
+    Hard NO lists and cleared an Operator line raised by settles on 080745
+    through 080830. Nothing had ruled on those windows.
+
+    Shaped like ``material_publish_reasons``, which already prevents exactly
+    this for Systems: the write clears Operator only when the new text names
+    what Operator was owed for. **If it is unclear, Operator stays owed** — an
+    exception class is never silently dropped to shorten the list.
+    """
+    entry = next(
+        (
+            row
+            for row in ((state or {}).get("roles_owed") or [])
+            if str(row.get("role") or "").strip().lower() == "operator"
+        ),
+        None,
+    )
+    reasons = [str(r) for r in ((entry or {}).get("reasons") or []) if str(r).strip()]
+    if not reasons:
+        return {
+            "material": False,
+            "why": (
+                "park changed but the Operator owed line names no reason to match "
+                "against; staying owed rather than clearing on an unrelated write"
+            ),
+            "matched": [],
+            "reasons": [],
+        }
+    path = artifact_path("operator", root=root)
+    try:
+        text = path.read_text(encoding="utf-8", errors="replace")
+    except OSError:
+        return {
+            "material": False,
+            "why": "park file could not be read; Operator stays owed",
+            "matched": [],
+            "reasons": reasons,
+        }
+    # A reason reads like "new_settle KXBTC15M-26SEP080745-45" or
+    # "park_aged R-SKIP-COINFLIP". The subject is what must appear.
+    matched = []
+    for reason in reasons:
+        subject = reason.split(" ", 1)[1].strip() if " " in reason else reason.strip()
+        if subject and subject in text:
+            matched.append(reason)
+    if matched:
+        return {
+            "material": True,
+            "why": f"park write names {len(matched)} of {len(reasons)} owed reason(s)",
+            "matched": matched,
+            "reasons": reasons,
+        }
+    return {
+        "material": False,
+        "why": (
+            "park changed but the new text names none of the "
+            f"{len(reasons)} thing(s) Operator was owed for "
+            f"({'; '.join(reasons[:3])}); nothing has ruled on them, so Operator stays owed"
+        ),
+        "matched": [],
+        "reasons": reasons,
+    }
+
+
 def reconcile_owed_from_disk(*, root: Path | None = None) -> list[dict[str, Any]]:
     """Clear owed roles whose owned artifact changed, whoever changed it.
 
@@ -480,6 +578,7 @@ def reconcile_owed_from_disk(*, root: Path | None = None) -> list[dict[str, Any]
         "systems",
         "digest-figures",
         "validator",
+        "critic-invariants",
         "digestor",
         "operator",
     )
@@ -489,6 +588,18 @@ def reconcile_owed_from_disk(*, root: Path | None = None) -> list[dict[str, Any]
             current[role] = token
         prev = previous.get(role)
         if role in owed and _proof_changed(role, prev, token, root=root):
+            if role == "operator":
+                verdict = operator_write_addresses_owed(state, root=root)
+                if not verdict["material"]:
+                    marked.append(
+                        {
+                            "role": role,
+                            "served_kind": None,
+                            "held": True,
+                            "note": verdict["why"],
+                        }
+                    )
+                    continue
             note = f"owned artifact changed on disk ({prev[:24]} -> {token[:24]})"
             mark_roles_served([role], by="artifact-proof", note=note, served_kind="human")
             marked.append({"role": role, "served_kind": "human", "note": note})

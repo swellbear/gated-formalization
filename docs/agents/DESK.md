@@ -6,11 +6,11 @@ Thread lines are **one sentence, newest first, max 10**. Long findings belong in
 
 | Field | Value |
 |-------|--------|
-| Updated | 2026-09-08 10:52 ET |
+| Updated | 2026-09-08 11:25 ET |
 | Active role | systems |
-| Job | Part 0 (get the loop onto current code) + Part 1 (invariant suite). |
+| Job | Parts 0–7: reload fix, invariant suite, digestor triggers, derived honesty gate, Operator severity split, the Critic's body, the ratchet, and the Critic's first attack. |
 | Status | done |
-| Handoff | Part 0 and Part 1 only. `digest-figures` and `validator` now self-serve, proven in production at 10:46:45. Parts 2–8 not started. The Critic still cannot be named owed; human `digestor` still has no trigger. |
+| Handoff | Parts 0–7 landed. `soften-critic` is now nameable and **is** owed live. `critic-invariants` self-serves. Routine settles no longer name Operator. The judgment honesty box now needs evidence, so the gate shut until this restamp attached hashes. |
 | Waiting on Founder | **N** |
 
 ## Ask Founder
@@ -21,22 +21,26 @@ Thread lines are **one sentence, newest first, max 10**. Long findings belong in
 
 The runner exports locally. It does **not** commit or push. The public page is **not** self-maintaining. That is the same defect that left Pages stale for six hours tonight. A local export is not a publish. Systems still owns the manual tick step: material export → `--strict` → commit → push to `master`.
 
-## Honesty checklist (CoS re-derived 2026-09-08 10:52 ET — not inherited)
+## Honesty checklist 2026-09-08 11:25 ET (three boxes now derived, not typed)
 
-This table is still **hand-typed prose matched on `**PASS**`** (`learn.py` `honesty_gate_from_desk`). Part 3 — deriving the derivable boxes from files — has **not** been done. Read every row as a claim with evidence attached, not as a machine verdict.
+Part 3 landed. Three boxes are computed in `learning_lane_15m/honesty.py` and the **derived verdict wins** — prose here can shut one, never open one, and deleting a row does not open the gate. The fourth is judgment and now needs a PID, a hash or a timestamp; `**PASS**` alone no longer opens it. The parser was narrowed, not widened.
 
 | Box | State |
 |-----|-------|
-| Lineage story readable, dual lineage labeled not merged | **PASS** — lineage A is the live `paper/ledger.json` book; lineage B remains the published `071445-45` `+1.67`. Digest caveats and the export both forbid summing. Figures re-read at 10:52, not carried forward. |
-| `KXBTC15M-26SEP071500-00` honestly joined or pending with a true reason | **PASS** — no paper book and no settle file on this tree. The rolling journal no longer holds its official row (forgotten, not resolved). Manifest names it a missing paper join, not `SETTLE_PENDING`. No pnl invented. |
-| No invented charts or pnl | **PASS** — generated digest copies ledger figures only; a window with no book still has no pnl. Fee-accurate totals are not on the hub. `digest_matches_ledger` now checks the headline against the book mechanically. |
-| One hub process on `learning_lane_15m` | **PASS** — one hub tree, not one OS process. Live 10:56: supervisor PID 2940 (no `--no-browser`, started 09-07 22:50:20) parent of listener PID 9780 (`--no-browser`, started 10:54:32) holding LISTEN on `127.0.0.1:8765`. Listener path today 21456 → 9568 → 14624 → 11532 → 26100 → 23348 → 26484 → 9780, supervisor held throughout. Not two independent hubs. Do not kill either. |
+| Lineage story readable, dual lineage labeled not merged | **PASS** — *derived*. Lineage A is the live ledger (158 entries / 79 paper fills / 78 settles); lineage B remains the published `KXBTC15M-26SEP071445-45`. No combined-bankroll field on the scan. |
+| `KXBTC15M-26SEP071500-00` honestly joined or pending with a true reason | **PASS** — *derived*. It is on `paper_join_missing`, is **not** on the pending list, and no missing-join row carries a pnl. |
+| One hub process on `learning_lane_15m` | **PASS** — *derived* from the process table. One hub **tree**, not one OS process: root PID 14704 → supervisor PID 2940 → listener PID 26824 holding `127.0.0.1:8765`. Criterion preserved as written. Do not kill any of the three. |
+| No invented charts or pnl | **PASS** — *judgment, with evidence*. Digest sha256 `4ee3b00ef9a4530d`, PNG `bb5fbfcd91b45ab4`, manifest `bad9d95c23ed3723`, all read 2026-09-08 11:25 ET. `digest_matches_ledger` PASS at 11:12:43 against the live book. Fee-accurate totals are not on the hub, digest, manifest or `records[]`. |
 
-**Gate is open on this live restamp.** Golf idle stays **ON**. Evidence bar remains **not binding**.
+**Gate is open on this restamp.** Golf idle stays **ON**. Evidence bar remains **not binding** — and `critic-invariants` now says why, mechanically.
 
 ## Invariants (live, machine-checked)
 
-`learn-15m` prints them; `latest/invariants.json` is the artifact. At 10:51:39 all four PASS. `digest_matches_ledger` caught the real 08:51-vs-live drift at 10:37 and cleared only when `digest-figures` actually regenerated the file at 10:46:59 — no prose cleared it.
+Two suites, both on the tick.
+
+**Lane** (`latest/invariants.json`) — all four PASS at 11:12:43. `digest_matches_ledger` caught the real 08:51-vs-live drift at 10:37 and cleared only when `digest-figures` regenerated the file at 10:46:59. No prose cleared it.
+
+**Method** (`LEARNING_LANE_15M_CRITIC_FINDINGS.json`, sha256 `80a25b6f0581b930`) — 3 of 8 PASS. Failing: `matched_exposure_control`, `delta_above_detection_floor` (δ 0.28 vs MDE 0.2807 at n=40, ratio **0.997** — the bar can only see its own detection floor), `holdout_is_forward_only`, `fee_schedule_hash_recorded`, `honesty_stamp_is_fresh`. These are mechanical readings of the bar's own numbers, not opinions.
 
 ## Thread
 

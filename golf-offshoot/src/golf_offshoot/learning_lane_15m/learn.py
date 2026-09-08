@@ -52,12 +52,76 @@ ROLE_ORDER = ("digest-figures", "operator", "systems", "validator")
 ILLUSTRATOR_ROLE = "illustrator"
 DIGESTOR_ROLE = "digestor"
 LAB_ROLE = "lab"
-_ROLE_RANK = ROLE_ORDER + (ILLUSTRATOR_ROLE, DIGESTOR_ROLE, LAB_ROLE)
+OPERATOR_ROLE = "operator"
+CRITIC_INVARIANTS_ROLE = "critic-invariants"
+SOFTEN_CRITIC_ROLE = "soften-critic"
+
+#: Display order for the desk and the tick, protocol order first.
+_ROLE_RANK = (
+    "digest-figures",
+    DIGESTOR_ROLE,
+    OPERATOR_ROLE,
+    "systems",
+    "validator",
+    ILLUSTRATOR_ROLE,
+    CRITIC_INVARIANTS_ROLE,
+    SOFTEN_CRITIC_ROLE,
+    LAB_ROLE,
+)
+
+#: What a routine market event names. All three are clerical: the runner
+#: clears them on the next pass, so naming them on every settle costs nothing
+#: and keeps the published surface current.
+ROUTINE_ROLES = ("digest-figures", "systems", "validator")
 
 EVENT_NEW_SETTLE = "new_settle"
 EVENT_NEW_FILL = "new_fill"
 EVENT_PENDING_CLEARED = "pending_cleared"
 EVENT_BOARD_STALE = "board_stale"
+
+from golf_offshoot.learning_lane_15m.triggers import (  # noqa: E402
+    EVENT_ARTIFACT_UNREVIEWED,
+    EVENT_BOOK_OPEN_NO_JOIN,
+    EVENT_FALSIFIER_FIRED,
+    EVENT_LAB_PROPOSED,
+    EVENT_PAPER_JOIN_MISSING_GREW,
+    EVENT_PARK_AGED,
+    EVENT_RULE_REACHED_N,
+    EVENT_SETTLE_CONTRADICTS_BOOK,
+    EVENT_UNRECORDED_COST,
+    EVENT_WINDOW_SEQUENCE_GAP,
+)
+
+#: Human digestor is owed when the generated figures **cannot express what
+#: changed**. Enumerated here and in PROTOCOL.md. Not zero, not every settle —
+#: the every-settle trigger is deliberately not restored.
+DIGESTOR_TRIGGERS = frozenset(
+    {
+        EVENT_PAPER_JOIN_MISSING_GREW,
+        EVENT_BOOK_OPEN_NO_JOIN,
+        EVENT_WINDOW_SEQUENCE_GAP,
+        EVENT_SETTLE_CONTRADICTS_BOOK,
+        EVENT_UNRECORDED_COST,
+    }
+)
+
+#: Operator is judicial. A normally-settled window owes it nothing. Enumerated
+#: here and in PROTOCOL.md. If an exception class is unclear, it stays on this
+#: list and Operator says why — it is never dropped to shorten the owed list.
+OPERATOR_TRIGGERS = frozenset(
+    {
+        EVENT_PARK_AGED,
+        EVENT_SETTLE_CONTRADICTS_BOOK,
+        EVENT_PAPER_JOIN_MISSING_GREW,
+        EVENT_WINDOW_SEQUENCE_GAP,
+        EVENT_FALSIFIER_FIRED,
+        EVENT_RULE_REACHED_N,
+        EVENT_LAB_PROPOSED,
+    }
+)
+
+#: Repo-side. Market data is not the only thing that changes.
+CRITIC_TRIGGERS = frozenset({EVENT_ARTIFACT_UNREVIEWED})
 
 #: The board may trail the live journal by the current open window. Two or more
 #: windows ahead of the PNG is a lag — Illustrator is owed, not optional.
@@ -672,12 +736,36 @@ def roles_owed_for(
     *,
     honesty_gate_passed: bool = False,
     operator_residual_posted: bool = False,
+    also_owes: Sequence[str] = (),
 ) -> list[str]:
-    """Protocol order. Lab is added only when both gates are explicitly true."""
-    roles = list(ROLE_ORDER)
+    """Which roles this event kind owes a turn. Severity split, enumerated.
+
+    A routine settle names the three clerical roles and nobody else. Judicial
+    roles are named only by their enumerated exception kinds, so the owed list
+    is something a human can still read after ninety-six windows in a day.
+
+    Lab is added only when both gates are explicitly true.
+    """
+    kind = str(kind or "").strip()
+    if kind == EVENT_BOARD_STALE:
+        return [ILLUSTRATOR_ROLE]
+    if kind in CRITIC_TRIGGERS:
+        roles = {CRITIC_INVARIANTS_ROLE, SOFTEN_CRITIC_ROLE}
+        roles.update(r for r in also_owes if r)
+        return sorted(roles, key=_role_rank)
+    roles = set(ROUTINE_ROLES)
+    if kind in DIGESTOR_TRIGGERS:
+        roles.add(DIGESTOR_ROLE)
+    if kind in OPERATOR_TRIGGERS:
+        roles.add(OPERATOR_ROLE)
+    roles.update(r for r in also_owes if r)
     if honesty_gate_passed and operator_residual_posted:
-        roles.append(LAB_ROLE)
-    return roles
+        roles.add(LAB_ROLE)
+    return sorted(roles, key=_role_rank)
+
+
+def _role_rank(role: str) -> int:
+    return _ROLE_RANK.index(role) if role in _ROLE_RANK else 99
 
 
 def diff_scans(previous: dict[str, Any] | None, current: dict[str, Any]) -> list[dict[str, Any]]:
@@ -737,6 +825,75 @@ def diff_scans(previous: dict[str, Any] | None, current: dict[str, Any]) -> list
     return events
 
 
+def exception_events(
+    previous: dict[str, Any] | None,
+    current: dict[str, Any],
+) -> list[dict[str, Any]]:
+    """The enumerated exceptions that owe a judicial role.
+
+    Each detector reads files. One that cannot read what it needs raises
+    nothing rather than guessing, and a detector raising nothing is not
+    evidence that the condition is absent — it is evidence it was not seen.
+    """
+    from golf_offshoot.learning_lane_15m import triggers as T
+
+    events: list[dict[str, Any]] = []
+    for detector in (
+        lambda: T.paper_join_missing_grew(previous, current),
+        lambda: T.new_book_open_no_join(previous, current),
+        lambda: T.window_sequence_gaps(previous, current),
+        lambda: T.settles_contradicting_their_book(previous, current),
+        T.unrecorded_cost,
+        T.park_aged,
+        T.falsifier_fired,
+        lambda: T.rule_reached_n(current),
+    ):
+        try:
+            events.extend(detector() or [])
+        except Exception as exc:  # noqa: BLE001 — a blind detector is not a pass
+            events.append(
+                {
+                    "kind": EVENT_SETTLE_CONTRADICTS_BOOK,
+                    "ticker": "",
+                    "window_id": "",
+                    "detail": (
+                        f"an exception detector failed to read its evidence "
+                        f"({type(exc).__name__}: {exc}); this is owed to Operator "
+                        "because a detector that cannot see is not a detector that saw nothing"
+                    ),
+                }
+            )
+    return events
+
+
+def repo_events() -> list[dict[str, Any]]:
+    """Repo-side event class: an artifact changed and no Critic finding covers it.
+
+    Market data is not the only thing that changes. A bar being drafted, a rule
+    reaching its n, an invariant being added, a park being written — the Critic
+    is owed on those and no market event kind covers them.
+    """
+    from golf_offshoot.learning_lane_15m.critic import unreviewed
+
+    try:
+        rows = unreviewed()
+    except Exception:  # noqa: BLE001
+        return []
+    return [
+        {
+            "kind": EVENT_ARTIFACT_UNREVIEWED,
+            "ticker": row.get("id") or "",
+            "window_id": "",
+            "detail": (
+                f"{row.get('path')} is at sha256 {str(row.get('sha256'))[:12]}… and no "
+                "Critic finding exists for that hash"
+            ),
+            "also_owes": tuple(row.get("also_owes") or ()),
+        }
+        for row in rows
+    ]
+
+
 def _event_label(event: dict[str, Any]) -> str:
     who = _as_str(event.get("ticker")) or _as_str(event.get("window_id")) or "window"
     return f"{event.get('kind')} {who}"
@@ -777,7 +934,7 @@ def _merge_roles_owed(
             entry["reasons"] = reasons[-MAX_REASONS:]
 
     out: list[dict[str, Any]] = []
-    for role in sorted(order, key=lambda r: _ROLE_RANK.index(r) if r in _ROLE_RANK else 99):
+    for role in sorted(order, key=_role_rank):
         entry = by_role[role]
         age = _age_s(_as_str(entry.get("owed_since")) or at, at_dt)
         entry["age_s"] = int(age)
@@ -791,23 +948,51 @@ def _merge_roles_owed(
 # ------------------------------------------------------------------- lab gate
 
 
-def honesty_gate_from_desk(path: Path | None = None) -> dict[str, Any]:
-    """Read the Chief of Staff honesty stamp. Never write it, never infer a PASS.
+def honesty_gate_from_desk(
+    path: Path | None = None,
+    *,
+    scan: dict[str, Any] | None = None,
+) -> dict[str, Any]:
+    """Read the honesty stamp, but derive every box that can be derived.
 
-    No stamp on the desk is not a pass. Anything short of an all-PASS table
-    leaves the gate shut, which is the only direction this read can move it.
+    Never write it, never infer a PASS. No stamp on the desk is not a pass.
+
+    Three boxes are computed from files and the **derived verdict wins** — desk
+    prose can shut one, never open one. The remaining box needs judgment, so it
+    must carry evidence (PIDs, hashes, timestamps); ``**PASS**`` alone no longer
+    opens it. A derived box missing from the desk is still evaluated, so
+    deleting a row cannot open the gate either.
+
+    The parser was not widened to accept more phrasings. It was narrowed.
     """
+    from golf_offshoot.learning_lane_15m.honesty import (
+        DERIVED_BOXES,
+        classify_box,
+        derive_boxes,
+        has_evidence,
+    )
+
     dest = path or desk_path()
+    derived = derive_boxes(scan)
     try:
         text = dest.read_text(encoding="utf-8")
     except OSError:
         return {
             "stamp_found": False,
             "passed": False,
-            "boxes": [],
+            "boxes": [
+                {
+                    "box": key,
+                    "state": "PASS" if derived[key]["ok"] else "FAIL",
+                    "source": "derived",
+                    "note": derived[key]["note"],
+                }
+                for key in DERIVED_BOXES
+            ],
             "note": "no desk file to read the Chief of Staff honesty stamp from",
         }
-    boxes: list[dict[str, str]] = []
+    boxes: list[dict[str, Any]] = []
+    seen_derived: set[str] = set()
     in_table = False
     for line in text.splitlines():
         stripped = line.strip()
@@ -821,15 +1006,68 @@ def honesty_gate_from_desk(path: Path | None = None) -> dict[str, Any]:
         cells = [c.strip() for c in stripped.strip("|").split("|")]
         if len(cells) < 2 or cells[0].lower() in {"box", ""} or set(cells[0]) <= set("- :"):
             continue
-        state = "FAIL" if "**FAIL**" in cells[1] else ("PASS" if "**PASS**" in cells[1] else "")
-        boxes.append({"box": cells[0], "state": state or "unstamped"})
+        typed = "FAIL" if "**FAIL**" in cells[1] else ("PASS" if "**PASS**" in cells[1] else "")
+        kind = classify_box(cells[0])
+        row: dict[str, Any] = {"box": cells[0], "typed": typed or "unstamped"}
+        if kind in derived:
+            seen_derived.add(kind)
+            machine = derived[kind]
+            # Fail-closed in both directions: the file decides PASS, the desk
+            # may still shut it.
+            state = "PASS" if machine["ok"] and typed != "FAIL" else "FAIL"
+            row.update(
+                {
+                    "state": state,
+                    "source": "derived",
+                    "note": machine["note"],
+                    "evidence": machine.get("evidence"),
+                }
+            )
+        else:
+            evidenced = has_evidence(cells[1])
+            row.update(
+                {
+                    "state": "PASS" if (typed == "PASS" and evidenced) else "FAIL",
+                    "source": "judgment",
+                    "has_evidence": evidenced,
+                    "note": (
+                        "stamped PASS with evidence attached"
+                        if typed == "PASS" and evidenced
+                        else (
+                            "stamped PASS with no evidence — a stamp with no PIDs, "
+                            "hashes or timestamps does not open the gate"
+                            if typed == "PASS"
+                            else f"not stamped PASS ({typed or 'unstamped'})"
+                        )
+                    ),
+                }
+            )
+        boxes.append(row)
+
+    for key in DERIVED_BOXES:
+        if key in seen_derived:
+            continue
+        machine = derived[key]
+        boxes.append(
+            {
+                "box": f"{key} (not on the desk)",
+                "typed": "absent",
+                "state": "PASS" if machine["ok"] else "FAIL",
+                "source": "derived",
+                "note": machine["note"],
+                "evidence": machine.get("evidence"),
+            }
+        )
+
     failing = [b["box"] for b in boxes if b["state"] != "PASS"]
+    stamped = any(b.get("typed") not in {None, "", "absent"} for b in boxes)
     return {
-        "stamp_found": bool(boxes),
+        "stamp_found": stamped,
         "passed": bool(boxes) and not failing,
+        "derived_boxes": list(DERIVED_BOXES),
         "boxes": boxes,
         "note": (
-            "all boxes stamped PASS"
+            "all boxes pass; derived boxes came off files, judgment boxes carry evidence"
             if boxes and not failing
             else (
                 f"not passed: {'; '.join(failing)}"
@@ -879,10 +1117,12 @@ def record_learning_tick(
     state = load_wake_state()
     previous = (state or {}).get("scan")
 
-    gate = honesty_gate_from_desk(desk)
+    gate = honesty_gate_from_desk(desk, scan=scan)
     passed = gate["passed"] if honesty_gate_passed is None else bool(honesty_gate_passed)
 
     events = diff_scans(previous, scan)
+    events.extend(exception_events(previous, scan))
+    events.extend(repo_events())
     for event in events:
         event["at"] = at
         event["lane"] = LANE_15M
@@ -891,6 +1131,7 @@ def record_learning_tick(
             str(event.get("kind") or ""),
             honesty_gate_passed=passed,
             operator_residual_posted=operator_residual_posted,
+            also_owes=event.pop("also_owes", ()) or (),
         )
         event["roles_owed_is_a_request"] = True
 
@@ -1171,9 +1412,12 @@ def format_wake_tick(state: dict[str, Any] | None) -> str:
             )
 
     lines.append("")
+    from golf_offshoot.learning_lane_15m.critic import format_critic, load_findings
     from golf_offshoot.learning_lane_15m.invariants import format_invariants
 
     lines.extend(format_invariants(state.get("invariants")))
+    lines.append("")
+    lines.extend(format_critic(load_findings()))
 
     lines.append("")
     owed = state.get("roles_owed") or []

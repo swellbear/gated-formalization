@@ -104,6 +104,42 @@ A role also leaves `roles_owed` when the artifact it owns changes on disk, whoev
 
 **Publish is still manual.** The runner exports locally. It does not `git commit` or `git push`. The public page is **not** self-maintaining. That is the same defect that left Pages stale for six hours. A local export is not a publish. Systems still owns the standing tick step: material export → `--strict` → commit → push to `master`. Do not assume the public page moved because the runner ran.
 
+### Who a tick owes (severity split)
+
+A routine settle names **only** the three clerical roles: `digest-figures`, `systems`, `validator`. The runner clears them on the next pass, so naming them costs nothing. Ninety-six windows a day across three judicial roles is roughly 288 owed turns nobody reads, and a normally-settled window owes Operator nothing.
+
+Judicial roles are named only by their **enumerated** exception kinds, in `learning_lane_15m/triggers.py`:
+
+| Event kind | Owes | Meaning |
+|---|---|---|
+| `paper_join_missing_grew` | digestor + operator | a new window has an official result and no book on this tree |
+| `book_open_no_join` | digestor | a paper book is open with no settle join written |
+| `window_sequence_gap` | digestor + operator | a hole in the 15-minute sequence — the `072245` shape. Never backfill |
+| `settle_contradicts_book` | digestor + operator | recorded winner, pnl sign, or pnl magnitude disagree with the book's own numbers |
+| `unrecorded_cost` | digestor | an Operator note measured a cost the caveats do not acknowledge |
+| `park_aged` | operator | a **crew** park past its ~1 day re-rule window |
+| `falsifier_fired` | operator | a falsifier fired and has not been ruled |
+| `rule_reached_n` | operator | a declared rule has accumulated the n its falsifier named |
+| `lab_proposed` | operator | a Lab PROPOSED arrived |
+| `artifact_unreviewed` | critic-invariants + soften-critic | a watched method artifact changed and no Critic finding covers that hash |
+
+Human `digestor` is owed when the **generated figures cannot express what changed** — not zero, and not every settle. The every-settle trigger is deliberately not restored.
+
+**Do not silently drop an exception class to shorten the owed list.** If it is unclear whether something belongs to Operator, it stays owing Operator and the reason is written down.
+
+**Operator no longer clears on any park write.** `operator_write_addresses_owed` is shaped like `material_publish_reasons`: a park change clears Operator only when the new text names what Operator was owed for. If the owed line names no reason, or the park file cannot be read, Operator **stays owed**. #174 edited the park to reconcile the Soften Critic Hard NO lists and cleared an Operator line raised by settles on 080745 through 080830 that nothing had ruled on. That cannot happen again.
+
+### The Critic has a body
+
+Split the same way Digestor was split.
+
+- **`critic-invariants`** — deterministic checker over the method artifacts, in `learning_lane_15m/critic.py`. **On `CLERICAL_WHITELIST`.** Proof artifact is `golf-offshoot/docs/LEARNING_LANE_15M_CRITIC_FINDINGS.json`, hashed like any other. Serve-on-proof clears it only when that file moves.
+- **`soften-critic`** — the adversarial analysis turn. Stays in `JUDICIAL_NEVER`. A written attack is not hash-provable and is never auto-served. It must run in a session separate from whichever session authored the thing it attacks, and Operator's answers must be a separate turn from the objections. One turn may not both object and dismiss.
+
+The trigger is the **repo-side event class**: a watched artifact's hash changed and no Critic finding exists for that hash. Watched: the evidence bar (both files), the rule registry, the Lab PROPOSED note, and the honesty-gate stamp section of DESK.md. The findings file is keyed by content hash, so editing a bar re-owes the Critic on the new text and cannot be cleared by editing something else.
+
+**Critic objections meet the same bar as a Lab PROPOSED: specific and falsifiable.** "Let us be careful" is not an objection. A padded finding teaches Operator to route around the Critic.
+
 ### Invariants (the ratchet)
 
 `golf-offshoot/src/golf_offshoot/learning_lane_15m/invariants.py`. Every flaw found by analysis becomes a permanent check here, so it cannot recur silently. A finding that does not produce a check is a finding that will be rediscovered by hand.
@@ -120,6 +156,21 @@ Seeded with the four that were live and invisible on 2026-09-08:
 | `clerical_roles_clear` | a **whitelisted** role has been owed longer than two ticks. A clerical role that cannot clear itself is either broken or misfiled as clerical. Judicial roles sitting owed are not arrears — that is what they are for |
 
 Adding a check is Founder-free. **Removing or weakening one is not.**
+
+A second suite runs over the **method** artifacts and is owned by `critic-invariants` (`learning_lane_15m/critic.py`). Its artifact is `LEARNING_LANE_15M_CRITIC_FINDINGS.json` and it also prints on the tick: `matched_exposure_control`, `delta_above_detection_floor`, `holdout_is_forward_only`, `fee_adjusted_book_is_binding`, `declared_at_precedes_scored_windows`, `trials_counter_is_consistent`, `fee_schedule_hash_recorded`, `honesty_stamp_is_fresh`. A checker cannot find an unknown failure mode, which is exactly why the ratchet exists: **every flaw analysis finds becomes a permanent check.** A finding that does not produce a check is a finding that will be rediscovered by hand.
+
+### Honesty gate: derived, not typed
+
+Three of the four boxes are computed from files in `learning_lane_15m/honesty.py`, and the **derived verdict wins** — desk prose can shut a derived box, never open one. A derived box deleted from the desk is still evaluated, so removing a row cannot open the gate.
+
+| Box | Source |
+|---|---|
+| lineage readable, dual lineage labeled not merged | **derived** from the scan: lineage A ledger present, lineage B kept as `published_only` rows, no combined figure |
+| `KXBTC15M-26SEP071500-00` honestly joined or pending with a true reason | **derived** from the scan: not on the pending list, and no missing-join row carries a pnl |
+| one hub process | **derived** from the process table: exactly one hub **tree**. The criterion is preserved as written — a supervisor plus its child is one hub, not two |
+| no invented charts or pnl | **judgment** — must carry evidence |
+
+A judgment box now needs `**PASS**` **and** evidence: a PID, a file hash, or a timestamp. **A stamp with no evidence attached does not open the gate.** The parser was not widened to accept more phrasings — it was narrowed.
 
 ### Auto-reload is load-bearing
 
