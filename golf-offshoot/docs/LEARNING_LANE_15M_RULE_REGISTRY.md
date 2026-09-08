@@ -3,7 +3,7 @@
 **Lane:** `learning_lane_15m` · series `KXBTC15M` only
 **Opened:** 2026-09-08 05:56 EDT
 **Admit?** N · **Soften?** N · **lab_admits?** false · Trading **NOT ARMED**
-**Evidence bar:** draft at [`LEARNING_LANE_15M_EVIDENCE_BAR.md`](LEARNING_LANE_15M_EVIDENCE_BAR.md) — **not binding**. `trials_to_date` starts at 0.
+**Evidence bar:** draft at [`LEARNING_LANE_15M_EVIDENCE_BAR.md`](LEARNING_LANE_15M_EVIDENCE_BAR.md) — **not binding**. `trials_to_date` is mechanical. `R-SKIP-COINFLIP`'s pre-mechanism declaration is not backfilled. `R-SKIP-INCOMPLETE-BOOK` is trial 1.
 
 A rule that is not dated before its windows close cannot use those windows as a clean out-of-sample test. Every hour collected before a declaration is an hour that cannot serve that rule. This file is the mechanic. The dated rows live in [`LEARNING_LANE_15M_RULES.json`](LEARNING_LANE_15M_RULES.json).
 
@@ -28,10 +28,11 @@ Write this down before anyone conflates them later: **a replayed result and a li
 
 ## First dated rows (week still young)
 
-See the JSON. Two rows were dated 2026-09-08 05:56 EDT:
+See the JSON. Two rows were dated 2026-09-08 05:56 EDT; a third was dated 2026-09-08 15:41 EDT:
 
 - `R-BASELINE-FILL-ALL` — names the mechanical fill that has been running. Not a tested edge. Overnight 56 locked books are **not** OOS for a later-declared selection rule, and they are not an unbroken run (`072245` gap).
-- `R-SKIP-COINFLIP` — first selection rule: skip when posted YES is inside `(0.45, 0.55)`. `execution=false` until the paper loop is wired to honor it. Windows that close after `declared_at` are the clean OOS set. Do not retune the band from last night's tape. Do not score it in the session that drafted the bar. The numeric form of its 40-window falsifier lives in the bar draft.
+- `R-SKIP-COINFLIP` — first selection rule: skip when posted YES is inside `(0.45, 0.55)`. `execution=false`. Band is not verifiably pre-registered. Do not retune the band. Do not score it in a proposing turn. Do not revive it.
+- `R-SKIP-INCOMPLETE-BOOK` — second selection rule ([`LEARNING_LANE_15M_LAB_PROPOSED_02.md`](LEARNING_LANE_15M_LAB_PROPOSED_02.md)): skip when the public book is not two-sided and strictly ordered. Parameters are book-integrity flags, not mark thresholds. `execution=false`. `decide()` has no expression for this id until Systems dispatches on the parameters. Not an ADMIT.
 
 ## Hard NOs
 

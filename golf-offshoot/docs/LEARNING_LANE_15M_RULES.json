@@ -6,9 +6,17 @@
   "lab_admits": false,
   "trading_armed": false,
   "opened_at": "2026-09-08T05:56:00-04:00",
-  "trials_to_date": 0,
+  "trials_to_date": 1,
   "trials_before_mechanism": 0,
-  "trials_log": [],
+  "trials_log": [
+    {
+      "subject": "R-SKIP-INCOMPLETE-BOOK",
+      "kind": "declaration",
+      "at": "2026-09-08T15:41:00-04:00",
+      "note": "selection rule declared",
+      "trials_to_date_after": 1
+    }
+  ],
   "evidence_bar": {
     "path": "golf-offshoot/docs/LEARNING_LANE_15M_EVIDENCE_BAR.json",
     "binding": false
@@ -32,7 +40,22 @@
       "selects": true,
       "rule": "Skip the paper fill when posted_yes is strictly inside (0.45, 0.55). Otherwise fill at the posted mark with entry_edge=0.0.",
       "falsifier": "After the n named by the evidence bar in force (currently looks.first_look_n = 70), if selected-fill settlement_pnl cannot be distinguished from R-BASELINE-FILL-ALL on those same windows, park this rule. Do not retune the band. The bar is the governing source.",
-      "note": "The (0.45, 0.55) band is not verifiably pre-registered — see the bar Pre-registration section. A note field asserting blind choice is not proof. execution=false (not flipped this turn). paper.py now consults decide() but this rule is not the executing rule. OOS still accumulates from declared_at by replay; replayed results are not lived results. L1 cannot support Established."
+      "note": "The (0.45, 0.55) band is not verifiably pre-registered \u2014 see the bar Pre-registration section. A note field asserting blind choice is not proof. execution=false (not flipped this turn). paper.py now consults decide() but this rule is not the executing rule. OOS still accumulates from declared_at by replay; replayed results are not lived results. L1 cannot support Established."
+    },
+    {
+      "id": "R-SKIP-INCOMPLETE-BOOK",
+      "kind": "selection",
+      "execution": false,
+      "selects": true,
+      "parameters": {
+        "require_yes_bid": true,
+        "require_yes_ask": true,
+        "require_strict_bid_lt_ask": true
+      },
+      "rule": "Skip the paper fill when the public book is not two-sided and strictly ordered: yes_bid and yes_ask both present and yes_bid < yes_ask. Otherwise fill at the posted mark with entry_edge=0.0. Does not inspect posted_yes to pick the window. Does not change the fill price.",
+      "falsifier": "After the n named by the evidence bar in force (currently looks.first_look_n = 70), if selected-fill settlement_pnl cannot be distinguished from R-BASELINE-FILL-ALL on those same windows, park this rule. Do not retune this predicate into a spread-width band or a posted_yes band. Do not revive R-SKIP-COINFLIP. The bar is the governing source.",
+      "note": "Parameters are structural book-integrity flags, not mark thresholds. They are first named in this registry entry. Lab did not open paper/*.json, settlements/*.json, or latest/journal.json to choose them. execution=false (Operator flips, and only after decide() can express this id). decide() has no expression for this id until Systems dispatches on parameters. Not CROSS / SPREAD / THRESH / FEE-AS-SIGNAL. See LEARNING_LANE_15M_LAB_PROPOSED_02.md.",
+      "declared_at": "2026-09-08T15:41:00-04:00"
     }
   ]
 }

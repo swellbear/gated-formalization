@@ -1,3 +1,4 @@
+from golf_offshoot.learning_lane_15m.evidence_bar import class_is_burned
 from golf_offshoot.learning_lane_15m.paper import load_decisions, paper_autobet_open_markets
 from golf_offshoot.learning_lane_15m.paths import set_15m_root_override
 from golf_offshoot.learning_lane_15m.rules import decide, load_rules, window_is_oos
@@ -6,13 +7,30 @@ from golf_offshoot.learning_lane_15m.rules import decide, load_rules, window_is_
 def test_registry_has_dated_first_rules():
     payload = load_rules()
     ids = [row["id"] for row in payload["rules"]]
-    assert ids == ["R-BASELINE-FILL-ALL", "R-SKIP-COINFLIP"]
+    assert ids == [
+        "R-BASELINE-FILL-ALL",
+        "R-SKIP-COINFLIP",
+        "R-SKIP-INCOMPLETE-BOOK",
+    ]
     assert payload["lab_admits"] is False
-    assert payload["trials_to_date"] == 0
+    assert payload["trials_to_date"] == 1
     assert payload["evidence_bar"]["binding"] is False
     skip = next(row for row in payload["rules"] if row["id"] == "R-SKIP-COINFLIP")
     assert skip["declared_at"] == "2026-09-08T05:56:00-04:00"
     assert skip["execution"] is False
+    proposed = next(row for row in payload["rules"] if row["id"] == "R-SKIP-INCOMPLETE-BOOK")
+    assert proposed["declared_at"] == "2026-09-08T15:41:00-04:00"
+    assert proposed["execution"] is False
+    assert proposed["selects"] is True
+    assert proposed["parameters"] == {
+        "require_yes_bid": True,
+        "require_yes_ask": True,
+        "require_strict_bid_lt_ask": True,
+    }
+    log = payload["trials_log"]
+    assert len(log) == 1
+    assert log[0]["subject"] == "R-SKIP-INCOMPLETE-BOOK"
+    assert log[0]["kind"] == "declaration"
 
 
 def test_predeclaration_window_is_not_oos():
@@ -42,6 +60,20 @@ def test_skip_coinflip_expresses_skip_and_fill():
     historic = decide(rule, posted_yes=0.50, close_at="2026-09-08T02:45:00-04:00")
     assert historic["eligible"] is False
     assert historic["action"] == "ineligible"
+
+
+def test_incomplete_book_is_declared_not_burned_and_not_expressed():
+    payload = load_rules()
+    rule = next(row for row in payload["rules"] if row["id"] == "R-SKIP-INCOMPLETE-BOOK")
+    assert class_is_burned("R-SKIP-INCOMPLETE-BOOK") is False
+    assert class_is_burned("CROSS") is True
+    assert class_is_burned("SPREAD") is True
+    assert class_is_burned("RETUNE-COINFLIP-BAND") is True
+    unknown = decide(rule, posted_yes=0.62, close_at="2026-09-08T16:00:00-04:00")
+    assert unknown["eligible"] is True
+    assert unknown["action"] == "unknown"
+    assert unknown["execution"] is False
+    assert "no expression" in unknown["reason"]
 
 
 def test_a_skip_rule_produces_no_fill_in_band_and_fills_out_of_band(tmp_path, monkeypatch):
