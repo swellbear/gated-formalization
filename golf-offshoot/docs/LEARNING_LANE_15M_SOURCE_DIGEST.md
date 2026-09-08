@@ -65,11 +65,13 @@ Cited to files:
 **Locked = an official Kalshi result in a settle file on this tree AND a paper book on this tree for the same `window_id`.** Fifty-six windows meet that bar as of this stamp. That count is **not** an unbroken run — see §3g.
 
 Seed and book, from `golf-offshoot/data/learning_lane_15m/paper/ledger.json`:
-`starting_bankroll` 100.00 → `bankroll` 93.86 · `betting_pnl` -6.14 · `deposits` 0.00 · `withdrawals` 0.00 · 114 entries (1 `observation_seed`, 57 `paper_fill`, 24 `settle_win`, 32 `settle_loss`) · 56 `events`.
+`starting_bankroll` 100.00 → `bankroll` 93.86 · `betting_pnl` -6.14 · `deposits` 0.00 · `withdrawals` 0.00 · 114 entries (1 `observation_seed`, 57 `paper_fill`, 24 `settle_win`, 32 `settle_loss`) · 56 `events`. Recorded book; omits the known fee (see the caveat below).
 
-57 paper books sit under `paper/KXBTC15M-*.json` (56 settled + the open `080600-00`). 57 settle files sit under `settlements/`. First locked ticker is still `KXBTC15M-26SEP071545-45`. Last locked ticker on this stamp is `KXBTC15M-26SEP080545-45` (`ledger.json` last `events[]` row: `settled_at` `2026-09-08T05:45:43.111529-04:00`, `kalshi_result=yes`, `pnl=+1.06`, `bankroll_after` 93.86).
+57 paper books sit under `paper/KXBTC15M-*.json` (56 settled + the open `080600-00`). 57 settle files sit under `settlements/`. First locked ticker is still `KXBTC15M-26SEP071545-45`. Last locked ticker on this stamp is `KXBTC15M-26SEP080545-45` (`ledger.json` last `events[]` row: `settled_at` `2026-09-08T05:45:43.111529-04:00`, `kalshi_result=yes`, `pnl=+1.06`, `bankroll_after` 93.86). That last-row pnl is the same recorded kind: no fee term.
 
 The 56 recorded event pnls are the `ledger.json` `events[].tickets[].pnl` figures. They reconcile the `bankroll_before` → `bankroll_after` chain 100.00 → 93.86. Nothing here is recomputed or averaged. This digest does **not** reprint a 56-row scoreboard — that table would read as a track record, and §6 still forbids one.
+
+**These recorded figures omit a known, measured cost.** `settle.py` pays `stake × decimal_odds` with no fee term. Yesterday's Operator note ([`LEARNING_LANE_15M_OPERATOR_NOTE_PROPOSED_01.md`](LEARNING_LANE_15M_OPERATOR_NOTE_PROPOSED_01.md), RUN-ONLY) measured the missing entry-side Kalshi taker fee on this lane. That cost is not in the ledger, not in `betting_pnl`, and not in the 100.00 → 93.86 chain. The recorded book is therefore incomplete, not merely rounded. This sentence does **not** replace those figures with a fee-accurate total — minting that number is a claim, and fee-accurate pnl still does not go on the hub. The caveat belongs here because the digest is the honesty instrument and was reporting a loss as if it were whole.
 
 Also locked: **the sequence has a hole.** `latest/journal.json` `windows[]` goes `KXBTC15M-26SEP072230-30` (`window_id` …`02:15:00Z`…`02:30:00Z`, `result` `no`) then `KXBTC15M-26SEP072300-00` (`window_id` …`02:45:00Z`…`03:00:00Z`, `result` `no`). There is no `072245` row. The same ticker is absent from `paper/` and `settlements/`. That is §3g, not a missing number.
 
@@ -175,7 +177,7 @@ Two paper books describe the same series over overlapping windows. They are **se
 |---|---|---|
 | Source of truth | `golf-offshoot/data/learning_lane_15m/paper/*.json` + `paper/ledger.json` | `docs/observability-hub/data/manifest.json` `$.lanes[1]` |
 | Seed | `starting_bankroll` 100.00, `observation_seed` at 2026-09-07T15:42:37-04:00 | implied 100.00 → published `paper observation after settle` 101.67 |
-| Current book | `bankroll` 93.86 · `betting_pnl` -6.14 · 114 entries · 56 settled events | published snapshot still `generated_at` `2026-09-07T21:28:39-04:00`: `paper_win` 1 · `+1.67` |
+| Current book | `bankroll` 93.86 · `betting_pnl` -6.14 · 114 entries · 56 settled events — recorded figures omit the known fee (§2) | published snapshot still `generated_at` `2026-09-07T21:28:39-04:00`: `paper_win` 1 · `+1.67` |
 | Windows | `071545` … `080545` locked, plus open `080600`; **hole at `072245` (§3g)** | `071445-45` settled `paper_win` +1.67; `071500-00` missing paper join |
 | Overlap | none — the two window sets are disjoint | none |
 
@@ -183,7 +185,7 @@ Two paper books describe the same series over overlapping windows. They are **se
 
 **Hard NOs on this conflict:**
 
-- Do **not** sum, net, average or reconcile the two bankrolls. 93.86 and 101.67 are two books. There is no combined figure, and `-6.14 + 1.67` is not a number that means anything.
+- Do **not** sum, net, average or reconcile the two bankrolls. 93.86 and 101.67 are two books. There is no combined figure, and `-6.14 + 1.67` is not a number that means anything. The 93.86 side also omits the known fee (§2); that does not license a third combined book.
 - Do **not** drop lineage B's published `paper_win` `+1.67` to make one clean story. It is real published history on a real official result.
 - Do **not** re-derive lineage B's `+1.67` from anything on this tree. The book is not here.
 - Do **not** move `071445-45` or `071500-00` into `paper/ledger.json`, and do not backfill settle files for them.
@@ -200,6 +202,7 @@ Currently the dual lineage is labeled in three places and summed in none: `manif
 - **Paper fills are not admits.** `lab_admits=false`. A fill is an observation, not a claim, and never a Softened admit ([`docs/OPERATOR_SOFTEN_FOLD_HABIT.md`](../../docs/OPERATOR_SOFTEN_FOLD_HABIT.md); [`templates/SOFTEN_PR_HONESTY_CHECKLIST.md`](../../templates/SOFTEN_PR_HONESTY_CHECKLIST.md)).
 - **`entry_edge=0` means the fill is mechanical, not smart.** `src/golf_offshoot/learning_lane_15m/paper.py` hardcodes `entry_edge=0.0` on the position and `edge_w=0.0` / `posted_edge=0.0` on the movement, and takes the fill at `paper_mark` (public mid, else `yes_ask`). Every book on disk shows it — e.g. `paper/KXBTC15M-26SEP071745__2026-09-07T21-30-00Z__2026-09-07T21-45-00Z.json` `movements[0]`: `edge_w` 0.0, `posted_edge` 0.0, `model_win` 0.515, `decimal_odds` 1.9417, `reason_plain` *"Paper observation fill at the public Kalshi mid/last mark."* The book buys YES at the posted mark on every candidate window. `model_win` equals the mark; the model is the market. Nothing is being selected, so the win/lose split measures the market's own noise, not a method.
 - **No pnl anywhere a file does not record one.** A window with no book says so. It does not say `0`.
+- **No fee-accurate pnl on the hub or in this digest.** The Operator note is the only place those numbers may live. The digest may say the recorded book omits that cost. It may not print a corrected total.
 - **No golf transfer.** Golf WC1 FAIL / Ill / calibration and golf θ belong to the golf lane and say nothing here; nothing here retunes golf θ ([`LEARNING_LANE_15M.md`](LEARNING_LANE_15M.md) "Locked posture"; `manifest.json` `$.lanes[1].lane_scope_note`).
 - **No expansion.** `KXBTC15M` only. Founder HOLD 2026-09-07 until this loop is honest.
 - **Not live trading.** Trading NOT ARMED, no Kalshi keys, no cash scopes, no order placement, `never_auto_bet: true` and `paper_observation_only: true` on every artifact.
@@ -214,7 +217,7 @@ Currently the dual lineage is labeled in three places and summed in none: `manif
 | SOURCE lock (`result` + CF Benchmarks `BRTI`) | `settlements/*.json` rows; [`LEARNING_LANE_15M.md`](LEARNING_LANE_15M.md) "Settle / field locks" |
 | Official result per window | `settlements/<stem>.json`; corroborated by `latest/journal.json` |
 | Paper fill mark and zero edge | `paper/<stem>.json` `movements[]`; `src/golf_offshoot/learning_lane_15m/paper.py` |
-| Paper pnl and the 100.00 → 93.86 chain | `paper/ledger.json` `entries` + `events`; `paper/<stem>.json` `settlement_pnl` |
+| Paper pnl and the 100.00 → 93.86 chain (omits known fee; §2) | `paper/ledger.json` `entries` + `events`; `paper/<stem>.json` `settlement_pnl`; fee measured in [`LEARNING_LANE_15M_OPERATOR_NOTE_PROPOSED_01.md`](LEARNING_LANE_15M_OPERATOR_NOTE_PROPOSED_01.md) |
 | True pending window | `latest/journal.json` first row `080600-00`; rotates |
 | Missing paper join (§4) | absence of `settlements/`/`paper/` `071500` files; official `result` last seen on an earlier tape |
 | Outage gap `072245` (§3g) | absence of that ticker in `paper/`, `settlements/`, `ledger.json`, and `latest/journal.json` `windows[]` |
@@ -242,5 +245,6 @@ Digestor's part is done for this tick. Digestor does not do any of the following
 
 | When | Who | What |
 |---|---|---|
+| 2026-09-08 06:10 EDT | `digestor` | Recorded lineage-A pnl omits the known entry-side fee measured in the PROPOSED 01 Operator note. Caveat added wherever the 100.00 → 93.86 / `betting_pnl` -6.14 chain appears. No fee-accurate total restated. |
 | 2026-09-08 05:50 EDT | `digestor` | Overnight refresh. Lineage A is 100.00 → 93.86 (`betting_pnl` -6.14, 56 settled events, 57 paper books). Named §3g: `KXBTC15M-26SEP072245` does not exist (22:25–22:50 `--once` argparse outage). No backfill, no inferred result or pnl. 56 is not an unbroken run. Public page still 21:28:39. No Soften, no ADMIT, no merge. |
 | 2026-09-07 18:03 EDT | `digestor` | First real SOURCE honesty digest for `learning_lane_15m`. Locked 10 official-settle + paper joins with settle files named; separated four residual kinds; wrote the pending-vs-missing-paper-join distinction for `KXBTC15M-26SEP071500-00` (CoS box 2); flagged lineage A vs lineage B and cited `paths.py` for why they are split. No Soften, no ADMIT, no merge, no invented pnl. |

@@ -25,7 +25,7 @@
       "selects": true,
       "rule": "Skip the paper fill when posted_yes is strictly inside (0.45, 0.55). Otherwise fill at the posted mark with entry_edge=0.0.",
       "falsifier": "After 40 eligible windows, if selected-fill settlement_pnl cannot be distinguished from R-BASELINE-FILL-ALL on those same windows, park this rule. Do not retune the band.",
-      "note": "Band chosen before looking at overnight marks. execution=false until paper.py honors rules.decide()."
+      "note": "Band chosen before looking at overnight marks. execution=false until paper.py honors rules.decide(). OOS still accumulates from declared_at by replay; replayed results are not lived results."
     }
   ]
 }
