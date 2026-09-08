@@ -83,6 +83,7 @@ JUDICIAL_NEVER = (
     "lab",
     "digestor",
     "soften-critic",
+    "chief-of-staff",
     "admit",
     "run-only",
     "park",

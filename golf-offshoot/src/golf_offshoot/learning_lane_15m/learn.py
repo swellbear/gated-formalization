@@ -204,6 +204,7 @@ CONTRACT = (
     "No win, lose or pnl is invented here. Every figure is copied from a file.",
     "A role leaves roles_owed only when an agent that really ran calls mark_roles_served().",
     "The watch loop never marks a role served.",
+    "crew_tick is a doorbell. The runner may write it. The runner is not CoS.",
 )
 
 
@@ -1255,6 +1256,7 @@ def record_learning_tick(
     desk: Path | None = None,
     honesty_gate_passed: bool | None = None,
     operator_residual_posted: bool = False,
+    crew_hub_ok: bool | None = None,
 ) -> dict[str, Any]:
     """One wake tick: scan, diff against stored state, persist. Never marks served."""
     at_dt = now()
@@ -1359,6 +1361,26 @@ def record_learning_tick(
         "lab_gate": _lab_gate_block(gate, operator_residual_posted=operator_residual_posted),
     }
     new_state["invariants"] = _run_invariants_block(new_state, watch_status)
+    if state and isinstance(state.get("crew_tick"), dict):
+        new_state["crew_tick"] = {
+            "last_cos_at": state["crew_tick"].get("last_cos_at") or "",
+            "last_cos_commit": state["crew_tick"].get("last_cos_commit") or "",
+            "handled_reason_ids": list(state["crew_tick"].get("handled_reason_ids") or []),
+        }
+    from golf_offshoot.learning_lane_15m.crew_tick import attach_crew_tick
+
+    desk_text = None
+    if desk is not None:
+        try:
+            desk_text = Path(desk).read_text(encoding="utf-8")
+        except OSError:
+            desk_text = ""
+    attach_crew_tick(
+        new_state,
+        desk_text=desk_text,
+        previous_watch=(state or {}).get("watch") if state else None,
+        hub_ok=crew_hub_ok,
+    )
     save_wake_state(new_state)
     return new_state
 
@@ -1460,6 +1482,7 @@ def mark_roles_served(
     if state is None:
         return None
     wanted = {str(role).strip().lower() for role in roles if str(role).strip()}
+    wanted -= {"chief-of-staff", "cos"}
     if not wanted:
         return state
     at = isoformat_now()
@@ -1583,6 +1606,10 @@ def format_wake_tick(state: dict[str, Any] | None) -> str:
     from golf_offshoot.learning_lane_15m.invariants import format_invariants
 
     lines.extend(format_invariants(state.get("invariants")))
+    lines.append("")
+    from golf_offshoot.learning_lane_15m.crew_tick import format_crew_tick
+
+    lines.extend(format_crew_tick(state.get("crew_tick")))
     lines.append("")
     lines.extend(format_critic(load_findings()))
 

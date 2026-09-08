@@ -64,6 +64,7 @@ def test_plan_serves_only_the_named_whitelist():
             {"role": "operator"},
             {"role": "lab"},
             {"role": "soften-critic"},
+            {"role": "chief-of-staff"},
         ]
     }
     plan = plan_from_wake(state)
@@ -77,7 +78,15 @@ def test_plan_serves_only_the_named_whitelist():
     assert "validator" not in JUDICIAL_NEVER
     assert "digestor" in JUDICIAL_NEVER
     assert plan["would_serve"] == list(CLERICAL_WHITELIST)
-    assert plan["held_for_human"] == ["digestor", "operator", "lab", "soften-critic"]
+    assert plan["held_for_human"] == [
+        "digestor",
+        "operator",
+        "lab",
+        "soften-critic",
+        "chief-of-staff",
+    ]
+    assert "chief-of-staff" in JUDICIAL_NEVER
+    assert "chief-of-staff" not in CLERICAL_WHITELIST
     assert "operator" not in plan["would_serve"]
     assert "digestor" not in plan["would_serve"]
     # The mechanical half self-serves; the written attack never does.

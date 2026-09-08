@@ -4,6 +4,28 @@ Chat is not memory. Roles talk through **[DESK.md](DESK.md)** and **[AGENT_LEAVE
 
 **Chief of Staff keeps the track moving.** Founder is only for a rare review or a real change of direction. Do not ping Founder to approve work that is already on leave-off “Next” or that stays inside the Hard NOs.
 
+## CoS is a body, not a courtesy
+
+CoS starts when `crew_tick.needed` is true, including via a Cursor Automation on a **15–30 minute** timer. Founder opening a chat is a backup, not the trigger. Do not schedule CoS at 90 seconds.
+
+`crew_tick` is derived on each `learn-15m` tick and written into `learning_wake.json`. It is not a second SoT. The wake already names `roles_owed`; `crew_tick` only says whether a CoS session should start. Enumerated in `golf-offshoot/src/golf_offshoot/learning_lane_15m/crew_tick.py` and here. If unsure, `needed` stays true and the reason says why.
+
+`needed` is **true** when at least one of these holds:
+
+- **A.** A worker just finished and the desk says `next=chief-of-staff` (or `Status=done` and Active role is a worker, or `Status=idle` and a judicial owe exists that no job is covering).
+- **B.** A *new* judicial owe appeared since the last CoS closeout (Operator exception, soften-critic on new artifact hashes, Lab residual + honesty gate, human digestor exception).
+- **C.** A `CLERICAL_WHITELIST` role owed longer than two ticks (already an invariant).
+- **D.** Watch or hub liveness failed (cycles not advancing, or the honesty hub box would fail).
+- **E.** Desk `Status=idle` while leave-off Next / an unassigned factory precondition is still open.
+
+`needed` is **false** when the watch is healthy AND no new judicial owe AND no clerical arrears AND the desk already has an assigned worker who is not stale, **or** when the last CoS closeout stamped the same `reason_ids` (a 90s heartbeat, not a doorbell).
+
+A CoS turn: session start, **one** assign or one closeout, desk + leave-off to committed truth, stamp `last_cos_*` via `stamp_cos_closeout`. Then stop. It does not ping Founder for the Next list. It does ping Founder for the existing Ask list (HOLD lift, arm, bind, Hard NO changes).
+
+Quiet tick: `needed` false ⇒ the automation no-ops. No desk spam.
+
+The runner may write `crew_tick`. It may not open a chat, ADMIT, invent, or push. CoS, Operator, Lab, and soften-critic stay off `CLERICAL_WHITELIST`.
+
 ## Session start (every turn)
 
 1. Read `docs/AGENT_LEAVE_OFF.md`.

@@ -6,18 +6,18 @@ Thread lines are **one sentence, newest first, max 10**. Long findings belong in
 
 | Field | Value |
 |-------|--------|
-| Updated | 2026-09-08 14:22 ET |
+| Updated | 2026-09-08 14:45 ET |
 | Active role | chief-of-staff |
-| Job | Turn 3 admit pass is on `5dc4f24`; full suite 565 passed against those bytes. Leave-off to committed truth. Lab not assigned. |
+| Job | crew_tick doorbell landed. Automation draft in COS_AUTOMATION.md. Lab not assigned. |
 | Status | idle |
 | Handoff | — |
-| Waiting on Founder | **N** |
+| Waiting on Founder | **Y** — create **15m CoS crew tick** (every 15 minutes) from `golf-offshoot/docs/COS_AUTOMATION.md` |
 
 **Branch note.** `origin/master` is still `b063f56` (#175). Factory Turns 1–3 live only on `cursor/part-a-clerical-trust-boundary` at `5dc4f24` (CRITIC 02 `4090983` → Systems `0a480d4` → Operator `5dc4f24`). Branching from `origin/master` would discard all of it. Work continues on this branch; [#176](https://github.com/swellbear/gated-formalization/pull/176) is OPEN and MERGEABLE.
 
 ## Ask Founder
 
-(none)
+Create the Cursor Automation **15m CoS crew tick**, every 15 minutes, from `golf-offshoot/docs/COS_AUTOMATION.md`. An agent cannot silently arm it.
 
 ## Publish gap (named so nobody assumes Pages is self-maintaining)
 
@@ -29,10 +29,10 @@ Part 3 landed. Three boxes are computed in `learning_lane_15m/honesty.py` and th
 
 | Box | State |
 |-----|-------|
-| Lineage story readable, dual lineage labeled not merged | **PASS** — *derived*. Lineage A is the live ledger (`bankroll` 89.48 / `betting_pnl` −10.52). Lineage B remains the published `KXBTC15M-26SEP071445-45`. No combined-bankroll field on the scan. |
+| Lineage story readable, dual lineage labeled not merged | **PASS** — *derived*. Lineage A is the live ledger (`bankroll` 90.98 / `betting_pnl` −9.02). Lineage B remains the published `KXBTC15M-26SEP071445-45`. No combined-bankroll field on the scan. |
 | `KXBTC15M-26SEP071500-00` honestly joined or pending with a true reason | **PASS** — *derived*. It is on `paper_join_missing`, is **not** on the pending list, and no missing-join row carries a pnl. |
-| One hub process on `learning_lane_15m` | **PASS** — *derived* from the process table. One hub **tree**, not one OS process: root PID 14704 over supervisor PID 2940 and listener PID **21880** holding `127.0.0.1:8765`. The listener re-exec'd after Turn 2/3; the supervisor held. Criterion preserved as written. Do not kill any of the three. |
-| No invented charts or pnl | **PASS** — *judgment, with evidence*. Wake 2026-09-08T14:15:29−04:00. `digest_matches_ledger` PASS against the live book (89.48 / −10.52 both sides). Findings reviewed (newline-normalised) bar `.md` `70772f9640bb0f56`, bar `.json` `231b2835d0574d22`, CRITIC 02 bytes `2a39471c0dde3e8f`, Operator answer `5dc4f24`. Fee-accurate totals are not on the hub, digest, manifest or `records[]`. |
+| One hub process on `learning_lane_15m` | **PASS** — *derived* from the process table. One hub **tree**, not one OS process: root PID 14704 over supervisor PID 2940 and listener PID **24300** holding `127.0.0.1:8765`. Criterion preserved as written. Do not kill any of the three. |
+| No invented charts or pnl | **PASS** — *judgment, with evidence*. `digest_matches_ledger` PASS 2026-09-08T14:42:33−04:00 against the live book (90.98 / −9.02 both sides). Live `crew_tick.needed=true` (A idle uncovered judicial, B new judicial, E idle unassigned). Fee-accurate totals are not on the hub, digest, manifest or `records[]`. |
 
 **Gate is open on this restamp.** Golf idle stays **ON**. Evidence bar remains **not binding**. Standing method blocker is the unpinned fee hash. Lab is **not** assigned — Operator residual is still unposted (`lab_proposed`, `detector_blind`).
 
@@ -48,6 +48,7 @@ Two suites, both on the tick.
 
 ## Thread
 
+- 2026-09-08 14:45 ET  chief-of-staff: crew_tick doorbell on the wake; suite 573; automation drafted in COS_AUTOMATION.md. next=Founder (create the 15m timer)
 - 2026-09-08 14:22 ET  chief-of-staff: full suite 565 passed on Turn 3 bytes (`5dc4f24`). Prior 565 was Turn 2 only. Binding stays false. Lab not assigned.
 - 2026-09-08 14:18 ET  chief-of-staff: Turn 3 closed at `5dc4f24`. CRITIC 02 answered; bar names the three functions; binding / founder_read_once stay false; X7 did not heartbeat-clear. Lab not assigned.
 - 2026-09-08 14:05 ET  operator → chief-of-staff: CRITIC 02 admit pass filed — 3 overruled (keyword greens, δ-check, leftover owed / honesty-in-suite), rest sustained or in part; named the three functions; binding stays false; did not score. next=chief-of-staff
@@ -57,5 +58,4 @@ Two suites, both on the tick.
 - 2026-09-08 12:01 ET  chief-of-staff: full ratchet loop closed — flaw found mechanically, upheld by the Critic, fixed by Operator, and the same check now passes. Bar stays not binding on an unpinned fee hash; the fetch returned 429 and nobody wrote a placeholder. next=founder (read-once, when ready)
 - 2026-09-08 11:58 ET  systems → chief-of-staff: Operator was right that X7 was only half fixed — `_critic_token` reached the human proof path but `serve_role` still compared raw fingerprints, so the runner kept clearing the Critic on a heartbeat. Fixed at the same place `systems` gets its material test. next=chief-of-staff
 - 2026-09-08 11:55 ET  operator → chief-of-staff: admit pass done, 7 SUSTAINED / 7 SUSTAINED IN PART, none dismissed. Overruled the Critic's claim that the spread is worst at 50/50 — `s/(p+s)` runs the *same* direction as the fee, so the rule avoids neither cost's worst region. next=chief-of-staff
-- 2026-09-08 11:40 ET  chief-of-staff: Parts 2–8 landed and pushed. Routine settles no longer name Operator; human `digestor` has five exceptions; three honesty boxes are derived; the Critic has a body and **is** owed live. next=operator
 *Older lines rolled off at the 10-line cap. Full history is in the git log for `docs/agents/DESK.md`.*
