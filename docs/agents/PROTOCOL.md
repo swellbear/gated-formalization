@@ -88,7 +88,9 @@ The wake path detects evidence and names which roles are owed. It never writes a
 
 `python -m golf_offshoot learn-15m-runner` may serve **only** the named whitelist: Illustrator re-render, Systems publish, Digestor digest. Everything else stays owed for a human. Judicial work (ADMIT, RUN-ONLY, closing a park, lifting the HOLD) is never on the list.
 
-It ships in **dry-run**. It logs what it would serve and serves nothing. `GOLF_OFFSHOOT_LEARNING_RUNNER=off` (or `--runner-mode off`) is the kill switch and stops it dead. It goes live only on Founder's explicit word. When later armed, it may call `mark_roles_served` only after the artifact actually changed on disk, with `served_kind=auto`. Exit code 0 is not proof. Auto-served and human-served turns stay distinguishable forever.
+It ships in **dry-run**. It logs what it would serve and serves nothing. The kill switch is the file `golf-offshoot/data/learning_lane_15m/latest/RUNNER_KILL` (or `--kill-runner`). The runner **re-reads that file at the start of every pass**. Touch it to stop the runner mid-flight without touching PaperWatch. An env var is not the switch.
+
+It goes live only when Founder writes `latest/RUNNER_ARMED`. Serve-on-proof is real: `serve_role` runs the clerical job and calls `mark_roles_served(..., served_kind='auto')` only after the artifact **hash** changed. If the file did not move, the role stays owed and the failure is logged. A systems heartbeat (`generated_at` only) is not proof. Exit code 0 is not proof. Auto-served and human-served turns stay distinguishable forever. Systems publish only from `master`.
 
 Do not automate publication until publication is a verified tick step.
 

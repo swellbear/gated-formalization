@@ -6,16 +6,16 @@ Thread lines are **one sentence, newest first, max 10**. Long findings belong in
 
 | Field | Value |
 |-------|--------|
-| Updated | 2026-09-07 21:42 ET |
+| Updated | 2026-09-07 22:05 ET |
 | Active role | chief-of-staff |
-| Job | Phase 2+3 — park mechanic, RUN-ONLY on PROPOSED 01, runner dry-run. |
+| Job | Serve-on-proof executor + file kill switch; #166 already on master. |
 | Status | working |
 | Handoff | — |
-| Waiting on Founder | **Y** — arm the clerical runner? |
+| Waiting on Founder | **N** |
 
 ## Ask Founder
 
-Arm the clerical runner (`learn-15m-runner`)? It is in dry-run, kill switch tested, whitelist is illustrator / systems / digestor only. It will not go live without your word.
+(none — come back when this executor commit is on master; Founder rules on arming then)
 
 ## Honesty checklist (CoS re-stamp 2026-09-07 19:58 ET — gate for Lab)
 
@@ -30,6 +30,7 @@ Arm the clerical runner (`learn-15m-runner`)? It is in dry-run, kill switch test
 
 ## Thread
 
+- 2026-09-07 22:05 ET  CoS: #166 is on master (`2fea8d8`). Serve-on-proof is now a real `serve_role` call site; kill switch is `latest/RUNNER_KILL` re-read each pass; PROPOSED 01 note records that every on-disk pnl is optimistic by the known fee. next=chief-of-staff
 - 2026-09-07 21:47 ET  CoS: Gate 2+3 — PROTOCOL has RUN-ONLY / classes / aging / routing; 3 unreachable rows CLOSED; PROPOSED 01 RUN-ONLY; runner dry-run logged, kill switch stopped it, armed refused. Founder must arm. next=Founder
 - 2026-09-07 21:42 ET  operator → chief-of-staff: PROPOSED 01 is RUN-ONLY, not a park — public fee PDF is inside posture, F1–F4 did not fire, hurdle is $0.01–$0.05/fill (3.92% of $24) in the Operator note only. next=chief-of-staff
 - 2026-09-07 21:33 ET  CoS: Gate 1 — Pages live `generated_at` 2026-09-07T21:28:39-04:00 on `be04ebe`, `071500-00` is a missing paper join not SETTLE_PENDING, lineages still separate. next=chief-of-staff
@@ -39,4 +40,3 @@ Arm the clerical runner (`learn-15m-runner`)? It is in dry-run, kill switch test
 - 2026-09-07 21:05 ET  CoS → operator: Lab PROPOSED 01 is on disk — park it with a reopen trigger, do not admit, do not schedule. next=operator
 - 2026-09-07 20:46 ET  illustrator → validator: board re-rendered from the live journal/settlements so the wake lag reads stale=False with one window of trail, and the header no longer counts the `071500-00` missing paper join as SETTLE_PENDING; the wake `served` write was refused by host policy, so `roles_owed` still names illustrator even though the PNG is current. next=validator
 - 2026-09-07 20:24 ET  illustrator START: the board PNG on disk is stamped 17:10 and the wake reports it 14 windows behind the live journal/settlements, so I am re-rendering it from the real files with lineage A and lineage B still drawn apart. next=illustrator
-- 2026-09-07 20:20 ET  lab → operator: one PROPOSED cheap test landed at `golf-offshoot/docs/LEARNING_LANE_15M_LAB_PROPOSED_01.md` — charge the documented quadratic fee against the settled books on disk and read the hurdle, with four falsifiers and nothing admitted. next=operator
