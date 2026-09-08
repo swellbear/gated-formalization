@@ -29,7 +29,7 @@ it stops being read-only.
 | Key | Meaning |
 | --- | --- |
 | `title`, `subtitle` | page copy |
-| `generated_at` | ISO 8601 UTC stamp of when this manifest was written |
+| `generated_at` | ISO 8601 stamp of when this manifest was written. The public page must show this stamp and that the file is a snapshot of a live 15-minute loop, so a stale pending ticker cannot be read as the current window |
 | `source_kind` | `fixture` or `export`. `fixture` makes the page say so, loudly. |
 | `source_note` | one sentence on provenance — where the numbers came from |
 | `control_surface_note` | restates that the control surface is the operator's local shell |

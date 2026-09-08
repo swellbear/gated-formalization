@@ -25,6 +25,10 @@ Read [PROTOCOL.md](../../../docs/agents/PROTOCOL.md), [docs/observability-hub/da
 - Merge golf WC1 into the 15m lane
 - Add controls or cash fields
 
+## After validator
+
+If `--strict` is clean **and** `material_publish_reasons(what_master_serves, this_export)` is non-empty, commit the manifest + current real PNG and push so Pages updates. Do not publish a heartbeat. Do not leave a corrected falsehood on `master`.
+
 ## Done
 
-Handoff → `validator`. Always.
+Handoff → `validator`. Always. After a material publish, note the commit and `hub.generated_at` on the desk.

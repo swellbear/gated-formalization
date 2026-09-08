@@ -71,11 +71,12 @@ PaperWatch alone is **not learning.** Learning has not begun until settled outco
 2. `digestor` — SOURCE honesty digest for this lane from real files only (settled vs pending, lineage A vs published Pages if still split)
 3. `operator` — Soften/park only what the spine supports; leave-off + desk to committed truth
 4. `systems` — `manifest.json` merge; never drop published `paper_win`, never invent pending
-5. `validator` — `python docs/observability-hub/validate_hub.py --strict`
-6. `hub-ui` — only if display is wrong or stale. No number invention
-7. `illustrator` — **owed by the wake** when the PNG lags live journal/settlements by more than one window (or there is no PNG and two or more windows of evidence exist). Claude Opus 5; real files only. One window of trail is allowed (the open window). Do not leave this optional
-8. `lab` — only after Operator posts a clear residual **and** the honesty checklist passes. One **PROPOSED** cheap test, paper-only, then `operator`. Never self-admit
-9. CoS schedules the next tick. Do not ping Founder.
+5. `validator` — `python docs/observability-hub/validate_hub.py --strict` on the exact bytes about to publish
+6. **publish** (standing tick step, not a project) — Systems owns `observability-export` → re-render the current real PNG → `validate_hub.py --strict` on those bytes → commit → push to `master` so Pages updates. Publishing is part of the tick, not a later event. Skip only a 90-second PaperWatch heartbeat that did not fire this learning tick. Never restamp an export to look fresher. Never invent. Use `material_publish_reasons` when deciding a heartbeat is empty. Do **not** leave a corrected falsehood unpublished. The public page reads `master` only
+7. `hub-ui` — only if display is wrong or stale. No number invention
+8. `illustrator` — **owed by the wake** when the PNG lags live journal/settlements by more than one window (or there is no PNG and two or more windows of evidence exist). Claude Opus 5; real files only. One window of trail is allowed (the open window). Do not leave this optional. Re-render before a material publish so the board is not an hour behind the tables
+9. `lab` — only after Operator posts a clear residual **and** the honesty checklist passes. One **PROPOSED** cheap test, paper-only, then `operator`. Never self-admit
+10. CoS schedules the next tick. Do not ping Founder.
 
 Nothing new on a tick: CoS posts **one** desk heartbeat line (no new settle; watch still running) and stays quiet.
 

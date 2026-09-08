@@ -7,6 +7,7 @@ from golf_offshoot.operator_surface.observability import (
     build_hub_manifest,
     collect_journal_windows,
     hub_manifest_path,
+    material_publish_reasons,
     write_observability_exports,
 )
 
@@ -146,3 +147,67 @@ def test_collect_journal_windows_from_paper_when_live_empty(tmp_path, monkeypatc
         assert any(w["ticker"] == "KXBTC15M-26SEP071445-45" for w in windows)
     finally:
         set_15m_root_override(None)
+
+
+def test_material_publish_reasons_ignore_heartbeat_and_catch_wording():
+    published = {
+        "lanes": [
+            {
+                "lane_id": "learning_lane_15m",
+                "settle": {
+                    "headline": "Live 1500 stays SETTLE_PENDING until Kalshi result.",
+                    "residual": [
+                        {"label": "KXBTC15M-26SEP071500-00", "value": "SETTLE_PENDING", "note": "until result"}
+                    ],
+                    "counts": [{"label": "Pending windows", "value": "1"}],
+                },
+                "last_run": {"headline": "old"},
+                "learning_status": {
+                    "pending_windows": [{"label": "KXBTC15M-26SEP071500-00"}],
+                    "missing_paper_joins": [],
+                    "published_history": [
+                        {"label": "KXBTC15M-26SEP071445-45", "value": "paper_win", "published_paper_pnl": "+1.67"}
+                    ],
+                },
+                "charts": [],
+            }
+        ]
+    }
+    same_heartbeat = {
+        "hub": {"generated_at": "later"},
+        "lanes": published["lanes"],
+    }
+    assert material_publish_reasons(published, same_heartbeat) == []
+
+    corrected = {
+        "lanes": [
+            {
+                "lane_id": "learning_lane_15m",
+                "settle": {
+                    "headline": "1500 is a missing paper join, not a pending window.",
+                    "residual": [
+                        {
+                            "label": "KXBTC15M-26SEP071500-00",
+                            "value": "missing paper join — official result present",
+                            "note": "no paper pnl invented",
+                        }
+                    ],
+                    "counts": [{"label": "Pending windows", "value": "1"}],
+                },
+                "last_run": {"headline": "corrected"},
+                "learning_status": {
+                    "pending_windows": [{"label": "KXBTC15M-26SEP072130-30"}],
+                    "missing_paper_joins": [
+                        {"label": "KXBTC15M-26SEP071500-00", "value": "missing paper join — official result present"}
+                    ],
+                    "published_history": [
+                        {"label": "KXBTC15M-26SEP071445-45", "value": "paper_win", "published_paper_pnl": "+1.67"}
+                    ],
+                },
+                "charts": [],
+            }
+        ]
+    }
+    reasons = material_publish_reasons(published, corrected)
+    assert "settle-status wording changed" in reasons
+    assert "missing-paper-join residual changed" in reasons

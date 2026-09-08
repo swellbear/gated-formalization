@@ -1,6 +1,6 @@
 # Lab — PROPOSED 01: charge the documented fee, and read the hurdle it prints
 
-**State:** **PROPOSED.** Awaiting `operator`. **Not** Softened, **not** admitted, **not** scheduled, **not** a board.
+**State:** **PARKED** by `operator` 2026-09-07 21:13 EDT. **Not** Softened, **not** admitted, **not** scheduled, **not** a board. Decision: [`LEARNING_LANE_15M_METHOD_PARK.md`](LEARNING_LANE_15M_METHOD_PARK.md) row 10. Reopen: public URL + retrieval date for `k`, or Founder GO naming this test.
 **Lane:** `learning_lane_15m` · series `KXBTC15M` only
 **Role:** `lab` — `lab_admits=false`. Lab never admits its own candidate ([`.cursor/skills/gpf-lab/SKILL.md`](../../.cursor/skills/gpf-lab/SKILL.md)).
 **Admit?** N · **Soften?** N · **Trading ARMED?** N · **Keys / orders / cash?** none

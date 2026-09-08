@@ -5,9 +5,9 @@ Chat transcripts are not. A later Grok / Cursor cloud agent will not see a prior
 
 | Field | Value |
 |-------|--------|
-| Updated | 2026-09-07 20:10 EDT (CoS closeout — learning cadence pushed) |
+| Updated | 2026-09-07 21:24 EDT (CoS: publish the 15m honesty correction to Pages) |
 | Interim operator | Cursor chat (Grok bot usage exhausted until **2026-09-13**) |
-| Repo SoT | `origin/master` @ `352b967` (PR #163) · **this work is on open PR [#165](https://github.com/swellbear/gated-formalization/pull/165)**, branch `cursor/agent-leave-off-handoff` @ `69bdc7a` |
+| Repo SoT | Landing on `master` through PR [#165](https://github.com/swellbear/gated-formalization/pull/165). Pages reads **`origin/master` only**. Until that merge deploys, the public hub can still show the pre-correction snapshot |
 | Local Windows tree for this interim | `C:\Users\bearh\gated-formalization-master-hub` |
 | Do **not** treat as SoT | `C:\Users\bearh\gated-formalization` on `cursor/eia-window-job2` (stale + dirty) |
 | Active track | `learning_lane_15m` (KXBTC15M paper loop) + Phase 1 desktop hub |
@@ -24,7 +24,22 @@ Before stopping, the agent that just worked **must**:
 
 If it is not in git on GitHub, the next bot does not have it.
 
-## What is already on master
+## What is on `origin/master` versus what is only on this branch
+
+**`origin/master` is the public SoT.** GitHub Pages serves that commit only. A local export, a desktop hub, or an unmerged PR is **not** published.
+
+As of this leave-off write, `origin/master` is still `352b967` (PR #163). That commit does **not** have `learn-15m`, the 15m SOURCE digest, the pending/settled export guard, or the corrected `071500-00` wording. The public page on that commit still says live `071500-00` stays `SETTLE_PENDING` — that is a known falsehood on the published surface until PR #165 lands.
+
+**Only on branch `cursor/agent-leave-off-handoff` (PR #165), until merge:**
+
+- Learning wake (`python -m golf_offshoot learn-15m`)
+- SOURCE digest, method park, Lab PROPOSED 01
+- Export-time pending/settled guard and `071500-00` as a missing paper join
+- Snapshot age on the public viewer (`hub.generated_at` shown; more than one window behind is named)
+
+Do not write branch state as if it were landed. After merge, rewrite this section so `origin/master` SHA matches Pages.
+
+## What is already on master (PR #163 and earlier)
 
 Desktop hub (control surface):
 
@@ -54,7 +69,7 @@ Golf Phase 1 (do not reopen unless asked):
 
 ## Learning is now **on** (this is the change since the last leave-off)
 
-> **Pushed, not yet merged.** The learning wake, the watch and the three 15m docs are committed and pushed on branch `cursor/agent-leave-off-handoff` (`5a564f1` code, `6dedced` docs, `69bdc7a` published snapshot) and are open as PR [#165](https://github.com/swellbear/gated-formalization/pull/165). Clone or check out **that branch**, not `origin/master` — `master` is still `352b967` and does not have `learn-15m`. If `learn-15m` is an unknown command after you clone, that is why.
+> **Public hub = `origin/master`.** A local `observability-export` does not update Pages. After PR #165 merges, `master` carries the learning wake (`learn-15m`), the SOURCE digest, the method park, Lab PROPOSED 01 (PARKED, not admitted), the export-time pending/settled guard, and the corrected `071500-00` missing-paper-join wording. Clone `master` after that merge. If you still see "Live 1500 stays SETTLE_PENDING" on GitHub Pages, the deploy has not finished — that wording is a known stale falsehood and must not be treated as current.
 
 PaperWatch alone was never learning. Two halves now run together:
 
@@ -126,11 +141,12 @@ Golf WC1 FAIL does **not** transfer into this lane, and nothing on this lane ret
    - `digestor` — refresh the SOURCE honesty digest from real files only
    - `operator` — park/Soften only what the spine supports; put leave-off + desk on committed truth
    - `systems` — `manifest.json` merge; never drop the published `paper_win`, never invent a pending, never sum the lineages
-   - `validator` — `python docs/observability-hub/validate_hub.py --strict`
+   - `validator` — `python docs/observability-hub/validate_hub.py --strict` on the bytes about to publish
+   - **publish** — if that export differs materially from `origin/master`, commit the manifest + current real PNG and push/merge so Pages updates. Do not publish a 90s heartbeat. Do not leave a corrected falsehood unpublished
 2. **Owed right now:** read it off `python -m golf_offshoot learn-15m` — do not trust this line, the loop keeps moving. The `KXBTC15M-26SEP071500-00` re-word is **done**: the published manifest reads `missing paper join — official result present`, and the fix lives in the export writer so the next export cannot undo it. Validator passed `--strict` at 19:53 after an export race was closed — pending is now re-derived from live settle files at export time, and the export refuses to write a manifest that calls a settled window pending.
 3. **Never collapse the two residual states.** A window pending for want of a Kalshi `result` is not the same as `KXBTC15M-26SEP071500-00`, which has an official `result=yes` and no book on this tree. Do not invent pnl for either. Do not merge lineage A and lineage B.
-4. **Illustrator:** the 15m board exists and is real — it is just behind. A later tick may re-render `paper_window_strip.png` from **current** files (live lineage A window count and bankroll; the `071500-00` cell carrying the missing-paper-join wording). If real files cannot drive it, leave the prior real board standing. Never invent a chart. Do not put golf WC1 / Ill on this lane.
-5. **`lab` stays idle.** The wake reports Lab **NOT owed** while `lab_gate.honesty_gate_passed` is false. Lab opens only when CoS re-stamps the honesty checklist **all-PASS** *and* Operator posts a clear residual on the desk. Then Lab brings **one** cheap paper-only **PROPOSED** test back to `operator`. Lab never self-admits.
+4. **Illustrator:** the wake owes a re-render when the PNG lags more than one window. Re-render from current files before a material publish. Never invent a chart. Do not put golf WC1 / Ill on this lane.
+5. **`lab` has proposed.** One cheap paper-only PROPOSED is on disk at `golf-offshoot/docs/LEARNING_LANE_15M_LAB_PROPOSED_01.md` and is **PARKED** as method-park row 10 — not admitted, not Softened, not scheduled. Reopen only on a public URL + retrieval date for `k`, or a Founder GO that names this test. Lab does not bring a second PROPOSED. Lab never self-admits.
 6. **Founder HOLD 2026-09-07 stands: no series other than `KXBTC15M` until this loop is honest.** Only Founder lifts it — not Operator, not CoS, not a later bot reading a tidy tick. Everything else parked (weekly honesty rollup, expanding the series, CFB websocket observe-only) is in `golf-offshoot/docs/LEARNING_LANE_15M_METHOD_PARK.md` with the explicit trigger that would reopen it.
 7. **Golf idle stays ON** (WC3+ only on a new settled week, on a fresh Founder GO that names the next invent). Nothing on the 15m lane clears it, retunes golf θ, or rewrites `golf-offshoot/docs/phase1_dryrun/OPERATOR_STATUS_STAMP.md`.
 
