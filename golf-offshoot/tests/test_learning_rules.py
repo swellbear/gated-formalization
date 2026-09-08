@@ -6,13 +6,22 @@ from golf_offshoot.learning_lane_15m.rules import decide, load_rules, window_is_
 def test_registry_has_dated_first_rules():
     payload = load_rules()
     ids = [row["id"] for row in payload["rules"]]
-    assert ids == ["R-BASELINE-FILL-ALL", "R-SKIP-COINFLIP"]
+    assert ids[:2] == ["R-BASELINE-FILL-ALL", "R-SKIP-COINFLIP"]
+    assert "R-SKIP-LAST-ONLY" in ids
     assert payload["lab_admits"] is False
-    assert payload["trials_to_date"] == 0
+    assert payload["trials_to_date"] == 1
+    assert payload["trials_log"][-1]["subject"] == "R-SKIP-LAST-ONLY"
+    assert payload["trials_log"][-1]["kind"] == "declaration"
     assert payload["evidence_bar"]["binding"] is False
     skip = next(row for row in payload["rules"] if row["id"] == "R-SKIP-COINFLIP")
     assert skip["declared_at"] == "2026-09-08T05:56:00-04:00"
     assert skip["execution"] is False
+    last_only = next(row for row in payload["rules"] if row["id"] == "R-SKIP-LAST-ONLY")
+    assert last_only["declared_at"] == "2026-09-08T16:12:00-04:00"
+    assert last_only["execution"] is False
+    assert last_only["selects"] is True
+    assert last_only["parameters"] == {}
+    assert last_only["class"] == "LAST-ONLY-SKIP"
 
 
 def test_predeclaration_window_is_not_oos():
@@ -42,6 +51,22 @@ def test_skip_coinflip_expresses_skip_and_fill():
     historic = decide(rule, posted_yes=0.50, close_at="2026-09-08T02:45:00-04:00")
     assert historic["eligible"] is False
     assert historic["action"] == "ineligible"
+
+
+def test_skip_last_only_has_no_expression_on_posted_yes_only():
+    """Lab declared the rule; decide() still only sees posted_yes. Not a score."""
+    rule = {
+        "id": "R-SKIP-LAST-ONLY",
+        "declared_at": "2026-09-08T16:12:00-04:00",
+        "kind": "selection",
+        "selects": True,
+        "execution": False,
+    }
+    verdict = decide(rule, posted_yes=0.50, close_at="2026-09-08T16:30:00-04:00")
+    assert verdict["eligible"] is True
+    assert verdict["action"] == "unknown"
+    assert verdict["execution"] is False
+    assert "R-SKIP-LAST-ONLY" in verdict["reason"]
 
 
 def test_a_skip_rule_produces_no_fill_in_band_and_fills_out_of_band(tmp_path, monkeypatch):

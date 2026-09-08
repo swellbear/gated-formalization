@@ -6,9 +6,17 @@
   "lab_admits": false,
   "trading_armed": false,
   "opened_at": "2026-09-08T05:56:00-04:00",
-  "trials_to_date": 0,
+  "trials_to_date": 1,
   "trials_before_mechanism": 0,
-  "trials_log": [],
+  "trials_log": [
+    {
+      "subject": "R-SKIP-LAST-ONLY",
+      "kind": "declaration",
+      "at": "2026-09-08T16:12:00-04:00",
+      "note": "selection rule declared",
+      "trials_to_date_after": 1
+    }
+  ],
   "evidence_bar": {
     "path": "golf-offshoot/docs/LEARNING_LANE_15M_EVIDENCE_BAR.json",
     "binding": false
@@ -33,6 +41,18 @@
       "rule": "Skip the paper fill when posted_yes is strictly inside (0.45, 0.55). Otherwise fill at the posted mark with entry_edge=0.0.",
       "falsifier": "After the n named by the evidence bar in force (currently looks.first_look_n = 70), if selected-fill settlement_pnl cannot be distinguished from R-BASELINE-FILL-ALL on those same windows, park this rule. Do not retune the band. The bar is the governing source.",
       "note": "The (0.45, 0.55) band is not verifiably pre-registered — see the bar Pre-registration section. A note field asserting blind choice is not proof. execution=false (not flipped this turn). paper.py now consults decide() but this rule is not the executing rule. OOS still accumulates from declared_at by replay; replayed results are not lived results. L1 cannot support Established."
+    },
+    {
+      "id": "R-SKIP-LAST-ONLY",
+      "declared_at": "2026-09-08T16:12:00-04:00",
+      "kind": "selection",
+      "class": "LAST-ONLY-SKIP",
+      "execution": false,
+      "selects": true,
+      "parameters": {},
+      "rule": "Skip the paper fill when yes_bid or yes_ask is missing, or when (yes_bid + yes_ask) / 2 is not in (0, 1). Fill at the posted mark with entry_edge=0.0 only when both sides are present and produce a mid. This is the mid branch of public_mid_or_last; last and ask-only fallbacks are skips.",
+      "falsifier": "After the n named by the evidence bar in force (currently looks.first_look_n = 70), if selected-fill settlement_pnl cannot be distinguished from R-BASELINE-FILL-ALL on those same windows, park this rule. Do not add a numeric mark band. Do not retune a threshold this rule does not have. The bar is the governing source.",
+      "note": "Parameter-free. No mark band. Not a revival of R-SKIP-COINFLIP. Not burned SPREAD. decide() cannot express this until the signature carries yes_bid/yes_ask or mark_source; execution stays false. Lab did not score. See LEARNING_LANE_15M_LAB_PROPOSED_02.md."
     }
   ]
 }

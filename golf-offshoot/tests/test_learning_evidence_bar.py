@@ -48,6 +48,10 @@ def test_burned_registry_seeds_oil_and_keeps_moy_cont_fragile():
     assert class_is_burned("MAG-WEAK") is True
     assert class_is_burned("magnitude-gate") is True
     assert class_is_burned("R-SKIP-COINFLIP") is False
+    assert class_is_burned("LAST-ONLY-SKIP") is False
+    assert class_is_burned("R-SKIP-LAST-ONLY") is False
+    assert class_is_burned("SPREAD") is True
+    assert class_is_burned("RETUNE-COINFLIP-BAND") is True
     assert fragile_not_null("H-SPOT-MOY-CONT") is True
     assert class_is_burned("H-SPOT-MOY-CONT") is False
 
