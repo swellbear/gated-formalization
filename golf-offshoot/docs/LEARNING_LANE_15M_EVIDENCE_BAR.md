@@ -2,7 +2,7 @@
 
 **Lane:** `learning_lane_15m` · series `KXBTC15M` only
 **Drafted:** 2026-09-08 08:30 EDT · Operator
-**Amended:** 2026-09-08 13:59 EDT · Operator, admit pass on Soften Critic CRITIC 02 (prior amendment: 2026-09-08 12:09 EDT at `2ad6fe1`, not midnight)
+**Amended:** 2026-09-08 17:42 EDT · Operator, admit pass on Soften Critic CRITIC 03 (prior amendment: 2026-09-08 13:59 EDT at `5dc4f24`, CRITIC 02 admit pass)
 **Binding?** **N.** A system that sets its own threshold does not have one.
 **Admit?** N · **Edge established?** N · `lab_admits` false · Trading **NOT ARMED**
 
@@ -12,7 +12,7 @@ This draft becomes binding only after all three:
 2. `critic-invariants` passes on the bytes proposed to bind, **or** every failing check is named on this bar's face with Operator's reason for binding anyway. A findings artifact that says `passed: false` cannot sit under a bar that says `binding: true`.
 3. Founder reads it once and acknowledges.
 
-Condition 1 is met **for the attack+answer pair named here**: [`LEARNING_LANE_15M_EVIDENCE_BAR_OPERATOR_ANSWER_02.md`](LEARNING_LANE_15M_EVIDENCE_BAR_OPERATOR_ANSWER_02.md), answering [`LEARNING_LANE_15M_EVIDENCE_BAR_CRITIC_02.md`](LEARNING_LANE_15M_EVIDENCE_BAR_CRITIC_02.md) (bytes `2a39471c…`). CRITIC 01 remains answered in [`LEARNING_LANE_15M_EVIDENCE_BAR_OPERATOR_ANSWER_01.md`](LEARNING_LANE_15M_EVIDENCE_BAR_OPERATOR_ANSWER_01.md). **Conditions 2 and 3 are not met.** `founder_read_once` stays false. This is still a proposed bar. Writing it is not an ADMIT. Amending it is not an ADMIT. Scoring against it is not owed. `records[]` stays empty.
+Condition 1 is **not met** for these bytes. [`LEARNING_LANE_15M_EVIDENCE_BAR_OPERATOR_ANSWER_03.md`](LEARNING_LANE_15M_EVIDENCE_BAR_OPERATOR_ANSWER_03.md) answers [`LEARNING_LANE_15M_EVIDENCE_BAR_CRITIC_03.md`](LEARNING_LANE_15M_EVIDENCE_BAR_CRITIC_03.md) (bytes `5a241513…`) on the **Turn 3** hashes (`70772F96…` / `231B2835…`). This amendment produces new bytes. An answer that amends the bar does not close condition 1 on the amended text. CRITIC 02 remains answered in [`LEARNING_LANE_15M_EVIDENCE_BAR_OPERATOR_ANSWER_02.md`](LEARNING_LANE_15M_EVIDENCE_BAR_OPERATOR_ANSWER_02.md) for its own hashes. CRITIC 01 remains answered in [`LEARNING_LANE_15M_EVIDENCE_BAR_OPERATOR_ANSWER_01.md`](LEARNING_LANE_15M_EVIDENCE_BAR_OPERATOR_ANSWER_01.md). **Conditions 2 and 3 are not met.** `founder_read_once` stays false. This is still a proposed bar. Writing it is not an ADMIT. Amending it is not an ADMIT. Scoring against it is not owed. `records[]` stays empty.
 
 Amending this bar re-owes the Critic on the new text (`critic.py` keys findings by content hash). That is correct and intended.
 
@@ -178,6 +178,10 @@ To count as pre-registered, a rule's parameters need:
 
 This condition dies for this rule if a commit, desk line, or dated artifact predating 2026-09-07 21:49:37 EDT names the (0.45, 0.55) band. None was found in the history.
 
+**`R-SKIP-2TO1-FAVORITE`'s `favorite_odds=2` does not meet this either, and this bar records that on its face.** First naming is `e9fab5a` at 2026-09-08 16:56:05 EDT (`declared_at` 16:53:00; 3m 5s commit lag). The published RUN-ONLY fee table (`2fea8d8`, author 2026-09-07 21:49:37 EDT) already listed 24 marks; **2 of 24** are ≥ 2/3 (`0.9835` on `071545`, `0.7050` on `071600`). Gap: **19h 06m 28s**. A registry `note` asserting those marks did not inform the parameter is not proof. `favorite_odds=2` as "the first integer odds strictly above evens" is a conventional prior that does not require the tape — that is recorded, not treated as proof. This is **not** a peek finding and not a score. **`verifiably_preregistered` is false.** L1 cannot support Established for this rule even if it later passes every clause. L1 may still be scored and may still support an Admissible dated record. `execution` stays true (RUN-ONLY, paper). A later attack+answer may flip this if it accepts the conventional-prior exception, or if a naming predating `2fea8d8` is found. None was found.
+
+`WATCHED.lab_proposed` in `critic.py` is still pinned to `LEARNING_LANE_15M_OPERATOR_NOTE_PROPOSED_01.md`. PROPOSED 02 notes are **outside** `WATCHED`. Watching them is owed to Systems. This turn did not edit `critic.py`.
+
 ---
 
 ## The L2 confirmation test
@@ -207,9 +211,11 @@ The registry already says these are different evidence. This bar says which verd
 
 Replay assumes fills live execution might not get. Skipping a bet changes nothing about the market and does change the fill sequence. Both are legitimate. They are not interchangeable.
 
-**Established is currently unreachable, and this bar says so rather than implying otherwise.** `paper.py` now consults `rules.decide()` via `consult_registry`. The running hub is on `0a480d4` (`watch.json` `runtime.git_tip` `refs/heads/cursor/part-a-clerical-trust-boundary@0a480d41321ebe004e8e07ed1241ef10af3ee39f`). That is not enough. `R-SKIP-COINFLIP` still has `execution: false`, and its band is **not verifiably pre-registered**, so its L1 cannot support Established even if it passed every clause. No selection rule declared after the flip exists. `currently_reachable` stays **false**.
+**Lived paper for `R-SKIP-2TO1-FAVORITE` begins at the execution flip, not at `declared_at`.** Flip recorded in the Operator note at **2026-09-08T17:11:00-04:00**, commit `0daae90` (17:14:46 EDT). Any window whose `close` is strictly after `declared_at` `2026-09-08T16:53:00-04:00` and at or before `2026-09-08T17:11:00-04:00` is **replay** for this rule. A later L1/L2 score that includes a window from that interval as lived fails this bar. I am not asserting which window ids exist or what they paid.
 
-**Explicit precondition of Established:** a selection rule declared after the execution flip, with verifiably pre-registered parameters, and `execution=true` before its first L2-eligible window closes. `R-SKIP-COINFLIP` cannot satisfy this. This turn does not flip its execution.
+**Established is currently unreachable, and this bar says so rather than implying otherwise.** `paper.py` now consults `rules.decide()` via `consult_registry`. The running hub is on `0a480d4` (`watch.json` `runtime.git_tip` `refs/heads/cursor/part-a-clerical-trust-boundary@0a480d41321ebe004e8e07ed1241ef10af3ee39f`). `R-SKIP-2TO1-FAVORITE` **does exist**: declared after that flip (`e9fab5a`, `declared_at` 16:53:00), `execution=true` since 17:11 (`0daae90`). That is not enough. The bar is not binding; condition 2 fails on the unpinned fee hash; condition 3 is unmet; and `favorite_odds=2` is **not verifiably pre-registered**. `R-SKIP-COINFLIP` still has `execution: false`, and its band is not verifiably pre-registered. `currently_reachable` stays **false**.
+
+**Explicit precondition of Established:** a selection rule declared after the `decide()` flip, with verifiably pre-registered parameters, and `execution=true` before its first L2-eligible window closes, scored under a binding bar. `R-SKIP-COINFLIP` cannot satisfy this. `R-SKIP-2TO1-FAVORITE` fails the pre-registration half. This turn does not flip `R-SKIP-COINFLIP` and does not flip `currently_reachable`.
 
 **The permitted flip point.** `execution=false → true` is legitimate **only before the first L2-eligible window closes**, and only recorded with a commit SHA and timestamp. Flipping it after any L2 window has closed, or flipping it to make a replayed look read as lived, is the prohibited move. The drafted ban read as absolute and forbade the only action that produces a lived confirmation; it is a timing rule.
 
@@ -217,11 +223,13 @@ Replay assumes fills live execution might not get. Skipping a bet changes nothin
 
 ## Trials accounting
 
-`trials_to_date` lives on [`LEARNING_LANE_15M_RULES.json`](LEARNING_LANE_15M_RULES.json). It starts at **0**.
+`trials_to_date` lives on [`LEARNING_LANE_15M_RULES.json`](LEARNING_LANE_15M_RULES.json). It started at **0**. It is now **1**.
 
 **It increments on the *declaration* of a selection rule on this lane, not on the score.** The drafted rule incremented "once per first-look (L1) score," which defines the multiplicity family by what got written up rather than by what got tried. A rule proposed, replayed informally and dropped before anyone wrote a score never touched the counter. That is the wrong denominator and it always flatters. Baseline naming is not a trial. L2 confirmation looks also increment (see §The L2 confirmation test).
 
-The counter is mechanical as of `0a480d4`: `record_trial` writes `trials_log`. Baseline naming is not a trial. `R-SKIP-COINFLIP`'s pre-mechanism declaration is not backfilled; `trials_to_date` stays 0. This turn does not increment it.
+The counter is mechanical as of `0a480d4`: `record_trial` writes `trials_log`. Baseline naming is not a trial. `R-SKIP-COINFLIP`'s pre-mechanism declaration is not backfilled. The `R-SKIP-2TO1-FAVORITE` declaration spent the first slot (`trials_log` row at 16:53:00; `trials_to_date_after` 1). This turn does not increment it again.
+
+**Next look.** `score_rule` reads the registry counter and computes `alpha_k` with `k = trials_to_date + 1`. The next look is **k = 2**, α = `0.05 / (2 · 3)` = **0.008333**. `alpha_first_look: 0.025` is the schedule's first term, now historical. Advertising 0.025 as the α this rule will be scored under is a different test from the scorer.
 
 The held-out L2 range is the other half of the protection: the scorer of L1 never sees it, and must prove that by commit order. Establishment cannot be claimed from L1 alone even if L1 passes.
 
@@ -285,7 +293,7 @@ Named on the face because fourteen sustained objections and zero new `CHECKS` me
 | F6 multiplicity | `trials_counter_is_consistent` requires `record_trial`; α is `0.05/(k(k+1))` |
 | F7 fee-free book | `fee_adjusted_book_is_binding` requires `fee_adjust` and reads the payout line |
 | X1 spread | empirical profile owed; unconditional direction withdrawn |
-| X2 reachable | `currently_reachable` stays false; `decide()` is in the running hub |
+| X2 reachable | `currently_reachable` stays false; `R-SKIP-2TO1-FAVORITE` exists and is executing; pre-registration / binding / fee hash / Founder read-once still block |
 | X3 L2 test | `looks.l2_test` is on the face; a missing-field check is possible, not written |
 | X4 trials on declaration | `record_trial`; baseline naming raises |
 | X5 sustain-or-overrule | prose; a hash check cannot read an admit-pass verdict |

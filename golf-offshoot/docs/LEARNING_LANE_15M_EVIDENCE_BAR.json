@@ -3,27 +3,30 @@
   "lane": "learning_lane_15m",
   "series": "KXBTC15M",
   "drafted_at": "2026-09-08T08:30:00-04:00",
-  "amended_at": "2026-09-08T13:59:48-04:00",
+  "amended_at": "2026-09-08T17:42:00-04:00",
   "amended_by": "operator",
-  "amendment": "admit pass on Soften Critic CRITIC 02; see LEARNING_LANE_15M_EVIDENCE_BAR_OPERATOR_ANSWER_02.md",
+  "amendment": "admit pass on Soften Critic CRITIC 03; see LEARNING_LANE_15M_EVIDENCE_BAR_OPERATOR_ANSWER_03.md",
   "prior_amendment": {
-    "amended_at": "2026-09-08T12:09:37-04:00",
-    "commit": "2ad6fe1",
-    "note": "CRITIC 01 admit pass. The previous amended_at of 2026-09-08T00:00:00-04:00 was midnight-exact and preceded drafted_at; the work was committed at 12:09:37, not at 00:00."
+    "amended_at": "2026-09-08T13:59:48-04:00",
+    "commit": "5dc4f24",
+    "note": "CRITIC 02 admit pass. Named control_function / adjustment_function / commit_order_control. Binding condition 1 was left met:true on those new bytes — CRITIC 03 objection 2."
   },
   "binding": false,
   "binding_rule": "Becomes binding only after (1) a Soften Critic written attack from a session that did not draft the bar, with Operator sustaining or explicitly overruling every objection with a stated reason in a separate turn, attack and answers both linked from the bar; (2) critic-invariants passing on the bytes proposed to bind, or every failing check named on the bar's face with Operator's reason for binding anyway; and (3) Founder read-once acknowledgement.",
   "binding_conditions": [
     {
       "id": "critic_answered",
-      "met": true,
-      "detail": "met only for the attack+answer pair named here. CRITIC 02 answered objection-by-objection in LEARNING_LANE_15M_EVIDENCE_BAR_OPERATOR_ANSWER_02.md, separate turn from the objections (attack 4090983, Systems 0a480d4, this turn). CRITIC 01 remains answered in OPERATOR_ANSWER_01.md. Amending the bar re-owes soften-critic on the new bytes.",
-      "critic_file": "golf-offshoot/docs/LEARNING_LANE_15M_EVIDENCE_BAR_CRITIC_02.md",
-      "critic_sha256_bytes": "2a39471c0dde3e8fcb5fe258898ca1c4b8b064213836cfe784fce3f7d3d8df25",
-      "answer_file": "golf-offshoot/docs/LEARNING_LANE_15M_EVIDENCE_BAR_OPERATOR_ANSWER_02.md",
+      "met": false,
+      "detail": "An answer that amends the bar does not close condition 1 on the amended text. LEARNING_LANE_15M_EVIDENCE_BAR_OPERATOR_ANSWER_03.md answers CRITIC 03 (bytes 5a241513…) on the Turn 3 hashes 70772F96… / 231B2835…. These bytes are not that digest. Soften Critic is re-owed on this amendment. CRITIC 02 remains answered in OPERATOR_ANSWER_02.md for its own hashes. CRITIC 01 remains answered in OPERATOR_ANSWER_01.md.",
+      "critic_file": "golf-offshoot/docs/LEARNING_LANE_15M_EVIDENCE_BAR_CRITIC_03.md",
+      "critic_sha256_bytes": "5a241513011e577c8fc160df5000c025eb90440d4849fcaea8fa1badbb62304e",
+      "answer_file": "golf-offshoot/docs/LEARNING_LANE_15M_EVIDENCE_BAR_OPERATOR_ANSWER_03.md",
+      "answered_bar_md_sha256": "70772f9640bb0f5614169bf1d02a655c88b5060edade85f5461fc50307075b05",
+      "answered_bar_json_sha256": "231b2835d0574d22f449f69735a676ea3f332d10a5207985701912cb4fbfe83b",
       "prior_pair": {
-        "critic_file": "golf-offshoot/docs/LEARNING_LANE_15M_EVIDENCE_BAR_CRITIC_01.md",
-        "answer_file": "golf-offshoot/docs/LEARNING_LANE_15M_EVIDENCE_BAR_OPERATOR_ANSWER_01.md"
+        "critic_file": "golf-offshoot/docs/LEARNING_LANE_15M_EVIDENCE_BAR_CRITIC_02.md",
+        "answer_file": "golf-offshoot/docs/LEARNING_LANE_15M_EVIDENCE_BAR_OPERATOR_ANSWER_02.md",
+        "critic_sha256_bytes": "2a39471c0dde3e8fcb5fe258898ca1c4b8b064213836cfe784fce3f7d3d8df25"
       }
     },
     {
@@ -75,8 +78,14 @@
       "requires_held_out_confirmation": true,
       "ops_beside_edge_stays_n": true,
       "currently_reachable": false,
-      "unreachable_because": "decide() is in the running hub (watch.json runtime.git_tip refs/heads/cursor/part-a-clerical-trust-boundary@0a480d41321ebe004e8e07ed1241ef10af3ee39f; paper.py consult_registry -> decide()). Established remains unreachable for R-SKIP-COINFLIP: execution is still false and its band is not verifiably pre-registered. No selection rule declared after the flip exists. currently_reachable stays false.",
-      "precondition": "a selection rule declared after the execution flip, with verifiably pre-registered parameters, and execution=true before its first L2-eligible window closes. R-SKIP-COINFLIP cannot satisfy this.",
+      "unreachable_because": "decide() is in the running hub (watch.json runtime.git_tip refs/heads/cursor/part-a-clerical-trust-boundary@0a480d41321ebe004e8e07ed1241ef10af3ee39f; paper.py consult_registry -> decide()). R-SKIP-2TO1-FAVORITE exists: declared after that flip (e9fab5a, declared_at 2026-09-08T16:53:00-04:00), execution=true since 2026-09-08T17:11:00-04:00 (0daae90). Established remains unreachable: the bar is not binding; condition 2 fails on the unpinned fee hash; condition 3 is unmet; favorite_odds=2 is not verifiably pre-registered. R-SKIP-COINFLIP still has execution false and its band is not verifiably pre-registered. currently_reachable stays false.",
+      "precondition": "a selection rule declared after the decide() flip, with verifiably pre-registered parameters, and execution=true before its first L2-eligible window closes, scored under a binding bar. R-SKIP-COINFLIP cannot satisfy this. R-SKIP-2TO1-FAVORITE fails the pre-registration half.",
+      "executing_selection_rule": "R-SKIP-2TO1-FAVORITE",
+      "lived_paper_begins_at": "2026-09-08T17:11:00-04:00",
+      "lived_paper_begins_commit": "0daae90",
+      "replay_close_after": "2026-09-08T16:53:00-04:00",
+      "replay_close_at_or_before": "2026-09-08T17:11:00-04:00",
+      "replay_interval_note": "A later L1/L2 score that treats a window from this close interval as lived fails this bar.",
       "execution_flip_rule": "execution=false -> true is legitimate only before the first L2-eligible window closes, recorded with a commit SHA and timestamp. Flipping after an L2 window has closed, or flipping to make a replayed look read as lived, is forbidden.",
       "scope": "scoped to the regimes actually observed; does not generalise past them"
     }
@@ -124,12 +133,16 @@
     "alpha_was": "0.05 / (trials_to_date + 1)",
     "alpha_changed_because": "0.05/k weights are the harmonic series and diverge; FWER over the bar's own 14-look week is 15.2%, not 5%. 0.05/(k(k+1)) sums to 0.05 over unbounded looks, so FWER <= 0.05.",
     "alpha_first_look": 0.025,
+    "alpha_first_look_is_historical": true,
+    "next_look_k": 2,
+    "next_look_alpha": 0.008333,
     "alpha_fourteenth_look": 0.000238,
     "fwer_14_looks_old_scheme": 0.152,
     "fwer_14_looks_new_scheme": 0.046,
     "trials_counter": "LEARNING_LANE_15M_RULES.json trials_to_date; increments on DECLARATION of a selection rule, not on score; L2 looks increment too; writer is golf_offshoot.learning_lane_15m.rules.record_trial; baseline naming is not a trial",
     "trials_counter_is_prose": false,
-    "trials_counter_owed": "record_trial and trials_log landed at 0a480d4. R-SKIP-COINFLIP's pre-mechanism declaration is not backfilled; trials_to_date stays 0. Do not increment it in this turn.",
+    "trials_to_date": 1,
+    "trials_counter_owed": "record_trial and trials_log landed at 0a480d4. R-SKIP-COINFLIP's pre-mechanism declaration is not backfilled. R-SKIP-2TO1-FAVORITE declaration spent the first slot (trials_to_date=1). Next look is k=2, alpha=0.008333. alpha_first_look 0.025 is the schedule's first term, now historical. Do not increment the counter in this turn.",
     "effect_floor_usd_per_window": 0.28,
     "effect_floor_as_fraction_of_stake": 0.28,
     "effect_floor_rationale": "delta is NOT derived from the critical value. Detection floor at n=70 with sd ~0.784 (the 95% upper confidence bound on the 0.66 point estimate from 56 calibration windows, since delta is linear in sd): 1.960 * SE_70 = 0.1837, so delta 0.28 sits at 1.52x the detection floor. At the drafted n=40 the ratio was 0.997 and the floor was the rejection threshold relabeled.",
@@ -228,6 +241,23 @@
         "consequence": "L1 cannot support an Established verdict even if it passes every clause. L1 may still be scored and may still support an Admissible dated record.",
         "dies_if": "a commit, desk line, or dated artifact predating 2026-09-07T21:49:37-04:00 names the (0.45, 0.55) band; none was found in the history",
         "is_not_a_score": true
+      },
+      {
+        "rule_id": "R-SKIP-2TO1-FAVORITE",
+        "parameter": "favorite_odds=2 (derived posted_yes cutoff 2/3)",
+        "verifiably_preregistered": false,
+        "first_named_in_commit": "e9fab5a",
+        "first_named_at": "2026-09-08T16:56:05-04:00",
+        "declared_at": "2026-09-08T16:53:00-04:00",
+        "declare_to_commit_lag": "3m 5s",
+        "informing_marks_published_in_commit": "2fea8d8",
+        "informing_marks_published_at": "2026-09-07T21:49:37-04:00",
+        "gap": "19h 06m 28s",
+        "published_marks_at_or_above_threshold": "2/24 (0.9835 on 071545, 0.7050 on 071600) from LEARNING_LANE_15M_OPERATOR_NOTE_PROPOSED_01.md",
+        "detail": "A registry note asserting no window mark informed favorite_odds=2 is not proof. Under the information-not-intent standard those two published marks sat on this tree before first naming. favorite_odds=2 as the first integer odds strictly above evens is a conventional prior that does not require the tape — recorded, not treated as proof. Not a peek finding and not a score.",
+        "consequence": "L1 cannot support an Established verdict even if it passes every clause. L1 may still be scored and may still support an Admissible dated record. execution stays true (RUN-ONLY, paper).",
+        "dies_if": "a later attack+answer accepts the conventional-prior exception as sufficient, or a commit, desk line, or dated artifact predating 2026-09-07T21:49:37-04:00 names favorite_odds=2; none was found in the history",
+        "is_not_a_score": true
       }
     ]
   },
@@ -259,7 +289,7 @@
     "critic_01_finding_6_multiplicity": "trials_counter_is_consistent requires record_trial and a trials_log; delta_above_detection_floor uses alpha=0.05/(k(k+1))",
     "critic_01_finding_7_fee_adjust": "fee_adjusted_book_is_binding requires adjustment_function, reproduces the RUN-ONLY table, and reads the payout expression not a substring of settle.py",
     "critic_01_x1_spread": "no mechanical check of the half-spread profile exists; empirical profile owed. Unconditional 'avoids neither worst region' is withdrawn until that profile exists",
-    "critic_01_x2_reachable": "currently_reachable stays false; decide() is in the running hub but R-SKIP-COINFLIP cannot Establish. A source-call check that paper.py calls decide() is possible and not yet a method-suite member",
+    "critic_01_x2_reachable": "currently_reachable stays false; R-SKIP-2TO1-FAVORITE exists and is executing; pre-registration / binding / fee hash / Founder read-once still block. A source-call check that paper.py calls decide() is possible and not yet a method-suite member",
     "critic_01_x3_l2_test": "looks.l2_test is on the face; no check yet fails when n/h0/delta/alpha are missing. Possible, not written",
     "critic_01_x4_trials_on_declaration": "record_trial increments on declaration and L2 looks; baseline naming raises",
     "critic_01_x5_sustain_or_overrule": "binding condition 1 is prose; a file check cannot read an admit-pass verdict without a structured verdicts array. Impossible as a hash check today",
@@ -275,7 +305,8 @@
     "check looks.l2_test has n, h0, delta, alpha before a score is allowed",
     "invariant: PAPER_UNIT != 1.0 while the bar is binding",
     "pin the Kalshi fee schedule sha256 (external; last fetch HTTP 429 at 2026-09-08T13:42:26-04:00)",
-    "PROTOCOL.md:123 and triggers.py docstring still say 'the n its falsifier named'; the code reads looks.first_look_n. Align the docs. Operator did not edit PROTOCOL."
+    "PROTOCOL.md:123 and triggers.py docstring still say 'the n its falsifier named'; the code reads looks.first_look_n. Align the docs. Operator did not edit PROTOCOL.",
+    "WATCHED.lab_proposed is pinned to LEARNING_LANE_15M_OPERATOR_NOTE_PROPOSED_01.md (critic.py:44, :70). Watch LEARNING_LANE_15M_LAB_PROPOSED_02.md and LEARNING_LANE_15M_OPERATOR_NOTE_PROPOSED_02.md, or a single stable path that always names the latest pair. Until that exists, PROPOSED 02 notes are outside WATCHED and cannot re-owe Soften Critic. Operator did not edit critic.py."
   ],
   "hard_nos": [
     "do not treat this draft as binding",

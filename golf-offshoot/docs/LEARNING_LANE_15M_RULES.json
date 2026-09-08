@@ -58,8 +58,16 @@
         "threshold_source": "favorite_odds=2; p=odds/(1+odds)",
         "derived_threshold": 0.6666666666666666
       },
-      "note": "PROPOSED 02 RUN-ONLY by Operator 2026-09-08T17:11:00-04:00. The free parameter is the integer prior favorite_odds=2, not a posted_yes cutoff read from this tree. No window mark informed the parameter. First naming e9fab5a. execution=true (paper only; this turn). Not a revival of R-SKIP-COINFLIP and not a retune of (0.45, 0.55). lab_admits=false. Not scored this turn. Not an ADMIT.",
-      "declared_at": "2026-09-08T16:53:00-04:00"
+      "note": "PROPOSED 02 RUN-ONLY by Operator 2026-09-08T17:11:00-04:00. The free parameter is the integer prior favorite_odds=2. A note asserting no window mark informed it is not proof — see the bar preregistration.rules row (verifiably_preregistered false; 2/24 published marks ≥ 2/3 sat on this tree 19h 06m before e9fab5a). execution=true (paper only). Lived paper begins at the flip, not at declared_at. Not a revival of R-SKIP-COINFLIP and not a retune of (0.45, 0.55). lab_admits=false. Not scored. Not an ADMIT.",
+      "declared_at": "2026-09-08T16:53:00-04:00",
+      "first_named_in_commit": "e9fab5a",
+      "execution_flipped_at": "2026-09-08T17:11:00-04:00",
+      "execution_flip_commit": "0daae90",
+      "lived_paper_begins_at": "2026-09-08T17:11:00-04:00",
+      "lived_paper_begins_commit": "0daae90",
+      "replay_close_after": "2026-09-08T16:53:00-04:00",
+      "replay_close_at_or_before": "2026-09-08T17:11:00-04:00",
+      "replay_interval_note": "A later L1/L2 score that treats a window from this close interval as lived fails the bar."
     }
   ]
 }

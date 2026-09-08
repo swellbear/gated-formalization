@@ -47,7 +47,7 @@ p \;=\; \frac{\text{odds}}{1 + \text{odds}} \;=\; \frac{2}{3}
 
 Skip is one-sided and on the *high* side of posted YES. That is the opposite of fee-avoidance: the taker fee `k · stake · (1 − P)` is smallest where this rule skips, and largest where it still fills. FEE-AS-SIGNAL is not smuggled in under another name.
 
-Expression (paper only; `execution=false`):
+Expression (paper only; **`execution=false` here is the proposing-turn state at 16:53**. Operator flipped `execution=true` at 17:11, commit `0daae90`. The live flag is the registry row, not this sentence):
 
 - `posted_yes >= 2/3` → **skip**
 - `posted_yes < 2/3` → **fill** at the posted mark, `entry_edge=0.0`
@@ -83,7 +83,7 @@ This is the statement the bar requires. It is not itself the proof — the commi
 
 - **Not an edge.** Not established, not banked, not measured, not implied.
 - **Not an admit.** `lab_admits=false`. Operator decides RUN-ONLY / PARK / (later) ADMIT.
-- **Not lived.** `execution=false`. Replay OOS begins at `declared_at`. Replay is not a lived result.
+- **Not lived at proposal.** `execution=false` was the proposing-turn state (16:53). Operator flipped `execution=true` at 17:11 (`0daae90`). Replay of windows that closed after `declared_at` and at or before that flip is still replay. Lived paper begins at the flip. Replay is not a lived result.
 - **Not a score.** `score_rule` is not called. No scorecard is opened.
 - **Not a bind, not an arm.** `binding` stays false. `trading_armed` stays false. The HOLD stands.
 - **Not a lineage merge.** Lineage A only, if and when anyone scores. Lineage B's published `+1.67` is neither re-derived nor summed.

@@ -68,7 +68,7 @@ Replay of windows that closed after `declared_at` and before this flip is still 
 - **Not an admit.** `lab_admits=false`. Promotion still requires the normal ADMIT gate, a binding bar, and a Soften Critic attack from a separate session.
 - **Not a score.** `score_rule` was not called. No scorecard was opened. No post-declaration outcome file was opened to write this.
 - **Not a bind, not an arm.** `binding` stays false. `trading_armed` stays false. The HOLD stands.
-- **Not a bar amend.** The bar still says "No selection rule declared after the flip exists" and `currently_reachable` stays **false**. That sentence is now stale as to existence of a post-`0a480d4` selecting row; updating it would re-owe Soften Critic. This fire does not edit the bar. Established remains unreachable until L2 is lived under a binding bar.
+- **Not a bind.** `currently_reachable` stays **false**. The 17:11 fire left the stale "No selection rule declared after the flip exists" sentence on the bar to avoid a Critic owe. CRITIC 03 attacked that. Operator ANSWER 03 (17:42) rewrote the sentence, named this rule on the face, and left `currently_reachable` false for reasons that are still true (not binding; fee hash unpinned; Founder unread; `favorite_odds=2` not verifiably pre-registered). Established remains unreachable until L2 is lived under a binding bar.
 - **Not a revival of `R-SKIP-COINFLIP`.** Do not score that rule. Do not retune `(0.45, 0.55)`.
 - **Not a lineage merge.** Lineage B's published `+1.67` is neither re-derived nor summed.
 - **Not a second series.** `KXBTC15M` only. Golf idle stays **ON**.

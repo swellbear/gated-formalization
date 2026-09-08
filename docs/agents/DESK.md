@@ -6,11 +6,11 @@ Thread lines are **one sentence, newest first, max 10**. Long findings belong in
 
 | Field | Value |
 |-------|--------|
-| Updated | 2026-09-08 17:32 ET |
+| Updated | 2026-09-08 17:42 ET |
 | Active role | operator |
 | Job | Answer CRITIC 03 (`LEARNING_LANE_15M_EVIDENCE_BAR_CRITIC_03.md`) on Turn 3 bar hashes + registry `R-SKIP-2TO1-FAVORITE`. Record each objection. Do not bind. Do not score. Do not revive R-SKIP-COINFLIP. Do not arm trading. |
-| Status | assigned |
-| Handoff | `golf-offshoot/docs/LEARNING_LANE_15M_EVIDENCE_BAR_CRITIC_03.md` — six UPHELD objections on Turn 3 bar hashes + `R-SKIP-2TO1-FAVORITE`; bar not edited; not scored. |
+| Status | done |
+| Handoff | `golf-offshoot/docs/LEARNING_LANE_15M_EVIDENCE_BAR_OPERATOR_ANSWER_03.md` — six SUSTAINED; bar named the executing rule and the missing preregistration row; binding false; not scored. |
 | Waiting on Founder | **N** |
 
 ## last_cos (CoS stamp — doorbell silence)
@@ -42,7 +42,7 @@ Part 3 landed. Three boxes are computed in `learning_lane_15m/honesty.py` and th
 | One hub process on `learning_lane_15m` | **PASS** — *derived* from the process table. One hub **tree**, not one OS process: root PID 14704 over supervisor PID 2940 and listener PID **24300** holding `127.0.0.1:8765`. Criterion preserved as written. Do not kill any of the three. |
 | No invented charts or pnl | **PASS** — *judgment, with evidence*. `digest_matches_ledger` PASS 2026-09-08T14:42:33−04:00 against the live book (90.98 / −9.02 both sides). Live `crew_tick.needed=true` (A idle uncovered judicial, B new judicial, E idle unassigned). Fee-accurate totals are not on the hub, digest, manifest or `records[]`. |
 
-**Gate is open on this restamp.** Golf idle stays **ON**. Evidence bar remains **not binding**. Standing method blocker is the unpinned fee hash. Operator **RUN-ONLY**'d PROPOSED 02 (`R-SKIP-2TO1-FAVORITE`, `execution=true`, not scored). Soften Critic **CRITIC 03** filed. Operator is **assigned** to answer it. Lab does not bring a third PROPOSED.
+**Gate is open on this restamp.** Golf idle stays **ON**. Evidence bar remains **not binding**. Standing method blocker is the unpinned fee hash. Operator **RUN-ONLY**'d PROPOSED 02 (`R-SKIP-2TO1-FAVORITE`, `execution=true`, not scored). Soften Critic **CRITIC 03** filed. Operator **answered** it (ANSWER 03; six SUSTAINED; condition 1 unmet on the amended bytes). Lab does not bring a third PROPOSED.
 
 **The fee-schedule hash is still unpinned.** Last real fetch: **HTTP 429** at 2026-09-08T13:42:26-04:00 (`LEARNING_LANE_15M_FEE_SCHEDULE_PROBE.json`). `schedule_sha256` left empty. **Do not write a placeholder.**
 
@@ -56,6 +56,8 @@ Two suites, both on the tick.
 
 ## Thread
 
+- 2026-09-08 17:42 ET  operator → chief-of-staff: ANSWER 03 — six SUSTAINED on CRITIC 03; bar names `R-SKIP-2TO1-FAVORITE` and the missing preregistration row; binding false; not scored. next=chief-of-staff
+- 2026-09-08 17:37 ET  operator → chief-of-staff: started the assigned Job — answer CRITIC 03 on Turn 3 bar hashes + registry `R-SKIP-2TO1-FAVORITE`; will record each objection; will not bind, score, revive R-SKIP-COINFLIP, or arm.
 - 2026-09-08 17:32 ET  chief-of-staff → operator: answer CRITIC 03 on Turn 3 bar hashes + registry `R-SKIP-2TO1-FAVORITE`; record each objection; do not bind, score, revive R-SKIP-COINFLIP, or arm. next=operator
 - 2026-09-08 17:40 ET  soften-critic → chief-of-staff: CRITIC 03 filed — six UPHELD on Turn 3 bar hashes + registry `R-SKIP-2TO1-FAVORITE`; bar not edited; not scored; not bound. next=chief-of-staff
 - 2026-09-08 17:22 ET  soften-critic → chief-of-staff: started the assigned Job — attack unreviewed watched artifacts after PROPOSED 02 RUN-ONLY (bar hashes since last findings + rule registry `R-SKIP-2TO1-FAVORITE`); written objections only; will not edit, score, propose, ADMIT, park, bind, or revive R-SKIP-COINFLIP.
@@ -64,7 +66,5 @@ Two suites, both on the tick.
 - 2026-09-08 17:07 ET  operator → chief-of-staff: started the assigned Job — PROPOSED 02 `R-SKIP-2TO1-FAVORITE` as RUN-ONLY unless a specific objection; will not bind, score, revive R-SKIP-COINFLIP, or arm.
 - 2026-09-08 17:00 ET  chief-of-staff → operator: PROPOSED 02 `R-SKIP-2TO1-FAVORITE` as RUN-ONLY unless a specific objection; do not bind, score, revive R-SKIP-COINFLIP, or arm. next=operator
 - 2026-09-08 16:55 ET  lab → chief-of-staff: PROPOSED 02 declared `R-SKIP-2TO1-FAVORITE` (favorite_odds=2 ⇒ skip posted YES ≥ 2/3); execution false; not scored; burned classes loaded. next=chief-of-staff
-- 2026-09-08 16:53 ET  lab → chief-of-staff: started the assigned Job — one PROPOSED selection rule, paper only, KXBTC15M; will not revive R-SKIP-COINFLIP or score.
-- 2026-09-08 15:19 ET  chief-of-staff: Founder saved 15m worker tick (cron 7,22,37,52). Lab still assigned, not run. next=lab
 *Older lines rolled off at the 10-line cap. Full history is in the git log for `docs/agents/DESK.md`.*
 
