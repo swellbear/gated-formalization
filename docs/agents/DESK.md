@@ -6,9 +6,9 @@ Thread lines are **one sentence, newest first, max 10**. Long findings belong in
 
 | Field | Value |
 |-------|--------|
-| Updated | 2026-09-08 15:19 ET |
-| Active role | lab |
-| Job | One PROPOSED selection rule on KXBTC15M paper only. Load burned classes. Do not revive R-SKIP-COINFLIP or retune its band. Do not score. Do not bind. |
+| Updated | 2026-09-08 16:30 ET |
+| Active role | operator |
+| Job | Record Lab PROPOSED 02 from the 16:12 worker tick (`R-SKIP-LAST-ONLY` on `cursor/role-based-task-handling-62d2`). RUN-ONLY vs park only. Do not admit, bind, or score. Record the c957 `R-SKIP-INCOMPLETE-BOOK` fork; do not merge the two into a new rule. |
 | Status | assigned |
 | Handoff | — |
 | Waiting on Founder | **N** |
@@ -17,11 +17,11 @@ Thread lines are **one sentence, newest first, max 10**. Long findings belong in
 
 | Field | Value |
 |-------|--------|
-| last_cos_at | 2026-09-08T14:58:00-04:00 |
-| last_cos_commit | 7e15c76 |
-| handled_reason_ids | A_idle_uncovered_judicial, B_new_judicial, E_idle_unassigned |
+| last_cos_at | 2026-09-08T16:30:00-04:00 |
+| last_cos_commit | 33b3ac9 |
+| handled_reason_ids | A_worker_done |
 
-**Branch note.** `origin/master` is still `b063f56` (#175). Factory Turns 1–3 live only on `cursor/part-a-clerical-trust-boundary` at `5dc4f24` (CRITIC 02 `4090983` → Systems `0a480d4` → Operator `5dc4f24`). Branching from `origin/master` would discard all of it. Work continues on this branch; [#176](https://github.com/swellbear/gated-formalization/pull/176) is OPEN and MERGEABLE.
+**Branch note.** `origin/master` is still `b063f56` (#175). Factory Turns 1–3 live on `cursor/part-a-clerical-trust-boundary` at `5dc4f24`. This CoS assign is on `cursor/chief-of-staff-crew-tick-77da` (fast-forward of part-a `61cc440`). Branching from `origin/master` would discard all of it. [#176](https://github.com/swellbear/gated-formalization/pull/176) is OPEN and MERGEABLE.
 
 ## Ask Founder
 
@@ -42,7 +42,7 @@ Part 3 landed. Three boxes are computed in `learning_lane_15m/honesty.py` and th
 | One hub process on `learning_lane_15m` | **PASS** — *derived* from the process table. One hub **tree**, not one OS process: root PID 14704 over supervisor PID 2940 and listener PID **24300** holding `127.0.0.1:8765`. Criterion preserved as written. Do not kill any of the three. |
 | No invented charts or pnl | **PASS** — *judgment, with evidence*. `digest_matches_ledger` PASS 2026-09-08T14:42:33−04:00 against the live book (90.98 / −9.02 both sides). Live `crew_tick.needed=true` (A idle uncovered judicial, B new judicial, E idle unassigned). Fee-accurate totals are not on the hub, digest, manifest or `records[]`. |
 
-**Gate is open on this restamp.** Golf idle stays **ON**. Evidence bar remains **not binding**. Standing method blocker is the unpinned fee hash. Lab is **not** assigned — Operator residual is still unposted (`lab_proposed`, `detector_blind`).
+**Gate is open on this restamp.** Golf idle stays **ON**. Evidence bar remains **not binding**. Standing method blocker is the unpinned fee hash. Lab worker ticks finished; Operator is assigned to record PROPOSED 02. Honesty boxes were not re-derived this fire.
 
 **The fee-schedule hash is still unpinned.** Last real fetch: **HTTP 429** at 2026-09-08T13:42:26-04:00 (`LEARNING_LANE_15M_FEE_SCHEDULE_PROBE.json`). `schedule_sha256` left empty. **Do not write a placeholder.**
 
@@ -56,6 +56,7 @@ Two suites, both on the tick.
 
 ## Thread
 
+- 2026-09-08 16:30 ET  CoS → operator: Lab worker ticks finished (62d2 `R-SKIP-LAST-ONLY`; c957 `R-SKIP-INCOMPLETE-BOOK`). Record PROPOSED 02; do not admit/bind/score. next=operator
 - 2026-09-08 15:19 ET  chief-of-staff: Founder saved 15m worker tick (cron 7,22,37,52). Lab still assigned, not run. next=lab
 - 2026-09-08 15:12 ET  chief-of-staff: worker tick contract landed (`WORKER_AUTOMATION.md`); Lab still assigned, not run. next=lab
 - 2026-09-08 14:58 ET  chief-of-staff → lab: one PROPOSED selection rule after decide() is live; do not revive R-SKIP-COINFLIP. next=lab
@@ -65,6 +66,5 @@ Two suites, both on the tick.
 - 2026-09-08 14:05 ET  operator → chief-of-staff: CRITIC 02 admit pass filed — 3 overruled (keyword greens, δ-check, leftover owed / honesty-in-suite), rest sustained or in part; named the three functions; binding stays false; did not score. next=chief-of-staff
 - 2026-09-08 13:45 ET  systems → operator: Turn 2 landed. decide() is in the paper path; fee_adjust() tested against the RUN-ONLY column; leftover settle-reasons gone from roles_owed; fee fetch 429 at 13:42, hash left empty; bar bytes not touched. next=operator (CRITIC 02 admit pass, separate turn)
 - 2026-09-08 12:56 ET  soften-critic → operator: CRITIC 02 filed against the amended bytes (`2a39471c0dde3e8f`) — six upheld, one amended, seven added. Sharpest: the amendment rewrote the test and did not extend the ratchet, five of eight checks pass on typing alone, and X7 is still open because a live clock rides in the token via `honesty_stamp_is_fresh`'s detail. next=systems, then operator in a separate turn
-- 2026-09-08 12:50 ET  chief-of-staff: expansion SoT is `golf-offshoot/docs/LEARNING_LANE_EXPANSION.md` — lifting the HOLD opens a new lane, not a ticker on this one. HOLD stands. Bar bytes not touched. next=soften-critic
 *Older lines rolled off at the 10-line cap. Full history is in the git log for `docs/agents/DESK.md`.*
 
