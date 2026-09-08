@@ -1,0 +1,32 @@
+{
+  "schema": 1,
+  "lane": "learning_lane_15m",
+  "stamped_at": "2026-09-07T21:40:00-04:00",
+  "framing": "honesty instrument, not a productivity metric, not progress",
+  "open": {
+    "total": 5,
+    "crew": 1,
+    "external": 1,
+    "founder": 3,
+    "unreachable": 0
+  },
+  "closed": {
+    "unreachable": 3,
+    "trigger_fired_since_last_stamp": 1,
+    "closed_on_falsifier": 0
+  },
+  "run_only_executed": 1,
+  "admits": 0,
+  "rows": {
+    "1_true_pending": "open / external",
+    "2_1500_missing_join": "CLOSED / unreachable — book requires a machine we do not have",
+    "3_1445_lineage_b_book": "CLOSED / unreachable — book requires a machine we do not have",
+    "4_unmeasured_tape": "CLOSED / unreachable — no book existed on this tree",
+    "5_stale_display_wording": "CLOSED / trigger fired — Pages 21:28:39-04:00 missing-paper-join wording is live",
+    "6_weekly_rollup": "open / founder",
+    "7_series_hold": "open / founder",
+    "8_named_horse": "open / founder",
+    "9_zero_edge_residual": "open / crew",
+    "10_proposed_01": "RUN-ONLY executed — see LEARNING_LANE_15M_OPERATOR_NOTE_PROPOSED_01.md"
+  }
+}

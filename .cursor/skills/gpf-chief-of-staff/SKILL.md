@@ -24,6 +24,8 @@ Then read that role’s skill under `.cursor/skills/gpf-<role>/SKILL.md` and do 
 
 Never assign two workers except `validator` after a just-finished publish, or when Founder names both `illustrator` and `hub-ui` for the same board.
 
+A Lab PROPOSED goes to Operator as **RUN-ONLY** (not park) when it is deterministic, adds no loop code, quarantines output to an Operator note, and carries a live falsifier — unless Operator names a specific objection. "Be careful" is not one. Do not park a well-falsified cheap test to look prudent.
+
 ## After a worker is done
 
 1. Read their `Handoff`.
