@@ -77,6 +77,9 @@ CLERICAL_WHITELIST = (
     # Mechanical half of the Critic: run the check suite, write the findings
     # artifact. The adversarial turn is soften-critic and stays judicial.
     "critic-invariants",
+    # Generated learning card. Separate from digest-figures so a SOURCE-only
+    # rewrite cannot clear a card owe (#171 lesson).
+    "learning-card",
 )
 JUDICIAL_NEVER = (
     "operator",
@@ -119,6 +122,10 @@ VALIDATOR_REPORT_REL = Path("docs") / "observability-hub" / "data" / "validator_
 CRITIC_FINDINGS_REL = (
     Path("golf-offshoot") / "docs" / "LEARNING_LANE_15M_CRITIC_FINDINGS.json"
 )
+LEARNING_CARD_REL = (
+    Path("golf-offshoot") / "docs" / "LEARNING_LANE_15M_LEARNING_CARD.md"
+)
+_CARD_STAMP_LINE = re.compile(r"^\*\*As-of:\*\*|^journal generated_at=", re.IGNORECASE)
 PNG_REL = (
     Path("docs")
     / "observability-hub"
@@ -234,6 +241,7 @@ def artifact_path(role: str, *, root: Path | None = None) -> Path:
         "digest-figures": DIGEST_REL,
         "validator": VALIDATOR_REPORT_REL,
         "critic-invariants": CRITIC_FINDINGS_REL,
+        "learning-card": LEARNING_CARD_REL,
         "operator": PARK_REL,
     }.get(role)
     if rel is None:
@@ -264,6 +272,7 @@ def owned_artifact_paths(role: str, *, root: Path | None = None) -> list[Path]:
         "digest-figures",
         "validator",
         "critic-invariants",
+        "learning-card",
         "operator",
     }:
         return [artifact_path(role, root=root)]
@@ -393,6 +402,18 @@ def _digest_token(path: Path) -> str | None:
     return hashlib.sha256("\n".join(kept).encode("utf-8")).hexdigest()
 
 
+def _card_token(path: Path) -> str | None:
+    """The learning card minus its as-of line. Same heartbeat guard as SOURCE."""
+    if not path.is_file():
+        return None
+    kept = [
+        line
+        for line in path.read_text(encoding="utf-8", errors="replace").splitlines()
+        if not _CARD_STAMP_LINE.search(line)
+    ]
+    return hashlib.sha256("\n".join(kept).encode("utf-8")).hexdigest()
+
+
 def _critic_token(path: Path) -> str | None:
     payload = _load_json(path)
     if payload is None:
@@ -451,6 +472,9 @@ CLERICAL_CONTRACTS: dict[str, ClericalContract] = {
     ),
     "critic-invariants": ClericalContract(
         _critic_token, "critic_findings_failing", "repo_events"
+    ),
+    "learning-card": ClericalContract(
+        _card_token, "detector_blind", "learning_card_inputs"
     ),
 }
 
@@ -529,6 +553,12 @@ def _default_do_digest_figures() -> Path:
     return write_digest()
 
 
+def _default_do_learning_card() -> Path:
+    from golf_offshoot.learning_lane_15m.learning_card import write_learning_card
+
+    return write_learning_card()
+
+
 def _default_do_critic_invariants() -> Path:
     from golf_offshoot.learning_lane_15m.critic import write_critic_findings
 
@@ -601,6 +631,7 @@ def serve_role(
         "digest-figures": _default_do_digest_figures,
         "validator": _default_do_validator,
         "critic-invariants": _default_do_critic_invariants,
+        "learning-card": _default_do_learning_card,
     }
     worker = do_work or workers[role]
     try:
@@ -733,6 +764,7 @@ def reconcile_owed_from_disk(*, root: Path | None = None) -> list[dict[str, Any]
         "digest-figures",
         "validator",
         "critic-invariants",
+        "learning-card",
         "digestor",
         "operator",
     )

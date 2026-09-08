@@ -237,6 +237,14 @@ def artifact_watch_files(roots: ResolvedRoots) -> list[Path]:
         board = None
     if board is not None and board.is_file():
         files.append(board)
+    try:
+        from golf_offshoot.learning_lane_15m.learning_card import card_path
+
+        card = card_path()
+    except Exception:
+        card = None
+    if card is not None and card.is_file():
+        files.append(card)
     # unique, stable
     seen: set[Path] = set()
     out: list[Path] = []

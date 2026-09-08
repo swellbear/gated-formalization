@@ -30,6 +30,10 @@ The runner may write `crew_tick`. It may not open a chat, ADMIT, invent, or push
 
 When the desk `Status=assigned`, a **separate** 15-minute Cursor Automation (`15m worker tick`, cron `7,22,37,52`) becomes that Active role, does the Job, sets `Status=done`, and hands to CoS. It does not assign the next worker. CoS assigns; this timer runs. SoT: [`golf-offshoot/docs/WORKER_AUTOMATION.md`](../../golf-offshoot/docs/WORKER_AUTOMATION.md).
 
+## The learning card is clerical, not a verdict
+
+The 15m hub panel **What is on trial** is generated from files (`learning-card` on `CLERICAL_WHITELIST`). It may quote a Lab note or an Operator ruling. It is not itself a verdict. Operator notes remain the verdict SoT. Empty state is honest: if no selection PROPOSED exists, the card says so and names the executing baseline. SoT: [`golf-offshoot/docs/LEARNING_LANE_15M_LEARNING_CARD.md`](../../golf-offshoot/docs/LEARNING_LANE_15M_LEARNING_CARD.md).
+
 ## Session start (every turn)
 
 1. Read `docs/AGENT_LEAVE_OFF.md`.

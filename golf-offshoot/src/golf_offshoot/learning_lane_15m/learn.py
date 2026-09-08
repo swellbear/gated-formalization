@@ -48,17 +48,19 @@ REL_PNG = Path("docs") / "observability-hub" / "data" / "charts" / "learning_lan
 #: Protocol order for the learning tick. Market events name the figures
 #: generator, not the human digestor. Human digestor is owed only when the
 #: caveats file itself needs a turn. Lab is not in the default list.
-ROLE_ORDER = ("digest-figures", "operator", "systems", "validator")
+ROLE_ORDER = ("digest-figures", "learning-card", "operator", "systems", "validator")
 ILLUSTRATOR_ROLE = "illustrator"
 DIGESTOR_ROLE = "digestor"
 LAB_ROLE = "lab"
 OPERATOR_ROLE = "operator"
 CRITIC_INVARIANTS_ROLE = "critic-invariants"
 SOFTEN_CRITIC_ROLE = "soften-critic"
+LEARNING_CARD_ROLE = "learning-card"
 
 #: Display order for the desk and the tick, protocol order first.
 _ROLE_RANK = (
     "digest-figures",
+    LEARNING_CARD_ROLE,
     DIGESTOR_ROLE,
     OPERATOR_ROLE,
     "systems",
@@ -78,6 +80,7 @@ EVENT_NEW_SETTLE = "new_settle"
 EVENT_NEW_FILL = "new_fill"
 EVENT_PENDING_CLEARED = "pending_cleared"
 EVENT_BOARD_STALE = "board_stale"
+EVENT_LEARNING_CARD_STALE = "learning_card_stale"
 
 from golf_offshoot.learning_lane_15m.triggers import (  # noqa: E402
     EVENT_ARTIFACT_UNREVIEWED,
@@ -154,6 +157,7 @@ NON_MARKET_KINDS = frozenset(
         EVENT_VALIDATOR_REPORT_FAILING,
         EVENT_PUBLISHED_FALSEHOOD,
         EVENT_DIGEST_CONTRADICTS_LEDGER,
+        EVENT_LEARNING_CARD_STALE,
     }
 )
 
@@ -788,6 +792,8 @@ def roles_owed_for(
     kind = str(kind or "").strip()
     if kind == EVENT_BOARD_STALE:
         return [ILLUSTRATOR_ROLE]
+    if kind == EVENT_LEARNING_CARD_STALE:
+        return [LEARNING_CARD_ROLE]
     if kind in CRITIC_TRIGGERS:
         roles = {CRITIC_INVARIANTS_ROLE, SOFTEN_CRITIC_ROLE}
         roles.update(r for r in also_owes if r)
@@ -931,6 +937,13 @@ def _blind_detector_event(detector: Any, exc: BaseException) -> dict[str, Any]:
             "a detector that cannot see is not a detector that saw nothing"
         ),
     }
+
+
+def _learning_card_input_events() -> list[dict[str, Any]]:
+    """Owe learning-card when its inputs moved. Raises if the registry is unreadable."""
+    from golf_offshoot.learning_lane_15m.learning_card import stale_events
+
+    return stale_events()
 
 
 def guarded_events(name: str, source: Callable[[], Any]) -> list[dict[str, Any]]:
@@ -1271,6 +1284,7 @@ def record_learning_tick(
     events = guarded_events("diff_scans", lambda: diff_scans(previous, scan))
     events.extend(guarded_events("exception_events", lambda: exception_events(previous, scan)))
     events.extend(guarded_events("repo_events", repo_events))
+    events.extend(guarded_events("learning_card_inputs", _learning_card_input_events))
     try:
         lag = board_lag(scan)
     except Exception as exc:  # noqa: BLE001 — a blind board is not a current one

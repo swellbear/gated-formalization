@@ -6,7 +6,7 @@ Thread lines are **one sentence, newest first, max 10**. Long findings belong in
 
 | Field | Value |
 |-------|--------|
-| Updated | 2026-09-08 15:19 ET |
+| Updated | 2026-09-08 15:35 ET |
 | Active role | lab |
 | Job | One PROPOSED selection rule on KXBTC15M paper only. Load burned classes. Do not revive R-SKIP-COINFLIP or retune its band. Do not score. Do not bind. |
 | Status | assigned |
@@ -56,6 +56,7 @@ Two suites, both on the tick.
 
 ## Thread
 
+- 2026-09-08 15:35 ET  chief-of-staff: 15m learning card is generated from files (empty: no selection rule on trial). Lab still assigned. next=lab
 - 2026-09-08 15:19 ET  chief-of-staff: Founder saved 15m worker tick (cron 7,22,37,52). Lab still assigned, not run. next=lab
 - 2026-09-08 15:12 ET  chief-of-staff: worker tick contract landed (`WORKER_AUTOMATION.md`); Lab still assigned, not run. next=lab
 - 2026-09-08 14:58 ET  chief-of-staff → lab: one PROPOSED selection rule after decide() is live; do not revive R-SKIP-COINFLIP. next=lab
@@ -65,6 +66,6 @@ Two suites, both on the tick.
 - 2026-09-08 14:05 ET  operator → chief-of-staff: CRITIC 02 admit pass filed — 3 overruled (keyword greens, δ-check, leftover owed / honesty-in-suite), rest sustained or in part; named the three functions; binding stays false; did not score. next=chief-of-staff
 - 2026-09-08 13:45 ET  systems → operator: Turn 2 landed. decide() is in the paper path; fee_adjust() tested against the RUN-ONLY column; leftover settle-reasons gone from roles_owed; fee fetch 429 at 13:42, hash left empty; bar bytes not touched. next=operator (CRITIC 02 admit pass, separate turn)
 - 2026-09-08 12:56 ET  soften-critic → operator: CRITIC 02 filed against the amended bytes (`2a39471c0dde3e8f`) — six upheld, one amended, seven added. Sharpest: the amendment rewrote the test and did not extend the ratchet, five of eight checks pass on typing alone, and X7 is still open because a live clock rides in the token via `honesty_stamp_is_fresh`'s detail. next=systems, then operator in a separate turn
-- 2026-09-08 12:50 ET  chief-of-staff: expansion SoT is `golf-offshoot/docs/LEARNING_LANE_EXPANSION.md` — lifting the HOLD opens a new lane, not a ticker on this one. HOLD stands. Bar bytes not touched. next=soften-critic
 *Older lines rolled off at the 10-line cap. Full history is in the git log for `docs/agents/DESK.md`.*
+
 

@@ -129,4 +129,11 @@ def _clock_pair(role: str, tmp_path):
         sidecar = tmp_path / "latest" / "board_fingerprint.json"
         sidecar.write_text(json.dumps({"drawn": "same-rows"}), encoding="utf-8")
         return png, "png-bytes-1", "png-bytes-2"
+    if role == "learning-card":
+        path = tmp_path / R.LEARNING_CARD_REL
+        return (
+            path,
+            "**As-of:** 11:00\nNo selection rule on trial.\ninput_fp: aaa\n",
+            "**As-of:** 11:30\nNo selection rule on trial.\ninput_fp: aaa\n",
+        )
     raise AssertionError(role)

@@ -60,6 +60,7 @@ def test_plan_serves_only_the_named_whitelist():
             {"role": "digest-figures"},
             {"role": "validator"},
             {"role": "critic-invariants"},
+            {"role": "learning-card"},
             {"role": "digestor"},
             {"role": "operator"},
             {"role": "lab"},
@@ -74,6 +75,7 @@ def test_plan_serves_only_the_named_whitelist():
         "digest-figures",
         "validator",
         "critic-invariants",
+        "learning-card",
     )
     assert "validator" not in JUDICIAL_NEVER
     assert "digestor" in JUDICIAL_NEVER
