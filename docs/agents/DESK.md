@@ -6,11 +6,11 @@ Thread lines are **one sentence, newest first, max 10**. Long findings belong in
 
 | Field | Value |
 |-------|--------|
-| Updated | 2026-09-08 06:00 ET |
+| Updated | 2026-09-08 06:12 ET |
 | Active role | chief-of-staff |
-| Job | Overnight digest landed. Publish the eight-hour-stale page. Publishing is not self-maintaining. |
+| Job | Fee caveat is on the digest. Autostart scripts still need to land and be registered locally. |
 | Status | working |
-| Handoff | Validator `--strict` OK on export `generated_at` 2026-09-08T05:52:39-04:00. Commit/push is the publish. |
+| Handoff | Founder must run `Register-15m-Learning-Hub-Task.ps1` in an elevated local PowerShell. An agent cannot elevate. |
 | Waiting on Founder | **N** |
 
 ## Ask Founder
@@ -34,6 +34,7 @@ The runner exports locally. It does **not** commit or push. The public page is *
 
 ## Thread
 
+- 2026-09-08 06:10 ET  digestor → chief-of-staff: recorded 100.00 → 93.86 / `betting_pnl` -6.14 now carry the known-fee omission caveat, citing the Operator note, with no corrected total. next=chief-of-staff
 - 2026-09-08 06:00 ET  validator → chief-of-staff: `validate_hub.py --strict` OK on export `generated_at` 2026-09-08T05:52:39-04:00. Publishing is still a manual commit/push. next=chief-of-staff
 - 2026-09-08 05:55 ET  CoS → systems: Digestor landed the overnight SOURCE digest; Operator recorded `072245` CLOSED / no backfill; publish the eight-hour-stale Pages snapshot. next=systems
 - 2026-09-08 05:55 ET  operator → chief-of-staff: folded digest §3g — `KXBTC15M-26SEP072245` does not exist, 22:25–22:50 `--once` outage, 56 locked books is not an unbroken run. next=chief-of-staff
@@ -42,4 +43,3 @@ The runner exports locally. It does **not** commit or push. The public page is *
 - 2026-09-07 23:15 ET  CoS: Digestor stayed on the whitelist; the as-of stamp was clearing SOURCE. Proof is now `LEARNING_LANE_15M_SOURCE_DIGEST.md` only. next=chief-of-staff
 - 2026-09-07 22:30 ET  CoS: `latest/RUNNER_ARMED` is written (gitignored). #168/`c6354cc` is on master. Whitelist stays illustrator, systems, digestor. Pages is still not self-maintaining. next=chief-of-staff
 - 2026-09-07 22:20 ET  CoS: arming the runner — PaperWatch invokes one pass every tick; human artifact-proof clears owed roles with `served_kind` kept; publish stays manual (Pages is not self-maintaining). next=chief-of-staff
-- 2026-09-07 22:05 ET  CoS: #166 is on master (`2fea8d8`). Serve-on-proof is now a real `serve_role` call site; kill switch is `latest/RUNNER_KILL` re-read each pass; PROPOSED 01 note records that every on-disk pnl is optimistic by the known fee. next=chief-of-staff

@@ -12,8 +12,14 @@ A rule that is not dated before its windows close cannot use those windows as a 
 2. `declared_at` is Eastern ISO-8601. It does not move. Restating the rule does not back-date it.
 3. A window is eligible for that rule only when its `close_time` is **strictly after** `declared_at`.
 4. Pre-declaration windows may be described as history. They are **in-sample for discovery, never OOS for that rule**.
-5. Execution (`execution=true`) is separate from declaration. Dating starts at `declared_at` even if the loop is still filling every window.
+5. Execution (`execution=true`) is separate from declaration. Dating starts at `declared_at` even if the loop is still filling every window. `execution=false` does **not** stall the OOS clock.
 6. This is not an ADMIT. A live paper rule is still `entry_edge` arithmetic, not a claim.
+
+## Replay is not a lived result
+
+`R-SKIP-COINFLIP` is declared with `execution=false`. Every window that closes after `2026-09-08T05:56:00-04:00` is already a clean out-of-sample test of that rule **by replay**: the books are being collected without the rule acting on them, so it can be scored counterfactually against data it demonstrably could not have influenced. The declaration timestamp is what makes the data clean, not the execution flag. Wiring `paper.py` only blocks **live** behavior.
+
+Write this down before anyone conflates them later: **a replayed result and a lived result are different evidence.** Replay assumes fills that live execution might not get. Skipping a bet changes nothing about the market and does change the fill sequence. Both are legitimate. They are not interchangeable.
 
 ## What the loop could not do until this file
 
