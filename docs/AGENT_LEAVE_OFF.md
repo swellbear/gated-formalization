@@ -5,9 +5,9 @@ Chat transcripts are not. A later Grok / Cursor cloud agent will not see a prior
 
 | Field | Value |
 |-------|--------|
-| Updated | 2026-09-08 09:13 EDT (Part A only: clerical trust-boundary move) |
+| Updated | 2026-09-08 10:52 EDT (Part 0 + Part 1: the loop runs current code, and four invariants say so) |
 | Interim operator | Cursor chat (Grok bot usage exhausted until **2026-09-13**) |
-| Repo SoT | **This fold is the Part A PR, not yet `master`.** Do not treat the live hub tree as published. |
+| Repo SoT | **PR [#176](https://github.com/swellbear/gated-formalization/pull/176) is OPEN, not merged.** `origin/master` is still `b063f56` (#175). Part A + Parts 0/1 live only on `cursor/part-a-clerical-trust-boundary`. |
 | Local Windows tree for this interim | `C:\Users\bearh\gated-formalization-master-hub` |
 | Do **not** treat as SoT | `C:\Users\bearh\gated-formalization` on `cursor/eia-window-job2` (stale + dirty) |
 | Active track | `learning_lane_15m` (KXBTC15M paper loop) + Phase 1 desktop hub |
@@ -46,7 +46,7 @@ Desktop hub (control surface):
 - Buttons: ingest / live / shadow / loop / refresh. Cash / arm / Kalshi-auth actions are refused.
 - Golf live/loop auto-applies **paper** advises only. 15m live/loop = public fetch → paper autobet → settle join.
 - ntfy: one ping on operator-triggered ingest/live/loop finish if `NTFY_TOPIC` is set.
-- Auto-reload: artifacts soft-refresh; git/code change re-execs the hub.
+- Auto-reload: artifacts soft-refresh; git/code change re-execs the hub. Watched code is `operator_surface/*.py`, `learning_lane_15m/*.py`, `__main__.py`, `audit/shadow_settle.py`. `git_tip` resolves branch SHAs through the worktree `commondir` — without that a linked worktree never sees a commit on its own branch.
 
 15-minute Kalshi learning lane:
 
@@ -146,8 +146,19 @@ Golf WC1 FAIL does **not** transfer into this lane, and nothing on this lane ret
 4. **Illustrator:** the wake owes a re-render when the PNG lags more than one window. Re-render from current files before a material publish. Never invent a chart. Do not put golf WC1 / Ill on this lane.
 5. **`lab` PROPOSED 01 is RUN-ONLY**, not parked. Hurdle lives only in `golf-offshoot/docs/LEARNING_LANE_15M_OPERATOR_NOTE_PROPOSED_01.md`. Not an ADMIT. Not a dashboard figure. Lab does not bring a second PROPOSED. Lab never self-admits. The clerical runner is armed by local `latest/RUNNER_ARMED` (gitignored). **Whitelist (trust-boundary move, not an append):** `illustrator`, `systems`, `digest-figures`, `validator`. Human `digestor` is now in `JUDICIAL_NEVER`. Do not add `operator`, `lab`, or `soften-critic`. Do not put the figures generator in the `digestor` slot. Publish stays **manual**.
 6. **`KXBTC15M-26SEP072245` does not exist.** 22:25–22:50 EDT `--once` argparse outage. Do not backfill. 56 locked lineage-A events is not an unbroken run. Digest §3g.
-7. **Evidence bar is drafted and not binding.** Soften Critic is hired. Do not score `R-SKIP-COINFLIP` (13 eligible closed + 1 open as of 09:13; n=40). Promotion has **not** fired.
-7b. **Part A landed.** `digest-figures` proves SOURCE. Human `digestor` is keyed on `LEARNING_LANE_15M_SOURCE_DIGEST_CAVEATS.md` only. `validator` is on the clerical whitelist with `validator_report.json` as proof. A figures-only refresh leaves `digestor` owed. Auto-publish is **not** armed. Parts B–F (Operator severity, Critic split, invariant ratchet, first Critic assignment, remaining list) have **not** started. The Critic still cannot be named owed.
+7. **Evidence bar is drafted and not binding.** Soften Critic is hired. Do not score `R-SKIP-COINFLIP` (**20 eligible closed + 1 open at 10:53**; n=40, so earliest honest n is ~15:56 EDT). Report the count only. Promotion has **not** fired.
+7b. **Part A landed and is now actually running.** `digest-figures` proves SOURCE. Human `digestor` is keyed on `LEARNING_LANE_15M_SOURCE_DIGEST_CAVEATS.md` only. `validator` is on the clerical whitelist with `validator_report.json` as proof. Proven in production, runner pass **10:46:45**: `served=[illustrator, systems, digest-figures, validator]`, `failed=[]`, with `operator` and `digestor` held for human. Auto-publish is **not** armed.
+
+7c. **Part 0 — why Part A sat inert for ninety minutes.** Two independent defects, both needed for silence:
+   - `read_git_tip` resolved refs only inside the **worktree** git dir. A linked worktree keeps branch refs in the common dir named by `commondir`, so every branch SHA read as empty and `git_tip` changed **only when the branch name changed**. A commit on the current branch looked like no change.
+   - `hub_code_files` watched `operator_surface/*.py` only. The entire `learning_lane_15m` package — which PaperWatch and the clerical runner execute **inside** the hub — was unwatched.
+   Both fixed in `operator_surface/reload.py`. The supervisor re-exec'd its own child; nothing was killed and no second hub was started. `process_matches_disk` is the standing check if this regresses.
+
+7d. **Part 1 — the invariant suite.** `learning_lane_15m/invariants.py`, artifact `latest/invariants.json`, printed on every `learn-15m`. Four checks: `digest_matches_ledger`, `process_matches_disk`, `watch_is_collecting`, `clerical_roles_clear`. It runs **after** the runner pass, so a digest the runner just regenerated is not reported stale. Adding a check is Founder-free; **removing or weakening one is not.**
+
+7e. **Also fixed:** `tests/test_learning_digest.py` called `write_digest()` with no root, so every full test run silently rewrote the **published** SOURCE digest. That is how the digest appeared to refresh at 10:40 before `digest-figures` had ever served. The generator now only touches the real spine through the runner.
+
+7f. **Not started — do not imply progress.** Part 2 (human `digestor` has **no trigger at all** now: `roles_owed_for` returns `ROLE_ORDER` for every event kind and `digestor` is not in it — once the leftover owed line clears, nothing will ever owe it again). Part 3 (honesty gate is still a hand-typed `**PASS**` string match). Part 4 (Operator over-fires and false-clears). Part 5 (the Critic still cannot be named owed by any event). Parts 6, 7, 8.
 8. **Soften Critic is hired.** Skill `.cursor/skills/gpf-soften-critic/SKILL.md`. Not on the clerical whitelist. Next owed after Parts B–D: a separate-session attack on the bar (Part E). Do not send it open-ended.
 8b. **Hub autostart scripts are on `master` (`b8b4d12`) and still not registered.** Task `GatedFormalization-15mLearningHub` does not exist. Founder, elevated local PowerShell, `Register-15m-Learning-Hub-Task.ps1`. An agent cannot elevate. Same exposure that cost `072245`.
 9. **Founder HOLD 2026-09-07 stands: no series other than `KXBTC15M` until this loop is honest.** Only Founder lifts it — not Operator, not CoS, not a later bot reading a tidy tick. Everything else parked (weekly honesty rollup, expanding the series, CFB websocket observe-only) is in `golf-offshoot/docs/LEARNING_LANE_15M_METHOD_PARK.md` with the explicit trigger that would reopen it.

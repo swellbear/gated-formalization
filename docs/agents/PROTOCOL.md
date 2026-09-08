@@ -104,6 +104,29 @@ A role also leaves `roles_owed` when the artifact it owns changes on disk, whoev
 
 **Publish is still manual.** The runner exports locally. It does not `git commit` or `git push`. The public page is **not** self-maintaining. That is the same defect that left Pages stale for six hours. A local export is not a publish. Systems still owns the standing tick step: material export → `--strict` → commit → push to `master`. Do not assume the public page moved because the runner ran.
 
+### Invariants (the ratchet)
+
+`golf-offshoot/src/golf_offshoot/learning_lane_15m/invariants.py`. Every flaw found by analysis becomes a permanent check here, so it cannot recur silently. A finding that does not produce a check is a finding that will be rediscovered by hand.
+
+The suite runs on every watch cycle **after** the clerical runner has had its pass, writes `golf-offshoot/data/learning_lane_15m/latest/invariants.json`, and prints its verdicts on `learn-15m`. A failing check names itself on the tick. **A failing invariant is never satisfied by prose** — it passes because a file says so, or it does not pass. A suite that cannot run is itself a failure, never a silent pass.
+
+Seeded with the four that were live and invisible on 2026-09-08:
+
+| Check | Fails when |
+|---|---|
+| `digest_matches_ledger` | the SOURCE digest headline `bankroll` / `betting_pnl` differ from the live ledger. Regenerate through `digest-figures`; never hand-edit the figures to clear it |
+| `process_matches_disk` | the running loop's `ROLE_ORDER` / `CLERICAL_WHITELIST` / `JUDICIAL_NEVER` differ from the code on disk, or the watch has stamped no runtime config at all. A stale process is an honesty defect, not a freshness one: roles silently stop self-serving while the desk looks normal |
+| `watch_is_collecting` | the watch claims `running` but its last cycle is older than three intervals. A re-exec that never comes back resets the counter and stops collection with no other symptom |
+| `clerical_roles_clear` | a **whitelisted** role has been owed longer than two ticks. A clerical role that cannot clear itself is either broken or misfiled as clerical. Judicial roles sitting owed are not arrears — that is what they are for |
+
+Adding a check is Founder-free. **Removing or weakening one is not.**
+
+### Auto-reload is load-bearing
+
+The hub re-execs its child when `git_tip` or a watched module's mtime moves (`operator_surface/reload.py`). Watched code is `operator_surface/*.py`, `learning_lane_15m/*.py`, `__main__.py`, `audit/shadow_settle.py`. The lane package is on that list because PaperWatch and the clerical runner run **inside** the hub process: a merge that only touches the lane must still re-exec.
+
+`git_tip` resolves branch SHAs through the worktree `commondir`. Without that, a linked worktree reads every branch SHA as empty, so a commit on the current branch looks like no change and nothing re-execs. `process_matches_disk` is the check that catches it if this regresses.
+
 ### Honesty gate before Lab invents
 
 CoS stamps these on the desk first. Any box failing ⇒ `digestor` + `operator` fix honesty and Lab stays idle.

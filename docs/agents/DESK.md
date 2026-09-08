@@ -6,11 +6,11 @@ Thread lines are **one sentence, newest first, max 10**. Long findings belong in
 
 | Field | Value |
 |-------|--------|
-| Updated | 2026-09-08 09:13 ET |
+| Updated | 2026-09-08 10:52 ET |
 | Active role | systems |
-| Job | Part A: separate digest-figures role + validator across the trust boundary. |
+| Job | Part 0 (get the loop onto current code) + Part 1 (invariant suite). |
 | Status | done |
-| Handoff | Part A only. Figures-only SOURCE refresh leaves human digestor owed. Validator is on the whitelist. Critic still cannot be named owed. |
+| Handoff | Part 0 and Part 1 only. `digest-figures` and `validator` now self-serve, proven in production at 10:46:45. Parts 2–8 not started. The Critic still cannot be named owed; human `digestor` still has no trigger. |
 | Waiting on Founder | **N** |
 
 ## Ask Founder
@@ -21,19 +21,30 @@ Thread lines are **one sentence, newest first, max 10**. Long findings belong in
 
 The runner exports locally. It does **not** commit or push. The public page is **not** self-maintaining. That is the same defect that left Pages stale for six hours tonight. A local export is not a publish. Systems still owns the manual tick step: material export → `--strict` → commit → push to `master`.
 
-## Honesty checklist (CoS re-derived 2026-09-08 09:13 ET — not inherited)
+## Honesty checklist (CoS re-derived 2026-09-08 10:52 ET — not inherited)
+
+This table is still **hand-typed prose matched on `**PASS**`** (`learn.py` `honesty_gate_from_desk`). Part 3 — deriving the derivable boxes from files — has **not** been done. Read every row as a claim with evidence attached, not as a machine verdict.
 
 | Box | State |
 |-----|-------|
-| Lineage story readable, dual lineage labeled not merged | **PASS** — lineage A is the live `paper/ledger.json` book (bankroll 90.1 / betting_pnl −9.9 at 09:13); lineage B remains the published `071445-45` `+1.67`. Digest caveats and the export both forbid summing. |
-| `KXBTC15M-26SEP071500-00` honestly joined or pending with a true reason | **PASS** — no paper book and no settle file on this tree. The rolling journal no longer holds its official row (forgotten, not resolved). Manifest still names it as a missing paper join, not `SETTLE_PENDING`. No pnl invented. |
-| No invented charts or pnl | **PASS** — generated digest copies ledger figures only; a window with no book still has no pnl. Fee-accurate totals are not on the hub. |
-| One hub process on `learning_lane_15m` | **PASS** — one hub tree, not one OS process. Live 09:13: supervisor PID 2940 (no `--no-browser`) parent of listener PID 11532 (`--no-browser`) on `127.0.0.1:8765`. Listener moved 21456 → 9568 → 14624 → 11532 under the same supervisor; documented git-change auto-reload. Not two independent hubs. Do not kill the listener. |
+| Lineage story readable, dual lineage labeled not merged | **PASS** — lineage A is the live `paper/ledger.json` book; lineage B remains the published `071445-45` `+1.67`. Digest caveats and the export both forbid summing. Figures re-read at 10:52, not carried forward. |
+| `KXBTC15M-26SEP071500-00` honestly joined or pending with a true reason | **PASS** — no paper book and no settle file on this tree. The rolling journal no longer holds its official row (forgotten, not resolved). Manifest names it a missing paper join, not `SETTLE_PENDING`. No pnl invented. |
+| No invented charts or pnl | **PASS** — generated digest copies ledger figures only; a window with no book still has no pnl. Fee-accurate totals are not on the hub. `digest_matches_ledger` now checks the headline against the book mechanically. |
+| One hub process on `learning_lane_15m` | **PASS** — one hub tree, not one OS process. Live 10:52: supervisor PID 2940 (no `--no-browser`, started 09-07 22:50:20) parent of listener PID 26484 (`--no-browser`, started 10:49:27) holding LISTEN on `127.0.0.1:8765`. Listener path today 21456 → 9568 → 14624 → 11532 → 26100 → 23348 → 26484, supervisor held throughout. Not two independent hubs. Do not kill either. |
 
-**Gate is open on this live restamp.** The 08:42 stamp is retired (its hub-box wording lacked `**PASS**` and the wake treated the box as failing). Golf idle stays **ON**. Evidence bar remains **not binding**.
+**Gate is open on this live restamp.** Golf idle stays **ON**. Evidence bar remains **not binding**.
+
+## Invariants (live, machine-checked)
+
+`learn-15m` prints them; `latest/invariants.json` is the artifact. At 10:51:39 all four PASS. `digest_matches_ledger` caught the real 08:51-vs-live drift at 10:37 and cleared only when `digest-figures` actually regenerated the file at 10:46:59 — no prose cleared it.
 
 ## Thread
 
+- 2026-09-08 10:52 ET  systems → chief-of-staff: Part 0 + Part 1 landed. Runner pass 10:46:45 served `illustrator, systems, digest-figures, validator` all auto; `operator` and `digestor` held for human. next=chief-of-staff
+- 2026-09-08 10:48 ET  systems → chief-of-staff: found and fixed a test that wrote the published SOURCE digest on every suite run (`write_digest()` with no root). The digest now only moves through `digest-figures`. next=chief-of-staff
+- 2026-09-08 10:40 ET  systems → chief-of-staff: invariant suite live — digest freshness, code-vs-process divergence, watch liveness, clerical arrears. Runs after the runner pass, writes `latest/invariants.json`, prints on the tick. next=chief-of-staff
+- 2026-09-08 10:33 ET  systems → chief-of-staff: auto-reload root cause — `read_git_tip` never resolved a branch SHA in a linked worktree, and `learning_lane_15m` was not watched at all, so #176's code sat inert. Both fixed; the supervisor re-exec'd its own child. next=chief-of-staff
+- 2026-09-08 10:28 ET  CoS: **#176 is still OPEN, not merged.** `origin/master` is `b063f56` (#175). Part A exists only on `cursor/part-a-clerical-trust-boundary`. next=systems
 - 2026-09-08 09:13 ET  systems → chief-of-staff: Part A landed — `digest-figures` proves SOURCE; human `digestor` keyed on caveats only; `validator` moved out of `JUDICIAL_NEVER` onto the whitelist. Parts B–F not started. next=chief-of-staff
 - 2026-09-08 08:52 ET  CoS: honesty gate re-derived live. Hub box is one tree (2940/9568), not the 19:58 "both --no-browser" claim. next=systems
 - 2026-09-08 08:51 ET  validator → systems: `--strict` OK; report sha256 matches the export bytes. next=systems

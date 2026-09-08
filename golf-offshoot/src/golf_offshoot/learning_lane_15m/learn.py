@@ -950,8 +950,86 @@ def record_learning_tick(
         "board": lag,
         "lab_gate": _lab_gate_block(gate, operator_residual_posted=operator_residual_posted),
     }
+    new_state["invariants"] = _run_invariants_block(new_state, watch_status)
     save_wake_state(new_state)
     return new_state
+
+
+def _run_invariants_block(
+    state: dict[str, Any],
+    watch_status: dict[str, Any],
+) -> dict[str, Any]:
+    """Run the invariant suite and keep a summary on the tick.
+
+    Full evidence goes to ``latest/invariants.json``. The wake carries the
+    verdicts so a failure is on the tick even if nobody opens the report. A
+    suite that cannot run is itself a failure — never a silent pass.
+    """
+    try:
+        from golf_offshoot.learning_lane_15m.invariants import (
+            run_invariants,
+            write_invariants,
+        )
+
+        report = run_invariants(state=state, watch_status=watch_status)
+        write_invariants(report)
+    except Exception as exc:  # noqa: BLE001 — the suite failing is a finding
+        return {
+            "passed": False,
+            "failing": ["invariant_suite"],
+            "checks": [
+                {
+                    "id": "invariant_suite",
+                    "title": "invariant suite runs",
+                    "state": "FAIL",
+                    "detail": f"suite raised {type(exc).__name__}: {exc}",
+                }
+            ],
+        }
+    return {
+        "ran_at": report.get("ran_at"),
+        "passed": report.get("passed"),
+        "failing": report.get("failing"),
+        "report": str(_invariants_report_path()),
+        "checks": [
+            {
+                "id": check.get("id"),
+                "title": check.get("title"),
+                "state": check.get("state"),
+                "detail": check.get("detail"),
+            }
+            for check in report.get("checks") or []
+        ],
+    }
+
+
+def _invariants_report_path() -> Path:
+    from golf_offshoot.learning_lane_15m.invariants import invariants_path
+
+    return invariants_path()
+
+
+def refresh_invariants(
+    *,
+    watch_status: dict[str, Any] | None = None,
+) -> dict[str, Any] | None:
+    """Re-run the suite against the state as it stands and store the verdicts.
+
+    Called after the clerical runner has had its pass, so a digest the runner
+    just regenerated is not reported stale. Names no role owed and marks none
+    served — this only re-reads.
+    """
+    state = load_wake_state()
+    if state is None:
+        return None
+    if watch_status is None:
+        from golf_offshoot.learning_lane_15m.watch import load_watch_status
+
+        watch_status = load_watch_status()
+    block = _run_invariants_block(state, watch_status)
+    state["invariants"] = block
+    save_wake_state(state)
+    return block
 
 
 def mark_roles_served(
@@ -1091,6 +1169,11 @@ def format_wake_tick(state: dict[str, Any] | None) -> str:
                 f"last event  {_event_label(recent[0])} — {recent[0].get('detail')} "
                 f"at {format_eastern(recent[0].get('at'), with_seconds=True)}"
             )
+
+    lines.append("")
+    from golf_offshoot.learning_lane_15m.invariants import format_invariants
+
+    lines.extend(format_invariants(state.get("invariants")))
 
     lines.append("")
     owed = state.get("roles_owed") or []

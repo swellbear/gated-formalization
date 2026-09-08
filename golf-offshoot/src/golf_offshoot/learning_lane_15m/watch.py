@@ -80,6 +80,7 @@ class PaperWatch:
         self.last_at = ""
         self.last_wake_error = ""
         self.last_runner_error = ""
+        self.last_invariants_error = ""
 
     @property
     def running(self) -> bool:
@@ -110,13 +111,38 @@ class PaperWatch:
             "last_at": self.last_at,
             "last_wake_error": self.last_wake_error,
             "last_runner_error": getattr(self, "last_runner_error", ""),
+            "last_invariants_error": getattr(self, "last_invariants_error", ""),
             "runner": "one clerical pass after each paper tick; survives this watch restart",
+            # What this long-lived process actually loaded. A fresh reader
+            # compares it to disk, which is the only way to see a loop that
+            # kept serving an old ROLE_ORDER after a merge.
+            "runtime": self._runtime_stamp(),
             "trading_armed": False,
             "note": (
                 "Repeating paper observation. Founder does not start cycles. "
                 "Official settle is Kalshi result only."
             ),
         }
+
+    def _invariants_tick(self) -> dict[str, Any] | None:
+        """Re-read the invariants once the runner has had its pass."""
+        from golf_offshoot.learning_lane_15m.learn import refresh_invariants
+
+        try:
+            block = refresh_invariants(watch_status=self.status())
+        except Exception as exc:  # noqa: BLE001 — never take the loop down
+            self.last_invariants_error = str(exc)
+            return None
+        self.last_invariants_error = ""
+        return block
+
+    def _runtime_stamp(self) -> dict[str, Any]:
+        try:
+            from golf_offshoot.learning_lane_15m.invariants import runtime_stamp
+
+            return runtime_stamp()
+        except Exception as exc:  # noqa: BLE001 — never take the loop down
+            return {"error": f"{type(exc).__name__}: {exc}"}
 
     def _persist(self) -> None:
         write_watch_status(self.status())
@@ -180,6 +206,11 @@ class PaperWatch:
             self._persist()
             payload["learning_wake"] = self._learning_tick()
             payload["learning_runner"] = self._runner_tick()
+            # The wake names roles, then the runner serves them. Invariants
+            # read after both, or every settle reports a stale digest that the
+            # same cycle already repaired — and a check that cries wolf on a
+            # schedule is a check nobody reads.
+            payload["learning_invariants"] = self._invariants_tick()
             self._persist()
             if self.on_cycle is not None:
                 self.on_cycle(payload)
