@@ -1,7 +1,7 @@
 # Operator — 15m method leftovers (park / CLOSED / RUN-ONLY)
 
 **Track:** `learning_lane_15m` · series `KXBTC15M` only
-**Updated:** 2026-09-08 05:55 EDT (recorded `072245` outage gap; digest overnight refresh)
+**Updated:** 2026-09-08 08:30 EDT (Soften Critic hired; evidence bar drafted, not binding)
 **State:** No dated ADMIT on this lane. No Soften. No edge claim. `lab_admits=false` · Trading **NOT ARMED**
 **Golf idle:** stays **ON**. This file does not clear it, does not touch golf θ, and does not rewrite `phase1_dryrun/OPERATOR_STATUS_STAMP.md`.
 
@@ -188,11 +188,22 @@ The 21:05 "park it, do not schedule" instruction is **superseded**.
 - Merge the two paper lineages, sum their bankrolls, or drop the published `paper_win` `+1.67`
 - Invent win / lose / pnl anywhere a file does not record one · use a DIY CFB average as an official settle
 - Retune golf θ · rewrite the golf Operator stamp · reopen WC3+ · clear golf idle
-- Hire a Soften Critic
+- Skip the Soften Critic on a proposed ADMIT or on binding the evidence bar
 - Lift the Founder HOLD (row 7) · expand past `KXBTC15M` · arm trading, keys, orders or cash
 - Put a fee-accurate figure on the hub or in `records[]` without a later ADMIT
 - Relist CLOSED-unreachable rows as open parks
 
+## CLOSED — founder trigger fired
+
+### 12. Soften Critic hire — **CLOSED / founder trigger fired**
+
+| | |
+|---|---|
+| **Closed** | 2026-09-08 08:30 EDT |
+| **What fired** | Founder GO hired the Soften Critic. Skill: `.cursor/skills/gpf-soften-critic/SKILL.md` |
+| **Honest state** | The role exists. It attacks proposed ADMITs and the evidence bar from a separate session. Operator records each objection. The hire is not an ADMIT and does not bind the bar |
+| **Not a claim** | Hiring the critic does not establish edge and does not promote this lane into the gated method |
+
 ## Handoff
 
-CoS: PROPOSED 01 is **RUN-ONLY**, not parked. Hurdle lives only in the Operator note. Three unreachable rows are CLOSED. Golf idle stays **ON**. Founder HOLD stands.
+CoS: evidence bar is a **draft, not binding**. Soften Critic is hired. Promotion has not fired (bar is not binding). Golf idle stays **ON**. Founder HOLD stands.

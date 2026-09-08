@@ -5,9 +5,9 @@ Chat transcripts are not. A later Grok / Cursor cloud agent will not see a prior
 
 | Field | Value |
 |-------|--------|
-| Updated | 2026-09-08 05:56 EDT (overnight digest + 072245 gap; publish in flight) |
+| Updated | 2026-09-08 08:32 EDT (evidence bar draft + Soften Critic hire; bar **not binding**) |
 | Interim operator | Cursor chat (Grok bot usage exhausted until **2026-09-13**) |
-| Repo SoT | **`origin/master` last published snapshot still `be04ebe` / `generated_at` `2026-09-07T21:28:39-04:00` until this publish lands.** Local export `generated_at` `2026-09-08T05:51:58-04:00` is not a publish. |
+| Repo SoT | **`origin/master` was `b8b4d12` (#173) before this fold.** Last *published* Pages snapshot is still older until a manual publish. A local export is not a publish. |
 | Local Windows tree for this interim | `C:\Users\bearh\gated-formalization-master-hub` |
 | Do **not** treat as SoT | `C:\Users\bearh\gated-formalization` on `cursor/eia-window-job2` (stale + dirty) |
 | Active track | `learning_lane_15m` (KXBTC15M paper loop) + Phase 1 desktop hub |
@@ -28,7 +28,7 @@ If it is not in git on GitHub, the next bot does not have it.
 
 **`origin/master` is the public SoT.** GitHub Pages serves that commit only. A local export, a desktop hub, or an unmerged PR is **not** published.
 
-`origin/master` is `c6354cc` (PR #168 merged 2026-09-07). That commit arms the clerical runner on every PaperWatch tick, clears owed roles from disk proof with permanent `served_kind`, and names the Pages publish gap. `#167` (`6f36844`) is the serve-on-proof executor + kill file. `#166` (`2fea8d8`) is RUN-ONLY, park classes, CLOSED unreachable rows, PROPOSED 01 note. GitHub Pages still serves the last *published* snapshot (`be04ebe`, `generated_at` `2026-09-07T21:28:39-04:00`) until someone manually publishes again.
+`origin/master` before this fold is `b8b4d12` (PR #173 — fee caveat + autostart scripts on tree, not registered). `#172` (`0786279`) is the overnight digest + `072245` gap + first dated rules. GitHub Pages is **not** self-maintaining. A local export is not a publish.
 
 **On `master` now:** learning wake, digest, park file with RUN-ONLY / classes, Lab PROPOSED 01 (RUN-ONLY, not admitted), export guard, serve-on-proof runner, kill file, continuous PaperWatch invoke, human artifact-proof.
 
@@ -145,8 +145,9 @@ Golf WC1 FAIL does **not** transfer into this lane, and nothing on this lane ret
 4. **Illustrator:** the wake owes a re-render when the PNG lags more than one window. Re-render from current files before a material publish. Never invent a chart. Do not put golf WC1 / Ill on this lane.
 5. **`lab` PROPOSED 01 is RUN-ONLY**, not parked. Hurdle lives only in `golf-offshoot/docs/LEARNING_LANE_15M_OPERATOR_NOTE_PROPOSED_01.md`. Not an ADMIT. Not a dashboard figure. Lab does not bring a second PROPOSED. Lab never self-admits. The clerical runner is armed by local `latest/RUNNER_ARMED` (gitignored). Whitelist is illustrator / systems / digestor only. Digestor on that list means the as-of stamp, not the SOURCE digest. Judicial work never joins it. Publish stays **manual**.
 6. **`KXBTC15M-26SEP072245` does not exist.** 22:25–22:50 EDT `--once` argparse outage. Do not backfill. 56 locked lineage-A events is not an unbroken run. Digest §3g.
-7. **Rule registry opened 2026-09-08 05:56 EDT.** `LEARNING_LANE_15M_RULES.json` dates `R-BASELINE-FILL-ALL` and `R-SKIP-COINFLIP`. Windows that closed before `declared_at` are not OOS. `R-SKIP-COINFLIP` is declared, `execution=false` until `paper.py` honors `rules.decide()`. Overnight data cannot be a clean test of a later-declared rule.
-8. **Hub autostart scripts must be on `master` and registered locally.** `Start-15m-Learning-Hub-Autostart.bat` and `Register-15m-Learning-Hub-Task.ps1` were missing from `0786279`. An agent cannot elevate. Founder running that script in an elevated PowerShell is the highest-value five minutes of the day — the same exposure that cost `072245`.
+7. **Evidence bar is drafted and not binding.** Files: `LEARNING_LANE_15M_EVIDENCE_BAR.md` / `.json`, `LEARNING_LANE_15M_BURNED_CLASSES.json`. It binds only after a Soften Critic attack in a **separate session**, Operator answers, and Founder acknowledgement. Do not score `R-SKIP-COINFLIP` before n=40 (~15:56 EDT earliest). `trials_to_date` starts at 0. Promotion into the gated method has **not** fired.
+8. **Soften Critic is hired.** Skill `.cursor/skills/gpf-soften-critic/SKILL.md`. Not on the clerical whitelist. Next owed after this fold: a separate-session attack on the bar.
+8b. **Hub autostart scripts are on `master` (`b8b4d12`) and still not registered.** Task `GatedFormalization-15mLearningHub` does not exist. Founder, elevated local PowerShell, `Register-15m-Learning-Hub-Task.ps1`. An agent cannot elevate. Same exposure that cost `072245`.
 9. **Founder HOLD 2026-09-07 stands: no series other than `KXBTC15M` until this loop is honest.** Only Founder lifts it — not Operator, not CoS, not a later bot reading a tidy tick. Everything else parked (weekly honesty rollup, expanding the series, CFB websocket observe-only) is in `golf-offshoot/docs/LEARNING_LANE_15M_METHOD_PARK.md` with the explicit trigger that would reopen it.
 10. **Golf idle stays ON** (WC3+ only on a new settled week, on a fresh Founder GO that names the next invent). Nothing on the 15m lane clears it, retunes golf θ, or rewrites `golf-offshoot/docs/phase1_dryrun/OPERATOR_STATUS_STAMP.md`.
 
@@ -162,7 +163,7 @@ Golf WC1 FAIL does **not** transfer into this lane, and nothing on this lane ret
 - Do not Soften the SOURCE CONFLICT away. Either one readable lineage story or an explicitly labeled dual lineage — a silent merge fails the honesty gate
 - Paper fills are not ADMITs (`lab_admits=false`). No edge established / banked edge / skill-met / productize on this lane
 - Do not expand past `KXBTC15M` while the Founder HOLD stands, and do not lift it on the crew's own authority
-- Soften Critic is **not hired** — do not invent the role
+- Soften Critic **is hired** — do not skip it, do not let it share the authoring session, do not put it on the clerical whitelist
 - Do not merge leftover oil-hunt / `cursor/eia-window-job2` dirt into this track
 
 ## Resume commands

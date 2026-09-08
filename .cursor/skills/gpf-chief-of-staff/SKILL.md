@@ -22,7 +22,7 @@ Then read that role’s skill under `.cursor/skills/gpf-<role>/SKILL.md` and do 
 
 **Claude Opus 5 for boards:** If the job is `illustrator`, or `hub-ui` work that places / styles / enlarges a chart, you MUST launch a Task subagent with `model: claude-opus-5-thinking-max`. Do not draw or restyle the 15m board yourself.
 
-Never assign two workers except `validator` after a just-finished publish, or when Founder names both `illustrator` and `hub-ui` for the same board.
+Never assign two workers except `validator` after a just-finished publish, when Founder names both `illustrator` and `hub-ui` for the same board, or when a proposed ADMIT / bar-bind needs `soften-critic` **in a later separate session**.
 
 A Lab PROPOSED goes to Operator as **RUN-ONLY** (not park) when it is deterministic, adds no loop code, quarantines output to an Operator note, and carries a live falsifier — unless Operator names a specific objection. "Be careful" is not one. Do not park a well-falsified cheap test to look prudent.
 
@@ -46,4 +46,4 @@ A Lab PROPOSED goes to Operator as **RUN-ONLY** (not park) when it is determinis
 - Invent win/lose or charts
 - Arm trading
 - Play Founder
-- Hire Soften Critic
+- Let Operator stamp a proposed ADMIT, or bind the 15m evidence bar, without a Soften Critic attack from a separate session

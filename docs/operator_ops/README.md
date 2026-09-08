@@ -1,6 +1,6 @@
 # Operator ops (Method Operator)
 
-Short ops index beside the Soften-fold habit. **Docs only.** Does **not** hire Soften Critic. Does **not** Soften usefulness / verdict. Does **not** auto-GO C2/C4. Does **not** elevate / skill-met / productize.
+Short ops index beside the Soften-fold habit. **Docs only.** Soften Critic is **hired** (2026-09-08). Does **not** Soften usefulness / verdict. Does **not** auto-GO C2/C4. Does **not** elevate / skill-met / productize.
 
 Standing habit (A–H): [`docs/OPERATOR_SOFTEN_FOLD_HABIT.md`](../OPERATOR_SOFTEN_FOLD_HABIT.md).
 

@@ -56,12 +56,14 @@ def test_plan_serves_only_the_named_whitelist():
             {"role": "digestor"},
             {"role": "operator"},
             {"role": "lab"},
+            {"role": "soften-critic"},
         ]
     }
     plan = plan_from_wake(state)
     assert plan["would_serve"] == list(CLERICAL_WHITELIST)
-    assert plan["held_for_human"] == ["operator", "lab"]
+    assert plan["held_for_human"] == ["operator", "lab", "soften-critic"]
     assert "operator" not in plan["would_serve"]
+    assert "soften-critic" not in plan["would_serve"]
 
 
 def test_dry_run_logs_and_does_not_mark_served(tmp_path):

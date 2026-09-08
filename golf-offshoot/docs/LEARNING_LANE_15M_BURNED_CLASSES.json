@@ -1,0 +1,185 @@
+{
+  "schema": 1,
+  "updated": "2026-09-08T08:30:00-04:00",
+  "source_prose": "logs/failure_mode_log.md",
+  "rule": "A proposer must load this file before naming a class. Re-naming a burned class is still that class. Prose is not enforceable.",
+  "fragile_not_null": [
+    {
+      "id": "H-SPOT-MOY-CONT",
+      "domain": "oil-track-b-spot",
+      "status": "FRAGILE",
+      "board": "Brent",
+      "note": "Scoped confirm survivor. Not a null. Not skill-met. Do not burn it to empty a queue. Do not promote it."
+    }
+  ],
+  "classes": [
+    {
+      "id": "FLIP",
+      "domain": "oil-track-b-spot",
+      "aliases": ["REV", "FLIP/REV", "C-SPOT-FLIP"],
+      "burned": true,
+      "note": "Oil Track B direction class. Seeded from failure_mode_log.md so it cannot be re-proposed under a 15m name."
+    },
+    {
+      "id": "INV",
+      "domain": "oil-track-b-spot",
+      "aliases": ["C-SPOT-INV"],
+      "burned": true,
+      "note": "Oil Track B direction class."
+    },
+    {
+      "id": "CROSS",
+      "domain": "oil-track-b-spot",
+      "aliases": ["C-SPOT-CROSS"],
+      "burned": true,
+      "note": "Oil Track B direction class."
+    },
+    {
+      "id": "LOGIT",
+      "domain": "oil-track-b-spot",
+      "aliases": ["C-SPOT-LOGIT"],
+      "burned": true,
+      "note": "Oil Track B direction class."
+    },
+    {
+      "id": "MAG",
+      "domain": "oil-track-b-spot",
+      "aliases": ["MAG-STRONG", "MAG-WEAK", "magnitude-gate", "C-SPOT-MAG"],
+      "burned": true,
+      "note": "Oil Track B. Lab batch 1 REJECT."
+    },
+    {
+      "id": "PERSIST",
+      "domain": "oil-track-b-spot",
+      "aliases": ["FRESH", "C-SPOT-PERSIST"],
+      "burned": true,
+      "note": "Oil Track B. Lab batch 1 REJECT."
+    },
+    {
+      "id": "BREAK",
+      "domain": "oil-track-b-spot",
+      "aliases": ["BREAK63", "BREAK42", "C-SPOT-BREAK"],
+      "burned": true,
+      "note": "Oil Track B. Lab batch 1 REJECT."
+    },
+    {
+      "id": "DXY",
+      "domain": "oil-track-b-spot",
+      "aliases": ["DXY-INV", "DXY-ALIGN", "C-SPOT-DXY"],
+      "burned": true,
+      "note": "Oil Track B. Lab batch 1 REJECT."
+    },
+    {
+      "id": "SHORT",
+      "domain": "oil-track-b-spot",
+      "aliases": ["SIGN5", "SIGN10", "C-SPOT-SHORT"],
+      "burned": true,
+      "note": "Oil Track B. Lab batch 2 REJECT."
+    },
+    {
+      "id": "VOTE",
+      "domain": "oil-track-b-spot",
+      "aliases": ["VOTE3", "VOTE-STRICT", "C-SPOT-VOTE"],
+      "burned": true,
+      "note": "Oil Track B. Lab batch 2 REJECT. VOTE-STRICT is a tautology (always continuation)."
+    },
+    {
+      "id": "RATES",
+      "domain": "oil-track-b-spot",
+      "aliases": ["DGS10-INV", "DGS10-ALIGN", "C-SPOT-RATES"],
+      "burned": true,
+      "note": "Oil Track B. Lab batch 2 REJECT. Strong discovery then confirm kill."
+    },
+    {
+      "id": "SPREAD",
+      "domain": "oil-track-b-spot",
+      "aliases": ["SPREAD-FADE", "SPREAD-CATCH", "C-SPOT-SPREAD"],
+      "burned": true,
+      "note": "Oil Track B. Lab batch 2 REJECT."
+    },
+    {
+      "id": "VIX",
+      "domain": "oil-track-b-spot",
+      "aliases": ["VIX-INV", "VIX-ALIGN", "C-SPOT-VIX"],
+      "burned": true,
+      "note": "Oil Track B. Lab batch 3. Disc-then-collapse."
+    },
+    {
+      "id": "THRESH",
+      "domain": "oil-track-b-spot",
+      "aliases": ["ABS05", "ABS10", "C-SPOT-THRESH", "direction-THRESH"],
+      "burned": true,
+      "note": "Oil Track B direction threshold. VOLTGT ABS05 is a different class and is also burned."
+    },
+    {
+      "id": "SKEW",
+      "domain": "oil-track-b-spot",
+      "aliases": ["UPFRAC", "UPFRAC-GATE", "C-SPOT-SKEW"],
+      "burned": true,
+      "note": "Oil Track B. Lab batch 3. One family."
+    },
+    {
+      "id": "SHRINK",
+      "domain": "oil-track-b-spot",
+      "aliases": ["SHRINK25", "SHRINK50", "C-SPOT-SHRINK"],
+      "burned": true,
+      "note": "Oil Track B. Lab batch 4. Shrunk momentum worsens RMSE vs 0-forecast."
+    },
+    {
+      "id": "VOLTGT",
+      "domain": "oil-track-b-spot",
+      "aliases": ["VOLTGT-MAG", "VOLTGT-ABS05", "C-SPOT-VOLTGT"],
+      "burned": true,
+      "note": "Oil Track B vol-target. Not the same horse as direction-THRESH ABS05; both are burned."
+    },
+    {
+      "id": "QUANT",
+      "domain": "oil-track-b-spot",
+      "aliases": ["C-SPOT-QUANT"],
+      "burned": true,
+      "note": "Oil Track B. Dead definition: hr ≡ continuation; noncont_calls=0. Dead definition ≠ near-miss."
+    },
+    {
+      "id": "SEAS-DIR",
+      "domain": "oil-track-b-spot",
+      "aliases": ["MOY-DIR", "C-SPOT-SEAS"],
+      "burned": true,
+      "note": "Oil Track B seasonal direction. MOY-CONT on Brent is a different horse and is FRAGILE, not this burn."
+    },
+    {
+      "id": "FEE-AS-SIGNAL",
+      "domain": "learning_lane_15m",
+      "aliases": ["fee-hurdle-as-edge", "fee-accurate-pnl-as-edge"],
+      "burned": true,
+      "note": "PROPOSED 01 priced an omitted cost. The hurdle is bookkeeping, not a selection rule and not evidence of method quality."
+    },
+    {
+      "id": "RETUNE-COINFLIP-BAND",
+      "domain": "learning_lane_15m",
+      "aliases": ["widen-045-055", "retune-skip-band-from-tape"],
+      "burned": true,
+      "note": "R-SKIP-COINFLIP band was declared before overnight marks. If the n=40 falsifier fires, park it. Do not retune the band."
+    },
+    {
+      "id": "SUM-LINEAGES",
+      "domain": "learning_lane_15m",
+      "aliases": ["net-lineage-a-b", "combine-books"],
+      "burned": true,
+      "note": "Lineage A and lineage B are two books. Adding them is a burned class of claim, not a new rule."
+    },
+    {
+      "id": "BACKFILL-GAP",
+      "domain": "learning_lane_15m",
+      "aliases": ["invent-072245", "impute-missing-window"],
+      "burned": true,
+      "note": "KXBTC15M-26SEP072245 does not exist. Do not backfill. Do not invent a fill to complete a denominator."
+    },
+    {
+      "id": "BASELINE-AS-EDGE",
+      "domain": "learning_lane_15m",
+      "aliases": ["fill-all-as-edge", "R-BASELINE-FILL-ALL-as-edge"],
+      "burned": true,
+      "note": "Naming the mechanical fill is not evidence of edge."
+    }
+  ]
+}

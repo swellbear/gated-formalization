@@ -30,6 +30,6 @@ If Lab is still waiting for Soften on a board the stamp already marks **REJECTED
 ## What this is not
 
 - Not a scoring change.
-- Not a Soften Critic hire.
+- Not a Soften Critic hire (the critic is already hired; this vocab page does not hire it).
 - Not a usefulness / verdict Soften.
 - Not an auto-GO of C2/C4.

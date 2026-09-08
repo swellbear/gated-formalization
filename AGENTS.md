@@ -4,6 +4,6 @@
 2. **[docs/agents/DESK.md](docs/agents/DESK.md)** — who is working and what they asked Founder  
 3. **[docs/agents/PROTOCOL.md](docs/agents/PROTOCOL.md)** — how roles talk  
 
-Start as **Chief of Staff** (`.cursor/skills/gpf-chief-of-staff/`). Assign one worker. Soften Critic is not hired.
+Start as **Chief of Staff** (`.cursor/skills/gpf-chief-of-staff/`). Assign one worker. Soften Critic is **hired** (`.cursor/skills/gpf-soften-critic/`) — separate session from the author of whatever it attacks.
 
 Chat is not memory. Push desk + leave-off with the work.

@@ -23,7 +23,7 @@ Read [PROTOCOL.md](../../../docs/agents/PROTOCOL.md) and [docs/OPERATOR_SOFTEN_F
 ## You must not
 
 - Let Lab self-admit
-- Hire Soften Critic
+- Stamp a proposed ADMIT, or treat the 15m evidence bar as binding, without a Soften Critic written attack from a **separate session**. Record each objection and answer it in the admit pass. Do not route around it.
 - Auto-GO C2/C4
 - Elevate / skill-met / productize / banked-edge
 - Soften a REJECTED idle-breach to “keep moving”
