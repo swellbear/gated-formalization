@@ -5,6 +5,7 @@ from __future__ import annotations
 import json
 
 from golf_offshoot.learning_lane_15m import critic, triggers
+from golf_offshoot.learning_lane_15m.paths import set_15m_root_override
 from golf_offshoot.learning_lane_15m.learn import (
     CRITIC_INVARIANTS_ROLE,
     LAB_ROLE,
@@ -296,6 +297,58 @@ def test_a_timestamp_only_rewrite_does_not_clear_the_critic(tmp_path):
         json.dumps({"ran_at": "11:30", "passed": True, "checks": checks}), encoding="utf-8"
     )
     assert _critic_token(path) != first
+
+
+def test_serve_role_does_not_clear_the_critic_on_a_heartbeat(tmp_path):
+    # Operator's admit pass caught this: _critic_token was wired only into the
+    # human artifact-proof path, and serve_role still compared raw fingerprints
+    # including ran_at, so the runner cleared the role every tick regardless.
+    from golf_offshoot.learning_lane_15m import runner as R
+
+    set_15m_root_override(tmp_path)
+    try:
+        (tmp_path / "latest").mkdir(parents=True, exist_ok=True)
+        (tmp_path / "latest" / "learning_wake.json").write_text(
+            json.dumps({"roles_owed": [{"role": "critic-invariants"}], "served": []}),
+            encoding="utf-8",
+        )
+        dest = tmp_path / R.CRITIC_FINDINGS_REL
+        dest.parent.mkdir(parents=True, exist_ok=True)
+        verdicts = {
+            "passed": False,
+            "checks": [{"id": "a", "state": "FAIL", "detail": "why"}],
+            "reviewed": [{"id": "bar", "sha256": "deadbeef"}],
+        }
+        dest.write_text(json.dumps({**verdicts, "ran_at": "11:00"}), encoding="utf-8")
+
+        def _restamp_only():
+            dest.write_text(json.dumps({**verdicts, "ran_at": "11:30"}), encoding="utf-8")
+
+        heartbeat = R.serve_role("critic-invariants", do_work=_restamp_only, root=tmp_path)
+        assert heartbeat["marked"] is False
+        assert "heartbeat" in heartbeat["reason"]
+
+        def _new_verdict():
+            moved = {**verdicts, "checks": [{"id": "a", "state": "PASS", "detail": "fixed"}]}
+            dest.write_text(json.dumps({**moved, "ran_at": "11:45"}), encoding="utf-8")
+
+        real = R.serve_role("critic-invariants", do_work=_new_verdict, root=tmp_path)
+        assert real["marked"] is True
+    finally:
+        set_15m_root_override(None)
+
+
+def test_reviewing_a_new_artifact_hash_is_real_work(tmp_path):
+    # Guard against the opposite failure: if only the checks counted, a run
+    # that reviewed a newly-changed bar would never clear and the role would
+    # deadlock once artifact_unreviewed stopped firing.
+    from golf_offshoot.learning_lane_15m.runner import critic_verdicts
+
+    base = {"passed": True, "checks": [{"id": "a", "state": "PASS", "detail": "ok"}]}
+    before = {**base, "reviewed": [{"sha256": "aaa"}]}
+    after = {**base, "reviewed": [{"sha256": "bbb"}]}
+
+    assert critic_verdicts(before) != critic_verdicts(after)
 
 
 def test_a_failing_findings_report_owes_operator(tmp_path):

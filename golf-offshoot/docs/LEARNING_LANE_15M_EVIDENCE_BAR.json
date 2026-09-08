@@ -3,8 +3,31 @@
   "lane": "learning_lane_15m",
   "series": "KXBTC15M",
   "drafted_at": "2026-09-08T08:30:00-04:00",
+  "amended_at": "2026-09-08T00:00:00-04:00",
+  "amended_by": "operator",
+  "amendment": "admit pass on Soften Critic CRITIC 01; see LEARNING_LANE_15M_EVIDENCE_BAR_OPERATOR_ANSWER_01.md",
   "binding": false,
-  "binding_rule": "Becomes binding only after (1) Soften Critic written attack in a session that did not draft the bar, with Operator answering each objection in the admit pass, and (2) Founder read-once acknowledgement.",
+  "binding_rule": "Becomes binding only after (1) a Soften Critic written attack from a session that did not draft the bar, with Operator sustaining or explicitly overruling every objection with a stated reason in a separate turn, attack and answers both linked from the bar; (2) critic-invariants passing on the bytes proposed to bind, or every failing check named on the bar's face with Operator's reason for binding anyway; and (3) Founder read-once acknowledgement.",
+  "binding_conditions": [
+    {
+      "id": "critic_answered",
+      "met": true,
+      "detail": "CRITIC 01 answered finding-by-finding in LEARNING_LANE_15M_EVIDENCE_BAR_OPERATOR_ANSWER_01.md, separate turn from the objections",
+      "critic_file": "golf-offshoot/docs/LEARNING_LANE_15M_EVIDENCE_BAR_CRITIC_01.md",
+      "answer_file": "golf-offshoot/docs/LEARNING_LANE_15M_EVIDENCE_BAR_OPERATOR_ANSWER_01.md"
+    },
+    {
+      "id": "critic_invariants_pass",
+      "met": false,
+      "detail": "fee_schedule_hash_recorded still FAILS: no sha256 pinned for the Kalshi fee schedule, so k=0.07 is used on habit. Standing blocker on binding.",
+      "note": "critic.py records the newline-normalised digest, not the raw byte hash. Compare the digest the checker actually read."
+    },
+    {
+      "id": "founder_read_once",
+      "met": false,
+      "detail": "not requested and not performed"
+    }
+  ],
   "admit": false,
   "edge_established": false,
   "lab_admits": false,
@@ -37,27 +60,98 @@
       "accepts_replay": false,
       "accepts_lived": true,
       "requires_held_out_confirmation": true,
-      "ops_beside_edge_stays_n": true
+      "ops_beside_edge_stays_n": true,
+      "currently_reachable": false,
+      "unreachable_because": "nothing in the running loop calls rules.decide(); paper.py fills every candidate window and never consults the registry, so no lived L2 can exist",
+      "precondition": "paper.py honours rules.decide() (owed to Systems)",
+      "execution_flip_rule": "execution=false -> true is legitimate only before the first L2-eligible window closes, recorded with a commit SHA and timestamp. Flipping after an L2 window has closed, or flipping to make a replayed look read as lived, is forbidden.",
+      "scope": "scoped to the regimes actually observed; does not generalise past them"
     }
   },
   "looks": {
-    "first_look_n": 40,
+    "first_look_n": 70,
+    "first_look_n_was": 40,
+    "first_look_n_changed_because": "at n=40, delta/MDE was 0.997 — the effect floor was the critical value relabeled",
     "first_look_set": "L1",
     "held_out_set": "L2",
-    "held_out_windows": "eligible windows 41 through 80 after declared_at",
-    "peeking": "forbidden — do not score before n=40; do not read L2 while scoring L1",
-    "continuous_scoring": false
+    "held_out_windows": "eligible windows 71 through 140 after declared_at",
+    "forward_only": true,
+    "held_out_regime": "strictly forward of L1, which is strictly forward of declared_at; rules.py window_is_oos enforces closed > declared, strict",
+    "forward_only_enforced_by": "the L1 score note must be committed before the 71st eligible window closes, recording that commit SHA and timestamp; the forward_only key alone is not the control",
+    "forward_only_keyword_is_not_clearance": true,
+    "calendar_days_min_l1_l2": 3,
+    "peeking": "forbidden — do not score before n=70; do not read L2 while scoring L1; prove it by commit order",
+    "continuous_scoring": false,
+    "l2_test": {
+      "n": 70,
+      "h0": "mean(d) <= delta",
+      "delta": "the same delta in force when L1 was scored; it does not move between looks",
+      "alpha": "alpha_k from the same schedule, using the counter value after L1's increment",
+      "clauses_binding": [1, 3, 4, 5],
+      "increments_trials_counter": true,
+      "requires_lived_execution": true
+    }
   },
   "distinguishable": {
     "contrast": "d_i = pnl_rule_fee_adj_i - pnl_baseline_fee_adj_i on the same n windows",
     "baseline_rule_id": "R-BASELINE-FILL-ALL",
     "skip_contributes": 0,
     "test": "one-sided paired t-test",
-    "h0": "mean(d) <= 0",
-    "alpha": "0.05 / (trials_to_date + 1)",
-    "trials_counter": "LEARNING_LANE_15M_RULES.json trials_to_date; increment after the look",
+    "h0": "mean(d) <= delta",
+    "h0_was": "mean(d) <= 0",
+    "h0_changed_because": "at a calibrated mark a fill is EV-zero pre-fee and the fee is strictly positive on every fill, so E[d] > 0 for any nonzero skip rate with no selection skill present; the drafted null was known false before any data were collected",
+    "alpha": "0.05 / (k * (k + 1)) where k = trials_to_date + 1",
+    "alpha_was": "0.05 / (trials_to_date + 1)",
+    "alpha_changed_because": "0.05/k weights are the harmonic series and diverge; FWER over the bar's own 14-look week is 15.2%, not 5%. 0.05/(k(k+1)) sums to 0.05 over unbounded looks, so FWER <= 0.05.",
+    "alpha_first_look": 0.025,
+    "alpha_fourteenth_look": 0.000238,
+    "fwer_14_looks_old_scheme": 0.152,
+    "fwer_14_looks_new_scheme": 0.046,
+    "trials_counter": "LEARNING_LANE_15M_RULES.json trials_to_date; increments on DECLARATION of a selection rule, not on score; L2 looks increment too",
+    "trials_counter_is_prose": true,
+    "trials_counter_owed": "no code reads or writes trials_to_date; a mechanical increment plus an invariant that fails when a score note exists without a matching increment is owed to Systems",
     "effect_floor_usd_per_window": 0.28,
-    "effect_floor_rationale": "pre-declaration paired-difference sd ~0.66 => SE_40 ~0.104; 2.69*SE ~0.28 for a 14-look week at family alpha 0.05; also larger than the measured per-fill fee",
+    "effect_floor_as_fraction_of_stake": 0.28,
+    "effect_floor_rationale": "delta is NOT derived from the critical value. Detection floor at n=70 with sd ~0.784 (the 95% upper confidence bound on the 0.66 point estimate from 56 calibration windows, since delta is linear in sd): 1.960 * SE_70 = 0.1837, so delta 0.28 sits at 1.52x the detection floor. At the drafted n=40 the ratio was 0.997 and the floor was the rejection threshold relabeled.",
+    "effect_floor_is_provisional": true,
+    "effect_floor_owed": "delta re-derived from what size of edge is worth acting on. No decision-relevance anchor exists today (paper-only, HOLD stands, no capital at risk), so 0.28 is carried provisionally with the coincidence labeled. This bar cannot bind on delta alone.",
+    "sd_point_estimate": 0.66,
+    "sd_upper_confidence_bound_95": 0.784,
+    "sd_used": 0.784,
+    "se_at_n": 0.0937,
+    "mde": 0.1837,
+    "delta_over_mde": 1.52,
+    "reject_if_mean_d_exceeds": 0.464,
+    "power": {
+      "disclosed_on_face": true,
+      "power_at_delta": "alpha, by construction — testing against a floor means power at the floor is the test level",
+      "effect_at_50pct_power": 0.464,
+      "effect_at_80pct_power": 0.543,
+      "drafted_design_power_at_delta": 0.50,
+      "drafted_design_effect_at_80pct_power": 0.37,
+      "honest_reading": "with per-window sd near 0.66-0.78 and an n reachable in under two days, this lane can only detect very large effects; that is a property of the tape and the $1 unit, not a defect the bar can amend away"
+    },
+    "matched_exposure": {
+      "arms_are_not_exposure_matched": true,
+      "detail": "the rule arm risks (1 - skip_rate) * n * $1 against the baseline's n * $1; the raw contrast measures volume as well as selection",
+      "control": "permutation null holding the number of skips fixed and reassigning which windows are skipped",
+      "draws": 10000,
+      "seed": 20260908,
+      "seed_preregistered_in": "golf-offshoot/docs/LEARNING_LANE_15M_EVIDENCE_BAR.md",
+      "requirement": "observed mean(d) must exceed the (1 - alpha_k) quantile of that null, in addition to clauses (1), (3) and (4)",
+      "why": "converts the question from 'did abstaining help?' to 'did this abstention rule beat abstaining at the same rate?'",
+      "also_report": [
+        "mean(d) per dollar at risk beside mean(d) per window",
+        "skip_rate * mean(fee | skip) — the mechanical fee-avoidance component of the contrast"
+      ]
+    },
+    "clauses": [
+      "(1) one-sided paired t-test, H0: mean(d) <= delta, reject only if p < alpha_k",
+      "(2) multiplicity: alpha_k = 0.05 / (k(k+1)), k = trials_to_date + 1, increment after the look",
+      "(3) effect floor delta = 0.28 * stake, absorbed into clause (1) as the null",
+      "(4) positive side: mean(pnl_rule_fee_adj) > 0 on those same n windows — binding, not conditional prose",
+      "(5) matched-exposure permutation control, fixed skip count, >=10,000 draws, seed 20260908"
+    ],
     "kill_if_not_distinguishable": "park the rule; do not retune the band"
   },
   "fee_hurdle": {
@@ -70,23 +164,81 @@
     "measured_fee_over_stake": 0.0392,
     "measured_on": "first 24 lineage-A books in the RUN-ONLY note",
     "positive_result_requires": "mean(pnl_rule_fee_adj) > 0 on the scored windows",
-    "display": "fee-accurate figures live in the score note / Operator note only; never hub, digest, manifest, records[]"
+    "display": "fee-accurate figures live in the score note / Operator note only; never hub, digest, manifest, records[]",
+    "schedule_url": "https://kalshi.com/docs/kalshi-fee-schedule.pdf",
+    "schedule_sha256": "",
+    "schedule_checked_at": "",
+    "schedule_hash_owed": "no sha256 pinned; k=0.07 is used on habit and a schedule change would be invisible. This is a standing blocker on binding condition 2.",
+    "fee_is_monotone_decreasing_in_mark": true,
+    "fee_monotonicity_detail": "with stake fixed at $1, C = stake/P and Kalshi's 0.07 * C * P * (1-P) reduces exactly to 0.07 * stake * (1 - P): $0.0455 at P=0.35, $0.035 at P=0.50, $0.014 at P=0.80",
+    "band_skip_does_not_avoid_fee": "a rule that skips the middle of the mark distribution skips the middle of the fee distribution and keeps the most fee-expensive fills; 'avoids the fee' is not available as a thesis for a coinflip-band skip on this book",
+    "spread_omitted": true,
+    "spread_detail": "paper_mark is public_mid_or_last(...) — the mid whenever both sides are quoted — and the payout is 1/mark, so the book buys at the mid and is paid at the mid while the RUN-ONLY note charges a taker fee. A taker pays the ask.",
+    "spread_cost_per_dollar_stake": "s / (p + s); about $0.010 per fill at p=0.50 on a one-cent book, about $0.020 on a two-cent book — the same order as the $0.039 mean fee",
+    "spread_cost_direction": "at a constant tick, s/(p+s) DECREASES in p ($0.0164 at p=0.30, $0.0099 at 0.50, $0.0055 at 0.90), so it runs the same direction as the fee, not the opposite; a band skip avoids neither cost's worst region",
+    "spread_is_not_adjusted_for": true,
+    "fee_adjusted_figure_remains_optimistic": "by an unmeasured amount of the same order as the fee; no fee-adjusted number produced under this bar may be presented as a full cost accounting",
+    "adjustment_is_hand_arithmetic": true,
+    "adjustment_owed": "a committed, tested fee_adjust(recorded_pnl, posted_yes, stake) in evidence_bar.py that the score note cites, so the adjustment is reproducible rather than retyped. Owed to Systems before this bar binds."
+  },
+  "preregistration": {
+    "requirement": "a selection rule's parameters count as pre-registered only with (a) the commit SHA and timestamp of the registry entry that first names them, and (b) a statement that this timestamp predates the earliest window whose mark informed the parameter, including marks published anywhere on this tree",
+    "note_field_is_not_proof": true,
+    "rules": [
+      {
+        "rule_id": "R-SKIP-COINFLIP",
+        "parameter": "band (0.45, 0.55)",
+        "verifiably_preregistered": false,
+        "first_named_in_commit": "0786279",
+        "first_named_at": "2026-09-08T05:56:51-04:00",
+        "declared_at": "2026-09-08T05:56:00-04:00",
+        "informing_marks_published_in_commit": "2fea8d8",
+        "informing_marks_published_at": "2026-09-07T21:49:37-04:00",
+        "gap": "8h 7m 14s",
+        "detail": "the RUN-ONLY note published mark and recorded pnl for 24 lineage-A windows 8h07m before the band was dated; 8 of those 24 rows fall strictly inside the band",
+        "consequence": "L1 cannot support an Established verdict even if it passes every clause. L1 may still be scored and may still support an Admissible dated record.",
+        "dies_if": "a commit, desk line, or dated artifact predating 2026-09-07T21:49:37-04:00 names the (0.45, 0.55) band; none was found in the history",
+        "is_not_a_score": true
+      }
+    ]
   },
   "calibration": {
     "used": "56 settled lineage-A books with close at or before 2026-09-08T05:56:00-04:00 (071545-45 through 080545-45, excluding missing 072245)",
     "fields_read": ["movements[0].model_win", "settlement_pnl"],
     "post_declaration_windows_read": false,
     "in_sample_mean_contrast_used_as_pass_fail": false,
-    "predeclaration_skip_rate_inside_045_055": "22/56"
+    "predeclaration_skip_rate_inside_045_055": "22/56",
+    "sd_is_one_number_from_one_stretch": "the 0.66 point estimate comes from 56 windows inside a single ~14-hour period; the bar uses its 95% upper confidence bound 0.784 wherever delta is compared to a detection floor. Recompute both when more tape exists."
   },
+  "unit_dependence": {
+    "delta_is_a_fraction_of_stake": true,
+    "paper_unit": 1.0,
+    "detail": "delta = $0.28 per window is meaningful only because PAPER_UNIT = 1.0 and stake_usd = 1.0; read delta as 0.28 * stake",
+    "owed": "an invariant that fails when PAPER_UNIT != 1.0 while this bar is binding (owed to Systems)"
+  },
+  "owed_to_systems": [
+    "invariant: L1 score note committed before the 71st eligible window closes",
+    "invariant: score note exists without a matching trials_to_date increment",
+    "invariant: PAPER_UNIT != 1.0 while the bar is binding",
+    "mechanical trials_to_date increment on declaration",
+    "fee_adjust(recorded_pnl, posted_yes, stake) in evidence_bar.py",
+    "paper.py honours rules.decide() (precondition of Established)",
+    "pin the Kalshi fee schedule sha256",
+    "serve_role must not mark critic-invariants served on a timestamp-only rewrite, and a passed:false findings report must leave something owed"
+  ],
   "hard_nos": [
     "do not treat this draft as binding",
-    "do not score R-SKIP-COINFLIP in the drafting session",
-    "do not peek L2 while scoring L1",
+    "do not set binding:true while critic-invariants reports passed:false on these bytes",
+    "do not score R-SKIP-COINFLIP before 70 eligible windows, and not in the drafting or amending session",
+    "do not peek L2 while scoring L1, and do not claim you did not without the commit order to show it",
+    "do not treat a note field's claim of blind parameter choice as pre-registration",
+    "do not present a fee-adjusted figure as a full cost accounting while the spread is unmeasured",
+    "do not claim a band skip avoids the fee-heavy region on this book",
     "do not put fee-accurate totals on the hub, digest, manifest, or records[]",
     "do not revive a burned class under a new name",
     "do not treat H-SPOT-MOY-CONT as a null",
     "do not treat a replayed survivor as lived establishment",
+    "do not flip execution to true after an L2-eligible window has closed",
     "do not merge lineage A and B",
     "do not backfill 072245"
   ]

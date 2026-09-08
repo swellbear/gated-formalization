@@ -294,25 +294,39 @@ def _proof_changed(
     return True
 
 
-def _critic_token(path: Path) -> str | None:
-    """Fingerprint the verdicts, not the clock.
+def critic_verdicts(payload: dict[str, Any] | None) -> str:
+    """The verdicts and what they cover, without the clock.
 
     ``run_critic_invariants`` stamps ``ran_at`` and a per-row ``checked_at`` on
     every pass, so the raw file hash moves whether or not a single verdict
-    moved — which would clear ``critic-invariants`` every tick on a heartbeat.
-    Systems already has ``material_publish_reasons`` for exactly this; this is
-    the same guard for the Critic's mechanical half.
+    moved — which clears ``critic-invariants`` every tick on a heartbeat.
+    Systems has ``material_publish_reasons`` for exactly this; this is the same
+    guard for the Critic's mechanical half.
+
+    The reviewed **hash set** is part of the token, not just the checks. A run
+    that reviews a newly-changed artifact has done real work even when every
+    verdict reads the same, and leaving that unserved would deadlock the role:
+    once the hash is reviewed, ``artifact_unreviewed`` stops firing and nothing
+    would ever owe it again.
     """
-    payload = _load_json(path)
-    if payload is None:
-        return file_fingerprint(path)
+    payload = payload or {}
     checks = [
         {"id": row.get("id"), "state": row.get("state"), "detail": row.get("detail")}
         for row in (payload.get("checks") or [])
     ]
+    reviewed = sorted(str((row or {}).get("sha256") or "") for row in payload.get("reviewed") or [])
     return json.dumps(
-        {"passed": payload.get("passed"), "checks": checks}, default=str, sort_keys=True
+        {"passed": payload.get("passed"), "checks": checks, "reviewed": reviewed},
+        default=str,
+        sort_keys=True,
     )
+
+
+def _critic_token(path: Path) -> str | None:
+    payload = _load_json(path)
+    if payload is None:
+        return file_fingerprint(path)
+    return critic_verdicts(payload)
 
 
 def role_proof_token(role: str, *, root: Path | None = None) -> str | None:
@@ -456,6 +470,7 @@ def serve_role(
     before = file_fingerprint(proof_path)
     before_work = file_fingerprint(work_path)
     before_manifest = _load_json(work_path) if role == "systems" else None
+    before_findings = _load_json(work_path) if role == "critic-invariants" else None
     result["before"] = before
     workers = {
         "illustrator": _default_do_illustrator,
@@ -490,6 +505,15 @@ def serve_role(
         result["material"] = reasons
         if not reasons:
             result["reason"] = "export was a heartbeat; role stays owed"
+            return result
+    if role == "critic-invariants":
+        # The proof hash moves on every run because the payload is stamped.
+        # Compare the verdicts and what they cover, not the clock.
+        if critic_verdicts(before_findings) == critic_verdicts(_load_json(work_path)):
+            result["reason"] = (
+                "findings run was a heartbeat; no verdict moved and no new "
+                "artifact was reviewed; role stays owed"
+            )
             return result
     note = f"artifact hash changed {before} -> {after}"
     mark_roles_served([role], by="runner", note=note, served_kind="auto")
