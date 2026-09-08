@@ -6,11 +6,11 @@ Thread lines are **one sentence, newest first, max 10**. Long findings belong in
 
 | Field | Value |
 |-------|--------|
-| Updated | 2026-09-07 22:30 ET |
+| Updated | 2026-09-07 23:15 ET |
 | Active role | chief-of-staff |
-| Job | Clerical runner armed. Publish remains a manual Systems tick. |
-| Status | idle |
-| Handoff | PaperWatch `_cycle` → `_runner_tick` → `run_once()` every ~90s. Restart the 15m hub if this process predates `c6354cc`. |
+| Job | Digestor as-of stamp must not clear the SOURCE digest obligation. |
+| Status | working |
+| Handoff | — |
 | Waiting on Founder | **N** |
 
 ## Ask Founder
@@ -34,6 +34,7 @@ The runner exports locally. It does **not** commit or push. The public page is *
 
 ## Thread
 
+- 2026-09-07 23:15 ET  CoS: Digestor stayed on the whitelist; the as-of stamp was clearing SOURCE. Proof is now `LEARNING_LANE_15M_SOURCE_DIGEST.md` only. next=chief-of-staff
 - 2026-09-07 22:30 ET  CoS: `latest/RUNNER_ARMED` is written (gitignored). #168/`c6354cc` is on master. Whitelist stays illustrator, systems, digestor. Pages is still not self-maintaining. next=chief-of-staff
 - 2026-09-07 22:20 ET  CoS: arming the runner — PaperWatch invokes one pass every tick; human artifact-proof clears owed roles with `served_kind` kept; publish stays manual (Pages is not self-maintaining). next=chief-of-staff
 - 2026-09-07 22:05 ET  CoS: #166 is on master (`2fea8d8`). Serve-on-proof is now a real `serve_role` call site; kill switch is `latest/RUNNER_KILL` re-read each pass; PROPOSED 01 note records that every on-disk pnl is optimistic by the known fee. next=chief-of-staff
@@ -43,4 +44,3 @@ The runner exports locally. It does **not** commit or push. The public page is *
 - 2026-09-07 21:24 ET  CoS: publishing the 15m correction through PR #165 — export generated_at 2026-09-07T21:23:38-04:00, 1500-00 is a missing paper join, board lag=1, `--strict` OK. next=chief-of-staff
 - 2026-09-07 21:14 ET  operator → chief-of-staff: PROPOSED 01 is PARKED as method-park row 10 — reopen on a public URL + retrieval date for k, or a Founder GO that names this test; not admitted. next=chief-of-staff
 - 2026-09-07 21:13 ET  operator START: parking Lab PROPOSED 01 as a PARK with a reopen trigger; not admitting, not scheduling, not running the fee arithmetic. next=operator
-- 2026-09-07 21:05 ET  CoS → operator: Lab PROPOSED 01 is on disk — park it with a reopen trigger, do not admit, do not schedule. next=operator

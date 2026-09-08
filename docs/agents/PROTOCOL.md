@@ -86,7 +86,7 @@ The wake path detects evidence and names which roles are owed. It never writes a
 
 ### Clerical runner (armed by `latest/RUNNER_ARMED`)
 
-`python -m golf_offshoot learn-15m-runner` may serve **only** the named whitelist: Illustrator re-render, Systems local export, Digestor digest. Everything else stays owed for a human. Judicial work (ADMIT, RUN-ONLY, closing a park, lifting the HOLD) is never on the list.
+`python -m golf_offshoot learn-15m-runner` may serve **only** the named whitelist: Illustrator re-render, Systems local export, Digestor **as-of stamp**. Everything else stays owed for a human. Judicial work (ADMIT, RUN-ONLY, closing a park, lifting the HOLD) is never on the list. Digestor stays on the whitelist so the clerical as-of file can be written; that write does **not** clear the SOURCE digest obligation. `roles_owed` drops `digestor` only when `golf-offshoot/docs/LEARNING_LANE_15M_SOURCE_DIGEST.md` itself changes.
 
 **Invoker:** PaperWatch. Each ~90s `_cycle` runs one clerical pass after the paper tick (`watch.py` `_runner_tick` → `run_once()`). The 15m hub starts PaperWatch; a hub or PaperWatch restart starts the runner again. The standalone CLI default is the same loop until the kill file — not a finite `--passes` that quietly runs out. `--once` / `--passes` are tests/debug only. Do not run the CLI loop and the hub at the same time.
 
@@ -94,7 +94,7 @@ The kill switch is the file `golf-offshoot/data/learning_lane_15m/latest/RUNNER_
 
 It goes live when `latest/RUNNER_ARMED` is present (gitignored). Serve-on-proof is real: `serve_role` runs the clerical job and calls `mark_roles_served(..., served_kind='auto')` only after the artifact **hash** changed. If the file did not move, the role stays owed and the failure is logged. A systems heartbeat (`generated_at` only) is not proof. Exit code 0 is not proof.
 
-A role also leaves `roles_owed` when the artifact it owns changes on disk, whoever changed it. That path records `served_kind='human'`. Auto and human stay distinguishable forever. Operator clears when the method park changes. Systems clears on a material manifest fingerprint, not a heartbeat rewrite. Validator and Lab own no artifact and stay owed until a human marks them.
+A role also leaves `roles_owed` when the artifact it owns changes on disk, whoever changed it. That path records `served_kind='human'`. Auto and human stay distinguishable forever. Operator clears when the method park changes. Systems clears on a material manifest fingerprint, not a heartbeat rewrite. Digestor clears when the SOURCE digest changes, not when `digest_asof.json` is rewritten. Validator and Lab own no artifact and stay owed until a human marks them.
 
 `execute=True` is a scratch-tree harness only. It requires `root=` pointing off the real repo and can never serve the live tree unarmed.
 

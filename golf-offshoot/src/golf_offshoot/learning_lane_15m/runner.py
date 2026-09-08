@@ -183,6 +183,7 @@ def _owed_roles(state: dict[str, Any] | None) -> list[str]:
 
 
 def artifact_path(role: str, *, root: Path | None = None) -> Path:
+    """What the clerical worker writes. Digestor's worker writes the as-of stamp."""
     if role == "digestor":
         return latest_dir_15m() / DIGEST_ASOF_NAME
     base = root or repo_root()
@@ -196,17 +197,24 @@ def artifact_path(role: str, *, root: Path | None = None) -> Path:
     return base / rel
 
 
+def proof_artifact_path(role: str, *, root: Path | None = None) -> Path:
+    """The file whose change clears the role.
+
+    Digestor stays on the clerical whitelist so the as-of stamp can be written.
+    The SOURCE digest is the honesty obligation. An as-of rewrite must not
+    clear it.
+    """
+    if role == "digestor":
+        return (root or repo_root()) / DIGEST_REL
+    return artifact_path(role, root=root)
+
+
 def owned_artifact_paths(role: str, *, root: Path | None = None) -> list[Path]:
     """Files whose change proves that role ran. Validator/lab own none."""
-    base = root or repo_root()
-    if role == "illustrator":
-        return [base / PNG_REL]
-    if role == "systems":
-        return [base / MANIFEST_REL]
     if role == "digestor":
-        return [latest_dir_15m() / DIGEST_ASOF_NAME, base / DIGEST_REL]
-    if role == "operator":
-        return [base / PARK_REL]
+        return [proof_artifact_path(role, root=root)]
+    if role in {"illustrator", "systems", "operator"}:
+        return [artifact_path(role, root=root)]
     return []
 
 
@@ -222,13 +230,26 @@ def _systems_token(path: Path) -> str | None:
     return json.dumps(token, default=str, sort_keys=True)
 
 
+def _proof_changed(role: str, prev: Any, token: str | None) -> bool:
+    """True when the proof token moved. Digestor's old asof|source store is migrated."""
+    if not prev or not token or prev == "missing":
+        return False
+    if prev == token:
+        return False
+    if role == "digestor" and isinstance(prev, str) and "|" in prev:
+        return prev.split("|", 1)[1] != token
+    return True
+
+
 def role_proof_token(role: str, *, root: Path | None = None) -> str | None:
     paths = owned_artifact_paths(role, root=root)
     if not paths:
         return None
     if role == "systems":
         return _systems_token(paths[0])
-    parts = [file_fingerprint(path) or "missing" for path in paths]
+    parts = [file_fingerprint(path) for path in paths]
+    if any(part is None for part in parts):
+        return None
     return "|".join(parts)
 
 
@@ -324,10 +345,13 @@ def serve_role(
     if role not in CLERICAL_WHITELIST:
         result["reason"] = "not on the clerical whitelist"
         return result
-    path = artifact_path(role, root=root)
-    result["artifact"] = str(path)
-    before = file_fingerprint(path)
-    before_manifest = _load_json(path) if role == "systems" else None
+    work_path = artifact_path(role, root=root)
+    proof_path = proof_artifact_path(role, root=root)
+    result["artifact"] = str(work_path)
+    result["proof"] = str(proof_path)
+    before = file_fingerprint(proof_path)
+    before_work = file_fingerprint(work_path)
+    before_manifest = _load_json(work_path) if role == "systems" else None
     result["before"] = before
     workers = {
         "illustrator": _default_do_illustrator,
@@ -340,16 +364,26 @@ def serve_role(
     except Exception as exc:  # noqa: BLE001 — failure stays owed
         result["reason"] = f"work raised {type(exc).__name__}: {exc}"
         return result
-    after = file_fingerprint(path)
+    after = file_fingerprint(proof_path)
+    after_work = file_fingerprint(work_path)
     result["after"] = after
-    if after is None:
+    if role == "digestor":
+        if after is None or after == before:
+            wrote = after_work is not None and after_work != before_work
+            result["reason"] = (
+                "as-of stamp wrote; SOURCE digest unchanged; role stays owed"
+                if wrote
+                else "SOURCE digest unchanged; role stays owed"
+            )
+            return result
+    elif after is None:
         result["reason"] = "artifact missing after work"
         return result
-    if after == before:
+    elif after == before:
         result["reason"] = "artifact hash unchanged; role stays owed"
         return result
     if role == "systems":
-        after_manifest = _load_json(path)
+        after_manifest = _load_json(work_path)
         reasons = material_publish_reasons(before_manifest, after_manifest or {})
         result["material"] = reasons
         if not reasons:
@@ -370,7 +404,10 @@ def reconcile_owed_from_disk(*, root: Path | None = None) -> list[dict[str, Any]
     First sight of a token is stored and does not clear. A later change marks
     ``served_kind=human`` unless the role is already gone (auto-served this pass).
     Roles with no owned artifact (validator, lab) stay owed.
+    Digestor proof is the SOURCE digest only. The as-of stamp never clears it.
     """
+    if has_15m_root_override() and root is None:
+        return []
     store_path = _fingerprint_store_path()
     previous: dict[str, Any] = {}
     if store_path.is_file():
@@ -385,14 +422,12 @@ def reconcile_owed_from_disk(*, root: Path | None = None) -> list[dict[str, Any]
     current: dict[str, str] = {}
     marked: list[dict[str, Any]] = []
     roles = ("illustrator", "systems", "digestor", "operator")
-    if has_15m_root_override() and root is None:
-        roles = ("digestor",)
     for role in roles:
         token = role_proof_token(role, root=root)
         if token:
             current[role] = token
         prev = previous.get(role)
-        if role in owed and prev and token and prev != token:
+        if role in owed and _proof_changed(role, prev, token):
             note = f"owned artifact changed on disk ({prev[:24]} -> {token[:24]})"
             mark_roles_served([role], by="artifact-proof", note=note, served_kind="human")
             marked.append({"role": role, "served_kind": "human", "note": note})
