@@ -79,6 +79,7 @@ class PaperWatch:
         self.last_error = ""
         self.last_at = ""
         self.last_wake_error = ""
+        self.last_runner_error = ""
 
     @property
     def running(self) -> bool:
@@ -108,6 +109,8 @@ class PaperWatch:
             "last_error": self.last_error,
             "last_at": self.last_at,
             "last_wake_error": self.last_wake_error,
+            "last_runner_error": getattr(self, "last_runner_error", ""),
+            "runner": "one clerical pass after each paper tick; survives this watch restart",
             "trading_armed": False,
             "note": (
                 "Repeating paper observation. Founder does not start cycles. "
@@ -130,6 +133,18 @@ class PaperWatch:
             return None
         self.last_wake_error = ""
         return state
+
+    def _runner_tick(self) -> dict[str, Any] | None:
+        """One clerical pass per paper tick. Survives a PaperWatch restart with this loop."""
+        from golf_offshoot.learning_lane_15m.runner import run_once
+
+        try:
+            entry = run_once()
+        except Exception as exc:
+            self.last_runner_error = str(exc)
+            return None
+        self.last_runner_error = ""
+        return entry
 
     def _run(self) -> None:
         self._cycle()
@@ -164,6 +179,8 @@ class PaperWatch:
             payload["report"] = format_loop_report(payload)
             self._persist()
             payload["learning_wake"] = self._learning_tick()
+            payload["learning_runner"] = self._runner_tick()
+            self._persist()
             if self.on_cycle is not None:
                 self.on_cycle(payload)
 

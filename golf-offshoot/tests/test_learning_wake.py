@@ -484,6 +484,8 @@ def test_watch_cycle_records_a_wake_and_never_serves_a_role(lane, monkeypatch):
 
     assert seen["learning_wake"]["updated_at"]
     assert watch.last_wake_error == ""
+    assert seen["learning_runner"]["mode"] == "dry-run"
+    assert seen["learning_runner"]["served"] == []
     # The loop names owed roles. It never marks one served.
     assert [row["role"] for row in load_wake_state()["roles_owed"]] == owed_before
 
