@@ -5,9 +5,9 @@ Chat transcripts are not. A later Grok / Cursor cloud agent will not see a prior
 
 | Field | Value |
 |-------|--------|
-| Updated | 2026-09-08 08:52 EDT (Part 0: live digest + validator report + publish in flight) |
+| Updated | 2026-09-08 09:13 EDT (Part A only: clerical trust-boundary move) |
 | Interim operator | Cursor chat (Grok bot usage exhausted until **2026-09-13**) |
-| Repo SoT | **This fold publishes.** Validator report must hash-match the committed `manifest.json`. |
+| Repo SoT | **This fold is the Part A PR, not yet `master`.** Do not treat the live hub tree as published. |
 | Local Windows tree for this interim | `C:\Users\bearh\gated-formalization-master-hub` |
 | Do **not** treat as SoT | `C:\Users\bearh\gated-formalization` on `cursor/eia-window-job2` (stale + dirty) |
 | Active track | `learning_lane_15m` (KXBTC15M paper loop) + Phase 1 desktop hub |
@@ -28,7 +28,7 @@ If it is not in git on GitHub, the next bot does not have it.
 
 **`origin/master` is the public SoT.** GitHub Pages serves that commit only. A local export, a desktop hub, or an unmerged PR is **not** published.
 
-`origin/master` before this fold is `b8b4d12` (PR #173 — fee caveat + autostart scripts on tree, not registered). `#172` (`0786279`) is the overnight digest + `072245` gap + first dated rules. GitHub Pages is **not** self-maintaining. A local export is not a publish.
+`origin/master` before this fold is `b063f56` (PR #175 — live digest refresh + hash-stamped validator report, validator still judicial). `#174` hired Soften Critic and drafted the bar. `#173` put autostart scripts on the tree, not registered. GitHub Pages is **not** self-maintaining. A local export is not a publish.
 
 **On `master` now:** learning wake, digest, park file with RUN-ONLY / classes, Lab PROPOSED 01 (RUN-ONLY, not admitted), export guard, serve-on-proof runner, kill file, continuous PaperWatch invoke, human artifact-proof.
 
@@ -133,21 +133,22 @@ Golf WC1 FAIL does **not** transfer into this lane, and nothing on this lane ret
 
 **Start every turn by running the tick.** `python -m golf_offshoot learn-15m` tells you which roles are owed and why. Serve them in the Protocol learning-tick order below; do not ping Founder to approve any of it.
 
-1. **The learning tick order is `lane-15m` → `digestor` → `operator` → `systems` → `validator`.** `hub-ui` runs only if the display is wrong or stale. **`illustrator` is owed by the wake** when the PNG lags live journal/settlements by more than one window (one window of trail is the open window and is allowed). **`lab` runs only after the honesty gate passes** — see item 5. A tick fires on a new official settle, a new paper fill, a pending window clearing, or a stale board.
+1. **The learning tick order is `lane-15m` → `digest-figures` → `digestor` (caveats only) → `operator` → `systems` → `validator`.** `hub-ui` runs only if the display is wrong or stale. **`illustrator` is owed by the wake** when the PNG lags live journal/settlements by more than one window (one window of trail is the open window and is allowed). **`lab` runs only after the honesty gate passes** — see item 5. A tick fires on a new official settle, a new paper fill, a pending window clearing, or a stale board.
    - `lane-15m` — confirm the watch is healthy, do not double-start hubs, stay `SETTLE_PENDING` where there is no Kalshi `result`
-   - `digestor` — refresh the SOURCE honesty digest from real files only
+   - `digest-figures` — generate the SOURCE figures half (`python -m golf_offshoot digest-15m`). Never write the caveats file
+   - `digestor` — human caveats turn only. A figures-only SOURCE refresh leaves this owed. A new caveat is the only write that clears it
    - `operator` — park/Soften only what the spine supports; put leave-off + desk on committed truth
    - `systems` — `manifest.json` merge; never drop the published `paper_win`, never invent a pending, never sum the lineages
-   - `validator` — `python docs/observability-hub/validate_hub.py --strict` on the bytes about to publish
+   - `validator` — `python docs/observability-hub/validate_hub.py --strict --write-report` on the bytes about to publish; the hash-stamped report is its proof
    - **publish** — if that export differs materially from `origin/master`, commit the manifest + current real PNG and push/merge so Pages updates. Do not publish a 90s heartbeat. Do not leave a corrected falsehood unpublished
 2. **Owed right now:** read it off `python -m golf_offshoot learn-15m` — do not trust this line, the loop keeps moving. The `KXBTC15M-26SEP071500-00` re-word is **done**: the published manifest reads `missing paper join — official result present`, and the fix lives in the export writer so the next export cannot undo it. Validator passed `--strict` at 19:53 after an export race was closed — pending is now re-derived from live settle files at export time, and the export refuses to write a manifest that calls a settled window pending.
 3. **Never collapse the two residual states.** A window pending for want of a Kalshi `result` is not the same as `KXBTC15M-26SEP071500-00`, which has an official `result=yes` and no book on this tree. Do not invent pnl for either. Do not merge lineage A and lineage B.
 4. **Illustrator:** the wake owes a re-render when the PNG lags more than one window. Re-render from current files before a material publish. Never invent a chart. Do not put golf WC1 / Ill on this lane.
-5. **`lab` PROPOSED 01 is RUN-ONLY**, not parked. Hurdle lives only in `golf-offshoot/docs/LEARNING_LANE_15M_OPERATOR_NOTE_PROPOSED_01.md`. Not an ADMIT. Not a dashboard figure. Lab does not bring a second PROPOSED. Lab never self-admits. The clerical runner is armed by local `latest/RUNNER_ARMED` (gitignored). Whitelist is illustrator / systems / digestor only. Digestor on that list means the as-of stamp, not the SOURCE digest. Judicial work never joins it. Publish stays **manual**.
+5. **`lab` PROPOSED 01 is RUN-ONLY**, not parked. Hurdle lives only in `golf-offshoot/docs/LEARNING_LANE_15M_OPERATOR_NOTE_PROPOSED_01.md`. Not an ADMIT. Not a dashboard figure. Lab does not bring a second PROPOSED. Lab never self-admits. The clerical runner is armed by local `latest/RUNNER_ARMED` (gitignored). **Whitelist (trust-boundary move, not an append):** `illustrator`, `systems`, `digest-figures`, `validator`. Human `digestor` is now in `JUDICIAL_NEVER`. Do not add `operator`, `lab`, or `soften-critic`. Do not put the figures generator in the `digestor` slot. Publish stays **manual**.
 6. **`KXBTC15M-26SEP072245` does not exist.** 22:25–22:50 EDT `--once` argparse outage. Do not backfill. 56 locked lineage-A events is not an unbroken run. Digest §3g.
-7. **Evidence bar is drafted and not binding.** Soften Critic is hired. Do not score `R-SKIP-COINFLIP` (11 eligible closed as of 08:42; n=40). Promotion has **not** fired.
-7b. **SOURCE digest is split.** Figures are generated (`python -m golf_offshoot digest-15m`). Standing caveats live in `LEARNING_LANE_15M_SOURCE_DIGEST_CAVEATS.md` and must not be rewritten by the generator. Validator has a hash-stamped report artifact (`docs/observability-hub/data/validator_report.json`). Validator is **not** on the clerical whitelist yet. Auto-publish is **not** armed.
-8. **Soften Critic is hired.** Skill `.cursor/skills/gpf-soften-critic/SKILL.md`. Not on the clerical whitelist. Next owed after this fold: a separate-session attack on the bar.
+7. **Evidence bar is drafted and not binding.** Soften Critic is hired. Do not score `R-SKIP-COINFLIP` (13 eligible closed + 1 open as of 09:13; n=40). Promotion has **not** fired.
+7b. **Part A landed.** `digest-figures` proves SOURCE. Human `digestor` is keyed on `LEARNING_LANE_15M_SOURCE_DIGEST_CAVEATS.md` only. `validator` is on the clerical whitelist with `validator_report.json` as proof. A figures-only refresh leaves `digestor` owed. Auto-publish is **not** armed. Parts B–F (Operator severity, Critic split, invariant ratchet, first Critic assignment, remaining list) have **not** started. The Critic still cannot be named owed.
+8. **Soften Critic is hired.** Skill `.cursor/skills/gpf-soften-critic/SKILL.md`. Not on the clerical whitelist. Next owed after Parts B–D: a separate-session attack on the bar (Part E). Do not send it open-ended.
 8b. **Hub autostart scripts are on `master` (`b8b4d12`) and still not registered.** Task `GatedFormalization-15mLearningHub` does not exist. Founder, elevated local PowerShell, `Register-15m-Learning-Hub-Task.ps1`. An agent cannot elevate. Same exposure that cost `072245`.
 9. **Founder HOLD 2026-09-07 stands: no series other than `KXBTC15M` until this loop is honest.** Only Founder lifts it — not Operator, not CoS, not a later bot reading a tidy tick. Everything else parked (weekly honesty rollup, expanding the series, CFB websocket observe-only) is in `golf-offshoot/docs/LEARNING_LANE_15M_METHOD_PARK.md` with the explicit trigger that would reopen it.
 10. **Golf idle stays ON** (WC3+ only on a new settled week, on a fresh Founder GO that names the next invent). Nothing on the 15m lane clears it, retunes golf θ, or rewrites `golf-offshoot/docs/phase1_dryrun/OPERATOR_STATUS_STAMP.md`.

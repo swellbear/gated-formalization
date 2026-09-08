@@ -348,12 +348,14 @@ def test_only_an_explicit_call_marks_a_role_served(lane):
     _settle_that_book(event)
     record_learning_tick()
 
-    served = mark_roles_served(["digestor"], by="digestor", note="posted the honesty digest")
+    served = mark_roles_served(
+        ["digest-figures"], by="digest-figures", note="posted generated figures"
+    )
 
     assert [row["role"] for row in served["roles_owed"]] == ["operator", "systems", "validator"]
-    assert served["served"][0]["role"] == "digestor"
+    assert served["served"][0]["role"] == "digest-figures"
     assert served["served"][0]["served_at"]
-    assert served["served"][0]["served_by"] == "digestor"
+    assert served["served"][0]["served_by"] == "digest-figures"
     # A later tick does not resurrect a served role and does not clear the rest.
     after = record_learning_tick()
     assert [row["role"] for row in after["roles_owed"]] == ["operator", "systems", "validator"]
@@ -500,7 +502,7 @@ def test_wake_lines_reach_the_hub_journal_and_the_tick(lane):
     tick = format_wake_tick(state)
 
     assert "learning wake" in line
-    assert "digestor" in line
+    assert "digest-figures" in line
     assert ORPHAN_TICKER in line
     assert "none is invented" in line
     assert "roles owed" in tick
@@ -531,7 +533,7 @@ def test_manifest_carries_wake_status_and_keeps_published_paper_win(lane, monkey
     fields = {row["label"]: row["value"] for row in lane15["last_run"]["fields"]}
     counts = {row["label"]: row["value"] for row in lane15["settle"]["counts"]}
     assert fields["Learning wake"] == "crew work owed"
-    assert "digestor" in fields["Crew roles owed"]
+    assert "digest-figures" in fields["Crew roles owed"]
     # Published lineage is not dropped and pending is not invented.
     assert fields["Settled paper fill"] == PUBLISHED_TICKER
     assert fields["paper settle_win pnl"] == "+1.67"

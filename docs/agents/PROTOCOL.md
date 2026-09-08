@@ -67,15 +67,16 @@ PaperWatch alone is **not learning.** Learning has not begun until settled outco
 ### Learning tick (new official settle, new paper fill, or a pending cleared)
 
 1. `lane-15m` — confirm watch healthy; do not double-start hubs; stay `SETTLE_PENDING` with no Kalshi `result`
-2. `digestor` — SOURCE honesty digest for this lane from real files only (settled vs pending, lineage A vs published Pages if still split)
-3. `operator` — Soften/park only what the spine supports; leave-off + desk to committed truth
-4. `systems` — `manifest.json` merge; never drop published `paper_win`, never invent pending
-5. `validator` — `python docs/observability-hub/validate_hub.py --strict` on the exact bytes about to publish
-6. **publish** (standing tick step, not a project) — Systems owns `observability-export` → re-render the current real PNG → `validate_hub.py --strict` on those bytes → commit → push to `master` so Pages updates. Publishing is part of the tick, not a later event. Skip only a 90-second PaperWatch heartbeat that did not fire this learning tick. Never restamp an export to look fresher. Never invent. Use `material_publish_reasons` when deciding a heartbeat is empty. Do **not** leave a corrected falsehood unpublished. The public page reads `master` only
-7. `hub-ui` — only if display is wrong or stale. No number invention
-8. `illustrator` — **owed by the wake** when the PNG lags live journal/settlements by more than one window (or there is no PNG and two or more windows of evidence exist). Claude Opus 5; real files only. One window of trail is allowed (the open window). Do not leave this optional. Re-render before a material publish so the board is not an hour behind the tables
-9. `lab` — only after Operator posts a clear residual **and** the honesty checklist passes. One **PROPOSED** cheap test, paper-only, then `operator`. Never self-admit
-10. CoS schedules the next tick. Do not ping Founder.
+2. `digest-figures` — generated figures half of the SOURCE digest from real files only (`python -m golf_offshoot digest-15m`). Does not write, rewrite, reorder, or drop the caveats file
+3. `digestor` — human caveats turn only. Owed when `LEARNING_LANE_15M_SOURCE_DIGEST_CAVEATS.md` needs a new caveat, not on every settle. A figures-only SOURCE refresh leaves this owed
+4. `operator` — Soften/park only what the spine supports; leave-off + desk to committed truth
+5. `systems` — `manifest.json` merge; never drop published `paper_win`, never invent pending
+6. `validator` — `python docs/observability-hub/validate_hub.py --strict --write-report` on the exact bytes about to publish; the hash-stamped report is its proof artifact
+7. **publish** (standing tick step, not a project) — Systems owns `observability-export` → re-render the current real PNG → `validate_hub.py --strict` on those bytes → commit → push to `master` so Pages updates. Publishing is part of the tick, not a later event. Skip only a 90-second PaperWatch heartbeat that did not fire this learning tick. Never restamp an export to look fresher. Never invent. Use `material_publish_reasons` when deciding a heartbeat is empty. Do **not** leave a corrected falsehood unpublished. The public page reads `master` only
+8. `hub-ui` — only if display is wrong or stale. No number invention
+9. `illustrator` — **owed by the wake** when the PNG lags live journal/settlements by more than one window (or there is no PNG and two or more windows of evidence exist). Claude Opus 5; real files only. One window of trail is allowed (the open window). Do not leave this optional. Re-render before a material publish so the board is not an hour behind the tables
+10. `lab` — only after Operator posts a clear residual **and** the honesty checklist passes. One **PROPOSED** cheap test, paper-only, then `operator`. Never self-admit
+11. CoS schedules the next tick. Do not ping Founder.
 
 Nothing new on a tick: CoS posts **one** desk heartbeat line (no new settle; watch still running) and stays quiet.
 
@@ -85,7 +86,11 @@ The wake path detects evidence and names which roles are owed. It never writes a
 
 ### Clerical runner (armed by `latest/RUNNER_ARMED`)
 
-`python -m golf_offshoot learn-15m-runner` may serve **only** the named whitelist: Illustrator re-render, Systems local export, Digestor **as-of stamp**. Everything else stays owed for a human. Judicial work (ADMIT, RUN-ONLY, closing a park, lifting the HOLD, Soften Critic attack) is never on the list. Do not add `operator`, `lab`, `validator`, or `soften-critic` to the whitelist. Digestor stays on the whitelist so the clerical as-of file can be written; that write does **not** clear the SOURCE digest obligation. `roles_owed` drops `digestor` only when `golf-offshoot/docs/LEARNING_LANE_15M_SOURCE_DIGEST.md` itself changes.
+`python -m golf_offshoot learn-15m-runner` may serve **only** the named whitelist: Illustrator re-render, Systems local export, generated digest figures, and the hash-stamped Validator report. Everything else stays owed for a human. Judicial work (ADMIT, RUN-ONLY, closing a park, lifting the HOLD, Soften Critic attack, human Digestor caveats) is never on the list.
+
+**This is a move across the trust boundary, not an append.** `validator` left `JUDICIAL_NEVER` and joined `CLERICAL_WHITELIST`. Human `digestor` left the whitelist and joined `JUDICIAL_NEVER`. Do not add `operator`, `lab`, or `soften-critic` to the whitelist. Do not put the figures generator in the `digestor` slot — that would write SOURCE every tick and clear `digestor` automatically, undoing PR #171 one layer up.
+
+`digest-figures` proves its own work against `LEARNING_LANE_15M_SOURCE_DIGEST.md`. Human `digestor` is keyed on `LEARNING_LANE_15M_SOURCE_DIGEST_CAVEATS.md` only. A figures-only SOURCE refresh leaves `digestor` owed. A new caveat is the only write that clears it. `validator` proves against `docs/observability-hub/data/validator_report.json` (SHA-256 of the exact bytes validated).
 
 **Invoker:** PaperWatch. Each ~90s `_cycle` runs one clerical pass after the paper tick (`watch.py` `_runner_tick` → `run_once()`). The 15m hub starts PaperWatch; a hub or PaperWatch restart starts the runner again. The standalone CLI default is the same loop until the kill file — not a finite `--passes` that quietly runs out. `--once` / `--passes` are tests/debug only. Do not run the CLI loop and the hub at the same time.
 
@@ -93,7 +98,7 @@ The kill switch is the file `golf-offshoot/data/learning_lane_15m/latest/RUNNER_
 
 It goes live when `latest/RUNNER_ARMED` is present (gitignored). Serve-on-proof is real: `serve_role` runs the clerical job and calls `mark_roles_served(..., served_kind='auto')` only after the artifact **hash** changed. If the file did not move, the role stays owed and the failure is logged. A systems heartbeat (`generated_at` only) is not proof. Exit code 0 is not proof.
 
-A role also leaves `roles_owed` when the artifact it owns changes on disk, whoever changed it. That path records `served_kind='human'`. Auto and human stay distinguishable forever. Operator clears when the method park changes. Systems clears on a material manifest fingerprint, not a heartbeat rewrite. Digestor clears when the SOURCE digest changes, not when `digest_asof.json` is rewritten. Validator and Lab own no artifact and stay owed until a human marks them.
+A role also leaves `roles_owed` when the artifact it owns changes on disk, whoever changed it. That path records `served_kind='human'`. Auto and human stay distinguishable forever. Operator clears when the method park changes. Systems clears on a material manifest fingerprint, not a heartbeat rewrite. `digest-figures` clears when SOURCE changes. Human `digestor` clears when the caveats file changes, not when SOURCE or `digest_asof.json` is rewritten. Validator clears when the hash-stamped report changes. Lab owns no artifact and stays owed until a human marks it.
 
 `execute=True` is a scratch-tree harness only. It requires `root=` pointing off the real repo and can never serve the live tree unarmed.
 

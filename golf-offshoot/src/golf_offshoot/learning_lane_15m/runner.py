@@ -1,8 +1,11 @@
 """Clerical learning runner. Dry-run until Founder arms it.
 
 Reads ``roles_owed`` and may serve only a named whitelist of clerical jobs:
-Illustrator re-render, Systems publish, Digestor digest-asof. Judicial work
-(ADMIT, RUN-ONLY, closing a park, lifting the HOLD) is never on the list.
+Illustrator re-render, Systems local export, generated digest figures, and
+the hash-stamped Validator report. Judicial work (ADMIT, RUN-ONLY, closing
+a park, lifting the HOLD, human Digestor caveats, Soften Critic) is never
+on the list. Validator's presence here is a move across the trust boundary
+from ``JUDICIAL_NEVER``, not an append.
 
 Default mode is dry-run: log what would be served, serve nothing.
 
@@ -61,11 +64,15 @@ KILL_NAME = "RUNNER_KILL"
 ARM_NAME = "RUNNER_ARMED"
 
 # Enumerate what this process may ever do. A blacklist is not acceptable.
-CLERICAL_WHITELIST = ("illustrator", "systems", "digestor")
+# Trust-boundary move (not an append): validator leaves JUDICIAL_NEVER and
+# joins the whitelist. Human digestor leaves the whitelist — its proof is
+# the caveats file, not SOURCE as a whole. A figures generator that wrote
+# SOURCE into the digestor slot would clear digestor every tick and undo #171.
+CLERICAL_WHITELIST = ("illustrator", "systems", "digest-figures", "validator")
 JUDICIAL_NEVER = (
     "operator",
     "lab",
-    "validator",
+    "digestor",
     "soften-critic",
     "admit",
     "run-only",
@@ -78,8 +85,10 @@ FP_STORE_NAME = "role_artifact_fps.json"
 
 DIGEST_ASOF_NAME = "digest_asof.json"
 DIGEST_REL = Path("golf-offshoot") / "docs" / "LEARNING_LANE_15M_SOURCE_DIGEST.md"
+CAVEATS_REL = Path("golf-offshoot") / "docs" / "LEARNING_LANE_15M_SOURCE_DIGEST_CAVEATS.md"
 PARK_REL = Path("golf-offshoot") / "docs" / "LEARNING_LANE_15M_METHOD_PARK.md"
 MANIFEST_REL = Path("docs") / "observability-hub" / "data" / "manifest.json"
+VALIDATOR_REPORT_REL = Path("docs") / "observability-hub" / "data" / "validator_report.json"
 PNG_REL = (
     Path("docs")
     / "observability-hub"
@@ -140,7 +149,7 @@ def write_arm_file() -> Path:
     path = arm_file_path()
     path.parent.mkdir(parents=True, exist_ok=True)
     path.write_text(
-        "armed 2026-09-07\nwhitelist=illustrator,systems,digestor\n"
+        "armed 2026-09-07\nwhitelist=illustrator,systems,digest-figures,validator\n"
         "publish=local-export-only\n",
         encoding="utf-8",
     )
@@ -184,13 +193,16 @@ def _owed_roles(state: dict[str, Any] | None) -> list[str]:
 
 
 def artifact_path(role: str, *, root: Path | None = None) -> Path:
-    """What the clerical worker writes. Digestor's worker writes the as-of stamp."""
+    """What the worker writes. Human digestor writes caveats; figures write SOURCE."""
     if role == "digestor":
+        # Leftover as-of stamp. It is not the proof and does not clear caveats.
         return latest_dir_15m() / DIGEST_ASOF_NAME
     base = root or repo_root()
     rel = {
         "illustrator": PNG_REL,
         "systems": MANIFEST_REL,
+        "digest-figures": DIGEST_REL,
+        "validator": VALIDATOR_REPORT_REL,
         "operator": PARK_REL,
     }.get(role)
     if rel is None:
@@ -201,20 +213,21 @@ def artifact_path(role: str, *, root: Path | None = None) -> Path:
 def proof_artifact_path(role: str, *, root: Path | None = None) -> Path:
     """The file whose change clears the role.
 
-    Digestor stays on the clerical whitelist so the as-of stamp can be written.
-    The SOURCE digest is the honesty obligation. An as-of rewrite must not
-    clear it.
+    Human digestor is keyed on the standing caveats file, not SOURCE as a
+    whole. A figures-only SOURCE rewrite must leave digestor owed. That is
+    the #171 mechanic one layer up: an as-of (or generated-figures) write
+    cannot clear a caveats obligation.
     """
     if role == "digestor":
-        return (root or repo_root()) / DIGEST_REL
+        return (root or repo_root()) / CAVEATS_REL
     return artifact_path(role, root=root)
 
 
 def owned_artifact_paths(role: str, *, root: Path | None = None) -> list[Path]:
-    """Files whose change proves that role ran. Validator/lab own none."""
+    """Files whose change proves that role ran. Lab owns none."""
     if role == "digestor":
         return [proof_artifact_path(role, root=root)]
-    if role in {"illustrator", "systems", "operator"}:
+    if role in {"illustrator", "systems", "digest-figures", "validator", "operator"}:
         return [artifact_path(role, root=root)]
     return []
 
@@ -231,14 +244,34 @@ def _systems_token(path: Path) -> str | None:
     return json.dumps(token, default=str, sort_keys=True)
 
 
-def _proof_changed(role: str, prev: Any, token: str | None) -> bool:
-    """True when the proof token moved. Digestor's old asof|source store is migrated."""
+def _legacy_digestor_source_store(prev: Any, *, root: Path | None = None) -> bool:
+    """True when prev is the old SOURCE (or asof|SOURCE) store from #171.
+
+    After the trust-boundary move, digestor proof is the caveats file. A leftover
+    SOURCE fingerprint must not look like a caveats write and false-clear.
+    """
+    if not prev or not isinstance(prev, str):
+        return False
+    source_fp = file_fingerprint((root or repo_root()) / DIGEST_REL)
+    if source_fp and (prev == source_fp or prev.endswith("|" + source_fp)):
+        return True
+    return "|" in prev
+
+
+def _proof_changed(
+    role: str,
+    prev: Any,
+    token: str | None,
+    *,
+    root: Path | None = None,
+) -> bool:
+    """True when the proof token moved. Leftover SOURCE stores never clear digestor."""
     if not prev or not token or prev == "missing":
         return False
     if prev == token:
         return False
-    if role == "digestor" and isinstance(prev, str) and "|" in prev:
-        return prev.split("|", 1)[1] != token
+    if role == "digestor" and _legacy_digestor_source_store(prev, root=root):
+        return False
     return True
 
 
@@ -309,7 +342,29 @@ def _default_do_systems() -> dict[str, str]:
     return write_observability_exports()
 
 
+def _default_do_digest_figures() -> Path:
+    from golf_offshoot.learning_lane_15m.digest import write_digest
+
+    return write_digest()
+
+
+def _default_do_validator() -> Path:
+    import subprocess
+    import sys
+
+    dest = artifact_path("validator")
+    manifest = repo_root() / MANIFEST_REL
+    script = repo_root() / "docs" / "observability-hub" / "validate_hub.py"
+    dest.parent.mkdir(parents=True, exist_ok=True)
+    subprocess.run(
+        [sys.executable, str(script), str(manifest), "--write-report", str(dest)],
+        check=False,
+    )
+    return dest
+
+
 def _default_do_digestor() -> Path:
+    """Leftover as-of writer. Not on the whitelist; kept so hooks stay importable."""
     path = artifact_path("digestor")
     path.parent.mkdir(parents=True, exist_ok=True)
     path.write_text(json.dumps(_digest_asof_payload(), indent=2) + "\n", encoding="utf-8")
@@ -357,7 +412,8 @@ def serve_role(
     workers = {
         "illustrator": _default_do_illustrator,
         "systems": _default_do_systems,
-        "digestor": _default_do_digestor,
+        "digest-figures": _default_do_digest_figures,
+        "validator": _default_do_validator,
     }
     worker = do_work or workers[role]
     try:
@@ -368,19 +424,15 @@ def serve_role(
     after = file_fingerprint(proof_path)
     after_work = file_fingerprint(work_path)
     result["after"] = after
-    if role == "digestor":
-        if after is None or after == before:
-            wrote = after_work is not None and after_work != before_work
-            result["reason"] = (
-                "as-of stamp wrote; SOURCE digest unchanged; role stays owed"
-                if wrote
-                else "SOURCE digest unchanged; role stays owed"
-            )
-            return result
-    elif after is None:
-        result["reason"] = "artifact missing after work"
+    if after is None:
+        wrote = after_work is not None and after_work != before_work
+        result["reason"] = (
+            "worker wrote a non-proof file; role stays owed"
+            if wrote
+            else "artifact missing after work"
+        )
         return result
-    elif after == before:
+    if after == before:
         result["reason"] = "artifact hash unchanged; role stays owed"
         return result
     if role == "systems":
@@ -404,8 +456,9 @@ def reconcile_owed_from_disk(*, root: Path | None = None) -> list[dict[str, Any]
 
     First sight of a token is stored and does not clear. A later change marks
     ``served_kind=human`` unless the role is already gone (auto-served this pass).
-    Roles with no owned artifact (validator, lab) stay owed.
-    Digestor proof is the SOURCE digest only. The as-of stamp never clears it.
+    Roles with no owned artifact (lab) stay owed.
+    Human digestor proof is the caveats file only. A SOURCE / figures write
+    never clears it. Validator proof is the hash-stamped report.
     """
     if has_15m_root_override() and root is None:
         return []
@@ -422,13 +475,20 @@ def reconcile_owed_from_disk(*, root: Path | None = None) -> list[dict[str, Any]
     }
     current: dict[str, str] = {}
     marked: list[dict[str, Any]] = []
-    roles = ("illustrator", "systems", "digestor", "operator")
+    roles = (
+        "illustrator",
+        "systems",
+        "digest-figures",
+        "validator",
+        "digestor",
+        "operator",
+    )
     for role in roles:
         token = role_proof_token(role, root=root)
         if token:
             current[role] = token
         prev = previous.get(role)
-        if role in owed and _proof_changed(role, prev, token):
+        if role in owed and _proof_changed(role, prev, token, root=root):
             note = f"owned artifact changed on disk ({prev[:24]} -> {token[:24]})"
             mark_roles_served([role], by="artifact-proof", note=note, served_kind="human")
             marked.append({"role": role, "served_kind": "human", "note": note})

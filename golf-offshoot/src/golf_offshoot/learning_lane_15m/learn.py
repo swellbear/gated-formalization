@@ -45,11 +45,14 @@ REL_MANIFEST = Path("docs") / "observability-hub" / "data" / "manifest.json"
 REL_DESK = Path("docs") / "agents" / "DESK.md"
 REL_PNG = Path("docs") / "observability-hub" / "data" / "charts" / "learning_lane_15m" / "paper_window_strip.png"
 
-#: Protocol order for the learning tick. Lab is not in it by default.
-ROLE_ORDER = ("digestor", "operator", "systems", "validator")
+#: Protocol order for the learning tick. Market events name the figures
+#: generator, not the human digestor. Human digestor is owed only when the
+#: caveats file itself needs a turn. Lab is not in the default list.
+ROLE_ORDER = ("digest-figures", "operator", "systems", "validator")
 ILLUSTRATOR_ROLE = "illustrator"
+DIGESTOR_ROLE = "digestor"
 LAB_ROLE = "lab"
-_ROLE_RANK = ROLE_ORDER + (ILLUSTRATOR_ROLE, LAB_ROLE)
+_ROLE_RANK = ROLE_ORDER + (ILLUSTRATOR_ROLE, DIGESTOR_ROLE, LAB_ROLE)
 
 EVENT_NEW_SETTLE = "new_settle"
 EVENT_NEW_FILL = "new_fill"
@@ -1155,7 +1158,7 @@ def format_wake_tick(state: dict[str, Any] | None) -> str:
             "thread line, and never invents a win, a lose or a pnl.",
             "A role clears its own line only after it really ran:",
             '  python -c "from golf_offshoot.learning_lane_15m.learn import '
-            "mark_roles_served; mark_roles_served(['digestor'], by='digestor', "
+            "mark_roles_served; mark_roles_served(['digest-figures'], by='digest-figures', "
             "note='posted the SOURCE honesty digest')\"",
         ]
     )
