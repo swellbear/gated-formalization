@@ -171,6 +171,7 @@ def test_the_suite_writes_a_machine_readable_report(tmp_path, monkeypatch):
             "process_matches_disk",
             "watch_is_collecting",
             "clerical_roles_clear",
+            "l1_committed_before_l2",
         ]
         # No digest on a scratch tree, so the suite must not report all-clear.
         assert on_disk["passed"] is False

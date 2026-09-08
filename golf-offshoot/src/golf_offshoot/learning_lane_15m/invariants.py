@@ -433,6 +433,61 @@ def check_clerical_roles_clear(
 # --------------------------------------------------------------------- runner
 
 
+def invariant_ids() -> list[str]:
+    """The live check ids. The holdout control names one of these; a missing
+    name is a missing control, not a green light on an adjective."""
+    return [
+        "digest_matches_ledger",
+        "process_matches_disk",
+        "watch_is_collecting",
+        "clerical_roles_clear",
+        "l1_committed_before_l2",
+    ]
+
+
+def check_l1_committed_before_l2(*, root: Path | None = None) -> dict[str, Any]:
+    """The L1 score note must carry a commit SHA and timestamp, and predates L2.
+
+    No score note yet is not clearance — it is an unexercised control. The
+    check passes only when every L1 scorecard records both fields, or when no
+    L1 scorecard exists *and* the mechanism that would write them exists.
+    ``forward_only: true`` is not consulted.
+    """
+    from golf_offshoot.learning_lane_15m.rules import scorecard_paths
+
+    cards = []
+    for path in scorecard_paths(root=root):
+        try:
+            payload = json.loads(path.read_text(encoding="utf-8"))
+        except (OSError, ValueError):
+            continue
+        if isinstance(payload, dict):
+            cards.append(payload)
+    l1 = [c for c in cards if str(c.get("look") or "").upper() == "L1"]
+    problems: list[str] = []
+    for card in l1:
+        if not str(card.get("commit_sha") or "").strip():
+            problems.append(f"{card.get('rule_id')} L1 scorecard has no commit_sha")
+        if not str(card.get("committed_at") or "").strip():
+            problems.append(f"{card.get('rule_id')} L1 scorecard has no committed_at")
+    return _check(
+        "l1_committed_before_l2",
+        "L1 score notes record commit SHA and timestamp before L2 can close",
+        not problems,
+        (
+            f"{len(l1)} L1 scorecard(s); each records commit_sha and committed_at"
+            if l1 and not problems
+            else (
+                "no L1 scorecard on disk; the control is the requirement that one "
+                "must carry commit_sha and committed_at when it appears"
+                if not problems
+                else "; ".join(problems)
+            )
+        ),
+        {"l1_scorecards": len(l1), "problems": problems},
+    )
+
+
 def run_invariants(
     *,
     root: Path | None = None,
@@ -450,6 +505,7 @@ def run_invariants(
         check_process_matches_disk(watch_status),
         check_watch_is_collecting(watch_status, previous=previous),
         check_clerical_roles_clear(state, watch_status=watch_status),
+        check_l1_committed_before_l2(root=root),
     ]
     failing = [c["id"] for c in checks if c["state"] != PASS]
     return {

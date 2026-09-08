@@ -5,7 +5,7 @@ Chat transcripts are not. A later Grok / Cursor cloud agent will not see a prior
 
 | Field | Value |
 |-------|--------|
-| Updated | 2026-09-08 12:50 EDT (expansion SoT landed: `LEARNING_LANE_EXPANSION.md`. HOLD stands. Bar bytes not touched — Critic 02 is in flight.) |
+| Updated | 2026-09-08 13:45 EDT (Turn 1 CRITIC 02 committed; Turn 2 factory on disk, not yet answering CRITIC 02. Bar bytes untouched. Fee fetch 429 at 13:42, hash empty.) |
 | Interim operator | Cursor chat (Grok bot usage exhausted until **2026-09-13**) |
 | Repo SoT | **PR [#176](https://github.com/swellbear/gated-formalization/pull/176) is OPEN, not merged.** `origin/master` is still `b063f56` (#175). Part A + Parts 0/1 live only on `cursor/part-a-clerical-trust-boundary`. |
 | Local Windows tree for this interim | `C:\Users\bearh\gated-formalization-master-hub` |

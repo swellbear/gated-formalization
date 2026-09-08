@@ -14,6 +14,7 @@ stays SETTLE_PENDING, and a window with no paper pnl on disk says so instead of 
 
 from __future__ import annotations
 
+import hashlib
 import json
 from dataclasses import dataclass, field
 from datetime import datetime, timezone
@@ -641,10 +642,72 @@ def _cells(row: WindowRow, tz: Any) -> dict[str, str]:
     }
 
 
+def board_fingerprint(blocks: list[Lineage]) -> str:
+    """A digest of what the board draws, with no render clock in it.
+
+    The header draws ``rendered {now}`` into the pixels, so the PNG's bytes move
+    on every re-render whether or not one row moved. Hashing the file would
+    therefore clear ``illustrator`` for having run — the heartbeat defect. This
+    hashes the drawn rows instead.
+    """
+    payload = [
+        {
+            "lineage": block.key,
+            "title": block.title,
+            "book": list(block.book_lines),
+            "total": block.total,
+            "rows": [
+                {
+                    "ticker": row.ticker,
+                    "settle_status": row.settle_status,
+                    "kalshi_result": row.kalshi_result,
+                    "kalshi_status": row.kalshi_status,
+                    "expiry": row.expiry_value,
+                    "src": row.settle_src,
+                    "join": row.paper_join,
+                    "missing_join": row.missing_join,
+                    "side": row.paper_side,
+                    "mark": row.paper_mark,
+                    "paper_settle": row.paper_settle,
+                    "pnl": row.paper_pnl,
+                    "pnl_text": row.paper_pnl_text,
+                }
+                for row in block.rows
+            ],
+        }
+        for block in blocks
+    ]
+    blob = json.dumps(payload, default=str, sort_keys=True)
+    return hashlib.sha256(blob.encode("utf-8")).hexdigest()
+
+
+def write_board_fingerprint(blocks: list[Lineage] | None, *, refused: str = "") -> Path:
+    """Record what the renderer drew, or why it refused to draw.
+
+    A refusal is not "nothing to report". ``board_lag`` reads this file and
+    raises ``detector_blind`` on a refusal, so a dead renderer owes a human
+    instead of leaving a stale board unexplained.
+    """
+    path = latest_dir_15m() / "board_fingerprint.json"
+    path.parent.mkdir(parents=True, exist_ok=True)
+    body: dict[str, Any] = {
+        "lane": LANE,
+        "framing": "clerical: what the board drew, without the render clock",
+        "drawn": None if refused else board_fingerprint(blocks or []),
+        "blocks": 0 if refused else len(blocks or []),
+        "rows": 0 if refused else sum(len(block.rows) for block in (blocks or [])),
+        "refused": refused,
+        "rendered_at": datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ"),
+    }
+    path.write_text(json.dumps(body, indent=2, sort_keys=True) + "\n", encoding="utf-8")
+    return path
+
+
 def render_paper_window_strip() -> Path | None:
     """Regenerate the board PNG from disk. No rows or no matplotlib → no file written."""
     blocks = collect_board()
     if not blocks:
+        write_board_fingerprint(None, refused="no rows on disk")
         return None
     try:
         import matplotlib
@@ -654,6 +717,7 @@ def render_paper_window_strip() -> Path | None:
         from matplotlib.lines import Line2D
         from matplotlib.patches import Patch, Rectangle
     except ImportError:
+        write_board_fingerprint(None, refused="matplotlib not importable")
         return None
 
     tz, tz_short, tz_long = _display_tz()
@@ -812,6 +876,7 @@ def render_paper_window_strip() -> Path | None:
     dest.parent.mkdir(parents=True, exist_ok=True)
     fig.savefig(dest, format="png", facecolor=BG)
     plt.close(fig)
+    write_board_fingerprint(blocks)
     return dest
 
 

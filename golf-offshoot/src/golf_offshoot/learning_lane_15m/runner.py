@@ -33,9 +33,10 @@ from __future__ import annotations
 import hashlib
 import json
 import os
+import re
 import time
 from pathlib import Path
-from typing import Any, Callable
+from typing import Any, Callable, NamedTuple
 
 from golf_offshoot.learning_lane_15m.learn import (
     load_wake_state,
@@ -90,6 +91,23 @@ JUDICIAL_NEVER = (
 
 LOG_NAME = "learning_runner.jsonl"
 FP_STORE_NAME = "role_artifact_fps.json"
+BOARD_FP_NAME = "board_fingerprint.json"
+
+#: Clock fields. A report that stamps itself on every write moves its own hash
+#: on every write, and serve-on-proof then clears the role for having run.
+VOLATILE_KEYS = (
+    "ran_at",
+    "checked_at",
+    "validated_at",
+    "generated_at",
+    "stamped_at",
+    "scored_at",
+    "at",
+    "at_text",
+)
+
+#: The SOURCE digest's own as-of lines. Same defect, in markdown.
+_DIGEST_STAMP_LINE = re.compile(r"\*\*Evidence as-of:\*\*|hub `generated_at`")
 
 DIGEST_ASOF_NAME = "digest_asof.json"
 DIGEST_REL = Path("golf-offshoot") / "docs" / "LEARNING_LANE_15M_SOURCE_DIGEST.md"
@@ -303,6 +321,14 @@ def critic_verdicts(payload: dict[str, Any] | None) -> str:
     Systems has ``material_publish_reasons`` for exactly this; this is the same
     guard for the Critic's mechanical half.
 
+    ``detail`` is **not** in the token. It was, and that defeated the whole
+    guard: ``check_honesty_stamp_is_fresh`` wrote ``{int(age)}s old`` into its
+    detail, so the token moved on every ~90s pass and the role went on clearing
+    itself on a heartbeat through two rounds of fixing. Dropping it weakens no
+    check — ``detail`` is a rendering of ``state`` and ``evidence`` — and that
+    check has left the method suite anyway. ``desk_checks`` are excluded for the
+    same reason: nothing that reads a clock may sit in a proof token.
+
     The reviewed **hash set** is part of the token, not just the checks. A run
     that reviews a newly-changed artifact has done real work even when every
     verdict reads the same, and leaving that unserved would deadlock the role:
@@ -311,7 +337,7 @@ def critic_verdicts(payload: dict[str, Any] | None) -> str:
     """
     payload = payload or {}
     checks = [
-        {"id": row.get("id"), "state": row.get("state"), "detail": row.get("detail")}
+        {"id": row.get("id"), "state": row.get("state")}
         for row in (payload.get("checks") or [])
     ]
     reviewed = sorted(str((row or {}).get("sha256") or "") for row in payload.get("reviewed") or [])
@@ -322,6 +348,50 @@ def critic_verdicts(payload: dict[str, Any] | None) -> str:
     )
 
 
+def _stripped_json_token(path: Path, volatile: tuple[str, ...]) -> str | None:
+    """A JSON artifact's content with its clock fields removed.
+
+    A report that stamps itself on every write moves its own hash on every
+    write. Serve-on-proof then clears the role for having run, which is the
+    defect ``material_publish_reasons`` was built for. This is the same guard,
+    generalised.
+    """
+    payload = _load_json(path)
+    if payload is None:
+        return file_fingerprint(path)
+
+    def _strip(node: Any) -> Any:
+        if isinstance(node, dict):
+            return {k: _strip(v) for k, v in sorted(node.items()) if k not in volatile}
+        if isinstance(node, list):
+            return [_strip(v) for v in node]
+        return node
+
+    return json.dumps(_strip(payload), default=str, sort_keys=True)
+
+
+def _validator_token(path: Path) -> str | None:
+    return _stripped_json_token(path, VOLATILE_KEYS)
+
+
+def _digest_token(path: Path) -> str | None:
+    """The SOURCE digest minus its own as-of lines.
+
+    Regenerating the digest with no book movement rewrites its stamp, so the
+    file hash moves and ``digest-figures`` clears on a heartbeat exactly the way
+    the Critic did.
+    """
+    if not path.is_file():
+        return None
+    text = path.read_text(encoding="utf-8", errors="replace")
+    kept = [
+        line
+        for line in text.splitlines()
+        if not _DIGEST_STAMP_LINE.search(line)
+    ]
+    return hashlib.sha256("\n".join(kept).encode("utf-8")).hexdigest()
+
+
 def _critic_token(path: Path) -> str | None:
     payload = _load_json(path)
     if payload is None:
@@ -329,14 +399,68 @@ def _critic_token(path: Path) -> str | None:
     return critic_verdicts(payload)
 
 
+def board_fingerprint_path() -> Path:
+    return latest_dir_15m() / BOARD_FP_NAME
+
+
+def _illustrator_token(path: Path) -> str | None:
+    """The board's *content* fingerprint, written by the renderer, not the PNG bytes.
+
+    ``illustrate.py`` stamps the render time into the PNG's metadata, so every
+    re-render moves the file hash whether or not a single drawn row moved. The
+    renderer writes a sidecar naming what it actually drew; that is the proof.
+    No sidecar means no proof, so the role stays owed.
+    """
+    if not path.is_file():
+        return None
+    sidecar = _load_json(board_fingerprint_path())
+    if not isinstance(sidecar, dict):
+        return None
+    drawn = sidecar.get("drawn")
+    if not drawn:
+        return None
+    return json.dumps({"png": True, "drawn": drawn}, default=str, sort_keys=True)
+
+
+class ClericalContract(NamedTuple):
+    """What must be true before this role may be served by a machine.
+
+    ``token`` must ignore clocks: a timestamp-only rewrite may not clear the
+    role. ``negative_event`` is the event kind a *failing* artifact raises, so a
+    ``passed: false`` result cannot be the end of it. ``event_source`` is the
+    detector whose silence would otherwise leave the role un-owed, and which
+    therefore has to report its own blindness. ``test_serve_on_proof.py``
+    enforces all three over the whole whitelist; a role added here without them
+    is a red build.
+    """
+
+    token: Callable[[Path], str | None]
+    negative_event: str
+    event_source: str
+
+
+CLERICAL_CONTRACTS: dict[str, ClericalContract] = {
+    "illustrator": ClericalContract(_illustrator_token, "detector_blind", "board_lag"),
+    "systems": ClericalContract(_systems_token, "published_falsehood", "diff_scans"),
+    "digest-figures": ClericalContract(
+        _digest_token, "digest_contradicts_ledger", "diff_scans"
+    ),
+    "validator": ClericalContract(
+        _validator_token, "validator_report_failing", "diff_scans"
+    ),
+    "critic-invariants": ClericalContract(
+        _critic_token, "critic_findings_failing", "repo_events"
+    ),
+}
+
+
 def role_proof_token(role: str, *, root: Path | None = None) -> str | None:
     paths = owned_artifact_paths(role, root=root)
     if not paths:
         return None
-    if role == "systems":
-        return _systems_token(paths[0])
-    if role == "critic-invariants":
-        return _critic_token(paths[0])
+    contract = CLERICAL_CONTRACTS.get(role)
+    if contract is not None:
+        return contract.token(paths[0])
     parts = [file_fingerprint(path) for path in paths]
     if any(part is None for part in parts):
         return None
@@ -467,10 +591,8 @@ def serve_role(
     proof_path = proof_artifact_path(role, root=root)
     result["artifact"] = str(work_path)
     result["proof"] = str(proof_path)
-    before = file_fingerprint(proof_path)
-    before_work = file_fingerprint(work_path)
-    before_manifest = _load_json(work_path) if role == "systems" else None
-    before_findings = _load_json(work_path) if role == "critic-invariants" else None
+    before = role_proof_token(role, root=root)
+    before_raw = file_fingerprint(proof_path)
     result["before"] = before
     workers = {
         "illustrator": _default_do_illustrator,
@@ -485,37 +607,21 @@ def serve_role(
     except Exception as exc:  # noqa: BLE001 — failure stays owed
         result["reason"] = f"work raised {type(exc).__name__}: {exc}"
         return result
-    after = file_fingerprint(proof_path)
-    after_work = file_fingerprint(work_path)
+    after = role_proof_token(role, root=root)
+    after_raw = file_fingerprint(proof_path)
     result["after"] = after
     if after is None:
-        wrote = after_work is not None and after_work != before_work
+        wrote = after_raw is not None and after_raw != before_raw
         result["reason"] = (
             "worker wrote a non-proof file; role stays owed"
             if wrote
             else "artifact missing after work"
         )
         return result
-    if after == before:
-        result["reason"] = "artifact hash unchanged; role stays owed"
+    if before is not None and after == before:
+        result["reason"] = "heartbeat; proof token unchanged; role stays owed"
         return result
-    if role == "systems":
-        after_manifest = _load_json(work_path)
-        reasons = material_publish_reasons(before_manifest, after_manifest or {})
-        result["material"] = reasons
-        if not reasons:
-            result["reason"] = "export was a heartbeat; role stays owed"
-            return result
-    if role == "critic-invariants":
-        # The proof hash moves on every run because the payload is stamped.
-        # Compare the verdicts and what they cover, not the clock.
-        if critic_verdicts(before_findings) == critic_verdicts(_load_json(work_path)):
-            result["reason"] = (
-                "findings run was a heartbeat; no verdict moved and no new "
-                "artifact was reviewed; role stays owed"
-            )
-            return result
-    note = f"artifact hash changed {before} -> {after}"
+    note = f"proof token changed {before} -> {after}"
     mark_roles_served([role], by="runner", note=note, served_kind="auto")
     result["ok"] = True
     result["marked"] = True

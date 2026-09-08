@@ -125,6 +125,8 @@ Judicial roles are named only by their **enumerated** exception kinds, in `learn
 
 Human `digestor` is owed when the **generated figures cannot express what changed** — not zero, and not every settle. The every-settle trigger is deliberately not restored.
 
+Pre-split leftover `new_settle` / `new_fill` / `pending_cleared` reasons on `digestor` and `operator` are dropped by `rekey_leftover_owed` on the next tick. Those roles stay owed only on the exception list above. `critic_findings_failing` pages Operator only on a *new* failing set, or on a failing check the bar does not already name with a reason.
+
 **Do not silently drop an exception class to shorten the owed list.** If it is unclear whether something belongs to Operator, it stays owing Operator and the reason is written down.
 
 **Operator no longer clears on any park write.** `operator_write_addresses_owed` is shaped like `material_publish_reasons`: a park change clears Operator only when the new text names what Operator was owed for. If the owed line names no reason, or the park file cannot be read, Operator **stays owed**. #174 edited the park to reconcile the Soften Critic Hard NO lists and cleared an Operator line raised by settles on 080745 through 080830 that nothing had ruled on. That cannot happen again.

@@ -191,7 +191,7 @@ def test_unchanged_artifact_stays_owed_and_is_logged(tmp_path):
         result = serve_role("digest-figures", do_work=_same, root=tmp_path)
         assert result["ok"] is False
         assert result["marked"] is False
-        assert "artifact hash unchanged" in result["reason"]
+        assert "heartbeat" in result["reason"] or "unchanged" in result["reason"]
         state = load_wake_state()
         assert state is not None
         assert [row["role"] for row in state["roles_owed"]] == ["digest-figures"]

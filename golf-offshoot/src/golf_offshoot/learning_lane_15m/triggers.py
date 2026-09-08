@@ -43,6 +43,11 @@ EVENT_LAB_PROPOSED = "lab_proposed"
 EVENT_ARTIFACT_UNREVIEWED = "artifact_unreviewed"
 EVENT_CRITIC_FINDINGS_FAILING = "critic_findings_failing"
 EVENT_DETECTOR_BLIND = "detector_blind"
+#: A clerical artifact that reports its own subject matter as *failing*. Serving
+#: the role on proof retires the run, never the finding.
+EVENT_VALIDATOR_REPORT_FAILING = "validator_report_failing"
+EVENT_PUBLISHED_FALSEHOOD = "published_falsehood"
+EVENT_DIGEST_CONTRADICTS_LEDGER = "digest_contradicts_ledger"
 
 WINDOW_S = 900
 #: A crew park re-rules within roughly one day of active loop. Restating is
@@ -54,6 +59,8 @@ CAVEATS_REL = Path("golf-offshoot") / "docs" / "LEARNING_LANE_15M_SOURCE_DIGEST_
 PROPOSED_GLOB = "LEARNING_LANE_15M_OPERATOR_NOTE_PROPOSED_*.md"
 REGISTRY_REL = Path("golf-offshoot") / "docs" / "LEARNING_LANE_15M_RULES.json"
 BAR_JSON_REL = Path("golf-offshoot") / "docs" / "LEARNING_LANE_15M_EVIDENCE_BAR.json"
+MANIFEST_REL = Path("docs") / "observability-hub" / "data" / "manifest.json"
+VALIDATOR_REPORT_REL = Path("docs") / "observability-hub" / "data" / "validator_report.json"
 
 
 def _event(kind: str, ticker: str, detail: str, **extra: Any) -> dict[str, Any]:
@@ -341,30 +348,223 @@ def rule_reached_n(
     return events
 
 
-def critic_findings_failing(*, root: Path | None = None) -> list[dict[str, Any]]:
+def _previous_wake() -> dict[str, Any]:
+    """The wake state as it stands before this tick writes.
+
+    ``record_learning_tick`` saves at the end, so during detection this is the
+    previous tick. Imported lazily: ``learn`` imports this module.
+    """
+    from golf_offshoot.learning_lane_15m.learn import load_wake_state
+
+    try:
+        state = load_wake_state()
+    except Exception:  # noqa: BLE001 — an unreadable wake is not a clean one
+        return {}
+    return state if isinstance(state, dict) else {}
+
+
+def last_paged_critic_failing(wake: dict[str, Any] | None = None) -> list[str]:
+    """The failing set the most recent ``critic_findings_failing`` event carried.
+
+    This is the materiality baseline for 4a: what Operator has already been
+    paged on. Read off the event history rather than a separate ledger, so
+    there is nothing to keep in sync and nothing to forge.
+    """
+    state = _previous_wake() if wake is None else wake
+    for event in (state or {}).get("events") or []:
+        if not isinstance(event, dict):
+            continue
+        if str(event.get("kind") or "") != EVENT_CRITIC_FINDINGS_FAILING:
+            continue
+        return sorted(str(f) for f in event.get("critic_failing") or [])
+    return []
+
+
+def critic_findings_failing(
+    wake: dict[str, Any] | None = None,
+    *,
+    root: Path | None = None,
+) -> list[dict[str, Any]]:
     """A failing method check may not be retired by the machine that found it.
 
     ``critic-invariants`` clears on serve-on-proof like any clerical role, so a
-    report saying *the bar fails four checks* used to clear exactly as a clean
-    report would, and the desk then read as clearance. The failing checks are
+    report saying *the bar fails four checks* clears exactly as a clean report
+    would, and the desk then reads as clearance. The failing checks are
     properties of the bar, and the bar is Operator's, so a failing report owes
-    Operator until the bar changes or Operator writes down why it should not.
+    Operator.
+
+    **Materiality.** It owes Operator on a *new* failing set, or on a failing
+    check the bar does not already name on its face with a reason — not once
+    per 90-second tick forever. An empty ``schedule_sha256`` after a recorded
+    HTTP 429 is a disclosed standing blocker, not a finding: the bar names it,
+    so re-paging Operator for it says nothing Operator has not already written
+    down. The discharge path is therefore either fixing the check or naming it
+    on the bar with a reason — no third, silent option, and re-firing resumes
+    the moment the failing set grows.
+
+    ``wake`` defaults to the wake state on disk, whose event history carries the
+    set this trigger last fired on. A first tick has none, so the current set is
+    new by definition and the event fires.
     """
-    from golf_offshoot.learning_lane_15m.critic import load_findings
+    from golf_offshoot.learning_lane_15m.critic import bar_names_failing_check, load_findings
 
     payload = load_findings(root=root)
     if not payload or payload.get("passed") is not False:
         return []
-    failing = [str(f) for f in payload.get("failing") or []]
+    failing = sorted(str(f) for f in payload.get("failing") or [])
     if not failing:
         return []
+
+    seen = last_paged_critic_failing(wake)
+    fresh = [check for check in failing if check not in seen]
+    undisclosed = [
+        check for check in failing if not bar_names_failing_check(check, root=root)
+    ]
+    if not fresh and not undisclosed:
+        return []
+
+    if fresh:
+        why = (
+            f"failing set changed — {', '.join(fresh)} not in the set Operator was "
+            f"last paged on ({', '.join(seen) or 'none'})"
+        )
+    else:
+        why = (
+            f"{', '.join(undisclosed)} failing and not named on the bar's face with a "
+            "reason; a check the bar does not disclose is not a disclosed blocker"
+        )
     return [
         _event(
             EVENT_CRITIC_FINDINGS_FAILING,
             "critic-invariants",
             f"{len(failing)} method check(s) failing on the current artifacts "
-            f"({', '.join(failing)}); the mechanical Critic cleared itself on proof, "
-            "which is not clearance of what it found",
+            f"({', '.join(failing)}); {why}",
+            critic_failing=failing,
+        )
+    ]
+
+
+def validator_report_failing(*, root: Path | None = None) -> list[dict[str, Any]]:
+    """The published-surface validator reporting its own subject matter invalid.
+
+    ``validator`` is on the clerical whitelist, so a report saying *the public
+    bytes are malformed* clears the role for having run. The run is not the
+    finding: invalid published bytes are an honesty defect on a surface the
+    crew points outsiders at, and that is judicial.
+    """
+    base = root or repo_root()
+    payload = _load_json(base / VALIDATOR_REPORT_REL)
+    if not payload:
+        return []
+    errors = [str(e) for e in payload.get("errors") or []]
+    exit_code = payload.get("exit_code")
+    if not errors and (exit_code in (0, None)):
+        return []
+    detail = ", ".join(errors[:3]) or f"exit_code={exit_code}"
+    return [
+        _event(
+            EVENT_VALIDATOR_REPORT_FAILING,
+            "validator",
+            f"the published-surface validator reports {len(errors)} error(s) "
+            f"({detail}); the validator cleared itself on proof, which is not "
+            "clearance of what it found",
+        )
+    ]
+
+
+def published_falsehood(
+    current: dict[str, Any] | None = None,
+    *,
+    root: Path | None = None,
+) -> list[dict[str, Any]]:
+    """The exported manifest calling a window pending that already has a result.
+
+    ``systems`` writes the local export and is served on proof, so an export
+    stating something the lane files contradict clears the role that wrote it.
+    A false sentence on the published surface is Operator's, not the exporter's.
+    """
+    base = root or repo_root()
+    manifest = _load_json(base / MANIFEST_REL)
+    if not manifest or current is None:
+        return []
+    status = manifest.get("learning_status")
+    pending = (status or {}).get("pending_windows") if isinstance(status, dict) else None
+    if not isinstance(pending, list):
+        return []
+    settled = (current.get("settled") or {}) if isinstance(current, dict) else {}
+    events = []
+    for raw in pending:
+        ticker = str(raw or "").strip()
+        row = settled.get(ticker) or {}
+        result = str(row.get("result") or "").strip()
+        if not result:
+            continue
+        events.append(
+            _event(
+                EVENT_PUBLISHED_FALSEHOOD,
+                ticker,
+                f"the exported manifest lists {ticker} as pending and this tree has an "
+                f"official Kalshi result={result} for it via {row.get('source')}",
+            )
+        )
+    return events
+
+
+def digest_contradicts_ledger(
+    previous: dict[str, Any] | None = None,
+    *,
+    root: Path | None = None,
+) -> list[dict[str, Any]]:
+    """The SOURCE digest's headline disagreeing with the ledger, twice running.
+
+    ``digest-figures`` regenerates the digest inside the same tick, so firing on
+    the first sighting would page a human for drift the cycle repairs — the
+    over-firing the severity split exists to stop. This fires only when the
+    previous tick's invariant block *already* recorded the contradiction: the
+    generator has had its pass and the figure is still wrong.
+    """
+    was_failing = "digest_matches_ledger" in {
+        str(f) for f in ((previous or {}).get("invariant_failing") or [])
+    }
+    if not was_failing:
+        return []
+    from golf_offshoot.learning_lane_15m.invariants import check_digest_matches_ledger
+
+    check = check_digest_matches_ledger(root=root)
+    if str(check.get("state") or "").upper() != "FAIL":
+        return []
+    return [
+        _event(
+            EVENT_DIGEST_CONTRADICTS_LEDGER,
+            "digest-figures",
+            f"the SOURCE digest still contradicts the ledger after a generator pass: "
+            f"{check.get('detail')}",
+        )
+    ]
+
+
+def board_render_refused(*, root: Path | None = None) -> list[dict[str, Any]]:
+    """The board renderer recording that it could not draw.
+
+    A refused render leaves the previous PNG in place, so ``board_lag`` reads a
+    board that is merely stale and owes ``illustrator`` — which cannot fix a
+    missing matplotlib. A renderer that cannot draw is not a renderer that had
+    nothing to draw, so this raises the existing blind-detector class.
+    """
+    from golf_offshoot.learning_lane_15m.runner import board_fingerprint_path
+
+    payload = _load_json(board_fingerprint_path())
+    if not payload:
+        return []
+    refused = str(payload.get("refused") or "").strip()
+    if not refused:
+        return []
+    return [
+        _event(
+            EVENT_DETECTOR_BLIND,
+            "board_render_refused",
+            f"the board renderer refused to draw ({refused}); the PNG on disk is "
+            "whatever was there before and illustrator cannot clear that by running",
         )
     ]
 

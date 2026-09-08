@@ -1,6 +1,8 @@
+from golf_offshoot.learning_lane_15m.critic import run_only_fee_rows
 from golf_offshoot.learning_lane_15m.evidence_bar import (
     bar_is_binding,
     class_is_burned,
+    fee_adjust,
     fragile_not_null,
     load_burned_classes,
     load_evidence_bar,
@@ -48,3 +50,13 @@ def test_burned_registry_seeds_oil_and_keeps_moy_cont_fragile():
     assert class_is_burned("R-SKIP-COINFLIP") is False
     assert fragile_not_null("H-SPOT-MOY-CONT") is True
     assert class_is_burned("H-SPOT-MOY-CONT") is False
+
+
+def test_fee_adjust_reproduces_the_run_only_raw_fee_column():
+    rows = run_only_fee_rows()
+    assert len(rows) >= 8
+    for row in rows:
+        got = fee_adjust(row["recorded_pnl"], row["mark"], 1.0)
+        assert abs(got - row["fee_adjusted_pnl"]) <= 5e-3
+        raw = 0.07 * 1.0 * (1.0 - row["mark"])
+        assert abs(raw - row["raw_fee"]) <= 5e-4

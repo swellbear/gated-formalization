@@ -25,7 +25,7 @@ from __future__ import annotations
 import json
 from datetime import datetime, timezone
 from pathlib import Path
-from typing import Any, Iterable, Sequence
+from typing import Any, Callable, Iterable, Sequence
 
 from golf_offshoot.learning_lane_15m.paths import (
     LANE_15M,
@@ -93,6 +93,11 @@ from golf_offshoot.learning_lane_15m.triggers import (  # noqa: E402
     EVENT_UNRECORDED_COST,
     EVENT_WINDOW_SEQUENCE_GAP,
 )
+from golf_offshoot.learning_lane_15m.triggers import (  # noqa: E402
+    EVENT_DIGEST_CONTRADICTS_LEDGER,
+    EVENT_PUBLISHED_FALSEHOOD,
+    EVENT_VALIDATOR_REPORT_FAILING,
+)
 
 #: Human digestor is owed when the generated figures **cannot express what
 #: changed**. Enumerated here and in PROTOCOL.md. Not zero, not every settle —
@@ -104,6 +109,9 @@ DIGESTOR_TRIGGERS = frozenset(
         EVENT_WINDOW_SEQUENCE_GAP,
         EVENT_SETTLE_CONTRADICTS_BOOK,
         EVENT_UNRECORDED_COST,
+        # The figure is wrong *after* the generator had its pass, so the figures
+        # role cannot express what changed by running again.
+        EVENT_DIGEST_CONTRADICTS_LEDGER,
     }
 )
 
@@ -125,6 +133,11 @@ OPERATOR_TRIGGERS = frozenset(
         EVENT_CRITIC_FINDINGS_FAILING,
         # A detector that cannot see is not a detector that saw nothing.
         EVENT_DETECTOR_BLIND,
+        # A clerical artifact reporting its own subject matter as failing. Being
+        # served on proof retires the run, never the finding.
+        EVENT_VALIDATOR_REPORT_FAILING,
+        EVENT_PUBLISHED_FALSEHOOD,
+        EVENT_DIGEST_CONTRADICTS_LEDGER,
     }
 )
 
@@ -134,7 +147,19 @@ CRITIC_TRIGGERS = frozenset({EVENT_ARTIFACT_UNREVIEWED})
 #: Kinds that are not about the market. Naming the figures roles on these is
 #: the same over-firing the severity split exists to stop: a failing method
 #: check does not need the digest regenerated.
-NON_MARKET_KINDS = frozenset({EVENT_CRITIC_FINDINGS_FAILING, EVENT_DETECTOR_BLIND})
+NON_MARKET_KINDS = frozenset(
+    {
+        EVENT_CRITIC_FINDINGS_FAILING,
+        EVENT_DETECTOR_BLIND,
+        EVENT_VALIDATOR_REPORT_FAILING,
+        EVENT_PUBLISHED_FALSEHOOD,
+        EVENT_DIGEST_CONTRADICTS_LEDGER,
+    }
+)
+
+#: Pre-split leftover reasons. A routine settle no longer names digestor or
+#: operator; lines that still carry these prefixes are the board lying.
+RETIRED_JUDICIAL_PREFIXES = ("new_settle ", "new_fill ", "pending_cleared ")
 
 #: The board may trail the live journal by the current open window. Two or more
 #: windows ahead of the PNG is a lag — Illustrator is owed, not optional.
@@ -851,11 +876,15 @@ def exception_events(
     from golf_offshoot.learning_lane_15m import triggers as T
     from golf_offshoot.learning_lane_15m.paths import has_15m_root_override
 
+    def _as(name: str, fn: Callable[[], Any]) -> Callable[[], Any]:
+        fn.__name__ = name
+        return fn
+
     detectors: list[Any] = [
-        lambda: T.paper_join_missing_grew(previous, current),
-        lambda: T.new_book_open_no_join(previous, current),
-        lambda: T.window_sequence_gaps(previous, current),
-        lambda: T.settles_contradicting_their_book(previous, current),
+        _as("paper_join_missing_grew", lambda: T.paper_join_missing_grew(previous, current)),
+        _as("new_book_open_no_join", lambda: T.new_book_open_no_join(previous, current)),
+        _as("window_sequence_gaps", lambda: T.window_sequence_gaps(previous, current)),
+        _as("settles_contradicting_their_book", lambda: T.settles_contradicting_their_book(previous, current)),
     ]
     # Detectors below read the *repo*, not the lane data directory. Under a
     # scratch root the repo is not the tree under test, so reading it would
@@ -867,8 +896,17 @@ def exception_events(
                 T.unrecorded_cost,
                 T.park_aged,
                 T.falsifier_fired,
-                T.critic_findings_failing,
-                lambda: T.rule_reached_n(current),
+                # Negative results from the clerical whitelist. Each of these
+                # roles is served on proof, so an artifact reporting its own
+                # subject matter as failing would otherwise clear the role that
+                # wrote it and owe nobody. ``test_serve_on_proof.py`` asserts
+                # one of these exists for every whitelisted role.
+                _as("critic_findings_failing", lambda: T.critic_findings_failing()),
+                T.validator_report_failing,
+                _as("published_falsehood", lambda: T.published_falsehood(current)),
+                _as("digest_contradicts_ledger", lambda: T.digest_contradicts_ledger(previous)),
+                T.board_render_refused,
+                _as("rule_reached_n", lambda: T.rule_reached_n(current)),
             ]
         )
 
@@ -892,6 +930,29 @@ def _blind_detector_event(detector: Any, exc: BaseException) -> dict[str, Any]:
             "a detector that cannot see is not a detector that saw nothing"
         ),
     }
+
+
+def guarded_events(name: str, source: Callable[[], Any]) -> list[dict[str, Any]]:
+    """Run an event source; a raise becomes ``detector_blind``, never silence.
+
+    ``exception_events`` has wrapped its own detectors since #148, but
+    ``diff_scans``, ``repo_events`` and ``board_lag`` were called bare. Any of
+    the three raising would have propagated out of the tick — and a tick that
+    does not finish writes no ``roles_owed`` at all, so every clerical role on
+    the whitelist would go un-owed and nothing would say why.
+    ``test_serve_on_proof.py`` asserts this over each whitelisted role's own
+    named source.
+    """
+    try:
+        return list(source() or [])
+    except Exception as exc:  # noqa: BLE001 — a blind source is not a quiet one
+        event = _blind_detector_event(source, exc)
+        event["ticker"] = name
+        event["detail"] = (
+            f"{name} failed to read its evidence ({type(exc).__name__}: {exc}); "
+            "a detector that cannot see is not a detector that saw nothing"
+        )
+        return [event]
 
 
 def repo_events() -> list[dict[str, Any]]:
@@ -936,6 +997,49 @@ def repo_events() -> list[dict[str, Any]]:
 def _event_label(event: dict[str, Any]) -> str:
     who = _as_str(event.get("ticker")) or _as_str(event.get("window_id")) or "window"
     return f"{event.get('kind')} {who}"
+
+
+def rekey_leftover_owed(
+    existing: Iterable[dict[str, Any]],
+    *,
+    drop_disclosed_critic_failing: bool = False,
+) -> list[dict[str, Any]]:
+    """Drop pre-split every-settle reasons from judicial lines.
+
+    Human digestor is not owed for ``new_settle`` / ``new_fill`` /
+    ``pending_cleared``. Operator is not owed for those either. After this
+    pass those roles stay owed only on the exception lists already enumerated
+    in ``triggers.py`` and PROTOCOL.md. A leftover ``critic_findings_failing``
+    for a failing set the bar already names is the same class of lie: Operator
+    has already written the reason, so the line is not a request for work.
+
+    Does not restore every-settle triggers. Does not drop a live exception
+    class to shorten the list.
+    """
+    out: list[dict[str, Any]] = []
+    for entry in existing:
+        role = _as_str(entry.get("role"))
+        if role not in {DIGESTOR_ROLE, OPERATOR_ROLE}:
+            out.append(dict(entry))
+            continue
+        kept: list[Any] = []
+        for reason in entry.get("reasons") or []:
+            text = str(reason)
+            if any(text.startswith(prefix) for prefix in RETIRED_JUDICIAL_PREFIXES):
+                continue
+            if (
+                drop_disclosed_critic_failing
+                and role == OPERATOR_ROLE
+                and text.startswith("critic_findings_failing")
+            ):
+                continue
+            kept.append(reason)
+        if not kept:
+            continue
+        row = dict(entry)
+        row["reasons"] = kept
+        out.append(row)
+    return out
 
 
 def _merge_roles_owed(
@@ -1162,9 +1266,20 @@ def record_learning_tick(
     gate = honesty_gate_from_desk(desk, scan=scan)
     passed = gate["passed"] if honesty_gate_passed is None else bool(honesty_gate_passed)
 
-    events = diff_scans(previous, scan)
-    events.extend(exception_events(previous, scan))
-    events.extend(repo_events())
+    events = guarded_events("diff_scans", lambda: diff_scans(previous, scan))
+    events.extend(guarded_events("exception_events", lambda: exception_events(previous, scan)))
+    events.extend(guarded_events("repo_events", repo_events))
+    try:
+        lag = board_lag(scan)
+    except Exception as exc:  # noqa: BLE001 — a blind board is not a current one
+        events.append(_blind_detector_event(board_lag, exc) | {"ticker": "board_lag"})
+        lag = {"stale": False, "detail": f"board_lag failed: {exc}"}
+    already_owed = {
+        _as_str(entry.get("role")).lower()
+        for entry in ((state or {}).get("roles_owed") or [])
+    }
+    if lag.get("stale") and ILLUSTRATOR_ROLE not in already_owed:
+        events.append(_board_stale_event(lag, at=at))
     for event in events:
         event["at"] = at
         event["lane"] = LANE_15M
@@ -1177,21 +1292,31 @@ def record_learning_tick(
         )
         event["roles_owed_is_a_request"] = True
 
-    lag = board_lag(scan)
-    already_owed = {
-        _as_str(entry.get("role")).lower()
-        for entry in ((state or {}).get("roles_owed") or [])
-    }
-    if lag["stale"] and ILLUSTRATOR_ROLE not in already_owed:
-        events.append(_board_stale_event(lag, at=at))
-
     if watch_status is None:
         from golf_offshoot.learning_lane_15m.watch import load_watch_status
 
         watch_status = load_watch_status()
 
+    drop_disclosed = False
+    try:
+        from golf_offshoot.learning_lane_15m.critic import (
+            bar_names_failing_check,
+            load_findings,
+        )
+
+        findings = load_findings()
+        failing = [str(f) for f in (findings or {}).get("failing") or []]
+        drop_disclosed = (not failing) or all(
+            bar_names_failing_check(check) for check in failing
+        )
+    except Exception:  # noqa: BLE001 — re-key still drops the retired market reasons
+        drop_disclosed = False
+
     owed = _merge_roles_owed(
-        (state or {}).get("roles_owed") or [],
+        rekey_leftover_owed(
+            (state or {}).get("roles_owed") or [],
+            drop_disclosed_critic_failing=drop_disclosed,
+        ),
         events,
         at=at,
         at_dt=at_dt,

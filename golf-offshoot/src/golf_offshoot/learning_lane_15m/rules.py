@@ -1,15 +1,48 @@
-"""Dated paper rules. A window that closed before declaration is not OOS."""
+"""Dated paper rules. A window that closed before declaration is not OOS.
+
+Three things live here besides :func:`decide`, all of them owed by the bar:
+
+* :func:`matched_exposure_permutation` — clause (5). The bar declares a
+  permutation null at a fixed skip count and a pre-registered seed; a JSON
+  object saying so is not the control, so the control is code and
+  :func:`score_rule` cannot produce a scorecard without calling it.
+* :func:`record_trial` — ``trials_to_date`` drives alpha and was prose. It now
+  increments on the declaration of a selection rule and on an L2 look, in code,
+  with a log an invariant can match score notes against.
+* :func:`score_rule` — the scorer, with the bar's guards in front of it rather
+  than in a comment. It refuses a non-binding bar, a failing method suite, and
+  an n below the declared first look.
+"""
 
 from __future__ import annotations
 
 import json
+import math
+import random
 from datetime import datetime
 from pathlib import Path
-from typing import Any
+from typing import Any, Sequence
 
-from golf_offshoot.localtime import to_eastern
+from golf_offshoot.learning_lane_15m.evidence_bar import fee_adjust
+from golf_offshoot.localtime import isoformat_now, to_eastern
 
 REGISTRY_REL = Path("golf-offshoot") / "docs" / "LEARNING_LANE_15M_RULES.json"
+SCORECARD_DIR_REL = Path("golf-offshoot") / "docs"
+SCORECARD_GLOB = "LEARNING_LANE_15M_SCORECARD_*.json"
+
+#: Clause (5), pre-registered on the bar's face. Named here so the check can
+#: compare the bar's declaration against the code that would actually run.
+MATCHED_EXPOSURE_SEED = 20260908
+MATCHED_EXPOSURE_DRAWS = 10000
+
+#: Dotted path the bar must cite for clause (5).
+PERMUTATION_PATH = (
+    "golf_offshoot.learning_lane_15m.rules.matched_exposure_permutation"
+)
+
+
+class RuleNotScorable(RuntimeError):
+    """A guard in front of the scorer fired. Not a score, and not a failure."""
 
 
 def registry_path(*, root: Path | None = None) -> Path:
@@ -51,15 +84,25 @@ def decide(
     close_at: str,
 ) -> dict[str, Any]:
     """Express a fill-or-skip. Does not place anything. Does not invent pnl."""
-    eligible = window_is_oos(rule, close_at=close_at)
-    action = "ineligible"
-    reason = "window closed at or before declared_at; not OOS for this rule"
-    if eligible:
-        kind = str(rule.get("kind") or "")
-        if kind == "baseline" or not rule.get("selects"):
-            action = "fill"
-            reason = "baseline fill at posted mark"
-        elif kind == "selection" and rule.get("id") == "R-SKIP-COINFLIP":
+    kind = str(rule.get("kind") or "")
+    selects = bool(rule.get("selects"))
+    if kind == "baseline" or not selects:
+        # Baseline is "fill what the loop hands you." OOS is a selection-rule
+        # scoring constraint, not a reason to stop the observation book.
+        eligible = True
+        action = "fill"
+        reason = "baseline fill at posted mark"
+    elif not str(close_at or "").strip():
+        # Open candidate, no close stamp yet. score_rule still requires one.
+        eligible = True
+        action = "unknown"
+        reason = f"no expression for {rule.get('id')}"
+    else:
+        eligible = window_is_oos(rule, close_at=close_at)
+        action = "ineligible"
+        reason = "window closed at or before declared_at; not OOS for this rule"
+    if eligible and selects:
+        if kind == "selection" and rule.get("id") == "R-SKIP-COINFLIP":
             if 0.45 < float(posted_yes) < 0.55:
                 action = "skip"
                 reason = "posted_yes inside (0.45, 0.55)"
@@ -76,3 +119,457 @@ def decide(
         "reason": reason,
         "execution": bool(rule.get("execution")),
     }
+
+
+def rule_by_id(rule_id: str, *, root: Path | None = None,
+               registry: dict[str, Any] | None = None) -> dict[str, Any] | None:
+    reg = registry if registry is not None else load_rules(root=root)
+    for rule in reg.get("rules") or []:
+        if str(rule.get("id") or "") == str(rule_id):
+            return rule
+    return None
+
+
+def active_execution_rule(
+    *,
+    root: Path | None = None,
+    registry: dict[str, Any] | None = None,
+) -> dict[str, Any] | None:
+    """The one rule the paper loop honours, or None when the registry is silent.
+
+    A selection rule with ``execution: true`` outranks the baseline — that is
+    what the execution flip means. Two of them executing at once is not a tie
+    to be broken quietly: the loop would be honouring a rule nobody named, so
+    it raises.
+    """
+    reg = registry if registry is not None else load_rules(root=root)
+    live = [r for r in reg.get("rules") or [] if r.get("execution")]
+    selecting = [r for r in live if r.get("selects")]
+    if len(selecting) > 1:
+        raise ValueError(
+            "more than one selection rule has execution=true: "
+            + ", ".join(str(r.get("id")) for r in selecting)
+            + ". The paper loop will not pick one on its own"
+        )
+    if selecting:
+        return selecting[0]
+    return live[0] if live else None
+
+
+# ------------------------------------------------------- clause (2): alpha_k
+
+
+def alpha_k(trials_to_date: int) -> float:
+    """``0.05 / (k(k+1))`` with ``k = trials_to_date + 1``.
+
+    The drafted ``0.05/k`` weights are the harmonic series and diverge, so they
+    control nothing. This schedule sums to 0.05 over unbounded looks.
+    """
+    k = int(trials_to_date) + 1
+    return 0.05 / (k * (k + 1))
+
+
+# --------------------------------------------- clause (5): the actual control
+
+
+def matched_exposure_permutation(
+    baseline_pnl: Sequence[float],
+    rule_fill_pnl: Sequence[float],
+    skipped: Sequence[bool],
+    *,
+    alpha: float,
+    draws: int = MATCHED_EXPOSURE_DRAWS,
+    seed: int = MATCHED_EXPOSURE_SEED,
+) -> dict[str, Any]:
+    """Permutation null holding the skip count fixed and reassigning the skips.
+
+    Clause (1) alone credits mechanical fee avoidance: abstaining at any rate on
+    a book with a strictly positive fee raises ``mean(d)`` with no skill
+    present. This null is centred on abstaining at the *observed rate* with no
+    skill, so the question becomes "did this abstention rule beat abstaining at
+    the same rate?" Deterministic given the seed; reads no new data.
+    """
+    n = len(baseline_pnl)
+    if n == 0 or len(rule_fill_pnl) != n or len(skipped) != n:
+        raise ValueError("baseline_pnl, rule_fill_pnl and skipped must be the same length")
+    if draws < MATCHED_EXPOSURE_DRAWS:
+        raise ValueError(f"the bar pre-registers at least {MATCHED_EXPOSURE_DRAWS} draws")
+    skip_count = sum(1 for flag in skipped if flag)
+
+    def _mean_d(skip_set: set[int]) -> float:
+        total = 0.0
+        for i in range(n):
+            arm = 0.0 if i in skip_set else float(rule_fill_pnl[i])
+            total += arm - float(baseline_pnl[i])
+        return total / n
+
+    observed = _mean_d({i for i, flag in enumerate(skipped) if flag})
+    rng = random.Random(seed)
+    indices = list(range(n))
+    null: list[float] = []
+    for _ in range(int(draws)):
+        null.append(_mean_d(set(rng.sample(indices, skip_count))))
+    null.sort()
+    # >= observed, so the p-value is conservative on ties.
+    at_or_above = sum(1 for value in null if value >= observed)
+    position = max(0, min(len(null) - 1, math.ceil((1.0 - alpha) * len(null)) - 1))
+    quantile = null[position]
+    return {
+        "observed_mean_d": round(observed, 6),
+        "quantile": round(quantile, 6),
+        "quantile_at": round(1.0 - alpha, 6),
+        "p_value": round((at_or_above + 1) / (len(null) + 1), 6),
+        "exceeds_quantile": observed > quantile,
+        "draws": int(draws),
+        "seed": int(seed),
+        "skip_count": skip_count,
+        "n": n,
+    }
+
+
+# ------------------------------------------------------ clause (1): the t-test
+
+
+def _betacf(a: float, b: float, x: float) -> float:
+    tiny = 1e-300
+    qab, qap, qam = a + b, a + 1.0, a - 1.0
+    c = 1.0
+    d = 1.0 - qab * x / qap
+    if abs(d) < tiny:
+        d = tiny
+    d = 1.0 / d
+    h = d
+    for m in range(1, 201):
+        m2 = 2 * m
+        aa = m * (b - m) * x / ((qam + m2) * (a + m2))
+        d = 1.0 + aa * d
+        if abs(d) < tiny:
+            d = tiny
+        c = 1.0 + aa / c
+        if abs(c) < tiny:
+            c = tiny
+        d = 1.0 / d
+        h *= d * c
+        aa = -(a + m) * (qab + m) * x / ((a + m2) * (qap + m2))
+        d = 1.0 + aa * d
+        if abs(d) < tiny:
+            d = tiny
+        c = 1.0 + aa / c
+        if abs(c) < tiny:
+            c = tiny
+        d = 1.0 / d
+        delta = d * c
+        h *= delta
+        if abs(delta - 1.0) < 3e-16:
+            break
+    return h
+
+
+def _betainc(a: float, b: float, x: float) -> float:
+    """Regularised incomplete beta ``I_x(a, b)``."""
+    if x <= 0.0:
+        return 0.0
+    if x >= 1.0:
+        return 1.0
+    front = math.exp(
+        math.lgamma(a + b) - math.lgamma(a) - math.lgamma(b)
+        + a * math.log(x) + b * math.log(1.0 - x)
+    )
+    if x < (a + 1.0) / (a + b + 2.0):
+        return front * _betacf(a, b, x) / a
+    return 1.0 - math.exp(
+        math.lgamma(a + b) - math.lgamma(a) - math.lgamma(b)
+        + b * math.log(1.0 - x) + a * math.log(x)
+    ) * _betacf(b, a, 1.0 - x) / b
+
+
+def student_t_sf(t: float, df: float) -> float:
+    """P(T > t) for Student's t with ``df`` degrees of freedom."""
+    if df <= 0:
+        raise ValueError("degrees of freedom must be positive")
+    x = df / (df + float(t) * float(t))
+    tail = 0.5 * _betainc(df / 2.0, 0.5, x)
+    return tail if t > 0 else 1.0 - tail
+
+
+def paired_t_against_floor(d: Sequence[float], delta: float) -> dict[str, Any]:
+    """One-sided paired t-test of ``H0: mean(d) <= delta``."""
+    n = len(d)
+    if n < 2:
+        raise ValueError("a paired t-test needs at least two windows")
+    mean = sum(float(v) for v in d) / n
+    var = sum((float(v) - mean) ** 2 for v in d) / (n - 1)
+    sd = math.sqrt(var)
+    se = sd / math.sqrt(n) if sd else 0.0
+    t = (mean - float(delta)) / se if se else 0.0
+    return {
+        "n": n,
+        "mean_d": round(mean, 6),
+        "sd_d": round(sd, 6),
+        "se": round(se, 6),
+        "delta": float(delta),
+        "t": round(t, 6),
+        "p_value": round(student_t_sf(t, n - 1), 8) if se else None,
+    }
+
+
+# --------------------------------------------------- trials_to_date, in code
+
+
+TRIAL_DECLARATION = "declaration"
+TRIAL_L2_LOOK = "l2_look"
+
+
+def trials_to_date(*, root: Path | None = None,
+                   registry: dict[str, Any] | None = None) -> int:
+    reg = registry if registry is not None else load_rules(root=root)
+    return int(reg.get("trials_to_date") or 0)
+
+
+def record_trial(
+    subject: str,
+    kind: str,
+    *,
+    root: Path | None = None,
+    note: str = "",
+    now_iso: str | None = None,
+) -> dict[str, Any]:
+    """Increment ``trials_to_date`` and log why. Baseline naming is not a trial.
+
+    The counter defines the multiplicity family. Incrementing it "once per
+    first-look score" counts what got written up rather than what got tried,
+    which is the wrong denominator and always flatters. Declaration of a
+    selection rule and an L2 confirmation look are the two events that count.
+    """
+    if kind not in {TRIAL_DECLARATION, TRIAL_L2_LOOK}:
+        raise ValueError(f"{kind!r} is not a trial kind; baseline naming is not a trial")
+    path = registry_path(root=root)
+    reg = json.loads(path.read_text(encoding="utf-8"))
+    entry = {
+        "subject": str(subject),
+        "kind": kind,
+        "at": now_iso or isoformat_now(),
+        "note": note,
+    }
+    log = list(reg.get("trials_log") or [])
+    log.append(entry)
+    reg["trials_log"] = log
+    reg["trials_to_date"] = int(reg.get("trials_to_date") or 0) + 1
+    entry["trials_to_date_after"] = reg["trials_to_date"]
+    path.write_text(json.dumps(reg, indent=2) + "\n", encoding="utf-8")
+    return entry
+
+
+def declare_rule(
+    rule: dict[str, Any],
+    *,
+    root: Path | None = None,
+    now_iso: str | None = None,
+) -> dict[str, Any]:
+    """Append a rule to the registry, incrementing the counter when it selects.
+
+    A rule declared after the execution flip may carry ``execution: true`` from
+    birth. Its parameters are pre-registered only if ``declared_at`` predates
+    every informing mark, including marks already published on this tree — the
+    registry records the claim, it does not adjudicate it.
+    """
+    rule_id = str(rule.get("id") or "").strip()
+    if not rule_id:
+        raise ValueError("a rule needs an id")
+    path = registry_path(root=root)
+    reg = json.loads(path.read_text(encoding="utf-8"))
+    if any(str(r.get("id") or "") == rule_id for r in reg.get("rules") or []):
+        raise ValueError(f"{rule_id} is already declared; a redeclaration is a new rule")
+    row = dict(rule)
+    row.setdefault("declared_at", now_iso or isoformat_now())
+    reg.setdefault("rules", []).append(row)
+    path.write_text(json.dumps(reg, indent=2) + "\n", encoding="utf-8")
+    if row.get("selects"):
+        record_trial(rule_id, TRIAL_DECLARATION, root=root,
+                     note="selection rule declared", now_iso=now_iso)
+    return row
+
+
+# ---------------------------------------------------------------- the scorer
+
+
+def scorecard_paths(*, root: Path | None = None) -> list[Path]:
+    docs = registry_path(root=root).parent
+    return sorted(docs.glob(SCORECARD_GLOB)) if docs.is_dir() else []
+
+
+def _bar(root: Path | None, bar: dict[str, Any] | None) -> dict[str, Any]:
+    if bar is not None:
+        return bar
+    from golf_offshoot.learning_lane_15m.evidence_bar import load_evidence_bar
+
+    return load_evidence_bar(root=root)
+
+
+def _assert_scorable(
+    rule: dict[str, Any],
+    bar: dict[str, Any],
+    n: int,
+    look: str,
+    *,
+    root: Path | None,
+    allow_nonbinding: bool,
+) -> None:
+    if not rule.get("selects"):
+        raise RuleNotScorable(
+            f"{rule.get('id')} selects nothing; naming a baseline is not a trial and "
+            "scoring one is not a result"
+        )
+    first_look_n = int((bar.get("looks") or {}).get("first_look_n") or 0)
+    if not first_look_n:
+        raise RuleNotScorable("the bar declares no first_look_n")
+    if n < first_look_n:
+        raise RuleNotScorable(
+            f"{n} eligible windows is below the declared first look of {first_look_n}; "
+            "continuous scoring against a threshold manufactures significance"
+        )
+    if look == "L2" and not rule.get("execution"):
+        raise RuleNotScorable(
+            "L2 confirmation requires lived execution; a replayed survivor is not a "
+            "lived one"
+        )
+    if allow_nonbinding:
+        return
+    if not bar.get("binding"):
+        raise RuleNotScorable(
+            "the evidence bar is not binding, so a scorecard against it would be a "
+            "number with no threshold behind it"
+        )
+    from golf_offshoot.learning_lane_15m.critic import load_findings
+
+    findings = load_findings(root=root)
+    if not findings:
+        raise RuleNotScorable("no critic-invariants findings on this tree to score under")
+    if findings.get("passed") is not True:
+        raise RuleNotScorable(
+            "critic-invariants reports "
+            f"{', '.join(findings.get('failing') or ['failing checks'])}; the method "
+            "checks must pass on the bytes proposed to bind before a rule is scored"
+        )
+
+
+def score_rule(
+    rule_id: str,
+    windows: Sequence[dict[str, Any]],
+    *,
+    look: str = "L1",
+    root: Path | None = None,
+    bar: dict[str, Any] | None = None,
+    registry: dict[str, Any] | None = None,
+    allow_nonbinding: bool = False,
+    now_iso: str | None = None,
+) -> dict[str, Any]:
+    """Apply every binding clause and return a scorecard. Never an ADMIT.
+
+    ``windows`` carries ``close_at``, ``posted_yes``, ``recorded_pnl`` and
+    ``stake`` per eligible window. Every pnl is fee-adjusted through
+    :func:`fee_adjust` before it is compared — the recorded book has no fee
+    term, and comparing gross numbers under a fee thesis is incoherent.
+    """
+    look = str(look).upper()
+    if look not in {"L1", "L2"}:
+        raise ValueError("look must be L1 or L2")
+    reg = registry if registry is not None else load_rules(root=root)
+    rule = rule_by_id(rule_id, root=root, registry=reg)
+    if rule is None:
+        raise RuleNotScorable(f"{rule_id} is not in the registry")
+    resolved = _bar(root, bar)
+    _assert_scorable(rule, resolved, len(windows), look,
+                     root=root, allow_nonbinding=allow_nonbinding)
+
+    dist = resolved.get("distinguishable") or {}
+    delta = float(dist.get("effect_floor_usd_per_window"))
+    control = dist.get("matched_exposure") or {}
+    draws = int(control.get("draws") or MATCHED_EXPOSURE_DRAWS)
+    seed = int(control.get("seed") or MATCHED_EXPOSURE_SEED)
+    k_before = trials_to_date(root=root, registry=reg)
+    alpha = alpha_k(k_before)
+
+    baseline_pnl: list[float] = []
+    rule_fill_pnl: list[float] = []
+    skipped: list[bool] = []
+    rows: list[dict[str, Any]] = []
+    for window in windows:
+        posted = float(window["posted_yes"])
+        stake = float(window.get("stake") or 1.0)
+        recorded = float(window["recorded_pnl"])
+        verdict = decide(rule, posted_yes=posted, close_at=str(window["close_at"]))
+        skip = verdict["action"] == "skip"
+        base_adj = fee_adjust(recorded, posted, stake, root=root)
+        # A rule that fills the same contract as the baseline books the same
+        # number. A rule that fills a different one supplies its own recorded
+        # pnl and mark; nothing here re-derives a fill that was never booked.
+        fill_adj = fee_adjust(
+            float(window.get("rule_recorded_pnl", recorded)),
+            float(window.get("rule_posted_yes", posted)),
+            stake,
+            root=root,
+        )
+        baseline_pnl.append(base_adj)
+        rule_fill_pnl.append(fill_adj)
+        skipped.append(skip)
+        rows.append(
+            {
+                "window_id": window.get("window_id") or "",
+                "close_at": str(window["close_at"]),
+                "posted_yes": posted,
+                "action": verdict["action"],
+                "pnl_baseline_fee_adj": base_adj,
+                "pnl_rule_fee_adj": 0.0 if skip else fill_adj,
+            }
+        )
+
+    d = [row["pnl_rule_fee_adj"] - row["pnl_baseline_fee_adj"] for row in rows]
+    rule_side = [row["pnl_rule_fee_adj"] for row in rows]
+    n = len(rows)
+    clause_1 = paired_t_against_floor(d, delta)
+    clause_1["alpha"] = alpha
+    clause_1["passes"] = bool(clause_1["p_value"] is not None and clause_1["p_value"] < alpha)
+    mean_rule = sum(rule_side) / n
+    clause_4 = {"mean_pnl_rule_fee_adj": round(mean_rule, 6), "passes": mean_rule > 0}
+    clause_5 = matched_exposure_permutation(
+        baseline_pnl, rule_fill_pnl, skipped, alpha=alpha, draws=draws, seed=seed
+    )
+    clause_5["passes"] = bool(clause_5["exceeds_quantile"])
+    skip_count = sum(1 for flag in skipped if flag)
+    passes = clause_1["passes"] and clause_4["passes"] and clause_5["passes"]
+
+    card = {
+        "schema": 1,
+        "lane": "learning_lane_15m",
+        "framing": (
+            "A scorecard is not an ADMIT, not an edge, not a track record and not a "
+            "dated record. It is arithmetic under a named bar."
+        ),
+        "rule_id": rule_id,
+        "look": look,
+        "scored_at": now_iso or isoformat_now(),
+        "n": n,
+        "skip_count": skip_count,
+        "skip_rate": round(skip_count / n, 6),
+        "alpha_k": alpha,
+        "trials_to_date_before": k_before,
+        "delta": delta,
+        "fee_adjust": "golf_offshoot.learning_lane_15m.evidence_bar.fee_adjust",
+        "permutation_control": PERMUTATION_PATH,
+        "clause_1_paired_t_vs_floor": clause_1,
+        "clause_4_positive_side": clause_4,
+        "clause_5_matched_exposure": clause_5,
+        "passes_every_binding_clause": passes,
+        "cost_accounting_is_incomplete": (
+            "the bid/ask spread is omitted and unmeasured; no figure here is a full "
+            "cost accounting"
+        ),
+        "windows": rows,
+    }
+    if look == "L2":
+        card["trial_recorded"] = record_trial(
+            rule_id, TRIAL_L2_LOOK, root=root,
+            note="L2 confirmation look", now_iso=now_iso,
+        )
+    return card

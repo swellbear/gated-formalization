@@ -197,8 +197,8 @@ def test_the_findings_artifact_is_the_proof(tmp_path):
         "declared_at_precedes_scored_windows",
         "trials_counter_is_consistent",
         "fee_schedule_hash_recorded",
-        "honesty_stamp_is_fresh",
     ]
+    assert [c["id"] for c in payload["desk_checks"]] == ["honesty_stamp_is_fresh"]
 
 
 # ------------------------------------- Part 6: the ratchet catches the bar
@@ -223,7 +223,13 @@ def test_a_delta_at_its_own_detection_floor_fails(tmp_path):
     check = critic.check_delta_above_detection_floor(root=tmp_path)
 
     assert check["state"] == critic.FAIL
-    assert check["evidence"]["ratio"] < 1.10
+    # The check now reads the bar's H0. A draft with no h0, or a zero-null
+    # design with δ sitting on its own MDE, is a fail either way.
+    ev = check["evidence"]
+    if "delta_over_zero_null_mde" in ev:
+        assert ev["delta_over_zero_null_mde"] < 1.10
+    else:
+        assert ev.get("h0") in (None, "") or "null" in check["detail"]
 
 
 def test_a_skip_scored_as_zero_against_a_filling_baseline_fails(tmp_path):
@@ -358,7 +364,7 @@ def test_a_failing_findings_report_owes_operator(tmp_path):
         root=tmp_path,
     )
 
-    events = triggers.critic_findings_failing(root=tmp_path)
+    events = triggers.critic_findings_failing(wake={}, root=tmp_path)
 
     assert len(events) == 1
     assert "delta_above_detection_floor" in events[0]["detail"]
@@ -369,7 +375,100 @@ def test_a_failing_findings_report_owes_operator(tmp_path):
 
 def test_a_passing_findings_report_owes_nobody(tmp_path):
     critic.write_critic_findings({"passed": True, "failing": [], "checks": []}, root=tmp_path)
-    assert triggers.critic_findings_failing(root=tmp_path) == []
+    assert triggers.critic_findings_failing(wake={}, root=tmp_path) == []
+
+
+def test_the_same_disclosed_failing_set_does_not_reowe_operator(tmp_path):
+    # 4a: empty schedule_sha256 after a recorded 429 is already on the bar's
+    # face. Re-paging Operator for it every tick is the judicial heartbeat.
+    critic.write_critic_findings(
+        {"passed": False, "failing": ["fee_schedule_hash_recorded"], "checks": []},
+        root=tmp_path,
+    )
+    bar = tmp_path / critic.BAR_JSON_REL
+    bar.parent.mkdir(parents=True, exist_ok=True)
+    bar.write_text(
+        json.dumps({"binding_conditions": [{"detail": "fee_schedule_hash_recorded still FAILS"}]}),
+        encoding="utf-8",
+    )
+    already = {
+        "events": [
+            {
+                "kind": triggers.EVENT_CRITIC_FINDINGS_FAILING,
+                "critic_failing": ["fee_schedule_hash_recorded"],
+            }
+        ]
+    }
+
+    assert triggers.critic_findings_failing(wake=already, root=tmp_path) == []
+
+
+def test_a_new_failing_check_does_reowe_operator(tmp_path):
+    critic.write_critic_findings(
+        {
+            "passed": False,
+            "failing": ["fee_schedule_hash_recorded", "matched_exposure_control"],
+            "checks": [],
+        },
+        root=tmp_path,
+    )
+    already = {
+        "events": [
+            {
+                "kind": triggers.EVENT_CRITIC_FINDINGS_FAILING,
+                "critic_failing": ["fee_schedule_hash_recorded"],
+            }
+        ]
+    }
+
+    events = triggers.critic_findings_failing(wake=already, root=tmp_path)
+    assert len(events) == 1
+    assert "matched_exposure_control" in events[0]["detail"]
+
+
+def test_leftover_settle_reasons_are_dropped_from_judicial_lines():
+    from golf_offshoot.learning_lane_15m.learn import rekey_leftover_owed
+
+    leftover = [
+        {
+            "role": "digestor",
+            "reasons": [
+                "new_settle KXBTC15M-26SEP081000-00",
+                "pending_cleared KXBTC15M-26SEP081000-00",
+            ],
+        },
+        {
+            "role": "operator",
+            "reasons": [
+                "new_settle KXBTC15M-26SEP080845-45",
+                "artifact_unreviewed lab_proposed",
+                "critic_findings_failing critic-invariants",
+            ],
+        },
+        {"role": "soften-critic", "reasons": ["artifact_unreviewed evidence_bar"]},
+    ]
+
+    cleaned = rekey_leftover_owed(leftover, drop_disclosed_critic_failing=True)
+    by_role = {row["role"]: row["reasons"] for row in cleaned}
+    assert "digestor" not in by_role
+    assert by_role["operator"] == ["artifact_unreviewed lab_proposed"]
+    assert by_role["soften-critic"] == ["artifact_unreviewed evidence_bar"]
+
+
+def test_critic_verdicts_ignore_a_clock_in_detail():
+    from golf_offshoot.learning_lane_15m.runner import critic_verdicts
+
+    a = {
+        "passed": False,
+        "checks": [{"id": "honesty_stamp_is_fresh", "state": "FAIL", "detail": "105s old"}],
+        "reviewed": [{"sha256": "aaa"}],
+    }
+    b = {
+        "passed": False,
+        "checks": [{"id": "honesty_stamp_is_fresh", "state": "FAIL", "detail": "195s old"}],
+        "reviewed": [{"sha256": "aaa"}],
+    }
+    assert critic_verdicts(a) == critic_verdicts(b)
 
 
 def test_a_blind_detector_raises_instead_of_reporting_nothing(monkeypatch):
