@@ -1,0 +1,12 @@
+{
+  "schema": 1,
+  "role": "validator",
+  "validated_at": "2026-09-08T08:52:43.628048-04:00",
+  "manifest_path": "C:\\Users\\bearh\\gated-formalization-master-hub\\docs\\observability-hub\\data\\manifest.json",
+  "byte_len": 56123,
+  "sha256": "9c91dfdbe9f6eb3e1c88cdaf16ab927836a92194c96683fc8f2a96e0354822e4",
+  "strict": true,
+  "exit_code": 0,
+  "errors": [],
+  "warnings": []
+}
