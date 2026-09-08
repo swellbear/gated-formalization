@@ -63,6 +63,15 @@ NO_PNL = "no pnl on disk"
 NO_PAPER = "n/a"
 PENDING_WORD = "SETTLE_PENDING"
 
+# The published manifest words a window whose paper book is not on this tree as a missing paper
+# join (``learn.MISSING_JOIN_BANNER``, LEARNING_LANE_15M_SOURCE_DIGEST.md §4a). The digest is
+# explicit that this is a missing join and *not* a pending window, so such a row is never drawn or
+# counted as a paper-book join on this tree and never folded into the SETTLE_PENDING count.
+# Doubles as the prefix matched against the published sentence, so a re-worded tail still lands here.
+MISSING_JOIN_WORD = "missing paper join"
+MISSING_JOIN_CHIP = "NO RESULT HERE"
+NO_BOOK_HERE = "book not on this tree"
+
 BG = "#f5f2ec"
 BAND = "#e8e2d5"
 INK = "#171717"
@@ -127,6 +136,8 @@ class WindowRow:
     paper_settle: str = ""
     paper_pnl: float | None = None
     paper_pnl_text: str = ""
+    #: The published lineage names a paper book for this window that is not on this tree.
+    missing_join: bool = False
 
 
 @dataclass(frozen=True)
@@ -534,6 +545,7 @@ def collect_board() -> list[Lineage]:
                 paper_settle=paper_settle,
                 paper_pnl=paper_pnl,
                 paper_pnl_text=paper_pnl_text,
+                missing_join=paper_settle.strip().lower().startswith(MISSING_JOIN_WORD),
             )
         )
 
@@ -582,6 +594,10 @@ def _result_chip(row: WindowRow) -> tuple[str, str, str]:
         return ("YES", "#ffffff", YES)
     if result == "no":
         return ("NO", "#ffffff", NO)
+    if row.missing_join:
+        # No official result for this window is on this tree. Saying PENDING here would read as
+        # "Kalshi has not settled it yet", which is a different claim than the file makes.
+        return (MISSING_JOIN_CHIP, INK, CHIP)
     return ("PENDING", PENDING, PENDING_FILL)
 
 
@@ -603,7 +619,9 @@ def _window_text(row: WindowRow, tz: Any) -> str:
 
 def _cells(row: WindowRow, tz: Any) -> dict[str, str]:
     join = "paper join" if row.paper_join else "journal only"
-    if row.paper_join and row.paper_side:
+    if row.missing_join:
+        join = NO_BOOK_HERE
+    elif row.paper_join and row.paper_side:
         join = f"paper join · {row.paper_side}"
     return {
         "ticker": row.ticker,
@@ -612,8 +630,12 @@ def _cells(row: WindowRow, tz: Any) -> dict[str, str]:
         "kalshi_status": row.kalshi_status or "not recorded",
         "kalshi_result": "",  # drawn as a labelled chip
         "expiry": row.expiry_value or ("n/a" if not row.kalshi_result else "not recorded"),
-        "mark": f"{row.paper_mark:.4g}" if row.paper_mark is not None else (NO_PAPER if not row.paper_join else "not recorded"),
-        "paper_settle": row.paper_settle or NO_PAPER,
+        "mark": f"{row.paper_mark:.4g}"
+        if row.paper_mark is not None
+        else (NO_PAPER if not row.paper_join or row.missing_join else "not recorded"),
+        # The row keeps the manifest's full sentence; the cell draws the short form because the
+        # published wording is wider than this column and the footer carries the rest.
+        "paper_settle": MISSING_JOIN_WORD if row.missing_join else (row.paper_settle or NO_PAPER),
         "paper_pnl": row.paper_pnl_text or NO_PNL,
         "source": row.settle_src,
     }
@@ -847,12 +869,15 @@ def _draw_header(
     journal = _journal()
     root = settlements_dir_15m()
     settle_files = len(list(root.glob("*.json"))) if root.is_dir() else 0
-    joins = sum(len(b.rows) for b in blocks if b.key != LINEAGE_TAPE)
+    # A missing paper join is not a join on this tree and not a pending window, so it is kept out
+    # of both counts and named in its own.
+    joins = sum(1 for b in blocks if b.key != LINEAGE_TAPE for row in b.rows if not row.missing_join)
     tape = sum(b.total for b in blocks if b.key == LINEAGE_TAPE)
     drawn = [row for block in blocks for row in block.rows]
     yes = sum(1 for row in drawn if row.kalshi_result == "yes")
     no = sum(1 for row in drawn if row.kalshi_result == "no")
-    pending = len(drawn) - yes - no
+    missing = sum(1 for row in drawn if row.missing_join and not row.kalshi_result)
+    pending = len(drawn) - yes - no - missing
 
     def from_top(y_in: float) -> float:
         return 1.0 - fy(y_in)
@@ -870,7 +895,7 @@ def _draw_header(
     lines = (
         lane_line,
         f"{joins} paper-book join(s) · {tape} Kalshi-only journal row(s) · {settle_files} settlement file(s) · "
-        f"result=yes {yes} · result=no {no} · {PENDING_WORD} {pending}",
+        f"result=yes {yes} · result=no {no} · {PENDING_WORD} {pending} · {MISSING_JOIN_WORD} {missing}",
         (f"journal generated_at={stamp}" if stamp else "journal generated_at not recorded")
         + f" · window clock in {tz_short} · rendered {datetime.now().astimezone():%Y-%m-%d %H:%M %Z}",
     )
@@ -899,6 +924,11 @@ def _draw_header(
             patch_cls(facecolor=YES, edgecolor=INK, label='chip "YES" — file records kalshi_result = yes'),
             patch_cls(facecolor=NO, edgecolor=INK, label='chip "NO" — file records kalshi_result = no'),
             patch_cls(facecolor=PENDING_FILL, edgecolor=INK, label=f'chip "PENDING" — {PENDING_WORD}, no result on disk'),
+            patch_cls(
+                facecolor=CHIP,
+                edgecolor=INK,
+                label=f'chip "{MISSING_JOIN_CHIP}" — {MISSING_JOIN_WORD}, not a pending window',
+            ),
         ],
         title="KALSHI RESULT column (every chip carries its word)",
         loc="upper left",
@@ -955,6 +985,10 @@ def _draw_footer(fig: Any, fx: Any, fy: Any, tz_long: str) -> None:
         "that book's own wording and its own recorded number. Nothing is recomputed, averaged or carried across lineages.",
         f"KALSHI STATUS / KALSHI RESULT / EXPIRY VALUE are copied from the settle join. A window with no Kalshi result "
         f"on disk stays {PENDING_WORD}; a result is never inferred from a close time or a DIY benchmark average.",
+        f'"{MISSING_JOIN_WORD}" / "{NO_BOOK_HERE}" = the published lineage names a paper book for that window that is '
+        "not on this tree, and no official result for it is on this tree either. Nothing is inferred in either direction.",
+        f"Such a row is counted apart from {PENDING_WORD} rather than drawn as waiting on Kalshi, its chip reads "
+        f'"{MISSING_JOIN_CHIP}", and no paper pnl exists here for it so none is invented.',
         f"sources on disk: golf-offshoot/data/learning_lane_15m/{{settlements/*.json, latest/journal.json, paper/*.json, "
         f"paper/ledger.json}} + {REL_MANIFEST.as_posix()} · window clock {tz_long}.",
         f"{LANE} / {SERIES} only. No golf WC1, Ill or calibration board on this lane. PHASE 1 paper observation — "
