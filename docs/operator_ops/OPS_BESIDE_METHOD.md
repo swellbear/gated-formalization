@@ -17,7 +17,7 @@ An ops ADMIT records the frozen exit (PASS / FAIL / park unproven / residual) un
 - **demo-as-edge** / Kalshi-demo or MOCK/DEMO fills as settles
 - **cash deposit-withdraw** scopes (no wallet, bank, or cash-control work under an ops Soften)
 
-Soften Critic stays **deferred** (not hired) unless Founder hires.
+Soften Critic is **hired** (2026-09-08). A proposed ADMIT still needs its written attack from a separate session. The hire does not establish edge.
 
 ## Dual Softened path
 
@@ -42,6 +42,6 @@ Kalshi Micro and the 15-min researcher **never self-admit**.
 
 - Not a Soften of usefulness / verdict.
 - Not an auto-GO of C2/C4.
-- Not a Soften Critic hire.
+- Not a Soften of usefulness / verdict. Soften Critic is hired; that hire is not an ADMIT.
 - Not elevate / skill-met / productize.
 - Not permission to treat a dated FAIL as a banked edge on the next weekly invent.

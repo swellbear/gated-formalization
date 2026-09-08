@@ -9,9 +9,9 @@ Paste into the ADMIT chat or docs-fold PR. Same pass: Softened SoT **then** docs
 - [ ] **5. After Founder reject:** stamp REJECTED/PARKED — never HOLD Soften pending GO. Lab waiting Soften on REJECTED = hard-stop.
 - [ ] **6. On dated-record ADMIT:** write Softened SoT (box-lab twin if mid-run) **and** update `SOFTENED_SET.md` + stamp (incl. Edge Softened/established? default **N** on ops tracks).
 - [ ] **7. Launch docs fold in this same pass** (do not wait for a second Founder ping). Record Docs fold PR# + **both** Softened SoT paths (box-lab + master).
-- [ ] **8. Honesty / Hard NOs:** no elevate / skill-met / productize; usefulness / verdict **NOT** Softened; no auto-GO C2/C4; Soften Critic **not** hired; ops tracks: no banked-edge / invent finishes / demo-as-edge / cash deposit-withdraw.
+- [ ] **8. Honesty / Hard NOs:** no elevate / skill-met / productize; usefulness / verdict **NOT** Softened; no auto-GO C2/C4; Soften Critic **hired** — written attack from a separate session recorded and answered; ops tracks: no banked-edge / invent finishes / demo-as-edge / cash deposit-withdraw.
 - [ ] **9. Auto-merge docs-only CLEAN:** mark ready if draft, then squash-merge. Master Softened SoT path is post-fold authority.
 
 ---
 
-*Does not change Material Admission Check / Amb scoring. Does not hire Soften Critic. Does not Soften usefulness / verdict. Does not auto-GO C2/C4.*
+*Does not change Material Admission Check / Amb scoring. Soften Critic is hired. Does not Soften usefulness / verdict. Does not auto-GO C2/C4.*

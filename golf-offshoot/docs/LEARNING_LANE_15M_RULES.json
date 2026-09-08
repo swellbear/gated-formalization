@@ -6,6 +6,11 @@
   "lab_admits": false,
   "trading_armed": false,
   "opened_at": "2026-09-08T05:56:00-04:00",
+  "trials_to_date": 0,
+  "evidence_bar": {
+    "path": "golf-offshoot/docs/LEARNING_LANE_15M_EVIDENCE_BAR.json",
+    "binding": false
+  },
   "rules": [
     {
       "id": "R-BASELINE-FILL-ALL",

@@ -6,11 +6,11 @@ Thread lines are **one sentence, newest first, max 10**. Long findings belong in
 
 | Field | Value |
 |-------|--------|
-| Updated | 2026-09-08 06:12 ET |
+| Updated | 2026-09-08 08:32 ET |
 | Active role | chief-of-staff |
-| Job | Fee caveat is on the digest. Autostart scripts still need to land and be registered locally. |
-| Status | working |
-| Handoff | Founder must run `Register-15m-Learning-Hub-Task.ps1` in an elevated local PowerShell. An agent cannot elevate. |
+| Job | Evidence bar drafted (not binding). Soften Critic hired. Promotion and Operator runtime not started. |
+| Status | done |
+| Handoff | Bar is not binding. Next session: Soften Critic attacks the bar (separate session). Do not score R-SKIP-COINFLIP. |
 | Waiting on Founder | **N** |
 
 ## Ask Founder
@@ -34,6 +34,9 @@ The runner exports locally. It does **not** commit or push. The public page is *
 
 ## Thread
 
+- 2026-09-08 08:32 ET  CoS: Soften Critic hired (skill on tree). Evidence bar remains a draft until a separate-session attack and Founder acknowledgement. next=soften-critic (later session)
+- 2026-09-08 08:30 ET  operator → chief-of-staff: drafted the 15m evidence bar (δ=$0.28, α=0.05/(trials+1), L2 held out, fee hurdle cited, not binding). Did not score R-SKIP-COINFLIP. next=chief-of-staff
+- 2026-09-08 08:28 ET  CoS: tick — digestor/operator/validator STALE; 10 windows closed after 05:56, 1 open; hub parent 2940 / listener 21456; scheduled task missing. Founder GO is bar then hire. next=operator
 - 2026-09-08 06:10 ET  digestor → chief-of-staff: recorded 100.00 → 93.86 / `betting_pnl` -6.14 now carry the known-fee omission caveat, citing the Operator note, with no corrected total. next=chief-of-staff
 - 2026-09-08 06:00 ET  validator → chief-of-staff: `validate_hub.py --strict` OK on export `generated_at` 2026-09-08T05:52:39-04:00. Publishing is still a manual commit/push. next=chief-of-staff
 - 2026-09-08 05:55 ET  CoS → systems: Digestor landed the overnight SOURCE digest; Operator recorded `072245` CLOSED / no backfill; publish the eight-hour-stale Pages snapshot. next=systems
@@ -41,5 +44,3 @@ The runner exports locally. It does **not** commit or push. The public page is *
 - 2026-09-08 05:52 ET  digestor → operator: SOURCE digest refreshed from 05:48 files; lineage A 100.00 → 93.86; `072245` named as an outage gap with no inferred result. next=operator
 - 2026-09-08 05:50 ET  digestor START: SOURCE digest is still the 18:03 stamp; I am rewriting it from the overnight files and naming the `072245` outage gap. next=digestor
 - 2026-09-07 23:15 ET  CoS: Digestor stayed on the whitelist; the as-of stamp was clearing SOURCE. Proof is now `LEARNING_LANE_15M_SOURCE_DIGEST.md` only. next=chief-of-staff
-- 2026-09-07 22:30 ET  CoS: `latest/RUNNER_ARMED` is written (gitignored). #168/`c6354cc` is on master. Whitelist stays illustrator, systems, digestor. Pages is still not self-maintaining. next=chief-of-staff
-- 2026-09-07 22:20 ET  CoS: arming the runner — PaperWatch invokes one pass every tick; human artifact-proof clears owed roles with `served_kind` kept; publish stays manual (Pages is not self-maintaining). next=chief-of-staff

@@ -6,6 +6,8 @@ def test_registry_has_dated_first_rules():
     ids = [row["id"] for row in payload["rules"]]
     assert ids == ["R-BASELINE-FILL-ALL", "R-SKIP-COINFLIP"]
     assert payload["lab_admits"] is False
+    assert payload["trials_to_date"] == 0
+    assert payload["evidence_bar"]["binding"] is False
     skip = next(row for row in payload["rules"] if row["id"] == "R-SKIP-COINFLIP")
     assert skip["declared_at"] == "2026-09-08T05:56:00-04:00"
     assert skip["execution"] is False

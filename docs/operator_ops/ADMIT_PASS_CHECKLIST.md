@@ -20,13 +20,13 @@ Run this on every Operator Soften / Harden / Kill / dated-record / park ADMIT **
 
 7. **Launch the docs fold in this same pass.** Do not wait for a second Founder ping. Record **Docs fold PR#** and **both** Softened SoT paths (box-lab + master). See [`DOCS_FOLD_LATENCY.md`](DOCS_FOLD_LATENCY.md). If a prior fold is in flight, queue (habit §A) — still in this pass.
 
-8. **Honesty / Hard NOs.** No elevate / skill-met / productize. Usefulness / verdict **NOT** Softened this fold. No auto-GO C2/C4. Soften Critic **not** hired. Digestor / Lab never Soften / Harden / Kill (`lab_admits=false`). Ops tracks: no banked-edge, invent finishes, demo-as-edge, or cash deposit-withdraw. Include [`templates/SOFTEN_PR_HONESTY_CHECKLIST.md`](../../templates/SOFTEN_PR_HONESTY_CHECKLIST.md) on the PR.
+8. **Honesty / Hard NOs.** No elevate / skill-met / productize. Usefulness / verdict **NOT** Softened this fold. No auto-GO C2/C4. Soften Critic **is hired** — a written attack from a **separate session** must exist, and each objection must be answered in this pass. Digestor / Lab never Soften / Harden / Kill (`lab_admits=false`). Ops tracks: no banked-edge, invent finishes, demo-as-edge, or cash deposit-withdraw. Include [`templates/SOFTEN_PR_HONESTY_CHECKLIST.md`](../../templates/SOFTEN_PR_HONESTY_CHECKLIST.md) on the PR.
 
 9. **Auto-merge docs-only CLEAN.** Mark ready if draft, then squash-merge. Master Softened SoT path is post-fold authority. Digestor / Lab treat master stamp + Softened_SET as carry — do not re-ask for a second admit.
 
 ## What this is not
 
 - Not a Material Admission Check or Amb scoring change.
-- Not a Soften Critic hire.
+- Not a change to Material Admission Check scoring. Soften Critic is hired; this checklist now requires its attack.
 - Not a usefulness / verdict Soften.
 - Not an auto-GO of C2/C4.

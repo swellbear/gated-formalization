@@ -40,7 +40,6 @@ Only if something **important must change or be reviewed**. One question, then w
 
 Ask:
 
-- Hire Soften Critic
 - C2 / C4 / TABLE / reopen WC3+
 - Expand past `KXBTC15M` or retune golf θ
 - Arm trading, cash, Kalshi keys
@@ -86,7 +85,7 @@ The wake path detects evidence and names which roles are owed. It never writes a
 
 ### Clerical runner (armed by `latest/RUNNER_ARMED`)
 
-`python -m golf_offshoot learn-15m-runner` may serve **only** the named whitelist: Illustrator re-render, Systems local export, Digestor **as-of stamp**. Everything else stays owed for a human. Judicial work (ADMIT, RUN-ONLY, closing a park, lifting the HOLD) is never on the list. Digestor stays on the whitelist so the clerical as-of file can be written; that write does **not** clear the SOURCE digest obligation. `roles_owed` drops `digestor` only when `golf-offshoot/docs/LEARNING_LANE_15M_SOURCE_DIGEST.md` itself changes.
+`python -m golf_offshoot learn-15m-runner` may serve **only** the named whitelist: Illustrator re-render, Systems local export, Digestor **as-of stamp**. Everything else stays owed for a human. Judicial work (ADMIT, RUN-ONLY, closing a park, lifting the HOLD, Soften Critic attack) is never on the list. Do not add `operator`, `lab`, `validator`, or `soften-critic` to the whitelist. Digestor stays on the whitelist so the clerical as-of file can be written; that write does **not** clear the SOURCE digest obligation. `roles_owed` drops `digestor` only when `golf-offshoot/docs/LEARNING_LANE_15M_SOURCE_DIGEST.md` itself changes.
 
 **Invoker:** PaperWatch. Each ~90s `_cycle` runs one clerical pass after the paper tick (`watch.py` `_runner_tick` → `run_once()`). The 15m hub starts PaperWatch; a hub or PaperWatch restart starts the runner again. The standalone CLI default is the same loop until the kill file — not a finite `--passes` that quietly runs out. `--once` / `--passes` are tests/debug only. Do not run the CLI loop and the hub at the same time.
 
@@ -166,11 +165,18 @@ Systems owns the counts. The ledger is an honesty instrument, not a productivity
 | Write `manifest.json` / export | `systems` | `validator` |
 | Hub chrome, tabs, enlarge, copy | `hub-ui` (Claude Opus 5 when the job is a chart/board) | `validator` |
 | `validate_hub.py` + Hard-NO language | `validator` | CoS |
-| Soften / dated-record ADMIT / RUN-ONLY / park class / stamp | `operator` | Digestor or Illustrator if needed |
+| Soften / dated-record ADMIT / RUN-ONLY / park class / stamp | `operator` | Digestor or Illustrator if needed. A proposed ADMIT or a bar that wants to bind goes through `soften-critic` first, in a **separate session**. |
+| Attack a proposed ADMIT or the 15m evidence bar | `soften-critic` | `operator` — Operator records each objection and answers it in the admit pass |
 | Invent / cheap-test (never admit) | `lab` | `operator` |
 | SOURCE honesty / living spine | `digestor` | `operator` |
 | Charts from real files only | `illustrator` (**Claude Opus 5**) | `hub-ui` or `validator` |
 
 ## Soften Critic
 
-**Not hired.** Do not invent that role.
+**Hired 2026-09-08.** Skill: `.cursor/skills/gpf-soften-critic/SKILL.md`.
+
+Its job is to attack a proposed ADMIT — and the 15m evidence bar — in writing, before Operator stamps. No authorship stake: it may not propose rules, may not score, may not ADMIT, may not park. It objects, with reasons.
+
+It must run as a session separate from whichever session proposed or scored the thing it is attacking. Operator must record each objection and answer it in the admit pass, not route around it.
+
+Do not add this role to `CLERICAL_WHITELIST`. A written attack is not hash-provable. `JUDICIAL_NEVER` stays. `lab_admits=false` already runs with two bots. This is the third.

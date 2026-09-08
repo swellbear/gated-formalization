@@ -3,6 +3,7 @@
 **Lane:** `learning_lane_15m` · series `KXBTC15M` only
 **Opened:** 2026-09-08 05:56 EDT
 **Admit?** N · **Soften?** N · **lab_admits?** false · Trading **NOT ARMED**
+**Evidence bar:** draft at [`LEARNING_LANE_15M_EVIDENCE_BAR.md`](LEARNING_LANE_15M_EVIDENCE_BAR.md) — **not binding**. `trials_to_date` starts at 0.
 
 A rule that is not dated before its windows close cannot use those windows as a clean out-of-sample test. Every hour collected before a declaration is an hour that cannot serve that rule. This file is the mechanic. The dated rows live in [`LEARNING_LANE_15M_RULES.json`](LEARNING_LANE_15M_RULES.json).
 
@@ -30,7 +31,7 @@ Write this down before anyone conflates them later: **a replayed result and a li
 See the JSON. Two rows were dated 2026-09-08 05:56 EDT:
 
 - `R-BASELINE-FILL-ALL` — names the mechanical fill that has been running. Not a tested edge. Overnight 56 locked books are **not** OOS for a later-declared selection rule, and they are not an unbroken run (`072245` gap).
-- `R-SKIP-COINFLIP` — first selection rule: skip when posted YES is inside `(0.45, 0.55)`. `execution=false` until the paper loop is wired to honor it. Windows that close after `declared_at` are the clean OOS set. Do not retune the band from last night's tape.
+- `R-SKIP-COINFLIP` — first selection rule: skip when posted YES is inside `(0.45, 0.55)`. `execution=false` until the paper loop is wired to honor it. Windows that close after `declared_at` are the clean OOS set. Do not retune the band from last night's tape. Do not score it in the session that drafted the bar. The numeric form of its 40-window falsifier lives in the bar draft.
 
 ## Hard NOs
 

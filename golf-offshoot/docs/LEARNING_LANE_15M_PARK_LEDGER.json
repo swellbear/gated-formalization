@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "lane": "learning_lane_15m",
-  "stamped_at": "2026-09-08T05:55:00-04:00",
+  "stamped_at": "2026-09-08T08:30:00-04:00",
   "framing": "honesty instrument, not a productivity metric, not progress",
   "open": {
     "total": 5,
@@ -12,7 +12,7 @@
   },
   "closed": {
     "unreachable": 3,
-    "trigger_fired_since_last_stamp": 1,
+    "trigger_fired_since_last_stamp": 2,
     "closed_on_falsifier": 0,
     "recorded_defect": 1
   },
@@ -29,6 +29,7 @@
     "8_named_horse": "open / founder",
     "9_zero_edge_residual": "open / crew",
     "10_proposed_01": "RUN-ONLY executed — see LEARNING_LANE_15M_OPERATOR_NOTE_PROPOSED_01.md",
-    "11_072245_outage_gap": "CLOSED / recorded defect — window does not exist; do not backfill"
+    "11_072245_outage_gap": "CLOSED / recorded defect — window does not exist; do not backfill",
+    "12_soften_critic_hire": "CLOSED / founder trigger fired — Soften Critic hired 2026-09-08; not an ADMIT; bar still not binding"
   }
 }

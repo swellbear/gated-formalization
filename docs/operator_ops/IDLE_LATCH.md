@@ -41,6 +41,6 @@ WC1 dated record ADMITTED (FAIL / park unproven; edge not established). Idle ON.
 ## What this is not
 
 - Not a Soften of the rejected board.
-- Not a Soften Critic hire.
+- Not a Soften Critic hire (the critic is already hired; the idle latch does not hire it).
 - Not an auto-GO of C2/C4 or of the next weekly invent.
 - Not a banked-edge or “edge established” stamp.

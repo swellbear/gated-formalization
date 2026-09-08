@@ -66,6 +66,7 @@ JUDICIAL_NEVER = (
     "operator",
     "lab",
     "validator",
+    "soften-critic",
     "admit",
     "run-only",
     "park",

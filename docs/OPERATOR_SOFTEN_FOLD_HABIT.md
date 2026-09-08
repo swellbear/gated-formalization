@@ -1,6 +1,6 @@
 # Operator Soften-fold habit (Method Operator)
 
-A short working habit. It does not change how claims are scored. It does **not** change the Material Admission Check, Amb scoring, or Soften Critic hire.
+A short working habit. It does not change how claims are scored. It does **not** change the Material Admission Check or Amb scoring. Soften Critic is **hired** (2026-09-08).
 
 ## The habit
 
@@ -50,7 +50,7 @@ When park DIGEST is **ADMITTED + MERGED** and available Soften folds for the liv
 
 ### D. Soften-PR pre-merge honesty checklist
 
-Every Soften docs PR must include this checklist in DIGESTION or the PR body (thin; Soften Critic is still **not** hired):
+Every Soften docs PR must include this checklist in DIGESTION or the PR body (thin; Soften Critic **is hired**):
 
 - [ ] media≠certified (or Amb SOURCE honesty)
 - [ ] day≠certified / closings≠evidence as applicable
@@ -58,7 +58,7 @@ Every Soften docs PR must include this checklist in DIGESTION or the PR body (th
 - [ ] parent usefulness / verdict **NOT** Softened this fold
 - [ ] Hold C2/C4 (or Amb holds) unless Founder GO
 - [ ] Digestor never Soften/Harden/Kill; `lab_admits=false`
-- [ ] Soften Critic not hired (unless Founder hired)
+- [ ] Soften Critic attack recorded from a separate session; each objection answered
 - [ ] Operator STATUS stamp pointed/updated correctly (not rewritten as sole owner of park DIGEST)
 
 Short template: [`templates/SOFTEN_PR_HONESTY_CHECKLIST.md`](../templates/SOFTEN_PR_HONESTY_CHECKLIST.md).
@@ -121,7 +121,7 @@ Dual Softened path (list **both** on the stamp):
 - **Box-lab twin** — mid-run write-back so Lab invent carry is not chat-only.
 - **Master path** — after the docs fold lands; this is post-fold authority.
 
-Kalshi Micro / 15-min researcher **never self-admits**. Softened admits stay **Operator-owned** (`lab_admits=false`). Soften Critic stays **deferred** (not hired).
+Kalshi Micro / 15-min researcher **never self-admits**. Softened admits stay **Operator-owned** (`lab_admits=false`). Soften Critic is **hired**.
 
 **Edge Softened/established?** defaults to **N** on ops tracks.
 
@@ -143,18 +143,18 @@ Do **not** rely on chat Softened lists for Lab invent carry.
 - Lab Soften-flip races are a **no-op** if the index is already Softened.
 - Soften-fold lane stays **one-at-a-time** (section A) so the Illustrator index does **not** race parallel Soften PRs.
 
-This does **not** hire a Soften Critic. It does **not** Soften usefulness / verdict. It does **not** authorize elevate / skill-met.
+This does **not** Soften usefulness / verdict. It does **not** authorize elevate / skill-met. Soften Critic is already hired; the habit does not re-hire it.
 
 ## Why
 
-Parallel Soften PRs rewrite the same STATUS as if each fold owns the whole Amb. A stamp the folds point to, one lane, one idle handshake, and a thin checklist keep the record honest without hiring a Soften Critic.
+Parallel Soften PRs rewrite the same STATUS as if each fold owns the whole Amb. A stamp the folds point to, one lane, one idle handshake, a hired Soften Critic in a separate session, and a thin checklist keep the record honest.
 
 Golf WC1/WC2 (2026-09-07) added four more standing rules: named state vocabulary so REJECTED is not left as HOLD Soften; an idle latch that rejects new invent as idle-breach; same-pass docs fold so dated-record ADMIT is not chat-only until a second ping; and ops-beside-method Hard NOs so a dated FAIL cannot be read as banked edge.
 
 ## What this does not do
 
 - Does **not** change the Material Admission Check or Amb scoring.
-- Does **not** hire a Soften Critic.
+- Does **not** skip the Soften Critic. The role is hired.
 - Does **not** Soften parent usefulness or verdict.
 - Does **not** auto-GO C2/C4 (or Amb equivalents).
 - Does **not** authorize elevate / skill-met / productize language.

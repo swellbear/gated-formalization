@@ -32,6 +32,6 @@ Tiny VIZ-pointer-only amends stay under §A’s exception.
 ## What this is not
 
 - Not a scoring change.
-- Not a Soften Critic hire.
+- Not a Soften Critic hire (the critic is already hired; same-pass fold does not hire it).
 - Not an elevate / skill-met / productize license.
 - Not permission to open a second parallel Soften PR for the same Amb.

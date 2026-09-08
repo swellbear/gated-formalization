@@ -1,0 +1,93 @@
+{
+  "schema": 1,
+  "lane": "learning_lane_15m",
+  "series": "KXBTC15M",
+  "drafted_at": "2026-09-08T08:30:00-04:00",
+  "binding": false,
+  "binding_rule": "Becomes binding only after (1) Soften Critic written attack in a session that did not draft the bar, with Operator answering each objection in the admit pass, and (2) Founder read-once acknowledgement.",
+  "admit": false,
+  "edge_established": false,
+  "lab_admits": false,
+  "trading_armed": false,
+  "verdicts": {
+    "admissible": {
+      "answers": "Is this rule well-posed and honestly testable under the gate sheet and this bar?",
+      "licenses": "dated-record ADMIT that the test completed; candidate may stay live; Operator note / park row",
+      "does_not_license": [
+        "edge",
+        "records[] as a track record",
+        "skill-met",
+        "productize",
+        "arming",
+        "lifting the HOLD"
+      ],
+      "accepts_replay": true,
+      "accepts_lived": true
+    },
+    "established": {
+      "answers": "Did the rule clear the locked numerical bar as edge, after confirmation?",
+      "licenses": "method establishment verdict on this lane only, and only after promotion into the gated method has fired",
+      "does_not_license": [
+        "money",
+        "keys",
+        "series expansion",
+        "golf theta",
+        "usefulness Soften"
+      ],
+      "accepts_replay": false,
+      "accepts_lived": true,
+      "requires_held_out_confirmation": true,
+      "ops_beside_edge_stays_n": true
+    }
+  },
+  "looks": {
+    "first_look_n": 40,
+    "first_look_set": "L1",
+    "held_out_set": "L2",
+    "held_out_windows": "eligible windows 41 through 80 after declared_at",
+    "peeking": "forbidden — do not score before n=40; do not read L2 while scoring L1",
+    "continuous_scoring": false
+  },
+  "distinguishable": {
+    "contrast": "d_i = pnl_rule_fee_adj_i - pnl_baseline_fee_adj_i on the same n windows",
+    "baseline_rule_id": "R-BASELINE-FILL-ALL",
+    "skip_contributes": 0,
+    "test": "one-sided paired t-test",
+    "h0": "mean(d) <= 0",
+    "alpha": "0.05 / (trials_to_date + 1)",
+    "trials_counter": "LEARNING_LANE_15M_RULES.json trials_to_date; increment after the look",
+    "effect_floor_usd_per_window": 0.28,
+    "effect_floor_rationale": "pre-declaration paired-difference sd ~0.66 => SE_40 ~0.104; 2.69*SE ~0.28 for a 14-look week at family alpha 0.05; also larger than the measured per-fill fee",
+    "kill_if_not_distinguishable": "park the rule; do not retune the band"
+  },
+  "fee_hurdle": {
+    "source": "golf-offshoot/docs/LEARNING_LANE_15M_OPERATOR_NOTE_PROPOSED_01.md",
+    "k": 0.07,
+    "stake_usd": 1.0,
+    "rounding": "ceil to the cent",
+    "formula": "fee = ceil_cent(k * stake * (1 - posted_yes))",
+    "measured_mean_per_fill_usd": 0.039,
+    "measured_fee_over_stake": 0.0392,
+    "measured_on": "first 24 lineage-A books in the RUN-ONLY note",
+    "positive_result_requires": "mean(pnl_rule_fee_adj) > 0 on the scored windows",
+    "display": "fee-accurate figures live in the score note / Operator note only; never hub, digest, manifest, records[]"
+  },
+  "calibration": {
+    "used": "56 settled lineage-A books with close at or before 2026-09-08T05:56:00-04:00 (071545-45 through 080545-45, excluding missing 072245)",
+    "fields_read": ["movements[0].model_win", "settlement_pnl"],
+    "post_declaration_windows_read": false,
+    "in_sample_mean_contrast_used_as_pass_fail": false,
+    "predeclaration_skip_rate_inside_045_055": "22/56"
+  },
+  "hard_nos": [
+    "do not treat this draft as binding",
+    "do not score R-SKIP-COINFLIP in the drafting session",
+    "do not peek L2 while scoring L1",
+    "do not put fee-accurate totals on the hub, digest, manifest, or records[]",
+    "do not revive a burned class under a new name",
+    "do not treat H-SPOT-MOY-CONT as a null",
+    "do not treat a replayed survivor as lived establishment",
+    "do not merge lineage A and B",
+    "do not backfill 072245"
+  ]
+}
