@@ -185,10 +185,16 @@ def main(argv: list[str] | None = None) -> int:
         help="learn-15m-runner: dry-run (default) or armed (refused until Founder writes latest/RUNNER_ARMED)",
     )
     parser.add_argument(
+        "--once",
+        action="store_true",
+        dest="runner_once",
+        help="learn-15m-runner: one pass then exit (tests/debug). Default is every watch tick until the kill file",
+    )
+    parser.add_argument(
         "--passes",
         type=int,
-        default=1,
-        help="learn-15m-runner: how many passes; the kill file is re-read at the start of each",
+        default=0,
+        help="learn-15m-runner: finite passes for tests only; default 0 means run until the kill file",
     )
     parser.add_argument(
         "--kill-runner",
@@ -1051,7 +1057,6 @@ def _cmd_learn_15m_runner(args) -> int:
     """Clerical runner. Dry-run until Founder arms it. Never writes a claim."""
     from golf_offshoot.learning_lane_15m.runner import (
         format_runner_line,
-        run_once,
         run_passes,
         write_kill_switch,
     )
@@ -1061,13 +1066,22 @@ def _cmd_learn_15m_runner(args) -> int:
         print(f"learning runner  KILL FILE {path}")
         return 0
     mode = str(getattr(args, "runner_mode", "") or "").strip() or None
-    passes = max(1, int(getattr(args, "passes", 1) or 1))
-    entries = run_passes(passes, mode=mode) if passes > 1 else [run_once(mode=mode)]
-    if getattr(args, "as_json", False):
-        print(json.dumps(entries if passes > 1 else entries[0], indent=2))
+    passes = int(getattr(args, "passes", 0) or 0)
+    once = bool(getattr(args, "runner_once", False))
+    if once or passes > 0:
+        from golf_offshoot.learning_lane_15m.runner import run_passes
+
+        entries = run_passes(passes or 1, mode=mode)
+        if getattr(args, "as_json", False):
+            print(json.dumps(entries if len(entries) > 1 else entries[0], indent=2))
+            return 0
+        for entry in entries:
+            print(format_runner_line(entry))
         return 0
-    for entry in entries:
-        print(format_runner_line(entry))
+    from golf_offshoot.learning_lane_15m.runner import run_forever
+
+    print("learning runner  continuous  one pass every PaperWatch tick  kill file stops it")
+    run_forever(mode=mode)
     return 0
 
 

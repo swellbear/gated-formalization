@@ -5,9 +5,9 @@ Chat transcripts are not. A later Grok / Cursor cloud agent will not see a prior
 
 | Field | Value |
 |-------|--------|
-| Updated | 2026-09-07 21:42 EDT (Gate 1 landed; Phase 2 RUN-ONLY + park classes; Phase 3 runner dry-run) |
+| Updated | 2026-09-07 22:25 EDT (runner armed locally after continuous/human-proof land; Pages publish still manual) |
 | Interim operator | Cursor chat (Grok bot usage exhausted until **2026-09-13**) |
-| Repo SoT | **`origin/master` @ `be04ebe`** (PR #165 merged). Pages reads that commit. Public snapshot `generated_at` `2026-09-07T21:28:39-04:00` |
+| Repo SoT | **`origin/master` @ `6f36844`** (PR #167 merged). Pages still reads the last *published* snapshot (`generated_at` `2026-09-07T21:28:39-04:00` on `be04ebe`). A local export is not a publish. |
 | Local Windows tree for this interim | `C:\Users\bearh\gated-formalization-master-hub` |
 | Do **not** treat as SoT | `C:\Users\bearh\gated-formalization` on `cursor/eia-window-job2` (stale + dirty) |
 | Active track | `learning_lane_15m` (KXBTC15M paper loop) + Phase 1 desktop hub |
@@ -28,11 +28,11 @@ If it is not in git on GitHub, the next bot does not have it.
 
 **`origin/master` is the public SoT.** GitHub Pages serves that commit only. A local export, a desktop hub, or an unmerged PR is **not** published.
 
-`origin/master` is `be04ebe` (PR #165 merged 2026-09-07). That commit **does** have `learn-15m`, the SOURCE digest, the pending/settled export guard, snapshot age on the viewer, and the corrected `071500-00` missing-paper-join wording. GitHub Pages build for `be04ebe` is `built`. Live `generated_at` is `2026-09-07T21:28:39-04:00`.
+`origin/master` is `6f36844` (PR #167 merged 2026-09-07). That commit has the serve-on-proof executor and the `RUNNER_KILL` file switch. `#166` (`2fea8d8`) is also on master: RUN-ONLY, park classes, CLOSED unreachable rows, PROPOSED 01 note. GitHub Pages still serves the last *published* snapshot (`be04ebe`, `generated_at` `2026-09-07T21:28:39-04:00`) until someone manually publishes again.
 
-**On `master` now:** learning wake, digest, park file (as of #165 — still the old two-verdict park), Lab PROPOSED 01, export guard.
+**On `master` now:** learning wake, digest, park file with RUN-ONLY / classes, Lab PROPOSED 01 (RUN-ONLY, not admitted), export guard, serve-on-proof runner, kill file.
 
-**Not yet on `master` (this session's Phase 2+3, until the next PR lands):** RUN-ONLY verdict, four trigger classes, CLOSED unreachable rows, Operator note with the fee hurdle, clerical runner in dry-run.
+**This arming pass (continuous PaperWatch invoke, human artifact-proof, `execute=True` scratch-only, publish-gap named on the desk):** land it, then write local `latest/RUNNER_ARMED` (gitignored). The runner still does not commit or push. The public page is **not** self-maintaining.
 
 Do not write branch state as if it were landed. If Pages `generated_at` is more than one 15-minute window behind now, the public page should say so itself.
 
@@ -143,7 +143,7 @@ Golf WC1 FAIL does **not** transfer into this lane, and nothing on this lane ret
 2. **Owed right now:** read it off `python -m golf_offshoot learn-15m` — do not trust this line, the loop keeps moving. The `KXBTC15M-26SEP071500-00` re-word is **done**: the published manifest reads `missing paper join — official result present`, and the fix lives in the export writer so the next export cannot undo it. Validator passed `--strict` at 19:53 after an export race was closed — pending is now re-derived from live settle files at export time, and the export refuses to write a manifest that calls a settled window pending.
 3. **Never collapse the two residual states.** A window pending for want of a Kalshi `result` is not the same as `KXBTC15M-26SEP071500-00`, which has an official `result=yes` and no book on this tree. Do not invent pnl for either. Do not merge lineage A and lineage B.
 4. **Illustrator:** the wake owes a re-render when the PNG lags more than one window. Re-render from current files before a material publish. Never invent a chart. Do not put golf WC1 / Ill on this lane.
-5. **`lab` PROPOSED 01 is RUN-ONLY**, not parked. Hurdle lives only in `golf-offshoot/docs/LEARNING_LANE_15M_OPERATOR_NOTE_PROPOSED_01.md`. Not an ADMIT. Not a dashboard figure. Lab does not bring a second PROPOSED. Lab never self-admits. Founder has not armed the clerical runner.
+5. **`lab` PROPOSED 01 is RUN-ONLY**, not parked. Hurdle lives only in `golf-offshoot/docs/LEARNING_LANE_15M_OPERATOR_NOTE_PROPOSED_01.md`. Not an ADMIT. Not a dashboard figure. Lab does not bring a second PROPOSED. Lab never self-admits. The clerical runner is armed by local `latest/RUNNER_ARMED` (gitignored). Whitelist is illustrator / systems / digestor only. Judicial work never joins it. PaperWatch invokes one pass every tick. Publish stays **manual** — the runner exports locally and does not commit or push.
 6. **Founder HOLD 2026-09-07 stands: no series other than `KXBTC15M` until this loop is honest.** Only Founder lifts it — not Operator, not CoS, not a later bot reading a tidy tick. Everything else parked (weekly honesty rollup, expanding the series, CFB websocket observe-only) is in `golf-offshoot/docs/LEARNING_LANE_15M_METHOD_PARK.md` with the explicit trigger that would reopen it.
 7. **Golf idle stays ON** (WC3+ only on a new settled week, on a fresh Founder GO that names the next invent). Nothing on the 15m lane clears it, retunes golf θ, or rewrites `golf-offshoot/docs/phase1_dryrun/OPERATOR_STATUS_STAMP.md`.
 
@@ -168,9 +168,10 @@ Golf WC1 FAIL does **not** transfer into this lane, and nothing on this lane ret
 cd golf-offshoot
 $env:PYTHONPATH = "src"
 python -m golf_offshoot learn-15m                        # learning tick — what is owed and why (start here)
-python -m golf_offshoot shell --lane learning_lane_15m   # PaperWatch starts itself (~90s cycle)
+python -m golf_offshoot shell --lane learning_lane_15m   # PaperWatch starts itself (~90s cycle) and runs one clerical pass each tick
 # Windows: golf-offshoot/scripts/windows/Open-15m-Learning-Hub.bat
-python -m golf_offshoot lane-15m --watch                 # CLI-only repeat, same cadence
+python -m golf_offshoot lane-15m --watch                 # CLI-only repeat, same cadence (do not also run learn-15m-runner)
+python -m golf_offshoot learn-15m-runner --kill-runner   # write latest/RUNNER_KILL; does not touch PaperWatch
 python docs/observability-hub/validate_hub.py --strict   # from repo root
 ```
 

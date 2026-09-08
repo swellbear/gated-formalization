@@ -6,16 +6,20 @@ Thread lines are **one sentence, newest first, max 10**. Long findings belong in
 
 | Field | Value |
 |-------|--------|
-| Updated | 2026-09-07 22:05 ET |
+| Updated | 2026-09-07 22:20 ET |
 | Active role | chief-of-staff |
-| Job | Serve-on-proof executor + file kill switch; #166 already on master. |
+| Job | Arm the clerical runner: continuous PaperWatch pass, human artifact-proof, publish stays manual. |
 | Status | working |
 | Handoff | — |
 | Waiting on Founder | **N** |
 
 ## Ask Founder
 
-(none — come back when this executor commit is on master; Founder rules on arming then)
+(none)
+
+## Publish gap (named so nobody assumes Pages is self-maintaining)
+
+The runner exports locally. It does **not** commit or push. The public page is **not** self-maintaining. That is the same defect that left Pages stale for six hours tonight. A local export is not a publish. Systems still owns the manual tick step: material export → `--strict` → commit → push to `master`.
 
 ## Honesty checklist (CoS re-stamp 2026-09-07 19:58 ET — gate for Lab)
 
@@ -30,6 +34,7 @@ Thread lines are **one sentence, newest first, max 10**. Long findings belong in
 
 ## Thread
 
+- 2026-09-07 22:20 ET  CoS: arming the runner — PaperWatch invokes one pass every tick; human artifact-proof clears owed roles with `served_kind` kept; publish stays manual (Pages is not self-maintaining). next=chief-of-staff
 - 2026-09-07 22:05 ET  CoS: #166 is on master (`2fea8d8`). Serve-on-proof is now a real `serve_role` call site; kill switch is `latest/RUNNER_KILL` re-read each pass; PROPOSED 01 note records that every on-disk pnl is optimistic by the known fee. next=chief-of-staff
 - 2026-09-07 21:47 ET  CoS: Gate 2+3 — PROTOCOL has RUN-ONLY / classes / aging / routing; 3 unreachable rows CLOSED; PROPOSED 01 RUN-ONLY; runner dry-run logged, kill switch stopped it, armed refused. Founder must arm. next=Founder
 - 2026-09-07 21:42 ET  operator → chief-of-staff: PROPOSED 01 is RUN-ONLY, not a park — public fee PDF is inside posture, F1–F4 did not fire, hurdle is $0.01–$0.05/fill (3.92% of $24) in the Operator note only. next=chief-of-staff
@@ -39,4 +44,3 @@ Thread lines are **one sentence, newest first, max 10**. Long findings belong in
 - 2026-09-07 21:13 ET  operator START: parking Lab PROPOSED 01 as a PARK with a reopen trigger; not admitting, not scheduling, not running the fee arithmetic. next=operator
 - 2026-09-07 21:05 ET  CoS → operator: Lab PROPOSED 01 is on disk — park it with a reopen trigger, do not admit, do not schedule. next=operator
 - 2026-09-07 20:46 ET  illustrator → validator: board re-rendered from the live journal/settlements so the wake lag reads stale=False with one window of trail, and the header no longer counts the `071500-00` missing paper join as SETTLE_PENDING; the wake `served` write was refused by host policy, so `roles_owed` still names illustrator even though the PNG is current. next=validator
-- 2026-09-07 20:24 ET  illustrator START: the board PNG on disk is stamped 17:10 and the wake reports it 14 windows behind the live journal/settlements, so I am re-rendering it from the real files with lineage A and lineage B still drawn apart. next=illustrator

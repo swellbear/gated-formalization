@@ -84,15 +84,21 @@ Nothing new on a tick: CoS posts **one** desk heartbeat line (no new settle; wat
 
 The wake path detects evidence and names which roles are owed. It never writes a Digestor / Operator / Lab thread line, never Softens, and never ADMITs. The desk shows a role only when that role actually ran.
 
-### Clerical runner (dry-run until Founder arms it)
+### Clerical runner (armed by `latest/RUNNER_ARMED`)
 
-`python -m golf_offshoot learn-15m-runner` may serve **only** the named whitelist: Illustrator re-render, Systems publish, Digestor digest. Everything else stays owed for a human. Judicial work (ADMIT, RUN-ONLY, closing a park, lifting the HOLD) is never on the list.
+`python -m golf_offshoot learn-15m-runner` may serve **only** the named whitelist: Illustrator re-render, Systems local export, Digestor digest. Everything else stays owed for a human. Judicial work (ADMIT, RUN-ONLY, closing a park, lifting the HOLD) is never on the list.
 
-It ships in **dry-run**. It logs what it would serve and serves nothing. The kill switch is the file `golf-offshoot/data/learning_lane_15m/latest/RUNNER_KILL` (or `--kill-runner`). The runner **re-reads that file at the start of every pass**. Touch it to stop the runner mid-flight without touching PaperWatch. An env var is not the switch.
+**Invoker:** PaperWatch. Each ~90s `_cycle` runs one clerical pass after the paper tick (`watch.py` `_runner_tick` → `run_once()`). The 15m hub starts PaperWatch; a hub or PaperWatch restart starts the runner again. The standalone CLI default is the same loop until the kill file — not a finite `--passes` that quietly runs out. `--once` / `--passes` are tests/debug only. Do not run the CLI loop and the hub at the same time.
 
-It goes live only when Founder writes `latest/RUNNER_ARMED`. Serve-on-proof is real: `serve_role` runs the clerical job and calls `mark_roles_served(..., served_kind='auto')` only after the artifact **hash** changed. If the file did not move, the role stays owed and the failure is logged. A systems heartbeat (`generated_at` only) is not proof. Exit code 0 is not proof. Auto-served and human-served turns stay distinguishable forever. Systems publish only from `master`.
+The kill switch is the file `golf-offshoot/data/learning_lane_15m/latest/RUNNER_KILL` (or `--kill-runner`). The runner **re-reads that file at the start of every pass**. Touch it to stop the runner mid-flight without touching PaperWatch. An env var is not the switch.
 
-Do not automate publication until publication is a verified tick step.
+It goes live when `latest/RUNNER_ARMED` is present (gitignored). Serve-on-proof is real: `serve_role` runs the clerical job and calls `mark_roles_served(..., served_kind='auto')` only after the artifact **hash** changed. If the file did not move, the role stays owed and the failure is logged. A systems heartbeat (`generated_at` only) is not proof. Exit code 0 is not proof.
+
+A role also leaves `roles_owed` when the artifact it owns changes on disk, whoever changed it. That path records `served_kind='human'`. Auto and human stay distinguishable forever. Operator clears when the method park changes. Systems clears on a material manifest fingerprint, not a heartbeat rewrite. Validator and Lab own no artifact and stay owed until a human marks them.
+
+`execute=True` is a scratch-tree harness only. It requires `root=` pointing off the real repo and can never serve the live tree unarmed.
+
+**Publish is still manual.** The runner exports locally. It does not `git commit` or `git push`. The public page is **not** self-maintaining. That is the same defect that left Pages stale for six hours. A local export is not a publish. Systems still owns the standing tick step: material export → `--strict` → commit → push to `master`. Do not assume the public page moved because the runner ran.
 
 ### Honesty gate before Lab invents
 

@@ -2,10 +2,14 @@
 
 import json
 
+import pytest
+
 from golf_offshoot.learning_lane_15m.learn import load_wake_state, mark_roles_served
 from golf_offshoot.learning_lane_15m.paths import set_15m_root_override
 from golf_offshoot.learning_lane_15m.runner import (
     CLERICAL_WHITELIST,
+    MANIFEST_REL,
+    PARK_REL,
     MODE_ARMED,
     MODE_DRY,
     MODE_OFF,
@@ -13,13 +17,17 @@ from golf_offshoot.learning_lane_15m.runner import (
     format_runner_line,
     kill_switch_active,
     plan_from_wake,
+    reconcile_owed_from_disk,
+    run_forever,
     run_once,
     run_passes,
     runner_log_path,
     runner_mode,
     serve_role,
+    write_arm_file,
     write_kill_switch,
 )
+from golf_offshoot.operator_surface.observability import repo_root
 
 
 def _wake(tmp_path, roles):
@@ -190,6 +198,7 @@ def test_dry_across_several_ticks_role_goes_owed_then_clears(tmp_path):
         tick3 = run_once(
             mode=MODE_DRY,
             execute=True,
+            root=tmp_path,
             do_work={"digestor": _write_new},
         )
         assert tick3["served"] == ["digestor"]
@@ -253,5 +262,109 @@ def test_mark_roles_served_records_human_vs_auto_provenance(tmp_path):
         assert state["roles_owed"] == []
         assert state["served"][0]["served_kind"] == "auto"
         assert state["served"][0]["served_by"] == "runner-test"
+    finally:
+        set_15m_root_override(None)
+
+
+def _lane_manifest(*, headline: str) -> dict:
+    return {
+        "lanes": [
+            {
+                "lane_id": "learning_lane_15m",
+                "settle": {"headline": headline, "residual": [], "counts": []},
+                "last_run": {"headline": headline},
+                "learning_status": {
+                    "pending_windows": [],
+                    "missing_paper_joins": [],
+                    "published_history": [],
+                },
+                "charts": [],
+            }
+        ]
+    }
+
+
+def test_execute_true_requires_scratch_root_and_refuses_the_real_tree():
+    with pytest.raises(RuntimeError, match="requires root="):
+        run_once(execute=True)
+    with pytest.raises(RuntimeError, match="cannot serve the real repo"):
+        run_once(execute=True, root=repo_root())
+
+
+def test_arm_file_is_enough_to_execute(tmp_path):
+    set_15m_root_override(tmp_path)
+    try:
+        _wake(tmp_path, ["digestor"])
+        write_arm_file()
+
+        def _write_new():
+            artifact_path("digestor").write_text(
+                '{"pending": ["ARMED"], "settled": []}\n',
+                encoding="utf-8",
+            )
+
+        entry = run_once(do_work={"digestor": _write_new})
+        assert entry["armed"] is True
+        assert entry["mode"] == MODE_ARMED
+        assert entry["served"] == ["digestor"]
+        assert entry["mark_roles_served_called"] is True
+        state = load_wake_state()
+        assert state is not None
+        assert state["roles_owed"] == []
+        assert state["served"][0]["served_kind"] == "auto"
+    finally:
+        set_15m_root_override(None)
+
+
+def test_human_artifact_change_clears_owed_and_keeps_kind(tmp_path):
+    set_15m_root_override(tmp_path)
+    try:
+        _wake(tmp_path, ["operator", "systems", "validator", "lab"])
+        park = tmp_path / PARK_REL
+        park.parent.mkdir(parents=True, exist_ok=True)
+        park.write_text("park v1\n", encoding="utf-8")
+        manifest = tmp_path / MANIFEST_REL
+        manifest.parent.mkdir(parents=True, exist_ok=True)
+        manifest.write_text(json.dumps(_lane_manifest(headline="same")), encoding="utf-8")
+
+        assert reconcile_owed_from_disk(root=tmp_path) == []
+        still = [row["role"] for row in (load_wake_state() or {}).get("roles_owed") or []]
+        assert still == ["operator", "systems", "validator", "lab"]
+
+        park.write_text("park v2 — operator ran\n", encoding="utf-8")
+        manifest.write_text(
+            json.dumps(_lane_manifest(headline="changed")),
+            encoding="utf-8",
+        )
+        entry = run_once(mode=MODE_DRY, root=tmp_path)
+        assert set(entry.get("human_cleared") or []) == {"operator", "systems"}
+        state = load_wake_state()
+        assert state is not None
+        owed = [row["role"] for row in state["roles_owed"]]
+        assert owed == ["validator", "lab"]
+        kinds = {row["role"]: row["served_kind"] for row in state["served"]}
+        assert kinds["operator"] == "human"
+        assert kinds["systems"] == "human"
+        assert "human_cleared=operator, systems" in format_runner_line(entry) or (
+            "human_cleared=systems, operator" in format_runner_line(entry)
+        )
+    finally:
+        set_15m_root_override(None)
+
+
+def test_run_forever_stops_on_kill_file(tmp_path, monkeypatch):
+    set_15m_root_override(tmp_path)
+    try:
+        _wake(tmp_path, ["illustrator"])
+        sleeps = {"n": 0}
+
+        def _sleep(_seconds):
+            sleeps["n"] += 1
+            write_kill_switch()
+
+        monkeypatch.setattr("golf_offshoot.learning_lane_15m.runner.time.sleep", _sleep)
+        run_forever(interval_s=5)
+        assert sleeps["n"] == 1
+        assert kill_switch_active() is True
     finally:
         set_15m_root_override(None)

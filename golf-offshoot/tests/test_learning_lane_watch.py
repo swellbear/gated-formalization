@@ -34,5 +34,6 @@ def test_paper_watch_one_cycle(tmp_path, monkeypatch):
         assert watch.last_ok is True
         assert "pending=1" in watch.last_summary
         assert watch.status()["trading_armed"] is False
+        assert "clerical pass" in watch.status()["runner"]
     finally:
         set_15m_root_override(None)

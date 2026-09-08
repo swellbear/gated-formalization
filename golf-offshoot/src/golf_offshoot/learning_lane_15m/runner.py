@@ -12,9 +12,17 @@ touching PaperWatch. Delete the file to let a later pass run. An env var is
 not the switch.
 
 Serve-on-proof: a role is marked served only after the artifact it was meant
-to produce actually changed on disk (sha256). Exit code 0 is not proof. If
-the artifact did not move, the role stays owed and the failure is logged.
-``mark_roles_served(..., served_kind='auto')`` is the only serve call site.
+to produce actually changed on disk. Exit code 0 is not proof. If the
+artifact did not move, the role stays owed and the failure is logged.
+Auto serve uses ``served_kind='auto'``. A human (or Systems export on the
+watch) that changes an owned artifact clears the role with ``served_kind='human'``.
+The two stay distinguishable forever.
+
+``execute=True`` is a scratch-tree harness only. It requires ``root=`` pointing
+off the real repo and never serves the live tree unarmed.
+
+The runner exports locally. It does not ``git commit`` or ``git push``. Pages
+stays a manual publish.
 """
 
 from __future__ import annotations
@@ -22,6 +30,7 @@ from __future__ import annotations
 import hashlib
 import json
 import os
+import time
 from pathlib import Path
 from typing import Any, Callable
 
@@ -30,9 +39,15 @@ from golf_offshoot.learning_lane_15m.learn import (
     mark_roles_served,
     scan_learning_evidence,
 )
-from golf_offshoot.learning_lane_15m.paths import latest_dir_15m
+from golf_offshoot.learning_lane_15m.paths import (
+    LANE_15M,
+    has_15m_root_override,
+    latest_dir_15m,
+)
 from golf_offshoot.localtime import format_eastern, isoformat_now
 from golf_offshoot.operator_surface.observability import (
+    _lane_by_id,
+    _lane_publish_fingerprint,
     material_publish_reasons,
     repo_root,
 )
@@ -58,8 +73,11 @@ JUDICIAL_NEVER = (
 )
 
 LOG_NAME = "learning_runner.jsonl"
+FP_STORE_NAME = "role_artifact_fps.json"
 
 DIGEST_ASOF_NAME = "digest_asof.json"
+DIGEST_REL = Path("golf-offshoot") / "docs" / "LEARNING_LANE_15M_SOURCE_DIGEST.md"
+PARK_REL = Path("golf-offshoot") / "docs" / "LEARNING_LANE_15M_METHOD_PARK.md"
 MANIFEST_REL = Path("docs") / "observability-hub" / "data" / "manifest.json"
 PNG_REL = (
     Path("docs")
@@ -117,6 +135,34 @@ def founder_has_armed() -> bool:
     return arm_file_path().is_file()
 
 
+def write_arm_file() -> Path:
+    path = arm_file_path()
+    path.parent.mkdir(parents=True, exist_ok=True)
+    path.write_text(
+        "armed 2026-09-07\nwhitelist=illustrator,systems,digestor\n"
+        "publish=local-export-only\n",
+        encoding="utf-8",
+    )
+    return path
+
+
+def _is_real_repo(root: Path | None) -> bool:
+    if root is None:
+        return True
+    try:
+        return Path(root).resolve() == repo_root().resolve()
+    except OSError:
+        return False
+
+
+def assert_scratch_execute(*, root: Path | None) -> None:
+    """execute=True may never target the live tree."""
+    if root is None:
+        raise RuntimeError("execute=True requires root= pointing at a scratch tree")
+    if _is_real_repo(root):
+        raise RuntimeError("execute=True cannot serve the real repo unarmed")
+
+
 def _append_log(entry: dict[str, Any]) -> Path:
     path = runner_log_path()
     path.parent.mkdir(parents=True, exist_ok=True)
@@ -143,10 +189,47 @@ def artifact_path(role: str, *, root: Path | None = None) -> Path:
     rel = {
         "illustrator": PNG_REL,
         "systems": MANIFEST_REL,
+        "operator": PARK_REL,
     }.get(role)
     if rel is None:
         raise ValueError(f"no clerical artifact for role {role!r}")
     return base / rel
+
+
+def owned_artifact_paths(role: str, *, root: Path | None = None) -> list[Path]:
+    """Files whose change proves that role ran. Validator/lab own none."""
+    base = root or repo_root()
+    if role == "illustrator":
+        return [base / PNG_REL]
+    if role == "systems":
+        return [base / MANIFEST_REL]
+    if role == "digestor":
+        return [latest_dir_15m() / DIGEST_ASOF_NAME, base / DIGEST_REL]
+    if role == "operator":
+        return [base / PARK_REL]
+    return []
+
+
+def _fingerprint_store_path() -> Path:
+    return latest_dir_15m() / FP_STORE_NAME
+
+
+def _systems_token(path: Path) -> str | None:
+    payload = _load_json(path)
+    if payload is None:
+        return file_fingerprint(path)
+    token = _lane_publish_fingerprint(_lane_by_id(payload, LANE_15M))
+    return json.dumps(token, default=str, sort_keys=True)
+
+
+def role_proof_token(role: str, *, root: Path | None = None) -> str | None:
+    paths = owned_artifact_paths(role, root=root)
+    if not paths:
+        return None
+    if role == "systems":
+        return _systems_token(paths[0])
+    parts = [file_fingerprint(path) or "missing" for path in paths]
+    return "|".join(parts)
 
 
 def file_fingerprint(path: Path) -> str | None:
@@ -198,6 +281,7 @@ def _default_do_illustrator() -> Path | None:
 
 
 def _default_do_systems() -> dict[str, str]:
+    """Local export only. No git commit, no push. Pages stays a manual publish."""
     from golf_offshoot.operator_surface.observability import write_observability_exports
 
     return write_observability_exports()
@@ -276,7 +360,45 @@ def serve_role(
     result["ok"] = True
     result["marked"] = True
     result["reason"] = note
+    result["served_kind"] = "auto"
     return result
+
+
+def reconcile_owed_from_disk(*, root: Path | None = None) -> list[dict[str, Any]]:
+    """Clear owed roles whose owned artifact changed, whoever changed it.
+
+    First sight of a token is stored and does not clear. A later change marks
+    ``served_kind=human`` unless the role is already gone (auto-served this pass).
+    Roles with no owned artifact (validator, lab) stay owed.
+    """
+    store_path = _fingerprint_store_path()
+    previous: dict[str, Any] = {}
+    if store_path.is_file():
+        loaded = _load_json(store_path)
+        if isinstance(loaded, dict):
+            previous = loaded
+    state = load_wake_state()
+    owed = {
+        str(entry.get("role") or "").strip().lower()
+        for entry in ((state or {}).get("roles_owed") or [])
+    }
+    current: dict[str, str] = {}
+    marked: list[dict[str, Any]] = []
+    roles = ("illustrator", "systems", "digestor", "operator")
+    if has_15m_root_override() and root is None:
+        roles = ("digestor",)
+    for role in roles:
+        token = role_proof_token(role, root=root)
+        if token:
+            current[role] = token
+        prev = previous.get(role)
+        if role in owed and prev and token and prev != token:
+            note = f"owned artifact changed on disk ({prev[:24]} -> {token[:24]})"
+            mark_roles_served([role], by="artifact-proof", note=note, served_kind="human")
+            marked.append({"role": role, "served_kind": "human", "note": note})
+    store_path.parent.mkdir(parents=True, exist_ok=True)
+    store_path.write_text(json.dumps(current, indent=2) + "\n", encoding="utf-8")
+    return marked
 
 
 def serve_owed_roles(
@@ -315,6 +437,8 @@ def run_once(
     root: Path | None = None,
 ) -> dict[str, Any]:
     """One runner pass. Re-reads the kill file first. Default dry-run."""
+    if execute:
+        assert_scratch_execute(root=root)
     at = now_iso or isoformat_now()
     entry: dict[str, Any] = {
         "at": at,
@@ -347,6 +471,8 @@ def run_once(
             "No role was served."
         )
         requested = MODE_DRY
+    if founder_has_armed() and requested != MODE_OFF:
+        requested = MODE_ARMED
     state = load_wake_state()
     plan = plan_from_wake(state)
     entry["owed"] = plan["owed"]
@@ -372,6 +498,13 @@ def run_once(
             "dry-run: logged clerical work that would be served; served nothing; "
             "did not call mark_roles_served"
         )
+    human = reconcile_owed_from_disk(root=root)
+    if human:
+        entry["human_cleared"] = [row["role"] for row in human]
+        entry["mark_roles_served_called"] = True
+        entry["served"] = list(entry.get("served") or []) + [
+            row["role"] for row in human if row["role"] not in (entry.get("served") or [])
+        ]
     _append_log(entry)
     return entry
 
@@ -398,6 +531,18 @@ def run_passes(
     return out
 
 
+def run_forever(*, mode: str | None = None, interval_s: float | None = None) -> None:
+    """One pass every watch tick until the kill file appears. No finite budget."""
+    from golf_offshoot.learning_lane_15m.watch import watch_interval_s
+
+    gap = watch_interval_s(interval_s)
+    while True:
+        entry = run_once(mode=mode)
+        if entry.get("mode") == MODE_OFF:
+            return
+        time.sleep(max(5.0, gap))
+
+
 def format_runner_line(entry: dict[str, Any]) -> str:
     mode = entry.get("mode")
     if mode == MODE_OFF:
@@ -406,9 +551,10 @@ def format_runner_line(entry: dict[str, Any]) -> str:
     held = ", ".join(entry.get("held_for_human") or []) or "none"
     served = ", ".join(entry.get("served") or []) or "none"
     failed = ", ".join(entry.get("failed") or []) or "none"
+    human = ", ".join(entry.get("human_cleared") or []) or "none"
     marked = "yes" if entry.get("mark_roles_served_called") else "no"
     return (
         f"learning runner  mode={mode}  would_serve={would}  "
         f"held_for_human={held}  served={served}  failed={failed}  "
-        f"mark_roles_served={marked}  {entry.get('at_text')}"
+        f"human_cleared={human}  mark_roles_served={marked}  {entry.get('at_text')}"
     )

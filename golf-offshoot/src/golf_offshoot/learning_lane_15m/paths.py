@@ -34,6 +34,10 @@ def set_15m_root_override(path: Path | None) -> None:
     _ROOT_OVERRIDE = path
 
 
+def has_15m_root_override() -> bool:
+    return _ROOT_OVERRIDE is not None
+
+
 def golf_data_root() -> Path:
     """Golf Phase 1 artifacts. Untouched by the 15-min lane."""
     return package_data_dir()
