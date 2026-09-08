@@ -32,6 +32,7 @@ See the JSON. Two rows were dated 2026-09-08 05:56 EDT:
 
 - `R-BASELINE-FILL-ALL` — names the mechanical fill that has been running. Not a tested edge. Overnight 56 locked books are **not** OOS for a later-declared selection rule, and they are not an unbroken run (`072245` gap).
 - `R-SKIP-COINFLIP` — first selection rule: skip when posted YES is inside `(0.45, 0.55)`. `execution=false` until the paper loop is wired to honor it. Windows that close after `declared_at` are the clean OOS set. Do not retune the band from last night's tape. Do not score it in the session that drafted the bar. The numeric form of its 40-window falsifier lives in the bar draft.
+- `R-SKIP-2TO1-FAVORITE` — second selection rule (PROPOSED 02, 2026-09-08 16:53 EDT): skip when posted YES is a 2-to-1 or better favorite (`favorite_odds=2` ⇒ `p=2/3`). The free parameter is the integer prior, not a tape cut. `execution=false`. `decide()` expresses it from `params.favorite_odds`. Do not score it in the proposing turn. Do not retune `favorite_odds` from the tape.
 
 ## Hard NOs
 

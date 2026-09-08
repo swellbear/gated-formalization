@@ -1,18 +1,36 @@
+from golf_offshoot.learning_lane_15m.evidence_bar import class_is_burned
 from golf_offshoot.learning_lane_15m.paper import load_decisions, paper_autobet_open_markets
 from golf_offshoot.learning_lane_15m.paths import set_15m_root_override
-from golf_offshoot.learning_lane_15m.rules import decide, load_rules, window_is_oos
+from golf_offshoot.learning_lane_15m.rules import (
+    decide,
+    favorite_threshold,
+    load_rules,
+    window_is_oos,
+)
 
 
 def test_registry_has_dated_first_rules():
     payload = load_rules()
     ids = [row["id"] for row in payload["rules"]]
-    assert ids == ["R-BASELINE-FILL-ALL", "R-SKIP-COINFLIP"]
+    assert ids == [
+        "R-BASELINE-FILL-ALL",
+        "R-SKIP-COINFLIP",
+        "R-SKIP-2TO1-FAVORITE",
+    ]
     assert payload["lab_admits"] is False
-    assert payload["trials_to_date"] == 0
+    assert payload["trials_to_date"] == 1
     assert payload["evidence_bar"]["binding"] is False
     skip = next(row for row in payload["rules"] if row["id"] == "R-SKIP-COINFLIP")
     assert skip["declared_at"] == "2026-09-08T05:56:00-04:00"
     assert skip["execution"] is False
+    fav = next(row for row in payload["rules"] if row["id"] == "R-SKIP-2TO1-FAVORITE")
+    assert fav["execution"] is False
+    assert fav["selects"] is True
+    assert fav["params"]["favorite_odds"] == 2
+    log = payload["trials_log"]
+    assert len(log) == 1
+    assert log[0]["subject"] == "R-SKIP-2TO1-FAVORITE"
+    assert log[0]["kind"] == "declaration"
 
 
 def test_predeclaration_window_is_not_oos():
@@ -94,3 +112,31 @@ def test_a_skip_rule_produces_no_fill_in_band_and_fills_out_of_band(tmp_path, mo
         assert out_band["ticker"] in tickers
     finally:
         set_15m_root_override(None)
+
+
+def test_two_to_one_favorite_is_not_a_burned_class():
+    assert class_is_burned("SKIP-2TO1-FAVORITE") is False
+    assert class_is_burned("R-SKIP-2TO1-FAVORITE") is False
+    assert class_is_burned("RETUNE-COINFLIP-BAND") is True
+    assert class_is_burned("FEE-AS-SIGNAL") is True
+
+
+def test_two_to_one_favorite_expresses_skip_and_fill():
+    assert favorite_threshold(2) == 2 / 3
+    rule = {
+        "id": "R-SKIP-2TO1-FAVORITE",
+        "declared_at": "2026-09-08T16:53:00-04:00",
+        "kind": "selection",
+        "selects": True,
+        "execution": False,
+        "params": {"favorite_odds": 2},
+    }
+    skip = decide(rule, posted_yes=2 / 3, close_at="2026-09-08T17:00:00-04:00")
+    assert skip["eligible"] is True
+    assert skip["action"] == "skip"
+    assert skip["execution"] is False
+    fill = decide(rule, posted_yes=0.50, close_at="2026-09-08T17:00:00-04:00")
+    assert fill["action"] == "fill"
+    historic = decide(rule, posted_yes=0.80, close_at="2026-09-08T16:45:00-04:00")
+    assert historic["eligible"] is False
+    assert historic["action"] == "ineligible"
