@@ -24,7 +24,7 @@ def test_registry_has_dated_first_rules():
     assert skip["declared_at"] == "2026-09-08T05:56:00-04:00"
     assert skip["execution"] is False
     fav = next(row for row in payload["rules"] if row["id"] == "R-SKIP-2TO1-FAVORITE")
-    assert fav["execution"] is False
+    assert fav["execution"] is True
     assert fav["selects"] is True
     assert fav["params"]["favorite_odds"] == 2
     log = payload["trials_log"]

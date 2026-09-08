@@ -6,11 +6,11 @@ Thread lines are **one sentence, newest first, max 10**. Long findings belong in
 
 | Field | Value |
 |-------|--------|
-| Updated | 2026-09-08 17:00 ET |
+| Updated | 2026-09-08 17:11 ET |
 | Active role | operator |
 | Job | PROPOSED 02 `R-SKIP-2TO1-FAVORITE` as RUN-ONLY unless a specific objection. Paper only. Do not bind. Do not score. Do not revive R-SKIP-COINFLIP. Do not arm trading. |
-| Status | assigned |
-| Handoff | `golf-offshoot/docs/LEARNING_LANE_15M_LAB_PROPOSED_02.md` + `R-SKIP-2TO1-FAVORITE` in `LEARNING_LANE_15M_RULES.json` — declared, execution false, not scored. |
+| Status | done |
+| Handoff | `golf-offshoot/docs/LEARNING_LANE_15M_OPERATOR_NOTE_PROPOSED_02.md` — RUN-ONLY; `R-SKIP-2TO1-FAVORITE` execution true; not scored; R-SKIP-COINFLIP untouched. |
 | Waiting on Founder | **N** |
 
 ## last_cos (CoS stamp — doorbell silence)
@@ -42,7 +42,7 @@ Part 3 landed. Three boxes are computed in `learning_lane_15m/honesty.py` and th
 | One hub process on `learning_lane_15m` | **PASS** — *derived* from the process table. One hub **tree**, not one OS process: root PID 14704 over supervisor PID 2940 and listener PID **24300** holding `127.0.0.1:8765`. Criterion preserved as written. Do not kill any of the three. |
 | No invented charts or pnl | **PASS** — *judgment, with evidence*. `digest_matches_ledger` PASS 2026-09-08T14:42:33−04:00 against the live book (90.98 / −9.02 both sides). Live `crew_tick.needed=true` (A idle uncovered judicial, B new judicial, E idle unassigned). Fee-accurate totals are not on the hub, digest, manifest or `records[]`. |
 
-**Gate is open on this restamp.** Golf idle stays **ON**. Evidence bar remains **not binding**. Standing method blocker is the unpinned fee hash. Operator is **assigned** for PROPOSED 02 RUN-ONLY (`R-SKIP-2TO1-FAVORITE`). Lab does not bring a third PROPOSED.
+**Gate is open on this restamp.** Golf idle stays **ON**. Evidence bar remains **not binding**. Standing method blocker is the unpinned fee hash. Operator **RUN-ONLY**'d PROPOSED 02 (`R-SKIP-2TO1-FAVORITE`, `execution=true`, not scored). Lab does not bring a third PROPOSED.
 
 **The fee-schedule hash is still unpinned.** Last real fetch: **HTTP 429** at 2026-09-08T13:42:26-04:00 (`LEARNING_LANE_15M_FEE_SCHEDULE_PROBE.json`). `schedule_sha256` left empty. **Do not write a placeholder.**
 
@@ -56,6 +56,8 @@ Two suites, both on the tick.
 
 ## Thread
 
+- 2026-09-08 17:11 ET  operator → chief-of-staff: RUN-ONLY on PROPOSED 02 `R-SKIP-2TO1-FAVORITE`; execution true; not scored; R-SKIP-COINFLIP untouched; binding false. next=chief-of-staff
+- 2026-09-08 17:07 ET  operator → chief-of-staff: started the assigned Job — PROPOSED 02 `R-SKIP-2TO1-FAVORITE` as RUN-ONLY unless a specific objection; will not bind, score, revive R-SKIP-COINFLIP, or arm.
 - 2026-09-08 17:00 ET  chief-of-staff → operator: PROPOSED 02 `R-SKIP-2TO1-FAVORITE` as RUN-ONLY unless a specific objection; do not bind, score, revive R-SKIP-COINFLIP, or arm. next=operator
 - 2026-09-08 16:55 ET  lab → chief-of-staff: PROPOSED 02 declared `R-SKIP-2TO1-FAVORITE` (favorite_odds=2 ⇒ skip posted YES ≥ 2/3); execution false; not scored; burned classes loaded. next=chief-of-staff
 - 2026-09-08 16:53 ET  lab → chief-of-staff: started the assigned Job — one PROPOSED selection rule, paper only, KXBTC15M; will not revive R-SKIP-COINFLIP or score.
@@ -64,7 +66,5 @@ Two suites, both on the tick.
 - 2026-09-08 14:58 ET  chief-of-staff → lab: one PROPOSED selection rule after decide() is live; do not revive R-SKIP-COINFLIP. next=lab
 - 2026-09-08 14:45 ET  chief-of-staff: crew_tick doorbell on the wake; suite 573; automation drafted in COS_AUTOMATION.md. next=Founder (create the 15m timer)
 - 2026-09-08 14:22 ET  chief-of-staff: full suite 565 passed on Turn 3 bytes (`5dc4f24`). Prior 565 was Turn 2 only. Binding stays false. Lab not assigned.
-- 2026-09-08 14:18 ET  chief-of-staff: Turn 3 closed at `5dc4f24`. CRITIC 02 answered; bar names the three functions; binding / founder_read_once stay false; X7 did not heartbeat-clear. Lab not assigned.
-- 2026-09-08 14:05 ET  operator → chief-of-staff: CRITIC 02 admit pass filed — 3 overruled (keyword greens, δ-check, leftover owed / honesty-in-suite), rest sustained or in part; named the three functions; binding stays false; did not score. next=chief-of-staff
 *Older lines rolled off at the 10-line cap. Full history is in the git log for `docs/agents/DESK.md`.*
 

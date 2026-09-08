@@ -1,6 +1,6 @@
 # Lab — PROPOSED 02: skip a posted 2-to-1 YES favorite
 
-**State:** **PROPOSED.** Not Softened, not admitted, not RUN-ONLY, not a board, not a dashboard figure. `execution` stays **false** — Operator flips, Lab does not.
+**State:** **RUN-ONLY** by `operator` 2026-09-08 17:11 EDT. **Not** Softened, **not** admitted, **not** a board, **not** a dashboard figure. Decision: [`LEARNING_LANE_15M_OPERATOR_NOTE_PROPOSED_02.md`](LEARNING_LANE_15M_OPERATOR_NOTE_PROPOSED_02.md). `execution=true` (paper only). Not scored. Promotion still requires the normal ADMIT gate.
 **Lane:** `learning_lane_15m` · series `KXBTC15M` only
 **Role:** `lab` — `lab_admits=false`. Lab never admits its own candidate ([`.cursor/skills/gpf-lab/SKILL.md`](../../.cursor/skills/gpf-lab/SKILL.md)).
 **Admit?** N · **Soften?** N · **Trading ARMED?** N · **Keys / orders / cash?** none
