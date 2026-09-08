@@ -5,9 +5,9 @@ Chat transcripts are not. A later Grok / Cursor cloud agent will not see a prior
 
 | Field | Value |
 |-------|--------|
-| Updated | 2026-09-07 18:20 EDT (Operator docs fold of the first real 15m SOURCE digest) |
+| Updated | 2026-09-07 20:10 EDT (CoS closeout — learning cadence pushed) |
 | Interim operator | Cursor chat (Grok bot usage exhausted until **2026-09-13**) |
-| Repo SoT | `origin/master` @ `352b967` (PR #163) |
+| Repo SoT | `origin/master` @ `352b967` (PR #163) · **this work is on open PR [#165](https://github.com/swellbear/gated-formalization/pull/165)**, branch `cursor/agent-leave-off-handoff` @ `69bdc7a` |
 | Local Windows tree for this interim | `C:\Users\bearh\gated-formalization-master-hub` |
 | Do **not** treat as SoT | `C:\Users\bearh\gated-formalization` on `cursor/eia-window-job2` (stale + dirty) |
 | Active track | `learning_lane_15m` (KXBTC15M paper loop) + Phase 1 desktop hub |
@@ -54,7 +54,7 @@ Golf Phase 1 (do not reopen unless asked):
 
 ## Learning is now **on** (this is the change since the last leave-off)
 
-> **Not yet on master.** The learning wake, the watch and the three 15m docs below live on branch `cursor/agent-leave-off-handoff` and were **uncommitted** at the time of this stamp (`learning_lane_15m/learn.py`, `learning_lane_15m/watch.py`, `LEARNING_LANE_15M_SOURCE_DIGEST.md`, `LEARNING_LANE_15M_SOURCE_CONFLICT.md`, `LEARNING_LANE_15M_METHOD_PARK.md`, `docs/observability-hub/data/charts/`). A bot that clones `origin/master` will not have them until that branch is committed and pushed. If `learn-15m` is an unknown command after you clone, that is why.
+> **Pushed, not yet merged.** The learning wake, the watch and the three 15m docs are committed and pushed on branch `cursor/agent-leave-off-handoff` (`5a564f1` code, `6dedced` docs, `69bdc7a` published snapshot) and are open as PR [#165](https://github.com/swellbear/gated-formalization/pull/165). Clone or check out **that branch**, not `origin/master` — `master` is still `352b967` and does not have `learn-15m`. If `learn-15m` is an unknown command after you clone, that is why.
 
 PaperWatch alone was never learning. Two halves now run together:
 
@@ -127,7 +127,7 @@ Golf WC1 FAIL does **not** transfer into this lane, and nothing on this lane ret
    - `operator` — park/Soften only what the spine supports; put leave-off + desk on committed truth
    - `systems` — `manifest.json` merge; never drop the published `paper_win`, never invent a pending, never sum the lineages
    - `validator` — `python docs/observability-hub/validate_hub.py --strict`
-2. **Owed right now:** `systems`, then `validator`. Systems re-words `manifest.json` off *"SETTLE_PENDING until Kalshi result"* for `KXBTC15M-26SEP071500-00` at the four paths named in the snapshot above, onto the missing-paper-join wording the same file already uses at `$.lanes[1].settle.counts[5].note`. Keep the published `paper_win` `+1.67`. The genuine pending window (whichever one `learn-15m` currently names) stays a real `SETTLE_PENDING`.
+2. **Owed right now:** read it off `python -m golf_offshoot learn-15m` — do not trust this line, the loop keeps moving. The `KXBTC15M-26SEP071500-00` re-word is **done**: the published manifest reads `missing paper join — official result present`, and the fix lives in the export writer so the next export cannot undo it. Validator passed `--strict` at 19:53 after an export race was closed — pending is now re-derived from live settle files at export time, and the export refuses to write a manifest that calls a settled window pending.
 3. **Never collapse the two residual states.** A window pending for want of a Kalshi `result` is not the same as `KXBTC15M-26SEP071500-00`, which has an official `result=yes` and no book on this tree. Do not invent pnl for either. Do not merge lineage A and lineage B.
 4. **Illustrator:** the 15m board exists and is real — it is just behind. A later tick may re-render `paper_window_strip.png` from **current** files (live lineage A window count and bankroll; the `071500-00` cell carrying the missing-paper-join wording). If real files cannot drive it, leave the prior real board standing. Never invent a chart. Do not put golf WC1 / Ill on this lane.
 5. **`lab` stays idle.** The wake reports Lab **NOT owed** while `lab_gate.honesty_gate_passed` is false. Lab opens only when CoS re-stamps the honesty checklist **all-PASS** *and* Operator posts a clear residual on the desk. Then Lab brings **one** cheap paper-only **PROPOSED** test back to `operator`. Lab never self-admits.
