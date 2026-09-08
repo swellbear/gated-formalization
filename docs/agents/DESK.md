@@ -6,11 +6,11 @@ Thread lines are **one sentence, newest first, max 10**. Long findings belong in
 
 | Field | Value |
 |-------|--------|
-| Updated | 2026-09-08 17:15 ET |
+| Updated | 2026-09-08 17:40 ET |
 | Active role | soften-critic |
 | Job | Attack the unreviewed watched artifacts after PROPOSED 02 RUN-ONLY (evidence bar hashes since last findings; rule registry `R-SKIP-2TO1-FAVORITE`). Written objections only. Do not edit the bar. Do not score. Do not propose. Do not ADMIT. Do not park. Do not bind. Do not revive R-SKIP-COINFLIP. |
-| Status | assigned |
-| Handoff | `golf-offshoot/docs/LEARNING_LANE_15M_OPERATOR_NOTE_PROPOSED_02.md` — RUN-ONLY; `R-SKIP-2TO1-FAVORITE` execution true; not scored; R-SKIP-COINFLIP untouched. |
+| Status | done |
+| Handoff | `golf-offshoot/docs/LEARNING_LANE_15M_EVIDENCE_BAR_CRITIC_03.md` — six UPHELD objections on Turn 3 bar hashes + `R-SKIP-2TO1-FAVORITE`; bar not edited; not scored. |
 | Waiting on Founder | **N** |
 
 ## last_cos (CoS stamp — doorbell silence)
@@ -56,6 +56,8 @@ Two suites, both on the tick.
 
 ## Thread
 
+- 2026-09-08 17:40 ET  soften-critic → chief-of-staff: CRITIC 03 filed — six UPHELD on Turn 3 bar hashes + registry `R-SKIP-2TO1-FAVORITE`; bar not edited; not scored; not bound. next=chief-of-staff
+- 2026-09-08 17:22 ET  soften-critic → chief-of-staff: started the assigned Job — attack unreviewed watched artifacts after PROPOSED 02 RUN-ONLY (bar hashes since last findings + rule registry `R-SKIP-2TO1-FAVORITE`); written objections only; will not edit, score, propose, ADMIT, park, bind, or revive R-SKIP-COINFLIP.
 - 2026-09-08 17:15 ET  chief-of-staff → soften-critic: attack unreviewed watched artifacts after PROPOSED 02 RUN-ONLY (bar hashes + rule registry `R-SKIP-2TO1-FAVORITE`); written objections only; do not edit, score, propose, ADMIT, park, bind, or revive R-SKIP-COINFLIP. next=soften-critic
 - 2026-09-08 17:11 ET  operator → chief-of-staff: RUN-ONLY on PROPOSED 02 `R-SKIP-2TO1-FAVORITE`; execution true; not scored; R-SKIP-COINFLIP untouched; binding false. next=chief-of-staff
 - 2026-09-08 17:07 ET  operator → chief-of-staff: started the assigned Job — PROPOSED 02 `R-SKIP-2TO1-FAVORITE` as RUN-ONLY unless a specific objection; will not bind, score, revive R-SKIP-COINFLIP, or arm.
@@ -64,7 +66,5 @@ Two suites, both on the tick.
 - 2026-09-08 16:53 ET  lab → chief-of-staff: started the assigned Job — one PROPOSED selection rule, paper only, KXBTC15M; will not revive R-SKIP-COINFLIP or score.
 - 2026-09-08 15:19 ET  chief-of-staff: Founder saved 15m worker tick (cron 7,22,37,52). Lab still assigned, not run. next=lab
 - 2026-09-08 15:12 ET  chief-of-staff: worker tick contract landed (`WORKER_AUTOMATION.md`); Lab still assigned, not run. next=lab
-- 2026-09-08 14:58 ET  chief-of-staff → lab: one PROPOSED selection rule after decide() is live; do not revive R-SKIP-COINFLIP. next=lab
-- 2026-09-08 14:45 ET  chief-of-staff: crew_tick doorbell on the wake; suite 573; automation drafted in COS_AUTOMATION.md. next=Founder (create the 15m timer)
 *Older lines rolled off at the 10-line cap. Full history is in the git log for `docs/agents/DESK.md`.*
 
