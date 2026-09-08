@@ -1,0 +1,31 @@
+{
+  "schema": 1,
+  "lane": "learning_lane_15m",
+  "series": "KXBTC15M",
+  "framing": "dated declarations, not admits, not edge",
+  "lab_admits": false,
+  "trading_armed": false,
+  "opened_at": "2026-09-08T05:56:00-04:00",
+  "rules": [
+    {
+      "id": "R-BASELINE-FILL-ALL",
+      "declared_at": "2026-09-08T05:56:00-04:00",
+      "kind": "baseline",
+      "execution": true,
+      "selects": false,
+      "rule": "Fill every candidate window at the posted public mark. entry_edge=0.0.",
+      "falsifier": "Not a claim. Naming this is not evidence of edge.",
+      "note": "This is the loop's current behavior, dated so later selection rules cannot pretend the undeclared overnight was their OOS."
+    },
+    {
+      "id": "R-SKIP-COINFLIP",
+      "declared_at": "2026-09-08T05:56:00-04:00",
+      "kind": "selection",
+      "execution": false,
+      "selects": true,
+      "rule": "Skip the paper fill when posted_yes is strictly inside (0.45, 0.55). Otherwise fill at the posted mark with entry_edge=0.0.",
+      "falsifier": "After 40 eligible windows, if selected-fill settlement_pnl cannot be distinguished from R-BASELINE-FILL-ALL on those same windows, park this rule. Do not retune the band.",
+      "note": "Band chosen before looking at overnight marks. execution=false until paper.py honors rules.decide()."
+    }
+  ]
+}

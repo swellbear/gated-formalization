@@ -1,7 +1,7 @@
 # Operator — 15m method leftovers (park / CLOSED / RUN-ONLY)
 
 **Track:** `learning_lane_15m` · series `KXBTC15M` only
-**Updated:** 2026-09-07 21:40 EDT (trigger classes + RUN-ONLY on PROPOSED 01)
+**Updated:** 2026-09-08 05:55 EDT (recorded `072245` outage gap; digest overnight refresh)
 **State:** No dated ADMIT on this lane. No Soften. No edge claim. `lab_admits=false` · Trading **NOT ARMED**
 **Golf idle:** stays **ON**. This file does not clear it, does not touch golf θ, and does not rewrite `phase1_dryrun/OPERATOR_STATUS_STAMP.md`.
 
@@ -37,6 +37,7 @@ Numbers move while the watch runs. This file names **states and triggers**, not 
 | Open · unreachable | 0 |
 | CLOSED · unreachable | **3** |
 | CLOSED · trigger fired since last stamp | 1 |
+| CLOSED · recorded defect (no backfill) | 1 |
 | CLOSED · on a falsifier | 0 |
 | RUN-ONLY executed (not an ADMIT) | 1 |
 | Dated ADMITs | 0 |
@@ -132,6 +133,21 @@ These required a machine we do not have, or a book that never existed here. They
 | **Closed** | 2026-09-07 21:40 EDT |
 | **Reason** | These windows closed before the local book existed (`ledger.json` `observation_seed` 15:42:37 EDT). No book existed here. None can be recovered on this tree. The rolling journal will drop them from the front; that is forgetting, not resolving |
 | **Honest state (still true)** | Unmeasured is not lost and not losses. Do not backfill from official results. Do not count them in any denominator |
+
+---
+
+## CLOSED — recorded defect (do not backfill)
+
+### 11. `KXBTC15M-26SEP072245` — outage gap — **CLOSED / recorded defect**
+
+| | |
+|---|---|
+| **Closed** | 2026-09-08 05:55 EDT |
+| **What happened** | The 22:25–22:50 EDT `--once` argparse collision. Window `KXBTC15M-26SEP072245` (22:30–22:45 EDT) does not exist on this tree |
+| **Evidence** | No `paper/` file, no `settlements/` file, no `ledger.json` row, no `latest/journal.json` `windows[]` row. Adjacent windows `072230-30` and `072300-00` exist |
+| **Honest state** | 56 locked lineage-A events is **not** an unbroken run. Digest §3g |
+| **Forbidden** | Backfill · infer a Kalshi `result` · invent a fill or pnl · treat 56 as a continuous overnight sample |
+| **Not reopened by** | Knowing the outage cause · wishing the console had stayed up |
 
 ---
 

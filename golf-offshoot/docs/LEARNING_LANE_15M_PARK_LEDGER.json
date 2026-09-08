@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "lane": "learning_lane_15m",
-  "stamped_at": "2026-09-07T21:40:00-04:00",
+  "stamped_at": "2026-09-08T05:55:00-04:00",
   "framing": "honesty instrument, not a productivity metric, not progress",
   "open": {
     "total": 5,
@@ -13,7 +13,8 @@
   "closed": {
     "unreachable": 3,
     "trigger_fired_since_last_stamp": 1,
-    "closed_on_falsifier": 0
+    "closed_on_falsifier": 0,
+    "recorded_defect": 1
   },
   "run_only_executed": 1,
   "admits": 0,
@@ -27,6 +28,7 @@
     "7_series_hold": "open / founder",
     "8_named_horse": "open / founder",
     "9_zero_edge_residual": "open / crew",
-    "10_proposed_01": "RUN-ONLY executed — see LEARNING_LANE_15M_OPERATOR_NOTE_PROPOSED_01.md"
+    "10_proposed_01": "RUN-ONLY executed — see LEARNING_LANE_15M_OPERATOR_NOTE_PROPOSED_01.md",
+    "11_072245_outage_gap": "CLOSED / recorded defect — window does not exist; do not backfill"
   }
 }
