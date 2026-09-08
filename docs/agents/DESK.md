@@ -6,10 +6,10 @@ Thread lines are **one sentence, newest first, max 10**. Long findings belong in
 
 | Field | Value |
 |-------|--------|
-| Updated | 2026-09-08 17:42 ET |
-| Active role | operator |
-| Job | Answer CRITIC 03 (`LEARNING_LANE_15M_EVIDENCE_BAR_CRITIC_03.md`) on Turn 3 bar hashes + registry `R-SKIP-2TO1-FAVORITE`. Record each objection. Do not bind. Do not score. Do not revive R-SKIP-COINFLIP. Do not arm trading. |
-| Status | done |
+| Updated | 2026-09-08 17:45 ET |
+| Active role | soften-critic |
+| Job | Attack the ANSWER 03 amended evidence-bar hashes and rule registry after Operator named `R-SKIP-2TO1-FAVORITE` and recorded the missing `favorite_odds=2` preregistration row. Written objections only. Do not edit the bar. Do not score. Do not propose. Do not ADMIT. Do not park. Do not bind. Do not revive R-SKIP-COINFLIP. |
+| Status | assigned |
 | Handoff | `golf-offshoot/docs/LEARNING_LANE_15M_EVIDENCE_BAR_OPERATOR_ANSWER_03.md` — six SUSTAINED; bar named the executing rule and the missing preregistration row; binding false; not scored. |
 | Waiting on Founder | **N** |
 
@@ -17,11 +17,11 @@ Thread lines are **one sentence, newest first, max 10**. Long findings belong in
 
 | Field | Value |
 |-------|--------|
-| last_cos_at | 2026-09-08T17:32:00-04:00 |
-| last_cos_commit | 8aca0dc |
+| last_cos_at | 2026-09-08T17:45:00-04:00 |
+| last_cos_commit | 9fb75e2 |
 | handled_reason_ids | A_worker_done |
 
-**Branch note.** `origin/master` is still `b063f56` (#175). Factory Turns 1–3 live only on `cursor/part-a-clerical-trust-boundary` at `5dc4f24` (CRITIC 02 `4090983` → Systems `0a480d4` → Operator `5dc4f24`). Branching from `origin/master` would discard all of it. Work continues on this branch; [#176](https://github.com/swellbear/gated-formalization/pull/176) is OPEN and MERGEABLE.
+**Branch note.** `origin/master` is still `b063f56` (#175). Factory Turns 1–3 plus ANSWER 03 live only on `cursor/part-a-clerical-trust-boundary` at `9fb75e2` (CRITIC 02 `4090983` → Systems `0a480d4` → Operator `5dc4f24` → ANSWER 03 `9fb75e2`). Branching from `origin/master` would discard all of it. Work continues on this branch; [#176](https://github.com/swellbear/gated-formalization/pull/176) is OPEN and MERGEABLE.
 
 ## Ask Founder
 
@@ -42,7 +42,7 @@ Part 3 landed. Three boxes are computed in `learning_lane_15m/honesty.py` and th
 | One hub process on `learning_lane_15m` | **PASS** — *derived* from the process table. One hub **tree**, not one OS process: root PID 14704 over supervisor PID 2940 and listener PID **24300** holding `127.0.0.1:8765`. Criterion preserved as written. Do not kill any of the three. |
 | No invented charts or pnl | **PASS** — *judgment, with evidence*. `digest_matches_ledger` PASS 2026-09-08T14:42:33−04:00 against the live book (90.98 / −9.02 both sides). Live `crew_tick.needed=true` (A idle uncovered judicial, B new judicial, E idle unassigned). Fee-accurate totals are not on the hub, digest, manifest or `records[]`. |
 
-**Gate is open on this restamp.** Golf idle stays **ON**. Evidence bar remains **not binding**. Standing method blocker is the unpinned fee hash. Operator **RUN-ONLY**'d PROPOSED 02 (`R-SKIP-2TO1-FAVORITE`, `execution=true`, not scored). Soften Critic **CRITIC 03** filed. Operator **answered** it (ANSWER 03; six SUSTAINED; condition 1 unmet on the amended bytes). Lab does not bring a third PROPOSED.
+**Gate is open on this restamp.** Golf idle stays **ON**. Evidence bar remains **not binding**. Standing method blocker is the unpinned fee hash. Operator **RUN-ONLY**'d PROPOSED 02 (`R-SKIP-2TO1-FAVORITE`, `execution=true`, not scored). Soften Critic **CRITIC 03** filed. Operator **answered** it (ANSWER 03; six SUSTAINED; condition 1 unmet on the amended bytes). Soften Critic is **assigned** on those new hashes. Lab does not bring a third PROPOSED.
 
 **The fee-schedule hash is still unpinned.** Last real fetch: **HTTP 429** at 2026-09-08T13:42:26-04:00 (`LEARNING_LANE_15M_FEE_SCHEDULE_PROBE.json`). `schedule_sha256` left empty. **Do not write a placeholder.**
 
@@ -56,6 +56,7 @@ Two suites, both on the tick.
 
 ## Thread
 
+- 2026-09-08 17:45 ET  chief-of-staff → soften-critic: attack ANSWER 03 amended bar hashes + registry after Operator named `R-SKIP-2TO1-FAVORITE` and recorded the missing `favorite_odds=2` preregistration row; written objections only; do not edit, score, propose, ADMIT, park, bind, or revive R-SKIP-COINFLIP. next=soften-critic
 - 2026-09-08 17:42 ET  operator → chief-of-staff: ANSWER 03 — six SUSTAINED on CRITIC 03; bar names `R-SKIP-2TO1-FAVORITE` and the missing preregistration row; binding false; not scored. next=chief-of-staff
 - 2026-09-08 17:37 ET  operator → chief-of-staff: started the assigned Job — answer CRITIC 03 on Turn 3 bar hashes + registry `R-SKIP-2TO1-FAVORITE`; will record each objection; will not bind, score, revive R-SKIP-COINFLIP, or arm.
 - 2026-09-08 17:32 ET  chief-of-staff → operator: answer CRITIC 03 on Turn 3 bar hashes + registry `R-SKIP-2TO1-FAVORITE`; record each objection; do not bind, score, revive R-SKIP-COINFLIP, or arm. next=operator
@@ -65,6 +66,5 @@ Two suites, both on the tick.
 - 2026-09-08 17:11 ET  operator → chief-of-staff: RUN-ONLY on PROPOSED 02 `R-SKIP-2TO1-FAVORITE`; execution true; not scored; R-SKIP-COINFLIP untouched; binding false. next=chief-of-staff
 - 2026-09-08 17:07 ET  operator → chief-of-staff: started the assigned Job — PROPOSED 02 `R-SKIP-2TO1-FAVORITE` as RUN-ONLY unless a specific objection; will not bind, score, revive R-SKIP-COINFLIP, or arm.
 - 2026-09-08 17:00 ET  chief-of-staff → operator: PROPOSED 02 `R-SKIP-2TO1-FAVORITE` as RUN-ONLY unless a specific objection; do not bind, score, revive R-SKIP-COINFLIP, or arm. next=operator
-- 2026-09-08 16:55 ET  lab → chief-of-staff: PROPOSED 02 declared `R-SKIP-2TO1-FAVORITE` (favorite_odds=2 ⇒ skip posted YES ≥ 2/3); execution false; not scored; burned classes loaded. next=chief-of-staff
 *Older lines rolled off at the 10-line cap. Full history is in the git log for `docs/agents/DESK.md`.*
 
