@@ -123,9 +123,4 @@ HARD NOs (every role)
 
 ## Founder click
 
-1. Open the Agents Window → Automations.
-2. New automation. Name **15m worker tick**. Do not edit **15m CoS crew tick**.
-3. Schedule `7,22,37,52 * * * *` (offset from CoS at `0,15,30,45`).
-4. Checkout this repo on `cursor/part-a-clerical-trust-boundary`.
-5. Paste the prompt above.
-6. Approve. An unapproved draft is not a timer.
+Saved 2026-09-08 15:19 ET. Name **15m worker tick**, cron `7,22,37,52 * * * *`. Do not edit **15m CoS crew tick**. An unsaved draft is not a timer; this one is saved.
