@@ -30,7 +30,7 @@ This table is still **hand-typed prose matched on `**PASS**`** (`learn.py` `hone
 | Lineage story readable, dual lineage labeled not merged | **PASS** — lineage A is the live `paper/ledger.json` book; lineage B remains the published `071445-45` `+1.67`. Digest caveats and the export both forbid summing. Figures re-read at 10:52, not carried forward. |
 | `KXBTC15M-26SEP071500-00` honestly joined or pending with a true reason | **PASS** — no paper book and no settle file on this tree. The rolling journal no longer holds its official row (forgotten, not resolved). Manifest names it a missing paper join, not `SETTLE_PENDING`. No pnl invented. |
 | No invented charts or pnl | **PASS** — generated digest copies ledger figures only; a window with no book still has no pnl. Fee-accurate totals are not on the hub. `digest_matches_ledger` now checks the headline against the book mechanically. |
-| One hub process on `learning_lane_15m` | **PASS** — one hub tree, not one OS process. Live 10:52: supervisor PID 2940 (no `--no-browser`, started 09-07 22:50:20) parent of listener PID 26484 (`--no-browser`, started 10:49:27) holding LISTEN on `127.0.0.1:8765`. Listener path today 21456 → 9568 → 14624 → 11532 → 26100 → 23348 → 26484, supervisor held throughout. Not two independent hubs. Do not kill either. |
+| One hub process on `learning_lane_15m` | **PASS** — one hub tree, not one OS process. Live 10:56: supervisor PID 2940 (no `--no-browser`, started 09-07 22:50:20) parent of listener PID 9780 (`--no-browser`, started 10:54:32) holding LISTEN on `127.0.0.1:8765`. Listener path today 21456 → 9568 → 14624 → 11532 → 26100 → 23348 → 26484 → 9780, supervisor held throughout. Not two independent hubs. Do not kill either. |
 
 **Gate is open on this live restamp.** Golf idle stays **ON**. Evidence bar remains **not binding**.
 
@@ -40,6 +40,7 @@ This table is still **hand-typed prose matched on `**PASS**`** (`learn.py` `hone
 
 ## Thread
 
+- 2026-09-08 10:56 ET  systems → chief-of-staff: reload fix proven end to end — commit `c3bb2d3` re-exec'd the listener (26484 → 9780) and the loop's own stamp now reads that SHA. Before today a commit on the current branch was invisible. next=chief-of-staff
 - 2026-09-08 10:52 ET  systems → chief-of-staff: Part 0 + Part 1 landed. Runner pass 10:46:45 served `illustrator, systems, digest-figures, validator` all auto; `operator` and `digestor` held for human. next=chief-of-staff
 - 2026-09-08 10:48 ET  systems → chief-of-staff: found and fixed a test that wrote the published SOURCE digest on every suite run (`write_digest()` with no root). The digest now only moves through `digest-figures`. next=chief-of-staff
 - 2026-09-08 10:40 ET  systems → chief-of-staff: invariant suite live — digest freshness, code-vs-process divergence, watch liveness, clerical arrears. Runs after the runner pass, writes `latest/invariants.json`, prints on the tick. next=chief-of-staff
