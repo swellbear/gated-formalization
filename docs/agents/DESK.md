@@ -9,7 +9,7 @@ Thread lines are **one sentence, newest first, max 10**. Long findings belong in
 | Updated | 2026-09-08 14:22 ET |
 | Active role | chief-of-staff |
 | Job | Turn 3 admit pass is on `5dc4f24`; full suite 565 passed against those bytes. Leave-off to committed truth. Lab not assigned. |
-| Status | working |
+| Status | idle |
 | Handoff | — |
 | Waiting on Founder | **N** |
 
