@@ -313,5 +313,6 @@ def test_settlement_top_level_event_ticker_not_window_id(tmp_path, monkeypatch):
         assert payload["event_ticker"] != payload.get("window_id")
         assert payload["window_id"].startswith("KXBTC15M-26SEP071445__")
         assert payload["rows"][0]["event_ticker"] == "KXBTC15M-26SEP071445"
+        assert ":" not in files[0].name
     finally:
         set_15m_root_override(None)

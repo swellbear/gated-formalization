@@ -41,6 +41,7 @@ from golf_offshoot.learning_lane_15m.paths import (
     LANE_15M,
     PRIMARY_SERIES,
     assert_not_golf_path,
+    safe_artifact_stem,
     settlements_dir_15m,
 )
 from golf_offshoot.localtime import now
@@ -414,7 +415,7 @@ def _write_join_artifact(book_id: str, rows: list[SettleJoinRow]) -> Path:
         event_ticker = _event_ticker_from_book_id(book_id)
     if not window:
         window = str(book_id or event_ticker)
-    dest = settlements_dir_15m() / f"{book_id}.json"
+    dest = settlements_dir_15m() / f"{safe_artifact_stem(book_id)}.json"
     assert_not_golf_path(dest)
     dest.write_text(
         json.dumps(

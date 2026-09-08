@@ -74,7 +74,7 @@ def main(argv: list[str] | None = None) -> int:
         "command",
         nargs="?",
         default="demo",
-        choices=["demo", "board", "explain", "strategy", "ingest", "calibrate", "pressure-test", "live", "watch", "shadow", "shell", "paper-export", "paper-ledger", "paper-deposit", "paper-withdraw", "paper-settle", "paper-fill", "compare-replay", "hub", "lane-15m", "observability-export"],
+        choices=["demo", "board", "explain", "strategy", "ingest", "calibrate", "pressure-test", "live", "watch", "shadow", "shell", "paper-export", "paper-ledger", "paper-deposit", "paper-withdraw", "paper-settle", "paper-fill", "compare-replay", "hub", "lane-15m", "learn-15m", "observability-export"],
     )
     parser.add_argument("--course-type", default="parkland")
     parser.add_argument("--player", default="p01")
@@ -167,6 +167,17 @@ def main(argv: list[str] | None = None) -> int:
         "--once",
         action="store_true",
         help="watch: one tick then exit (use this to confirm ntfy)",
+    )
+    parser.add_argument(
+        "--watch",
+        action="store_true",
+        help="lane-15m: keep repeating the paper loop. Founder does not click cycles.",
+    )
+    parser.add_argument(
+        "--json",
+        action="store_true",
+        dest="as_json",
+        help="learn-15m: print the wake state as JSON instead of the readable tick",
     )
     parser.add_argument(
         "--dry-run",
@@ -269,6 +280,8 @@ def main(argv: list[str] | None = None) -> int:
         return _cmd_hub(args)
     if args.command == "lane-15m":
         return _cmd_lane_15m(args)
+    if args.command == "learn-15m":
+        return _cmd_learn_15m(args)
     if args.command == "observability-export":
         return _cmd_observability_export(args)
 
@@ -991,11 +1004,29 @@ def _cmd_hub(args) -> int:
 
 
 def _cmd_lane_15m(args) -> int:
+    if getattr(args, "watch", False):
+        from golf_offshoot.learning_lane_15m.watch import run_watch_forever
+
+        interval = None if int(getattr(args, "interval", 600) or 600) == 600 else float(args.interval)
+        return run_watch_forever(interval_s=interval)
+
     from golf_offshoot.operator_surface.runner import format_run_record, run_15m_loop
 
     rec = run_15m_loop(refresh=args.refresh, notify=True)
     print(format_run_record(rec))
     return 0 if rec.ok else 2
+
+
+def _cmd_learn_15m(args) -> int:
+    """The learning tick. Names which roles are owed a turn; marks none of them served."""
+    from golf_offshoot.learning_lane_15m.learn import format_wake_tick, record_learning_tick
+
+    state = record_learning_tick()
+    if getattr(args, "as_json", False):
+        print(json.dumps(state, indent=2))
+        return 0
+    print(format_wake_tick(state))
+    return 0
 
 
 def _cmd_observability_export(_args) -> int:
