@@ -5,7 +5,7 @@ Chat transcripts are not. A later Grok / Cursor cloud agent will not see a prior
 
 | Field | Value |
 |-------|--------|
-| Updated | 2026-09-08 14:58 EDT (CoS fire assigned lab: one new selection PROPOSED. last_cos handled A/B/E at 7e15c76. Bar still not binding.) |
+| Updated | 2026-09-08 15:12 EDT (worker tick contract landed; Lab still assigned from 14:58, not run. last_cos handled A/B/E at 7e15c76. Bar still not binding.) |
 | Interim operator | Cursor chat (Grok bot usage exhausted until **2026-09-13**) |
 | Repo SoT | **PR [#176](https://github.com/swellbear/gated-formalization/pull/176) is OPEN, not merged.** `origin/master` is still `b063f56` (#175). Part A + Parts 0/1 live only on `cursor/part-a-clerical-trust-boundary`. |
 | Local Windows tree for this interim | `C:\Users\bearh\gated-formalization-master-hub` |
@@ -133,7 +133,7 @@ Golf WC1 FAIL does **not** transfer into this lane, and nothing on this lane ret
 
 **Start every turn by running the tick.** `python -m golf_offshoot learn-15m` tells you which roles are owed and why. Serve them in the Protocol learning-tick order below; do not ping Founder to approve any of it.
 
-1. **The learning tick order is `lane-15m` → `digest-figures` → `digestor` (caveats only) → `operator` → `systems` → `validator`.** `hub-ui` runs only if the display is wrong or stale. **`illustrator` is owed by the wake** when the PNG lags live journal/settlements by more than one window (one window of trail is the open window and is allowed). **`lab` is assigned 2026-09-08 14:58 ET** — one PROPOSED selection rule; do not revive `R-SKIP-COINFLIP`. **CoS last_cos** handled `A_idle_uncovered_judicial, B_new_judicial, E_idle_unassigned` at `7e15c76` (desk block + this line; wake is gitignored). A tick fires on a new official settle, a new paper fill, a pending window clearing, or a stale board. CoS starts when `crew_tick.needed` is true. Do not schedule CoS at 90s.
+1. **The learning tick order is `lane-15m` → `digest-figures` → `digestor` (caveats only) → `operator` → `systems` → `validator`.** `hub-ui` runs only if the display is wrong or stale. **`illustrator` is owed by the wake** when the PNG lags live journal/settlements by more than one window (one window of trail is the open window and is allowed). **`lab` is still assigned 2026-09-08 14:58 ET** — one PROPOSED selection rule; do not revive `R-SKIP-COINFLIP`. **Do not run Lab in a CoS authoring turn.** The first PROPOSED comes from **15m worker tick** (`golf-offshoot/docs/WORKER_AUTOMATION.md`, cron `7,22,37,52`) once Founder creates it. **CoS last_cos** handled `A_idle_uncovered_judicial, B_new_judicial, E_idle_unassigned` at `7e15c76` (desk block + this line; wake is gitignored). A tick fires on a new official settle, a new paper fill, a pending window clearing, or a stale board. CoS starts when `crew_tick.needed` is true. Do not schedule CoS at 90s.
    - `lane-15m` — confirm the watch is healthy, do not double-start hubs, stay `SETTLE_PENDING` where there is no Kalshi `result`
    - `digest-figures` — generate the SOURCE figures half (`python -m golf_offshoot digest-15m`). Never write the caveats file
    - `digestor` — human caveats turn only, and **owed only on its five exceptions** (7f). A figures-only SOURCE refresh leaves this owed. A new caveat is the only write that clears it

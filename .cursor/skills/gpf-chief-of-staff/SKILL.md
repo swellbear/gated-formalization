@@ -20,7 +20,7 @@ Start when `learning_wake.json` `crew_tick.needed` is true, including from a 15�
 
 Set desk `Active role`, `Job`, `Status=assigned`, `Waiting on Founder=N`. Thread: `CoS → ROLE: job. next=ROLE`.
 
-Then read that role’s skill under `.cursor/skills/gpf-<role>/SKILL.md` and do the job **in this same turn** only if it is a single safe step. If the job is large, assign and state you are now that role.
+Then stop. Do not become that role in the CoS fire. **15m worker tick** (`golf-offshoot/docs/WORKER_AUTOMATION.md`) reads the skill and does the Job. Founder opening a chat is a backup, not the runner.
 
 **Claude Opus 5 for boards:** If the job is `illustrator`, or `hub-ui` work that places / styles / enlarges a chart, you MUST launch a Task subagent with `model: claude-opus-5-thinking-max`. Do not draw or restyle the 15m board yourself.
 

@@ -26,6 +26,10 @@ Quiet tick: `needed` false ⇒ the automation no-ops. No desk spam.
 
 The runner may write `crew_tick`. It may not open a chat, ADMIT, invent, or push. CoS, Operator, Lab, and soften-critic stay off `CLERICAL_WHITELIST`.
 
+## Worker tick is a body, not a courtesy
+
+When the desk `Status=assigned`, a **separate** 15-minute Cursor Automation (`15m worker tick`, cron `7,22,37,52`) becomes that Active role, does the Job, sets `Status=done`, and hands to CoS. It does not assign the next worker. CoS assigns; this timer runs. SoT: [`golf-offshoot/docs/WORKER_AUTOMATION.md`](../../golf-offshoot/docs/WORKER_AUTOMATION.md).
+
 ## Session start (every turn)
 
 1. Read `docs/AGENT_LEAVE_OFF.md`.

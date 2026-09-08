@@ -11,7 +11,7 @@ click-path if the editor was not opened from chat.
 | Optional extra trigger | push to `cursor/part-a-clerical-trust-boundary` when `docs/agents/DESK.md` or `docs/AGENT_LEAVE_OFF.md` changes |
 | Repo / branch | this repo, `cursor/part-a-clerical-trust-boundary` — not `origin/master` until #176 merges |
 | Tools | whatever the CoS skill needs to read the tree, edit desk / leave-off, and assign. Not deploy, not Kalshi private, not a second hub |
-| Do not also create | a worker automation that runs Operator / Lab / Critic. CoS-only this session |
+| Do not also create | a second CoS timer. Worker fires belong to **15m worker tick** (`WORKER_AUTOMATION.md`) |
 
 ## Agent prompt (paste)
 
@@ -26,7 +26,7 @@ If `needed` is true: do exactly one thing —
   (2) if the owed job is CoS bookkeeping only (leave-off drift, leftover re-key already specified, restamp `last_cos`), do that one closeout.
 Then stamp `last_cos_*` via `golf_offshoot.learning_lane_15m.crew_tick.stamp_cos_closeout` so the same reason set does not re-ring. Stop.
 
-Do not also run Systems, Operator, Lab, or Critic in the same automation fire. The assigned worker is a later turn — either Founder's next chat or a *separate* worker automation you must NOT create unless Founder already asked for worker automations. This automation is CoS-only.
+Do not also run Systems, Operator, Lab, or Critic in the same automation fire. CoS assigns; **15m worker tick** runs the assigned job. This automation is CoS-only.
 
 Hard NOs (same as the desk):
   Do not set binding true. Do not arm trading. Do not lift the HOLD.
