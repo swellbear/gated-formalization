@@ -140,6 +140,13 @@ The trigger is the **repo-side event class**: a watched artifact's hash changed 
 
 **Critic objections meet the same bar as a Lab PROPOSED: specific and falsifiable.** "Let us be careful" is not an objection. A padded finding teaches Operator to route around the Critic.
 
+Two guards exist because the Critic's first attack found them missing in the Critic's own body:
+
+- **A failing report does not clear what it found.** `critic-invariants` clears on serve-on-proof like any clerical role, so a report reading *the bar fails four checks* cleared exactly as a clean one would, and the desk read that as clearance. A findings artifact with `passed: false` now raises `critic_findings_failing`, which owes **Operator** — the failing checks are properties of the bar, and the bar is Operator's. A failing method check cannot be retired by the machine that found it.
+- **A heartbeat is not proof, for this role either.** The findings payload stamps `ran_at` on every pass, so the raw file hash moved every tick whether or not a verdict moved. `_critic_token` fingerprints the `checks` block and `passed`, not the clock — the same guard `material_publish_reasons` already gave Systems.
+
+A detector that fails to read its evidence raises `detector_blind` to Operator. **A suite that cannot run is a failure, never a silent pass** — including the Critic's own repo scan, which previously swallowed its exception and reported no events, leaving the Critic quietly un-owed.
+
 ### Invariants (the ratchet)
 
 `golf-offshoot/src/golf_offshoot/learning_lane_15m/invariants.py`. Every flaw found by analysis becomes a permanent check here, so it cannot recur silently. A finding that does not produce a check is a finding that will be rediscovered by hand.

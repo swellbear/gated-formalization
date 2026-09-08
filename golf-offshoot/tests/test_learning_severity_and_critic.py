@@ -271,6 +271,74 @@ def test_a_rule_scored_before_it_was_declared_fails(tmp_path):
     assert check["evidence"]["violations"][0]["rule"] == "R-X"
 
 
+# ------------ X7: what the Critic found in the Critic's own body, and the fix
+
+
+def test_a_timestamp_only_rewrite_does_not_clear_the_critic(tmp_path):
+    # run_critic_invariants stamps ran_at and checked_at every pass, so the raw
+    # file hash moves on a heartbeat. The proof token must follow the verdicts.
+    from golf_offshoot.learning_lane_15m.runner import _critic_token
+
+    path = tmp_path / "findings.json"
+    checks = [{"id": "a", "state": "FAIL", "detail": "why"}]
+    path.write_text(
+        json.dumps({"ran_at": "11:00", "passed": False, "checks": checks}), encoding="utf-8"
+    )
+    first = _critic_token(path)
+
+    path.write_text(
+        json.dumps({"ran_at": "11:30", "passed": False, "checks": checks}), encoding="utf-8"
+    )
+    assert _critic_token(path) == first
+
+    checks[0]["state"] = "PASS"
+    path.write_text(
+        json.dumps({"ran_at": "11:30", "passed": True, "checks": checks}), encoding="utf-8"
+    )
+    assert _critic_token(path) != first
+
+
+def test_a_failing_findings_report_owes_operator(tmp_path):
+    # A failing method check may not be retired by the machine that found it.
+    critic.write_critic_findings(
+        {"passed": False, "failing": ["delta_above_detection_floor"], "checks": []},
+        root=tmp_path,
+    )
+
+    events = triggers.critic_findings_failing(root=tmp_path)
+
+    assert len(events) == 1
+    assert "delta_above_detection_floor" in events[0]["detail"]
+    # Owes the judicial role that owns the bar, and nobody else. A failing
+    # method check does not need the digest regenerated.
+    assert roles_owed_for(events[0]["kind"]) == ["operator"]
+
+
+def test_a_passing_findings_report_owes_nobody(tmp_path):
+    critic.write_critic_findings({"passed": True, "failing": [], "checks": []}, root=tmp_path)
+    assert triggers.critic_findings_failing(root=tmp_path) == []
+
+
+def test_a_blind_detector_raises_instead_of_reporting_nothing(monkeypatch):
+    from golf_offshoot.learning_lane_15m import learn
+
+    def _boom(**_):
+        raise RuntimeError("cannot read the tree")
+
+    monkeypatch.setattr(critic, "unreviewed", _boom)
+    monkeypatch.setattr(learn, "repo_events", learn.repo_events)
+    monkeypatch.setattr(
+        "golf_offshoot.learning_lane_15m.paths.has_15m_root_override", lambda: False
+    )
+
+    events = learn.repo_events()
+
+    assert len(events) == 1
+    assert events[0]["kind"] == triggers.EVENT_DETECTOR_BLIND
+    assert "not a detector that saw nothing" in events[0]["detail"]
+    assert "operator" in roles_owed_for(events[0]["kind"])
+
+
 def test_an_unpinned_fee_schedule_fails(tmp_path):
     bar = tmp_path / critic.BAR_JSON_REL
     bar.parent.mkdir(parents=True, exist_ok=True)

@@ -41,6 +41,8 @@ EVENT_RULE_REACHED_N = "rule_reached_n"
 EVENT_FALSIFIER_FIRED = "falsifier_fired"
 EVENT_LAB_PROPOSED = "lab_proposed"
 EVENT_ARTIFACT_UNREVIEWED = "artifact_unreviewed"
+EVENT_CRITIC_FINDINGS_FAILING = "critic_findings_failing"
+EVENT_DETECTOR_BLIND = "detector_blind"
 
 WINDOW_S = 900
 #: A crew park re-rules within roughly one day of active loop. Restating is
@@ -337,6 +339,34 @@ def rule_reached_n(
                 )
             )
     return events
+
+
+def critic_findings_failing(*, root: Path | None = None) -> list[dict[str, Any]]:
+    """A failing method check may not be retired by the machine that found it.
+
+    ``critic-invariants`` clears on serve-on-proof like any clerical role, so a
+    report saying *the bar fails four checks* used to clear exactly as a clean
+    report would, and the desk then read as clearance. The failing checks are
+    properties of the bar, and the bar is Operator's, so a failing report owes
+    Operator until the bar changes or Operator writes down why it should not.
+    """
+    from golf_offshoot.learning_lane_15m.critic import load_findings
+
+    payload = load_findings(root=root)
+    if not payload or payload.get("passed") is not False:
+        return []
+    failing = [str(f) for f in payload.get("failing") or []]
+    if not failing:
+        return []
+    return [
+        _event(
+            EVENT_CRITIC_FINDINGS_FAILING,
+            "critic-invariants",
+            f"{len(failing)} method check(s) failing on the current artifacts "
+            f"({', '.join(failing)}); the mechanical Critic cleared itself on proof, "
+            "which is not clearance of what it found",
+        )
+    ]
 
 
 def falsifier_fired(*, root: Path | None = None) -> list[dict[str, Any]]:

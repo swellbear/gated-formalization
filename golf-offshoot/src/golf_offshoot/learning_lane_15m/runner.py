@@ -294,12 +294,35 @@ def _proof_changed(
     return True
 
 
+def _critic_token(path: Path) -> str | None:
+    """Fingerprint the verdicts, not the clock.
+
+    ``run_critic_invariants`` stamps ``ran_at`` and a per-row ``checked_at`` on
+    every pass, so the raw file hash moves whether or not a single verdict
+    moved — which would clear ``critic-invariants`` every tick on a heartbeat.
+    Systems already has ``material_publish_reasons`` for exactly this; this is
+    the same guard for the Critic's mechanical half.
+    """
+    payload = _load_json(path)
+    if payload is None:
+        return file_fingerprint(path)
+    checks = [
+        {"id": row.get("id"), "state": row.get("state"), "detail": row.get("detail")}
+        for row in (payload.get("checks") or [])
+    ]
+    return json.dumps(
+        {"passed": payload.get("passed"), "checks": checks}, default=str, sort_keys=True
+    )
+
+
 def role_proof_token(role: str, *, root: Path | None = None) -> str | None:
     paths = owned_artifact_paths(role, root=root)
     if not paths:
         return None
     if role == "systems":
         return _systems_token(paths[0])
+    if role == "critic-invariants":
+        return _critic_token(paths[0])
     parts = [file_fingerprint(path) for path in paths]
     if any(part is None for part in parts):
         return None

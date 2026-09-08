@@ -82,6 +82,8 @@ EVENT_BOARD_STALE = "board_stale"
 from golf_offshoot.learning_lane_15m.triggers import (  # noqa: E402
     EVENT_ARTIFACT_UNREVIEWED,
     EVENT_BOOK_OPEN_NO_JOIN,
+    EVENT_CRITIC_FINDINGS_FAILING,
+    EVENT_DETECTOR_BLIND,
     EVENT_FALSIFIER_FIRED,
     EVENT_LAB_PROPOSED,
     EVENT_PAPER_JOIN_MISSING_GREW,
@@ -117,11 +119,22 @@ OPERATOR_TRIGGERS = frozenset(
         EVENT_FALSIFIER_FIRED,
         EVENT_RULE_REACHED_N,
         EVENT_LAB_PROPOSED,
+        # A failing method check may not be retired by the machine that found
+        # it. The failing checks are properties of the bar, and the bar is
+        # Operator's.
+        EVENT_CRITIC_FINDINGS_FAILING,
+        # A detector that cannot see is not a detector that saw nothing.
+        EVENT_DETECTOR_BLIND,
     }
 )
 
 #: Repo-side. Market data is not the only thing that changes.
 CRITIC_TRIGGERS = frozenset({EVENT_ARTIFACT_UNREVIEWED})
+
+#: Kinds that are not about the market. Naming the figures roles on these is
+#: the same over-firing the severity split exists to stop: a failing method
+#: check does not need the digest regenerated.
+NON_MARKET_KINDS = frozenset({EVENT_CRITIC_FINDINGS_FAILING, EVENT_DETECTOR_BLIND})
 
 #: The board may trail the live journal by the current open window. Two or more
 #: windows ahead of the PNG is a lag — Illustrator is owed, not optional.
@@ -753,7 +766,7 @@ def roles_owed_for(
         roles = {CRITIC_INVARIANTS_ROLE, SOFTEN_CRITIC_ROLE}
         roles.update(r for r in also_owes if r)
         return sorted(roles, key=_role_rank)
-    roles = set(ROUTINE_ROLES)
+    roles: set[str] = set() if kind in NON_MARKET_KINDS else set(ROUTINE_ROLES)
     if kind in DIGESTOR_TRIGGERS:
         roles.add(DIGESTOR_ROLE)
     if kind in OPERATOR_TRIGGERS:
@@ -836,34 +849,49 @@ def exception_events(
     evidence that the condition is absent — it is evidence it was not seen.
     """
     from golf_offshoot.learning_lane_15m import triggers as T
+    from golf_offshoot.learning_lane_15m.paths import has_15m_root_override
 
-    events: list[dict[str, Any]] = []
-    for detector in (
+    detectors: list[Any] = [
         lambda: T.paper_join_missing_grew(previous, current),
         lambda: T.new_book_open_no_join(previous, current),
         lambda: T.window_sequence_gaps(previous, current),
         lambda: T.settles_contradicting_their_book(previous, current),
-        T.unrecorded_cost,
-        T.park_aged,
-        T.falsifier_fired,
-        lambda: T.rule_reached_n(current),
-    ):
+    ]
+    # Detectors below read the *repo*, not the lane data directory. Under a
+    # scratch root the repo is not the tree under test, so reading it would
+    # leak live findings into a sandbox — the same leak that let a test rewrite
+    # the published digest. This is a scope limit, not a blind detector.
+    if not has_15m_root_override():
+        detectors.extend(
+            [
+                T.unrecorded_cost,
+                T.park_aged,
+                T.falsifier_fired,
+                T.critic_findings_failing,
+                lambda: T.rule_reached_n(current),
+            ]
+        )
+
+    events: list[dict[str, Any]] = []
+    for detector in detectors:
         try:
             events.extend(detector() or [])
         except Exception as exc:  # noqa: BLE001 — a blind detector is not a pass
-            events.append(
-                {
-                    "kind": EVENT_SETTLE_CONTRADICTS_BOOK,
-                    "ticker": "",
-                    "window_id": "",
-                    "detail": (
-                        f"an exception detector failed to read its evidence "
-                        f"({type(exc).__name__}: {exc}); this is owed to Operator "
-                        "because a detector that cannot see is not a detector that saw nothing"
-                    ),
-                }
-            )
+            events.append(_blind_detector_event(detector, exc))
     return events
+
+
+def _blind_detector_event(detector: Any, exc: BaseException) -> dict[str, Any]:
+    name = getattr(detector, "__name__", "") or "an exception detector"
+    return {
+        "kind": EVENT_DETECTOR_BLIND,
+        "ticker": name,
+        "window_id": "",
+        "detail": (
+            f"{name} failed to read its evidence ({type(exc).__name__}: {exc}); "
+            "a detector that cannot see is not a detector that saw nothing"
+        ),
+    }
 
 
 def repo_events() -> list[dict[str, Any]]:
@@ -872,13 +900,24 @@ def repo_events() -> list[dict[str, Any]]:
     Market data is not the only thing that changes. A bar being drafted, a rule
     reaching its n, an invariant being added, a park being written — the Critic
     is owed on those and no market event kind covers them.
-    """
-    from golf_offshoot.learning_lane_15m.critic import unreviewed
 
-    try:
-        rows = unreviewed()
-    except Exception:  # noqa: BLE001
+    The import is inside the ``try`` on purpose. It used to sit outside it, so
+    an ImportError propagated instead of being handled — and the bare
+    ``return []`` below it meant any runtime fault reported *no events*,
+    silently leaving the Critic un-owed. That is the same silent-pass the
+    module exists to prevent, so a failure here raises instead.
+    """
+    from golf_offshoot.learning_lane_15m.paths import has_15m_root_override
+
+    if has_15m_root_override():
+        # Scratch root: the live repo is not the tree under test.
         return []
+    try:
+        from golf_offshoot.learning_lane_15m.critic import unreviewed
+
+        rows = unreviewed()
+    except Exception as exc:  # noqa: BLE001 — a suite that cannot run is a failure
+        return [_blind_detector_event(repo_events, exc)]
     return [
         {
             "kind": EVENT_ARTIFACT_UNREVIEWED,
@@ -941,6 +980,9 @@ def _merge_roles_owed(
         entry["age_text"] = _age_text(age)
         entry["stale"] = age >= STALE_AFTER_S
         entry["served_at"] = None
+        # Judicial silence as a number rather than a vibe: how many ticks this
+        # role has been named and has not answered.
+        entry["ticks_unanswered"] = int(entry.get("ticks_unanswered") or 0) + 1
         out.append(entry)
     return out
 
@@ -1425,8 +1467,11 @@ def format_wake_tick(state: dict[str, Any] | None) -> str:
         lines.append(f"roles owed ({len(owed)}) — a request for a turn, not a completion")
         for entry in owed:
             flag = "  STALE" if entry.get("stale") else ""
+            silent = int(entry.get("ticks_unanswered") or 0)
+            # Judicial silence is a count, not an impression.
+            quiet = f"  silent {silent} ticks" if silent > 1 else ""
             lines.append(
-                f"  {_as_str(entry.get('role')):<10} owed {entry.get('age_text')}{flag}"
+                f"  {_as_str(entry.get('role')):<10} owed {entry.get('age_text')}{quiet}{flag}"
             )
             for reason in entry.get("reasons") or []:
                 lines.append(f"    for: {reason}")
