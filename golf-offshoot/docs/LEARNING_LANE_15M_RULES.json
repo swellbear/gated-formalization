@@ -31,8 +31,8 @@
       "execution": false,
       "selects": true,
       "rule": "Skip the paper fill when posted_yes is strictly inside (0.45, 0.55). Otherwise fill at the posted mark with entry_edge=0.0.",
-      "falsifier": "After 40 eligible windows, if selected-fill settlement_pnl cannot be distinguished from R-BASELINE-FILL-ALL on those same windows, park this rule. Do not retune the band.",
-      "note": "Band chosen before looking at overnight marks. execution=false until paper.py honors rules.decide(). OOS still accumulates from declared_at by replay; replayed results are not lived results."
+      "falsifier": "After the n named by the evidence bar in force (currently looks.first_look_n = 70), if selected-fill settlement_pnl cannot be distinguished from R-BASELINE-FILL-ALL on those same windows, park this rule. Do not retune the band. The bar is the governing source.",
+      "note": "The (0.45, 0.55) band is not verifiably pre-registered — see the bar Pre-registration section. A note field asserting blind choice is not proof. execution=false (not flipped this turn). paper.py now consults decide() but this rule is not the executing rule. OOS still accumulates from declared_at by replay; replayed results are not lived results. L1 cannot support Established."
     }
   ]
 }

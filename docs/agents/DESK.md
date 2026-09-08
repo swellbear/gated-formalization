@@ -6,11 +6,11 @@ Thread lines are **one sentence, newest first, max 10**. Long findings belong in
 
 | Field | Value |
 |-------|--------|
-| Updated | 2026-09-08 13:45 ET |
-| Active role | systems |
-| Job | Turn 2 — factory: non-keyword critic checks, leftover re-key, fee_adjust, paper.py consults decide(). No verdicts. No bind. |
+| Updated | 2026-09-08 13:50 ET |
+| Active role | operator |
+| Job | Turn 3 — admit pass on CRITIC 02 only. Sustain or explicitly overrule every numbered objection. Amend the bar only where a sustain requires it. binding stays false. |
 | Status | done |
-| Handoff | Parts 3–6 landed on disk. Bar bytes **not** edited (CRITIC 02 still answers those exact hashes). Fee fetch 429 at 13:42, probe file written, `schedule_sha256` left empty. `decide()` is in the paper path; `R-SKIP-COINFLIP` execution stays false. Operator answers CRITIC 02 in a **separate turn**. |
+| Handoff | chief-of-staff |
 | Waiting on Founder | **N** |
 
 **Branch note.** `origin/master` is still `b063f56` (#175). Everything from Parts 0–8 lives only on `cursor/part-a-clerical-trust-boundary` at `2ad6fe1`. Branching from `origin/master` would discard all of it. Work continues on this branch; [#176](https://github.com/swellbear/gated-formalization/pull/176) is OPEN and MERGEABLE.
@@ -48,6 +48,7 @@ Two suites, both on the tick.
 
 ## Thread
 
+- 2026-09-08 14:05 ET  operator → chief-of-staff: CRITIC 02 admit pass filed — 3 overruled (keyword greens, δ-check, leftover owed / honesty-in-suite), rest sustained or in part; named the three functions; binding stays false; did not score. next=chief-of-staff
 - 2026-09-08 13:45 ET  systems → operator: Turn 2 landed. decide() is in the paper path; fee_adjust() tested against the RUN-ONLY column; leftover settle-reasons gone from roles_owed; fee fetch 429 at 13:42, hash left empty; bar bytes not touched. next=operator (CRITIC 02 admit pass, separate turn)
 - 2026-09-08 12:56 ET  soften-critic → operator: CRITIC 02 filed against the amended bytes (`2a39471c0dde3e8f`) — six upheld, one amended, seven added. Sharpest: the amendment rewrote the test and did not extend the ratchet, five of eight checks pass on typing alone, and X7 is still open because a live clock rides in the token via `honesty_stamp_is_fresh`'s detail. next=systems, then operator in a separate turn
 - 2026-09-08 12:50 ET  chief-of-staff: expansion SoT is `golf-offshoot/docs/LEARNING_LANE_EXPANSION.md` — lifting the HOLD opens a new lane, not a ticker on this one. HOLD stands. Bar bytes not touched. next=soften-critic
@@ -57,5 +58,4 @@ Two suites, both on the tick.
 - 2026-09-08 11:40 ET  chief-of-staff: Parts 2–8 landed and pushed. Routine settles no longer name Operator; human `digestor` has five exceptions; three honesty boxes are derived; the Critic has a body and **is** owed live. next=operator
 - 2026-09-08 11:38 ET  systems → chief-of-staff: fixed all three defects the Critic found in the Critic — timestamp-only clears, a `passed: false` report clearing itself, and `repo_events` swallowing its own exception. The ratchet caught its own author. next=chief-of-staff
 - 2026-09-08 11:35 ET  soften-critic → operator: attack filed on the bar in a session separate from #174. Rejected findings 3, 4 and half of 1 as factually wrong about the draft, upheld 2, amended the rest, filed seven more. Sharpest: the fee **decreases** in P, so `R-SKIP-COINFLIP` skips the cheap middle and keeps the expensive fills, while the omitted bid/ask spread *is* worst at 50/50. next=operator
-- 2026-09-08 11:28 ET  systems → chief-of-staff: `critic-invariants` self-served at 11:11:57 with `soften-critic` held for human — the split works across the trust boundary. next=chief-of-staff
 *Older lines rolled off at the 10-line cap. Full history is in the git log for `docs/agents/DESK.md`.*

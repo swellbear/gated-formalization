@@ -2,7 +2,7 @@
 
 **Lane:** `learning_lane_15m` · series `KXBTC15M` only
 **Drafted:** 2026-09-08 08:30 EDT · Operator
-**Amended:** 2026-09-08 · Operator, admit pass on Soften Critic CRITIC 01
+**Amended:** 2026-09-08 13:59 EDT · Operator, admit pass on Soften Critic CRITIC 02 (prior amendment: 2026-09-08 12:09 EDT at `2ad6fe1`, not midnight)
 **Binding?** **N.** A system that sets its own threshold does not have one.
 **Admit?** N · **Edge established?** N · `lab_admits` false · Trading **NOT ARMED**
 
@@ -12,9 +12,9 @@ This draft becomes binding only after all three:
 2. `critic-invariants` passes on the bytes proposed to bind, **or** every failing check is named on this bar's face with Operator's reason for binding anyway. A findings artifact that says `passed: false` cannot sit under a bar that says `binding: true`.
 3. Founder reads it once and acknowledges.
 
-Condition 1 is met by [`LEARNING_LANE_15M_EVIDENCE_BAR_OPERATOR_ANSWER_01.md`](LEARNING_LANE_15M_EVIDENCE_BAR_OPERATOR_ANSWER_01.md), answering [`LEARNING_LANE_15M_EVIDENCE_BAR_CRITIC_01.md`](LEARNING_LANE_15M_EVIDENCE_BAR_CRITIC_01.md). **Conditions 2 and 3 are not met.** This is still a proposed bar. Writing it is not an ADMIT. Amending it is not an ADMIT. Scoring against it is not owed. `records[]` stays empty.
+Condition 1 is met **for the attack+answer pair named here**: [`LEARNING_LANE_15M_EVIDENCE_BAR_OPERATOR_ANSWER_02.md`](LEARNING_LANE_15M_EVIDENCE_BAR_OPERATOR_ANSWER_02.md), answering [`LEARNING_LANE_15M_EVIDENCE_BAR_CRITIC_02.md`](LEARNING_LANE_15M_EVIDENCE_BAR_CRITIC_02.md) (bytes `2a39471c…`). CRITIC 01 remains answered in [`LEARNING_LANE_15M_EVIDENCE_BAR_OPERATOR_ANSWER_01.md`](LEARNING_LANE_15M_EVIDENCE_BAR_OPERATOR_ANSWER_01.md). **Conditions 2 and 3 are not met.** `founder_read_once` stays false. This is still a proposed bar. Writing it is not an ADMIT. Amending it is not an ADMIT. Scoring against it is not owed. `records[]` stays empty.
 
-Amending this bar re-owes the Critic on the new text (`critic.py` keys findings by content hash). That is correct and intended: CRITIC 02 attacks *this* version.
+Amending this bar re-owes the Critic on the new text (`critic.py` keys findings by content hash). That is correct and intended.
 
 Machine copy: [`LEARNING_LANE_15M_EVIDENCE_BAR.json`](LEARNING_LANE_15M_EVIDENCE_BAR.json).
 Burned classes: [`LEARNING_LANE_15M_BURNED_CLASSES.json`](LEARNING_LANE_15M_BURNED_CLASSES.json).
@@ -26,14 +26,11 @@ Fee source: [`LEARNING_LANE_15M_OPERATOR_NOTE_PROPOSED_01.md`](LEARNING_LANE_15M
 
 Disclosed on the face because a bar that fails its own lane's checks and does not say so reads as complete. Run `critic-invariants` against the exact bytes of this file before treating any of this as current.
 
-At the last read, on the pre-amendment text, four method checks failed: `matched_exposure_control`, `delta_above_detection_floor`, `holdout_is_forward_only`, `fee_schedule_hash_recorded`. This amendment addresses the first three in substance. **`fee_schedule_hash_recorded` still fails and is a standing blocker on binding condition 2**: `k = 0.07` is used with no pinned sha256 for `https://kalshi.com/docs/kalshi-fee-schedule.pdf`, so a schedule change would be invisible. Pinning that hash is owed before this bar can bind.
+The method suite has **seven** checks (`honesty_stamp_is_fresh` is a desk check in `DESK_CHECKS` and does not set `passed`). As of Turn 2 (`0a480d4`) the keyword tests CRITIC 02 demonstrated are gone: a scratch-tree bar that kept the adjective and dropped the substance now **FAIL**s `matched_exposure_control`, `holdout_is_forward_only`, `fee_adjusted_book_is_binding`, `delta_above_detection_floor`, and `fee_schedule_hash_recorded`. Do not quote "6 of 8" or "two keyword-satisfiable checks" against these bytes.
 
-Two of those checks are keyword-satisfiable and must not be read as clearance on their own:
+This amendment **names** the functions the stricter checks require: `control_function` = `golf_offshoot.learning_lane_15m.rules.matched_exposure_permutation`, `adjustment_function` = `golf_offshoot.learning_lane_15m.evidence_bar.fee_adjust`, `commit_order_control.invariant` = `l1_committed_before_l2`. **`fee_schedule_hash_recorded` still fails and is a standing blocker on binding condition 2**: `k = 0.07` is used with no pinned sha256 for `https://kalshi.com/docs/kalshi-fee-schedule.pdf`. Last real fetch: HTTP **429** at 2026-09-08T13:42:26-04:00. Recording that attempt does not turn the check green. Pinning that hash is owed before this bar can bind.
 
-- `holdout_is_forward_only` passes the moment `forward_only` appears in the JSON. The key is set below **because** the substantive control was added (commit-ordering, §No peeking), not instead of it.
-- `matched_exposure_control` passes on the presence of a `matched_exposure` key. It is set because clause (5) exists, not to silence the check.
-
-`honesty_stamp_is_fresh` is a property of `DESK.md`, not of this bar, and is not this file's to clear.
+`honesty_stamp_is_fresh` is a property of `DESK.md`, not of this bar, and is not this file's to clear. It does not set `passed`.
 
 **A recorded hash in the findings artifact is not the byte hash of this file.** `critic.py` reads with `read_text()` and re-encodes, so on a CRLF checkout it records the newline-normalised digest. Binding condition 2 means the *normalised* bytes the checker actually read. Whoever verifies it must check which digest they are comparing.
 
@@ -63,9 +60,9 @@ n was 40 in the drafted version. It is 70 because at n = 40 the effect floor δ 
 - First look: the first 70 eligible windows after `declared_at` (`close` strictly after declaration). Call this set **L1**.
 - Do not compute the test at n = 1, 10, 40, or 69. Do not peek and then wait for a prettier n.
 - **L2** (eligible windows 71–140 after `declared_at`) is held out. L2 is strictly forward of L1, which is strictly forward of declaration; `rules.py` `window_is_oos` enforces `closed > declared`, strict.
-- **The holdout is not an honour-system reading restriction.** The L1 score note must be **committed before the 71st eligible window closes**, and must record that commit SHA and its timestamp. A note that cannot show it predates the first L2 window is not an L1 score; it is a look at both sets. This is the only form of the rule that is not self-certification, and it belongs in `invariants.py` as a check (owed to Systems).
-- L1 and L2 together must span at least **3 distinct UTC days**. At ~96 windows/day, 140 windows is ~35 hours; without this the whole test lives inside one contiguous stretch of one regime.
-- Even with that span: an **Established** verdict on this lane is scoped to the regimes actually observed and does not generalise past them. Say so in the verdict.
+- **The holdout is not an honour-system reading restriction.** The L1 score note must be **committed before the 71st eligible window closes**, and must record that commit SHA and its timestamp. A note that cannot show it predates the first L2 window is not an L1 score; it is a look at both sets. Enforced by invariant `l1_committed_before_l2` (landed at `0a480d4`). `forward_only: true` is not the control.
+- L1 and L2 together are **140 windows = 35.0 hours** elapsed. That is the tape span this lane can offer. The drafted "3 distinct UTC days" clause is **retired**: a 35-hour block touches 3 UTC dates iff L1 starts at or after 13:15 UTC, and 2 if it starts earlier — a clock-alignment rule, not a regime-diversity rule. Recomputed 2026-09-08; no 140-window block that spans more than 35 hours can fail a 3-date test it already games by start time.
+- An **Established** verdict on this lane is scoped to the regimes actually observed and does not generalise past them. Say so in the verdict. The retired calendar-date clause does not add a second scope.
 - A later confirmation look on L2 is a second precommitted look, not a retry of L1. Its test is specified in §The L2 confirmation test, before L1 is scored.
 - `072245` does not exist. Do not invent it. Do not put it in any denominator.
 
@@ -93,14 +90,14 @@ Contrast, on the **same** n eligible windows:
    The drafted null was `mean(d) ≤ 0`. That null is **known false before any data are collected**: the book fills at the posted mark and pays `1/mark`, so a fill is EV-zero *pre-fee* at a calibrated mark, and the fee is strictly positive on every fill (minimum ceil-cent fee $0.01). Therefore `E[d] > 0` for any nonzero skip rate with no selection skill present. Testing against zero is testing arithmetic. The floor is now the null, so clause (3) is absorbed here rather than checked separately.
 2. **Multiplicity.** `α_k = 0.05 / (k · (k+1))`, where `k = trials_to_date + 1`, using the registry counter *before* incrementing. Then increment.
    The drafted scheme was `0.05 / k`. Its weights are the harmonic series, which diverges, so it controls nothing: over the bar's own 14-look week `1 − Π(1 − 0.05/k) = 15.2%`, not 5%. The replacement sums to 0.05 over an unbounded number of looks (`Σ 0.05/(k(k+1)) = 0.05`), giving FWER ≤ 0.05 forever. First look: `α_1 = 0.025`, z = 1.960. Fourteenth: `α_14 = 0.000238`, z = 3.494. FWER over 14 looks under the new scheme is 4.6%.
-   The increment must be **mechanical**. Nothing on the tree currently reads or writes `trials_to_date` — it is prose, and `:Burned classes` already says prose is not enforceable. An invariant that fails when a score note exists without a matching increment is owed to Systems.
+   The increment is **mechanical**: `rules.record_trial` writes `trials_log` and `trials_to_date`. Baseline naming is not a trial. `R-SKIP-COINFLIP`'s pre-mechanism declaration is not backfilled; the counter stays 0. Clause (2) uses that counter as it stands.
 3. **Effect floor:** `δ = $0.28` per window, **= 0.28 × stake**. Absorbed into clause (1) as the null. See §Effect floor for what δ is and is not.
 4. **Positive side.** `mean(pnl_rule_fee_adj) > 0` on those same n windows. Promoted from conditional prose to a binding numbered clause. Beating a losing baseline by skipping, and still booking ~0 after fees, is distinguishable-or-not; it is not a positive result that cleared the cost. Skip-all yields 0 and fails this clause.
 5. **Matched-exposure permutation control.** `mean(d)` must exceed the `1 − α_k` quantile of a permutation null that **holds the number of skips fixed and reassigns which windows are skipped**: ≥ 10,000 draws, seed **`20260908`**, pre-registered here. This null is centred on abstaining at the observed rate with no skill, which is the correct comparison; clause (1) alone would still credit mechanical fee avoidance. Deterministic given the seed, no new data, no loop code.
 
 **Also print, beside `mean(d)`:** `skip_rate × mean(fee | skip)` — the mechanical fee-avoidance component of the contrast — so a reader can see how much of the result is arithmetic rather than selection.
 
-**Kill / park** (the numeric form of `R-SKIP-COINFLIP`'s existing falsifier): if at n = 70 the rule fails any of (1)–(5), **park it and do not retune the band.** A dead test is a complete outcome. Record the park on that falsifier.
+**Kill / park** (the numeric form of `R-SKIP-COINFLIP`'s falsifier): if at n = 70 the rule fails any of (1)–(5), **park it and do not retune the band.** A dead test is a complete outcome. Record the park on that falsifier. The registry falsifier now reads "the n named by the evidence bar in force" so the two cannot drift to 40 vs 70 again. `triggers.py` already fires `rule_reached_n` from `looks.first_look_n`, not from the registry sentence.
 
 ### Effect floor
 
@@ -147,11 +144,15 @@ Measured cost cited from that note, not restated here as a dashboard figure: mea
 
 **The spread is omitted entirely and is not adjusted for.** `paper_mark` is `public_mid_or_last(...)` — the **mid** whenever both sides are quoted — and the payout is `1/mark`. The book buys at the mid and is paid at the mid, while the RUN-ONLY note charges a **taker** fee on that fill. A taker pays the ask, not the mid. The omitted half-spread costs `s / (p + s)` per $1 of stake: on a one-cent book that is about **$0.010 per fill** at p = 0.50 and about **$0.020** on a two-cent book — the same order as the $0.039 mean fee.
 
-**Direction of the spread cost.** At a constant tick, `s/(p+s)` is *decreasing* in p — $0.0164 at p = 0.30, $0.0110 at 0.45, $0.0099 at 0.50, $0.0055 at 0.90. It runs the **same** direction as the fee, not the opposite. Both omitted costs are worst on cheap marks. A band skip avoids neither's worst region.
+**Direction of the spread cost, at a constant tick only.** At a constant tick, `s/(p+s)` is *decreasing* in p — $0.0164 at p = 0.30, $0.0110 at 0.45, $0.0099 at 0.50, $0.0055 at 0.90. **At a constant tick** it runs the same direction as the fee, not the opposite. **At a constant tick** a band skip avoids neither cost's worst region.
+
+That constant-tick premise is **contradicted** by the module this bar cites for `paper_mark`: `PRICE_LEVEL_STRUCTURE = "tapered_deci_cent"` in `kalshi_15m.py`. A tapered tick is finer at the extremes and coarser in the middle — the geometry that can restore an increasing half-spread toward 0.50. The direction of the spread cost near 0.50 is therefore **unknown, not settled**. The empirical profile — mean `(yes_ask − yes_bid)/2` bucketed by mark, from fields already on disk — is owed to Systems before this bar binds. Until it exists, this bar asserts that a band skip avoids the **fee's** worst region (proven) and that the spread's profile is unmeasured.
 
 **Therefore: the fee-adjusted figure remains optimistic by an unmeasured amount of the same order as the fee.** No fee-adjusted number produced under this bar may be presented as a full cost accounting. A bar that closes one omitted cost and stays silent about a comparable one is more dangerous than a bar that closes neither, because it reads as complete.
 
-**The adjustment must be code, not a hand table.** `evidence_bar.py` implements no arithmetic — it is two loaders, a binding flag and two burned-class lookups. A binding numeric floor may not depend on a step with no code, no artifact and no check. A committed, tested `fee_adjust(recorded_pnl, posted_yes, stake)` that the score note cites is owed to Systems before this bar binds.
+**The adjustment is code.** `golf_offshoot.learning_lane_15m.evidence_bar.fee_adjust` landed at `0a480d4` and reproduces all 24 rows of the RUN-ONLY fee table. The score note must cite that function. The recorded book still has no fee term (`settle.py` pays `stake * decimal_odds`). `fee_type=quadratic x1` on a movement is a label of the schedule that *would* apply, not a fee that was charged.
+
+**The recorded book's own notes contradict the mid fill.** `paper.py` prefers `paper_mark` (the mid) and falls back to `yes_ask` only when the mark is absent. The live path is the mid. The docstring at `paper.py:269` and the position `notes` at `paper.py:358` still say "posted ask" / "posted Kalshi ask" on every book written to date; `reason_plain` at `:384` says mid/last. The calibration set's provenance strings are known wrong rather than silently corrected. Correcting those two strings is owed to Systems.
 
 ---
 
@@ -206,9 +207,9 @@ The registry already says these are different evidence. This bar says which verd
 
 Replay assumes fills live execution might not get. Skipping a bet changes nothing about the market and does change the fill sequence. Both are legitimate. They are not interchangeable.
 
-**Established is currently unreachable, and this bar says so rather than implying otherwise.** Nothing in the running loop calls `rules.decide()` — the only callers on the tree are the test suite. `paper.py` fills every candidate window and never consults the registry. So the lane cannot produce a lived L2 today.
+**Established is currently unreachable, and this bar says so rather than implying otherwise.** `paper.py` now consults `rules.decide()` via `consult_registry`. The running hub is on `0a480d4` (`watch.json` `runtime.git_tip` `refs/heads/cursor/part-a-clerical-trust-boundary@0a480d41321ebe004e8e07ed1241ef10af3ee39f`). That is not enough. `R-SKIP-COINFLIP` still has `execution: false`, and its band is **not verifiably pre-registered**, so its L1 cannot support Established even if it passed every clause. No selection rule declared after the flip exists. `currently_reachable` stays **false**.
 
-**Explicit precondition of Established:** `paper.py` honours `rules.decide()`. That is a Systems change, and until it lands no rule on this lane can be Established by any route.
+**Explicit precondition of Established:** a selection rule declared after the execution flip, with verifiably pre-registered parameters, and `execution=true` before its first L2-eligible window closes. `R-SKIP-COINFLIP` cannot satisfy this. This turn does not flip its execution.
 
 **The permitted flip point.** `execution=false → true` is legitimate **only before the first L2-eligible window closes**, and only recorded with a commit SHA and timestamp. Flipping it after any L2 window has closed, or flipping it to make a replayed look read as lived, is the prohibited move. The drafted ban read as absolute and forbade the only action that produces a lived confirmation; it is a timing rule.
 
@@ -220,7 +221,7 @@ Replay assumes fills live execution might not get. Skipping a bet changes nothin
 
 **It increments on the *declaration* of a selection rule on this lane, not on the score.** The drafted rule incremented "once per first-look (L1) score," which defines the multiplicity family by what got written up rather than by what got tried. A rule proposed, replayed informally and dropped before anyone wrote a score never touched the counter. That is the wrong denominator and it always flatters. Baseline naming is not a trial. L2 confirmation looks also increment (see §The L2 confirmation test).
 
-The counter is currently prose: no code reads or writes it. Making it mechanical, plus an invariant that fails when a score note exists without a matching increment, is owed to Systems and is a precondition of clause (2) meaning anything.
+The counter is mechanical as of `0a480d4`: `record_trial` writes `trials_log`. Baseline naming is not a trial. `R-SKIP-COINFLIP`'s pre-mechanism declaration is not backfilled; `trials_to_date` stays 0. This turn does not increment it.
 
 The held-out L2 range is the other half of the protection: the scorer of L1 never sees it, and must prove that by commit order. Establishment cannot be claimed from L1 alone even if L1 passes.
 
@@ -270,6 +271,27 @@ After promotion fires (conditional, not this draft): establishment is adjudicate
 
 ---
 
+## Ratchet: which check guards which CRITIC 01 finding
+
+Named on the face because fourteen sustained objections and zero new `CHECKS` members was the Y2 finding. The suite still has seven method checks; several were **rewritten** at `0a480d4` rather than appended. JSON copy: `ratchet_guards`.
+
+| CRITIC 01 | What now guards it, or why a check is impossible |
+|---|---|
+| F1 H0 floor | `delta_above_detection_floor` reads `h0` and reports 50/80% power |
+| F2 matched exposure | `matched_exposure_control` requires `control_function` + `score_rule` call |
+| F3 power | same check recomputes se / mde / threshold / power and fails on disagreement |
+| F4 holdout | `holdout_is_forward_only` keys on `l1_committed_before_l2`, not `forward_only` |
+| F5 pre-registration | no check searches git history; the 8h 07m 14s gap stays on the face |
+| F6 multiplicity | `trials_counter_is_consistent` requires `record_trial`; α is `0.05/(k(k+1))` |
+| F7 fee-free book | `fee_adjusted_book_is_binding` requires `fee_adjust` and reads the payout line |
+| X1 spread | empirical profile owed; unconditional direction withdrawn |
+| X2 reachable | `currently_reachable` stays false; `decide()` is in the running hub |
+| X3 L2 test | `looks.l2_test` is on the face; a missing-field check is possible, not written |
+| X4 trials on declaration | `record_trial`; baseline naming raises |
+| X5 sustain-or-overrule | prose; a hash check cannot read an admit-pass verdict |
+| X6 δ is a fraction | `effect_floor_as_fraction_of_stake`; `PAPER_UNIT` invariant still owed |
+| X7 heartbeat clear | `critic_verdicts` drops `detail`; honesty is a desk check; failing-set materiality |
+
 ## Hard NOs (this bar)
 
 - Do not treat this draft as binding
@@ -279,6 +301,7 @@ After promotion fires (conditional, not this draft): establishment is adjudicate
 - Do not treat a `note` field's claim of blind parameter choice as pre-registration
 - Do not present a fee-adjusted figure as a full cost accounting while the spread is unmeasured
 - Do not claim a band skip avoids the fee-heavy region on this book
+- Do not assert the spread-cost direction unconditionally while `PRICE_LEVEL_STRUCTURE` is `tapered_deci_cent` and the empirical half-spread profile is unmeasured
 - Do not put fee-accurate totals on the hub, digest, manifest, or `records[]`
 - Do not revive a burned class under a new name
 - Do not treat `H-SPOT-MOY-CONT` as a null
