@@ -18,7 +18,7 @@ Thread lines are **one sentence, newest first, max 10**. Long findings belong in
 | Field | Value |
 |-------|--------|
 | last_cos_at | 2026-09-08T16:30:00-04:00 |
-| last_cos_commit | pending |
+| last_cos_commit | 33b3ac9 |
 | handled_reason_ids | A_worker_done |
 
 **Branch note.** `origin/master` is still `b063f56` (#175). Factory Turns 1–3 live on `cursor/part-a-clerical-trust-boundary` at `5dc4f24`. This CoS assign is on `cursor/chief-of-staff-crew-tick-77da` (fast-forward of part-a `61cc440`). Branching from `origin/master` would discard all of it. [#176](https://github.com/swellbear/gated-formalization/pull/176) is OPEN and MERGEABLE.
