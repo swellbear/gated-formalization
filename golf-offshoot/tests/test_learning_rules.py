@@ -1,3 +1,4 @@
+from golf_offshoot.learning_lane_15m.evidence_bar import class_is_burned
 from golf_offshoot.learning_lane_15m.paper import load_decisions, paper_autobet_open_markets
 from golf_offshoot.learning_lane_15m.paths import set_15m_root_override
 from golf_offshoot.learning_lane_15m.rules import decide, load_rules, window_is_oos
@@ -6,13 +7,22 @@ from golf_offshoot.learning_lane_15m.rules import decide, load_rules, window_is_
 def test_registry_has_dated_first_rules():
     payload = load_rules()
     ids = [row["id"] for row in payload["rules"]]
-    assert ids == ["R-BASELINE-FILL-ALL", "R-SKIP-COINFLIP"]
+    assert ids == ["R-BASELINE-FILL-ALL", "R-SKIP-COINFLIP", "R-SKIP-CLOSE-HH"]
     assert payload["lab_admits"] is False
-    assert payload["trials_to_date"] == 0
+    assert payload["trials_to_date"] == 1
     assert payload["evidence_bar"]["binding"] is False
     skip = next(row for row in payload["rules"] if row["id"] == "R-SKIP-COINFLIP")
     assert skip["declared_at"] == "2026-09-08T05:56:00-04:00"
     assert skip["execution"] is False
+    clock = next(row for row in payload["rules"] if row["id"] == "R-SKIP-CLOSE-HH")
+    assert clock["declared_at"] == "2026-09-08T16:39:00-04:00"
+    assert clock["execution"] is False
+    assert clock["selects"] is True
+    assert clock["skip_close_minutes"] == [0, 30]
+    log = payload["trials_log"]
+    assert len(log) == 1
+    assert log[0]["subject"] == "R-SKIP-CLOSE-HH"
+    assert log[0]["kind"] == "declaration"
 
 
 def test_predeclaration_window_is_not_oos():
@@ -94,3 +104,34 @@ def test_a_skip_rule_produces_no_fill_in_band_and_fills_out_of_band(tmp_path, mo
         assert out_band["ticker"] in tickers
     finally:
         set_15m_root_override(None)
+
+
+def test_close_hh_class_is_not_burned():
+    assert class_is_burned("CLOSE-HH") is False
+    assert class_is_burned("R-SKIP-CLOSE-HH") is False
+    assert class_is_burned("RETUNE-COINFLIP-BAND") is True
+    assert class_is_burned("SEAS-DIR") is True
+    assert class_is_burned("THRESH") is True
+
+
+def test_skip_close_minutes_expresses_on_clock_not_mark():
+    rule = {
+        "id": "R-SKIP-CLOSE-HH",
+        "declared_at": "2026-09-08T16:39:00-04:00",
+        "kind": "selection",
+        "selects": True,
+        "execution": False,
+        "skip_close_minutes": [0, 30],
+    }
+    fill_cheap = decide(rule, posted_yes=0.20, close_at="2026-09-08T16:45:00-04:00")
+    fill_rich = decide(rule, posted_yes=0.80, close_at="2026-09-08T16:45:00-04:00")
+    assert fill_cheap["action"] == fill_rich["action"] == "fill"
+    skip_cheap = decide(rule, posted_yes=0.20, close_at="2026-09-08T17:00:00-04:00")
+    skip_rich = decide(rule, posted_yes=0.80, close_at="2026-09-08T17:00:00-04:00")
+    assert skip_cheap["action"] == skip_rich["action"] == "skip"
+    assert decide(rule, posted_yes=0.50, close_at="2026-09-08T17:15:00-04:00")["action"] == "fill"
+    assert decide(rule, posted_yes=0.50, close_at="2026-09-08T17:30:00-04:00")["action"] == "skip"
+    historic = decide(rule, posted_yes=0.50, close_at="2026-09-08T16:30:00-04:00")
+    assert historic["eligible"] is False
+    assert historic["action"] == "ineligible"
+    assert historic["execution"] is False

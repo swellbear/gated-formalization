@@ -102,7 +102,19 @@ def decide(
         action = "ineligible"
         reason = "window closed at or before declared_at; not OOS for this rule"
     if eligible and selects:
-        if kind == "selection" and rule.get("id") == "R-SKIP-COINFLIP":
+        skip_minutes = rule.get("skip_close_minutes")
+        if skip_minutes is not None:
+            # Dispatch on declared parameters, not on a hardcoded id.
+            # close-minute membership is a product clock, not a posted mark.
+            minute = int(_as_dt(close_at).minute)
+            skip_set = {int(m) for m in skip_minutes}
+            if minute in skip_set:
+                action = "skip"
+                reason = f"close minute {minute:02d} in skip_close_minutes"
+            else:
+                action = "fill"
+                reason = f"close minute {minute:02d} outside skip_close_minutes"
+        elif kind == "selection" and rule.get("id") == "R-SKIP-COINFLIP":
             if 0.45 < float(posted_yes) < 0.55:
                 action = "skip"
                 reason = "posted_yes inside (0.45, 0.55)"
