@@ -8,12 +8,14 @@ from golf_offshoot.learning_lane_15m.learn import load_wake_state, mark_roles_se
 from golf_offshoot.learning_lane_15m.paths import set_15m_root_override
 from golf_offshoot.learning_lane_15m.runner import (
     CLERICAL_WHITELIST,
+    DIGEST_REL,
     MANIFEST_REL,
     PARK_REL,
     MODE_ARMED,
     MODE_DRY,
     MODE_OFF,
     artifact_path,
+    proof_artifact_path,
     format_runner_line,
     kill_switch_active,
     plan_from_wake,
@@ -131,14 +133,14 @@ def test_serve_on_proof_marks_only_when_hash_changes(tmp_path):
     set_15m_root_override(tmp_path)
     try:
         _wake(tmp_path, ["digestor"])
+        source = tmp_path / DIGEST_REL
+        source.parent.mkdir(parents=True, exist_ok=True)
+        source.write_text("SOURCE v1\n", encoding="utf-8")
 
-        def _write_new():
-            artifact_path("digestor").write_text(
-                '{"pending": ["KXBTC15M-NEW"], "settled": []}\n',
-                encoding="utf-8",
-            )
+        def _write_source():
+            source.write_text("SOURCE v2 — honesty digest\n", encoding="utf-8")
 
-        ok = serve_role("digestor", do_work=_write_new)
+        ok = serve_role("digestor", do_work=_write_source, root=tmp_path)
         assert ok["ok"] is True
         assert ok["marked"] is True
         assert ok["before"] != ok["after"]
@@ -161,10 +163,10 @@ def test_unchanged_artifact_stays_owed_and_is_logged(tmp_path):
         def _same():
             path.write_text('{"pending": ["A"]}\n', encoding="utf-8")
 
-        result = serve_role("digestor", do_work=_same)
+        result = serve_role("digestor", do_work=_same, root=tmp_path)
         assert result["ok"] is False
         assert result["marked"] is False
-        assert "unchanged" in result["reason"]
+        assert "SOURCE digest unchanged" in result["reason"]
         state = load_wake_state()
         assert state is not None
         assert [row["role"] for row in state["roles_owed"]] == ["digestor"]
@@ -201,17 +203,24 @@ def test_dry_across_several_ticks_role_goes_owed_then_clears(tmp_path):
             root=tmp_path,
             do_work={"digestor": _write_new},
         )
-        assert tick3["served"] == ["digestor"]
-        assert tick3["mark_roles_served_called"] is True
+        assert tick3["served"] == []
+        assert tick3["failed"] == ["digestor"]
+        assert "SOURCE digest unchanged" in (tick3.get("results") or [{}])[0].get("reason", "")
+        state = load_wake_state()
+        assert state is not None
+        assert [row["role"] for row in state["roles_owed"]] == ["digestor", "operator"]
+
+        source = tmp_path / DIGEST_REL
+        source.parent.mkdir(parents=True, exist_ok=True)
+        source.write_text("SOURCE v1\n", encoding="utf-8")
+        assert reconcile_owed_from_disk(root=tmp_path) == []
+        source.write_text("SOURCE v2\n", encoding="utf-8")
+        tick4 = run_once(mode=MODE_DRY, root=tmp_path)
+        assert "digestor" in (tick4.get("human_cleared") or [])
         state = load_wake_state()
         assert state is not None
         assert [row["role"] for row in state["roles_owed"]] == ["operator"]
-        assert state["served"][0]["served_kind"] == "auto"
-
-        tick4 = run_once(mode=MODE_DRY)
-        assert tick4["would_serve"] == []
-        assert tick4["held_for_human"] == ["operator"]
-        assert tick4["mark_roles_served_called"] is False
+        assert state["served"][0]["served_kind"] == "human"
     finally:
         set_15m_root_override(None)
 
@@ -306,12 +315,11 @@ def test_arm_file_is_enough_to_execute(tmp_path):
         entry = run_once(do_work={"digestor": _write_new})
         assert entry["armed"] is True
         assert entry["mode"] == MODE_ARMED
-        assert entry["served"] == ["digestor"]
-        assert entry["mark_roles_served_called"] is True
+        assert entry["served"] == []
+        assert entry["failed"] == ["digestor"]
         state = load_wake_state()
         assert state is not None
-        assert state["roles_owed"] == []
-        assert state["served"][0]["served_kind"] == "auto"
+        assert [row["role"] for row in state["roles_owed"]] == ["digestor"]
     finally:
         set_15m_root_override(None)
 
@@ -348,6 +356,53 @@ def test_human_artifact_change_clears_owed_and_keeps_kind(tmp_path):
         assert "human_cleared=operator, systems" in format_runner_line(entry) or (
             "human_cleared=systems, operator" in format_runner_line(entry)
         )
+    finally:
+        set_15m_root_override(None)
+
+
+def test_digestor_asof_does_not_clear_source_obligation(tmp_path):
+    set_15m_root_override(tmp_path)
+    try:
+        _wake(tmp_path, ["digestor"])
+        source = tmp_path / DIGEST_REL
+        source.parent.mkdir(parents=True, exist_ok=True)
+        source.write_text("SOURCE still 18:03\n", encoding="utf-8")
+
+        def _write_asof():
+            artifact_path("digestor").write_text(
+                '{"pending": ["KXBTC15M-NEW"], "settled": ["X"]}\n',
+                encoding="utf-8",
+            )
+
+        result = serve_role("digestor", do_work=_write_asof, root=tmp_path)
+        assert result["marked"] is False
+        assert "as-of stamp wrote" in result["reason"]
+        assert proof_artifact_path("digestor", root=tmp_path) == source
+        state = load_wake_state()
+        assert [row["role"] for row in (state or {}).get("roles_owed") or []] == ["digestor"]
+    finally:
+        set_15m_root_override(None)
+
+
+def test_digestor_old_asof_source_token_does_not_false_clear(tmp_path):
+    set_15m_root_override(tmp_path)
+    try:
+        _wake(tmp_path, ["digestor"])
+        source = tmp_path / DIGEST_REL
+        source.parent.mkdir(parents=True, exist_ok=True)
+        source.write_text("SOURCE unchanged\n", encoding="utf-8")
+        from golf_offshoot.learning_lane_15m.runner import file_fingerprint
+
+        source_fp = file_fingerprint(source)
+        (tmp_path / "latest").mkdir(parents=True, exist_ok=True)
+        (tmp_path / "latest" / "role_artifact_fps.json").write_text(
+            json.dumps({"digestor": f"1178:oldasof|{source_fp}"}),
+            encoding="utf-8",
+        )
+        assert reconcile_owed_from_disk(root=tmp_path) == []
+        assert [row["role"] for row in (load_wake_state() or {}).get("roles_owed") or []] == [
+            "digestor"
+        ]
     finally:
         set_15m_root_override(None)
 
