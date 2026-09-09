@@ -71,10 +71,53 @@ def _as_dt(value: str) -> datetime:
 
 
 def window_is_oos(rule: dict[str, Any], *, close_at: str) -> bool:
-    """True only when the window closed strictly after the rule was declared."""
+    """True only when the window closed strictly after the rule was declared.
+
+    OOS is the expression gate for :func:`decide`. It is not the lived/replay
+    label :func:`score_rule` uses. A window can be OOS and still be replay.
+    """
     declared = _as_dt(str(rule.get("declared_at") or ""))
     closed = _as_dt(close_at)
     return closed > declared
+
+
+def _replay_bounds(rule: dict[str, Any]) -> tuple[datetime, datetime] | None:
+    """(after, at_or_before] if this row names a replay interval, else None.
+
+    Prefer the explicit ``replay_close_*`` pair. If only
+    ``lived_paper_begins_at`` is set, the interval is (declared_at, flip].
+    """
+    after = str(rule.get("replay_close_after") or "").strip()
+    until = str(rule.get("replay_close_at_or_before") or "").strip()
+    if after and until:
+        return _as_dt(after), _as_dt(until)
+    begins = str(rule.get("lived_paper_begins_at") or "").strip()
+    declared = str(rule.get("declared_at") or "").strip()
+    if begins and declared:
+        return _as_dt(declared), _as_dt(begins)
+    return None
+
+
+def window_is_replay(rule: dict[str, Any], *, close_at: str) -> bool:
+    """True when close is in the declared replay interval (after, at_or_before]."""
+    bounds = _replay_bounds(rule)
+    if bounds is None:
+        return False
+    after, until = bounds
+    closed = _as_dt(close_at)
+    return after < closed <= until
+
+
+def window_is_lived(rule: dict[str, Any], *, close_at: str) -> bool:
+    """True when the window is OOS and not in the declared replay interval.
+
+    Rules that name no replay interval treat every OOS close as lived-for-score
+    (L1 may still be a replay *mode* via ``execution=false``; that is the L2
+    execution guard, not this clock).
+    """
+    if not window_is_oos(rule, close_at=close_at):
+        return False
+    return not window_is_replay(rule, close_at=close_at)
 
 
 def favorite_threshold(odds: float) -> float:
@@ -467,6 +510,29 @@ def _assert_scorable(
         )
 
 
+def _assert_window_lived_or_raise(rule: dict[str, Any], *, close_at: str, look: str) -> str:
+    """Label a scored window. Replay treated as lived fails as a machine."""
+    close_s = str(close_at)
+    if not window_is_oos(rule, close_at=close_s):
+        raise RuleNotScorable(
+            f"{close_s} closed at or before declared_at; it is not OOS for "
+            f"{rule.get('id')}"
+        )
+    if window_is_replay(rule, close_at=close_s):
+        bounds = _replay_bounds(rule)
+        after = bounds[0].isoformat() if bounds else "?"
+        until = bounds[1].isoformat() if bounds else "?"
+        raise RuleNotScorable(
+            f"{close_s} is in the replay interval ({after}, {until}]; a {look} "
+            "score that treats it as lived fails the bar"
+        )
+    if not window_is_lived(rule, close_at=close_s):
+        raise RuleNotScorable(
+            f"{close_s} is not lived for {rule.get('id')}"
+        )
+    return "lived"
+
+
 def score_rule(
     rule_id: str,
     windows: Sequence[dict[str, Any]],
@@ -509,10 +575,12 @@ def score_rule(
     skipped: list[bool] = []
     rows: list[dict[str, Any]] = []
     for window in windows:
+        close_at = str(window["close_at"])
+        evidence = _assert_window_lived_or_raise(rule, close_at=close_at, look=look)
         posted = float(window["posted_yes"])
         stake = float(window.get("stake") or 1.0)
         recorded = float(window["recorded_pnl"])
-        verdict = decide(rule, posted_yes=posted, close_at=str(window["close_at"]))
+        verdict = decide(rule, posted_yes=posted, close_at=close_at)
         skip = verdict["action"] == "skip"
         base_adj = fee_adjust(recorded, posted, stake, root=root)
         # A rule that fills the same contract as the baseline books the same
@@ -530,9 +598,10 @@ def score_rule(
         rows.append(
             {
                 "window_id": window.get("window_id") or "",
-                "close_at": str(window["close_at"]),
+                "close_at": close_at,
                 "posted_yes": posted,
                 "action": verdict["action"],
+                "evidence": evidence,
                 "pnl_baseline_fee_adj": base_adj,
                 "pnl_rule_fee_adj": 0.0 if skip else fill_adj,
             }

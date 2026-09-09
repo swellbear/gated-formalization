@@ -3,13 +3,12 @@
   "lane": "learning_lane_15m",
   "series": "KXBTC15M",
   "drafted_at": "2026-09-08T08:30:00-04:00",
-  "amended_at": "2026-09-08T21:00:00-04:00",
-  "amended_by": "operator",
-  "amendment": "record of Soften Critic CRITIC 09 (zero UPHELD); see LEARNING_LANE_15M_EVIDENCE_BAR_OPERATOR_ANSWER_09.md",
+  "amended_at": "2026-09-09T09:05:00-04:00",
+  "amended_by": "systems",
+  "amendment": "wired lived/replay into score_rule: a window in (replay_close_after, replay_close_at_or_before] fails as a machine. window_is_oos unchanged for decide(). Not a score. Binding stays false.",
   "prior_amendment": {
-    "amended_at": "2026-09-08T20:28:00-04:00",
-    "commit": "78db2cc",
-    "note": "CRITIC 08 admit pass. Labeled alpha_14 the schedule's 14th term / 13th scoring look; FWER 4.6% includes spent alpha_1. Binding condition 1 was left met:false on those new bytes — CRITIC 09 attacked them (zero UPHELD)."
+    "amended_at": "2026-09-08T21:00:00-04:00",
+    "note": "record of Soften Critic CRITIC 09 (zero UPHELD); see LEARNING_LANE_15M_EVIDENCE_BAR_OPERATOR_ANSWER_09.md"
   },
   "binding": false,
   "binding_rule": "Becomes binding only after (1) a Soften Critic written attack from a session that did not draft the bar, with Operator sustaining or explicitly overruling every objection with a stated reason in a separate turn, attack and answers both linked from the bar; (2) critic-invariants passing on the bytes proposed to bind, or every failing check named on the bar's face with Operator's reason for binding anyway; and (3) Founder read-once acknowledgement.",
@@ -17,7 +16,7 @@
     {
       "id": "critic_answered",
       "met": false,
-      "detail": "An answer that amends the bar does not close condition 1 on the amended text. LEARNING_LANE_15M_EVIDENCE_BAR_OPERATOR_ANSWER_09.md records CRITIC 09 (bytes CDEC94C5…; zero UPHELD) on the ANSWER 08 hashes 6CACBB0F… / 1C5D9FFF…. These bytes are not that digest. Soften Critic is re-owed on this amendment. CRITIC 08 remains answered in OPERATOR_ANSWER_08.md for its own hashes. CRITIC 07 remains answered in OPERATOR_ANSWER_07.md for its own hashes. CRITIC 06 remains answered in OPERATOR_ANSWER_06.md for its own hashes. CRITIC 05 remains answered in OPERATOR_ANSWER_05.md for its own hashes. CRITIC 04 remains answered in OPERATOR_ANSWER_04.md for its own hashes. CRITIC 03 remains answered in OPERATOR_ANSWER_03.md for its own hashes. CRITIC 02 remains answered in OPERATOR_ANSWER_02.md for its own hashes. CRITIC 01 remains answered in OPERATOR_ANSWER_01.md.",
+      "detail": "Systems 2026-09-09T09:05:00-04:00 wired score_rule lived/replay. These bytes are not the ANSWER 09 digest. An answer that amends the bar does not close condition 1 on the amended text. LEARNING_LANE_15M_EVIDENCE_BAR_OPERATOR_ANSWER_09.md records CRITIC 09 (bytes CDEC94C5…; zero UPHELD) on the ANSWER 08 hashes 6CACBB0F… / 1C5D9FFF…. Soften Critic is re-owed on this amendment. CRITIC 08 remains answered in OPERATOR_ANSWER_08.md for its own hashes. CRITIC 07 remains answered in OPERATOR_ANSWER_07.md for its own hashes. CRITIC 06 remains answered in OPERATOR_ANSWER_06.md for its own hashes. CRITIC 05 remains answered in OPERATOR_ANSWER_05.md for its own hashes. CRITIC 04 remains answered in OPERATOR_ANSWER_04.md for its own hashes. CRITIC 03 remains answered in OPERATOR_ANSWER_03.md for its own hashes. CRITIC 02 remains answered in OPERATOR_ANSWER_02.md for its own hashes. CRITIC 01 remains answered in OPERATOR_ANSWER_01.md.",
       "critic_file": "golf-offshoot/docs/LEARNING_LANE_15M_EVIDENCE_BAR_CRITIC_09.md",
       "critic_sha256_bytes": "cdec94c56939b856350c659eb07569a4195a734d9cc18e5afdc421d9e970c20d",
       "answer_file": "golf-offshoot/docs/LEARNING_LANE_15M_EVIDENCE_BAR_OPERATOR_ANSWER_09.md",
@@ -90,9 +89,9 @@
       "lived_paper_begins_commit": "0daae90",
       "replay_close_after": "2026-09-08T16:53:00-04:00",
       "replay_close_at_or_before": "2026-09-08T17:11:00-04:00",
-      "replay_interval_note": "A later L1/L2 score that treats a window from this close interval as lived fails this bar as prose. These fields are prose-only today: window_is_oos keys closed > declared_at; _assert_scorable L2 keys current execution; score_rule does not read them. Wiring owed to Systems.",
-      "lived_replay_fields_are_prose_only": true,
-      "lived_replay_enforced_by_scorer": false,
+      "replay_interval_note": "score_rule rejects a window in (replay_close_after, replay_close_at_or_before] as lived. window_is_oos remains closed > declared_at (decide expression). Lived-for-score starts after lived_paper_begins_at.",
+      "lived_replay_fields_are_prose_only": false,
+      "lived_replay_enforced_by_scorer": true,
       "execution_flip_rule": "execution=false -> true is legitimate only before the first L2-eligible window closes, recorded with a commit SHA and timestamp. Flipping after an L2 window has closed, or flipping to make a replayed look read as lived, is forbidden.",
       "scope": "scoped to the regimes actually observed; does not generalise past them"
     }
@@ -327,7 +326,7 @@
     "pin the Kalshi fee schedule sha256 (external; last fetch HTTP 429 at 2026-09-08T13:42:26-04:00)",
     "PROTOCOL.md:123 and triggers.py docstring still say 'the n its falsifier named'; the code reads looks.first_look_n. Align the docs. Operator did not edit PROTOCOL.",
     "WATCHED.lab_proposed is pinned to LEARNING_LANE_15M_OPERATOR_NOTE_PROPOSED_01.md (critic.py:44, :70). Watch LEARNING_LANE_15M_LAB_PROPOSED_02.md and LEARNING_LANE_15M_OPERATOR_NOTE_PROPOSED_02.md, or a single stable path that always names the latest pair. Until that exists, PROPOSED 02 notes are outside WATCHED and cannot re-owe Soften Critic. Operator did not edit critic.py.",
-    "wire lived_paper_begins_at / replay_close_after / replay_close_at_or_before into window_is_oos or _assert_scorable so a lived-mislabel of (16:53, 17:11] fails as a machine. Fields are prose-only today. Operator did not edit rules.py.",
+    "lived/replay scorer wiring LANDED 2026-09-09: score_rule / _assert_window_lived_or_raise reject (16:53, 17:11] as lived. window_is_oos still keys declared_at for decide().",
     "check_delta_above_detection_floor compares alpha_first_look to current alpha_k (critic.py:298). After trials_to_date=1 those disagree even when alpha_first_look is correctly the spent first term. Compare that key only against the schedule's first term, or read a current_alpha key. Operator did not edit critic.py."
   ],
   "hard_nos": [

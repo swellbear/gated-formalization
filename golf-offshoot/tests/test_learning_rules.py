@@ -1,11 +1,17 @@
+import pytest
+
 from golf_offshoot.learning_lane_15m.evidence_bar import class_is_burned
 from golf_offshoot.learning_lane_15m.paper import load_decisions, paper_autobet_open_markets
 from golf_offshoot.learning_lane_15m.paths import set_15m_root_override
 from golf_offshoot.learning_lane_15m.rules import (
+    RuleNotScorable,
     decide,
     favorite_threshold,
     load_rules,
+    score_rule,
+    window_is_lived,
     window_is_oos,
+    window_is_replay,
 )
 
 
@@ -140,3 +146,74 @@ def test_two_to_one_favorite_expresses_skip_and_fill():
     historic = decide(rule, posted_yes=0.80, close_at="2026-09-08T16:45:00-04:00")
     assert historic["eligible"] is False
     assert historic["action"] == "ineligible"
+
+
+_FAVORITE_CLOCK = {
+    "id": "R-SKIP-2TO1-FAVORITE",
+    "declared_at": "2026-09-08T16:53:00-04:00",
+    "lived_paper_begins_at": "2026-09-08T17:11:00-04:00",
+    "replay_close_after": "2026-09-08T16:53:00-04:00",
+    "replay_close_at_or_before": "2026-09-08T17:11:00-04:00",
+    "kind": "selection",
+    "selects": True,
+    "execution": True,
+    "params": {"favorite_odds": 2},
+}
+
+
+def test_replay_interval_is_oos_but_not_lived():
+    mid = "2026-09-08T17:00:00-04:00"
+    flip = "2026-09-08T17:11:00-04:00"
+    after = "2026-09-08T17:15:00-04:00"
+    assert window_is_oos(_FAVORITE_CLOCK, close_at=mid) is True
+    assert window_is_replay(_FAVORITE_CLOCK, close_at=mid) is True
+    assert window_is_lived(_FAVORITE_CLOCK, close_at=mid) is False
+    assert window_is_replay(_FAVORITE_CLOCK, close_at=flip) is True
+    assert window_is_lived(_FAVORITE_CLOCK, close_at=flip) is False
+    assert window_is_lived(_FAVORITE_CLOCK, close_at=after) is True
+    assert window_is_replay(_FAVORITE_CLOCK, close_at=after) is False
+    # decide() still expresses replay windows; the scorer is the lived gate.
+    expressed = decide(_FAVORITE_CLOCK, posted_yes=0.50, close_at=mid)
+    assert expressed["eligible"] is True
+    assert expressed["action"] == "fill"
+
+
+def _synthetic_lived_windows(n: int) -> list[dict]:
+    out = []
+    for i in range(n):
+        minutes = i * 15
+        h, m = divmod(minutes, 60)
+        d, h = divmod(h, 24)
+        out.append(
+            {
+                "window_id": f"SYNTH-{d:02d}{h:02d}{m:02d}",
+                "close_at": f"2026-09-09T{h:02d}:{m:02d}:00-04:00",
+                "posted_yes": 0.50,
+                "recorded_pnl": 0.0,
+                "stake": 1.0,
+            }
+        )
+    return out
+
+
+def test_score_rule_rejects_replay_window_as_lived():
+    windows = _synthetic_lived_windows(69)
+    windows.append(
+        {
+            "window_id": "REPLAY",
+            "close_at": "2026-09-08T17:00:00-04:00",
+            "posted_yes": 0.50,
+            "recorded_pnl": 0.0,
+            "stake": 1.0,
+        }
+    )
+    with pytest.raises(RuleNotScorable, match="replay interval"):
+        score_rule("R-SKIP-2TO1-FAVORITE", windows, allow_nonbinding=True)
+
+
+def test_score_rule_accepts_post_flip_windows_and_labels_lived():
+    windows = _synthetic_lived_windows(70)
+    card = score_rule("R-SKIP-2TO1-FAVORITE", windows, allow_nonbinding=True)
+    assert card["n"] == 70
+    assert all(row["evidence"] == "lived" for row in card["windows"])
+    assert card["look"] == "L1"
