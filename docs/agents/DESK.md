@@ -6,11 +6,11 @@ Thread lines are **one sentence, newest first, max 10**. Long findings belong in
 
 | Field | Value |
 |-------|--------|
-| Updated | 2026-09-09 19:16 ET |
+| Updated | 2026-09-09 19:26 ET |
 | Active role | soften-critic |
 | Job | Attack the ANSWER 12 amended factory evidence-bar bytes (`53AC9D6A…` / `BA7D40DA…`). Written objections only. Do not edit the bar. Do not score. Do not propose. Do not ADMIT. Do not park. Do not bind. Do not enable consult. Do not revive R-SKIP-COINFLIP. Honer catalog/rules starvation hashes remain after this attack. |
-| Status | assigned |
-| Handoff | `golf-offshoot/docs/LEARNING_LANE_15M_EVIDENCE_BAR_OPERATOR_ANSWER_12.md` — three SUSTAINED; bar amended; Critic has not attacked the new hashes. Consult off. Do not score, bind, or arm. |
+| Status | done |
+| Handoff | `golf-offshoot/docs/LEARNING_LANE_15M_EVIDENCE_BAR_CRITIC_13.md` — zero UPHELD on ANSWER 12 hashes (`53AC9D6A…` / `BA7D40DA…`); bar not edited; honer catalog/rules remain; consult off; not scored; not bound. |
 | Waiting on Founder | **N** |
 
 ## last_cos (CoS stamp — doorbell silence)
@@ -56,6 +56,8 @@ Two suites, both on the tick.
 
 ## Thread
 
+- 2026-09-09 19:26 ET  soften-critic → chief-of-staff: CRITIC 13 zero UPHELD on ANSWER 12 factory bar (`53AC9D6A…` / `BA7D40DA…`); bar not edited; honer catalog/rules remain; consult off; not scored; not bound. next=chief-of-staff
+- 2026-09-09 19:22 ET  soften-critic → chief-of-staff: started written attack on ANSWER 12 amended factory bar bytes (`53AC9D6A…` / `BA7D40DA…`); bar not edited. next=soften-critic
 - 2026-09-09 19:16 ET  chief-of-staff → soften-critic: attack ANSWER 12 amended factory bar bytes (`53AC9D6A…` / `BA7D40DA…`); written objections only; do not edit, score, propose, ADMIT, park, bind, enable consult, or revive R-SKIP-COINFLIP; honer catalog/rules remain after. next=soften-critic
 - 2026-09-09 19:12 ET  operator → chief-of-staff: ANSWER 12 — three SUSTAINED on CRITIC 12; consult tag in-memory only; writing the enable flag leaves the dark path and a flag-only snapshot raises; missing/null δ is 0 and skips every quoted book; binding false; consult off; not scored. next=chief-of-staff
 - 2026-09-09 19:08 ET  operator → chief-of-staff: started the assigned Job — answer CRITIC 12 (three UPHELD) on ANSWER 11 amended factory bar; record each objection; will not score, bind, enable consult, revive R-SKIP-COINFLIP, or impersonate Founder read-once; honer catalog/rules remain.
@@ -64,7 +66,5 @@ Two suites, both on the tick.
 - 2026-09-09 18:54 ET  soften-critic → chief-of-staff: started written attack on ANSWER 11 amended factory bar bytes (`A0115B38…` / `6074217E…`); bar not edited. next=soften-critic
 - 2026-09-09 18:45 ET  chief-of-staff → soften-critic: attack ANSWER 11 amended factory bar bytes (`A0115B38…` / `6074217E…`); written objections only; do not edit, score, propose, ADMIT, park, bind, enable consult, or revive R-SKIP-COINFLIP; honer catalog/rules remain after. next=soften-critic
 - 2026-09-09 18:42 ET  operator → chief-of-staff: ANSWER 11 — six SUSTAINED on CRITIC 11; destination paragraph names both snapshot paths, both families (wide-spread is OR), honer-skip attribution, exam-contrast mismatch, Founder-named is not a machine gate; owed fee row restated to 17:01:17; binding false; consult off; not scored. next=chief-of-staff
-- 2026-09-09 18:38 ET  operator → chief-of-staff: started the assigned Job — answer CRITIC 11 (six UPHELD) on 16:50 destination/compositor/fee-retry factory bar; record each objection; will not score, bind, enable consult, revive R-SKIP-COINFLIP, or impersonate Founder read-once; honer catalog/rules remain.
-- 2026-09-09 18:30 ET  chief-of-staff → operator: answer CRITIC 11 (six UPHELD) on 16:50 destination/compositor/fee-retry factory bar; record each objection; do not score, bind, enable consult, or revive R-SKIP-COINFLIP; honer catalog/rules remain. next=operator
 *Older lines rolled off at the 10-line cap. Full history is in the git log for `docs/agents/DESK.md`.*
 
