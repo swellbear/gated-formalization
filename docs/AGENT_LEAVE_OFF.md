@@ -5,12 +5,12 @@ Chat transcripts are not. A later Grok / Cursor cloud agent will not see a prior
 
 | Field | Value |
 |-------|--------|
-| Updated | 2026-09-09 09:05 EDT (Systems: score_rule rejects replay interval as lived. Bar hashes moved; Soften Critic assigned on the new bytes. Binding false. HOLD stands. Do not score.) |
+| Updated | 2026-09-09 13:55 EDT (honer_15m sibling implemented on `cursor/honer-15m-sibling`, own PR not #176. Root `golf-offshoot/data/honer_15m`. Live 70 untouched. Soften Critic still owed on lived/replay bar hashes. Binding false. HOLD stands. Do not score.) |
 | Interim operator | Cursor chat (Grok bot usage exhausted until **2026-09-13**) |
 | Repo SoT | **PR [#176](https://github.com/swellbear/gated-formalization/pull/176) is OPEN, not merged.** `origin/master` is still `b063f56` (#175). Part A + Parts 0/1 live only on `cursor/part-a-clerical-trust-boundary`. |
 | Local Windows tree for this interim | `C:\Users\bearh\gated-formalization-master-hub` |
 | Do **not** treat as SoT | `C:\Users\bearh\gated-formalization` on `cursor/eia-window-job2` (stale + dirty) |
-| Active track | `learning_lane_15m` (KXBTC15M paper loop) + Phase 1 desktop hub |
+| Active track | `learning_lane_15m` (KXBTC15M paper loop) + Phase 1 desktop hub + isolated `honer_15m` sibling (own root, not the live 70) |
 | Crew | `docs/agents/` — CoS routes; desk is live board |
 | Trading | **NOT ARMED** |
 

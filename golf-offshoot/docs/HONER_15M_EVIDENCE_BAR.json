@@ -1,0 +1,26 @@
+{
+  "schema": 1,
+  "lane": "honer_15m",
+  "series": "KXBTC15M",
+  "binding": false,
+  "admit": false,
+  "edge_established": false,
+  "founder_read_once": false,
+  "lab_admits": false,
+  "trading_armed": false,
+  "fee_omitted": true,
+  "looks": {
+    "first_look_n": 70,
+    "l2_named": true,
+    "l2_scored_this_build": false,
+    "futility_looks": [20, 40]
+  },
+  "alpha": {
+    "formula": "0.05 / (k * (k + 1))",
+    "k_source": "data/honer_15m/latest/trials.json trials_to_date",
+    "increments_on": "exam snapshot freeze"
+  },
+  "permutation_seed": 20260909,
+  "delta_sd": "provisional; compute from sibling exam sample; do not copy live-bar 0.28 / 0.784",
+  "contrast": "d_i = 0 on exam fill; d_i = -fill_all_pnl on exam skip"
+}

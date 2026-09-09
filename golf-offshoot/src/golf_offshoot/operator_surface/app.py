@@ -567,6 +567,17 @@ def render_html(surface: dict) -> str:
             else "<p class=\"help\">No operator cycle in this shell session yet. Journal below is from disk.</p>"
         )
         paper_html = ""
+        try:
+            from golf_offshoot.honer_15m.hub_block import sandbox_html
+
+            honer_block = sandbox_html()
+        except Exception:
+            honer_block = (
+                '<section class="panel honer-sandbox">'
+                "<h2>honer_15m sandbox</h2>"
+                '<p class="help">honer_15m sandbox unavailable this render. Live 15m journal is unchanged.</p>'
+                "</section>"
+            )
         lane_body = (
             '<section class="panel">'
             "<h2>15-min Kalshi journal</h2>"
@@ -577,6 +588,7 @@ def render_html(surface: dict) -> str:
             "<h3>Journal</h3>"
             f"<pre>{journal_board}</pre>"
             "</section>"
+            + honer_block
         )
     else:
         lane_body = (
@@ -1004,8 +1016,24 @@ def _sync_paper_watch(state: dict) -> None:
         state["paper_watch"] = watch
     if parse_lane(state.get("lane")) == LANE_15M:
         watch.start()
+        _sync_honer_watch(state, running=True)
     else:
         watch.stop_watch()
+        _sync_honer_watch(state, running=False)
+
+
+def _sync_honer_watch(state: dict, *, running: bool) -> None:
+    """Second thread. Own root. Exceptions stay inside honer_15m.watch."""
+    honer = state.get("honer_watch")
+    if honer is None:
+        from golf_offshoot.honer_15m.watch import HonerWatch
+
+        honer = HonerWatch()
+        state["honer_watch"] = honer
+    if running:
+        honer.start()
+    else:
+        honer.stop_watch()
 
 
 def rebuild_surface(state: dict, *, last_run: RunRecord | None | object = ...) -> None:

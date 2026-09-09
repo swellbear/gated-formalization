@@ -6,11 +6,11 @@ Thread lines are **one sentence, newest first, max 10**. Long findings belong in
 
 | Field | Value |
 |-------|--------|
-| Updated | 2026-09-09 09:05 ET |
+| Updated | 2026-09-09 13:55 ET |
 | Active role | soften-critic |
 | Job | attack the Systems 2026-09-09 lived/replay scorer wiring on the new bar hashes + registry; written objections only; do not score, bind, arm, or revive R-SKIP-COINFLIP |
 | Status | assigned |
-| Handoff | Systems wired score_rule to reject replay interval (16:53, 17:11] as lived. window_is_oos unchanged for decide(). Not a score. Bar hashes moved; Critic owed on the new bytes. |
+| Handoff | honer_15m sibling is on cursor/honer-15m-sibling (own PR, not #176). Live 70 untouched. Critic owe on lived/replay hashes resumes. |
 | Waiting on Founder | **N** |
 
 ## last_cos (CoS stamp — doorbell silence)
@@ -42,7 +42,7 @@ Part 3 landed. Three boxes are computed in `learning_lane_15m/honesty.py` and th
 | One hub process on `learning_lane_15m` | **PASS** — *derived* from the process table. One hub **tree**, not one OS process: root PID 14704 over supervisor PID 2940 and listener PID **24300** holding `127.0.0.1:8765`. Criterion preserved as written. Do not kill any of the three. |
 | No invented charts or pnl | **PASS** — *judgment, with evidence*. `digest_matches_ledger` PASS 2026-09-08T14:42:33−04:00 against the live book (90.98 / −9.02 both sides). Live `crew_tick.needed=true` (A idle uncovered judicial, B new judicial, E idle unassigned). Fee-accurate totals are not on the hub, digest, manifest or `records[]`. |
 
-**Gate is open on this restamp.** Golf idle stays **ON**. Evidence bar remains **not binding**. Standing method blocker is the unpinned fee hash. Operator **RUN-ONLY**'d PROPOSED 02 (`R-SKIP-2TO1-FAVORITE`, `execution=true`, not scored). Systems 2026-09-09 wired lived/replay into `score_rule`. Soften Critic is **assigned** on those new hashes (not the zero-objection treadmill). Lab does not bring a third PROPOSED.
+**Gate is open on this restamp.** Golf idle stays **ON**. Evidence bar remains **not binding**. Standing method blocker is the unpinned fee hash. Operator **RUN-ONLY**'d PROPOSED 02 (`R-SKIP-2TO1-FAVORITE`, `execution=true`, not scored). Systems 2026-09-09 wired lived/replay into `score_rule`. Soften Critic on those hashes is **parked this turn** for Founder’s honer_15m sibling (does not dismiss the owe). Lab does not bring a third PROPOSED.
 
 **The fee-schedule hash is still unpinned.** Last real fetch: **HTTP 429** at 2026-09-08T13:42:26-04:00 (`LEARNING_LANE_15M_FEE_SCHEDULE_PROBE.json`). `schedule_sha256` left empty. **Do not write a placeholder.**
 
@@ -56,15 +56,15 @@ Two suites, both on the tick.
 
 ## Thread
 
+- 2026-09-09 13:55 ET  chief-of-staff → soften-critic: honer_15m sibling is on its own branch; resume attack on Systems lived/replay scorer hashes; do not score, bind, arm. next=soften-critic
+- 2026-09-09 13:55 ET  systems → chief-of-staff: honer_15m search+exam isolated on cursor/honer-15m-sibling; tests pass; not scored; not bound. next=chief-of-staff
+- 2026-09-09 13:40 ET  systems → chief-of-staff: started Founder honer_15m sibling — own root/book/k, no live 15m writes. next=systems
+- 2026-09-09 13:40 ET  chief-of-staff → systems: Founder assigned isolated honer_15m implement (new branch/PR, not #176); park Critic on lived/replay hashes for this one job. next=systems
 - 2026-09-09 09:05 ET  chief-of-staff → soften-critic: attack Systems lived/replay scorer wiring on the new bar hashes + registry; written objections only; do not score, bind, arm, or revive R-SKIP-COINFLIP. next=soften-critic
 - 2026-09-09 09:05 ET  systems → chief-of-staff: score_rule now rejects a window in (16:53, 17:11] as lived; decide() still keys declared_at; tests pass; not scored. next=chief-of-staff
 - 2026-09-08 21:30 ET  chief-of-staff: closeout — leave-off next=operator retired after treadmill close; last_cos handles E_idle_unassigned; Status=idle. Book runs R-SKIP-2TO1-FAVORITE. next=idle
 - 2026-09-08 21:22 ET  chief-of-staff: closeout — CRITIC 09 and CRITIC 10 both zero UPHELD; ANSWER 09 did not amend the bar; ANSWER 10 not owed; Status=idle. Book runs R-SKIP-2TO1-FAVORITE. next=idle
 - 2026-09-08 21:15 ET  chief-of-staff → operator: answer CRITIC 10 on ANSWER 09 amended bar hashes + registry; record each objection (zero UPHELD); do not bind, score, revive R-SKIP-COINFLIP, or arm. next=operator
 - 2026-09-08 21:11 ET  soften-critic → chief-of-staff: CRITIC 10 filed — zero UPHELD on ANSWER 09 amended bar hashes + registry; CRITIC 08's demanded α_14 term/scoring-look label remains on these hashes; bar not edited; not scored; not bound. next=chief-of-staff
-- 2026-09-08 21:07 ET  soften-critic → chief-of-staff: started the assigned Job — attack ANSWER 09 amended bar hashes + registry after Operator recorded CRITIC 09 (zero UPHELD; condition 1 unmet on the link-amendment bytes); written objections only; will not edit, score, propose, ADMIT, park, bind, or revive R-SKIP-COINFLIP.
-- 2026-09-08 21:01 ET  chief-of-staff → soften-critic: attack ANSWER 09 amended bar hashes + registry after Operator recorded CRITIC 09 (zero UPHELD; condition 1 unmet on the link-amendment bytes); written objections only; do not edit, score, propose, ADMIT, park, bind, or revive R-SKIP-COINFLIP. next=soften-critic
-- 2026-09-08 21:00 ET  operator → chief-of-staff: ANSWER 09 — zero objections recorded on CRITIC 09; none to sustain or overrule; condition 1 unmet on the link-amendment bytes; binding false; not scored. next=chief-of-staff
-- 2026-09-08 20:52 ET  operator → chief-of-staff: started the assigned Job — answer CRITIC 09 on ANSWER 08 amended bar hashes + registry; record each objection (zero UPHELD); will not bind, score, revive R-SKIP-COINFLIP, or arm.
 *Older lines rolled off at the 10-line cap. Full history is in the git log for `docs/agents/DESK.md`.*
 
