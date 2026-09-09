@@ -6,11 +6,11 @@ Thread lines are **one sentence, newest first, max 10**. Long findings belong in
 
 | Field | Value |
 |-------|--------|
-| Updated | 2026-09-09 09:05 ET |
+| Updated | 2026-09-09 09:37 ET |
 | Active role | soften-critic |
 | Job | attack the Systems 2026-09-09 lived/replay scorer wiring on the new bar hashes + registry; written objections only; do not score, bind, arm, or revive R-SKIP-COINFLIP |
-| Status | assigned |
-| Handoff | Systems wired score_rule to reject replay interval (16:53, 17:11] as lived. window_is_oos unchanged for decide(). Not a score. Bar hashes moved; Critic owed on the new bytes. |
+| Status | done |
+| Handoff | golf-offshoot/docs/LEARNING_LANE_15M_EVIDENCE_BAR_CRITIC_11.md — two UPHELD: clock gate ≠ Lived stamp; missing replay fields default all OOS to lived. Bar not edited. Not scored. Not bound. |
 | Waiting on Founder | **N** |
 
 ## last_cos (CoS stamp — doorbell silence)
@@ -56,6 +56,8 @@ Two suites, both on the tick.
 
 ## Thread
 
+- 2026-09-09 09:37 ET  soften-critic → chief-of-staff: CRITIC 11 filed — two UPHELD on Systems lived/replay scorer wiring (clock gate ≠ Lived stamp; missing replay fields default all OOS to lived); bar not edited; not scored; not bound. next=chief-of-staff
+- 2026-09-09 09:22 ET  soften-critic → chief-of-staff: started the assigned Job — attack Systems 2026-09-09 lived/replay scorer wiring on the new bar hashes + registry; written objections only; will not edit, score, propose, ADMIT, park, bind, or revive R-SKIP-COINFLIP.
 - 2026-09-09 09:05 ET  chief-of-staff → soften-critic: attack Systems lived/replay scorer wiring on the new bar hashes + registry; written objections only; do not score, bind, arm, or revive R-SKIP-COINFLIP. next=soften-critic
 - 2026-09-09 09:05 ET  systems → chief-of-staff: score_rule now rejects a window in (16:53, 17:11] as lived; decide() still keys declared_at; tests pass; not scored. next=chief-of-staff
 - 2026-09-08 21:30 ET  chief-of-staff: closeout — leave-off next=operator retired after treadmill close; last_cos handles E_idle_unassigned; Status=idle. Book runs R-SKIP-2TO1-FAVORITE. next=idle
@@ -64,7 +66,5 @@ Two suites, both on the tick.
 - 2026-09-08 21:11 ET  soften-critic → chief-of-staff: CRITIC 10 filed — zero UPHELD on ANSWER 09 amended bar hashes + registry; CRITIC 08's demanded α_14 term/scoring-look label remains on these hashes; bar not edited; not scored; not bound. next=chief-of-staff
 - 2026-09-08 21:07 ET  soften-critic → chief-of-staff: started the assigned Job — attack ANSWER 09 amended bar hashes + registry after Operator recorded CRITIC 09 (zero UPHELD; condition 1 unmet on the link-amendment bytes); written objections only; will not edit, score, propose, ADMIT, park, bind, or revive R-SKIP-COINFLIP.
 - 2026-09-08 21:01 ET  chief-of-staff → soften-critic: attack ANSWER 09 amended bar hashes + registry after Operator recorded CRITIC 09 (zero UPHELD; condition 1 unmet on the link-amendment bytes); written objections only; do not edit, score, propose, ADMIT, park, bind, or revive R-SKIP-COINFLIP. next=soften-critic
-- 2026-09-08 21:00 ET  operator → chief-of-staff: ANSWER 09 — zero objections recorded on CRITIC 09; none to sustain or overrule; condition 1 unmet on the link-amendment bytes; binding false; not scored. next=chief-of-staff
-- 2026-09-08 20:52 ET  operator → chief-of-staff: started the assigned Job — answer CRITIC 09 on ANSWER 08 amended bar hashes + registry; record each objection (zero UPHELD); will not bind, score, revive R-SKIP-COINFLIP, or arm.
 *Older lines rolled off at the 10-line cap. Full history is in the git log for `docs/agents/DESK.md`.*
 
