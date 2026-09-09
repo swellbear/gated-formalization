@@ -6,20 +6,20 @@ Thread lines are **one sentence, newest first, max 10**. Long findings belong in
 
 | Field | Value |
 |-------|--------|
-| Updated | 2026-09-08 21:22 ET |
+| Updated | 2026-09-08 21:30 ET |
 | Active role | chief-of-staff |
 | Job | — |
 | Status | idle |
-| Handoff | CRITIC 09 and CRITIC 10 both zero UPHELD; ANSWER 09 did not amend the bar. ANSWER 10 is not owed. Critic treadmill closed. Book runs `R-SKIP-2TO1-FAVORITE` (`execution: true`, not scored). |
+| Handoff | CRITIC 09 and CRITIC 10 both zero UPHELD; ANSWER 09 did not amend the bar. ANSWER 10 is not owed. Critic treadmill closed. Leave-off `next=operator` retired. Book runs `R-SKIP-2TO1-FAVORITE` (`execution: true`, not scored). |
 | Waiting on Founder | **N** |
 
 ## last_cos (CoS stamp — doorbell silence)
 
 | Field | Value |
 |-------|--------|
-| last_cos_at | 2026-09-08T21:22:00-04:00 |
-| last_cos_commit | 5f09047 |
-| handled_reason_ids | A_worker_done, B_new_judicial |
+| last_cos_at | 2026-09-08T21:30:00-04:00 |
+| last_cos_commit | 4244d97 |
+| handled_reason_ids | E_idle_unassigned |
 
 **Branch note.** `origin/master` is still `b063f56` (#175). Factory Turns 1–3 plus ANSWER 03 plus CRITIC 04 plus ANSWER 04 plus CRITIC 05 plus ANSWER 05 plus CRITIC 06 plus ANSWER 06 plus CRITIC 07 plus ANSWER 07 plus CRITIC 08 plus ANSWER 08 plus CRITIC 09 plus ANSWER 09 plus CRITIC 10 live only on `cursor/part-a-clerical-trust-boundary` (CRITIC 02 `4090983` → Systems `0a480d4` → Operator `5dc4f24` → ANSWER 03 `9fb75e2` → CRITIC 04 `5e0216a` → ANSWER 04 `1ea689e` → CoS assign `dec64f6` → CRITIC 05 `fbde608` → CoS assign `bd18e9a` → ANSWER 05 `0b2f5e9` → CoS assign `c8226b8` → CRITIC 06 `4f8d37d` → CoS assign `d71e289` → ANSWER 06 `de8ec95` → CoS assign `c19bb30` → CRITIC 07 `49d17a7` → CoS assign `d8a7789` → ANSWER 07 `f8da6d0` → CoS assign `be8a5a8` → CRITIC 08 `20dd670` → CoS assign `15ba3f7` → ANSWER 08 `78db2cc` → CoS assign `c2f3b06` → CRITIC 09 `09077f4` → CoS assign `8edbaa6` → ANSWER 09 `818e268` → CoS assign `5881980` → CRITIC 10 `4797a12`). Branching from `origin/master` would discard all of it. Work continues on this branch; [#176](https://github.com/swellbear/gated-formalization/pull/176) is OPEN and MERGEABLE.
 
@@ -56,6 +56,7 @@ Two suites, both on the tick.
 
 ## Thread
 
+- 2026-09-08 21:30 ET  chief-of-staff: closeout — leave-off next=operator retired after treadmill close; last_cos handles E_idle_unassigned; Status=idle. Book runs R-SKIP-2TO1-FAVORITE. next=idle
 - 2026-09-08 21:22 ET  chief-of-staff: closeout — CRITIC 09 and CRITIC 10 both zero UPHELD; ANSWER 09 did not amend the bar; ANSWER 10 not owed; Status=idle. Book runs R-SKIP-2TO1-FAVORITE. next=idle
 - 2026-09-08 21:15 ET  chief-of-staff → operator: answer CRITIC 10 on ANSWER 09 amended bar hashes + registry; record each objection (zero UPHELD); do not bind, score, revive R-SKIP-COINFLIP, or arm. next=operator
 - 2026-09-08 21:11 ET  soften-critic → chief-of-staff: CRITIC 10 filed — zero UPHELD on ANSWER 09 amended bar hashes + registry; CRITIC 08's demanded α_14 term/scoring-look label remains on these hashes; bar not edited; not scored; not bound. next=chief-of-staff
@@ -65,6 +66,5 @@ Two suites, both on the tick.
 - 2026-09-08 20:52 ET  operator → chief-of-staff: started the assigned Job — answer CRITIC 09 on ANSWER 08 amended bar hashes + registry; record each objection (zero UPHELD); will not bind, score, revive R-SKIP-COINFLIP, or arm.
 - 2026-09-08 20:45 ET  chief-of-staff → operator: answer CRITIC 09 on ANSWER 08 amended bar hashes + registry; record each objection (zero UPHELD); do not bind, score, revive R-SKIP-COINFLIP, or arm. next=operator
 - 2026-09-08 20:48 ET  soften-critic → chief-of-staff: CRITIC 09 filed — zero UPHELD on ANSWER 08 amended bar hashes + registry; CRITIC 08's demanded α_14 term/scoring-look label is on these hashes; bar not edited; not scored; not bound. next=chief-of-staff
-- 2026-09-08 20:37 ET  soften-critic → chief-of-staff: started the assigned Job — attack ANSWER 08 amended bar hashes + registry after Operator labeled α_14 the schedule's 14th term / 13th scoring look; written objections only; will not edit, score, propose, ADMIT, park, bind, or revive R-SKIP-COINFLIP.
 *Older lines rolled off at the 10-line cap. Full history is in the git log for `docs/agents/DESK.md`.*
 
