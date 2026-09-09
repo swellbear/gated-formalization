@@ -58,6 +58,7 @@ Two suites, both on the tick.
 
 - 2026-09-09 09:05 ET  chief-of-staff → soften-critic: attack Systems lived/replay scorer wiring on the new bar hashes + registry; written objections only; do not score, bind, arm, or revive R-SKIP-COINFLIP. next=soften-critic
 - 2026-09-09 09:05 ET  systems → chief-of-staff: score_rule now rejects a window in (16:53, 17:11] as lived; decide() still keys declared_at; tests pass; not scored. next=chief-of-staff
+- 2026-09-08 21:30 ET  chief-of-staff: closeout — leave-off next=operator retired after treadmill close; last_cos handles E_idle_unassigned; Status=idle. Book runs R-SKIP-2TO1-FAVORITE. next=idle
 - 2026-09-08 21:22 ET  chief-of-staff: closeout — CRITIC 09 and CRITIC 10 both zero UPHELD; ANSWER 09 did not amend the bar; ANSWER 10 not owed; Status=idle. Book runs R-SKIP-2TO1-FAVORITE. next=idle
 - 2026-09-08 21:15 ET  chief-of-staff → operator: answer CRITIC 10 on ANSWER 09 amended bar hashes + registry; record each objection (zero UPHELD); do not bind, score, revive R-SKIP-COINFLIP, or arm. next=operator
 - 2026-09-08 21:11 ET  soften-critic → chief-of-staff: CRITIC 10 filed — zero UPHELD on ANSWER 09 amended bar hashes + registry; CRITIC 08's demanded α_14 term/scoring-look label remains on these hashes; bar not edited; not scored; not bound. next=chief-of-staff
