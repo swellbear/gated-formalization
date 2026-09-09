@@ -10,7 +10,7 @@ Thread lines are **one sentence, newest first, max 10**. Long findings belong in
 | Active role | soften-critic |
 | Job | attack the Systems 2026-09-09 lived/replay scorer wiring on the new bar hashes + registry; written objections only; do not score, bind, arm, or revive R-SKIP-COINFLIP |
 | Status | assigned |
-| Handoff | honer_15m sibling is on cursor/honer-15m-sibling (own PR, not #176). Live 70 untouched. Critic owe on lived/replay hashes resumes. |
+| Handoff | honer_15m sibling is [PR #178](https://github.com/swellbear/gated-formalization/pull/178) (base part-a, not #176). Live 70 untouched. Critic owe on lived/replay hashes resumes. |
 | Waiting on Founder | **N** |
 
 ## last_cos (CoS stamp — doorbell silence)
