@@ -92,8 +92,33 @@ def watch_status_path() -> Path:
     return latest_dir() / "watch.json"
 
 
+def board_png_path() -> Path:
+    """Local honer strip. Never the Lineage A observability-hub PNG."""
+    return latest_dir() / "honer_window_strip.png"
+
+
 def registry_path() -> Path:
     return Path(__file__).resolve().parents[3] / "docs" / "HONER_15M_RULES.json"
+
+
+def catalog_path() -> Path:
+    return Path(__file__).resolve().parents[3] / "docs" / "HONER_15M_CATALOG.json"
+
+
+def library_path() -> Path:
+    return latest_dir() / "library.json"
+
+
+def quote_quality_path() -> Path:
+    return latest_dir() / "quote_quality.json"
+
+
+def last_tick_path() -> Path:
+    return latest_dir() / "last_tick.json"
+
+
+def invariants_path() -> Path:
+    return latest_dir() / "invariants.json"
 
 
 def safe_artifact_stem(name: str, *, fallback: str = "event") -> str:

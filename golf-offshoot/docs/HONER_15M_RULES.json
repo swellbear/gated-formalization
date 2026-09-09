@@ -7,6 +7,7 @@
   "trading_armed": false,
   "binding": false,
   "opened_at": "2026-09-09T13:40:00-04:00",
+  "catalog": "HONER_15M_CATALOG.json",
   "trials_to_date_note": "Live k lives in data/honer_15m/latest/trials.json so this file does not mutate on every freeze.",
   "policy": {
     "id": "H-SKIP-RICH-YES",
@@ -16,12 +17,26 @@
     "theta_min": 0.55,
     "theta_max": 0.90,
     "step": 0.02,
+    "step_rule": "local_regret_v2",
+    "step_band": 0.10,
+    "step_rule_declared_at": "2026-09-09T15:08:00-04:00",
+    "freeze_rule": "in_band_v1",
+    "freeze_rule_declared_at": "2026-09-09T15:44:00-04:00",
     "freeze_abs_delta": 0.05,
+    "freeze_abs_delta_spread": 0.02,
     "freeze_min_search_settled": 20,
+    "freeze_stable_windows": 5,
+    "clip_exhaust_windows": 20,
+    "spread_band": 0.03,
+    "spread_quote_min_frac": 0.75,
+    "start_delta": 0.04,
+    "delta_min": 0.02,
+    "delta_max": 0.12,
+    "delta_step": 0.01,
     "exam_n": 70,
     "futility_looks": [20, 40],
     "declared_at": "2026-09-09T13:40:00-04:00",
     "permutation_seed": 20260909,
-    "note": "Search θ moves on discovery only. An exam snapshot is a later declaration in latest/trials.json. Not a retune of R-SKIP-2TO1-FAVORITE."
+    "note": "Search knobs move on discovery only. local_regret_v2: step only near the line; fill+NO tightens; skip+YES loosens. Freeze in_band_v1 counts only in-band settles. An exam snapshot is a later declaration in latest/trials.json. Not a retune of R-SKIP-2TO1-FAVORITE. Not a keep."
   }
 }

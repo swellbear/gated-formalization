@@ -15,6 +15,8 @@ from golf_offshoot.honer_15m.paths import (
 )
 from golf_offshoot.honer_15m.policy import START_THETA
 from golf_offshoot.operator_surface.lanes import parse_lane
+from golf_offshoot.quote_bus import set_quote_bus_root_override
+from golf_offshoot.two_brains import set_two_brains_root_override
 
 
 FORBIDDEN_IMPORTS = {
@@ -26,6 +28,7 @@ FORBIDDEN_IMPORTS = {
     "golf_offshoot.learning_lane_15m.runner",
     "golf_offshoot.learning_lane_15m.crew_tick",
     "golf_offshoot.learning_lane_15m.evidence_bar",
+    "golf_offshoot.learning_lane_15m.standing",
 }
 
 PKG = Path(__file__).resolve().parents[1] / "src" / "golf_offshoot" / "honer_15m"
@@ -35,8 +38,26 @@ PKG = Path(__file__).resolve().parents[1] / "src" / "golf_offshoot" / "honer_15m
 def honer_tmp(tmp_path, monkeypatch):
     root = tmp_path / "honer_15m"
     set_honer_root_override(root)
+    set_quote_bus_root_override(tmp_path / "quote_bus")
+    set_two_brains_root_override(tmp_path / "two_brains")
     yield root
     set_honer_root_override(None)
+    set_quote_bus_root_override(None)
+    set_two_brains_root_override(None)
+
+
+def _seed_search_quotes(*, n: int = 20, with_spread: int = 20) -> None:
+    rows = {}
+    for i in range(n):
+        rows[f"KXBTC15M-Q{i:02d}"] = {
+            "ticker": f"KXBTC15M-Q{i:02d}",
+            "action": "fill",
+            "spread": 0.04 if i < with_spread else None,
+            "posted_yes": 0.70,
+            "theta": 0.75,
+            "at": f"2026-09-09T00:{i:02d}:00-04:00",
+        }
+    books.save_decisions("search", rows)
 
 
 def test_parse_lane_stays_two_values():
@@ -84,17 +105,31 @@ def test_decide_skip_and_fill():
     assert decide.decide_yes_or_skip(0.70, 0.75)[0] == "fill"
 
 
-def test_theta_steps_and_clip(honer_tmp):
-    st = theta.step_search_theta(action="fill", kalshi_result="no")
-    assert st["theta"] == pytest.approx(0.77)
-    theta.step_search_theta(action="skip", kalshi_result="yes")
+def test_v2_far_fill_loss_does_not_step(honer_tmp):
+    st = theta.step_search_theta(action="fill", kalshi_result="no", posted_yes=0.48)
+    assert st["theta"] == pytest.approx(START_THETA)
+    assert st["search_settled_since_freeze"] == 1
+    assert st["in_band_settled"] == 0
+    assert st["far_settled_since_freeze"] == 1
+    assert st["in_band_stable"] == 0
+
+
+def test_v2_inband_fill_loss_tightens(honer_tmp):
+    st = theta.step_search_theta(action="fill", kalshi_result="no", posted_yes=0.68)
+    assert st["theta"] == pytest.approx(0.73)
+
+
+def test_v2_inband_skip_yes_raises(honer_tmp):
+    theta.step_search_theta(action="skip", kalshi_result="yes", posted_yes=0.80)
+    assert theta.load_theta()["theta"] == pytest.approx(0.77)
+
+
+def test_v2_clip_min_stays(honer_tmp):
     st = theta.load_theta()
-    assert st["theta"] == pytest.approx(0.75)
-    st = theta.load_theta()
-    st["theta"] = 0.90
+    st["theta"] = 0.55
     theta.save_theta(st)
-    st = theta.step_search_theta(action="fill", kalshi_result="no")
-    assert st["theta"] == pytest.approx(0.90)
+    st = theta.step_search_theta(action="fill", kalshi_result="no", posted_yes=0.50)
+    assert st["theta"] == pytest.approx(0.55)
 
 
 def test_pending_does_not_step(honer_tmp):
@@ -104,9 +139,9 @@ def test_pending_does_not_step(honer_tmp):
 
 
 def test_restart_reloads_theta(honer_tmp):
-    theta.step_search_theta(action="fill", kalshi_result="no")
+    theta.step_search_theta(action="fill", kalshi_result="no", posted_yes=0.68)
     again = theta.load_theta()
-    assert again["theta"] == pytest.approx(0.77)
+    assert again["theta"] == pytest.approx(0.73)
 
 
 def test_exam_settle_does_not_step_theta(honer_tmp):
@@ -124,13 +159,14 @@ def test_exam_settle_does_not_step_theta(honer_tmp):
     assert theta.load_theta()["theta"] == pytest.approx(START_THETA)
 
 
-def test_freeze_gates(honer_tmp):
+def test_freeze_needs_novelty_and_stability(honer_tmp):
     st = theta.load_theta()
-    st["search_settled_since_freeze"] = 19
+    st["in_band_settled"] = 20
     st["theta"] = 0.81
+    st["in_band_stable"] = 4
     theta.save_theta(st)
     assert freeze.freeze_ready() is False
-    st["search_settled_since_freeze"] = 20
+    st["in_band_stable"] = 5
     st["theta"] = 0.76
     theta.save_theta(st)
     assert freeze.freeze_ready() is False
@@ -230,3 +266,532 @@ def test_illustrate_uses_exact_live_root():
     text = src.read_text(encoding="utf-8")
     assert "learning_lane_15m*" not in text
     assert "honer_15m" not in text
+
+
+def test_exam_k_stamped(honer_tmp):
+    from golf_offshoot.honer_15m.freeze import save_exam_state
+
+    save_exam_state({"open": True, "k_after": 2, "frozen_theta": 0.81, "n": 0})
+    row = books.record_action(
+        "exam",
+        ticker="KXBTC15M-EXAM",
+        window_id="w",
+        action="skip",
+        reason="x",
+        posted_yes=0.80,
+        theta=0.81,
+        close_at="t",
+    )
+    assert row["exam_k"] == 2
+
+
+def test_standing_skip_why_and_pending_not_zero(honer_tmp):
+    from golf_offshoot.honer_15m.board import collect_standing
+    from golf_offshoot.honer_15m.hub_block import sandbox_html
+
+    books.record_action(
+        "search",
+        ticker="KXBTC15M-26SEP091400-00",
+        window_id="KXBTC15M-26SEP091400__2026-09-09T17:45:00Z__2026-09-09T18:00:00Z",
+        action="skip",
+        reason="posted_yes >= theta 0.75",
+        posted_yes=0.80,
+        theta=0.75,
+        close_at="2026-09-09T18:00:00Z",
+    )
+    standing = collect_standing()
+    assert standing.search_rows
+    row = standing.search_rows[0]
+    assert "skipped" in row.why.lower()
+    assert row.pending is True
+    assert "+0.00" not in row.pnl_text
+    assert "waiting" in row.pnl_text.lower()
+    html = sandbox_html()
+    assert "skipped" in html.lower()
+    assert "do not add" in html.lower()
+    assert "combined bankroll" not in html.lower()
+    assert "winner" not in html.lower()
+
+
+def test_honer_png_path_stays_under_honer_root(honer_tmp):
+    from golf_offshoot.honer_15m.paths import board_png_path, honer_root
+
+    path = board_png_path()
+    assert honer_root() in path.parents or path.parent == honer_root()
+    assert "learning_lane_15m" not in path.as_posix()
+    assert "observability-hub" not in path.as_posix()
+
+
+def test_honer_illustrate_does_not_import_live_board():
+    src = Path(__file__).resolve().parents[1] / "src" / "golf_offshoot" / "honer_15m" / "illustrate.py"
+    text = src.read_text(encoding="utf-8")
+    assert "golf_offshoot.learning_lane_15m.illustrate" not in text
+    assert "paper_window_strip.png" not in text
+
+
+def test_v2_migrate_keeps_theta_resets_clock(honer_tmp):
+    import json
+
+    from golf_offshoot.honer_15m.paths import theta_path
+
+    payload = {"theta": 0.79, "last_declared_theta": 0.75, "search_settled_since_freeze": 4}
+    theta_path().write_text(json.dumps(payload), encoding="utf-8")
+    got = theta.load_theta()
+    assert got["theta"] == pytest.approx(0.79)
+    assert got["last_declared_theta"] == pytest.approx(0.75)
+    assert got["search_settled_since_freeze"] == 0
+    assert got["step_rule"] == "local_regret_v2"
+    assert got["freeze_rule"] == "in_band_v1"
+    assert got["stable_windows"] == 0
+    assert got["in_band_settled"] == 0
+
+
+def test_retired_vector_cannot_freeze(honer_tmp):
+    from golf_offshoot.honer_15m.library import append_exam_row
+    from golf_offshoot.honer_15m.policy import knob_vector
+
+    append_exam_row(
+        k=1,
+        family="H-SKIP-RICH-YES",
+        knobs=knob_vector(family="H-SKIP-RICH-YES", theta=0.81, delta=0.04),
+        outcome="parked",
+    )
+    st = theta.load_theta()
+    st["theta"] = 0.81
+    st["in_band_settled"] = 20
+    st["in_band_stable"] = 5
+    theta.save_theta(st)
+    assert freeze.freeze_ready() is False
+
+
+def test_picker_has_no_pnl_parameters():
+    import inspect
+
+    from golf_offshoot.honer_15m import picker
+
+    for name in ("on_exam_close", "maybe_advance"):
+        params = inspect.signature(getattr(picker, name)).parameters
+        for banned in ("d", "pnl", "ledger", "exam_pnl", "betting_pnl"):
+            assert banned not in params
+    src = (PKG / "picker.py").read_text(encoding="utf-8")
+    assert "exam_sums" not in src
+    assert "load_ledger" not in src
+    assert "betting_pnl" not in src
+
+
+def test_catalog_skips_two_thirds():
+    from golf_offshoot.honer_15m.catalog import catalog_ids, load_catalog
+
+    text = str(load_catalog())
+    assert "0.666" not in text
+    assert "2/3" not in text
+    assert catalog_ids() == ["H-SKIP-RICH-YES", "H-SKIP-WIDE-SPREAD"]
+
+
+def test_clip_exhaust_advances_to_spread_and_keeps_seed(honer_tmp):
+    from golf_offshoot.honer_15m.library import append_exam_row
+    from golf_offshoot.honer_15m.picker import maybe_advance
+    from golf_offshoot.honer_15m.policy import FAMILY_SPREAD, knob_vector
+
+    append_exam_row(
+        k=1,
+        family="H-SKIP-RICH-YES",
+        knobs=knob_vector(family="H-SKIP-RICH-YES", theta=0.81, delta=0.04),
+        outcome="completed_unscored",
+    )
+    st = theta.load_theta()
+    st["theta"] = 0.90
+    st["clip_streak"] = 20
+    theta.save_theta(st)
+    _seed_search_quotes(n=20, with_spread=20)
+    out = maybe_advance()
+    assert out and out["advanced"] is True
+    assert out["active_family"] == FAMILY_SPREAD
+    live = theta.load_theta()
+    assert live["active_family"] == FAMILY_SPREAD
+    assert live["theta"] == pytest.approx(0.81)
+    assert live["delta"] == pytest.approx(0.04)
+    assert live["search_settled_since_freeze"] == 0
+
+
+def test_ordinary_exam_close_does_not_reset_theta(honer_tmp):
+    from golf_offshoot.honer_15m.picker import on_exam_close
+    from golf_offshoot.honer_15m.policy import knob_vector
+
+    st = theta.load_theta()
+    st["theta"] = 0.79
+    theta.save_theta(st)
+    on_exam_close(
+        outcome="completed_unscored",
+        family="H-SKIP-RICH-YES",
+        knobs=knob_vector(family="H-SKIP-RICH-YES", theta=0.79, delta=0.04),
+        k=1,
+    )
+    assert theta.load_theta()["theta"] == pytest.approx(0.79)
+
+
+def test_spread_skip_does_not_change_mark_missing_quotes_use_theta():
+    from golf_offshoot.honer_15m.decide import decide_ticket, posted_mark
+    from golf_offshoot.honer_15m.policy import FAMILY_SPREAD
+
+    market = {"paper_mark": 0.60, "yes_ask": 0.62, "yes_bid": 0.50}
+    assert posted_mark(market) == pytest.approx(0.60)
+    action, reason = decide_ticket(
+        0.60, 0.75, family=FAMILY_SPREAD, delta=0.04, spread=0.12
+    )
+    assert action == "skip"
+    assert "spread" in reason
+    action2, reason2 = decide_ticket(
+        0.60, 0.75, family=FAMILY_SPREAD, delta=0.04, spread=None
+    )
+    assert action2 == "fill"
+    assert "theta" in reason2
+
+
+def test_hub_block_has_no_combined_pnl(honer_tmp):
+    from golf_offshoot.honer_15m.hub_block import sandbox_html
+
+    html = sandbox_html()
+    assert "combined" not in html.lower()
+    assert "library" in html.lower()
+    assert "keep" in html.lower()
+
+
+def test_v1_step_removed_from_policy():
+    from golf_offshoot.honer_15m.policy import load_policy
+
+    pol = load_policy()
+    assert pol["step_rule"] == "local_regret_v2"
+    assert pol["step_band"] == pytest.approx(0.10)
+    assert pol["freeze_rule"] == "in_band_v1"
+    assert pol["spread_band"] == pytest.approx(0.03)
+
+
+def test_freeze_meter_matches_theta(honer_tmp):
+    from golf_offshoot.honer_15m.board import collect_standing, freeze_meter
+
+    st = theta.load_theta()
+    st["theta"] = 0.81
+    st["last_declared_theta"] = 0.75
+    st["in_band_settled"] = 3
+    st["far_settled_since_freeze"] = 1
+    st["in_band_stable"] = 2
+    theta.save_theta(st)
+    line = freeze_meter()
+    assert line == (
+        "Honer freeze: 3/20 in-band · 1 far ignored · moved 6¢ of 5¢ · "
+        "stable 2/5 · line 81¢ · skip-rich-YES"
+    )
+    standing = collect_standing()
+    assert standing.freeze_meter == line
+    assert standing.subtitle_lines[0] == line
+    st["in_band_settled"] = 20
+    st["in_band_stable"] = 5
+    theta.save_theta(st)
+    ready = freeze_meter()
+    assert ready == "Honer freeze: ready — next tick can open exam. Not a keep."
+
+
+def test_library_english_has_no_registry_ids(honer_tmp):
+    from golf_offshoot.honer_15m.board import collect_standing, library_english
+    from golf_offshoot.honer_15m.library import append_exam_row
+    from golf_offshoot.honer_15m.policy import FAMILY_RICH, knob_vector
+
+    none_line = library_english(
+        {"rows": [], "retired": []},
+        family=FAMILY_RICH,
+        clip_streak=0,
+        clip_need=20,
+    )
+    assert none_line.startswith("No exam yet.")
+    assert "completed_unscored" not in none_line
+    assert "completed_dead" not in none_line
+    append_exam_row(
+        k=1,
+        family=FAMILY_RICH,
+        knobs=knob_vector(family=FAMILY_RICH, theta=0.81, delta=0.04),
+        outcome="completed_unscored",
+    )
+    standing = collect_standing()
+    assert "completed_unscored" not in standing.library_line
+    assert "completed_dead" not in standing.library_line
+    assert "Still not a keep" in standing.library_line
+    assert "means were above zero" in standing.library_line
+    dead = library_english(
+        {"rows": [{"outcome": "completed_dead"}], "retired": [1]},
+        family=FAMILY_RICH,
+        clip_streak=0,
+        clip_need=20,
+    )
+    assert "completed_dead" not in dead
+    assert "mean was not above zero" in dead
+    parked = library_english(
+        {"rows": [{"outcome": "parked"}], "retired": [1]},
+        family=FAMILY_RICH,
+        clip_streak=0,
+        clip_need=20,
+    )
+    assert parked.startswith("Last exam stopped early (futility).")
+
+
+def test_near_line_48_vs_81_is_no(honer_tmp):
+    from golf_offshoot.honer_15m.board import collect_standing, current_search_action
+    from golf_offshoot.honer_15m.hub_block import sandbox_html
+
+    books.record_action(
+        "search",
+        ticker="KXBTC15M-26SEP091400-00",
+        window_id="w",
+        action="fill",
+        reason="posted_yes below theta 0.81",
+        posted_yes=0.48,
+        theta=0.81,
+        close_at="2026-09-09T18:00:00Z",
+    )
+    row = collect_standing().search_rows[0]
+    assert row.near_line is False
+    assert row.near_line_text == "no"
+    phrase = current_search_action()["phrase"]
+    assert "not near the 81¢ line" in phrase
+    assert "48¢" in phrase
+    html = sandbox_html()
+    assert "Near line" in html
+    assert "Spread" in html
+    assert "Wide-book" in html
+    assert "+0.00" not in row.pnl_text
+
+
+def test_missing_quotes_spread_na_decide_richness_only(honer_tmp):
+    from golf_offshoot.honer_15m.board import collect_standing
+    from golf_offshoot.honer_15m.decide import decide_ticket
+    from golf_offshoot.honer_15m.policy import FAMILY_SPREAD
+
+    books.record_action(
+        "search",
+        ticker="KXBTC15M-26SEP091415-15",
+        window_id="w",
+        action="fill",
+        reason="posted_yes below theta 0.81",
+        posted_yes=0.70,
+        theta=0.81,
+        close_at="2026-09-09T18:15:00Z",
+        spread=None,
+        delta=0.04,
+    )
+    row = collect_standing().search_rows[0]
+    assert row.spread is None
+    assert row.spread_text == "n/a"
+    assert row.delta_text == "4¢"
+    action, reason = decide_ticket(
+        0.70, 0.81, family=FAMILY_SPREAD, delta=0.04, spread=None
+    )
+    assert action == "fill"
+    assert "theta" in reason
+
+
+def test_clocks_and_spine_show_meter_without_restyle(honer_tmp):
+    from golf_offshoot.operator_surface.app import _clock_legend_html, _spine_html
+    from golf_offshoot.operator_surface.this_window import this_window_html
+
+    st = theta.load_theta()
+    st["theta"] = 0.81
+    st["last_declared_theta"] = 0.75
+    st["in_band_settled"] = 3
+    st["far_settled_since_freeze"] = 1
+    st["in_band_stable"] = 2
+    theta.save_theta(st)
+    clocks = _clock_legend_html()
+    assert "Honer freeze: 3/20 in-band" in clocks
+    assert "1 far ignored" in clocks
+    assert "moved 6¢ of 5¢" in clocks
+    assert "Quote bus:" in clocks
+    spine = _spine_html()
+    assert "Only tickets within 10¢ of the line move it." in spine
+    assert "Freeze counts only in-band tickets." in spine
+    assert "Factory — live 70" in spine
+    assert "Search may move a cutoff." in spine
+    books.record_action(
+        "search",
+        ticker="KXBTC15M-26SEP091400-00",
+        window_id="w",
+        action="fill",
+        reason="x",
+        posted_yes=0.48,
+        theta=0.81,
+        close_at="t",
+    )
+    now_html = this_window_html()
+    assert "not near the 81¢ line" in now_html
+    assert "$" not in now_html or "Actions only" in now_html
+    assert "combined" not in now_html.lower()
+
+
+def test_far_settles_cannot_freeze(honer_tmp):
+    st = theta.load_theta()
+    st["theta"] = 0.81
+    st["last_declared_theta"] = 0.75
+    theta.save_theta(st)
+    for _ in range(20):
+        theta.step_search_theta(action="fill", kalshi_result="no", posted_yes=0.48)
+    live = theta.load_theta()
+    live["stable_windows"] = 5
+    live["search_settled_since_freeze"] = 20
+    theta.save_theta(live)
+    live = theta.load_theta()
+    assert live["in_band_settled"] == 0
+    assert live["far_settled_since_freeze"] == 20
+    assert live["in_band_stable"] == 0
+    assert freeze.freeze_ready() is False
+
+
+def test_clip_streak_does_not_increment_on_far_at_clip(honer_tmp):
+    st = theta.load_theta()
+    st["theta"] = 0.90
+    st["clip_streak"] = 19
+    theta.save_theta(st)
+    live = theta.step_search_theta(action="fill", kalshi_result="no", posted_yes=0.48)
+    assert live["clip_streak"] == 19
+    assert live["far_settled_since_freeze"] == 1
+    assert live["in_band_settled"] == 0
+
+
+def test_in_band_migrate_keeps_theta_resets_clocks(honer_tmp):
+    import json
+
+    from golf_offshoot.honer_15m.paths import theta_path
+
+    payload = {
+        "theta": 0.81,
+        "last_declared_theta": 0.75,
+        "step_rule": "local_regret_v2",
+        "search_settled_since_freeze": 1,
+        "active_family": "H-SKIP-RICH-YES",
+        "delta": 0.04,
+    }
+    theta_path().write_text(json.dumps(payload), encoding="utf-8")
+    got = theta.load_theta()
+    assert got["theta"] == pytest.approx(0.81)
+    assert got["last_declared_theta"] == pytest.approx(0.75)
+    assert got["in_band_settled"] == 0
+    assert got["far_settled_since_freeze"] == 0
+    assert got["freeze_rule"] == "in_band_v1"
+
+
+def test_thin_quotes_do_not_advance_spread_family(honer_tmp):
+    from golf_offshoot.honer_15m.picker import maybe_advance
+    from golf_offshoot.honer_15m.policy import FAMILY_RICH
+
+    st = theta.load_theta()
+    st["clip_streak"] = 20
+    theta.save_theta(st)
+    _seed_search_quotes(n=20, with_spread=10)
+    out = maybe_advance()
+    assert out and out.get("waiting_on_quotes") is True
+    assert out.get("advanced") is False
+    assert theta.load_theta()["active_family"] == FAMILY_RICH
+
+
+def test_no_bus_does_not_http_or_write_live_15m(honer_tmp, monkeypatch, tmp_path):
+    import json
+
+    called = []
+
+    def boom(*_a, **_k):
+        called.append(1)
+        raise AssertionError("Kalshi fetch must not run")
+
+    monkeypatch.setattr("golf_offshoot.data_feeds.kalshi_15m.Kalshi15mFeed.fetch", boom)
+    src = (PKG / "loop.py").read_text(encoding="utf-8")
+    assert "Kalshi15mFeed" not in src
+    assert loop.fetch_markets() == []
+    assert called == []
+    live = tmp_path / LIVE_15M_NAME
+    live.mkdir()
+    marker = live / "ledger.json"
+    marker.write_text("keep", encoding="utf-8")
+    out = loop.run_tick()
+    assert out["http_fetches"] == 0
+    assert out["quote_bus_stale"] is True
+    assert marker.read_text(encoding="utf-8") == "keep"
+    from golf_offshoot.honer_15m.paths import last_tick_path
+
+    last = json.loads(last_tick_path().read_text(encoding="utf-8"))
+    assert last["http_fetches"] == 0
+    assert last["wrote_learning_lane_15m"] is False
+
+
+def test_can_keep_false_and_exam_label_is_not_keep():
+    from golf_offshoot.honer_15m.keep import can_keep, keep_blocked_reason
+
+    assert can_keep() is False
+    assert keep_blocked_reason() == "fee omitted"
+    assert score.classify_completed_exam([]) == "completed_dead"
+    assert "not a keep" in (score.classify_completed_exam.__doc__ or "").lower()
+
+
+def test_catalog_next_none_and_burned_id_rejected():
+    from golf_offshoot.honer_15m.catalog import CatalogError, _validate_item, next_family
+
+    assert next_family("H-SKIP-WIDE-SPREAD") is None
+    with pytest.raises(CatalogError):
+        _validate_item({"id": "FLIP", "declared_at": "2026-09-09T15:44:00-04:00", "activate": "start"}, index=1)
+
+
+def test_sidecar_cmdline_is_honer_not_shell():
+    from golf_offshoot.honer_15m.watch import honer_sidecar_command
+
+    cmd = honer_sidecar_command(executable="python")
+    assert "honer-15m" in cmd
+    assert "shell" not in cmd
+    honesty = Path(__file__).resolve().parents[1] / "src" / "golf_offshoot" / "learning_lane_15m" / "honesty.py"
+    trees_src = honesty.read_text(encoding="utf-8")
+    start = trees_src.find("def hub_trees")
+    body = trees_src[start : trees_src.find("\ndef ", start + 1)]
+    assert "honer-15m" not in body
+    assert " shell" in body
+
+
+def test_honer_png_has_near_spread_wide_columns():
+    from golf_offshoot.honer_15m.illustrate import COLUMNS
+
+    labels = [label.lower() for _k, _x, label in COLUMNS]
+    assert any("near line" in label for label in labels)
+    assert any(label == "spread" for label in labels)
+    assert any("wide-book" in label for label in labels)
+
+
+def test_maybe_render_rebuilds_when_theta_changes(honer_tmp, monkeypatch):
+    from golf_offshoot.honer_15m.illustrate import chart_png_path, maybe_render
+
+    png = chart_png_path()
+    png.write_bytes(b"old-png")
+    theta.save_theta(theta.load_theta())
+    called: list[int] = []
+
+    def fake_render():
+        called.append(1)
+        return png
+
+    monkeypatch.setattr("golf_offshoot.honer_15m.illustrate.render_honer_window_strip", fake_render)
+    maybe_render()
+    assert called == [1]
+
+
+def test_exam_idle_uses_freeze_meter(honer_tmp):
+    from golf_offshoot.honer_15m.hub_block import sandbox_html
+
+    html = sandbox_html()
+    assert "Exam idle." in html
+    assert "in-band" in html
+    assert "combined" not in html.lower()
+
+
+def test_invariants_not_on_factory_whitelist(honer_tmp):
+    from golf_offshoot.honer_15m.invariants import run_invariants
+    from golf_offshoot.learning_lane_15m.runner import CLERICAL_WHITELIST
+
+    loop.run_tick([])
+    payload = run_invariants()
+    assert payload["not_on_factory_whitelist"] is True
+    assert "honer-invariants" not in CLERICAL_WHITELIST
+    assert payload["passed"] is True

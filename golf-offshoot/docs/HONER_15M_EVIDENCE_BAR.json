@@ -22,5 +22,10 @@
   },
   "permutation_seed": 20260909,
   "delta_sd": "provisional; compute from sibling exam sample; do not copy live-bar 0.28 / 0.784",
-  "contrast": "d_i = 0 on exam fill; d_i = -fill_all_pnl on exam skip"
+  "contrast": "d_i = 0 on exam fill; d_i = -fill_all_pnl on exam skip",
+  "keep_lock": {
+    "can_keep": false,
+    "closed_while": ["fee_omitted", "binding != true", "founder_read_once != true", "lab_admits", "trading_armed"],
+    "classify_completed_exam_is_not_a_keep": true
+  }
 }

@@ -1,0 +1,31 @@
+{
+  "schema": 1,
+  "lane": "honer_15m",
+  "series": "KXBTC15M",
+  "declared_at": "2026-09-09T15:08:00-04:00",
+  "note": "Dated order. Picker does not sort this file from tape or pnl. Two families only.",
+  "items": [
+    {
+      "id": "H-SKIP-RICH-YES",
+      "family": "H-SKIP-RICH-YES",
+      "knob": "theta",
+      "start_theta": 0.75,
+      "theta_min": 0.55,
+      "theta_max": 0.90,
+      "step": 0.02,
+      "activate": "start",
+      "declared_at": "2026-09-09T15:08:00-04:00"
+    },
+    {
+      "id": "H-SKIP-WIDE-SPREAD",
+      "family": "H-SKIP-WIDE-SPREAD",
+      "knob": "delta",
+      "start_delta": 0.04,
+      "delta_min": 0.02,
+      "delta_max": 0.12,
+      "step": 0.01,
+      "activate": "clip_exhaustion+quote_quality_ok",
+      "declared_at": "2026-09-09T15:44:00-04:00"
+    }
+  ]
+}

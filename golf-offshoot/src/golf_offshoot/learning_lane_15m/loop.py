@@ -102,10 +102,12 @@ def settle_join(
 
 def run_loop(*, refresh: bool = True, feed: Kalshi15mFeed | None = None) -> dict[str, Any]:
     """End-to-end paper observation loop against public KXBTC15M windows."""
-    ingested = ingest(refresh=refresh, feed=feed)
     live_state = live(refresh=refresh, feed=feed)
-    markets = live_state.get("markets") or ingested.get("markets") or []
-    events = live_state.get("events") or ingested.get("events") or []
+    from golf_offshoot.quote_bus import publish as publish_quote_bus
+
+    bus = publish_quote_bus(live_state)
+    markets = live_state.get("markets") or []
+    events = live_state.get("events") or []
     paper = paper_autobet(markets)
     joined = settle_join(markets, events)
     export_paths = write_observability_exports(markets=markets)
@@ -114,11 +116,12 @@ def run_loop(*, refresh: bool = True, feed: Kalshi15mFeed | None = None) -> dict
         "series": PRIMARY_SERIES,
         "banner": OBSERVATION_BANNER,
         "trading_armed": False,
-        "ingest": ingested,
+        "ingest": live_state,
         "live": live_state,
         "paper_autobet": paper,
         "settle_join": joined,
         "observability_export": export_paths,
+        "quote_bus": {"fetch_id": bus.get("fetch_id"), "fetched_at": bus.get("fetched_at")},
     }
 
 

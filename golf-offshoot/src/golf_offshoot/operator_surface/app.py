@@ -84,7 +84,7 @@ SLOT_PLAIN_HELP = {
 #: ``modes``/``runner``; the page says it once, quietly, instead of on every card.
 HARD_NO_STRIP = (
     f"Trading {NOT_ARMED} · {PAPER_ONLY} · {AI_NO_CASH} — {CASH_BADGE} · "
-    "no Kalshi account, key, or wallet scope"
+    "no Kalshi account, key, or wallet scope · do not add honer bankrolls to Lineage A"
 )
 
 #: (POST action value, button label, one-line help). POST values stay unchanged.
@@ -253,8 +253,10 @@ CHART_15M_PLAIN = (
 )
 CHART_15M_SUB = (
     "Read-only PNG rendered from settlements/*.json, latest/journal.json and paper/*.json in "
-    "learning_lane_15m. No bankroll, payout or PnL is drawn. Not a golf WC1 / Ill board."
+    "learning_lane_15m. PAPER PNL is that window's own recorded figure on Lineage A only. "
+    "Not a golf WC1 / Ill board. Not a combined bankroll."
 )
+#: Honer board is a sibling block on this lane, not a third parse_lane.
 CHART_15M_MISSING = (
     "15m chart not yet available. The Illustrator regenerates it from the join files; nothing is "
     "drawn in its place. No golf WC1 / Ill here."
@@ -272,6 +274,184 @@ def _chart_15m_path() -> Path | None:
     except Exception:
         return None
     return path if path.is_file() else None
+
+
+def _chart_honer_path() -> Path | None:
+    try:
+        from golf_offshoot.honer_15m.illustrate import maybe_render
+
+        path = maybe_render()
+    except Exception:
+        try:
+            from golf_offshoot.honer_15m.paths import board_png_path
+
+            path = board_png_path()
+        except Exception:
+            return None
+    return path if path is not None and path.is_file() else None
+
+
+def _bold_stars(text: str) -> str:
+    out = html.escape(text)
+    while "**" in out:
+        out = out.replace("**", "<strong>", 1).replace("**", "</strong>", 1)
+    return out
+
+
+def _spine_html() -> str:
+    return (
+        '<section class="panel spine" id="spine">'
+        "<h2>Two boxes — two books — two counters</h2>"
+        '<p class="help">Neither book is a keep. Trading NOT ARMED. Do not add bankrolls.</p>'
+        '<div class="spine-grid">'
+        '<div class="spine-box">'
+        "<h3>Factory — live 70</h3>"
+        "<p>Paper diary of YES tickets under the executing selection rule. "
+        "Named baseline is the comparison, not a second live brain. "
+        "Not scored. Not bound. Not a keep.</p>"
+        '<p><a href="#factory">Jump to factory</a></p>'
+        "</div>"
+        '<div class="spine-box">'
+        "<h3>Honer — sibling</h3>"
+        "<p>Own root, own money, own k. Search may move a cutoff. "
+        "Only tickets within 10¢ of the line move it. "
+        "Freeze counts only in-band tickets. "
+        "Exam is a later frozen test. Never a keep. Do not add to factory.</p>"
+        '<p><a href="#honer">Jump to honer</a></p>'
+        "</div>"
+        "</div>"
+        "</section>"
+    )
+
+
+def _clock_legend_html() -> str:
+    from golf_offshoot.localtime import format_eastern, now
+
+    rendered = html.escape(format_eastern(now()))
+    factory_bit = "Factory PaperWatch: unavailable"
+    honer_bit = "Honer watch: unavailable"
+    journal_bit = "Factory journal: n/a"
+    factory_png = "Lineage A PNG: n/a"
+    honer_png = "Honer PNG: n/a"
+    meter_bit = ""
+    bus_bit = ""
+    sidecar_bit = ""
+    try:
+        from golf_offshoot.learning_lane_15m.standing import factory_watch_clock
+
+        clock = factory_watch_clock()
+        stale = " stale" if clock.get("stale") else ""
+        on = "on" if clock.get("running") else "off"
+        factory_bit = (
+            f"Factory PaperWatch: {on}{stale} · last {clock.get('last') or 'n/a'} · "
+            f"{clock.get('at') or 'n/a'}"
+        )
+        journal_bit = f"Factory journal: {clock.get('journal_at') or 'n/a'}"
+        factory_png = f"Lineage A PNG: {clock.get('png_mtime') or 'n/a'} (one open window of trail is allowed)"
+    except Exception:
+        pass
+    try:
+        from golf_offshoot.honer_15m.board import freeze_meter, watch_clock
+
+        clock = watch_clock()
+        stale = " stale" if clock.get("stale") else ""
+        on = "on" if clock.get("running") else "off"
+        honer_bit = (
+            f"Honer watch: {on}{stale} · last {clock.get('last') or 'n/a'} · "
+            f"{clock.get('at') or 'n/a'}"
+        )
+        honer_png = f"Honer PNG: {clock.get('png_mtime') or 'n/a'}"
+        meter_bit = freeze_meter()
+        sidecar_on = "on" if clock.get("running") and not clock.get("stale") else "stale"
+        sidecar_bit = (
+            f"Honer sidecar: {sidecar_on} · pid {clock.get('pid') or 'n/a'}"
+        )
+    except Exception:
+        pass
+    try:
+        from golf_offshoot.quote_bus import clock_line
+
+        bus_bit = clock_line()
+    except Exception:
+        bus_bit = "Quote bus: missing — honer waits; does not fetch"
+    meter_p = f"<p>{html.escape(meter_bit)}</p>" if meter_bit else ""
+    bus_p = f"<p>{html.escape(bus_bit)}</p>" if bus_bit else ""
+    sidecar_p = f"<p>{html.escape(sidecar_bit)}</p>" if sidecar_bit else ""
+    return (
+        '<section class="panel clocks" id="clocks">'
+        "<h2>Clocks</h2>"
+        f"<p>Page rendered at {rendered}.</p>"
+        f"<p>{html.escape(factory_bit)}</p>"
+        f"<p>{html.escape(honer_bit)}</p>"
+        f"{sidecar_p}"
+        f"{meter_p}"
+        f"{bus_p}"
+        f"<p>{html.escape(journal_bit)}</p>"
+        f"<p>{html.escape(factory_png)}</p>"
+        f"<p>{html.escape(honer_png)}</p>"
+        "</section>"
+    )
+
+
+def _factory_standing_html() -> str:
+    try:
+        from golf_offshoot.learning_lane_15m.standing import collect_factory_standing
+
+        standing = collect_factory_standing()
+    except Exception as exc:
+        return f'<p class="missing">Factory standing unavailable ({html.escape(str(exc))}).</p>'
+    keep = f'<p class="loud">{html.escape(standing.not_a_keep)}</p>' if standing.not_a_keep else ""
+    return (
+        '<div class="standing">'
+        "<h3>What it is</h3>"
+        f"<p>{_bold_stars(standing.what_it_is)}</p>"
+        "<h3>Where it stands</h3>"
+        f"<p>{_bold_stars(standing.where_it_stands)}</p>"
+        "<h3>Last thing that happened</h3>"
+        f"<p>{_bold_stars(standing.last_happened)}</p>"
+        "<h3>This book's money</h3>"
+        f"<p>{html.escape(standing.this_book)}</p>"
+        f"{keep}"
+        "</div>"
+    )
+
+
+def _honer_viz_html() -> str:
+    path = _chart_honer_path()
+    if path is None:
+        return (
+            '<p class="missing">Honer chart not yet available. '
+            "Rendered from honer files only. Nothing is invented in its place.</p>"
+        )
+    try:
+        cache = int(path.stat().st_mtime)
+    except OSError:
+        cache = 0
+    src = f"/viz-honer/honer_window_strip.png?t={cache}"
+    title = "KXBTC15M honer search and exam board"
+    badges = "".join(
+        f'<span class="badge">{html.escape(text)}</span>'
+        for text in ("HONER SIBLING", PAPER_ONLY, AI_NO_CASH)
+    )
+    return (
+        '<div class="viz-wall">'
+        '<section class="viz wide" id="viz-slot-honer-window-strip">'
+        f"<h3>{html.escape(title)}</h3>"
+        f'<div class="badge-row">{badges}</div>'
+        "<p class=\"plain\">Search block above exam block. Skips are rows. Books do not merge.</p>"
+        "<p class=\"sub\">Local honer PNG from golf-offshoot/data/honer_15m. "
+        "Not Lineage A. Not published to Pages.</p>"
+        "<figure>"
+        f'<a class="zoom" href="{src}" data-viz-zoom="1" data-viz-title="{html.escape(title)}" '
+        f'aria-label="Enlarge {html.escape(title)}">'
+        f'<img src="{src}" alt="{html.escape(title)} — read-only board" width="1700"/>'
+        '<span class="zoom-hint">Click to enlarge</span>'
+        "</a>"
+        '<figcaption><span class="src">Source: honer_15m search/exam files · click to enlarge</span></figcaption>'
+        "</figure>"
+        "</section>"
+        "</div>"
+    )
 
 
 def _window_rows_15m() -> list:
@@ -339,7 +519,7 @@ def _learning_card_html() -> str:
         body = f"<pre>{html.escape(path.read_text(encoding='utf-8', errors='replace'))}</pre>"
     return (
         '<section class="learning-card">'
-        "<h2>What is on trial</h2>"
+        "<h2>What is on trial (registry proof)</h2>"
         f"{body}"
         "</section>"
     )
@@ -499,10 +679,11 @@ def render_html(surface: dict) -> str:
     lane_line = f"Active lane: {lane_header_name(lane)}"
     if lane == LANE_15M:
         lane_line = f"{lane_line} — LEARNING LANE"
-        viz_wall = _learning_card_html() + _viz_wall_15m_html()
-        # The 15m board carries its own overlay. Deriving it from the golf viz wall
-        # left this lane with no lightbox at all whenever golf had no chart on disk.
-        viz_lightbox = _lightbox_html(_chart_15m_path() is not None)
+        viz_wall = _viz_wall_15m_html()
+        # Lightbox if either factory or honer PNG exists.
+        viz_lightbox = _lightbox_html(
+            _chart_15m_path() is not None or _chart_honer_path() is not None
+        )
         watch = load_watch_status()
         watch_bit = "WATCH ON" if watch.get("running") else "WATCH OFF"
         settle_banner = (
@@ -564,32 +745,58 @@ def render_html(surface: dict) -> str:
         last_block = (
             f"<h3>Last operator cycle</h3><pre>{last_html}</pre>"
             if last
-            else "<p class=\"help\">No operator cycle in this shell session yet. Journal below is from disk.</p>"
+            else "<p class=\"help\">No operator cycle in this shell session yet. Journal is from disk.</p>"
         )
         paper_html = ""
         try:
             from golf_offshoot.honer_15m.hub_block import sandbox_html
+            from golf_offshoot.operator_surface.this_window import this_window_html
 
-            honer_block = sandbox_html()
+            honer_block = sandbox_html(extra_html=_honer_viz_html())
+            now_strip = this_window_html()
         except Exception:
             honer_block = (
-                '<section class="panel honer-sandbox">'
+                '<section class="panel honer-sandbox" id="honer">'
                 "<h2>honer_15m sandbox</h2>"
-                '<p class="help">honer_15m sandbox unavailable this render. Live 15m journal is unchanged.</p>'
+                '<p class="help">honer_15m sandbox unavailable this render. Live 15m journal is unchanged. '
+                "Do not add honer bankrolls to Lineage A.</p>"
                 "</section>"
             )
-        lane_body = (
-            '<section class="panel">'
-            "<h2>15-min Kalshi journal</h2>"
+            now_strip = ""
+        factory_box = (
+            '<section class="panel factory-box" id="factory">'
+            "<h2>Factory — live 70</h2>"
+            f'<p class="help">{html.escape(charts_help)}</p>'
+            f"{_factory_standing_html()}"
+            f"{viz_wall}"
+            "<details class=\"proof\">"
+            "<summary>Registry and source log</summary>"
+            f"{_learning_card_html()}"
+            "<h3>Journal</h3>"
+            f"<pre>{journal_board}</pre>"
+            "</details>"
+            "</section>"
+        )
+        extras = (
+            '<section class="panel" id="extras">'
+            "<h2>Operator extras</h2>"
+            '<p class="help">Watch is already looping this lane. Buttons are extras. '
+            "paper autobet is paper observation only. No golf WC1 here.</p>"
+            f"{actions}"
+            f"{last_block}"
             '<p class="help">'
             '<a href="https://swellbear.github.io/gated-formalization/observability-hub/">'
             "Public observability hub</a></p>"
-            f"{last_block}"
-            "<h3>Journal</h3>"
-            f"<pre>{journal_board}</pre>"
             "</section>"
-            + honer_block
         )
+        nav = (
+            '<nav class="jump">'
+            '<a href="#factory">Factory</a>'
+            '<a href="#honer">Honer</a>'
+            '<a href="#extras">Extras</a>'
+            "</nav>"
+        )
+        lane_body = nav + _spine_html() + _clock_legend_html() + now_strip + factory_box + honer_block + extras
     else:
         lane_body = (
             '<section class="panel">'
@@ -618,6 +825,27 @@ def render_html(surface: dict) -> str:
             '<p class="help">Re-fitted weights are stored, not used, while the recommendation stays keep_expert. '
             "Edge is not established.</p>"
             f"<pre>{calib}</pre>"
+            "</section>"
+        )
+    if lane == LANE_15M:
+        main_top = ""
+    else:
+        main_top = (
+            '<section class="panel">'
+            "<h2>Charts first — read-only chart wall</h2>"
+            f'<p class="help">{html.escape(charts_help)}</p>'
+            f"{viz_wall}"
+            "</section>"
+            '<section class="panel">'
+            "<h2>What you can do here</h2>"
+            f'<p class="help">Five buttons. Trading is {html.escape(NOT_ARMED)}. '
+            f"Paper bankroll auto-apply is {html.escape(PAPER_ONLY)} — not trading armed. "
+            "No deposit, withdraw, transfer, cash-out, or one-tap bet control exists on this page.</p>"
+            f"{actions}"
+            "</section>"
+            '<section class="panel">'
+            "<h2>What the last run did</h2>"
+            f"<pre>{last_html}</pre>"
             "</section>"
         )
     return f"""<!DOCTYPE html>
@@ -660,6 +888,25 @@ def render_html(surface: dict) -> str:
  .panel .help {{ font-size: 13px; color: #4a4a4a; margin: 6px 0 10px; }}
  ul.help {{ font-size: 13px; color: #4a4a4a; margin: 6px 0 0; padding-left: 20px; }}
  .loud {{ font-weight: 700; margin: 6px 0; }}
+ nav.jump {{ display: flex; gap: 16px; margin: 12px 0 0; font-size: 14px; }}
+ nav.jump a {{ color: #1f3b4d; font-weight: 700; }}
+ .spine-grid {{ display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }}
+ .spine-box {{ border: 1px solid #1f3b4d; padding: 10px 12px; background: #f4f1ea; }}
+ .spine-box h3 {{ margin: 0 0 6px; font-size: 16px; }}
+ .standing h3 {{ margin: 12px 0 4px; font-size: 16px; color: #1f3b4d; }}
+ .standing p {{ font-size: 15px; line-height: 1.45; margin: 0 0 8px; }}
+ ul.happened {{ font-size: 14px; line-height: 1.45; }}
+ .honer-table-wrap {{ overflow-x: auto; }}
+ table.honer-board {{ border-collapse: collapse; width: 100%; font-size: 13px; }}
+ table.honer-board th {{ text-align: left; background: #1f3b4d; color: #fff; padding: 6px 8px; }}
+ table.honer-board td {{ border-bottom: 1px solid #c9c2b2; padding: 6px 8px; vertical-align: top; }}
+ table.honer-board tr:nth-child(even) td {{ background: #f4f1ea; }}
+ table.honer-board td.src {{ font-size: 11px; color: #4a4a4a; }}
+ details.proof {{ margin-top: 14px; border: 1px solid #c9c2b2; padding: 8px 10px; }}
+ details.proof summary {{ cursor: pointer; font-weight: 700; color: #1f3b4d; }}
+ .this-window {{ font-size: 14px; }}
+ .this-window-panel ul {{ font-size: 15px; line-height: 1.5; }}
+ @media (max-width: 800px) {{ .spine-grid {{ grid-template-columns: 1fr; }} }}
  .viz-wall {{ display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 16px; }}
  .viz {{ margin: 0; padding: 12px; background: #fff; border: 1px solid #c9c2b2; }}
  .viz h3 {{ margin: 0 0 6px; font-size: 17px; }}
@@ -698,20 +945,7 @@ def render_html(surface: dict) -> str:
 </header>
 {settle_banner}
 <main>
-  <section class="panel">
-    <h2>Charts first — read-only chart wall</h2>
-    <p class="help">{html.escape(charts_help)}</p>
-    {viz_wall}
-  </section>
-  <section class="panel">
-    <h2>What you can do here</h2>
-    <p class="help">{"Watch is already looping this lane. Buttons are extras." if lane == LANE_15M else f"Five buttons. Trading is {html.escape(NOT_ARMED)}. Paper bankroll auto-apply is {html.escape(PAPER_ONLY)} — not trading armed. No deposit, withdraw, transfer, cash-out, or one-tap bet control exists on this page."}</p>
-    {actions}
-  </section>
-  <section class="panel">
-    <h2>What the last run did</h2>
-    <pre>{last_html}</pre>
-  </section>
+  {main_top}
   {paper_html}
   {lane_body}
 </main>
@@ -826,6 +1060,15 @@ class OperatorHandler(BaseHTTPRequestHandler):
             return
         if parsed.path == "/viz15/paper_window_strip.png":
             from golf_offshoot.learning_lane_15m.illustrate import chart_png_path
+
+            path = chart_png_path()
+            if path.is_file():
+                self._send(200, "image/png", path.read_bytes())
+            else:
+                self._send(404, "text/plain; charset=utf-8", b"not yet available\n")
+            return
+        if parsed.path == "/viz-honer/honer_window_strip.png":
+            from golf_offshoot.honer_15m.illustrate import chart_png_path
 
             path = chart_png_path()
             if path.is_file():
@@ -1023,21 +1266,24 @@ def _sync_paper_watch(state: dict) -> None:
 
 
 def _sync_honer_watch(state: dict, *, running: bool) -> None:
-    """Second thread. Own root. Exceptions stay inside honer_15m.watch."""
-    honer = state.get("honer_watch")
-    if honer is None:
-        from golf_offshoot.honer_15m.watch import HonerWatch
+    """Sidecar process. Own root. Exceptions stay inside honer_15m.watch."""
+    from golf_offshoot.honer_15m.watch import start_sidecar_process, stop_sidecar_process
 
-        honer = HonerWatch()
-        state["honer_watch"] = honer
     if running:
-        honer.start()
+        state["honer_sidecar"] = start_sidecar_process(existing=state.get("honer_sidecar"))
     else:
-        honer.stop_watch()
+        stop_sidecar_process(state.get("honer_sidecar"))
+        state["honer_sidecar"] = None
 
 
 def rebuild_surface(state: dict, *, last_run: RunRecord | None | object = ...) -> None:
     keep = state["surface"].get("last_run") if last_run is ... else last_run
+    try:
+        from golf_offshoot.two_brains import sync as sync_two_brains
+
+        sync_two_brains()
+    except Exception:
+        pass
     state["surface"] = build_surface(
         event_id=state.get("event_id") or None,
         artifact_root=state.get("artifact_root"),
@@ -1166,6 +1412,10 @@ def run_http_server(
     finally:
         stop.set()
         httpd.server_close()
+        try:
+            _sync_honer_watch(state, running=False)
+        except Exception:
+            pass
     if state.get("reload_kind") == "code":
         return REEXEC_CODE
     return 0

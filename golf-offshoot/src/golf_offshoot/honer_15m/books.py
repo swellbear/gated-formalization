@@ -79,6 +79,10 @@ def record_action(
     posted_yes: float,
     theta: float,
     close_at: str,
+    exam_k: int | None = None,
+    family: str | None = None,
+    delta: float | None = None,
+    spread: float | None = None,
 ) -> dict[str, Any]:
     if has_ticket(book, ticker):
         return load_decisions(book)[ticker]
@@ -89,6 +93,9 @@ def record_action(
         "reason": reason,
         "posted_yes": posted_yes,
         "theta": theta,
+        "family": family,
+        "delta": delta,
+        "spread": spread,
         "stake": STAKE if action == "fill" else 0.0,
         "close_at": close_at,
         "kalshi_result": "",
@@ -102,6 +109,14 @@ def record_action(
         "entry_edge": 0.0,
         "fee_omitted": True,
     }
+    if book == "exam":
+        if exam_k is None:
+            from golf_offshoot.honer_15m.freeze import load_exam_state, load_trials
+
+            exam_k = int(
+                (load_exam_state().get("k_after") or load_trials().get("trials_to_date") or 0)
+            )
+        row["exam_k"] = int(exam_k)
     dest = paper_path(book, ticker)
     assert_honer_path(dest)
     dest.write_text(json.dumps(row, indent=2), encoding="utf-8")
@@ -143,7 +158,7 @@ def apply_settle(
         return row, False
     result = str(kalshi_result).strip().lower()
     if result not in {"yes", "no"}:
-        return row
+        return row, False
     posted = float(row["posted_yes"])
     baseline = fill_all_pnl(posted, result)
     if row["action"] == "fill":
@@ -170,7 +185,14 @@ def apply_settle(
     if step_theta:
         from golf_offshoot.honer_15m.theta import step_search_theta
 
-        step_search_theta(action=str(row["action"]), kalshi_result=result)
+        spread = row.get("spread")
+        spread_f = float(spread) if spread is not None else None
+        step_search_theta(
+            action=str(row["action"]),
+            kalshi_result=result,
+            posted_yes=posted,
+            spread=spread_f,
+        )
     return row, True
 
 

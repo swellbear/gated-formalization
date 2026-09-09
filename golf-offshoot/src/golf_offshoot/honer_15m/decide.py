@@ -2,6 +2,8 @@
 
 from __future__ import annotations
 
+from golf_offshoot.honer_15m.policy import FAMILY_SPREAD
+
 
 def posted_mark(market: dict) -> float | None:
     mark = market.get("paper_mark")
@@ -16,7 +18,35 @@ def posted_mark(market: dict) -> float | None:
     return yes_f
 
 
+def market_spread(market: dict) -> float | None:
+    try:
+        bid = market.get("yes_bid")
+        ask = market.get("yes_ask")
+        if bid is None or ask is None:
+            return None
+        spread = float(ask) - float(bid)
+    except (TypeError, ValueError):
+        return None
+    if spread < 0:
+        return None
+    return spread
+
+
 def decide_yes_or_skip(posted_yes: float, theta: float) -> tuple[str, str]:
     if float(posted_yes) >= float(theta):
         return "skip", f"posted_yes >= theta {theta:g}"
     return "fill", f"posted_yes below theta {theta:g}"
+
+
+def decide_ticket(
+    posted_yes: float,
+    theta: float,
+    *,
+    family: str,
+    delta: float,
+    spread: float | None,
+) -> tuple[str, str]:
+    """Spread is a skip gate only. Missing bid/ask → richness line only. Never buy NO."""
+    if str(family) == FAMILY_SPREAD and spread is not None and float(spread) >= float(delta):
+        return "skip", f"spread {spread:g} >= delta {delta:g}"
+    return decide_yes_or_skip(posted_yes, theta)

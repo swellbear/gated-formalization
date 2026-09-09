@@ -1,11 +1,14 @@
-"""Honer watch thread. Must not raise into the hub. Not PaperWatch."""
+"""Honer sidecar watch. Own process. Own re-exec. Not PaperWatch. Not a second hub."""
 
 from __future__ import annotations
 
 import json
 import os
+import subprocess
+import sys
 import threading
 import time
+from pathlib import Path
 from typing import Any
 
 from golf_offshoot.honer_15m.loop import run_tick
@@ -15,6 +18,10 @@ from golf_offshoot.localtime import now
 DEFAULT_INTERVAL_S = 90.0
 FIRST_SLEEP_S = 45.0
 ENV_INTERVAL = "GOLF_OFFSHOOT_HONER_WATCH_S"
+HONER_CHILD_ENV = "GOLF_OFFSHOOT_HONER_CHILD"
+REEXEC_CODE = 75
+PKG = Path(__file__).resolve().parent
+DOCS = Path(__file__).resolve().parents[3] / "docs"
 
 
 def honer_interval_s(override: float | None = None) -> float:
@@ -28,23 +35,116 @@ def honer_interval_s(override: float | None = None) -> float:
     return parsed if parsed > 0 else DEFAULT_INTERVAL_S
 
 
+def honer_sidecar_command(*, executable: str | None = None) -> list[str]:
+    return [executable or sys.executable, "-m", "golf_offshoot", "honer-15m", "--watch"]
+
+
+def is_honer_child(environ: dict[str, str] | None = None) -> bool:
+    env = os.environ if environ is None else environ
+    return (env.get(HONER_CHILD_ENV) or "").strip() == "1"
+
+
 def load_watch_status() -> dict[str, Any]:
     path = watch_status_path()
     if not path.is_file():
         return {"running": False, "cycles": 0, "lane": "honer_15m"}
     try:
-        return json.loads(path.read_text(encoding="utf-8"))
+        payload = json.loads(path.read_text(encoding="utf-8"))
     except (OSError, ValueError):
         return {"running": False, "cycles": 0, "lane": "honer_15m"}
+    return payload if isinstance(payload, dict) else {"running": False, "cycles": 0, "lane": "honer_15m"}
 
 
 def _write_status(payload: dict[str, Any]) -> None:
     path = watch_status_path()
+    existing = load_watch_status()
+    existing.update(payload)
+    existing["lane"] = "honer_15m"
+    existing["at"] = now().isoformat()
     assert_honer_path(path)
-    path.write_text(json.dumps(payload, indent=2), encoding="utf-8")
+    path.write_text(json.dumps(existing, indent=2), encoding="utf-8")
+
+
+def _honer_watch_files() -> list[Path]:
+    files = sorted(p for p in PKG.glob("*.py") if p.is_file())
+    for name in ("HONER_15M_RULES.json", "HONER_15M_CATALOG.json"):
+        path = DOCS / name
+        if path.is_file():
+            files.append(path)
+    return files
+
+
+def honer_code_mtime() -> float:
+    newest = 0.0
+    for path in _honer_watch_files():
+        try:
+            newest = max(newest, path.stat().st_mtime)
+        except OSError:
+            continue
+    return newest
+
+
+def pid_alive(pid: int) -> bool:
+    if int(pid or 0) <= 0:
+        return False
+    try:
+        import psutil
+
+        return bool(psutil.pid_exists(int(pid)))
+    except Exception:
+        try:
+            os.kill(int(pid), 0)
+        except OSError:
+            return False
+        return True
+
+
+def sidecar_pid_is_honer(pid: int) -> bool:
+    if not pid_alive(pid):
+        return False
+    try:
+        import psutil
+
+        proc = psutil.Process(int(pid))
+        line = " ".join(str(a) for a in (proc.cmdline() or []))
+        return "honer-15m" in line and "shell" not in line.split()
+    except Exception:
+        return True
+
+
+def stop_pid(pid: int) -> None:
+    if int(pid or 0) <= 0:
+        return
+    try:
+        import psutil
+
+        proc = psutil.Process(int(pid))
+        kids = proc.children(recursive=True)
+        proc.terminate()
+        for child in kids:
+            try:
+                child.terminate()
+            except Exception:
+                pass
+        gone, alive = psutil.wait_procs([proc, *kids], timeout=3)
+        del gone
+        for child in alive:
+            try:
+                child.kill()
+            except Exception:
+                pass
+        return
+    except Exception:
+        pass
+    try:
+        os.kill(int(pid), 15)
+    except OSError:
+        return
 
 
 class HonerWatch:
+    """Inner tick loop. Runs inside the sidecar child, not inside 8765."""
+
     def __init__(self, *, interval_s: float | None = None, first_sleep_s: float = FIRST_SLEEP_S) -> None:
         self.interval_s = honer_interval_s(interval_s)
         self.first_sleep_s = float(first_sleep_s)
@@ -74,8 +174,7 @@ class HonerWatch:
                 "interval_s": self.interval_s,
                 "last_error": error or self.last_error,
                 "last_summary": self.last_summary,
-                "lane": "honer_15m",
-                "at": now().isoformat(),
+                "sidecar": True,
             }
         )
 
@@ -102,15 +201,92 @@ class HonerWatch:
             self._stop.wait(self.interval_s)
 
 
+def _run_child_loop(*, interval_s: float | None = None) -> int:
+    watch = HonerWatch(interval_s=interval_s)
+    watch.start()
+    last = honer_code_mtime()
+    try:
+        while True:
+            time.sleep(2.0)
+            now_m = honer_code_mtime()
+            if now_m > last + 1e-6:
+                watch.stop_watch()
+                return REEXEC_CODE
+    except KeyboardInterrupt:
+        watch.stop_watch()
+        return 0
+
+
+def supervise_honer_child(*, interval_s: float | None = None) -> int:
+    cmd = honer_sidecar_command()
+    env = dict(os.environ)
+    env[HONER_CHILD_ENV] = "1"
+    _write_status({"running": True, "pid": os.getpid(), "sidecar": True, "role": "supervisor"})
+    while True:
+        try:
+            completed = subprocess.run(cmd, env=env, check=False)
+        except KeyboardInterrupt:
+            _write_status({"running": False})
+            return 0
+        code = int(getattr(completed, "returncode", completed) or 0)
+        if code != REEXEC_CODE:
+            _write_status({"running": False, "last_error": f"child exit {code}" if code else ""})
+            return code
+        _write_status({"running": True, "pid": os.getpid(), "sidecar": True, "reexec": True})
+
+
 def run_watch_forever(*, interval_s: float | None = None, once: bool = False) -> int:
     if once:
         run_tick()
+        try:
+            from golf_offshoot.honer_15m.invariants import format_invariants, run_invariants
+
+            print(format_invariants(run_invariants()))
+        except Exception:
+            pass
         return 0
-    watch = HonerWatch(interval_s=interval_s)
-    watch.start()
-    try:
-        while True:
-            time.sleep(3600)
-    except KeyboardInterrupt:
-        watch.stop_watch()
-    return 0
+    if is_honer_child():
+        return _run_child_loop(interval_s=interval_s)
+    return supervise_honer_child(interval_s=interval_s)
+
+
+def start_sidecar_process(
+    *,
+    existing: subprocess.Popen[Any] | None = None,
+    env: dict[str, str] | None = None,
+) -> subprocess.Popen[Any] | None:
+    if existing is not None and existing.poll() is None:
+        return existing
+    status = load_watch_status()
+    pid = int(status.get("pid") or 0)
+    if sidecar_pid_is_honer(pid):
+        return existing
+    child_env = dict(os.environ if env is None else env)
+    kwargs: dict[str, Any] = {}
+    if os.name == "nt":
+        kwargs["creationflags"] = subprocess.CREATE_NEW_PROCESS_GROUP
+    else:
+        kwargs["start_new_session"] = True
+    proc = subprocess.Popen(honer_sidecar_command(), env=child_env, **kwargs)
+    _write_status({"running": True, "pid": proc.pid, "sidecar": True, "role": "hub-launched"})
+    return proc
+
+
+def stop_sidecar_process(proc: subprocess.Popen[Any] | None) -> None:
+    pid = 0
+    if proc is not None and proc.poll() is None:
+        pid = int(proc.pid)
+    if not pid:
+        pid = int(load_watch_status().get("pid") or 0)
+    if pid:
+        stop_pid(pid)
+    if proc is not None and proc.poll() is None:
+        try:
+            proc.terminate()
+            proc.wait(timeout=3)
+        except Exception:
+            try:
+                proc.kill()
+            except Exception:
+                pass
+    _write_status({"running": False})

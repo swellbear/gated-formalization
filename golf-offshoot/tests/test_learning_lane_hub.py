@@ -127,6 +127,10 @@ def test_desktop_shell_html_has_lane_selector_and_hides_golf_viz_on_15m(tmp_path
     assert "KXBTC15M" in page
     assert "paper autobet" in page.lower()
     assert "No golf WC1" in page
+    assert "Two boxes" in page
+    assert "Factory — live 70" in page
+    assert 'id="honer"' in page
+    assert "This window" in page
     assert 'name="deposit"' not in page
     assert 'name="withdraw"' not in page
     assert "lane=learning_lane_15m" in text

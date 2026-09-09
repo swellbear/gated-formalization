@@ -45,6 +45,19 @@ def should_check_futility(n: int) -> bool:
     return n in {int(x) for x in load_policy()["futility_looks"]}
 
 
+def classify_completed_exam(rows: list[dict[str, Any]] | None = None) -> str:
+    """End-of-70 give-up label. Not a score. Not Established. Not a keep."""
+    sums = exam_sums(rows)
+    n = int(sums["n"])
+    if n <= 0:
+        return "completed_dead"
+    mean_d = float(sums["d_sum"]) / n
+    mean_pnl = float(sums["exam_pnl_sum"]) / n
+    if mean_d <= 0.0 or mean_pnl <= 0.0:
+        return "completed_dead"
+    return "completed_unscored"
+
+
 def mean_and_sd(values: list[float]) -> tuple[float, float]:
     if not values:
         return (0.0, 0.0)

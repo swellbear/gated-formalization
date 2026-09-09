@@ -1,53 +1,160 @@
-"""8765 sandbox copy. No combined bankroll. No winner vs Lineage A."""
+"""8765 honer panel. No combined bankroll. No winner vs Lineage A."""
 
 from __future__ import annotations
 
 import html
 
-from golf_offshoot.honer_15m.books import load_ledger
-from golf_offshoot.honer_15m.freeze import load_exam_state
-from golf_offshoot.honer_15m.theta import load_theta
-from golf_offshoot.honer_15m.watch import load_watch_status
-
-NEAR_2TO1 = 2.0 / 3.0
+from golf_offshoot.honer_15m.board import HonerRow, HonerStanding, collect_standing
 
 
-def sandbox_html() -> str:
-    theta = load_theta()
-    search = load_ledger("search")
-    exam_led = load_ledger("exam")
-    exam = load_exam_state()
-    watch = load_watch_status()
-    th = float(theta.get("theta") or 0)
-    near = abs(th - NEAR_2TO1) < 0.02
-    label = (
-        f"θ={th:.3f} (near live 2/3 — this is the honer book, not a retune of R-SKIP-2TO1-FAVORITE)"
-        if near
-        else f"θ={th:.3f}"
+def _bold_stars(text: str) -> str:
+    out = html.escape(text)
+    while "**" in out:
+        out = out.replace("**", "<strong>", 1).replace("**", "</strong>", 1)
+    return out
+
+
+def _search_table(rows: list[HonerRow]) -> str:
+    if not rows:
+        return "<p class=\"help\">Honer has not taken a search window yet.</p>"
+    head = (
+        "<thead><tr>"
+        "<th>Ticker</th><th>Window ET</th><th>Action</th><th>Posted YES</th>"
+        "<th>Cutoff</th><th>Near line</th><th>Spread</th><th>Wide-book</th>"
+        "<th>Kalshi</th><th>Paper pnl</th><th>Why</th><th>Source</th>"
+        "</tr></thead>"
     )
-    exam_line = "exam idle"
-    if exam.get("parked"):
-        exam_line = f"exam parked: {exam.get('park_reason') or 'futility'}"
-    elif exam.get("open"):
-        exam_line = (
-            f"exam open n={int(exam.get('n') or 0)}/70 frozen_θ={exam.get('frozen_theta')}"
+    body = ["<tbody>"]
+    for row in rows:
+        kalshi = "still waiting on Kalshi" if row.pending else (row.kalshi_result.upper() or "n/a")
+        posted = f"{round(row.posted_yes * 100):.0f}¢" if row.posted_yes is not None else "n/a"
+        cutoff = f"{round(row.theta * 100):.0f}¢" if row.theta is not None else "n/a"
+        body.append(
+            "<tr>"
+            f"<td><code>{html.escape(row.ticker)}</code></td>"
+            f"<td>{html.escape(row.window_et)}</td>"
+            f"<td>{html.escape(row.action_label)}</td>"
+            f"<td>{html.escape(posted)}</td>"
+            f"<td>{html.escape(cutoff)}</td>"
+            f"<td>{html.escape(row.near_line_text)}</td>"
+            f"<td>{html.escape(row.spread_text)}</td>"
+            f"<td>{html.escape(row.delta_text)}</td>"
+            f"<td>{html.escape(kalshi)}</td>"
+            f"<td>{html.escape(row.pnl_text)}</td>"
+            f"<td>{html.escape(row.why)}</td>"
+            f"<td class=\"src\">{html.escape(row.source)}</td>"
+            "</tr>"
         )
-    elif exam.get("completed"):
-        exam_line = f"exam complete n={int(exam.get('n') or 0)}"
+    body.append("</tbody>")
+    return f'<div class="honer-table-wrap"><table class="honer-board">{head}{"".join(body)}</table></div>'
+
+
+def _exam_table(rows: list[HonerRow], standing: HonerStanding) -> str:
+    if standing.phase in {"searching", "freeze_ready"} and not rows:
+        return f'<p class="help">Exam idle. {html.escape(standing.freeze_meter)}</p>'
+    if not rows:
+        return f'<p class="help">Exam idle. {html.escape(standing.freeze_meter)}</p>'
+    head = (
+        "<thead><tr>"
+        "<th>Ticker</th><th>Window ET</th><th>Action</th><th>Posted YES</th>"
+        "<th>Frozen cutoff</th><th>Near line</th><th>Spread</th><th>Wide-book</th>"
+        "<th>Exam k</th><th>Kalshi</th><th>Exam pnl</th>"
+        "<th>Always-buy</th><th>d</th><th>Why</th><th>Source</th>"
+        "</tr></thead>"
+    )
+    body = ["<tbody>"]
+    for row in rows:
+        kalshi = "still waiting on Kalshi" if row.pending else (row.kalshi_result.upper() or "n/a")
+        posted = f"{round(row.posted_yes * 100):.0f}¢" if row.posted_yes is not None else "n/a"
+        cutoff = f"{round(row.theta * 100):.0f}¢" if row.theta is not None else "n/a"
+        always = row.fill_all_text or ("n/a" if row.pending else "")
+        d = row.d_text or ("n/a" if row.pending else "")
+        k = str(row.exam_k) if row.exam_k is not None else "n/a"
+        body.append(
+            "<tr>"
+            f"<td><code>{html.escape(row.ticker)}</code></td>"
+            f"<td>{html.escape(row.window_et)}</td>"
+            f"<td>{html.escape(row.action_label)}</td>"
+            f"<td>{html.escape(posted)}</td>"
+            f"<td>{html.escape(cutoff)}</td>"
+            f"<td>{html.escape(row.near_line_text)}</td>"
+            f"<td>{html.escape(row.spread_text)}</td>"
+            f"<td>{html.escape(row.delta_text)}</td>"
+            f"<td>{html.escape(k)}</td>"
+            f"<td>{html.escape(kalshi)}</td>"
+            f"<td>{html.escape(row.pnl_text)}</td>"
+            f"<td>{html.escape(always)}</td>"
+            f"<td>{html.escape(d)}</td>"
+            f"<td>{html.escape(row.why)}</td>"
+            f"<td class=\"src\">{html.escape(row.source)}</td>"
+            "</tr>"
+        )
+    body.append("</tbody>")
+    return f'<div class="honer-table-wrap"><table class="honer-board">{head}{"".join(body)}</table></div>'
+
+
+def _exam_action_strip(standing: HonerStanding) -> str:
+    if standing.phase not in {"exam_open", "exam_complete"}:
+        return ""
+    search = standing.current_search
+    exam = standing.current_exam
+    if search is None:
+        return ""
+    exam_bit = exam.action_label if exam is not None else "no exam decision"
     return (
-        '<section class="panel honer-sandbox">'
-        "<h2>honer_15m sandbox</h2>"
+        f'<p class="this-window">Same window {html.escape(search.ticker)} · '
+        f"search={html.escape(search.action_label)} · exam={html.escape(exam_bit)}. "
+        "Actions only — do not add the books.</p>"
+    )
+
+
+def board_html(*, extra_html: str = "") -> str:
+    standing = collect_standing()
+    happened = "".join(f"<li>{html.escape(line)}</li>" for line in standing.happened)
+    if not happened:
+        happened = "<li>Honer has not taken a window yet.</li>"
+    keep = f"<p class=\"loud\">{html.escape(standing.not_a_keep)}</p>" if standing.not_a_keep else ""
+    return (
+        '<section class="panel honer-sandbox" id="honer">'
+        "<h2>Honer — sibling search and exam</h2>"
         '<p class="help">honer_15m sandbox — not Lineage A, not a keep, books do not merge, zero-fee. '
         "Trading NOT ARMED. Skips are rows. Do not add these bankrolls to Lineage A.</p>"
-        f"<pre>{html.escape(label)}\n"
-        f"search bankroll={float(search.get('bankroll') or 0):.2f} "
-        f"betting_pnl={float(search.get('betting_pnl') or 0):+.2f} "
-        f"skips={int(search.get('skips') or 0)} fills={int(search.get('fills') or 0)}\n"
-        f"exam bankroll={float(exam_led.get('bankroll') or 0):.2f} "
-        f"betting_pnl={float(exam_led.get('betting_pnl') or 0):+.2f} "
-        f"skips={int(exam_led.get('skips') or 0)} fills={int(exam_led.get('fills') or 0)}\n"
-        f"{exam_line}\n"
-        f"watch running={watch.get('running')} cycles={watch.get('cycles')} "
-        f"{watch.get('last_summary') or ''}</pre>"
+        '<div class="standing">'
+        "<h3>What it is</h3>"
+        f"<p>{_bold_stars(standing.what_it_is)}</p>"
+        "<h3>Where it stands</h3>"
+        f"<p>{_bold_stars(standing.where_it_stands)}</p>"
+        "<h3>Library</h3>"
+        f"<p>{_bold_stars(standing.library_line)}</p>"
+        "<h3>Last thing that happened</h3>"
+        f"<p>{_bold_stars(standing.last_happened)}</p>"
+        "<h3>The two books</h3>"
+        f"<p>{html.escape(standing.two_books)}</p>"
+        f"<p class=\"help\">{html.escape(standing.glossary)}</p>"
+        f'<p class="help">Cutoff trail (search): {html.escape(standing.theta_trail)}</p>'
+        f"{keep}"
+        "</div>"
+        "<h3>What just happened</h3>"
+        f"<ul class=\"happened\">{happened}</ul>"
+        f"{extra_html}"
+        "<h3>Search book</h3>"
+        f"{_search_table(standing.search_rows)}"
+        "<h3>Exam book</h3>"
+        f"{_exam_table(standing.exam_rows, standing)}"
+        f"{_exam_action_strip(standing)}"
         "</section>"
     )
+
+
+def sandbox_html(*, extra_html: str = "") -> str:
+    """Full honer panel. Kept name so the hub import stays stable."""
+    try:
+        return board_html(extra_html=extra_html)
+    except Exception:
+        return (
+            '<section class="panel honer-sandbox" id="honer">'
+            "<h2>honer_15m sandbox</h2>"
+            '<p class="help">honer_15m sandbox unavailable this render. Live 15m journal is unchanged. '
+            "Do not add honer bankrolls to Lineage A. Books do not merge.</p>"
+            "</section>"
+        )

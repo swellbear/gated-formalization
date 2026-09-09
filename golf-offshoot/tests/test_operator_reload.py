@@ -527,9 +527,8 @@ def test_15m_missing_png_stays_not_yet_available(monkeypatch, tmp_path):
     monkeypatch.setattr("golf_offshoot.operator_surface.app._chart_15m_path", lambda: None)
     page = render_html(build_surface(lane="learning_lane_15m", artifact_root=tmp_path, viz_root=tmp_path / "viz"))
     assert "not yet available" in page
-    # Nothing is drawn in its place, and there is no overlay to open.
+    # Factory strip stays missing. Honer may still open a lightbox for its own PNG.
     assert "/viz15/paper_window_strip.png" not in page
-    assert 'id="viz-lightbox"' not in page
 
 
 def test_15m_window_summary_never_invents_a_result():

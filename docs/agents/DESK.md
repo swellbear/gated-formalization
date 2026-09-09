@@ -6,20 +6,20 @@ Thread lines are **one sentence, newest first, max 10**. Long findings belong in
 
 | Field | Value |
 |-------|--------|
-| Updated | 2026-09-09 13:55 ET |
-| Active role | soften-critic |
-| Job | attack the Systems 2026-09-09 lived/replay scorer wiring on the new bar hashes + registry; written objections only; do not score, bind, arm, or revive R-SKIP-COINFLIP |
-| Status | assigned |
-| Handoff | honer_15m sibling is [PR #178](https://github.com/swellbear/gated-formalization/pull/178) (base part-a, not #176). Live 70 untouched. Critic owe on lived/replay hashes resumes. |
+| Updated | 2026-09-09 16:09 ET |
+| Active role | chief-of-staff |
+| Job | — |
+| Status | idle |
+| Handoff | — |
 | Waiting on Founder | **N** |
 
 ## last_cos (CoS stamp — doorbell silence)
 
 | Field | Value |
 |-------|--------|
-| last_cos_at | 2026-09-09T09:05:00-04:00 |
-| last_cos_commit | 3c89a7f |
-| handled_reason_ids | A_worker_done, B_new_judicial |
+| last_cos_at | 2026-09-09T16:09:00-04:00 |
+| last_cos_commit | baf2fe0 |
+| handled_reason_ids | A_worker_done |
 
 **Branch note.** `origin/master` is still `b063f56` (#175). Factory Turns 1–3 plus ANSWER 03 plus CRITIC 04 plus ANSWER 04 plus CRITIC 05 plus ANSWER 05 plus CRITIC 06 plus ANSWER 06 plus CRITIC 07 plus ANSWER 07 plus CRITIC 08 plus ANSWER 08 plus CRITIC 09 plus ANSWER 09 plus CRITIC 10 live only on `cursor/part-a-clerical-trust-boundary` (CRITIC 02 `4090983` → Systems `0a480d4` → Operator `5dc4f24` → ANSWER 03 `9fb75e2` → CRITIC 04 `5e0216a` → ANSWER 04 `1ea689e` → CoS assign `dec64f6` → CRITIC 05 `fbde608` → CoS assign `bd18e9a` → ANSWER 05 `0b2f5e9` → CoS assign `c8226b8` → CRITIC 06 `4f8d37d` → CoS assign `d71e289` → ANSWER 06 `de8ec95` → CoS assign `c19bb30` → CRITIC 07 `49d17a7` → CoS assign `d8a7789` → ANSWER 07 `f8da6d0` → CoS assign `be8a5a8` → CRITIC 08 `20dd670` → CoS assign `15ba3f7` → ANSWER 08 `78db2cc` → CoS assign `c2f3b06` → CRITIC 09 `09077f4` → CoS assign `8edbaa6` → ANSWER 09 `818e268` → CoS assign `5881980` → CRITIC 10 `4797a12`). Branching from `origin/master` would discard all of it. Work continues on this branch; [#176](https://github.com/swellbear/gated-formalization/pull/176) is OPEN and MERGEABLE.
 
@@ -39,10 +39,10 @@ Part 3 landed. Three boxes are computed in `learning_lane_15m/honesty.py` and th
 |-----|-------|
 | Lineage story readable, dual lineage labeled not merged | **PASS** — *derived*. Lineage A is the live ledger (`bankroll` 90.98 / `betting_pnl` −9.02). Lineage B remains the published `KXBTC15M-26SEP071445-45`. No combined-bankroll field on the scan. |
 | `KXBTC15M-26SEP071500-00` honestly joined or pending with a true reason | **PASS** — *derived*. It is on `paper_join_missing`, is **not** on the pending list, and no missing-join row carries a pnl. |
-| One hub process on `learning_lane_15m` | **PASS** — *derived* from the process table. One hub **tree**, not one OS process: root PID 14704 over supervisor PID 2940 and listener PID **24300** holding `127.0.0.1:8765`. Criterion preserved as written. Do not kill any of the three. |
+| One hub process on `learning_lane_15m` | **PASS** — *derived* from the process table. One hub **tree**, not one OS process: `py` launcher PID **24188** over supervisor PID **24532** and listener PID **20100** holding `127.0.0.1:8765`. Child re-exec'd 16:07:47 after sidecar/`app.py` (honer sidecar supervisor **18548** over tick child **23916**, `honer-15m` not `shell`). Criterion preserved as written. Do not start a second tree. |
 | No invented charts or pnl | **PASS** — *judgment, with evidence*. `digest_matches_ledger` PASS 2026-09-08T14:42:33−04:00 against the live book (90.98 / −9.02 both sides). Live `crew_tick.needed=true` (A idle uncovered judicial, B new judicial, E idle unassigned). Fee-accurate totals are not on the hub, digest, manifest or `records[]`. |
 
-**Gate is open on this restamp.** Golf idle stays **ON**. Evidence bar remains **not binding**. Standing method blocker is the unpinned fee hash. Operator **RUN-ONLY**'d PROPOSED 02 (`R-SKIP-2TO1-FAVORITE`, `execution=true`, not scored). Systems 2026-09-09 wired lived/replay into `score_rule`. Soften Critic on those hashes is **parked this turn** for Founder’s honer_15m sibling (does not dismiss the owe). Lab does not bring a third PROPOSED.
+**Gate is open on this restamp.** Golf idle stays **ON**. Evidence bar remains **not binding**. Standing method blocker is the unpinned fee hash. Operator **RUN-ONLY**'d PROPOSED 02 (`R-SKIP-2TO1-FAVORITE`, `execution=true`, not scored). Systems 2026-09-09 wired lived/replay into `score_rule`. Soften Critic on those hashes is **parked** (does not dismiss the owe) — honer informed machine is implemented; do not attack it in the authoring session. Lab does not bring a third PROPOSED.
 
 **The fee-schedule hash is still unpinned.** Last real fetch: **HTTP 429** at 2026-09-08T13:42:26-04:00 (`LEARNING_LANE_15M_FEE_SCHEDULE_PROBE.json`). `schedule_sha256` left empty. **Do not write a placeholder.**
 
@@ -56,15 +56,15 @@ Two suites, both on the tick.
 
 ## Thread
 
-- 2026-09-09 13:55 ET  chief-of-staff → soften-critic: honer_15m sibling is on its own branch; resume attack on Systems lived/replay scorer hashes; do not score, bind, arm. next=soften-critic
-- 2026-09-09 13:55 ET  systems → chief-of-staff: honer_15m search+exam isolated on cursor/honer-15m-sibling; tests pass; not scored; not bound. next=chief-of-staff
-- 2026-09-09 13:40 ET  systems → chief-of-staff: started Founder honer_15m sibling — own root/book/k, no live 15m writes. next=systems
-- 2026-09-09 13:40 ET  chief-of-staff → systems: Founder assigned isolated honer_15m implement (new branch/PR, not #176); park Critic on lived/replay hashes for this one job. next=systems
-- 2026-09-09 09:05 ET  chief-of-staff → soften-critic: attack Systems lived/replay scorer wiring on the new bar hashes + registry; written objections only; do not score, bind, arm, or revive R-SKIP-COINFLIP. next=soften-critic
-- 2026-09-09 09:05 ET  systems → chief-of-staff: score_rule now rejects a window in (16:53, 17:11] as lived; decide() still keys declared_at; tests pass; not scored. next=chief-of-staff
-- 2026-09-08 21:30 ET  chief-of-staff: closeout — leave-off next=operator retired after treadmill close; last_cos handles E_idle_unassigned; Status=idle. Book runs R-SKIP-2TO1-FAVORITE. next=idle
-- 2026-09-08 21:22 ET  chief-of-staff: closeout — CRITIC 09 and CRITIC 10 both zero UPHELD; ANSWER 09 did not amend the bar; ANSWER 10 not owed; Status=idle. Book runs R-SKIP-2TO1-FAVORITE. next=idle
-- 2026-09-08 21:15 ET  chief-of-staff → operator: answer CRITIC 10 on ANSWER 09 amended bar hashes + registry; record each objection (zero UPHELD); do not bind, score, revive R-SKIP-COINFLIP, or arm. next=operator
-- 2026-09-08 21:11 ET  soften-critic → chief-of-staff: CRITIC 10 filed — zero UPHELD on ANSWER 09 amended bar hashes + registry; CRITIC 08's demanded α_14 term/scoring-look label remains on these hashes; bar not edited; not scored; not bound. next=chief-of-staff
+- 2026-09-09 16:09 ET  chief-of-staff: honer informed machine done; Critic still parked on lived/replay hashes (later session). next=idle
+- 2026-09-09 16:09 ET  systems → chief-of-staff: informed machine landed (in-band freeze, quote bus, sidecar, keep-lock, PNG columns); one 8765 re-exec child 20100; not scored; not bound. next=chief-of-staff
+- 2026-09-09 15:44 ET  chief-of-staff → systems: Founder assigned honer informed machine (in-band freeze, quote bus, sidecar, keep-lock); park Critic; do not score, bind, arm, or add honer to _CODE_PKG_DIRS. next=systems
+- 2026-09-09 15:28 ET  chief-of-staff: honer hub desk done; 8765 re-exec'd once (child 26180); Critic still parked on lived/replay hashes. next=idle
+- 2026-09-09 15:28 ET  systems → chief-of-staff: honer hub desk landed (freeze meter, English library, near-line/spread); one 8765 re-exec; not scored; not bound. next=chief-of-staff
+- 2026-09-09 15:20 ET  chief-of-staff → systems: Founder assigned honer hub desk (freeze meter, English library, near-line/spread); park Critic; do not add honer to _CODE_PKG_DIRS. next=systems
+- 2026-09-09 15:16 ET  systems → chief-of-staff: honer learn-fix landed (local_regret_v2, stability freeze, library/picker); live 70 untouched; not scored; not bound. next=chief-of-staff
+- 2026-09-09 15:08 ET  chief-of-staff → systems: Founder assigned honer learn-fix (v2 step, stability freeze, short picker); park Critic on lived/replay hashes for this job. next=systems
+- 2026-09-09 14:30 ET  systems → chief-of-staff: 8765 two-box factory/honer English board live; honer PNG local only; not scored; not bound. next=chief-of-staff
+- 2026-09-09 14:14 ET  systems → chief-of-staff: started Founder honer/factory English board (files only; no score, no Lineage A PNG rewrite). next=systems
 *Older lines rolled off at the 10-line cap. Full history is in the git log for `docs/agents/DESK.md`.*
 
