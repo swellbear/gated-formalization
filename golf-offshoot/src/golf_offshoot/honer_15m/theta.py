@@ -34,6 +34,9 @@ def default_state(policy: dict[str, Any] | None = None) -> dict[str, Any]:
         "far_settled_since_freeze": 0,
         "stable_windows": 0,
         "clip_streak": 0,
+        "family_starvations": {},
+        "advance_owed": "",
+        "starvation_pending": False,
         "step_rule": STEP_RULE,
         "freeze_rule": FREEZE_RULE,
         "active_family": FAMILY_RICH,
@@ -115,6 +118,9 @@ def load_theta() -> dict[str, Any]:
     payload.setdefault("far_settled_since_freeze", 0)
     payload.setdefault("stable_windows", 0)
     payload.setdefault("clip_streak", 0)
+    payload.setdefault("family_starvations", {})
+    payload.setdefault("advance_owed", "")
+    payload.setdefault("starvation_pending", False)
     payload.setdefault("step_rule", STEP_RULE)
     payload.setdefault("freeze_rule", FREEZE_RULE)
     payload.setdefault("active_family", FAMILY_RICH)

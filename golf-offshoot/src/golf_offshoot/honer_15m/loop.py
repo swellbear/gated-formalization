@@ -23,7 +23,7 @@ from golf_offshoot.honer_15m.paths import (
     settlements_dir,
     watch_status_path,
 )
-from golf_offshoot.honer_15m.picker import maybe_advance
+from golf_offshoot.honer_15m.picker import apply_search_starvation, maybe_advance
 from golf_offshoot.honer_15m.policy import FAMILY_RICH, load_policy
 from golf_offshoot.honer_15m.score import classify_completed_exam, exam_sums, futility_impossible, should_check_futility
 from golf_offshoot.honer_15m.theta import load_theta
@@ -195,7 +195,9 @@ def run_tick(markets: list[dict[str, Any]] | None = None) -> dict[str, Any]:
         if result not in {"yes", "no"} or not ticker:
             continue
         _write_settle_row(market, result)
-        apply_settle("search", ticker, kalshi_result=result, step_theta=True)
+        _search_row, newly_search = apply_settle("search", ticker, kalshi_result=result, step_theta=True)
+        if newly_search:
+            apply_search_starvation()
         if exam_is_open():
             exam_row, newly = apply_settle("exam", ticker, kalshi_result=result, step_theta=False)
             if newly and exam_row is not None:
@@ -212,9 +214,11 @@ def run_tick(markets: list[dict[str, Any]] | None = None) -> dict[str, Any]:
                     ):
                         parked = park_exam(f"futility at n={n}: remaining skips cannot pass")
                         _close_exam_to_library(parked, outcome="parked")
+                        apply_search_starvation()
                 elif n >= int(pol["exam_n"]):
                     completed = complete_exam()
                     _close_exam_to_library(completed, outcome=classify_completed_exam())
+                    apply_search_starvation()
 
     maybe_advance()
     fired = fire_freeze()

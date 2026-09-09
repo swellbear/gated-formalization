@@ -14,7 +14,8 @@ from golf_offshoot.honer_15m.policy import (
 )
 from golf_offshoot.localtime import now
 
-OUTCOMES = ("parked", "completed_dead", "completed_unscored")
+OUTCOMES = ("parked", "completed_dead", "completed_unscored", "search_untestable")
+RETIRE_OUTCOMES = frozenset({"parked", "completed_dead", "search_untestable"})
 
 
 def default_library() -> dict[str, Any]:
@@ -112,7 +113,7 @@ def append_exam_row(
             "at": now().isoformat(),
         }
     )
-    if outcome in {"parked", "completed_dead"}:
+    if outcome in RETIRE_OUTCOMES:
         retired = list(payload.get("retired") or [])
         if not _in_set(retired, vector):
             retired.append(vector)
@@ -125,3 +126,8 @@ def append_exam_row(
         payload["seed_theta"] = float(vector["theta"])
     save_library(payload)
     return payload
+
+
+def append_search_untestable(*, family: str, knobs: dict[str, Any]) -> dict[str, Any]:
+    """Retire a search vector the tape never visited. Does not increment exam k."""
+    return append_exam_row(k=0, family=family, knobs=knobs, outcome="search_untestable")

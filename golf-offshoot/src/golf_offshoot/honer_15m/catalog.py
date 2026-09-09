@@ -23,11 +23,31 @@ BURNED_IDS = frozenset(
         "BASELINE-AS-EDGE",
     }
 )
-ALLOWED_ACTIVATE = frozenset({"", "start", "clip_exhaustion", "quote_quality_ok", "clip_exhaustion+quote_quality_ok"})
+ALLOWED_ACTIVATE = frozenset(
+    {
+        "",
+        "start",
+        "clip_exhaustion",
+        "quote_quality_ok",
+        "clip_exhaustion+quote_quality_ok",
+        "search_starvation",
+        "search_starvation+quote_quality_ok",
+    }
+)
 
 
 class CatalogError(ValueError):
     """Dated catalog item is malformed or burned."""
+
+
+def activate_allowed(activate: str) -> bool:
+    token = str(activate or "")
+    if token in ALLOWED_ACTIVATE:
+        return True
+    if "|" not in token:
+        return False
+    parts = [p.strip() for p in token.split("|")]
+    return bool(parts) and all(p in ALLOWED_ACTIVATE and p not in {"", "start"} for p in parts)
 
 
 def _validate_item(item: dict[str, Any], *, index: int) -> None:
@@ -39,7 +59,7 @@ def _validate_item(item: dict[str, Any], *, index: int) -> None:
     if not str(item.get("declared_at") or ""):
         raise CatalogError(f"catalog item {ident} missing declared_at")
     activate = str(item.get("activate") or ("start" if index == 0 else ""))
-    if activate not in ALLOWED_ACTIVATE:
+    if not activate_allowed(activate):
         raise CatalogError(f"catalog item {ident} activate {activate!r} is not file-derived")
 
 
@@ -53,7 +73,7 @@ def load_catalog() -> dict[str, Any]:
                 {
                     "id": FAMILY_SPREAD,
                     "family": FAMILY_SPREAD,
-                    "activate": "clip_exhaustion+quote_quality_ok",
+                    "activate": "clip_exhaustion+quote_quality_ok|search_starvation+quote_quality_ok",
                 },
             ],
         }

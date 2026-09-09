@@ -26,6 +26,7 @@ Fee-adj is **omitted** (zero-fee mid). Name that. Do not print a corrected total
 - L1: first 70 exam settles after the snapshot `declared_at`.
 - L2 (71–140) is named and **not scored in this build**.
 - Futility at n=20 and n=40: remaining windows treated as skips (`d=+1` each, exam pnl 0). Park if mean(d)≤0 or exam mean pnl≤0 at 70 under that path.
+- Search starvation looks (honer search clock only, not this exam sample): n=40 zero in-band visits; n=70 in-band < freeze_min. Outcome `search_untestable` does not increment sibling k and is not a score.
 - `α_k = 0.05 / (k(k+1))` with sibling `k` from `latest/trials.json` (increments on freeze).
 - Permutation seed **20260909**.
 

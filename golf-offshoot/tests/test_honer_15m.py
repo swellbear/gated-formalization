@@ -369,7 +369,7 @@ def test_picker_has_no_pnl_parameters():
 
     from golf_offshoot.honer_15m import picker
 
-    for name in ("on_exam_close", "maybe_advance"):
+    for name in ("on_exam_close", "maybe_advance", "apply_search_starvation"):
         params = inspect.signature(getattr(picker, name)).parameters
         for banned in ("d", "pnl", "ledger", "exam_pnl", "betting_pnl"):
             assert banned not in params
@@ -479,7 +479,9 @@ def test_freeze_meter_matches_theta(honer_tmp):
     theta.save_theta(st)
     line = freeze_meter()
     assert line == (
-        "Honer freeze: 3/20 in-band · 1 far ignored · moved 6¢ of 5¢ · "
+        "Honer freeze: 3/20 in-band · 1 far ignored · "
+        "40: need a visit · 70: need 20 in-band · "
+        "moved 6¢ of 5¢ · "
         "stable 2/5 · line 81¢ · skip-rich-YES"
     )
     standing = collect_standing()
@@ -532,6 +534,16 @@ def test_library_english_has_no_registry_ids(honer_tmp):
         clip_need=20,
     )
     assert parked.startswith("Last exam stopped early (futility).")
+    untestable = library_english(
+        {"rows": [{"outcome": "search_untestable"}], "retired": [1]},
+        family=FAMILY_RICH,
+        clip_streak=0,
+        clip_need=20,
+    )
+    assert "search_untestable" not in untestable
+    assert "The tape did not visit the line" in untestable
+    assert "75¢" in untestable
+    assert "skip-wide-spread" in untestable
 
 
 def test_near_line_48_vs_81_is_no(honer_tmp):
@@ -832,3 +844,280 @@ def test_invariants_not_on_factory_whitelist(honer_tmp):
     assert payload["not_on_factory_whitelist"] is True
     assert "honer-invariants" not in CLERICAL_WHITELIST
     assert payload["passed"] is True
+
+
+def test_catalog_starvation_activate_is_file_derived():
+    from golf_offshoot.honer_15m.catalog import (
+        CatalogError,
+        activate_allowed,
+        catalog_ids,
+        load_catalog,
+    )
+
+    payload = load_catalog()
+    items = [item for item in payload.get("items") or [] if isinstance(item, dict)]
+    assert catalog_ids() == ["H-SKIP-RICH-YES", "H-SKIP-WIDE-SPREAD"]
+    assert len(items) == 2
+    assert items[1]["activate"] == (
+        "clip_exhaustion+quote_quality_ok|search_starvation+quote_quality_ok"
+    )
+    assert activate_allowed(items[1]["activate"])
+    assert not activate_allowed("pnl_rank")
+    assert not activate_allowed("clip_exhaustion|")
+    try:
+        from golf_offshoot.honer_15m.catalog import _validate_item
+
+        _validate_item(
+            {"id": "H-SKIP-WIDE-SPREAD", "declared_at": "x", "activate": "tape_sort"},
+            index=1,
+        )
+        raise AssertionError("expected CatalogError")
+    except CatalogError:
+        pass
+
+
+def test_deploy_does_not_zero_live_search_clocks(honer_tmp):
+    import json
+
+    from golf_offshoot.honer_15m.paths import theta_path
+
+    payload = {
+        "theta": 0.81,
+        "last_declared_theta": 0.75,
+        "step_rule": "local_regret_v2",
+        "freeze_rule": "in_band_v1",
+        "search_settled_since_freeze": 6,
+        "in_band_settled": 1,
+        "far_settled_since_freeze": 5,
+        "in_band_stable": 1,
+        "active_family": "H-SKIP-RICH-YES",
+        "delta": 0.04,
+    }
+    theta_path().write_text(json.dumps(payload), encoding="utf-8")
+    got = theta.load_theta()
+    assert got["theta"] == pytest.approx(0.81)
+    assert got["search_settled_since_freeze"] == 6
+    assert got["in_band_settled"] == 1
+    assert got["far_settled_since_freeze"] == 5
+    assert got["family_starvations"] == {}
+    assert got["advance_owed"] == ""
+
+
+def test_n39_zero_inband_does_not_starve(honer_tmp):
+    from golf_offshoot.honer_15m.picker import apply_search_starvation
+
+    st = theta.load_theta()
+    st["theta"] = 0.81
+    st["last_declared_theta"] = 0.75
+    st["search_settled_since_freeze"] = 39
+    st["in_band_settled"] = 0
+    theta.save_theta(st)
+    assert apply_search_starvation() is None
+    live = theta.load_theta()
+    assert live["theta"] == pytest.approx(0.81)
+    assert live["active_family"] == "H-SKIP-RICH-YES"
+
+
+def test_n40_zero_inband_resets_to_start_and_retires(honer_tmp):
+    from golf_offshoot.honer_15m.freeze import load_trials
+    from golf_offshoot.honer_15m.library import is_retired, load_library
+    from golf_offshoot.honer_15m.picker import apply_search_starvation
+    from golf_offshoot.honer_15m.policy import knob_vector
+
+    st = theta.load_theta()
+    st["theta"] = 0.81
+    st["last_declared_theta"] = 0.75
+    st["search_settled_since_freeze"] = 40
+    st["in_band_settled"] = 0
+    st["far_settled_since_freeze"] = 40
+    theta.save_theta(st)
+    out = apply_search_starvation()
+    assert out and out["reset"] is True
+    assert out["advanced"] is False
+    assert out["trials_unchanged"] is True
+    live = theta.load_theta()
+    assert live["theta"] == pytest.approx(START_THETA)
+    assert live["last_declared_theta"] == pytest.approx(START_THETA)
+    assert live["active_family"] == "H-SKIP-RICH-YES"
+    assert live["search_settled_since_freeze"] == 0
+    assert live["in_band_settled"] == 0
+    assert live["family_starvations"]["H-SKIP-RICH-YES"] == 1
+    assert load_trials()["trials_to_date"] == 0
+    lib = load_library()
+    assert lib["rows"][-1]["outcome"] == "search_untestable"
+    assert lib["rows"][-1]["k"] == 0
+    assert is_retired(knob_vector(family="H-SKIP-RICH-YES", theta=0.81, delta=0.04), lib)
+    assert freeze.freeze_ready() is False
+
+
+def test_n70_inband_19_starves_with_20_does_not(honer_tmp):
+    from golf_offshoot.honer_15m.picker import apply_search_starvation
+
+    st = theta.load_theta()
+    st["theta"] = 0.81
+    st["search_settled_since_freeze"] = 70
+    st["in_band_settled"] = 20
+    theta.save_theta(st)
+    assert apply_search_starvation() is None
+    st["in_band_settled"] = 19
+    theta.save_theta(st)
+    out = apply_search_starvation()
+    assert out and out["reset"] is True
+    assert theta.load_theta()["theta"] == pytest.approx(START_THETA)
+
+
+def test_second_family1_starvation_advances_when_quotes_ok(honer_tmp):
+    from golf_offshoot.honer_15m.picker import apply_search_starvation
+    from golf_offshoot.honer_15m.policy import FAMILY_SPREAD
+
+    st = theta.load_theta()
+    st["theta"] = 0.81
+    st["search_settled_since_freeze"] = 40
+    st["in_band_settled"] = 0
+    st["family_starvations"] = {"H-SKIP-RICH-YES": 1}
+    theta.save_theta(st)
+    _seed_search_quotes(n=20, with_spread=20)
+    out = apply_search_starvation()
+    assert out and out.get("advanced") is True
+    live = theta.load_theta()
+    assert live["active_family"] == FAMILY_SPREAD
+    assert live["advance_owed"] == ""
+    assert live["theta"] == pytest.approx(0.81)
+    assert live["search_settled_since_freeze"] == 0
+
+
+def test_second_starvation_quotes_wait_does_not_reset_or_spend_another_look(honer_tmp):
+    from golf_offshoot.honer_15m.picker import apply_search_starvation, maybe_advance
+    from golf_offshoot.honer_15m.policy import ADVANCE_OWED_STARVATION, FAMILY_RICH, FAMILY_SPREAD
+
+    st = theta.load_theta()
+    st["theta"] = 0.81
+    st["search_settled_since_freeze"] = 70
+    st["in_band_settled"] = 19
+    st["family_starvations"] = {"H-SKIP-RICH-YES": 1}
+    theta.save_theta(st)
+    _seed_search_quotes(n=20, with_spread=10)
+    out = apply_search_starvation()
+    assert out and out.get("waiting_on_quotes") is True
+    live = theta.load_theta()
+    assert live["active_family"] == FAMILY_RICH
+    assert live["theta"] == pytest.approx(0.81)
+    assert live["advance_owed"] == ADVANCE_OWED_STARVATION
+    assert live["search_settled_since_freeze"] == 70
+    live["search_settled_since_freeze"] = 71
+    theta.save_theta(live)
+    assert apply_search_starvation() is None
+    assert theta.load_theta()["theta"] == pytest.approx(0.81)
+    _seed_search_quotes(n=20, with_spread=20)
+    later = maybe_advance()
+    assert later and later["advanced"] is True
+    assert theta.load_theta()["active_family"] == FAMILY_SPREAD
+    assert theta.load_theta()["advance_owed"] == ""
+
+
+def test_family2_second_starvation_exhausts_catalog(honer_tmp):
+    from golf_offshoot.honer_15m.library import load_library
+    from golf_offshoot.honer_15m.picker import apply_search_starvation
+    from golf_offshoot.honer_15m.policy import FAMILY_SPREAD
+
+    st = theta.load_theta()
+    st["active_family"] = FAMILY_SPREAD
+    st["delta"] = 0.09
+    st["last_declared_delta"] = 0.04
+    st["search_settled_since_freeze"] = 40
+    st["in_band_settled"] = 0
+    theta.save_theta(st)
+    first = apply_search_starvation()
+    assert first and first["reset"] is True
+    live = theta.load_theta()
+    assert live["delta"] == pytest.approx(0.04)
+    assert live["active_family"] == FAMILY_SPREAD
+    live["search_settled_since_freeze"] = 40
+    live["in_band_settled"] = 0
+    theta.save_theta(live)
+    second = apply_search_starvation()
+    assert second and second.get("catalog_exhausted") is True
+    assert load_library()["catalog_exhausted"] is True
+
+
+def test_starvation_skips_while_exam_open_and_does_not_increment_k(honer_tmp):
+    from golf_offshoot.honer_15m.freeze import load_trials, save_exam_state
+    from golf_offshoot.honer_15m.picker import apply_search_starvation
+
+    save_exam_state(
+        {
+            "open": True,
+            "parked": False,
+            "n": 3,
+            "frozen_theta": 0.79,
+            "k_after": 1,
+        }
+    )
+    st = theta.load_theta()
+    st["theta"] = 0.81
+    st["search_settled_since_freeze"] = 40
+    st["in_band_settled"] = 0
+    theta.save_theta(st)
+    out = apply_search_starvation()
+    assert out and out.get("deferred") is True
+    assert theta.load_theta()["theta"] == pytest.approx(0.81)
+    assert load_trials()["trials_to_date"] == 0
+    save_exam_state({"open": False, "parked": True, "n": 3})
+    acted = apply_search_starvation()
+    assert acted and acted["reset"] is True
+    assert load_trials()["trials_to_date"] == 0
+
+
+def test_clip_wins_over_starvation_same_tick(honer_tmp):
+    from golf_offshoot.honer_15m.library import load_library
+    from golf_offshoot.honer_15m.picker import apply_search_starvation
+
+    st = theta.load_theta()
+    st["theta"] = 0.81
+    st["search_settled_since_freeze"] = 40
+    st["in_band_settled"] = 0
+    st["clip_streak"] = 20
+    theta.save_theta(st)
+    out = apply_search_starvation()
+    assert out and out.get("skipped") is True
+    assert theta.load_theta()["theta"] == pytest.approx(0.81)
+    assert load_library().get("rows") == []
+
+
+def test_loop_search_settle_can_starve(honer_tmp):
+    st = theta.load_theta()
+    st["theta"] = 0.81
+    st["search_settled_since_freeze"] = 39
+    st["in_band_settled"] = 0
+    theta.save_theta(st)
+    books.record_action(
+        "search",
+        ticker="KXBTC15M-STARVE",
+        window_id="w",
+        action="fill",
+        reason="x",
+        posted_yes=0.48,
+        theta=0.81,
+        close_at="t",
+    )
+    loop.run_tick(
+        [
+            {
+                "ticker": "KXBTC15M-STARVE",
+                "window_id": "w",
+                "paper_mark": 0.48,
+                "is_open": False,
+                "status": "determined",
+                "close_time": "t",
+                "result": "no",
+            }
+        ]
+    )
+    live = theta.load_theta()
+    assert live["theta"] == pytest.approx(START_THETA)
+    assert live["family_starvations"]["H-SKIP-RICH-YES"] == 1
+    src = (PKG / "loop.py").read_text(encoding="utf-8")
+    assert "apply_search_starvation" in src
+    paper = (PKG.parent / "learning_lane_15m" / "paper.py").read_text(encoding="utf-8")
+    assert "golf_offshoot.honer_15m" not in paper
+

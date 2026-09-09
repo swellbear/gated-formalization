@@ -155,6 +155,7 @@ def freeze_meter(
     moved = abs(theta_now - last_declared)
     return (
         f"Honer freeze: {settled}/{need_n} in-band · {far} far ignored · "
+        f"40: need a visit · 70: need {need_n} in-band · "
         f"moved {cents(moved)} of {cents(need_delta)} · "
         f"stable {stable}/{stable_need} · line {cents(theta_now)} · {family}"
     )
@@ -181,23 +182,47 @@ def library_english(
         )
     elif last == "completed_unscored":
         exam_bit = "Last exam finished 70; means were above zero. Still not a keep."
+    elif last == "search_untestable":
+        if family == FAMILY_SPREAD:
+            exam_bit = (
+                "The tape did not visit the line. That cutoff is retired. "
+                "Spread cutoff returned to its start."
+            )
+        else:
+            exam_bit = (
+                "The tape did not visit the line. That cutoff is retired. "
+                "Cutoff returned to 75¢."
+            )
     else:
         exam_bit = "No exam yet."
     retired_n = len(list(payload.get("retired") or []))
+    owed = False
+    try:
+        from golf_offshoot.honer_15m.policy import ADVANCE_OWED_STARVATION
+
+        owed = str(load_theta().get("advance_owed") or "") == ADVANCE_OWED_STARVATION
+    except Exception:
+        owed = False
+    waiting = quote_ok is False
+    if quote_ok is None:
+        try:
+            from golf_offshoot.honer_15m.quality import quote_quality_ok
+
+            waiting = not quote_quality_ok()
+        except Exception:
+            waiting = False
     next_bit = "θ still walking"
     if payload.get("catalog_exhausted"):
         next_bit = "catalog exhausted — no new family"
     elif family == FAMILY_SPREAD:
         next_bit = "spread family walking; no further family after clip"
+    elif owed and waiting:
+        next_bit = "spread family waiting on quotes"
+    elif owed:
+        next_bit = "next family is skip-wide-spread"
+    elif last == "search_untestable":
+        next_bit = "next untestable on this family is skip-wide-spread"
     elif int(clip_streak) >= int(clip_need):
-        waiting = quote_ok is False
-        if quote_ok is None:
-            try:
-                from golf_offshoot.honer_15m.quality import quote_quality_ok
-
-                waiting = not quote_quality_ok()
-            except Exception:
-                waiting = False
         if waiting:
             next_bit = "θ on clip; spread family waiting on quotes"
         else:
@@ -553,6 +578,7 @@ def _phase_paragraph(
     live = load_theta()
     stable_have = int(live.get("in_band_stable") or 0)
     far = int(live.get("far_settled_since_freeze") or 0)
+    total = int(live.get("search_settled_since_freeze") or 0)
     return (
         "searching",
         f"Right now it is **searching**. The exam book is empty on purpose. "
@@ -560,6 +586,8 @@ def _phase_paragraph(
         f"θ moved by at least {cents(need_delta)} from the last declared cutoff, **and** "
         f"{stable_need} in-band windows with no cutoff move. Far tickets do not count. "
         f"In-band so far: **{settled_since} of {need_n}**. Far ignored: **{far}**. "
+        f"Search settles this episode: **{total}**. Look clocks: at 40 need a visit; "
+        f"at 70 need {need_n} in-band. "
         f"θ has moved **{cents(moved)}** from {cents(last_declared)}. "
         f"In-band stable: **{stable_have} of {stable_need}**. Freeze is not ready.",
     )

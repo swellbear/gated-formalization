@@ -21,7 +21,7 @@ A later Founder-named step may make a surviving honer family the executing regis
 
 ## Order
 
-1. **Search** — in-band freeze (`in_band_v1`). Far tickets audit, they do not count. Family 2 waits on clip + quote quality. No third family until Lab dates a PROPOSED.
+1. **Search** — in-band freeze (`in_band_v1`). Far tickets audit, they do not count. Family 2 waits on clip exhaustion **or** second search-starvation, plus quote quality. Search starvation is a honer search give-up (`search_untestable`); it does not increment exam k and does not enable consult. No third family until Lab dates a PROPOSED.
 2. **Exam snapshot** — freeze writes honer exam knobs with `declared_at`. Search stops mutating that exam.
 3. **Dated honer fee-apply** — cites the factory `schedule_sha256` pin. Cite is not apply. `fee_omitted` stays true until that dated apply. Keep-lock stays closed while omitted.
 4. **Lab** — dated PROPOSED that the frozen family be consulted (names snapshot hashes, family, θ/δ, `declared_at`). Not a playlist. Not a burned class.
@@ -34,6 +34,8 @@ A later Founder-named step may make a surviving honer family the executing regis
 ## Fail
 
 If the exam parks or scores dead: notebook closed. Compositor stays dark. Factory `decide()` unchanged. A new family is Lab PROPOSED → Operator RUN-ONLY → later Critic, not a tape sort.
+
+Search starvation retires an untestable search knob. That is not a keep, not an exam score, and not a consult enable.
 
 ## This build
 

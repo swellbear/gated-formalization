@@ -29,6 +29,11 @@ DELTA_MAX = 0.12
 DELTA_STEP = 0.01
 EXAM_N = 70
 FUTILITY_LOOKS = (20, 40)
+SEARCH_STARVATION_LOOKS = (40, 70)
+SEARCH_STARVATION_ZERO_VISIT_N = 40
+SEARCH_STARVATION_EXAM_LENGTH_N = 70
+SEARCH_STARVATION_DECLARED_AT = "2026-09-09T17:27:00-04:00"
+ADVANCE_OWED_STARVATION = "search_starvation"
 SEED_BANKROLL = 100.0
 STAKE = 1.0
 PERMUTATION_SEED = 20260909
@@ -62,6 +67,10 @@ def load_policy() -> dict[str, Any]:
         "delta_step": DELTA_STEP,
         "exam_n": EXAM_N,
         "futility_looks": list(FUTILITY_LOOKS),
+        "search_starvation_looks": list(SEARCH_STARVATION_LOOKS),
+        "search_starvation_zero_visit_n": SEARCH_STARVATION_ZERO_VISIT_N,
+        "search_starvation_exam_length_n": SEARCH_STARVATION_EXAM_LENGTH_N,
+        "search_starvation_declared_at": SEARCH_STARVATION_DECLARED_AT,
         "declared_at": DECLARED_AT,
         "permutation_seed": PERMUTATION_SEED,
         "id": RULE_ID,
@@ -94,6 +103,18 @@ def load_policy() -> dict[str, Any]:
     out["delta_step"] = float(pol.get("delta_step", DELTA_STEP))
     out["exam_n"] = int(pol.get("exam_n", EXAM_N))
     out["futility_looks"] = [int(x) for x in (pol.get("futility_looks") or FUTILITY_LOOKS)]
+    out["search_starvation_looks"] = [
+        int(x) for x in (pol.get("search_starvation_looks") or SEARCH_STARVATION_LOOKS)
+    ]
+    out["search_starvation_zero_visit_n"] = int(
+        pol.get("search_starvation_zero_visit_n", SEARCH_STARVATION_ZERO_VISIT_N)
+    )
+    out["search_starvation_exam_length_n"] = int(
+        pol.get("search_starvation_exam_length_n", SEARCH_STARVATION_EXAM_LENGTH_N)
+    )
+    out["search_starvation_declared_at"] = str(
+        pol.get("search_starvation_declared_at") or SEARCH_STARVATION_DECLARED_AT
+    )
     out["declared_at"] = str(pol.get("declared_at") or DECLARED_AT)
     out["permutation_seed"] = int(pol.get("permutation_seed") or PERMUTATION_SEED)
     out["id"] = str(pol.get("id") or RULE_ID)
@@ -121,6 +142,31 @@ def knob_vector(*, family: str, theta: float, delta: float) -> dict[str, Any]:
         "theta": round(float(theta), 4),
         "delta": round(float(delta), 4),
     }
+
+
+def should_check_starvation(n: int, *, policy: dict[str, Any] | None = None) -> bool:
+    pol = policy or load_policy()
+    return int(n) in {int(x) for x in pol["search_starvation_looks"]}
+
+
+def starvation_untestable(
+    *,
+    n: int,
+    in_band: int,
+    policy: dict[str, Any] | None = None,
+) -> bool:
+    """Search-reachability look. No pnl. Not an exam score."""
+    pol = policy or load_policy()
+    if not should_check_starvation(n, policy=pol):
+        return False
+    zero_n = int(pol["search_starvation_zero_visit_n"])
+    exam_n = int(pol["search_starvation_exam_length_n"])
+    need = int(pol["freeze_min_search_settled"])
+    if int(n) == zero_n:
+        return int(in_band) == 0
+    if int(n) == exam_n:
+        return int(in_band) < need
+    return False
 
 
 def vectors_equal(left: dict[str, Any], right: dict[str, Any]) -> bool:
