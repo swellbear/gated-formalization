@@ -3,13 +3,13 @@
   "lane": "learning_lane_15m",
   "series": "KXBTC15M",
   "drafted_at": "2026-09-08T08:30:00-04:00",
-  "amended_at": "2026-09-08T19:52:00-04:00",
+  "amended_at": "2026-09-08T20:28:00-04:00",
   "amended_by": "operator",
-  "amendment": "admit pass on Soften Critic CRITIC 07; see LEARNING_LANE_15M_EVIDENCE_BAR_OPERATOR_ANSWER_07.md",
+  "amendment": "admit pass on Soften Critic CRITIC 08; see LEARNING_LANE_15M_EVIDENCE_BAR_OPERATOR_ANSWER_08.md",
   "prior_amendment": {
-    "amended_at": "2026-09-08T19:12:00-04:00",
-    "commit": "de8ec95",
-    "note": "CRITIC 06 admit pass. Struck 'L2 look only' as the increment rule; clause (2) increments on declaration and after an L2 look. Binding condition 1 was left met:false on those new bytes — CRITIC 07 attacks them."
+    "amended_at": "2026-09-08T19:52:00-04:00",
+    "commit": "f8da6d0",
+    "note": "CRITIC 07 admit pass. Labeled alpha_1 spent/historical; first scoring look k=2 / 0.008333. Binding condition 1 was left met:false on those new bytes — CRITIC 08 attacks them."
   },
   "binding": false,
   "binding_rule": "Becomes binding only after (1) a Soften Critic written attack from a session that did not draft the bar, with Operator sustaining or explicitly overruling every objection with a stated reason in a separate turn, attack and answers both linked from the bar; (2) critic-invariants passing on the bytes proposed to bind, or every failing check named on the bar's face with Operator's reason for binding anyway; and (3) Founder read-once acknowledgement.",
@@ -17,22 +17,22 @@
     {
       "id": "critic_answered",
       "met": false,
-      "detail": "An answer that amends the bar does not close condition 1 on the amended text. LEARNING_LANE_15M_EVIDENCE_BAR_OPERATOR_ANSWER_07.md answers CRITIC 07 (bytes CAD08432…) on the ANSWER 06 hashes 9F72AF66… / 726FF992…. These bytes are not that digest. Soften Critic is re-owed on this amendment. CRITIC 06 remains answered in OPERATOR_ANSWER_06.md for its own hashes. CRITIC 05 remains answered in OPERATOR_ANSWER_05.md for its own hashes. CRITIC 04 remains answered in OPERATOR_ANSWER_04.md for its own hashes. CRITIC 03 remains answered in OPERATOR_ANSWER_03.md for its own hashes. CRITIC 02 remains answered in OPERATOR_ANSWER_02.md for its own hashes. CRITIC 01 remains answered in OPERATOR_ANSWER_01.md.",
-      "critic_file": "golf-offshoot/docs/LEARNING_LANE_15M_EVIDENCE_BAR_CRITIC_07.md",
-      "critic_sha256_bytes": "cad08432192a23954f7657badb27c7af12e3d3e315e6a92f7c47c5e47a63b14c",
-      "answer_file": "golf-offshoot/docs/LEARNING_LANE_15M_EVIDENCE_BAR_OPERATOR_ANSWER_07.md",
-      "answered_bar_md_sha256": "9f72af662b69d5d36561e3ae85db499506aa7b5091273f2007f6d86da778da5d",
-      "answered_bar_json_sha256": "726ff992bf60811c9ef2bbde0ea7143cdbf2d5569204aac8aa25b730b26cc06c",
+      "detail": "An answer that amends the bar does not close condition 1 on the amended text. LEARNING_LANE_15M_EVIDENCE_BAR_OPERATOR_ANSWER_08.md answers CRITIC 08 (bytes AE75EB18…) on the ANSWER 07 hashes B88302EF… / 01DC50B1…. These bytes are not that digest. Soften Critic is re-owed on this amendment. CRITIC 07 remains answered in OPERATOR_ANSWER_07.md for its own hashes. CRITIC 06 remains answered in OPERATOR_ANSWER_06.md for its own hashes. CRITIC 05 remains answered in OPERATOR_ANSWER_05.md for its own hashes. CRITIC 04 remains answered in OPERATOR_ANSWER_04.md for its own hashes. CRITIC 03 remains answered in OPERATOR_ANSWER_03.md for its own hashes. CRITIC 02 remains answered in OPERATOR_ANSWER_02.md for its own hashes. CRITIC 01 remains answered in OPERATOR_ANSWER_01.md.",
+      "critic_file": "golf-offshoot/docs/LEARNING_LANE_15M_EVIDENCE_BAR_CRITIC_08.md",
+      "critic_sha256_bytes": "ae75eb1890ad3eb5221e7b683b083c36ce162ed7de7f62a1a63eadeef7affd11",
+      "answer_file": "golf-offshoot/docs/LEARNING_LANE_15M_EVIDENCE_BAR_OPERATOR_ANSWER_08.md",
+      "answered_bar_md_sha256": "b88302efa54ea885e15f0249344640e0d86f137f7d002165f0119be44af199f2",
+      "answered_bar_json_sha256": "01dc50b1c94cb3a2cebe8eda5b7bece98031ca23ca21c99336ee86c70186679e",
       "prior_pair": {
-        "critic_file": "golf-offshoot/docs/LEARNING_LANE_15M_EVIDENCE_BAR_CRITIC_06.md",
-        "answer_file": "golf-offshoot/docs/LEARNING_LANE_15M_EVIDENCE_BAR_OPERATOR_ANSWER_06.md",
-        "critic_sha256_bytes": "8bf8f1d8633f384994e5019078ac684c9d7b77507e1798730d96ce38ca28c654"
+        "critic_file": "golf-offshoot/docs/LEARNING_LANE_15M_EVIDENCE_BAR_CRITIC_07.md",
+        "answer_file": "golf-offshoot/docs/LEARNING_LANE_15M_EVIDENCE_BAR_OPERATOR_ANSWER_07.md",
+        "critic_sha256_bytes": "cad08432192a23954f7657badb27c7af12e3d3e315e6a92f7c47c5e47a63b14c"
       }
     },
     {
       "id": "critic_invariants_pass",
       "met": false,
-      "detail": "The last findings file (ran_at 2026-09-08T12:02:45-04:00) reviews 5F2AA5F5… / 2611C255… / CD25DD72… — not the ANSWER 06 hashes 9F72AF66… / 726FF992… / 1DDD3CCE… and not these bytes. The 14:04 failing_set_at_last_operator_read of [fee_schedule_hash_recorded] described other bytes and is struck as a picture of this file. Copied arithmetic of check_delta_above_detection_floor on the ANSWER 03 hashes would name mde / reject_if_mean_d_exceeds / alpha_first_look / both power effects. After ANSWER 04 restated the four design numbers at next-look alpha, that function would still compare alpha_first_look 0.025 to current alpha_k 0.008333 (checker/key mismatch owed to Systems). Standing named fail: fee_schedule_hash_recorded (empty sha256 after HTTP 429). honesty_stamp_is_fresh is a desk check and does not set passed. write_critic_findings() was not called.",
+      "detail": "The last findings file (ran_at 2026-09-08T12:02:45-04:00) reviews 5F2AA5F5… / 2611C255… / CD25DD72… — not the ANSWER 07 hashes B88302EF… / 01DC50B1… / 1DDD3CCE… and not these bytes. The 14:04 failing_set_at_last_operator_read of [fee_schedule_hash_recorded] described other bytes and is struck as a picture of this file. Copied arithmetic of check_delta_above_detection_floor on the ANSWER 03 hashes would name mde / reject_if_mean_d_exceeds / alpha_first_look / both power effects. After ANSWER 04 restated the four design numbers at next-look alpha, that function would still compare alpha_first_look 0.025 to current alpha_k 0.008333 (checker/key mismatch owed to Systems). Standing named fail: fee_schedule_hash_recorded (empty sha256 after HTTP 429). honesty_stamp_is_fresh is a desk check and does not set passed. write_critic_findings() was not called.",
       "note": "critic.py records the newline-normalised digest, not the raw byte hash. Compare the digest the checker actually read.",
       "last_findings_cover_these_bytes": false,
       "last_findings_ran_at": "2026-09-08T12:02:45.460786-04:00",
@@ -147,8 +147,11 @@
     "next_look_alpha": 0.008333,
     "next_look_z": 2.394,
     "alpha_fourteenth_look": 0.000238,
+    "alpha_fourteenth_look_is_schedule_term": true,
+    "alpha_fourteenth_look_scoring_look_index": 13,
     "fwer_14_looks_old_scheme": 0.152,
     "fwer_14_looks_new_scheme": 0.046,
+    "fwer_14_looks_includes_spent_alpha_1": true,
     "trials_counter": "LEARNING_LANE_15M_RULES.json trials_to_date; increments on DECLARATION of a selection rule, not on an L1 score; L2 looks increment after the L2 look; writer is golf_offshoot.learning_lane_15m.rules.record_trial (kinds declaration and l2_look only); baseline naming is not a trial",
     "trials_counter_is_prose": false,
     "trials_to_date": 1,
@@ -197,7 +200,7 @@
     },
     "clauses": [
       "(1) one-sided paired t-test, H0: mean(d) <= delta, reject only if p < alpha_k",
-      "(2) multiplicity: alpha_k = 0.05 / (k(k+1)), k = trials_to_date + 1, increment on declaration and after an L2 look; L1 scoring does not increment; alpha_1 = 0.025 is the schedule's first term, spent on declaration, historical; first scoring look is k=2 / alpha=0.008333",
+      "(2) multiplicity: alpha_k = 0.05 / (k(k+1)), k = trials_to_date + 1, increment on declaration and after an L2 look; L1 scoring does not increment; alpha_1 = 0.025 is the schedule's first term, spent on declaration, historical; first scoring look is k=2 / alpha=0.008333; alpha_14 = 0.000238 is the schedule's 14th term (the 13th scoring look); FWER over 14 schedule terms is 4.6% and includes the spent unused alpha_1",
       "(3) effect floor delta = 0.28 * stake, absorbed into clause (1) as the null",
       "(4) positive side: mean(pnl_rule_fee_adj) > 0 on those same n windows — binding, not conditional prose",
       "(5) matched-exposure permutation control, fixed skip count, >=10,000 draws, seed 20260908"
