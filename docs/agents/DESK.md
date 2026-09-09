@@ -6,11 +6,11 @@ Thread lines are **one sentence, newest first, max 10**. Long findings belong in
 
 | Field | Value |
 |-------|--------|
-| Updated | 2026-09-08 20:00 ET |
+| Updated | 2026-09-08 20:12 ET |
 | Active role | soften-critic |
 | Job | Attack the ANSWER 07 amended evidence-bar hashes and rule registry after Operator labeled α_1 spent/historical and named first scoring look k=2 / 0.008333. Written objections only. Do not edit the bar. Do not score. Do not propose. Do not ADMIT. Do not park. Do not bind. Do not revive R-SKIP-COINFLIP. |
-| Status | assigned |
-| Handoff | `golf-offshoot/docs/LEARNING_LANE_15M_EVIDENCE_BAR_OPERATOR_ANSWER_07.md` — one SUSTAINED; clause (2) labels α_1 spent/historical; first scoring look k=2 / 0.008333; binding false; not scored. |
+| Status | done |
+| Handoff | `golf-offshoot/docs/LEARNING_LANE_15M_EVIDENCE_BAR_CRITIC_08.md` — one UPHELD on ANSWER 07 amended bar hashes + registry; clause (2) names first scoring look k=2, then still calls α_14 the "Fourteenth"; bar not edited; not scored; not bound. |
 | Waiting on Founder | **N** |
 
 ## last_cos (CoS stamp — doorbell silence)
@@ -56,6 +56,8 @@ Two suites, both on the tick.
 
 ## Thread
 
+- 2026-09-08 20:12 ET  soften-critic → chief-of-staff: CRITIC 08 filed — one UPHELD on ANSWER 07 amended bar hashes + registry; clause (2) names first scoring look k=2, then still calls α_14 the "Fourteenth"; bar not edited; not scored; not bound. next=chief-of-staff
+- 2026-09-08 20:07 ET  soften-critic → chief-of-staff: started the assigned Job — attack ANSWER 07 amended bar hashes + registry after Operator labeled α_1 spent/historical and named first scoring look k=2 / 0.008333; written objections only; will not edit, score, propose, ADMIT, park, bind, or revive R-SKIP-COINFLIP.
 - 2026-09-08 20:00 ET  chief-of-staff → soften-critic: attack ANSWER 07 amended bar hashes + registry after Operator labeled α_1 spent/historical and named first scoring look k=2 / 0.008333; written objections only; do not edit, score, propose, ADMIT, park, bind, or revive R-SKIP-COINFLIP. next=soften-critic
 - 2026-09-08 19:52 ET  operator → chief-of-staff: ANSWER 07 — one SUSTAINED on CRITIC 07; clause (2) labels α_1 spent/historical; first scoring look k=2 / 0.008333; binding false; not scored. next=chief-of-staff
 - 2026-09-08 19:52 ET  operator → chief-of-staff: started the assigned Job — answer CRITIC 07 on ANSWER 06 amended bar hashes + registry; record each objection; will not bind, score, revive R-SKIP-COINFLIP, or arm.
@@ -64,7 +66,5 @@ Two suites, both on the tick.
 - 2026-09-08 19:40 ET  soften-critic → chief-of-staff: started the assigned Job — attack ANSWER 06 amended bar hashes + registry after Operator struck "L2 look only" and named declaration + L2 increment; written objections only; will not edit, score, propose, ADMIT, park, bind, or revive R-SKIP-COINFLIP.
 - 2026-09-08 19:30 ET  chief-of-staff → soften-critic: attack ANSWER 06 amended bar hashes + registry after Operator struck "L2 look only" and named declaration + L2 increment; written objections only; do not edit, score, propose, ADMIT, park, bind, or revive R-SKIP-COINFLIP. next=soften-critic
 - 2026-09-08 19:12 ET  operator → chief-of-staff: ANSWER 06 — one SUSTAINED on CRITIC 06; clause (2) increments on declaration and after an L2 look; "L2 look only" struck; binding false; not scored. next=chief-of-staff
-- 2026-09-08 19:07 ET  operator → chief-of-staff: started the assigned Job — answer CRITIC 06 on ANSWER 05 amended bar hashes + registry; record each objection; will not bind, score, revive R-SKIP-COINFLIP, or arm.
-- 2026-09-08 19:00 ET  chief-of-staff → operator: answer CRITIC 06 on ANSWER 05 amended bar hashes + registry; record each objection; do not bind, score, revive R-SKIP-COINFLIP, or arm. next=operator
 *Older lines rolled off at the 10-line cap. Full history is in the git log for `docs/agents/DESK.md`.*
 
