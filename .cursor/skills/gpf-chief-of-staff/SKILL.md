@@ -31,10 +31,11 @@ A Lab PROPOSED goes to Operator as **RUN-ONLY** (not park) when it is determinis
 ## After a worker is done
 
 1. Read their `Handoff`.
-2. If handoff is another role and it is on the routing table — assign it.
-3. If the next step is on leave-off or inside Hard NOs — assign it. Do not ask Founder.
-4. If and only if the next step is a Protocol Founder-stop — one question, `waiting-founder`, stop.
-5. Update leave-off before you stop.
+2. If the newest Soften Critic finding is zero UPHELD and Operator did not amend the bar — **close out** (`Status=idle`). Do not assign Operator to record nothing, and do not assign another attack on the same hashes.
+3. If handoff is another role and it is on the routing table — assign it.
+4. If the next step is on leave-off or inside Hard NOs — assign it. Do not ask Founder.
+5. If and only if the next step is a Protocol Founder-stop — one question, `waiting-founder`, stop.
+6. Update leave-off before you stop.
 
 ## You may touch
 

@@ -1,22 +1,22 @@
 {
   "schema": 1,
   "lane": "learning_lane_15m",
-  "stamped_at": "2026-09-08T08:30:00-04:00",
+  "stamped_at": "2026-09-08T17:11:00-04:00",
   "framing": "honesty instrument, not a productivity metric, not progress",
   "open": {
-    "total": 5,
-    "crew": 1,
+    "total": 4,
+    "crew": 0,
     "external": 1,
     "founder": 3,
     "unreachable": 0
   },
   "closed": {
     "unreachable": 3,
-    "trigger_fired_since_last_stamp": 2,
+    "trigger_fired_since_last_stamp": 3,
     "closed_on_falsifier": 0,
     "recorded_defect": 1
   },
-  "run_only_executed": 1,
+  "run_only_executed": 2,
   "admits": 0,
   "rows": {
     "1_true_pending": "open / external",
@@ -26,10 +26,11 @@
     "5_stale_display_wording": "CLOSED / trigger fired — Pages 21:28:39-04:00 missing-paper-join wording is live",
     "6_weekly_rollup": "open / founder",
     "7_series_hold": "open / founder",
-    "8_named_horse": "open / founder",
-    "9_zero_edge_residual": "open / crew",
+    "8_named_horse": "open / founder — third PROPOSED not owed; row 9 residual used the second slot",
+    "9_zero_edge_residual": "CLOSED / trigger fired — PROPOSED 02 selects; RUN-ONLY execution true; not an ADMIT",
     "10_proposed_01": "RUN-ONLY executed — see LEARNING_LANE_15M_OPERATOR_NOTE_PROPOSED_01.md",
     "11_072245_outage_gap": "CLOSED / recorded defect — window does not exist; do not backfill",
-    "12_soften_critic_hire": "CLOSED / founder trigger fired — Soften Critic hired 2026-09-08; not an ADMIT; bar still not binding"
+    "12_soften_critic_hire": "CLOSED / founder trigger fired — Soften Critic hired 2026-09-08; not an ADMIT; bar still not binding",
+    "13_proposed_02": "RUN-ONLY executed — see LEARNING_LANE_15M_OPERATOR_NOTE_PROPOSED_02.md; R-SKIP-2TO1-FAVORITE execution true; not scored"
   }
 }

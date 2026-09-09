@@ -2,7 +2,7 @@
 
 **Lane:** `learning_lane_15m` · series `KXBTC15M` only
 **Drafted:** 2026-09-08 08:30 EDT · Operator
-**Amended:** 2026-09-08 13:59 EDT · Operator, admit pass on Soften Critic CRITIC 02 (prior amendment: 2026-09-08 12:09 EDT at `2ad6fe1`, not midnight)
+**Amended:** 2026-09-08 21:00 EDT · Operator, record of Soften Critic CRITIC 09 (zero UPHELD; prior amendment: 2026-09-08 20:28 EDT at `78db2cc`, CRITIC 08 admit pass)
 **Binding?** **N.** A system that sets its own threshold does not have one.
 **Admit?** N · **Edge established?** N · `lab_admits` false · Trading **NOT ARMED**
 
@@ -12,7 +12,7 @@ This draft becomes binding only after all three:
 2. `critic-invariants` passes on the bytes proposed to bind, **or** every failing check is named on this bar's face with Operator's reason for binding anyway. A findings artifact that says `passed: false` cannot sit under a bar that says `binding: true`.
 3. Founder reads it once and acknowledges.
 
-Condition 1 is met **for the attack+answer pair named here**: [`LEARNING_LANE_15M_EVIDENCE_BAR_OPERATOR_ANSWER_02.md`](LEARNING_LANE_15M_EVIDENCE_BAR_OPERATOR_ANSWER_02.md), answering [`LEARNING_LANE_15M_EVIDENCE_BAR_CRITIC_02.md`](LEARNING_LANE_15M_EVIDENCE_BAR_CRITIC_02.md) (bytes `2a39471c…`). CRITIC 01 remains answered in [`LEARNING_LANE_15M_EVIDENCE_BAR_OPERATOR_ANSWER_01.md`](LEARNING_LANE_15M_EVIDENCE_BAR_OPERATOR_ANSWER_01.md). **Conditions 2 and 3 are not met.** `founder_read_once` stays false. This is still a proposed bar. Writing it is not an ADMIT. Amending it is not an ADMIT. Scoring against it is not owed. `records[]` stays empty.
+Condition 1 is **not met** for these bytes. [`LEARNING_LANE_15M_EVIDENCE_BAR_OPERATOR_ANSWER_09.md`](LEARNING_LANE_15M_EVIDENCE_BAR_OPERATOR_ANSWER_09.md) records [`LEARNING_LANE_15M_EVIDENCE_BAR_CRITIC_09.md`](LEARNING_LANE_15M_EVIDENCE_BAR_CRITIC_09.md) (bytes `CDEC94C5…`; zero UPHELD) on the **ANSWER 08** hashes (`6CACBB0F…` / `1C5D9FFF…`). Linking that pair from this file amends the face. An answer that amends the bar does not close condition 1 on the amended text. CRITIC 08 remains answered in [`LEARNING_LANE_15M_EVIDENCE_BAR_OPERATOR_ANSWER_08.md`](LEARNING_LANE_15M_EVIDENCE_BAR_OPERATOR_ANSWER_08.md) for its own hashes. CRITIC 07 remains answered in [`LEARNING_LANE_15M_EVIDENCE_BAR_OPERATOR_ANSWER_07.md`](LEARNING_LANE_15M_EVIDENCE_BAR_OPERATOR_ANSWER_07.md) for its own hashes. CRITIC 06 remains answered in [`LEARNING_LANE_15M_EVIDENCE_BAR_OPERATOR_ANSWER_06.md`](LEARNING_LANE_15M_EVIDENCE_BAR_OPERATOR_ANSWER_06.md) for its own hashes. CRITIC 05 remains answered in [`LEARNING_LANE_15M_EVIDENCE_BAR_OPERATOR_ANSWER_05.md`](LEARNING_LANE_15M_EVIDENCE_BAR_OPERATOR_ANSWER_05.md) for its own hashes. CRITIC 04 remains answered in [`LEARNING_LANE_15M_EVIDENCE_BAR_OPERATOR_ANSWER_04.md`](LEARNING_LANE_15M_EVIDENCE_BAR_OPERATOR_ANSWER_04.md) for its own hashes. CRITIC 03 remains answered in [`LEARNING_LANE_15M_EVIDENCE_BAR_OPERATOR_ANSWER_03.md`](LEARNING_LANE_15M_EVIDENCE_BAR_OPERATOR_ANSWER_03.md) for its own hashes. CRITIC 02 remains answered in [`LEARNING_LANE_15M_EVIDENCE_BAR_OPERATOR_ANSWER_02.md`](LEARNING_LANE_15M_EVIDENCE_BAR_OPERATOR_ANSWER_02.md) for its own hashes. CRITIC 01 remains answered in [`LEARNING_LANE_15M_EVIDENCE_BAR_OPERATOR_ANSWER_01.md`](LEARNING_LANE_15M_EVIDENCE_BAR_OPERATOR_ANSWER_01.md). **Conditions 2 and 3 are not met.** The last findings file (`ran_at` 2026-09-08T12:02:45−04:00) reviews `5F2AA5F5…` / `2611C255…` / `CD25DD72…` — not the ANSWER 08 hashes and not these bytes. The 14:04 `failing_set_at_last_operator_read` of `["fee_schedule_hash_recorded"]` described other bytes and is struck as a picture of this file. Copied arithmetic of `check_delta_above_detection_floor` on the ANSWER 03 hashes would name `mde` / `reject_if_mean_d_exceeds` / `alpha_first_look` / both power effects. After ANSWER 04 restated the four design numbers at next-look α, that same function would still compare `alpha_first_look` 0.025 to current α_k 0.008333 — a checker/key mismatch owed to Systems. `fee_schedule_hash_recorded` remains the standing named fail (empty sha256 after HTTP 429). `founder_read_once` stays false. This is still a proposed bar. Writing it is not an ADMIT. Amending it is not an ADMIT. Scoring against it is not owed. `records[]` stays empty.
 
 Amending this bar re-owes the Critic on the new text (`critic.py` keys findings by content hash). That is correct and intended.
 
@@ -88,9 +88,9 @@ Contrast, on the **same** n eligible windows:
 
 1. **Null.** One-sided paired t-test, **H0: mean(d) ≤ δ**. Reject only if p < α_k.
    The drafted null was `mean(d) ≤ 0`. That null is **known false before any data are collected**: the book fills at the posted mark and pays `1/mark`, so a fill is EV-zero *pre-fee* at a calibrated mark, and the fee is strictly positive on every fill (minimum ceil-cent fee $0.01). Therefore `E[d] > 0` for any nonzero skip rate with no selection skill present. Testing against zero is testing arithmetic. The floor is now the null, so clause (3) is absorbed here rather than checked separately.
-2. **Multiplicity.** `α_k = 0.05 / (k · (k+1))`, where `k = trials_to_date + 1`, using the registry counter *before* incrementing. Then increment.
-   The drafted scheme was `0.05 / k`. Its weights are the harmonic series, which diverges, so it controls nothing: over the bar's own 14-look week `1 − Π(1 − 0.05/k) = 15.2%`, not 5%. The replacement sums to 0.05 over an unbounded number of looks (`Σ 0.05/(k(k+1)) = 0.05`), giving FWER ≤ 0.05 forever. First look: `α_1 = 0.025`, z = 1.960. Fourteenth: `α_14 = 0.000238`, z = 3.494. FWER over 14 looks under the new scheme is 4.6%.
-   The increment is **mechanical**: `rules.record_trial` writes `trials_log` and `trials_to_date`. Baseline naming is not a trial. `R-SKIP-COINFLIP`'s pre-mechanism declaration is not backfilled; the counter stays 0. Clause (2) uses that counter as it stands.
+2. **Multiplicity.** `α_k = 0.05 / (k · (k+1))`, where `k = trials_to_date + 1`, using the registry counter *before* the look. The counter increments on **declaration** and after an **L2** look. An L1 score does not increment.
+   The drafted scheme was `0.05 / k`. Its weights are the harmonic series, which diverges, so it controls nothing: over the bar's own 14-look week `1 − Π(1 − 0.05/k) = 15.2%`, not 5%. The replacement sums to 0.05 over an unbounded number of looks (`Σ 0.05/(k(k+1)) = 0.05`), giving FWER ≤ 0.05 forever. `α_1 = 0.025`, z = 1.960, is the schedule's first term, spent on declaration, historical — matching the table and JSON `alpha_first_look_is_historical`. The first scoring look under this increment rule is k=2 / α=0.008333. `α_14 = 0.000238`, z = 3.494, is the schedule's 14th term (the 13th scoring look). FWER over 14 schedule terms under the new scheme is 4.6% — that sum includes the spent unused α_1.
+   The increment is **mechanical**: `rules.record_trial` writes `trials_log` and `trials_to_date` on `declaration` and `l2_look` only. Baseline naming is not a trial. An L1 score is not a trial kind. `R-SKIP-COINFLIP`'s pre-mechanism declaration is not backfilled; the counter stays 0. Clause (2) uses that counter as it stands.
 3. **Effect floor:** `δ = $0.28` per window, **= 0.28 × stake**. Absorbed into clause (1) as the null. See §Effect floor for what δ is and is not.
 4. **Positive side.** `mean(pnl_rule_fee_adj) > 0` on those same n windows. Promoted from conditional prose to a binding numbered clause. Beating a losing baseline by skipping, and still booking ~0 after fees, is distinguishable-or-not; it is not a positive result that cleared the cost. Skip-all yields 0 and fails this clause.
 5. **Matched-exposure permutation control.** `mean(d)` must exceed the `1 − α_k` quantile of a permutation null that **holds the number of skips fixed and reassigns which windows are skipped**: ≥ 10,000 draws, seed **`20260908`**, pre-registered here. This null is centred on abstaining at the observed rate with no skill, which is the correct comparison; clause (1) alone would still credit mechanical fee avoidance. Deterministic given the seed, no new data, no loop code.
@@ -105,19 +105,20 @@ Contrast, on the **same** n eligible windows:
 
 What has changed: δ is no longer derived from the critical value, and n has moved so the two numbers are not the same number.
 
-| | Drafted (n = 40) | Amended (n = 70) |
-|---|---|---|
-| sd used | 0.66 (point estimate) | **0.784** — 95% upper confidence bound on 0.66 from 56 calibration windows. δ is linear in sd and 0.66 is one number from one 14-hour stretch |
-| SE | 0.1044 | 0.0937 |
-| α on the first look | 0.05 | 0.025 |
-| MDE | 0.2807 | 0.1837 |
-| **δ / MDE** | **0.997** | **1.52** |
-| Reject if mean(d) > | 0.28 (H0 ≤ 0) | **0.464** (H0 ≤ δ) |
+| | Drafted (n = 40) | First look, spent (n = 70, α = 0.025) | Next look (k = 2, α = 0.008333; the scorer) |
+|---|---|---|---|
+| sd used | 0.66 (point estimate) | **0.784** — 95% upper confidence bound on 0.66 from 56 calibration windows. δ is linear in sd and 0.66 is one number from one 14-hour stretch | same 0.784 |
+| SE | 0.1044 | 0.0937 | 0.0937 |
+| α | 0.05 | 0.025 (spent slot; labeled historical) | **0.008333** |
+| z | — | 1.960 | **2.394** |
+| MDE | 0.2807 | 0.1837 | **0.2243** |
+| **δ / MDE** | **0.997** | **1.52** | **1.25** |
+| Reject if mean(d) > | 0.28 (H0 ≤ 0) | 0.464 (H0 ≤ δ; spent) | **0.504** (H0 ≤ δ; next look) |
 
-**Power, on the bar's face.** Under the amended null, power *at* δ is α by construction — that is what testing against a floor means. So the honest statement is the curve, not a single number:
+**Power, on the bar's face.** Under the amended null, power *at* δ is α by construction — that is what testing against a floor means. So the honest statement is the curve, not a single number. The spent first-look curve is historical. A later score under `trials_to_date = 1` uses the next-look curve:
 
-- 50% power against a true effect of **$0.464/window** (46% of a $1 stake, every window).
-- 80% power against a true effect of **$0.543/window** (54% of stake).
+- Spent first look (α = 0.025): 50% power against **$0.464/window**; 80% against **$0.543/window**.
+- Next look (k = 2, α = 0.008333): 50% power against **$0.504/window**; 80% against **$0.583/window**.
 - Under the *drafted* design (H0 ≤ 0, n = 40) the bar had **~50% power at δ** and reached 80% power only at $0.37/window. A bar that misses half the effects it declares material is a coin.
 
 **Read this honestly: with per-window sd near 0.66–0.78 and an n reachable in under two days, this lane can only detect very large effects.** That is a property of the tape and the $1 unit, not a defect the bar can amend away. It is disclosed rather than hidden.
@@ -178,6 +179,10 @@ To count as pre-registered, a rule's parameters need:
 
 This condition dies for this rule if a commit, desk line, or dated artifact predating 2026-09-07 21:49:37 EDT names the (0.45, 0.55) band. None was found in the history.
 
+**`R-SKIP-2TO1-FAVORITE`'s `favorite_odds=2` does not meet this either, and this bar records that on its face.** First naming is `e9fab5a` at 2026-09-08 16:56:05 EDT (`declared_at` 16:53:00; 3m 5s commit lag). The published RUN-ONLY fee table (`2fea8d8`, author 2026-09-07 21:49:37 EDT) already listed 24 marks; **2 of 24** are ≥ 2/3 (`0.9835` on `071545`, `0.7050` on `071600`). Gap: **19h 06m 28s**. A registry `note` asserting those marks did not inform the parameter is not proof. `favorite_odds=2` as "the first integer odds strictly above evens" is a conventional prior that does not require the tape — that is recorded, not treated as proof, and **is not a third clause of this test**. This is **not** a peek finding and not a score. **`verifiably_preregistered` is false.** L1 cannot support Established for this rule even if it later passes every clause. L1 may still be scored and may still support an Admissible dated record. `execution` stays true (RUN-ONLY, paper). This condition dies for this rule if a commit, desk line, or dated artifact predating 2026-09-07 21:49:37 EDT names `favorite_odds=2`. None was found. A later turn may not flip the flag by accepting a conventional-prior exception the two-part test does not contain.
+
+`WATCHED.lab_proposed` in `critic.py` is still pinned to `LEARNING_LANE_15M_OPERATOR_NOTE_PROPOSED_01.md`. PROPOSED 02 notes are **outside** `WATCHED`. Watching them is owed to Systems. This turn did not edit `critic.py`.
+
 ---
 
 ## The L2 confirmation test
@@ -189,9 +194,9 @@ Specified here, before L1 is scored, so the confirmation threshold cannot be set
 | n | 70 (eligible windows 71–140 after `declared_at`) |
 | H0 | `mean(d) ≤ δ`, same form as L1 |
 | δ | the same δ in force when L1 was scored. It does not move between looks |
-| α | `α_k` from the same schedule, using the counter value **after** L1's increment |
+| α | `α_k` from the same schedule, using the counter as it stands after the **declaration** increment. L1 scoring does not increment. With `trials_to_date = 1` today, L2 shares the next-look set (k=2, α=0.008333, reject 0.504, MDE 0.2243, 50% 0.504, 80% 0.583). The struck sentence said "after L1's increment." `record_trial` accepts only `declaration` and `l2_look`; there is no L1-score kind |
 | Clauses | (1), (3), (4), (5) all bind, same as L1 |
-| Counter | **L2 increments `trials_to_date` too.** A confirmation look is a look. Not counting it makes confirmation free |
+| Counter | **L2 increments `trials_to_date` after its look.** A confirmation look is a look. Not counting it makes confirmation free. An L1 score does not increment |
 | Execution | must be **lived** — see §Replay versus lived |
 
 ---
@@ -207,9 +212,13 @@ The registry already says these are different evidence. This bar says which verd
 
 Replay assumes fills live execution might not get. Skipping a bet changes nothing about the market and does change the fill sequence. Both are legitimate. They are not interchangeable.
 
-**Established is currently unreachable, and this bar says so rather than implying otherwise.** `paper.py` now consults `rules.decide()` via `consult_registry`. The running hub is on `0a480d4` (`watch.json` `runtime.git_tip` `refs/heads/cursor/part-a-clerical-trust-boundary@0a480d41321ebe004e8e07ed1241ef10af3ee39f`). That is not enough. `R-SKIP-COINFLIP` still has `execution: false`, and its band is **not verifiably pre-registered**, so its L1 cannot support Established even if it passed every clause. No selection rule declared after the flip exists. `currently_reachable` stays **false**.
+**Lived paper for `R-SKIP-2TO1-FAVORITE` begins at the execution flip, not at `declared_at`.** Flip recorded in the Operator note at **2026-09-08T17:11:00-04:00**, commit `0daae90` (17:14:46 EDT). Any window whose `close` is strictly after `declared_at` `2026-09-08T16:53:00-04:00` and at or before `2026-09-08T17:11:00-04:00` is **replay** for this rule. A later L1/L2 score that includes a window from that interval as lived fails this bar. I am not asserting which window ids exist or what they paid.
 
-**Explicit precondition of Established:** a selection rule declared after the execution flip, with verifiably pre-registered parameters, and `execution=true` before its first L2-eligible window closes. `R-SKIP-COINFLIP` cannot satisfy this. This turn does not flip its execution.
+**These lived/replay fields are prose-only today.** `window_is_oos` keys only on `closed > declared_at`. `_assert_scorable` L2 keys only on the current `execution` flag. `score_rule` does not read `lived_paper_begins_at` / `replay_close_*`. Wiring that read is owed to Systems. A later score that treats a window from that interval as lived still fails this bar as prose; the scorer cannot fail it as a machine. This turn did not edit `rules.py`.
+
+**Established is currently unreachable, and this bar says so rather than implying otherwise.** `paper.py` consults `rules.decide()` via `consult_registry`. **No live hub tip was readable this turn** (`watch.json` is absent on this tree; this turn did not start or kill a hub). The previous face cited running-hub tip `0a480d4`. That SHA is Turn 2 (13:46 EDT). At `0a480d4`, `decide()` has no `favorite_odds` dispatch: after the OOS check it only special-cases `R-SKIP-COINFLIP`; every other selecting id gets `unknown`. HEAD `_express_selection` does dispatch `params.favorite_odds`. This face does **not** claim a live process tip. `R-SKIP-2TO1-FAVORITE` **does exist**: declared at `e9fab5a` (`declared_at` 16:53:00), `execution=true` since 17:11 (`0daae90`). That is not enough. The bar is not binding; condition 2 fails on the unpinned fee hash and on findings that do not cover these bytes; condition 3 is unmet; and `favorite_odds=2` is **not verifiably pre-registered**. `R-SKIP-COINFLIP` still has `execution: false`, and its band is not verifiably pre-registered. `currently_reachable` stays **false**.
+
+**Explicit precondition of Established:** a selection rule declared after the `decide()` flip, with verifiably pre-registered parameters, and `execution=true` before its first L2-eligible window closes, scored under a binding bar. `R-SKIP-COINFLIP` cannot satisfy this. `R-SKIP-2TO1-FAVORITE` fails the pre-registration half. This turn does not flip `R-SKIP-COINFLIP` and does not flip `currently_reachable`.
 
 **The permitted flip point.** `execution=false → true` is legitimate **only before the first L2-eligible window closes**, and only recorded with a commit SHA and timestamp. Flipping it after any L2 window has closed, or flipping it to make a replayed look read as lived, is the prohibited move. The drafted ban read as absolute and forbade the only action that produces a lived confirmation; it is a timing rule.
 
@@ -217,11 +226,13 @@ Replay assumes fills live execution might not get. Skipping a bet changes nothin
 
 ## Trials accounting
 
-`trials_to_date` lives on [`LEARNING_LANE_15M_RULES.json`](LEARNING_LANE_15M_RULES.json). It starts at **0**.
+`trials_to_date` lives on [`LEARNING_LANE_15M_RULES.json`](LEARNING_LANE_15M_RULES.json). It started at **0**. It is now **1**.
 
 **It increments on the *declaration* of a selection rule on this lane, not on the score.** The drafted rule incremented "once per first-look (L1) score," which defines the multiplicity family by what got written up rather than by what got tried. A rule proposed, replayed informally and dropped before anyone wrote a score never touched the counter. That is the wrong denominator and it always flatters. Baseline naming is not a trial. L2 confirmation looks also increment (see §The L2 confirmation test).
 
-The counter is mechanical as of `0a480d4`: `record_trial` writes `trials_log`. Baseline naming is not a trial. `R-SKIP-COINFLIP`'s pre-mechanism declaration is not backfilled; `trials_to_date` stays 0. This turn does not increment it.
+The counter is mechanical as of `0a480d4`: `record_trial` writes `trials_log`. Baseline naming is not a trial. `R-SKIP-COINFLIP`'s pre-mechanism declaration is not backfilled. The `R-SKIP-2TO1-FAVORITE` declaration spent the first slot (`trials_log` row at 16:53:00; `trials_to_date_after` 1). This turn does not increment it again.
+
+**Next look.** `score_rule` reads the registry counter and computes `alpha_k` with `k = trials_to_date + 1`. The next look is **k = 2**, α = `0.05 / (2 · 3)` = **0.008333**. `alpha_first_look: 0.025` is the schedule's first term, now historical. The rejection threshold / MDE / 50% / 80% power a later score will be compared against are the next-look set in §Effect floor (0.504 / 0.2243 / 0.504 / 0.583), not the spent first-look set (0.464 / 0.1837 / 0.464 / 0.543). L2 uses that same k: an L1 score does not increment, so a later L2 is also k=2 until L2 itself increments. Advertising "after L1's increment" as if an L1 score moved the counter is a different test from the scorer.
 
 The held-out L2 range is the other half of the protection: the scorer of L1 never sees it, and must prove that by commit order. Establishment cannot be claimed from L1 alone even if L1 passes.
 
@@ -281,12 +292,12 @@ Named on the face because fourteen sustained objections and zero new `CHECKS` me
 | F2 matched exposure | `matched_exposure_control` requires `control_function` + `score_rule` call |
 | F3 power | same check recomputes se / mde / threshold / power and fails on disagreement |
 | F4 holdout | `holdout_is_forward_only` keys on `l1_committed_before_l2`, not `forward_only` |
-| F5 pre-registration | no check searches git history; the 8h 07m 14s gap stays on the face |
+| F5 pre-registration | no check searches git history; the coinflip 8h 07m 14s gap and the `favorite_odds=2` 19h 06m 28s gap stay on the face; conventional-prior is not a flip path |
 | F6 multiplicity | `trials_counter_is_consistent` requires `record_trial`; α is `0.05/(k(k+1))` |
 | F7 fee-free book | `fee_adjusted_book_is_binding` requires `fee_adjust` and reads the payout line |
 | X1 spread | empirical profile owed; unconditional direction withdrawn |
-| X2 reachable | `currently_reachable` stays false; `decide()` is in the running hub |
-| X3 L2 test | `looks.l2_test` is on the face; a missing-field check is possible, not written |
+| X2 reachable | `currently_reachable` stays false; `R-SKIP-2TO1-FAVORITE` registry `execution` is true; lived honoring is unproven on this tree this turn (no tip, no cited decision row); pre-registration / binding / fee hash / Founder read-once still block |
+| X3 L2 test | `looks.l2_test` is on the face; L2 α is the declaration-counter k and shares the next-look set; a missing-field check is possible, not written |
 | X4 trials on declaration | `record_trial`; baseline naming raises |
 | X5 sustain-or-overrule | prose; a hash check cannot read an admit-pass verdict |
 | X6 δ is a fraction | `effect_floor_as_fraction_of_stake`; `PAPER_UNIT` invariant still owed |

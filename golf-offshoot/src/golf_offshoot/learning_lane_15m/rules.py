@@ -77,6 +77,29 @@ def window_is_oos(rule: dict[str, Any], *, close_at: str) -> bool:
     return closed > declared
 
 
+def favorite_threshold(odds: float) -> float:
+    """posted_yes cutoff for an N-to-1 favorite: p = odds / (1 + odds)."""
+    if float(odds) <= 0:
+        raise ValueError("favorite_odds must be positive")
+    return float(odds) / (1.0 + float(odds))
+
+
+def _express_selection(rule: dict[str, Any], posted_yes: float) -> tuple[str, str]:
+    """Fill-or-skip from declared parameters. Does not read the tape."""
+    params = rule.get("params") or {}
+    if params.get("favorite_odds") is not None:
+        odds = float(params["favorite_odds"])
+        threshold = favorite_threshold(odds)
+        if float(posted_yes) >= threshold:
+            return "skip", f"posted_yes >= {odds:g}:1 favorite threshold {threshold}"
+        return "fill", f"posted_yes below {odds:g}:1 favorite threshold"
+    if str(rule.get("id") or "") == "R-SKIP-COINFLIP":
+        if 0.45 < float(posted_yes) < 0.55:
+            return "skip", "posted_yes inside (0.45, 0.55)"
+        return "fill", "posted_yes outside coinflip band"
+    return "unknown", f"no expression for {rule.get('id')}"
+
+
 def decide(
     rule: dict[str, Any],
     *,
@@ -102,16 +125,7 @@ def decide(
         action = "ineligible"
         reason = "window closed at or before declared_at; not OOS for this rule"
     if eligible and selects:
-        if kind == "selection" and rule.get("id") == "R-SKIP-COINFLIP":
-            if 0.45 < float(posted_yes) < 0.55:
-                action = "skip"
-                reason = "posted_yes inside (0.45, 0.55)"
-            else:
-                action = "fill"
-                reason = "posted_yes outside coinflip band"
-        else:
-            action = "unknown"
-            reason = f"no expression for {rule.get('id')}"
+        action, reason = _express_selection(rule, posted_yes)
     return {
         "rule_id": rule.get("id"),
         "eligible": eligible,

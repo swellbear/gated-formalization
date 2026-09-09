@@ -22,6 +22,8 @@ CoS starts when `crew_tick.needed` is true, including via a Cursor Automation on
 
 A CoS turn: session start, **one** assign or one closeout, desk + leave-off to committed truth, stamp `last_cos_*` via `stamp_cos_closeout`. Then stop. It does not ping Founder for the Next list. It does ping Founder for the existing Ask list (HOLD lift, arm, bind, Hard NO changes).
 
+**Zero-objection stop.** If the newest Soften Critic finding is zero UPHELD and Operator did **not** amend the bar (a record-only ANSWER, or no ANSWER owed), CoS **closes out**: `Status=idle`, do not assign Operator to write another ANSWER, do not assign Soften Critic on those same hashes. Two consecutive zero-UPHELD attacks is the treadmill; close it. A new judicial owe is a *new* bar/registry hash from a real amendment, not a new CRITIC file that found nothing. If `stamp_cos_closeout` cannot persist (cloud VM missing wake or pydantic), the committed desk `last_cos_*` table is the stamp.
+
 Quiet tick: `needed` false ⇒ the automation no-ops. No desk spam.
 
 The runner may write `crew_tick`. It may not open a chat, ADMIT, invent, or push. CoS, Operator, Lab, and soften-critic stay off `CLERICAL_WHITELIST`.
