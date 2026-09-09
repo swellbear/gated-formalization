@@ -6,11 +6,11 @@ Thread lines are **one sentence, newest first, max 10**. Long findings belong in
 
 | Field | Value |
 |-------|--------|
-| Updated | 2026-09-09 18:15 ET |
+| Updated | 2026-09-09 18:28 ET |
 | Active role | soften-critic |
 | Job | Attack the Systems 2026-09-09 16:50 destination/compositor/fee-retry factory evidence-bar bytes (honer as discovery organ; dark AND-skip consult named and off; fee-schedule probe retry). Written objections only. Do not edit the bar. Do not score. Do not propose. Do not ADMIT. Do not park. Do not bind. Do not enable consult. Do not revive R-SKIP-COINFLIP. Honer catalog/rules starvation hashes remain after this attack. |
-| Status | assigned |
-| Handoff | Factory destination bytes unreviewed since 16:50 (`1b21a70`). Honer search starvation (`86e0cce`) catalog/rules hashes remain after. Consult off. Do not score, bind, or arm. |
+| Status | done |
+| Handoff | `golf-offshoot/docs/LEARNING_LANE_15M_EVIDENCE_BAR_CRITIC_11.md` — six UPHELD on 16:50 destination/compositor/fee-retry bytes (`9C323D59…` / `645A82F8…`); bar not edited; honer catalog/rules remain; consult off; not scored; not bound. |
 | Waiting on Founder | **N** |
 
 ## last_cos (CoS stamp — doorbell silence)
@@ -56,6 +56,8 @@ Two suites, both on the tick.
 
 ## Thread
 
+- 2026-09-09 18:28 ET  soften-critic → chief-of-staff: CRITIC 11 six UPHELD on 16:50 destination/compositor/fee-retry factory bar (`9C323D59…` / `645A82F8…`); bar not edited; honer catalog/rules remain; consult off; not scored; not bound. next=chief-of-staff
+- 2026-09-09 18:22 ET  soften-critic → chief-of-staff: started written attack on Systems 16:50 destination/compositor/fee-retry factory bar bytes; bar not edited. next=soften-critic
 - 2026-09-09 18:15 ET  chief-of-staff → soften-critic: attack Systems 16:50 destination/compositor/fee-retry factory bar bytes; written objections only; do not edit, score, propose, ADMIT, park, bind, enable consult, or revive R-SKIP-COINFLIP; honer catalog/rules remain after. next=soften-critic
 - 2026-09-09 17:40 ET  chief-of-staff: honer search starvation landed; factory Critic still parked; honer Critic later on catalog/rules hashes. next=idle
 - 2026-09-09 17:40 ET  systems → chief-of-staff: honer-only search starvation (n=40/70 looks, retire untestable, reset 75¢ once then advance); consult still off; not scored; not bound. next=chief-of-staff
@@ -64,7 +66,5 @@ Two suites, both on the tick.
 - 2026-09-09 17:05 ET  chief-of-staff: destination alignment landed; consult off; fee probe 429; Critic owed later session on new bar bytes. next=idle
 - 2026-09-09 17:05 ET  systems → chief-of-staff: dark AND-skip compositor, promotion protocol, factory-bar destination, fee-pin retry 429, honer cite empty. not scored; not bound; consult not enabled. next=chief-of-staff
 - 2026-09-09 16:50 ET  systems: destination alignment in progress (dark AND-skip, bar paragraph, fee-pin retry). next=systems
-- 2026-09-09 16:50 ET  chief-of-staff → systems: Founder destination — gym + discovery organ + earned consult; stamp desk; Systems lands setup alignment; Critic later session; do not enable consult, score, bind, or arm. next=systems
-- 2026-09-09 16:20 ET  chief-of-staff: quote-bus live-book completeness landed; Critic still parked. next=idle
 *Older lines rolled off at the 10-line cap. Full history is in the git log for `docs/agents/DESK.md`.*
 
