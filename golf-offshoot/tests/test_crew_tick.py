@@ -1,0 +1,221 @@
+"""crew_tick doorbell: CoS starts when the board needs a brain, not every 90s."""
+
+from datetime import datetime, timezone
+
+from golf_offshoot.learning_lane_15m.crew_tick import (
+    REASON_A_DONE,
+    REASON_A_IDLE,
+    REASON_B,
+    REASON_C,
+    REASON_D_WATCH,
+    REASON_E,
+    compute_crew_tick,
+    stamp_cos_closeout,
+)
+from golf_offshoot.learning_lane_15m.learn import mark_roles_served, record_learning_tick
+from golf_offshoot.learning_lane_15m.paths import set_15m_root_override
+from golf_offshoot.learning_lane_15m.runner import serve_role
+
+
+def _desk(*, role="chief-of-staff", status="idle", job="factory closed. Lab not assigned.", thread=""):
+    return (
+        "# Agent desk\n\n"
+        "| Field | Value |\n"
+        "|-------|--------|\n"
+        f"| Active role | {role} |\n"
+        f"| Job | {job} |\n"
+        f"| Status | {status} |\n"
+        "| Handoff | — |\n\n"
+        "## Thread\n\n"
+        f"{thread or '- 2026-09-08 14:22 ET  chief-of-staff: factory closed. Lab not assigned.'}\n"
+    )
+
+
+def _watch(*, cycles="4", last_at=None, running=True, interval_s="90.0"):
+    if last_at is None:
+        last_at = datetime.now(timezone.utc).isoformat()
+    return {
+        "running": running,
+        "cycles": cycles,
+        "interval_s": interval_s,
+        "last_at": last_at,
+    }
+
+
+def _owed(role, *, reasons=None, ticks=1, since="2026-09-08T14:00:00-04:00"):
+    return {
+        "role": role,
+        "reasons": list(reasons or ["lab_proposed"]),
+        "ticks_unanswered": ticks,
+        "owed_since": since,
+    }
+
+
+def test_routine_settle_alone_is_quiet():
+    """A new_settle names clerical roles only. That is not a CoS doorbell."""
+    tick = compute_crew_tick(
+        {
+            "watch": _watch(),
+            "roles_owed": [
+                _owed("digest-figures", reasons=["new_settle KXBTC15M-26SEP081430-30"], ticks=1),
+                _owed("systems", reasons=["new_settle KXBTC15M-26SEP081430-30"], ticks=1),
+                _owed("validator", reasons=["new_settle KXBTC15M-26SEP081430-30"], ticks=1),
+            ],
+        },
+        desk_text=_desk(role="systems", status="assigned", job="export the settle"),
+        hub_ok=True,
+    )
+    assert tick["needed"] is False
+    assert tick["quiet"] is True
+    assert tick["reason_ids"] == []
+
+
+def test_desk_done_next_cos_rings():
+    tick = compute_crew_tick(
+        {"watch": _watch(), "roles_owed": []},
+        desk_text=_desk(
+            role="operator",
+            status="done",
+            job="admit pass filed",
+            thread="- 2026-09-08 14:05 ET  operator → chief-of-staff: admit pass. next=chief-of-staff",
+        ),
+        hub_ok=True,
+    )
+    assert tick["needed"] is True
+    assert REASON_A_DONE in tick["reason_ids"]
+
+
+def test_same_reasons_after_closeout_stamp_are_quiet():
+    state = {
+        "watch": _watch(),
+        "roles_owed": [_owed("operator"), _owed("soften-critic", reasons=["artifact_unreviewed"])],
+        "crew_tick": {},
+    }
+    desk = _desk()
+    first = compute_crew_tick(state, desk_text=desk, leave_off_text="Lab not assigned.", hub_ok=True)
+    assert first["needed"] is True
+    assert REASON_A_IDLE in first["reason_ids"]
+    assert REASON_B in first["reason_ids"]
+    assert REASON_E in first["reason_ids"]
+
+    state["crew_tick"] = {
+        "last_cos_at": "2026-09-08T14:40:00-04:00",
+        "last_cos_commit": "testhash",
+        "handled_reason_ids": list(first["reason_ids"]),
+    }
+    # Judicial owes older than the stamp are not "new" (B drops). A and E remain.
+    silenced = compute_crew_tick(
+        state,
+        desk_text=desk,
+        leave_off_text="Lab not assigned.",
+        hub_ok=True,
+        handled_reason_ids=list(first["reason_ids"]),
+    )
+    assert silenced["needed"] is False
+    assert silenced["quiet"] is True
+    assert silenced["last_cos_commit"] == "testhash"
+
+
+def test_clerical_role_owed_more_than_two_ticks_rings():
+    tick = compute_crew_tick(
+        {
+            "watch": _watch(),
+            "roles_owed": [
+                _owed("systems", reasons=["new_settle X"], ticks=3),
+            ],
+        },
+        desk_text=_desk(role="systems", status="assigned", job="export"),
+        hub_ok=True,
+    )
+    assert tick["needed"] is True
+    assert REASON_C in tick["reason_ids"]
+
+
+def test_watch_cycles_stuck_rings():
+    frozen = "2026-09-08T12:00:00-04:00"
+    tick = compute_crew_tick(
+        {
+            "watch": _watch(cycles="2", last_at=frozen, running=True),
+            "roles_owed": [],
+        },
+        desk_text=_desk(role="operator", status="assigned", job="park"),
+        hub_ok=True,
+        previous_watch=_watch(cycles="2", last_at=frozen, running=True),
+    )
+    assert tick["needed"] is True
+    assert REASON_D_WATCH in tick["reason_ids"]
+
+
+def test_runner_cannot_mark_cos_served(tmp_path):
+    set_15m_root_override(tmp_path)
+    try:
+        latest = tmp_path / "latest"
+        latest.mkdir(parents=True, exist_ok=True)
+        (latest / "learning_wake.json").write_text(
+            '{"roles_owed":[{"role":"chief-of-staff","reasons":["crew_tick"]}],"served":[]}',
+            encoding="utf-8",
+        )
+        result = serve_role("chief-of-staff")
+        assert result["marked"] is False
+        assert "whitelist" in result["reason"]
+        state = mark_roles_served(["chief-of-staff"], by="runner", note="must not")
+        assert state is not None
+        assert state["roles_owed"][0]["role"] == "chief-of-staff"
+        assert state["served"] == []
+    finally:
+        set_15m_root_override(None)
+
+
+def test_current_idle_cos_desk_rings_like_the_exhibit():
+    """The 14:22 idle-CoS desk with uncovered judicial owes is a doorbell."""
+    tick = compute_crew_tick(
+        {
+            "watch": _watch(),
+            "updated_at": "2026-09-08T14:30:11-04:00",
+            "roles_owed": [
+                _owed("operator", reasons=["lab_proposed", "detector_blind <lambda>"]),
+                _owed("soften-critic", reasons=["artifact_unreviewed evidence_bar"]),
+            ],
+        },
+        desk_text=_desk(),
+        leave_off_text="Turns 1–3 on 5dc4f24. Lab not assigned. Bar not binding.",
+        hub_ok=True,
+    )
+    assert tick["needed"] is True
+    assert REASON_A_IDLE in tick["reason_ids"]
+    assert REASON_E in tick["reason_ids"]
+
+
+def test_stamp_cos_closeout_silences_the_same_set(tmp_path, monkeypatch):
+    set_15m_root_override(tmp_path)
+    repo = tmp_path / "repo"
+    (repo / "docs" / "agents").mkdir(parents=True)
+    (repo / "docs" / "agents" / "DESK.md").write_text(_desk(), encoding="utf-8")
+    (repo / "docs" / "AGENT_LEAVE_OFF.md").write_text("Lab not assigned.\n", encoding="utf-8")
+    monkeypatch.setattr(
+        "golf_offshoot.learning_lane_15m.crew_tick.repo_root", lambda: repo
+    )
+    monkeypatch.setattr(
+        "golf_offshoot.learning_lane_15m.learn.repo_root", lambda: repo
+    )
+    try:
+        from golf_offshoot.learning_lane_15m.learn import save_wake_state
+
+        state = {
+            "watch": _watch(),
+            "roles_owed": [_owed("operator"), _owed("soften-critic", reasons=["artifact_unreviewed"])],
+            "crew_tick": {},
+        }
+        first = compute_crew_tick(
+            state, desk_text=_desk(), leave_off_text="Lab not assigned.", hub_ok=True
+        )
+        state["crew_tick"] = first
+        save_wake_state(state)
+        stamped = stamp_cos_closeout(commit="proofsha", reason_ids=list(first["reason_ids"]), root=repo)
+        assert stamped is not None
+        assert stamped["needed"] is False
+        assert stamped["quiet"] is True
+        assert stamped["last_cos_commit"] == "proofsha"
+        assert sorted(stamped["handled_reason_ids"]) == sorted(first["reason_ids"])
+    finally:
+        set_15m_root_override(None)

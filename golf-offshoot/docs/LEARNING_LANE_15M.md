@@ -24,7 +24,7 @@ Hub viz for this lane is not yet available (empty / observation-only). Do not in
 - AI never deposit / withdraw / transfer. There is no 15-min cash UI.
 - Paper money only. `PAPER OBSERVATION ONLY`.
 - Do **not** retune golf θ from 15-min.
-- Do **not** widen past `KXBTC15M` in this PR (the adapter is shaped to expand later).
+- Do **not** widen past `KXBTC15M`. Expansion is a new lane, not a wider allow-list. Procedure: [`LEARNING_LANE_EXPANSION.md`](LEARNING_LANE_EXPANSION.md).
 - No geo. No LIVE cash. No invented edge / banked-edge claims.
 - 15-min Kalshi is not live trading and not a golf WC1 edge.
 
@@ -107,12 +107,12 @@ Every PaperWatch cycle (and every `learn-15m`) scans `settlements/*.json`, `pape
 | `new_fill` | a new paper book appeared on this tree |
 | `pending_cleared` | a window left the pending list |
 
-Each event carries `roles_owed` in Protocol order — `digestor` → `operator` → `systems` → `validator`. `lab` is added only when the CoS honesty checklist is stamped all-PASS **and** an Operator residual is passed in explicitly; a scan alone never owes Lab. Nothing new on a cycle records a heartbeat instead (`no new settle; watch still running`).
+Each event carries `roles_owed` in Protocol order — `digest-figures` → `operator` → `systems` → `validator`. Human `digestor` is not named on a routine settle; it is keyed on the standing caveats file. `lab` is added only when the CoS honesty checklist is stamped all-PASS **and** an Operator residual is passed in explicitly; a scan alone never owes Lab. Nothing new on a cycle records a heartbeat instead (`no new settle; watch still running`).
 
 **`roles_owed` is a request, never a completion.** The wake writes no desk thread line, Softens nothing, ADMITs nothing, and invents no win, lose or pnl. An owed role keeps its `owed_since`, so a wake nobody answered ages in plain sight. A role leaves the list only when an agent that really ran calls it:
 
 ```bash
-python -c "from golf_offshoot.learning_lane_15m.learn import mark_roles_served; mark_roles_served(['digestor'], by='digestor', note='posted the SOURCE honesty digest')"
+python -c "from golf_offshoot.learning_lane_15m.learn import mark_roles_served; mark_roles_served(['digest-figures'], by='digest-figures', note='posted generated figures')"
 ```
 
 A window can carry an official Kalshi result while its paper book is not on this tree. The scan reports that as a **missing paper join** with no paper pnl — never as a pending window, and never as a paper win or loss.

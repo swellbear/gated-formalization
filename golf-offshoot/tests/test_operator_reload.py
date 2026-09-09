@@ -85,6 +85,58 @@ def test_read_git_tip_packed_refs_and_worktree(tmp_path):
     assert read_git_tip(repo) == "refs/heads/master@999fff"
 
 
+def _linked_worktree(tmp_path: Path, *, sha: str, branch: str = "refs/heads/feature") -> Path:
+    """The layout git actually writes for `git worktree add`.
+
+    Branch refs live in the common dir. The worktree git dir holds only HEAD
+    and a `commondir` pointer.
+    """
+    common = tmp_path / "main" / ".git"
+    (common / branch).parent.mkdir(parents=True, exist_ok=True)
+    (common / branch).write_text(sha + "\n", encoding="utf-8")
+    wt_git = common / "worktrees" / "side"
+    wt_git.mkdir(parents=True, exist_ok=True)
+    (wt_git / "HEAD").write_text(f"ref: {branch}\n", encoding="utf-8")
+    (wt_git / "commondir").write_text("../..\n", encoding="utf-8")
+    repo = tmp_path / "side"
+    repo.mkdir(exist_ok=True)
+    (repo / ".git").write_text(f"gitdir: {wt_git}\n", encoding="utf-8")
+    return repo
+
+
+def test_read_git_tip_resolves_a_branch_sha_inside_a_linked_worktree(tmp_path):
+    # Reading only the worktree git dir leaves the sha empty, so every commit
+    # on the current branch looks like no change and the hub never re-execs.
+    repo = _linked_worktree(tmp_path, sha="1111aaa")
+    assert read_git_tip(repo) == "refs/heads/feature@1111aaa"
+
+
+def test_a_commit_on_the_same_branch_is_a_code_reload_in_a_worktree(tmp_path):
+    repo = _linked_worktree(tmp_path, sha="1111aaa")
+    before = WatchSnapshot(git_tip=read_git_tip(repo), code=(), artifacts=())
+    (tmp_path / "main" / ".git" / "refs" / "heads" / "feature").write_text(
+        "2222bbb\n", encoding="utf-8"
+    )
+    after = WatchSnapshot(git_tip=read_git_tip(repo), code=(), artifacts=())
+
+    assert before.git_tip != after.git_tip
+    assert classify_change(before, after).should_reexec is True
+
+
+def test_hub_code_files_watch_the_lane_package(tmp_path):
+    # PaperWatch and the clerical runner execute in the hub process. A merge
+    # that only touches the lane must still re-exec.
+    pkg = _pkg_with_hub(tmp_path)
+    lane = pkg / "learning_lane_15m"
+    lane.mkdir()
+    (lane / "runner.py").write_text("# clerical runner\n", encoding="utf-8")
+    (lane / "learn.py").write_text("# wake\n", encoding="utf-8")
+
+    names = {path.name for path in hub_code_files(pkg)}
+
+    assert {"runner.py", "learn.py", "app.py", "__main__.py"} <= names
+
+
 def test_noise_names_skip_editor_temps():
     assert is_noise_name("app.py.tmp")
     assert is_noise_name("app.py.swp")

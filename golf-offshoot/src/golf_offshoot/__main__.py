@@ -74,7 +74,7 @@ def main(argv: list[str] | None = None) -> int:
         "command",
         nargs="?",
         default="demo",
-        choices=["demo", "board", "explain", "strategy", "ingest", "calibrate", "pressure-test", "live", "watch", "shadow", "shell", "paper-export", "paper-ledger", "paper-deposit", "paper-withdraw", "paper-settle", "paper-fill", "compare-replay", "hub", "lane-15m", "learn-15m", "learn-15m-runner", "digest-15m", "observability-export"],
+        choices=["demo", "board", "explain", "strategy", "ingest", "calibrate", "pressure-test", "live", "watch", "shadow", "shell", "paper-export", "paper-ledger", "paper-deposit", "paper-withdraw", "paper-settle", "paper-fill", "compare-replay", "hub", "lane-15m", "learn-15m", "learn-15m-runner", "digest-15m", "observability-export", "honer-15m"],
     )
     parser.add_argument("--course-type", default="parkland")
     parser.add_argument("--player", default="p01")
@@ -310,6 +310,8 @@ def main(argv: list[str] | None = None) -> int:
         return _cmd_digest_15m(args)
     if args.command == "observability-export":
         return _cmd_observability_export(args)
+    if args.command == "honer-15m":
+        return _cmd_honer_15m(args)
 
     print(DEMO_BANNER)
     ct = CourseType(args.course_type)
@@ -1027,6 +1029,16 @@ def _cmd_hub(args) -> int:
         return 0
     print(html)
     return 0
+
+
+def _cmd_honer_15m(args) -> int:
+    """Isolated honer_15m tick. Does not start or kill PaperWatch."""
+    from golf_offshoot.honer_15m.watch import run_watch_forever
+
+    if getattr(args, "watch", False):
+        interval = None if int(getattr(args, "interval", 600) or 600) == 600 else float(args.interval)
+        return run_watch_forever(interval_s=interval)
+    return run_watch_forever(once=True)
 
 
 def _cmd_lane_15m(args) -> int:

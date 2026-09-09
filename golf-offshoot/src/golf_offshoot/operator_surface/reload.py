@@ -23,6 +23,14 @@ DEFAULT_POLL_S = 2.0
 DEFAULT_DEBOUNCE_S = 1.5
 
 _NOISE_SUFFIXES = (".tmp", ".temp", ".swp", ".swo", ".bak", ".orig", ".pyc", ".pyo")
+#: Packages the running hub executes in-process. ``learning_lane_15m`` is here
+#: because PaperWatch and the clerical runner run inside the hub: a merge that
+#: only touches the lane must still re-exec, or the process keeps serving the
+#: old ROLE_ORDER and whitelist while the desk looks normal.
+_CODE_PKG_DIRS = (
+    "operator_surface",
+    "learning_lane_15m",
+)
 _CODE_RELPATHS = (
     "__main__.py",
     "audit/shadow_settle.py",
@@ -128,35 +136,71 @@ def _resolve_git_dir(repo: Path) -> Path | None:
         return None
 
 
+def _common_git_dir(git_dir: Path) -> Path | None:
+    """The shared git dir behind a linked worktree.
+
+    A worktree's git dir holds its own HEAD but no ``refs/heads`` and no
+    ``packed-refs`` — those live in the common dir named by ``commondir``.
+    Resolving only the worktree dir makes every branch SHA read as empty, so
+    a commit on the current branch looks like no change at all.
+    """
+    marker = git_dir / "commondir"
+    if not marker.is_file():
+        return None
+    try:
+        raw = marker.read_text(encoding="utf-8").strip()
+    except OSError:
+        return None
+    if not raw:
+        return None
+    path = Path(raw)
+    if not path.is_absolute():
+        path = git_dir / path
+    try:
+        resolved = path.resolve()
+    except OSError:
+        return None
+    return resolved if resolved != git_dir else None
+
+
 def _read_ref_sha(git_dir: Path, ref: str) -> str:
-    ref_path = git_dir / ref
-    try:
-        if ref_path.is_file():
-            return ref_path.read_text(encoding="utf-8").strip()
-    except OSError:
-        pass
-    packed = git_dir / "packed-refs"
-    try:
-        body = packed.read_text(encoding="utf-8")
-    except OSError:
-        return ""
-    for line in body.splitlines():
-        stripped = line.strip()
-        if not stripped or stripped.startswith("#") or stripped.startswith("^"):
+    search = [git_dir]
+    common = _common_git_dir(git_dir)
+    if common is not None:
+        search.append(common)
+    for base in search:
+        ref_path = base / ref
+        try:
+            if ref_path.is_file():
+                text = ref_path.read_text(encoding="utf-8").strip()
+                if text:
+                    return text
+        except OSError:
+            pass
+    for base in search:
+        try:
+            body = (base / "packed-refs").read_text(encoding="utf-8")
+        except OSError:
             continue
-        parts = stripped.split()
-        if len(parts) >= 2 and parts[1] == ref:
-            return parts[0]
+        for line in body.splitlines():
+            stripped = line.strip()
+            if not stripped or stripped.startswith("#") or stripped.startswith("^"):
+                continue
+            parts = stripped.split()
+            if len(parts) >= 2 and parts[1] == ref:
+                return parts[0]
     return ""
 
 
 def hub_code_files(pkg: Path | None = None) -> list[Path]:
-    """Hub modules whose mtime means the running process may be stale."""
+    """Modules whose mtime means the running process may be stale."""
     base = pkg if pkg is not None else Path(__file__).resolve().parents[1]
     files: list[Path] = []
-    surface = base / "operator_surface"
-    if surface.is_dir():
-        for path in sorted(surface.glob("*.py")):
+    for pkg_name in _CODE_PKG_DIRS:
+        folder = base / pkg_name
+        if not folder.is_dir():
+            continue
+        for path in sorted(folder.glob("*.py")):
             if not is_noise_name(path.name):
                 files.append(path)
     for rel in _CODE_RELPATHS:
@@ -193,6 +237,14 @@ def artifact_watch_files(roots: ResolvedRoots) -> list[Path]:
         board = None
     if board is not None and board.is_file():
         files.append(board)
+    try:
+        from golf_offshoot.learning_lane_15m.learning_card import card_path
+
+        card = card_path()
+    except Exception:
+        card = None
+    if card is not None and card.is_file():
+        files.append(card)
     # unique, stable
     seen: set[Path] = set()
     out: list[Path] = []
