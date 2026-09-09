@@ -6,11 +6,11 @@ Thread lines are **one sentence, newest first, max 10**. Long findings belong in
 
 | Field | Value |
 |-------|--------|
-| Updated | 2026-09-09 16:20 ET |
+| Updated | 2026-09-09 17:05 ET |
 | Active role | chief-of-staff |
 | Job | — |
 | Status | idle |
-| Handoff | — |
+| Handoff | Soften Critic owed on the 16:50 destination/compositor/fee-retry bar bytes, in a later session that did not author them. Consult off. Fee pin still empty after 429. |
 | Waiting on Founder | **N** |
 
 ## last_cos (CoS stamp — doorbell silence)
@@ -42,7 +42,7 @@ Part 3 landed. Three boxes are computed in `learning_lane_15m/honesty.py` and th
 | One hub process on `learning_lane_15m` | **PASS** — *derived* from the process table. One hub **tree**, not one OS process: `py` launcher PID **24188** over supervisor PID **24532** and listener PID **20100** holding `127.0.0.1:8765`. Child re-exec'd 16:07:47 after sidecar/`app.py` (honer sidecar supervisor **18548** over tick child **23916**, `honer-15m` not `shell`). Criterion preserved as written. Do not start a second tree. |
 | No invented charts or pnl | **PASS** — *judgment, with evidence*. `digest_matches_ledger` PASS 2026-09-08T14:42:33−04:00 against the live book (90.98 / −9.02 both sides). Live `crew_tick.needed=true` (A idle uncovered judicial, B new judicial, E idle unassigned). Fee-accurate totals are not on the hub, digest, manifest or `records[]`. |
 
-**Gate is open on this restamp.** Golf idle stays **ON**. Evidence bar remains **not binding**. Standing method blocker is the unpinned fee hash. Operator **RUN-ONLY**'d PROPOSED 02 (`R-SKIP-2TO1-FAVORITE`, `execution=true`, not scored). Systems 2026-09-09 wired lived/replay into `score_rule`. Soften Critic on those hashes is **parked** (does not dismiss the owe) — honer informed machine is implemented; do not attack it in the authoring session. Lab does not bring a third PROPOSED.
+**Gate is open on this restamp.** Golf idle stays **ON**. Evidence bar remains **not binding**. Destination: KXBTC15M 15m is the **gym**; honer is the **discovery organ**; a surviving exam may earn a dated AND-skip consult inside factory `decide()` — isolation is a staging wall, not a forever-sidecar. Consult is **off**. Standing method blocker is the unpinned fee hash (retry HTTP 429 at 2026-09-09T17:01:17-04:00). Operator **RUN-ONLY**'d PROPOSED 02 (`R-SKIP-2TO1-FAVORITE`, `execution=true`, not scored). Soften Critic is **owed on the bytes this alignment wrote**, in a **later session** (not this author). Lab does not bring a third PROPOSED.
 
 **The fee-schedule hash is still unpinned.** Last real fetch: **HTTP 429** at 2026-09-08T13:42:26-04:00 (`LEARNING_LANE_15M_FEE_SCHEDULE_PROBE.json`). `schedule_sha256` left empty. **Do not write a placeholder.**
 
@@ -56,15 +56,15 @@ Two suites, both on the tick.
 
 ## Thread
 
+- 2026-09-09 17:05 ET  chief-of-staff: destination alignment landed; consult off; fee probe 429; Critic owed later session on new bar bytes. next=idle
+- 2026-09-09 17:05 ET  systems → chief-of-staff: dark AND-skip compositor, promotion protocol, factory-bar destination, fee-pin retry 429, honer cite empty. not scored; not bound; consult not enabled. next=chief-of-staff
+- 2026-09-09 16:50 ET  systems: destination alignment in progress (dark AND-skip, bar paragraph, fee-pin retry). next=systems
+- 2026-09-09 16:50 ET  chief-of-staff → systems: Founder destination — gym + discovery organ + earned consult; stamp desk; Systems lands setup alignment; Critic later session; do not enable consult, score, bind, or arm. next=systems
 - 2026-09-09 16:20 ET  chief-of-staff: quote-bus live-book completeness landed; Critic still parked. next=idle
 - 2026-09-09 16:20 ET  systems → chief-of-staff: quote-bus completeness now counts the live book, not settled tape with null bids (1/21 was a lying clock). next=chief-of-staff
 - 2026-09-09 16:09 ET  chief-of-staff: honer informed machine done; Critic still parked on lived/replay hashes (later session). next=idle
 - 2026-09-09 16:09 ET  systems → chief-of-staff: informed machine landed (in-band freeze, quote bus, sidecar, keep-lock, PNG columns); one 8765 re-exec child 20100; not scored; not bound. next=chief-of-staff
 - 2026-09-09 15:44 ET  chief-of-staff → systems: Founder assigned honer informed machine (in-band freeze, quote bus, sidecar, keep-lock); park Critic; do not score, bind, arm, or add honer to _CODE_PKG_DIRS. next=systems
 - 2026-09-09 15:28 ET  chief-of-staff: honer hub desk done; 8765 re-exec'd once (child 26180); Critic still parked on lived/replay hashes. next=idle
-- 2026-09-09 15:28 ET  systems → chief-of-staff: honer hub desk landed (freeze meter, English library, near-line/spread); one 8765 re-exec; not scored; not bound. next=chief-of-staff
-- 2026-09-09 15:20 ET  chief-of-staff → systems: Founder assigned honer hub desk (freeze meter, English library, near-line/spread); park Critic; do not add honer to _CODE_PKG_DIRS. next=systems
-- 2026-09-09 15:16 ET  systems → chief-of-staff: honer learn-fix landed (local_regret_v2, stability freeze, library/picker); live 70 untouched; not scored; not bound. next=chief-of-staff
-- 2026-09-09 15:08 ET  chief-of-staff → systems: Founder assigned honer learn-fix (v2 step, stability freeze, short picker); park Critic on lived/replay hashes for this job. next=systems
 *Older lines rolled off at the 10-line cap. Full history is in the git log for `docs/agents/DESK.md`.*
 

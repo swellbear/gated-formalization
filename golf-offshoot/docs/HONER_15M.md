@@ -4,7 +4,7 @@
 **Series:** `KXBTC15M` only. Not a HOLD lift.  
 **Not** `learning_lane_15m`. Books do not merge. Trading **NOT ARMED**.
 
-This is a Founder-authorized sibling. Lineage A, PaperWatch, `LEARNING_LANE_15M_RULES.json`, and `trials_to_date` stay sole owners of the live 70.
+This is a Founder-authorized sibling. Lineage A, PaperWatch, `LEARNING_LANE_15M_RULES.json`, and `trials_to_date` stay sole owners of the live 70. Isolation is a **staging wall** so evidence stays clean, not a claim honer stays a toy. Destination: search → exam → earned AND-skip consult inside factory `decide()`. Protocol: [`HONER_15M_PROMOTION.md`](HONER_15M_PROMOTION.md). Consult is **off** until Founder names implement.
 
 ## What it is
 
@@ -13,14 +13,14 @@ This is a Founder-authorized sibling. Lineage A, PaperWatch, `LEARNING_LANE_15M_
 - **Exam book:** lived fills at **frozen** knobs when freeze *f* fires. Own k (in `data/honer_15m/latest/trials.json`). n=70. One exam at a time. Not a keep.
 - **Freeze f `in_band_v1`:** ≥20 **in-band** settled search windows, `|θ − last_declared_θ| ≥ 0.05` (or `|δ − last_declared_δ| ≥ 0.02` on the spread family), **and** 5 consecutive **in-band** windows with no knob move. Far tickets increment an ignored counter only. Retired or spent vectors cannot freeze.
 - **Quote bus:** PaperWatch is the sole Kalshi fetch. Honer subscribes to `data/quote_bus/latest/KXBTC15M.json`. Stale (>180s) or missing → skip, never HTTP.
-- **Keep-lock:** `can_keep()` is false while fee is omitted, the bar is not binding, `founder_read_once` is false, lab_admits, or trading is armed. A green exam is not a keep.
+- **Keep-lock:** `can_keep()` is false while fee is omitted, the bar is not binding, `founder_read_once` is false, lab_admits, or trading is armed. A green exam is not a keep. Citing the factory fee pin is not a dated fee-apply.
 - **Sidecar:** hub launches `python -m golf_offshoot honer-15m --watch` as its own process (not a second hub tree). Soft artifact refresh does not load new honer tick code.
 - **8765 HTML and the local honer PNG share columns:** Near line / Spread / Wide-book. Freeze meter is in-band. Lineage A PNG is untouched.
 - **Library:** `latest/library.json`. Outcomes are `parked`, `completed_dead`, or `completed_unscored`. Labels compound. Pnl does not rank. Not a score.
 - **Catalog:** [`HONER_15M_CATALOG.json`](HONER_15M_CATALOG.json). Two families only. `H-SKIP-WIDE-SPREAD` activates only after θ sits on the clip for 20 **in-band** windows **and** ≥75% of the last 20 search decisions have a quote. Missing bid/ask → no spread skip (richness line only). Amend protocol: [`HONER_15M_CATALOG_AMEND.md`](HONER_15M_CATALOG_AMEND.md).
 - **Futility:** at n=20 and n=40, park if remaining windows as skips cannot pass (mean d≤0 or exam mean pnl≤0 at 70). At n=70 the same means label `completed_dead` vs `completed_unscored` — still not a keep.
 - **Mark:** `paper_mark` else `yes_ask`. Same candidate filter as the public 15m adapter. Spread is a skip gate, never settle evidence.
-- **Fee:** omitted. Do not print a fee-adjusted total.
+- **Fee:** omitted until a dated honer fee-apply that cites the factory `schedule_sha256`. A cite is not an apply. Do not print a fee-adjusted total.
 - **δ / sd:** not copied from the live bar. Provisional until a sibling score. Permutation seed `20260909`. Binding false.
 
 ## Roots

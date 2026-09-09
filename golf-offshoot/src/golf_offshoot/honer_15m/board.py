@@ -597,6 +597,7 @@ def collect_standing() -> HonerStanding:
         else "Family is skip-rich-YES."
     )
     what = (
+        "Honer is the discovery organ for this 15m gym — not Lineage A. Factory consult is off. "
         "Honer is not predicting up or down. Each 15-minute window it either takes a paper YES "
         "ticket at the market's posted price, or it skips. It never buys NO. "
         f"{family_bit} Only tickets within 10¢ of the line move the cutoff; "

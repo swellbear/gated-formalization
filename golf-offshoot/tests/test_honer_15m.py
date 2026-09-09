@@ -720,6 +720,41 @@ def test_no_bus_does_not_http_or_write_live_15m(honer_tmp, monkeypatch, tmp_path
     assert last["wrote_learning_lane_15m"] is False
 
 
+def test_cite_factory_pin_does_not_open_keep(tmp_path):
+    import json
+
+    from golf_offshoot.honer_15m.fee import cite_factory_pin, factory_schedule_sha256
+    from golf_offshoot.honer_15m.keep import can_keep, keep_blocked_reason
+
+    factory = tmp_path / "LEARNING_LANE_15M_EVIDENCE_BAR.json"
+    honer = tmp_path / "HONER_15M_EVIDENCE_BAR.json"
+    factory.write_text(
+        json.dumps({"fee_hurdle": {"schedule_sha256": "abc"}}),
+        encoding="utf-8",
+    )
+    honer.write_text(
+        json.dumps(
+            {
+                "binding": False,
+                "fee_omitted": True,
+                "founder_read_once": False,
+                "lab_admits": False,
+                "trading_armed": False,
+            }
+        ),
+        encoding="utf-8",
+    )
+    cite = cite_factory_pin(factory_bar=factory, honer_bar=honer)
+    assert cite["schedule_sha256"] == "abc"
+    assert cite["fee_omitted"] is True
+    payload = json.loads(honer.read_text(encoding="utf-8"))
+    assert payload["fee_omitted"] is True
+    assert payload["factory_fee_cite"]["schedule_sha256"] == "abc"
+    assert can_keep(payload) is False
+    assert keep_blocked_reason(payload) == "fee omitted"
+    assert factory_schedule_sha256(bar_path=factory) == "abc"
+
+
 def test_can_keep_false_and_exam_label_is_not_keep():
     from golf_offshoot.honer_15m.keep import can_keep, keep_blocked_reason
 
@@ -783,6 +818,8 @@ def test_exam_idle_uses_freeze_meter(honer_tmp):
     html = sandbox_html()
     assert "Exam idle." in html
     assert "in-band" in html
+    assert "Discovery organ" in html
+    assert "consult is off" in html.lower()
     assert "combined" not in html.lower()
 
 

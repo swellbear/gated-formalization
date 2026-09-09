@@ -25,6 +25,7 @@ Hub viz for this lane is not yet available (empty / observation-only). Do not in
 - Paper money only. `PAPER OBSERVATION ONLY`.
 - Do **not** retune golf θ from 15-min.
 - Do **not** widen past `KXBTC15M`. Expansion is a new lane, not a wider allow-list. Procedure: [`LEARNING_LANE_EXPANSION.md`](LEARNING_LANE_EXPANSION.md).
+- Destination: this tape is the **gym**. `honer_15m` is the discovery organ. A surviving exam may earn a dated AND-skip consult inside `consult_registry`. Consult is off until Founder names implement. Protocol: [`HONER_15M_PROMOTION.md`](HONER_15M_PROMOTION.md). Books do not merge.
 - No geo. No LIVE cash. No invented edge / banked-edge claims.
 - 15-min Kalshi is not live trading and not a golf WC1 edge.
 

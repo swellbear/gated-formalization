@@ -43,7 +43,7 @@ Do not claim Established. Do not bind in this build.
 
 A green exam (`classify_completed_exam` → `completed_unscored`) is a **library label**, not a keep. `permutation_mean_d` and `alpha_k` stay callable and unwired to keep.
 
-Do not pin a fee sha256 placeholder. If the factory later pins `schedule_sha256`, honer may cite it and still omit fee from totals until a **dated honer fee-apply** (out of this build).
+Do not pin a fee sha256 placeholder. Honer may **cite** the factory `schedule_sha256` (`honer_15m.fee.cite_factory_pin`). A cite is not a dated honer fee-apply. `fee_omitted` stays true and `can_keep()` stays false until that dated apply.
 
 δ/sd stay provisional on this sibling exam sample. Do not copy live-bar 0.28 / 0.784.
 

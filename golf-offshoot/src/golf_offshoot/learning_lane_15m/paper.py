@@ -19,6 +19,7 @@ from golf_offshoot.learning_lane_15m.paths import (
     safe_artifact_stem,
     shadow_dir_15m,
 )
+from golf_offshoot.learning_lane_15m.consult_honer import compose_and_skip, market_spread
 from golf_offshoot.learning_lane_15m.rules import active_execution_rule, decide
 from golf_offshoot.localtime import now
 from golf_offshoot.models.enums import BetType
@@ -232,6 +233,8 @@ def consult_registry(
     *,
     posted_yes: float,
     close_at: str,
+    spread: float | None = None,
+    consult_root: Path | None = None,
 ) -> dict:
     """What the executing rule says about this window. Never a fill by default.
 
@@ -239,25 +242,36 @@ def consult_registry(
     which is why ``Established`` was unreachable: no rule selected anything, so
     no lived L2 could exist. A registry with no executing rule fills nothing —
     an unnamed default is how "always fill" got in here in the first place.
+
+    After ``rules.decide()``, ``compose_and_skip`` may add a honer skip from a
+    dated frozen snapshot. That compositor is dark unless ``consult_enabled``
+    is true. Live honer θ never consults.
     """
     if rule is None:
-        return {
+        verdict = {
             "rule_id": "",
             "action": "no_rule",
             "reason": "no rule in the registry carries execution=true; nothing fills",
             "eligible": False,
             "execution": False,
         }
-    try:
-        return decide(rule, posted_yes=posted_yes, close_at=close_at)
-    except ValueError as exc:
-        return {
-            "rule_id": rule.get("id"),
-            "action": "undecidable",
-            "reason": f"cannot establish OOS for this window ({exc}); not filling",
-            "eligible": False,
-            "execution": bool(rule.get("execution")),
-        }
+    else:
+        try:
+            verdict = decide(rule, posted_yes=posted_yes, close_at=close_at)
+        except ValueError as exc:
+            verdict = {
+                "rule_id": rule.get("id"),
+                "action": "undecidable",
+                "reason": f"cannot establish OOS for this window ({exc}); not filling",
+                "eligible": False,
+                "execution": bool(rule.get("execution")),
+            }
+    return compose_and_skip(
+        verdict,
+        posted_yes=posted_yes,
+        spread=spread,
+        root=consult_root,
+    )
 
 
 def paper_autobet_open_markets(
@@ -301,7 +315,10 @@ def paper_autobet_open_markets(
         if yes_f is None or dec_f is None or yes_f <= 0.0 or yes_f >= 1.0 or dec_f <= 1.0:
             continue
         verdict = consult_registry(
-            active, posted_yes=yes_f, close_at=str(market.get("close_time") or "")
+            active,
+            posted_yes=yes_f,
+            close_at=str(market.get("close_time") or ""),
+            spread=market_spread(market),
         )
         if verdict["action"] != "fill":
             if ticker not in load_decisions():

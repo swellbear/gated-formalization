@@ -117,7 +117,8 @@ def board_html(*, extra_html: str = "") -> str:
     return (
         '<section class="panel honer-sandbox" id="honer">'
         "<h2>Honer — sibling search and exam</h2>"
-        '<p class="help">honer_15m sandbox — not Lineage A, not a keep, books do not merge, zero-fee. '
+        '<p class="help">Discovery organ for this gym. Factory AND-skip consult is off. '
+        "Freeze still in-band. Not Lineage A, not a keep, books do not merge, zero-fee. "
         "Trading NOT ARMED. Skips are rows. Do not add these bankrolls to Lineage A.</p>"
         '<div class="standing">'
         "<h3>What it is</h3>"
