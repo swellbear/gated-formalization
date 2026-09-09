@@ -5,7 +5,7 @@ Chat transcripts are not. A later Grok / Cursor cloud agent will not see a prior
 
 | Field | Value |
 |-------|--------|
-| Updated | 2026-09-09 16:09 EDT (honer informed machine on `cursor/honer-15m-sibling` / PR #178: in-band freeze, quote bus, quote-quality gate, two-brains, honer invariants, sidecar, keep-lock, PNG Near/Spread/Wide-book. One hub re-exec — supervisor 24532, child **20100** at 16:07:47; honer sidecar `honer-15m --watch` 18548/23916. Did not add honer to `_CODE_PKG_DIRS` or factory whitelist. Live 70 untouched. Soften Critic still owed on lived/replay hashes (later session). Binding false. HOLD stands. Do not score.) |
+| Updated | 2026-09-09 16:20 EDT (honer informed machine on `cursor/honer-15m-sibling` / PR #178, plus quote-bus completeness on the **live** book not the settled tape. In-band freeze, quote bus, sidecar, keep-lock, PNG Near/Spread/Wide-book. One hub tree — supervisor 24532, child **20100**. Did not add honer to `_CODE_PKG_DIRS`. Live 70 untouched. Soften Critic still owed on lived/replay hashes (later session). Binding false. HOLD stands. Do not score.) |
 | Interim operator | Cursor chat (Grok bot usage exhausted until **2026-09-13**) |
 | Repo SoT | **PR [#176](https://github.com/swellbear/gated-formalization/pull/176) is OPEN, not merged.** `origin/master` is still `b063f56` (#175). Part A + Parts 0/1 live only on `cursor/part-a-clerical-trust-boundary`. |
 | Local Windows tree for this interim | `C:\Users\bearh\gated-formalization-master-hub` |

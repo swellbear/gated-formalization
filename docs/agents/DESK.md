@@ -6,7 +6,7 @@ Thread lines are **one sentence, newest first, max 10**. Long findings belong in
 
 | Field | Value |
 |-------|--------|
-| Updated | 2026-09-09 16:09 ET |
+| Updated | 2026-09-09 16:20 ET |
 | Active role | chief-of-staff |
 | Job | — |
 | Status | idle |
@@ -56,6 +56,8 @@ Two suites, both on the tick.
 
 ## Thread
 
+- 2026-09-09 16:20 ET  chief-of-staff: quote-bus live-book completeness landed; Critic still parked. next=idle
+- 2026-09-09 16:20 ET  systems → chief-of-staff: quote-bus completeness now counts the live book, not settled tape with null bids (1/21 was a lying clock). next=chief-of-staff
 - 2026-09-09 16:09 ET  chief-of-staff: honer informed machine done; Critic still parked on lived/replay hashes (later session). next=idle
 - 2026-09-09 16:09 ET  systems → chief-of-staff: informed machine landed (in-band freeze, quote bus, sidecar, keep-lock, PNG columns); one 8765 re-exec child 20100; not scored; not bound. next=chief-of-staff
 - 2026-09-09 15:44 ET  chief-of-staff → systems: Founder assigned honer informed machine (in-band freeze, quote bus, sidecar, keep-lock); park Critic; do not score, bind, arm, or add honer to _CODE_PKG_DIRS. next=systems
@@ -64,7 +66,5 @@ Two suites, both on the tick.
 - 2026-09-09 15:20 ET  chief-of-staff → systems: Founder assigned honer hub desk (freeze meter, English library, near-line/spread); park Critic; do not add honer to _CODE_PKG_DIRS. next=systems
 - 2026-09-09 15:16 ET  systems → chief-of-staff: honer learn-fix landed (local_regret_v2, stability freeze, library/picker); live 70 untouched; not scored; not bound. next=chief-of-staff
 - 2026-09-09 15:08 ET  chief-of-staff → systems: Founder assigned honer learn-fix (v2 step, stability freeze, short picker); park Critic on lived/replay hashes for this job. next=systems
-- 2026-09-09 14:30 ET  systems → chief-of-staff: 8765 two-box factory/honer English board live; honer PNG local only; not scored; not bound. next=chief-of-staff
-- 2026-09-09 14:14 ET  systems → chief-of-staff: started Founder honer/factory English board (files only; no score, no Lineage A PNG rewrite). next=systems
 *Older lines rolled off at the 10-line cap. Full history is in the git log for `docs/agents/DESK.md`.*
 

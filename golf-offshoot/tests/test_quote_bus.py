@@ -39,6 +39,21 @@ def _feed(monkeypatch, events, markets):
     return feed
 
 
+def test_completeness_counts_live_book_not_settled_tape():
+    from golf_offshoot.quote_bus import completeness
+
+    rows = [
+        {"ticker": "live", "status": "active", "is_open": True, "yes_bid": 0.55, "yes_ask": 0.56},
+        {"ticker": "live-thin", "status": "initialized", "is_open": False, "yes_bid": None, "yes_ask": None},
+        {"ticker": "done", "status": "finalized", "is_open": False, "yes_bid": None, "yes_ask": None},
+        {"ticker": "done2", "status": "finalized", "result": "yes", "yes_bid": None, "yes_ask": None},
+    ]
+    got = completeness(rows)
+    assert got["n"] == 2
+    assert got["with_bid_and_ask"] == 1
+    assert got["missing"] == 1
+
+
 def test_publish_refuses_live_and_honer_paths(tmp_path):
     from golf_offshoot.quote_bus.paths import assert_quote_bus_path
     import pytest

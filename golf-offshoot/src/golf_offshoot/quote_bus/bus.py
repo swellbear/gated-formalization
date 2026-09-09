@@ -11,13 +11,22 @@ from golf_offshoot.localtime import now, to_eastern
 from golf_offshoot.quote_bus.paths import SERIES, assert_quote_bus_path, snapshot_path
 
 MAX_AGE_S = 180.0
+_LIVE_STATUSES = frozenset({"active", "initialized", "open"})
+
+
+def _is_live_quote_row(row: dict[str, Any]) -> bool:
+    """Settled tape has null bid/ask. Completeness is about the live book."""
+    if row.get("is_open"):
+        return True
+    status = str(row.get("status") or "").strip().lower()
+    return status in _LIVE_STATUSES
 
 
 def completeness(markets: list[Any]) -> dict[str, Any]:
     n = 0
     with_ba = 0
     for row in markets:
-        if not isinstance(row, dict):
+        if not isinstance(row, dict) or not _is_live_quote_row(row):
             continue
         n += 1
         if row.get("yes_bid") is not None and row.get("yes_ask") is not None:
