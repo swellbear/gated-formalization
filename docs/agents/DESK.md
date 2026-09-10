@@ -17,9 +17,9 @@ Thread lines are **one sentence, newest first, max 10**. Long findings belong in
 
 | Field | Value |
 |-------|--------|
-| last_cos_at | 2026-09-10T09:16:00-04:00 |
-| last_cos_commit | 4a58a2e |
-| handled_reason_ids | A_worker_done, B_new_judicial, E_idle_unassigned |
+| last_cos_at | 2026-09-10T10:52:00-04:00 |
+| last_cos_commit | 1322c2c |
+| handled_reason_ids | A_worker_done, A_idle_uncovered_judicial, B_new_judicial, C_clerical_arrears, E_idle_unassigned |
 
 **Branch note.** Live work is `cursor/honer-15m-sibling` [#178](https://github.com/swellbear/gated-formalization/pull/178) (open; base is `cursor/part-a-clerical-trust-boundary`). [#176](https://github.com/swellbear/gated-formalization/pull/176) is still OPEN, not merged. `origin/master` is still `b063f56` (#175). Factory Turns 1–3 plus the ANSWER/CRITIC chain live on part-a / this sibling. Branching from `origin/master` would discard all of it. Do not use `C:\Users\bearh\gated-formalization` on `cursor/eia-window-job2`.
 
