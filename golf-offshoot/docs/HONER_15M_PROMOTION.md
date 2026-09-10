@@ -29,7 +29,7 @@ A later Founder-named step may make a surviving honer family the executing regis
 6. **Score** — n=70 in-band exam windows, contrast `d_i = pnl_exam − pnl_fill_all`, in a session that did not author the snapshot. Do not peek. Do not score `R-SKIP-COINFLIP`.
 7. **Soften Critic** — later session from the author of the PROPOSED / score note. Operator answers in a turn that is not the attack.
 8. **Founder names implement** — the only enable. Flip `consult_enabled` to true on **that** frozen snapshot. Then put consult artifacts on the factory tick whitelist.
-9. Factory bar bind / `founder_read_once` / arm / HOLD lift are **not** this file. Bind and arm stay Founder. Expansion is a new lane ([`LEARNING_LANE_EXPANSION.md`](LEARNING_LANE_EXPANSION.md)).
+9. Factory bar bind is crew+machine (Critic+Operator and critic-invariants). Arm and HOLD lift stay Founder. Consult enable is Founder-named implement (step 8). Expansion is a new lane ([`LEARNING_LANE_EXPANSION.md`](LEARNING_LANE_EXPANSION.md)).
 
 ## Fail
 

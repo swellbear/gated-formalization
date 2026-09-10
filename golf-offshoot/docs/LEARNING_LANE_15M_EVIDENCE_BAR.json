@@ -3,12 +3,12 @@
   "lane": "learning_lane_15m",
   "series": "KXBTC15M",
   "drafted_at": "2026-09-08T08:30:00-04:00",
-  "amended_at": "2026-09-09T21:28:00-04:00",
+  "amended_at": "2026-09-09T21:33:00-04:00",
   "amended_by": "operator",
-  "amendment": "ANSWER 15: one SUSTAINED on CRITIC 15. Eighth-check detail and docstring still call snapshot_absent a half-pass / silent half-pass named on the bar; the ANSWER 14 hashes did not contain that word — they named state PASS / named suite green. Not a score. Not a bind. Consult not enabled.",
+  "amendment": "Founder GO: drop founder_read_once from bind (crew-written, not a Founder GO). Bind is (1) Critic+Operator and (2) critic-invariants. Ninth method check bind_has_no_founder_read_once. ANSWER 15 leftover half-pass citation remains named. Not a score. Not a bind. Consult not enabled.",
   "prior_amendment": {
-    "amended_at": "2026-09-09T20:58:00-04:00",
-    "note": "ANSWER 14: three SUSTAINED on CRITIC 14. snapshot_absent is state PASS inside CHECKS and will not block suite green once the fee hash pins; unreadable/empty present file is the same PASS; probe/snapshot latest/ is the fallback shape and both resolved paths are named; ratchet paragraph says eight and names series_fee_regime_matches. Not a score. Not a bind. Consult not enabled."
+    "amended_at": "2026-09-09T21:28:00-04:00",
+    "note": "ANSWER 15: one SUSTAINED on CRITIC 15. Eighth-check detail and docstring still call snapshot_absent a half-pass / silent half-pass named on the bar; the ANSWER 14 hashes did not contain that word — they named state PASS / named suite green. Not a score. Not a bind. Consult not enabled."
   },
   "discovery_organ": {
     "lane": "honer_15m",
@@ -45,7 +45,7 @@
     "currently_a_seat": false
   },
   "binding": false,
-  "binding_rule": "Becomes binding only after (1) a Soften Critic written attack from a session that did not draft the bar, with Operator sustaining or explicitly overruling every objection with a stated reason in a separate turn, attack and answers both linked from the bar; (2) critic-invariants passing on the bytes proposed to bind, or every failing check named on the bar's face with Operator's reason for binding anyway; and (3) Founder read-once acknowledgement.",
+  "binding_rule": "Becomes binding only after (1) a Soften Critic written attack from a session that did not draft the bar, with Operator sustaining or explicitly overruling every objection with a stated reason in a separate turn, attack and answers both linked from the bar; and (2) critic-invariants passing on the bytes proposed to bind, or every failing check named on the bar's face with Operator's reason for binding anyway.",
   "binding_conditions": [
     {
       "id": "critic_answered",
@@ -85,11 +85,6 @@
       ],
       "failing_set_at_last_operator_read_struck": "2026-09-08T14:04:31.195208-04:00 list [fee_schedule_hash_recorded] described other bytes; not a picture of these hashes",
       "evaluated_by": "copied check_delta_above_detection_floor arithmetic from critic.py:272-305; package not imported; write_critic_findings() was not called. honesty_stamp_is_fresh is a desk check and was not in failing."
-    },
-    {
-      "id": "founder_read_once",
-      "met": false,
-      "detail": "not requested and not performed"
     }
   ],
   "admit": false,
@@ -126,7 +121,7 @@
       "requires_held_out_confirmation": true,
       "ops_beside_edge_stays_n": true,
       "currently_reachable": false,
-      "unreachable_because": "paper.py consults decide() via consult_registry then a dark AND-skip compositor (consult_enabled off; live honer theta never consults). No watch.json on this tree this turn; this turn did not start or kill a hub and does not cite 0a480d4 as a live tip. 0a480d4 is a historical Turn 2 SHA whose decide() has no favorite_odds dispatch. HEAD _express_selection dispatches params.favorite_odds. R-SKIP-2TO1-FAVORITE exists: declared at e9fab5a (declared_at 2026-09-08T16:53:00-04:00), execution=true since 2026-09-08T17:11:00-04:00 (0daae90). Established remains unreachable: the bar is not binding; condition 2 fails on the unpinned fee hash and on findings that do not cover these bytes; condition 3 is unmet; favorite_odds=2 is not verifiably pre-registered. R-SKIP-COINFLIP still has execution false and its band is not verifiably pre-registered. currently_reachable stays false. Naming the discovery organ is not a seat.",
+      "unreachable_because": "paper.py consults decide() via consult_registry then a dark AND-skip compositor (consult_enabled off; live honer theta never consults). No watch.json on this tree this turn; this turn did not start or kill a hub and does not cite 0a480d4 as a live tip. 0a480d4 is a historical Turn 2 SHA whose decide() has no favorite_odds dispatch. HEAD _express_selection dispatches params.favorite_odds. R-SKIP-2TO1-FAVORITE exists: declared at e9fab5a (declared_at 2026-09-08T16:53:00-04:00), execution=true since 2026-09-08T17:11:00-04:00 (0daae90). Established remains unreachable: the bar is not binding; condition 2 fails on the unpinned fee hash and on findings that do not cover these bytes; favorite_odds=2 is not verifiably pre-registered. R-SKIP-COINFLIP still has execution false and its band is not verifiably pre-registered. currently_reachable stays false. Naming the discovery organ is not a seat.",
       "precondition": "a selection rule declared after the decide() flip, with verifiably pre-registered parameters, and execution=true before its first L2-eligible window closes, scored under a binding bar. R-SKIP-COINFLIP cannot satisfy this. R-SKIP-2TO1-FAVORITE fails the pre-registration half.",
       "executing_selection_rule": "R-SKIP-2TO1-FAVORITE",
       "lived_paper_begins_at": "2026-09-08T17:11:00-04:00",
@@ -377,13 +372,14 @@
     "critic_01_finding_6_multiplicity": "trials_counter_is_consistent requires record_trial and a trials_log; delta_above_detection_floor uses alpha=0.05/(k(k+1))",
     "critic_01_finding_7_fee_adjust": "fee_adjusted_book_is_binding requires adjustment_function, reproduces the RUN-ONLY table, and reads the payout expression not a substring of settle.py",
     "critic_01_x1_spread": "no mechanical check of the half-spread profile exists; empirical profile owed. Unconditional 'avoids neither worst region' is withdrawn until that profile exists",
-    "critic_01_x2_reachable": "currently_reachable stays false; R-SKIP-2TO1-FAVORITE registry execution is true; lived honoring is unproven on this tree this turn (no tip, no cited decision row); pre-registration / binding / fee hash / Founder read-once still block. A source-call check that paper.py calls decide() is possible and not yet a method-suite member",
+    "critic_01_x2_reachable": "currently_reachable stays false; R-SKIP-2TO1-FAVORITE registry execution is true; lived honoring is unproven on this tree this turn (no tip, no cited decision row); pre-registration / binding / fee hash still block. A source-call check that paper.py calls decide() is possible and not yet a method-suite member",
     "critic_01_x3_l2_test": "looks.l2_test is on the face; L2 alpha is the declaration-counter k and shares the next-look set; no check yet fails when n/h0/delta/alpha are missing. Possible, not written",
     "critic_01_x4_trials_on_declaration": "record_trial increments on declaration and L2 looks; baseline naming raises",
     "critic_01_x5_sustain_or_overrule": "binding condition 1 is prose; a file check cannot read an admit-pass verdict without a structured verdicts array. Impossible as a hash check today",
     "critic_01_x6_delta_is_fraction": "effect_floor_as_fraction_of_stake is on the face; PAPER_UNIT != 1.0 invariant still owed",
     "critic_01_x7_heartbeat_clear": "critic_verdicts drops detail; honesty_stamp_is_fresh is in DESK_CHECKS and does not set passed; critic_findings_failing pages on a new or undisclosed failing set",
-    "gym_pin_eighth_series_fee_regime": "series_fee_regime_matches is the eighth CHECKS member. snapshot_absent (missing, unreadable JSON, or non-dict) is state PASS and will not block passed:true once fee_schedule_hash_recorded clears. A well-formed present missing/drifted M FAILs. The eighth-check detail and docstring still say half-pass / silent half-pass named on the bar, which the ANSWER 14 hashes did not contain."
+    "gym_pin_eighth_series_fee_regime": "series_fee_regime_matches is the eighth CHECKS member. snapshot_absent (missing, unreadable JSON, or non-dict) is state PASS and will not block passed:true once fee_schedule_hash_recorded clears. A well-formed present missing/drifted M FAILs. The eighth-check detail and docstring still say half-pass / silent half-pass named on the bar, which the ANSWER 14 hashes did not contain.",
+    "founder_2026_09_09_no_read_once": "bind_has_no_founder_read_once is the ninth CHECKS member. It fails if binding_conditions includes id founder_read_once or binding_rule still requires a numbered Founder-acknowledgement gate. Arm and HOLD lift stay Founder."
   },
   "owed_to_systems": [
     "empirical half-spread profile: mean (yes_ask-yes_bid)/2 bucketed by mark, from recorded books",
@@ -401,6 +397,7 @@
   ],
   "hard_nos": [
     "do not treat this draft as binding",
+    "do not add founder_read_once as a bind condition",
     "do not set binding:true while critic-invariants reports passed:false on these bytes",
     "do not score R-SKIP-COINFLIP before 70 eligible windows, and not in the drafting or amending session",
     "do not peek L2 while scoring L1, and do not claim you did not without the commit order to show it",

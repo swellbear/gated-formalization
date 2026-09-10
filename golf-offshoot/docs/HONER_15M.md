@@ -13,7 +13,7 @@ This is a Founder-authorized sibling. Lineage A, PaperWatch, `LEARNING_LANE_15M_
 - **Exam book:** lived fills at **frozen** knobs when freeze *f* fires. Own k (in `data/honer_15m/latest/trials.json`). n=70. One exam at a time. Not a keep.
 - **Freeze f `in_band_v1`:** ≥20 **in-band** settled search windows, `|θ − last_declared_θ| ≥ 0.05` (or `|δ − last_declared_δ| ≥ 0.02` on the spread family), **and** 5 consecutive **in-band** windows with no knob move. Far tickets increment an ignored counter only. Retired or spent vectors cannot freeze.
 - **Quote bus:** PaperWatch is the sole Kalshi fetch. Honer subscribes to `data/quote_bus/latest/KXBTC15M.json`. Stale (>180s) or missing → skip, never HTTP.
-- **Keep-lock:** `can_keep()` is false while fee is omitted, the bar is not binding, `founder_read_once` is false, lab_admits, or trading is armed. A green exam is not a keep. Citing the factory fee pin is not a dated fee-apply.
+- **Keep-lock:** `can_keep()` is false while fee is omitted, the bar is not binding, lab_admits, or trading is armed. A green exam is not a keep. Citing the factory fee pin is not a dated fee-apply. Founder read-once is not a keep gate.
 - **Sidecar:** hub launches `python -m golf_offshoot honer-15m --watch` as its own process (not a second hub tree). Soft artifact refresh does not load new honer tick code.
 - **8765 HTML and the local honer PNG share columns:** Near line / Spread / Wide-book. Freeze meter is in-band. Lineage A PNG is untouched.
 - **Library:** `latest/library.json`. Outcomes are `parked`, `completed_dead`, `completed_unscored`, or `search_untestable`. Labels compound. Pnl does not rank. Not a score. `search_untestable` does **not** increment honer exam k.

@@ -767,6 +767,20 @@ def test_cite_factory_pin_does_not_open_keep(tmp_path):
     assert factory_schedule_sha256(bar_path=factory) == "abc"
 
 
+def test_can_keep_does_not_wait_on_founder_read_once():
+    from golf_offshoot.honer_15m.keep import can_keep, keep_blocked_reason
+
+    payload = {
+        "binding": True,
+        "fee_omitted": False,
+        "lab_admits": False,
+        "trading_armed": False,
+        "founder_read_once": False,
+    }
+    assert keep_blocked_reason(payload) is None
+    assert can_keep(payload) is True
+
+
 def test_can_keep_false_and_exam_label_is_not_keep():
     from golf_offshoot.honer_15m.keep import can_keep, keep_blocked_reason
 

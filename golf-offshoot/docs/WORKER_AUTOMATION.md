@@ -119,7 +119,7 @@ HARD NOs (every role)
   Do not set binding true. Do not set trading_armed. Do not lift HOLD.
   Do not add a series. Do not git push to master. Do not start/kill a hub.
   Do not declare a rule unless you are lab and that is the Job.
-  Do not impersonate Founder read-once. Do not both object and answer.
+  Do not impersonate Founder on arm or HOLD. Do not add Founder read-once as a bind condition. Do not both object and answer.
 
 ## Founder click
 

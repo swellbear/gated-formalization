@@ -19,7 +19,7 @@ Lifting the HOLD opens a **new lane**. It does not add a ticker to `learning_lan
 - Its own fee-schedule pin (a later Kalshi PDF, a different `k`, or a series override is a different pin)
 - Its own wake / ledger / paper / settlements
 
-Trading ARMED, if ever, is per-lane and stays false until that lane’s own bind + lived L2 + Founder read-once.
+Trading ARMED, if ever, is per-lane and stays false until that lane’s own bind + lived L2 + Founder arm.
 
 ## What may be reused
 

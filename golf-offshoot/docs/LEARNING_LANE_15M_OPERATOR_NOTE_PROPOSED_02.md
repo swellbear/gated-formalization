@@ -54,7 +54,7 @@ This note is the only place this ruling lives. It does not go in `manifest.json`
 | Flip commit | the commit that lands this note |
 | Timing | Before this rule's first L2-eligible window closes (L2 is eligible windows 71–140 after `declared_at`). No L2 window of this rule has closed. |
 | Not flipped | `R-SKIP-COINFLIP` (`execution` stays false) |
-| Not set | `binding`, `trading_armed`, `founder_read_once` |
+| Not set | `binding`, `trading_armed` |
 
 `active_execution_rule()` will honour this row over the baseline. Two selecting rules with `execution=true` would raise; only this selecting row is live.
 

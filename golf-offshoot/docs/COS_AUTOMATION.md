@@ -54,7 +54,7 @@ Hard NOs (same as the desk):
   Do not add a series. Do not auto-publish / git push to master.
   Do not start or kill a hub. Do not write a fee-schedule placeholder.
   Do not score R-SKIP-COINFLIP. Do not declare a new rule.
-  Do not impersonate Founder read-once. Do not both object and answer.
+  Do not impersonate Founder on arm or HOLD. Do not add Founder read-once as a bind condition. Do not both object and answer.
 
 ## Founder click
 

@@ -110,7 +110,7 @@ This is the statement the bar requires. It is not itself the proof — the commi
 - No score, no scorecard, no post-declaration outcome file opened for results
 - `execution` left false; `binding` not touched; `trading_armed` not touched; HOLD not lifted
 - No golf θ, no WC3+, no second series, no second hub, no placeholder fee hash
-- No Founder impersonation of `founder_read_once`
+- No Founder impersonation of arm or HOLD. Do not add `founder_read_once` as a bind condition
 
 ---
 

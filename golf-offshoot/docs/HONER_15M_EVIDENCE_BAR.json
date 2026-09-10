@@ -5,7 +5,6 @@
   "binding": false,
   "admit": false,
   "edge_established": false,
-  "founder_read_once": false,
   "lab_admits": false,
   "trading_armed": false,
   "fee_omitted": true,
@@ -37,7 +36,6 @@
     "closed_while": [
       "fee_omitted",
       "binding != true",
-      "founder_read_once != true",
       "lab_admits",
       "trading_armed"
     ],

@@ -50,3 +50,4 @@ A Lab PROPOSED goes to Operator as **RUN-ONLY** (not park) when it is determinis
 - Arm trading
 - Play Founder
 - Let Operator stamp a proposed ADMIT, or bind the 15m evidence bar, without a Soften Critic attack from a separate session
+- Add Founder read-once (or any Founder acknowledgement) as a condition of the 15m bar becoming binding. Bind is Critic+Operator and critic-invariants. Founder remains for **arm** and **HOLD lift**

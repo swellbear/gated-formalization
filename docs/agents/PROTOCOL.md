@@ -20,7 +20,7 @@ CoS starts when `crew_tick.needed` is true, including via a Cursor Automation on
 
 `needed` is **false** when the watch is healthy AND no new judicial owe AND no clerical arrears AND the desk already has an assigned worker who is not stale, **or** when the last CoS closeout stamped the same `reason_ids` (a 90s heartbeat, not a doorbell).
 
-A CoS turn: session start, **one** assign or one closeout, desk + leave-off to committed truth, stamp `last_cos_*` via `stamp_cos_closeout`. Then stop. It does not ping Founder for the Next list. It does ping Founder for the existing Ask list (HOLD lift, arm, bind, Hard NO changes).
+A CoS turn: session start, **one** assign or one closeout, desk + leave-off to committed truth, stamp `last_cos_*` via `stamp_cos_closeout`. Then stop. It does not ping Founder for the Next list. It does ping Founder for the existing Ask list (HOLD lift, arm, Hard NO changes). Bind is not on that list.
 
 **Zero-objection stop.** If the newest Soften Critic finding is zero UPHELD and Operator did **not** amend the bar (a record-only ANSWER, or no ANSWER owed), CoS **closes out**: `Status=idle`, do not assign Operator to write another ANSWER, do not assign Soften Critic on those same hashes. Two consecutive zero-UPHELD attacks is the treadmill; close it. A new judicial owe is a *new* bar/registry hash from a real amendment, not a new CRITIC file that found nothing. If `stamp_cos_closeout` cannot persist (cloud VM missing wake or pydantic), the committed desk `last_cos_*` table is the stamp.
 
@@ -88,6 +88,7 @@ Do **not** ask (CoS just does it):
 - Desk / leave-off bookkeeping
 - Chrome-only Hub UI inside existing Hard NOs
 - Commit / push of a valid observability export so Pages can update
+- Do not ping Founder to stamp bind. Bind is Critic+Operator and critic-invariants; CoS assigns those roles. CoS does not set `binding: true`. Do not add a Founder stamp to bind.
 - Ask Founder to click ingest / live / loop / publish
 
 ## Keep-looping (15m)
@@ -198,7 +199,7 @@ Seeded with the four that were live and invisible on 2026-09-08:
 
 Adding a check is Founder-free. **Removing or weakening one is not.**
 
-A second suite runs over the **method** artifacts and is owned by `critic-invariants` (`learning_lane_15m/critic.py`). Its artifact is `LEARNING_LANE_15M_CRITIC_FINDINGS.json` and it also prints on the tick: `matched_exposure_control`, `delta_above_detection_floor`, `holdout_is_forward_only`, `fee_adjusted_book_is_binding`, `declared_at_precedes_scored_windows`, `trials_counter_is_consistent`, `fee_schedule_hash_recorded`, `series_fee_regime_matches`, `honesty_stamp_is_fresh`. A checker cannot find an unknown failure mode, which is exactly why the ratchet exists: **every flaw analysis finds becomes a permanent check.** A finding that does not produce a check is a finding that will be rediscovered by hand.
+A second suite runs over the **method** artifacts and is owned by `critic-invariants` (`learning_lane_15m/critic.py`). Its artifact is `LEARNING_LANE_15M_CRITIC_FINDINGS.json` and it also prints on the tick: `matched_exposure_control`, `delta_above_detection_floor`, `holdout_is_forward_only`, `fee_adjusted_book_is_binding`, `declared_at_precedes_scored_windows`, `trials_counter_is_consistent`, `fee_schedule_hash_recorded`, `series_fee_regime_matches`, `bind_has_no_founder_read_once`, `honesty_stamp_is_fresh`. A checker cannot find an unknown failure mode, which is exactly why the ratchet exists: **every flaw analysis finds becomes a permanent check.** A finding that does not produce a check is a finding that will be rediscovered by hand.
 
 ### Honesty gate: derived, not typed
 

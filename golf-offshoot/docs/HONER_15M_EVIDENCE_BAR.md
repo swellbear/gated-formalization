@@ -1,7 +1,7 @@
 # honer_15m evidence bar (DRAFT — not binding)
 
 **Lane:** `honer_15m` · series `KXBTC15M` only  
-**Binding?** **N.** `founder_read_once` false.  
+**Binding?** **N.**  
 **Admit?** N · **Edge established?** N · Trading **NOT ARMED**
 
 This is not the live 15m bar. Do not copy δ=$0.28 or sd=0.784 from that file. Compute δ/sd from the sibling **exam** sample at first score.
@@ -40,7 +40,7 @@ Do not claim Established. Do not bind in this build.
 
 ## Keep-lock
 
-`can_keep()` is false while any of: `fee_omitted`, `binding != true`, `founder_read_once != true`, `lab_admits`, trading armed.
+`can_keep()` is false while any of: `fee_omitted`, `binding != true`, `lab_admits`, trading armed.
 
 A green exam (`classify_completed_exam` → `completed_unscored`) is a **library label**, not a keep. `permutation_mean_d` and `alpha_k` stay callable and unwired to keep.
 

@@ -198,6 +198,7 @@ def test_the_findings_artifact_is_the_proof(tmp_path):
         "trials_counter_is_consistent",
         "fee_schedule_hash_recorded",
         "series_fee_regime_matches",
+        "bind_has_no_founder_read_once",
     ]
     assert [c["id"] for c in payload["desk_checks"]] == ["honesty_stamp_is_fresh"]
 
@@ -501,3 +502,83 @@ def test_an_unpinned_fee_schedule_fails(tmp_path):
 
     assert check["state"] == critic.FAIL
     assert "habit" in check["detail"]
+
+
+def test_bind_has_no_founder_read_once_passes_on_empty_scratch_bar(tmp_path):
+    check = critic.check_bind_has_no_founder_read_once(root=tmp_path)
+    assert check["state"] == critic.PASS
+
+
+def test_bind_has_no_founder_read_once_fails_if_the_id_returns(tmp_path):
+    bar = tmp_path / critic.BAR_JSON_REL
+    bar.parent.mkdir(parents=True, exist_ok=True)
+    bar.write_text(
+        json.dumps(
+            {
+                "binding_rule": "crew only",
+                "binding_conditions": [{"id": "founder_read_once", "met": False}],
+            }
+        ),
+        encoding="utf-8",
+    )
+    check = critic.check_bind_has_no_founder_read_once(root=tmp_path)
+    assert check["state"] == critic.FAIL
+    assert "founder_read_once" in check["detail"]
+
+
+def test_bind_has_no_founder_read_once_fails_on_numbered_gate(tmp_path):
+    bar = tmp_path / critic.BAR_JSON_REL
+    bar.parent.mkdir(parents=True, exist_ok=True)
+    bar.write_text(
+        json.dumps(
+            {
+                "binding_rule": (
+                    "Becomes binding only after (1) crew; (2) machine; "
+                    "and (3) Founder read-once acknowledgement."
+                )
+            }
+        ),
+        encoding="utf-8",
+    )
+    check = critic.check_bind_has_no_founder_read_once(root=tmp_path)
+    assert check["state"] == critic.FAIL
+
+
+def test_bind_has_no_founder_read_once_fails_on_dropped_md_gate(tmp_path):
+    bar = tmp_path / critic.BAR_JSON_REL
+    md = tmp_path / critic.BAR_MD_REL
+    bar.parent.mkdir(parents=True, exist_ok=True)
+    bar.write_text("{}", encoding="utf-8")
+    md.write_text("3. Founder reads it once and acknowledges.\n", encoding="utf-8")
+    check = critic.check_bind_has_no_founder_read_once(root=tmp_path)
+    assert check["state"] == critic.FAIL
+
+
+def test_bind_has_no_founder_read_once_allows_dropped_notice(tmp_path):
+    bar = tmp_path / critic.BAR_JSON_REL
+    md = tmp_path / critic.BAR_MD_REL
+    bar.parent.mkdir(parents=True, exist_ok=True)
+    bar.write_text(
+        json.dumps(
+            {
+                "binding_rule": (
+                    "Becomes binding only after (1) Critic+Operator; "
+                    "and (2) critic-invariants. Founder read-once is not a bind condition."
+                )
+            }
+        ),
+        encoding="utf-8",
+    )
+    md.write_text(
+        "Founder read-once is **not** a bind condition (dropped 2026-09-09).\n",
+        encoding="utf-8",
+    )
+    check = critic.check_bind_has_no_founder_read_once(root=tmp_path)
+    assert check["state"] == critic.PASS
+
+
+def test_live_factory_bar_has_no_founder_read_once_bind_condition():
+    from golf_offshoot.operator_surface.observability import repo_root
+
+    check = critic.check_bind_has_no_founder_read_once(root=repo_root())
+    assert check["state"] == critic.PASS

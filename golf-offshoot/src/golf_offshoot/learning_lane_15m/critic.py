@@ -840,6 +840,62 @@ def check_series_fee_regime_matches(*, root: Path | None = None) -> dict[str, An
     )
 
 
+_FOUNDER_READ_ONCE_GATE = re.compile(r"\(3\)\s*Founder read-once")
+_FOUNDER_READS_IT_ONCE = "Founder reads it once"
+
+
+def check_bind_has_no_founder_read_once(*, root: Path | None = None) -> dict[str, Any]:
+    """Bind is crew+machine. Founder acknowledgement is not a third condition.
+
+    Founder 2026-09-09 dropped it: the crew wrote it into the 08:30 draft; it
+    was not a Founder GO. Putting the id or the numbered gate back is a Hard
+    NO. Arm and HOLD lift stay Founder. A sentence that says the stamp is
+    dropped does not fail this check.
+    """
+    base = root or repo_root()
+    bar = _load_json(base / BAR_JSON_REL)
+    md_path = base / BAR_MD_REL
+    try:
+        md = md_path.read_text(encoding="utf-8")
+    except OSError:
+        md = ""
+    problems: list[str] = []
+    conditions = bar.get("binding_conditions")
+    if isinstance(conditions, list):
+        for row in conditions:
+            if isinstance(row, dict) and row.get("id") == "founder_read_once":
+                problems.append(
+                    "binding_conditions includes id founder_read_once; "
+                    "Founder 2026-09-09 dropped it as a bind condition"
+                )
+                break
+    rule = str(bar.get("binding_rule") or "")
+    if _FOUNDER_READ_ONCE_GATE.search(rule):
+        problems.append(
+            "binding_rule still requires a numbered Founder-acknowledgement "
+            "gate; bind is (1) Critic+Operator and (2) critic-invariants only"
+        )
+    if _FOUNDER_READS_IT_ONCE in md:
+        problems.append(
+            "evidence bar markdown still names the dropped Founder-acknowledgement "
+            "sentence as a bind gate"
+        )
+    ok = not problems
+    return _check(
+        "bind_has_no_founder_read_once",
+        "the 15m bar does not make Founder acknowledgement a bind condition",
+        ok,
+        (
+            "no founder_read_once bind condition; bind is Critic+Operator and critic-invariants"
+            if ok
+            else "; ".join(problems)
+        ),
+        {
+            "forbidden_id": "founder_read_once",
+        },
+    )
+
+
 def check_honesty_stamp_is_fresh(
     *,
     root: Path | None = None,
@@ -896,6 +952,7 @@ CHECKS = (
     check_trials_counter_is_consistent,
     check_fee_schedule_hash_recorded,
     check_series_fee_regime_matches,
+    check_bind_has_no_founder_read_once,
 )
 
 #: Reported beside the method suite and deliberately outside it.
