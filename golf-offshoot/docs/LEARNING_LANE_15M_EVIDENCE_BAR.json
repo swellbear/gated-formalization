@@ -3,12 +3,12 @@
   "lane": "learning_lane_15m",
   "series": "KXBTC15M",
   "drafted_at": "2026-09-08T08:30:00-04:00",
-  "amended_at": "2026-09-09T20:58:00-04:00",
+  "amended_at": "2026-09-09T21:28:00-04:00",
   "amended_by": "operator",
-  "amendment": "ANSWER 14: three SUSTAINED on CRITIC 14. snapshot_absent is state PASS inside CHECKS and will not block suite green once the fee hash pins; unreadable/empty present file is the same PASS; probe/snapshot latest/ is the fallback shape and both resolved paths are named; ratchet paragraph says eight and names series_fee_regime_matches. Not a score. Not a bind. Consult not enabled.",
+  "amendment": "ANSWER 15: one SUSTAINED on CRITIC 15. Eighth-check detail and docstring still call snapshot_absent a half-pass / silent half-pass named on the bar; the ANSWER 14 hashes did not contain that word — they named state PASS / named suite green. Not a score. Not a bind. Consult not enabled.",
   "prior_amendment": {
-    "amended_at": "2026-09-09T19:51:00-04:00",
-    "note": "gym PaperWatch fee pin (12h PDF probe; 429 off the bar; series_fee_regime_matches). Not a score. Not a bind. Consult not enabled. ANSWER 12 destination/compositor face remains."
+    "amended_at": "2026-09-09T20:58:00-04:00",
+    "note": "ANSWER 14: three SUSTAINED on CRITIC 14. snapshot_absent is state PASS inside CHECKS and will not block suite green once the fee hash pins; unreadable/empty present file is the same PASS; probe/snapshot latest/ is the fallback shape and both resolved paths are named; ratchet paragraph says eight and names series_fee_regime_matches. Not a score. Not a bind. Consult not enabled."
   },
   "discovery_organ": {
     "lane": "honer_15m",
@@ -50,25 +50,25 @@
     {
       "id": "critic_answered",
       "met": false,
-      "detail": "LEARNING_LANE_15M_EVIDENCE_BAR_OPERATOR_ANSWER_14.md records CRITIC 14 (bytes A095CE46\u2026; three UPHELD, three SUSTAINED) on the Systems 19:51 gym-pin hashes C9D3FF62\u2026 / 17A3788C\u2026. An answer that amends the bar does not close condition 1 on the amended text. ANSWER 12 remains answered in OPERATOR_ANSWER_12.md for its own hashes A0115B38\u2026 / 6074217E\u2026. CRITIC 13 zero UPHELD on those ANSWER 12 hashes; ANSWER 13 is not owed. Soften Critic is re-owed on this amendment. CRITIC 11 remains answered in OPERATOR_ANSWER_11.md for its own hashes. CRITIC 09 remains answered in OPERATOR_ANSWER_09.md for its own hashes. CRITIC 08 remains answered in OPERATOR_ANSWER_08.md for its own hashes. CRITIC 07 remains answered in OPERATOR_ANSWER_07.md for its own hashes. CRITIC 06 remains answered in OPERATOR_ANSWER_06.md for its own hashes. CRITIC 05 remains answered in OPERATOR_ANSWER_05.md for its own hashes. CRITIC 04 remains answered in OPERATOR_ANSWER_04.md for its own hashes. CRITIC 03 remains answered in OPERATOR_ANSWER_03.md for its own hashes. CRITIC 02 remains answered in OPERATOR_ANSWER_02.md for its own hashes. CRITIC 01 remains answered in OPERATOR_ANSWER_01.md.",
-      "critic_file": "golf-offshoot/docs/LEARNING_LANE_15M_EVIDENCE_BAR_CRITIC_14.md",
-      "critic_sha256_bytes": "a095ce46a2e6d5d9a0d89fc56f907dcef02453c537a341263aac64fceaa3b4bf",
-      "answer_file": "golf-offshoot/docs/LEARNING_LANE_15M_EVIDENCE_BAR_OPERATOR_ANSWER_14.md",
-      "answered_bar_md_sha256": "c9d3ff62ca18fa3be7f1bcd1f1764965b2886735d6467f9756de5a1643eb7bb6",
-      "answered_bar_json_sha256": "17a3788ca4889366ed7e3be15b4c6a0d5d326e6922525a6a65b958c03f20558a",
-      "upheld": 3,
-      "sustained": 3,
+      "detail": "LEARNING_LANE_15M_EVIDENCE_BAR_OPERATOR_ANSWER_15.md records CRITIC 15 (bytes DF418702\u2026; one UPHELD, one SUSTAINED) on the ANSWER 14 hashes 72A4A4EE\u2026 / 999E33E4\u2026. An answer that amends the bar does not close condition 1 on the amended text. ANSWER 14 remains answered in OPERATOR_ANSWER_14.md for its own hashes C9D3FF62\u2026 / 17A3788C\u2026. ANSWER 12 remains answered in OPERATOR_ANSWER_12.md for its own hashes A0115B38\u2026 / 6074217E\u2026. CRITIC 13 zero UPHELD on those ANSWER 12 hashes; ANSWER 13 is not owed. Soften Critic is re-owed on this amendment. CRITIC 11 remains answered in OPERATOR_ANSWER_11.md for its own hashes. CRITIC 09 remains answered in OPERATOR_ANSWER_09.md for its own hashes. CRITIC 08 remains answered in OPERATOR_ANSWER_08.md for its own hashes. CRITIC 07 remains answered in OPERATOR_ANSWER_07.md for its own hashes. CRITIC 06 remains answered in OPERATOR_ANSWER_06.md for its own hashes. CRITIC 05 remains answered in OPERATOR_ANSWER_05.md for its own hashes. CRITIC 04 remains answered in OPERATOR_ANSWER_04.md for its own hashes. CRITIC 03 remains answered in OPERATOR_ANSWER_03.md for its own hashes. CRITIC 02 remains answered in OPERATOR_ANSWER_02.md for its own hashes. CRITIC 01 remains answered in OPERATOR_ANSWER_01.md.",
+      "critic_file": "golf-offshoot/docs/LEARNING_LANE_15M_EVIDENCE_BAR_CRITIC_15.md",
+      "critic_sha256_bytes": "df4187028075c127392cc6a73f3f362e06c7c2db087163441375fa5c03a46541",
+      "answer_file": "golf-offshoot/docs/LEARNING_LANE_15M_EVIDENCE_BAR_OPERATOR_ANSWER_15.md",
+      "answered_bar_md_sha256": "72a4a4eef616f0937f6ee087ae5d510406459fc4174d6e7ba8e5c689b05f2ea2",
+      "answered_bar_json_sha256": "999e33e4069253abf040d341a8e0455211a6db8c4ffbf01cb4d27ca661340f97",
+      "upheld": 1,
+      "sustained": 1,
       "overruled": 0,
       "prior_pair": {
-        "critic_file": "golf-offshoot/docs/LEARNING_LANE_15M_EVIDENCE_BAR_CRITIC_12.md",
-        "answer_file": "golf-offshoot/docs/LEARNING_LANE_15M_EVIDENCE_BAR_OPERATOR_ANSWER_12.md",
-        "critic_sha256_bytes": "953d6027e3ed4fbb98b62ac00f57e22e1d2013fa565ec839944ddd92ca44a702"
+        "critic_file": "golf-offshoot/docs/LEARNING_LANE_15M_EVIDENCE_BAR_CRITIC_14.md",
+        "answer_file": "golf-offshoot/docs/LEARNING_LANE_15M_EVIDENCE_BAR_OPERATOR_ANSWER_14.md",
+        "critic_sha256_bytes": "a095ce46a2e6d5d9a0d89fc56f907dcef02453c537a341263aac64fceaa3b4bf"
       }
     },
     {
       "id": "critic_invariants_pass",
       "met": false,
-      "detail": "The last findings file (ran_at 2026-09-08T12:02:45-04:00) reviews 5F2AA5F5\u2026 / 2611C255\u2026 / CD25DD72\u2026 \u2014 not the gym-pin hashes C9D3FF62\u2026 / 17A3788C\u2026 / BBD87E52\u2026 and not these bytes. The 14:04 failing_set_at_last_operator_read of [fee_schedule_hash_recorded] described other bytes and is struck as a picture of this file. Copied arithmetic of check_delta_above_detection_floor on the ANSWER 03 hashes would name mde / reject_if_mean_d_exceeds / alpha_first_look / both power effects. After ANSWER 04 restated the four design numbers at next-look alpha, that function would still compare alpha_first_look 0.025 to current alpha_k 0.008333 (checker/key mismatch owed to Systems). Standing named fail: fee_schedule_hash_recorded (empty sha256 after HTTP 429). honesty_stamp_is_fresh is a desk check and does not set passed. write_critic_findings() was not called.",
+      "detail": "The last findings file (ran_at 2026-09-08T12:02:45-04:00) reviews 5F2AA5F5\u2026 / 2611C255\u2026 / CD25DD72\u2026 \u2014 not the ANSWER 14 hashes 72A4A4EE\u2026 / 999E33E4\u2026 / BBD87E52\u2026 and not these bytes. The 14:04 failing_set_at_last_operator_read of [fee_schedule_hash_recorded] described other bytes and is struck as a picture of this file. Copied arithmetic of check_delta_above_detection_floor on the ANSWER 03 hashes would name mde / reject_if_mean_d_exceeds / alpha_first_look / both power effects. After ANSWER 04 restated the four design numbers at next-look alpha, that function would still compare alpha_first_look 0.025 to current alpha_k 0.008333 (checker/key mismatch owed to Systems). Standing named fail: fee_schedule_hash_recorded (empty sha256 after HTTP 429). honesty_stamp_is_fresh is a desk check and does not set passed. write_critic_findings() was not called.",
       "note": "critic.py records the newline-normalised digest, not the raw byte hash. Compare the digest the checker actually read.",
       "last_findings_cover_these_bytes": false,
       "last_findings_ran_at": "2026-09-08T12:02:45.460786-04:00",
@@ -283,11 +283,14 @@
     "root_critic_reads_repo_fallback": true,
     "expected_fee_type": "quadratic",
     "expected_fee_multiplier": 1,
-    "series_fee_check": "series_fee_regime_matches. Ingested KXBTC15M fee_type and fee_multiplier must match expected_fee_type / expected_fee_multiplier. snapshot_absent returns state PASS and is inside CHECKS, so it will not appear in failing and will not block passed:true once fee_schedule_hash_recorded clears. load_series_fee_snapshot returns {} on a missing file, unreadable JSON, or a non-dict payload; those three are the same PASS (detail still says has not written). A well-formed present snapshot with a missing field or a drifted M FAILs. fee_adjust still reads fee_hurdle.k; live M does not retune k.",
+    "series_fee_check": "series_fee_regime_matches. Ingested KXBTC15M fee_type and fee_multiplier must match expected_fee_type / expected_fee_multiplier. snapshot_absent returns state PASS and is inside CHECKS, so it will not appear in failing and will not block passed:true once fee_schedule_hash_recorded clears. load_series_fee_snapshot returns {} on a missing file, unreadable JSON, or a non-dict payload; those three are the same PASS (detail still says has not written). The eighth-check detail (critic.py:792-793) and docstring (:773-774) still call snapshot_absent a half-pass (docstring: silent half-pass) named on the bar. The ANSWER 14 hashes (72A4A4EE / 999E33E4) did not contain that word — they named state PASS / named suite green. The leftover citation is of the machine, not of those hashes. A well-formed present snapshot with a missing field or a drifted M FAILs. fee_adjust still reads fee_hurdle.k; live M does not retune k.",
     "snapshot_absent_state_is_pass": true,
     "snapshot_absent_is_in_checks": true,
     "snapshot_absent_does_not_block_passed": true,
     "unreadable_present_file_is_same_pass": true,
+    "eighth_check_detail_still_says_half_pass_named_on_bar": true,
+    "eighth_check_docstring_still_says_silent_half_pass": true,
+    "answer_14_hashes_did_not_contain_half_pass": true,
     "gym_probe": "PaperWatch (not Cursor) GETs https://kalshi.com/docs/kalshi-fee-schedule.pdf every 12h with User-Agent gated-formalization/1.0 (public read-only). Do not spoof a browser. Do not hammer.",
     "fee_is_monotone_decreasing_in_mark": true,
     "fee_monotonicity_detail": "with stake fixed at $1, C = stake/P and Kalshi's 0.07 * C * P * (1-P) reduces exactly to 0.07 * stake * (1 - P): $0.0455 at P=0.35, $0.035 at P=0.50, $0.014 at P=0.80",
@@ -380,7 +383,7 @@
     "critic_01_x5_sustain_or_overrule": "binding condition 1 is prose; a file check cannot read an admit-pass verdict without a structured verdicts array. Impossible as a hash check today",
     "critic_01_x6_delta_is_fraction": "effect_floor_as_fraction_of_stake is on the face; PAPER_UNIT != 1.0 invariant still owed",
     "critic_01_x7_heartbeat_clear": "critic_verdicts drops detail; honesty_stamp_is_fresh is in DESK_CHECKS and does not set passed; critic_findings_failing pages on a new or undisclosed failing set",
-    "gym_pin_eighth_series_fee_regime": "series_fee_regime_matches is the eighth CHECKS member. snapshot_absent (missing, unreadable JSON, or non-dict) is state PASS and will not block passed:true once fee_schedule_hash_recorded clears. A well-formed present missing/drifted M FAILs."
+    "gym_pin_eighth_series_fee_regime": "series_fee_regime_matches is the eighth CHECKS member. snapshot_absent (missing, unreadable JSON, or non-dict) is state PASS and will not block passed:true once fee_schedule_hash_recorded clears. A well-formed present missing/drifted M FAILs. The eighth-check detail and docstring still say half-pass / silent half-pass named on the bar, which the ANSWER 14 hashes did not contain."
   },
   "owed_to_systems": [
     "empirical half-spread profile: mean (yes_ask-yes_bid)/2 bucketed by mark, from recorded books",
