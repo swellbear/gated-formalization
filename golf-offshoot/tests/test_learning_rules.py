@@ -1,11 +1,15 @@
+import json
+
 import pytest
 
 from golf_offshoot.learning_lane_15m.evidence_bar import class_is_burned
 from golf_offshoot.learning_lane_15m.paper import load_decisions, paper_autobet_open_markets
 from golf_offshoot.learning_lane_15m.paths import set_15m_root_override
 from golf_offshoot.learning_lane_15m.rules import (
+    RuleAlreadyInformed,
     RuleNotScorable,
     decide,
+    declare_rule,
     favorite_threshold,
     load_rules,
     score_rule,
@@ -217,3 +221,53 @@ def test_score_rule_accepts_post_flip_windows_and_labels_lived():
     assert card["n"] == 70
     assert all(row["evidence"] == "lived" for row in card["windows"])
     assert card["look"] == "L1"
+
+
+def test_declare_rule_refuses_a_selecting_rule_when_marks_exist(tmp_path):
+    set_15m_root_override(tmp_path / "kalshi_15m")
+    try:
+        paper = tmp_path / "kalshi_15m" / "paper"
+        paper.mkdir(parents=True)
+        (paper / "KXBTC15M-26SEP071600-00.json").write_text("{}", encoding="utf-8")
+        docs = tmp_path / "golf-offshoot" / "docs"
+        docs.mkdir(parents=True)
+        (docs / "LEARNING_LANE_15M_RULES.json").write_text(
+            json.dumps({"rules": [], "trials_to_date": 0, "trials_log": []}),
+            encoding="utf-8",
+        )
+        with pytest.raises(RuleAlreadyInformed, match="informing"):
+            declare_rule(
+                {
+                    "id": "R-SKIP-NEW-CUT",
+                    "kind": "selection",
+                    "selects": True,
+                    "params": {"favorite_odds": 3},
+                },
+                root=tmp_path,
+            )
+    finally:
+        set_15m_root_override(None)
+
+
+def test_declare_rule_allows_a_selecting_rule_on_an_empty_tree(tmp_path):
+    set_15m_root_override(tmp_path / "kalshi_15m")
+    try:
+        docs = tmp_path / "golf-offshoot" / "docs"
+        docs.mkdir(parents=True)
+        (docs / "LEARNING_LANE_15M_RULES.json").write_text(
+            json.dumps({"rules": [], "trials_to_date": 0, "trials_log": []}),
+            encoding="utf-8",
+        )
+        row = declare_rule(
+            {
+                "id": "R-SKIP-NEW-CUT",
+                "kind": "selection",
+                "selects": True,
+                "params": {"favorite_odds": 3},
+            },
+            root=tmp_path,
+            now_iso="2026-09-10T09:00:00-04:00",
+        )
+        assert row["id"] == "R-SKIP-NEW-CUT"
+    finally:
+        set_15m_root_override(None)

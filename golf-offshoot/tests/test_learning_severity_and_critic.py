@@ -199,6 +199,8 @@ def test_the_findings_artifact_is_the_proof(tmp_path):
         "fee_schedule_hash_recorded",
         "series_fee_regime_matches",
         "bind_has_no_founder_read_once",
+        "half_spread_profile_recorded",
+        "hub_autostart_registered",
     ]
     assert [c["id"] for c in payload["desk_checks"]] == ["honesty_stamp_is_fresh"]
 
@@ -582,3 +584,71 @@ def test_live_factory_bar_has_no_founder_read_once_bind_condition():
 
     check = critic.check_bind_has_no_founder_read_once(root=repo_root())
     assert check["state"] == critic.PASS
+
+
+def test_half_spread_profile_fails_when_unmeasured(tmp_path):
+    check = critic.check_half_spread_profile(root=tmp_path)
+    assert check["state"] == critic.FAIL
+    assert check["id"] == "half_spread_profile_recorded"
+
+
+def test_half_spread_profile_passes_when_named_and_measured(tmp_path):
+    from golf_offshoot.learning_lane_15m.spread_profile import PROFILE_REL, build_profile, write_profile
+
+    profile = build_profile(
+        [{"mark": 0.50, "half_spread": 0.005, "yes_bid": 0.49, "yes_ask": 0.51}]
+    )
+    write_profile(profile, root=tmp_path, latest_dir=tmp_path / "latest")
+    bar = tmp_path / critic.BAR_JSON_REL
+    bar.parent.mkdir(parents=True, exist_ok=True)
+    bar.write_text(
+        json.dumps({"fee_hurdle": {}, "half_spread_profile": PROFILE_REL.name}),
+        encoding="utf-8",
+    )
+    md = tmp_path / critic.BAR_MD_REL
+    md.write_text(f"named {PROFILE_REL.name}\n", encoding="utf-8")
+    check = critic.check_half_spread_profile(root=tmp_path)
+    assert check["state"] == critic.PASS
+
+
+def test_hub_autostart_scratch_tree_skips_schtasks(tmp_path):
+    check = critic.check_hub_autostart_registered(root=tmp_path)
+    assert check["state"] == critic.PASS
+    assert check["id"] == "hub_autostart_registered"
+
+
+def test_alpha_first_look_is_the_schedule_first_term(tmp_path):
+    bar = tmp_path / critic.BAR_JSON_REL
+    bar.parent.mkdir(parents=True, exist_ok=True)
+    bar.write_text(
+        json.dumps(
+            {
+                "looks": {"first_look_n": 70},
+                "distinguishable": {
+                    "h0": "mean(d) <= delta",
+                    "effect_floor_usd_per_window": 0.28,
+                    "sd_used": 0.784,
+                    "se_at_n": 0.0937,
+                    "mde": 0.2243,
+                    "reject_if_mean_d_exceeds": 0.504,
+                    "alpha_first_look": 0.025,
+                    "next_look_alpha": 0.008333,
+                    "effect_floor_rationale": "sd ~0.784 next look",
+                    "power": {
+                        "disclosed_on_face": True,
+                        "effect_at_50pct_power": 0.504,
+                        "effect_at_80pct_power": 0.583,
+                    },
+                },
+            }
+        ),
+        encoding="utf-8",
+    )
+    registry = tmp_path / critic.REGISTRY_REL
+    registry.parent.mkdir(parents=True, exist_ok=True)
+    registry.write_text(json.dumps({"trials_to_date": 1}), encoding="utf-8")
+    check = critic.check_delta_above_detection_floor(root=tmp_path)
+    disagreements = check["evidence"].get("disagreements") or []
+    assert not any("alpha_first_look" in row for row in disagreements)
+    assert not any("next_look_alpha" in row for row in disagreements)
+

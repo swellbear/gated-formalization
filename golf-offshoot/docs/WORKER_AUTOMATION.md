@@ -21,7 +21,7 @@ cannot silently arm a cloud agent on this account.
 |-------|--------|
 | Name | 15m worker tick |
 | Interval | every 15 minutes, **offset** from CoS (`7,22,37,52 * * * *`) |
-| Repo / branch | this repo, `cursor/part-a-clerical-trust-boundary` — not `origin/master` until #176 merges |
+| Repo / branch | this repo, `cursor/honer-15m-sibling` — not `origin/master` until #178 merges |
 | Tools | whatever the named worker skill needs to do that one job on this branch. Commit to this branch only. No deploy, no master push, no Kalshi private, no second hub |
 | Do not also create | a second CoS timer, or role-specific extra automations |
 

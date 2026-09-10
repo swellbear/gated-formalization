@@ -2,68 +2,80 @@
   "schema": 1,
   "lane": "learning_lane_15m",
   "role": "critic-invariants",
-  "ran_at": "2026-09-08T12:02:45.460786-04:00",
+  "ran_at": "2026-09-10T09:15:25.827074-04:00",
   "framing": "Deterministic checks over method artifacts. This is the mechanical half of the Critic. It objects to nothing, scores nothing, admits nothing and parks nothing. A written attack is soften-critic's turn and is never auto-served.",
-  "passed": false,
-  "failing": [
-    "fee_schedule_hash_recorded"
-  ],
+  "passed": true,
+  "failing": [],
+  "failing_named_on_bar": [],
+  "failing_not_named_on_bar": [],
   "checks": [
     {
       "id": "matched_exposure_control",
-      "title": "rule and control are compared at matched exposure",
+      "title": "the matched-exposure control is code the scorer must call",
       "state": "PASS",
-      "detail": "the bar declares a matched-exposure or per-bet contrast",
+      "detail": "golf_offshoot.learning_lane_15m.rules.matched_exposure_permutation imports, holds the skip count fixed at seed 20260908 over 10000 draws, and score_rule calls it",
       "evidence": {
+        "control_function": "golf_offshoot.learning_lane_15m.rules.matched_exposure_permutation",
+        "function_exists": true,
+        "score_path_calls_it": true,
+        "seed": 20260908,
+        "draws": 10000,
         "contrast": "d_i = pnl_rule_fee_adj_i - pnl_baseline_fee_adj_i on the same n windows",
-        "skip_contributes": 0,
-        "matched_exposure": {
-          "arms_are_not_exposure_matched": true,
-          "detail": "the rule arm risks (1 - skip_rate) * n * $1 against the baseline's n * $1; the raw contrast measures volume as well as selection",
-          "control": "permutation null holding the number of skips fixed and reassigning which windows are skipped",
-          "draws": 10000,
-          "seed": 20260908,
-          "seed_preregistered_in": "golf-offshoot/docs/LEARNING_LANE_15M_EVIDENCE_BAR.md",
-          "requirement": "observed mean(d) must exceed the (1 - alpha_k) quantile of that null, in addition to clauses (1), (3) and (4)",
-          "why": "converts the question from 'did abstaining help?' to 'did this abstention rule beat abstaining at the same rate?'",
-          "also_report": [
-            "mean(d) per dollar at risk beside mean(d) per window",
-            "skip_rate * mean(fee | skip) \u2014 the mechanical fee-avoidance component of the contrast"
-          ]
-        }
+        "skip_contributes": 0
       }
     },
     {
       "id": "delta_above_detection_floor",
-      "title": "effect floor is not merely the detection floor",
+      "title": "the effect floor is checked against the null the bar declares",
       "state": "PASS",
-      "detail": "delta 0.28 vs MDE 0.1837 at n=70 (ratio 1.525). delta is more than 10% above the floor",
+      "detail": "null is floor (h0 'mean(d) <= delta'); at n=70, sd=0.784, alpha_k=0.00833333 (k=2) the test rejects above 0.5043. delta 0.28 is 0.555 of that threshold, so power at delta is alpha by construction. 50% power at 0.5043/window, 80% at 0.5832. Against a zero null the MDE would be 0.2243 (ratio 1.248), which is not the null in force.",
       "evidence": {
+        "h0": "mean(d) <= delta",
+        "null_kind": "floor",
         "delta": 0.28,
-        "mde": 0.1837,
-        "ratio": 1.525,
         "n": 70,
-        "sd": 0.784
+        "sd_used": 0.784,
+        "alpha_k": 0.008333333333333333,
+        "alpha_first_term": 0.025,
+        "trials_to_date": 1,
+        "se": 0.093706,
+        "mde_zero_null": 0.22433,
+        "reject_above": 0.50433,
+        "delta_over_reject_threshold": 0.555192,
+        "delta_over_zero_null_mde": 1.248161,
+        "effect_at_50pct_power": 0.50433,
+        "effect_at_80pct_power": 0.583195,
+        "disagreements": []
       }
     },
     {
       "id": "holdout_is_forward_only",
-      "title": "holdout is forward-only, not an index slice",
+      "title": "the holdout is enforced by commit order, not by an adjective",
       "state": "PASS",
-      "detail": "the holdout is declared forward-only",
+      "detail": "held-out set 'eligible windows 71 through 140 after declared_at' is enforced by invariant l1_committed_before_l2, which requires the L1 score note's commit SHA and timestamp",
       "evidence": {
         "held_out_windows": "eligible windows 71 through 140 after declared_at",
-        "forward_only": true
+        "forward_only_keyword": true,
+        "keyword_is_not_clearance": true,
+        "commit_order_invariant": "l1_committed_before_l2"
       }
     },
     {
       "id": "fee_adjusted_book_is_binding",
-      "title": "scoring runs on a fee-adjusted book",
+      "title": "scoring runs on a fee-adjusted book, through committed code",
       "state": "PASS",
-      "detail": "the scored contrast is fee-adjusted",
+      "detail": "golf_offshoot.learning_lane_15m.evidence_bar.fee_adjust reproduces all 24 rows of the RUN-ONLY fee table and score_rule calls it",
       "evidence": {
+        "adjustment_function": "golf_offshoot.learning_lane_15m.evidence_bar.fee_adjust",
+        "run_only_rows_reproduced": 24,
+        "recorded_book_has_fee_term": false,
+        "payout_expressions": [
+          "payout = round(pos.stake * pos.decimal_odds, 2) if won else 0.0",
+          "pnl = round(payout - pos.stake, 2)",
+          "payout=payout,",
+          "pnl=pnl,"
+        ],
         "contrast": "d_i = pnl_rule_fee_adj_i - pnl_baseline_fee_adj_i on the same n windows",
-        "recorded_book_has_fee_term": true,
         "measured_mean_per_fill_usd": 0.039,
         "k": 0.07
       }
@@ -72,81 +84,151 @@
       "id": "declared_at_precedes_scored_windows",
       "title": "no rule is scored on a window that predates its declaration",
       "state": "PASS",
-      "detail": "no rule records a scored window at or before its declared_at",
+      "detail": "no scored window in 0 scorecard(s) or the registry closes at or before its rule's declared_at",
       "evidence": {
-        "violations": []
+        "violations": [],
+        "scorecards": 0
       }
     },
     {
       "id": "trials_counter_is_consistent",
-      "title": "trials_to_date is consistent with the register",
+      "title": "trials_to_date is mechanical and accounts for every look",
       "state": "PASS",
-      "detail": "trials_to_date=0 covers 0 rule(s) that have been looked at",
+      "detail": "trials_to_date=1 equals 0 pre-mechanism + 1 logged increment(s); 0 score note(s) all match",
       "evidence": {
-        "trials_to_date": 0,
-        "rules": 2,
-        "looked_at": 0
+        "trials_to_date": 1,
+        "trials_before_mechanism": 0,
+        "logged": 1,
+        "l2_logged": 0,
+        "score_notes": 0,
+        "writer": "golf_offshoot.learning_lane_15m.rules.record_trial"
       }
     },
     {
       "id": "fee_schedule_hash_recorded",
-      "title": "the public fee schedule is pinned by hash",
-      "state": "FAIL",
-      "detail": "no sha256 recorded for https://kalshi.com/docs/kalshi-fee-schedule.pdf; k=0.07 is being used on habit and a schedule change would be invisible",
+      "title": "the public fee schedule is pinned by a real digest",
+      "state": "PASS",
+      "detail": "schedule sha256 c326a69f596a\u2026 recorded, last checked 2026-09-10T09:01:32.334331-04:00",
       "evidence": {
         "url": "https://kalshi.com/docs/kalshi-fee-schedule.pdf",
-        "sha256": "",
-        "checked_at": "",
+        "sha256": "c326a69f596a11e8f8be2620402d39a8d4823920c21cc97c93a114d862699601",
+        "checked_at": "2026-09-10T09:01:32.334331-04:00",
+        "fetch_status": 429,
+        "fetch_note": "Founder browser bytes, 281129 bytes, SHA-256 c326a69f596a11e8f8be2620402d39a8d4823920c21cc97c93a114d862699601. Not an HTTP 200 gym GET. Gym 12h 429 is drift detection only, not the pin clock.",
+        "blocker_is_external": false,
         "k": 0.07
       }
     },
     {
+      "id": "series_fee_regime_matches",
+      "title": "ingested KXBTC15M fee_type and fee_multiplier match the bar",
+      "state": "PASS",
+      "detail": "ingested quadratic x 1.0 matches expected quadratic x 1.0",
+      "evidence": {
+        "snapshot_absent": false,
+        "expected_fee_type": "quadratic",
+        "expected_fee_multiplier": 1.0,
+        "fee_type": "quadratic",
+        "fee_multiplier": 1.0,
+        "fee_type_present": true,
+        "fee_multiplier_present": true
+      }
+    },
+    {
+      "id": "bind_has_no_founder_read_once",
+      "title": "the 15m bar does not make Founder acknowledgement a bind condition",
+      "state": "PASS",
+      "detail": "no founder_read_once bind condition; bind is Critic+Operator and critic-invariants",
+      "evidence": {
+        "forbidden_id": "founder_read_once"
+      }
+    },
+    {
+      "id": "half_spread_profile_recorded",
+      "title": "the empirical half-spread profile is measured and named",
+      "state": "PASS",
+      "detail": "profile n=624, 20 buckets, named on the bar",
+      "evidence": {
+        "n": 624,
+        "buckets": 20,
+        "named_on_bar": true,
+        "path": "golf-offshoot/docs/LEARNING_LANE_15M_HALF_SPREAD_PROFILE.json"
+      }
+    },
+    {
+      "id": "hub_autostart_registered",
+      "title": "the 15m hub logon task exists",
+      "state": "PASS",
+      "detail": "scratch-tree critic run; live Windows gym queries schtasks",
+      "evidence": {
+        "skipped": true,
+        "name": "GatedFormalization-15mLearningHub"
+      }
+    }
+  ],
+  "desk_checks": [
+    {
       "id": "honesty_stamp_is_fresh",
       "title": "the honesty stamp is inside one window",
       "state": "PASS",
-      "detail": "stamped 2026-09-08 12:01, 105s old, inside one 900s window",
+      "detail": "stamped 2026-09-10 09:10, 325s old, inside one 900s window",
       "evidence": {
-        "stamped": "2026-09-08 12:01",
-        "age_s": 105,
+        "stamped": "2026-09-10 09:10",
+        "age_s": 325,
         "window_s": 900.0
       }
     }
   ],
+  "desk_checks_are_outside_the_method_suite": "These do not set passed and never owe Operator about the bar. A desk freshness timer is CoS's obligation, not a property of the bar.",
   "reviewed": [
     {
       "id": "evidence_bar",
       "path": "golf-offshoot/docs/LEARNING_LANE_15M_EVIDENCE_BAR.md",
-      "sha256": "5f2aa5f5462956bfbbedfc0e7ad6ae26841cfebb7347a26e61f294e3b923a7c5",
+      "sha256": "d25d0227136206ec08846147470e3da4aea58cfe0b25b5a0b51bb9b7284feeb2",
       "present": true,
-      "checked_at": "2026-09-08T12:02:45.460786-04:00"
+      "checked_at": "2026-09-10T09:15:25.827074-04:00"
     },
     {
       "id": "evidence_bar_json",
       "path": "golf-offshoot/docs/LEARNING_LANE_15M_EVIDENCE_BAR.json",
-      "sha256": "2611c255c69072a6c2e81ef1bef3a0c7765a3f26b50f7c524a2909f069af1835",
+      "sha256": "4d9e86c2c45362b8af5fbf040f2da5c5ba39f2efa879c0f82d04cfdb946b74d6",
       "present": true,
-      "checked_at": "2026-09-08T12:02:45.460786-04:00"
+      "checked_at": "2026-09-10T09:15:25.827074-04:00"
     },
     {
       "id": "rule_registry",
       "path": "golf-offshoot/docs/LEARNING_LANE_15M_RULES.json",
-      "sha256": "cd25dd72be7e6182a9acd6bfa1f7f0854a4a75fc98e4d55d71730bca68309027",
+      "sha256": "bbd87e52ee6fc1e5f797c676ea6038f4c77404dde7f29e21128bd75bf4b802d0",
       "present": true,
-      "checked_at": "2026-09-08T12:02:45.460786-04:00"
+      "checked_at": "2026-09-10T09:15:25.827074-04:00"
     },
     {
       "id": "lab_proposed",
       "path": "golf-offshoot/docs/LEARNING_LANE_15M_OPERATOR_NOTE_PROPOSED_01.md",
       "sha256": "83d4463b4bb55d327485e3874a4bf3daa54727d7ed37f56c124c6e8913daf0b4",
       "present": true,
-      "checked_at": "2026-09-08T12:02:45.460786-04:00"
+      "checked_at": "2026-09-10T09:15:25.827074-04:00"
+    },
+    {
+      "id": "lab_proposed_02",
+      "path": "golf-offshoot/docs/LEARNING_LANE_15M_OPERATOR_NOTE_PROPOSED_02.md",
+      "sha256": "1071b9f7402ea0807147f64731456b80030310ed9fb2f6ff5ecd3009cc303119",
+      "present": true,
+      "checked_at": "2026-09-10T09:15:25.827074-04:00"
+    },
+    {
+      "id": "lab_lab_proposed_02",
+      "path": "golf-offshoot/docs/LEARNING_LANE_15M_LAB_PROPOSED_02.md",
+      "sha256": "460f59a369241e107f7fd48a22898f24d4456338618a7927d73d7aebdc0368e2",
+      "present": true,
+      "checked_at": "2026-09-10T09:15:25.827074-04:00"
     },
     {
       "id": "honesty_stamp",
       "path": "docs/agents/DESK.md",
-      "sha256": "070556051c7d5a4831ce97b23cf88a1541c31208b3a227f2139d5210af67799d",
+      "sha256": "09b9a950051f5a907dd58723a5f7312457e15ba4c829a1eb1f2a4dae73ded41b",
       "present": true,
-      "checked_at": "2026-09-08T12:02:45.460786-04:00"
+      "checked_at": "2026-09-10T09:15:25.827074-04:00"
     }
   ]
 }

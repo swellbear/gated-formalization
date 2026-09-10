@@ -45,6 +45,10 @@ class RuleNotScorable(RuntimeError):
     """A guard in front of the scorer fired. Not a score, and not a failure."""
 
 
+class RuleAlreadyInformed(ValueError):
+    """A new selecting rule cannot be declared on a tree that already has marks."""
+
+
 def registry_path(*, root: Path | None = None) -> Path:
     if root is not None:
         return Path(root) / REGISTRY_REL
@@ -417,6 +421,21 @@ def record_trial(
     return entry
 
 
+def informing_marks_on_tree(*, root: Path | None = None) -> bool:
+    """True when this tree already has posted-yes marks a new cut would see."""
+    from golf_offshoot.learning_lane_15m.paths import has_15m_root_override, paper_dir_15m
+
+    if has_15m_root_override():
+        folder = paper_dir_15m()
+    elif root is not None:
+        folder = Path(root) / "golf-offshoot" / "data" / "learning_lane_15m" / "paper"
+    else:
+        folder = paper_dir_15m()
+    if not folder.is_dir():
+        return False
+    return any(folder.glob("KXBTC15M-*.json"))
+
+
 def declare_rule(
     rule: dict[str, Any],
     *,
@@ -425,19 +444,23 @@ def declare_rule(
 ) -> dict[str, Any]:
     """Append a rule to the registry, incrementing the counter when it selects.
 
-    A rule declared after the execution flip may carry ``execution: true`` from
-    birth. Its parameters are pre-registered only if ``declared_at`` predates
-    every informing mark, including marks already published on this tree — the
-    registry records the claim, it does not adjudicate it.
+    A new selecting rule is refused if informing marks already exist on this
+    tree. Existing rows stay; this gate is pre-registration, not a rewrite.
     """
     rule_id = str(rule.get("id") or "").strip()
     if not rule_id:
         raise ValueError("a rule needs an id")
+    row = dict(rule)
+    if row.get("selects") and informing_marks_on_tree(root=root):
+        raise RuleAlreadyInformed(
+            f"{rule_id} selects on posted-yes cuts and this tree already has "
+            "informing KXBTC15M marks; a new Established-capable rule needs a "
+            "new class or a new lane, not another skip-band here"
+        )
     path = registry_path(root=root)
     reg = json.loads(path.read_text(encoding="utf-8"))
     if any(str(r.get("id") or "") == rule_id for r in reg.get("rules") or []):
         raise ValueError(f"{rule_id} is already declared; a redeclaration is a new rule")
-    row = dict(rule)
     row.setdefault("declared_at", now_iso or isoformat_now())
     reg.setdefault("rules", []).append(row)
     path.write_text(json.dumps(reg, indent=2) + "\n", encoding="utf-8")

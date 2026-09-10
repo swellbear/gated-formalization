@@ -5,6 +5,7 @@ from __future__ import annotations
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 from urllib.parse import parse_qs, urlparse
 
+from golf_offshoot.operator_surface.client_write import write_http_body
 from golf_offshoot.operator_surface.hub import render_hub
 from golf_offshoot.operator_surface.lanes import DEFAULT_LANE, SELECTOR_FIELD, parse_lane
 
@@ -22,7 +23,7 @@ class HubHandler(BaseHTTPRequestHandler):
         self.send_header("Content-Type", "text/html; charset=utf-8")
         self.send_header("Content-Length", str(len(body)))
         self.end_headers()
-        self.wfile.write(body)
+        write_http_body(self.wfile, body)
 
     def do_POST(self) -> None:  # noqa: N802
         length = int(self.headers.get("Content-Length") or 0)

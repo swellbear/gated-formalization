@@ -280,10 +280,12 @@ def paper_autobet_open_markets(
     unit: float = PAPER_UNIT,
     rule: dict | None = None,
 ) -> list[PaperMovement]:
-    """Mechanical paper YES at posted ask for each open KXBTC15M window.
+    """Mechanical paper YES at the public Kalshi mid/last mark.
 
     Observation probe of the ops loop. Does not invent an edge. Skips
-    already-booked tickers and missing/untradable asks.
+    already-booked tickers and missing/untradable marks. ``paper_mark`` is
+    ``public_mid_or_last`` (the mid when both sides are quoted); ``yes_ask``
+    is fallback only.
 
     Every candidate now goes through ``rules.decide()`` on the rule the
     registry marks ``execution: true``. A skip writes no position, no ledger
@@ -372,8 +374,8 @@ def paper_autobet_open_markets(
             entry_model_p=yes_f,
             entry_market_p=yes_f,
             notes=(
-                "PAPER OBSERVATION ONLY. Mechanical YES at posted Kalshi ask. "
-                "No claimed edge. Trading NOT ARMED. Not a Kalshi order."
+                "PAPER OBSERVATION ONLY. Mechanical YES at the public Kalshi "
+                "mid/last mark. No claimed edge. Trading NOT ARMED. Not a Kalshi order."
             ),
             user_recorded=True,
             proposed=False,
@@ -404,7 +406,8 @@ def paper_autobet_open_markets(
             ),
             reason_technical=(
                 f"lane={LANE_15M} series={PRIMARY_SERIES} ticker={ticker} "
-                f"paper_mark={yes_f} fee_type=quadratic x1 "
+                f"paper_mark={yes_f} yes_bid={market.get('yes_bid')} "
+                f"yes_ask={market.get('yes_ask')} fee_type=quadratic x1 "
                 f"price_level_structure=tapered_deci_cent paper_autobet observation "
                 f"rule_id={verdict.get('rule_id') or ''} "
                 f"rules.decide={verdict['action']} ({verdict['reason']})"

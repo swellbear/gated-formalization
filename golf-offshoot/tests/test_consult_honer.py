@@ -160,6 +160,13 @@ def test_paper_autobet_ignores_live_honer_theta_when_consult_off(tmp_path, monke
         set_honer_root_override(None)
 
 
+def test_enabled_missing_theta_returns_factory_verdict():
+    snap = {"consult_enabled": True, "family": "H-SKIP-RICH-YES"}
+    out = compose_and_skip(FACTORY_FILL, posted_yes=0.90, snapshot=snap)
+    assert out is FACTORY_FILL
+    assert out["action"] == "fill"
+
+
 def test_factory_paper_and_rules_do_not_import_honer_package():
     paper = (SRC / "learning_lane_15m" / "paper.py").read_text(encoding="utf-8")
     rules = (SRC / "learning_lane_15m" / "rules.py").read_text(encoding="utf-8")

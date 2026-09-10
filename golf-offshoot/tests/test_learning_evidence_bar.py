@@ -252,3 +252,48 @@ def test_score_rule_still_refuses_an_unbound_bar():
         )
     with pytest.raises(RuleNotScorable, match="not binding"):
         score_rule("R-SKIP-2TO1-FAVORITE", windows)
+
+
+def test_founder_browser_bytes_pin_the_bar_and_gym_does_not_overwrite(tmp_path):
+    import hashlib
+    from golf_offshoot.learning_lane_15m import critic
+    from golf_offshoot.learning_lane_15m.evidence_bar import apply_founder_fee_pin
+
+    body = b"%PDF-1.7 founder-bytes"
+    digest = hashlib.sha256(body).hexdigest()
+    pdf = tmp_path / "kalshi-fee-schedule.pdf"
+    pdf.write_bytes(body)
+    bar = tmp_path / critic.BAR_JSON_REL
+    bar.parent.mkdir(parents=True, exist_ok=True)
+    bar.write_text(
+        json.dumps({"fee_hurdle": {"k": 0.07, "schedule_sha256": "", "schedule_fetch_status": 429}}),
+        encoding="utf-8",
+    )
+    out = apply_founder_fee_pin(pdf, root=tmp_path)
+    assert out["sha256"] == digest
+    assert out["source"] == "founder_browser_bytes"
+    fee = json.loads(bar.read_text(encoding="utf-8"))["fee_hurdle"]
+    assert fee["schedule_sha256"] == digest
+    assert fee["schedule_pin_source"] == "founder_browser_bytes"
+    assert fee["schedule_fetch_status"] == 429
+    assert "HTTP 200 gym GET" not in fee["schedule_fetch_note"] or "Not an HTTP 200" in fee["schedule_fetch_note"]
+
+    latest = tmp_path / "latest"
+
+    def opener_200(_url, _timeout):
+        return 200, b"%PDF-1.4 other-gym-bytes"
+
+    from golf_offshoot.learning_lane_15m.evidence_bar import record_fee_schedule_probe
+
+    second = record_fee_schedule_probe(opener=opener_200, root=tmp_path, latest_dir=latest)
+    assert second["pinned"] is False
+    assert json.loads(bar.read_text(encoding="utf-8"))["fee_hurdle"]["schedule_sha256"] == digest
+
+
+def test_live_fee_pin_is_founder_browser_bytes():
+    from golf_offshoot.learning_lane_15m.evidence_bar import load_evidence_bar
+
+    fee = load_evidence_bar()["fee_hurdle"]
+    assert fee.get("schedule_pin_source") == "founder_browser_bytes"
+    assert len(str(fee.get("schedule_sha256") or "")) == 64
+

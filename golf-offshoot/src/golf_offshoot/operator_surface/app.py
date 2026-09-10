@@ -25,6 +25,7 @@ from golf_offshoot.operator_surface.modes import (
     PAPER_ONLY,
     build_mode_walls,
 )
+from golf_offshoot.operator_surface.client_write import write_http_body
 from golf_offshoot.operator_surface.notify import notify_run_complete
 from golf_offshoot.operator_surface.paths import resolve_roots, safe_existing_file
 from golf_offshoot.operator_surface.reload import (
@@ -1135,7 +1136,7 @@ class OperatorHandler(BaseHTTPRequestHandler):
         self.send_header("Content-Length", str(len(body)))
         self.send_header("Cache-Control", "no-store")
         self.end_headers()
-        self.wfile.write(body)
+        write_http_body(self.wfile, body, log=lambda msg: self.log_message("%s", msg))
 
 
 def _dispatch(action: str, event: str, state: dict) -> RunRecord:

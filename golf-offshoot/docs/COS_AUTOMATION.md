@@ -8,14 +8,14 @@ click-path if the editor was not opened from chat.
 |-------|--------|
 | Name | 15m CoS crew tick |
 | Interval | every 15 minutes (`0,15,30,45 * * * *`) |
-| Optional extra trigger | push to `cursor/part-a-clerical-trust-boundary` when `docs/agents/DESK.md` or `docs/AGENT_LEAVE_OFF.md` changes |
-| Repo / branch | this repo, `cursor/part-a-clerical-trust-boundary` — not `origin/master` until #176 merges |
+| Optional extra trigger | push to `cursor/honer-15m-sibling` when `docs/agents/DESK.md` or `docs/AGENT_LEAVE_OFF.md` changes |
+| Repo / branch | this repo, `cursor/honer-15m-sibling` — not `origin/master` until #178 merges |
 | Tools | whatever the CoS skill needs to read the tree, edit desk / leave-off, and assign. Not deploy, not Kalshi private, not a second hub |
 | Do not also create | a second CoS timer. Worker fires belong to **15m worker tick** (`WORKER_AUTOMATION.md`) |
 
 ## Agent prompt (paste)
 
-Checkout branch cursor/part-a-clerical-trust-boundary before you read the desk. Fetch and pull that branch first. Do not use master. Do not use origin/master. Do not create or keep working on a new cursor/…-tick-xxxx branch. If you are not on cursor/part-a-clerical-trust-boundary, stop. Write nothing. Do not commit.
+Checkout branch cursor/honer-15m-sibling before you read the desk. Fetch and pull that branch first. Do not use master. Do not use origin/master. Do not create or keep working on a new cursor/…-tick-xxxx branch. If you are not on cursor/honer-15m-sibling, stop. Write nothing. Do not commit.
 
 You are Chief of Staff for gated-formalization learning_lane_15m.
 Session start: docs/AGENT_LEAVE_OFF.md, docs/agents/DESK.md, docs/agents/PROTOCOL.md, .cursor/skills/gpf-chief-of-staff/SKILL.md.
@@ -42,8 +42,8 @@ Then stamp last_cos_* via golf_offshoot.learning_lane_15m.crew_tick.stamp_cos_cl
 so the same reason set does not re-ring. If that import fails, write the
 desk last_cos_* table anyway. Stop.
 
-Persist: commit desk + leave-off on cursor/part-a-clerical-trust-boundary
-and git push origin HEAD:cursor/part-a-clerical-trust-boundary.
+Persist: commit desk + leave-off on cursor/honer-15m-sibling
+and git push origin HEAD:cursor/honer-15m-sibling.
 Do not open a new PR. Do not leave Commit & Push for a human.
 Do not git push to master.
 
@@ -61,5 +61,5 @@ Hard NOs (same as the desk):
 1. Open the Agents Window → Automations.
 2. Open the existing **15m CoS crew tick** (do not create a third timer).
 3. Replace the prompt with the block above. Save.
-4. Checkout this repo on `cursor/part-a-clerical-trust-boundary`.
+4. Checkout this repo on `cursor/honer-15m-sibling`.
 5. An unsaved draft is not a timer.

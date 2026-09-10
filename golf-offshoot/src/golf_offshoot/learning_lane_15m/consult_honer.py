@@ -95,9 +95,14 @@ def compose_and_skip(
     action = str(factory_verdict.get("action") or "")
     if action != "fill":
         return factory_verdict
-    honer_action, honer_reason = express_frozen_honer(
-        snap, posted_yes=posted_yes, spread=spread
-    )
+    try:
+        honer_action, honer_reason = express_frozen_honer(
+            snap, posted_yes=posted_yes, spread=spread
+        )
+    except ValueError:
+        # Fail closed: an enabled snapshot without numeric theta / a usable
+        # family expression must not crash paper. Flag stays off on this tree.
+        return factory_verdict
     if honer_action != "skip":
         return factory_verdict
     out = dict(factory_verdict)

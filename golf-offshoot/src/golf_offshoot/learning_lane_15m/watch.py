@@ -216,6 +216,8 @@ class PaperWatch:
             # same cycle already repaired — and a check that cries wolf on a
             # schedule is a check nobody reads.
             payload["learning_invariants"] = self._invariants_tick()
+            payload["spread_profile"] = self._spread_tick(payload)
+            payload["ops_alerts"] = self._ops_alerts_tick(payload)
             self._persist()
             if self.on_cycle is not None:
                 self.on_cycle(payload)
@@ -233,6 +235,30 @@ class PaperWatch:
         self.last_fee_probe_error = ""
         self.last_fee_probe = state
         return state
+
+    def _spread_tick(self, payload: dict[str, Any]) -> dict[str, Any] | None:
+        """Append live bid/ask samples. Never takes the paper loop down."""
+        from golf_offshoot.learning_lane_15m.spread_profile import record_live_quotes
+
+        try:
+            ingest = payload.get("ingest") or payload.get("live") or {}
+            return record_live_quotes(ingest.get("markets") or [])
+        except Exception as exc:  # noqa: BLE001 — a quote miss is not a hub crash
+            self.last_spread_error = str(exc)
+            return None
+
+    def _ops_alerts_tick(self, payload: dict[str, Any]) -> dict[str, Any] | None:
+        """Hub-down and first gap. Fail open. Never takes the paper loop down."""
+        from golf_offshoot.learning_lane_15m.notify import notify_ops_alerts
+
+        try:
+            return notify_ops_alerts(
+                invariants=payload.get("learning_invariants") or {},
+                wake=payload.get("learning_wake") or {},
+            )
+        except Exception as exc:  # noqa: BLE001 — ntfy must not take the loop down
+            self.last_ops_alert_error = str(exc)
+            return None
 
 
 def run_watch_forever(*, interval_s: float | None = None, feed=None) -> int:

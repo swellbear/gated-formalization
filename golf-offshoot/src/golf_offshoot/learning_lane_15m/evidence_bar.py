@@ -330,6 +330,9 @@ def apply_fee_schedule_pin(
     current = str(fee.get("schedule_sha256") or "").strip().lower()
     if current == digest:
         return False
+    if str(fee.get("schedule_pin_source") or "") == "founder_browser_bytes":
+        # Gym 200 is drift detection. It does not replace Founder bytes.
+        return False
     fee["schedule_sha256"] = digest
     fee["schedule_checked_at"] = result.get("checked_at") or isoformat_now()
     fee["schedule_fetch_status"] = 200
@@ -343,6 +346,64 @@ def apply_fee_schedule_pin(
     )
     path.write_text(json.dumps(payload, indent=2) + "\n", encoding="utf-8")
     return True
+
+
+FOUNDER_FEE_PDF_REL = Path("golf-offshoot") / "docs" / "kalshi-fee-schedule.pdf"
+FOUNDER_FEE_PIN_SOURCE = "founder_browser_bytes"
+
+
+def apply_founder_fee_pin(
+    pdf_path: Path,
+    *,
+    root: Path | None = None,
+    dest_rel: Path | None = None,
+) -> dict[str, Any]:
+    """Hash Founder-downloaded PDF bytes onto the bar. Not an HTTP 200 gym GET.
+
+    A later gym 429 does not clear this digest. Gym probing stays on the 12h
+    cooldown for drift detection only; it is not the pin clock.
+    """
+    src = Path(pdf_path)
+    data = src.read_bytes()
+    if not data.startswith(b"%PDF"):
+        raise ValueError("founder fee pin is not a PDF")
+    digest = hashlib.sha256(data).hexdigest()
+    dest = (Path(root) if root is not None else _repo_root()) / (dest_rel or FOUNDER_FEE_PDF_REL)
+    dest.parent.mkdir(parents=True, exist_ok=True)
+    dest.write_bytes(data)
+    path = bar_path(root=root)
+    if not path.is_file():
+        raise FileNotFoundError(f"evidence bar missing at {path}")
+    payload = json.loads(path.read_text(encoding="utf-8"))
+    fee = payload.setdefault("fee_hurdle", {})
+    gym_status = fee.get("schedule_fetch_status")
+    gym_checked = fee.get("schedule_checked_at")
+    fee["schedule_sha256"] = digest
+    fee["schedule_checked_at"] = isoformat_now()
+    fee["schedule_pin_source"] = FOUNDER_FEE_PIN_SOURCE
+    fee["schedule_bytes"] = len(data)
+    fee["schedule_fetch_is_external"] = False
+    fee["schedule_gym_last_status"] = gym_status
+    fee["schedule_gym_last_checked_at"] = gym_checked
+    fee["schedule_fetch_note"] = (
+        f"Founder browser bytes, {len(data)} bytes, SHA-256 {digest}. "
+        "Not an HTTP 200 gym GET. Gym 12h 429 is drift detection only, not the pin clock."
+    )
+    fee["schedule_hash_owed"] = (
+        f"pinned from founder_browser_bytes SHA-256 {digest}. "
+        "Gym 12h 429 is not the pin clock."
+    )
+    fee["schedule_digest_kind"] = (
+        "sha256 of the Founder-downloaded PDF bytes; no newline normalisation"
+    )
+    path.write_text(json.dumps(payload, indent=2) + "\n", encoding="utf-8")
+    return {
+        "sha256": digest,
+        "bytes": len(data),
+        "dest": str(dest).replace("\\", "/"),
+        "source": FOUNDER_FEE_PIN_SOURCE,
+        "pinned": True,
+    }
 
 
 def record_fee_schedule_probe(

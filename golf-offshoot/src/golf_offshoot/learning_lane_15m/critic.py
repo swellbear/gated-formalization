@@ -28,7 +28,9 @@ import hashlib
 import importlib
 import inspect
 import json
+import os
 import re
+import subprocess
 from datetime import datetime
 from pathlib import Path
 from statistics import NormalDist
@@ -42,7 +44,10 @@ BAR_MD_REL = Path("golf-offshoot") / "docs" / "LEARNING_LANE_15M_EVIDENCE_BAR.md
 BAR_JSON_REL = Path("golf-offshoot") / "docs" / "LEARNING_LANE_15M_EVIDENCE_BAR.json"
 REGISTRY_REL = Path("golf-offshoot") / "docs" / "LEARNING_LANE_15M_RULES.json"
 PROPOSED_REL = Path("golf-offshoot") / "docs" / "LEARNING_LANE_15M_OPERATOR_NOTE_PROPOSED_01.md"
+PROPOSED_02_REL = Path("golf-offshoot") / "docs" / "LEARNING_LANE_15M_OPERATOR_NOTE_PROPOSED_02.md"
+LAB_PROPOSED_02_REL = Path("golf-offshoot") / "docs" / "LEARNING_LANE_15M_LAB_PROPOSED_02.md"
 DESK_REL = Path("docs") / "agents" / "DESK.md"
+HUB_TASK_NAME = "GatedFormalization-15mLearningHub"
 
 #: The public schedule the fee hurdle is cited from. RUN-ONLY already requires
 #: that a later schedule naming a different k or a KXBTC15M override makes the
@@ -68,6 +73,8 @@ WATCHED: tuple[Watched, ...] = (
     Watched("evidence_bar_json", BAR_JSON_REL),
     Watched("rule_registry", REGISTRY_REL),
     Watched("lab_proposed", PROPOSED_REL, also_owes=("operator",)),
+    Watched("lab_proposed_02", PROPOSED_02_REL, also_owes=("operator",)),
+    Watched("lab_lab_proposed_02", LAB_PROPOSED_02_REL, also_owes=("operator",)),
     Watched("honesty_stamp", DESK_REL, section="## Honesty checklist"),
 )
 
@@ -273,6 +280,7 @@ def check_delta_above_detection_floor(*, root: Path | None = None) -> dict[str, 
     trials = int(registry.get("trials_to_date") or 0)
     k = trials + 1
     alpha = 0.05 / (k * (k + 1))
+    alpha_first_term = 0.05 / (1 * 2)
     normal = NormalDist()
     z_alpha = normal.inv_cdf(1.0 - alpha)
     sd = float(sd_declared)
@@ -295,7 +303,8 @@ def check_delta_above_detection_floor(*, root: Path | None = None) -> dict[str, 
         ("se_at_n", se, dist.get("se_at_n")),
         ("mde", mde, dist.get("mde")),
         ("reject_if_mean_d_exceeds", threshold, dist.get("reject_if_mean_d_exceeds")),
-        ("alpha_first_look", alpha, dist.get("alpha_first_look")),
+        ("alpha_first_look", alpha_first_term, dist.get("alpha_first_look")),
+        ("next_look_alpha", alpha, dist.get("next_look_alpha")),
         ("power.effect_at_50pct_power", effect_50, power.get("effect_at_50pct_power")),
         ("power.effect_at_80pct_power", effect_80, power.get("effect_at_80pct_power")),
     ):
@@ -329,6 +338,7 @@ def check_delta_above_detection_floor(*, root: Path | None = None) -> dict[str, 
             "n": n,
             "sd_used": sd,
             "alpha_k": alpha,
+            "alpha_first_term": alpha_first_term,
             "trials_to_date": trials,
             "se": round(se, 6),
             "mde_zero_null": round(mde, 6),
@@ -941,6 +951,120 @@ def check_honesty_stamp_is_fresh(
     )
 
 
+def check_half_spread_profile(*, root: Path | None = None) -> dict[str, Any]:
+    """Unmeasured spread cannot silently return. The named artifact must exist."""
+    from golf_offshoot.learning_lane_15m.spread_profile import PROFILE_REL, profile_path
+
+    check_id = "half_spread_profile_recorded"
+    title = "the empirical half-spread profile is measured and named"
+    base = root or repo_root()
+    path = profile_path(root=root)
+    payload = _load_json(path)
+    n = int(payload.get("n") or 0)
+    buckets = payload.get("buckets") if isinstance(payload.get("buckets"), list) else []
+    bar = _load_json(base / BAR_JSON_REL)
+    md_path = base / BAR_MD_REL
+    try:
+        md = md_path.read_text(encoding="utf-8")
+    except OSError:
+        md = ""
+    named = (
+        PROFILE_REL.name in json.dumps(bar)
+        or PROFILE_REL.name in md
+        or "half_spread_profile" in json.dumps(bar)
+    )
+    problems: list[str] = []
+    if n < 1:
+        problems.append(
+            "half-spread profile is missing or n=0; unmeasured spread cannot bind"
+        )
+    if not buckets and n >= 1:
+        problems.append("profile has samples but no mark buckets")
+    if not named:
+        problems.append("the bar face does not name LEARNING_LANE_15M_HALF_SPREAD_PROFILE.json")
+    ok = not problems
+    return _check(
+        check_id,
+        title,
+        ok,
+        (
+            f"profile n={n}, {len(buckets)} buckets, named on the bar"
+            if ok
+            else "; ".join(problems)
+        ),
+        {
+            "n": n,
+            "buckets": len(buckets),
+            "named_on_bar": named,
+            "path": str(PROFILE_REL).replace("\\", "/"),
+        },
+    )
+
+
+def query_hub_autostart_task() -> dict[str, Any]:
+    """Does the Windows logon task exist? Non-Windows is not this gym."""
+    if os.name != "nt":
+        return {"platform": os.name, "present": None, "skipped": True, "name": HUB_TASK_NAME}
+    try:
+        proc = subprocess.run(
+            ["schtasks", "/Query", "/TN", HUB_TASK_NAME],
+            capture_output=True,
+            text=True,
+            timeout=10,
+            check=False,
+        )
+    except (OSError, subprocess.TimeoutExpired) as exc:
+        return {
+            "platform": os.name,
+            "present": False,
+            "skipped": False,
+            "name": HUB_TASK_NAME,
+            "error": f"{type(exc).__name__}: {exc}",
+        }
+    return {
+        "platform": os.name,
+        "present": proc.returncode == 0,
+        "skipped": False,
+        "name": HUB_TASK_NAME,
+        "returncode": proc.returncode,
+    }
+
+
+def check_hub_autostart_registered(*, root: Path | None = None) -> dict[str, Any]:
+    """The gym hub must have a logon task. Scratch-tree critic runs skip schtasks."""
+    check_id = "hub_autostart_registered"
+    title = "the 15m hub logon task exists"
+    if root is not None:
+        return _check(
+            check_id,
+            title,
+            True,
+            "scratch-tree critic run; live Windows gym queries schtasks",
+            {"skipped": True, "name": HUB_TASK_NAME},
+        )
+    probed = query_hub_autostart_task()
+    if probed.get("skipped"):
+        return _check(
+            check_id,
+            title,
+            True,
+            "not Windows; hub autostart is a Windows Scheduled Task",
+            probed,
+        )
+    ok = bool(probed.get("present"))
+    return _check(
+        check_id,
+        title,
+        ok,
+        (
+            f"schtasks {HUB_TASK_NAME} is registered"
+            if ok
+            else f"schtasks {HUB_TASK_NAME} is not registered; overnight holes follow"
+        ),
+        probed,
+    )
+
+
 #: The method suite. Every member is a property of the bar, the registry or the
 #: code they name. Nothing here reads a clock.
 CHECKS = (
@@ -953,6 +1077,8 @@ CHECKS = (
     check_fee_schedule_hash_recorded,
     check_series_fee_regime_matches,
     check_bind_has_no_founder_read_once,
+    check_half_spread_profile,
+    check_hub_autostart_registered,
 )
 
 #: Reported beside the method suite and deliberately outside it.

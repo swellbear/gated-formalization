@@ -26,7 +26,7 @@ Hub viz for this lane is not yet available (empty / observation-only). Do not in
 - Do **not** retune golf θ from 15-min.
 - Do **not** widen past `KXBTC15M`. Expansion is a new lane, not a wider allow-list. Procedure: [`LEARNING_LANE_EXPANSION.md`](LEARNING_LANE_EXPANSION.md).
 - Destination: this tape is the **gym**. `honer_15m` is the discovery organ. A surviving exam may earn a dated AND-skip consult inside `consult_registry`. Consult is off until Founder names implement. Protocol: [`HONER_15M_PROMOTION.md`](HONER_15M_PROMOTION.md). Books do not merge.
-- **Fee pin:** PaperWatch probes `https://kalshi.com/docs/kalshi-fee-schedule.pdf` every 12 hours. A 429 is written to `latest/fee_schedule_probe.json` and does not amend the evidence bar. `schedule_sha256` is set only on a new HTTP 200 64-hex. Do not probe from Cursor. Do not spoof a browser. `fee_adjust` still reads `fee_hurdle.k`; live series `fee_multiplier` is a separate check (`series_fee_regime_matches`) and does not retune k.
+- **Fee pin:** Founder browser bytes hashed onto `fee_hurdle.schedule_sha256` (`founder_browser_bytes`). Gym PaperWatch may still GET `https://kalshi.com/docs/kalshi-fee-schedule.pdf` every 12 hours for drift detection; a 429 does not amend the bar and is not the pin clock. Do not probe from Cursor. Do not spoof a browser. Do not GET the PDF every 90s. `fee_adjust` still reads `fee_hurdle.k`; live series `fee_multiplier` is a separate check (`series_fee_regime_matches`) and does not retune k.
 - No geo. No LIVE cash. No invented edge / banked-edge claims.
 - 15-min Kalshi is not live trading and not a golf WC1 edge.
 
