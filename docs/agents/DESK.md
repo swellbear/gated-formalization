@@ -6,20 +6,20 @@ Thread lines are **one sentence, newest first, max 10**. Long findings belong in
 
 | Field | Value |
 |-------|--------|
-| Updated | 2026-09-10 13:25 ET |
-| Active role | lab |
-| Job | one 15m PROPOSED under the invent contract (kill anatomy, unburned mechanism, pre-reg, live falsifier); handoff operator |
-| Status | done |
-| Handoff | `golf-offshoot/docs/LEARNING_LANE_15M_LAB_PROPOSED_03.md` — declared `R-SKIP-HOUR-CLOSE` (`skip_close_minute=0`, `execution=false`); not scored. next=chief-of-staff |
+| Updated | 2026-09-10 13:26 ET |
+| Active role | operator |
+| Job | RUN-ONLY or PARK Lab PROPOSED 03 `R-SKIP-HOUR-CLOSE` (`golf-offshoot/docs/LEARNING_LANE_15M_LAB_PROPOSED_03.md`; `skip_close_minute=0`, `execution=false`). Route RUN-ONLY unless a specific objection. Do not score. Do not ADMIT. Do not bind. Do not score `R-SKIP-COINFLIP`. Do not re-score PARK'd `R-SKIP-2TO1-FAVORITE`. Do not set `trading_armed`. Do not lift HOLD. |
+| Status | assigned |
+| Handoff | CoS assigned operator on sitting PROPOSED 03. next=operator |
 | Waiting on Founder | **N** |
 
 ## last_cos (CoS stamp — doorbell silence)
 
 | Field | Value |
 |-------|--------|
-| last_cos_at | 2026-09-10T13:05:00-04:00 |
-| last_cos_commit | 121c322 |
-| handled_reason_ids | F_continuation |
+| last_cos_at | 2026-09-10T13:26:00-04:00 |
+| last_cos_commit | c917e56 |
+| handled_reason_ids | A_worker_done |
 
 **Branch note.** Live work is `cursor/honer-15m-sibling` [#178](https://github.com/swellbear/gated-formalization/pull/178) (open; base is `cursor/part-a-clerical-trust-boundary`). [#176](https://github.com/swellbear/gated-formalization/pull/176) is still OPEN, not merged. `origin/master` is still `b063f56` (#175). Factory Turns 1–3 plus the ANSWER/CRITIC chain live on part-a / this sibling. Branching from `origin/master` would discard all of it. Do not use `C:\Users\bearh\gated-formalization` on `cursor/eia-window-job2`.
 
@@ -29,7 +29,7 @@ Thread lines are **one sentence, newest first, max 10**. Long findings belong in
 - This PC must not sleep while it is gym SoT. Task `GatedFormalization-15mLearningHub` exists (`Ready`). `WakeToRun=false` does not survive sleep.
 - Golf C2 / C4 / WC3+ / retune golf θ.
 
-These do not block the Lab assign. Waiting on Founder stays **N**. Cloud CoS/worker are treated as on `cursor/honer-15m-sibling` unless a fire proves otherwise (wrong branch writes nothing).
+These do not block the Operator assign. Waiting on Founder stays **N**. Cloud CoS/worker are treated as on `cursor/honer-15m-sibling` unless a fire proves otherwise (wrong branch writes nothing).
 
 ## Publish gap (gym `PUBLISH_ARMED`, not sibling-HEAD-to-master)
 
@@ -46,7 +46,7 @@ Part 3 landed. Three boxes are computed in `learning_lane_15m/honesty.py` and th
 | One hub process on `learning_lane_15m` | **PASS** — *derived* from the process table. One hub **tree**, not one OS process: `py` launcher PID **24188** over supervisor PID **24532** and listener PID **20100** holding `127.0.0.1:8765`. Watch loop pid **11160** (`watch.json` / `process_matches_disk`, 11:42). Child re-exec'd after sidecar/`app.py`. Criterion preserved as written. Do not start a second tree. |
 | No invented charts or pnl | **PASS** — *judgment, with evidence*. `digest_matches_ledger` PASS 2026-09-10T11:42:52−04:00 against the live book (82.18 / −17.82 both sides). CoS closeout stamps the current doorbell so the same A/B/E set does not re-ring. Fee-accurate totals are not on the hub, digest, manifest or `records[]`. |
 
-**Gate is open on this restamp.** Golf idle stays **ON** (15m paper PROPOSED is not golf idle-breach). Evidence bar is **binding** for scoring. `R-SKIP-2TO1-FAVORITE` L1 is **PARK** on its falsifier (Admissible completed, not Established, not an ADMIT). `rule_reached_n` named on the park for both that rule and `R-SKIP-COINFLIP` without scoring. Consult **off**. Honer dark. Lab filed PROPOSED 03 `R-SKIP-HOUR-CLOSE` (`execution=false`). Trading **NOT ARMED**.
+**Gate is open on this restamp.** Golf idle stays **ON** (15m paper PROPOSED is not golf idle-breach). Evidence bar is **binding** for scoring. `R-SKIP-2TO1-FAVORITE` L1 is **PARK** on its falsifier (Admissible completed, not Established, not an ADMIT). `rule_reached_n` named on the park for both that rule and `R-SKIP-COINFLIP` without scoring. Consult **off**. Honer dark. Operator is assigned on sitting PROPOSED 03 `R-SKIP-HOUR-CLOSE` (`execution=false`). Trading **NOT ARMED**.
 
 **The fee-schedule hash is pinned from Founder browser bytes.** Source `founder_browser_bytes`, file `golf-offshoot/docs/kalshi-fee-schedule.pdf`, 281129 bytes. Last gym GET remains HTTP 429 (drift only). Do not GET the PDF every 90s. Do not spoof a browser. **Do not write a placeholder.**
 
@@ -56,10 +56,11 @@ Two suites, both on the tick.
 
 **Lane** (`latest/invariants.json`) — `digest_matches_ledger` PASS at 11:42:53 (82.18 / −17.82). `watch_is_collecting` PASS (cycle 3 after code re-exec). `clerical_roles_clear` may still fail until the runner sees the park name-clear. No prose cleared it.
 
-**Method** — 11 method checks (`half_spread_profile_recorded`, `hub_autostart_registered` are tenth and eleventh). Fee pin is `founder_browser_bytes`. `honesty_stamp_is_fresh` is a desk check and does not set `passed`. `critic_verdicts` is `{id, state}` + reviewed hashes — no `detail`. Bar is **binding**. Clerical findings `passed: true`. Soften Critic is **not** assigned. PARK is not an ADMIT and is not a Critic job.
+**Method** — 11 method checks (`half_spread_profile_recorded`, `hub_autostart_registered` are tenth and eleventh). Fee pin is `founder_browser_bytes`. `honesty_stamp_is_fresh` is a desk check and does not set `passed`. `critic_verdicts` is `{id, state}` + reviewed hashes — no `detail`. Bar is **binding**. Clerical findings `passed: true`. Soften Critic is **not** assigned. Operator is assigned on PROPOSED 03. PARK is not an ADMIT and is not a Critic job.
 
 ## Thread
 
+- 2026-09-10 13:26 ET  chief-of-staff → operator: RUN-ONLY or PARK Lab PROPOSED 03 `R-SKIP-HOUR-CLOSE`; do not score; do not ADMIT; do not bind. next=operator
 - 2026-09-10 13:25 ET  lab → chief-of-staff: PROPOSED 03 `R-SKIP-HOUR-CLOSE` filed (`skip_close_minute=0`, execution false); not scored; not an ADMIT. next=chief-of-staff
 - 2026-09-10 13:20 ET  lab → chief-of-staff: started one 15m PROPOSED under the invent contract; paper only; do not score; do not set execution. next=lab
 - 2026-09-10 13:05 ET  chief-of-staff → lab: one 15m PROPOSED under the invent contract; handoff operator. next=lab
@@ -69,5 +70,4 @@ Two suites, both on the tick.
 - 2026-09-10 10:26 ET  operator → chief-of-staff: started `score_rule` L1 of `R-SKIP-2TO1-FAVORITE` only; n=70 lived; do not score coinflip; do not ADMIT. next=operator
 - 2026-09-10 10:25 ET  chief-of-staff → operator: score `R-SKIP-2TO1-FAVORITE` L1 Admissible only; quarantine scorecard; do not score coinflip; do not ADMIT. next=operator
 - 2026-09-10 10:16 ET  operator → chief-of-staff: ANSWER 20 records CRITIC 20 zero UPHELD; binding true; findings passed; not scored. next=chief-of-staff
-- 2026-09-10 10:10 ET  operator → chief-of-staff: started ANSWER 20 on CRITIC 20 (zero UPHELD) then Founder-plan bind; do not score. next=operator
 *Older lines rolled off at the 10-line cap. Full history is in the git log for `docs/agents/DESK.md`.*
