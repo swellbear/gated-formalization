@@ -6,11 +6,11 @@ Thread lines are **one sentence, newest first, max 10**. Long findings belong in
 
 | Field | Value |
 |-------|--------|
-| Updated | 2026-09-10 13:05 ET |
+| Updated | 2026-09-10 13:25 ET |
 | Active role | lab |
 | Job | one 15m PROPOSED under the invent contract (kill anatomy, unburned mechanism, pre-reg, live falsifier); handoff operator |
-| Status | assigned |
-| Handoff | Continuation boss landed: `F_continuation` assigns Lab when starved. Worker tick invents. HOLD glob stays off this ledger. Trading NOT ARMED. next=lab |
+| Status | done |
+| Handoff | `golf-offshoot/docs/LEARNING_LANE_15M_LAB_PROPOSED_03.md` — declared `R-SKIP-HOUR-CLOSE` (`skip_close_minute=0`, `execution=false`); not scored. next=chief-of-staff |
 | Waiting on Founder | **N** |
 
 ## last_cos (CoS stamp — doorbell silence)
@@ -46,7 +46,7 @@ Part 3 landed. Three boxes are computed in `learning_lane_15m/honesty.py` and th
 | One hub process on `learning_lane_15m` | **PASS** — *derived* from the process table. One hub **tree**, not one OS process: `py` launcher PID **24188** over supervisor PID **24532** and listener PID **20100** holding `127.0.0.1:8765`. Watch loop pid **11160** (`watch.json` / `process_matches_disk`, 11:42). Child re-exec'd after sidecar/`app.py`. Criterion preserved as written. Do not start a second tree. |
 | No invented charts or pnl | **PASS** — *judgment, with evidence*. `digest_matches_ledger` PASS 2026-09-10T11:42:52−04:00 against the live book (82.18 / −17.82 both sides). CoS closeout stamps the current doorbell so the same A/B/E set does not re-ring. Fee-accurate totals are not on the hub, digest, manifest or `records[]`. |
 
-**Gate is open on this restamp.** Golf idle stays **ON** (15m paper PROPOSED is not golf idle-breach). Evidence bar is **binding** for scoring. `R-SKIP-2TO1-FAVORITE` L1 is **PARK** on its falsifier (Admissible completed, not Established, not an ADMIT). `rule_reached_n` named on the park for both that rule and `R-SKIP-COINFLIP` without scoring. Consult **off**. Honer dark. CoS assigned Lab (`F_continuation`). Trading **NOT ARMED**.
+**Gate is open on this restamp.** Golf idle stays **ON** (15m paper PROPOSED is not golf idle-breach). Evidence bar is **binding** for scoring. `R-SKIP-2TO1-FAVORITE` L1 is **PARK** on its falsifier (Admissible completed, not Established, not an ADMIT). `rule_reached_n` named on the park for both that rule and `R-SKIP-COINFLIP` without scoring. Consult **off**. Honer dark. Lab filed PROPOSED 03 `R-SKIP-HOUR-CLOSE` (`execution=false`). Trading **NOT ARMED**.
 
 **The fee-schedule hash is pinned from Founder browser bytes.** Source `founder_browser_bytes`, file `golf-offshoot/docs/kalshi-fee-schedule.pdf`, 281129 bytes. Last gym GET remains HTTP 429 (drift only). Do not GET the PDF every 90s. Do not spoof a browser. **Do not write a placeholder.**
 
@@ -60,6 +60,8 @@ Two suites, both on the tick.
 
 ## Thread
 
+- 2026-09-10 13:25 ET  lab → chief-of-staff: PROPOSED 03 `R-SKIP-HOUR-CLOSE` filed (`skip_close_minute=0`, execution false); not scored; not an ADMIT. next=chief-of-staff
+- 2026-09-10 13:20 ET  lab → chief-of-staff: started one 15m PROPOSED under the invent contract; paper only; do not score; do not set execution. next=lab
 - 2026-09-10 13:05 ET  chief-of-staff → lab: one 15m PROPOSED under the invent contract; handoff operator. next=lab
 - 2026-09-10 11:47 ET  chief-of-staff: unattended gym loop; `decide_cos_action`; park name-clear; gym `PUBLISH_ARMED`; HOLD stands. next=idle
 - 2026-09-10 10:50 ET  chief-of-staff: best-plan closeout; favorite L1 PARK; stop inventing; honer dark; no PROPOSED 03; HOLD stands. next=idle
@@ -68,6 +70,4 @@ Two suites, both on the tick.
 - 2026-09-10 10:25 ET  chief-of-staff → operator: score `R-SKIP-2TO1-FAVORITE` L1 Admissible only; quarantine scorecard; do not score coinflip; do not ADMIT. next=operator
 - 2026-09-10 10:16 ET  operator → chief-of-staff: ANSWER 20 records CRITIC 20 zero UPHELD; binding true; findings passed; not scored. next=chief-of-staff
 - 2026-09-10 10:10 ET  operator → chief-of-staff: started ANSWER 20 on CRITIC 20 (zero UPHELD) then Founder-plan bind; do not score. next=operator
-- 2026-09-10 10:08 ET  chief-of-staff → operator: record CRITIC 20 zero UPHELD then bind; do not score. next=operator
-- 2026-09-10 10:05 ET  soften-critic → chief-of-staff: CRITIC 20 zero UPHELD on ANSWER 19 hashes `7C1C1CB3…` / `7A934A4E…`; CRITIC 19 strikes are on the face; not bound. next=chief-of-staff
 *Older lines rolled off at the 10-line cap. Full history is in the git log for `docs/agents/DESK.md`.*

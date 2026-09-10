@@ -6,7 +6,7 @@
   "lab_admits": false,
   "trading_armed": false,
   "opened_at": "2026-09-08T05:56:00-04:00",
-  "trials_to_date": 1,
+  "trials_to_date": 2,
   "trials_before_mechanism": 0,
   "trials_log": [
     {
@@ -15,6 +15,13 @@
       "at": "2026-09-08T16:53:00-04:00",
       "note": "selection rule declared",
       "trials_to_date_after": 1
+    },
+    {
+      "subject": "R-SKIP-HOUR-CLOSE",
+      "kind": "declaration",
+      "at": "2026-09-10T13:25:00-04:00",
+      "note": "selection rule declared",
+      "trials_to_date_after": 2
     }
   ],
   "evidence_bar": {
@@ -70,6 +77,25 @@
       "replay_interval_note": "score_rule rejects a window in (replay_close_after, replay_close_at_or_before] as lived. window_is_oos remains closed > declared_at (decide expression). Lived-for-score starts after lived_paper_begins_at.",
       "lived_replay_fields_are_prose_only": false,
       "lived_replay_enforced_by_scorer": true
+    },
+    {
+      "id": "R-SKIP-HOUR-CLOSE",
+      "kind": "selection",
+      "class": "SKIP-HOUR-CLOSE",
+      "execution": false,
+      "selects": true,
+      "rule": "Skip the paper fill when close_at clock minute equals 0 (hour-ending slot; skip_close_minute=0). Otherwise fill at the posted mark with entry_edge=0.0.",
+      "falsifier": "After the n named by the evidence bar in force (currently looks.first_look_n = 70), if selected-fill settlement_pnl cannot be distinguished from R-BASELINE-FILL-ALL on those same windows, park this rule. Do not retune skip_close_minute. Do not replace 0 with a tape-chosen slot. The bar is the governing source.",
+      "params": {
+        "skip_close_minute": 0
+      },
+      "expression": {
+        "skip_if": "close_minute_eq",
+        "threshold_source": "skip_close_minute=0; civil-clock hour-ending close",
+        "derived_threshold": 0
+      },
+      "note": "PROPOSED 03 by Lab 2026-09-10T13:25:00-04:00. The free parameter is the integer prior skip_close_minute=0. A note asserting no window mark informed it is not proof — the commit record is. Not a posted-yes cut. Not a revival of R-SKIP-COINFLIP and not a retune of favorite_odds. execution=false (Operator flips if it survives). lab_admits=false. Not scored. Not an ADMIT.",
+      "declared_at": "2026-09-10T13:25:00-04:00"
     }
   ]
 }

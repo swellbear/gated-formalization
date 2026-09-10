@@ -131,9 +131,43 @@ def favorite_threshold(odds: float) -> float:
     return float(odds) / (1.0 + float(odds))
 
 
-def _express_selection(rule: dict[str, Any], posted_yes: float) -> tuple[str, str]:
+def close_minute(close_at: str) -> int:
+    """Clock minute of a window close. Not a posted-yes mark."""
+    return _as_dt(close_at).minute
+
+
+def selects_on_posted_yes_cut(rule: dict[str, Any]) -> bool:
+    """True when the free parameters are posted-yes cuts (skip-band family).
+
+    A close-minute class is a new class, not another skip-band. The informing-
+    marks gate refuses only the skip-band family.
+    """
+    params = rule.get("params") or {}
+    expr = rule.get("expression") or {}
+    skip_if = str(expr.get("skip_if") or "")
+    if skip_if == "close_minute_eq":
+        return False
+    if params.get("skip_close_minute") is not None and params.get("favorite_odds") is None:
+        return False
+    return True
+
+
+def _express_selection(
+    rule: dict[str, Any],
+    posted_yes: float,
+    *,
+    close_at: str = "",
+) -> tuple[str, str]:
     """Fill-or-skip from declared parameters. Does not read the tape."""
     params = rule.get("params") or {}
+    if params.get("skip_close_minute") is not None:
+        if not str(close_at or "").strip():
+            return "unknown", f"no close_at for {rule.get('id')}"
+        skip_m = int(params["skip_close_minute"])
+        minute = close_minute(close_at)
+        if minute == skip_m:
+            return "skip", f"close_minute == {skip_m} (hour-ending slot)"
+        return "fill", f"close_minute {minute} != {skip_m}"
     if params.get("favorite_odds") is not None:
         odds = float(params["favorite_odds"])
         threshold = favorite_threshold(odds)
@@ -172,7 +206,7 @@ def decide(
         action = "ineligible"
         reason = "window closed at or before declared_at; not OOS for this rule"
     if eligible and selects:
-        action, reason = _express_selection(rule, posted_yes)
+        action, reason = _express_selection(rule, posted_yes, close_at=close_at)
     return {
         "rule_id": rule.get("id"),
         "eligible": eligible,
@@ -444,14 +478,19 @@ def declare_rule(
 ) -> dict[str, Any]:
     """Append a rule to the registry, incrementing the counter when it selects.
 
-    A new selecting rule is refused if informing marks already exist on this
-    tree. Existing rows stay; this gate is pre-registration, not a rewrite.
+    A new posted-yes selecting rule is refused if informing marks already
+    exist on this tree. A close-minute class is not a skip-band. Existing
+    rows stay; this gate is pre-registration, not a rewrite.
     """
     rule_id = str(rule.get("id") or "").strip()
     if not rule_id:
         raise ValueError("a rule needs an id")
     row = dict(rule)
-    if row.get("selects") and informing_marks_on_tree(root=root):
+    if (
+        row.get("selects")
+        and selects_on_posted_yes_cut(row)
+        and informing_marks_on_tree(root=root)
+    ):
         raise RuleAlreadyInformed(
             f"{rule_id} selects on posted-yes cuts and this tree already has "
             "informing KXBTC15M marks; a new Established-capable rule needs a "

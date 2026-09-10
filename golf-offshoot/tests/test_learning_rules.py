@@ -8,11 +8,13 @@ from golf_offshoot.learning_lane_15m.paths import set_15m_root_override
 from golf_offshoot.learning_lane_15m.rules import (
     RuleAlreadyInformed,
     RuleNotScorable,
+    close_minute,
     decide,
     declare_rule,
     favorite_threshold,
     load_rules,
     score_rule,
+    selects_on_posted_yes_cut,
     window_is_lived,
     window_is_oos,
     window_is_replay,
@@ -26,9 +28,10 @@ def test_registry_has_dated_first_rules():
         "R-BASELINE-FILL-ALL",
         "R-SKIP-COINFLIP",
         "R-SKIP-2TO1-FAVORITE",
+        "R-SKIP-HOUR-CLOSE",
     ]
     assert payload["lab_admits"] is False
-    assert payload["trials_to_date"] == 1
+    assert payload["trials_to_date"] == 2
     assert payload["evidence_bar"]["binding"] is False
     skip = next(row for row in payload["rules"] if row["id"] == "R-SKIP-COINFLIP")
     assert skip["declared_at"] == "2026-09-08T05:56:00-04:00"
@@ -37,10 +40,17 @@ def test_registry_has_dated_first_rules():
     assert fav["execution"] is True
     assert fav["selects"] is True
     assert fav["params"]["favorite_odds"] == 2
+    hour = next(row for row in payload["rules"] if row["id"] == "R-SKIP-HOUR-CLOSE")
+    assert hour["execution"] is False
+    assert hour["selects"] is True
+    assert hour["params"]["skip_close_minute"] == 0
+    assert hour["declared_at"] == "2026-09-10T13:25:00-04:00"
     log = payload["trials_log"]
-    assert len(log) == 1
+    assert len(log) == 2
     assert log[0]["subject"] == "R-SKIP-2TO1-FAVORITE"
     assert log[0]["kind"] == "declaration"
+    assert log[1]["subject"] == "R-SKIP-HOUR-CLOSE"
+    assert log[1]["kind"] == "declaration"
 
 
 def test_predeclaration_window_is_not_oos():
@@ -129,6 +139,35 @@ def test_two_to_one_favorite_is_burned_after_l1_falsifier():
     assert class_is_burned("R-SKIP-2TO1-FAVORITE") is True
     assert class_is_burned("RETUNE-COINFLIP-BAND") is True
     assert class_is_burned("FEE-AS-SIGNAL") is True
+    assert class_is_burned("SKIP-HOUR-CLOSE") is False
+    assert class_is_burned("R-SKIP-HOUR-CLOSE") is False
+    assert class_is_burned("SEAS-DIR") is True
+
+
+def test_hour_close_expresses_skip_and_fill():
+    assert close_minute("2026-09-10T13:00:00-04:00") == 0
+    assert close_minute("2026-09-10T13:15:00-04:00") == 15
+    rule = {
+        "id": "R-SKIP-HOUR-CLOSE",
+        "declared_at": "2026-09-10T13:25:00-04:00",
+        "kind": "selection",
+        "selects": True,
+        "execution": False,
+        "params": {"skip_close_minute": 0},
+        "expression": {"skip_if": "close_minute_eq"},
+    }
+    assert selects_on_posted_yes_cut(rule) is False
+    skip = decide(rule, posted_yes=0.50, close_at="2026-09-10T14:00:00-04:00")
+    assert skip["eligible"] is True
+    assert skip["action"] == "skip"
+    assert skip["execution"] is False
+    fill = decide(rule, posted_yes=0.80, close_at="2026-09-10T14:15:00-04:00")
+    assert fill["action"] == "fill"
+    historic = decide(rule, posted_yes=0.50, close_at="2026-09-10T13:00:00-04:00")
+    assert historic["eligible"] is False
+    assert historic["action"] == "ineligible"
+    open_window = decide(rule, posted_yes=0.50, close_at="")
+    assert open_window["action"] == "unknown"
 
 
 def test_two_to_one_favorite_expresses_skip_and_fill():
@@ -245,6 +284,18 @@ def test_declare_rule_refuses_a_selecting_rule_when_marks_exist(tmp_path):
                 },
                 root=tmp_path,
             )
+        row = declare_rule(
+            {
+                "id": "R-SKIP-HOUR-CLOSE-TEST",
+                "kind": "selection",
+                "selects": True,
+                "params": {"skip_close_minute": 0},
+                "expression": {"skip_if": "close_minute_eq"},
+            },
+            root=tmp_path,
+            now_iso="2026-09-10T13:25:00-04:00",
+        )
+        assert row["id"] == "R-SKIP-HOUR-CLOSE-TEST"
     finally:
         set_15m_root_override(None)
 
