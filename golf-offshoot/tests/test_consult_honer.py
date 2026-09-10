@@ -245,3 +245,178 @@ def test_factory_paper_and_rules_do_not_import_honer_package():
     assert "golf_offshoot.honer_15m" not in rules
     assert "golf_offshoot.honer_15m" not in consult
     assert "theta.json" not in consult or "Never reads" in consult
+    assert "R-SKIP-HOUR-CLOSE" not in consult
+
+
+FEE_SHA = "a" * 64
+EXAM = {
+    "frozen_family": "H-SKIP-RICH-YES",
+    "frozen_theta": 0.81,
+    "frozen_delta": 0.04,
+    "declared_at": "2026-09-10T14:00:00-04:00",
+}
+SURVIVING_SCORE = {"outcome": "completed_unscored", "survives": True}
+LIVE_BAR = {
+    "fee_omitted": False,
+    "honer_fee_apply": {"schedule_sha256": FEE_SHA},
+}
+
+
+def _seated(rule_id: str, *, execution: bool = True) -> dict:
+    return {"id": rule_id, "selects": True, "execution": execution}
+
+
+def _write_l1(root, rule_id: str, *, passes: bool) -> Path:
+    dest = (
+        root
+        / "golf-offshoot"
+        / "docs"
+        / f"LEARNING_LANE_15M_SCORECARD_{rule_id}_L1.json"
+    )
+    dest.parent.mkdir(parents=True, exist_ok=True)
+    dest.write_text(
+        json.dumps({"passes_every_binding_clause": passes}),
+        encoding="utf-8",
+    )
+    return dest
+
+
+def _gate_ok(gates, gate_id: str) -> bool:
+    by_id = {g["id"]: g["ok"] for g in gates}
+    return bool(by_id[gate_id])
+
+
+def test_enable_refused_while_seated_first_70_open(tmp_path):
+    from golf_offshoot.learning_lane_15m.consult_honer import (
+        consult_enable_gates,
+        write_consult_candidate,
+    )
+
+    snap = write_consult_candidate(EXAM, dest=tmp_path / "honer_consult.json")
+    gates = consult_enable_gates(
+        exam=EXAM,
+        score=SURVIVING_SCORE,
+        honer_bar=LIVE_BAR,
+        snapshot=snap,
+        invariants={"passed": True},
+        executing=_seated("R-SKIP-HOUR-CLOSE"),
+        root=tmp_path,
+    )
+    assert _gate_ok(gates, "exam_not_dead") is True
+    assert _gate_ok(gates, "executing_l1_closed") is False
+    assert _gate_ok(gates, "executing_is_keeper") is False
+    assert all(g.get("ok") for g in gates) is False
+
+
+def test_enable_refused_when_seated_l1_failed_or_execution_dropped(tmp_path):
+    from golf_offshoot.learning_lane_15m.consult_honer import (
+        consult_enable_gates,
+        write_consult_candidate,
+    )
+
+    snap = write_consult_candidate(EXAM, dest=tmp_path / "honer_consult.json")
+    _write_l1(tmp_path, "R-SKIP-HOUR-CLOSE", passes=False)
+    failed = consult_enable_gates(
+        exam=EXAM,
+        score=SURVIVING_SCORE,
+        honer_bar=LIVE_BAR,
+        snapshot=snap,
+        invariants={"passed": True},
+        executing=_seated("R-SKIP-HOUR-CLOSE"),
+        root=tmp_path,
+    )
+    assert _gate_ok(failed, "executing_l1_closed") is True
+    assert _gate_ok(failed, "executing_is_keeper") is False
+
+    _write_l1(tmp_path, "R-SKIP-HOUR-CLOSE", passes=True)
+    dropped = consult_enable_gates(
+        exam=EXAM,
+        score=SURVIVING_SCORE,
+        honer_bar=LIVE_BAR,
+        snapshot=snap,
+        invariants={"passed": True},
+        executing=_seated("R-SKIP-HOUR-CLOSE", execution=False),
+        root=tmp_path,
+    )
+    assert _gate_ok(dropped, "executing_is_keeper") is False
+    assert all(g.get("ok") for g in dropped) is False
+
+
+def test_enable_allowed_for_keeper_and_surviving_freeze(tmp_path, monkeypatch):
+    from golf_offshoot.learning_lane_15m import consult_honer as ch
+
+    monkeypatch.setattr(ch, "load_honer_exam", lambda: EXAM)
+    dest = tmp_path / "honer_consult.json"
+    _write_l1(tmp_path, "R-SKIP-HOUR-CLOSE", passes=True)
+    out = ch.maybe_sync_and_enable(
+        dest=dest,
+        score=SURVIVING_SCORE,
+        honer_bar=LIVE_BAR,
+        invariants={"passed": True},
+        executing=_seated("R-SKIP-HOUR-CLOSE"),
+        root=tmp_path,
+    )
+    assert out["consult_enabled"] is True
+    payload = json.loads(dest.read_text(encoding="utf-8"))
+    assert payload["consult_enabled"] is True
+    assert dest == tmp_path / "honer_consult.json"
+
+
+def test_enable_gates_same_for_non_hour_id(tmp_path):
+    from golf_offshoot.learning_lane_15m.consult_honer import (
+        consult_enable_gates,
+        write_consult_candidate,
+    )
+
+    snap = write_consult_candidate(EXAM, dest=tmp_path / "honer_consult.json")
+    _write_l1(tmp_path, "R-SKIP-CIVIL-BOUNDARIES", passes=True)
+    gates = consult_enable_gates(
+        exam=EXAM,
+        score=SURVIVING_SCORE,
+        honer_bar=LIVE_BAR,
+        snapshot=snap,
+        invariants={"passed": True},
+        executing=_seated("R-SKIP-CIVIL-BOUNDARIES"),
+        root=tmp_path,
+    )
+    by_id = {g["id"]: g["ok"] for g in gates}
+    assert by_id["executing_l1_closed"] is True
+    assert by_id["executing_is_keeper"] is True
+    assert all(g.get("ok") for g in gates) is True
+
+
+def test_leash_scores_then_enables(monkeypatch):
+    from golf_offshoot.learning_lane_15m.leash import run_leash_tick
+
+    order: list[str] = []
+
+    def score():
+        order.append("score")
+        return {"wrote": False}
+
+    def farm():
+        order.append("farm")
+        return {"wrote": False}
+
+    def enable():
+        order.append("enable")
+        return {"consult_enabled": False}
+
+    monkeypatch.setattr(
+        "golf_offshoot.learning_lane_15m.clerical_score.maybe_score_executing",
+        score,
+    )
+    monkeypatch.setattr(
+        "golf_offshoot.learning_lane_15m.clerical_score.maybe_score_farm",
+        farm,
+    )
+    monkeypatch.setattr(
+        "golf_offshoot.learning_lane_15m.consult_honer.maybe_sync_and_enable",
+        enable,
+    )
+    out = run_leash_tick()
+    assert order == ["score", "farm", "enable"]
+    assert out["clerical_score"]["wrote"] is False
+    assert out["farm"]["wrote"] is False
+    assert out["consult"]["consult_enabled"] is False
+

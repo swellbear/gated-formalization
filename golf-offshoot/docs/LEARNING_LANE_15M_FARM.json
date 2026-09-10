@@ -1,0 +1,7 @@
+{
+  "schema": 1,
+  "lane": "learning_lane_15m",
+  "series": "KXBTC15M",
+  "note": "Discovery farm. Notebooks are execution false. Not live. Not an ADMIT. Lab dates rows. Operator RUN-ONLY to seat one. Do not add farm pnl to Lineage A.",
+  "notebooks": []
+}

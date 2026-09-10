@@ -6,11 +6,11 @@ Thread lines are **one sentence, newest first, max 10**. Long findings belong in
 
 | Field | Value |
 |-------|--------|
-| Updated | 2026-09-10 16:05 ET |
+| Updated | 2026-09-10 18:15 ET |
 | Active role | chief-of-staff |
 | Job | — |
 | Status | idle |
-| Handoff | Discovery leash: honer fee-apply + machine score + consult file-gates. H is clerical. Replacement is crew after consult lived. Hour-close still executing. Consult off. HOLD stands. Trading NOT ARMED. next=idle |
+| Handoff | Discovery farm landed (I/J, isolated notebooks, one chair). FARM.json empty. Consult off. Hour-close still executing. HOLD stands. Trading NOT ARMED. next=idle |
 | Waiting on Founder | **N** |
 
 ## last_cos (CoS stamp — doorbell silence)
@@ -46,7 +46,7 @@ Part 3 landed. Three boxes are computed in `learning_lane_15m/honesty.py` and th
 | One hub process on `learning_lane_15m` | **PASS** — *derived* from the process table. One hub **tree**, not one OS process: `py` launcher PID **24188** over supervisor PID **24532** and listener PID **20100** holding `127.0.0.1:8765`. Watch loop pid **11160** (`watch.json` / `process_matches_disk`, 11:42). Child re-exec'd after sidecar/`app.py`. Criterion preserved as written. Do not start a second tree. |
 | No invented charts or pnl | **PASS** — *judgment, with evidence*. `digest_matches_ledger` PASS 2026-09-10T11:42:52−04:00 against the live book (82.18 / −17.82 both sides). CoS closeout stamps the current doorbell so the same A/B/E set does not re-ring. Fee-accurate totals are not on the hub, digest, manifest or `records[]`. |
 
-**Gate is open on this restamp.** Golf idle stays **ON** (15m paper PROPOSED is not golf idle-breach). Evidence bar is **binding** for scoring. `R-SKIP-2TO1-FAVORITE` L1 is **PARK** on its falsifier (Admissible completed, not Established, not an ADMIT). `R-SKIP-HOUR-CLOSE` is **RUN-ONLY** (`execution=true`, paper only). Consult **off** (file gates do not hold). Honer fee applied at score time; keep closed until bind. Trading **NOT ARMED**.
+**Gate is open on this restamp.** Golf idle stays **ON** (15m paper PROPOSED is not golf idle-breach). Evidence bar is **binding** for scoring. `R-SKIP-2TO1-FAVORITE` L1 is **PARK** on its falsifier (Admissible completed, not Established, not an ADMIT). `R-SKIP-HOUR-CLOSE` is **RUN-ONLY** (`execution=true`, paper only). Consult **off** (no seated L1 keeper; photocopy stays dark). Honer fee applied at score time; keep closed until bind. Trading **NOT ARMED**.
 
 **The fee-schedule hash is pinned from Founder browser bytes.** Source `founder_browser_bytes`, file `golf-offshoot/docs/kalshi-fee-schedule.pdf`, 281129 bytes. Last gym GET remains HTTP 429 (drift only). Do not GET the PDF every 90s. Do not spoof a browser. **Do not write a placeholder.**
 
@@ -60,6 +60,8 @@ Two suites, both on the tick.
 
 ## Thread
 
+- 2026-09-10 18:15 ET  systems → chief-of-staff: discovery farm landed (`I_farm_open` / `J_farm_promote`; FARM.json empty; leash score then farm then consult; 8765 Farm panel not live). Do not date live notebooks this fire. Do not arm. Soften Critic of promote later. next=idle
+- 2026-09-10 16:55 ET  systems → chief-of-staff: tidy stack landed (seated first-70 keeper gates; score-then-enable; not hour-specific). Consult off. Do not arm. Soften Critic of enabler later. next=idle
 - 2026-09-10 16:05 ET  systems → chief-of-staff: discovery leash landed (honer fee-apply, machine exam score, consult file-gates, H clerical, crew replacement after consult). Consult off. Hour-close still executing. next=idle
 - 2026-09-10 15:10 ET  chief-of-staff: invent contract denser (catalog + 10/n); H will assign Lab when honer freezes; this fire does not invent. next=idle
 - 2026-09-10 14:03 ET  chief-of-staff: Operator RUN-ONLY of PROPOSED 03 done; live trial `R-SKIP-HOUR-CLOSE` seated; favorite L1 PARK; HOLD stands. next=idle
@@ -68,6 +70,4 @@ Two suites, both on the tick.
 - 2026-09-10 13:26 ET  chief-of-staff → operator: RUN-ONLY or PARK Lab PROPOSED 03 `R-SKIP-HOUR-CLOSE`; do not score; do not ADMIT; do not bind. next=operator
 - 2026-09-10 13:25 ET  lab → chief-of-staff: PROPOSED 03 `R-SKIP-HOUR-CLOSE` filed (`skip_close_minute=0`, execution false); not scored; not an ADMIT. next=chief-of-staff
 - 2026-09-10 13:20 ET  lab → chief-of-staff: started one 15m PROPOSED under the invent contract; paper only; do not score; do not set execution. next=lab
-- 2026-09-10 13:05 ET  chief-of-staff → lab: one 15m PROPOSED under the invent contract; handoff operator. next=lab
-- 2026-09-10 11:47 ET  chief-of-staff: unattended gym loop; `decide_cos_action`; park name-clear; gym `PUBLISH_ARMED`; HOLD stands. next=idle
 *Older lines rolled off at the 10-line cap. Full history is in the git log for `docs/agents/DESK.md`.*

@@ -130,6 +130,7 @@ def test_desktop_shell_html_has_lane_selector_and_hides_golf_viz_on_15m(tmp_path
     assert "Two boxes" in page
     assert "Factory — live 70" in page
     assert 'id="honer"' in page
+    assert 'id="farm"' in page
     assert "This window" in page
     assert 'name="deposit"' not in page
     assert 'name="withdraw"' not in page

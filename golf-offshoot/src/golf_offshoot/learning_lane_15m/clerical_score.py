@@ -142,6 +142,48 @@ def gather_lived_windows(rule: dict[str, Any]) -> list[dict[str, Any]]:
     return windows
 
 
+def gather_tape_windows(rule: dict[str, Any]) -> list[dict[str, Any]]:
+    """Settled tape after declared_at. Fill-all pnl only. Never live skip/fill book pnl."""
+    from golf_offshoot.learning_lane_15m.paper import load_decisions
+
+    decisions = load_decisions()
+    results = _kalshi_results()
+    windows: list[dict[str, Any]] = []
+    for ticker, row in decisions.items():
+        if not isinstance(row, dict):
+            continue
+        close_at = str(row.get("close_at") or "")
+        if not close_at:
+            continue
+        try:
+            if not window_is_lived(rule, close_at=close_at):
+                continue
+        except Exception:  # noqa: BLE001 — bad close stamp is not a window
+            continue
+        posted = row.get("posted_yes")
+        try:
+            posted_f = float(posted)
+        except (TypeError, ValueError):
+            continue
+        result = results.get(str(ticker))
+        if result not in {"yes", "no"}:
+            continue
+        try:
+            recorded = _fill_all_pnl(posted_f, result)
+        except ValueError:
+            continue
+        windows.append(
+            {
+                "window_id": str(row.get("window_id") or ticker),
+                "close_at": close_at,
+                "posted_yes": posted_f,
+                "recorded_pnl": recorded,
+                "stake": float(row.get("stake") or STAKE) or STAKE,
+            }
+        )
+    return windows
+
+
 def maybe_score_executing(*, root: Path | None = None) -> dict[str, Any]:
     """Write an L1 scorecard when the executing selection reaches n. Not an ADMIT."""
     rule = active_execution_rule(root=root)
@@ -173,3 +215,76 @@ def maybe_score_executing(*, root: Path | None = None) -> dict[str, Any]:
     dest.parent.mkdir(parents=True, exist_ok=True)
     dest.write_text(json.dumps(card, indent=2) + "\n", encoding="utf-8")
     return {"wrote": True, "path": str(dest), "n": card.get("n"), "passes": card.get("passes_every_binding_clause")}
+
+
+def maybe_score_farm(*, root: Path | None = None) -> dict[str, Any]:
+    """Score farm notebooks on reconstructed decide(). Never drops execution. Not an ADMIT."""
+    from golf_offshoot.learning_lane_15m.farm import (
+        FORBIDDEN_FARM_IDS,
+        farm_scorecard_path,
+        load_farm,
+        notebook_as_rule,
+    )
+    from golf_offshoot.learning_lane_15m.evidence_bar import load_evidence_bar
+
+    payload = load_farm(root=root)
+    notebooks = [row for row in (payload.get("notebooks") or []) if isinstance(row, dict)]
+    if not notebooks:
+        return {"wrote": False, "reason": "no farm notebooks", "cards": []}
+    try:
+        bar = load_evidence_bar(root=root)
+    except Exception as exc:  # noqa: BLE001
+        return {"wrote": False, "reason": f"bar unreadable: {exc}", "cards": []}
+    need = int((bar.get("looks") or {}).get("first_look_n") or 70)
+    wrote = False
+    cards: list[dict[str, Any]] = []
+    for notebook in notebooks:
+        rid = str(notebook.get("id") or "")
+        if not rid or rid in FORBIDDEN_SCORE_IDS or rid in FORBIDDEN_FARM_IDS:
+            continue
+        if notebook.get("execution") is True:
+            continue
+        dest = farm_scorecard_path(rid, root=root)
+        if dest.is_file():
+            continue
+        rule = notebook_as_rule(notebook)
+        windows = gather_tape_windows(rule)
+        if len(windows) < need:
+            cards.append({"id": rid, "wrote": False, "reason": f"n={len(windows)} < {need}", "n": len(windows)})
+            continue
+        synth = {"rules": [rule], "trials_to_date": 0}
+        try:
+            card = score_rule(
+                rid,
+                windows,
+                look="L1",
+                root=root,
+                bar=bar,
+                registry=synth,
+                allow_nonbinding=True,
+            )
+        except RuleNotScorable as exc:
+            cards.append({"id": rid, "wrote": False, "reason": str(exc), "n": len(windows)})
+            continue
+        card["look"] = "FARM"
+        card["framing"] = (
+            "Farm notebook score. Isolated decide() on the shared tape. "
+            "Not an ADMIT, not a live trial, not Established, not Lineage A."
+        )
+        card["notebook"] = True
+        card["clerical"] = True
+        card["execution"] = False
+        card["scored_at"] = isoformat_now()
+        dest.parent.mkdir(parents=True, exist_ok=True)
+        dest.write_text(json.dumps(card, indent=2) + "\n", encoding="utf-8")
+        wrote = True
+        cards.append(
+            {
+                "id": rid,
+                "wrote": True,
+                "path": str(dest),
+                "n": card.get("n"),
+                "passes": card.get("passes_every_binding_clause"),
+            }
+        )
+    return {"wrote": wrote, "cards": cards}

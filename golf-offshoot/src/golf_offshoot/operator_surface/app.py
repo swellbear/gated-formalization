@@ -764,6 +764,17 @@ def render_html(surface: dict) -> str:
                 "</section>"
             )
             now_strip = ""
+        try:
+            from golf_offshoot.learning_lane_15m.farm_hub import farm_panel_html
+
+            farm_block = farm_panel_html()
+        except Exception:
+            farm_block = (
+                '<section class="panel farm-sandbox" id="farm">'
+                "<h2>Farm — discovery notebooks</h2>"
+                '<p class="help">Farm panel unavailable this render. Not live. No invented rows.</p>'
+                "</section>"
+            )
         factory_box = (
             '<section class="panel factory-box" id="factory">'
             "<h2>Factory — live 70</h2>"
@@ -794,10 +805,11 @@ def render_html(surface: dict) -> str:
             '<nav class="jump">'
             '<a href="#factory">Factory</a>'
             '<a href="#honer">Honer</a>'
+            '<a href="#farm">Farm</a>'
             '<a href="#extras">Extras</a>'
             "</nav>"
         )
-        lane_body = nav + _spine_html() + _clock_legend_html() + now_strip + factory_box + honer_block + extras
+        lane_body = nav + _spine_html() + _clock_legend_html() + now_strip + factory_box + honer_block + farm_block + extras
     else:
         lane_body = (
             '<section class="panel">'
@@ -903,6 +915,13 @@ def render_html(surface: dict) -> str:
  table.honer-board td {{ border-bottom: 1px solid #c9c2b2; padding: 6px 8px; vertical-align: top; }}
  table.honer-board tr:nth-child(even) td {{ background: #f4f1ea; }}
  table.honer-board td.src {{ font-size: 11px; color: #4a4a4a; }}
+ .farm-table-wrap {{ overflow-x: auto; }}
+ table.farm-board {{ border-collapse: collapse; width: 100%; font-size: 13px; }}
+ table.farm-board th {{ text-align: left; background: #1f3b4d; color: #fff; padding: 6px 8px; }}
+ table.farm-board td {{ border-bottom: 1px solid #c9c2b2; padding: 6px 8px; vertical-align: top; }}
+ table.farm-board tr:nth-child(even) td {{ background: #f4f1ea; }}
+ .farm-meter {{ display: inline-block; width: 120px; height: 10px; margin-right: 8px; background: #e6e0d4; border: 1px solid #c9c2b2; vertical-align: middle; }}
+ .farm-meter-fill {{ display: block; height: 100%; background: #1f3b4d; }}
  details.proof {{ margin-top: 14px; border: 1px solid #c9c2b2; padding: 8px 10px; }}
  details.proof summary {{ cursor: pointer; font-weight: 700; color: #1f3b4d; }}
  .this-window {{ font-size: 14px; }}

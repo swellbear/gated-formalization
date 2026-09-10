@@ -18,6 +18,7 @@ from golf_offshoot.learning_lane_15m.paths import latest_dir_15m
 SNAPSHOT_NAME = "honer_consult.json"
 FAMILY_RICH = "H-SKIP-RICH-YES"
 FAMILY_SPREAD = "H-SKIP-WIDE-SPREAD"
+_UNSET: Any = object()
 
 
 def consult_snapshot_path(*, root: Path | None = None) -> Path:
@@ -221,6 +222,68 @@ def write_consult_candidate(
     return snap
 
 
+def _seated_selecting(rule: dict[str, Any] | None) -> dict[str, Any] | None:
+    """Selecting chair only. Baseline fill-all is not a stack target.
+
+    Coinflip and the parked favorite cannot be stacked onto even if a row
+    still says execution. Not hardcoded to any one live id.
+    """
+    if not rule:
+        return None
+    if rule.get("selects") is not True:
+        return None
+    from golf_offshoot.learning_lane_15m.clerical_score import FORBIDDEN_SCORE_IDS
+
+    if str(rule.get("id") or "") in FORBIDDEN_SCORE_IDS:
+        return None
+    return rule
+
+
+def _load_seated_selecting(
+    *,
+    root: Path | None = None,
+    executing: Any = _UNSET,
+) -> dict[str, Any] | None:
+    if executing is not _UNSET:
+        return _seated_selecting(executing if isinstance(executing, dict) else None)
+    from golf_offshoot.learning_lane_15m.rules import active_execution_rule
+
+    try:
+        return _seated_selecting(active_execution_rule(root=root))
+    except ValueError:
+        return None
+
+
+def _l1_card_for(
+    rule: dict[str, Any] | None,
+    *,
+    root: Path | None = None,
+    l1_card: Any = _UNSET,
+) -> dict[str, Any]:
+    if l1_card is not _UNSET:
+        return l1_card if isinstance(l1_card, dict) else {}
+    if not rule:
+        return {}
+    from golf_offshoot.learning_lane_15m.clerical_score import scorecard_path
+
+    return _load_json(scorecard_path(str(rule.get("id") or ""), root=root))
+
+
+def _l1_file_exists(
+    rule: dict[str, Any] | None,
+    *,
+    root: Path | None = None,
+    l1_card: Any = _UNSET,
+) -> bool:
+    if l1_card is not _UNSET:
+        return bool(l1_card)
+    if not rule:
+        return False
+    from golf_offshoot.learning_lane_15m.clerical_score import scorecard_path
+
+    return scorecard_path(str(rule.get("id") or ""), root=root).is_file()
+
+
 def consult_enable_gates(
     *,
     exam: dict[str, Any] | None = None,
@@ -228,6 +291,9 @@ def consult_enable_gates(
     honer_bar: dict[str, Any] | None = None,
     snapshot: dict[str, Any] | None = None,
     invariants: dict[str, Any] | None = None,
+    executing: Any = _UNSET,
+    l1_card: Any = _UNSET,
+    root: Path | None = None,
 ) -> list[dict[str, Any]]:
     exam = exam if exam is not None else load_honer_exam()
     score = score if score is not None else load_honer_exam_score()
@@ -238,6 +304,18 @@ def consult_enable_gates(
     sha = str(apply.get("schedule_sha256") or "").strip().lower()
     outcome = str(score.get("outcome") or "")
     survives = score.get("survives") is True or outcome == "completed_unscored"
+    seated = _load_seated_selecting(root=root, executing=executing)
+    card = _l1_card_for(seated, root=root, l1_card=l1_card)
+    l1_closed = (
+        seated is not None
+        and seated.get("execution") is True
+        and _l1_file_exists(seated, root=root, l1_card=l1_card)
+    )
+    keeper = (
+        seated is not None
+        and seated.get("execution") is True
+        and card.get("passes_every_binding_clause") is True
+    )
     gates = [
         {
             "id": "freeze_present",
@@ -264,14 +342,32 @@ def consult_enable_gates(
             "id": "not_live_theta",
             "ok": snap.get("live_theta_never_consults") is True if snap else False,
         },
+        {
+            "id": "executing_l1_closed",
+            "ok": l1_closed,
+        },
+        {
+            "id": "executing_is_keeper",
+            "ok": keeper,
+        },
     ]
     return gates
 
 
-def maybe_sync_and_enable(*, dest: Path | None = None) -> dict[str, Any]:
+def maybe_sync_and_enable(
+    *,
+    dest: Path | None = None,
+    executing: Any = _UNSET,
+    l1_card: Any = _UNSET,
+    score: dict[str, Any] | None = None,
+    honer_bar: dict[str, Any] | None = None,
+    invariants: dict[str, Any] | None = None,
+    root: Path | None = None,
+) -> dict[str, Any]:
     """Copy freeze to honer_consult.json. Enable only when every gate holds.
 
     Does not arm. Does not ADMIT. Does not read live theta.json.
+    Does not steal the seated selecting row.
     """
     exam = load_honer_exam()
     result: dict[str, Any] = {"wrote_candidate": False, "consult_enabled": False, "gates": []}
@@ -282,7 +378,16 @@ def maybe_sync_and_enable(*, dest: Path | None = None) -> dict[str, Any]:
     except ValueError:
         return result
     result["wrote_candidate"] = True
-    gates = consult_enable_gates(exam=exam, snapshot=snap)
+    gates = consult_enable_gates(
+        exam=exam,
+        snapshot=snap,
+        score=score,
+        honer_bar=honer_bar,
+        invariants=invariants,
+        executing=executing,
+        l1_card=l1_card,
+        root=root,
+    )
     result["gates"] = gates
     result["snapshot"] = snap
     if all(g.get("ok") for g in gates):

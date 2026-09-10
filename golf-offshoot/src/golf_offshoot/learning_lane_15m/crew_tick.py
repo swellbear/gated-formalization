@@ -4,11 +4,12 @@ The wake already names ``roles_owed``. This block only answers whether a
 Chief of Staff turn is owed. It is not a second SoT. The runner may write
 it; the runner may not become CoS, open a chat, ADMIT, invent, or push.
 
-needed is true when at least one of A–H holds. If unsure, needed stays true
+needed is true when at least one of A–J holds. If unsure, needed stays true
 and the reason says why. Same reason-id set after a CoS closeout stamp is a
-heartbeat, not a doorbell. F_continuation is not silenced by that stamp
-unless the desk is Status=assigned / lab. H_honer_freeze is not silenced
-by the stamp; it clears when honer_consult.json photocopies the freeze.
+heartbeat, not a doorbell. F_continuation / I_farm_open / J_farm_promote are
+not silenced by that stamp unless the desk is Status=assigned / lab.
+H_honer_freeze is not silenced by the stamp; it clears when honer_consult.json
+photocopies the freeze.
 """
 
 from __future__ import annotations
@@ -53,6 +54,8 @@ REASON_D_HUB = "D_hub_liveness"
 REASON_E = "E_idle_unassigned"
 REASON_F = "F_continuation"
 REASON_H = "H_honer_freeze"
+REASON_I = "I_farm_open"
+REASON_J = "J_farm_promote"
 
 REGISTRY_REL = Path("golf-offshoot") / "docs" / "LEARNING_LANE_15M_RULES.json"
 BURNED_REL = Path("golf-offshoot") / "docs" / "LEARNING_LANE_15M_BURNED_CLASSES.json"
@@ -202,6 +205,17 @@ def live_selecting_rule_ids(
     return live
 
 
+def desk_idle_for_lab(desk: dict[str, Any]) -> bool:
+    """Idle / blank CoS job, and not an assigned worker covering a fire."""
+    status = str(desk.get("status") or "").strip().lower()
+    role = str(desk.get("active_role") or "").strip().lower()
+    job = str(desk.get("job") or "")
+    if status == "assigned" and role in WORKER_ROLES:
+        return False
+    cos_blank = role in {COS_ROLE, "cos"} and _job_is_blank(job)
+    return status in {"idle", ""} or cos_blank
+
+
 def gym_is_starved(
     desk: dict[str, Any],
     wake: dict[str, Any] | None,
@@ -211,14 +225,7 @@ def gym_is_starved(
     live_trial_ids: list[str] | None = None,
 ) -> bool:
     """True when CoS should assign Lab: idle gym, no live trial, no un-operated PROPOSED."""
-    status = str(desk.get("status") or "").strip().lower()
-    role = str(desk.get("active_role") or "").strip().lower()
-    job = str(desk.get("job") or "")
-    assigned_worker = status == "assigned" and role in WORKER_ROLES
-    if assigned_worker:
-        return False
-    cos_blank = role in {COS_ROLE, "cos"} and _job_is_blank(job)
-    if status not in {"idle", ""} and not cos_blank:
+    if not desk_idle_for_lab(desk):
         return False
     if unoperated_lab_proposed(wake):
         return False
@@ -227,6 +234,58 @@ def gym_is_starved(
     else:
         live = live_selecting_rule_ids(root=root, registry=registry)
     return not live
+
+
+def farm_open_owed(
+    desk: dict[str, Any],
+    wake: dict[str, Any] | None,
+    *,
+    root: Path | None = None,
+    registry: dict[str, Any] | None = None,
+    farm_open: bool | None = None,
+) -> bool:
+    """Hunger: unused legal slots, else invent next kind, else exhausted file stops it.
+
+    A seated live trial does not pause this. That was the F-only hole.
+    """
+    if farm_open is False:
+        return False
+    if not desk_idle_for_lab(desk):
+        return False
+    if unoperated_lab_proposed(wake):
+        return False
+    if farm_open is True:
+        return True
+    from golf_offshoot.learning_lane_15m.farm import farm_hunger
+
+    try:
+        return farm_hunger(root=root, registry=registry)
+    except Exception:  # noqa: BLE001 — missing catalog is not hunger
+        return False
+
+
+def farm_promote_owed(
+    desk: dict[str, Any],
+    wake: dict[str, Any] | None,
+    *,
+    root: Path | None = None,
+    registry: dict[str, Any] | None = None,
+    farm_promote: bool | None = None,
+) -> bool:
+    if farm_promote is False:
+        return False
+    if not desk_idle_for_lab(desk):
+        return False
+    if unoperated_lab_proposed(wake):
+        return False
+    if farm_promote is True:
+        return True
+    from golf_offshoot.learning_lane_15m.farm import promote_ready
+
+    try:
+        return promote_ready(root=root, registry=registry)
+    except Exception:  # noqa: BLE001 — missing tmp registry is not a promote
+        return False
 
 
 def _honer_latest(*, root: Path | None = None) -> Path:
@@ -384,6 +443,8 @@ def compute_crew_tick(
     live_trial_ids: list[str] | None = None,
     honer_freeze_open: bool | None = None,
     honer_freeze_snapshot: dict[str, Any] | None = None,
+    farm_open: bool | None = None,
+    farm_promote: bool | None = None,
 ) -> dict[str, Any]:
     """Derive ``crew_tick`` from the wake, the desk, and the last CoS stamp.
 
@@ -490,17 +551,40 @@ def compute_crew_tick(
             )
         )
 
+    j_owed = farm_promote_owed(
+        desk,
+        state,
+        root=root,
+        registry=registry,
+        farm_promote=farm_promote,
+    )
     if gym_is_starved(
         desk,
         state,
         root=root,
         registry=registry,
         live_trial_ids=live_trial_ids,
-    ):
+    ) and not j_owed:
         reasons.append(
             _reason(
                 REASON_F,
                 "gym has no live 15m trial; CoS assigns Lab under the invent contract",
+            )
+        )
+
+    if farm_open_owed(
+        desk,
+        state,
+        root=root,
+        registry=registry,
+        farm_open=farm_open,
+    ):
+        reasons.append(
+            _reason(
+                REASON_I,
+                "farm hunger: date unused legal slots in one Lab fire, else invent "
+                "the next kind, else write farm_menu_exhausted; a seated trial does "
+                "not pause invent",
             )
         )
 
@@ -535,6 +619,15 @@ def compute_crew_tick(
             )
         )
 
+    if j_owed:
+        reasons.append(
+            _reason(
+                REASON_J,
+                "live selecting L1 is closed and a farm keeper is queued; CoS assigns "
+                "Lab to date the declared_at head (not richest pnl); Operator RUN-ONLY",
+            )
+        )
+
     # Dedup by id, keep first detail.
     seen: set[str] = set()
     unique: list[dict[str, str]] = []
@@ -552,7 +645,15 @@ def compute_crew_tick(
             row
             for row in unique
             if row["id"]
-            not in {REASON_A_DONE, REASON_A_IDLE, REASON_E, REASON_F, REASON_H}
+            not in {
+                REASON_A_DONE,
+                REASON_A_IDLE,
+                REASON_E,
+                REASON_F,
+                REASON_H,
+                REASON_I,
+                REASON_J,
+            }
         ]
         if not new_judicial or all(_role(e) == role for e in new_judicial):
             unique = [row for row in unique if row["id"] != REASON_B]
@@ -560,7 +661,11 @@ def compute_crew_tick(
 
     handled_quiet = list(handled)
     if not desk_assigned_lab(desk):
-        handled_quiet = [x for x in handled_quiet if x not in {REASON_F, REASON_H}]
+        handled_quiet = [
+            x
+            for x in handled_quiet
+            if x not in {REASON_F, REASON_H, REASON_I, REASON_J}
+        ]
 
     if reason_ids and handled_quiet and set(reason_ids) <= set(handled_quiet):
         # Same why, or a subset after the stamp itself retired B. Not a new doorbell.
@@ -666,7 +771,7 @@ def stamp_cos_closeout(
     handled = [str(x) for x in (reason_ids if reason_ids is not None else current.get("reason_ids") or [])]
     desk = parse_desk(read_desk_text(root=root))
     if not desk_assigned_lab(desk):
-        handled = [x for x in handled if x not in {REASON_F, REASON_H}]
+        handled = [x for x in handled if x not in {REASON_F, REASON_H, REASON_I, REASON_J}]
     carried = {
         "last_cos_at": at or isoformat_now(),
         "last_cos_commit": str(commit or ""),

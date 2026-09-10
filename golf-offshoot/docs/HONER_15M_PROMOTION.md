@@ -4,7 +4,7 @@
 
 KXBTC15M 15m is the **gym**. `honer_15m` is the **discovery organ**. Isolation of books is a staging wall so evidence stays clean. The destination is an **earned seat** inside factory `decide()` / `consult_registry` as one input among others that have already earned a seat. Failed discovery stays a failed notebook.
 
-Trading is **NOT ARMED**. HOLD stands. `consult_enabled` is a **file gate**: true only when freeze hash, dated fee-apply, surviving exam score, and honer invariants hold on **that** snapshot. Dark unless the flag is exactly true. Arm stays Founder. Replacement of the executing registry row is **crew** after consult has lived, not a Founder stamp.
+Trading is **NOT ARMED**. HOLD stands. `consult_enabled` is a **file gate**: true only when freeze hash, dated fee-apply, surviving exam score, honer invariants, and the **seated** selecting rule's first 70 keeper all hold on **that** snapshot. Dark unless the flag is exactly true. Arm stays Founder. Replacement of the executing registry row is **crew** after consult has lived, not a Founder stamp.
 
 ## Seat shape
 
@@ -25,9 +25,9 @@ One factory executing selection rule still expresses fill-or-skip (`R-SKIP-HOUR-
 2. **Exam snapshot** — freeze writes honer exam knobs with `declared_at`. Search stops mutating that exam. Freeze bytes **are** the name. Clerical copies them into `honer_consult.json` with `consult_enabled` false. Lab does not retype θ.
 3. **Dated honer fee-apply** — cites the factory `founder_browser_bytes` / `schedule_sha256` pin. Score-time `fee_adjust`. Search/exam ledgers stay gross. Keep-lock stays closed while the honer bar is unbound.
 4. **Machine score** — n=70 or futility 20/40 writes `honer_15m/latest/exam_score.json`. Dead → library park / `completed_dead`. Survive → `completed_unscored`. Not a keep. Do not score `R-SKIP-COINFLIP`. Do not re-score PARK'd favorite.
-5. **Consult enable** — `maybe_sync_and_enable` flips `consult_enabled` true only when every file gate holds. Soften Critic attacks the **enabler code** in a later session from the author, not every machine scorecard.
+5. **Consult enable** — the seated selecting rule runs **alone** for its first 70. Honer may hunt / freeze / exam in parallel; the photocopy stays dark (`consult_enabled` false). After that 70 is scored, `maybe_sync_and_enable` may flip the flag true only when every file gate holds, including `executing_l1_closed` and `executing_is_keeper`. If the seated look died (parked, failing card, or execution dropped), do not glue a freeze onto it. If it kept the chair, a **surviving** freeze may add extra skips on top; the next 70 are the stack, not a rewrite of the first 70. If nothing is in the selecting chair, consult stays off; baseline fill-all is not a stack target. Not hardcoded to today's occupant. Soften Critic attacks the **enabler code** in a later session from the author, not every machine scorecard. Do not score stacked windows as if honer had never joined.
 6. **Replacement** — after consult has lived and the factory executing trial is not live: CoS assigns Lab (`HONER-FROZEN-REPLACE`) to date the freeze as the executing row. Operator RUN-ONLY. Not Founder. Not arm.
-7. Factory bar bind is crew+machine. Arm stays Founder. Expansion is a new lane ([`LEARNING_LANE_EXPANSION.md`](LEARNING_LANE_EXPANSION.md)).
+7. Factory bar bind is crew+machine. Arm stays Founder. Expansion is a new lane ([`LEARNING_LANE_EXPANSION.md`](LEARNING_LANE_EXPANSION.md)). Discovery farm (legal unused kinds as isolated notebooks, one live chair, promote between looks) is [`LEARNING_LANE_15M_FARM.md`](LEARNING_LANE_15M_FARM.md): `I_farm_open` → Lab; `J_farm_promote` → Lab then Operator RUN-ONLY. Not Founder. Farm cards stay off hub digest / `records[]`.
 
 ## Fail
 
@@ -37,4 +37,4 @@ Search starvation retires an untestable search knob. That is not a keep, not an 
 
 ## This build
 
-Compositor is **dark** until gates hold (they do not, until an exam survives). Do not arm. Do not ADMIT. Do not steal `R-SKIP-HOUR-CLOSE`. Soften Critic of the enabler is a later fire.
+Compositor is **dark** until gates hold (they do not: no seated L1 keeper yet, and no surviving exam). Do not arm. Do not ADMIT. Do not steal the seated selecting row. Soften Critic of the enabler is a later fire.

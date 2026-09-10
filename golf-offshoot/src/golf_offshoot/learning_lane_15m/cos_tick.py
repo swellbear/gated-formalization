@@ -7,7 +7,9 @@ unattended-and-smart.
 
 Forbidden assigns (code + skill): score R-SKIP-COINFLIP, re-score
 PARK'd R-SKIP-2TO1-FAVORITE, arm, bind, git push to master. Lab is legal:
-F_continuation assigns one 15m PROPOSED. H_honer_freeze is clerical
+F_continuation assigns one 15m PROPOSED. I_farm_open assigns Lab to date farm
+notebooks (hunger). J_farm_promote dates the queued keeper then Operator RUN-ONLY.
+H_honer_freeze is clerical
 (freeze photocopy); CoS does not assign Lab to retype theta. This fold
 does not enable consult unless file gates already hold.
 """
@@ -21,6 +23,8 @@ from golf_offshoot.learning_lane_15m.crew_tick import (
     JUDICIAL_ROLES,
     REASON_F,
     REASON_H,
+    REASON_I,
+    REASON_J,
     WORKER_ROLES,
     compute_crew_tick,
     parse_desk,
@@ -42,6 +46,21 @@ LAB_INVENT_JOB = (
     "HONER-FROZEN-REPLACE only after consult has lived and hour-close is not "
     "the live trial; do not retype freeze theta; pre-reg, live falsifier); "
     "handoff operator"
+)
+
+LAB_FARM_OPEN_JOB = (
+    "date every currently legal unused catalog slot as farm notebooks in one fire "
+    "(LEARNING_LANE_15M_FARM.json, execution false, do not steal the chair); "
+    "if none unused, invent the next kind (product-structure skip rate, unburned, "
+    "not a clone) and date it as a farm notebook; if you cannot name another kind, "
+    "write LEARNING_LANE_15M_FARM_MENU_EXHAUSTED.json so I stops; do not retype "
+    "freeze theta; do not set execution true; handoff operator"
+)
+
+LAB_FARM_PROMOTE_JOB = (
+    "date the next queued farm keeper (declared_at head, not richest pnl) as a "
+    "PROPOSED executing row with execution still false; Operator RUN-ONLY flips "
+    "execution; do not arm; do not ADMIT; do not score; handoff operator"
 )
 
 #: Wake subjects that are name-clear bookkeeping, not a score Job.
@@ -196,6 +215,24 @@ def _assign_lab() -> dict[str, Any]:
     )
 
 
+def _assign_lab_farm_open() -> dict[str, Any]:
+    return _base(
+        action=ACTION_ASSIGN,
+        reason="farm_open_assign_lab",
+        role="lab",
+        job=LAB_FARM_OPEN_JOB,
+    )
+
+
+def _assign_lab_farm_promote() -> dict[str, Any]:
+    return _base(
+        action=ACTION_ASSIGN,
+        reason="farm_promote_assign_lab",
+        role="lab",
+        job=LAB_FARM_PROMOTE_JOB,
+    )
+
+
 def lab_honer_freeze_job(snap: dict[str, Any] | None) -> str:
     """Deprecated: H is clerical. Kept so old tests can import the name."""
     snap = snap or {}
@@ -246,6 +283,8 @@ def decide_cos_action(
     needed = bool(tick.get("needed"))
     f_owed = REASON_F in reason_ids
     h_owed = REASON_H in reason_ids
+    i_owed = REASON_I in reason_ids
+    j_owed = REASON_J in reason_ids
     freeze_snap = tick.get("honer_freeze") if isinstance(tick.get("honer_freeze"), dict) else None
 
     if status == "assigned" and active in WORKER_ROLES:
@@ -258,6 +297,8 @@ def decide_cos_action(
         and set(reason_ids) <= set(handled)
         and REASON_F not in reason_ids
         and REASON_H not in reason_ids
+        and REASON_I not in reason_ids
+        and REASON_J not in reason_ids
     ):
         return _base(action=ACTION_QUIET, reason="quiet_or_handled")
 
@@ -286,7 +327,7 @@ def decide_cos_action(
 
     if only_name_clear_reasons(op_reasons):
         uncovered_roles = [r for r in uncovered_roles if r != "operator"]
-        if not uncovered_roles and not f_owed and not h_owed:
+        if not uncovered_roles and not f_owed and not h_owed and not i_owed and not j_owed:
             return _base(
                 action=ACTION_CLOSEOUT,
                 reason="name_clear_not_score",
@@ -308,12 +349,20 @@ def decide_cos_action(
     ):
         if f_owed:
             return _assign_lab()
+        if i_owed:
+            return _assign_lab_farm_open()
+        if j_owed:
+            return _assign_lab_farm_promote()
         if h_owed:
             return _assign_lab_honer(freeze_snap)
         return _base(action=ACTION_CLOSEOUT, reason="zero_objection_stop")
 
     if f_owed:
         return _assign_lab()
+    if i_owed:
+        return _assign_lab_farm_open()
+    if j_owed:
+        return _assign_lab_farm_promote()
     if h_owed:
         return _assign_lab_honer(freeze_snap)
 

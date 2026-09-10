@@ -238,6 +238,8 @@ def test_starved_idle_rings_f():
         hub_ok=True,
         live_trial_ids=[],
         honer_freeze_open=False,
+        farm_open=False,
+        farm_promote=False,
     )
     assert tick["needed"] is True
     assert REASON_F in tick["reason_ids"]
@@ -251,6 +253,8 @@ def test_assigned_worker_does_not_ring_f():
         hub_ok=True,
         live_trial_ids=[],
         honer_freeze_open=True,
+        farm_open=False,
+        farm_promote=False,
     )
     assert REASON_F not in tick["reason_ids"]
     assert REASON_H not in tick["reason_ids"]
@@ -266,6 +270,8 @@ def test_unoperated_proposed_does_not_ring_f():
         hub_ok=True,
         live_trial_ids=[],
         honer_freeze_open=False,
+        farm_open=False,
+        farm_promote=False,
     )
     assert REASON_F not in tick["reason_ids"]
 
@@ -277,6 +283,8 @@ def test_live_trial_does_not_ring_f():
         hub_ok=True,
         live_trial_ids=["R-SKIP-NEW"],
         honer_freeze_open=False,
+        farm_open=False,
+        farm_promote=False,
     )
     assert REASON_F not in tick["reason_ids"]
 
@@ -288,6 +296,8 @@ def test_hub_ok_false_still_rings_f():
         hub_ok=False,
         live_trial_ids=[],
         honer_freeze_open=False,
+        farm_open=False,
+        farm_promote=False,
     )
     assert REASON_F in tick["reason_ids"]
     assert REASON_D_HUB in tick["reason_ids"]
@@ -302,7 +312,7 @@ def test_stamping_f_without_assigning_lab_does_not_silence():
     }
     desk = _idle_blank_desk()
     first = compute_crew_tick(
-        state, desk_text=desk, hub_ok=True, live_trial_ids=[], honer_freeze_open=False
+        state, desk_text=desk, hub_ok=True, live_trial_ids=[], honer_freeze_open=False, farm_open=False, farm_promote=False
     )
     assert REASON_F in first["reason_ids"]
     state["crew_tick"] = {
@@ -317,6 +327,8 @@ def test_stamping_f_without_assigning_lab_does_not_silence():
         handled_reason_ids=list(first["reason_ids"]),
         live_trial_ids=[],
         honer_freeze_open=False,
+        farm_open=False,
+        farm_promote=False,
     )
     assert again["needed"] is True
     assert REASON_F in again["reason_ids"]
