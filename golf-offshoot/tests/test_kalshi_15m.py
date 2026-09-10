@@ -8,6 +8,7 @@ from golf_offshoot.data_feeds.kalshi_15m import (
     TickerParseError,
     assert_public_read_url,
     is_paper_autobet_candidate,
+    observed_fee_fields,
     parse_dollar_unit,
     parse_event,
     parse_event_ticker,
@@ -75,7 +76,24 @@ SERIES = {
 }
 
 
+def test_observed_fee_fields_do_not_default_a_missing_multiplier():
+    missing = observed_fee_fields({"fee_type": "quadratic"})
+    assert missing["fee_type_present"] is True
+    assert missing["fee_type"] == "quadratic"
+    assert missing["fee_multiplier_present"] is False
+    assert missing["fee_multiplier"] is None
+    empty = observed_fee_fields(None)
+    assert empty["fee_type_present"] is False
+    assert empty["fee_multiplier_present"] is False
+
+
 def test_parse_dollar_and_result():
+    assert parse_dollar_unit("0.5200") == 0.52
+    assert parse_dollar_unit("0.0000") is None
+    assert parse_dollar_unit("1.0000") is None
+    assert parse_kalshi_result("yes") == "yes"
+    assert parse_kalshi_result("") == ""
+    assert parse_kalshi_result("maybe") == ""
     assert parse_dollar_unit("0.5200") == 0.52
     assert parse_dollar_unit("0.0000") is None
     assert parse_dollar_unit("1.0000") is None
@@ -282,6 +300,10 @@ def test_feed_fetch_uses_injected_payload(monkeypatch):
     assert payload["cf_index_id"] == "BRTI"
     assert payload["cfb_ws_average_role"] == CFB_WS_AVERAGE_ROLE == "observe_only"
     assert payload["fee_type"] == "quadratic"
+    assert payload["series_fee"]["fee_type"] == "quadratic"
+    assert payload["series_fee"]["fee_multiplier"] == 1.0
+    assert payload["series_fee"]["fee_type_present"] is True
+    assert payload["series_fee"]["fee_multiplier_present"] is True
 
 
 def test_feed_prefers_open_over_initialized_default(monkeypatch):

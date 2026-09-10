@@ -15,12 +15,14 @@ from __future__ import annotations
 import hashlib
 import json
 import math
+import re
 import urllib.error
 import urllib.request
+from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any
 
-from golf_offshoot.localtime import isoformat_now
+from golf_offshoot.localtime import isoformat_now, now as eastern_now
 
 BAR_REL = Path("golf-offshoot") / "docs" / "LEARNING_LANE_15M_EVIDENCE_BAR.json"
 BURNED_REL = Path("golf-offshoot") / "docs" / "LEARNING_LANE_15M_BURNED_CLASSES.json"
@@ -31,6 +33,13 @@ FEE_SCHEDULE_URL = "https://kalshi.com/docs/kalshi-fee-schedule.pdf"
 
 #: Dotted path the score note must cite, and the path ``critic.py`` imports.
 FEE_ADJUST_PATH = "golf_offshoot.learning_lane_15m.evidence_bar.fee_adjust"
+
+#: Gym PDF probe cooldown. Not every 90s tick. Not a Cursor/cloud retry.
+FEE_PROBE_COOLDOWN_S = 12 * 3600
+FEE_PROBE_UA = "gated-formalization/1.0 (public read-only)"
+_HEX64 = re.compile(r"^[0-9a-f]{64}$")
+FEE_PROBE_NAME = "fee_schedule_probe.json"
+SERIES_FEE_NAME = "series_fee.json"
 
 
 def _repo_root() -> Path:
@@ -157,6 +166,81 @@ def fee_adjust(
 # --------------------------------------------------------- fee schedule pin
 
 
+def fee_probe_path(*, latest_dir: Path | None = None) -> Path:
+    from golf_offshoot.learning_lane_15m.paths import latest_dir_15m
+
+    dest = (latest_dir if latest_dir is not None else latest_dir_15m()) / FEE_PROBE_NAME
+    from golf_offshoot.learning_lane_15m.paths import assert_not_golf_path
+
+    assert_not_golf_path(dest)
+    return dest
+
+
+def series_fee_snapshot_path(*, root: Path | None = None, latest_dir: Path | None = None) -> Path:
+    """Live gym snapshot. Tests may pass ``root`` or ``latest_dir``."""
+    if latest_dir is not None:
+        dest = latest_dir / SERIES_FEE_NAME
+    elif root is not None:
+        dest = (
+            Path(root)
+            / "golf-offshoot"
+            / "data"
+            / "learning_lane_15m"
+            / "latest"
+            / SERIES_FEE_NAME
+        )
+    else:
+        from golf_offshoot.learning_lane_15m.paths import latest_dir_15m
+
+        dest = latest_dir_15m() / SERIES_FEE_NAME
+    from golf_offshoot.learning_lane_15m.paths import assert_not_golf_path
+
+    assert_not_golf_path(dest)
+    return dest
+
+
+def _parse_probe_time(text: str) -> datetime | None:
+    raw = str(text or "").strip()
+    if not raw:
+        return None
+    if raw.endswith("Z"):
+        raw = raw[:-1] + "+00:00"
+    try:
+        when = datetime.fromisoformat(raw)
+    except ValueError:
+        return None
+    if when.tzinfo is None:
+        when = when.replace(tzinfo=timezone.utc)
+    return when
+
+
+def load_fee_schedule_probe(*, latest_dir: Path | None = None) -> dict[str, Any]:
+    path = fee_probe_path(latest_dir=latest_dir)
+    if not path.is_file():
+        return {}
+    try:
+        payload = json.loads(path.read_text(encoding="utf-8"))
+    except (OSError, ValueError):
+        return {}
+    return payload if isinstance(payload, dict) else {}
+
+
+def fee_probe_due(
+    *,
+    latest_dir: Path | None = None,
+    cooldown_s: float = FEE_PROBE_COOLDOWN_S,
+    now: datetime | None = None,
+) -> bool:
+    """True when the gym should fetch the PDF. Missing probe file is due."""
+    probe = load_fee_schedule_probe(latest_dir=latest_dir)
+    checked = _parse_probe_time(str(probe.get("checked_at") or ""))
+    if checked is None:
+        return True
+    clock = now if now is not None else eastern_now()
+    age = (clock - checked).total_seconds()
+    return age >= float(cooldown_s)
+
+
 def probe_fee_schedule(
     url: str = FEE_SCHEDULE_URL,
     *,
@@ -198,41 +282,173 @@ def probe_fee_schedule(
 
 
 def _urlopen(url: str, timeout_s: float) -> tuple[int, bytes]:
-    request = urllib.request.Request(
-        url, headers={"User-Agent": "gated-formalization/1.0 (public read-only)"}
-    )
+    request = urllib.request.Request(url, headers={"User-Agent": FEE_PROBE_UA})
     with urllib.request.urlopen(request, timeout=timeout_s) as response:  # noqa: S310
         return int(response.status), response.read()
+
+
+def write_fee_schedule_probe(
+    result: dict[str, Any],
+    *,
+    latest_dir: Path | None = None,
+) -> Path:
+    """Always write the attempt. A 429 does not amend the evidence bar."""
+    dest = fee_probe_path(latest_dir=latest_dir)
+    dest.parent.mkdir(parents=True, exist_ok=True)
+    dest.write_text(json.dumps(result, indent=2) + "\n", encoding="utf-8")
+    return dest
+
+
+def pin_digest_from_probe(result: dict[str, Any]) -> str:
+    """64-hex of a real 200 body, else empty. Never a placeholder."""
+    if int(result.get("status") or 0) != 200:
+        return ""
+    digest = str(result.get("sha256") or "").strip().lower()
+    if not _HEX64.match(digest):
+        return ""
+    return digest
+
+
+def apply_fee_schedule_pin(
+    result: dict[str, Any],
+    *,
+    root: Path | None = None,
+) -> bool:
+    """Write ``schedule_sha256`` onto the bar only when the digest is new.
+
+    A 429, an empty body, or a non-hex digest leaves the bar bytes alone. A later
+    429 does not clear a good hash. Returns True only when the bar file changed.
+    """
+    digest = pin_digest_from_probe(result)
+    if not digest:
+        return False
+    path = bar_path(root=root)
+    if not path.is_file():
+        return False
+    payload = json.loads(path.read_text(encoding="utf-8"))
+    fee = payload.setdefault("fee_hurdle", {})
+    current = str(fee.get("schedule_sha256") or "").strip().lower()
+    if current == digest:
+        return False
+    fee["schedule_sha256"] = digest
+    fee["schedule_checked_at"] = result.get("checked_at") or isoformat_now()
+    fee["schedule_fetch_status"] = 200
+    fee["schedule_fetch_note"] = (
+        result.get("error") or f"HTTP 200, {result.get('bytes')} bytes; gym PaperWatch pin"
+    )
+    fee["schedule_fetch_is_external"] = False
+    fee["schedule_digest_kind"] = (
+        "sha256 of the fetched bytes; the schedule is a PDF, so there is no "
+        "newline normalisation on it — unlike the text artifacts critic.py hashes"
+    )
+    path.write_text(json.dumps(payload, indent=2) + "\n", encoding="utf-8")
+    return True
 
 
 def record_fee_schedule_probe(
     probe: dict[str, Any] | None = None,
     *,
     root: Path | None = None,
+    latest_dir: Path | None = None,
     opener: Any = None,
 ) -> dict[str, Any]:
-    """Write the probe result onto the bar. A placeholder hash is not writable.
+    """Write the probe file. Pin the bar only on a new 200 digest.
 
-    ``schedule_sha256`` is set only from a real 200 body. On any other outcome
-    it is left exactly as it was and the status is recorded beside it, which
-    keeps ``fee_schedule_hash_recorded`` failing — correctly.
+    A 429 is recorded on the probe file and does not amend the bar. That is
+    the bite this split exists to stop: Cursor retries must not mint new bar
+    hashes. ``schedule_sha256`` is set only from a real 200 body.
     """
     result = probe if probe is not None else probe_fee_schedule(opener=opener)
-    path = bar_path(root=root)
-    payload = json.loads(path.read_text(encoding="utf-8"))
-    fee = payload.setdefault("fee_hurdle", {})
-    fee["schedule_checked_at"] = result.get("checked_at") or ""
-    fee["schedule_fetch_status"] = result.get("status")
-    fee["schedule_fetch_note"] = result.get("error") or (
-        f"HTTP {result.get('status')}, {result.get('bytes')} bytes"
-    )
-    fee["schedule_fetch_is_external"] = not bool(result.get("sha256"))
-    digest = str(result.get("sha256") or "")
-    if digest:
-        fee["schedule_sha256"] = digest
-        fee["schedule_digest_kind"] = (
-            "sha256 of the fetched bytes; the schedule is a PDF, so there is no "
-            "newline normalisation on it — unlike the text artifacts critic.py hashes"
+    write_fee_schedule_probe(result, latest_dir=latest_dir)
+    pinned = apply_fee_schedule_pin(result, root=root)
+    out = dict(result)
+    out["pinned"] = pinned
+    return out
+
+
+def write_series_fee_snapshot(
+    observed: dict[str, Any],
+    *,
+    latest_dir: Path | None = None,
+    root: Path | None = None,
+) -> Path:
+    dest = series_fee_snapshot_path(root=root, latest_dir=latest_dir)
+    dest.parent.mkdir(parents=True, exist_ok=True)
+    payload = {
+        "series": str(observed.get("series") or "KXBTC15M"),
+        "fee_type": observed.get("fee_type"),
+        "fee_multiplier": observed.get("fee_multiplier"),
+        "fee_type_present": bool(observed.get("fee_type_present")),
+        "fee_multiplier_present": bool(observed.get("fee_multiplier_present")),
+        "written_at": isoformat_now(),
+        "note": (
+            "Ingested KXBTC15M series fee fields without defaulting a missing "
+            "multiplier to 1. Not a pin of k=0.07. Not a dated fee-apply."
+        ),
+    }
+    dest.write_text(json.dumps(payload, indent=2) + "\n", encoding="utf-8")
+    return dest
+
+
+def load_series_fee_snapshot(*, root: Path | None = None, latest_dir: Path | None = None) -> dict[str, Any]:
+    path = series_fee_snapshot_path(root=root, latest_dir=latest_dir)
+    if not path.is_file():
+        return {}
+    try:
+        payload = json.loads(path.read_text(encoding="utf-8"))
+    except (OSError, ValueError):
+        return {}
+    return payload if isinstance(payload, dict) else {}
+
+
+def gym_fee_tick(
+    ingest: dict[str, Any] | None = None,
+    *,
+    root: Path | None = None,
+    latest_dir: Path | None = None,
+    opener: Any = None,
+    now: datetime | None = None,
+    cooldown_s: float = FEE_PROBE_COOLDOWN_S,
+    probe: bool = True,
+) -> dict[str, Any]:
+    """PaperWatch fee half: snapshot series M every cycle; PDF probe on cooldown.
+
+    Does not fetch the PDF unless ``probe`` is true and the cooldown has
+    elapsed. Does not invent a hash. Does not amend the bar on 429.
+    """
+    observed = (ingest or {}).get("series_fee") or {}
+    snapshot_path = ""
+    if observed:
+        snapshot_path = str(
+            write_series_fee_snapshot(observed, latest_dir=latest_dir, root=root)
         )
-    path.write_text(json.dumps(payload, indent=2) + "\n", encoding="utf-8")
-    return result
+    out: dict[str, Any] = {
+        "series_fee_snapshot": snapshot_path,
+        "probed": False,
+        "skipped_cooldown": False,
+        "pinned": False,
+        "status": None,
+        "sha256": "",
+        "error": "",
+        "checked_at": "",
+    }
+    if not probe:
+        return out
+    if not fee_probe_due(latest_dir=latest_dir, cooldown_s=cooldown_s, now=now):
+        out["skipped_cooldown"] = True
+        last = load_fee_schedule_probe(latest_dir=latest_dir)
+        out["status"] = last.get("status")
+        out["sha256"] = last.get("sha256") or ""
+        out["checked_at"] = last.get("checked_at") or ""
+        out["error"] = last.get("error") or ""
+        return out
+    result = record_fee_schedule_probe(
+        opener=opener, root=root, latest_dir=latest_dir
+    )
+    out["probed"] = True
+    out["pinned"] = bool(result.get("pinned"))
+    out["status"] = result.get("status")
+    out["sha256"] = result.get("sha256") or ""
+    out["checked_at"] = result.get("checked_at") or ""
+    out["error"] = result.get("error") or ""
+    return out

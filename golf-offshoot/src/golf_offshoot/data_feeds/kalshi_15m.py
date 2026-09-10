@@ -101,6 +101,31 @@ def parse_optional_float(raw: Any) -> float | None:
         return None
 
 
+def observed_fee_fields(raw: dict[str, Any] | None) -> dict[str, Any]:
+    """Series fee fields as Kalshi sent them. Missing stays missing.
+
+    Display labels may still default to quadratic × 1. The critic snapshot
+    must not: a missing ``fee_multiplier`` defaulted to 1 would hide an omit.
+    """
+    if not isinstance(raw, dict):
+        return {
+            "fee_type": None,
+            "fee_multiplier": None,
+            "fee_type_present": False,
+            "fee_multiplier_present": False,
+        }
+    type_raw = raw.get("fee_type")
+    type_present = type_raw is not None and str(type_raw).strip() != ""
+    mult_raw = raw.get("fee_multiplier")
+    mult_present = "fee_multiplier" in raw and mult_raw is not None and mult_raw != ""
+    return {
+        "fee_type": str(type_raw).strip() if type_present else None,
+        "fee_multiplier": parse_optional_float(mult_raw) if mult_present else None,
+        "fee_type_present": type_present,
+        "fee_multiplier_present": mult_present,
+    }
+
+
 def parse_dollar_unit(raw: Any) -> float | None:
     """Kalshi *_dollars fields are contract prices in (0, 1)."""
     if raw is None or raw == "":
@@ -391,6 +416,13 @@ class Kalshi15mFeed(DataFeed[dict[str, Any]]):
         payload = {
             "series": ALLOWED_SERIES,
             "series_meta": series_meta,
+            "series_fee": {
+                "series": ALLOWED_SERIES,
+                "fee_type": series_meta.get("fee_type_observed"),
+                "fee_multiplier": series_meta.get("fee_multiplier_observed"),
+                "fee_type_present": bool(series_meta.get("fee_type_present")),
+                "fee_multiplier_present": bool(series_meta.get("fee_multiplier_present")),
+            },
             "cf_index_id": CF_INDEX_ID,
             "cfb_ws_average_role": CFB_WS_AVERAGE_ROLE,
             "fee_type": series_meta.get("fee_type") or FEE_TYPE,
@@ -433,12 +465,17 @@ class Kalshi15mFeed(DataFeed[dict[str, Any]]):
         url = f"{KALSHI_PUBLIC_BASE}/series/{ALLOWED_SERIES}?include_volume=true"
         body = self._get(url, label="kalshi_15m_series", ttl_seconds=ttl_seconds, refresh=refresh)
         raw = body.get("series") if isinstance(body, dict) else None
+        observed = observed_fee_fields(raw if isinstance(raw, dict) else None)
         if not isinstance(raw, dict):
             return {
                 "ticker": ALLOWED_SERIES,
                 "settlement_sources": [],
                 "fee_type": FEE_TYPE,
                 "fee_multiplier": FEE_MULTIPLIER,
+                "fee_type_observed": observed["fee_type"],
+                "fee_multiplier_observed": observed["fee_multiplier"],
+                "fee_type_present": observed["fee_type_present"],
+                "fee_multiplier_present": observed["fee_multiplier_present"],
                 "cf_index_id": CF_INDEX_ID,
             }
         sources = parse_settlement_sources(raw.get("settlement_sources"))
@@ -449,6 +486,10 @@ class Kalshi15mFeed(DataFeed[dict[str, Any]]):
             "source_is_cf_benchmarks": source_is_cf_benchmarks(sources),
             "fee_type": str(raw.get("fee_type") or FEE_TYPE),
             "fee_multiplier": parse_optional_float(raw.get("fee_multiplier")) or FEE_MULTIPLIER,
+            "fee_type_observed": observed["fee_type"],
+            "fee_multiplier_observed": observed["fee_multiplier"],
+            "fee_type_present": observed["fee_type_present"],
+            "fee_multiplier_present": observed["fee_multiplier_present"],
             "contract_terms_url": str(raw.get("contract_terms_url") or ""),
             "cf_index_id": CF_INDEX_ID,
             "volume": parse_optional_float(raw.get("volume_fp") or raw.get("volume")),

@@ -765,6 +765,81 @@ def check_fee_schedule_hash_recorded(*, root: Path | None = None) -> dict[str, A
     )
 
 
+def check_series_fee_regime_matches(*, root: Path | None = None) -> dict[str, Any]:
+    """Live KXBTC15M fee_type / M must match the bar. Does not pin k.
+
+    ``fee_adjust`` still reads ``fee_hurdle.k``. A live multiplier other than
+    the declared 1 fails this check; it does not retune k in the dark. No
+    snapshot yet is a named silent half-pass so CI without a gym latest/ does
+    not fail the suite.
+    """
+    from golf_offshoot.learning_lane_15m.evidence_bar import load_series_fee_snapshot
+
+    bar = _load_json((root or repo_root()) / BAR_JSON_REL)
+    fee = _as_dict(bar.get("fee_hurdle"))
+    expected_type = str(fee.get("expected_fee_type") or "quadratic").strip()
+    expected_m = fee.get("expected_fee_multiplier")
+    try:
+        expected_m_f = float(1 if expected_m is None else expected_m)
+    except (TypeError, ValueError):
+        expected_m_f = 1.0
+    snap = load_series_fee_snapshot(root=root)
+    if not snap:
+        return _check(
+            "series_fee_regime_matches",
+            "ingested KXBTC15M fee_type and fee_multiplier match the bar",
+            True,
+            "snapshot_absent — PaperWatch has not written latest/series_fee.json; "
+            "this half-pass is named on the bar and is not a pin of k=0.07",
+            {
+                "snapshot_absent": True,
+                "expected_fee_type": expected_type,
+                "expected_fee_multiplier": expected_m_f,
+            },
+        )
+    problems: list[str] = []
+    if not snap.get("fee_type_present"):
+        problems.append("ingested series omitted fee_type")
+    if not snap.get("fee_multiplier_present"):
+        problems.append("ingested series omitted fee_multiplier")
+    got_type = str(snap.get("fee_type") or "").strip()
+    if snap.get("fee_type_present") and got_type != expected_type:
+        problems.append(f"fee_type {got_type!r} != expected {expected_type!r}")
+    got_m = snap.get("fee_multiplier")
+    if snap.get("fee_multiplier_present"):
+        try:
+            got_m_f = float(got_m)
+        except (TypeError, ValueError):
+            problems.append(f"fee_multiplier {got_m!r} is not a number")
+            got_m_f = None
+        else:
+            if abs(got_m_f - expected_m_f) > 1e-9:
+                problems.append(
+                    f"fee_multiplier {got_m_f} != expected {expected_m_f}; "
+                    "fee_adjust still reads fee_hurdle.k and was not retuned"
+                )
+    ok = not problems
+    return _check(
+        "series_fee_regime_matches",
+        "ingested KXBTC15M fee_type and fee_multiplier match the bar",
+        ok,
+        (
+            f"ingested {got_type} x {got_m} matches expected {expected_type} x {expected_m_f}"
+            if ok
+            else "; ".join(problems)
+        ),
+        {
+            "snapshot_absent": False,
+            "expected_fee_type": expected_type,
+            "expected_fee_multiplier": expected_m_f,
+            "fee_type": snap.get("fee_type"),
+            "fee_multiplier": snap.get("fee_multiplier"),
+            "fee_type_present": snap.get("fee_type_present"),
+            "fee_multiplier_present": snap.get("fee_multiplier_present"),
+        },
+    )
+
+
 def check_honesty_stamp_is_fresh(
     *,
     root: Path | None = None,
@@ -820,6 +895,7 @@ CHECKS = (
     check_declared_at_precedes_scored_windows,
     check_trials_counter_is_consistent,
     check_fee_schedule_hash_recorded,
+    check_series_fee_regime_matches,
 )
 
 #: Reported beside the method suite and deliberately outside it.

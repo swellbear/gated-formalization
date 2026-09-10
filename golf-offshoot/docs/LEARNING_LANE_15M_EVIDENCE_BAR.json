@@ -3,12 +3,12 @@
   "lane": "learning_lane_15m",
   "series": "KXBTC15M",
   "drafted_at": "2026-09-08T08:30:00-04:00",
-  "amended_at": "2026-09-09T19:12:00-04:00",
-  "amended_by": "operator",
-  "amendment": "ANSWER 12: three SUSTAINED on CRITIC 12. consult: honer_and_skip is in-memory only; writing consult_enabled leaves the dark path and a flag-only snapshot raises through unguarded compose_and_skip; missing/null delta is 0.0 and skips every non-negative quoted spread under H-SKIP-WIDE-SPREAD. Not a score. Not a bind. Consult not enabled.",
+  "amended_at": "2026-09-09T19:51:00-04:00",
+  "amended_by": "systems",
+  "amendment": "gym PaperWatch fee pin (12h PDF probe; 429 off the bar; series_fee_regime_matches). Not a score. Not a bind. Consult not enabled. ANSWER 12 destination/compositor face remains.",
   "prior_amendment": {
-    "amended_at": "2026-09-09T18:42:00-04:00",
-    "note": "ANSWER 11: six SUSTAINED on CRITIC 11. Named both snapshot paths, both compositor families (wide-spread is OR), honer-skip attribution (keeps factory rule_id), exam contrast mismatch, Founder-named is not a machine gate, owed fee row restated to 17:01:17 retry. Not a score. Not a bind. Consult not enabled."
+    "amended_at": "2026-09-09T19:12:00-04:00",
+    "note": "ANSWER 12: three SUSTAINED on CRITIC 12. consult: honer_and_skip is in-memory only; writing consult_enabled leaves the dark path and a flag-only snapshot raises through unguarded compose_and_skip; missing/null delta is 0.0 and skips every non-negative quoted spread under H-SKIP-WIDE-SPREAD. Not a score. Not a bind. Consult not enabled."
   },
   "discovery_organ": {
     "lane": "honer_15m",
@@ -50,7 +50,7 @@
     {
       "id": "critic_answered",
       "met": false,
-      "detail": "LEARNING_LANE_15M_EVIDENCE_BAR_OPERATOR_ANSWER_12.md records CRITIC 12 (bytes 953D6027\u2026; three UPHELD, three SUSTAINED) on the ANSWER 11 amended hashes A0115B38\u2026 / 6074217E\u2026. An answer that amends the bar does not close condition 1 on the amended text. CRITIC 11 remains answered in OPERATOR_ANSWER_11.md for its own hashes. CRITIC 09 remains answered in OPERATOR_ANSWER_09.md for its own hashes. CRITIC 08 remains answered in OPERATOR_ANSWER_08.md for its own hashes. CRITIC 07 remains answered in OPERATOR_ANSWER_07.md for its own hashes. CRITIC 06 remains answered in OPERATOR_ANSWER_06.md for its own hashes. CRITIC 05 remains answered in OPERATOR_ANSWER_05.md for its own hashes. CRITIC 04 remains answered in OPERATOR_ANSWER_04.md for its own hashes. CRITIC 03 remains answered in OPERATOR_ANSWER_03.md for its own hashes. CRITIC 02 remains answered in OPERATOR_ANSWER_02.md for its own hashes. CRITIC 01 remains answered in OPERATOR_ANSWER_01.md.",
+      "detail": "Systems 2026-09-09T19:51:00-04:00 named the gym PaperWatch fee pin (12h PDF probe; 429 off the bar; series_fee_regime_matches). These bytes are not the ANSWER 12 digest. An answer that amends the bar does not close condition 1 on the amended text. LEARNING_LANE_15M_EVIDENCE_BAR_OPERATOR_ANSWER_12.md records CRITIC 12 (bytes 953D6027\u2026; three UPHELD, three SUSTAINED) on the ANSWER 11 amended hashes A0115B38\u2026 / 6074217E\u2026. CRITIC 13 zero UPHELD on those ANSWER 12 hashes; ANSWER 13 is not owed. Soften Critic is re-owed on this amendment. CRITIC 11 remains answered in OPERATOR_ANSWER_11.md for its own hashes. CRITIC 09 remains answered in OPERATOR_ANSWER_09.md for its own hashes. CRITIC 08 remains answered in OPERATOR_ANSWER_08.md for its own hashes. CRITIC 07 remains answered in OPERATOR_ANSWER_07.md for its own hashes. CRITIC 06 remains answered in OPERATOR_ANSWER_06.md for its own hashes. CRITIC 05 remains answered in OPERATOR_ANSWER_05.md for its own hashes. CRITIC 04 remains answered in OPERATOR_ANSWER_04.md for its own hashes. CRITIC 03 remains answered in OPERATOR_ANSWER_03.md for its own hashes. CRITIC 02 remains answered in OPERATOR_ANSWER_02.md for its own hashes. CRITIC 01 remains answered in OPERATOR_ANSWER_01.md.",
       "critic_file": "golf-offshoot/docs/LEARNING_LANE_15M_EVIDENCE_BAR_CRITIC_12.md",
       "critic_sha256_bytes": "953d6027e3ed4fbb98b62ac00f57e22e1d2013fa565ec839944ddd92ca44a702",
       "answer_file": "golf-offshoot/docs/LEARNING_LANE_15M_EVIDENCE_BAR_OPERATOR_ANSWER_12.md",
@@ -274,7 +274,11 @@
     "schedule_fetch_note": "HTTP 429 Too Many Requests. Real fetch recorded in LEARNING_LANE_15M_FEE_SCHEDULE_PROBE.json. sha256 left empty. No placeholder.",
     "schedule_fetch_is_external": true,
     "schedule_park_class": "external",
-    "schedule_hash_owed": "no sha256 pinned; k=0.07 is used on habit and a schedule change would be invisible. This is a standing blocker on binding condition 2. Recording the 429 does not turn fee_schedule_hash_recorded green.",
+    "schedule_hash_owed": "no sha256 pinned; k=0.07 is used on habit and a schedule change would be invisible. This is a standing blocker on binding condition 2. PaperWatch probes the PDF every 12 hours from the gym process. A 429 is written to latest/fee_schedule_probe.json and does not amend this bar. schedule_sha256 is set only on a new HTTP 200 64-hex. Recording a 429 does not turn fee_schedule_hash_recorded green.",
+    "expected_fee_type": "quadratic",
+    "expected_fee_multiplier": 1,
+    "series_fee_check": "series_fee_regime_matches. Ingested KXBTC15M fee_type and fee_multiplier must match expected_fee_type / expected_fee_multiplier. A missing field on a present snapshot FAILs. No snapshot yet is a named snapshot_absent half-pass (not a silent green, not a pin of k). fee_adjust still reads fee_hurdle.k; live M does not retune k.",
+    "gym_probe": "PaperWatch (not Cursor) GETs https://kalshi.com/docs/kalshi-fee-schedule.pdf every 12h with User-Agent gated-formalization/1.0 (public read-only). Do not spoof a browser. Do not hammer.",
     "fee_is_monotone_decreasing_in_mark": true,
     "fee_monotonicity_detail": "with stake fixed at $1, C = stake/P and Kalshi's 0.07 * C * P * (1-P) reduces exactly to 0.07 * stake * (1 - P): $0.0455 at P=0.35, $0.035 at P=0.50, $0.014 at P=0.80",
     "band_skip_does_not_avoid_fee": "a rule that skips the middle of the mark distribution skips the middle of the fee distribution and keeps the most fee-expensive fills; 'avoids the fee' is not available as a thesis for a coinflip-band skip on this book",
@@ -375,7 +379,7 @@
     "check that verifiably_preregistered cannot be true without a commit SHA",
     "check looks.l2_test has n, h0, delta, alpha before a score is allowed",
     "invariant: PAPER_UNIT != 1.0 while the bar is binding",
-    "pin the Kalshi fee schedule sha256 (external; last fetch HTTP 429 at 2026-09-09T17:01:17-04:00)",
+    "pin the Kalshi fee schedule sha256 is now the gym PaperWatch job (12h cooldown; 429 off this bar); empty sha256 remains the standing blocker until a 200",
     "PROTOCOL.md:123 and triggers.py docstring still say 'the n its falsifier named'; the code reads looks.first_look_n. Align the docs. Operator did not edit PROTOCOL.",
     "WATCHED.lab_proposed is pinned to LEARNING_LANE_15M_OPERATOR_NOTE_PROPOSED_01.md (critic.py:44, :70). Watch LEARNING_LANE_15M_LAB_PROPOSED_02.md and LEARNING_LANE_15M_OPERATOR_NOTE_PROPOSED_02.md, or a single stable path that always names the latest pair. Until that exists, PROPOSED 02 notes are outside WATCHED and cannot re-owe Soften Critic. Operator did not edit critic.py.",
     "lived/replay scorer wiring LANDED 2026-09-09: score_rule / _assert_window_lived_or_raise reject (16:53, 17:11] as lived. window_is_oos still keys declared_at for decide().",

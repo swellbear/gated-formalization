@@ -81,6 +81,8 @@ class PaperWatch:
         self.last_wake_error = ""
         self.last_runner_error = ""
         self.last_invariants_error = ""
+        self.last_fee_probe: dict[str, Any] = {}
+        self.last_fee_probe_error = ""
 
     @property
     def running(self) -> bool:
@@ -112,6 +114,8 @@ class PaperWatch:
             "last_wake_error": self.last_wake_error,
             "last_runner_error": getattr(self, "last_runner_error", ""),
             "last_invariants_error": getattr(self, "last_invariants_error", ""),
+            "fee_probe": getattr(self, "last_fee_probe", None) or {},
+            "last_fee_probe_error": getattr(self, "last_fee_probe_error", ""),
             "runner": "one clerical pass after each paper tick; survives this watch restart",
             # What this long-lived process actually loaded. A fresh reader
             # compares it to disk, which is the only way to see a loop that
@@ -203,6 +207,7 @@ class PaperWatch:
             self.last_at = isoformat_now()
             payload["watch"] = self.status()
             payload["report"] = format_loop_report(payload)
+            payload["fee"] = self._fee_tick(payload)
             self._persist()
             payload["learning_wake"] = self._learning_tick()
             payload["learning_runner"] = self._runner_tick()
@@ -214,6 +219,20 @@ class PaperWatch:
             self._persist()
             if self.on_cycle is not None:
                 self.on_cycle(payload)
+
+    def _fee_tick(self, payload: dict[str, Any]) -> dict[str, Any] | None:
+        """Gym fee pin + series M snapshot. Never takes the paper loop down."""
+        from golf_offshoot.learning_lane_15m.evidence_bar import gym_fee_tick
+
+        try:
+            ingest = payload.get("ingest") or payload.get("live") or {}
+            state = gym_fee_tick(ingest)
+        except Exception as exc:  # noqa: BLE001 — a probe failure is a recorded fact
+            self.last_fee_probe_error = str(exc)
+            return None
+        self.last_fee_probe_error = ""
+        self.last_fee_probe = state
+        return state
 
 
 def run_watch_forever(*, interval_s: float | None = None, feed=None) -> int:

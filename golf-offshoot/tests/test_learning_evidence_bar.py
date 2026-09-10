@@ -1,11 +1,18 @@
+import json
+
+import pytest
 from golf_offshoot.learning_lane_15m.critic import run_only_fee_rows
 from golf_offshoot.learning_lane_15m.evidence_bar import (
     bar_is_binding,
     class_is_burned,
     fee_adjust,
+    fee_probe_due,
     fragile_not_null,
+    gym_fee_tick,
     load_burned_classes,
     load_evidence_bar,
+    load_fee_schedule_probe,
+    record_fee_schedule_probe,
 )
 
 
@@ -21,6 +28,10 @@ def test_bar_is_a_nonbinding_draft():
     assert bar["verdicts"]["established"]["accepts_replay"] is False
     assert bar["calibration"]["post_declaration_windows_read"] is False
     assert bar_is_binding() is False
+    assert bar["discovery_organ"]["consult_enabled"] is False
+    assert bar["fee_hurdle"]["expected_fee_type"] == "quadratic"
+    assert bar["fee_hurdle"]["expected_fee_multiplier"] == 1
+    assert "series_fee_regime_matches" in bar["fee_hurdle"]["series_fee_check"]
 
 
 def test_the_admit_pass_amendments_are_pinned():
@@ -60,3 +71,184 @@ def test_fee_adjust_reproduces_the_run_only_raw_fee_column():
         assert abs(got - row["fee_adjusted_pnl"]) <= 5e-3
         raw = 0.07 * 1.0 * (1.0 - row["mark"])
         assert abs(raw - row["raw_fee"]) <= 5e-4
+
+
+def test_a_429_does_not_amend_the_bar(tmp_path):
+    import json
+    from golf_offshoot.learning_lane_15m import critic
+
+    bar = tmp_path / critic.BAR_JSON_REL
+    bar.parent.mkdir(parents=True, exist_ok=True)
+    bar.write_text(json.dumps({"fee_hurdle": {"k": 0.07, "schedule_sha256": ""}}), encoding="utf-8")
+    latest = tmp_path / "latest"
+
+    def opener_429(_url, _timeout):
+        return 429, b""
+
+    result = record_fee_schedule_probe(opener=opener_429, root=tmp_path, latest_dir=latest)
+    payload = json.loads(bar.read_text(encoding="utf-8"))
+    probe = load_fee_schedule_probe(latest_dir=latest)
+
+    assert result["status"] == 429
+    assert result["sha256"] == ""
+    assert result["pinned"] is False
+    assert payload["fee_hurdle"]["schedule_sha256"] == ""
+    assert probe["status"] == 429
+    assert "schedule_checked_at" not in payload["fee_hurdle"] or payload["fee_hurdle"].get(
+        "schedule_checked_at"
+    ) in (None, "")
+
+
+def test_a_200_pins_and_a_later_429_keeps_the_hash(tmp_path):
+    import hashlib
+    import json
+    from golf_offshoot.learning_lane_15m import critic
+
+    body = b"%PDF-1.4 gym-fee-schedule-test"
+    digest = hashlib.sha256(body).hexdigest()
+    bar = tmp_path / critic.BAR_JSON_REL
+    bar.parent.mkdir(parents=True, exist_ok=True)
+    bar.write_text(json.dumps({"fee_hurdle": {"k": 0.07, "schedule_sha256": ""}}), encoding="utf-8")
+    latest = tmp_path / "latest"
+
+    def opener_200(_url, _timeout):
+        return 200, body
+
+    first = record_fee_schedule_probe(opener=opener_200, root=tmp_path, latest_dir=latest)
+    assert first["pinned"] is True
+    assert json.loads(bar.read_text(encoding="utf-8"))["fee_hurdle"]["schedule_sha256"] == digest
+
+    def opener_429(_url, _timeout):
+        return 429, b""
+
+    second = record_fee_schedule_probe(opener=opener_429, root=tmp_path, latest_dir=latest)
+    assert second["pinned"] is False
+    assert json.loads(bar.read_text(encoding="utf-8"))["fee_hurdle"]["schedule_sha256"] == digest
+    assert load_fee_schedule_probe(latest_dir=latest)["status"] == 429
+
+
+def test_a_placeholder_hash_is_not_writable(tmp_path):
+    import json
+    from golf_offshoot.learning_lane_15m import critic
+
+    bar = tmp_path / critic.BAR_JSON_REL
+    bar.parent.mkdir(parents=True, exist_ok=True)
+    bar.write_text(json.dumps({"fee_hurdle": {"k": 0.07, "schedule_sha256": ""}}), encoding="utf-8")
+    latest = tmp_path / "latest"
+    fake = {
+        "url": "https://kalshi.com/docs/kalshi-fee-schedule.pdf",
+        "checked_at": "2026-09-09T19:51:00-04:00",
+        "status": 200,
+        "sha256": "not-a-hash",
+        "bytes": 4,
+        "error": "",
+    }
+    result = record_fee_schedule_probe(probe=fake, root=tmp_path, latest_dir=latest)
+    assert result["pinned"] is False
+    assert json.loads(bar.read_text(encoding="utf-8"))["fee_hurdle"]["schedule_sha256"] == ""
+    check = critic.check_fee_schedule_hash_recorded(root=tmp_path)
+    assert check["state"] == critic.FAIL
+
+
+def test_fee_probe_cooldown_skips_a_second_fetch(tmp_path):
+    import json
+    from golf_offshoot.learning_lane_15m import critic
+
+    bar = tmp_path / critic.BAR_JSON_REL
+    bar.parent.mkdir(parents=True, exist_ok=True)
+    bar.write_text(json.dumps({"fee_hurdle": {"k": 0.07, "schedule_sha256": ""}}), encoding="utf-8")
+    latest = tmp_path / "latest"
+    calls = {"n": 0}
+
+    def opener_429(_url, _timeout):
+        calls["n"] += 1
+        return 429, b""
+
+    first = gym_fee_tick({}, opener=opener_429, root=tmp_path, latest_dir=latest)
+    assert first["probed"] is True
+    assert calls["n"] == 1
+    assert fee_probe_due(latest_dir=latest) is False
+
+    def opener_must_not_run(_url, _timeout):
+        raise AssertionError("cooldown must skip the second fetch")
+
+    second = gym_fee_tick({}, opener=opener_must_not_run, root=tmp_path, latest_dir=latest)
+    assert second["probed"] is False
+    assert second["skipped_cooldown"] is True
+    assert calls["n"] == 1
+
+
+def test_series_fee_snapshot_absent_does_not_fail_the_suite(tmp_path):
+    from golf_offshoot.learning_lane_15m import critic
+
+    check = critic.check_series_fee_regime_matches(root=tmp_path)
+    assert check["state"] == critic.PASS
+    assert check["evidence"]["snapshot_absent"] is True
+
+
+def test_series_fee_mismatch_and_missing_field_fail(tmp_path):
+    from golf_offshoot.learning_lane_15m import critic
+    from golf_offshoot.learning_lane_15m.evidence_bar import write_series_fee_snapshot
+
+    bar = tmp_path / critic.BAR_JSON_REL
+    bar.parent.mkdir(parents=True, exist_ok=True)
+    bar.write_text(
+        json.dumps(
+            {
+                "fee_hurdle": {
+                    "k": 0.07,
+                    "expected_fee_type": "quadratic",
+                    "expected_fee_multiplier": 1,
+                }
+            }
+        ),
+        encoding="utf-8",
+    )
+    write_series_fee_snapshot(
+        {
+            "series": "KXBTC15M",
+            "fee_type": "quadratic",
+            "fee_multiplier": 0.5,
+            "fee_type_present": True,
+            "fee_multiplier_present": True,
+        },
+        root=tmp_path,
+    )
+    mismatch = critic.check_series_fee_regime_matches(root=tmp_path)
+    assert mismatch["state"] == critic.FAIL
+    assert "fee_multiplier" in mismatch["detail"]
+
+    write_series_fee_snapshot(
+        {
+            "series": "KXBTC15M",
+            "fee_type": "quadratic",
+            "fee_multiplier": None,
+            "fee_type_present": True,
+            "fee_multiplier_present": False,
+        },
+        root=tmp_path,
+    )
+    missing = critic.check_series_fee_regime_matches(root=tmp_path)
+    assert missing["state"] == critic.FAIL
+    assert "omitted fee_multiplier" in missing["detail"]
+
+
+def test_score_rule_still_refuses_an_unbound_bar():
+    from golf_offshoot.learning_lane_15m.rules import RuleNotScorable, score_rule
+
+    windows = []
+    for i in range(70):
+        minutes = i * 15
+        h, m = divmod(minutes, 60)
+        d, h = divmod(h, 24)
+        windows.append(
+            {
+                "window_id": f"SYNTH-{d:02d}{h:02d}{m:02d}",
+                "close_at": f"2026-09-09T{h:02d}:{m:02d}:00-04:00",
+                "posted_yes": 0.50,
+                "recorded_pnl": 0.0,
+                "stake": 1.0,
+            }
+        )
+    with pytest.raises(RuleNotScorable, match="not binding"):
+        score_rule("R-SKIP-2TO1-FAVORITE", windows)

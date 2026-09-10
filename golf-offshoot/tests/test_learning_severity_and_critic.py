@@ -197,6 +197,7 @@ def test_the_findings_artifact_is_the_proof(tmp_path):
         "declared_at_precedes_scored_windows",
         "trials_counter_is_consistent",
         "fee_schedule_hash_recorded",
+        "series_fee_regime_matches",
     ]
     assert [c["id"] for c in payload["desk_checks"]] == ["honesty_stamp_is_fresh"]
 

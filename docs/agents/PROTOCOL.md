@@ -198,7 +198,7 @@ Seeded with the four that were live and invisible on 2026-09-08:
 
 Adding a check is Founder-free. **Removing or weakening one is not.**
 
-A second suite runs over the **method** artifacts and is owned by `critic-invariants` (`learning_lane_15m/critic.py`). Its artifact is `LEARNING_LANE_15M_CRITIC_FINDINGS.json` and it also prints on the tick: `matched_exposure_control`, `delta_above_detection_floor`, `holdout_is_forward_only`, `fee_adjusted_book_is_binding`, `declared_at_precedes_scored_windows`, `trials_counter_is_consistent`, `fee_schedule_hash_recorded`, `honesty_stamp_is_fresh`. A checker cannot find an unknown failure mode, which is exactly why the ratchet exists: **every flaw analysis finds becomes a permanent check.** A finding that does not produce a check is a finding that will be rediscovered by hand.
+A second suite runs over the **method** artifacts and is owned by `critic-invariants` (`learning_lane_15m/critic.py`). Its artifact is `LEARNING_LANE_15M_CRITIC_FINDINGS.json` and it also prints on the tick: `matched_exposure_control`, `delta_above_detection_floor`, `holdout_is_forward_only`, `fee_adjusted_book_is_binding`, `declared_at_precedes_scored_windows`, `trials_counter_is_consistent`, `fee_schedule_hash_recorded`, `series_fee_regime_matches`, `honesty_stamp_is_fresh`. A checker cannot find an unknown failure mode, which is exactly why the ratchet exists: **every flaw analysis finds becomes a permanent check.** A finding that does not produce a check is a finding that will be rediscovered by hand.
 
 ### Honesty gate: derived, not typed
 

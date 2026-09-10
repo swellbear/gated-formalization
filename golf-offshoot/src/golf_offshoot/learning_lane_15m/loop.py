@@ -53,6 +53,7 @@ def ingest(*, refresh: bool = False, feed: Kalshi15mFeed | None = None) -> dict[
         "events": payload.get("events") or [],
         "markets": payload.get("markets") or [],
         "quality": quality.model_dump(mode="json"),
+        "series_fee": payload.get("series_fee") or {},
     }
     out["snapshot"] = _write_snapshot("ingest", out)
     return out
