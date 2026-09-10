@@ -1,6 +1,6 @@
 # Lab — PROPOSED 03: skip the hour-ending 15m close
 
-**State:** **PROPOSED.** **Not** Softened, **not** admitted, **not** RUN-ONLY, **not** a board, **not** a dashboard figure. `execution=false` (Operator may flip). Not scored.
+**State:** **RUN-ONLY** by `operator` 2026-09-10 13:36 EDT. **Not** Softened, **not** admitted, **not** a board, **not** a dashboard figure. Decision: [`LEARNING_LANE_15M_OPERATOR_NOTE_PROPOSED_03.md`](LEARNING_LANE_15M_OPERATOR_NOTE_PROPOSED_03.md). `execution=true` (paper only). Not scored. Promotion still requires the normal ADMIT gate.
 **Lane:** `learning_lane_15m` · series `KXBTC15M` only
 **Role:** `lab` — `lab_admits=false`. Lab never admits its own candidate ([`.cursor/skills/gpf-lab/SKILL.md`](../../.cursor/skills/gpf-lab/SKILL.md)).
 **Admit?** N · **Soften?** N · **Trading ARMED?** N · **Keys / orders / cash?** none

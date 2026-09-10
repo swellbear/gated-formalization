@@ -1,7 +1,7 @@
 # Operator — 15m method leftovers (park / CLOSED / RUN-ONLY)
 
 **Track:** `learning_lane_15m` · series `KXBTC15M` only
-**Updated:** 2026-09-10 11:40 EDT (row 15 name-clear: `rule_reached_n` on both rules without scoring)
+**Updated:** 2026-09-10 13:36 EDT (row 16: RUN-ONLY Lab PROPOSED 03 `R-SKIP-HOUR-CLOSE`; `lab_proposed LEARNING_LANE_15M_LAB_PROPOSED_03.md`)
 **State:** No dated ADMIT on this lane. No Soften. No edge claim. `lab_admits=false` · Trading **NOT ARMED**
 **Golf idle:** stays **ON**. This file does not clear it, does not touch golf θ, and does not rewrite `phase1_dryrun/OPERATOR_STATUS_STAMP.md`.
 
@@ -39,7 +39,7 @@ Numbers move while the watch runs. This file names **states and triggers**, not 
 | CLOSED · trigger fired since last stamp | 3 |
 | CLOSED · recorded defect (no backfill) | **2** |
 | CLOSED · on a falsifier | **1** |
-| RUN-ONLY executed (not an ADMIT) | 2 |
+| RUN-ONLY executed (not an ADMIT) | 3 |
 | Dated ADMITs | 0 |
 
 No open crew park remains. Row 15 is **CLOSED / on a falsifier** (crew stamp). Three open parks are founder; one is the rotating pending window (external). Two recorded defects (`072245`, overnight `100315`–`100500`) mean the locked count is not an unbroken run.
@@ -86,8 +86,8 @@ This fold does **not** lift the HOLD and is not evidence toward lifting it. A RU
 | | |
 |---|---|
 | **Class** | `founder` |
-| **Last re-ruled** | 2026-09-08 17:11 EDT |
-| **Parked state** | **Named horse not opened.** The residual-triggered selection PROPOSED (row 9 / row 13 RUN-ONLY) used the second cheap-test slot. A third PROPOSED is not owed |
+| **Last re-ruled** | 2026-09-10 13:36 EDT |
+| **Parked state** | **Named horse not opened.** Row 9 / row 13 used the second cheap-test slot. CoS `F_continuation` after favorite L1 PARK assigned Lab PROPOSED 03 (`lab_proposed LEARNING_LANE_15M_LAB_PROPOSED_03.md`); that residual used the third slot (row 16 RUN-ONLY). A fourth PROPOSED is not owed |
 | **Trigger** | A fresh Founder GO that names a new invent. Under golf idle, a WC3+ / new board without that GO is an idle-breach REJECT |
 
 ### 9. Zero-edge fills — the observation gap (residual, not a board) — **CLOSED / trigger fired**
@@ -212,11 +212,24 @@ The 21:05 "park it, do not schedule" instruction is **superseded**.
 |---|---|
 | **Verdict** | **RUN-ONLY** · Operator · 2026-09-08 17:11 EDT |
 | **Note** | [`LEARNING_LANE_15M_OPERATOR_NOTE_PROPOSED_02.md`](LEARNING_LANE_15M_OPERATOR_NOTE_PROPOSED_02.md) |
-| **Registry** | `R-SKIP-2TO1-FAVORITE` · `favorite_odds=2` · first naming `e9fab5a` · `execution=true` (paper only) |
+| **Registry** | `R-SKIP-2TO1-FAVORITE` · `favorite_odds=2` · first naming `e9fab5a` · `execution` dropped 2026-09-10 13:36 so PROPOSED 03 could take the only selecting seat |
 | **Owed for** | `lab_proposed` — CoS assigned RUN-ONLY unless a specific objection |
 | **Falsifier** | After the n the bar names (currently 70), indistinguishable from `R-BASELINE-FILL-ALL` → park; do not retune `favorite_odds` |
 | **What it is** | A paper selection rule authorized to execute. Skip posted YES ≥ 2/3; else fill at the posted mark with `entry_edge=0.0` |
 | **What it is not** | An ADMIT · an edge · a dashboard figure · a revival of `R-SKIP-COINFLIP` · evidence toward lifting the HOLD. L1 was later scored; the falsifier fired (row 15). |
+| **Promotion** | Would require the normal dated-record ADMIT gate, a binding bar, and a Soften Critic attack from a separate session. Accumulation of this note does not admit it |
+
+### 16. Lab PROPOSED 03 — skip the hour-ending 15m close
+
+| | |
+|---|---|
+| **Verdict** | **RUN-ONLY** · Operator · 2026-09-10 13:36 EDT |
+| **Note** | [`LEARNING_LANE_15M_OPERATOR_NOTE_PROPOSED_03.md`](LEARNING_LANE_15M_OPERATOR_NOTE_PROPOSED_03.md) |
+| **Registry** | `R-SKIP-HOUR-CLOSE` · `skip_close_minute=0` · first naming `c917e56` · `execution=true` (paper only) |
+| **Owed for** | `lab_proposed LEARNING_LANE_15M_LAB_PROPOSED_03.md` — CoS assigned RUN-ONLY unless a specific objection |
+| **Falsifier** | After the n the bar names (currently 70), indistinguishable from `R-BASELINE-FILL-ALL` → park; do not retune `skip_close_minute` |
+| **What it is** | A paper selection rule authorized to execute. Skip when `close_at.minute == 0`; else fill at the posted mark with `entry_edge=0.0` |
+| **What it is not** | An ADMIT · an edge · a dashboard figure · a revival of `R-SKIP-COINFLIP` · a retune of `favorite_odds` · evidence toward lifting the HOLD |
 | **Promotion** | Would require the normal dated-record ADMIT gate, a binding bar, and a Soften Critic attack from a separate session. Accumulation of this note does not admit it |
 
 ---
@@ -246,4 +259,4 @@ The 21:05 "park it, do not schedule" instruction is **superseded**.
 
 ## Handoff
 
-CoS: `R-SKIP-2TO1-FAVORITE` L1 is **PARK** on its falsifier (row 15, crew). Scorecard + Operator note quarantined. Not an ADMIT. Not Established. `R-SKIP-COINFLIP` still **not scored**, `execution` false. Wake name-clear: `rule_reached_n R-SKIP-COINFLIP` (do not score) and `rule_reached_n R-SKIP-2TO1-FAVORITE` (do not re-score). Binding unchanged. Consult off. Golf idle stays **ON**. Founder HOLD stands. Trading **NOT ARMED**.
+CoS: Lab PROPOSED 03 `R-SKIP-HOUR-CLOSE` is **RUN-ONLY** (row 16). `execution=true` (paper only). Favorite L1 PARK stands (row 15); that dead row is off the selecting seat. Not an ADMIT. Not scored. `R-SKIP-COINFLIP` still **not scored**, `execution` false. Binding unchanged. Consult off. Golf idle stays **ON**. Founder HOLD stands. Trading **NOT ARMED**.
