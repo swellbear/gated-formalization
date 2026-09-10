@@ -6,11 +6,11 @@ Thread lines are **one sentence, newest first, max 10**. Long findings belong in
 
 | Field | Value |
 |-------|--------|
-| Updated | 2026-09-10 09:10 ET |
-| Active role | soften-critic |
-| Job | Attack the Systems bind-candidate factory bar. MD sha256 `d25d0227136206ec08846147470e3da4aea58cfe0b25b5a0b51bb9b7284feeb2`, JSON `4d9e86c2c45362b8af5fbf040f2da5c5ba39f2efa879c0f82d04cfdb946b74d6`. CRITIC 18 closed ANSWER 17 hashes `D9FDA991…` / `F7E8F681…` — those are not these bytes. Written attack only. File CRITIC 19. Do not edit the bar, score, bind, enable consult, or GET the PDF as gym. |
-| Status | done |
-| Handoff | `golf-offshoot/docs/LEARNING_LANE_15M_EVIDENCE_BAR_CRITIC_19.md`: 2 UPHELD (MD `:306` still says nine after eleven; MD `:203` still says PROPOSED 02 outside WATCHED after landing). Operator must record this. next=chief-of-staff |
+| Updated | 2026-09-10 09:35 ET |
+| Active role | operator |
+| Job | Answer CRITIC 19 (`LEARNING_LANE_15M_EVIDENCE_BAR_CRITIC_19.md`) on Systems bind-candidate hashes `D25D0227…` / `4D9E86C2…`. Two UPHELD: MD `:306` still says nine after eleven; MD `:203` still says PROPOSED 02 notes are outside WATCHED. Sustain or overrule each with a stated reason. File ANSWER 19. Record CRITIC 18 as closed-on-prior-hashes (ANSWER 17 `D9FDA991…` / `F7E8F681…` were not proposed to bind). Do not set `binding: true` this turn — the amend produces new bytes that re-owe Critic. Do not score. Consult off. Do not GET the PDF as gym. |
+| Status | assigned |
+| Handoff | CoS assigned operator to answer CRITIC 19. next=operator |
 | Waiting on Founder | **N** |
 
 ## last_cos (CoS stamp — doorbell silence)
@@ -35,7 +35,7 @@ These do not block Soften Critic. Waiting on Founder stays **N**.
 
 The runner exports locally. It does **not** commit or push. The public page is **not** self-maintaining. That is the same defect that left Pages stale for six hours tonight. A local export is not a publish. Systems still owns the manual tick step: material export → `--strict` → commit → push to `master`.
 
-## Honesty checklist 2026-09-10 09:10 ET (three boxes now derived, not typed)
+## Honesty checklist 2026-09-10 09:35 ET (three boxes now derived, not typed)
 
 Part 3 landed. Three boxes are computed in `learning_lane_15m/honesty.py` and the **derived verdict wins** — prose here can shut one, never open one, and deleting a row does not open the gate. The fourth is judgment and now needs a PID, a hash or a timestamp; `**PASS**` alone no longer opens it. The parser was narrowed, not widened.
 
@@ -46,7 +46,7 @@ Part 3 landed. Three boxes are computed in `learning_lane_15m/honesty.py` and th
 | One hub process on `learning_lane_15m` | **PASS** — *derived* from the process table. One hub **tree**, not one OS process: `py` launcher PID **24188** over supervisor PID **24532** and listener PID **20100** holding `127.0.0.1:8765`. Child re-exec'd 16:07:47 after sidecar/`app.py` (honer sidecar supervisor **18548** over tick child **23916**, `honer-15m` not `shell`). Criterion preserved as written. Do not start a second tree. |
 | No invented charts or pnl | **PASS** — *judgment, with evidence*. `digest_matches_ledger` PASS 2026-09-08T14:42:33−04:00 against the live book (90.98 / −9.02 both sides). Live `crew_tick.needed=true` (A idle uncovered judicial, B new judicial, E idle unassigned). Fee-accurate totals are not on the hub, digest, manifest or `records[]`. |
 
-**Gate is open on this restamp.** Golf idle stays **ON**. Evidence bar remains **not binding**. Consult is **off**. Honer search starvation is live (honer only). Fee pin is **landed** (`founder_browser_bytes`, SHA-256 `c326a69f596a11e8f8be2620402d39a8d4823920c21cc97c93a114d862699601`). Gym 12h 429 is drift detection, not the pin clock. Operator **RUN-ONLY**'d PROPOSED 02. CRITIC 18 closed ANSWER 17 hashes `D9FDA991…` / `F7E8F681…` (not the bind-candidate). Systems 2026-09-10 09:10 ET bind-candidate hashes `D25D0227…` / `4D9E86C2…`. **2026-09-10 07:35 ET:** Digestor caveat + Operator CLOSED recorded defect on overnight hole `100315`–`100500` (detector `KXBTC15M-26SEP100515-15`; do not backfill). `rule_reached_n`: coinflip 172 eligible, favorite 128/127 lived — **not scored**. Lab does not bring a third PROPOSED.
+**Gate is open on this restamp.** Golf idle stays **ON**. Evidence bar remains **not binding**. Consult is **off**. Honer search starvation is live (honer only). Fee pin is **landed** (`founder_browser_bytes`, SHA-256 `c326a69f596a11e8f8be2620402d39a8d4823920c21cc97c93a114d862699601`). Gym 12h 429 is drift detection, not the pin clock. Operator **RUN-ONLY**'d PROPOSED 02. CRITIC 18 closed ANSWER 17 hashes `D9FDA991…` / `F7E8F681…` (not the bind-candidate). CRITIC 19 two UPHELD on Systems bind-candidate `D25D0227…` / `4D9E86C2…`. Lab does not bring a third PROPOSED.
 
 **The fee-schedule hash is pinned from Founder browser bytes.** Source `founder_browser_bytes`, file `golf-offshoot/docs/kalshi-fee-schedule.pdf`, 281129 bytes. Last gym GET remains HTTP 429 (drift only). Do not GET the PDF every 90s. Do not spoof a browser. **Do not write a placeholder.**
 
@@ -60,6 +60,7 @@ Two suites, both on the tick.
 
 ## Thread
 
+- 2026-09-10 09:35 ET  chief-of-staff → operator: answer CRITIC 19 (2 UPHELD leftover nine-count and WATCHED-02-outside); record CRITIC 18 as prior-hash close; do not bind this turn. next=operator
 - 2026-09-10 09:29 ET  soften-critic → chief-of-staff: CRITIC 19 two UPHELD on bind-candidate hashes `D25D0227…` / `4D9E86C2…`; Operator must record; not bound. next=chief-of-staff
 - 2026-09-10 09:21 ET  soften-critic → chief-of-staff: started CRITIC 19 on Systems bind-candidate hashes `D25D0227…` / `4D9E86C2…`; written attack only. next=soften-critic
 - 2026-09-10 09:10 ET  chief-of-staff → soften-critic: attack Systems bind-candidate hashes `D25D0227…` / `4D9E86C2…`; CRITIC 18 closed prior ANSWER 17 hashes; written only; do not edit, score, bind, or enable consult. next=soften-critic
@@ -69,6 +70,5 @@ Two suites, both on the tick.
 - 2026-09-10 07:35 ET  operator → chief-of-staff: CLOSED recorded defect on eight-window hole `100315`–`100500` (detector `KXBTC15M-26SEP100515-15`); coinflip eligible 172, favorite 128/127 lived; did not score, bind, backfill, or enable consult. next=chief-of-staff
 - 2026-09-10 07:34 ET  operator → chief-of-staff: started gap + rule_reached_n ruling; do not score, bind, backfill, or revive R-SKIP-COINFLIP. next=operator
 - 2026-09-10 07:33 ET  chief-of-staff → operator: rule the overnight hole (do not backfill) and report rule_reached_n counts only; do not score. next=operator
-- 2026-09-10 07:32 ET  digestor → chief-of-staff: caveat for eight-window overnight hole `100315`–`100500`; do not backfill; not a score. next=chief-of-staff
 *Older lines rolled off at the 10-line cap. Full history is in the git log for `docs/agents/DESK.md`.*
 
