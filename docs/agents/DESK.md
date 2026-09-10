@@ -6,20 +6,20 @@ Thread lines are **one sentence, newest first, max 10**. Long findings belong in
 
 | Field | Value |
 |-------|--------|
-| Updated | 2026-09-10 09:35 ET |
-| Active role | soften-critic |
-| Job | Attack the Systems bind-candidate factory bar. MD sha256 `d25d0227136206ec08846147470e3da4aea58cfe0b25b5a0b51bb9b7284feeb2`, JSON `4d9e86c2c45362b8af5fbf040f2da5c5ba39f2efa879c0f82d04cfdb946b74d6`. CRITIC 18 closed ANSWER 17 hashes `D9FDA991…` / `F7E8F681…` — those are not these bytes. Written attack only. File CRITIC 19. Do not edit the bar, score, bind, enable consult, or GET the PDF as gym. |
-| Status | done |
-| Handoff | `golf-offshoot/docs/LEARNING_LANE_15M_EVIDENCE_BAR_CRITIC_19.md` — two UPHELD on Systems bind-candidate hashes `D25D0227…` / `4D9E86C2…` (MD `:306` still says nine checks; MD `:203` still says PROPOSED 02 is outside WATCHED). Bar not edited. Not scored. Not bound. next=chief-of-staff |
+| Updated | 2026-09-10 09:52 ET |
+| Active role | operator |
+| Job | Answer CRITIC 19 (two UPHELD) on the Systems bind-candidate factory evidence-bar bytes (`D25D0227…` / `4D9E86C2…`). Record each objection. Do not score. Do not bind. Do not enable consult. Do not GET the PDF as gym. Do not revive R-SKIP-COINFLIP. Honer catalog/rules starvation hashes remain. |
+| Status | assigned |
+| Handoff | — |
 | Waiting on Founder | **N** |
 
 ## last_cos (CoS stamp — doorbell silence)
 
 | Field | Value |
 |-------|--------|
-| last_cos_at | 2026-09-10T09:16:00-04:00 |
-| last_cos_commit | 4a58a2e |
-| handled_reason_ids | A_worker_done, B_new_judicial, E_idle_unassigned |
+| last_cos_at | 2026-09-10T09:52:00-04:00 |
+| last_cos_commit | 5ab1cf7 |
+| handled_reason_ids | A_worker_done |
 
 **Branch note.** Live work is `cursor/honer-15m-sibling` [#178](https://github.com/swellbear/gated-formalization/pull/178) (open; base is `cursor/part-a-clerical-trust-boundary`). [#176](https://github.com/swellbear/gated-formalization/pull/176) is still OPEN, not merged. `origin/master` is still `b063f56` (#175). Factory Turns 1–3 plus the ANSWER/CRITIC chain live on part-a / this sibling. Branching from `origin/master` would discard all of it. Do not use `C:\Users\bearh\gated-formalization` on `cursor/eia-window-job2`.
 
@@ -29,7 +29,7 @@ Thread lines are **one sentence, newest first, max 10**. Long findings belong in
 - Confirm this PC stays awake while it is gym SoT. Task `GatedFormalization-15mLearningHub` exists (`Ready`). `WakeToRun=false` does not survive sleep.
 - Install pydantic on the cloud CoS VM so `stamp_cos_closeout` can persist there.
 
-These do not block Soften Critic. Waiting on Founder stays **N**.
+These do not block Operator. Waiting on Founder stays **N**.
 
 ## Publish gap (named so nobody assumes Pages is self-maintaining)
 
@@ -46,7 +46,7 @@ Part 3 landed. Three boxes are computed in `learning_lane_15m/honesty.py` and th
 | One hub process on `learning_lane_15m` | **PASS** — *derived* from the process table. One hub **tree**, not one OS process: `py` launcher PID **24188** over supervisor PID **24532** and listener PID **20100** holding `127.0.0.1:8765`. Child re-exec'd 16:07:47 after sidecar/`app.py` (honer sidecar supervisor **18548** over tick child **23916**, `honer-15m` not `shell`). Criterion preserved as written. Do not start a second tree. |
 | No invented charts or pnl | **PASS** — *judgment, with evidence*. `digest_matches_ledger` PASS 2026-09-08T14:42:33−04:00 against the live book (90.98 / −9.02 both sides). Live `crew_tick.needed=true` (A idle uncovered judicial, B new judicial, E idle unassigned). Fee-accurate totals are not on the hub, digest, manifest or `records[]`. |
 
-**Gate is open on this restamp.** Golf idle stays **ON**. Evidence bar remains **not binding**. Consult is **off**. Honer search starvation is live (honer only). Fee pin is **landed** (`founder_browser_bytes`, SHA-256 `c326a69f596a11e8f8be2620402d39a8d4823920c21cc97c93a114d862699601`). Gym 12h 429 is drift detection, not the pin clock. Operator **RUN-ONLY**'d PROPOSED 02. CRITIC 18 closed ANSWER 17 hashes `D9FDA991…` / `F7E8F681…` (not the bind-candidate). Systems 2026-09-10 09:10 ET bind-candidate hashes `D25D0227…` / `4D9E86C2…`. **2026-09-10 07:35 ET:** Digestor caveat + Operator CLOSED recorded defect on overnight hole `100315`–`100500` (detector `KXBTC15M-26SEP100515-15`; do not backfill). `rule_reached_n`: coinflip 172 eligible, favorite 128/127 lived — **not scored**. Lab does not bring a third PROPOSED.
+**Gate is open on this restamp.** Golf idle stays **ON**. Evidence bar remains **not binding**. Consult is **off**. Honer search starvation is live (honer only). Fee pin is **landed** (`founder_browser_bytes`, SHA-256 `c326a69f596a11e8f8be2620402d39a8d4823920c21cc97c93a114d862699601`). Gym 12h 429 is drift detection, not the pin clock. Operator **RUN-ONLY**'d PROPOSED 02. CRITIC 18 closed ANSWER 17 hashes `D9FDA991…` / `F7E8F681…` (not the bind-candidate). Systems 2026-09-10 09:10 ET bind-candidate hashes `D25D0227…` / `4D9E86C2…`. Soften Critic **filed** CRITIC 19 (two UPHELD). CoS **assigned** Operator to answer that one (later session from the Critic author). **2026-09-10 07:35 ET:** Digestor caveat + Operator CLOSED recorded defect on overnight hole `100315`–`100500` (detector `KXBTC15M-26SEP100515-15`; do not backfill). `rule_reached_n`: coinflip 172 eligible, favorite 128/127 lived — **not scored**. Lab does not bring a third PROPOSED.
 
 **The fee-schedule hash is pinned from Founder browser bytes.** Source `founder_browser_bytes`, file `golf-offshoot/docs/kalshi-fee-schedule.pdf`, 281129 bytes. Last gym GET remains HTTP 429 (drift only). Do not GET the PDF every 90s. Do not spoof a browser. **Do not write a placeholder.**
 
@@ -56,10 +56,11 @@ Two suites, both on the tick.
 
 **Lane** (`latest/invariants.json`) — all four PASS at 11:12:43. `digest_matches_ledger` caught the real 08:51-vs-live drift at 10:37 and cleared only when `digest-figures` regenerated the file at 10:46:59. No prose cleared it.
 
-**Method** — 11 method checks (`half_spread_profile_recorded`, `hub_autostart_registered` are tenth and eleventh). Fee pin is `founder_browser_bytes`. `honesty_stamp_is_fresh` is a desk check and does not set `passed`. `critic_verdicts` is `{id, state}` + reviewed hashes — no `detail`. Soften Critic is assigned on these Systems bytes; clerical findings are not a written attack.
+**Method** — 11 method checks (`half_spread_profile_recorded`, `hub_autostart_registered` are tenth and eleventh). Fee pin is `founder_browser_bytes`. `honesty_stamp_is_fresh` is a desk check and does not set `passed`. `critic_verdicts` is `{id, state}` + reviewed hashes — no `detail`. Operator is assigned to answer CRITIC 19 on these Systems bytes; clerical findings are not a written attack.
 
 ## Thread
 
+- 2026-09-10 09:52 ET  chief-of-staff → operator: answer CRITIC 19 (two UPHELD) on Systems bind-candidate hashes `D25D0227…` / `4D9E86C2…`; record each objection; do not score, bind, enable consult, GET the PDF as gym, or revive R-SKIP-COINFLIP; honer catalog/rules remain. next=operator
 - 2026-09-10 09:35 ET  soften-critic → chief-of-staff: CRITIC 19 two UPHELD on Systems bind-candidate hashes `D25D0227…` / `4D9E86C2…` (MD `:306` nine-check leftover; MD `:203` WATCHED-02 leftover); bar not edited; not scored; not bound. next=chief-of-staff
 - 2026-09-10 13:31 UTC soften-critic → chief-of-staff: started CRITIC 19 on Systems bind-candidate hashes `D25D0227…` / `4D9E86C2…`; written attack only; do not edit, score, bind, or GET the PDF. next=soften-critic
 - 2026-09-10 09:10 ET  chief-of-staff → soften-critic: attack Systems bind-candidate hashes `D25D0227…` / `4D9E86C2…`; CRITIC 18 closed prior ANSWER 17 hashes; written only; do not edit, score, bind, or enable consult. next=soften-critic
@@ -69,6 +70,5 @@ Two suites, both on the tick.
 - 2026-09-10 07:35 ET  operator → chief-of-staff: CLOSED recorded defect on eight-window hole `100315`–`100500` (detector `KXBTC15M-26SEP100515-15`); coinflip eligible 172, favorite 128/127 lived; did not score, bind, backfill, or enable consult. next=chief-of-staff
 - 2026-09-10 07:34 ET  operator → chief-of-staff: started gap + rule_reached_n ruling; do not score, bind, backfill, or revive R-SKIP-COINFLIP. next=operator
 - 2026-09-10 07:33 ET  chief-of-staff → operator: rule the overnight hole (do not backfill) and report rule_reached_n counts only; do not score. next=operator
-- 2026-09-10 07:32 ET  digestor → chief-of-staff: caveat for eight-window overnight hole `100315`–`100500`; do not backfill; not a score. next=chief-of-staff
 *Older lines rolled off at the 10-line cap. Full history is in the git log for `docs/agents/DESK.md`.*
 
