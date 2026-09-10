@@ -118,6 +118,8 @@ HARD NOs (every role)
   Do not become CoS. Do not run a second role in this fire.
   Do not set binding true. Do not set trading_armed. Do not lift HOLD.
   Do not add a series. Do not git push to master. Do not start/kill a hub.
+  Do not score R-SKIP-COINFLIP. Do not re-score PARK'd R-SKIP-2TO1-FAVORITE.
+  Naming rule_reached_n on the park without scoring is allowed bookkeeping.
   Do not declare a rule unless you are lab and that is the Job.
   Do not impersonate Founder on arm or HOLD. Do not add Founder read-once as a bind condition. Do not both object and answer.
 

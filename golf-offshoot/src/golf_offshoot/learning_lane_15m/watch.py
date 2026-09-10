@@ -80,6 +80,7 @@ class PaperWatch:
         self.last_at = ""
         self.last_wake_error = ""
         self.last_runner_error = ""
+        self.last_hub_publish_error = ""
         self.last_invariants_error = ""
         self.last_fee_probe: dict[str, Any] = {}
         self.last_fee_probe_error = ""
@@ -113,6 +114,7 @@ class PaperWatch:
             "last_at": self.last_at,
             "last_wake_error": self.last_wake_error,
             "last_runner_error": getattr(self, "last_runner_error", ""),
+            "last_hub_publish_error": getattr(self, "last_hub_publish_error", ""),
             "last_invariants_error": getattr(self, "last_invariants_error", ""),
             "fee_probe": getattr(self, "last_fee_probe", None) or {},
             "last_fee_probe_error": getattr(self, "last_fee_probe_error", ""),
@@ -176,6 +178,16 @@ class PaperWatch:
         self.last_runner_error = ""
         return entry
 
+    def _hub_publish_tick(self) -> dict[str, Any] | None:
+        """Gym-only material Pages allowlist. Fail-open. Never sibling-HEAD-to-master."""
+        from golf_offshoot.learning_lane_15m.hub_publish import maybe_publish_hub
+
+        try:
+            return maybe_publish_hub()
+        except Exception as exc:  # noqa: BLE001 — never take the paper loop down
+            self.last_hub_publish_error = str(exc)
+            return None
+
     def _run(self) -> None:
         self._cycle()
         while not self.stop.wait(max(5.0, self.interval_s)):
@@ -211,6 +223,7 @@ class PaperWatch:
             self._persist()
             payload["learning_wake"] = self._learning_tick()
             payload["learning_runner"] = self._runner_tick()
+            payload["hub_publish"] = self._hub_publish_tick()
             # The wake names roles, then the runner serves them. Invariants
             # read after both, or every settle reports a stale digest that the
             # same cycle already repaired — and a check that cries wolf on a

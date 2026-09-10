@@ -74,7 +74,7 @@ def main(argv: list[str] | None = None) -> int:
         "command",
         nargs="?",
         default="demo",
-        choices=["demo", "board", "explain", "strategy", "ingest", "calibrate", "pressure-test", "live", "watch", "shadow", "shell", "paper-export", "paper-ledger", "paper-deposit", "paper-withdraw", "paper-settle", "paper-fill", "compare-replay", "hub", "lane-15m", "learn-15m", "learn-15m-runner", "digest-15m", "observability-export", "honer-15m"],
+        choices=["demo", "board", "explain", "strategy", "ingest", "calibrate", "pressure-test", "live", "watch", "shadow", "shell", "paper-export", "paper-ledger", "paper-deposit", "paper-withdraw", "paper-settle", "paper-fill", "compare-replay", "hub", "lane-15m", "learn-15m", "learn-15m-runner", "digest-15m", "observability-export", "honer-15m", "publish-hub"],
     )
     parser.add_argument("--course-type", default="parkland")
     parser.add_argument("--player", default="p01")
@@ -310,6 +310,8 @@ def main(argv: list[str] | None = None) -> int:
         return _cmd_digest_15m(args)
     if args.command == "observability-export":
         return _cmd_observability_export(args)
+    if args.command == "publish-hub":
+        return _cmd_publish_hub(args)
     if args.command == "honer-15m":
         return _cmd_honer_15m(args)
 
@@ -1115,6 +1117,17 @@ def _cmd_observability_export(_args) -> int:
     print("shareable observability export (Hub UI manifest; read-only; no controls)")
     for key, path in paths.items():
         print(f"  {key}: {path}")
+    return 0
+
+
+def _cmd_publish_hub(_args) -> int:
+    """Gym debug path. Default publish is the PaperWatch hook after the runner pass."""
+    import json
+
+    from golf_offshoot.learning_lane_15m.hub_publish import maybe_publish_hub
+
+    result = maybe_publish_hub()
+    print(json.dumps(result, indent=2))
     return 0
 
 

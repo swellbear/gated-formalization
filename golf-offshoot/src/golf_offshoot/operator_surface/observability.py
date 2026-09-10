@@ -25,6 +25,7 @@ from golf_offshoot.learning_lane_15m.settle import (
     event_ticker_from_book_id,
 )
 from golf_offshoot.localtime import isoformat_now
+from golf_offshoot.repo_paths import repo_root
 
 SCHEMA_VERSION = 1
 SCHEMA_SOT = "docs/observability-hub/data/SCHEMA.md"
@@ -130,10 +131,6 @@ SETTLED_WINDOWS_NOTE = (
 def _base_label(label: str) -> str:
     """A count label with its lineage prefix stripped, for matching across exports."""
     return label[len(LINEAGE_B_PREFIX) :] if label.startswith(LINEAGE_B_PREFIX) else label
-
-
-def repo_root() -> Path:
-    return Path(__file__).resolve().parents[4]
 
 
 def hub_manifest_path() -> Path:

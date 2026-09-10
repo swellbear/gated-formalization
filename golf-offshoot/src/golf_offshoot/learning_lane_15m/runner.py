@@ -24,8 +24,10 @@ The two stay distinguishable forever.
 ``execute=True`` is a scratch-tree harness only. It requires ``root=`` pointing
 off the real repo and never serves the live tree unarmed.
 
-The runner exports locally. It does not ``git commit`` or ``git push``. Pages
-stays a manual publish.
+The runner exports locally. It does not ``git commit`` or ``git push``.
+Gym Pages updates are a separate ``PUBLISH_ARMED`` hook after the watch
+pass (hub allowlist to ``origin/master`` via a master worktree). The runner
+never pushes sibling HEAD to master.
 """
 
 from __future__ import annotations

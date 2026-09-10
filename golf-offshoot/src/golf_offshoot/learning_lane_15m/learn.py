@@ -35,8 +35,14 @@ from golf_offshoot.learning_lane_15m.paths import (
     settlements_dir_15m,
 )
 from golf_offshoot.learning_lane_15m.settle import SETTLE_PENDING, SETTLE_SETTLED
+from golf_offshoot.learning_lane_15m.wake_io import (
+    WAKE_FILE,
+    load_wake_state,
+    save_wake_state,
+    wake_state_path,
+)
 from golf_offshoot.localtime import format_eastern, isoformat_now, now
-from golf_offshoot.operator_surface.observability import repo_root
+from golf_offshoot.repo_paths import repo_root
 
 SCHEMA = 1
 WAKE_FILE = "learning_wake.json"
@@ -215,12 +221,6 @@ CONTRACT = (
 # --------------------------------------------------------------------------- io
 
 
-def wake_state_path() -> Path:
-    path = latest_dir_15m() / WAKE_FILE
-    assert_not_golf_path(path)
-    return path
-
-
 def hub_manifest_path() -> Path:
     return repo_root() / REL_MANIFEST
 
@@ -234,19 +234,6 @@ def _read_json(path: Path) -> Any:
         return json.loads(path.read_text(encoding="utf-8"))
     except (OSError, ValueError):
         return None
-
-
-def load_wake_state() -> dict[str, Any] | None:
-    payload = _read_json(wake_state_path())
-    return payload if isinstance(payload, dict) else None
-
-
-def save_wake_state(state: dict[str, Any]) -> Path:
-    dest = wake_state_path()
-    dest.parent.mkdir(parents=True, exist_ok=True)
-    assert_not_golf_path(dest)
-    dest.write_text(json.dumps(state, indent=2) + "\n", encoding="utf-8")
-    return dest
 
 
 # ----------------------------------------------------------------------- format

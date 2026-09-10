@@ -20,9 +20,9 @@ CoS starts when `crew_tick.needed` is true, including via a Cursor Automation on
 
 `needed` is **false** when the watch is healthy AND no new judicial owe AND no clerical arrears AND the desk already has an assigned worker who is not stale, **or** when the last CoS closeout stamped the same `reason_ids` (a 90s heartbeat, not a doorbell).
 
-A CoS turn: session start, **one** assign or one closeout, desk + leave-off to committed truth, stamp `last_cos_*` via `stamp_cos_closeout`. Then stop. It does not ping Founder for the Next list. It does ping Founder for the existing Ask list (HOLD lift, arm, Hard NO changes). Bind is not on that list.
+A CoS turn: session start, **one** assign or one closeout via `decide_cos_action` (`golf-offshoot/src/golf_offshoot/learning_lane_15m/cos_tick.py`), desk + leave-off to committed truth, stamp `last_cos_*` via `stamp_cos_closeout`. Then stop. It does not ping Founder for the Next list. It does ping Founder for the existing Ask list (HOLD lift, honer implement, arm, new rule class). Bind is not on that list. Forbidden assigns: lab, score `R-SKIP-COINFLIP`, re-score PARK'd `R-SKIP-2TO1-FAVORITE`, consult, HOLD lift, arm, bind, git push to `master`.
 
-**Zero-objection stop.** If the newest Soften Critic finding is zero UPHELD and Operator did **not** amend the bar (a record-only ANSWER, or no ANSWER owed), CoS **closes out**: `Status=idle`, do not assign Operator to write another ANSWER, do not assign Soften Critic on those same hashes. Two consecutive zero-UPHELD attacks is the treadmill; close it. A new judicial owe is a *new* bar/registry hash from a real amendment, not a new CRITIC file that found nothing. If `stamp_cos_closeout` cannot persist (cloud VM missing wake or pydantic), the committed desk `last_cos_*` table is the stamp.
+**Zero-objection stop.** If the newest Soften Critic finding is zero UPHELD and Operator did **not** amend the bar (a record-only ANSWER, or no ANSWER owed), CoS **closes out**: `Status=idle`, do not assign Operator to write another ANSWER, do not assign Soften Critic on those same hashes. Two consecutive zero-UPHELD attacks is the treadmill; close it. A new judicial owe is a *new* bar/registry hash from a real amendment, not a new CRITIC file that found nothing. If `stamp_cos_closeout` cannot persist (cloud VM missing wake or import failure), the committed desk `last_cos_*` table is the stamp. `crew_tick` / `stamp_cos_closeout` must import without pydantic. Do not invent `A_worker_done` from an empty VM. Do not ask Founder to pip-install pydantic on the CoS VM.
 
 Quiet tick: `needed` false ⇒ the automation no-ops. No desk spam.
 
@@ -75,6 +75,7 @@ Ask:
 - C2 / C4 / TABLE / reopen WC3+
 - Expand past `KXBTC15M` or retune golf θ. Expansion is a **new lane**, not a second ticker on `learning_lane_15m`. Procedure: [`golf-offshoot/docs/LEARNING_LANE_EXPANSION.md`](../../golf-offshoot/docs/LEARNING_LANE_EXPANSION.md). Do not add a series to this lane’s ledger, bar, or globs.
 - Arm trading, cash, Kalshi keys
+- Lift the HOLD, implement honer `consult_enabled`, or declare a new class of rule
 - Change a Hard NO, or put golf WC1 / Ill on the 15m lane
 - A new dated-record ADMIT / REJECT that would rewrite the Operator stamp
 - A Validator fail that is not a simple writer fix (honesty / method conflict)
@@ -87,9 +88,9 @@ Do **not** ask (CoS just does it):
 - Stay `SETTLE_PENDING` when it does not (never invent win/lose)
 - Desk / leave-off bookkeeping
 - Chrome-only Hub UI inside existing Hard NOs
-- Commit / push of a valid observability export so Pages can update
+- Gym `PUBLISH_ARMED` material hub-allowlist push (this gym PC only). Cloud CoS/worker must **not** `git push` to `master`. Factory merge of #178 is a PR merge, not that script
 - Do not ping Founder to stamp bind. Bind is Critic+Operator and critic-invariants; CoS assigns those roles. CoS does not set `binding: true`. Do not add a Founder stamp to bind.
-- Ask Founder to click ingest / live / loop / publish
+- Ask Founder to click ingest / live / loop
 
 ## Keep-looping (15m)
 
@@ -105,7 +106,7 @@ PaperWatch alone is **not learning.** Learning has not begun until settled outco
 4. `operator` — Soften/park only what the spine supports; leave-off + desk to committed truth
 5. `systems` — `manifest.json` merge; never drop published `paper_win`, never invent pending
 6. `validator` — `python docs/observability-hub/validate_hub.py --strict --write-report` on the exact bytes about to publish; the hash-stamped report is its proof artifact
-7. **publish** (standing tick step, not a project) — Systems owns `observability-export` → re-render the current real PNG → `validate_hub.py --strict` on those bytes → commit → push to `master` so Pages updates. Publishing is part of the tick, not a later event. Skip only a 90-second PaperWatch heartbeat that did not fire this learning tick. Never restamp an export to look fresher. Never invent. Use `material_publish_reasons` when deciding a heartbeat is empty. Do **not** leave a corrected falsehood unpublished. The public page reads `master` only
+7. **publish** (gym PC only) — after the PaperWatch runner pass, `PUBLISH_ARMED` may push the hub allowlist (`manifest.json`, `paper_window_strip.png`, `validator_report.json`) to `origin/master` from a **master worktree** when `material_publish_reasons` is non-empty, `validate_hub.py --strict` is clean, `watch_is_collecting` PASS, and lineage A `ledger.json` is present. Never copy scorecards / `records[]` / fee-accurate Operator totals. Never `git push origin HEAD:master` from `cursor/honer-15m-sibling`. Cloud CoS/worker timers still do not publish. Skip a 90-second heartbeat. Never restamp an export to look fresher. Never invent. Factory merge of #178 is still a PR merge
 8. `hub-ui` — only if display is wrong or stale. No number invention
 9. `illustrator` — **owed by the wake** when the PNG lags live journal/settlements by more than one window (or there is no PNG and two or more windows of evidence exist). Claude Opus 5; real files only. One window of trail is allowed (the open window). Do not leave this optional. Re-render before a material publish so the board is not an hour behind the tables
 10. `lab` — only after Operator posts a clear residual **and** the honesty checklist passes. One **PROPOSED** cheap test, paper-only, then `operator`. Never self-admit
@@ -135,7 +136,7 @@ A role also leaves `roles_owed` when the artifact it owns changes on disk, whoev
 
 `execute=True` is a scratch-tree harness only. It requires `root=` pointing off the real repo and can never serve the live tree unarmed.
 
-**Publish is still manual.** The runner exports locally. It does not `git commit` or `git push`. The public page is **not** self-maintaining. That is the same defect that left Pages stale for six hours. A local export is not a publish. Systems still owns the standing tick step: material export → `--strict` → commit → push to `master`. Do not assume the public page moved because the runner ran.
+**Pages publish is gym-only, material, allowlisted.** The runner still does not `git commit` or `git push`. After each PaperWatch runner pass, `PUBLISH_ARMED` (gitignored, this gym tree) may push the hub allowlist to `origin/master` from a **master worktree** when `material_publish_reasons` is non-empty. Never sibling-HEAD-to-master. Cloud CoS/worker timers do not publish. Factory merge of #178 is still a PR merge.
 
 ### Who a tick owes (severity split)
 

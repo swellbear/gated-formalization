@@ -17,7 +17,7 @@ from pathlib import Path
 from typing import Any
 
 from golf_offshoot.localtime import isoformat_now, now
-from golf_offshoot.operator_surface.observability import repo_root
+from golf_offshoot.repo_paths import repo_root
 
 COS_ROLE = "chief-of-staff"
 
@@ -358,8 +358,10 @@ def stamp_cos_closeout(
     """CoS writes the reason set it handled so the next 90s pass stays quiet.
 
     The runner must not call this. It does not mark CoS served.
+    If the wake is missing (cloud clone) this returns None; write the desk
+    ``last_cos_*`` table anyway.
     """
-    from golf_offshoot.learning_lane_15m.learn import load_wake_state, save_wake_state
+    from golf_offshoot.learning_lane_15m.wake_io import load_wake_state, save_wake_state
 
     state = load_wake_state()
     if state is None:

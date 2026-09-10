@@ -1,7 +1,7 @@
 # Operator — 15m method leftovers (park / CLOSED / RUN-ONLY)
 
 **Track:** `learning_lane_15m` · series `KXBTC15M` only
-**Updated:** 2026-09-10 10:40 EDT (row 15 `R-SKIP-2TO1-FAVORITE` L1 PARK on falsifier, class crew; not an ADMIT)
+**Updated:** 2026-09-10 11:40 EDT (row 15 name-clear: `rule_reached_n` on both rules without scoring)
 **State:** No dated ADMIT on this lane. No Soften. No edge claim. `lab_admits=false` · Trading **NOT ARMED**
 **Golf idle:** stays **ON**. This file does not clear it, does not touch golf θ, and does not rewrite `phase1_dryrun/OPERATOR_STATUS_STAMP.md`.
 
@@ -113,7 +113,8 @@ This fold does **not** lift the HOLD and is not evidence toward lifting it. A RU
 | **Note** | [`LEARNING_LANE_15M_OPERATOR_NOTE_SCORE_R-SKIP-2TO1-FAVORITE_L1.md`](LEARNING_LANE_15M_OPERATOR_NOTE_SCORE_R-SKIP-2TO1-FAVORITE_L1.md) |
 | **Scorecard** | [`LEARNING_LANE_15M_SCORECARD_R-SKIP-2TO1-FAVORITE_L1.json`](LEARNING_LANE_15M_SCORECARD_R-SKIP-2TO1-FAVORITE_L1.json) |
 | **Honest state** | Admissible test completed. Not Established (`favorite_odds=2` not verifiably pre-registered). Not an ADMIT. `R-SKIP-COINFLIP` was not scored. |
-| **Forbidden** | Retune `favorite_odds` · replace 2/3 with a tape quantile · treat this PARK as an ADMIT · copy fee-accurate totals onto the hub / digest / `manifest.json` / `records[]` |
+| **Wake name-clear** | `rule_reached_n R-SKIP-COINFLIP` (do not score) · `rule_reached_n R-SKIP-2TO1-FAVORITE` (L1 already PARK; do not re-score). Bookkeeping only so the wake can drop Operator. Not a new test. |
+| **Forbidden** | Retune `favorite_odds` · replace 2/3 with a tape quantile · treat this PARK as an ADMIT · copy fee-accurate totals onto the hub / digest / `manifest.json` / `records[]` · score `R-SKIP-COINFLIP` · re-score this PARK |
 
 ---
 
@@ -245,4 +246,4 @@ The 21:05 "park it, do not schedule" instruction is **superseded**.
 
 ## Handoff
 
-CoS: `R-SKIP-2TO1-FAVORITE` L1 is **PARK** on its falsifier (row 15, crew). Scorecard + Operator note quarantined. Not an ADMIT. Not Established. `R-SKIP-COINFLIP` still **not scored**, `execution` false. Binding unchanged. Consult off. Golf idle stays **ON**. Founder HOLD stands. Trading **NOT ARMED**.
+CoS: `R-SKIP-2TO1-FAVORITE` L1 is **PARK** on its falsifier (row 15, crew). Scorecard + Operator note quarantined. Not an ADMIT. Not Established. `R-SKIP-COINFLIP` still **not scored**, `execution` false. Wake name-clear: `rule_reached_n R-SKIP-COINFLIP` (do not score) and `rule_reached_n R-SKIP-2TO1-FAVORITE` (do not re-score). Binding unchanged. Consult off. Golf idle stays **ON**. Founder HOLD stands. Trading **NOT ARMED**.

@@ -70,6 +70,8 @@ The registry falsifier: after the n the bar names (70), if selected-fill settlem
 
 `favorite_odds` stays **2**. `R-SKIP-COINFLIP` is not revived and is not scored. `execution` on the coinflip row stays **false**. Binding is unchanged. Consult stays **off**. Trading **NOT ARMED**. HOLD stands.
 
+**Wake name-clear (not a score):** `rule_reached_n R-SKIP-COINFLIP` (do not score) · `rule_reached_n R-SKIP-2TO1-FAVORITE` (L1 already PARK; do not re-score).
+
 This scorecard is **not** an ADMIT. Soften Critic would attack a later proposed ADMIT; none is proposed.
 
 ---

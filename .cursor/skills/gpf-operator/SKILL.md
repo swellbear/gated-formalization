@@ -28,6 +28,7 @@ Read [PROTOCOL.md](../../../docs/agents/PROTOCOL.md) and [docs/OPERATOR_SOFTEN_F
 - Auto-GO C2/C4
 - Elevate / skill-met / productize / banked-edge
 - Soften a REJECTED idle-breach to “keep moving”
+- Score `R-SKIP-COINFLIP`. Do not re-score PARK'd `R-SKIP-2TO1-FAVORITE`. Naming `rule_reached_n` on the park without scoring is allowed bookkeeping so the wake can clear.
 
 ## Done
 

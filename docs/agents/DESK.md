@@ -6,11 +6,11 @@ Thread lines are **one sentence, newest first, max 10**. Long findings belong in
 
 | Field | Value |
 |-------|--------|
-| Updated | 2026-09-10 10:50 ET |
+| Updated | 2026-09-10 11:47 ET |
 | Active role | chief-of-staff |
 | Job | — |
 | Status | idle |
-| Handoff | Best-plan done through Admissible: bar binding; favorite L1 PARK on falsifier; coinflip unscored; honer dark; no PROPOSED 03. HOLD stands. Trading NOT ARMED. next=idle |
+| Handoff | Unattended gym loop landed: pydantic-free CoS stamp; `decide_cos_action`; park name-clear; gym `PUBLISH_ARMED`. HOLD stands. Trading NOT ARMED. next=idle |
 | Waiting on Founder | **N** |
 
 ## last_cos (CoS stamp — doorbell silence)
@@ -25,28 +25,27 @@ Thread lines are **one sentence, newest first, max 10**. Long findings belong in
 
 ## Ask Founder
 
-- Retarget the live 15m CoS + worker automations to `cursor/honer-15m-sibling` (docs already name that branch; Founder must click the live automations).
-- Confirm this PC stays awake while it is gym SoT. Task `GatedFormalization-15mLearningHub` exists (`Ready`). `WakeToRun=false` does not survive sleep.
-- Install pydantic on the cloud CoS VM so `stamp_cos_closeout` can persist there.
+- HOLD lift, honer `consult_enabled` implement, live arm, or a new class of rule.
+- This PC must not sleep while it is gym SoT. Task `GatedFormalization-15mLearningHub` exists (`Ready`). `WakeToRun=false` does not survive sleep.
 
-These do not block idle. Waiting on Founder stays **N**. Third Lab PROPOSED, HOLD lift, and honer consult remain Founder GO.
+These do not block idle. Waiting on Founder stays **N**. Cloud CoS/worker are treated as on `cursor/honer-15m-sibling` unless a fire proves otherwise (wrong branch writes nothing).
 
-## Publish gap (named so nobody assumes Pages is self-maintaining)
+## Publish gap (gym `PUBLISH_ARMED`, not sibling-HEAD-to-master)
 
-The runner exports locally. It does **not** commit or push. The public page is **not** self-maintaining. That is the same defect that left Pages stale for six hours tonight. A local export is not a publish. Systems still owns the manual tick step: material export → `--strict` → commit → push to `master`.
+The runner still does **not** commit or push. After each PaperWatch runner pass, gitignored `golf-offshoot/data/learning_lane_15m/latest/PUBLISH_ARMED` may push the hub allowlist (`manifest.json`, `paper_window_strip.png`, `validator_report.json`) to `origin/master` from a **master worktree** when `material_publish_reasons` is non-empty. Never copy scorecards / `records[]` / fee-accurate Operator totals. Cloud CoS/worker must **not** `git push` to `master`. Factory merge of [#178](https://github.com/swellbear/gated-formalization/pull/178) is still a PR merge, not this script.
 
-## Honesty checklist 2026-09-10 10:50 ET (three boxes now derived, not typed)
+## Honesty checklist 2026-09-10 11:46 ET (three boxes now derived, not typed)
 
 Part 3 landed. Three boxes are computed in `learning_lane_15m/honesty.py` and the **derived verdict wins** — prose here can shut one, never open one, and deleting a row does not open the gate. The fourth is judgment and now needs a PID, a hash or a timestamp; `**PASS**` alone no longer opens it. The parser was narrowed, not widened.
 
 | Box | State |
 |-----|-------|
-| Lineage story readable, dual lineage labeled not merged | **PASS** — *derived*. Lineage A is the live ledger (`bankroll` 90.98 / `betting_pnl` −9.02). Lineage B remains the published `KXBTC15M-26SEP071445-45`. No combined-bankroll field on the scan. |
+| Lineage story readable, dual lineage labeled not merged | **PASS** — *derived*. Lineage A is the live ledger (`bankroll` 82.18 / `betting_pnl` −17.82). Lineage B remains the published `KXBTC15M-26SEP071445-45`. No combined-bankroll field on the scan. |
 | `KXBTC15M-26SEP071500-00` honestly joined or pending with a true reason | **PASS** — *derived*. It is on `paper_join_missing`, is **not** on the pending list, and no missing-join row carries a pnl. |
-| One hub process on `learning_lane_15m` | **PASS** — *derived* from the process table. One hub **tree**, not one OS process: `py` launcher PID **24188** over supervisor PID **24532** and listener PID **20100** holding `127.0.0.1:8765`. Child re-exec'd 16:07:47 after sidecar/`app.py` (honer sidecar supervisor **18548** over tick child **23916**, `honer-15m` not `shell`). Criterion preserved as written. Do not start a second tree. |
-| No invented charts or pnl | **PASS** — *judgment, with evidence*. `digest_matches_ledger` PASS 2026-09-08T14:42:33−04:00 against the live book (90.98 / −9.02 both sides). CoS closeout stamps the current doorbell so the same A/B/E set does not re-ring. Fee-accurate totals are not on the hub, digest, manifest or `records[]`. |
+| One hub process on `learning_lane_15m` | **PASS** — *derived* from the process table. One hub **tree**, not one OS process: `py` launcher PID **24188** over supervisor PID **24532** and listener PID **20100** holding `127.0.0.1:8765`. Watch loop pid **11160** (`watch.json` / `process_matches_disk`, 11:42). Child re-exec'd after sidecar/`app.py`. Criterion preserved as written. Do not start a second tree. |
+| No invented charts or pnl | **PASS** — *judgment, with evidence*. `digest_matches_ledger` PASS 2026-09-10T11:42:52−04:00 against the live book (82.18 / −17.82 both sides). CoS closeout stamps the current doorbell so the same A/B/E set does not re-ring. Fee-accurate totals are not on the hub, digest, manifest or `records[]`. |
 
-**Gate is open on this restamp.** Golf idle stays **ON**. Evidence bar is **binding** for scoring. `R-SKIP-2TO1-FAVORITE` L1 is **PARK** on its falsifier (Admissible completed, not Established, not an ADMIT). `R-SKIP-COINFLIP` unscored. Consult **off**. Honer dark. Lab does not bring a third PROPOSED. HOLD stands. Trading **NOT ARMED**.
+**Gate is open on this restamp.** Golf idle stays **ON**. Evidence bar is **binding** for scoring. `R-SKIP-2TO1-FAVORITE` L1 is **PARK** on its falsifier (Admissible completed, not Established, not an ADMIT). `rule_reached_n` named on the park for both that rule and `R-SKIP-COINFLIP` without scoring. Consult **off**. Honer dark. Lab does not bring a third PROPOSED. HOLD stands. Trading **NOT ARMED**.
 
 **The fee-schedule hash is pinned from Founder browser bytes.** Source `founder_browser_bytes`, file `golf-offshoot/docs/kalshi-fee-schedule.pdf`, 281129 bytes. Last gym GET remains HTTP 429 (drift only). Do not GET the PDF every 90s. Do not spoof a browser. **Do not write a placeholder.**
 
@@ -54,12 +53,13 @@ Part 3 landed. Three boxes are computed in `learning_lane_15m/honesty.py` and th
 
 Two suites, both on the tick.
 
-**Lane** (`latest/invariants.json`) — all four PASS at 11:12:43. `digest_matches_ledger` caught the real 08:51-vs-live drift at 10:37 and cleared only when `digest-figures` regenerated the file at 10:46:59. No prose cleared it.
+**Lane** (`latest/invariants.json`) — `digest_matches_ledger` PASS at 11:42:53 (82.18 / −17.82). `watch_is_collecting` PASS (cycle 3 after code re-exec). `clerical_roles_clear` may still fail until the runner sees the park name-clear. No prose cleared it.
 
 **Method** — 11 method checks (`half_spread_profile_recorded`, `hub_autostart_registered` are tenth and eleventh). Fee pin is `founder_browser_bytes`. `honesty_stamp_is_fresh` is a desk check and does not set `passed`. `critic_verdicts` is `{id, state}` + reviewed hashes — no `detail`. Bar is **binding**. Clerical findings `passed: true`. Soften Critic is **not** assigned. PARK is not an ADMIT and is not a Critic job.
 
 ## Thread
 
+- 2026-09-10 11:47 ET  chief-of-staff: unattended gym loop; `decide_cos_action`; park name-clear; gym `PUBLISH_ARMED`; HOLD stands. next=idle
 - 2026-09-10 10:50 ET  chief-of-staff: best-plan closeout; favorite L1 PARK; stop inventing; honer dark; no PROPOSED 03; HOLD stands. next=idle
 - 2026-09-10 10:40 ET  operator → chief-of-staff: favorite L1 PARK (falsifier); n=70 skip_count=1 passes_every_binding_clause=false; coinflip unscored; no ADMIT. next=chief-of-staff
 - 2026-09-10 10:26 ET  operator → chief-of-staff: started `score_rule` L1 of `R-SKIP-2TO1-FAVORITE` only; n=70 lived; do not score coinflip; do not ADMIT. next=operator
@@ -69,6 +69,4 @@ Two suites, both on the tick.
 - 2026-09-10 10:08 ET  chief-of-staff → operator: record CRITIC 20 zero UPHELD then bind; do not score. next=operator
 - 2026-09-10 10:05 ET  soften-critic → chief-of-staff: CRITIC 20 zero UPHELD on ANSWER 19 hashes `7C1C1CB3…` / `7A934A4E…`; CRITIC 19 strikes are on the face; not bound. next=chief-of-staff
 - 2026-09-10 09:53 ET  soften-critic → chief-of-staff: started CRITIC 20 on ANSWER 19 hashes `7C1C1CB3…` / `7A934A4E…`; written attack only. next=soften-critic
-- 2026-09-10 09:52 ET  chief-of-staff → soften-critic: attack ANSWER 19 hashes `7C1C1CB3…` / `7A934A4E…`; written only; do not edit, score, bind, or enable consult. next=soften-critic
 *Older lines rolled off at the 10-line cap. Full history is in the git log for `docs/agents/DESK.md`.*
-

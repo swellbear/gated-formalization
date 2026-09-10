@@ -4,8 +4,6 @@ from __future__ import annotations
 
 from pathlib import Path
 
-from golf_offshoot.data_feeds.http import package_data_dir
-
 LANE_GOLF = "golf"
 LANE_15M = "learning_lane_15m"
 LANE_NAME = "learning_lane_15m"
@@ -42,7 +40,7 @@ def has_15m_root_override() -> bool:
 
 def golf_data_root() -> Path:
     """Golf Phase 1 artifacts. Untouched by the 15-min lane."""
-    return package_data_dir()
+    return Path(__file__).resolve().parents[3] / "data"
 
 
 def golf_paper_dir() -> Path:
