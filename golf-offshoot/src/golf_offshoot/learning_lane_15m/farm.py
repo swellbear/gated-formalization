@@ -146,13 +146,13 @@ def _used_singleton_minutes(
     return used
 
 
-def _civil_used(
+def _minutes_used(
+    want: set[int],
     *,
     root: Path | None = None,
     registry: dict[str, Any] | None = None,
     farm: dict[str, Any] | None = None,
 ) -> bool:
-    want = {0, 30}
     reg = load_registry(root=root, registry=registry)
     for row in list(reg.get("rules") or []) + list((farm or load_farm(root=root)).get("notebooks") or []):
         if not isinstance(row, dict):
@@ -161,6 +161,24 @@ def _civil_used(
         if minutes is not None and set(minutes) == want:
             return True
     return False
+
+
+def _civil_used(
+    *,
+    root: Path | None = None,
+    registry: dict[str, Any] | None = None,
+    farm: dict[str, Any] | None = None,
+) -> bool:
+    return _minutes_used({0, 30}, root=root, registry=registry, farm=farm)
+
+
+def _quarter_used(
+    *,
+    root: Path | None = None,
+    registry: dict[str, Any] | None = None,
+    farm: dict[str, Any] | None = None,
+) -> bool:
+    return _minutes_used({15, 45}, root=root, registry=registry, farm=farm)
 
 
 def _clock_singleton_executing(*, root: Path | None = None, registry: dict[str, Any] | None = None) -> bool:
@@ -232,6 +250,19 @@ def unused_legal_kinds(
                 {
                     "kind": kid,
                     "params": {"skip_close_minutes": [0, 30]},
+                    "expected_skip_rate": 0.5,
+                }
+            )
+            continue
+        if kid == "CLOCK-QUARTER-BOUNDARIES":
+            if kind.get("legal_now") is not True:
+                continue
+            if _quarter_used(root=root, registry=registry, farm=payload):
+                continue
+            out.append(
+                {
+                    "kind": kid,
+                    "params": {"skip_close_minutes": [15, 45]},
                     "expected_skip_rate": 0.5,
                 }
             )
@@ -346,7 +377,7 @@ def promote_ready(*, root: Path | None = None, registry: dict[str, Any] | None =
 def product_skip_kinds(lane: str = "learning_lane_15m") -> tuple[str, ...]:
     """Named skip families this gym can farm. A later series supplies its own menu."""
     if str(lane or "") == "learning_lane_15m":
-        return ("CLOCK-CLOSE-MINUTE", "CLOCK-CIVIL-BOUNDARIES")
+        return ("CLOCK-CLOSE-MINUTE", "CLOCK-CIVIL-BOUNDARIES", "CLOCK-QUARTER-BOUNDARIES")
     return ()
 
 

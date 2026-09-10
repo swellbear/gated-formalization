@@ -2,7 +2,7 @@
   "schema": 1,
   "lane": "learning_lane_15m",
   "series": "KXBTC15M",
-  "updated": "2026-09-10T15:45:00-04:00",
+  "updated": "2026-09-10T19:05:00-04:00",
   "rule": "Crew-owned kind menu. Lab loads this like burned classes. Lab may add a kind by inventing if it can name a product-structure expected_skip_rate from the 15m quartet. Operator RUN-ONLY or PARK. Not a Founder permission list. Do not put future tickers here. Catalog prefers ≥ 0.25; declare_rule floor is 10/first_look_n. Do not append a third honer family until the two dated families finish exams. Consult enable is a file gate. Replacement is crew after consult has lived.",
   "kinds": [
     {
@@ -20,6 +20,14 @@
       "params": ["skip_close_minutes"],
       "legal_after": "hour-close parks (or Operator parks 03)",
       "note": "Not this Lab fire. Parameters are the two named civil walls, not the two worst minutes on this book."
+    },
+    {
+      "id": "CLOCK-QUARTER-BOUNDARIES",
+      "expected_skip_rate": 0.5,
+      "rate_source": "quarter-hour walls :15 and :45 (the two 15m closes that are not civil hour/half-hour)",
+      "params": ["skip_close_minutes"],
+      "legal_now": true,
+      "note": "Lab invent 2026-09-10. Parameters are the two named quarter-hour walls, not the two leftover minutes on this book. Not CLOCK-CIVIL-BOUNDARIES. Not RETUNE-CLOCK-MINUTE. Not a live steal."
     },
     {
       "id": "HONER-FROZEN-CONSULT",

@@ -33,6 +33,19 @@
       "declared_at": "2026-09-10T18:45:00-04:00",
       "execution": false,
       "selects": true
+    },
+    {
+      "id": "F-CLOCK-QUARTER-BOUNDARIES-15-45",
+      "kind": "CLOCK-QUARTER-BOUNDARIES",
+      "params": {
+        "skip_close_minutes": [
+          15,
+          45
+        ]
+      },
+      "declared_at": "2026-09-10T19:05:00-04:00",
+      "execution": false,
+      "selects": true
     }
   ]
 }
