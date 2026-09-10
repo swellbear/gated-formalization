@@ -3,12 +3,12 @@
   "lane": "learning_lane_15m",
   "series": "KXBTC15M",
   "drafted_at": "2026-09-08T08:30:00-04:00",
-  "amended_at": "2026-09-09T21:33:00-04:00",
+  "amended_at": "2026-09-09T22:50:00-04:00",
   "amended_by": "operator",
-  "amendment": "Founder GO: drop founder_read_once from bind (crew-written, not a Founder GO). Bind is (1) Critic+Operator and (2) critic-invariants. Ninth method check bind_has_no_founder_read_once. ANSWER 15 leftover half-pass citation remains named. Not a score. Not a bind. Consult not enabled.",
+  "amendment": "ANSWER 17: one SUSTAINED on CRITIC 17. MD :238 leftover \"condition 3 is unmet\" struck so the Established face agrees with JSON unreachable_because, which already lacked the phrase. Bind stays two conditions. Not a score. Not a bind. Consult not enabled.",
   "prior_amendment": {
-    "amended_at": "2026-09-09T21:28:00-04:00",
-    "note": "ANSWER 15: one SUSTAINED on CRITIC 15. Eighth-check detail and docstring still call snapshot_absent a half-pass / silent half-pass named on the bar; the ANSWER 14 hashes did not contain that word — they named state PASS / named suite green. Not a score. Not a bind. Consult not enabled."
+    "amended_at": "2026-09-09T21:33:00-04:00",
+    "note": "Founder GO: drop founder_read_once from bind (crew-written, not a Founder GO). Bind is (1) Critic+Operator and (2) critic-invariants. Ninth method check bind_has_no_founder_read_once. ANSWER 15 leftover half-pass citation remains named. Not a score. Not a bind. Consult not enabled."
   },
   "discovery_organ": {
     "lane": "honer_15m",
@@ -50,25 +50,25 @@
     {
       "id": "critic_answered",
       "met": false,
-      "detail": "LEARNING_LANE_15M_EVIDENCE_BAR_OPERATOR_ANSWER_15.md records CRITIC 15 (bytes DF418702\u2026; one UPHELD, one SUSTAINED) on the ANSWER 14 hashes 72A4A4EE\u2026 / 999E33E4\u2026. An answer that amends the bar does not close condition 1 on the amended text. ANSWER 14 remains answered in OPERATOR_ANSWER_14.md for its own hashes C9D3FF62\u2026 / 17A3788C\u2026. ANSWER 12 remains answered in OPERATOR_ANSWER_12.md for its own hashes A0115B38\u2026 / 6074217E\u2026. CRITIC 13 zero UPHELD on those ANSWER 12 hashes; ANSWER 13 is not owed. Soften Critic is re-owed on this amendment. CRITIC 11 remains answered in OPERATOR_ANSWER_11.md for its own hashes. CRITIC 09 remains answered in OPERATOR_ANSWER_09.md for its own hashes. CRITIC 08 remains answered in OPERATOR_ANSWER_08.md for its own hashes. CRITIC 07 remains answered in OPERATOR_ANSWER_07.md for its own hashes. CRITIC 06 remains answered in OPERATOR_ANSWER_06.md for its own hashes. CRITIC 05 remains answered in OPERATOR_ANSWER_05.md for its own hashes. CRITIC 04 remains answered in OPERATOR_ANSWER_04.md for its own hashes. CRITIC 03 remains answered in OPERATOR_ANSWER_03.md for its own hashes. CRITIC 02 remains answered in OPERATOR_ANSWER_02.md for its own hashes. CRITIC 01 remains answered in OPERATOR_ANSWER_01.md.",
-      "critic_file": "golf-offshoot/docs/LEARNING_LANE_15M_EVIDENCE_BAR_CRITIC_15.md",
-      "critic_sha256_bytes": "df4187028075c127392cc6a73f3f362e06c7c2db087163441375fa5c03a46541",
-      "answer_file": "golf-offshoot/docs/LEARNING_LANE_15M_EVIDENCE_BAR_OPERATOR_ANSWER_15.md",
-      "answered_bar_md_sha256": "72a4a4eef616f0937f6ee087ae5d510406459fc4174d6e7ba8e5c689b05f2ea2",
-      "answered_bar_json_sha256": "999e33e4069253abf040d341a8e0455211a6db8c4ffbf01cb4d27ca661340f97",
+      "detail": "LEARNING_LANE_15M_EVIDENCE_BAR_OPERATOR_ANSWER_17.md records CRITIC 17 (bytes C90C16EC\u2026; one UPHELD, one SUSTAINED) on the drop-read-once hashes 1D29ABCD\u2026 / A5FCFAB7\u2026. An answer that amends the bar does not close condition 1 on the amended text. ANSWER 15 remains answered in OPERATOR_ANSWER_15.md for its own hashes 72A4A4EE\u2026 / 999E33E4\u2026. CRITIC 16 zero UPHELD on those ANSWER 15 hashes; ANSWER 16 is not owed. ANSWER 14 remains answered in OPERATOR_ANSWER_14.md for its own hashes C9D3FF62\u2026 / 17A3788C\u2026. ANSWER 12 remains answered in OPERATOR_ANSWER_12.md for its own hashes A0115B38\u2026 / 6074217E\u2026. CRITIC 13 zero UPHELD on those ANSWER 12 hashes; ANSWER 13 is not owed. Soften Critic is re-owed on this amendment. CRITIC 11 remains answered in OPERATOR_ANSWER_11.md for its own hashes. CRITIC 09 remains answered in OPERATOR_ANSWER_09.md for its own hashes. CRITIC 08 remains answered in OPERATOR_ANSWER_08.md for its own hashes. CRITIC 07 remains answered in OPERATOR_ANSWER_07.md for its own hashes. CRITIC 06 remains answered in OPERATOR_ANSWER_06.md for its own hashes. CRITIC 05 remains answered in OPERATOR_ANSWER_05.md for its own hashes. CRITIC 04 remains answered in OPERATOR_ANSWER_04.md for its own hashes. CRITIC 03 remains answered in OPERATOR_ANSWER_03.md for its own hashes. CRITIC 02 remains answered in OPERATOR_ANSWER_02.md for its own hashes. CRITIC 01 remains answered in OPERATOR_ANSWER_01.md.",
+      "critic_file": "golf-offshoot/docs/LEARNING_LANE_15M_EVIDENCE_BAR_CRITIC_17.md",
+      "critic_sha256_bytes": "c90c16ec1357cff4ec46e7db37785a3308423ca4ea9b3a71a541b99949f57e9e",
+      "answer_file": "golf-offshoot/docs/LEARNING_LANE_15M_EVIDENCE_BAR_OPERATOR_ANSWER_17.md",
+      "answered_bar_md_sha256": "1d29abcdc13746f349374f584f265cdd226c53486862cfa467552eb898c8091e",
+      "answered_bar_json_sha256": "a5fcfab7004a71f8c25e608505941fc9619c9dc8415b218dea0e32f7f4dc4770",
       "upheld": 1,
       "sustained": 1,
       "overruled": 0,
       "prior_pair": {
-        "critic_file": "golf-offshoot/docs/LEARNING_LANE_15M_EVIDENCE_BAR_CRITIC_14.md",
-        "answer_file": "golf-offshoot/docs/LEARNING_LANE_15M_EVIDENCE_BAR_OPERATOR_ANSWER_14.md",
-        "critic_sha256_bytes": "a095ce46a2e6d5d9a0d89fc56f907dcef02453c537a341263aac64fceaa3b4bf"
+        "critic_file": "golf-offshoot/docs/LEARNING_LANE_15M_EVIDENCE_BAR_CRITIC_15.md",
+        "answer_file": "golf-offshoot/docs/LEARNING_LANE_15M_EVIDENCE_BAR_OPERATOR_ANSWER_15.md",
+        "critic_sha256_bytes": "df4187028075c127392cc6a73f3f362e06c7c2db087163441375fa5c03a46541"
       }
     },
     {
       "id": "critic_invariants_pass",
       "met": false,
-      "detail": "The last findings file (ran_at 2026-09-08T12:02:45-04:00) reviews 5F2AA5F5\u2026 / 2611C255\u2026 / CD25DD72\u2026 \u2014 not the ANSWER 14 hashes 72A4A4EE\u2026 / 999E33E4\u2026 / BBD87E52\u2026 and not these bytes. The 14:04 failing_set_at_last_operator_read of [fee_schedule_hash_recorded] described other bytes and is struck as a picture of this file. Copied arithmetic of check_delta_above_detection_floor on the ANSWER 03 hashes would name mde / reject_if_mean_d_exceeds / alpha_first_look / both power effects. After ANSWER 04 restated the four design numbers at next-look alpha, that function would still compare alpha_first_look 0.025 to current alpha_k 0.008333 (checker/key mismatch owed to Systems). Standing named fail: fee_schedule_hash_recorded (empty sha256 after HTTP 429). honesty_stamp_is_fresh is a desk check and does not set passed. write_critic_findings() was not called.",
+      "detail": "The last findings file (ran_at 2026-09-08T12:02:45-04:00) reviews 5F2AA5F5\u2026 / 2611C255\u2026 / CD25DD72\u2026 \u2014 not the drop-read-once hashes 1D29ABCD\u2026 / A5FCFAB7\u2026 / BBD87E52\u2026 and not these bytes. The 14:04 failing_set_at_last_operator_read of [fee_schedule_hash_recorded] described other bytes and is struck as a picture of this file. Copied arithmetic of check_delta_above_detection_floor on the ANSWER 03 hashes would name mde / reject_if_mean_d_exceeds / alpha_first_look / both power effects. After ANSWER 04 restated the four design numbers at next-look alpha, that function would still compare alpha_first_look 0.025 to current alpha_k 0.008333 (checker/key mismatch owed to Systems). Standing named fail: fee_schedule_hash_recorded (empty sha256 after HTTP 429). honesty_stamp_is_fresh is a desk check and does not set passed. write_critic_findings() was not called.",
       "note": "critic.py records the newline-normalised digest, not the raw byte hash. Compare the digest the checker actually read.",
       "last_findings_cover_these_bytes": false,
       "last_findings_ran_at": "2026-09-08T12:02:45.460786-04:00",

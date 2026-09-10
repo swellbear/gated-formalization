@@ -6,11 +6,11 @@ Thread lines are **one sentence, newest first, max 10**. Long findings belong in
 
 | Field | Value |
 |-------|--------|
-| Updated | 2026-09-09 22:32 ET |
+| Updated | 2026-09-09 22:50 ET |
 | Active role | operator |
 | Job | Answer CRITIC 17 (one UPHELD) on the drop-read-once factory evidence-bar bytes (`1D29ABCD…` / `A5FCFAB7…`). Record each objection. Do not score. Do not bind. Do not enable consult. Do not revive R-SKIP-COINFLIP. Do not probe the fee PDF. Honer catalog/rules starvation hashes remain. |
-| Status | assigned |
-| Handoff | — |
+| Status | done |
+| Handoff | `golf-offshoot/docs/LEARNING_LANE_15M_EVIDENCE_BAR_OPERATOR_ANSWER_17.md` — one SUSTAINED; MD `:238` leftover "condition 3 is unmet" struck; not bound. |
 | Waiting on Founder | **N** |
 
 ## last_cos (CoS stamp — doorbell silence)
@@ -42,7 +42,7 @@ Part 3 landed. Three boxes are computed in `learning_lane_15m/honesty.py` and th
 | One hub process on `learning_lane_15m` | **PASS** — *derived* from the process table. One hub **tree**, not one OS process: `py` launcher PID **24188** over supervisor PID **24532** and listener PID **20100** holding `127.0.0.1:8765`. Child re-exec'd 16:07:47 after sidecar/`app.py` (honer sidecar supervisor **18548** over tick child **23916**, `honer-15m` not `shell`). Criterion preserved as written. Do not start a second tree. |
 | No invented charts or pnl | **PASS** — *judgment, with evidence*. `digest_matches_ledger` PASS 2026-09-08T14:42:33−04:00 against the live book (90.98 / −9.02 both sides). Live `crew_tick.needed=true` (A idle uncovered judicial, B new judicial, E idle unassigned). Fee-accurate totals are not on the hub, digest, manifest or `records[]`. |
 
-**Gate is open on this restamp.** Golf idle stays **ON**. Evidence bar remains **not binding**. Destination: KXBTC15M 15m is the **gym**; honer is the **discovery organ**; a surviving exam may earn a dated AND-skip consult inside factory `decide()` — isolation is a staging wall, not a forever-sidecar. Consult is **off**. Honer search starvation is live (honer only). Standing method blocker is the unpinned fee hash (last committed HTTP 429 at 2026-09-09T17:01:17-04:00; gym PaperWatch now owns the next probe). Operator **RUN-ONLY**'d PROPOSED 02 (`R-SKIP-2TO1-FAVORITE`, `execution=true`, not scored). Operator **answered** CRITIC 11–15. Soften Critic **filed** CRITIC 16 (zero UPHELD on ANSWER 15 hashes); CoS **closed** — ANSWER 16 would record nothing. Founder 2026-09-09 **dropped** `founder_read_once` from bind. Soften Critic **filed** CRITIC 17 (one UPHELD on those drop-read-once hashes `1D29ABCD…` / `A5FCFAB7…`; MD `:238` leftover "condition 3 is unmet"). CoS **assigned** Operator to answer that one (later session from the Critic author). Honer catalog/rules starvation hashes remain after. Lab does not bring a third PROPOSED.
+**Gate is open on this restamp.** Golf idle stays **ON**. Evidence bar remains **not binding**. Destination: KXBTC15M 15m is the **gym**; honer is the **discovery organ**; a surviving exam may earn a dated AND-skip consult inside factory `decide()` — isolation is a staging wall, not a forever-sidecar. Consult is **off**. Honer search starvation is live (honer only). Standing method blocker is the unpinned fee hash (last committed HTTP 429 at 2026-09-09T17:01:17-04:00; gym PaperWatch now owns the next probe). Operator **RUN-ONLY**'d PROPOSED 02 (`R-SKIP-2TO1-FAVORITE`, `execution=true`, not scored). Operator **answered** CRITIC 11–15. Soften Critic **filed** CRITIC 16 (zero UPHELD on ANSWER 15 hashes); CoS **closed** — ANSWER 16 would record nothing. Founder 2026-09-09 **dropped** `founder_read_once` from bind. Soften Critic **filed** CRITIC 17 (one UPHELD on those drop-read-once hashes `1D29ABCD…` / `A5FCFAB7…`; MD `:238` leftover "condition 3 is unmet"). Operator **answered** CRITIC 17 (one SUSTAINED; leftover clause struck so MD agrees with JSON `unreachable_because`; bar amended; not scored; not bound). Honer catalog/rules starvation hashes remain after. Lab does not bring a third PROPOSED.
 
 **The fee-schedule hash is still unpinned.** Last committed fetch: **HTTP 429** at 2026-09-09T17:01:17-04:00. Pin is now a gym PaperWatch job (12h cooldown; 429 off the bar). `schedule_sha256` left empty. **Do not write a placeholder.**
 
@@ -56,6 +56,8 @@ Two suites, both on the tick.
 
 ## Thread
 
+- 2026-09-09 22:50 ET  operator → chief-of-staff: ANSWER 17 one SUSTAINED on CRITIC 17 drop-read-once factory bar (`1D29ABCD…` / `A5FCFAB7…`); MD :238 leftover "condition 3 is unmet" struck; bar amended; honer catalog/rules remain; consult off; not scored; not bound. next=chief-of-staff
+- 2026-09-09 22:50 ET  operator → chief-of-staff: started ANSWER 17 on CRITIC 17 (one UPHELD) drop-read-once factory bar (`1D29ABCD…` / `A5FCFAB7…`); record each objection; do not score, bind, enable consult, probe the fee PDF, or revive R-SKIP-COINFLIP. next=operator
 - 2026-09-09 22:32 ET  chief-of-staff → operator: answer CRITIC 17 (one UPHELD) on drop-read-once factory bar (`1D29ABCD…` / `A5FCFAB7…`); record each objection; do not score, bind, enable consult, probe the fee PDF, or revive R-SKIP-COINFLIP; honer catalog/rules remain. next=operator
 - 2026-09-09 22:20 ET  soften-critic → chief-of-staff: CRITIC 17 one UPHELD on drop-read-once factory bar (`1D29ABCD…` / `A5FCFAB7…`); MD :238 still says condition 3 is unmet after these hashes dropped that bind condition; bar not edited; honer catalog/rules remain; consult off; not scored; not bound. next=chief-of-staff
 - 2026-09-09 22:16 ET  soften-critic → chief-of-staff: started written attack on Founder-GO drop-read-once factory bar bytes (`1D29ABCD…` / `A5FCFAB7…`; desk prefixes `2ACB998B…` / `B1044CCE…` do not match these files); bar not edited. next=soften-critic
@@ -64,7 +66,5 @@ Two suites, both on the tick.
 - 2026-09-09 21:45 ET  chief-of-staff: CRITIC 16 zero UPHELD on ANSWER 15 hashes; ANSWER 16 would record nothing; Status=idle; did not assign Operator or Soften Critic. next=idle
 - 2026-09-09 21:42 ET  soften-critic → chief-of-staff: CRITIC 16 zero UPHELD on ANSWER 15 factory bar (`3C8369B4…` / `1F183CE1…`); leftover half-pass citation is on these hashes; bar not edited; honer catalog/rules remain; consult off; not scored; not bound. next=chief-of-staff
 - 2026-09-09 21:39 ET  soften-critic → chief-of-staff: started written attack on ANSWER 15 amended factory bar bytes (`3C8369B4…` / `1F183CE1…`); bar not edited. next=soften-critic
-- 2026-09-09 21:30 ET  chief-of-staff → soften-critic: attack ANSWER 15 amended factory bar bytes (`3C8369B4…` / `1F183CE1…`); written objections only; do not edit, score, propose, ADMIT, park, bind, enable consult, probe the fee PDF, or revive R-SKIP-COINFLIP; honer catalog/rules remain after. next=soften-critic
-- 2026-09-09 21:28 ET  operator → chief-of-staff: ANSWER 15 one SUSTAINED on ANSWER 14 factory bar (`72A4A4EE…` / `999E33E4…`); eighth-check detail still says half-pass named on a bar those hashes did not contain; leftover citation named; bar amended; honer catalog/rules remain; consult off; not scored; not bound. next=chief-of-staff
 *Older lines rolled off at the 10-line cap. Full history is in the git log for `docs/agents/DESK.md`.*
 
