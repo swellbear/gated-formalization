@@ -41,12 +41,18 @@ and here):
   tidy the admit pass."
 - Persist nothing only in the gitignored wake. Done-state is the desk.
 
-Lab hard rules: `lab_admits=false`. One PROPOSED max. Load burned classes.
-Do not revive `R-SKIP-COINFLIP` or retune its band. Do not score. Do not
-self-admit. Do not set `execution:true` (Operator does that).
+Lab hard rules: `lab_admits=false`. One PROPOSED per fire. Invent contract
+in the note: kill anatomy, unburned mechanism, pre-registration, live
+falsifier. Load burned classes. Do not revive `R-SKIP-COINFLIP` or retune
+its band. Do not retune PARK'd `favorite_odds`. Golf idle does not stop a
+15m KXBTC15M paper PROPOSED. Do not score. Do not self-admit. Do not set
+`execution:true` (Operator does that).
 
 Operator hard rules: may set `execution:true` on a surviving pre-registered
-rule (paper implementation). Must not set `binding` true or `trading_armed`.
+rule (paper implementation). A falsifier PARK of an executing selection rule
+drops `execution` in that score turn. The next RUN-ONLY takes the only
+selecting seat. Must not set `binding` true or `trading_armed`. A CoS-assigned
+KXBTC15M paper PROPOSED is not golf idle-breach.
 
 ## Agent prompt (paste)
 
@@ -93,16 +99,28 @@ When the Job is done:
 
 LAB HARD RULES (when you are lab)
   One PROPOSED selection rule, paper only, KXBTC15M only.
-  Parameters must not already exist as informing marks on this tree.
-  Load burned classes. Do not revive R-SKIP-COINFLIP. Do not retune
-  its band. Do not score. Do not self-admit. Do not set execution:true
-  (Operator does that). Handoff → operator.
+  Golf idle ON does not stop this Job. This is not golf WC3+.
+  The PROPOSED note itself must contain:
+    1. Kill anatomy — quote the last closed score/park (clauses, skip_count).
+       Favorite L1: n=70, skip_count=1, clauses 1/4/5 fail. Not a favorite_odds
+       retune and not a tape quantile (burned).
+    2. Unburned mechanism — load LEARNING_LANE_15M_BURNED_CLASSES.json.
+       Skip-on-mark families that only move the same cut are retunes.
+    3. Pre-registration — parameters must not be informing marks on this tree.
+    4. Live falsifier — n and a park instruction, no retune-if-dead.
+  Do not revive R-SKIP-COINFLIP. Do not retune its band. Do not score.
+  Do not self-admit. Do not set execution:true (Operator does that).
+  Handoff → operator.
 
 OPERATOR HARD RULES (when you are operator)
   Sustain or overrule with reasons. Separate from any Critic fire.
   May set execution:true on a pre-registered survivor (paper
-  implementation). Do not set binding true. Do not set trading_armed.
-  Do not lift the HOLD. Do not score in the same turn you amend a bar
+  implementation). Only one selecting rule may have execution:true.
+  A falsifier PARK drops that row's execution. The next RUN-ONLY takes
+  the only seat (dead row off, new row on).
+  A CoS-assigned KXBTC15M paper PROPOSED is not golf idle-breach.
+  Do not set binding true. Do not set trading_armed.
+  Do not score in the same turn you amend a bar
   you have not already attacked-answered.
 
 SYSTEMS HARD RULES (when you are systems)

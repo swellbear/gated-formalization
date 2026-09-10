@@ -6,29 +6,30 @@ Thread lines are **one sentence, newest first, max 10**. Long findings belong in
 
 | Field | Value |
 |-------|--------|
-| Updated | 2026-09-10 11:47 ET |
-| Active role | chief-of-staff |
-| Job | — |
-| Status | idle |
-| Handoff | Unattended gym loop landed: pydantic-free CoS stamp; `decide_cos_action`; park name-clear; gym `PUBLISH_ARMED`. HOLD stands. Trading NOT ARMED. next=idle |
+| Updated | 2026-09-10 13:05 ET |
+| Active role | lab |
+| Job | one 15m PROPOSED under the invent contract (kill anatomy, unburned mechanism, pre-reg, live falsifier); handoff operator |
+| Status | assigned |
+| Handoff | Continuation boss landed: `F_continuation` assigns Lab when starved. Worker tick invents. HOLD glob stays off this ledger. Trading NOT ARMED. next=lab |
 | Waiting on Founder | **N** |
 
 ## last_cos (CoS stamp — doorbell silence)
 
 | Field | Value |
 |-------|--------|
-| last_cos_at | 2026-09-10T11:52:00-04:00 |
-| last_cos_commit | 7e720fb |
-| handled_reason_ids | A_worker_done, A_idle_uncovered_judicial, B_new_judicial, C_clerical_arrears, D_watch_stuck, E_idle_unassigned |
+| last_cos_at | 2026-09-10T13:05:00-04:00 |
+| last_cos_commit | pending-continuation-boss |
+| handled_reason_ids | F_continuation |
 
 **Branch note.** Live work is `cursor/honer-15m-sibling` [#178](https://github.com/swellbear/gated-formalization/pull/178) (open; base is `cursor/part-a-clerical-trust-boundary`). [#176](https://github.com/swellbear/gated-formalization/pull/176) is still OPEN, not merged. `origin/master` is still `b063f56` (#175). Factory Turns 1–3 plus the ANSWER/CRITIC chain live on part-a / this sibling. Branching from `origin/master` would discard all of it. Do not use `C:\Users\bearh\gated-formalization` on `cursor/eia-window-job2`.
 
 ## Ask Founder
 
-- HOLD lift, honer `consult_enabled` implement, live arm, or a new class of rule.
+- Live arm, cash, or Kalshi keys.
 - This PC must not sleep while it is gym SoT. Task `GatedFormalization-15mLearningHub` exists (`Ready`). `WakeToRun=false` does not survive sleep.
+- Golf C2 / C4 / WC3+ / retune golf θ.
 
-These do not block idle. Waiting on Founder stays **N**. Cloud CoS/worker are treated as on `cursor/honer-15m-sibling` unless a fire proves otherwise (wrong branch writes nothing).
+These do not block the Lab assign. Waiting on Founder stays **N**. Cloud CoS/worker are treated as on `cursor/honer-15m-sibling` unless a fire proves otherwise (wrong branch writes nothing).
 
 ## Publish gap (gym `PUBLISH_ARMED`, not sibling-HEAD-to-master)
 
@@ -45,7 +46,7 @@ Part 3 landed. Three boxes are computed in `learning_lane_15m/honesty.py` and th
 | One hub process on `learning_lane_15m` | **PASS** — *derived* from the process table. One hub **tree**, not one OS process: `py` launcher PID **24188** over supervisor PID **24532** and listener PID **20100** holding `127.0.0.1:8765`. Watch loop pid **11160** (`watch.json` / `process_matches_disk`, 11:42). Child re-exec'd after sidecar/`app.py`. Criterion preserved as written. Do not start a second tree. |
 | No invented charts or pnl | **PASS** — *judgment, with evidence*. `digest_matches_ledger` PASS 2026-09-10T11:42:52−04:00 against the live book (82.18 / −17.82 both sides). CoS closeout stamps the current doorbell so the same A/B/E set does not re-ring. Fee-accurate totals are not on the hub, digest, manifest or `records[]`. |
 
-**Gate is open on this restamp.** Golf idle stays **ON**. Evidence bar is **binding** for scoring. `R-SKIP-2TO1-FAVORITE` L1 is **PARK** on its falsifier (Admissible completed, not Established, not an ADMIT). `rule_reached_n` named on the park for both that rule and `R-SKIP-COINFLIP` without scoring. Consult **off**. Honer dark. Lab does not bring a third PROPOSED. HOLD stands. Trading **NOT ARMED**.
+**Gate is open on this restamp.** Golf idle stays **ON** (15m paper PROPOSED is not golf idle-breach). Evidence bar is **binding** for scoring. `R-SKIP-2TO1-FAVORITE` L1 is **PARK** on its falsifier (Admissible completed, not Established, not an ADMIT). `rule_reached_n` named on the park for both that rule and `R-SKIP-COINFLIP` without scoring. Consult **off**. Honer dark. CoS assigned Lab (`F_continuation`). Trading **NOT ARMED**.
 
 **The fee-schedule hash is pinned from Founder browser bytes.** Source `founder_browser_bytes`, file `golf-offshoot/docs/kalshi-fee-schedule.pdf`, 281129 bytes. Last gym GET remains HTTP 429 (drift only). Do not GET the PDF every 90s. Do not spoof a browser. **Do not write a placeholder.**
 
@@ -59,6 +60,7 @@ Two suites, both on the tick.
 
 ## Thread
 
+- 2026-09-10 13:05 ET  chief-of-staff → lab: one 15m PROPOSED under the invent contract; handoff operator. next=lab
 - 2026-09-10 11:47 ET  chief-of-staff: unattended gym loop; `decide_cos_action`; park name-clear; gym `PUBLISH_ARMED`; HOLD stands. next=idle
 - 2026-09-10 10:50 ET  chief-of-staff: best-plan closeout; favorite L1 PARK; stop inventing; honer dark; no PROPOSED 03; HOLD stands. next=idle
 - 2026-09-10 10:40 ET  operator → chief-of-staff: favorite L1 PARK (falsifier); n=70 skip_count=1 passes_every_binding_clause=false; coinflip unscored; no ADMIT. next=chief-of-staff
@@ -68,5 +70,4 @@ Two suites, both on the tick.
 - 2026-09-10 10:10 ET  operator → chief-of-staff: started ANSWER 20 on CRITIC 20 (zero UPHELD) then Founder-plan bind; do not score. next=operator
 - 2026-09-10 10:08 ET  chief-of-staff → operator: record CRITIC 20 zero UPHELD then bind; do not score. next=operator
 - 2026-09-10 10:05 ET  soften-critic → chief-of-staff: CRITIC 20 zero UPHELD on ANSWER 19 hashes `7C1C1CB3…` / `7A934A4E…`; CRITIC 19 strikes are on the face; not bound. next=chief-of-staff
-- 2026-09-10 09:53 ET  soften-critic → chief-of-staff: started CRITIC 20 on ANSWER 19 hashes `7C1C1CB3…` / `7A934A4E…`; written attack only. next=soften-critic
 *Older lines rolled off at the 10-line cap. Full history is in the git log for `docs/agents/DESK.md`.*

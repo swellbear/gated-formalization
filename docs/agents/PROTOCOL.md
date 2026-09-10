@@ -13,14 +13,15 @@ CoS starts when `crew_tick.needed` is true, including via a Cursor Automation on
 `needed` is **true** when at least one of these holds:
 
 - **A.** A worker just finished and the desk says `next=chief-of-staff` (or `Status=done` and Active role is a worker, or `Status=idle` and a judicial owe exists that no job is covering).
-- **B.** A *new* judicial owe appeared since the last CoS closeout (Operator exception, soften-critic on new artifact hashes, Lab residual + honesty gate, human digestor exception).
+- **B.** A *new* judicial owe appeared since the last CoS closeout (Operator exception, soften-critic on new artifact hashes, human digestor exception).
 - **C.** A `CLERICAL_WHITELIST` role owed longer than two ticks (already an invariant).
-- **D.** Watch or hub liveness failed (cycles not advancing, or the honesty hub box would fail).
+- **D.** Watch or hub liveness failed (cycles not advancing, or the honesty hub box would fail). Hub fail is an ops doorbell (`D_hub`), not a veto on Lab.
 - **E.** Desk `Status=idle` while leave-off Next / an unassigned factory precondition is still open.
+- **F.** `F_continuation`: desk idle (or CoS with Job `—`), no assigned worker, no un-operated Lab PROPOSED, and no live 15m trial (executing selection still unscored). Favorite L1 PARK is dead. `R-SKIP-COINFLIP` `execution: false` is not live. Stamp F handled **only after** desk `Status=assigned` / `lab`.
 
-`needed` is **false** when the watch is healthy AND no new judicial owe AND no clerical arrears AND the desk already has an assigned worker who is not stale, **or** when the last CoS closeout stamped the same `reason_ids` (a 90s heartbeat, not a doorbell).
+`needed` is **false** when the watch is healthy AND no new judicial owe AND no clerical arrears AND the desk already has an assigned worker who is not stale AND F is not owed, **or** when the last CoS closeout stamped the same `reason_ids` (a 90s heartbeat, not a doorbell). F is not silenced by that stamp unless Lab is assigned.
 
-A CoS turn: session start, **one** assign or one closeout via `decide_cos_action` (`golf-offshoot/src/golf_offshoot/learning_lane_15m/cos_tick.py`), desk + leave-off to committed truth, stamp `last_cos_*` via `stamp_cos_closeout`. Then stop. It does not ping Founder for the Next list. It does ping Founder for the existing Ask list (HOLD lift, honer implement, arm, new rule class). Bind is not on that list. Forbidden assigns: lab, score `R-SKIP-COINFLIP`, re-score PARK'd `R-SKIP-2TO1-FAVORITE`, consult, HOLD lift, arm, bind, git push to `master`.
+A CoS turn: session start, **one** assign or one closeout via `decide_cos_action` (`golf-offshoot/src/golf_offshoot/learning_lane_15m/cos_tick.py`), desk + leave-off to committed truth, stamp `last_cos_*` via `stamp_cos_closeout`. Then stop. It does not ping Founder for the Next list. It does ping Founder for arm / cash / keys, golf C2/C4/WC3+, and retune golf θ. Bind is not on that list. Forbidden assigns: score `R-SKIP-COINFLIP`, re-score PARK'd `R-SKIP-2TO1-FAVORITE`, arm, bind, git push to `master`. **Lab is legal:** F_continuation assigns one 15m PROPOSED. CoS does not author the PROPOSED. Operator `lab_proposed` or Critic on a **new** hash first. Zero-objection closeout does not skip a sitting PROPOSED or a starved gym (assign Operator or Lab).
 
 **Zero-objection stop.** If the newest Soften Critic finding is zero UPHELD and Operator did **not** amend the bar (a record-only ANSWER, or no ANSWER owed), CoS **closes out**: `Status=idle`, do not assign Operator to write another ANSWER, do not assign Soften Critic on those same hashes. Two consecutive zero-UPHELD attacks is the treadmill; close it. A new judicial owe is a *new* bar/registry hash from a real amendment, not a new CRITIC file that found nothing. If `stamp_cos_closeout` cannot persist (cloud VM missing wake or import failure), the committed desk `last_cos_*` table is the stamp. `crew_tick` / `stamp_cos_closeout` must import without pydantic. Do not invent `A_worker_done` from an empty VM. Do not ask Founder to pip-install pydantic on the CoS VM.
 
@@ -73,9 +74,8 @@ Only if something **important must change or be reviewed**. One question, then w
 Ask:
 
 - C2 / C4 / TABLE / reopen WC3+
-- Expand past `KXBTC15M` or retune golf θ. Expansion is a **new lane**, not a second ticker on `learning_lane_15m`. Procedure: [`golf-offshoot/docs/LEARNING_LANE_EXPANSION.md`](../../golf-offshoot/docs/LEARNING_LANE_EXPANSION.md). Do not add a series to this lane’s ledger, bar, or globs.
+- Retune golf θ
 - Arm trading, cash, Kalshi keys
-- Lift the HOLD, implement honer `consult_enabled`, or declare a new class of rule
 - Change a Hard NO, or put golf WC1 / Ill on the 15m lane
 - A new dated-record ADMIT / REJECT that would rewrite the Operator stamp
 - A Validator fail that is not a simple writer fix (honesty / method conflict)
@@ -84,6 +84,9 @@ Do **not** ask (CoS just does it):
 
 - Leave-off “Next” items
 - Start or continue the 15m paper watch
+- Assign Lab when `F_continuation` is owed (one 15m PROPOSED; CoS does not write it)
+- Enable honer consult when exam + score + later Critic exist: assign Systems to flip **that** snapshot
+- Scaffold a **new lane** when [`LEARNING_LANE_EXPANSION.md`](../../golf-offshoot/docs/LEARNING_LANE_EXPANSION.md) checklist is true **and** this gym already has a live try (not a second ticker on this ledger)
 - `lane-15m` → `systems` → `validator` when a Kalshi `result` exists
 - Stay `SETTLE_PENDING` when it does not (never invent win/lose)
 - Desk / leave-off bookkeeping
@@ -109,7 +112,7 @@ PaperWatch alone is **not learning.** Learning has not begun until settled outco
 7. **publish** (gym PC only) — after the PaperWatch runner pass, `PUBLISH_ARMED` may push the hub allowlist (`manifest.json`, `paper_window_strip.png`, `validator_report.json`) to `origin/master` from a **master worktree** when `material_publish_reasons` is non-empty, `validate_hub.py --strict` is clean, `watch_is_collecting` PASS, and lineage A `ledger.json` is present. Never copy scorecards / `records[]` / fee-accurate Operator totals. Never `git push origin HEAD:master` from `cursor/honer-15m-sibling`. Cloud CoS/worker timers still do not publish. Skip a 90-second heartbeat. Never restamp an export to look fresher. Never invent. Factory merge of #178 is still a PR merge
 8. `hub-ui` — only if display is wrong or stale. No number invention
 9. `illustrator` — **owed by the wake** when the PNG lags live journal/settlements by more than one window (or there is no PNG and two or more windows of evidence exist). Claude Opus 5; real files only. One window of trail is allowed (the open window). Do not leave this optional. Re-render before a material publish so the board is not an hour behind the tables
-10. `lab` — only after Operator posts a clear residual **and** the honesty checklist passes. One **PROPOSED** cheap test, paper-only, then `operator`. Never self-admit
+10. `lab` — when `F_continuation` is owed (no live trial, no un-operated PROPOSED). One **PROPOSED** cheap test under the invent contract, paper-only, then `operator`. Never self-admit. Golf idle does not stop a 15m Lab assign. Honesty / hub fail is `D_hub`, not a Lab veto.
 11. CoS schedules the next tick. Do not ping Founder.
 
 Nothing new on a tick: CoS posts **one** desk heartbeat line (no new settle; watch still running) and stays quiet.
@@ -221,14 +224,9 @@ The hub re-execs its child when `git_tip` or a watched module's mtime moves (`op
 
 `git_tip` resolves branch SHAs through the worktree `commondir`. Without that, a linked worktree reads every branch SHA as empty, so a commit on the current branch looks like no change and nothing re-execs. `process_matches_disk` is the check that catches it if this regresses.
 
-### Honesty gate before Lab invents
+### Honesty gate is not a Lab veto
 
-CoS stamps these on the desk first. Any box failing ⇒ `digestor` + `operator` fix honesty and Lab stays idle.
-
-- One readable lineage story, or an explicitly labeled dual lineage — never a silent merge
-- `KXBTC15M-26SEP071500-00` honestly joined, or pending with its true reason (original book not on this tree / no invent)
-- No invented charts or pnl
-- One hub process for `learning_lane_15m`
+Three of the four boxes are derived (`learning_lane_15m/honesty.py`). A failing hub tree is `D_hub`: CoS assigns Digestor/Operator for honesty, but **does not** hold Lab when `F_continuation` is owed. Hub fail is an ops doorbell, not a Founder-shaped invent stop.
 
 ### Operator verdicts (claims vs arithmetic)
 
@@ -240,7 +238,7 @@ Operator has **three** verdicts on a Lab PROPOSED. Lab, CoS, and the wake issue 
 | **RUN-ONLY** | Execution | Claiming. Never becomes an ADMIT by accumulation | An Operator note only. Never `manifest.json`, never the digest, never the hub, never `records[]`, never a dated record |
 | **PARK** | Waiting | Execution and claiming | Method park, with a trigger class |
 
-Promotion from RUN-ONLY to a claim uses the normal ADMIT gate, exactly as strict as today. A falsifier firing is a **complete, successful outcome**: record it as a park closed on that falsifier. Do not delete it silently. Do not score a dead test as a failed turn.
+Promotion from RUN-ONLY to a claim uses the normal ADMIT gate, exactly as strict as today. A falsifier firing is a **complete, successful outcome**: record it as a park closed on that falsifier. Do not delete it silently. Do not score a dead test as a failed turn. If that rule still has `execution: true`, Operator drops `execution` in the score turn so a dead skip does not own the next trial. Only one selecting rule may execute.
 
 The method gates **claims**, not arithmetic. "Cannot admit" is not "cannot compute."
 

@@ -11,13 +11,14 @@ Write the latch in **both**:
 1. `SOFTENED_SET.md` — **Idle ON** + the reject rule.
 2. Operator STATUS stamp — **Operator idle until Founder GO? Y** + the reject rule.
 
-The reject rule in one line: *any new Lab PROPOSED under idle is idle-breach REJECT, not Softened.*
+The reject rule in one line: *any new **golf** Lab PROPOSED under idle is idle-breach REJECT, not Softened.* A CoS-assigned `learning_lane_15m` / `KXBTC15M` paper PROPOSED is **not** golf idle-breach.
 
 Chat-only idle is not the latch.
 
 ## Enforcement
 
-- Any new Lab **PROPOSED** under idle → **REJECT as idle-breach**. The board is **not Softened**.
+- Any new **golf** Lab **PROPOSED** under idle → **REJECT as idle-breach**. The board is **not Softened**.
+- A CoS-assigned `learning_lane_15m` / `KXBTC15M` paper PROPOSED is **not** idle-breach. Golf idle stays ON for golf. WC3+ still needs a Founder GO that names that invent.
 - **Soften Hard NO** under idle. Do not Soften the breach to absorb chatter, to “keep the lane moving,” or to clear a Digestor CONFLICT.
 - CONFLICT on an idle-breach PROPOSED clears by **parking** the board (REJECTED/PARKED), not by Softening it.
 - Do **not** re-reply park STATUS to pings that only restate the same facts (habit §C). Restate ≠ GO.

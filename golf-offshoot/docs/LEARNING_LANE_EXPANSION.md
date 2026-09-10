@@ -3,7 +3,7 @@
 **This file is the SoT for opening another Kalshi series.**  
 Park row 7, the protocol, leave-off, and the 15m lane doc point here. They do not restate the procedure. The 15m evidence bar already says Established does not license series expansion; this file is the lift checklist, not a bar amendment.
 
-The Founder HOLD of 2026-09-07 stands: no series other than `KXBTC15M` until Founder lifts it. **This file does not lift that HOLD.** Writing it, citing it, or making `decide()` generic is not evidence toward lifting it.
+The HOLD of 2026-09-07 stands: do not collect another series on this ledger. **This file does not collect a series.** CoS may assign a **new-lane scaffold** when the checklist below is true **and** this gym already has a live try. Writing this file, citing it, or making `decide()` generic is not evidence that a second ticker may be globbed here.
 
 ## Expansion rule
 
@@ -62,7 +62,9 @@ All of these, on **this** lane first:
 
 ## Who
 
-Only Founder lifts the HOLD. Operator, CoS, Lab, and a later bot reading a tidy tick cannot.
+CoS may assign a **new-lane scaffold** when this checklist is true **and** this gym already has a live try. That is not globbing a second ticker into `learning_lane_15m`. Do not collect the new series until the new package exists.
+
+Collecting another series (lifting the HOLD) is still a direction change. Do not collect “to get ready.” Marks before the new bar exist are informing marks.
 
 Lifting the HOLD is not arming and not a second hub. A second series does not share this lane’s process tree or publish surface until its own adapter and roots exist.
 

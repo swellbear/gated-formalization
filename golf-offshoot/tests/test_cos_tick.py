@@ -4,9 +4,15 @@ from golf_offshoot.learning_lane_15m.cos_tick import (
     ACTION_ASSIGN,
     ACTION_CLOSEOUT,
     ACTION_QUIET,
+    LAB_INVENT_JOB,
     decide_cos_action,
 )
-from golf_offshoot.learning_lane_15m.crew_tick import REASON_A_DONE, REASON_A_IDLE, REASON_B
+from golf_offshoot.learning_lane_15m.crew_tick import (
+    REASON_A_DONE,
+    REASON_A_IDLE,
+    REASON_B,
+    REASON_F,
+)
 
 
 def _desk(*, role="chief-of-staff", status="idle", job="—", thread=""):
@@ -49,7 +55,7 @@ def test_needed_false_is_quiet():
             "handled_reason_ids": ["A_idle_uncovered_judicial"],
         },
     }
-    decision = decide_cos_action(_desk(), wake=wake)
+    decision = decide_cos_action(_desk(), wake=wake, crew_tick=wake["crew_tick"])
     assert decision["action"] == ACTION_QUIET
     assert decision["assign"] is False
 
@@ -101,19 +107,95 @@ def test_operator_name_clear_is_closeout_not_score():
     assert decision["assign"] is False
 
 
-def test_lab_owed_is_not_assigned():
+def test_starved_empty_owed_assigns_lab():
     wake = {
-        "roles_owed": [_owed("lab", reasons=["lab_proposed"])],
+        "roles_owed": [],
         "crew_tick": {
             "needed": True,
-            "reason_ids": [REASON_A_IDLE],
+            "reason_ids": [REASON_F],
             "handled_reason_ids": [],
         },
     }
-    decision = decide_cos_action(_desk(job="one PROPOSED 03"), wake=wake, crew_tick=wake["crew_tick"])
-    assert decision["action"] == ACTION_CLOSEOUT
-    assert decision["assign"] is False
-    assert decision["role"] != "lab"
+    decision = decide_cos_action(_desk(), wake=wake, crew_tick=wake["crew_tick"])
+    assert decision["action"] == ACTION_ASSIGN
+    assert decision["role"] == "lab"
+    assert decision["assign"] is True
+    assert decision["job"] == LAB_INVENT_JOB
+    assert decision["reason"] == "continuation_assign_lab"
+
+
+def test_lab_proposed_operator_beats_f():
+    wake = {
+        "roles_owed": [_owed("operator", reasons=["lab_proposed LEARNING_LANE_15M_LAB_PROPOSED_03.md"])],
+        "crew_tick": {
+            "needed": True,
+            "reason_ids": [REASON_F, REASON_A_IDLE],
+            "handled_reason_ids": [],
+        },
+    }
+    decision = decide_cos_action(_desk(), wake=wake, crew_tick=wake["crew_tick"])
+    assert decision["action"] == ACTION_ASSIGN
+    assert decision["role"] == "operator"
+    assert decision["reason"] == "lab_proposed_operator_first"
+
+
+def test_operator_beats_critic_on_new_proposed_hash():
+    wake = {
+        "roles_owed": [
+            _owed("operator", reasons=["lab_proposed LEARNING_LANE_15M_LAB_PROPOSED_03.md"]),
+            _owed(
+                "soften-critic",
+                reasons=["artifact_unreviewed lab_lab_proposed_03"],
+                since="2026-09-10T12:00:00-04:00",
+            ),
+        ],
+        "crew_tick": {
+            "needed": True,
+            "reason_ids": [REASON_A_IDLE, REASON_B],
+            "handled_reason_ids": [],
+            "last_cos_at": "2026-09-10T11:00:00-04:00",
+        },
+    }
+    decision = decide_cos_action(_desk(), wake=wake, crew_tick=wake["crew_tick"])
+    assert decision["action"] == ACTION_ASSIGN
+    assert decision["role"] == "operator"
+
+
+def test_name_clear_plus_f_assigns_lab():
+    wake = {
+        "roles_owed": [
+            _owed(
+                "operator",
+                reasons=[
+                    "rule_reached_n R-SKIP-COINFLIP",
+                    "rule_reached_n R-SKIP-2TO1-FAVORITE",
+                ],
+            )
+        ],
+        "crew_tick": {
+            "needed": True,
+            "reason_ids": [REASON_F],
+            "handled_reason_ids": [],
+        },
+    }
+    decision = decide_cos_action(_desk(), wake=wake, crew_tick=wake["crew_tick"])
+    assert decision["action"] == ACTION_ASSIGN
+    assert decision["role"] == "lab"
+    assert decision["job"] == LAB_INVENT_JOB
+
+
+def test_hub_ok_false_still_allows_f():
+    wake = {
+        "roles_owed": [],
+        "crew_tick": {
+            "needed": True,
+            "reason_ids": ["D_hub_liveness", REASON_F],
+            "handled_reason_ids": [],
+        },
+    }
+    decision = decide_cos_action(_desk(), wake=wake, crew_tick=wake["crew_tick"])
+    assert decision["action"] == ACTION_ASSIGN
+    assert decision["role"] == "lab"
 
 
 def test_coinflip_score_job_is_forbidden():

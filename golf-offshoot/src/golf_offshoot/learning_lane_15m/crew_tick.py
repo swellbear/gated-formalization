@@ -4,13 +4,15 @@ The wake already names ``roles_owed``. This block only answers whether a
 Chief of Staff turn is owed. It is not a second SoT. The runner may write
 it; the runner may not become CoS, open a chat, ADMIT, invent, or push.
 
-needed is true when at least one of A–E holds. If unsure, needed stays true
+needed is true when at least one of A–F holds. If unsure, needed stays true
 and the reason says why. Same reason-id set after a CoS closeout stamp is a
-heartbeat, not a doorbell.
+heartbeat, not a doorbell. F_continuation is not silenced by that stamp unless
+the desk is Status=assigned / lab.
 """
 
 from __future__ import annotations
 
+import json
 import re
 from datetime import datetime
 from pathlib import Path
@@ -48,6 +50,13 @@ REASON_C = "C_clerical_arrears"
 REASON_D_WATCH = "D_watch_stuck"
 REASON_D_HUB = "D_hub_liveness"
 REASON_E = "E_idle_unassigned"
+REASON_F = "F_continuation"
+
+REGISTRY_REL = Path("golf-offshoot") / "docs" / "LEARNING_LANE_15M_RULES.json"
+BURNED_REL = Path("golf-offshoot") / "docs" / "LEARNING_LANE_15M_BURNED_CLASSES.json"
+SCORECARD_DIR_REL = Path("golf-offshoot") / "docs"
+
+_BLANK_JOBS = frozenset({"", "—", "-", "–", "–"})
 
 CLERICAL_ARREARS_TICKS = 2
 WATCH_STUCK_INTERVALS = 3
@@ -106,6 +115,112 @@ def _reason(rid: str, detail: str) -> dict[str, str]:
     return {"id": rid, "detail": detail}
 
 
+def _job_is_blank(job: str) -> bool:
+    return str(job or "").strip() in _BLANK_JOBS
+
+
+def desk_assigned_lab(desk: dict[str, Any]) -> bool:
+    return desk.get("status") == "assigned" and desk.get("active_role") == "lab"
+
+
+def unoperated_lab_proposed(wake: dict[str, Any] | None) -> bool:
+    """True when a Lab PROPOSED is sitting for Operator (not a new invent)."""
+    for entry in (wake or {}).get("roles_owed") or []:
+        for reason in entry.get("reasons") or []:
+            text = str(reason or "").strip().lower()
+            if text.startswith("lab_proposed"):
+                return True
+    return False
+
+
+def _load_json(path: Path) -> dict[str, Any]:
+    try:
+        payload = json.loads(path.read_text(encoding="utf-8"))
+    except (OSError, json.JSONDecodeError):
+        return {}
+    return payload if isinstance(payload, dict) else {}
+
+
+def _burned_class_ids(*, root: Path | None = None) -> set[str]:
+    payload = _load_json((root or repo_root()) / BURNED_REL)
+    out: set[str] = set()
+    for row in payload.get("classes") or []:
+        if not isinstance(row, dict) or not row.get("burned"):
+            continue
+        cid = str(row.get("id") or "").strip()
+        if cid:
+            out.add(cid)
+        for alias in row.get("aliases") or []:
+            text = str(alias or "").strip()
+            if text:
+                out.add(text)
+    return out
+
+
+def _l1_scorecard_exists(rule_id: str, *, root: Path | None = None) -> bool:
+    docs = (root or repo_root()) / SCORECARD_DIR_REL
+    return (docs / f"LEARNING_LANE_15M_SCORECARD_{rule_id}_L1.json").is_file()
+
+
+def live_selecting_rule_ids(
+    *,
+    root: Path | None = None,
+    registry: dict[str, Any] | None = None,
+) -> list[str]:
+    """Executing selection rules that are still on trial (unscored, unburned).
+
+    Favorite L1 PARK is dead: it has an L1 scorecard and its class is burned.
+    ``R-SKIP-COINFLIP`` ``execution: false`` is not live.
+    """
+    payload = registry if registry is not None else _load_json((root or repo_root()) / REGISTRY_REL)
+    burned = _burned_class_ids(root=root)
+    live: list[str] = []
+    for row in payload.get("rules") or []:
+        if not isinstance(row, dict):
+            continue
+        if not row.get("execution") or not row.get("selects"):
+            continue
+        if str(row.get("kind") or "").strip().lower() != "selection":
+            continue
+        rid = str(row.get("id") or "").strip()
+        if not rid:
+            continue
+        class_id = str(row.get("class") or "").strip()
+        if rid in burned or class_id in burned:
+            continue
+        if _l1_scorecard_exists(rid, root=root):
+            continue
+        live.append(rid)
+    return live
+
+
+def gym_is_starved(
+    desk: dict[str, Any],
+    wake: dict[str, Any] | None,
+    *,
+    root: Path | None = None,
+    registry: dict[str, Any] | None = None,
+    live_trial_ids: list[str] | None = None,
+) -> bool:
+    """True when CoS should assign Lab: idle gym, no live trial, no un-operated PROPOSED."""
+    status = str(desk.get("status") or "").strip().lower()
+    role = str(desk.get("active_role") or "").strip().lower()
+    job = str(desk.get("job") or "")
+    assigned_worker = status == "assigned" and role in WORKER_ROLES
+    if assigned_worker:
+        return False
+    cos_blank = role in {COS_ROLE, "cos"} and _job_is_blank(job)
+    if status not in {"idle", ""} and not cos_blank:
+        return False
+    if unoperated_lab_proposed(wake):
+        return False
+    if live_trial_ids is not None:
+        live = list(live_trial_ids)
+    else:
+        live = live_selecting_rule_ids(root=root, registry=registry)
+    return not live
+
+
 def _watch_stuck(watch: dict[str, Any], previous_watch: dict[str, Any] | None) -> str:
     """Empty string if healthy; a detail if the watch looks frozen."""
     watch = watch or {}
@@ -144,6 +259,9 @@ def compute_crew_tick(
     hub_ok: bool | None = None,
     previous_watch: dict[str, Any] | None = None,
     handled_reason_ids: list[str] | None = None,
+    root: Path | None = None,
+    registry: dict[str, Any] | None = None,
+    live_trial_ids: list[str] | None = None,
 ) -> dict[str, Any]:
     """Derive ``crew_tick`` from the wake, the desk, and the last CoS stamp.
 
@@ -250,6 +368,20 @@ def compute_crew_tick(
             )
         )
 
+    if gym_is_starved(
+        desk,
+        state,
+        root=root,
+        registry=registry,
+        live_trial_ids=live_trial_ids,
+    ):
+        reasons.append(
+            _reason(
+                REASON_F,
+                "gym has no live 15m trial; CoS assigns Lab under the invent contract",
+            )
+        )
+
     # Dedup by id, keep first detail.
     seen: set[str] = set()
     unique: list[dict[str, str]] = []
@@ -261,14 +393,22 @@ def compute_crew_tick(
     reason_ids = [row["id"] for row in unique]
 
     if assigned_worker and not clerical_arrears and not stuck and hub_ok is not False:
-        # Healthy assigned worker: drop A/E noise. B stays if a *different*
+        # Healthy assigned worker: drop A/E/F noise. B stays if a *different*
         # judicial owe is new; C and D already excluded.
-        unique = [row for row in unique if row["id"] not in {REASON_A_DONE, REASON_A_IDLE, REASON_E}]
+        unique = [
+            row
+            for row in unique
+            if row["id"] not in {REASON_A_DONE, REASON_A_IDLE, REASON_E, REASON_F}
+        ]
         if not new_judicial or all(_role(e) == role for e in new_judicial):
             unique = [row for row in unique if row["id"] != REASON_B]
         reason_ids = [row["id"] for row in unique]
 
-    if reason_ids and handled and set(reason_ids) <= set(handled):
+    handled_quiet = list(handled)
+    if REASON_F in reason_ids and not desk_assigned_lab(desk):
+        handled_quiet = [x for x in handled_quiet if x != REASON_F]
+
+    if reason_ids and handled_quiet and set(reason_ids) <= set(handled_quiet):
         # Same why, or a subset after the stamp itself retired B. Not a new doorbell.
         needed = False
         quiet = True
@@ -344,6 +484,7 @@ def attach_crew_tick(
         leave_off_text=leave_off_text,
         hub_ok=hub_ok,
         previous_watch=previous_watch,
+        root=root,
     )
     return state["crew_tick"]
 
@@ -368,6 +509,9 @@ def stamp_cos_closeout(
         return None
     current = state.get("crew_tick") if isinstance(state.get("crew_tick"), dict) else {}
     handled = [str(x) for x in (reason_ids if reason_ids is not None else current.get("reason_ids") or [])]
+    desk = parse_desk(read_desk_text(root=root))
+    if not desk_assigned_lab(desk):
+        handled = [x for x in handled if x != REASON_F]
     carried = {
         "last_cos_at": at or isoformat_now(),
         "last_cos_commit": str(commit or ""),
@@ -386,6 +530,7 @@ def stamp_cos_closeout(
         leave_off_text=read_leave_off_text(root=root),
         hub_ok=True,
         handled_reason_ids=carried["handled_reason_ids"],
+        root=root,
     )
     state["crew_tick"]["last_cos_at"] = carried["last_cos_at"]
     state["crew_tick"]["last_cos_commit"] = carried["last_cos_commit"]

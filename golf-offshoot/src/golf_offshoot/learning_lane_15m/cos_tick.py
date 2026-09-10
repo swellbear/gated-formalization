@@ -5,9 +5,9 @@ score because the wake still names ``rule_reached_n`` for favorite
 (already PARK) and coinflip (Hard NO). That is the opposite of
 unattended-and-smart.
 
-Forbidden assigns (code + skill): lab, score R-SKIP-COINFLIP, re-score
-PARK'd R-SKIP-2TO1-FAVORITE, consult_enabled, HOLD lift, arm, bind, git
-push to master.
+Forbidden assigns (code + skill): score R-SKIP-COINFLIP, re-score
+PARK'd R-SKIP-2TO1-FAVORITE, arm, bind, git push to master. Lab is legal:
+F_continuation assigns one 15m PROPOSED.
 """
 
 from __future__ import annotations
@@ -17,6 +17,7 @@ from typing import Any
 
 from golf_offshoot.learning_lane_15m.crew_tick import (
     JUDICIAL_ROLES,
+    REASON_F,
     WORKER_ROLES,
     compute_crew_tick,
     parse_desk,
@@ -26,8 +27,14 @@ ACTION_QUIET = "quiet"
 ACTION_CLOSEOUT = "closeout"
 ACTION_ASSIGN = "assign"
 
-#: CoS must never assign Lab. No PROPOSED 03 without Founder.
-FORBIDDEN_ASSIGN_ROLES = frozenset({"lab"})
+#: CoS may assign Lab when F_continuation is owed. CoS does not author the
+#: PROPOSED. Score / arm / bind / master push stay forbidden.
+FORBIDDEN_ASSIGN_ROLES = frozenset()
+
+LAB_INVENT_JOB = (
+    "one 15m PROPOSED under the invent contract (kill anatomy, unburned "
+    "mechanism, pre-reg, live falsifier); handoff operator"
+)
 
 #: Wake subjects that are name-clear bookkeeping, not a score Job.
 NAME_CLEAR_SUBJECTS = frozenset(
@@ -39,6 +46,7 @@ NAME_CLEAR_SUBJECTS = frozenset(
 
 LEGAL_ASSIGN_ROLES = frozenset(
     {
+        "lab",
         "operator",
         "digestor",
         "soften-critic",
@@ -49,12 +57,6 @@ LEGAL_ASSIGN_ROLES = frozenset(
 )
 
 FORBIDDEN_JOB_NEEDLES = (
-    "consult_enabled",
-    "enable consult",
-    "consult enabled",
-    "lift the hold",
-    "lift hold",
-    "hold lift",
     "arm trading",
     "trading_armed",
     "bind the bar",
@@ -97,6 +99,13 @@ def only_name_clear_reasons(reasons: list[str]) -> bool:
     return all(is_name_clear_reason(r) for r in reasons)
 
 
+def operator_owed_lab_proposed(wake: dict[str, Any] | None) -> bool:
+    for reason in operator_owed_reasons(wake):
+        if str(reason).strip().lower().startswith("lab_proposed"):
+            return True
+    return False
+
+
 def _parse_iso(value: Any) -> datetime | None:
     text = str(value or "").strip()
     if not text:
@@ -132,6 +141,27 @@ def _stale_unreviewed_critic_only(
     return since_stamp <= last
 
 
+def _critic_new_hash(
+    owed: list[dict[str, Any]],
+    *,
+    last_cos_at: str = "",
+) -> bool:
+    """True when Soften Critic is owed artifact_unreviewed newer than last CoS."""
+    last = _parse_iso(last_cos_at)
+    for entry in owed:
+        if _role(entry) != "soften-critic":
+            continue
+        reasons = _reasons(entry)
+        if not reasons or not all(r.startswith("artifact_unreviewed") for r in reasons):
+            continue
+        since_stamp = _parse_iso(entry.get("owed_since"))
+        if last is None:
+            return True
+        if since_stamp is not None and since_stamp > last:
+            return True
+    return False
+
+
 def job_is_forbidden(job: str) -> bool:
     low = (job or "").lower()
     return any(needle in low for needle in FORBIDDEN_JOB_NEEDLES)
@@ -146,6 +176,15 @@ def _base(*, action: str, reason: str, role: str | None = None, job: str | None 
         "skill": f".cursor/skills/gpf-{role}/SKILL.md" if role else None,
         "assign": action == ACTION_ASSIGN,
     }
+
+
+def _assign_lab() -> dict[str, Any]:
+    return _base(
+        action=ACTION_ASSIGN,
+        reason="continuation_assign_lab",
+        role="lab",
+        job=LAB_INVENT_JOB,
+    )
 
 
 def decide_cos_action(
@@ -178,11 +217,14 @@ def decide_cos_action(
     reason_ids = [str(x) for x in (tick.get("reason_ids") or [])]
     handled = [str(x) for x in (tick.get("handled_reason_ids") or [])]
     needed = bool(tick.get("needed"))
+    f_owed = REASON_F in reason_ids
 
     if status == "assigned" and active in WORKER_ROLES:
         return _base(action=ACTION_QUIET, reason="assigned_worker_covers", role=active, job=job)
 
-    if not needed or (reason_ids and set(reason_ids) <= set(handled)):
+    if not needed:
+        return _base(action=ACTION_QUIET, reason="quiet_or_handled")
+    if reason_ids and set(reason_ids) <= set(handled) and REASON_F not in reason_ids:
         return _base(action=ACTION_QUIET, reason="quiet_or_handled")
 
     if status == "done":
@@ -196,27 +238,46 @@ def decide_cos_action(
     uncovered_roles = sorted({_role(e) for e in judicial})
     op_reasons = operator_owed_reasons(wake)
 
+    # Wake may name Lab by mistake; invent is F_continuation, not a Lab owe.
     if "lab" in uncovered_roles:
         uncovered_roles = [r for r in uncovered_roles if r != "lab"]
-        if not uncovered_roles and only_name_clear_reasons(op_reasons):
-            return _base(action=ACTION_CLOSEOUT, reason="forbidden_lab")
-        if not uncovered_roles:
-            return _base(action=ACTION_CLOSEOUT, reason="forbidden_lab")
+
+    if operator_owed_lab_proposed(wake):
+        return _base(
+            action=ACTION_ASSIGN,
+            reason="lab_proposed_operator_first",
+            role="operator",
+            job=job if job and job.strip() not in {"", "—"} else "RUN-ONLY or PARK the sitting Lab PROPOSED",
+        )
 
     if only_name_clear_reasons(op_reasons):
         uncovered_roles = [r for r in uncovered_roles if r != "operator"]
-        if not uncovered_roles:
+        if not uncovered_roles and not f_owed:
             return _base(
                 action=ACTION_CLOSEOUT,
                 reason="name_clear_not_score",
             )
+
+    critic_new = _critic_new_hash(owed, last_cos_at=str(tick.get("last_cos_at") or ""))
+    if critic_new and "soften-critic" in uncovered_roles:
+        return _base(
+            action=ACTION_ASSIGN,
+            reason="legal_next_worker",
+            role="soften-critic",
+            job=job if job and job.strip() not in {"", "—"} else "attack the new artifact hash",
+        )
 
     if _stale_unreviewed_critic_only(
         owed,
         uncovered_roles,
         last_cos_at=str(tick.get("last_cos_at") or ""),
     ):
+        if f_owed:
+            return _assign_lab()
         return _base(action=ACTION_CLOSEOUT, reason="zero_objection_stop")
+
+    if f_owed:
+        return _assign_lab()
 
     legal = [r for r in uncovered_roles if r in LEGAL_ASSIGN_ROLES and r not in FORBIDDEN_ASSIGN_ROLES]
     if "operator" in legal and only_name_clear_reasons(op_reasons):
@@ -229,4 +290,5 @@ def decide_cos_action(
     role = "operator" if "operator" in legal else legal[0]
     if role in FORBIDDEN_ASSIGN_ROLES:
         return _base(action=ACTION_CLOSEOUT, reason="forbidden_role")
-    return _base(action=ACTION_ASSIGN, reason="legal_next_worker", role=role, job=job)
+    assign_job = LAB_INVENT_JOB if role == "lab" else job
+    return _base(action=ACTION_ASSIGN, reason="legal_next_worker", role=role, job=assign_job)

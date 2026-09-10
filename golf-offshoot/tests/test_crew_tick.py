@@ -8,8 +8,11 @@ from golf_offshoot.learning_lane_15m.crew_tick import (
     REASON_B,
     REASON_C,
     REASON_D_WATCH,
+    REASON_D_HUB,
     REASON_E,
+    REASON_F,
     compute_crew_tick,
+    live_selecting_rule_ids,
     stamp_cos_closeout,
 )
 from golf_offshoot.learning_lane_15m.learn import mark_roles_served, record_learning_tick
@@ -219,3 +222,94 @@ def test_stamp_cos_closeout_silences_the_same_set(tmp_path, monkeypatch):
         assert sorted(stamped["handled_reason_ids"]) == sorted(first["reason_ids"])
     finally:
         set_15m_root_override(None)
+
+
+def _idle_blank_desk():
+    return _desk(role="chief-of-staff", status="idle", job="—")
+
+
+def test_starved_idle_rings_f():
+    tick = compute_crew_tick(
+        {"watch": _watch(), "roles_owed": []},
+        desk_text=_idle_blank_desk(),
+        hub_ok=True,
+        live_trial_ids=[],
+    )
+    assert tick["needed"] is True
+    assert REASON_F in tick["reason_ids"]
+
+
+def test_assigned_worker_does_not_ring_f():
+    tick = compute_crew_tick(
+        {"watch": _watch(), "roles_owed": []},
+        desk_text=_desk(role="lab", status="assigned", job="one 15m PROPOSED"),
+        hub_ok=True,
+        live_trial_ids=[],
+    )
+    assert REASON_F not in tick["reason_ids"]
+
+
+def test_unoperated_proposed_does_not_ring_f():
+    tick = compute_crew_tick(
+        {
+            "watch": _watch(),
+            "roles_owed": [_owed("operator", reasons=["lab_proposed"])],
+        },
+        desk_text=_idle_blank_desk(),
+        hub_ok=True,
+        live_trial_ids=[],
+    )
+    assert REASON_F not in tick["reason_ids"]
+
+
+def test_live_trial_does_not_ring_f():
+    tick = compute_crew_tick(
+        {"watch": _watch(), "roles_owed": []},
+        desk_text=_idle_blank_desk(),
+        hub_ok=True,
+        live_trial_ids=["R-SKIP-NEW"],
+    )
+    assert REASON_F not in tick["reason_ids"]
+
+
+def test_hub_ok_false_still_rings_f():
+    tick = compute_crew_tick(
+        {"watch": _watch(), "roles_owed": []},
+        desk_text=_idle_blank_desk(),
+        hub_ok=False,
+        live_trial_ids=[],
+    )
+    assert REASON_F in tick["reason_ids"]
+    assert REASON_D_HUB in tick["reason_ids"]
+    assert tick["needed"] is True
+
+
+def test_stamping_f_without_assigning_lab_does_not_silence():
+    state = {
+        "watch": _watch(),
+        "roles_owed": [],
+        "crew_tick": {},
+    }
+    desk = _idle_blank_desk()
+    first = compute_crew_tick(
+        state, desk_text=desk, hub_ok=True, live_trial_ids=[]
+    )
+    assert REASON_F in first["reason_ids"]
+    state["crew_tick"] = {
+        "last_cos_at": "2026-09-10T12:00:00-04:00",
+        "last_cos_commit": "testhash",
+        "handled_reason_ids": list(first["reason_ids"]),
+    }
+    again = compute_crew_tick(
+        state,
+        desk_text=desk,
+        hub_ok=True,
+        handled_reason_ids=list(first["reason_ids"]),
+        live_trial_ids=[],
+    )
+    assert again["needed"] is True
+    assert REASON_F in again["reason_ids"]
+
+
+def test_this_tree_favorite_park_is_not_a_live_trial():
+    assert live_selecting_rule_ids() == []

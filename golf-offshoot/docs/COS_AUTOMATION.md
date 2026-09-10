@@ -25,18 +25,22 @@ If decide_cos_action.action is quiet, or needed is false: write nothing except a
 
 ZERO-OBJECTION STOP (read this before assigning):
   If the newest Soften Critic finding is zero UPHELD and Operator did not
-  amend the bar (record-only ANSWER, or no ANSWER owed): close out.
+  amend the bar (record-only ANSWER, or no ANSWER owed): close out
+  UNLESS F_continuation is owed or Operator is owed lab_proposed.
   Status=idle. Job=—. Active role=chief-of-staff.
   Do not assign Operator to write another ANSWER that records nothing.
   Do not assign Soften Critic on those same hashes.
   Two consecutive zero-UPHELD attacks is the treadmill; close it.
   A new judicial owe is a new bar/registry hash from a real amendment,
   not a new CRITIC_*.md that found nothing.
+  A starved gym (F_continuation) assigns Lab. A sitting PROPOSED assigns
+  Operator. Obey decide_cos_action.
 
-Forbidden assigns: lab (no PROPOSED 03), score R-SKIP-COINFLIP,
-re-score PARK'd R-SKIP-2TO1-FAVORITE, consult_enabled, HOLD lift, arm,
-bind, git push to master. Operator owed only rule_reached_n on those
-two rules is closeout, not a score Job.
+Forbidden assigns: score R-SKIP-COINFLIP,
+re-score PARK'd R-SKIP-2TO1-FAVORITE, arm,
+bind, git push to master. Lab is legal when decide_cos_action returns
+lab. CoS does not author the PROPOSED. Operator owed only rule_reached_n
+on those two rules is closeout unless F is owed (then assign Lab).
 
 If action is assign or closeout (and the stop rule does not apply): do
 exactly one thing —
@@ -56,11 +60,12 @@ Do not git push to master.
 Do not also run Systems, Operator, Lab, or Critic in the same automation fire. CoS assigns; 15m worker tick runs the assigned job. This automation is CoS-only.
 
 Hard NOs (same as the desk):
-  Do not set binding true. Do not arm trading. Do not lift the HOLD.
+  Do not set binding true. Do not arm trading.
   Do not add a series. Do not auto-publish / git push to master.
   Do not start or kill a hub. Do not write a fee-schedule placeholder.
-  Do not score R-SKIP-COINFLIP. Do not declare a new rule.
-  Do not impersonate Founder on arm or HOLD. Do not add Founder read-once as a bind condition. Do not both object and answer.
+  Do not score R-SKIP-COINFLIP. CoS does not author the PROPOSED or
+  registry row; Lab does when assigned.
+  Do not impersonate Founder on arm. Do not add Founder read-once as a bind condition. Do not both object and answer.
 
 ## Founder click
 

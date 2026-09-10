@@ -4,7 +4,7 @@
 **Series:** `KXBTC15M` only. Not a HOLD lift.  
 **Not** `learning_lane_15m`. Books do not merge. Trading **NOT ARMED**.
 
-This is a Founder-authorized sibling. Lineage A, PaperWatch, `LEARNING_LANE_15M_RULES.json`, and `trials_to_date` stay sole owners of the live 70. Isolation is a **staging wall** so evidence stays clean, not a claim honer stays a toy. Destination: search → exam → earned AND-skip consult inside factory `decide()`. Protocol: [`HONER_15M_PROMOTION.md`](HONER_15M_PROMOTION.md). Consult is **off** until Founder names implement.
+This is a Founder-authorized sibling. Lineage A, PaperWatch, `LEARNING_LANE_15M_RULES.json`, and `trials_to_date` stay sole owners of the live 70. Isolation is a **staging wall** so evidence stays clean, not a claim honer stays a toy. Destination: search → exam → earned AND-skip consult inside factory `decide()`. Protocol: [`HONER_15M_PROMOTION.md`](HONER_15M_PROMOTION.md). Consult is **off** until exam + score + later Critic exist and CoS assigns Systems to enable that snapshot.
 
 ## What it is
 

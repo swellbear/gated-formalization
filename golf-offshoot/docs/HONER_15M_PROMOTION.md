@@ -4,7 +4,7 @@
 
 KXBTC15M 15m is the **gym**. `honer_15m` is the **discovery organ**. Isolation of books is a staging wall so evidence stays clean. The destination is an **earned seat** inside factory `decide()` / `consult_registry` as one input among others that have already earned a seat. Failed discovery stays a failed notebook.
 
-Trading is **NOT ARMED**. HOLD stands. `consult_enabled` stays **false** until Founder names implement.
+Trading is **NOT ARMED**. HOLD stands. `consult_enabled` stays **false** until exam + score + later Critic exist and CoS assigns Systems to enable **that** frozen snapshot. Do not flip it in a fold that has not met that bar.
 
 ## Seat shape
 
@@ -28,8 +28,8 @@ A later Founder-named step may make a surviving honer family the executing regis
 5. **Operator** — RUN-ONLY on that note. Does not ADMIT. Does not flip `consult_enabled`. Does not score.
 6. **Score** — n=70 in-band exam windows, contrast `d_i = pnl_exam − pnl_fill_all`, in a session that did not author the snapshot. Do not peek. Do not score `R-SKIP-COINFLIP`.
 7. **Soften Critic** — later session from the author of the PROPOSED / score note. Operator answers in a turn that is not the attack.
-8. **Founder names implement** — the only enable. Flip `consult_enabled` to true on **that** frozen snapshot. Then put consult artifacts on the factory tick whitelist.
-9. Factory bar bind is crew+machine (Critic+Operator and critic-invariants). Arm and HOLD lift stay Founder. Consult enable is Founder-named implement (step 8). Expansion is a new lane ([`LEARNING_LANE_EXPANSION.md`](LEARNING_LANE_EXPANSION.md)).
+8. **CoS assigns Systems to enable** — when exam + score + later Critic exist for **that** frozen snapshot. Flip `consult_enabled` to true on that snapshot. Then put consult artifacts on the factory tick whitelist. Arm stays Founder. Do not enable in a fold that has not met the bar.
+9. Factory bar bind is crew+machine (Critic+Operator and critic-invariants). Arm stays Founder. Expansion is a new lane ([`LEARNING_LANE_EXPANSION.md`](LEARNING_LANE_EXPANSION.md)).
 
 ## Fail
 

@@ -10,7 +10,8 @@ When **ON**, enforce all of:
 
 - [ ] `SOFTENED_SET.md` says Idle ON + reject rule
 - [ ] Operator STATUS stamp says Idle ON + reject rule
-- [ ] New Lab PROPOSED under idle → **REJECT as idle-breach** (**not Softened**)
+- [ ] New **golf** Lab PROPOSED under idle → **REJECT as idle-breach** (**not Softened**)
+- [ ] A CoS-assigned `KXBTC15M` 15m paper PROPOSED is **not** golf idle-breach
 - [ ] Soften **Hard NO** under idle
 - [ ] Do **not** clear idle on restated park facts / chatter
 - [ ] After reject: stamp **REJECTED/PARKED**, never HOLD Soften pending GO
