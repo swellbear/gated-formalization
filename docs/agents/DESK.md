@@ -6,20 +6,20 @@ Thread lines are **one sentence, newest first, max 10**. Long findings belong in
 
 | Field | Value |
 |-------|--------|
-| Updated | 2026-09-10 18:15 ET |
-| Active role | chief-of-staff |
-| Job | — |
-| Status | idle |
-| Handoff | Discovery farm landed (I/J, isolated notebooks, one chair). FARM.json empty. Consult off. Hour-close still executing. HOLD stands. Trading NOT ARMED. next=idle |
+| Updated | 2026-09-10 18:30 ET |
+| Active role | lab |
+| Job | date unused CLOCK-CLOSE-MINUTE {15, 30, 45} as farm notebooks in LEARNING_LANE_15M_FARM.json (execution false; do not steal the chair); if none unused invent next kind or write farm_menu_exhausted; do not set execution true. |
+| Status | assigned |
+| Handoff | I_farm_open assigned. Unused clock minutes {15, 30, 45}. Hour-close still executing. Consult off. HOLD stands. Trading NOT ARMED. next=lab |
 | Waiting on Founder | **N** |
 
 ## last_cos (CoS stamp — doorbell silence)
 
 | Field | Value |
 |-------|--------|
-| last_cos_at | 2026-09-10T14:03:00-04:00 |
-| last_cos_commit | 35f4306 |
-| handled_reason_ids | A_worker_done, E_idle_unassigned |
+| last_cos_at | 2026-09-10T18:30:00-04:00 |
+| last_cos_commit | 32c2351 |
+| handled_reason_ids | E_idle_unassigned, I_farm_open |
 
 **Branch note.** Live work is `cursor/honer-15m-sibling` [#178](https://github.com/swellbear/gated-formalization/pull/178) (open; base is `cursor/part-a-clerical-trust-boundary`). [#176](https://github.com/swellbear/gated-formalization/pull/176) is still OPEN, not merged. `origin/master` is still `b063f56` (#175). Factory Turns 1–3 plus the ANSWER/CRITIC chain live on part-a / this sibling. Branching from `origin/master` would discard all of it. Do not use `C:\Users\bearh\gated-formalization` on `cursor/eia-window-job2`.
 
@@ -60,6 +60,7 @@ Two suites, both on the tick.
 
 ## Thread
 
+- 2026-09-10 18:30 ET  chief-of-staff → lab: date unused CLOCK-CLOSE-MINUTE {15, 30, 45} as farm notebooks (execution false; do not steal the chair). next=lab
 - 2026-09-10 18:15 ET  systems → chief-of-staff: discovery farm landed (`I_farm_open` / `J_farm_promote`; FARM.json empty; leash score then farm then consult; 8765 Farm panel not live). Do not date live notebooks this fire. Do not arm. Soften Critic of promote later. next=idle
 - 2026-09-10 16:55 ET  systems → chief-of-staff: tidy stack landed (seated first-70 keeper gates; score-then-enable; not hour-specific). Consult off. Do not arm. Soften Critic of enabler later. next=idle
 - 2026-09-10 16:05 ET  systems → chief-of-staff: discovery leash landed (honer fee-apply, machine exam score, consult file-gates, H clerical, crew replacement after consult). Consult off. Hour-close still executing. next=idle
@@ -69,5 +70,4 @@ Two suites, both on the tick.
 - 2026-09-10 13:36 ET  operator → chief-of-staff: started RUN-ONLY or PARK of Lab PROPOSED 03 `R-SKIP-HOUR-CLOSE`; do not score; do not ADMIT; do not bind. next=operator
 - 2026-09-10 13:26 ET  chief-of-staff → operator: RUN-ONLY or PARK Lab PROPOSED 03 `R-SKIP-HOUR-CLOSE`; do not score; do not ADMIT; do not bind. next=operator
 - 2026-09-10 13:25 ET  lab → chief-of-staff: PROPOSED 03 `R-SKIP-HOUR-CLOSE` filed (`skip_close_minute=0`, execution false); not scored; not an ADMIT. next=chief-of-staff
-- 2026-09-10 13:20 ET  lab → chief-of-staff: started one 15m PROPOSED under the invent contract; paper only; do not score; do not set execution. next=lab
 *Older lines rolled off at the 10-line cap. Full history is in the git log for `docs/agents/DESK.md`.*
