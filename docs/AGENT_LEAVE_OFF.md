@@ -5,7 +5,7 @@ Chat transcripts are not. A later Grok / Cursor cloud agent will not see a prior
 
 | Field | Value |
 |-------|--------|
-| Updated | 2026-09-10 09:10 EDT (Systems bind-candidate on `cursor/honer-15m-sibling` #178: Founder browser fee pin `founder_browser_bytes` SHA-256 `c326a69f…`; half-spread n=624; α-key; eleven method checks; leftover unpinned-fee face struck. CoS assigned soften-critic on hashes `D25D0227…` / `4D9E86C2…`. Not bound. Consult off. HOLD stands. Gym 12h 429 is not the pin clock. Lab no third PROPOSED. next=soften-critic) |
+| Updated | 2026-09-10 09:16 EDT (Systems bind-candidate committed `4a58a2e` on `cursor/honer-15m-sibling` #178: Founder browser fee pin `founder_browser_bytes` SHA-256 `c326a69f…`; half-spread n=624; α-key; eleven method checks; leftover unpinned-fee face struck. CoS assigned soften-critic on hashes `D25D0227…` / `4D9E86C2…`. Not bound. Consult off. HOLD stands. Gym 12h 429 is not the pin clock. Lab no third PROPOSED. next=soften-critic) |
 | Interim operator | Cursor chat (Grok bot usage exhausted until **2026-09-13**) |
 | Repo SoT | **Live work is PR [#178](https://github.com/swellbear/gated-formalization/pull/178)** (`cursor/honer-15m-sibling`). [#176](https://github.com/swellbear/gated-formalization/pull/176) is still OPEN, not merged (`cursor/part-a-clerical-trust-boundary`). `origin/master` is still `b063f56` (#175). Do not branch from `origin/master`. |
 | Local Windows tree for this interim | `C:\Users\bearh\gated-formalization-master-hub` |
