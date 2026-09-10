@@ -1,7 +1,7 @@
 # Operator — 15m method leftovers (park / CLOSED / RUN-ONLY)
 
 **Track:** `learning_lane_15m` · series `KXBTC15M` only
-**Updated:** 2026-09-10 07:35 EDT (row 14 overnight hole CLOSED / recorded defect; `rule_reached_n` counts reported, not scored; bar still not binding)
+**Updated:** 2026-09-10 10:40 EDT (row 15 `R-SKIP-2TO1-FAVORITE` L1 PARK on falsifier, class crew; not an ADMIT)
 **State:** No dated ADMIT on this lane. No Soften. No edge claim. `lab_admits=false` · Trading **NOT ARMED**
 **Golf idle:** stays **ON**. This file does not clear it, does not touch golf θ, and does not rewrite `phase1_dryrun/OPERATOR_STATUS_STAMP.md`.
 
@@ -26,7 +26,7 @@ Numbers move while the watch runs. This file names **states and triggers**, not 
 
 ---
 
-## Park ledger (2026-09-10 07:35 EDT)
+## Park ledger (2026-09-10 10:40 EDT)
 
 | | Count |
 |---|---:|
@@ -38,11 +38,11 @@ Numbers move while the watch runs. This file names **states and triggers**, not 
 | CLOSED · unreachable | **3** |
 | CLOSED · trigger fired since last stamp | 3 |
 | CLOSED · recorded defect (no backfill) | **2** |
-| CLOSED · on a falsifier | 0 |
+| CLOSED · on a falsifier | **1** |
 | RUN-ONLY executed (not an ADMIT) | 2 |
 | Dated ADMITs | 0 |
 
-No open crew park remains. The aging clock has nothing crew-owned to work on. Three open parks are founder; one is the rotating pending window (external). Do not mistake a clean crew column for progress. Two recorded defects (`072245`, overnight `100315`–`100500`) mean the locked count is not an unbroken run.
+No open crew park remains. Row 15 is **CLOSED / on a falsifier** (crew stamp). Three open parks are founder; one is the rotating pending window (external). Two recorded defects (`072245`, overnight `100315`–`100500`) mean the locked count is not an unbroken run.
 
 ---
 
@@ -98,6 +98,22 @@ This fold does **not** lift the HOLD and is not evidence toward lifting it. A RU
 | **What fired** | Lab PROPOSED 02 `R-SKIP-2TO1-FAVORITE` selects. Operator **RUN-ONLY**; `execution=true` (paper only). Trigger named here: *a later PROPOSED that actually selects* |
 | **Honest state (still true)** | Fills that still happen remain `entry_edge=0.0`. Selecting is not an edge and not an ADMIT. That honesty lives in [`LEARNING_LANE_15M_OPERATOR_NOTE_PROPOSED_02.md`](LEARNING_LANE_15M_OPERATOR_NOTE_PROPOSED_02.md), not as an open park |
 | **Not a claim** | Closing this row is not Established, not a bind, and not evidence toward lifting the HOLD |
+
+---
+
+## CLOSED — on a falsifier
+
+### 15. `R-SKIP-2TO1-FAVORITE` L1 — **CLOSED / on a falsifier**
+
+| | |
+|---|---|
+| **Class** | `crew` |
+| **Closed** | 2026-09-10 10:40 EDT |
+| **What fired** | Registry falsifier at `looks.first_look_n=70`. `score_rule` L1 `passes_every_binding_clause=false` (clauses (1), (4), (5) all fail). Park; do not retune `favorite_odds`. |
+| **Note** | [`LEARNING_LANE_15M_OPERATOR_NOTE_SCORE_R-SKIP-2TO1-FAVORITE_L1.md`](LEARNING_LANE_15M_OPERATOR_NOTE_SCORE_R-SKIP-2TO1-FAVORITE_L1.md) |
+| **Scorecard** | [`LEARNING_LANE_15M_SCORECARD_R-SKIP-2TO1-FAVORITE_L1.json`](LEARNING_LANE_15M_SCORECARD_R-SKIP-2TO1-FAVORITE_L1.json) |
+| **Honest state** | Admissible test completed. Not Established (`favorite_odds=2` not verifiably pre-registered). Not an ADMIT. `R-SKIP-COINFLIP` was not scored. |
+| **Forbidden** | Retune `favorite_odds` · replace 2/3 with a tape quantile · treat this PARK as an ADMIT · copy fee-accurate totals onto the hub / digest / `manifest.json` / `records[]` |
 
 ---
 
@@ -199,7 +215,7 @@ The 21:05 "park it, do not schedule" instruction is **superseded**.
 | **Owed for** | `lab_proposed` — CoS assigned RUN-ONLY unless a specific objection |
 | **Falsifier** | After the n the bar names (currently 70), indistinguishable from `R-BASELINE-FILL-ALL` → park; do not retune `favorite_odds` |
 | **What it is** | A paper selection rule authorized to execute. Skip posted YES ≥ 2/3; else fill at the posted mark with `entry_edge=0.0` |
-| **What it is not** | An ADMIT · an edge · a score · a dashboard figure · a revival of `R-SKIP-COINFLIP` · evidence toward lifting the HOLD |
+| **What it is not** | An ADMIT · an edge · a dashboard figure · a revival of `R-SKIP-COINFLIP` · evidence toward lifting the HOLD. L1 was later scored; the falsifier fired (row 15). |
 | **Promotion** | Would require the normal dated-record ADMIT gate, a binding bar, and a Soften Critic attack from a separate session. Accumulation of this note does not admit it |
 
 ---
@@ -214,6 +230,7 @@ The 21:05 "park it, do not schedule" instruction is **superseded**.
 - Lift the Founder HOLD (row 7) · expand past `KXBTC15M` · arm trading, keys, orders or cash
 - Put a fee-accurate figure on the hub or in `records[]` without a later ADMIT
 - Relist CLOSED-unreachable rows as open parks
+- Retune `favorite_odds` after row 15's falsifier
 
 ## CLOSED — founder trigger fired
 
@@ -228,4 +245,4 @@ The 21:05 "park it, do not schedule" instruction is **superseded**.
 
 ## Handoff
 
-CoS: overnight hole `100315`–`100500` is **CLOSED / recorded defect** (do not backfill). `rule_reached_n` counts are reported in [`LEARNING_LANE_15M_OPERATOR_NOTE_2026-09-10_GAP_AND_N.md`](LEARNING_LANE_15M_OPERATOR_NOTE_2026-09-10_GAP_AND_N.md): `R-SKIP-COINFLIP` 172 eligible settled after `declared_at`, `execution` false, **not scored**; `R-SKIP-2TO1-FAVORITE` 128 after `declared_at` / 127 after lived flip, still **not scored**, not Established. Evidence bar is **not binding**. Soften Critic hire stands. Golf idle stays **ON**. Founder HOLD stands.
+CoS: `R-SKIP-2TO1-FAVORITE` L1 is **PARK** on its falsifier (row 15, crew). Scorecard + Operator note quarantined. Not an ADMIT. Not Established. `R-SKIP-COINFLIP` still **not scored**, `execution` false. Binding unchanged. Consult off. Golf idle stays **ON**. Founder HOLD stands. Trading **NOT ARMED**.

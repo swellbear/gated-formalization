@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "lane": "learning_lane_15m",
-  "stamped_at": "2026-09-10T07:35:00-04:00",
+  "stamped_at": "2026-09-10T10:40:00-04:00",
   "framing": "honesty instrument, not a productivity metric, not progress",
   "open": {
     "total": 4,
@@ -13,7 +13,7 @@
   "closed": {
     "unreachable": 3,
     "trigger_fired_since_last_stamp": 3,
-    "closed_on_falsifier": 0,
+    "closed_on_falsifier": 1,
     "recorded_defect": 2
   },
   "run_only_executed": 2,
@@ -32,6 +32,7 @@
     "11_072245_outage_gap": "CLOSED / recorded defect — window does not exist; do not backfill",
     "14_overnight_hole_100315_100500": "CLOSED / recorded defect — eight windows 100315 through 100500 do not exist; do not backfill; detector KXBTC15M-26SEP100515-15",
     "12_soften_critic_hire": "CLOSED / founder trigger fired — Soften Critic hired 2026-09-08; not an ADMIT; bar still not binding",
-    "13_proposed_02": "RUN-ONLY executed — see LEARNING_LANE_15M_OPERATOR_NOTE_PROPOSED_02.md; R-SKIP-2TO1-FAVORITE execution true; not scored"
+    "13_proposed_02": "RUN-ONLY executed — see LEARNING_LANE_15M_OPERATOR_NOTE_PROPOSED_02.md; R-SKIP-2TO1-FAVORITE L1 scored and PARK on falsifier (row 15)",
+    "15_favorite_l1_falsifier": "CLOSED / on a falsifier — crew; R-SKIP-2TO1-FAVORITE L1 n=70; do not retune favorite_odds; not an ADMIT"
   }
 }

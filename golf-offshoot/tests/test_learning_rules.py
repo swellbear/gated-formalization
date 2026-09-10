@@ -124,9 +124,9 @@ def test_a_skip_rule_produces_no_fill_in_band_and_fills_out_of_band(tmp_path, mo
         set_15m_root_override(None)
 
 
-def test_two_to_one_favorite_is_not_a_burned_class():
-    assert class_is_burned("SKIP-2TO1-FAVORITE") is False
-    assert class_is_burned("R-SKIP-2TO1-FAVORITE") is False
+def test_two_to_one_favorite_is_burned_after_l1_falsifier():
+    assert class_is_burned("SKIP-2TO1-FAVORITE") is True
+    assert class_is_burned("R-SKIP-2TO1-FAVORITE") is True
     assert class_is_burned("RETUNE-COINFLIP-BAND") is True
     assert class_is_burned("FEE-AS-SIGNAL") is True
 

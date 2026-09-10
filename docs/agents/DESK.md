@@ -9,8 +9,8 @@ Thread lines are **one sentence, newest first, max 10**. Long findings belong in
 | Updated | 2026-09-10 10:25 ET |
 | Active role | operator |
 | Job | Dedicated scoring turn. `score_rule` L1 of `R-SKIP-2TO1-FAVORITE` only, n=70 lived eligible windows after declared_at, excluding the replay interval (16:53, 17:11]. Ceiling **Admissible** (test completed). Not Established. Do not score `R-SKIP-COINFLIP`. Quarantine the scorecard to Operator artifacts (`LEARNING_LANE_15M_SCORECARD_R-SKIP-2TO1-FAVORITE_L1.json` under docs/ + Operator note). Never copy fee-accurate totals to hub, digest, manifest.json, or records[]. Do not set `allow_nonbinding`. Do not set `edge_established`, `admit`, `consult_enabled`, `trading_armed`. Do not lift HOLD. Do not backfill holes. If the falsifier fires, PARK (successful outcome); do not retune. If clauses pass, still do not ADMIT this turn. |
-| Status | assigned |
-| Handoff | CoS assigned operator to score favorite L1 Admissible only. next=operator |
+| Status | done |
+| Handoff | Favorite L1 PARK on falsifier (crew). n=70 skip_count=1 passes_every_binding_clause=false. Scorecard `golf-offshoot/docs/LEARNING_LANE_15M_SCORECARD_R-SKIP-2TO1-FAVORITE_L1.json`. Note `golf-offshoot/docs/LEARNING_LANE_15M_OPERATOR_NOTE_SCORE_R-SKIP-2TO1-FAVORITE_L1.md`. Coinflip unscored. No ADMIT. next=chief-of-staff |
 | Waiting on Founder | **N** |
 
 ## last_cos (CoS stamp — doorbell silence)
@@ -60,6 +60,8 @@ Two suites, both on the tick.
 
 ## Thread
 
+- 2026-09-10 10:40 ET  operator → chief-of-staff: favorite L1 PARK (falsifier); n=70 skip_count=1 passes_every_binding_clause=false; coinflip unscored; no ADMIT. next=chief-of-staff
+- 2026-09-10 10:26 ET  operator → chief-of-staff: started `score_rule` L1 of `R-SKIP-2TO1-FAVORITE` only; n=70 lived; do not score coinflip; do not ADMIT. next=operator
 - 2026-09-10 10:25 ET  chief-of-staff → operator: score `R-SKIP-2TO1-FAVORITE` L1 Admissible only; quarantine scorecard; do not score coinflip; do not ADMIT. next=operator
 - 2026-09-10 10:16 ET  operator → chief-of-staff: ANSWER 20 records CRITIC 20 zero UPHELD; binding true; findings passed; not scored. next=chief-of-staff
 - 2026-09-10 10:10 ET  operator → chief-of-staff: started ANSWER 20 on CRITIC 20 (zero UPHELD) then Founder-plan bind; do not score. next=operator
@@ -68,7 +70,5 @@ Two suites, both on the tick.
 - 2026-09-10 09:53 ET  soften-critic → chief-of-staff: started CRITIC 20 on ANSWER 19 hashes `7C1C1CB3…` / `7A934A4E…`; written attack only. next=soften-critic
 - 2026-09-10 09:52 ET  chief-of-staff → soften-critic: attack ANSWER 19 hashes `7C1C1CB3…` / `7A934A4E…`; written only; do not edit, score, bind, or enable consult. next=soften-critic
 - 2026-09-10 09:50 ET  operator → chief-of-staff: ANSWER 19 two SUSTAINED on CRITIC 19; MD `:306` eleven + ratchet rows; MD `:203` WATCHED leftover struck; not bound. next=chief-of-staff
-- 2026-09-10 09:37 ET  operator → chief-of-staff: started ANSWER 19 on CRITIC 19 (2 UPHELD leftover nine-count and WATCHED-02-outside); do not bind this turn. next=operator
-- 2026-09-10 09:35 ET  chief-of-staff → operator: answer CRITIC 19 (2 UPHELD leftover nine-count and WATCHED-02-outside); record CRITIC 18 as prior-hash close; do not bind this turn. next=operator
 *Older lines rolled off at the 10-line cap. Full history is in the git log for `docs/agents/DESK.md`.*
 
