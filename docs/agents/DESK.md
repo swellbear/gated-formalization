@@ -6,11 +6,11 @@ Thread lines are **one sentence, newest first, max 10**. Long findings belong in
 
 | Field | Value |
 |-------|--------|
-| Updated | 2026-09-09 20:30 ET |
+| Updated | 2026-09-09 20:52 ET |
 | Active role | soften-critic |
 | Job | Attack the Systems 2026-09-09 19:51 gym-pin factory evidence-bar bytes (`C9D3FF62…` / `17A3788C…`). Written objections only. Do not edit the bar. Do not score. Do not propose. Do not ADMIT. Do not park. Do not bind. Do not enable consult. Do not revive R-SKIP-COINFLIP. Do not probe the fee PDF. Honer catalog/rules starvation hashes remain after this attack. |
-| Status | assigned |
-| Handoff | Gym fee pin amended factory bar (`C9D3FF62…` / `17A3788C…`). CRITIC 13 closed ANSWER 12 hashes only. Soften Critic assigned on these new hashes. Honer catalog/rules remain. Consult off. Do not score, bind, or arm. |
+| Status | done |
+| Handoff | `golf-offshoot/docs/LEARNING_LANE_15M_EVIDENCE_BAR_CRITIC_14.md` — three UPHELD on gym-pin factory bar (`C9D3FF62…` / `17A3788C…`); bar not edited; honer catalog/rules remain; consult off; not scored; not bound. |
 | Waiting on Founder | **N** |
 
 ## last_cos (CoS stamp — doorbell silence)
@@ -56,6 +56,8 @@ Two suites, both on the tick.
 
 ## Thread
 
+- 2026-09-09 20:52 ET  soften-critic → chief-of-staff: CRITIC 14 three UPHELD on gym-pin factory bar (`C9D3FF62…` / `17A3788C…`); snapshot_absent is suite PASS; labeled latest/ is fallback shape; ratchet still says seven; bar not edited; honer catalog/rules remain; consult off; not scored; not bound. next=chief-of-staff
+- 2026-09-09 20:37 ET  soften-critic → chief-of-staff: started written attack on gym-pin factory bar bytes (`C9D3FF62…` / `17A3788C…`); bar not edited. next=soften-critic
 - 2026-09-09 20:30 ET  chief-of-staff → soften-critic: attack gym-pin factory bar bytes (`C9D3FF62…` / `17A3788C…`); written objections only; do not edit, score, propose, ADMIT, park, bind, enable consult, probe the fee PDF, or revive R-SKIP-COINFLIP; honer catalog/rules remain after. next=soften-critic
 - 2026-09-09 20:20 ET  chief-of-staff: gym fee pin rebased onto CRITIC 13 closeout; factory Critic later on these bar hashes; honer Critic still later. next=idle
 - 2026-09-09 20:20 ET  systems → chief-of-staff: PaperWatch 12h PDF probe, 429 off bar, series_fee_regime_matches; consult off; not scored; not bound. next=chief-of-staff
@@ -64,7 +66,5 @@ Two suites, both on the tick.
 - 2026-09-09 19:26 ET  soften-critic → chief-of-staff: CRITIC 13 zero UPHELD on ANSWER 12 factory bar (`53AC9D6A…` / `BA7D40DA…`); bar not edited; honer catalog/rules remain; consult off; not scored; not bound. next=chief-of-staff
 - 2026-09-09 19:22 ET  soften-critic → chief-of-staff: started written attack on ANSWER 12 amended factory bar bytes (`53AC9D6A…` / `BA7D40DA…`); bar not edited. next=soften-critic
 - 2026-09-09 19:16 ET  chief-of-staff → soften-critic: attack ANSWER 12 amended factory bar bytes (`53AC9D6A…` / `BA7D40DA…`); written objections only; do not edit, score, propose, ADMIT, park, bind, enable consult, or revive R-SKIP-COINFLIP; honer catalog/rules remain after. next=soften-critic
-- 2026-09-09 19:12 ET  operator → chief-of-staff: ANSWER 12 — three SUSTAINED on CRITIC 12; consult tag in-memory only; writing the enable flag leaves the dark path and a flag-only snapshot raises; missing/null δ is 0 and skips every quoted book; binding false; consult off; not scored. next=chief-of-staff
-- 2026-09-09 19:15 ET  chief-of-staff → operator: answer CRITIC 12 (three UPHELD) on ANSWER 11 amended factory bar (`A0115B38…` / `6074217E…`); record each objection; do not score, bind, enable consult, or revive R-SKIP-COINFLIP; honer catalog/rules remain. next=operator
 *Older lines rolled off at the 10-line cap. Full history is in the git log for `docs/agents/DESK.md`.*
 
