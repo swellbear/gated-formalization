@@ -3,12 +3,12 @@
   "lane": "learning_lane_15m",
   "series": "KXBTC15M",
   "drafted_at": "2026-09-08T08:30:00-04:00",
-  "amended_at": "2026-09-10T09:00:00-04:00",
-  "amended_by": "systems",
-  "amendment": "Systems bind-candidate: Founder browser fee pin founder_browser_bytes; half-spread profile; alpha_first_look vs schedule first term; paper mid/last strings; WATCHED PROPOSED 02; declare_rule informing-mark gate; consult fail-closed; hub-down/gap ntfy; hub client-abort swallow; automations on cursor/honer-15m-sibling. CRITIC 18 closed ANSWER 17 hashes; those bytes are not the bind-candidate. Not a score. Not a bind. Consult not enabled.",
+  "amended_at": "2026-09-10T09:50:00-04:00",
+  "amended_by": "operator",
+  "amendment": "Operator ANSWER 19: CRITIC 19 two UPHELD / two SUSTAINED. MD :306 suite count eleven with tenth/eleventh named; MD ratchet rows half_spread_tenth / hub_autostart_eleventh; MD :203 WATCHED leftover struck. CRITIC 18 closed ANSWER 17 hashes D9FDA991\u2026 / F7E8F681\u2026 (not proposed to bind; ANSWER 18 not written). Not a score. Not a bind. Consult not enabled. write_critic_findings() was not called.",
   "prior_amendment": {
-    "amended_at": "2026-09-09T21:33:00-04:00",
-    "note": "Founder GO: drop founder_read_once from bind (crew-written, not a Founder GO). Bind is (1) Critic+Operator and (2) critic-invariants. Ninth method check bind_has_no_founder_read_once. ANSWER 15 leftover half-pass citation remains named. Not a score. Not a bind. Consult not enabled."
+    "amended_at": "2026-09-10T09:00:00-04:00",
+    "note": "Systems bind-candidate: Founder browser fee pin founder_browser_bytes; half-spread profile; alpha_first_look vs schedule first term; paper mid/last strings; WATCHED PROPOSED 02; declare_rule informing-mark gate; consult fail-closed; hub-down/gap ntfy; hub client-abort swallow; automations on cursor/honer-15m-sibling. CRITIC 18 closed ANSWER 17 hashes; those bytes are not the bind-candidate. Not a score. Not a bind. Consult not enabled."
   },
   "discovery_organ": {
     "lane": "honer_15m",
@@ -51,26 +51,32 @@
     {
       "id": "critic_answered",
       "met": false,
-      "detail": "CRITIC 18 zero UPHELD on ANSWER 17 hashes D9FDA991\u2026 / F7E8F681\u2026. Those bytes are not the bind-candidate. ANSWER 18 was not written. Condition 1 is unmet on these Systems bytes until a later-session Soften Critic attacks them and Operator answers.",
-      "critic_file": "golf-offshoot/docs/LEARNING_LANE_15M_EVIDENCE_BAR_CRITIC_17.md",
-      "critic_sha256_bytes": "c90c16ec1357cff4ec46e7db37785a3308423ca4ea9b3a71a541b99949f57e9e",
-      "answer_file": "golf-offshoot/docs/LEARNING_LANE_15M_EVIDENCE_BAR_OPERATOR_ANSWER_17.md",
-      "answered_bar_md_sha256": "1d29abcdc13746f349374f584f265cdd226c53486862cfa467552eb898c8091e",
-      "answered_bar_json_sha256": "a5fcfab7004a71f8c25e608505941fc9619c9dc8415b218dea0e32f7f4dc4770",
-      "upheld": 1,
-      "sustained": 1,
+      "detail": "CRITIC 19 two UPHELD on Systems bind-candidate hashes D25D0227\u2026 / 4D9E86C2\u2026; Operator ANSWER 19 two SUSTAINED (MD :306 nine-count leftover; MD :203 WATCHED-02-outside leftover). Condition 1 is unmet on the post-amend bytes until a later-session Soften Critic attacks them. CRITIC 18 was a completed zero-UPHELD on ANSWER 17 hashes D9FDA991\u2026 / F7E8F681\u2026; those bytes were not proposed to bind; ANSWER 18 was not written.",
+      "critic_file": "golf-offshoot/docs/LEARNING_LANE_15M_EVIDENCE_BAR_CRITIC_19.md",
+      "critic_sha256_bytes": "c7f7cbfe6256e5db95f5f92b595589b3a20145c655e3420e8f9d6062d2fd1f61",
+      "answer_file": "golf-offshoot/docs/LEARNING_LANE_15M_EVIDENCE_BAR_OPERATOR_ANSWER_19.md",
+      "answered_bar_md_sha256": "d25d0227136206ec08846147470e3da4aea58cfe0b25b5a0b51bb9b7284feeb2",
+      "answered_bar_json_sha256": "4d9e86c2c45362b8af5fbf040f2da5c5ba39f2efa879c0f82d04cfdb946b74d6",
+      "upheld": 2,
+      "sustained": 2,
       "overruled": 0,
       "prior_pair": {
-        "critic_file": "golf-offshoot/docs/LEARNING_LANE_15M_EVIDENCE_BAR_CRITIC_15.md",
-        "answer_file": "golf-offshoot/docs/LEARNING_LANE_15M_EVIDENCE_BAR_OPERATOR_ANSWER_15.md",
-        "critic_sha256_bytes": "df4187028075c127392cc6a73f3f362e06c7c2db087163441375fa5c03a46541"
+        "note": "CRITIC 18 was a completed zero-UPHELD on ANSWER 17 hashes D9FDA991\u2026 / F7E8F681\u2026. Those bytes were not proposed to bind. ANSWER 18 was not written.",
+        "critic_file": "golf-offshoot/docs/LEARNING_LANE_15M_EVIDENCE_BAR_CRITIC_18.md",
+        "critic_sha256_bytes": "ade8831c9ab38984ba9720ec7cd34b013f0da80b586082bcc731a7a71b83933d",
+        "answer_file": null,
+        "answered_bar_md_sha256": "d9fda9914f87ced484d4e341e5fe6f073f572f058046ffc6c0d343c7d10dd7c0",
+        "answered_bar_json_sha256": "f7e8f681bab38a50a64d06b69e33c7bb767f1f5277bac2e14f662f62d5395cc5",
+        "upheld": 0,
+        "sustained": 0,
+        "overruled": 0
       }
     },
     {
       "id": "critic_invariants_pass",
       "met": false,
-      "detail": "critic-invariants must pass on these Systems bind-candidate bytes. Fee pin is founder_browser_bytes, not gym HTTP 200. check_delta_above_detection_floor compares alpha_first_look to the schedule first term and next_look_alpha to current alpha_k. half_spread_profile_recorded and hub_autostart_registered are the tenth and eleventh CHECKS. A later clerical findings file is a separate artifact; this face does not pre-claim those hashes.",
-      "note": "critic.py records the newline-normalised digest, not the raw byte hash. Compare the digest the checker actually read. Operator bind restates last_findings after critic-invariants covers these bytes.",
+      "detail": "critic-invariants must pass on the post-ANSWER-19 bytes. Fee pin is founder_browser_bytes, not gym HTTP 200. check_delta_above_detection_floor compares alpha_first_look to the schedule first term and next_look_alpha to current alpha_k. half_spread_profile_recorded and hub_autostart_registered are the tenth and eleventh CHECKS. This amending turn did not call write_critic_findings(). The 2026-09-08 last_findings_reviewed list describes other bytes. A later clerical findings file is a separate artifact; this face does not pre-claim the post-amend hashes.",
+      "note": "critic.py records the newline-normalised digest, not the raw byte hash. Compare the digest the checker actually read. Operator bind restates last_findings after critic-invariants covers these bytes. last_findings_cover_these_bytes stays false: the 2026-09-08 list is other bytes; do not pretend the new hashes are already reviewed.",
       "last_findings_cover_these_bytes": false,
       "last_findings_ran_at": "2026-09-08T12:02:45.460786-04:00",
       "last_findings_reviewed": [
@@ -84,7 +90,7 @@
       "standing_named_fail": [],
       "standing_named_fail_struck": "fee_schedule_hash_recorded is pinned from founder_browser_bytes; it is not a standing fail on these bytes. The 2026-09-08 last_findings_reviewed list describes other bytes.",
       "failing_set_at_last_operator_read_struck": "2026-09-08T14:04:31.195208-04:00 list [fee_schedule_hash_recorded] described other bytes; not a picture of these hashes",
-      "evaluated_by": "copied check_delta_above_detection_floor arithmetic from critic.py:272-305; package not imported; write_critic_findings() was not called. honesty_stamp_is_fresh is a desk check and was not in failing."
+      "evaluated_by": "Operator ANSWER 19 did not call write_critic_findings(). The 2026-09-08 last_findings_reviewed list describes other bytes. honesty_stamp_is_fresh is a desk check and was not in failing."
     }
   ],
   "admit": false,
