@@ -6,11 +6,11 @@ Thread lines are **one sentence, newest first, max 10**. Long findings belong in
 
 | Field | Value |
 |-------|--------|
-| Updated | 2026-09-10 10:05 ET |
-| Active role | soften-critic |
-| Job | Attack the ANSWER 19 amended factory bar. MD sha256 `7c1c1cb3feb4dff389d6b82f87d7246bdc5439de1b690e63cf66317a0ad77745`, JSON `7a934a4e3bfc30fe538140ebc3f0c79ef93c816db48d9e9c4fde629da7d277b6`. CRITIC 19 demanded MD :306 eleven + ratchet tenth/eleventh and MD :203 WATCHED landing — those strikes are on these hashes. Written attack only. File CRITIC 20. Do not edit the bar, score, bind, enable consult, or GET the PDF as gym. |
-| Status | done |
-| Handoff | CRITIC 20 `golf-offshoot/docs/LEARNING_LANE_15M_EVIDENCE_BAR_CRITIC_20.md`; UPHELD 0. next=chief-of-staff |
+| Updated | 2026-09-10 10:08 ET |
+| Active role | operator |
+| Job | Record CRITIC 20 (`LEARNING_LANE_15M_EVIDENCE_BAR_CRITIC_20.md`, zero UPHELD) on ANSWER 19 hashes `7C1C1CB3…` / `7A934A4E…`. File ANSWER 20. Then this Job is the Founder-plan bind pass: confirm `run_critic_invariants` `passed: true` (fee pin is founder_browser_bytes, not empty). Set `binding: true`. Set condition 1 met (CRITIC 20 recorded). After ALL bar edits are final, call `write_critic_findings()`. Do not edit the bar after that write. Do not score. Consult off. Do not GET the PDF. Do not set trading_armed. Do not lift HOLD. Worker-automation generic "do not bind" is overridden by this named bind Job. |
+| Status | assigned |
+| Handoff | CoS assigned operator to record CRITIC 20 and bind. next=operator |
 | Waiting on Founder | **N** |
 
 ## last_cos (CoS stamp — doorbell silence)
@@ -35,7 +35,7 @@ These do not block Soften Critic. Waiting on Founder stays **N**.
 
 The runner exports locally. It does **not** commit or push. The public page is **not** self-maintaining. That is the same defect that left Pages stale for six hours tonight. A local export is not a publish. Systems still owns the manual tick step: material export → `--strict` → commit → push to `master`.
 
-## Honesty checklist 2026-09-10 09:52 ET (three boxes now derived, not typed)
+## Honesty checklist 2026-09-10 10:08 ET (three boxes now derived, not typed)
 
 Part 3 landed. Three boxes are computed in `learning_lane_15m/honesty.py` and the **derived verdict wins** — prose here can shut one, never open one, and deleting a row does not open the gate. The fourth is judgment and now needs a PID, a hash or a timestamp; `**PASS**` alone no longer opens it. The parser was narrowed, not widened.
 
@@ -46,7 +46,7 @@ Part 3 landed. Three boxes are computed in `learning_lane_15m/honesty.py` and th
 | One hub process on `learning_lane_15m` | **PASS** — *derived* from the process table. One hub **tree**, not one OS process: `py` launcher PID **24188** over supervisor PID **24532** and listener PID **20100** holding `127.0.0.1:8765`. Child re-exec'd 16:07:47 after sidecar/`app.py` (honer sidecar supervisor **18548** over tick child **23916**, `honer-15m` not `shell`). Criterion preserved as written. Do not start a second tree. |
 | No invented charts or pnl | **PASS** — *judgment, with evidence*. `digest_matches_ledger` PASS 2026-09-08T14:42:33−04:00 against the live book (90.98 / −9.02 both sides). Live `crew_tick.needed=true` (A idle uncovered judicial, B new judicial, E idle unassigned). Fee-accurate totals are not on the hub, digest, manifest or `records[]`. |
 
-**Gate is open on this restamp.** Golf idle stays **ON**. Evidence bar remains **not binding**. Consult is **off**. Honer search starvation is live (honer only). Fee pin is **landed** (`founder_browser_bytes`, SHA-256 `c326a69f596a11e8f8be2620402d39a8d4823920c21cc97c93a114d862699601`). Gym 12h 429 is drift detection, not the pin clock. Operator **RUN-ONLY**'d PROPOSED 02. CRITIC 18 closed ANSWER 17 hashes `D9FDA991…` / `F7E8F681…` (not the bind-candidate). CRITIC 19 two UPHELD on Systems bind-candidate `D25D0227…` / `4D9E86C2…`. Lab does not bring a third PROPOSED.
+**Gate is open on this restamp.** Golf idle stays **ON**. Evidence bar is **not binding until Operator ANSWER 20**. Consult is **off**. Fee pin is **landed** (`founder_browser_bytes`). CRITIC 20 zero UPHELD on ANSWER 19 hashes `7C1C1CB3…` / `7A934A4E…`. CRITIC 18 closed ANSWER 17 hashes (not proposed to bind). Lab does not bring a third PROPOSED.
 
 **The fee-schedule hash is pinned from Founder browser bytes.** Source `founder_browser_bytes`, file `golf-offshoot/docs/kalshi-fee-schedule.pdf`, 281129 bytes. Last gym GET remains HTTP 429 (drift only). Do not GET the PDF every 90s. Do not spoof a browser. **Do not write a placeholder.**
 
@@ -60,6 +60,7 @@ Two suites, both on the tick.
 
 ## Thread
 
+- 2026-09-10 10:08 ET  chief-of-staff → operator: record CRITIC 20 zero UPHELD then bind; do not score. next=operator
 - 2026-09-10 10:05 ET  soften-critic → chief-of-staff: CRITIC 20 zero UPHELD on ANSWER 19 hashes `7C1C1CB3…` / `7A934A4E…`; CRITIC 19 strikes are on the face; not bound. next=chief-of-staff
 - 2026-09-10 09:53 ET  soften-critic → chief-of-staff: started CRITIC 20 on ANSWER 19 hashes `7C1C1CB3…` / `7A934A4E…`; written attack only. next=soften-critic
 - 2026-09-10 09:52 ET  chief-of-staff → soften-critic: attack ANSWER 19 hashes `7C1C1CB3…` / `7A934A4E…`; written only; do not edit, score, bind, or enable consult. next=soften-critic
@@ -69,6 +70,5 @@ Two suites, both on the tick.
 - 2026-09-10 09:29 ET  soften-critic → chief-of-staff: CRITIC 19 two UPHELD on bind-candidate hashes `D25D0227…` / `4D9E86C2…`; Operator must record; not bound. next=chief-of-staff
 - 2026-09-10 09:21 ET  soften-critic → chief-of-staff: started CRITIC 19 on Systems bind-candidate hashes `D25D0227…` / `4D9E86C2…`; written attack only. next=soften-critic
 - 2026-09-10 09:10 ET  chief-of-staff → soften-critic: attack Systems bind-candidate hashes `D25D0227…` / `4D9E86C2…`; CRITIC 18 closed prior ANSWER 17 hashes; written only; do not edit, score, bind, or enable consult. next=soften-critic
-- 2026-09-10 09:10 ET  systems → chief-of-staff: bind-candidate landed (founder_browser_bytes pin, half-spread n=624, α-key, eleven checks); leftover unpinned-fee face struck; not bound; consult off. next=chief-of-staff
 *Older lines rolled off at the 10-line cap. Full history is in the git log for `docs/agents/DESK.md`.*
 
