@@ -26,6 +26,7 @@ from golf_offshoot.localtime import isoformat_now, now as eastern_now
 
 BAR_REL = Path("golf-offshoot") / "docs" / "LEARNING_LANE_15M_EVIDENCE_BAR.json"
 BURNED_REL = Path("golf-offshoot") / "docs" / "LEARNING_LANE_15M_BURNED_CLASSES.json"
+MECHANISM_CATALOG_REL = Path("golf-offshoot") / "docs" / "LEARNING_LANE_15M_MECHANISM_CATALOG.json"
 
 #: The public schedule ``k`` is cited from. A later schedule naming a different
 #: k, or a KXBTC15M override, makes the RUN-ONLY note stale.
@@ -65,6 +66,18 @@ def load_burned_classes(*, root: Path | None = None) -> dict[str, Any]:
     payload = json.loads(burned_path(root=root).read_text(encoding="utf-8"))
     if not isinstance(payload, dict):
         raise ValueError("burned-class registry must be an object")
+    return payload
+
+
+def mechanism_catalog_path(*, root: Path | None = None) -> Path:
+    return (Path(root) if root is not None else _repo_root()) / MECHANISM_CATALOG_REL
+
+
+def load_mechanism_catalog(*, root: Path | None = None) -> dict[str, Any]:
+    """Crew-owned kind menu. Lab loads this like burned classes. Not a Founder list."""
+    payload = json.loads(mechanism_catalog_path(root=root).read_text(encoding="utf-8"))
+    if not isinstance(payload, dict):
+        raise ValueError("mechanism catalog must be an object")
     return payload
 
 

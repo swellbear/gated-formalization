@@ -86,6 +86,9 @@ PENDING = "#9a7a10"
 PENDING_FILL = "#f0dfa4"
 POS = "#1f6b46"
 NEG = "#8d2b2b"
+SKIP = "#4a6a8a"
+SKIP_PNL = "skip · no position"
+SKIP_JOIN = "skip · no position"
 
 SANS = "DejaVu Sans"
 MONO = "DejaVu Sans Mono"
@@ -139,6 +142,8 @@ class WindowRow:
     paper_pnl_text: str = ""
     #: The published lineage names a paper book for this window that is not on this tree.
     missing_join: bool = False
+    #: Factory rule_decisions skip: no position, no booked pnl, not a would-have.
+    skipped: bool = False
 
 
 @dataclass(frozen=True)
@@ -472,17 +477,37 @@ def _paper_settle_cells(
     return (PENDING_WORD, None, NO_PNL)
 
 
+def _rule_decisions() -> dict[str, dict[str, Any]]:
+    """ticker -> decide() row from paper/rule_decisions.json. A skip has no book."""
+    path = paper_dir_15m() / "rule_decisions.json"
+    payload = _read_json(path)
+    if not isinstance(payload, dict):
+        return {}
+    rows = payload.get("decisions")
+    return rows if isinstance(rows, dict) else {}
+
+
 def collect_board() -> list[Lineage]:
     """The board as blocks of rows, newest window first, one block per paper lineage."""
     settles = _settlement_index()
     journal = _journal_index(_journal())
     joins = _paper_joins()
     published = _published_lineage()
+    decisions = _rule_decisions()
+    skip_tickers = {
+        ticker
+        for ticker, row in decisions.items()
+        if isinstance(row, dict) and str(row.get("action") or "").lower() == "skip"
+    }
 
-    tickers = list(joins)
-    tickers += [t for t in published.rows if t not in joins]
-    tickers += [t for t in journal if t not in joins and t not in published.rows]
-    tickers += [t for t in settles if t not in joins and t not in published.rows and t not in journal]
+    seen: set[str] = set()
+    tickers: list[str] = []
+    for group in (joins, published.rows, journal, settles, skip_tickers):
+        for ticker in group:
+            if ticker in seen:
+                continue
+            seen.add(str(ticker))
+            tickers.append(str(ticker))
 
     buckets: dict[str, list[WindowRow]] = {LINEAGE_LOCAL: [], LINEAGE_PUBLISHED: [], LINEAGE_TAPE: []}
     for ticker in tickers:
@@ -490,8 +515,14 @@ def collect_board() -> list[Lineage]:
         pub = published.rows.get(ticker) if join is None else None
         settle = settles.get(ticker)
         journal_row = journal.get(ticker)
+        decision = decisions.get(ticker) if isinstance(decisions.get(ticker), dict) else None
+        skipped = ticker in skip_tickers and join is None and pub is None
         status, result, src = _resolve_settle(settle, journal_row, pub)
         paper_settle, paper_pnl, paper_pnl_text = _paper_settle_cells(join, pub)
+        if skipped:
+            paper_settle = "no position"
+            paper_pnl = None
+            paper_pnl_text = SKIP_PNL
 
         window_id = next(
             (
@@ -500,6 +531,7 @@ def collect_board() -> list[Lineage]:
                     join.window_id if join else "",
                     (journal_row or {}).get("window_id", ""),
                     settle.window_id if settle else "",
+                    str((decision or {}).get("window_id") or ""),
                 )
                 if candidate
             ),
@@ -510,6 +542,8 @@ def collect_board() -> list[Lineage]:
         sources = [src]
         if join is not None:
             sources.append("paper/*.json")
+        if skipped:
+            sources.append("paper/rule_decisions.json")
         if pub is not None:
             sources.append(REL_MANIFEST.name)
         expiry = settle.expiry_value if settle else ""
@@ -524,6 +558,8 @@ def collect_board() -> list[Lineage]:
             lineage = LINEAGE_LOCAL
         elif pub is not None:
             lineage = LINEAGE_PUBLISHED
+        elif skipped:
+            lineage = LINEAGE_LOCAL
         else:
             lineage = LINEAGE_TAPE
 
@@ -534,7 +570,7 @@ def collect_board() -> list[Lineage]:
                 settle_status=status,
                 kalshi_result=result,
                 settle_src=" · ".join(dict.fromkeys(sources)),
-                paper_join=lineage != LINEAGE_TAPE,
+                paper_join=bool(join) or bool(pub),
                 # The manifest publishes no side for its rows, so a published join has none.
                 paper_side=join.side if join else "",
                 paper_mark=join.mark if join else None,
@@ -547,6 +583,7 @@ def collect_board() -> list[Lineage]:
                 paper_pnl=paper_pnl,
                 paper_pnl_text=paper_pnl_text,
                 missing_join=paper_settle.strip().lower().startswith(MISSING_JOIN_WORD),
+                skipped=skipped,
             )
         )
 
@@ -620,7 +657,9 @@ def _window_text(row: WindowRow, tz: Any) -> str:
 
 def _cells(row: WindowRow, tz: Any) -> dict[str, str]:
     join = "paper join" if row.paper_join else "journal only"
-    if row.missing_join:
+    if row.skipped:
+        join = SKIP_JOIN
+    elif row.missing_join:
         join = NO_BOOK_HERE
     elif row.paper_join and row.paper_side:
         join = f"paper join · {row.paper_side}"
@@ -666,6 +705,7 @@ def board_fingerprint(blocks: list[Lineage]) -> str:
                     "src": row.settle_src,
                     "join": row.paper_join,
                     "missing_join": row.missing_join,
+                    "skipped": row.skipped,
                     "side": row.paper_side,
                     "mark": row.paper_mark,
                     "paper_settle": row.paper_settle,
@@ -739,7 +779,10 @@ def render_paper_window_strip() -> Path | None:
     pnl_span = max((abs(v) for v in pnl_values), default=0.0) * 1.35 or 1.0
 
     # A lineage whose files record no pnl gets no bar axis at all, rather than an empty grid.
-    has_bars = [any(row.paper_pnl is not None for row in block.rows) for block in blocks]
+    # Skip rows still get the axis so the hollow tick is visible.
+    has_bars = [
+        any(row.paper_pnl is not None or row.skipped for row in block.rows) for block in blocks
+    ]
     last_bar_block = max((i for i, flag in enumerate(has_bars) if flag), default=-1)
 
     cursor_in = fig_h - HEADER_IN
@@ -813,7 +856,17 @@ def render_paper_window_strip() -> Path | None:
                     )
                 )
             cells = _cells(row, tz)
-            fig.text(fx(COLUMNS[0][1]), centre, row.ticker, fontsize=10, color=INK, fontweight="bold", family=MONO, va="center")
+            ticker_color = SKIP if row.skipped else INK
+            fig.text(
+                fx(COLUMNS[0][1]),
+                centre,
+                row.ticker,
+                fontsize=10,
+                color=ticker_color,
+                fontweight="bold",
+                family=MONO,
+                va="center",
+            )
             for key, x_in, _ in COLUMNS[1:]:
                 if key == "kalshi_result":
                     label, text_color, fill = _result_chip(row)
@@ -831,6 +884,17 @@ def render_paper_window_strip() -> Path | None:
                     continue
                 if key == "paper_pnl":
                     is_number = row.paper_pnl is not None
+                    if row.skipped:
+                        fig.text(
+                            fx(x_in),
+                            centre,
+                            cells[key],
+                            fontsize=8.8,
+                            color=SKIP,
+                            family=MONO,
+                            va="center",
+                        )
+                        continue
                     fig.text(
                         fx(x_in),
                         centre,
@@ -896,6 +960,18 @@ def _draw_pnl_axis(ax: Any, rows: list[WindowRow], *, span: float, show_x: bool)
 
     for index, row in enumerate(rows):
         y = count - index - 0.5
+        if row.skipped:
+            ax.plot(
+                0,
+                y,
+                marker="o",
+                markersize=7.5,
+                markerfacecolor="none",
+                markeredgecolor=SKIP,
+                markeredgewidth=1.4,
+                zorder=3,
+            )
+            continue
         if row.paper_pnl is None:
             # No bar at all. The PAPER PNL text column already says why, and a 0-length bar
             # sitting on the zero line would read as a settled break-even.
@@ -936,7 +1012,14 @@ def _draw_header(
     settle_files = len(list(root.glob("*.json"))) if root.is_dir() else 0
     # A missing paper join is not a join on this tree and not a pending window, so it is kept out
     # of both counts and named in its own.
-    joins = sum(1 for b in blocks if b.key != LINEAGE_TAPE for row in b.rows if not row.missing_join)
+    joins = sum(
+        1
+        for b in blocks
+        if b.key != LINEAGE_TAPE
+        for row in b.rows
+        if not row.missing_join and not row.skipped
+    )
+    skips = sum(1 for b in blocks for row in b.rows if row.skipped)
     tape = sum(b.total for b in blocks if b.key == LINEAGE_TAPE)
     drawn = [row for block in blocks for row in block.rows]
     yes = sum(1 for row in drawn if row.kalshi_result == "yes")
@@ -959,7 +1042,7 @@ def _draw_header(
     stamp = str(journal.get("generated_at") or "")
     lines = (
         lane_line,
-        f"{joins} paper-book join(s) · {tape} Kalshi-only journal row(s) · {settle_files} settlement file(s) · "
+        f"{joins} paper-book join(s) · {skips} skip(s) (no position) · {tape} Kalshi-only journal row(s) · {settle_files} settlement file(s) · "
         f"result=yes {yes} · result=no {no} · {PENDING_WORD} {pending} · {MISSING_JOIN_WORD} {missing}",
         (f"journal generated_at={stamp}" if stamp else "journal generated_at not recorded")
         + f" · window clock in {tz_short} · rendered {datetime.now().astimezone():%Y-%m-%d %H:%M %Z}",
@@ -1007,6 +1090,7 @@ def _draw_header(
         handles=[
             patch_cls(facecolor=POS, edgecolor=INK, label="bar right — pnl recorded on file is positive"),
             patch_cls(facecolor=NEG, edgecolor=INK, label="bar left — pnl recorded on file is negative"),
+            patch_cls(facecolor="none", edgecolor=SKIP, label=f'hollow tick — "{SKIP_PNL}", never a would-have'),
             patch_cls(facecolor=BG, edgecolor=FAINT, label=f'no bar — "{NO_PNL}" / "{NO_PAPER}", never 0'),
         ],
         title="PAPER PNL column (per window, per lineage)",

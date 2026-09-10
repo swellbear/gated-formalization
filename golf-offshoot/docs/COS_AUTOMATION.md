@@ -26,21 +26,23 @@ If decide_cos_action.action is quiet, or needed is false: write nothing except a
 ZERO-OBJECTION STOP (read this before assigning):
   If the newest Soften Critic finding is zero UPHELD and Operator did not
   amend the bar (record-only ANSWER, or no ANSWER owed): close out
-  UNLESS F_continuation is owed or Operator is owed lab_proposed.
+  UNLESS F_continuation or H_honer_freeze is owed or Operator is owed lab_proposed.
   Status=idle. Job=—. Active role=chief-of-staff.
   Do not assign Operator to write another ANSWER that records nothing.
   Do not assign Soften Critic on those same hashes.
   Two consecutive zero-UPHELD attacks is the treadmill; close it.
   A new judicial owe is a new bar/registry hash from a real amendment,
   not a new CRITIC_*.md that found nothing.
-  A starved gym (F_continuation) assigns Lab. A sitting PROPOSED assigns
-  Operator. Obey decide_cos_action.
+  A starved gym (F_continuation) assigns Lab. An open honer freeze
+  (H_honer_freeze) assigns Lab even if a factory trial is live. A sitting
+  PROPOSED assigns Operator. If both H and F, H wins. Obey decide_cos_action.
 
 Forbidden assigns: score R-SKIP-COINFLIP,
 re-score PARK'd R-SKIP-2TO1-FAVORITE, arm,
 bind, git push to master. Lab is legal when decide_cos_action returns
-lab. CoS does not author the PROPOSED. Operator owed only rule_reached_n
-on those two rules is closeout unless F is owed (then assign Lab).
+lab. CoS does not author the PROPOSED. Do not enable consult. Operator owed
+only rule_reached_n on those two rules is closeout unless F or H is owed
+(then assign Lab).
 
 If action is assign or closeout (and the stop rule does not apply): do
 exactly one thing —

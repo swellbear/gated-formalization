@@ -2,17 +2,21 @@ import json
 
 import pytest
 
-from golf_offshoot.learning_lane_15m.evidence_bar import class_is_burned
+from golf_offshoot.learning_lane_15m.evidence_bar import class_is_burned, load_mechanism_catalog
 from golf_offshoot.learning_lane_15m.paper import load_decisions, paper_autobet_open_markets
 from golf_offshoot.learning_lane_15m.paths import set_15m_root_override
 from golf_offshoot.learning_lane_15m.rules import (
     RuleAlreadyInformed,
     RuleNotScorable,
+    RuleSkipRateUnnamed,
+    RuleTooSparse,
     close_minute,
     decide,
     declare_rule,
+    expected_skip_rate,
     favorite_threshold,
     load_rules,
+    min_expected_skip_rate,
     score_rule,
     selects_on_posted_yes_cut,
     window_is_lived,
@@ -141,6 +145,8 @@ def test_two_to_one_favorite_is_burned_after_l1_falsifier():
     assert class_is_burned("FEE-AS-SIGNAL") is True
     assert class_is_burned("SKIP-HOUR-CLOSE") is False
     assert class_is_burned("R-SKIP-HOUR-CLOSE") is False
+    assert class_is_burned("RETUNE-CLOCK-MINUTE") is True
+    assert class_is_burned("retune-skip-close-minute") is True
     assert class_is_burned("SEAS-DIR") is True
 
 
@@ -296,11 +302,12 @@ def test_declare_rule_refuses_a_selecting_rule_when_marks_exist(tmp_path):
             now_iso="2026-09-10T13:25:00-04:00",
         )
         assert row["id"] == "R-SKIP-HOUR-CLOSE-TEST"
+        assert row["expected_skip_rate"] == 0.25
     finally:
         set_15m_root_override(None)
 
 
-def test_declare_rule_allows_a_selecting_rule_on_an_empty_tree(tmp_path):
+def test_declare_rule_refuses_unnamed_posted_yes_on_an_empty_tree(tmp_path):
     set_15m_root_override(tmp_path / "kalshi_15m")
     try:
         docs = tmp_path / "golf-offshoot" / "docs"
@@ -309,16 +316,98 @@ def test_declare_rule_allows_a_selecting_rule_on_an_empty_tree(tmp_path):
             json.dumps({"rules": [], "trials_to_date": 0, "trials_log": []}),
             encoding="utf-8",
         )
-        row = declare_rule(
-            {
-                "id": "R-SKIP-NEW-CUT",
-                "kind": "selection",
-                "selects": True,
-                "params": {"favorite_odds": 3},
-            },
-            root=tmp_path,
-            now_iso="2026-09-10T09:00:00-04:00",
-        )
-        assert row["id"] == "R-SKIP-NEW-CUT"
+        with pytest.raises(RuleSkipRateUnnamed, match="product structure"):
+            declare_rule(
+                {
+                    "id": "R-SKIP-NEW-CUT",
+                    "kind": "selection",
+                    "selects": True,
+                    "params": {"favorite_odds": 3},
+                },
+                root=tmp_path,
+                now_iso="2026-09-10T09:00:00-04:00",
+            )
     finally:
         set_15m_root_override(None)
+
+
+def test_declare_rule_refuses_a_minute_not_on_the_quartet(tmp_path):
+    set_15m_root_override(tmp_path / "kalshi_15m")
+    try:
+        docs = tmp_path / "golf-offshoot" / "docs"
+        docs.mkdir(parents=True)
+        (docs / "LEARNING_LANE_15M_RULES.json").write_text(
+            json.dumps({"rules": [], "trials_to_date": 0, "trials_log": []}),
+            encoding="utf-8",
+        )
+        with pytest.raises(RuleTooSparse, match="density floor"):
+            declare_rule(
+                {
+                    "id": "R-SKIP-MINUTE-7",
+                    "kind": "selection",
+                    "selects": True,
+                    "params": {"skip_close_minute": 7},
+                    "expression": {"skip_if": "close_minute_eq"},
+                },
+                root=tmp_path,
+            )
+    finally:
+        set_15m_root_override(None)
+
+
+def test_hour_close_expected_skip_rate_clears_the_floor():
+    rule = {
+        "id": "R-SKIP-HOUR-CLOSE",
+        "selects": True,
+        "params": {"skip_close_minute": 0},
+        "expression": {"skip_if": "close_minute_eq"},
+    }
+    assert expected_skip_rate(rule) == 0.25
+    assert expected_skip_rate(rule) >= min_expected_skip_rate()
+    civil = {
+        "id": "R-SKIP-CIVIL",
+        "selects": True,
+        "params": {"skip_close_minutes": [0, 30]},
+        "expression": {"skip_if": "close_minute_in"},
+    }
+    assert expected_skip_rate(civil) == 0.5
+    fav = {
+        "id": "R-SKIP-2TO1-FAVORITE",
+        "selects": True,
+        "params": {"favorite_odds": 2},
+    }
+    assert expected_skip_rate(fav) is None
+
+
+def test_civil_boundaries_expresses_skip_on_named_walls():
+    rule = {
+        "id": "R-SKIP-CIVIL",
+        "declared_at": "2026-09-10T14:00:00-04:00",
+        "kind": "selection",
+        "selects": True,
+        "params": {"skip_close_minutes": [0, 30]},
+        "expression": {"skip_if": "close_minute_in"},
+    }
+    assert selects_on_posted_yes_cut(rule) is False
+    assert decide(rule, posted_yes=0.50, close_at="2026-09-10T15:00:00-04:00")["action"] == "skip"
+    assert decide(rule, posted_yes=0.50, close_at="2026-09-10T15:30:00-04:00")["action"] == "skip"
+    assert decide(rule, posted_yes=0.80, close_at="2026-09-10T15:15:00-04:00")["action"] == "fill"
+
+
+def test_mechanism_catalog_seeds_the_four_kinds():
+    kinds = [row["id"] for row in load_mechanism_catalog()["kinds"]]
+    assert kinds == [
+        "CLOCK-CLOSE-MINUTE",
+        "CLOCK-CIVIL-BOUNDARIES",
+        "HONER-FROZEN-CONSULT",
+        "HONER-FAMILY-AMEND",
+    ]
+
+
+def test_existing_registry_rows_are_grandfathered():
+    payload = load_rules()
+    fav = next(row for row in payload["rules"] if row["id"] == "R-SKIP-2TO1-FAVORITE")
+    assert fav["selects"] is True
+    assert "expected_skip_rate" not in fav
+    hour = next(row for row in payload["rules"] if row["id"] == "R-SKIP-HOUR-CLOSE")
+    assert hour["params"]["skip_close_minute"] == 0

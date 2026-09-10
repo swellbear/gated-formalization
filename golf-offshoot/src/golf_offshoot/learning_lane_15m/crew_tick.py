@@ -4,10 +4,10 @@ The wake already names ``roles_owed``. This block only answers whether a
 Chief of Staff turn is owed. It is not a second SoT. The runner may write
 it; the runner may not become CoS, open a chat, ADMIT, invent, or push.
 
-needed is true when at least one of A–F holds. If unsure, needed stays true
+needed is true when at least one of A–H holds. If unsure, needed stays true
 and the reason says why. Same reason-id set after a CoS closeout stamp is a
-heartbeat, not a doorbell. F_continuation is not silenced by that stamp unless
-the desk is Status=assigned / lab.
+heartbeat, not a doorbell. F_continuation and H_honer_freeze are not
+silenced by that stamp unless the desk is Status=assigned / lab.
 """
 
 from __future__ import annotations
@@ -51,10 +51,17 @@ REASON_D_WATCH = "D_watch_stuck"
 REASON_D_HUB = "D_hub_liveness"
 REASON_E = "E_idle_unassigned"
 REASON_F = "F_continuation"
+REASON_H = "H_honer_freeze"
 
 REGISTRY_REL = Path("golf-offshoot") / "docs" / "LEARNING_LANE_15M_RULES.json"
 BURNED_REL = Path("golf-offshoot") / "docs" / "LEARNING_LANE_15M_BURNED_CLASSES.json"
 SCORECARD_DIR_REL = Path("golf-offshoot") / "docs"
+HONER_LATEST_REL = Path("golf-offshoot") / "data" / "honer_15m" / "latest"
+CONSULT_SNAPSHOT_REL = (
+    Path("golf-offshoot") / "data" / "learning_lane_15m" / "latest" / "honer_consult.json"
+)
+EVIDENCE_BAR_REL = Path("golf-offshoot") / "docs" / "LEARNING_LANE_15M_EVIDENCE_BAR.json"
+LAB_PROPOSED_GLOB = "LEARNING_LANE_15M_LAB_PROPOSED_*.md"
 
 _BLANK_JOBS = frozenset({"", "—", "-", "–", "–"})
 
@@ -221,6 +228,122 @@ def gym_is_starved(
     return not live
 
 
+def _honer_latest(*, root: Path | None = None) -> Path:
+    return (root or repo_root()) / HONER_LATEST_REL
+
+
+def load_honer_freeze_snapshot(*, root: Path | None = None) -> dict[str, Any] | None:
+    """Open exam, else last freeze-log snapshot. JSON only; no honer imports."""
+    latest = _honer_latest(root=root)
+    exam = _load_json(latest / "exam.json")
+    if exam.get("open") and not exam.get("parked"):
+        return exam
+    if exam.get("parked"):
+        return None
+    log_path = latest / "freeze_log.json"
+    try:
+        raw = json.loads(log_path.read_text(encoding="utf-8"))
+    except (OSError, json.JSONDecodeError):
+        return None
+    if not isinstance(raw, list):
+        return None
+    for entry in reversed(raw):
+        if not isinstance(entry, dict):
+            continue
+        if entry.get("frozen_theta") is not None or entry.get("frozen_family"):
+            return entry
+    return None
+
+
+def consult_enabled_for_doorbell(*, root: Path | None = None) -> bool:
+    """True only when consult_enabled is exactly true. This fold does not flip it."""
+    candidates = [
+        (root or repo_root()) / EVIDENCE_BAR_REL,
+        (root or repo_root()) / CONSULT_SNAPSHOT_REL,
+    ]
+    try:
+        from golf_offshoot.learning_lane_15m.paths import latest_dir_15m
+
+        candidates.append(latest_dir_15m() / "honer_consult.json")
+    except Exception:  # noqa: BLE001 — missing 15m root is not enabled
+        pass
+    seen: set[Path] = set()
+    for path in candidates:
+        try:
+            resolved = path.resolve()
+        except OSError:
+            resolved = path
+        if resolved in seen:
+            continue
+        seen.add(resolved)
+        payload = _load_json(path)
+        if payload.get("consult_enabled") is True:
+            return True
+    return False
+
+
+def freeze_named_in_lab_proposed(
+    snap: dict[str, Any],
+    *,
+    root: Path | None = None,
+) -> bool:
+    """True when a Lab PROPOSED already names this freeze (family + θ / declared_at)."""
+    family = str(snap.get("frozen_family") or snap.get("family") or "").strip()
+    theta = snap.get("frozen_theta")
+    declared = str(snap.get("declared_at") or "").strip()
+    docs = (root or repo_root()) / SCORECARD_DIR_REL
+    if not docs.is_dir():
+        return False
+    theta_needles: list[str] = []
+    if theta is not None:
+        theta_needles.append(str(theta))
+        try:
+            theta_needles.append(f"{float(theta):.2f}")
+            theta_needles.append(f"{float(theta):g}")
+        except (TypeError, ValueError):
+            pass
+    for path in docs.glob(LAB_PROPOSED_GLOB):
+        try:
+            text = path.read_text(encoding="utf-8")
+        except OSError:
+            continue
+        honerish = (
+            "HONER-FROZEN" in text
+            or "frozen_theta" in text
+            or "frozen_family" in text
+            or "HONER-FAMILY-AMEND" in text
+        )
+        if not honerish:
+            continue
+        if declared and declared in text:
+            return True
+        if family and family in text:
+            if not theta_needles or any(needle in text for needle in theta_needles):
+                return True
+    return False
+
+
+def honer_freeze_owed(
+    desk: dict[str, Any],
+    *,
+    root: Path | None = None,
+    snapshot: dict[str, Any] | None = None,
+) -> tuple[bool, dict[str, Any] | None]:
+    """H rings when a freeze is open/unproposed, consult is off, and no worker is assigned."""
+    status = str(desk.get("status") or "").strip().lower()
+    role = str(desk.get("active_role") or "").strip().lower()
+    if status == "assigned" and role in WORKER_ROLES:
+        return False, None
+    if consult_enabled_for_doorbell(root=root):
+        return False, None
+    snap = snapshot if snapshot is not None else load_honer_freeze_snapshot(root=root)
+    if not snap:
+        return False, None
+    if freeze_named_in_lab_proposed(snap, root=root):
+        return False, None
+    return True, snap
+
+
 def _watch_stuck(watch: dict[str, Any], previous_watch: dict[str, Any] | None) -> str:
     """Empty string if healthy; a detail if the watch looks frozen."""
     watch = watch or {}
@@ -262,6 +385,8 @@ def compute_crew_tick(
     root: Path | None = None,
     registry: dict[str, Any] | None = None,
     live_trial_ids: list[str] | None = None,
+    honer_freeze_open: bool | None = None,
+    honer_freeze_snapshot: dict[str, Any] | None = None,
 ) -> dict[str, Any]:
     """Derive ``crew_tick`` from the wake, the desk, and the last CoS stamp.
 
@@ -382,6 +507,37 @@ def compute_crew_tick(
             )
         )
 
+    freeze_snap: dict[str, Any] | None = None
+    h_owed = False
+    if honer_freeze_open is False:
+        h_owed = False
+    elif honer_freeze_open is True:
+        freeze_snap = honer_freeze_snapshot or {
+            "open": True,
+            "parked": False,
+            "frozen_family": "H-SKIP-RICH-YES",
+            "frozen_theta": 0.81,
+            "frozen_delta": 0.04,
+            "declared_at": "2026-09-10T14:00:00-04:00",
+        }
+        h_owed, freeze_snap = honer_freeze_owed(
+            desk, root=root, snapshot=freeze_snap
+        )
+    else:
+        h_owed, freeze_snap = honer_freeze_owed(
+            desk, root=root, snapshot=honer_freeze_snapshot
+        )
+    if h_owed:
+        family = (freeze_snap or {}).get("frozen_family") or "?"
+        theta = (freeze_snap or {}).get("frozen_theta")
+        reasons.append(
+            _reason(
+                REASON_H,
+                f"honer freeze open family={family} theta={theta}; "
+                "CoS assigns Lab to name that snapshot even if a factory trial is live",
+            )
+        )
+
     # Dedup by id, keep first detail.
     seen: set[str] = set()
     unique: list[dict[str, str]] = []
@@ -393,20 +549,21 @@ def compute_crew_tick(
     reason_ids = [row["id"] for row in unique]
 
     if assigned_worker and not clerical_arrears and not stuck and hub_ok is not False:
-        # Healthy assigned worker: drop A/E/F noise. B stays if a *different*
+        # Healthy assigned worker: drop A/E/F/H noise. B stays if a *different*
         # judicial owe is new; C and D already excluded.
         unique = [
             row
             for row in unique
-            if row["id"] not in {REASON_A_DONE, REASON_A_IDLE, REASON_E, REASON_F}
+            if row["id"]
+            not in {REASON_A_DONE, REASON_A_IDLE, REASON_E, REASON_F, REASON_H}
         ]
         if not new_judicial or all(_role(e) == role for e in new_judicial):
             unique = [row for row in unique if row["id"] != REASON_B]
         reason_ids = [row["id"] for row in unique]
 
     handled_quiet = list(handled)
-    if REASON_F in reason_ids and not desk_assigned_lab(desk):
-        handled_quiet = [x for x in handled_quiet if x != REASON_F]
+    if not desk_assigned_lab(desk):
+        handled_quiet = [x for x in handled_quiet if x not in {REASON_F, REASON_H}]
 
     if reason_ids and handled_quiet and set(reason_ids) <= set(handled_quiet):
         # Same why, or a subset after the stamp itself retired B. Not a new doorbell.
@@ -433,6 +590,7 @@ def compute_crew_tick(
         "last_cos_at": previous.get("last_cos_at") or "",
         "last_cos_commit": previous.get("last_cos_commit") or "",
         "handled_reason_ids": handled,
+        "honer_freeze": freeze_snap if h_owed else None,
         "contract": (
             "crew_tick is a doorbell. It does not mark a role served, "
             "open a chat, ADMIT, invent, or push."
@@ -511,7 +669,7 @@ def stamp_cos_closeout(
     handled = [str(x) for x in (reason_ids if reason_ids is not None else current.get("reason_ids") or [])]
     desk = parse_desk(read_desk_text(root=root))
     if not desk_assigned_lab(desk):
-        handled = [x for x in handled if x != REASON_F]
+        handled = [x for x in handled if x not in {REASON_F, REASON_H}]
     carried = {
         "last_cos_at": at or isoformat_now(),
         "last_cos_commit": str(commit or ""),

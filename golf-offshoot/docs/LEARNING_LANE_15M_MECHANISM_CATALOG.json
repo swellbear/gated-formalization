@@ -1,0 +1,35 @@
+{
+  "schema": 1,
+  "lane": "learning_lane_15m",
+  "series": "KXBTC15M",
+  "updated": "2026-09-10T14:40:00-04:00",
+  "rule": "Crew-owned kind menu. Lab loads this like burned classes. Lab may add a kind by inventing if it can name a product-structure expected_skip_rate from the 15m quartet. Operator RUN-ONLY or PARK. Not a Founder permission list. Do not put future tickers here. Catalog prefers ≥ 0.25; declare_rule floor is 10/first_look_n. This fold does not enable consult and does not append a third family to HONER_15M_CATALOG.json.",
+  "kinds": [
+    {
+      "id": "CLOCK-CLOSE-MINUTE",
+      "expected_skip_rate": 0.25,
+      "rate_source": "one of four 15m close minutes {0, 15, 30, 45}",
+      "params": ["skip_close_minute"],
+      "legal_now": true,
+      "note": "PROPOSED 03 is this (skip_close_minute=0). Do not re-file the same parameter as a new id."
+    },
+    {
+      "id": "CLOCK-CIVIL-BOUNDARIES",
+      "expected_skip_rate": 0.5,
+      "rate_source": "hour and half-hour walls :00 and :30",
+      "params": ["skip_close_minutes"],
+      "legal_after": "hour-close parks (or Operator parks 03)",
+      "note": "Not this Lab fire. Parameters are the two named civil walls, not the two worst minutes on this book."
+    },
+    {
+      "id": "HONER-FROZEN-CONSULT",
+      "legal_only_when": "honer exam is open / freeze log has an unproposed snapshot",
+      "note": "Lab names hashes, family, theta/delta, declared_at. Does not invent theta. CoS still assigns Systems to enable consult after exam + score + later Critic. This fold does not enable consult. Prefer this over another clock kind when H/Job says so."
+    },
+    {
+      "id": "HONER-FAMILY-AMEND",
+      "protocol": "golf-offshoot/docs/HONER_15M_CATALOG_AMEND.md",
+      "note": "Lab may date a third honer family (id, knob, start, clip, step, file-derived activate). Not a tape sort. Not Founder picking theta. This systems fold does not write the family into HONER_15M_CATALOG.json. Critic is a later session."
+    }
+  ]
+}

@@ -49,6 +49,21 @@ class RuleAlreadyInformed(ValueError):
     """A new selecting rule cannot be declared on a tree that already has marks."""
 
 
+class RuleSkipRateUnnamed(ValueError):
+    """A new selecting rule must name expected_skip_rate from product structure."""
+
+
+class RuleTooSparse(ValueError):
+    """A new selecting rule's product-structure skip rate is below the density floor."""
+
+
+#: Four 15m close minutes. The density floor is 10 / first_look_n, not a tape count.
+QUARTET_CLOSE_MINUTES = frozenset({0, 15, 30, 45})
+QUARTET_SLOT_COUNT = 4
+MIN_EXPECTED_SKIP_COUNT = 10
+DEFAULT_FIRST_LOOK_N = 70
+
+
 def registry_path(*, root: Path | None = None) -> Path:
     if root is not None:
         return Path(root) / REGISTRY_REL
@@ -145,11 +160,85 @@ def selects_on_posted_yes_cut(rule: dict[str, Any]) -> bool:
     params = rule.get("params") or {}
     expr = rule.get("expression") or {}
     skip_if = str(expr.get("skip_if") or "")
-    if skip_if == "close_minute_eq":
+    if skip_if in {"close_minute_eq", "close_minute_in"}:
+        return False
+    if params.get("skip_close_minutes") is not None and params.get("favorite_odds") is None:
         return False
     if params.get("skip_close_minute") is not None and params.get("favorite_odds") is None:
         return False
     return True
+
+
+def clock_skip_minutes(rule: dict[str, Any]) -> list[int] | None:
+    """Named 15m close minutes this rule skips, or None if it is not a clock rule.
+
+    Product structure only. Does not read ``paper/`` pnl.
+    """
+    params = rule.get("params") or {}
+    expr = rule.get("expression") or {}
+    skip_if = str(expr.get("skip_if") or "")
+    if params.get("skip_close_minutes") is not None or skip_if == "close_minute_in":
+        raw = params.get("skip_close_minutes")
+        if raw is None:
+            raw = expr.get("minutes") or expr.get("close_minutes")
+        if raw is None:
+            return []
+        try:
+            return [int(x) for x in raw]
+        except (TypeError, ValueError):
+            return []
+    if params.get("skip_close_minute") is not None or skip_if == "close_minute_eq":
+        raw = params.get("skip_close_minute")
+        if raw is None:
+            raw = expr.get("minute")
+        if raw is None:
+            return []
+        try:
+            return [int(raw)]
+        except (TypeError, ValueError):
+            return []
+    return None
+
+
+def expected_skip_rate(rule: dict[str, Any]) -> float | None:
+    """Skip rate from the 15m clock quartet, or None when the rule cannot name one.
+
+    A posted-yes cut cannot name this rate without the tape. Existing registry
+    rows are grandfathered: this function is for new ``declare_rule`` calls.
+    """
+    if not rule.get("selects"):
+        return None
+    minutes = clock_skip_minutes(rule)
+    if minutes is None:
+        return None
+    if not minutes:
+        return 0.0
+    unique: list[int] = []
+    seen: set[int] = set()
+    for minute in minutes:
+        if minute not in seen:
+            seen.add(minute)
+            unique.append(minute)
+    if any(minute not in QUARTET_CLOSE_MINUTES for minute in unique):
+        return 0.0
+    return len(unique) / float(QUARTET_SLOT_COUNT)
+
+
+def min_expected_skip_rate(*, root: Path | None = None) -> float:
+    """Hard refuse: ``10 / looks.first_look_n`` (~14% at n=70). Not 20/70."""
+    n = DEFAULT_FIRST_LOOK_N
+    try:
+        from golf_offshoot.learning_lane_15m.evidence_bar import load_evidence_bar
+
+        n = int(
+            (load_evidence_bar(root=root).get("looks") or {}).get("first_look_n")
+            or DEFAULT_FIRST_LOOK_N
+        )
+    except (OSError, ValueError, TypeError, KeyError):
+        n = DEFAULT_FIRST_LOOK_N
+    if n <= 0:
+        n = DEFAULT_FIRST_LOOK_N
+    return MIN_EXPECTED_SKIP_COUNT / float(n)
 
 
 def _express_selection(
@@ -160,6 +249,14 @@ def _express_selection(
 ) -> tuple[str, str]:
     """Fill-or-skip from declared parameters. Does not read the tape."""
     params = rule.get("params") or {}
+    if params.get("skip_close_minutes") is not None:
+        if not str(close_at or "").strip():
+            return "unknown", f"no close_at for {rule.get('id')}"
+        skip_set = {int(x) for x in params["skip_close_minutes"]}
+        minute = close_minute(close_at)
+        if minute in skip_set:
+            return "skip", f"close_minute in {sorted(skip_set)} (civil walls)"
+        return "fill", f"close_minute {minute} not in {sorted(skip_set)}"
     if params.get("skip_close_minute") is not None:
         if not str(close_at or "").strip():
             return "unknown", f"no close_at for {rule.get('id')}"
@@ -479,8 +576,10 @@ def declare_rule(
     """Append a rule to the registry, incrementing the counter when it selects.
 
     A new posted-yes selecting rule is refused if informing marks already
-    exist on this tree. A close-minute class is not a skip-band. Existing
-    rows stay; this gate is pre-registration, not a rewrite.
+    exist on this tree. A close-minute class is not a skip-band. New
+    selecting rows must name ``expected_skip_rate`` from the 15m quartet
+    at or above ``10 / first_look_n``. Existing rows stay; this gate is
+    pre-registration, not a rewrite. Do not read ``paper/`` pnl for the rate.
     """
     rule_id = str(rule.get("id") or "").strip()
     if not rule_id:
@@ -496,6 +595,22 @@ def declare_rule(
             "informing KXBTC15M marks; a new Established-capable rule needs a "
             "new class or a new lane, not another skip-band here"
         )
+    if row.get("selects"):
+        rate = expected_skip_rate(row)
+        floor = min_expected_skip_rate(root=root)
+        if rate is None:
+            raise RuleSkipRateUnnamed(
+                f"{rule_id} cannot name expected_skip_rate from product structure "
+                "(a posted-yes cut is tape-informed, not a 15m clock rate); "
+                "declare a CLOCK-* kind or another named quartet skip"
+            )
+        if rate < floor:
+            raise RuleTooSparse(
+                f"{rule_id} expected_skip_rate={rate} is below the density floor "
+                f"{floor} (10/first_look_n); a minute not on the 15m quartet "
+                f"{sorted(QUARTET_CLOSE_MINUTES)} is 0. Catalog prefers ≥ 0.25"
+            )
+        row["expected_skip_rate"] = round(float(rate), 6)
     path = registry_path(root=root)
     reg = json.loads(path.read_text(encoding="utf-8"))
     if any(str(r.get("id") or "") == rule_id for r in reg.get("rules") or []):

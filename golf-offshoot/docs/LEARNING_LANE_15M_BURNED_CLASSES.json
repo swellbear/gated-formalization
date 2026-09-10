@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "updated": "2026-09-10T10:40:00-04:00",
+  "updated": "2026-09-10T15:10:00-04:00",
   "source_prose": "logs/failure_mode_log.md",
   "rule": "A proposer must load this file before naming a class. Re-naming a burned class is still that class. Prose is not enforceable.",
   "fragile_not_null": [
@@ -187,6 +187,17 @@
       "aliases": ["R-SKIP-2TO1-FAVORITE", "retune-favorite-odds", "RETUNE-FAVORITE-ODDS"],
       "burned": true,
       "note": "L1 PARK on the registry falsifier 2026-09-10. Do not retune favorite_odds. Do not replace 2/3 with a tape quantile. Not an ADMIT."
+    },
+    {
+      "id": "RETUNE-CLOCK-MINUTE",
+      "domain": "learning_lane_15m",
+      "aliases": [
+        "retune-skip-close-minute",
+        "move-skip-close-minute",
+        "replace-hour-close-slot"
+      ],
+      "burned": true,
+      "note": "Do not move skip_close_minute after a park. Do not replace 0 with another quartet slot from this tape. Same shape as RETUNE-FAVORITE-ODDS."
     }
   ]
 }

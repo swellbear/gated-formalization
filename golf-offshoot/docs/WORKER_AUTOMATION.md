@@ -42,11 +42,14 @@ and here):
 - Persist nothing only in the gitignored wake. Done-state is the desk.
 
 Lab hard rules: `lab_admits=false`. One PROPOSED per fire. Invent contract
-in the note: kill anatomy, unburned mechanism, pre-registration, live
-falsifier. Load burned classes. Do not revive `R-SKIP-COINFLIP` or retune
-its band. Do not retune PARK'd `favorite_odds`. Golf idle does not stop a
-15m KXBTC15M paper PROPOSED. Do not score. Do not self-admit. Do not set
-`execution:true` (Operator does that).
+in the note: kill anatomy, unburned mechanism (load burned classes +
+LEARNING_LANE_15M_MECHANISM_CATALOG.json), density floor 10/n from the 15m
+quartet, prefer HONER-FROZEN-CONSULT if H/Job names an open freeze, pre-reg,
+live falsifier. Do not retune skip_close_minute / RETUNE-CLOCK-MINUTE. Do not
+revive `R-SKIP-COINFLIP` or retune its band. Do not retune PARK'd
+`favorite_odds`. Golf idle does not stop a 15m KXBTC15M paper PROPOSED. Do
+not score. Do not self-admit. Do not set `execution:true` (Operator does
+that). Do not enable consult.
 
 Operator hard rules: may set `execution:true` on a surviving pre-registered
 rule (paper implementation). A falsifier PARK of an executing selection rule
@@ -66,6 +69,7 @@ Read:
   docs/agents/PROTOCOL.md
   golf-offshoot/docs/WORKER_AUTOMATION.md
   golf-offshoot/docs/LEARNING_LANE_15M_BURNED_CLASSES.json
+  golf-offshoot/docs/LEARNING_LANE_15M_MECHANISM_CATALOG.json
 
 Read the desk table. You are allowed to run ONLY if Status is exactly
 assigned. If Status is idle, done, working, or missing: write nothing,
@@ -103,13 +107,19 @@ LAB HARD RULES (when you are lab)
   The PROPOSED note itself must contain:
     1. Kill anatomy — quote the last closed score/park (clauses, skip_count).
        Favorite L1: n=70, skip_count=1, clauses 1/4/5 fail. Not a favorite_odds
-       retune and not a tape quantile (burned).
-    2. Unburned mechanism — load LEARNING_LANE_15M_BURNED_CLASSES.json.
-       Skip-on-mark families that only move the same cut are retunes.
+       retune and not a tape quantile (burned). Do not retune skip_close_minute
+       (RETUNE-CLOCK-MINUTE is burned).
+    2. Unburned mechanism — load LEARNING_LANE_15M_BURNED_CLASSES.json and
+       LEARNING_LANE_15M_MECHANISM_CATALOG.json. Skip-on-mark families that only
+       move the same cut are retunes. Prefer HONER-FROZEN-CONSULT if H/Job
+       names an open freeze (name hashes/family/θ/δ/declared_at; do not invent
+       theta). HONER-FAMILY-AMEND may date a third honer family; do not tape-sort.
     3. Pre-registration — parameters must not be informing marks on this tree.
+       declare_rule density: expected_skip_rate from the 15m quartet, floor 10/n.
     4. Live falsifier — n and a park instruction, no retune-if-dead.
   Do not revive R-SKIP-COINFLIP. Do not retune its band. Do not score.
   Do not self-admit. Do not set execution:true (Operator does that).
+  Do not enable consult.
   Handoff → operator.
 
 OPERATOR HARD RULES (when you are operator)

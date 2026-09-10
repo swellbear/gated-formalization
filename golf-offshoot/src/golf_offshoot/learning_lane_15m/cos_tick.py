@@ -7,7 +7,9 @@ unattended-and-smart.
 
 Forbidden assigns (code + skill): score R-SKIP-COINFLIP, re-score
 PARK'd R-SKIP-2TO1-FAVORITE, arm, bind, git push to master. Lab is legal:
-F_continuation assigns one 15m PROPOSED.
+F_continuation assigns one 15m PROPOSED. H_honer_freeze assigns Lab to
+name that freeze even if a factory trial is live. This fold does not
+enable consult.
 """
 
 from __future__ import annotations
@@ -18,6 +20,7 @@ from typing import Any
 from golf_offshoot.learning_lane_15m.crew_tick import (
     JUDICIAL_ROLES,
     REASON_F,
+    REASON_H,
     WORKER_ROLES,
     compute_crew_tick,
     parse_desk,
@@ -32,8 +35,10 @@ ACTION_ASSIGN = "assign"
 FORBIDDEN_ASSIGN_ROLES = frozenset()
 
 LAB_INVENT_JOB = (
-    "one 15m PROPOSED under the invent contract (kill anatomy, unburned "
-    "mechanism, pre-reg, live falsifier); handoff operator"
+    "one 15m PROPOSED under the invent contract (mechanism catalog, density "
+    "floor 10/n, kill anatomy, unburned including RETUNE-CLOCK-MINUTE, "
+    "prefer HONER-FROZEN if H/Job says so, pre-reg, live falsifier); "
+    "handoff operator"
 )
 
 #: Wake subjects that are name-clear bookkeeping, not a score Job.
@@ -187,6 +192,29 @@ def _assign_lab() -> dict[str, Any]:
     )
 
 
+def lab_honer_freeze_job(snap: dict[str, Any] | None) -> str:
+    snap = snap or {}
+    family = snap.get("frozen_family") or snap.get("family") or "?"
+    theta = snap.get("frozen_theta")
+    delta = snap.get("frozen_delta")
+    declared = snap.get("declared_at") or ""
+    return (
+        "name the open honer freeze (HONER-FROZEN-CONSULT): "
+        f"family={family} theta={theta} delta={delta} declared_at={declared}; "
+        "do not invent theta; do not enable consult; do not retune clock minute; "
+        "handoff operator"
+    )
+
+
+def _assign_lab_honer(snap: dict[str, Any] | None = None) -> dict[str, Any]:
+    return _base(
+        action=ACTION_ASSIGN,
+        reason="honer_freeze_assign_lab",
+        role="lab",
+        job=lab_honer_freeze_job(snap),
+    )
+
+
 def decide_cos_action(
     desk_text: str,
     *,
@@ -218,13 +246,20 @@ def decide_cos_action(
     handled = [str(x) for x in (tick.get("handled_reason_ids") or [])]
     needed = bool(tick.get("needed"))
     f_owed = REASON_F in reason_ids
+    h_owed = REASON_H in reason_ids
+    freeze_snap = tick.get("honer_freeze") if isinstance(tick.get("honer_freeze"), dict) else None
 
     if status == "assigned" and active in WORKER_ROLES:
         return _base(action=ACTION_QUIET, reason="assigned_worker_covers", role=active, job=job)
 
     if not needed:
         return _base(action=ACTION_QUIET, reason="quiet_or_handled")
-    if reason_ids and set(reason_ids) <= set(handled) and REASON_F not in reason_ids:
+    if (
+        reason_ids
+        and set(reason_ids) <= set(handled)
+        and REASON_F not in reason_ids
+        and REASON_H not in reason_ids
+    ):
         return _base(action=ACTION_QUIET, reason="quiet_or_handled")
 
     if status == "done":
@@ -252,7 +287,7 @@ def decide_cos_action(
 
     if only_name_clear_reasons(op_reasons):
         uncovered_roles = [r for r in uncovered_roles if r != "operator"]
-        if not uncovered_roles and not f_owed:
+        if not uncovered_roles and not f_owed and not h_owed:
             return _base(
                 action=ACTION_CLOSEOUT,
                 reason="name_clear_not_score",
@@ -272,10 +307,14 @@ def decide_cos_action(
         uncovered_roles,
         last_cos_at=str(tick.get("last_cos_at") or ""),
     ):
+        if h_owed:
+            return _assign_lab_honer(freeze_snap)
         if f_owed:
             return _assign_lab()
         return _base(action=ACTION_CLOSEOUT, reason="zero_objection_stop")
 
+    if h_owed:
+        return _assign_lab_honer(freeze_snap)
     if f_owed:
         return _assign_lab()
 

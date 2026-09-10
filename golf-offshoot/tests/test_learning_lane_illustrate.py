@@ -256,6 +256,51 @@ def test_render_writes_a_png_from_the_files(lane):
     assert dest.stat().st_size > 20_000
 
 
+def test_skip_rows_sit_on_lineage_a_with_no_would_have_pnl(lane):
+    skip_ticker = "KXBTC15M-26SEP071400-00"
+    skip_id = _window_id("KXBTC15M-26SEP071400", "18:00", "18:15")
+    journal_path = latest_dir_15m() / "journal.json"
+    payload = json.loads(journal_path.read_text(encoding="utf-8"))
+    payload["windows"].append(
+        {
+            "ticker": skip_ticker,
+            "window_id": skip_id,
+            "status": "finalized",
+            "result": "yes",
+        }
+    )
+    journal_path.write_text(json.dumps(payload), encoding="utf-8")
+    (paper_dir_15m() / "rule_decisions.json").write_text(
+        json.dumps(
+            {
+                "decisions": {
+                    skip_ticker: {
+                        "ticker": skip_ticker,
+                        "window_id": skip_id,
+                        "action": "skip",
+                        "pnl": None,
+                        "note": "no fill, no position, no pnl; a skip is not a loss",
+                    }
+                }
+            }
+        ),
+        encoding="utf-8",
+    )
+    blocks = {block.key: block for block in collect_board()}
+    local = {row.ticker: row for row in blocks[LINEAGE_LOCAL].rows}
+    tape = {row.ticker for row in blocks[LINEAGE_TAPE].rows}
+    assert skip_ticker in local
+    assert skip_ticker not in tape
+    assert TAPE in tape
+    row = local[skip_ticker]
+    assert row.skipped is True
+    assert row.paper_join is False
+    assert row.paper_pnl is None
+    assert row.paper_pnl_text == illustrate.SKIP_PNL
+    assert "would" not in row.paper_pnl_text.lower()
+    assert "0" not in row.paper_pnl_text
+
+
 def test_no_rows_writes_nothing(tmp_path, monkeypatch):
     set_15m_root_override(tmp_path / "empty")
     monkeypatch.setattr(illustrate, "repo_root", lambda: tmp_path / "repo")

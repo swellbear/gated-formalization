@@ -6,12 +6,14 @@ from golf_offshoot.learning_lane_15m.cos_tick import (
     ACTION_QUIET,
     LAB_INVENT_JOB,
     decide_cos_action,
+    lab_honer_freeze_job,
 )
 from golf_offshoot.learning_lane_15m.crew_tick import (
     REASON_A_DONE,
     REASON_A_IDLE,
     REASON_B,
     REASON_F,
+    REASON_H,
 )
 
 
@@ -274,3 +276,78 @@ def test_stale_unreviewed_critic_is_closeout_not_assign():
     assert decision["reason"] == "zero_objection_stop"
     assert decision["assign"] is False
     assert decision["role"] is None
+
+
+def test_honer_freeze_assigns_lab_even_with_live_trial():
+    freeze = {
+        "frozen_family": "H-SKIP-RICH-YES",
+        "frozen_theta": 0.81,
+        "frozen_delta": 0.04,
+        "declared_at": "2026-09-10T14:00:00-04:00",
+    }
+    wake = {
+        "roles_owed": [],
+        "crew_tick": {
+            "needed": True,
+            "reason_ids": [REASON_H],
+            "handled_reason_ids": [],
+            "honer_freeze": freeze,
+        },
+    }
+    decision = decide_cos_action(_desk(), wake=wake, crew_tick=wake["crew_tick"])
+    assert decision["action"] == ACTION_ASSIGN
+    assert decision["role"] == "lab"
+    assert decision["reason"] == "honer_freeze_assign_lab"
+    assert decision["job"] == lab_honer_freeze_job(freeze)
+    assert "HONER-FROZEN-CONSULT" in decision["job"]
+
+
+def test_h_beats_f():
+    freeze = {"frozen_family": "H-SKIP-WIDE-SPREAD", "frozen_theta": 0.04, "frozen_delta": 0.06, "declared_at": "x"}
+    wake = {
+        "roles_owed": [],
+        "crew_tick": {
+            "needed": True,
+            "reason_ids": [REASON_F, REASON_H],
+            "handled_reason_ids": [],
+            "honer_freeze": freeze,
+        },
+    }
+    decision = decide_cos_action(_desk(), wake=wake, crew_tick=wake["crew_tick"])
+    assert decision["role"] == "lab"
+    assert decision["reason"] == "honer_freeze_assign_lab"
+    assert decision["job"] != LAB_INVENT_JOB
+
+
+def test_lab_proposed_operator_beats_h():
+    wake = {
+        "roles_owed": [_owed("operator", reasons=["lab_proposed LEARNING_LANE_15M_LAB_PROPOSED_03.md"])],
+        "crew_tick": {
+            "needed": True,
+            "reason_ids": [REASON_H, REASON_F],
+            "handled_reason_ids": [],
+            "honer_freeze": {"frozen_family": "H-SKIP-RICH-YES"},
+        },
+    }
+    decision = decide_cos_action(_desk(), wake=wake, crew_tick=wake["crew_tick"])
+    assert decision["action"] == ACTION_ASSIGN
+    assert decision["role"] == "operator"
+    assert decision["reason"] == "lab_proposed_operator_first"
+
+
+def test_assigned_operator_quiet_despite_h():
+    wake = {
+        "roles_owed": [],
+        "crew_tick": {
+            "needed": True,
+            "reason_ids": [REASON_H],
+            "handled_reason_ids": [],
+        },
+    }
+    decision = decide_cos_action(
+        _desk(role="operator", status="assigned", job="RUN-ONLY PROPOSED 03"),
+        wake=wake,
+        crew_tick=wake["crew_tick"],
+    )
+    assert decision["action"] == ACTION_QUIET
+    assert decision["reason"] == "assigned_worker_covers"

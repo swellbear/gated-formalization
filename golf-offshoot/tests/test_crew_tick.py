@@ -1,5 +1,6 @@
 """crew_tick doorbell: CoS starts when the board needs a brain, not every 90s."""
 
+import json
 from datetime import datetime, timezone
 
 from golf_offshoot.learning_lane_15m.crew_tick import (
@@ -11,6 +12,7 @@ from golf_offshoot.learning_lane_15m.crew_tick import (
     REASON_D_HUB,
     REASON_E,
     REASON_F,
+    REASON_H,
     compute_crew_tick,
     live_selecting_rule_ids,
     stamp_cos_closeout,
@@ -95,7 +97,7 @@ def test_same_reasons_after_closeout_stamp_are_quiet():
         "crew_tick": {},
     }
     desk = _desk()
-    first = compute_crew_tick(state, desk_text=desk, leave_off_text="Lab not assigned.", hub_ok=True)
+    first = compute_crew_tick(state, desk_text=desk, leave_off_text="Lab not assigned.", hub_ok=True, honer_freeze_open=False)
     assert first["needed"] is True
     assert REASON_A_IDLE in first["reason_ids"]
     assert REASON_B in first["reason_ids"]
@@ -113,6 +115,7 @@ def test_same_reasons_after_closeout_stamp_are_quiet():
         leave_off_text="Lab not assigned.",
         hub_ok=True,
         handled_reason_ids=list(first["reason_ids"]),
+        honer_freeze_open=False,
     )
     assert silenced["needed"] is False
     assert silenced["quiet"] is True
@@ -234,9 +237,11 @@ def test_starved_idle_rings_f():
         desk_text=_idle_blank_desk(),
         hub_ok=True,
         live_trial_ids=[],
+        honer_freeze_open=False,
     )
     assert tick["needed"] is True
     assert REASON_F in tick["reason_ids"]
+    assert REASON_H not in tick["reason_ids"]
 
 
 def test_assigned_worker_does_not_ring_f():
@@ -245,8 +250,10 @@ def test_assigned_worker_does_not_ring_f():
         desk_text=_desk(role="lab", status="assigned", job="one 15m PROPOSED"),
         hub_ok=True,
         live_trial_ids=[],
+        honer_freeze_open=True,
     )
     assert REASON_F not in tick["reason_ids"]
+    assert REASON_H not in tick["reason_ids"]
 
 
 def test_unoperated_proposed_does_not_ring_f():
@@ -258,6 +265,7 @@ def test_unoperated_proposed_does_not_ring_f():
         desk_text=_idle_blank_desk(),
         hub_ok=True,
         live_trial_ids=[],
+        honer_freeze_open=False,
     )
     assert REASON_F not in tick["reason_ids"]
 
@@ -268,6 +276,7 @@ def test_live_trial_does_not_ring_f():
         desk_text=_idle_blank_desk(),
         hub_ok=True,
         live_trial_ids=["R-SKIP-NEW"],
+        honer_freeze_open=False,
     )
     assert REASON_F not in tick["reason_ids"]
 
@@ -278,6 +287,7 @@ def test_hub_ok_false_still_rings_f():
         desk_text=_idle_blank_desk(),
         hub_ok=False,
         live_trial_ids=[],
+        honer_freeze_open=False,
     )
     assert REASON_F in tick["reason_ids"]
     assert REASON_D_HUB in tick["reason_ids"]
@@ -292,7 +302,7 @@ def test_stamping_f_without_assigning_lab_does_not_silence():
     }
     desk = _idle_blank_desk()
     first = compute_crew_tick(
-        state, desk_text=desk, hub_ok=True, live_trial_ids=[]
+        state, desk_text=desk, hub_ok=True, live_trial_ids=[], honer_freeze_open=False
     )
     assert REASON_F in first["reason_ids"]
     state["crew_tick"] = {
@@ -306,10 +316,153 @@ def test_stamping_f_without_assigning_lab_does_not_silence():
         hub_ok=True,
         handled_reason_ids=list(first["reason_ids"]),
         live_trial_ids=[],
+        honer_freeze_open=False,
     )
     assert again["needed"] is True
     assert REASON_F in again["reason_ids"]
 
 
 def test_this_tree_favorite_park_is_not_a_live_trial():
-    assert live_selecting_rule_ids() == []
+    assert live_selecting_rule_ids() == ["R-SKIP-HOUR-CLOSE"]
+
+
+def _write_honer_exam(root, *, open_exam=True, parked=False):
+    latest = root / "golf-offshoot" / "data" / "honer_15m" / "latest"
+    latest.mkdir(parents=True, exist_ok=True)
+    (latest / "exam.json").write_text(
+        json.dumps(
+            {
+                "open": open_exam,
+                "parked": parked,
+                "frozen_family": "H-SKIP-RICH-YES",
+                "frozen_theta": 0.81,
+                "frozen_delta": 0.04,
+                "declared_at": "2026-09-10T14:00:00-04:00",
+            }
+        ),
+        encoding="utf-8",
+    )
+
+
+def test_freeze_open_live_trial_rings_h(tmp_path):
+    set_15m_root_override(tmp_path / "kalshi_15m")
+    try:
+        _write_honer_exam(tmp_path)
+        tick = compute_crew_tick(
+            {"watch": _watch(), "roles_owed": []},
+            desk_text=_idle_blank_desk(),
+            hub_ok=True,
+            live_trial_ids=["R-SKIP-HOUR-CLOSE"],
+            root=tmp_path,
+        )
+        assert REASON_H in tick["reason_ids"]
+        assert REASON_F not in tick["reason_ids"]
+        assert tick["needed"] is True
+        assert tick["honer_freeze"]["frozen_family"] == "H-SKIP-RICH-YES"
+    finally:
+        set_15m_root_override(None)
+
+
+def test_no_freeze_starved_still_rings_f(tmp_path):
+    set_15m_root_override(tmp_path / "kalshi_15m")
+    try:
+        (tmp_path / "golf-offshoot" / "data" / "honer_15m" / "latest").mkdir(parents=True)
+        tick = compute_crew_tick(
+            {"watch": _watch(), "roles_owed": []},
+            desk_text=_idle_blank_desk(),
+            hub_ok=True,
+            live_trial_ids=[],
+            root=tmp_path,
+        )
+        assert REASON_F in tick["reason_ids"]
+        assert REASON_H not in tick["reason_ids"]
+    finally:
+        set_15m_root_override(None)
+
+
+def test_assigned_operator_does_not_ring_h(tmp_path):
+    set_15m_root_override(tmp_path / "kalshi_15m")
+    try:
+        _write_honer_exam(tmp_path)
+        tick = compute_crew_tick(
+            {"watch": _watch(), "roles_owed": []},
+            desk_text=_desk(role="operator", status="assigned", job="RUN-ONLY PROPOSED 03"),
+            hub_ok=True,
+            live_trial_ids=["R-SKIP-HOUR-CLOSE"],
+            root=tmp_path,
+        )
+        assert REASON_H not in tick["reason_ids"]
+    finally:
+        set_15m_root_override(None)
+
+
+def test_consult_enabled_does_not_ring_h(tmp_path):
+    set_15m_root_override(tmp_path / "kalshi_15m")
+    try:
+        _write_honer_exam(tmp_path)
+        snap = tmp_path / "golf-offshoot" / "data" / "learning_lane_15m" / "latest"
+        snap.mkdir(parents=True)
+        (snap / "honer_consult.json").write_text(
+            json.dumps({"consult_enabled": True}),
+            encoding="utf-8",
+        )
+        tick = compute_crew_tick(
+            {"watch": _watch(), "roles_owed": []},
+            desk_text=_idle_blank_desk(),
+            hub_ok=True,
+            live_trial_ids=["R-SKIP-HOUR-CLOSE"],
+            root=tmp_path,
+        )
+        assert REASON_H not in tick["reason_ids"]
+    finally:
+        set_15m_root_override(None)
+
+
+def test_named_freeze_does_not_ring_h(tmp_path):
+    set_15m_root_override(tmp_path / "kalshi_15m")
+    try:
+        _write_honer_exam(tmp_path)
+        docs = tmp_path / "golf-offshoot" / "docs"
+        docs.mkdir(parents=True)
+        (docs / "LEARNING_LANE_15M_LAB_PROPOSED_04.md").write_text(
+            "HONER-FROZEN-CONSULT frozen_family H-SKIP-RICH-YES frozen_theta=0.81\n",
+            encoding="utf-8",
+        )
+        tick = compute_crew_tick(
+            {"watch": _watch(), "roles_owed": []},
+            desk_text=_idle_blank_desk(),
+            hub_ok=True,
+            live_trial_ids=["R-SKIP-HOUR-CLOSE"],
+            root=tmp_path,
+        )
+        assert REASON_H not in tick["reason_ids"]
+    finally:
+        set_15m_root_override(None)
+
+
+def test_stamping_h_without_assigning_lab_does_not_silence(tmp_path):
+    set_15m_root_override(tmp_path / "kalshi_15m")
+    try:
+        _write_honer_exam(tmp_path)
+        state = {"watch": _watch(), "roles_owed": [], "crew_tick": {}}
+        desk = _idle_blank_desk()
+        first = compute_crew_tick(
+            state,
+            desk_text=desk,
+            hub_ok=True,
+            live_trial_ids=["R-SKIP-HOUR-CLOSE"],
+            root=tmp_path,
+        )
+        assert REASON_H in first["reason_ids"]
+        again = compute_crew_tick(
+            state,
+            desk_text=desk,
+            hub_ok=True,
+            handled_reason_ids=list(first["reason_ids"]),
+            live_trial_ids=["R-SKIP-HOUR-CLOSE"],
+            root=tmp_path,
+        )
+        assert again["needed"] is True
+        assert REASON_H in again["reason_ids"]
+    finally:
+        set_15m_root_override(None)

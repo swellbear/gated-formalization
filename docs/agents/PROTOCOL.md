@@ -18,10 +18,11 @@ CoS starts when `crew_tick.needed` is true, including via a Cursor Automation on
 - **D.** Watch or hub liveness failed (cycles not advancing, or the honesty hub box would fail). Hub fail is an ops doorbell (`D_hub`), not a veto on Lab.
 - **E.** Desk `Status=idle` while leave-off Next / an unassigned factory precondition is still open.
 - **F.** `F_continuation`: desk idle (or CoS with Job `—`), no assigned worker, no un-operated Lab PROPOSED, and no live 15m trial (executing selection still unscored). Favorite L1 PARK is dead. `R-SKIP-COINFLIP` `execution: false` is not live. Stamp F handled **only after** desk `Status=assigned` / `lab`.
+- **H.** `H_honer_freeze`: honer exam is open (or freeze log has an unproposed snapshot), no Lab PROPOSED already names that freeze, `consult_enabled` is not true, and the desk is not an assigned worker. CoS assigns Lab to name **that** freeze even if a factory trial is live. If both H and F, H wins. Stamp H handled **only after** desk `Status=assigned` / `lab`.
 
-`needed` is **false** when the watch is healthy AND no new judicial owe AND no clerical arrears AND the desk already has an assigned worker who is not stale AND F is not owed, **or** when the last CoS closeout stamped the same `reason_ids` (a 90s heartbeat, not a doorbell). F is not silenced by that stamp unless Lab is assigned.
+`needed` is **false** when the watch is healthy AND no new judicial owe AND no clerical arrears AND the desk already has an assigned worker who is not stale AND F is not owed AND H is not owed, **or** when the last CoS closeout stamped the same `reason_ids` (a 90s heartbeat, not a doorbell). F and H are not silenced by that stamp unless Lab is assigned.
 
-A CoS turn: session start, **one** assign or one closeout via `decide_cos_action` (`golf-offshoot/src/golf_offshoot/learning_lane_15m/cos_tick.py`), desk + leave-off to committed truth, stamp `last_cos_*` via `stamp_cos_closeout`. Then stop. It does not ping Founder for the Next list. It does ping Founder for arm / cash / keys, golf C2/C4/WC3+, and retune golf θ. Bind is not on that list. Forbidden assigns: score `R-SKIP-COINFLIP`, re-score PARK'd `R-SKIP-2TO1-FAVORITE`, arm, bind, git push to `master`. **Lab is legal:** F_continuation assigns one 15m PROPOSED. CoS does not author the PROPOSED. Operator `lab_proposed` or Critic on a **new** hash first. Zero-objection closeout does not skip a sitting PROPOSED or a starved gym (assign Operator or Lab).
+A CoS turn: session start, **one** assign or one closeout via `decide_cos_action` (`golf-offshoot/src/golf_offshoot/learning_lane_15m/cos_tick.py`), desk + leave-off to committed truth, stamp `last_cos_*` via `stamp_cos_closeout`. Then stop. It does not ping Founder for the Next list. It does ping Founder for arm / cash / keys, golf C2/C4/WC3+, and retune golf θ. Bind is not on that list. Forbidden assigns: score `R-SKIP-COINFLIP`, re-score PARK'd `R-SKIP-2TO1-FAVORITE`, arm, bind, git push to `master`. **Lab is legal:** F_continuation assigns one 15m PROPOSED. H_honer_freeze assigns Lab to name that freeze (even if a factory trial is live). CoS does not author the PROPOSED. Operator `lab_proposed` or Critic on a **new** hash first. Zero-objection closeout does not skip a sitting PROPOSED, a starved gym, or an open honer freeze (assign Operator or Lab).
 
 **Zero-objection stop.** If the newest Soften Critic finding is zero UPHELD and Operator did **not** amend the bar (a record-only ANSWER, or no ANSWER owed), CoS **closes out**: `Status=idle`, do not assign Operator to write another ANSWER, do not assign Soften Critic on those same hashes. Two consecutive zero-UPHELD attacks is the treadmill; close it. A new judicial owe is a *new* bar/registry hash from a real amendment, not a new CRITIC file that found nothing. If `stamp_cos_closeout` cannot persist (cloud VM missing wake or import failure), the committed desk `last_cos_*` table is the stamp. `crew_tick` / `stamp_cos_closeout` must import without pydantic. Do not invent `A_worker_done` from an empty VM. Do not ask Founder to pip-install pydantic on the CoS VM.
 
@@ -85,6 +86,7 @@ Do **not** ask (CoS just does it):
 - Leave-off “Next” items
 - Start or continue the 15m paper watch
 - Assign Lab when `F_continuation` is owed (one 15m PROPOSED; CoS does not write it)
+- Assign Lab when `H_honer_freeze` is owed (name that freeze snapshot; do not enable consult)
 - Enable honer consult when exam + score + later Critic exist: assign Systems to flip **that** snapshot
 - Scaffold a **new lane** when [`LEARNING_LANE_EXPANSION.md`](../../golf-offshoot/docs/LEARNING_LANE_EXPANSION.md) checklist is true **and** this gym already has a live try (not a second ticker on this ledger)
 - `lane-15m` → `systems` → `validator` when a Kalshi `result` exists
@@ -112,7 +114,7 @@ PaperWatch alone is **not learning.** Learning has not begun until settled outco
 7. **publish** (gym PC only) — after the PaperWatch runner pass, `PUBLISH_ARMED` may push the hub allowlist (`manifest.json`, `paper_window_strip.png`, `validator_report.json`) to `origin/master` from a **master worktree** when `material_publish_reasons` is non-empty, `validate_hub.py --strict` is clean, `watch_is_collecting` PASS, and lineage A `ledger.json` is present. Never copy scorecards / `records[]` / fee-accurate Operator totals. Never `git push origin HEAD:master` from `cursor/honer-15m-sibling`. Cloud CoS/worker timers still do not publish. Skip a 90-second heartbeat. Never restamp an export to look fresher. Never invent. Factory merge of #178 is still a PR merge
 8. `hub-ui` — only if display is wrong or stale. No number invention
 9. `illustrator` — **owed by the wake** when the PNG lags live journal/settlements by more than one window (or there is no PNG and two or more windows of evidence exist). Claude Opus 5; real files only. One window of trail is allowed (the open window). Do not leave this optional. Re-render before a material publish so the board is not an hour behind the tables
-10. `lab` — when `F_continuation` is owed (no live trial, no un-operated PROPOSED). One **PROPOSED** cheap test under the invent contract, paper-only, then `operator`. Never self-admit. Golf idle does not stop a 15m Lab assign. Honesty / hub fail is `D_hub`, not a Lab veto.
+10. `lab` — when `F_continuation` is owed (no live trial, no un-operated PROPOSED) **or** when `H_honer_freeze` is owed (open freeze, unproposed, consult off). One **PROPOSED** cheap test under the invent contract (mechanism catalog, density floor `10/n`, prefer HONER-FROZEN if H/Job says so, do not retune clock minute), paper-only, then `operator`. Never self-admit. Golf idle does not stop a 15m Lab assign. Honesty / hub fail is `D_hub`, not a Lab veto. H wins if both H and F. This fold does not enable consult.
 11. CoS schedules the next tick. Do not ping Founder.
 
 Nothing new on a tick: CoS posts **one** desk heartbeat line (no new settle; watch still running) and stays quiet.
@@ -226,7 +228,7 @@ The hub re-execs its child when `git_tip` or a watched module's mtime moves (`op
 
 ### Honesty gate is not a Lab veto
 
-Three of the four boxes are derived (`learning_lane_15m/honesty.py`). A failing hub tree is `D_hub`: CoS assigns Digestor/Operator for honesty, but **does not** hold Lab when `F_continuation` is owed. Hub fail is an ops doorbell, not a Founder-shaped invent stop.
+Three of the four boxes are derived (`learning_lane_15m/honesty.py`). A failing hub tree is `D_hub`: CoS assigns Digestor/Operator for honesty, but **does not** hold Lab when `F_continuation` or `H_honer_freeze` is owed. Hub fail is an ops doorbell, not a Founder-shaped invent stop.
 
 ### Operator verdicts (claims vs arithmetic)
 
