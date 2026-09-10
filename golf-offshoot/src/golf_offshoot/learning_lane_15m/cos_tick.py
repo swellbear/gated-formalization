@@ -12,6 +12,7 @@ push to master.
 
 from __future__ import annotations
 
+from datetime import datetime
 from typing import Any
 
 from golf_offshoot.learning_lane_15m.crew_tick import (
@@ -96,6 +97,41 @@ def only_name_clear_reasons(reasons: list[str]) -> bool:
     return all(is_name_clear_reason(r) for r in reasons)
 
 
+def _parse_iso(value: Any) -> datetime | None:
+    text = str(value or "").strip()
+    if not text:
+        return None
+    try:
+        return datetime.fromisoformat(text)
+    except ValueError:
+        return None
+
+
+def _stale_unreviewed_critic_only(
+    owed: list[dict[str, Any]],
+    uncovered_roles: list[str],
+    *,
+    last_cos_at: str = "",
+) -> bool:
+    """Zero-objection stop: do not assign another attack already seen at last CoS."""
+    leftover = [r for r in uncovered_roles if r != "operator"]
+    if leftover != ["soften-critic"]:
+        return False
+    reasons: list[str] = []
+    since_stamp = None
+    for entry in owed:
+        if _role(entry) != "soften-critic":
+            continue
+        reasons.extend(_reasons(entry))
+        since_stamp = _parse_iso(entry.get("owed_since"))
+    if not reasons or not all(r.startswith("artifact_unreviewed") for r in reasons):
+        return False
+    last = _parse_iso(last_cos_at)
+    if last is None or since_stamp is None:
+        return True
+    return since_stamp <= last
+
+
 def job_is_forbidden(job: str) -> bool:
     low = (job or "").lower()
     return any(needle in low for needle in FORBIDDEN_JOB_NEEDLES)
@@ -174,6 +210,13 @@ def decide_cos_action(
                 action=ACTION_CLOSEOUT,
                 reason="name_clear_not_score",
             )
+
+    if _stale_unreviewed_critic_only(
+        owed,
+        uncovered_roles,
+        last_cos_at=str(tick.get("last_cos_at") or ""),
+    ):
+        return _base(action=ACTION_CLOSEOUT, reason="zero_objection_stop")
 
     legal = [r for r in uncovered_roles if r in LEGAL_ASSIGN_ROLES and r not in FORBIDDEN_ASSIGN_ROLES]
     if "operator" in legal and only_name_clear_reasons(op_reasons):

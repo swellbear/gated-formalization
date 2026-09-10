@@ -141,6 +141,7 @@ def test_legal_soften_critic_is_assign():
             "needed": True,
             "reason_ids": [REASON_A_IDLE, REASON_B],
             "handled_reason_ids": [],
+            "last_cos_at": "2026-09-10T09:00:00-04:00",
         },
     }
     decision = decide_cos_action(_desk(), wake=wake, crew_tick=wake["crew_tick"])
@@ -165,3 +166,29 @@ def test_assigned_worker_is_quiet():
     )
     assert decision["action"] == ACTION_QUIET
     assert decision["reason"] == "assigned_worker_covers"
+
+
+def test_stale_unreviewed_critic_is_closeout_not_assign():
+    wake = {
+        "roles_owed": [
+            _owed(
+                "soften-critic",
+                reasons=[
+                    "artifact_unreviewed rule_registry",
+                    "artifact_unreviewed evidence_bar",
+                ],
+                since="2026-09-08T13:28:04.431553-04:00",
+            )
+        ],
+        "crew_tick": {
+            "needed": True,
+            "reason_ids": [REASON_A_IDLE],
+            "handled_reason_ids": [],
+            "last_cos_at": "2026-09-10T10:52:00-04:00",
+        },
+    }
+    decision = decide_cos_action(_desk(), wake=wake, crew_tick=wake["crew_tick"])
+    assert decision["action"] == ACTION_CLOSEOUT
+    assert decision["reason"] == "zero_objection_stop"
+    assert decision["assign"] is False
+    assert decision["role"] is None
