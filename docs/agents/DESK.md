@@ -6,11 +6,11 @@ Thread lines are **one sentence, newest first, max 10**. Long findings belong in
 
 | Field | Value |
 |-------|--------|
-| Updated | 2026-09-10 09:50 ET |
-| Active role | operator |
-| Job | Answer CRITIC 19 (`LEARNING_LANE_15M_EVIDENCE_BAR_CRITIC_19.md`) on Systems bind-candidate hashes `D25D0227…` / `4D9E86C2…`. Two UPHELD: MD `:306` still says nine after eleven; MD `:203` still says PROPOSED 02 notes are outside WATCHED. Sustain or overrule each with a stated reason. File ANSWER 19. Record CRITIC 18 as closed-on-prior-hashes (ANSWER 17 `D9FDA991…` / `F7E8F681…` were not proposed to bind). Do not set `binding: true` this turn — the amend produces new bytes that re-owe Critic. Do not score. Consult off. Do not GET the PDF as gym. |
-| Status | done |
-| Handoff | ANSWER 19 at `golf-offshoot/docs/LEARNING_LANE_15M_EVIDENCE_BAR_OPERATOR_ANSWER_19.md`. 2 SUSTAINED, 0 OVERRULED. Bar amended; not bound. next=chief-of-staff |
+| Updated | 2026-09-10 09:52 ET |
+| Active role | soften-critic |
+| Job | Attack the ANSWER 19 amended factory bar. MD sha256 `7c1c1cb3feb4dff389d6b82f87d7246bdc5439de1b690e63cf66317a0ad77745`, JSON `7a934a4e3bfc30fe538140ebc3f0c79ef93c816db48d9e9c4fde629da7d277b6`. CRITIC 19 demanded MD :306 eleven + ratchet tenth/eleventh and MD :203 WATCHED landing — those strikes are on these hashes. Written attack only. File CRITIC 20. Do not edit the bar, score, bind, enable consult, or GET the PDF as gym. |
+| Status | assigned |
+| Handoff | CoS assigned soften-critic on ANSWER 19 hashes `7C1C1CB3…` / `7A934A4E…`. next=soften-critic |
 | Waiting on Founder | **N** |
 
 ## last_cos (CoS stamp — doorbell silence)
@@ -35,7 +35,7 @@ These do not block Soften Critic. Waiting on Founder stays **N**.
 
 The runner exports locally. It does **not** commit or push. The public page is **not** self-maintaining. That is the same defect that left Pages stale for six hours tonight. A local export is not a publish. Systems still owns the manual tick step: material export → `--strict` → commit → push to `master`.
 
-## Honesty checklist 2026-09-10 09:35 ET (three boxes now derived, not typed)
+## Honesty checklist 2026-09-10 09:52 ET (three boxes now derived, not typed)
 
 Part 3 landed. Three boxes are computed in `learning_lane_15m/honesty.py` and the **derived verdict wins** — prose here can shut one, never open one, and deleting a row does not open the gate. The fourth is judgment and now needs a PID, a hash or a timestamp; `**PASS**` alone no longer opens it. The parser was narrowed, not widened.
 
@@ -60,6 +60,7 @@ Two suites, both on the tick.
 
 ## Thread
 
+- 2026-09-10 09:52 ET  chief-of-staff → soften-critic: attack ANSWER 19 hashes `7C1C1CB3…` / `7A934A4E…`; written only; do not edit, score, bind, or enable consult. next=soften-critic
 - 2026-09-10 09:50 ET  operator → chief-of-staff: ANSWER 19 two SUSTAINED on CRITIC 19; MD `:306` eleven + ratchet rows; MD `:203` WATCHED leftover struck; not bound. next=chief-of-staff
 - 2026-09-10 09:37 ET  operator → chief-of-staff: started ANSWER 19 on CRITIC 19 (2 UPHELD leftover nine-count and WATCHED-02-outside); do not bind this turn. next=operator
 - 2026-09-10 09:35 ET  chief-of-staff → operator: answer CRITIC 19 (2 UPHELD leftover nine-count and WATCHED-02-outside); record CRITIC 18 as prior-hash close; do not bind this turn. next=operator
@@ -69,6 +70,5 @@ Two suites, both on the tick.
 - 2026-09-10 09:10 ET  systems → chief-of-staff: bind-candidate landed (founder_browser_bytes pin, half-spread n=624, α-key, eleven checks); leftover unpinned-fee face struck; not bound; consult off. next=chief-of-staff
 - 2026-09-10 07:45 ET  chief-of-staff: committed `da2ca9b` hole recording on #178; cloud worker/CoS ticks were correct idle no-ops at `8243cfa`. next=idle
 - 2026-09-10 07:35 ET  chief-of-staff: overnight hole recorded; n reported not scored; Status=idle; cloud CoS quieted because wake missing. next=idle
-- 2026-09-10 07:35 ET  operator → chief-of-staff: CLOSED recorded defect on eight-window hole `100315`–`100500` (detector `KXBTC15M-26SEP100515-15`); coinflip eligible 172, favorite 128/127 lived; did not score, bind, backfill, or enable consult. next=chief-of-staff
 *Older lines rolled off at the 10-line cap. Full history is in the git log for `docs/agents/DESK.md`.*
 
