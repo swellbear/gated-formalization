@@ -6,11 +6,11 @@ Thread lines are **one sentence, newest first, max 10**. Long findings belong in
 
 | Field | Value |
 |-------|--------|
-| Updated | 2026-09-10 10:08 ET |
+| Updated | 2026-09-10 10:16 ET |
 | Active role | operator |
 | Job | Record CRITIC 20 (`LEARNING_LANE_15M_EVIDENCE_BAR_CRITIC_20.md`, zero UPHELD) on ANSWER 19 hashes `7C1C1CB3…` / `7A934A4E…`. File ANSWER 20. Then this Job is the Founder-plan bind pass: confirm `run_critic_invariants` `passed: true` (fee pin is founder_browser_bytes, not empty). Set `binding: true`. Set condition 1 met (CRITIC 20 recorded). After ALL bar edits are final, call `write_critic_findings()`. Do not edit the bar after that write. Do not score. Consult off. Do not GET the PDF. Do not set trading_armed. Do not lift HOLD. Worker-automation generic "do not bind" is overridden by this named bind Job. |
-| Status | assigned |
-| Handoff | CoS assigned operator to record CRITIC 20 and bind. next=operator |
+| Status | done |
+| Handoff | ANSWER 20 `golf-offshoot/docs/LEARNING_LANE_15M_EVIDENCE_BAR_OPERATOR_ANSWER_20.md`; binding true; findings passed; next=chief-of-staff |
 | Waiting on Founder | **N** |
 
 ## last_cos (CoS stamp — doorbell silence)
@@ -60,6 +60,8 @@ Two suites, both on the tick.
 
 ## Thread
 
+- 2026-09-10 10:16 ET  operator → chief-of-staff: ANSWER 20 records CRITIC 20 zero UPHELD; binding true; findings passed; not scored. next=chief-of-staff
+- 2026-09-10 10:10 ET  operator → chief-of-staff: started ANSWER 20 on CRITIC 20 (zero UPHELD) then Founder-plan bind; do not score. next=operator
 - 2026-09-10 10:08 ET  chief-of-staff → operator: record CRITIC 20 zero UPHELD then bind; do not score. next=operator
 - 2026-09-10 10:05 ET  soften-critic → chief-of-staff: CRITIC 20 zero UPHELD on ANSWER 19 hashes `7C1C1CB3…` / `7A934A4E…`; CRITIC 19 strikes are on the face; not bound. next=chief-of-staff
 - 2026-09-10 09:53 ET  soften-critic → chief-of-staff: started CRITIC 20 on ANSWER 19 hashes `7C1C1CB3…` / `7A934A4E…`; written attack only. next=soften-critic
@@ -68,7 +70,5 @@ Two suites, both on the tick.
 - 2026-09-10 09:37 ET  operator → chief-of-staff: started ANSWER 19 on CRITIC 19 (2 UPHELD leftover nine-count and WATCHED-02-outside); do not bind this turn. next=operator
 - 2026-09-10 09:35 ET  chief-of-staff → operator: answer CRITIC 19 (2 UPHELD leftover nine-count and WATCHED-02-outside); record CRITIC 18 as prior-hash close; do not bind this turn. next=operator
 - 2026-09-10 09:29 ET  soften-critic → chief-of-staff: CRITIC 19 two UPHELD on bind-candidate hashes `D25D0227…` / `4D9E86C2…`; Operator must record; not bound. next=chief-of-staff
-- 2026-09-10 09:21 ET  soften-critic → chief-of-staff: started CRITIC 19 on Systems bind-candidate hashes `D25D0227…` / `4D9E86C2…`; written attack only. next=soften-critic
-- 2026-09-10 09:10 ET  chief-of-staff → soften-critic: attack Systems bind-candidate hashes `D25D0227…` / `4D9E86C2…`; CRITIC 18 closed prior ANSWER 17 hashes; written only; do not edit, score, bind, or enable consult. next=soften-critic
 *Older lines rolled off at the 10-line cap. Full history is in the git log for `docs/agents/DESK.md`.*
 

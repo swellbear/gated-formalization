@@ -1,19 +1,19 @@
-# 15m evidence bar (DRAFT — not binding)
+# 15m evidence bar (binding for scoring; Established still unreachable)
 
 **Lane:** `learning_lane_15m` · series `KXBTC15M` only
 **Drafted:** 2026-09-08 08:30 EDT · Operator
-**Amended:** 2026-09-10 09:50 EDT · Operator, record of Soften Critic CRITIC 19 (two SUSTAINED leftover-citation strikes; CRITIC 18 recorded as closed-on-prior-hashes). Prior: 2026-09-10 09:00 EDT · Systems bind-candidate (Founder browser fee pin `founder_browser_bytes`; half-spread profile; α-key; paper mid strings; WATCHED PROPOSED 02; `declare_rule` informing-mark gate; consult fail-closed; hub-down/gap ntfy; hub abort swallow; automations on `cursor/honer-15m-sibling`. Not a score. Not a bind. Consult not enabled).
-**Binding?** **N.** A system that sets its own threshold does not have one.
+**Amended:** 2026-09-10 10:15 EDT · Operator, record of Soften Critic CRITIC 20 (zero UPHELD; 0 SUSTAINED / 0 OVERRULED) and Founder-plan bind. Prior: 2026-09-10 09:50 EDT · Operator ANSWER 19 (CRITIC 19 two SUSTAINED leftover-citation strikes; CRITIC 18 recorded as closed-on-prior-hashes). Binding for Admissible scoring. Established still unreachable. Not a score. Consult not enabled.
+**Binding?** **Y.** Binding is for Admissible scoring. Established remains unreachable. A system that sets its own *edge* threshold still does not have one.
 **Admit?** N · **Edge established?** N · `lab_admits` false · Trading **NOT ARMED**
 
-This draft becomes binding only after both:
+This bar is **binding for Admissible scoring** after both:
 
-1. the Soften Critic attacks it in writing, in a session that did not draft it, and Operator **sustains or explicitly overrules every objection, each with a stated reason**, in a turn separate from the objections. "Answered" is not "noted." The attack and the answers are both linked from this file.
+1. the Soften Critic attacks it in writing, in a session that did not draft it, and Operator **sustains or explicitly overrules every objection, each with a stated reason**, in a turn separate from the objections. "Answered" is not "noted." The attack and the answers are both linked from this file. Zero UPHELD is a completed attack: 0 to sustain, 0 to overrule.
 2. `critic-invariants` passes on the bytes proposed to bind, **or** every failing check is named on this bar's face with Operator's reason for binding anyway. A findings artifact that says `passed: false` cannot sit under a bar that says `binding: true`.
 
 Founder read-once is **not** a bind condition. Founder 2026-09-09 dropped it: the crew had written it into the 08:30 draft; it was not a Founder GO. Founder remains for **arm** and **HOLD lift** only. Putting it back is a Hard NO; `bind_has_no_founder_read_once` fails the method suite if it returns.
 
-Condition 1 is **not met** for these bytes. This Operator answer (ANSWER 19) records CRITIC 19 (`LEARNING_LANE_15M_EVIDENCE_BAR_CRITIC_19.md`) on the Systems bind-candidate hashes (`D25D0227…` / `4D9E86C2…`): two UPHELD, two SUSTAINED. Amending the face produces new bytes; a later-session Soften Critic must attack those hashes. CRITIC 18 (`LEARNING_LANE_15M_EVIDENCE_BAR_CRITIC_18.md`) was a completed zero-UPHELD attack on the ANSWER 17 hashes (`D9FDA991…` / `F7E8F681…`). Those bytes were **not** proposed to bind. ANSWER 18 was not written. **Condition 2** waits on `critic-invariants` covering these (post-amend) bytes. The 2026-09-08 `last_findings_reviewed` list describes other bytes; this turn did not call `write_critic_findings()`. The fee pin is Founder browser bytes (`founder_browser_bytes`), not a gym HTTP 200. Gym 12h 429 is drift detection, not the pin clock. `check_delta_above_detection_floor` now compares `alpha_first_look` to the schedule's first term and `next_look_alpha` to current α_k. Founder read-once is not a bind condition. This is still a proposed bar. Writing it is not an ADMIT. Amending it is not an ADMIT. Scoring against it is not owed. `records[]` stays empty.
+Condition 1 is **met**. This Operator answer (ANSWER 20) records CRITIC 20 (`LEARNING_LANE_15M_EVIDENCE_BAR_CRITIC_20.md`) on the ANSWER 19 hashes (`7C1C1CB3…` / `7A934A4E…`): zero UPHELD, 0 SUSTAINED, 0 OVERRULED. Completed attack, not a skip. CRITIC 19's demanded strikes (MD `:306` eleven with tenth/eleventh named; MD ratchet table half-spread tenth / hub-autostart eleventh; MD `:203` WATCHED landing, not "outside") are on those hashes. CRITIC 18 (`LEARNING_LANE_15M_EVIDENCE_BAR_CRITIC_18.md`) was already recorded in ANSWER 19 as a prior-hash close: a completed zero-UPHELD attack on the ANSWER 17 hashes (`D9FDA991…` / `F7E8F681…`). Those ANSWER 17 bytes were **not** proposed to bind. ANSWER 18 was not written. This bind-face is the Founder-plan recording of CRITIC 20, not a leftover-strike amend that reopens condition 1. **Condition 2** is met as Operator's statement that `run_critic_invariants()` returned `passed: true` on the tree (`fee_schedule_hash_recorded` PASS; pin `founder_browser_bytes`) and that `write_critic_findings()` ran after this face was frozen. The face does **not** copy the findings artifact hash back onto the JSON (that would move the bytes). `last_findings_cover_these_bytes` stays **false**: do not pre-claim; the clerical artifact [`LEARNING_LANE_15M_CRITIC_FINDINGS.json`](LEARNING_LANE_15M_CRITIC_FINDINGS.json) is the machine SoT and is a separate file. The 2026-09-08 `last_findings_reviewed` list remains a lagged snapshot of other bytes. The fee pin is Founder browser bytes (`founder_browser_bytes`), not a gym HTTP 200. Gym 12h 429 is drift detection, not the pin clock. `check_delta_above_detection_floor` now compares `alpha_first_look` to the schedule's first term and `next_look_alpha` to current α_k. δ stays provisional and is not the sole bind reason. Founder read-once is not a bind condition. Binding is not an ADMIT. Scoring against it is not owed this turn. `records[]` stays empty. `currently_reachable` stays **false**.
 
 Amending this bar re-owes the Critic on the new text (`critic.py` keys findings by content hash). That is correct and intended.
 
@@ -37,7 +37,7 @@ A honer skip under this compositor keeps the factory `rule_id` and overwrites `r
 
 The protocol's exam contrast (step 6) is `d_i = pnl_exam − pnl_fill_all` (gross, in-band exam windows). That is **not** this bar's fee-adjusted five-clause test (`d_i = pnl_rule_fee_adj_i − pnl_baseline_fee_adj_i`, H0 `mean(d) ≤ δ`, clauses (1)–(5), L1 n=70 after `declared_at` then lived L2). Surviving the exam is therefore not surviving this bar.
 
-This paragraph is not a seat, not an ADMIT, not Established, not a keep. Consult stays **off**. `currently_reachable` stays **false**. Binding stays **false**. Trading **NOT ARMED**. HOLD stands.
+This paragraph is not a seat, not an ADMIT, not Established, not a keep. Consult stays **off**. `currently_reachable` stays **false**. Binding is **true** for Admissible scoring. Established still unreachable. Trading **NOT ARMED**. HOLD stands.
 
 ---
 
@@ -66,7 +66,7 @@ The method already says a gate pass is not a claim: Amb ≠ clearance, print-mat
 
 An ops ADMIT on this lane, while the lane is still ops-beside-method, is a dated record. Per [`docs/operator_ops/OPS_BESIDE_METHOD.md`](../../docs/operator_ops/OPS_BESIDE_METHOD.md): it does **not** establish edge. **Edge Softened/established?** stays **N**. Observation ≠ edge.
 
-Promotion into the gated method is a separate Founder-named conditional. This bar does not fire it. This bar being written does not fire it. This bar is not binding yet, so the promotion condition that requires a binding bar cannot hold yet.
+Promotion into the gated method is a separate Founder-named conditional. This bar does not fire it. This bar being written or bound does not fire it. This bar is binding for Admissible scoring. Established remains unreachable (`favorite_odds=2` is not verifiably pre-registered), so a promotion condition that requires Established cannot hold.
 
 ---
 
@@ -235,7 +235,7 @@ Replay assumes fills live execution might not get. Skipping a bet changes nothin
 
 **These lived/replay fields are enforced by the scorer.** `window_is_oos` still keys only on `closed > declared_at` (the `decide()` expression gate). `score_rule` calls `_assert_window_lived_or_raise`, which reads `lived_paper_begins_at` / `replay_close_*` and raises `RuleNotScorable` on a window in `(replay_close_after, replay_close_at_or_before]`. A later score that treats a window from that interval as lived fails as a machine, not only as prose. This Systems turn did not score and did not open window outcome files.
 
-**Established is currently unreachable, and this bar says so rather than implying otherwise.** `paper.py` consults `rules.decide()` via `consult_registry`, then a dark AND-skip compositor that does not move Lineage A while `consult_enabled` is off. **This face does not claim a live process tip.** `watch.json` may exist on the gym tree; it is not bind evidence. This turn did not start or kill a hub. The previous face cited running-hub tip `0a480d4`. That SHA is Turn 2 (13:46 EDT). At `0a480d4`, `decide()` has no `favorite_odds` dispatch: after the OOS check it only special-cases `R-SKIP-COINFLIP`; every other selecting id gets `unknown`. HEAD `_express_selection` does dispatch `params.favorite_odds`. `R-SKIP-2TO1-FAVORITE` **does exist**: declared at `e9fab5a` (`declared_at` 16:53:00), `execution=true` since 17:11 (`0daae90`). That is not enough. The bar is not binding; condition 2 waits on `critic-invariants` covering these bytes (fee pin is `founder_browser_bytes`, not a gym HTTP 200); `favorite_odds=2` is **not verifiably pre-registered**; skip-on-mark classes on this tree are likely burned for Established. `R-SKIP-COINFLIP` still has `execution: false`, and its band is not verifiably pre-registered. `currently_reachable` stays **false**.
+**Established is currently unreachable, and this bar says so rather than implying otherwise.** `paper.py` consults `rules.decide()` via `consult_registry`, then a dark AND-skip compositor that does not move Lineage A while `consult_enabled` is off. **This face does not claim a live process tip.** `watch.json` may exist on the gym tree; it is not bind evidence. This turn did not start or kill a hub. The previous face cited running-hub tip `0a480d4`. That SHA is Turn 2 (13:46 EDT). At `0a480d4`, `decide()` has no `favorite_odds` dispatch: after the OOS check it only special-cases `R-SKIP-COINFLIP`; every other selecting id gets `unknown`. HEAD `_express_selection` does dispatch `params.favorite_odds`. `R-SKIP-2TO1-FAVORITE` **does exist**: declared at `e9fab5a` (`declared_at` 16:53:00), `execution=true` since 17:11 (`0daae90`). That is not enough. The bar is binding for Admissible scoring; `favorite_odds=2` is **not verifiably pre-registered**; skip-on-mark classes on this tree are likely burned for Established. The fee pin is `founder_browser_bytes`, not a gym HTTP 200. `R-SKIP-COINFLIP` still has `execution: false`, and its band is not verifiably pre-registered. `currently_reachable` stays **false**.
 
 **Explicit precondition of Established:** a selection rule declared after the `decide()` flip, with verifiably pre-registered parameters, and `execution=true` before its first L2-eligible window closes, scored under a binding bar. `R-SKIP-COINFLIP` cannot satisfy this. `R-SKIP-2TO1-FAVORITE` fails the pre-registration half. This turn does not flip `R-SKIP-COINFLIP` and does not flip `currently_reachable`.
 
@@ -277,7 +277,7 @@ While the lane is ops-beside-method:
 - **Edge Softened/established?** stays **N**. Write N even if a paper-hit count exists.
 - It does not arm trading, lift the series HOLD, clear golf idle, rewrite the golf Operator stamp, or put a fee-accurate figure on the hub.
 
-After promotion fires (conditional, not this draft): establishment is adjudicated under the standing gated-method rules against *this* bar once binding. Operator issues that verdict without asking Founder. Promotion is not itself a verdict.
+After promotion fires (conditional, not this bind): establishment is adjudicated under the standing gated-method rules against *this* bar. Operator issues that verdict without asking Founder. Promotion is not itself a verdict. Binding for Admissible scoring is not promotion and is not Established.
 
 ---
 
@@ -315,7 +315,7 @@ Named on the face because fourteen sustained objections and zero new `CHECKS` me
 | F6 multiplicity | `trials_counter_is_consistent` requires `record_trial`; α is `0.05/(k(k+1))` |
 | F7 fee-free book | `fee_adjusted_book_is_binding` requires `fee_adjust` and reads the payout line |
 | X1 spread | empirical profile landed n=624 mean 0.00385 (`LEARNING_LANE_15M_HALF_SPREAD_PROFILE.json`); `fee_adjust` still omits it; not a fee adjustment |
-| X2 reachable | `currently_reachable` stays false; `R-SKIP-2TO1-FAVORITE` registry `execution` is true; lived honoring is unproven on this tree this turn (no tip, no cited decision row); pre-registration / not-binding still block; fee pin is landed |
+| X2 reachable | `currently_reachable` stays false; `R-SKIP-2TO1-FAVORITE` registry `execution` is true; lived honoring is unproven on this tree this turn (no tip, no cited decision row); pre-registration still blocks Established; bar is binding for Admissible scoring; fee pin is landed |
 | X3 L2 test | `looks.l2_test` is on the face; L2 α is the declaration-counter k and shares the next-look set; a missing-field check is possible, not written |
 | X4 trials on declaration | `record_trial`; baseline naming raises |
 | X5 sustain-or-overrule | prose; a hash check cannot read an admit-pass verdict |
@@ -328,7 +328,7 @@ Named on the face because fourteen sustained objections and zero new `CHECKS` me
 
 ## Hard NOs (this bar)
 
-- Do not treat this draft as binding
+- Do not treat binding for Admissible scoring as Established
 - Do not add `founder_read_once` as a bind condition
 - Do not set `binding: true` while `critic-invariants` reports `passed: false` on these bytes
 - Do not score `R-SKIP-COINFLIP` before 70 eligible windows, and not in the drafting or amending session

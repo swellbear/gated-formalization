@@ -2,7 +2,7 @@
   "schema": 1,
   "lane": "learning_lane_15m",
   "role": "critic-invariants",
-  "ran_at": "2026-09-10T09:15:25.827074-04:00",
+  "ran_at": "2026-09-10T10:18:22.874508-04:00",
   "framing": "Deterministic checks over method artifacts. This is the mechanical half of the Critic. It objects to nothing, scores nothing, admits nothing and parks nothing. A written attack is soften-critic's turn and is never auto-served.",
   "passed": true,
   "failing": [],
@@ -159,10 +159,13 @@
       "id": "hub_autostart_registered",
       "title": "the 15m hub logon task exists",
       "state": "PASS",
-      "detail": "scratch-tree critic run; live Windows gym queries schtasks",
+      "detail": "schtasks GatedFormalization-15mLearningHub is registered",
       "evidence": {
-        "skipped": true,
-        "name": "GatedFormalization-15mLearningHub"
+        "platform": "nt",
+        "present": true,
+        "skipped": false,
+        "name": "GatedFormalization-15mLearningHub",
+        "returncode": 0
       }
     }
   ],
@@ -171,10 +174,10 @@
       "id": "honesty_stamp_is_fresh",
       "title": "the honesty stamp is inside one window",
       "state": "PASS",
-      "detail": "stamped 2026-09-10 09:10, 325s old, inside one 900s window",
+      "detail": "stamped 2026-09-10 10:08, 622s old, inside one 900s window",
       "evidence": {
-        "stamped": "2026-09-10 09:10",
-        "age_s": 325,
+        "stamped": "2026-09-10 10:08",
+        "age_s": 622,
         "window_s": 900.0
       }
     }
@@ -184,51 +187,51 @@
     {
       "id": "evidence_bar",
       "path": "golf-offshoot/docs/LEARNING_LANE_15M_EVIDENCE_BAR.md",
-      "sha256": "d25d0227136206ec08846147470e3da4aea58cfe0b25b5a0b51bb9b7284feeb2",
+      "sha256": "6490a3307a1acb73897acfa2bb8c4439e834d7ba52266bb96aa2ad51005503e8",
       "present": true,
-      "checked_at": "2026-09-10T09:15:25.827074-04:00"
+      "checked_at": "2026-09-10T10:18:22.874508-04:00"
     },
     {
       "id": "evidence_bar_json",
       "path": "golf-offshoot/docs/LEARNING_LANE_15M_EVIDENCE_BAR.json",
-      "sha256": "4d9e86c2c45362b8af5fbf040f2da5c5ba39f2efa879c0f82d04cfdb946b74d6",
+      "sha256": "1f36a807bb789126ee66f82ad466d5bf841b3fe8296ce6358de18d8005d9fba6",
       "present": true,
-      "checked_at": "2026-09-10T09:15:25.827074-04:00"
+      "checked_at": "2026-09-10T10:18:22.874508-04:00"
     },
     {
       "id": "rule_registry",
       "path": "golf-offshoot/docs/LEARNING_LANE_15M_RULES.json",
       "sha256": "bbd87e52ee6fc1e5f797c676ea6038f4c77404dde7f29e21128bd75bf4b802d0",
       "present": true,
-      "checked_at": "2026-09-10T09:15:25.827074-04:00"
+      "checked_at": "2026-09-10T10:18:22.874508-04:00"
     },
     {
       "id": "lab_proposed",
       "path": "golf-offshoot/docs/LEARNING_LANE_15M_OPERATOR_NOTE_PROPOSED_01.md",
       "sha256": "83d4463b4bb55d327485e3874a4bf3daa54727d7ed37f56c124c6e8913daf0b4",
       "present": true,
-      "checked_at": "2026-09-10T09:15:25.827074-04:00"
+      "checked_at": "2026-09-10T10:18:22.874508-04:00"
     },
     {
       "id": "lab_proposed_02",
       "path": "golf-offshoot/docs/LEARNING_LANE_15M_OPERATOR_NOTE_PROPOSED_02.md",
       "sha256": "1071b9f7402ea0807147f64731456b80030310ed9fb2f6ff5ecd3009cc303119",
       "present": true,
-      "checked_at": "2026-09-10T09:15:25.827074-04:00"
+      "checked_at": "2026-09-10T10:18:22.874508-04:00"
     },
     {
       "id": "lab_lab_proposed_02",
       "path": "golf-offshoot/docs/LEARNING_LANE_15M_LAB_PROPOSED_02.md",
       "sha256": "460f59a369241e107f7fd48a22898f24d4456338618a7927d73d7aebdc0368e2",
       "present": true,
-      "checked_at": "2026-09-10T09:15:25.827074-04:00"
+      "checked_at": "2026-09-10T10:18:22.874508-04:00"
     },
     {
       "id": "honesty_stamp",
       "path": "docs/agents/DESK.md",
-      "sha256": "09b9a950051f5a907dd58723a5f7312457e15ba4c829a1eb1f2a4dae73ded41b",
+      "sha256": "5ffb770f63911a5429eba83468a669bd388bd7c864a786dc9fde312e5c73a32c",
       "present": true,
-      "checked_at": "2026-09-10T09:15:25.827074-04:00"
+      "checked_at": "2026-09-10T10:18:22.874508-04:00"
     }
   ]
 }

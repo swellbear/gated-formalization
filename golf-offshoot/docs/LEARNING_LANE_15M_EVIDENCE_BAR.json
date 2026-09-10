@@ -3,12 +3,12 @@
   "lane": "learning_lane_15m",
   "series": "KXBTC15M",
   "drafted_at": "2026-09-08T08:30:00-04:00",
-  "amended_at": "2026-09-10T09:50:00-04:00",
+  "amended_at": "2026-09-10T10:15:00-04:00",
   "amended_by": "operator",
-  "amendment": "Operator ANSWER 19: CRITIC 19 two UPHELD / two SUSTAINED. MD :306 suite count eleven with tenth/eleventh named; MD ratchet rows half_spread_tenth / hub_autostart_eleventh; MD :203 WATCHED leftover struck. CRITIC 18 closed ANSWER 17 hashes D9FDA991\u2026 / F7E8F681\u2026 (not proposed to bind; ANSWER 18 not written). Not a score. Not a bind. Consult not enabled. write_critic_findings() was not called.",
+  "amendment": "Operator ANSWER 20: CRITIC 20 zero UPHELD / 0 SUSTAINED / 0 OVERRULED on ANSWER 19 hashes 7C1C1CB3\u2026 / 7A934A4E\u2026. Completed attack, not a skip. CRITIC 19 demanded MD :306 eleven + ratchet tenth/eleventh and MD :203 WATCHED landing are on those hashes. CRITIC 18 closed ANSWER 17 hashes D9FDA991\u2026 / F7E8F681\u2026 (not proposed to bind; ANSWER 18 not written). Founder-plan bind: binding true for Admissible scoring. Established still unreachable. Not a score. Consult not enabled. write_critic_findings() ran after this face. last_findings_cover_these_bytes stays false (do not pre-claim; clerical artifact is separate).",
   "prior_amendment": {
-    "amended_at": "2026-09-10T09:00:00-04:00",
-    "note": "Systems bind-candidate: Founder browser fee pin founder_browser_bytes; half-spread profile; alpha_first_look vs schedule first term; paper mid/last strings; WATCHED PROPOSED 02; declare_rule informing-mark gate; consult fail-closed; hub-down/gap ntfy; hub client-abort swallow; automations on cursor/honer-15m-sibling. CRITIC 18 closed ANSWER 17 hashes; those bytes are not the bind-candidate. Not a score. Not a bind. Consult not enabled."
+    "amended_at": "2026-09-10T09:50:00-04:00",
+    "note": "Operator ANSWER 19: CRITIC 19 two UPHELD / two SUSTAINED. MD :306 suite count eleven with tenth/eleventh named; MD ratchet rows half_spread_tenth / hub_autostart_eleventh; MD :203 WATCHED leftover struck. CRITIC 18 closed ANSWER 17 hashes D9FDA991\u2026 / F7E8F681\u2026 (not proposed to bind; ANSWER 18 not written). Not a score. Not a bind. Consult not enabled. write_critic_findings() was not called."
   },
   "discovery_organ": {
     "lane": "honer_15m",
@@ -45,21 +45,32 @@
     "protocol": "golf-offshoot/docs/HONER_15M_PROMOTION.md",
     "currently_a_seat": false
   },
-  "binding": false,
-  "binding_rule": "Becomes binding only after (1) a Soften Critic written attack from a session that did not draft the bar, with Operator sustaining or explicitly overruling every objection with a stated reason in a separate turn, attack and answers both linked from the bar; and (2) critic-invariants passing on the bytes proposed to bind, or every failing check named on the bar's face with Operator's reason for binding anyway.",
+  "binding": true,
+  "binding_rule": "Becomes binding only after (1) a Soften Critic written attack from a session that did not draft the bar, with Operator sustaining or explicitly overruling every objection with a stated reason in a separate turn, attack and answers both linked from the bar (zero UPHELD is a completed attack: 0 to sustain, 0 to overrule); and (2) critic-invariants passing on the bytes proposed to bind, or every failing check named on the bar's face with Operator's reason for binding anyway. Satisfied 2026-09-10 by CRITIC 20 + ANSWER 20 and write_critic_findings after this face. Binding is for Admissible scoring. Established remains unreachable.",
   "binding_conditions": [
     {
       "id": "critic_answered",
-      "met": false,
-      "detail": "CRITIC 19 two UPHELD on Systems bind-candidate hashes D25D0227\u2026 / 4D9E86C2\u2026; Operator ANSWER 19 two SUSTAINED (MD :306 nine-count leftover; MD :203 WATCHED-02-outside leftover). Condition 1 is unmet on the post-amend bytes until a later-session Soften Critic attacks them. CRITIC 18 was a completed zero-UPHELD on ANSWER 17 hashes D9FDA991\u2026 / F7E8F681\u2026; those bytes were not proposed to bind; ANSWER 18 was not written.",
-      "critic_file": "golf-offshoot/docs/LEARNING_LANE_15M_EVIDENCE_BAR_CRITIC_19.md",
-      "critic_sha256_bytes": "c7f7cbfe6256e5db95f5f92b595589b3a20145c655e3420e8f9d6062d2fd1f61",
-      "answer_file": "golf-offshoot/docs/LEARNING_LANE_15M_EVIDENCE_BAR_OPERATOR_ANSWER_19.md",
-      "answered_bar_md_sha256": "d25d0227136206ec08846147470e3da4aea58cfe0b25b5a0b51bb9b7284feeb2",
-      "answered_bar_json_sha256": "4d9e86c2c45362b8af5fbf040f2da5c5ba39f2efa879c0f82d04cfdb946b74d6",
-      "upheld": 2,
-      "sustained": 2,
+      "met": true,
+      "detail": "CRITIC 20 zero UPHELD on ANSWER 19 hashes 7C1C1CB3\u2026 / 7A934A4E\u2026; Operator ANSWER 20 records 0 SUSTAINED / 0 OVERRULED (completed attack, not a skip). CRITIC 19 demanded MD :306 eleven + ratchet tenth/eleventh and MD :203 WATCHED landing are on those hashes. CRITIC 18 was a completed zero-UPHELD on ANSWER 17 hashes D9FDA991\u2026 / F7E8F681\u2026; those bytes were not proposed to bind; ANSWER 18 was not written. Founder-plan bind pass: this face records that pair and sets binding true for Admissible scoring.",
+      "critic_file": "golf-offshoot/docs/LEARNING_LANE_15M_EVIDENCE_BAR_CRITIC_20.md",
+      "critic_sha256_bytes": "5a50ec6576bebd9adb72a24e6e5c5ab51566a08b16efb2ccf0bc085502d2cbee",
+      "answer_file": "golf-offshoot/docs/LEARNING_LANE_15M_EVIDENCE_BAR_OPERATOR_ANSWER_20.md",
+      "answered_bar_md_sha256": "7c1c1cb3feb4dff389d6b82f87d7246bdc5439de1b690e63cf66317a0ad77745",
+      "answered_bar_json_sha256": "7a934a4e3bfc30fe538140ebc3f0c79ef93c816db48d9e9c4fde629da7d277b6",
+      "upheld": 0,
+      "sustained": 0,
       "overruled": 0,
+      "prior_answered": {
+        "note": "CRITIC 19 two UPHELD / ANSWER 19 two SUSTAINED on Systems bind-candidate hashes D25D0227\u2026 / 4D9E86C2\u2026.",
+        "critic_file": "golf-offshoot/docs/LEARNING_LANE_15M_EVIDENCE_BAR_CRITIC_19.md",
+        "critic_sha256_bytes": "c7f7cbfe6256e5db95f5f92b595589b3a20145c655e3420e8f9d6062d2fd1f61",
+        "answer_file": "golf-offshoot/docs/LEARNING_LANE_15M_EVIDENCE_BAR_OPERATOR_ANSWER_19.md",
+        "answered_bar_md_sha256": "d25d0227136206ec08846147470e3da4aea58cfe0b25b5a0b51bb9b7284feeb2",
+        "answered_bar_json_sha256": "4d9e86c2c45362b8af5fbf040f2da5c5ba39f2efa879c0f82d04cfdb946b74d6",
+        "upheld": 2,
+        "sustained": 2,
+        "overruled": 0
+      },
       "prior_pair": {
         "note": "CRITIC 18 was a completed zero-UPHELD on ANSWER 17 hashes D9FDA991\u2026 / F7E8F681\u2026. Those bytes were not proposed to bind. ANSWER 18 was not written.",
         "critic_file": "golf-offshoot/docs/LEARNING_LANE_15M_EVIDENCE_BAR_CRITIC_18.md",
@@ -74,9 +85,9 @@
     },
     {
       "id": "critic_invariants_pass",
-      "met": false,
-      "detail": "critic-invariants must pass on the post-ANSWER-19 bytes. Fee pin is founder_browser_bytes, not gym HTTP 200. check_delta_above_detection_floor compares alpha_first_look to the schedule first term and next_look_alpha to current alpha_k. half_spread_profile_recorded and hub_autostart_registered are the tenth and eleventh CHECKS. This amending turn did not call write_critic_findings(). The 2026-09-08 last_findings_reviewed list describes other bytes. A later clerical findings file is a separate artifact; this face does not pre-claim the post-amend hashes.",
-      "note": "critic.py records the newline-normalised digest, not the raw byte hash. Compare the digest the checker actually read. Operator bind restates last_findings after critic-invariants covers these bytes. last_findings_cover_these_bytes stays false: the 2026-09-08 list is other bytes; do not pretend the new hashes are already reviewed.",
+      "met": true,
+      "detail": "run_critic_invariants() passed:true on the tree before this bind-face (fee_schedule_hash_recorded PASS; pin founder_browser_bytes SHA-256 c326a69f596a11e8f8be2620402d39a8d4823920c21cc97c93a114d862699601; schedule_sha256 not emptied). write_critic_findings() ran after this face was frozen. Do not copy the findings artifact hash back onto this JSON (that would move the bytes). last_findings_cover_these_bytes stays false: do not pre-claim; the clerical artifact LEARNING_LANE_15M_CRITIC_FINDINGS.json is the machine SoT and is a separate file that always lags this face snapshot. check_delta_above_detection_floor compares alpha_first_look to the schedule first term and next_look_alpha to current alpha_k. half_spread_profile_recorded and hub_autostart_registered are the tenth and eleventh CHECKS. delta stays provisional and is not the sole bind reason.",
+      "note": "critic.py records the newline-normalised digest, not the raw byte hash. Compare the digest the checker actually read. last_findings_cover_these_bytes stays false: do not pre-claim; clerical artifact is separate. The 2026-09-08 last_findings_reviewed list is a lagged face snapshot of other bytes, not coverage of these hashes.",
       "last_findings_cover_these_bytes": false,
       "last_findings_ran_at": "2026-09-08T12:02:45.460786-04:00",
       "last_findings_reviewed": [
@@ -88,9 +99,9 @@
         "delta_above_detection_floor"
       ],
       "standing_named_fail": [],
-      "standing_named_fail_struck": "fee_schedule_hash_recorded is pinned from founder_browser_bytes; it is not a standing fail on these bytes. The 2026-09-08 last_findings_reviewed list describes other bytes.",
+      "standing_named_fail_struck": "fee_schedule_hash_recorded is pinned from founder_browser_bytes; it is not a standing fail on these bytes.",
       "failing_set_at_last_operator_read_struck": "2026-09-08T14:04:31.195208-04:00 list [fee_schedule_hash_recorded] described other bytes; not a picture of these hashes",
-      "evaluated_by": "Operator ANSWER 19 did not call write_critic_findings(). The 2026-09-08 last_findings_reviewed list describes other bytes. honesty_stamp_is_fresh is a desk check and was not in failing."
+      "evaluated_by": "Operator ANSWER 20 confirmed run_critic_invariants() passed:true then called write_critic_findings() after this face was frozen. honesty_stamp_is_fresh is a desk check and does not set passed."
     }
   ],
   "admit": false,
@@ -127,7 +138,7 @@
       "requires_held_out_confirmation": true,
       "ops_beside_edge_stays_n": true,
       "currently_reachable": false,
-      "unreachable_because": "paper.py consults decide() via consult_registry then a dark AND-skip compositor (consult_enabled off; live honer theta never consults). R-SKIP-2TO1-FAVORITE exists: declared at e9fab5a (declared_at 2026-09-08T16:53:00-04:00), execution=true since 2026-09-08T17:11:00-04:00 (0daae90). Established remains unreachable: the bar is not binding; favorite_odds=2 is not verifiably pre-registered; skip-on-mark classes on this tree are likely burned for Established. R-SKIP-COINFLIP still has execution false and its band is not verifiably pre-registered. currently_reachable stays false. Naming the discovery organ is not a seat.",
+      "unreachable_because": "paper.py consults decide() via consult_registry then a dark AND-skip compositor (consult_enabled off; live honer theta never consults). R-SKIP-2TO1-FAVORITE exists: declared at e9fab5a (declared_at 2026-09-08T16:53:00-04:00), execution=true since 2026-09-08T17:11:00-04:00 (0daae90). The bar is binding for Admissible scoring. Established remains unreachable: favorite_odds=2 is not verifiably pre-registered; skip-on-mark classes on this tree are likely burned for Established. R-SKIP-COINFLIP still has execution false and its band is not verifiably pre-registered. currently_reachable stays false. Naming the discovery organ is not a seat.",
       "precondition": "a selection rule declared after the decide() flip, with verifiably pre-registered parameters, and execution=true before its first L2-eligible window closes, scored under a binding bar. R-SKIP-COINFLIP cannot satisfy this. R-SKIP-2TO1-FAVORITE fails the pre-registration half.",
       "executing_selection_rule": "R-SKIP-2TO1-FAVORITE",
       "lived_paper_begins_at": "2026-09-08T17:11:00-04:00",
@@ -387,7 +398,7 @@
     "critic_01_finding_6_multiplicity": "trials_counter_is_consistent requires record_trial and a trials_log; delta_above_detection_floor uses alpha=0.05/(k(k+1))",
     "critic_01_finding_7_fee_adjust": "fee_adjusted_book_is_binding requires adjustment_function, reproduces the RUN-ONLY table, and reads the payout expression not a substring of settle.py",
     "critic_01_x1_spread": "half_spread_profile_recorded is the tenth CHECKS member. LEARNING_LANE_15M_HALF_SPREAD_PROFILE.json n=624 mean 0.00385. fee_adjust still omits the measured half-spread. Unconditional constant-tick direction remains the formula; the profile is a measurement, not a fee adjustment",
-    "critic_01_x2_reachable": "currently_reachable stays false; R-SKIP-2TO1-FAVORITE registry execution is true; lived honoring is unproven on this tree this turn (no tip, no cited decision row); pre-registration / not-binding still block; fee pin is landed founder_browser_bytes. A source-call check that paper.py calls decide() is possible and not yet a method-suite member",
+    "critic_01_x2_reachable": "currently_reachable stays false; R-SKIP-2TO1-FAVORITE registry execution is true; lived honoring is unproven on this tree this turn (no tip, no cited decision row); pre-registration still blocks Established; bar is binding for Admissible scoring; fee pin is landed founder_browser_bytes. A source-call check that paper.py calls decide() is possible and not yet a method-suite member",
     "critic_01_x3_l2_test": "looks.l2_test is on the face; L2 alpha is the declaration-counter k and shares the next-look set; no check yet fails when n/h0/delta/alpha are missing. Possible, not written",
     "critic_01_x4_trials_on_declaration": "record_trial increments on declaration and L2 looks; baseline naming raises",
     "critic_01_x5_sustain_or_overrule": "binding condition 1 is prose; a file check cannot read an admit-pass verdict without a structured verdicts array. Impossible as a hash check today",
@@ -413,7 +424,7 @@
     "check_delta_above_detection_floor LANDED 2026-09-10: alpha_first_look vs schedule first term; next_look_alpha vs current alpha_k"
   ],
   "hard_nos": [
-    "do not treat this draft as binding",
+    "do not treat binding for Admissible scoring as Established",
     "do not add founder_read_once as a bind condition",
     "do not set binding:true while critic-invariants reports passed:false on these bytes",
     "do not score R-SKIP-COINFLIP before 70 eligible windows, and not in the drafting or amending session",
