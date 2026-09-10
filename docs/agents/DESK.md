@@ -6,11 +6,11 @@ Thread lines are **one sentence, newest first, max 10**. Long findings belong in
 
 | Field | Value |
 |-------|--------|
-| Updated | 2026-09-10 19:31 ET |
+| Updated | 2026-09-10 19:36 ET |
 | Active role | lab |
 | Job | unused legal kinds empty (CLOCK-QUARTER-BOUNDARIES already dated); invent the next kind (product-structure skip rate, unburned, not a clone) as a farm notebook in LEARNING_LANE_15M_FARM.json (execution false; do not steal the chair); if you cannot name another kind, write LEARNING_LANE_15M_FARM_MENU_EXHAUSTED.json so I stops; do not set execution true. |
-| Status | assigned |
-| Handoff | I_farm_open assigned. Unused legal kinds empty. Invent next kind or write farm_menu_exhausted. Hour-close still executing. Consult off. HOLD stands. Trading NOT ARMED. next=lab |
+| Status | done |
+| Handoff | golf-offshoot/docs/LEARNING_LANE_15M_FARM.json + LEARNING_LANE_15M_MECHANISM_CATALOG.json: dated F-CLOCK-HOUR-FIRST-HALF-15-30 (skip :15/:30, rate 0.5, execution false). Chair untouched. next=chief-of-staff |
 | Waiting on Founder | **N** |
 
 ## last_cos (CoS stamp — doorbell silence)
@@ -60,6 +60,8 @@ Two suites, both on the tick.
 
 ## Thread
 
+- 2026-09-10 19:36 ET  lab → chief-of-staff: invented CLOCK-HOUR-FIRST-HALF as F-CLOCK-HOUR-FIRST-HALF-15-30 in LEARNING_LANE_15M_FARM.json (execution false; chair untouched). next=chief-of-staff
+- 2026-09-10 19:34 ET  lab → chief-of-staff: started inventing the next farm kind (product-structure skip rate; execution false; do not steal the chair). next=lab
 - 2026-09-10 19:31 ET  chief-of-staff → lab: unused legal kinds empty; invent the next kind as a farm notebook (execution false; do not steal the chair) or write farm_menu_exhausted. next=lab
 - 2026-09-10 19:11 ET  chief-of-staff: Lab invent CLOCK-QUARTER-BOUNDARIES done; F-CLOCK-QUARTER-BOUNDARIES-15-45 seated execution false; chair untouched; I invent-next-kind later. next=idle
 - 2026-09-10 19:08 ET  lab → chief-of-staff: invented CLOCK-QUARTER-BOUNDARIES as F-CLOCK-QUARTER-BOUNDARIES-15-45 in LEARNING_LANE_15M_FARM.json (execution false; chair untouched). next=chief-of-staff
@@ -68,5 +70,4 @@ Two suites, both on the tick.
 - 2026-09-10 18:49 ET  chief-of-staff: Lab farm date done; unused CLOCK-CLOSE-MINUTE {15,30,45} notebooks seated execution false; chair untouched; I invent-next-kind later. next=idle
 - 2026-09-10 18:46 ET  lab → chief-of-staff: dated F-CLOCK-CLOSE-MINUTE-{15,30,45} in LEARNING_LANE_15M_FARM.json (execution false; chair untouched). next=chief-of-staff
 - 2026-09-10 18:45 ET  lab → chief-of-staff: started dating unused CLOCK-CLOSE-MINUTE {15, 30, 45} as farm notebooks (execution false; do not steal the chair). next=lab
-- 2026-09-10 18:30 ET  chief-of-staff → lab: date unused CLOCK-CLOSE-MINUTE {15, 30, 45} as farm notebooks (execution false; do not steal the chair). next=lab
 *Older lines rolled off at the 10-line cap. Full history is in the git log for `docs/agents/DESK.md`.*

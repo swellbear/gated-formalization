@@ -399,6 +399,8 @@ def test_mechanism_catalog_seeds_the_kinds():
     assert kinds == [
         "CLOCK-CLOSE-MINUTE",
         "CLOCK-CIVIL-BOUNDARIES",
+        "CLOCK-QUARTER-BOUNDARIES",
+        "CLOCK-HOUR-FIRST-HALF",
         "HONER-FROZEN-CONSULT",
         "HONER-FAMILY-AMEND",
         "HONER-FROZEN-REPLACE",
