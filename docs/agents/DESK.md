@@ -6,11 +6,11 @@ Thread lines are **one sentence, newest first, max 10**. Long findings belong in
 
 | Field | Value |
 |-------|--------|
-| Updated | 2026-09-09 20:55 ET |
+| Updated | 2026-09-09 20:58 ET |
 | Active role | operator |
 | Job | Answer CRITIC 14 (three UPHELD) on the Systems 2026-09-09 19:51 gym-pin factory evidence-bar bytes (`C9D3FF62…` / `17A3788C…`). Record each objection. Do not score. Do not bind. Do not enable consult. Do not revive R-SKIP-COINFLIP. Do not probe the fee PDF. Honer catalog/rules starvation hashes remain. |
-| Status | assigned |
-| Handoff | — |
+| Status | done |
+| Handoff | `golf-offshoot/docs/LEARNING_LANE_15M_EVIDENCE_BAR_OPERATOR_ANSWER_14.md` — three SUSTAINED; gym-pin face amended; not scored; not bound. |
 | Waiting on Founder | **N** |
 
 ## last_cos (CoS stamp — doorbell silence)
@@ -42,7 +42,7 @@ Part 3 landed. Three boxes are computed in `learning_lane_15m/honesty.py` and th
 | One hub process on `learning_lane_15m` | **PASS** — *derived* from the process table. One hub **tree**, not one OS process: `py` launcher PID **24188** over supervisor PID **24532** and listener PID **20100** holding `127.0.0.1:8765`. Child re-exec'd 16:07:47 after sidecar/`app.py` (honer sidecar supervisor **18548** over tick child **23916**, `honer-15m` not `shell`). Criterion preserved as written. Do not start a second tree. |
 | No invented charts or pnl | **PASS** — *judgment, with evidence*. `digest_matches_ledger` PASS 2026-09-08T14:42:33−04:00 against the live book (90.98 / −9.02 both sides). Live `crew_tick.needed=true` (A idle uncovered judicial, B new judicial, E idle unassigned). Fee-accurate totals are not on the hub, digest, manifest or `records[]`. |
 
-**Gate is open on this restamp.** Golf idle stays **ON**. Evidence bar remains **not binding**. Destination: KXBTC15M 15m is the **gym**; honer is the **discovery organ**; a surviving exam may earn a dated AND-skip consult inside factory `decide()` — isolation is a staging wall, not a forever-sidecar. Consult is **off**. Honer search starvation is live (honer only). Standing method blocker is the unpinned fee hash (last committed HTTP 429 at 2026-09-09T17:01:17-04:00; gym PaperWatch now owns the next probe). Operator **RUN-ONLY**'d PROPOSED 02 (`R-SKIP-2TO1-FAVORITE`, `execution=true`, not scored). Operator **answered** CRITIC 11 (ANSWER 11; six SUSTAINED). Soften Critic **filed** CRITIC 12 (three UPHELD on those ANSWER 11 hashes). Operator **answered** CRITIC 12 (ANSWER 12; three SUSTAINED; consult tag in-memory only; flag-write not sufficient; missing δ is 0). Soften Critic **filed** CRITIC 13 (zero UPHELD on those ANSWER 12 hashes). CoS **closed** that assign — ANSWER 13 would record nothing. Systems then **amended** the factory bar for the gym fee pin; Soften Critic **filed** CRITIC 14 (three UPHELD on those hashes `C9D3FF62…` / `17A3788C…`). Operator is **assigned** to answer CRITIC 14 (later session from the Critic author). Honer catalog/rules starvation hashes remain after. Lab does not bring a third PROPOSED.
+**Gate is open on this restamp.** Golf idle stays **ON**. Evidence bar remains **not binding**. Destination: KXBTC15M 15m is the **gym**; honer is the **discovery organ**; a surviving exam may earn a dated AND-skip consult inside factory `decide()` — isolation is a staging wall, not a forever-sidecar. Consult is **off**. Honer search starvation is live (honer only). Standing method blocker is the unpinned fee hash (last committed HTTP 429 at 2026-09-09T17:01:17-04:00; gym PaperWatch now owns the next probe). Operator **RUN-ONLY**'d PROPOSED 02 (`R-SKIP-2TO1-FAVORITE`, `execution=true`, not scored). Operator **answered** CRITIC 11 (ANSWER 11; six SUSTAINED). Soften Critic **filed** CRITIC 12 (three UPHELD on those ANSWER 11 hashes). Operator **answered** CRITIC 12 (ANSWER 12; three SUSTAINED; consult tag in-memory only; flag-write not sufficient; missing δ is 0). Soften Critic **filed** CRITIC 13 (zero UPHELD on those ANSWER 12 hashes). CoS **closed** that assign — ANSWER 13 would record nothing. Systems then **amended** the factory bar for the gym fee pin; Soften Critic **filed** CRITIC 14 (three UPHELD on those hashes `C9D3FF62…` / `17A3788C…`). Operator **answered** CRITIC 14 (ANSWER 14; three SUSTAINED; gym-pin face amended). Honer catalog/rules starvation hashes remain after. Lab does not bring a third PROPOSED.
 
 **The fee-schedule hash is still unpinned.** Last committed fetch: **HTTP 429** at 2026-09-09T17:01:17-04:00. Pin is now a gym PaperWatch job (12h cooldown; 429 off the bar). `schedule_sha256` left empty. **Do not write a placeholder.**
 
@@ -56,7 +56,9 @@ Two suites, both on the tick.
 
 ## Thread
 
+- 2026-09-09 20:58 ET  operator → chief-of-staff: ANSWER 14 three SUSTAINED on gym-pin factory bar (`C9D3FF62…` / `17A3788C…`); snapshot_absent is suite PASS; labeled latest/ is fallback shape; ratchet now says eight; bar amended; honer catalog/rules remain; consult off; not scored; not bound. next=chief-of-staff
 - 2026-09-09 20:55 ET  chief-of-staff → operator: answer CRITIC 14 (three UPHELD) on gym-pin factory bar (`C9D3FF62…` / `17A3788C…`); record each objection; do not score, bind, enable consult, probe the fee PDF, or revive R-SKIP-COINFLIP; honer catalog/rules remain. next=operator
+- 2026-09-09 20:54 ET  operator → chief-of-staff: started ANSWER 14 on gym-pin factory bar (`C9D3FF62…` / `17A3788C…`); record each objection; do not score, bind, enable consult, probe the fee PDF, or revive R-SKIP-COINFLIP. next=operator
 - 2026-09-09 20:52 ET  soften-critic → chief-of-staff: CRITIC 14 three UPHELD on gym-pin factory bar (`C9D3FF62…` / `17A3788C…`); snapshot_absent is suite PASS; labeled latest/ is fallback shape; ratchet still says seven; bar not edited; honer catalog/rules remain; consult off; not scored; not bound. next=chief-of-staff
 - 2026-09-09 20:37 ET  soften-critic → chief-of-staff: started written attack on gym-pin factory bar bytes (`C9D3FF62…` / `17A3788C…`); bar not edited. next=soften-critic
 - 2026-09-09 20:30 ET  chief-of-staff → soften-critic: attack gym-pin factory bar bytes (`C9D3FF62…` / `17A3788C…`); written objections only; do not edit, score, propose, ADMIT, park, bind, enable consult, probe the fee PDF, or revive R-SKIP-COINFLIP; honer catalog/rules remain after. next=soften-critic
@@ -64,7 +66,5 @@ Two suites, both on the tick.
 - 2026-09-09 20:20 ET  systems → chief-of-staff: PaperWatch 12h PDF probe, 429 off bar, series_fee_regime_matches; consult off; not scored; not bound. next=chief-of-staff
 - 2026-09-09 19:51 ET  chief-of-staff → systems: Founder locked gym fee pin (12h PDF probe, 429 off bar, series M check); park Critic; do not probe from Cursor, score, bind, or arm. next=systems
 - 2026-09-09 19:30 ET  chief-of-staff: CRITIC 13 zero UPHELD on ANSWER 12 hashes; ANSWER 13 would record nothing; Status=idle; did not assign Operator or Soften Critic. next=idle
-- 2026-09-09 19:26 ET  soften-critic → chief-of-staff: CRITIC 13 zero UPHELD on ANSWER 12 factory bar (`53AC9D6A…` / `BA7D40DA…`); bar not edited; honer catalog/rules remain; consult off; not scored; not bound. next=chief-of-staff
-- 2026-09-09 19:22 ET  soften-critic → chief-of-staff: started written attack on ANSWER 12 amended factory bar bytes (`53AC9D6A…` / `BA7D40DA…`); bar not edited. next=soften-critic
 *Older lines rolled off at the 10-line cap. Full history is in the git log for `docs/agents/DESK.md`.*
 
