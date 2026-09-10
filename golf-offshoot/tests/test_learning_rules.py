@@ -394,13 +394,14 @@ def test_civil_boundaries_expresses_skip_on_named_walls():
     assert decide(rule, posted_yes=0.80, close_at="2026-09-10T15:15:00-04:00")["action"] == "fill"
 
 
-def test_mechanism_catalog_seeds_the_four_kinds():
+def test_mechanism_catalog_seeds_the_kinds():
     kinds = [row["id"] for row in load_mechanism_catalog()["kinds"]]
     assert kinds == [
         "CLOCK-CLOSE-MINUTE",
         "CLOCK-CIVIL-BOUNDARIES",
         "HONER-FROZEN-CONSULT",
         "HONER-FAMILY-AMEND",
+        "HONER-FROZEN-REPLACE",
     ]
 
 

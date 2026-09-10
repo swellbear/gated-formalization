@@ -2,8 +2,8 @@
   "schema": 1,
   "lane": "learning_lane_15m",
   "series": "KXBTC15M",
-  "updated": "2026-09-10T14:40:00-04:00",
-  "rule": "Crew-owned kind menu. Lab loads this like burned classes. Lab may add a kind by inventing if it can name a product-structure expected_skip_rate from the 15m quartet. Operator RUN-ONLY or PARK. Not a Founder permission list. Do not put future tickers here. Catalog prefers ≥ 0.25; declare_rule floor is 10/first_look_n. This fold does not enable consult and does not append a third family to HONER_15M_CATALOG.json.",
+  "updated": "2026-09-10T15:45:00-04:00",
+  "rule": "Crew-owned kind menu. Lab loads this like burned classes. Lab may add a kind by inventing if it can name a product-structure expected_skip_rate from the 15m quartet. Operator RUN-ONLY or PARK. Not a Founder permission list. Do not put future tickers here. Catalog prefers ≥ 0.25; declare_rule floor is 10/first_look_n. Do not append a third honer family until the two dated families finish exams. Consult enable is a file gate. Replacement is crew after consult has lived.",
   "kinds": [
     {
       "id": "CLOCK-CLOSE-MINUTE",
@@ -23,13 +23,19 @@
     },
     {
       "id": "HONER-FROZEN-CONSULT",
-      "legal_only_when": "honer exam is open / freeze log has an unproposed snapshot",
-      "note": "Lab names hashes, family, theta/delta, declared_at. Does not invent theta. CoS still assigns Systems to enable consult after exam + score + later Critic. This fold does not enable consult. Prefer this over another clock kind when H/Job says so."
+      "legal_only_when": "never as a Lab invent; freeze bytes are the name; clerical copies honer_consult.json",
+      "note": "Do not retype theta. H is clerical. Consult_enabled is a file gate after exam score survives."
     },
     {
       "id": "HONER-FAMILY-AMEND",
       "protocol": "golf-offshoot/docs/HONER_15M_CATALOG_AMEND.md",
-      "note": "Lab may date a third honer family (id, knob, start, clip, step, file-derived activate). Not a tape sort. Not Founder picking theta. This systems fold does not write the family into HONER_15M_CATALOG.json. Critic is a later session."
+      "legal_after": "dead honer exam or catalog exhaust",
+      "note": "Lab may date a third honer family (id, knob, start, clip, step, file-derived activate). Not a tape sort. Not this fold: two families still running. Critic is a later session."
+    },
+    {
+      "id": "HONER-FROZEN-REPLACE",
+      "legal_only_when": "consult has lived and the factory executing trial is not live",
+      "note": "Lab photocopies freeze family/theta/delta/declared_at as the executing registry row. Operator RUN-ONLY. Not Founder. Not ADMIT. Not arm. Skip-on-mark may still fail Established on this dirty book."
     }
   ]
 }

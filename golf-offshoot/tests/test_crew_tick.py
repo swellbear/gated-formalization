@@ -418,7 +418,36 @@ def test_consult_enabled_does_not_ring_h(tmp_path):
         set_15m_root_override(None)
 
 
-def test_named_freeze_does_not_ring_h(tmp_path):
+def test_consult_candidate_does_not_ring_h(tmp_path):
+    set_15m_root_override(tmp_path / "kalshi_15m")
+    try:
+        _write_honer_exam(tmp_path)
+        from golf_offshoot.learning_lane_15m.consult_honer import write_consult_candidate
+        from golf_offshoot.learning_lane_15m.paths import latest_dir_15m
+
+        exam = {
+            "frozen_family": "H-SKIP-RICH-YES",
+            "frozen_theta": 0.81,
+            "frozen_delta": 0.04,
+            "declared_at": "2026-09-10T14:00:00-04:00",
+        }
+        dest = latest_dir_15m() / "honer_consult.json"
+        dest.parent.mkdir(parents=True, exist_ok=True)
+        write_consult_candidate(exam, dest=dest, consult_enabled=False)
+        tick = compute_crew_tick(
+            {"watch": _watch(), "roles_owed": []},
+            desk_text=_idle_blank_desk(),
+            hub_ok=True,
+            live_trial_ids=["R-SKIP-HOUR-CLOSE"],
+            root=tmp_path,
+        )
+        assert REASON_H not in tick["reason_ids"]
+    finally:
+        set_15m_root_override(None)
+
+
+def test_lab_proposed_does_not_count_as_freeze_name(tmp_path):
+    """A Lab note is not the freeze name. H still rings until the photocopy exists."""
     set_15m_root_override(tmp_path / "kalshi_15m")
     try:
         _write_honer_exam(tmp_path)
@@ -435,7 +464,7 @@ def test_named_freeze_does_not_ring_h(tmp_path):
             live_trial_ids=["R-SKIP-HOUR-CLOSE"],
             root=tmp_path,
         )
-        assert REASON_H not in tick["reason_ids"]
+        assert REASON_H in tick["reason_ids"]
     finally:
         set_15m_root_override(None)
 

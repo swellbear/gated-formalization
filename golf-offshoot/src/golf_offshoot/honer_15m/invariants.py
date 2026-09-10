@@ -31,6 +31,8 @@ FORBIDDEN_IMPORTS = {
     "golf_offshoot.learning_lane_15m.evidence_bar",
     "golf_offshoot.learning_lane_15m.standing",
 }
+#: Score-time fee_adjust only. Not a live-book import.
+ALLOWED_EVIDENCE_BAR_FILES = frozenset({"fee.py", "score.py"})
 
 
 def _check(check_id: str, title: str, ok: bool, detail: str, evidence: Any = None) -> dict[str, Any]:
@@ -93,10 +95,20 @@ def _check_forbidden_imports() -> dict[str, Any]:
         tree = ast.parse(path.read_text(encoding="utf-8"))
         for node in ast.walk(tree):
             if isinstance(node, ast.ImportFrom) and node.module in FORBIDDEN_IMPORTS:
+                if (
+                    node.module == "golf_offshoot.learning_lane_15m.evidence_bar"
+                    and path.name in ALLOWED_EVIDENCE_BAR_FILES
+                ):
+                    continue
                 hits.append(f"{path.name}:{node.module}")
             if isinstance(node, ast.Import):
                 for alias in node.names:
                     if alias.name in FORBIDDEN_IMPORTS:
+                        if (
+                            alias.name == "golf_offshoot.learning_lane_15m.evidence_bar"
+                            and path.name in ALLOWED_EVIDENCE_BAR_FILES
+                        ):
+                            continue
                         hits.append(f"{path.name}:{alias.name}")
     ok = not hits
     return _check(
@@ -196,15 +208,29 @@ def _check_one_exam() -> dict[str, Any]:
 
 def _check_fee_and_keep() -> dict[str, Any]:
     bar = load_bar()
-    fee = bool(bar.get("fee_omitted", True))
     keep = can_keep(bar)
-    ok = fee and not keep
+    from golf_offshoot.honer_15m.keep import keep_blocked_reason
+
+    reason = keep_blocked_reason(bar)
+    omitted = bool(bar.get("fee_omitted", True))
+    apply = bar.get("honer_fee_apply") if isinstance(bar.get("honer_fee_apply"), dict) else {}
+    sha = str(apply.get("schedule_sha256") or "")
+    if omitted:
+        ok = (not keep) and reason == "fee omitted"
+        detail = "can_keep is false while fee is omitted" if ok else "keep lock failed"
+    else:
+        ok = (not keep) and reason != "fee omitted" and len(sha) == 64
+        detail = (
+            "fee applied; keep closed until honer bar binds"
+            if ok
+            else "fee-apply keep lock failed"
+        )
     return _check(
-        "fee_omitted_keep_closed",
-        "fee_omitted is true and keep is closed",
+        "keep_closed_until_bind",
+        "Keep-lock closed until honer bar bind; fee-apply does not open keep",
         ok,
-        "can_keep is false while fee is omitted" if ok else "keep lock failed",
-        {"fee_omitted": fee, "can_keep": keep},
+        detail,
+        {"fee_omitted": omitted, "can_keep": keep, "reason": reason, "apply_sha_len": len(sha)},
     )
 
 

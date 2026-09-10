@@ -6,8 +6,9 @@ it; the runner may not become CoS, open a chat, ADMIT, invent, or push.
 
 needed is true when at least one of A–H holds. If unsure, needed stays true
 and the reason says why. Same reason-id set after a CoS closeout stamp is a
-heartbeat, not a doorbell. F_continuation and H_honer_freeze are not
-silenced by that stamp unless the desk is Status=assigned / lab.
+heartbeat, not a doorbell. F_continuation is not silenced by that stamp
+unless the desk is Status=assigned / lab. H_honer_freeze is not silenced
+by the stamp; it clears when honer_consult.json photocopies the freeze.
 """
 
 from __future__ import annotations
@@ -282,45 +283,38 @@ def consult_enabled_for_doorbell(*, root: Path | None = None) -> bool:
     return False
 
 
-def freeze_named_in_lab_proposed(
+def freeze_has_consult_candidate(
     snap: dict[str, Any],
     *,
     root: Path | None = None,
 ) -> bool:
-    """True when a Lab PROPOSED already names this freeze (family + θ / declared_at)."""
-    family = str(snap.get("frozen_family") or snap.get("family") or "").strip()
-    theta = snap.get("frozen_theta")
-    declared = str(snap.get("declared_at") or "").strip()
-    docs = (root or repo_root()) / SCORECARD_DIR_REL
-    if not docs.is_dir():
-        return False
-    theta_needles: list[str] = []
-    if theta is not None:
-        theta_needles.append(str(theta))
-        try:
-            theta_needles.append(f"{float(theta):.2f}")
-            theta_needles.append(f"{float(theta):g}")
-        except (TypeError, ValueError):
-            pass
-    for path in docs.glob(LAB_PROPOSED_GLOB):
-        try:
-            text = path.read_text(encoding="utf-8")
-        except OSError:
-            continue
-        honerish = (
-            "HONER-FROZEN" in text
-            or "frozen_theta" in text
-            or "frozen_family" in text
-            or "HONER-FAMILY-AMEND" in text
-        )
-        if not honerish:
-            continue
-        if declared and declared in text:
-            return True
-        if family and family in text:
-            if not theta_needles or any(needle in text for needle in theta_needles):
-                return True
-    return False
+    """True when honer_consult.json photocopies this freeze. Not a Lab note."""
+    from golf_offshoot.learning_lane_15m.consult_honer import (
+        load_consult_snapshot,
+        snapshot_matches_freeze,
+    )
+
+    candidate = load_consult_snapshot()
+    try:
+        from golf_offshoot.learning_lane_15m.paths import latest_dir_15m
+
+        if root is not None:
+            alt = latest_dir_15m() / "honer_consult.json"
+            candidates = [
+                (root / "golf-offshoot" / "data" / "learning_lane_15m" / "latest" / "honer_consult.json"),
+                alt,
+            ]
+            for path in candidates:
+                if path.is_file():
+                    try:
+                        payload = json.loads(path.read_text(encoding="utf-8"))
+                    except (OSError, json.JSONDecodeError):
+                        continue
+                    if isinstance(payload, dict) and snapshot_matches_freeze(payload, snap):
+                        return True
+    except Exception:  # noqa: BLE001
+        pass
+    return snapshot_matches_freeze(candidate, snap)
 
 
 def honer_freeze_owed(
@@ -329,7 +323,10 @@ def honer_freeze_owed(
     root: Path | None = None,
     snapshot: dict[str, Any] | None = None,
 ) -> tuple[bool, dict[str, Any] | None]:
-    """H rings when a freeze is open/unproposed, consult is off, and no worker is assigned."""
+    """H rings when a freeze is open/unphotocopied, consult is off, and no worker is assigned.
+
+    Clerical copies the freeze. CoS does not assign Lab to retype θ.
+    """
     status = str(desk.get("status") or "").strip().lower()
     role = str(desk.get("active_role") or "").strip().lower()
     if status == "assigned" and role in WORKER_ROLES:
@@ -339,7 +336,7 @@ def honer_freeze_owed(
     snap = snapshot if snapshot is not None else load_honer_freeze_snapshot(root=root)
     if not snap:
         return False, None
-    if freeze_named_in_lab_proposed(snap, root=root):
+    if freeze_has_consult_candidate(snap, root=root):
         return False, None
     return True, snap
 
@@ -534,7 +531,7 @@ def compute_crew_tick(
             _reason(
                 REASON_H,
                 f"honer freeze open family={family} theta={theta}; "
-                "CoS assigns Lab to name that snapshot even if a factory trial is live",
+                "clerical copies that snapshot; CoS does not assign Lab to retype theta",
             )
         )
 

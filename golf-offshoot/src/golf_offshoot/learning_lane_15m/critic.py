@@ -906,6 +906,59 @@ def check_bind_has_no_founder_read_once(*, root: Path | None = None) -> dict[str
     )
 
 
+def check_consult_enabled_requires_gates(*, root: Path | None = None) -> dict[str, Any]:
+    """consult_enabled true only when freeze/score/fee gates hold. Dark is PASS."""
+    from golf_offshoot.learning_lane_15m.consult_honer import (
+        consult_enable_gates,
+        consult_is_enabled,
+        load_consult_snapshot,
+    )
+
+    snap = load_consult_snapshot()
+    if not consult_is_enabled(snap):
+        return _check(
+            "consult_enabled_requires_gates",
+            "consult stays dark unless freeze/score/fee gates hold",
+            True,
+            "consult_enabled is not exactly true",
+            {"consult_enabled": False},
+        )
+    gates = consult_enable_gates(snapshot=snap)
+    ok = all(g.get("ok") for g in gates)
+    return _check(
+        "consult_enabled_requires_gates",
+        "consult stays dark unless freeze/score/fee gates hold",
+        ok,
+        "all enable gates hold" if ok else "enabled snapshot failed a gate",
+        {"gates": gates},
+    )
+
+
+def check_honer_consult_not_live_theta(*, root: Path | None = None) -> dict[str, Any]:
+    """Enabled or candidate snapshot must not be live search theta.json."""
+    from golf_offshoot.learning_lane_15m.consult_honer import load_consult_snapshot
+
+    snap = load_consult_snapshot()
+    if not snap:
+        return _check(
+            "honer_consult_not_live_theta",
+            "honer consult snapshot is a freeze photocopy, never live theta",
+            True,
+            "no consult snapshot",
+            {},
+        )
+    ok = snap.get("live_theta_never_consults") is True and "theta.json" not in str(
+        snap.get("source") or ""
+    )
+    return _check(
+        "honer_consult_not_live_theta",
+        "honer consult snapshot is a freeze photocopy, never live theta",
+        ok,
+        "snapshot names freeze photocopy" if ok else "snapshot is not marked freeze-only",
+        {"source": snap.get("source"), "live_theta_never_consults": snap.get("live_theta_never_consults")},
+    )
+
+
 def check_honesty_stamp_is_fresh(
     *,
     root: Path | None = None,
@@ -1079,6 +1132,8 @@ CHECKS = (
     check_bind_has_no_founder_read_once,
     check_half_spread_profile,
     check_hub_autostart_registered,
+    check_consult_enabled_requires_gates,
+    check_honer_consult_not_live_theta,
 )
 
 #: Reported beside the method suite and deliberately outside it.

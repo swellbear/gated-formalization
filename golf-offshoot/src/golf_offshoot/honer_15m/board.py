@@ -27,6 +27,15 @@ from golf_offshoot.localtime import format_eastern, now, to_eastern
 
 WAITING = "still waiting on Kalshi"
 DO_NOT_ADD = "Do not add these two."
+
+
+def _fee_lock_phrase() -> str:
+    """English keep-lock. Never a fee-adjusted total."""
+    from golf_offshoot.honer_15m.keep import load_bar
+
+    if load_bar().get("fee_omitted", True):
+        return "fee omitted"
+    return "fee applied at score time; keep closed until bind"
 MAX_HTML_SEARCH = 48
 MAX_PNG_ROWS = 24
 MAX_HAPPENED = 8
@@ -229,7 +238,7 @@ def library_english(
             next_bit = "next family is skip-wide-spread"
     return (
         f"{exam_bit} {retired_n} retired snapshot(s). Next: {next_bit}. "
-        "Not a keep; fee omitted."
+        f"Not a keep; {_fee_lock_phrase()}."
     )
 
 
@@ -659,12 +668,12 @@ def collect_standing() -> HonerStanding:
         "Cutoff θ = richness line, in cents. Only tickets within 10¢ of the line move it. "
         "Exam = a later frozen test, not a keep. Library labels are not scores."
     )
-    not_keep = "Not a keep; fee omitted. can_keep is false on this bar."
+    not_keep = f"Not a keep; {_fee_lock_phrase()}. can_keep is false on this bar."
     exam_pnl = float(exam_led.get("betting_pnl") or 0)
     if (exam.get("open") or exam.get("completed")) and exam_pnl > 0:
         not_keep = (
             "A green exam book is not a keep. Freeze was for search novelty. "
-            "Scoring is later and separate. Fee omitted."
+            f"Scoring is later and separate. {_fee_lock_phrase()}."
         )
     chronological = list(reversed(search_rows))
     trail_vals = [cents(r.theta) for r in chronological[-MAX_THETA_TRAIL:] if r.theta is not None]
@@ -682,7 +691,7 @@ def collect_standing() -> HonerStanding:
     subtitle = (
         meter,
         f"lane=honer_15m · {family_label(family)} · local_regret_v2 · freeze in_band_v1 · not a keep",
-        f"Trading NOT ARMED · fee omitted · books do not merge · rendered {format_eastern(now())}",
+        f"Trading NOT ARMED · {_fee_lock_phrase()} · books do not merge · rendered {format_eastern(now())}",
         bus_line,
     )
     current_search = search_rows[0] if search_rows else None

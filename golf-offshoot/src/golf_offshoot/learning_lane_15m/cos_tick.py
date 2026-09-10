@@ -7,9 +7,9 @@ unattended-and-smart.
 
 Forbidden assigns (code + skill): score R-SKIP-COINFLIP, re-score
 PARK'd R-SKIP-2TO1-FAVORITE, arm, bind, git push to master. Lab is legal:
-F_continuation assigns one 15m PROPOSED. H_honer_freeze assigns Lab to
-name that freeze even if a factory trial is live. This fold does not
-enable consult.
+F_continuation assigns one 15m PROPOSED. H_honer_freeze is clerical
+(freeze photocopy); CoS does not assign Lab to retype theta. This fold
+does not enable consult unless file gates already hold.
 """
 
 from __future__ import annotations
@@ -37,7 +37,10 @@ FORBIDDEN_ASSIGN_ROLES = frozenset()
 LAB_INVENT_JOB = (
     "one 15m PROPOSED under the invent contract (mechanism catalog, density "
     "floor 10/n, kill anatomy, unburned including RETUNE-CLOCK-MINUTE, "
-    "prefer HONER-FROZEN if H/Job says so, pre-reg, live falsifier); "
+    "HONER-FAMILY-AMEND only after a dead honer exam or catalog exhaust — "
+    "do not append a third family until the two dated families finish exams; "
+    "HONER-FROZEN-REPLACE only after consult has lived and hour-close is not "
+    "the live trial; do not retype freeze theta; pre-reg, live falsifier); "
     "handoff operator"
 )
 
@@ -46,6 +49,7 @@ NAME_CLEAR_SUBJECTS = frozenset(
     {
         "R-SKIP-COINFLIP",
         "R-SKIP-2TO1-FAVORITE",
+        "R-SKIP-HOUR-CLOSE",
     }
 )
 
@@ -193,24 +197,19 @@ def _assign_lab() -> dict[str, Any]:
 
 
 def lab_honer_freeze_job(snap: dict[str, Any] | None) -> str:
+    """Deprecated: H is clerical. Kept so old tests can import the name."""
     snap = snap or {}
     family = snap.get("frozen_family") or snap.get("family") or "?"
-    theta = snap.get("frozen_theta")
-    delta = snap.get("frozen_delta")
-    declared = snap.get("declared_at") or ""
     return (
-        "name the open honer freeze (HONER-FROZEN-CONSULT): "
-        f"family={family} theta={theta} delta={delta} declared_at={declared}; "
-        "do not invent theta; do not enable consult; do not retune clock minute; "
-        "handoff operator"
+        "clerical freeze photocopy (not a Lab invent): "
+        f"family={family}; do not invent theta; do not enable consult"
     )
 
 
 def _assign_lab_honer(snap: dict[str, Any] | None = None) -> dict[str, Any]:
     return _base(
-        action=ACTION_ASSIGN,
-        reason="honer_freeze_assign_lab",
-        role="lab",
+        action=ACTION_CLOSEOUT,
+        reason="honer_freeze_clerical",
         job=lab_honer_freeze_job(snap),
     )
 
@@ -307,16 +306,16 @@ def decide_cos_action(
         uncovered_roles,
         last_cos_at=str(tick.get("last_cos_at") or ""),
     ):
-        if h_owed:
-            return _assign_lab_honer(freeze_snap)
         if f_owed:
             return _assign_lab()
+        if h_owed:
+            return _assign_lab_honer(freeze_snap)
         return _base(action=ACTION_CLOSEOUT, reason="zero_objection_stop")
 
-    if h_owed:
-        return _assign_lab_honer(freeze_snap)
     if f_owed:
         return _assign_lab()
+    if h_owed:
+        return _assign_lab_honer(freeze_snap)
 
     legal = [r for r in uncovered_roles if r in LEGAL_ASSIGN_ROLES and r not in FORBIDDEN_ASSIGN_ROLES]
     if "operator" in legal and only_name_clear_reasons(op_reasons):

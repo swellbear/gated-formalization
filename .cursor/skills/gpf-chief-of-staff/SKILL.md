@@ -27,14 +27,14 @@ Then stop. Do not become that role in the CoS fire. **15m worker tick** (`golf-o
 
 Never assign two workers except `validator` after a just-finished publish, when Founder names both `illustrator` and `hub-ui` for the same board, or when a proposed ADMIT / bar-bind needs `soften-critic` **in a later separate session**.
 
-**Forbidden assigns (code + this skill):** score `R-SKIP-COINFLIP`, re-score PARK'd `R-SKIP-2TO1-FAVORITE`, arm, bind, git push to `master`. **Lab is legal** when `decide_cos_action` returns `lab` (`F_continuation` or `H_honer_freeze`). H assigns Lab to name that freeze even if a factory trial is live. CoS does not author the PROPOSED or registry row. Do not enable consult. If Operator is owed only `rule_reached_n` on those two rules **and** F and H are not owed, that is **closeout**, not a score Job. Naming `rule_reached_n` on the park without scoring is Operator bookkeeping, not a new test. Operator `lab_proposed` or Critic on a **new** hash first. Golf idle does not stop a 15m Lab assign.
+**Forbidden assigns (code + this skill):** score `R-SKIP-COINFLIP`, re-score PARK'd `R-SKIP-2TO1-FAVORITE`, arm, bind, git push to `master`. **Lab is legal** when `decide_cos_action` returns `lab` (`F_continuation`). H is clerical (freeze photocopy); CoS does not assign Lab to retype θ. Consult enable is a file gate. Replacement after consult has lived is Lab `HONER-FROZEN-REPLACE`, not Founder. CoS does not author the PROPOSED or registry row. If Operator is owed only `rule_reached_n` on coinflip, parked favorite, or hour-close **and** F is not owed, that is **closeout**, not a score Job. Operator `lab_proposed` or Critic on a **new** hash first. Golf idle does not stop a 15m Lab assign.
 
 A Lab PROPOSED goes to Operator as **RUN-ONLY** (not park) when it is deterministic, adds no loop code, quarantines output to an Operator note, and carries a live falsifier — unless Operator names a specific objection. "Be careful" is not one. Do not park a well-falsified cheap test to look prudent.
 
 ## After a worker is done
 
 1. Read their `Handoff`.
-2. If the newest Soften Critic finding is zero UPHELD and Operator did not amend the bar — **close out** (`Status=idle`) **unless** `F_continuation` or `H_honer_freeze` is owed or Operator is owed `lab_proposed`. Do not assign Operator to record nothing, and do not assign another attack on the same hashes. A starved gym assigns Lab. An open honer freeze assigns Lab (even if a factory trial is live). A sitting PROPOSED assigns Operator.
+2. If the newest Soften Critic finding is zero UPHELD and Operator did not amend the bar — **close out** (`Status=idle`) **unless** `F_continuation` is owed or Operator is owed `lab_proposed`. Do not assign Operator to record nothing, and do not assign another attack on the same hashes. A starved gym assigns Lab. An open honer freeze is clerical, not a Lab invent. A sitting PROPOSED assigns Operator.
 3. If handoff is another role and it is on the routing table — assign it.
 4. If the next step is on leave-off or inside Hard NOs — assign it. Do not ask Founder.
 5. If and only if the next step is a Protocol Founder-stop — one question, `waiting-founder`, stop.
@@ -54,4 +54,4 @@ A Lab PROPOSED goes to Operator as **RUN-ONLY** (not park) when it is determinis
 - Play Founder
 - Git push to `master` (cloud CoS/worker). Gym `PUBLISH_ARMED` may push the hub allowlist from the gym PC; factory merge of #178 is still a PR merge
 - Let Operator stamp a proposed ADMIT, or bind the 15m evidence bar, without a Soften Critic attack from a separate session
-- Add Founder read-once (or any Founder acknowledgement) as a condition of the 15m bar becoming binding. Bind is Critic+Operator and critic-invariants. Founder remains for **arm** and golf C2/C4/WC3+
+- Add Founder read-once (or any Founder acknowledgement) as a condition of the 15m bar becoming binding. Bind is Critic+Operator and critic-invariants. Founder remains for **arm**, cash, Kalshi keys, HOLD lift, and golf C2/C4/WC3+. Replacement of the executing registry row after consult has lived is crew, not Founder.

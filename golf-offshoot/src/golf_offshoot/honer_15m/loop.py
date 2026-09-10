@@ -25,7 +25,13 @@ from golf_offshoot.honer_15m.paths import (
 )
 from golf_offshoot.honer_15m.picker import apply_search_starvation, maybe_advance
 from golf_offshoot.honer_15m.policy import FAMILY_RICH, load_policy
-from golf_offshoot.honer_15m.score import classify_completed_exam, exam_sums, futility_impossible, should_check_futility
+from golf_offshoot.honer_15m.score import (
+    classify_completed_exam,
+    exam_sums,
+    futility_impossible,
+    should_check_futility,
+    write_exam_scorecard,
+)
 from golf_offshoot.honer_15m.theta import load_theta
 from golf_offshoot.localtime import now
 
@@ -213,11 +219,20 @@ def run_tick(markets: list[dict[str, Any]] | None = None) -> dict[str, Any]:
                         exam_n=int(pol["exam_n"]),
                     ):
                         parked = park_exam(f"futility at n={n}: remaining skips cannot pass")
+                        from golf_offshoot.honer_15m.fee import apply_factory_fee
+
+                        apply_factory_fee()
+                        write_exam_scorecard(parked, outcome="parked")
                         _close_exam_to_library(parked, outcome="parked")
                         apply_search_starvation()
                 elif n >= int(pol["exam_n"]):
                     completed = complete_exam()
-                    _close_exam_to_library(completed, outcome=classify_completed_exam())
+                    from golf_offshoot.honer_15m.fee import apply_factory_fee
+
+                    apply_factory_fee()
+                    outcome = classify_completed_exam()
+                    write_exam_scorecard(completed, outcome=outcome)
+                    _close_exam_to_library(completed, outcome=outcome)
                     apply_search_starvation()
 
     maybe_advance()
@@ -239,6 +254,9 @@ def run_tick(markets: list[dict[str, Any]] | None = None) -> dict[str, Any]:
     except Exception:
         pass
     live = load_theta()
+    from golf_offshoot.honer_15m.keep import load_bar
+
+    bar = load_bar()
     return {
         "lane": "honer_15m",
         "search_theta": float(live["theta"]),
@@ -247,7 +265,7 @@ def run_tick(markets: list[dict[str, Any]] | None = None) -> dict[str, Any]:
         "froze": bool(fired),
         "markets": len(rows),
         "trading_armed": False,
-        "fee_omitted": True,
+        "fee_omitted": bool(bar.get("fee_omitted", True)),
         "http_fetches": 0,
         "quote_bus_stale": stale,
     }

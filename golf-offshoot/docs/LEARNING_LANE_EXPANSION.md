@@ -55,7 +55,7 @@ All of these, on **this** lane first:
 2. `fee_adjust()` is real and tested.
 3. `trials_to_date` is mechanical.
 4. The evidence bar is binding, or every failure is named on its face with Operator’s reason for binding anyway.
-5. The factory has completed at least one lived declare → skip/fill → score cycle on `KXBTC15M` without Founder driving it.
+5. The factory has completed at least one lived declare → skip/fill → score cycle on `KXBTC15M` without Founder driving it. A clerical `score_rule` card on the executing hour-close row can satisfy this item. It does not glob a second ticker onto this ledger.
 6. The running hub is on that code.
 
 “Digest matches ledger” and “the loop looks honest” are not the lift.

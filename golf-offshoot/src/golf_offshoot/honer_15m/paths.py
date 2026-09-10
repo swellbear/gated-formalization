@@ -121,6 +121,11 @@ def invariants_path() -> Path:
     return latest_dir() / "invariants.json"
 
 
+def exam_score_path() -> Path:
+    """Machine exam score/park artifact. Not a keep. Never a 15m path."""
+    return latest_dir() / "exam_score.json"
+
+
 def safe_artifact_stem(name: str, *, fallback: str = "event") -> str:
     safe = "".join(ch if ch.isalnum() or ch in "-_" else "-" for ch in str(name or ""))
     return safe.strip("-") or fallback

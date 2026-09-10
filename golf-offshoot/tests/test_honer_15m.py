@@ -67,13 +67,25 @@ def test_parse_lane_stays_two_values():
 
 
 def test_import_whitelist():
+    from golf_offshoot.honer_15m.invariants import ALLOWED_EVIDENCE_BAR_FILES, FORBIDDEN_IMPORTS
+
     for path in PKG.glob("*.py"):
         tree = ast.parse(path.read_text(encoding="utf-8"))
         for node in ast.walk(tree):
             if isinstance(node, ast.ImportFrom) and node.module:
+                if (
+                    node.module == "golf_offshoot.learning_lane_15m.evidence_bar"
+                    and path.name in ALLOWED_EVIDENCE_BAR_FILES
+                ):
+                    continue
                 assert node.module not in FORBIDDEN_IMPORTS, path.name
             if isinstance(node, ast.Import):
                 for alias in node.names:
+                    if (
+                        alias.name == "golf_offshoot.learning_lane_15m.evidence_bar"
+                        and path.name in ALLOWED_EVIDENCE_BAR_FILES
+                    ):
+                        continue
                     assert alias.name not in FORBIDDEN_IMPORTS, path.name
 
 
@@ -767,6 +779,91 @@ def test_cite_factory_pin_does_not_open_keep(tmp_path):
     assert factory_schedule_sha256(bar_path=factory) == "abc"
 
 
+def test_apply_factory_fee_clears_omitted_keeps_keep_closed(tmp_path):
+    import json
+
+    from golf_offshoot.honer_15m.fee import apply_factory_fee, fee_is_applied
+    from golf_offshoot.honer_15m.keep import can_keep, keep_blocked_reason
+
+    sha = "c326a69f596a11e8f8be2620402d39a8d4823920c21cc97c93a114d862699601"
+    factory = tmp_path / "LEARNING_LANE_15M_EVIDENCE_BAR.json"
+    honer = tmp_path / "HONER_15M_EVIDENCE_BAR.json"
+    factory.write_text(json.dumps({"fee_hurdle": {"schedule_sha256": sha}}), encoding="utf-8")
+    honer.write_text(
+        json.dumps(
+            {
+                "binding": False,
+                "fee_omitted": True,
+                "lab_admits": False,
+                "trading_armed": False,
+            }
+        ),
+        encoding="utf-8",
+    )
+    applied = apply_factory_fee(factory_bar=factory, honer_bar=honer)
+    payload = json.loads(honer.read_text(encoding="utf-8"))
+    assert applied["fee_omitted"] is False
+    assert payload["fee_omitted"] is False
+    assert payload["honer_fee_apply"]["schedule_sha256"] == sha
+    assert fee_is_applied(payload) is True
+    assert can_keep(payload) is False
+    assert keep_blocked_reason(payload) == "bar not binding"
+    assert payload.get("consult_enabled") is not True
+    assert applied.get("pin_source") == "founder_browser_bytes"
+
+
+def test_apply_short_sha_does_not_clear_omitted(tmp_path):
+    import json
+
+    from golf_offshoot.honer_15m.fee import apply_factory_fee, fee_is_applied
+    from golf_offshoot.honer_15m.keep import can_keep, keep_blocked_reason
+
+    factory = tmp_path / "LEARNING_LANE_15M_EVIDENCE_BAR.json"
+    honer = tmp_path / "HONER_15M_EVIDENCE_BAR.json"
+    factory.write_text(json.dumps({"fee_hurdle": {"schedule_sha256": "abc"}}), encoding="utf-8")
+    honer.write_text(
+        json.dumps(
+            {
+                "binding": False,
+                "fee_omitted": True,
+                "lab_admits": False,
+                "trading_armed": False,
+            }
+        ),
+        encoding="utf-8",
+    )
+    applied = apply_factory_fee(factory_bar=factory, honer_bar=honer)
+    payload = json.loads(honer.read_text(encoding="utf-8"))
+    assert applied["fee_omitted"] is True
+    assert payload["fee_omitted"] is True
+    assert "honer_fee_apply" not in payload
+    assert fee_is_applied(payload) is False
+    assert can_keep(payload) is False
+    assert keep_blocked_reason(payload) == "fee omitted"
+
+
+def test_write_exam_scorecard_is_not_consult_enable(honer_tmp):
+    import json
+
+    from golf_offshoot.honer_15m.paths import exam_score_path
+    from golf_offshoot.honer_15m.score import write_exam_scorecard
+
+    exam = {
+        "frozen_family": "H-SKIP-RICH-YES",
+        "frozen_theta": 0.81,
+        "frozen_delta": 0.04,
+        "declared_at": "2026-09-10T14:00:00-04:00",
+    }
+    card = write_exam_scorecard(exam, outcome="completed_dead")
+    assert card["consult_enabled"] is False
+    assert card["survives"] is False
+    path = exam_score_path()
+    assert path.is_file()
+    payload = json.loads(path.read_text(encoding="utf-8"))
+    assert payload["consult_enabled"] is False
+    assert "learning_lane_15m" not in {p.name for p in honer_tmp.rglob("*")}
+
+
 def test_can_keep_does_not_wait_on_founder_read_once():
     from golf_offshoot.honer_15m.keep import can_keep, keep_blocked_reason
 
@@ -785,7 +882,8 @@ def test_can_keep_false_and_exam_label_is_not_keep():
     from golf_offshoot.honer_15m.keep import can_keep, keep_blocked_reason
 
     assert can_keep() is False
-    assert keep_blocked_reason() == "fee omitted"
+    reason = keep_blocked_reason()
+    assert reason in {"fee omitted", "bar not binding"}
     assert score.classify_completed_exam([]) == "completed_dead"
     assert "not a keep" in (score.classify_completed_exam.__doc__ or "").lower()
 

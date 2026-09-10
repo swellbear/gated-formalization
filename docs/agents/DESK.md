@@ -6,11 +6,11 @@ Thread lines are **one sentence, newest first, max 10**. Long findings belong in
 
 | Field | Value |
 |-------|--------|
-| Updated | 2026-09-10 15:10 ET |
+| Updated | 2026-09-10 16:05 ET |
 | Active role | chief-of-staff |
 | Job | — |
 | Status | idle |
-| Handoff | Invent contract denser (catalog + density floor). H assigns Lab when honer freezes. Live trial `R-SKIP-HOUR-CLOSE` seated. Favorite L1 PARK. HOLD stands. Trading NOT ARMED. next=idle |
+| Handoff | Discovery leash: honer fee-apply + machine score + consult file-gates. H is clerical. Replacement is crew after consult lived. Hour-close still executing. Consult off. HOLD stands. Trading NOT ARMED. next=idle |
 | Waiting on Founder | **N** |
 
 ## last_cos (CoS stamp — doorbell silence)
@@ -46,7 +46,7 @@ Part 3 landed. Three boxes are computed in `learning_lane_15m/honesty.py` and th
 | One hub process on `learning_lane_15m` | **PASS** — *derived* from the process table. One hub **tree**, not one OS process: `py` launcher PID **24188** over supervisor PID **24532** and listener PID **20100** holding `127.0.0.1:8765`. Watch loop pid **11160** (`watch.json` / `process_matches_disk`, 11:42). Child re-exec'd after sidecar/`app.py`. Criterion preserved as written. Do not start a second tree. |
 | No invented charts or pnl | **PASS** — *judgment, with evidence*. `digest_matches_ledger` PASS 2026-09-10T11:42:52−04:00 against the live book (82.18 / −17.82 both sides). CoS closeout stamps the current doorbell so the same A/B/E set does not re-ring. Fee-accurate totals are not on the hub, digest, manifest or `records[]`. |
 
-**Gate is open on this restamp.** Golf idle stays **ON** (15m paper PROPOSED is not golf idle-breach). Evidence bar is **binding** for scoring. `R-SKIP-2TO1-FAVORITE` L1 is **PARK** on its falsifier (Admissible completed, not Established, not an ADMIT). `R-SKIP-HOUR-CLOSE` is **RUN-ONLY** (`execution=true`, paper only). Consult **off**. Honer dark. Trading **NOT ARMED**.
+**Gate is open on this restamp.** Golf idle stays **ON** (15m paper PROPOSED is not golf idle-breach). Evidence bar is **binding** for scoring. `R-SKIP-2TO1-FAVORITE` L1 is **PARK** on its falsifier (Admissible completed, not Established, not an ADMIT). `R-SKIP-HOUR-CLOSE` is **RUN-ONLY** (`execution=true`, paper only). Consult **off** (file gates do not hold). Honer fee applied at score time; keep closed until bind. Trading **NOT ARMED**.
 
 **The fee-schedule hash is pinned from Founder browser bytes.** Source `founder_browser_bytes`, file `golf-offshoot/docs/kalshi-fee-schedule.pdf`, 281129 bytes. Last gym GET remains HTTP 429 (drift only). Do not GET the PDF every 90s. Do not spoof a browser. **Do not write a placeholder.**
 
@@ -56,10 +56,11 @@ Two suites, both on the tick.
 
 **Lane** (`latest/invariants.json`) — `digest_matches_ledger` PASS at 11:42:53 (82.18 / −17.82). `watch_is_collecting` PASS (cycle 3 after code re-exec). `clerical_roles_clear` may still fail until the runner sees the park name-clear. No prose cleared it.
 
-**Method** — 11 method checks (`half_spread_profile_recorded`, `hub_autostart_registered` are tenth and eleventh). Fee pin is `founder_browser_bytes`. `honesty_stamp_is_fresh` is a desk check and does not set `passed`. `critic_verdicts` is `{id, state}` + reviewed hashes — no `detail`. Bar is **binding**. Clerical findings `passed: true`. Soften Critic is **not** assigned. Operator RUN-ONLY on PROPOSED 03 is done. Live trial seated. PARK is not an ADMIT and is not a Critic job.
+**Method** — 13 method checks (`consult_enabled_requires_gates` and `honer_consult_not_live_theta` added this fold; dark consult is PASS). `half_spread_profile_recorded` / `hub_autostart_registered` remain tenth and eleventh. Fee pin is `founder_browser_bytes`. `honesty_stamp_is_fresh` is a desk check and does not set `passed`. `critic_verdicts` is `{id, state}` + reviewed hashes — no `detail`. Bar is **binding**. Soften Critic of the consult enabler is a **later session**. Operator RUN-ONLY on PROPOSED 03 is done. Live trial seated. PARK is not an ADMIT and is not a Critic job.
 
 ## Thread
 
+- 2026-09-10 16:05 ET  systems → chief-of-staff: discovery leash landed (honer fee-apply, machine exam score, consult file-gates, H clerical, crew replacement after consult). Consult off. Hour-close still executing. next=idle
 - 2026-09-10 15:10 ET  chief-of-staff: invent contract denser (catalog + 10/n); H will assign Lab when honer freezes; this fire does not invent. next=idle
 - 2026-09-10 14:03 ET  chief-of-staff: Operator RUN-ONLY of PROPOSED 03 done; live trial `R-SKIP-HOUR-CLOSE` seated; favorite L1 PARK; HOLD stands. next=idle
 - 2026-09-10 13:36 ET  operator → chief-of-staff: RUN-ONLY `R-SKIP-HOUR-CLOSE` (`skip_close_minute=0`, execution true); favorite off the seat; not scored; not an ADMIT. next=chief-of-staff
@@ -69,5 +70,4 @@ Two suites, both on the tick.
 - 2026-09-10 13:20 ET  lab → chief-of-staff: started one 15m PROPOSED under the invent contract; paper only; do not score; do not set execution. next=lab
 - 2026-09-10 13:05 ET  chief-of-staff → lab: one 15m PROPOSED under the invent contract; handoff operator. next=lab
 - 2026-09-10 11:47 ET  chief-of-staff: unattended gym loop; `decide_cos_action`; park name-clear; gym `PUBLISH_ARMED`; HOLD stands. next=idle
-- 2026-09-10 10:50 ET  chief-of-staff: best-plan closeout; favorite L1 PARK; stop inventing; honer dark; no PROPOSED 03; HOLD stands. next=idle
 *Older lines rolled off at the 10-line cap. Full history is in the git log for `docs/agents/DESK.md`.*

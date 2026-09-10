@@ -223,6 +223,7 @@ class PaperWatch:
             self._persist()
             payload["learning_wake"] = self._learning_tick()
             payload["learning_runner"] = self._runner_tick()
+            payload["leash"] = self._leash_tick()
             payload["hub_publish"] = self._hub_publish_tick()
             # The wake names roles, then the runner serves them. Invariants
             # read after both, or every settle reports a stale digest that the
@@ -248,6 +249,16 @@ class PaperWatch:
         self.last_fee_probe_error = ""
         self.last_fee_probe = state
         return state
+
+    def _leash_tick(self) -> dict[str, Any] | None:
+        """Freeze photocopy + clerical executing score. Fail-open. Not arm."""
+        from golf_offshoot.learning_lane_15m.leash import run_leash_tick
+
+        try:
+            return run_leash_tick()
+        except Exception as exc:  # noqa: BLE001 — never take the paper loop down
+            self.last_leash_error = str(exc)
+            return None
 
     def _spread_tick(self, payload: dict[str, Any]) -> dict[str, Any] | None:
         """Append live bid/ask samples. Never takes the paper loop down."""

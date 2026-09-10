@@ -167,6 +167,76 @@ def test_enabled_missing_theta_returns_factory_verdict():
     assert out["action"] == "fill"
 
 
+def test_write_consult_candidate_stays_dark(tmp_path):
+    from golf_offshoot.learning_lane_15m.consult_honer import write_consult_candidate
+
+    dest = tmp_path / "honer_consult.json"
+    snap = write_consult_candidate(
+        {
+            "frozen_family": "H-SKIP-RICH-YES",
+            "frozen_theta": 0.81,
+            "frozen_delta": 0.04,
+            "declared_at": "2026-09-10T14:00:00-04:00",
+        },
+        dest=dest,
+        consult_enabled=False,
+    )
+    assert snap["consult_enabled"] is False
+    assert snap["live_theta_never_consults"] is True
+    assert "theta.json" not in str(snap.get("source") or "")
+    payload = json.loads(dest.read_text(encoding="utf-8"))
+    assert payload["consult_enabled"] is False
+    assert compose_and_skip(FACTORY_FILL, posted_yes=0.90, snapshot=payload) is FACTORY_FILL
+
+
+def test_enable_gates_fail_without_surviving_score(tmp_path):
+    from golf_offshoot.learning_lane_15m.consult_honer import (
+        consult_enable_gates,
+        write_consult_candidate,
+    )
+
+    exam = {
+        "frozen_family": "H-SKIP-RICH-YES",
+        "frozen_theta": 0.81,
+        "frozen_delta": 0.04,
+        "declared_at": "2026-09-10T14:00:00-04:00",
+    }
+    snap = write_consult_candidate(exam, dest=tmp_path / "honer_consult.json")
+    gates = consult_enable_gates(
+        exam=exam,
+        score={},
+        honer_bar={"fee_omitted": True},
+        snapshot=snap,
+        invariants={"passed": False},
+    )
+    by_id = {g["id"]: g["ok"] for g in gates}
+    assert by_id["fee_apply"] is False
+    assert by_id["exam_not_dead"] is False
+    assert by_id["honer_invariants"] is False
+    assert all(g.get("ok") for g in gates) is False
+
+
+def test_maybe_sync_does_not_enable_without_score(tmp_path, monkeypatch):
+    from golf_offshoot.learning_lane_15m import consult_honer as ch
+
+    exam = {
+        "open": True,
+        "frozen_family": "H-SKIP-RICH-YES",
+        "frozen_theta": 0.81,
+        "frozen_delta": 0.04,
+        "declared_at": "2026-09-10T14:00:00-04:00",
+    }
+    monkeypatch.setattr(ch, "load_honer_exam", lambda: exam)
+    monkeypatch.setattr(ch, "load_honer_exam_score", lambda: {})
+    dest = tmp_path / "honer_consult.json"
+    out = ch.maybe_sync_and_enable(dest=dest)
+    assert out["wrote_candidate"] is True
+    assert out["consult_enabled"] is False
+    payload = json.loads(dest.read_text(encoding="utf-8"))
+    assert payload["consult_enabled"] is False
+    assert compose_and_skip(FACTORY_FILL, posted_yes=0.90, snapshot=payload) is FACTORY_FILL
+
+
 def test_factory_paper_and_rules_do_not_import_honer_package():
     paper = (SRC / "learning_lane_15m" / "paper.py").read_text(encoding="utf-8")
     rules = (SRC / "learning_lane_15m" / "rules.py").read_text(encoding="utf-8")

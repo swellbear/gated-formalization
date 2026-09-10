@@ -7,7 +7,7 @@
   "edge_established": false,
   "lab_admits": false,
   "trading_armed": false,
-  "fee_omitted": true,
+  "fee_omitted": false,
   "looks": {
     "first_look_n": 70,
     "l2_named": true,
@@ -30,11 +30,10 @@
   },
   "permutation_seed": 20260909,
   "delta_sd": "provisional; compute from sibling exam sample; do not copy live-bar 0.28 / 0.784",
-  "contrast": "d_i = 0 on exam fill; d_i = -fill_all_pnl on exam skip",
+  "contrast": "d_i = 0 on exam fill; d_i = -fill_all_pnl on exam skip; score-time fee_adjust",
   "keep_lock": {
     "can_keep": false,
     "closed_while": [
-      "fee_omitted",
       "binding != true",
       "lab_admits",
       "trading_armed"
@@ -42,9 +41,19 @@
     "classify_completed_exam_is_not_a_keep": true
   },
   "factory_fee_cite": {
-    "schedule_sha256": "",
-    "cited_at": "2026-09-09T17:01:17.945738-04:00",
-    "fee_omitted": true,
-    "note": "factory pin empty; cannot apply; keep-lock stays closed"
+    "schedule_sha256": "c326a69f596a11e8f8be2620402d39a8d4823920c21cc97c93a114d862699601",
+    "cited_at": "2026-09-10T15:45:00-04:00",
+    "fee_omitted": false,
+    "note": "cite landed; dated honer fee-apply follows"
+  },
+  "honer_fee_apply": {
+    "applied_at": "2026-09-10T15:45:00-04:00",
+    "schedule_sha256": "c326a69f596a11e8f8be2620402d39a8d4823920c21cc97c93a114d862699601",
+    "fee_adjust": "golf_offshoot.learning_lane_15m.evidence_bar.fee_adjust",
+    "applies_at": "score_time",
+    "does_not_rewrite_search_ledgers": true,
+    "fee_omitted": false,
+    "note": "dated honer fee-apply of factory founder_browser_bytes pin; score_time fee_adjust; search/exam ledgers stay gross",
+    "pin_source": "founder_browser_bytes"
   }
 }

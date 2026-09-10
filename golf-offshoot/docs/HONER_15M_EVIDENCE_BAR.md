@@ -19,7 +19,7 @@ Fill-all is a **counterfactual** always-YES at the same mark. Not Lineage A. Not
 
 The exam only differs on skips.
 
-Fee-adj is **omitted** (zero-fee mid). Name that. Do not print a corrected total.
+Fee-adj is **applied at score time** via factory `fee_adjust` citing `founder_browser_bytes` pin `c326a69f596a11e8f8be2620402d39a8d4823920c21cc97c93a114d862699601`. Search/exam ledgers stay gross. Do not print a fee-adjusted honer total on the hub, digest, or `records[]`. Keep-lock stays closed while this bar is unbound.
 
 ## Looks
 
@@ -44,7 +44,7 @@ Do not claim Established. Do not bind in this build.
 
 A green exam (`classify_completed_exam` → `completed_unscored`) is a **library label**, not a keep. `permutation_mean_d` and `alpha_k` stay callable and unwired to keep.
 
-Do not pin a fee sha256 placeholder. Honer may **cite** the factory `schedule_sha256` (`honer_15m.fee.cite_factory_pin`). A cite is not a dated honer fee-apply. `fee_omitted` stays true and `can_keep()` stays false until that dated apply.
+Do not pin a fee sha256 placeholder. Honer **cites and applies** the factory `schedule_sha256` (`honer_15m.fee.cite_factory_pin` then `apply_factory_fee`). A cite alone does not clear `fee_omitted`. After the dated apply, `fee_omitted` is false and `can_keep()` stays false until `binding` is true. This is not consult enable.
 
 δ/sd stay provisional on this sibling exam sample. Do not copy live-bar 0.28 / 0.784.
 

@@ -1,6 +1,6 @@
 # honer_15m catalog amendment protocol
 
-**This build does not add a third family.** Two dated items only: `H-SKIP-RICH-YES` then `H-SKIP-WIDE-SPREAD`.
+**This build does not add a third family.** Two dated items only: `H-SKIP-RICH-YES` then `H-SKIP-WIDE-SPREAD`. Lab may date a third family only after both of those exams finish (dead or catalog exhaust). Not while they are still running.
 
 A new family is not a tape sort, a pnl rank, or a Founder-free append.
 

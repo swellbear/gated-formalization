@@ -6,7 +6,6 @@ from golf_offshoot.learning_lane_15m.cos_tick import (
     ACTION_QUIET,
     LAB_INVENT_JOB,
     decide_cos_action,
-    lab_honer_freeze_job,
 )
 from golf_offshoot.learning_lane_15m.crew_tick import (
     REASON_A_DONE,
@@ -93,6 +92,7 @@ def test_operator_name_clear_is_closeout_not_score():
                 reasons=[
                     "rule_reached_n R-SKIP-COINFLIP",
                     "rule_reached_n R-SKIP-2TO1-FAVORITE",
+                    "rule_reached_n R-SKIP-HOUR-CLOSE",
                 ],
             )
         ],
@@ -278,7 +278,7 @@ def test_stale_unreviewed_critic_is_closeout_not_assign():
     assert decision["role"] is None
 
 
-def test_honer_freeze_assigns_lab_even_with_live_trial():
+def test_honer_freeze_is_clerical_not_lab():
     freeze = {
         "frozen_family": "H-SKIP-RICH-YES",
         "frozen_theta": 0.81,
@@ -295,14 +295,14 @@ def test_honer_freeze_assigns_lab_even_with_live_trial():
         },
     }
     decision = decide_cos_action(_desk(), wake=wake, crew_tick=wake["crew_tick"])
-    assert decision["action"] == ACTION_ASSIGN
-    assert decision["role"] == "lab"
-    assert decision["reason"] == "honer_freeze_assign_lab"
-    assert decision["job"] == lab_honer_freeze_job(freeze)
-    assert "HONER-FROZEN-CONSULT" in decision["job"]
+    assert decision["action"] == ACTION_CLOSEOUT
+    assert decision["reason"] == "honer_freeze_clerical"
+    assert decision["assign"] is False
+    assert decision["role"] is None
+    assert "HONER-FROZEN-CONSULT" not in (decision.get("job") or "")
 
 
-def test_h_beats_f():
+def test_f_assigns_lab_even_if_h_also_owed():
     freeze = {"frozen_family": "H-SKIP-WIDE-SPREAD", "frozen_theta": 0.04, "frozen_delta": 0.06, "declared_at": "x"}
     wake = {
         "roles_owed": [],
@@ -315,8 +315,8 @@ def test_h_beats_f():
     }
     decision = decide_cos_action(_desk(), wake=wake, crew_tick=wake["crew_tick"])
     assert decision["role"] == "lab"
-    assert decision["reason"] == "honer_freeze_assign_lab"
-    assert decision["job"] != LAB_INVENT_JOB
+    assert decision["reason"] == "continuation_assign_lab"
+    assert decision["job"] == LAB_INVENT_JOB
 
 
 def test_lab_proposed_operator_beats_h():

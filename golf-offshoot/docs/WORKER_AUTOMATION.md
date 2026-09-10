@@ -44,12 +44,14 @@ and here):
 Lab hard rules: `lab_admits=false`. One PROPOSED per fire. Invent contract
 in the note: kill anatomy, unburned mechanism (load burned classes +
 LEARNING_LANE_15M_MECHANISM_CATALOG.json), density floor 10/n from the 15m
-quartet, prefer HONER-FROZEN-CONSULT if H/Job names an open freeze, pre-reg,
-live falsifier. Do not retune skip_close_minute / RETUNE-CLOCK-MINUTE. Do not
-revive `R-SKIP-COINFLIP` or retune its band. Do not retune PARK'd
-`favorite_odds`. Golf idle does not stop a 15m KXBTC15M paper PROPOSED. Do
+quartet, HONER-FAMILY-AMEND only after a dead honer exam or catalog exhaust
+(no third family until the two dated families finish exams), HONER-FROZEN-REPLACE
+only after consult has lived and hour-close is not the live trial (photocopy freeze
+knobs; do not retype θ), pre-reg, live falsifier. Do not retune skip_close_minute /
+RETUNE-CLOCK-MINUTE. Do not revive `R-SKIP-COINFLIP` or retune its band. Do not retune
+PARK'd `favorite_odds`. Golf idle does not stop a 15m KXBTC15M paper PROPOSED. Do
 not score. Do not self-admit. Do not set `execution:true` (Operator does
-that). Do not enable consult.
+that). Consult enable is a file gate, not this Lab job.
 
 Operator hard rules: may set `execution:true` on a surviving pre-registered
 rule (paper implementation). A falsifier PARK of an executing selection rule
@@ -111,15 +113,19 @@ LAB HARD RULES (when you are lab)
        (RETUNE-CLOCK-MINUTE is burned).
     2. Unburned mechanism — load LEARNING_LANE_15M_BURNED_CLASSES.json and
        LEARNING_LANE_15M_MECHANISM_CATALOG.json. Skip-on-mark families that only
-       move the same cut are retunes. Prefer HONER-FROZEN-CONSULT if H/Job
-       names an open freeze (name hashes/family/θ/δ/declared_at; do not invent
-       theta). HONER-FAMILY-AMEND may date a third honer family; do not tape-sort.
+       move the same cut are retunes. HONER-FROZEN-CONSULT is not a Lab invent
+       (freeze bytes are the name; clerical copies the snapshot). HONER-FAMILY-AMEND
+       dates a third honer family only after a dead exam or catalog exhaust; do
+       not tape-sort; do not append until the two dated families finish exams.
+       HONER-FROZEN-REPLACE photocopies freeze knobs as the executing row after
+       consult has lived and hour-close is not live; Operator RUN-ONLY; not Founder;
+       not arm. Do not retype freeze theta.
     3. Pre-registration — parameters must not be informing marks on this tree.
        declare_rule density: expected_skip_rate from the 15m quartet, floor 10/n.
     4. Live falsifier — n and a park instruction, no retune-if-dead.
   Do not revive R-SKIP-COINFLIP. Do not retune its band. Do not score.
   Do not self-admit. Do not set execution:true (Operator does that).
-  Do not enable consult.
+  Consult enable is a file gate, not this Lab job.
   Handoff → operator.
 
 OPERATOR HARD RULES (when you are operator)
