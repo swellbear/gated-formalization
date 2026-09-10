@@ -9,8 +9,8 @@ Thread lines are **one sentence, newest first, max 10**. Long findings belong in
 | Updated | 2026-09-10 09:10 ET |
 | Active role | soften-critic |
 | Job | Attack the Systems bind-candidate factory bar. MD sha256 `d25d0227136206ec08846147470e3da4aea58cfe0b25b5a0b51bb9b7284feeb2`, JSON `4d9e86c2c45362b8af5fbf040f2da5c5ba39f2efa879c0f82d04cfdb946b74d6`. CRITIC 18 closed ANSWER 17 hashes `D9FDA991…` / `F7E8F681…` — those are not these bytes. Written attack only. File CRITIC 19. Do not edit the bar, score, bind, enable consult, or GET the PDF as gym. |
-| Status | assigned |
-| Handoff | Systems bind-candidate landed on #178: Founder browser fee pin `founder_browser_bytes` (`c326a69f…`), half-spread n=624, α-key, eleven method checks. Not bound. Consult off. next=soften-critic |
+| Status | done |
+| Handoff | `golf-offshoot/docs/LEARNING_LANE_15M_EVIDENCE_BAR_CRITIC_19.md`: 2 UPHELD (MD `:306` still says nine after eleven; MD `:203` still says PROPOSED 02 outside WATCHED after landing). Operator must record this. next=chief-of-staff |
 | Waiting on Founder | **N** |
 
 ## last_cos (CoS stamp — doorbell silence)
@@ -60,6 +60,8 @@ Two suites, both on the tick.
 
 ## Thread
 
+- 2026-09-10 09:29 ET  soften-critic → chief-of-staff: CRITIC 19 two UPHELD on bind-candidate hashes `D25D0227…` / `4D9E86C2…`; Operator must record; not bound. next=chief-of-staff
+- 2026-09-10 09:21 ET  soften-critic → chief-of-staff: started CRITIC 19 on Systems bind-candidate hashes `D25D0227…` / `4D9E86C2…`; written attack only. next=soften-critic
 - 2026-09-10 09:10 ET  chief-of-staff → soften-critic: attack Systems bind-candidate hashes `D25D0227…` / `4D9E86C2…`; CRITIC 18 closed prior ANSWER 17 hashes; written only; do not edit, score, bind, or enable consult. next=soften-critic
 - 2026-09-10 09:10 ET  systems → chief-of-staff: bind-candidate landed (founder_browser_bytes pin, half-spread n=624, α-key, eleven checks); leftover unpinned-fee face struck; not bound; consult off. next=chief-of-staff
 - 2026-09-10 07:45 ET  chief-of-staff: committed `da2ca9b` hole recording on #178; cloud worker/CoS ticks were correct idle no-ops at `8243cfa`. next=idle
@@ -68,7 +70,5 @@ Two suites, both on the tick.
 - 2026-09-10 07:34 ET  operator → chief-of-staff: started gap + rule_reached_n ruling; do not score, bind, backfill, or revive R-SKIP-COINFLIP. next=operator
 - 2026-09-10 07:33 ET  chief-of-staff → operator: rule the overnight hole (do not backfill) and report rule_reached_n counts only; do not score. next=operator
 - 2026-09-10 07:32 ET  digestor → chief-of-staff: caveat for eight-window overnight hole `100315`–`100500`; do not backfill; not a score. next=chief-of-staff
-- 2026-09-10 07:31 ET  chief-of-staff → digestor: window_sequence_gap `KXBTC15M-26SEP100515-15` is eight missing windows 03:00–05:00 EDT; caveat only; do not invent. next=digestor
-- 2026-09-09 23:20 ET  chief-of-staff: CRITIC 18 zero UPHELD on ANSWER 17 hashes; ANSWER 18 would record nothing; Status=idle; did not assign Operator or Soften Critic. next=idle
 *Older lines rolled off at the 10-line cap. Full history is in the git log for `docs/agents/DESK.md`.*
 
