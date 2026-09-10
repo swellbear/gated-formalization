@@ -222,12 +222,12 @@ def maybe_score_farm(*, root: Path | None = None) -> dict[str, Any]:
     from golf_offshoot.learning_lane_15m.farm import (
         FORBIDDEN_FARM_IDS,
         farm_scorecard_path,
-        load_farm,
         notebook_as_rule,
     )
     from golf_offshoot.learning_lane_15m.evidence_bar import load_evidence_bar
+    from golf_offshoot.learning_lane_15m.sibling_sync import observed_farm_payload
 
-    payload = load_farm(root=root)
+    payload, _meta = observed_farm_payload(root=root)
     notebooks = [row for row in (payload.get("notebooks") or []) if isinstance(row, dict)]
     if not notebooks:
         return {"wrote": False, "reason": "no farm notebooks", "cards": []}

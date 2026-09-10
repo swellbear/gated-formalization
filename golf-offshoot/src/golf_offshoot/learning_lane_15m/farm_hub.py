@@ -10,12 +10,12 @@ from golf_offshoot.learning_lane_15m.farm import (
     farm_path,
     first_look_n,
     keeper_notebooks,
-    load_farm,
     notebook_status,
     progress_meter,
     progress_pct,
     settled_n,
 )
+from golf_offshoot.learning_lane_15m.sibling_sync import ORIGIN_SIBLING, observed_farm_payload
 
 
 def _params_text(params: dict[str, Any]) -> str:
@@ -29,32 +29,48 @@ def _params_text(params: dict[str, Any]) -> str:
     return html.escape(str(params))
 
 
+def _origin_label(meta: dict[str, Any]) -> str:
+    if str(meta.get("source") or "") != "origin":
+        return ""
+    sha = str(meta.get("sha") or "").strip()
+    short = sha[:7] if sha else ""
+    ref = str(meta.get("ref") or ORIGIN_SIBLING)
+    if short:
+        return f"from {ref} @ {short}"
+    return f"from {ref}"
+
+
 def farm_panel_html(*, root: Path | None = None) -> str:
     path = farm_path(root=root)
+    payload, meta = observed_farm_payload(root=root)
+    notebooks = [row for row in (payload.get("notebooks") or []) if isinstance(row, dict)]
     help_txt = (
         "Discovery notebooks on the shared tape. Not live. Not an ADMIT. "
         "One chair stays What is on trial. Do not add farm pnl to Lineage A."
     )
-    if not path.is_file():
+    origin_line = _origin_label(meta)
+    loud = "Not live"
+    if origin_line:
+        loud = f"Not live. {origin_line}"
+    if not notebooks and not path.is_file() and str(meta.get("source") or "") != "origin":
         return (
             '<section class="panel farm-sandbox" id="farm">'
             "<h2>Farm — discovery notebooks</h2>"
             f'<p class="help">{html.escape(help_txt)}</p>'
-            '<p class="loud">Not live</p>'
+            f'<p class="loud">{html.escape(loud)}</p>'
             '<p class="help">Farm idle. No farm file. Not invented rows.</p>'
             "</section>"
         )
-    payload = load_farm(root=root)
-    notebooks = [row for row in (payload.get("notebooks") or []) if isinstance(row, dict)]
     if not notebooks:
-        return (
+        idle = (
             '<section class="panel farm-sandbox" id="farm">'
             "<h2>Farm — discovery notebooks</h2>"
             f'<p class="help">{html.escape(help_txt)}</p>'
-            '<p class="loud">Not live</p>'
+            f'<p class="loud">{html.escape(loud)}</p>'
             '<p class="help">Farm idle. No notebooks dated. Not live.</p>'
             "</section>"
         )
+        return idle
     need = first_look_n(root=root)
     keepers = keeper_notebooks(root=root, farm=payload)
     head = keepers[0] if keepers else None
@@ -102,7 +118,7 @@ def farm_panel_html(*, root: Path | None = None) -> str:
         '<section class="panel farm-sandbox" id="farm">'
         "<h2>Farm — discovery notebooks</h2>"
         f'<p class="help">{html.escape(help_txt)}</p>'
-        '<p class="loud">Not live</p>'
+        f'<p class="loud">{html.escape(loud)}</p>'
         '<div class="farm-table-wrap">'
         f'<table class="farm-board">{head_row}{"".join(body)}</table>'
         "</div>"

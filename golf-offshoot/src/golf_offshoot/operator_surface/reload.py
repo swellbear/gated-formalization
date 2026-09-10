@@ -36,7 +36,7 @@ _CODE_RELPATHS = (
     "audit/shadow_settle.py",
 )
 _ARTIFACT_DIR_GLOBS = (
-    ("latest", ("*_live_*", "*leftover*")),
+    ("latest", ("*_live_*", "*leftover*", "origin_farm.json", "origin_farm_meta.json")),
     ("exports", ("*_live_*", "*leftover*")),
     ("calibration", ("weights_calib-v*.json",)),
     ("paper", ("ledger.json", "*.json")),
@@ -245,6 +245,14 @@ def artifact_watch_files(roots: ResolvedRoots) -> list[Path]:
         card = None
     if card is not None and card.is_file():
         files.append(card)
+    try:
+        from golf_offshoot.learning_lane_15m.sibling_sync import origin_farm_cache_paths
+
+        for path in origin_farm_cache_paths():
+            if path.is_file():
+                files.append(path)
+    except Exception:
+        pass
     # unique, stable
     seen: set[Path] = set()
     out: list[Path] = []
@@ -372,6 +380,12 @@ class HubWatcher:
         return accepted
 
     def poll(self) -> ReloadDecision:
+        try:
+            from golf_offshoot.learning_lane_15m.sibling_sync import maybe_fetch_origin_farm
+
+            maybe_fetch_origin_farm()
+        except Exception:
+            pass
         return self.observe(self._snapshot_fn())
 
 

@@ -60,6 +60,7 @@ Persist: commit desk + leave-off on cursor/honer-15m-sibling
 and git push origin HEAD:cursor/honer-15m-sibling.
 Do not open a new PR. Do not leave Commit & Push for a human.
 Do not git push to master.
+Gym 8765 observes origin farm after its own fetch; do not tell Founder to pull.
 
 Do not also run Systems, Operator, Lab, or Critic in the same automation fire. CoS assigns; 15m worker tick runs the assigned job. This automation is CoS-only.
 

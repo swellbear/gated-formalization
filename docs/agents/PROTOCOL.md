@@ -100,6 +100,7 @@ Do **not** ask (CoS just does it):
 - Desk / leave-off bookkeeping
 - Chrome-only Hub UI inside existing Hard NOs
 - Gym `PUBLISH_ARMED` material hub-allowlist push (this gym PC only). Cloud CoS/worker must **not** `git push` to `master`. Factory merge of #178 is a PR merge, not that script
+- Gym 8765 observes farm notebooks from `origin/cursor/honer-15m-sibling` after a hub fetch (not a Founder pull, not a second executing SoT). Tape and the live chair stay this gym. Cloud ticks do not pull this PC.
 - Do not ping Founder to stamp bind. Bind is Critic+Operator and critic-invariants; CoS assigns those roles. CoS does not set `binding: true`. Do not add a Founder stamp to bind.
 - Ask Founder to click ingest / live / loop
 
@@ -148,6 +149,8 @@ A role also leaves `roles_owed` when the artifact it owns changes on disk, whoev
 `execute=True` is a scratch-tree harness only. It requires `root=` pointing off the real repo and can never serve the live tree unarmed.
 
 **Pages publish is gym-only, material, allowlisted.** The runner still does not `git commit` or `git push`. After each PaperWatch runner pass, `PUBLISH_ARMED` (gitignored, this gym tree) may push the hub allowlist to `origin/master` from a **master worktree** when `material_publish_reasons` is non-empty. Never sibling-HEAD-to-master. Cloud CoS/worker timers do not publish. Factory merge of #178 is still a PR merge.
+
+**Farm panel observation is gym-hub fetch, not Founder pull.** The hub already polling on this PC `git fetch`es `cursor/honer-15m-sibling` and caches `LEARNING_LANE_15M_FARM.json` from origin (gitignored). It does not reset this tree, does not overlay executing `RULES.json`, and does not put farm cards on Pages. Founder does not pull for 8765. Cloud CoS/worker already fetch their own clone.
 
 ### Who a tick owes (severity split)
 
