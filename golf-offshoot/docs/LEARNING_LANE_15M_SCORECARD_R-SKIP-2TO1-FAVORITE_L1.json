@@ -5,6 +5,8 @@
   "rule_id": "R-SKIP-2TO1-FAVORITE",
   "look": "L1",
   "scored_at": "2026-09-10T10:33:59.706631-04:00",
+  "commit_sha": "516a66c728444ee099bbc3d29f5bde5e5785e1af",
+  "committed_at": "2026-09-10T10:41:17-04:00",
   "n": 70,
   "skip_count": 1,
   "skip_rate": 0.014286,
