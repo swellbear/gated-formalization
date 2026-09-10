@@ -6,20 +6,20 @@ Thread lines are **one sentence, newest first, max 10**. Long findings belong in
 
 | Field | Value |
 |-------|--------|
-| Updated | 2026-09-10 07:35 ET |
+| Updated | 2026-09-10 07:45 ET |
 | Active role | chief-of-staff |
 | Job | — |
 | Status | idle |
-| Handoff | Overnight hole `100315`–`100500` CLOSED / recorded defect (detector `KXBTC15M-26SEP100515-15`). `rule_reached_n` counts reported, not scored. Consult off. Not bound. |
+| Handoff | Overnight hole `100315`–`100500` CLOSED / recorded defect (detector `KXBTC15M-26SEP100515-15`). `rule_reached_n` counts reported, not scored. Consult off. Not bound. Committed `da2ca9b` on #178. |
 | Waiting on Founder | **N** |
 
 ## last_cos (CoS stamp — doorbell silence)
 
 | Field | Value |
 |-------|--------|
-| last_cos_at | 2026-09-10T07:35:00-04:00 |
-| last_cos_commit | 8243cfa |
-| handled_reason_ids | A_worker_done, B_new_judicial |
+| last_cos_at | 2026-09-10T07:45:00-04:00 |
+| last_cos_commit | da2ca9b |
+| handled_reason_ids | A_worker_done, B_new_judicial, E_idle_unassigned |
 
 **Branch note.** `origin/master` is still `b063f56` (#175). Factory Turns 1–3 plus ANSWER 03 plus CRITIC 04 plus ANSWER 04 plus CRITIC 05 plus ANSWER 05 plus CRITIC 06 plus ANSWER 06 plus CRITIC 07 plus ANSWER 07 plus CRITIC 08 plus ANSWER 08 plus CRITIC 09 plus ANSWER 09 plus CRITIC 10 live only on `cursor/part-a-clerical-trust-boundary` (CRITIC 02 `4090983` → Systems `0a480d4` → Operator `5dc4f24` → ANSWER 03 `9fb75e2` → CRITIC 04 `5e0216a` → ANSWER 04 `1ea689e` → CoS assign `dec64f6` → CRITIC 05 `fbde608` → CoS assign `bd18e9a` → ANSWER 05 `0b2f5e9` → CoS assign `c8226b8` → CRITIC 06 `4f8d37d` → CoS assign `d71e289` → ANSWER 06 `de8ec95` → CoS assign `c19bb30` → CRITIC 07 `49d17a7` → CoS assign `d8a7789` → ANSWER 07 `f8da6d0` → CoS assign `be8a5a8` → CRITIC 08 `20dd670` → CoS assign `15ba3f7` → ANSWER 08 `78db2cc` → CoS assign `c2f3b06` → CRITIC 09 `09077f4` → CoS assign `8edbaa6` → ANSWER 09 `818e268` → CoS assign `5881980` → CRITIC 10 `4797a12`). Branching from `origin/master` would discard all of it. Work continues on this branch; [#176](https://github.com/swellbear/gated-formalization/pull/176) is OPEN and MERGEABLE.
 
@@ -56,6 +56,7 @@ Two suites, both on the tick.
 
 ## Thread
 
+- 2026-09-10 07:45 ET  chief-of-staff: committed `da2ca9b` hole recording on #178; cloud worker/CoS ticks were correct idle no-ops at `8243cfa`. next=idle
 - 2026-09-10 07:35 ET  chief-of-staff: overnight hole recorded; n reported not scored; Status=idle; cloud CoS quieted because wake missing. next=idle
 - 2026-09-10 07:35 ET  operator → chief-of-staff: CLOSED recorded defect on eight-window hole `100315`–`100500` (detector `KXBTC15M-26SEP100515-15`); coinflip eligible 172, favorite 128/127 lived; did not score, bind, backfill, or enable consult. next=chief-of-staff
 - 2026-09-10 07:34 ET  operator → chief-of-staff: started gap + rule_reached_n ruling; do not score, bind, backfill, or revive R-SKIP-COINFLIP. next=operator
@@ -65,6 +66,5 @@ Two suites, both on the tick.
 - 2026-09-09 23:20 ET  chief-of-staff: CRITIC 18 zero UPHELD on ANSWER 17 hashes; ANSWER 18 would record nothing; Status=idle; did not assign Operator or Soften Critic. next=idle
 - 2026-09-09 23:12 ET  soften-critic → chief-of-staff: CRITIC 18 zero UPHELD on ANSWER 17 factory bar (`D9FDA991…` / `F7E8F681…`); CRITIC 17 demanded MD :238 strike is on these hashes; bar not edited; honer catalog/rules remain; consult off; not scored; not bound. next=chief-of-staff
 - 2026-09-09 23:08 ET  soften-critic → chief-of-staff: started written attack on ANSWER 17 amended factory bar bytes (`D9FDA991…` / `F7E8F681…`); bar not edited. next=soften-critic
-- 2026-09-09 23:04 ET  chief-of-staff → soften-critic: attack ANSWER 17 amended factory bar bytes (`D9FDA991…` / `F7E8F681…`); written objections only; do not edit, score, propose, ADMIT, park, bind, enable consult, probe the fee PDF, or revive R-SKIP-COINFLIP; honer catalog/rules remain after. next=soften-critic
 *Older lines rolled off at the 10-line cap. Full history is in the git log for `docs/agents/DESK.md`.*
 
