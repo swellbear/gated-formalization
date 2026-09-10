@@ -3,7 +3,7 @@
 **Lane:** `learning_lane_15m` · series `KXBTC15M` only
 **Role:** `digestor` — honesty owner. Never Soften / Harden / Kill / ADMIT.
 **Admit?** N · **Soften?** N · **Trading ARMED?** N
-**Evidence as-of:** 2026-09-08 08:51 EDT (`latest/journal.json` `generated_at`)
+**Evidence as-of:** 2026-09-10 07:42 EDT (`latest/journal.json` `generated_at`)
 **Figures:** generated from files. **Caveats:** concatenated verbatim from [`LEARNING_LANE_15M_SOURCE_DIGEST_CAVEATS.md`](LEARNING_LANE_15M_SOURCE_DIGEST_CAVEATS.md). The generator may not write that file.
 
 Truth on disk, in the order this digest trusts it:
@@ -25,28 +25,29 @@ Cited to the file that recorded them. No default, no zero-fill, no pnl a file do
 
 ### Lineage A — `paper/ledger.json`
 
-- `starting_bankroll` 100.0 → `bankroll` 89.12 · `betting_pnl` -10.88 · `deposits` 0.0 · `withdrawals` 0.0
-- entries 138 (1 `observation_seed`, 69 `paper_fill`, 40 `settle_loss`, 28 `settle_win`)
-- events 68
-- paper books on this tree: 69 (68 with `settled_at`, 1 open: `KXBTC15M-26SEP080900`)
-- settle files on this tree: 69
+- `starting_bankroll` 100.0 → `bankroll` 87.33 · `betting_pnl` -12.67 · `deposits` 0.0 · `withdrawals` 0.0
+- entries 458 (1 `observation_seed`, 229 `paper_fill`, 121 `settle_loss`, 107 `settle_win`)
+- events 228
+- paper books on this tree: 229 (228 with `settled_at`, 1 open: `KXBTC15M-26SEP100745`)
+- settle files on this tree: 229
 - first event `event_name`: `BTC price up in next 15 mins?`
-- last event `event_name`: `BTC price up in next 15 mins?` · `settled_at` `2026-09-08T08:45:43.494762-04:00` · last-row ticket `pnl` -1.00 · `bankroll_after` 89.12
+- last event `event_name`: `BTC price up in next 15 mins?` · `settled_at` `2026-09-10T07:15:58.172221-04:00` · last-row ticket `pnl` +1.30 · `bankroll_after` 87.33
 
 Recorded book. The standing caveats say these figures omit the known fee.
 
 ### Pending on the current journal tape
 
-`KXBTC15M-26SEP080900-00` · journal `status` `active` · `result` "" · `window_id` `KXBTC15M-26SEP080900__2026-09-08T12:45:00Z__2026-09-08T13:00:00Z`
+`KXBTC15M-26SEP100745-45` · journal `status` `active` · `result` "" · `window_id` `KXBTC15M-26SEP100745__2026-09-10T11:30:00Z__2026-09-10T11:45:00Z`
 
 ### Absences (recorded as absence, not as zero)
 
 - `KXBTC15M-26SEP072245` paper+settle files present? `False` — expected absent; see caveats.
+- overnight hole `100315`–`100500` (8 windows) paper+settle files present? `False` — expected all absent; see caveats.
 - `KXBTC15M-26SEP071500-00` paper+settle files present? `False` — expected absent; missing paper join.
 
 ### Lineage B — `docs/observability-hub/data/manifest.json`
 
-- hub `generated_at` `2026-09-08T08:51:20.234760-04:00` (local export; a local rewrite is not a publish)
+- hub `generated_at` `2026-09-10T07:42:16.378625-04:00` (local export; a local rewrite is not a publish)
 - `$.lanes[1].records` length: 0
 - published history kept: `KXBTC15M-26SEP071445-45` `paper_win` `+1.67` — cited to the manifest, never re-derived here, never added to lineage A
 
@@ -103,7 +104,7 @@ This paragraph does **not** replace those figures with a fee-accurate total — 
 
 ## Locked count is not an unbroken run
 
-**Locked** = an official Kalshi result in a settle file on this tree AND a paper book on this tree for the same `window_id`. The generated locked count is **not** an unbroken run — see the outage gap below.
+**Locked** = an official Kalshi result in a settle file on this tree AND a paper book on this tree for the same `window_id`. The generated locked count is **not** an unbroken run — see the outage gaps below (`072245` and the overnight `100315`–`100500` hole).
 
 This digest does **not** reprint a window-by-window scoreboard. That table would read as a track record.
 
@@ -121,6 +122,29 @@ Cause: the 22:25–22:50 EDT outage from the `--once` argparse collision. Adjace
 
 ---
 
+## Overnight hole — eight windows `100315` through `100500` do not exist
+
+**This is a defect to record, not to explain away.** Detector name on the owed line: `window_sequence_gap KXBTC15M-26SEP100515-15` (the first window *after* the hole).
+
+Eight consecutive 15-minute windows are absent from every file this digest trusts: no `paper/` file, no `settlements/` file, no `ledger.json` entry or event, no `latest/journal.json` `windows[]` row.
+
+| Stem | UTC window | EDT |
+|---|---|---|
+| `KXBTC15M-26SEP100315` | 07:00–07:15Z | 03:00–03:15 |
+| `KXBTC15M-26SEP100330` | 07:15–07:30Z | 03:15–03:30 |
+| `KXBTC15M-26SEP100345` | 07:30–07:45Z | 03:30–03:45 |
+| `KXBTC15M-26SEP100400` | 07:45–08:00Z | 03:45–04:00 |
+| `KXBTC15M-26SEP100415` | 08:00–08:15Z | 04:00–04:15 |
+| `KXBTC15M-26SEP100430` | 08:15–08:30Z | 04:15–04:30 |
+| `KXBTC15M-26SEP100445` | 08:30–08:45Z | 04:30–04:45 |
+| `KXBTC15M-26SEP100500` | 08:45–09:00Z | 04:45–05:00 |
+
+Adjacent windows **do** exist: `KXBTC15M-26SEP100300` (02:45–03:00 EDT; settle file `as_of` 2026-09-10T05:02:12-04:00, `settlement_ts` 2026-09-10T09:00:03Z) and `KXBTC15M-26SEP100515` (05:00–05:15 EDT; `as_of` 2026-09-10T05:16:39-04:00). Honer has none of the eight stems either. This is **not** the `072245` `--once` argparse collision.
+
+**Do not backfill them. Do not infer what they would have been.** No Kalshi `result`, no paper fill, no pnl for those eight. Anyone who treats the locked count as a continuous overnight sample is reading the hole as data.
+
+---
+
 ## Four residual kinds (do not collapse)
 
 They are different states with different reasons and must not be collapsed into one "pending" bucket.
@@ -128,7 +152,7 @@ They are different states with different reasons and must not be collapsed into 
 1. **Pending for want of a Kalshi `result`** — a true pending window. Kalshi has not spoken. The open paper book exists. The ticker rotates; read it off the generated figures, never freeze a name here.
 2. **Missing paper join** — official result present (or once present on a tape that has since rolled off), no book on this tree. **`KXBTC15M-26SEP071500-00`.** There is no paper pnl here and none is invented. `SETTLE_PENDING` is the wrong banner.
 3. **Published-only lineage B** — `KXBTC15M-26SEP071445-45`, `paper_win` `+1.67`. Kept as published history. Never re-derived here. Never added to lineage A.
-4. **Unmeasured tape** — official result, no settle file and no paper position anywhere on this tree, because the local book seeded later (`ledger.json` `observation_seed` 15:42:37 EDT). `latest/journal.json` is a **rolling tape**, not an archive. A shrinking list means windows are being *forgotten*, not resolved. **Unmeasured is not lost and not losses.** Do not backfill them from a result. Do not count them in a denominator. This is a different state from the `072245` gap: those windows existed on a tape; `072245` never existed on this tree.
+4. **Unmeasured tape** — official result, no settle file and no paper position anywhere on this tree, because the local book seeded later (`ledger.json` `observation_seed` 15:42:37 EDT). `latest/journal.json` is a **rolling tape**, not an archive. A shrinking list means windows are being *forgotten*, not resolved. **Unmeasured is not lost and not losses.** Do not backfill them from a result. Do not count them in a denominator. This is a different state from the `072245` and `100315`–`100500` gaps: unmeasured windows existed on a tape; the gap stems never existed on this tree.
 
 A window with no book has no pnl. That is a true statement, not a missing number. Do not write `0`.
 

@@ -23,6 +23,16 @@ DIGEST_REL = Path("golf-offshoot") / "docs" / "LEARNING_LANE_15M_SOURCE_DIGEST.m
 CAVEATS_REL = Path("golf-offshoot") / "docs" / "LEARNING_LANE_15M_SOURCE_DIGEST_CAVEATS.md"
 MANIFEST_REL = Path("docs") / "observability-hub" / "data" / "manifest.json"
 GAP_TICKER = "KXBTC15M-26SEP072245"
+OVERNIGHT_HOLE_STEMS = (
+    "KXBTC15M-26SEP100315",
+    "KXBTC15M-26SEP100330",
+    "KXBTC15M-26SEP100345",
+    "KXBTC15M-26SEP100400",
+    "KXBTC15M-26SEP100415",
+    "KXBTC15M-26SEP100430",
+    "KXBTC15M-26SEP100445",
+    "KXBTC15M-26SEP100500",
+)
 MISSING_JOIN = "KXBTC15M-26SEP071500-00"
 LINEAGE_B = "KXBTC15M-26SEP071445-45"
 CAVEATS_BANNER = (
@@ -127,6 +137,13 @@ def collect_figures(*, root: Path | None = None) -> dict[str, Any]:
 
     gap_paper = list(paper_dir_15m().glob(f"{GAP_TICKER}*"))
     gap_settle = list(settlements_dir_15m().glob(f"{GAP_TICKER}*"))
+    overnight_hole_present = False
+    for stem in OVERNIGHT_HOLE_STEMS:
+        if list(paper_dir_15m().glob(f"{stem}*")) or list(
+            settlements_dir_15m().glob(f"{stem}*")
+        ):
+            overnight_hole_present = True
+            break
     missing_paper = list(paper_dir_15m().glob(f"{MISSING_JOIN.split('-00')[0]}*"))
     missing_settle = list(settlements_dir_15m().glob("KXBTC15M-26SEP071500*"))
 
@@ -169,6 +186,7 @@ def collect_figures(*, root: Path | None = None) -> dict[str, Any]:
             for row in pending_journal
         ],
         "gap_absent": not gap_paper and not gap_settle,
+        "overnight_hole_absent": not overnight_hole_present,
         "missing_join_absent": not missing_paper and not missing_settle,
         "manifest_generated_at": hub.get("generated_at"),
         "lineage_b_records_n": len(records) if records is not None else None,
@@ -242,6 +260,7 @@ Recorded book. The standing caveats say these figures omit the known fee.
 ### Absences (recorded as absence, not as zero)
 
 - `{GAP_TICKER}` paper+settle files present? `{not figures['gap_absent']}` — expected absent; see caveats.
+- overnight hole `100315`–`100500` (8 windows) paper+settle files present? `{not figures['overnight_hole_absent']}` — expected all absent; see caveats.
 - `{MISSING_JOIN}` paper+settle files present? `{not figures['missing_join_absent']}` — expected absent; missing paper join.
 
 ### Lineage B — `docs/observability-hub/data/manifest.json`

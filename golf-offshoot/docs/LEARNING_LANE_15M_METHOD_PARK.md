@@ -1,7 +1,7 @@
 # Operator — 15m method leftovers (park / CLOSED / RUN-ONLY)
 
 **Track:** `learning_lane_15m` · series `KXBTC15M` only
-**Updated:** 2026-09-08 17:11 EDT (PROPOSED 02 RUN-ONLY; row 9 closed on its trigger; bar still not binding)
+**Updated:** 2026-09-10 07:35 EDT (row 14 overnight hole CLOSED / recorded defect; `rule_reached_n` counts reported, not scored; bar still not binding)
 **State:** No dated ADMIT on this lane. No Soften. No edge claim. `lab_admits=false` · Trading **NOT ARMED**
 **Golf idle:** stays **ON**. This file does not clear it, does not touch golf θ, and does not rewrite `phase1_dryrun/OPERATOR_STATUS_STAMP.md`.
 
@@ -26,7 +26,7 @@ Numbers move while the watch runs. This file names **states and triggers**, not 
 
 ---
 
-## Park ledger (2026-09-08 17:11 EDT)
+## Park ledger (2026-09-10 07:35 EDT)
 
 | | Count |
 |---|---:|
@@ -37,12 +37,12 @@ Numbers move while the watch runs. This file names **states and triggers**, not 
 | Open · unreachable | 0 |
 | CLOSED · unreachable | **3** |
 | CLOSED · trigger fired since last stamp | 3 |
-| CLOSED · recorded defect (no backfill) | 1 |
+| CLOSED · recorded defect (no backfill) | **2** |
 | CLOSED · on a falsifier | 0 |
 | RUN-ONLY executed (not an ADMIT) | 2 |
 | Dated ADMITs | 0 |
 
-No open crew park remains. The aging clock has nothing crew-owned to work on. Three open parks are founder; one is the rotating pending window (external). Do not mistake a clean crew column for progress.
+No open crew park remains. The aging clock has nothing crew-owned to work on. Three open parks are founder; one is the rotating pending window (external). Do not mistake a clean crew column for progress. Two recorded defects (`072245`, overnight `100315`–`100500`) mean the locked count is not an unbroken run.
 
 ---
 
@@ -145,6 +145,19 @@ These required a machine we do not have, or a book that never existed here. They
 | **Forbidden** | Backfill · infer a Kalshi `result` · invent a fill or pnl · treat 56 as a continuous overnight sample |
 | **Not reopened by** | Knowing the outage cause · wishing the console had stayed up |
 
+### 14. Overnight hole `100315`–`100500` — **CLOSED / recorded defect**
+
+Detector owed line: `window_sequence_gap KXBTC15M-26SEP100515-15`.
+
+| | |
+|---|---|
+| **Closed** | 2026-09-10 07:35 EDT |
+| **What happened** | Eight consecutive 15-minute windows from `KXBTC15M-26SEP100315` through `KXBTC15M-26SEP100500` (03:00–05:00 EDT) do not exist on this tree. Adjacent `100300` and `100515` exist. `100300` settle `as_of` 05:02:12 EDT (`settlement_ts` 09:00:03Z). Honer has none of the eight stems. Not the `072245` argparse collision |
+| **Evidence** | No `paper/` file, no `settlements/` file, no `ledger.json` row, no `latest/journal.json` `windows[]` row for those eight stems. Caveat: `LEARNING_LANE_15M_SOURCE_DIGEST_CAVEATS.md`. Note: `LEARNING_LANE_15M_OPERATOR_NOTE_2026-09-10_GAP_AND_N.md` |
+| **Honest state** | Locked lineage-A is **not** an unbroken overnight sample. Two holes: `072245` and this eight-window gap |
+| **Forbidden** | Backfill · infer a Kalshi `result` · invent a fill or pnl · treat the locked count as continuous |
+| **Not reopened by** | Knowing a plausible cause · the detector naming the window *after* the hole |
+
 ---
 
 ## CLOSED — trigger fired
@@ -215,4 +228,4 @@ The 21:05 "park it, do not schedule" instruction is **superseded**.
 
 ## Handoff
 
-CoS: PROPOSED 02 is **RUN-ONLY** (`R-SKIP-2TO1-FAVORITE`, `execution=true`, not scored). Evidence bar is a **draft, not binding**. Soften Critic is hired. Promotion has not fired (bar is not binding). Golf idle stays **ON**. Founder HOLD stands. A third Lab PROPOSED is not owed.
+CoS: overnight hole `100315`–`100500` is **CLOSED / recorded defect** (do not backfill). `rule_reached_n` counts are reported in [`LEARNING_LANE_15M_OPERATOR_NOTE_2026-09-10_GAP_AND_N.md`](LEARNING_LANE_15M_OPERATOR_NOTE_2026-09-10_GAP_AND_N.md): `R-SKIP-COINFLIP` 172 eligible settled after `declared_at`, `execution` false, **not scored**; `R-SKIP-2TO1-FAVORITE` 128 after `declared_at` / 127 after lived flip, still **not scored**, not Established. Evidence bar is **not binding**. Soften Critic hire stands. Golf idle stays **ON**. Founder HOLD stands.

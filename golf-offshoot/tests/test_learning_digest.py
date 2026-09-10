@@ -48,6 +48,8 @@ def test_generator_concatenates_caveats_and_does_not_rewrite_them(tmp_path):
     assert str(figures["betting_pnl"]) in body
     assert str(figures["events_n"]) in body
     assert "KXBTC15M-26SEP072245" in body
+    assert "KXBTC15M-26SEP100515" in body
+    assert "KXBTC15M-26SEP100315" in body
 
 
 def test_the_generator_never_writes_the_published_digest_from_a_scratch_root(tmp_path):

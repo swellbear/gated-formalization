@@ -49,7 +49,7 @@ This paragraph does **not** replace those figures with a fee-accurate total — 
 
 ## Locked count is not an unbroken run
 
-**Locked** = an official Kalshi result in a settle file on this tree AND a paper book on this tree for the same `window_id`. The generated locked count is **not** an unbroken run — see the outage gap below.
+**Locked** = an official Kalshi result in a settle file on this tree AND a paper book on this tree for the same `window_id`. The generated locked count is **not** an unbroken run — see the outage gaps below (`072245` and the overnight `100315`–`100500` hole).
 
 This digest does **not** reprint a window-by-window scoreboard. That table would read as a track record.
 
@@ -67,6 +67,29 @@ Cause: the 22:25–22:50 EDT outage from the `--once` argparse collision. Adjace
 
 ---
 
+## Overnight hole — eight windows `100315` through `100500` do not exist
+
+**This is a defect to record, not to explain away.** Detector name on the owed line: `window_sequence_gap KXBTC15M-26SEP100515-15` (the first window *after* the hole).
+
+Eight consecutive 15-minute windows are absent from every file this digest trusts: no `paper/` file, no `settlements/` file, no `ledger.json` entry or event, no `latest/journal.json` `windows[]` row.
+
+| Stem | UTC window | EDT |
+|---|---|---|
+| `KXBTC15M-26SEP100315` | 07:00–07:15Z | 03:00–03:15 |
+| `KXBTC15M-26SEP100330` | 07:15–07:30Z | 03:15–03:30 |
+| `KXBTC15M-26SEP100345` | 07:30–07:45Z | 03:30–03:45 |
+| `KXBTC15M-26SEP100400` | 07:45–08:00Z | 03:45–04:00 |
+| `KXBTC15M-26SEP100415` | 08:00–08:15Z | 04:00–04:15 |
+| `KXBTC15M-26SEP100430` | 08:15–08:30Z | 04:15–04:30 |
+| `KXBTC15M-26SEP100445` | 08:30–08:45Z | 04:30–04:45 |
+| `KXBTC15M-26SEP100500` | 08:45–09:00Z | 04:45–05:00 |
+
+Adjacent windows **do** exist: `KXBTC15M-26SEP100300` (02:45–03:00 EDT; settle file `as_of` 2026-09-10T05:02:12-04:00, `settlement_ts` 2026-09-10T09:00:03Z) and `KXBTC15M-26SEP100515` (05:00–05:15 EDT; `as_of` 2026-09-10T05:16:39-04:00). Honer has none of the eight stems either. This is **not** the `072245` `--once` argparse collision.
+
+**Do not backfill them. Do not infer what they would have been.** No Kalshi `result`, no paper fill, no pnl for those eight. Anyone who treats the locked count as a continuous overnight sample is reading the hole as data.
+
+---
+
 ## Four residual kinds (do not collapse)
 
 They are different states with different reasons and must not be collapsed into one "pending" bucket.
@@ -74,7 +97,7 @@ They are different states with different reasons and must not be collapsed into 
 1. **Pending for want of a Kalshi `result`** — a true pending window. Kalshi has not spoken. The open paper book exists. The ticker rotates; read it off the generated figures, never freeze a name here.
 2. **Missing paper join** — official result present (or once present on a tape that has since rolled off), no book on this tree. **`KXBTC15M-26SEP071500-00`.** There is no paper pnl here and none is invented. `SETTLE_PENDING` is the wrong banner.
 3. **Published-only lineage B** — `KXBTC15M-26SEP071445-45`, `paper_win` `+1.67`. Kept as published history. Never re-derived here. Never added to lineage A.
-4. **Unmeasured tape** — official result, no settle file and no paper position anywhere on this tree, because the local book seeded later (`ledger.json` `observation_seed` 15:42:37 EDT). `latest/journal.json` is a **rolling tape**, not an archive. A shrinking list means windows are being *forgotten*, not resolved. **Unmeasured is not lost and not losses.** Do not backfill them from a result. Do not count them in a denominator. This is a different state from the `072245` gap: those windows existed on a tape; `072245` never existed on this tree.
+4. **Unmeasured tape** — official result, no settle file and no paper position anywhere on this tree, because the local book seeded later (`ledger.json` `observation_seed` 15:42:37 EDT). `latest/journal.json` is a **rolling tape**, not an archive. A shrinking list means windows are being *forgotten*, not resolved. **Unmeasured is not lost and not losses.** Do not backfill them from a result. Do not count them in a denominator. This is a different state from the `072245` and `100315`–`100500` gaps: unmeasured windows existed on a tape; the gap stems never existed on this tree.
 
 A window with no book has no pnl. That is a true statement, not a missing number. Do not write `0`.
 
