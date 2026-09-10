@@ -6,11 +6,11 @@ Thread lines are **one sentence, newest first, max 10**. Long findings belong in
 
 | Field | Value |
 |-------|--------|
-| Updated | 2026-09-10 18:30 ET |
+| Updated | 2026-09-10 18:46 ET |
 | Active role | lab |
 | Job | date unused CLOCK-CLOSE-MINUTE {15, 30, 45} as farm notebooks in LEARNING_LANE_15M_FARM.json (execution false; do not steal the chair); if none unused invent next kind or write farm_menu_exhausted; do not set execution true. |
-| Status | assigned |
-| Handoff | I_farm_open assigned. Unused clock minutes {15, 30, 45}. Hour-close still executing. Consult off. HOLD stands. Trading NOT ARMED. next=lab |
+| Status | done |
+| Handoff | `golf-offshoot/docs/LEARNING_LANE_15M_FARM.json` dated F-CLOCK-CLOSE-MINUTE-{15,30,45} (execution false; chair `R-SKIP-HOUR-CLOSE` untouched). next=chief-of-staff |
 | Waiting on Founder | **N** |
 
 ## last_cos (CoS stamp — doorbell silence)
@@ -60,6 +60,8 @@ Two suites, both on the tick.
 
 ## Thread
 
+- 2026-09-10 18:46 ET  lab → chief-of-staff: dated F-CLOCK-CLOSE-MINUTE-{15,30,45} in LEARNING_LANE_15M_FARM.json (execution false; chair untouched). next=chief-of-staff
+- 2026-09-10 18:45 ET  lab → chief-of-staff: started dating unused CLOCK-CLOSE-MINUTE {15, 30, 45} as farm notebooks (execution false; do not steal the chair). next=lab
 - 2026-09-10 18:30 ET  chief-of-staff → lab: date unused CLOCK-CLOSE-MINUTE {15, 30, 45} as farm notebooks (execution false; do not steal the chair). next=lab
 - 2026-09-10 18:15 ET  systems → chief-of-staff: discovery farm landed (`I_farm_open` / `J_farm_promote`; FARM.json empty; leash score then farm then consult; 8765 Farm panel not live). Do not date live notebooks this fire. Do not arm. Soften Critic of promote later. next=idle
 - 2026-09-10 16:55 ET  systems → chief-of-staff: tidy stack landed (seated first-70 keeper gates; score-then-enable; not hour-specific). Consult off. Do not arm. Soften Critic of enabler later. next=idle
@@ -68,6 +70,4 @@ Two suites, both on the tick.
 - 2026-09-10 14:03 ET  chief-of-staff: Operator RUN-ONLY of PROPOSED 03 done; live trial `R-SKIP-HOUR-CLOSE` seated; favorite L1 PARK; HOLD stands. next=idle
 - 2026-09-10 13:36 ET  operator → chief-of-staff: RUN-ONLY `R-SKIP-HOUR-CLOSE` (`skip_close_minute=0`, execution true); favorite off the seat; not scored; not an ADMIT. next=chief-of-staff
 - 2026-09-10 13:36 ET  operator → chief-of-staff: started RUN-ONLY or PARK of Lab PROPOSED 03 `R-SKIP-HOUR-CLOSE`; do not score; do not ADMIT; do not bind. next=operator
-- 2026-09-10 13:26 ET  chief-of-staff → operator: RUN-ONLY or PARK Lab PROPOSED 03 `R-SKIP-HOUR-CLOSE`; do not score; do not ADMIT; do not bind. next=operator
-- 2026-09-10 13:25 ET  lab → chief-of-staff: PROPOSED 03 `R-SKIP-HOUR-CLOSE` filed (`skip_close_minute=0`, execution false); not scored; not an ADMIT. next=chief-of-staff
 *Older lines rolled off at the 10-line cap. Full history is in the git log for `docs/agents/DESK.md`.*

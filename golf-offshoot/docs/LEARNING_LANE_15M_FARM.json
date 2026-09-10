@@ -3,5 +3,36 @@
   "lane": "learning_lane_15m",
   "series": "KXBTC15M",
   "note": "Discovery farm. Notebooks are execution false. Not live. Not an ADMIT. Lab dates rows. Operator RUN-ONLY to seat one. Do not add farm pnl to Lineage A.",
-  "notebooks": []
+  "notebooks": [
+    {
+      "id": "F-CLOCK-CLOSE-MINUTE-15",
+      "kind": "CLOCK-CLOSE-MINUTE",
+      "params": {
+        "skip_close_minute": 15
+      },
+      "declared_at": "2026-09-10T18:45:00-04:00",
+      "execution": false,
+      "selects": true
+    },
+    {
+      "id": "F-CLOCK-CLOSE-MINUTE-30",
+      "kind": "CLOCK-CLOSE-MINUTE",
+      "params": {
+        "skip_close_minute": 30
+      },
+      "declared_at": "2026-09-10T18:45:00-04:00",
+      "execution": false,
+      "selects": true
+    },
+    {
+      "id": "F-CLOCK-CLOSE-MINUTE-45",
+      "kind": "CLOCK-CLOSE-MINUTE",
+      "params": {
+        "skip_close_minute": 45
+      },
+      "declared_at": "2026-09-10T18:45:00-04:00",
+      "execution": false,
+      "selects": true
+    }
+  ]
 }
