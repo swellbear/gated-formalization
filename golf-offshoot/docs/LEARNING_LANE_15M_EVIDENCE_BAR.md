@@ -2,7 +2,7 @@
 
 **Lane:** `learning_lane_15m` · series `KXBTC15M` only
 **Drafted:** 2026-09-08 08:30 EDT · Operator
-**Amended:** 2026-09-10 09:00 EDT · Systems (Founder browser fee pin `founder_browser_bytes`; half-spread profile; α-key; paper mid strings; WATCHED PROPOSED 02; `declare_rule` informing-mark gate; consult fail-closed; hub-down/gap ntfy; hub abort swallow; automations on `cursor/honer-15m-sibling`. Not a score. Not a bind. Consult not enabled). Prior: 2026-09-09 22:50 EDT · Operator, record of Soften Critic CRITIC 17.
+**Amended:** 2026-09-10 10:40 EDT · Operator, record of Soften Critic CRITIC 19 (two SUSTAINED; MD `:306` nine-check leftover struck; MD `:203` WATCHED-02 leftover struck). Prior: 2026-09-10 09:00 EDT · Systems bind-candidate.
 **Binding?** **N.** A system that sets its own threshold does not have one.
 **Admit?** N · **Edge established?** N · `lab_admits` false · Trading **NOT ARMED**
 
@@ -13,7 +13,7 @@ This draft becomes binding only after both:
 
 Founder read-once is **not** a bind condition. Founder 2026-09-09 dropped it: the crew had written it into the 08:30 draft; it was not a Founder GO. Founder remains for **arm** and **HOLD lift** only. Putting it back is a Hard NO; `bind_has_no_founder_read_once` fails the method suite if it returns.
 
-Condition 1 is **not met** for these bytes. CRITIC 18 (`LEARNING_LANE_15M_EVIDENCE_BAR_CRITIC_18.md`) was a completed zero-UPHELD attack on the ANSWER 17 hashes (`D9FDA991…` / `F7E8F681…`). Those bytes are **not** the bind-candidate. ANSWER 18 was not written as busywork. The next Operator answer records CRITIC 18 as closed-on-prior-hashes and answers the attack on **these** Systems bytes. **Condition 2** waits on `critic-invariants` covering these bytes. The fee pin is Founder browser bytes (`founder_browser_bytes`), not a gym HTTP 200. Gym 12h 429 is drift detection, not the pin clock. `check_delta_above_detection_floor` now compares `alpha_first_look` to the schedule's first term and `next_look_alpha` to current α_k. Founder read-once is not a bind condition. This is still a proposed bar. Writing it is not an ADMIT. Amending it is not an ADMIT. Scoring against it is not owed. `records[]` stays empty.
+Condition 1 is **not met** for these bytes. CRITIC 19 (`LEARNING_LANE_15M_EVIDENCE_BAR_CRITIC_19.md`) filed two UPHELD on the Systems bind-candidate hashes (`D25D0227…` / `4D9E86C2…`). ANSWER 19 (`LEARNING_LANE_15M_EVIDENCE_BAR_OPERATOR_ANSWER_19.md`) sustained both and struck the leftovers. Those answered hashes are **not** these bytes. CRITIC 18 closed ANSWER 17 hashes (`D9FDA991…` / `F7E8F681…`); those are also not these bytes. **Condition 2** waits on `critic-invariants` covering these bytes. The fee pin is Founder browser bytes (`founder_browser_bytes`), not a gym HTTP 200. Gym 12h 429 is drift detection, not the pin clock. `check_delta_above_detection_floor` now compares `alpha_first_look` to the schedule's first term and `next_look_alpha` to current α_k. Founder read-once is not a bind condition. This is still a proposed bar. Writing it is not an ADMIT. Amending it is not an ADMIT. Scoring against it is not owed. `records[]` stays empty.
 
 Amending this bar re-owes the Critic on the new text (`critic.py` keys findings by content hash). That is correct and intended.
 
@@ -200,7 +200,7 @@ This condition dies for this rule if a commit, desk line, or dated artifact pred
 
 **`R-SKIP-2TO1-FAVORITE`'s `favorite_odds=2` does not meet this either, and this bar records that on its face.** First naming is `e9fab5a` at 2026-09-08 16:56:05 EDT (`declared_at` 16:53:00; 3m 5s commit lag). The published RUN-ONLY fee table (`2fea8d8`, author 2026-09-07 21:49:37 EDT) already listed 24 marks; **2 of 24** are ≥ 2/3 (`0.9835` on `071545`, `0.7050` on `071600`). Gap: **19h 06m 28s**. A registry `note` asserting those marks did not inform the parameter is not proof. `favorite_odds=2` as "the first integer odds strictly above evens" is a conventional prior that does not require the tape — that is recorded, not treated as proof, and **is not a third clause of this test**. This is **not** a peek finding and not a score. **`verifiably_preregistered` is false.** L1 cannot support Established for this rule even if it later passes every clause. L1 may still be scored and may still support an Admissible dated record. `execution` stays true (RUN-ONLY, paper). This condition dies for this rule if a commit, desk line, or dated artifact predating 2026-09-07 21:49:37 EDT names `favorite_odds=2`. None was found. A later turn may not flip the flag by accepting a conventional-prior exception the two-part test does not contain.
 
-`WATCHED.lab_proposed` in `critic.py` is still pinned to `LEARNING_LANE_15M_OPERATOR_NOTE_PROPOSED_01.md`. PROPOSED 02 notes are **outside** `WATCHED`. Watching them is owed to Systems. This turn did not edit `critic.py`.
+`WATCHED.lab_proposed` in `critic.py` is still pinned to `LEARNING_LANE_15M_OPERATOR_NOTE_PROPOSED_01.md`. PROPOSED 02 notes are **in** `WATCHED` as `lab_proposed_02` (`OPERATOR_NOTE_PROPOSED_02.md`) and `lab_lab_proposed_02` (`LAB_PROPOSED_02.md`). JSON `owed_to_systems` already says LANDED 2026-09-10. Systems `4a58a2e` edited `critic.py`. This Operator turn did not edit `critic.py`.
 
 ---
 
@@ -303,7 +303,7 @@ After promotion fires (conditional, not this draft): establishment is adjudicate
 
 ## Ratchet: which check guards which CRITIC 01 finding
 
-Named on the face because fourteen sustained objections and zero new `CHECKS` members was the Y2 finding. The suite now has **nine** method checks (`series_fee_regime_matches` is the eighth; `bind_has_no_founder_read_once` is the ninth). Several of the first seven were **rewritten** at `0a480d4` rather than appended. JSON copy: `ratchet_guards`.
+Named on the face because fourteen sustained objections and zero new `CHECKS` members was the Y2 finding. The suite now has **eleven** method checks (`series_fee_regime_matches` is the eighth; `bind_has_no_founder_read_once` is the ninth; `half_spread_profile_recorded` is the tenth; `hub_autostart_registered` is the eleventh). Several of the first seven were **rewritten** at `0a480d4` rather than appended. JSON copy: `ratchet_guards`.
 
 | CRITIC 01 | What now guards it, or why a check is impossible |
 |---|---|

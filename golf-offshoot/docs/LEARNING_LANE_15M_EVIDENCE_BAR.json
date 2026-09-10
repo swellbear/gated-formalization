@@ -3,12 +3,12 @@
   "lane": "learning_lane_15m",
   "series": "KXBTC15M",
   "drafted_at": "2026-09-08T08:30:00-04:00",
-  "amended_at": "2026-09-10T09:00:00-04:00",
-  "amended_by": "systems",
-  "amendment": "Systems bind-candidate: Founder browser fee pin founder_browser_bytes; half-spread profile; alpha_first_look vs schedule first term; paper mid/last strings; WATCHED PROPOSED 02; declare_rule informing-mark gate; consult fail-closed; hub-down/gap ntfy; hub client-abort swallow; automations on cursor/honer-15m-sibling. CRITIC 18 closed ANSWER 17 hashes; those bytes are not the bind-candidate. Not a score. Not a bind. Consult not enabled.",
+  "amended_at": "2026-09-10T10:40:00-04:00",
+  "amended_by": "operator",
+  "amendment": "ANSWER 19: two SUSTAINED on CRITIC 19. MD :306 nine-check leftover struck (ratchet face now names eleven). MD :203 WATCHED-02 leftover struck (PROPOSED 02 is in WATCHED as lab_proposed_02 / lab_lab_proposed_02). Not a score. Not a bind. Consult not enabled.",
   "prior_amendment": {
-    "amended_at": "2026-09-09T21:33:00-04:00",
-    "note": "Founder GO: drop founder_read_once from bind (crew-written, not a Founder GO). Bind is (1) Critic+Operator and (2) critic-invariants. Ninth method check bind_has_no_founder_read_once. ANSWER 15 leftover half-pass citation remains named. Not a score. Not a bind. Consult not enabled."
+    "amended_at": "2026-09-10T09:00:00-04:00",
+    "note": "Systems bind-candidate: Founder browser fee pin founder_browser_bytes; half-spread profile; alpha_first_look vs schedule first term; paper mid/last strings; WATCHED PROPOSED 02; declare_rule informing-mark gate; consult fail-closed; hub-down/gap ntfy; hub client-abort swallow; automations on cursor/honer-15m-sibling. CRITIC 18 closed ANSWER 17 hashes; those bytes are not the bind-candidate. Not a score. Not a bind. Consult not enabled."
   },
   "discovery_organ": {
     "lane": "honer_15m",
@@ -51,19 +51,19 @@
     {
       "id": "critic_answered",
       "met": false,
-      "detail": "CRITIC 18 zero UPHELD on ANSWER 17 hashes D9FDA991\u2026 / F7E8F681\u2026. Those bytes are not the bind-candidate. ANSWER 18 was not written. Condition 1 is unmet on these Systems bytes until a later-session Soften Critic attacks them and Operator answers.",
-      "critic_file": "golf-offshoot/docs/LEARNING_LANE_15M_EVIDENCE_BAR_CRITIC_17.md",
-      "critic_sha256_bytes": "c90c16ec1357cff4ec46e7db37785a3308423ca4ea9b3a71a541b99949f57e9e",
-      "answer_file": "golf-offshoot/docs/LEARNING_LANE_15M_EVIDENCE_BAR_OPERATOR_ANSWER_17.md",
-      "answered_bar_md_sha256": "1d29abcdc13746f349374f584f265cdd226c53486862cfa467552eb898c8091e",
-      "answered_bar_json_sha256": "a5fcfab7004a71f8c25e608505941fc9619c9dc8415b218dea0e32f7f4dc4770",
-      "upheld": 1,
-      "sustained": 1,
+      "detail": "CRITIC 19 two UPHELD on Systems bind-candidate hashes D25D0227\u2026 / 4D9E86C2\u2026. ANSWER 19 two SUSTAINED; MD :306 nine-check leftover and MD :203 WATCHED-02 leftover struck. Those answered hashes are not these bytes. Condition 1 is unmet on the amended bytes until a later-session Soften Critic attacks them and Operator answers. CRITIC 18 zero UPHELD on ANSWER 17 hashes D9FDA991\u2026 / F7E8F681\u2026; those are also not these bytes.",
+      "critic_file": "golf-offshoot/docs/LEARNING_LANE_15M_EVIDENCE_BAR_CRITIC_19.md",
+      "critic_sha256_bytes": "683f76187a735967d2a6af716a6a4ac82b1a3b7b753a09526b1439b0a0251df5",
+      "answer_file": "golf-offshoot/docs/LEARNING_LANE_15M_EVIDENCE_BAR_OPERATOR_ANSWER_19.md",
+      "answered_bar_md_sha256": "d25d0227136206ec08846147470e3da4aea58cfe0b25b5a0b51bb9b7284feeb2",
+      "answered_bar_json_sha256": "4d9e86c2c45362b8af5fbf040f2da5c5ba39f2efa879c0f82d04cfdb946b74d6",
+      "upheld": 2,
+      "sustained": 2,
       "overruled": 0,
       "prior_pair": {
-        "critic_file": "golf-offshoot/docs/LEARNING_LANE_15M_EVIDENCE_BAR_CRITIC_15.md",
-        "answer_file": "golf-offshoot/docs/LEARNING_LANE_15M_EVIDENCE_BAR_OPERATOR_ANSWER_15.md",
-        "critic_sha256_bytes": "df4187028075c127392cc6a73f3f362e06c7c2db087163441375fa5c03a46541"
+        "critic_file": "golf-offshoot/docs/LEARNING_LANE_15M_EVIDENCE_BAR_CRITIC_17.md",
+        "answer_file": "golf-offshoot/docs/LEARNING_LANE_15M_EVIDENCE_BAR_OPERATOR_ANSWER_17.md",
+        "critic_sha256_bytes": "c90c16ec1357cff4ec46e7db37785a3308423ca4ea9b3a71a541b99949f57e9e"
       }
     },
     {
