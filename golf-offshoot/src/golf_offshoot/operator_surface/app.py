@@ -14,9 +14,28 @@ from pathlib import Path
 from urllib.parse import parse_qs, urlparse
 
 from golf_offshoot.learning_lane_15m.paths import LANE_15M, LANE_GOLF, PRIMARY_SERIES
-from golf_offshoot.learning_lane_15m.watch import PaperWatch, load_watch_status
+from golf_offshoot.learning_lane_15m.watch import PaperWatch
 from golf_offshoot.operator_surface.artifacts import HonestyBundle, load_honesty
 from golf_offshoot.operator_surface.hub_browser import refresh_existing_hub_window
+from golf_offshoot.operator_surface.lane_15m_home import (
+    ACTION_BUTTONS_15M,
+    CHART_15M_MISSING,
+    CHART_15M_NAMED,
+    CHART_15M_PLAIN,
+    CHART_15M_SUB,
+    CHART_15M_TITLE,
+    LANE_15M_CSS,
+    LANE_15M_JS,
+    chart_15m_path as _chart_15m_path,
+    glance_strip_html,
+    header_15m_html,
+    live_payload as _15m_live_payload,
+    main_15m_html,
+    this_lane_now_html,
+    viz_wall_15m_html as _viz_wall_15m_html,
+    window_rows_15m as _window_rows_15m,
+    window_summary_15m as _window_summary_15m,
+)
 from golf_offshoot.operator_surface.lanes import SELECTOR_FIELD, lane_header_name, parse_lane
 from golf_offshoot.operator_surface.modes import (
     AI_NO_CASH,
@@ -244,129 +263,7 @@ def _lightbox_html(has_chart: bool) -> str:
     )
 
 
-#: 15m board chrome. Display copy describing the PNG the Illustrator renders from
-#: the join files — this module never derives a settle, a result or a bankroll.
-CHART_15M_TITLE = "KXBTC15M paper windows — 15-minute board"
-CHART_15M_PLAIN = (
-    "One row per KXBTC15M window: the ticker, the settle status found on disk, and the official "
-    "Kalshi result once Kalshi posts one. A window with no result on disk stays SETTLE_PENDING."
-)
-CHART_15M_SUB = (
-    "Read-only PNG rendered from settlements/*.json, latest/journal.json and paper/*.json in "
-    "learning_lane_15m. No bankroll, payout or PnL is drawn. Not a golf WC1 / Ill board."
-)
-CHART_15M_MISSING = (
-    "15m chart not yet available. The Illustrator regenerates it from the join files; nothing is "
-    "drawn in its place. No golf WC1 / Ill here."
-)
-#: How many windows the caption names before it falls back to a count.
-CHART_15M_NAMED = 6
-
-
-def _chart_15m_path() -> Path | None:
-    """The Illustrator's 15m PNG, when it is actually on disk."""
-    try:
-        from golf_offshoot.learning_lane_15m.illustrate import chart_png_path
-
-        path = chart_png_path()
-    except Exception:
-        return None
-    return path if path.is_file() else None
-
-
-def _window_rows_15m() -> list:
-    """Window rows as the Illustrator reads them. Display copy only, never written."""
-    try:
-        from golf_offshoot.learning_lane_15m.illustrate import collect_rows
-
-        paper_rows, tape_rows = collect_rows()
-    except Exception:
-        return []
-    return list(paper_rows) + list(tape_rows)
-
-
-def _window_summary_15m(rows: list, *, limit: int = CHART_15M_NAMED) -> tuple[str, str]:
-    """(counts line, named-windows line) for the caption.
-
-    Every figure here is copied from a file. ``yes``/``no`` are Kalshi results that
-    already exist on disk; anything else counts as pending rather than being guessed.
-    """
-    if not rows:
-        return ("", "")
-    yes = no = pending = 0
-    named: list[str] = []
-    for row in rows:
-        result = str(getattr(row, "kalshi_result", "") or "").strip().lower()
-        status = str(getattr(row, "settle_status", "") or "").strip() or "unknown"
-        ticker = str(getattr(row, "ticker", "") or "")
-        if result == "yes":
-            yes += 1
-        elif result == "no":
-            no += 1
-        else:
-            pending += 1
-        if ticker and len(named) < max(0, int(limit)):
-            if result in ("yes", "no"):
-                named.append(f"{ticker} · {status} · result={result}")
-            elif status.upper() == "SETTLE_PENDING":
-                named.append(f"{ticker} · SETTLE_PENDING")
-            else:
-                named.append(f"{ticker} · {status} · SETTLE_PENDING")
-    joins = sum(1 for row in rows if getattr(row, "paper_join", False))
-    counts = (
-        f"{len(rows)} {PRIMARY_SERIES} window(s) on the board — {joins} paper-book join(s), "
-        f"{len(rows) - joins} Kalshi-only journal row(s) · "
-        f"settled result=yes {yes} · settled result=no {no} · SETTLE_PENDING {pending}"
-    )
-    if not named:
-        return (counts, "")
-    rest = len(rows) - len(named)
-    tail = f" · +{rest} more on the board" if rest > 0 else ""
-    return (counts, "Windows: " + "; ".join(named) + tail)
-
-
-def _viz_wall_15m_html() -> str:
-    """The 15m board as a labelled figure. Missing stays 'not yet available'."""
-    path = _chart_15m_path()
-    if path is None:
-        return f'<p class="missing">{html.escape(CHART_15M_MISSING)}</p>'
-    try:
-        cache = int(path.stat().st_mtime)
-    except OSError:
-        cache = 0
-    src = f"/viz15/paper_window_strip.png?t={cache}"
-    title = CHART_15M_TITLE
-    counts, windows = _window_summary_15m(_window_rows_15m())
-    caption_bits = []
-    if counts:
-        caption_bits.append(f'<span class="counts">{html.escape(counts)}</span>')
-    if windows:
-        caption_bits.append(f'<span class="windows">{html.escape(windows)}</span>')
-    caption_bits.append(
-        '<span class="src">Source: learning_lane_15m join files · click the board to enlarge</span>'
-    )
-    badges = "".join(
-        f'<span class="badge">{html.escape(text)}</span>'
-        for text in ("LEARNING LANE", PAPER_ONLY, AI_NO_CASH)
-    )
-    return (
-        '<div class="viz-wall" id="viz-wall">'
-        '<section class="viz wide" id="viz-slot-paper-window-strip">'
-        f"<h3>{html.escape(title)}</h3>"
-        f'<div class="badge-row">{badges}</div>'
-        f'<p class="plain">{html.escape(CHART_15M_PLAIN)}</p>'
-        f'<p class="sub">{html.escape(CHART_15M_SUB)}</p>'
-        "<figure>"
-        f'<a class="zoom" href="{src}" data-viz-zoom="1" data-viz-title="{html.escape(title)}" '
-        f'aria-label="Enlarge {html.escape(title)}">'
-        f'<img src="{src}" alt="{html.escape(title)} — read-only board" width="1700"/>'
-        '<span class="zoom-hint">Click to enlarge</span>'
-        "</a>"
-        f'<figcaption>{"".join(caption_bits)}</figcaption>'
-        "</figure>"
-        "</section>"
-        "</div>"
-    )
+# 15m board chrome lives in lane_15m_home. Re-exported so existing tests keep importing here.
 
 
 def _settle_banner_html(honesty: HonestyBundle) -> str:
@@ -425,13 +322,7 @@ def _actions_html(event: str, lane: str = LANE_GOLF) -> str:
     help_rows = []
     blurbs = ACTION_BUTTONS
     if lane == LANE_15M:
-        blurbs = (
-            ("ingest", "Pull latest data", "Public KXBTC15M fetch. Observation only."),
-            ("live", "Update live ranks", "Refresh 15m prices, then paper autobet and settle join."),
-            ("shadow", "Check paper journal", "Re-read the 15m journal."),
-            ("loop", "Do all three", "One extra cycle now. The 15m watch already repeats researcher → systems by itself."),
-            ("refresh", "Reload files", "Re-read saved files from disk. No run is started."),
-        )
+        blurbs = ACTION_BUTTONS_15M
     for value, label, blurb in blurbs:
         css = ' class="soft"' if value == "refresh" else ""
         buttons.append(f'<button{css} name="action" value="{value}">{html.escape(label)}</button>')
@@ -477,28 +368,36 @@ def render_html(surface: dict) -> str:
     # it is an observation page, and the standing Hard NOs are the one footer strip.
     wall_lines = "".join(f"<div>{html.escape(line)}</div>" for line in walls.lines) if walls.is_mock else ""
     lane_line = f"Active lane: {lane_header_name(lane)}"
-    if lane == LANE_15M:
+    extra_css = ""
+    extra_js = ""
+    page_title = "golf-offshoot operator shell"
+    is_15m = lane == LANE_15M
+    if is_15m:
         lane_line = f"{lane_line} — LEARNING LANE"
         viz_wall = _viz_wall_15m_html()
         # The 15m board carries its own overlay. Deriving it from the golf viz wall
         # left this lane with no lightbox at all whenever golf had no chart on disk.
         viz_lightbox = _lightbox_html(_chart_15m_path() is not None)
-        watch = load_watch_status()
-        watch_bit = "WATCH ON" if watch.get("running") else "WATCH OFF"
-        settle_banner = (
-            f'<div class="settle">'
-            f"<strong>{watch_bit}</strong> — settle when Kalshi posts result. "
-            f"{html.escape(str(watch.get('last_summary') or ''))}"
-            "</div>"
-        )
+        settle_banner = glance_strip_html() + this_lane_now_html()
+        header_block = header_15m_html(lane_line=lane_line, wall_lines=wall_lines)
+        extra_css = LANE_15M_CSS
+        extra_js = LANE_15M_JS
+        page_title = "KXBTC15M paper watch"
     else:
         viz_wall = _viz_wall_html(viz)
         viz_lightbox = _viz_lightbox_html(viz)
         settle_banner = _settle_banner_html(honesty)
-    actions = _actions_html(event, lane)
+        header_block = (
+            f'<header class="{wall_class}">'
+            f"<h1>{html.escape(walls.title)}</h1>"
+            f'<div class="lane-line">{html.escape(lane_line)}</div>'
+            f"{wall_lines}"
+            "</header>"
+        )
+    actions = "" if is_15m else _actions_html(event, lane)
     last_html = html.escape(format_run_record(last)) if last else "no operator run this session"
     paper_html = ""
-    if last is not None and last.paper:
+    if (not is_15m) and last is not None and last.paper:
         paper_html = (
             '<section class="panel">'
             "<h2>Paper observation (not trading)</h2>"
@@ -511,54 +410,37 @@ def render_html(surface: dict) -> str:
             f"<pre>{html.escape(last.paper)}</pre>"
             "</section>"
         )
-    ranked = html.escape(honesty.ranked.text)
-    leftover = html.escape(honesty.leftover.text)
-    inventory = html.escape(honesty.inventory.text)
-    shadow = html.escape(honesty.shadow.text)
-    calib = html.escape(honesty.calibration.text)
-    html_link = ""
-    if honesty.ranked.html_path:
-        html_link = (
-            f'<p>Full export: <a href="/export/html">{html.escape(str(honesty.ranked.html_path))}</a></p>'
-        )
-    if lane == LANE_15M:
-        from golf_offshoot.learning_lane_15m.learn import format_wake_line, load_wake_state
-        from golf_offshoot.learning_lane_15m.paper import format_15m_observation_board
-
-        watch = load_watch_status()
-        watch_line = (
-            f"watch running={watch.get('running')} interval_s={watch.get('interval_s')} "
-            f"cycles={watch.get('cycles')} last={watch.get('last_summary') or 'none'}"
-        )
-        # The observation surface, not chrome: whether crew work is owed belongs
-        # beside the journal the founder already reads.
-        journal_board = html.escape(
-            "\n\n".join(
-                (
-                    watch_line,
-                    format_wake_line(load_wake_state()),
-                    format_15m_observation_board(),
-                )
-            )
-        )
-        last_block = (
-            f"<h3>Last operator cycle</h3><pre>{last_html}</pre>"
-            if last
-            else "<p class=\"help\">No operator cycle in this shell session yet. Journal below is from disk.</p>"
-        )
+    if is_15m:
         paper_html = ""
-        lane_body = (
-            '<section class="panel">'
-            "<h2>15-min Kalshi journal</h2>"
-            '<p class="help">'
-            '<a href="https://swellbear.github.io/gated-formalization/observability-hub/">'
-            "Public observability hub</a></p>"
-            f"{last_block}"
-            "<h3>Journal</h3>"
-            f"<pre>{journal_board}</pre>"
-            "</section>"
-        )
+        lane_body = main_15m_html(last_run=last)
+        golf_home_panels = ""
     else:
+        ranked = html.escape(honesty.ranked.text)
+        leftover = html.escape(honesty.leftover.text)
+        inventory = html.escape(honesty.inventory.text)
+        shadow = html.escape(honesty.shadow.text)
+        calib = html.escape(honesty.calibration.text)
+        html_link = ""
+        if honesty.ranked.html_path:
+            html_link = (
+                f'<p>Full export: <a href="/export/html">{html.escape(str(honesty.ranked.html_path))}</a></p>'
+            )
+        golf_home_panels = f"""
+  <section class="panel">
+    <h2>Charts first — read-only chart wall</h2>
+    <p class="help">{html.escape(charts_help)}</p>
+    {viz_wall}
+  </section>
+  <section class="panel">
+    <h2>What you can do here</h2>
+    <p class="help">Five buttons. Trading is {html.escape(NOT_ARMED)}. Paper bankroll auto-apply is {html.escape(PAPER_ONLY)} — not trading armed. No deposit, withdraw, transfer, cash-out, or one-tap bet control exists on this page.</p>
+    {actions}
+  </section>
+  <section class="panel">
+    <h2>What the last run did</h2>
+    <pre>{last_html}</pre>
+  </section>
+"""
         lane_body = (
             '<section class="panel">'
             "<h2>Ranked table — latest real live run</h2>"
@@ -593,7 +475,7 @@ def render_html(surface: dict) -> str:
 <head>
 <meta charset="utf-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>golf-offshoot operator shell</title>
+<title>{html.escape(page_title)}</title>
 <style>
  body {{ font-family: Segoe UI, Helvetica, Arial, sans-serif; margin: 0; background: #f4f1ea; color: #1b1b1b; }}
  header.ops {{ background: #1f3b4d; color: #fff; padding: 16px 20px; }}
@@ -654,30 +536,14 @@ def render_html(surface: dict) -> str:
  .lightbox img {{ max-width: 100%; max-height: 86vh; width: auto; height: auto; cursor: zoom-in; border: 1px solid #c9c2b2; background: #111; }}
  .lightbox.full img {{ width: 100%; max-width: 100%; max-height: none; height: auto; cursor: zoom-out; }}
  body.viz-zoomed {{ overflow: hidden; }}
+{extra_css}
 </style>
 </head>
-<body class="{body_class}">
-<header class="{wall_class}">
-  <h1>{html.escape(walls.title)}</h1>
-  <div class="lane-line">{html.escape(lane_line)}</div>
-  {wall_lines}
-</header>
+<body class="{body_class}" data-lane="{html.escape(lane)}" data-market="{html.escape(PRIMARY_SERIES if is_15m else '')}">
+{header_block}
 {settle_banner}
 <main>
-  <section class="panel">
-    <h2>Charts first — read-only chart wall</h2>
-    <p class="help">{html.escape(charts_help)}</p>
-    {viz_wall}
-  </section>
-  <section class="panel">
-    <h2>What you can do here</h2>
-    <p class="help">{"Watch is already looping this lane. Buttons are extras." if lane == LANE_15M else f"Five buttons. Trading is {html.escape(NOT_ARMED)}. Paper bankroll auto-apply is {html.escape(PAPER_ONLY)} — not trading armed. No deposit, withdraw, transfer, cash-out, or one-tap bet control exists on this page."}</p>
-    {actions}
-  </section>
-  <section class="panel">
-    <h2>What the last run did</h2>
-    <pre>{last_html}</pre>
-  </section>
+  {golf_home_panels}
   {paper_html}
   {lane_body}
 </main>
@@ -725,17 +591,50 @@ def render_html(surface: dict) -> str:
     if (ev.key === 'Escape' || ev.key === 'Esc') closeBox();
   }});
 }})();
+{extra_js}
 (function(){{
   // Same-tab refresh. Nobody clicks reload: a hub restart bounces /api/watch,
   // and this tab reloads itself as soon as the port answers again.
+  // 15m watch heartbeats patch the glance/journal. Full reload is only after
+  // the hub process itself went away (code re-exec).
   var gen = null;
   var lost = false;
+  var is15 = document.body.classList.contains('lane-15m');
+  function applyHome(home){{
+    if (!home) return;
+    var glance = document.getElementById('glance-strip');
+    if (glance && home.glance_html) glance.innerHTML = home.glance_html;
+    var now = document.getElementById('lane-now');
+    if (now && home.now_html) now.innerHTML = home.now_html;
+    var journal = document.getElementById('journal-exceptions');
+    if (journal && home.exceptions_html) journal.innerHTML = home.exceptions_html;
+    var cap = document.getElementById('chart-15m-caption');
+    if (cap && home.caption_html) cap.innerHTML = home.caption_html;
+    var src = home.chart_src;
+    if (src) {{
+      document.querySelectorAll('#viz-slot-paper-window-strip img').forEach(function(img){{
+        img.setAttribute('src', src);
+        var zoom = img.closest('a.zoom');
+        if (zoom) zoom.setAttribute('href', src);
+      }});
+    }}
+    var lab = document.getElementById('tab-lab-body');
+    if (lab && home.lab_html) lab.innerHTML = home.lab_html;
+    var bot = document.getElementById('tab-bot-body');
+    if (bot && home.bot_html) bot.innerHTML = home.bot_html;
+    var score = document.getElementById('tab-scoreboard-body');
+    if (score && home.scoreboard_html) score.innerHTML = home.scoreboard_html;
+  }}
   function tick(){{
     fetch('/api/watch', {{cache:'no-store'}}).then(function(r){{
       if (!r.ok) throw new Error('hub ' + r.status);
       return r.json();
     }}).then(function(s){{
       if (lost) {{ location.reload(); return; }}
+      if (is15) {{
+        applyHome(s.home);
+        return;
+      }}
       if (gen === null) {{ gen = s.generation; return; }}
       if (s.generation !== gen) location.reload();
     }}).catch(function(){{ lost = true; }});
@@ -905,10 +804,19 @@ def _public_state(surface: dict) -> dict:
 
 
 def _watch_state(state: dict) -> dict:
-    return {
+    lane = parse_lane(state.get("lane") or LANE_GOLF)
+    payload = {
         "generation": int(state.get("generation") or 0),
         "kind": str(state.get("reload_kind") or "ok"),
+        "lane": lane,
+        "cycle": int(state.get("watch_cycles") or 0),
     }
+    if lane == LANE_15M or state.get("paper_watch_keep"):
+        try:
+            payload["home"] = _15m_live_payload(state)
+        except Exception as exc:
+            payload["home_error"] = str(exc)
+    return payload
 
 
 def hub_url(host: str, port: int) -> str:
@@ -951,8 +859,13 @@ def maybe_open_hub_browser(url: str, *, enabled: bool) -> bool:
 
 
 def _sync_paper_watch(state: dict) -> None:
-    """15m lane keeps the paper watch on. Golf turns it off. Founder does not click."""
+    """15m starts PaperWatch. Golf chrome never stops it. Founder does not click."""
     watch = state.get("paper_watch")
+    keep = bool(state.get("paper_watch_keep"))
+    on_15m = parse_lane(state.get("lane")) == LANE_15M
+    if not on_15m and not keep:
+        return
+
     if watch is None:
 
         def _on_cycle(payload: dict) -> None:
@@ -975,15 +888,15 @@ def _sync_paper_watch(state: dict) -> None:
                 },
             )
             rebuild_surface(state, last_run=rec)
-            state["reload_kind"] = "artifacts"
-            state["generation"] = int(state.get("generation") or 0) + 1
+            state["watch_cycles"] = int(meta.get("cycles") or 0)
+            # A 90s heartbeat is not a reason to full-page reload the tab.
+            if state.get("reload_kind") != "code":
+                state["reload_kind"] = "watch"
 
         watch = PaperWatch(on_cycle=_on_cycle)
         state["paper_watch"] = watch
-    if parse_lane(state.get("lane")) == LANE_15M:
-        watch.start()
-    else:
-        watch.stop_watch()
+    watch.start()
+    state["paper_watch_keep"] = True
 
 
 def rebuild_surface(state: dict, *, last_run: RunRecord | None | object = ...) -> None:
@@ -1094,6 +1007,8 @@ def run_http_server(
             lane=start_lane,
         ),
         "paper_watch": None,
+        "paper_watch_keep": False,
+        "watch_cycles": 0,
     }
     _sync_paper_watch(state)
     httpd = _HubServer((host, port), OperatorHandler)

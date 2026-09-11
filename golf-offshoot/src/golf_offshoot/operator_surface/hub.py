@@ -107,7 +107,7 @@ def _viz_html(lane: str) -> str:
         return """
 <section class="viz" data-lane="learning_lane_15m">
   <h2>Viz wall</h2>
-  <p class="empty">not yet available — 15-min lane is observation-only. No golf WC1 / Ill charts here.</p>
+  <p class="empty">15m PNG is on the operator shell (python -m golf_offshoot shell --lane learning_lane_15m), not this sibling. Missing stays not yet available. No golf WC1 / Ill here.</p>
 </section>
 """
     slots = "\n".join(

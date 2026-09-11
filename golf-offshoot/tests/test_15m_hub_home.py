@@ -1,0 +1,319 @@
+"""15m glance home lock + this-lane doing/thinking/learning. Not go-live."""
+
+from http.client import HTTPConnection
+from threading import Thread
+from types import SimpleNamespace
+
+from golf_offshoot.learning_lane_15m.paper import save_ledger
+from golf_offshoot.learning_lane_15m.paths import set_15m_root_override
+from golf_offshoot.learning_lane_15m.watch import write_watch_status
+from golf_offshoot.operator_surface.app import (
+    _sync_paper_watch,
+    _watch_state,
+    _window_summary_15m,
+    build_surface,
+    render_html,
+)
+from golf_offshoot.operator_surface.modes import NOT_ARMED, PAPER_ONLY
+from golf_offshoot.strategy.paper_ledger import PaperLedger
+
+
+def _page(tmp_path, **kwargs):
+    return render_html(
+        build_surface(
+            artifact_root=tmp_path,
+            viz_root=tmp_path / "viz",
+            lane="learning_lane_15m",
+            **kwargs,
+        )
+    )
+
+
+def _golf(tmp_path):
+    return render_html(build_surface(artifact_root=tmp_path, viz_root=tmp_path / "viz", lane="golf"))
+
+
+def test_15m_chrome_is_not_golf_named(tmp_path):
+    set_15m_root_override(tmp_path)
+    try:
+        page = _page(tmp_path)
+        golf = _golf(tmp_path)
+    finally:
+        set_15m_root_override(None)
+    header = page[page.index("<header") : page.index("</header>")]
+    assert "KXBTC15M paper watch" in header
+    assert "PHASE 1 OBSERVATION" not in header
+    assert "Update live ranks" not in page
+    assert "Pull latest data" not in page[page.index("<main") : page.index('id="tab-ops"')]
+    assert "Fetch KXBTC15M" in page
+    assert "Paper cycle" in page
+    assert "Extra cycle" in page
+    assert "Update live ranks" in golf
+    assert "PHASE 1 OBSERVATION" in golf
+
+
+def test_glance_strip_watch_window_pending_pnl(tmp_path):
+    set_15m_root_override(tmp_path)
+    try:
+        write_watch_status(
+            {
+                "running": True,
+                "last_ok": True,
+                "cycles": 4,
+                "last_summary": "paper tick ok",
+                "lane": "learning_lane_15m",
+            }
+        )
+        led = PaperLedger(starting_bankroll=100.0, bankroll=95.59, betting_pnl=-4.41)
+        save_ledger(led)
+        page = _page(tmp_path)
+    finally:
+        set_15m_root_override(None)
+    assert 'id="glance-strip"' in page
+    assert 'data-watch="on"' in page
+    assert "Watch on" in page
+    assert 'class="settle"' not in page
+    assert "watch-on" in page
+    assert "lineage A P/L $-4.41" in page
+    assert "bankroll $95.59" in page
+    assert "KXBTC15M" in page
+    assert 'data-kind="pending"' in page or 'data-kind="pending-none"' in page
+    assert 'data-kind="missing-join"' in page or 'data-kind="missing-none"' in page
+
+
+def test_healthy_watch_is_not_crimson_fail(tmp_path):
+    set_15m_root_override(tmp_path)
+    try:
+        write_watch_status({"running": True, "last_ok": True, "cycles": 1, "last_summary": "ok"})
+        page = _page(tmp_path)
+    finally:
+        set_15m_root_override(None)
+    assert 'data-watch="on"' in page
+    assert "WATCH ON" not in page
+    assert 'class="settle"' not in page
+    assert ".chip.watch-on { background: #1f5c3a" in page
+
+
+def test_journal_is_exceptions_not_dump(tmp_path):
+    set_15m_root_override(tmp_path)
+    try:
+        page = _page(tmp_path)
+    finally:
+        set_15m_root_override(None)
+    assert ">Exceptions</h2>" in page
+    assert "Full tape (not the glance)" in page
+    assert "What the last run did" not in page
+    assert "Last operator cycle" not in page
+    assert "15-min Kalshi journal" not in page
+    assert "<details" in page
+
+
+def test_png_caption_matches_pnl_board(monkeypatch, tmp_path):
+    png = tmp_path / "board.png"
+    png.write_bytes(b"\x89PNG\r\n")
+    monkeypatch.setattr("golf_offshoot.operator_surface.lane_15m_home.chart_15m_path", lambda: png)
+    monkeypatch.setattr("golf_offshoot.operator_surface.app._chart_15m_path", lambda: png)
+    set_15m_root_override(tmp_path)
+    try:
+        page = _page(tmp_path)
+    finally:
+        set_15m_root_override(None)
+    assert "paper PnL" in page
+    assert "never summed" in page
+    assert "Missing join" in page or "missing paper join" in page
+    assert "No bankroll, payout or PnL is drawn" not in page
+    assert "No golf WC1" in page
+
+
+def test_15m_script_does_not_reload_on_generation(tmp_path):
+    set_15m_root_override(tmp_path)
+    try:
+        page = _page(tmp_path)
+    finally:
+        set_15m_root_override(None)
+    assert "var is15 = document.body.classList.contains('lane-15m')" in page
+    assert "applyHome(s.home)" in page
+    # Golf still reloads on generation; 15m returns after the patch.
+    assert "if (s.generation !== gen) location.reload()" in page
+    home_idx = page.index("applyHome(s.home)")
+    golf_reload = page.index("if (s.generation !== gen) location.reload()")
+    assert home_idx < golf_reload
+    assert "return;" in page[home_idx:golf_reload]
+
+
+def test_market_lock_obvious_paper_subtle(tmp_path):
+    set_15m_root_override(tmp_path)
+    try:
+        page = _page(tmp_path)
+    finally:
+        set_15m_root_override(None)
+    header = page[page.index("<header") : page.index("</header>")]
+    assert 'class="market-lock"' in header
+    assert 'class="lock-ticker">KXBTC15M' in header
+    assert "market lock" in header
+    assert 'class="trust"' in header
+    assert "Paper · not armed" in header
+    assert 'data-market="KXBTC15M"' in page
+    assert 'data-lane="learning_lane_15m"' in page
+    assert NOT_ARMED in page
+    assert PAPER_ONLY in page
+    assert 'value="deposit"' not in page
+    assert 'value="arm"' not in page
+
+
+def test_thin_tabs_on_home(tmp_path):
+    set_15m_root_override(tmp_path)
+    try:
+        page = _page(tmp_path)
+    finally:
+        set_15m_root_override(None)
+    for label in ("Home", "Scoreboard", "Lab", "Ops", "Bot-hub"):
+        assert label in page
+    assert 'class="thin-tabs"' in page
+    assert 'data-tab="home"' in page
+    assert 'id="tab-home"' in page
+    assert "tab-panel active" in page
+
+
+def test_golf_control_does_not_stop_paperwatch(monkeypatch):
+    created = []
+
+    class FakeWatch:
+        def __init__(self, **kwargs):
+            created.append(self)
+            self.started = 0
+            self.stopped = 0
+            self.on_cycle = kwargs.get("on_cycle")
+
+        def start(self):
+            self.started += 1
+
+        def stop_watch(self):
+            self.stopped += 1
+
+        def status(self):
+            return {"running": True, "cycles": 1, "last_ok": True}
+
+    monkeypatch.setattr("golf_offshoot.operator_surface.app.PaperWatch", FakeWatch)
+    state = {
+        "lane": "learning_lane_15m",
+        "surface": {"last_run": None},
+        "paper_watch": None,
+        "paper_watch_keep": False,
+    }
+    _sync_paper_watch(state)
+    assert len(created) == 1
+    assert created[0].started == 1
+    assert created[0].stopped == 0
+    state["lane"] = "golf"
+    _sync_paper_watch(state)
+    assert created[0].stopped == 0
+    assert state["paper_watch_keep"] is True
+    golf_only = {
+        "lane": "golf",
+        "surface": {"last_run": None},
+        "paper_watch": None,
+        "paper_watch_keep": False,
+    }
+    _sync_paper_watch(golf_only)
+    assert golf_only.get("paper_watch") is None
+
+
+def test_paperwatch_is_the_loop_copy(tmp_path):
+    set_15m_root_override(tmp_path)
+    try:
+        page = _page(tmp_path)
+    finally:
+        set_15m_root_override(None)
+    assert "PaperWatch remains the loop" in page or "PaperWatch is the loop" in page
+    assert "Buttons are extras" in page or "buttons are extras" in page.lower()
+    assert "stop PaperWatch" in page
+
+
+def test_this_lane_doing_thinking_learning(tmp_path):
+    set_15m_root_override(tmp_path)
+    try:
+        write_watch_status({"running": True, "last_ok": True, "cycles": 2, "last_summary": "join ok"})
+        page = _page(tmp_path)
+    finally:
+        set_15m_root_override(None)
+    assert 'id="lane-now"' in page
+    assert "Doing</span>" in page
+    assert "Thinking</span>" in page
+    assert "Learning</span>" in page
+    assert "PaperWatch is the loop" in page
+    assert "golf tile" not in page.lower()
+    assert "role roster" not in page.lower()
+
+
+def test_missing_join_is_not_counted_as_pending():
+    rows = [
+        SimpleNamespace(
+            ticker="KXBTC15M-26SEP071500-00",
+            settle_status="finalized",
+            kalshi_result="",
+            paper_join=False,
+            missing_join=True,
+        ),
+        SimpleNamespace(
+            ticker="KXBTC15M-26SEP071900-00",
+            settle_status="SETTLE_PENDING",
+            kalshi_result="",
+            paper_join=True,
+            missing_join=False,
+        ),
+    ]
+    counts, windows = _window_summary_15m(rows)
+    assert "SETTLE_PENDING 1" in counts
+    assert "missing paper join 1" in counts
+    assert "KXBTC15M-26SEP071500-00 · missing paper join" in windows
+    assert "KXBTC15M-26SEP071500-00 · SETTLE_PENDING" not in windows
+    assert "KXBTC15M-26SEP071900-00 · SETTLE_PENDING" in windows
+
+
+def test_api_watch_includes_15m_home_and_no_generation_bump_on_cycle(tmp_path):
+    set_15m_root_override(tmp_path)
+    try:
+        from golf_offshoot.operator_surface.app import OperatorHandler, _HubServer
+
+        state = {
+            "event_id": "",
+            "artifact_root": tmp_path,
+            "viz_root": tmp_path / "viz",
+            "odds_book": "auto",
+            "lane": "learning_lane_15m",
+            "generation": 0,
+            "reload_kind": "watch",
+            "watch_cycles": 3,
+            "paper_watch_keep": True,
+            "paper_watch": None,
+            "surface": build_surface(
+                artifact_root=tmp_path, viz_root=tmp_path / "viz", lane="learning_lane_15m"
+            ),
+        }
+        payload = _watch_state(state)
+        assert payload["generation"] == 0
+        assert payload["kind"] == "watch"
+        assert payload["home"]["lane"] == "learning_lane_15m"
+        assert payload["home"]["series"] == "KXBTC15M"
+        assert payload["home"]["trading_armed"] is False
+        assert "glance_html" in payload["home"]
+        assert "now_html" in payload["home"]
+        httpd = _HubServer(("127.0.0.1", 0), OperatorHandler)
+        httpd.surface_state = state
+        thread = Thread(target=httpd.serve_forever, daemon=True)
+        thread.start()
+        try:
+            host, port = httpd.server_address[:2]
+            conn = HTTPConnection(host, port, timeout=5)
+            conn.request("GET", "/api/watch")
+            body = conn.getresponse().read().decode("utf-8")
+            conn.close()
+        finally:
+            httpd.shutdown()
+            httpd.server_close()
+        assert '"generation": 0' in body
+        assert '"lane": "learning_lane_15m"' in body
+        assert "glance_html" in body
+    finally:
+        set_15m_root_override(None)

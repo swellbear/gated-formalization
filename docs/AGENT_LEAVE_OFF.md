@@ -5,7 +5,7 @@ Chat transcripts are not. A later Grok / Cursor cloud agent will not see a prior
 
 | Field | Value |
 |-------|--------|
-| Updated | 2026-09-08 08:52 EDT (Part 0: live digest + validator report + publish in flight) |
+| Updated | 2026-09-11 11:45 EDT (15m hub UX draft PR — not merged; Part 0 still the last master fold) |
 | Interim operator | Cursor chat (Grok bot usage exhausted until **2026-09-13**) |
 | Repo SoT | **This fold publishes.** Validator report must hash-match the committed `manifest.json`. |
 | Local Windows tree for this interim | `C:\Users\bearh\gated-formalization-master-hub` |
@@ -35,6 +35,10 @@ If it is not in git on GitHub, the next bot does not have it.
 **Armed locally:** `golf-offshoot/data/learning_lane_15m/latest/RUNNER_ARMED` (gitignored). The runner still does not commit or push. The public page is **not** self-maintaining. Restart the 15m hub if the running PaperWatch predates `c6354cc`.
 
 Do not write branch state as if it were landed. If Pages `generated_at` is more than one 15-minute window behind now, the public page should say so itself.
+
+## 15m hub UX draft (not on master, do not merge)
+
+Branch `cursor/15m-hub-ux-6620`. Founder locked sequence after 15m glance home is solid: **A** this-lane doing/thinking/learning, **then B** other existing lanes as compact status tiles (golf, not a second cockpit), **then C** compact role strip (owed/idle/served, last tick; collapsed unless owed). Home must not become a wall of panels. Market/lane lock `KXBTC15M` / `learning_lane_15m` is a veto. PaperWatch stays. Trading **NOT ARMED**. Ask Founder after C whether a new lock is required. Not go-live.
 
 ## What is already on master (PR #163 and earlier)
 

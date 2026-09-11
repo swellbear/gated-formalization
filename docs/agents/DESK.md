@@ -6,16 +6,16 @@ Thread lines are **one sentence, newest first, max 10**. Long findings belong in
 
 | Field | Value |
 |-------|--------|
-| Updated | 2026-09-08 08:52 ET |
-| Active role | systems |
-| Job | Part 0: live digest refresh + hash-stamped validator report + publish. |
-| Status | done |
-| Handoff | Honesty gate re-derived live below. Do not inherit the 19:58 stamp. |
-| Waiting on Founder | **N** |
+| Updated | 2026-09-11 11:45 ET |
+| Active role | hub-ui |
+| Job | Founder lock: 15m glance home, then A this-lane, then B other-lane tiles, then C role strip. Same draft PR. Do not merge. Not armed. |
+| Status | working |
+| Handoff | Lock+A tests green locally. Next on this PR: B compact golf status tile, then C collapsed-unless-owed role strip. |
+| Waiting on Founder | **N** (ask after C whether a new lock is required) |
 
 ## Ask Founder
 
-(none)
+(none yet — one question after C lands on the draft PR)
 
 ## Publish gap (named so nobody assumes Pages is self-maintaining)
 
@@ -34,6 +34,8 @@ The runner exports locally. It does **not** commit or push. The public page is *
 
 ## Thread
 
+- 2026-09-11 11:45 ET  hub-ui: 15m glance home + A this-lane doing/thinking/learning on the draft PR. PaperWatch stays. next=hub-ui (B then C)
+- 2026-09-11 11:45 ET  CoS → hub-ui: Founder locked A then B then C after glance home; same draft PR; do not merge; not armed. next=hub-ui
 - 2026-09-08 08:52 ET  CoS: honesty gate re-derived live. Hub box is one tree (2940/9568), not the 19:58 "both --no-browser" claim. next=systems
 - 2026-09-08 08:51 ET  validator → systems: `--strict` OK; report sha256 matches the export bytes. next=systems
 - 2026-09-08 08:49 ET  digestor → validator: SOURCE figures regenerated from live files (caveats concatenated, not rewritten). next=validator
@@ -42,5 +44,3 @@ The runner exports locally. It does **not** commit or push. The public page is *
 - 2026-09-08 08:28 ET  CoS: tick — digestor/operator/validator STALE; 10 windows closed after 05:56, 1 open; hub parent 2940 / listener 21456; scheduled task missing. Founder GO is bar then hire. next=operator
 - 2026-09-08 06:10 ET  digestor → chief-of-staff: recorded 100.00 → 93.86 / `betting_pnl` -6.14 now carry the known-fee omission caveat, citing the Operator note, with no corrected total. next=chief-of-staff
 - 2026-09-08 06:00 ET  validator → chief-of-staff: `validate_hub.py --strict` OK on export `generated_at` 2026-09-08T05:52:39-04:00. Publishing is still a manual commit/push. next=chief-of-staff
-- 2026-09-08 05:55 ET  CoS → systems: Digestor landed the overnight SOURCE digest; Operator recorded `072245` CLOSED / no backfill; publish the eight-hour-stale Pages snapshot. next=systems
-- 2026-09-08 05:55 ET  operator → chief-of-staff: folded digest §3g — `KXBTC15M-26SEP072245` does not exist, 22:25–22:50 `--once` outage, 56 locked books is not an unbroken run. next=chief-of-staff

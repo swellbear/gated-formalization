@@ -436,28 +436,28 @@ def test_html_watch_script_reloads_same_tab_after_reconnect(tmp_path):
 def test_15m_lane_shows_labelled_window_board(monkeypatch, tmp_path):
     png = tmp_path / "paper_window_strip.png"
     png.write_bytes(b"\x89PNG\r\n")
+    rows = [
+        SimpleNamespace(
+            ticker="KXBTC15M-26SEP071445-45",
+            settle_status="settled",
+            kalshi_result="yes",
+            paper_join=True,
+        ),
+        SimpleNamespace(
+            ticker="KXBTC15M-26SEP071500-00",
+            settle_status="SETTLE_PENDING",
+            kalshi_result="",
+            paper_join=True,
+        ),
+    ]
     monkeypatch.setattr("golf_offshoot.operator_surface.app._chart_15m_path", lambda: png)
-    monkeypatch.setattr(
-        "golf_offshoot.operator_surface.app._window_rows_15m",
-        lambda: [
-            SimpleNamespace(
-                ticker="KXBTC15M-26SEP071445-45",
-                settle_status="settled",
-                kalshi_result="yes",
-                paper_join=True,
-            ),
-            SimpleNamespace(
-                ticker="KXBTC15M-26SEP071500-00",
-                settle_status="SETTLE_PENDING",
-                kalshi_result="",
-                paper_join=True,
-            ),
-        ],
-    )
+    monkeypatch.setattr("golf_offshoot.operator_surface.lane_15m_home.chart_15m_path", lambda: png)
+    monkeypatch.setattr("golf_offshoot.operator_surface.lane_15m_home.window_rows_15m", lambda: rows)
+    monkeypatch.setattr("golf_offshoot.operator_surface.app._window_rows_15m", lambda: rows)
     page = render_html(build_surface(lane="learning_lane_15m", artifact_root=tmp_path, viz_root=tmp_path / "viz"))
 
     # A titled figure, not an unlabelled colour block.
-    assert "<figure>" in page and "<figcaption>" in page
+    assert "<figure>" in page and "<figcaption" in page
     assert "KXBTC15M paper windows" in page
     # The caption names the windows: ticker, status, result.
     assert "KXBTC15M-26SEP071445-45 · settled · result=yes" in page
@@ -473,6 +473,7 @@ def test_15m_lane_shows_labelled_window_board(monkeypatch, tmp_path):
 
 def test_15m_missing_png_stays_not_yet_available(monkeypatch, tmp_path):
     monkeypatch.setattr("golf_offshoot.operator_surface.app._chart_15m_path", lambda: None)
+    monkeypatch.setattr("golf_offshoot.operator_surface.lane_15m_home.chart_15m_path", lambda: None)
     page = render_html(build_surface(lane="learning_lane_15m", artifact_root=tmp_path, viz_root=tmp_path / "viz"))
     assert "not yet available" in page
     # Nothing is drawn in its place, and there is no overlay to open.
