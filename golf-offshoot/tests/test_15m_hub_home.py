@@ -175,6 +175,11 @@ def test_thin_tabs_on_home(tmp_path):
     assert 'data-tab="home"' in page
     assert 'id="tab-home"' in page
     assert "tab-panel active" in page
+    assert 'data-density="cockpit"' in page
+    assert 'data-density="glance"' in page
+    assert page.index('class="thin-tabs"') < page.index('class="panel chart-panel"')
+    assert "cockpit-only" in page
+    assert ".cockpit-only { display: none; }" in page
 
 
 def test_golf_control_does_not_stop_paperwatch(monkeypatch):
@@ -307,6 +312,8 @@ def test_api_watch_includes_15m_home_and_no_generation_bump_on_cycle(tmp_path):
         assert "now_html" in payload["home"]
         assert "tiles_html" in payload["home"]
         assert "roles_html" in payload["home"]
+        assert "ops_watch_html" in payload["home"]
+        assert "cockpit_html" in payload["home"]
         httpd = _HubServer(("127.0.0.1", 0), OperatorHandler)
         httpd.surface_state = state
         thread = Thread(target=httpd.serve_forever, daemon=True)
@@ -410,6 +417,9 @@ def test_role_strip_collapsed_unless_owed(tmp_path):
     assert '<details class="role-strip-details" open>' in owed
     assert "owed digestor 12m" in owed
     assert "last served: systems" in owed
+    assert 'href="#lane-now"' in owed
+    assert 'data-tab="lab"' in owed
+    assert 'data-density="cockpit"' in owed
     assert "<ul" not in owed
     assert "for:" not in owed
     assert "role roster" not in owed_page.lower()
@@ -439,4 +449,106 @@ def test_preview_launcher_runs_this_checkout_not_master():
     assert "not master" in lower or "does not touch master" in lower
     assert "InternetShortcut" in url
     assert "http://127.0.0.1:8765" in url
+
+
+def test_doing_thinking_learning_uses_wake_when_present(tmp_path):
+    set_15m_root_override(tmp_path)
+    try:
+        write_watch_status(
+            {
+                "running": True,
+                "last_ok": True,
+                "cycles": 9,
+                "last_summary": "paper tick ok",
+                "last_at": "2026-09-11T12:00:00-04:00",
+                "interval_s": 90,
+            }
+        )
+        _write_wake(
+            tmp_path,
+            updated_at="2026-09-11T12:01:00-04:00",
+            scan={
+                "pending": [
+                    {
+                        "ticker": "KXBTC15M-26SEP111215-15",
+                        "reason": "wait for Kalshi result",
+                    }
+                ],
+                "paper_join_missing": [
+                    {
+                        "ticker": "KXBTC15M-26SEP071500-00",
+                        "reason": "official result present; paper book not on this tree",
+                    }
+                ],
+            },
+            new_events=[
+                {
+                    "kind": "new_settle",
+                    "ticker": "KXBTC15M-26SEP111200-00",
+                    "detail": "official Kalshi result=yes via latest/journal.json",
+                    "at": "2026-09-11T12:00:00-04:00",
+                }
+            ],
+            events=[],
+            roles_owed=[{"role": "digestor", "age_text": "4m", "reasons": ["new official settle"]}],
+        )
+        page = _page(tmp_path)
+    finally:
+        set_15m_root_override(None)
+    now = page[page.index('id="lane-now"') : page.index('id="lane-tiles"')]
+    assert "Watch on" in now
+    assert "last cycle 2026-09-11 12:00 EDT" in now
+    assert "SETTLE_PENDING KXBTC15M-26SEP111215-15" in now
+    assert "wait for Kalshi result" in now
+    assert "missing paper join KXBTC15M-26SEP071500-00" in now
+    assert "new_settle KXBTC15M-26SEP111200-00" in now
+    assert "owed digestor 4m" in now
+    assert "now-sub" in now
+    assert "cadence ~90s" in now
+    assert "cockpit-only" in now
+
+
+def test_views_are_thin_but_real(tmp_path):
+    set_15m_root_override(tmp_path)
+    try:
+        led = PaperLedger(starting_bankroll=100.0, bankroll=95.59, betting_pnl=-4.41)
+        save_ledger(led)
+        _write_wake(
+            tmp_path,
+            updated_at="2026-09-11T12:01:00-04:00",
+            scan={"pending": [], "paper_join_missing": []},
+            roles_owed=[],
+            lab_gate={
+                "lab_owed": False,
+                "why": "honesty gate has not passed -- test",
+                "boxes": [{"box": "Lineage story readable", "state": "PASS"}],
+                "note": "Lab never self-admits.",
+            },
+        )
+        page = _page(tmp_path)
+    finally:
+        set_15m_root_override(None)
+    score = page[page.index('id="tab-scoreboard"') : page.index('id="tab-lab"')]
+    lab = page[page.index('id="tab-lab"') : page.index('id="tab-ops"')]
+    ops = page[page.index('id="tab-ops"') : page.index('id="tab-bot-hub"')]
+    bot = page[page.index('id="tab-bot-hub"') :]
+    assert "Lineage A (this tree)" in score
+    assert "never added together" in score
+    assert "missing paper join" in score
+    assert "Fee-accurate" not in lab
+    assert "RUN-ONLY" in lab
+    assert "NOT owed" in lab
+    assert "Honesty stamp" in lab
+    assert "PaperWatch remains the loop" in ops
+    assert "Watch" in ops
+    assert "Fetch KXBTC15M" in ops
+    assert "last tick 2026-09-11 12:01 EDT" in bot
+    assert "roles owed: none" in bot
+    assert "trading_armed=false" in bot
+    assert 'id="cockpit-rail"' in page
+    header = page[page.index("<header") : page.index("</header>")]
+    assert 'class="lock-ticker">KXBTC15M' in header
+    assert 'value="arm"' not in page
+    assert 'value="deposit"' not in page
+
 

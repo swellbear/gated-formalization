@@ -5,7 +5,7 @@ Chat transcripts are not. A later Grok / Cursor cloud agent will not see a prior
 
 | Field | Value |
 |-------|--------|
-| Updated | 2026-09-11 12:01 EDT (15m hub UX draft PR #179 — A/B/C + PREVIEW launcher; hub listening on this VM; not merged) |
+| Updated | 2026-09-11 12:17 EDT (draft PR #179 hub-intent upgrades; hub on 127.0.0.1:8765; not merged) |
 | Interim operator | Cursor chat (Grok bot usage exhausted until **2026-09-13**) |
 | Repo SoT | **This fold publishes.** Validator report must hash-match the committed `manifest.json`. |
 | Local Windows tree for this interim | `C:\Users\bearh\gated-formalization-master-hub` |
@@ -38,7 +38,7 @@ Do not write branch state as if it were landed. If Pages `generated_at` is more 
 
 ## 15m hub UX draft (not on master, do not merge)
 
-Draft PR **#179** on `cursor/15m-hub-ux-6620`. Sequence is landed in order: 15m glance home, **A** this-lane doing/thinking/learning, **B** compact golf status tile (Operator stamp, not a cockpit), **C** compact role strip (collapsed unless owed). Preview launcher: `golf-offshoot/Open-15m-Hub-PREVIEW.bat` plus `Open-15m-Hub-PREVIEW.url` (copy the .url to Desktop; keep the .bat in this checkout so it does not start master). This cloud VM is serving `http://127.0.0.1:8765` for Try Live — that process is not SoT. Market/lane lock `KXBTC15M` / `learning_lane_15m` is a veto. PaperWatch stays. Trading **NOT ARMED**. Waiting on Founder: is a new lock required, or does this draft sit until go-live? Not merged.
+Draft PR **#179** on `cursor/15m-hub-ux-6620`. Sequence landed: glance home, A this-lane, B golf status tile, C role strip. Incremental hub-intent: **Glance** default / **Cockpit** reachable; Scoreboard / Lab / Ops / Bot-hub are thin but real; doing/thinking/learning grows extra lines when files exist; C jumps to this-lane / Lab / Bot-hub / Cockpit. Preview launcher: `golf-offshoot/Open-15m-Hub-PREVIEW.bat` plus `.url`. This cloud VM serves `http://127.0.0.1:8765` for Try Live. Market/lane lock `KXBTC15M` / `learning_lane_15m`. PaperWatch stays. Trading **NOT ARMED**. Waiting on Founder: new lock, or keep upgrading this draft until go-live? Not merged.
 
 ## What is already on master (PR #163 and earlier)
 

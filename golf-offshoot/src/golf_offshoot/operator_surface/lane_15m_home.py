@@ -176,6 +176,28 @@ def _watch_status(state: dict | None = None) -> dict[str, Any]:
     return file_st if isinstance(file_st, dict) else {}
 
 
+def _load_wake() -> dict[str, Any] | None:
+    try:
+        from golf_offshoot.learning_lane_15m.learn import load_wake_state
+
+        wake = load_wake_state()
+    except Exception:
+        return None
+    return wake if isinstance(wake, dict) else None
+
+
+def _fmt_when(value: object) -> str:
+    if not value:
+        return ""
+    try:
+        from golf_offshoot.localtime import format_eastern
+
+        text = format_eastern(value)
+    except Exception:
+        text = str(value)
+    return "" if text in {"", "n/a"} else text
+
+
 def _ledger_a() -> tuple[str, str]:
     """Lineage A bankroll and betting_pnl as recorded on ledger.json. Never summed."""
     try:
@@ -387,60 +409,124 @@ def glance_strip_html(state: dict | None = None) -> str:
     return f'<div class="glance" id="glance-strip">{glance_chips_html(state)}</div>'
 
 
+def _now_block(label: str, lines: list[str], *, extra: list[str] | None = None) -> str:
+    primary = lines[0] if lines else ""
+    rest = lines[1:]
+    bits = [
+        '<div class="now-row"><span class="now-k">' + _esc(label) + "</span> "
+        f'<span class="now-v">{_esc(primary)}</span></div>'
+    ]
+    for line in rest:
+        bits.append(f'<div class="now-sub">{_esc(line)}</div>')
+    if extra:
+        bits.append('<div class="now-more cockpit-only">')
+        bits.extend(f'<div class="now-sub">{_esc(line)}</div>' for line in extra)
+        bits.append("</div>")
+    return "".join(bits)
+
+
 def this_lane_now_inner_html(state: dict | None = None) -> str:
     """This-lane doing / thinking / learning. Copied from the watch + wake. No golf tiles."""
-    from golf_offshoot.learning_lane_15m.learn import _event_label, load_wake_state
+    from golf_offshoot.learning_lane_15m.learn import _event_label
 
     watch = _watch_status(state)
+    wake = _load_wake()
     running = "on" if watch.get("running") else "off"
     cycles = watch.get("cycles")
     summary = str(watch.get("last_summary") or "").strip()
-    doing = f"Watch {running}"
+    doing = [f"Watch {running}"]
     if cycles not in (None, ""):
-        doing += f" · cycle {cycles}"
-    doing += " · PaperWatch is the loop"
+        doing[0] += f" · cycle {cycles}"
+    doing[0] += " · PaperWatch is the loop"
     if summary:
-        doing += f" · {summary}"
+        doing[0] += f" · {summary}"
+    last_at = _fmt_when(watch.get("last_at"))
+    interval = watch.get("interval_s")
+    doing_extra: list[str] = []
+    if last_at:
+        doing.append(f"last cycle {last_at}")
+    if interval not in (None, ""):
+        doing_extra.append(f"cadence ~{interval}s · extras are buttons, not the loop")
+    if watch.get("last_ok") is False and watch.get("last_error"):
+        doing.append(f"last cycle failed — {watch.get('last_error')}")
 
-    wake = None
-    try:
-        wake = load_wake_state()
-    except Exception:
-        wake = None
     scan = (wake or {}).get("scan") if isinstance((wake or {}).get("scan"), dict) else {}
     pending = [row for row in (scan.get("pending") or []) if isinstance(row, dict)]
     missing = [row for row in (scan.get("paper_join_missing") or []) if isinstance(row, dict)]
+    kept = [row for row in (scan.get("published_only") or []) if isinstance(row, dict)]
+    thinking: list[str] = []
+    thinking_extra: list[str] = []
     if pending:
         row = pending[0]
         why = str(row.get("reason") or "wait for Kalshi result")
-        thinking = (
+        thinking.append(
             f"SETTLE_PENDING {row.get('ticker') or row.get('window_id') or 'window'} — {why}"
         )
-    elif missing:
+        if len(pending) > 1:
+            thinking.append(f"+{len(pending) - 1} more pending window(s) on this tree")
+    if missing:
         row = missing[0]
         why = str(row.get("reason") or row.get("state") or "missing paper join, not pending")
-        thinking = f"missing paper join {row.get('ticker') or 'window'} — {why}"
-    else:
-        thinking = "no pending window · no missing join on this tree"
+        thinking.append(
+            f"missing paper join {row.get('ticker') or 'window'} — {why}"
+        )
+        if len(missing) > 1:
+            thinking.append(f"+{len(missing) - 1} more missing join(s) — no pnl invented")
+    if not thinking:
+        thinking.append("no pending window · no missing join on this tree")
+    if kept:
+        row = kept[0]
+        thinking_extra.append(
+            f"lineage B kept {row.get('ticker') or 'published'} "
+            f"{str(row.get('paper_outcome') or '').strip()} "
+            f"{str(row.get('published_paper_pnl') or '').strip()} "
+            "— never summed into lineage A"
+        )
+    board = (wake or {}).get("board") if isinstance((wake or {}).get("board"), dict) else {}
+    if board.get("note"):
+        thinking_extra.append(str(board.get("note")))
 
-    events = (wake or {}).get("new_events") or (wake or {}).get("events") or []
+    events = [
+        ev
+        for ev in ((wake or {}).get("new_events") or (wake or {}).get("events") or [])
+        if isinstance(ev, dict)
+    ]
     heartbeat = (wake or {}).get("heartbeat") or {}
-    if events and isinstance(events[0], dict):
+    learning: list[str] = []
+    learning_extra: list[str] = []
+    if events:
         ev = events[0]
-        learning = f"{_event_label(ev)} — {ev.get('detail') or 'see wake'}"
+        learning.append(f"{_event_label(ev)} — {ev.get('detail') or 'see wake'}")
+        when = _fmt_when(ev.get("at"))
+        if when:
+            learning.append(f"last learn {when}")
+        for ev in events[1:3]:
+            learning_extra.append(f"{_event_label(ev)} — {ev.get('detail') or 'see wake'}")
     elif heartbeat:
-        learning = str(heartbeat.get("note") or "no new settle; watch still running")
+        learning.append(str(heartbeat.get("note") or "no new settle; watch still running"))
     elif not wake:
-        learning = "learning wake not recorded yet on this tree"
+        learning.append("learning wake not recorded yet on this tree")
     else:
-        learning = "no new settle; watch still running"
+        learning.append("no new settle; watch still running")
+    owed = [
+        entry
+        for entry in ((wake or {}).get("roles_owed") or [])
+        if isinstance(entry, dict) and entry.get("role")
+    ]
+    if owed:
+        first = owed[0]
+        reasons = "; ".join(str(r) for r in (first.get("reasons") or [])[:2] if r)
+        line = f"owed {first.get('role')} {first.get('age_text') or ''}".strip()
+        if reasons:
+            line += f" — {reasons}"
+        learning.append(line)
+    tick = _fmt_when((wake or {}).get("updated_at"))
+    if tick and not any(tick in line for line in learning):
+        learning_extra.append(f"wake tick {tick}")
     return (
-        '<div class="now-row"><span class="now-k">Doing</span> '
-        f'<span class="now-v">{_esc(doing)}</span></div>'
-        '<div class="now-row"><span class="now-k">Thinking</span> '
-        f'<span class="now-v">{_esc(thinking)}</span></div>'
-        '<div class="now-row"><span class="now-k">Learning</span> '
-        f'<span class="now-v">{_esc(learning)}</span></div>'
+        _now_block("Doing", doing, extra=doing_extra)
+        + _now_block("Thinking", thinking, extra=thinking_extra)
+        + _now_block("Learning", learning, extra=learning_extra)
     )
 
 
@@ -591,6 +677,12 @@ def role_strip_inner_html(state: dict | None = None) -> str:
         f'<details class="role-strip-details"{open_attr}>'
         f"<summary>{_esc(summary)}</summary>"
         f'<p class="role-line">{_esc(detail)}</p>'
+        '<p class="role-jumps">'
+        '<a href="#lane-now">this lane</a>'
+        ' · <a href="#lab" data-tab="lab">Lab</a>'
+        ' · <a href="#bot-hub" data-tab="bot-hub">Bot-hub</a>'
+        ' · <a href="#home" data-density="cockpit">Cockpit</a>'
+        "</p>"
         "</details>"
     )
 
@@ -725,58 +817,167 @@ def exceptions_html(last_run: RunRecord | None = None, *, state: dict | None = N
 
 def scoreboard_inner_html() -> str:
     counts, windows = window_summary_15m(window_rows_15m(), limit=24)
-    bits = []
+    pnl, bankroll = _ledger_a()
+    wake = _load_wake()
+    scan = (wake or {}).get("scan") if isinstance((wake or {}).get("scan"), dict) else {}
+    pending = [row for row in (scan.get("pending") or []) if isinstance(row, dict)]
+    missing = [row for row in (scan.get("paper_join_missing") or []) if isinstance(row, dict)]
+    kept = [row for row in (scan.get("published_only") or []) if isinstance(row, dict)]
+    bits = [
+        f"<p class='lock'>Series <code>{PRIMARY_SERIES}</code> only. Lineage A and lineage B "
+        "stay two books. Their pnl figures are never added together.</p>"
+    ]
+    if pnl:
+        bits.append(
+            f"<p class='counts'>Lineage A (this tree) P/L ${_esc(pnl)} · bankroll ${_esc(bankroll)}</p>"
+        )
+    else:
+        bits.append("<p class='help'>Lineage A P/L not on file — none invented.</p>")
+    bits.append(
+        "<p class='counts'>SETTLE_PENDING "
+        f"{len(pending)} · missing paper join {len(missing)} "
+        "(missing join is not pending)</p>"
+    )
+    if kept:
+        row = kept[0]
+        bits.append(
+            "<p class='help'>Lineage B (published Pages) kept "
+            f"{_esc(row.get('ticker') or 'window')} "
+            f"{_esc(row.get('paper_outcome') or '')} "
+            f"{_esc(row.get('published_paper_pnl') or '')} "
+            "— not summed into lineage A.</p>"
+        )
     if counts:
         bits.append(f"<p class='counts'>{_esc(counts)}</p>")
     if windows:
         bits.append(f"<p class='windows'>{_esc(windows)}</p>")
+    joins = _recent_join_lines()
+    if joins:
+        bits.append("<h3>Last official joins</h3>")
+        bits.append(
+            "<ul class='exceptions'>" + "".join(f"<li>{_esc(line)}</li>" for line in joins) + "</ul>"
+        )
     bits.append(
-        "<p class='help'>Lineage A and lineage B stay two books. Their pnl figures are never added "
-        "together. Missing paper join is not SETTLE_PENDING. PnL only where a book exists.</p>"
+        "<p class='help'>PnL only where a book exists. A window with no book has no pnl — not 0.</p>"
     )
-    return "".join(bits) or "<p class='help'>No window rows on file yet.</p>"
+    return "".join(bits)
 
 
 def lab_inner_html() -> str:
-    from golf_offshoot.learning_lane_15m.learn import load_wake_state
-
-    wake = None
-    try:
-        wake = load_wake_state()
-    except Exception:
-        wake = None
+    wake = _load_wake()
     owed = (wake or {}).get("roles_owed") or []
     gate = (wake or {}).get("lab_gate") or {}
     rows = []
     for entry in owed:
+        if not isinstance(entry, dict):
+            continue
         role = str(entry.get("role") or "")
         age = str(entry.get("age_text") or "")
         reasons = "; ".join(str(r) for r in (entry.get("reasons") or []) if r)
-        rows.append(f"<li>{_esc(role)} · owed {_esc(age)}" + (f" — {_esc(reasons)}" if reasons else "") + "</li>")
+        rows.append(
+            f"<li>{_esc(role)} · owed {_esc(age)}" + (f" — {_esc(reasons)}" if reasons else "") + "</li>"
+        )
     owed_block = (
         "<ul class='exceptions'>" + "".join(rows) + "</ul>" if rows else "<p class='help'>No roles owed.</p>"
     )
+    lab_owed = "owed" if gate.get("lab_owed") else "NOT owed"
     lab_line = str(gate.get("why") or "Lab is not owed from this glance.")
+    boxes = []
+    for box in gate.get("boxes") or []:
+        if not isinstance(box, dict):
+            continue
+        boxes.append(f"<li>{_esc(box.get('box') or '')} · {_esc(box.get('state') or 'unstamped')}</li>")
+    box_block = (
+        "<h3>Honesty stamp (copied from the desk, not restamped here)</h3>"
+        "<ul class='exceptions'>" + "".join(boxes) + "</ul>"
+        if boxes
+        else "<p class='help'>No honesty checklist copied onto this wake yet.</p>"
+    )
     return (
         "<p class='help'>Lab output stays in Operator notes. Nothing here is an ADMIT. "
-        f"{_esc(_LAB_NOTE)} is RUN-ONLY, not a dashboard figure.</p>"
+        "No fee-accurate figure is displayed on this dashboard.</p>"
+        f"<p class='owed'>Lab is { _esc(lab_owed) } — {_esc(lab_line)}</p>"
+        f"<p class='help'>{_esc(_LAB_NOTE)} is RUN-ONLY, not a dashboard figure, not a dated record.</p>"
+        f"{box_block}"
         f"<h3>Roles owed</h3>{owed_block}"
-        f"<p class='help'>{_esc(lab_line)}</p>"
+        f"<p class='help'>{_esc(gate.get('note') or 'Lab never self-admits.')}</p>"
     )
 
 
 def bot_inner_html() -> str:
-    from golf_offshoot.learning_lane_15m.learn import format_wake_line, load_wake_state
+    from golf_offshoot.learning_lane_15m.learn import _event_label
 
-    wake = None
-    try:
-        wake = load_wake_state()
-    except Exception:
-        wake = None
+    wake = _load_wake()
+    if not wake:
+        return (
+            "<p class='help'>PaperWatch is the loop. The learning wake has not been recorded "
+            "on this tree yet. No roles are owed and none are claimed.</p>"
+        )
+    tick = _fmt_when(wake.get("updated_at")) or "not recorded"
+    owed = [e for e in (wake.get("roles_owed") or []) if isinstance(e, dict) and e.get("role")]
+    served = [e for e in (wake.get("served") or []) if isinstance(e, dict) and e.get("role")]
+    events = [e for e in (wake.get("new_events") or wake.get("events") or []) if isinstance(e, dict)]
+    owed_html = (
+        "<ul class='exceptions'>"
+        + "".join(
+            "<li>"
+            + _esc(
+                f"{entry.get('role')} · owed {entry.get('age_text') or ''}"
+                + (
+                    " — " + "; ".join(str(r) for r in (entry.get("reasons") or [])[:2] if r)
+                    if entry.get("reasons")
+                    else ""
+                )
+            )
+            + "</li>"
+            for entry in owed
+        )
+        + "</ul>"
+        if owed
+        else "<p class='help'>roles owed: none — a request for a turn, not a completion.</p>"
+    )
+    event_html = (
+        "<ul class='exceptions'>"
+        + "".join(
+            f"<li>{_esc(_event_label(ev))} — {_esc(ev.get('detail') or 'see wake')}</li>"
+            for ev in events[:6]
+        )
+        + "</ul>"
+        if events
+        else "<p class='help'>No new wake events this tick.</p>"
+    )
+    served_html = (
+        "<p class='help'>last served: "
+        + _esc(
+            f"{served[0].get('role')} {_fmt_when(served[0].get('served_at'))} "
+            f"{served[0].get('served_kind') or ''}".strip()
+        )
+        + "</p>"
+        if served
+        else "<p class='help'>last served: none on this wake</p>"
+    )
     return (
-        "<p class='help'>PaperWatch is the loop. This tab is the wake — names owed roles, "
-        "serves none of them, invents no pnl.</p>"
-        f"<pre>{_esc(format_wake_line(wake))}</pre>"
+        "<p class='help'>PaperWatch is the loop. Bot-hub names owed roles from the wake. "
+        "It serves none of them and invents no pnl.</p>"
+        f"<p class='counts'>last tick { _esc(tick) } · series <code>{PRIMARY_SERIES}</code> · "
+        "trading_armed=false</p>"
+        f"<h3>Owed</h3>{owed_html}"
+        f"<h3>Last learn</h3>{event_html}"
+        f"{served_html}"
+    )
+
+
+def ops_watch_inner_html(state: dict | None = None) -> str:
+    watch = _watch_status(state)
+    running = "on" if watch.get("running") else "off"
+    last_at = _fmt_when(watch.get("last_at")) or "not recorded"
+    interval = watch.get("interval_s")
+    cadence = f" · cadence ~{interval}s" if interval not in (None, "") else ""
+    ok = "last cycle ok" if watch.get("last_ok", True) else "last cycle failed"
+    return (
+        f"<p class='counts'>Watch { _esc(running) }{ _esc(cadence) } · { _esc(ok) } · "
+        f"cycle { _esc(watch.get('cycles') or 'n/a') } · last { _esc(last_at) }</p>"
+        f"<p class='help'>{_esc(watch.get('last_summary') or 'PaperWatch is the loop. Buttons below are extras.')}</p>"
     )
 
 
@@ -793,6 +994,7 @@ def ops_html(last_run: RunRecord | None = None) -> str:
         else "<p class='help'>No extra button cycle in this shell session. The watch is the loop.</p>"
     )
     return (
+        f'<div id="tab-ops-watch">{ops_watch_inner_html()}</div>'
         '<p class="help">PaperWatch remains the loop. These buttons are extras. '
         "paper autobet is observation only. Trading is not armed. Series "
         f"<code>{PRIMARY_SERIES}</code> only.</p>"
@@ -821,7 +1023,48 @@ def tabs_nav_html() -> str:
         bits.append(
             f'<a href="#{_esc(tab_id)}" data-tab="{_esc(tab_id)}"{css}>{_esc(label)}</a>'
         )
+    bits.append(
+        '<span class="density-toggle" aria-label="density">'
+        '<a href="#glance" data-density="glance" class="active">Glance</a>'
+        '<a href="#cockpit" data-density="cockpit">Cockpit</a>'
+        "</span>"
+    )
     return f'<nav class="thin-tabs" aria-label="15m views">{"".join(bits)}</nav>'
+
+
+def cockpit_rail_html() -> str:
+    """Denser home extras. Hidden on glance so home is not a wall of panels."""
+    pnl, bankroll = _ledger_a()
+    wake = _load_wake()
+    scan = (wake or {}).get("scan") if isinstance((wake or {}).get("scan"), dict) else {}
+    pending = len([row for row in (scan.get("pending") or []) if isinstance(row, dict)])
+    missing = len([row for row in (scan.get("paper_join_missing") or []) if isinstance(row, dict)])
+    pnl_line = (
+        f"lineage A P/L ${_esc(pnl)} · bankroll ${_esc(bankroll)}"
+        if pnl
+        else "lineage A P/L not on file — none invented"
+    )
+    owed = [
+        str(entry.get("role"))
+        for entry in ((wake or {}).get("roles_owed") or [])
+        if isinstance(entry, dict) and entry.get("role")
+    ]
+    tick = _fmt_when((wake or {}).get("updated_at")) or "not recorded"
+    owed_line = ", ".join(owed) if owed else "none"
+    return (
+        '<div class="cockpit-rail cockpit-only" id="cockpit-rail">'
+        "<article>"
+        '<h3><a href="#scoreboard" data-tab="scoreboard">Scoreboard</a></h3>'
+        f"<p>{pnl_line}</p>"
+        f"<p>SETTLE_PENDING {pending} · missing join {missing}</p>"
+        "</article>"
+        "<article>"
+        '<h3><a href="#bot-hub" data-tab="bot-hub">Wake</a></h3>'
+        f"<p>owed { _esc(owed_line) }</p>"
+        f"<p>last tick { _esc(tick) }</p>"
+        "</article>"
+        "</div>"
+    )
 
 
 def header_15m_html(*, lane_line: str, wall_lines: str) -> str:
@@ -912,6 +1155,8 @@ def live_payload(state: dict | None = None, *, last_run: RunRecord | None = None
         "scoreboard_html": scoreboard_inner_html(),
         "lab_html": lab_inner_html(),
         "bot_html": bot_inner_html(),
+        "ops_watch_html": ops_watch_inner_html(state),
+        "cockpit_html": cockpit_rail_html(),
         "chart_src": src,
         "watch_kind": model["watch_kind"],
         "ticker": model["ticker"],
@@ -927,13 +1172,14 @@ def main_15m_html(*, last_run: RunRecord | None = None, state: dict | None = Non
         rec = state["surface"].get("last_run")
     chart = viz_wall_15m_html()
     return (
+        f"{tabs_nav_html()}"
+        '<div id="tab-home" class="tab-panel active" data-tab-panel="home">'
+        f"{cockpit_rail_html()}"
         '<section class="panel chart-panel">'
         "<h2>KXBTC15M board</h2>"
         '<p class="help">KXBTC15M windows from the join files. No golf WC1 / Ill here.</p>'
         f"{chart}"
         "</section>"
-        f"{tabs_nav_html()}"
-        '<div id="tab-home" class="tab-panel active" data-tab-panel="home">'
         f"{exceptions_html(rec, state=state)}"
         "</div>"
         '<div id="tab-scoreboard" class="tab-panel" data-tab-panel="scoreboard">'
@@ -976,6 +1222,10 @@ LANE_15M_CSS = """
  .lane-now .now-row { margin: 2px 0; }
  .lane-now .now-k { display: inline-block; min-width: 5.5rem; font-weight: 700; color: #1f3b4d; }
  .lane-now .now-v { color: #1b1b1b; }
+ .lane-now .now-sub { margin: 0 0 2px 5.5rem; font-size: 12px; color: #4a4a4a; }
+ .cockpit-only { display: none; }
+ body.density-cockpit .now-more.cockpit-only { display: block; }
+ body.density-cockpit .cockpit-rail.cockpit-only { display: grid; }
  .lane-tiles { display: flex; flex-wrap: wrap; gap: 8px; padding: 6px 20px 8px; background: #eef3f6; border-bottom: 1px solid #c9c2b2; }
  .lane-tile { display: flex; flex-direction: column; gap: 2px; padding: 6px 10px; background: #fff; border: 1px solid #c9c2b2; font-size: 12px; min-width: 11rem; max-width: 16rem; }
  .lane-tile .tile-name { font-weight: 700; font-size: 11px; letter-spacing: 0.06em; text-transform: uppercase; }
@@ -984,9 +1234,17 @@ LANE_15M_CSS = """
  .role-strip { padding: 4px 20px 8px; background: #eef3f6; border-bottom: 1px solid #c9c2b2; font-size: 12px; }
  .role-strip summary { cursor: pointer; color: #4a4a4a; }
  .role-strip .role-line { margin: 4px 0 0; color: #1b1b1b; }
- .thin-tabs { display: flex; flex-wrap: wrap; gap: 2px; margin: 8px 0 0; border-bottom: 1px solid #c9c2b2; }
+ .role-strip .role-jumps { margin: 4px 0 0; font-size: 12px; }
+ .role-strip .role-jumps a { color: #1f3b4d; }
+ .cockpit-rail { grid-template-columns: 1fr 1fr; gap: 8px; margin: 8px 0 0; }
+ .cockpit-rail article { background: #fff; border: 1px solid #c9c2b2; padding: 8px 10px; font-size: 12px; }
+ .cockpit-rail h3 { margin: 0 0 4px; font-size: 13px; }
+ .cockpit-rail p { margin: 2px 0; }
+ .thin-tabs { display: flex; flex-wrap: wrap; gap: 2px; margin: 0; padding: 6px 0 0; border-bottom: 1px solid #c9c2b2; position: sticky; top: 0; z-index: 4; background: #f4f1ea; }
  .thin-tabs a { padding: 6px 12px; font-size: 13px; color: #4a4a4a; text-decoration: none; }
  .thin-tabs a.active { color: #1b1b1b; font-weight: 700; border-bottom: 2px solid #1f3b4d; }
+ .thin-tabs .density-toggle { margin-left: auto; display: flex; gap: 2px; }
+ .thin-tabs .density-toggle a { font-size: 12px; }
  .tab-panel { display: none; }
  .tab-panel.active { display: block; }
  ul.exceptions { margin: 6px 0 10px; padding-left: 18px; font-size: 13px; font-family: Consolas, "Courier New", monospace; }
@@ -1009,14 +1267,36 @@ LANE_15M_JS = """
       a.classList.toggle('active', a.getAttribute('data-tab') === id);
     });
   }
-  nav.addEventListener('click', function(ev){
-    var a = ev.target.closest('[data-tab]');
+  function setDensity(mode){
+    var cockpit = mode === 'cockpit';
+    document.body.classList.toggle('density-cockpit', cockpit);
+    document.body.classList.toggle('density-glance', !cockpit);
+    try { localStorage.setItem('gpf-15m-density', cockpit ? 'cockpit' : 'glance'); } catch (e) {}
+    document.querySelectorAll('[data-density]').forEach(function(a){
+      a.classList.toggle('active', a.getAttribute('data-density') === (cockpit ? 'cockpit' : 'glance'));
+    });
+  }
+  document.addEventListener('click', function(ev){
+    var dens = ev.target.closest ? ev.target.closest('[data-density]') : null;
+    if (dens) {
+      ev.preventDefault();
+      setDensity(dens.getAttribute('data-density') || 'glance');
+      return;
+    }
+    var a = ev.target.closest ? ev.target.closest('[data-tab]') : null;
     if (!a) return;
     ev.preventDefault();
     var id = a.getAttribute('data-tab') || 'home';
     show(id);
     if (history.replaceState) history.replaceState(null, '', '#' + id);
   });
-  show((location.hash || '#home').replace('#',''));
+  var hash = (location.hash || '#home').replace('#','');
+  if (hash === 'cockpit') { setDensity('cockpit'); show('home'); }
+  else if (hash === 'glance') { setDensity('glance'); show('home'); }
+  else { show(hash); }
+  try {
+    var saved = localStorage.getItem('gpf-15m-density');
+    if (hash !== 'cockpit' && hash !== 'glance' && saved) setDensity(saved);
+  } catch (e) {}
 })();
 """

@@ -632,6 +632,10 @@ def render_html(surface: dict) -> str:
     if (bot && home.bot_html) bot.innerHTML = home.bot_html;
     var score = document.getElementById('tab-scoreboard-body');
     if (score && home.scoreboard_html) score.innerHTML = home.scoreboard_html;
+    var opsWatch = document.getElementById('tab-ops-watch');
+    if (opsWatch && home.ops_watch_html) opsWatch.innerHTML = home.ops_watch_html;
+    var rail = document.getElementById('cockpit-rail');
+    if (rail && home.cockpit_html) rail.outerHTML = home.cockpit_html;
   }}
   function tick(){{
     fetch('/api/watch', {{cache:'no-store'}}).then(function(r){{
