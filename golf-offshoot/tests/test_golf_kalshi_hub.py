@@ -12,6 +12,7 @@ from golf_offshoot.operator_surface.app import (
 )
 from golf_offshoot.operator_surface.lane_golf_home import (
     BOOK_MISSING,
+    BOOK_WHY,
     FARM_IDLE,
     HONER_IDLE,
     set_golf_kalshi_root_override,
@@ -66,6 +67,12 @@ def test_golf_glance_does_not_invent_pnl(tmp_path):
     assert 'class="settle"' in page
     glance = page[page.index('id="glance-strip"') : page.index('id="session-strip"')]
     assert 'class="settle"' not in glance
+    assert "no open paper tickets" not in glance
+    assert "not on this checkout" in glance
+    assert BOOK_WHY in page
+    home = page[page.index('id="tab-home"') : page.index('id="tab-scoreboard"')]
+    assert "decide_golf" in home
+    assert "golf_kalshi" in home
 
 
 def test_golf_copies_book_files_when_present(tmp_path):

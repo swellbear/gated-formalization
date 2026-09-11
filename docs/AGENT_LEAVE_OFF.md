@@ -5,7 +5,7 @@ Chat transcripts are not. A later Grok / Cursor cloud agent will not see a prior
 
 | Field | Value |
 |-------|--------|
-| Updated | 2026-09-11 13:50 EDT (draft PR #179 Golf (Kalshi) glance/cockpit; VM Desktop Chrome on 127.0.0.1:8765; not merged) |
+| Updated | 2026-09-11 14:05 EDT (draft PR #179; cloud golf hub has no Kalshi book; Windows live gym has the open tickets; not merged) |
 | Interim operator | Cursor chat (Grok bot usage exhausted until **2026-09-13**) |
 | Repo SoT | **This fold publishes.** Validator report must hash-match the committed `manifest.json`. |
 | Local Windows tree for this interim | `C:\Users\bearh\gated-formalization-master-hub` |
@@ -38,7 +38,7 @@ Do not write branch state as if it were landed. If Pages `generated_at` is more 
 
 ## 15m hub UX draft (not on master, do not merge)
 
-Draft PR **#179** on `cursor/15m-hub-ux-6620`. Sequence landed: glance home, A this-lane, B other-lane tiles, C role strip, Glance/Cockpit, Scoreboard / Lab / Ops / Bot-hub. Incremental: session row; folded Exceptions; cockpit Tape; tabs under the session row; other tabs hide Home A/B/C; Glance thinking is **why**; Cockpit rail is thinking/learning/tape; **`/api/watch` patches in place** (full reload only if the hub process restarts). **Golf (Kalshi)** is the golf lane (not PHASE 1 ESPN): same glance/session/tabs language, Farm + Honer tabs, Museum holds the previous Phase 1 claim, catalog stays off glance, 15m ledger is not dumped on golf Ops. 15m glance B is compact Golf (Kalshi) / Farm / Honer tiles, not WC1 FAIL. Optional-import of live golf-kalshi modules when present; this checkout stays honest if they are missing. Preview launcher: `golf-offshoot/Open-15m-Hub-PREVIEW.bat` plus `.url`. This cloud VM serves `http://127.0.0.1:8765` in the **Desktop Chrome window**. Founder said keep upgrading this draft. Do **not** merge. 15m market lock `KXBTC15M`. PaperWatch stays. Trading **NOT ARMED**.
+Draft PR **#179** on `cursor/15m-hub-ux-6620`. Sequence landed: glance home, A this-lane, B other-lane tiles, C role strip, Glance/Cockpit, Scoreboard / Lab / Ops / Bot-hub. Incremental: session row; folded Exceptions; cockpit Tape; tabs under the session row; other tabs hide Home A/B/C; Glance thinking is **why**; Cockpit rail is thinking/learning/tape; **`/api/watch` patches in place** (full reload only if the hub process restarts). **Golf (Kalshi)** is the golf lane (not PHASE 1 ESPN): same glance/session/tabs language, Farm + Honer tabs, Museum holds the previous Phase 1 claim, catalog stays off glance, 15m ledger is not dumped on golf Ops. 15m glance B is compact Golf (Kalshi) / Farm / Honer tiles, not WC1 FAIL. Optional-import of live golf-kalshi modules when present; this checkout stays honest if they are missing. **The cloud VM hub shows no open golf tickets because the book is not on this tree** (`golf_kalshi` module missing, `data/golf_kalshi/` absent). The live Windows gym has the `decide_golf` book (Founder: 11 open). Do not scrape tickets from a saved HTML snapshot. Preview launcher: `golf-offshoot/Open-15m-Hub-PREVIEW.bat` plus `.url`. This cloud VM serves `http://127.0.0.1:8765` in the **Desktop Chrome window**. Founder said keep upgrading this draft. Do **not** merge. 15m market lock `KXBTC15M`. PaperWatch stays. Trading **NOT ARMED**.
 
 ## What is already on master (PR #163 and earlier)
 

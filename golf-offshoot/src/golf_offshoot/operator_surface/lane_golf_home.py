@@ -40,6 +40,11 @@ CATALOG_MISSING = (
     "book here. Counts are not invented."
 )
 BOOK_MISSING = "Golf (Kalshi) book not on this checkout — none invented"
+BOOK_WHY = (
+    "The live Windows gym fills Watch / tickets / P/L from decide_golf on that machine. "
+    "This cloud checkout has no golf_kalshi module and no golf_kalshi/ files. "
+    "Scoreboard is empty for the same reason. The hub will not invent the open book."
+)
 
 TABS = (
     ("home", "Home"),
@@ -348,6 +353,14 @@ def _halt_label(halt: object) -> str:
     return "Halt not on file"
 
 
+def _chip(kind: str, key: str, value: str, *, css: str = "", extra: str = "") -> str:
+    return (
+        f'<span class="chip {css}" data-kind="{_esc(kind)}"{extra}>'
+        f'<span class="chip-k">{_esc(key)}</span> '
+        f'<span class="chip-v">{_esc(value)}</span></span>'
+    )
+
+
 def glance_chips_html(snap: dict[str, Any] | None = None) -> str:
     data = snap if snap is not None else golf_kalshi_snapshot()
     watch_kind = data["watch_kind"]
@@ -361,24 +374,30 @@ def glance_chips_html(snap: dict[str, Any] | None = None) -> str:
         chips.append(f'<span class="chip quiet" data-kind="watch-at">{_esc(when)}</span>')
     n = data.get("tickets_n")
     if n is None:
-        chips.append('<span class="chip quiet" data-kind="tickets">paper tickets not on file</span>')
+        chips.append(
+            '<span class="chip quiet" data-kind="tickets">paper tickets not on this checkout</span>'
+        )
     else:
         chips.append(
             f'<span class="chip" data-kind="tickets">paper tickets {_esc(n)}</span>'
         )
     if data.get("pnl"):
-        bank = f" · bankroll ${_esc(data['bankroll'])}" if data.get("bankroll") else ""
         chips.append(
-            f'<span class="chip pnl" data-kind="golf-pnl">P/L ${_esc(data["pnl"])}{bank}</span>'
+            f'<span class="chip pnl" data-kind="golf-pnl">P/L ${_esc(data["pnl"])}</span>'
         )
+        if data.get("bankroll"):
+            chips.append(
+                f'<span class="chip pnl" data-kind="bankroll">bankroll ${_esc(data["bankroll"])}</span>'
+            )
     else:
         chips.append(
             '<span class="chip pnl" data-kind="golf-pnl">P/L not on file — none invented</span>'
         )
     if data.get("fees"):
         chips.append(f'<span class="chip quiet" data-kind="fees">fees {_esc(data["fees"])}</span>')
+    halt_css = " halt-yes" if data.get("halt") is True else ""
     chips.append(
-        f'<span class="chip" data-kind="halt">{_esc(_halt_label(data.get("halt")))}</span>'
+        f'<span class="chip{halt_css}" data-kind="halt">{_esc(_halt_label(data.get("halt")))}</span>'
     )
     return "".join(chips)
 
@@ -390,20 +409,32 @@ def glance_strip_html() -> str:
 def session_inner_html(snap: dict[str, Any] | None = None) -> str:
     data = snap if snap is not None else golf_kalshi_snapshot()
     n = data.get("tickets_n")
-    if n is None:
+    halt = _halt_label(data.get("halt"))
+    if not data.get("present"):
+        clock = "no book on this checkout"
         pos = '<span class="sess-pos">open tickets not on this checkout</span>'
         note = f'<span class="sess-note">{_esc(BOOK_MISSING)}</span>'
-    elif int(n) == 0:
-        pos = '<span class="sess-pos">no open paper tickets</span>'
-        note = '<span class="sess-note">copied from the golf Kalshi book · not 15m lineage A</span>'
     else:
-        pos = f'<span class="sess-pos">{_esc(n)} open paper tickets · SETTLE_PENDING</span>'
-        note = '<span class="sess-note">copied from the golf Kalshi book · not 15m lineage A</span>'
-    halt = _halt_label(data.get("halt"))
+        clock = str(data.get("watch_at") or data.get("watch_label") or "watch stamp not on file")
+        if n is None:
+            pos = '<span class="sess-pos">open tickets not on this checkout</span>'
+            note = f'<span class="sess-note">{_esc(halt)} · {_esc(BOOK_MISSING)}</span>'
+        elif int(n) == 0:
+            pos = '<span class="sess-pos">no open paper tickets</span>'
+            note = (
+                f'<span class="sess-note">{_esc(halt)} · copied from the golf Kalshi book · '
+                "not 15m lineage A</span>"
+            )
+        else:
+            pos = f'<span class="sess-pos">{_esc(n)} open paper tickets · SETTLE_PENDING</span>'
+            note = (
+                f'<span class="sess-note">{_esc(halt)} · copied from the golf Kalshi book · '
+                "not 15m lineage A</span>"
+            )
     return (
         '<span class="sess-k">Gym</span>'
         f'<span class="sess-ticker">{_esc(GYM_LOCK)}</span>'
-        f'<span class="sess-clock">{_esc(halt)}</span>'
+        f'<span class="sess-clock">{_esc(clock)}</span>'
         f"{pos}{note}"
     )
 
@@ -567,13 +598,15 @@ def role_strip_html() -> str:
 
 def tabs_nav_html() -> str:
     bits = []
-    for tab_id, label in TABS:
+    for i, (tab_id, label) in enumerate(TABS, start=1):
         css = ' class="active"' if tab_id == "home" else ""
+        current = ' aria-current="page"' if tab_id == "home" else ""
         bits.append(
-            f'<a href="#{_esc(tab_id)}" data-tab="{_esc(tab_id)}"{css}>{_esc(label)}</a>'
+            f'<a href="#{_esc(tab_id)}" data-tab="{_esc(tab_id)}" title="Shortcut {i}"{css}{current}>'
+            f"{_esc(label)}</a>"
         )
     bits.append(
-        '<span class="density-toggle home-only" aria-label="density">'
+        '<span class="density-toggle home-only" role="group" aria-label="density">'
         '<a href="#glance" data-density="glance" class="active">Glance</a>'
         '<a href="#cockpit" data-density="cockpit">Cockpit</a>'
         "</span>"
@@ -585,17 +618,80 @@ def header_golf_html(*, lane_line: str, wall_lines: str, wall_class: str = "ops"
     css = wall_class if wall_class in {"ops", "mock"} else "ops"
     return (
         f'<header class="{_esc(css)}">'
+        '<div class="hdr-top">'
+        '<div class="hdr-titles">'
         f'<p class="kicker">{_esc(HEADER_KICKER)}</p>'
         f"<h1>{_esc(HEADER_TITLE)}</h1>"
+        "</div>"
         '<div class="market-lock">'
         f'<span class="lock-ticker">{_esc(GYM_LOCK)}</span>'
         f'<span class="lock-note">{_esc(GYM_LOCK_NOTE)}</span>'
         "</div>"
         f'<div class="trust">{_esc(TRUST_LINE)}</div>'
+        "</div>"
         f'<div class="lane-line">{_esc(lane_line)}</div>'
         f"{wall_lines}"
         "</header>"
     )
+
+
+def _status_pill(status: str) -> str:
+    raw = str(status or "SETTLE_PENDING")
+    kind = "pending" if "PENDING" in raw.upper() else "ok"
+    if "HALT" in raw.upper() or raw.upper() == "FAIL":
+        kind = "halt"
+    return f'<span class="pill {kind}">{_esc(raw)}</span>'
+
+
+def _ticket_rows(rows: list[Any], *, limit: int | None = None) -> tuple[list[str], int]:
+    body: list[str] = []
+    total = 0
+    for row in rows:
+        if not isinstance(row, dict):
+            continue
+        total += 1
+        if limit is not None and len(body) >= limit:
+            continue
+        player = row.get("player") or row.get("name") or ""
+        market = row.get("market") or row.get("title") or ""
+        sleeve = row.get("sleeve") or ""
+        stake = _fmt_money(row.get("stake"))
+        quote = row.get("quote")
+        quote_txt = _fmt_money(quote) if quote not in (None, "") else ""
+        status = str(row.get("status") or "SETTLE_PENDING")
+        body.append(
+            "<tr>"
+            f"<td>{_esc(player)}</td>"
+            f"<td>{_esc(market)}</td>"
+            f"<td>{_esc(sleeve)}</td>"
+            f'<td class="num">{_esc(stake)}</td>'
+            f'<td class="num">{_esc(quote_txt)}</td>'
+            f"<td>{_status_pill(status)}</td>"
+            "</tr>"
+        )
+    return body, total
+
+
+def _tickets_table_html(rows: list[Any], *, limit: int | None = None) -> tuple[str, int]:
+    body, total = _ticket_rows(rows, limit=limit)
+    if not body:
+        return ("", total)
+    shown = len(body)
+    more = ""
+    if limit is not None and total > shown:
+        more = (
+            f'<p class="help">{_esc(total - shown)} more on '
+            '<a href="#scoreboard" data-tab="scoreboard">Scoreboard</a>.</p>'
+        )
+    table = (
+        '<div class="gk-table-wrap" id="gk-tickets">'
+        '<table class="board-table gk-board">'
+        "<thead><tr><th>Player</th><th>Market</th><th>Sleeve</th>"
+        '<th class="num">Stake</th><th class="num">Quote</th><th>Status</th></tr></thead>'
+        f"<tbody>{''.join(body)}</tbody></table></div>"
+        f"{more}"
+    )
+    return table, total
 
 
 def tickets_inner_html(snap: dict[str, Any] | None = None) -> str:
@@ -605,37 +701,33 @@ def tickets_inner_html(snap: dict[str, Any] | None = None) -> str:
         if data["present"]:
             return "<p class='help'>No open golf Kalshi tickets on file.</p>"
         return f"<p class='help'>{_esc(BOOK_MISSING)}</p>"
-    body = []
-    for row in rows:
-        if not isinstance(row, dict):
-            continue
-        player = row.get("player") or row.get("name") or ""
-        market = row.get("market") or row.get("title") or ""
-        sleeve = row.get("sleeve") or ""
-        stake = _fmt_money(row.get("stake"))
-        quote = row.get("quote")
-        quote_txt = _fmt_money(quote) if quote not in (None, "") else ""
-        status = row.get("status") or "SETTLE_PENDING"
-        body.append(
-            "<tr>"
-            f"<td>{_esc(player)}</td>"
-            f"<td>{_esc(market)}</td>"
-            f"<td>{_esc(sleeve)}</td>"
-            f"<td>{_esc(stake)}</td>"
-            f"<td>{_esc(quote_txt)}</td>"
-            f"<td>{_esc(status)}</td>"
-            "</tr>"
-        )
-    if not body:
+    table, _total = _tickets_table_html(rows)
+    if not table:
         return f"<p class='help'>{_esc(BOOK_MISSING)}</p>"
     return (
         '<p class="help">Paper fills from decide_golf. Catalog open markets are Kalshi '
         "contracts, not this table. Not 15m lineage A.</p>"
-        '<div class="gk-table-wrap" id="gk-tickets">'
-        '<table class="board-table gk-board">'
-        "<thead><tr><th>Player</th><th>Market</th><th>Sleeve</th>"
-        "<th>Stake</th><th>Quote</th><th>Status</th></tr></thead>"
-        f"<tbody>{''.join(body)}</tbody></table></div>"
+        f"{table}"
+    )
+
+
+def tickets_teaser_html(snap: dict[str, Any] | None = None) -> str:
+    """Glance teaser: a few open tickets, not the catalog."""
+    data = snap if snap is not None else golf_kalshi_snapshot()
+    rows = data.get("tickets") or []
+    if not rows:
+        if data["present"]:
+            return "<p class='help'>No open golf Kalshi tickets on file.</p>"
+        return (
+            '<div class="empty-room">'
+            "<p class='loud'>No golf Kalshi book on this checkout</p>"
+            f"<p class='help'>{_esc(BOOK_MISSING)} {_esc(BOOK_WHY)}</p></div>"
+        )
+    table, total = _tickets_table_html(rows, limit=3)
+    return (
+        '<p class="help">Open paper tickets (teaser). Full book and catalog are on Scoreboard. '
+        "Not 15m lineage A.</p>"
+        f"{table}"
     )
 
 
@@ -662,21 +754,23 @@ def sleeves_inner_html(snap: dict[str, Any] | None = None) -> str:
         if used_f is not None and cap_f:
             pct = max(0, min(100, int(round(100 * used_f / cap_f))))
         title = ""
+        nums = ""
         if used_f is not None and cap_f is not None:
             title = f"{used_f:.2f} / {cap_f:.2f}"
+            nums = f'<span class="gk-sleeve-num">{_esc(title)}</span>'
         bits.append(
-            f"<div><span>{_esc(name)}</span>"
+            '<div class="gk-sleeve">'
+            f'<span class="gk-sleeve-name">{_esc(name)}</span>'
             f'<div class="gk-bar" title="{_esc(title)}"><span style="width:{pct}%"></span></div>'
-            "</div>"
+            f"{nums}</div>"
         )
     if not bits:
         return "<p class='help'>Sleeves not on this checkout.</p>"
     return f'<div class="gk-sleeves" id="gk-sleeves">{"".join(bits)}</div>'
 
 
-def catalog_inner_html(snap: dict[str, Any] | None = None) -> str:
+def catalog_chips_html(snap: dict[str, Any] | None = None) -> str:
     data = snap if snap is not None else golf_kalshi_snapshot()
-    html_board = str(data.get("catalog_html") or "").strip()
     counts = data.get("catalog_counts") or {}
     chips = []
     labels = (
@@ -690,11 +784,22 @@ def catalog_inner_html(snap: dict[str, Any] | None = None) -> str:
         val = counts.get(key)
         if val in (None, ""):
             continue
-        chips.append(f'<span class="chip"><b>{_esc(label)}</b> {_esc(val)}</span>')
-    chip_row = f'<div class="gk-chips">{"".join(chips)}</div>' if chips else ""
+        chips.append(_chip(key, label, str(val)))
+    if not chips:
+        return ""
+    return f'<div class="gk-chips" id="gk-catalog-chips">{"".join(chips)}</div>'
+
+
+def catalog_inner_html(snap: dict[str, Any] | None = None) -> str:
+    data = snap if snap is not None else golf_kalshi_snapshot()
+    html_board = str(data.get("catalog_html") or "").strip()
+    chip_row = catalog_chips_html(data)
     if html_board:
         return (
             f"{chip_row}"
+            '<label class="catalog-filter" for="gk-catalog-filter">Filter catalog'
+            '<input id="gk-catalog-filter" type="search" placeholder="Series, tour, player…" '
+            'autocomplete="off"/></label>'
             '<p class="help">Tour family → series counts. Market rows load when you open a '
             "series. Open markets are the catalog, not paper tickets.</p>"
             f'<div class="gk-catalog" id="gk-catalog">{html_board}</div>'
@@ -710,17 +815,27 @@ def catalog_inner_html(snap: dict[str, Any] | None = None) -> str:
 
 def farm_inner_html(snap: dict[str, Any] | None = None) -> str:
     data = snap if snap is not None else golf_kalshi_snapshot()
+    status = data.get("farm_status") or FARM_IDLE
     return (
         f'<p class="help">{_esc(FARM_HELP)}</p>'
-        f'<p class="loud" id="golf-farm-status">{_esc(data.get("farm_status") or FARM_IDLE)}</p>'
+        '<div class="empty-room">'
+        f'<p class="loud" id="golf-farm-status">{_esc(status)}</p>'
+        "<p class='help'>This room stays empty until golf paper settles. "
+        "It does not invent a tape.</p>"
+        "</div>"
     )
 
 
 def honer_inner_html(snap: dict[str, Any] | None = None) -> str:
     data = snap if snap is not None else golf_kalshi_snapshot()
+    status = data.get("honer_status") or HONER_IDLE
     return (
         f'<p class="help">{_esc(HONER_HELP)}</p>'
-        f'<p class="loud" id="golf-honer-status">{_esc(data.get("honer_status") or HONER_IDLE)}</p>'
+        '<div class="empty-room">'
+        f'<p class="loud" id="golf-honer-status">{_esc(status)}</p>'
+        "<p class='help'>Own sandbox. No combined bankroll. No Lineage A. "
+        "Nothing honed until this gym has golf tape.</p>"
+        "</div>"
     )
 
 
@@ -730,7 +845,8 @@ def lab_inner_html(snap: dict[str, Any] | None = None) -> str:
     return (
         '<p class="view-lead">Lab for this gym is the golf Kalshi recipe. '
         "Not the 15m PROPOSED. Not an ADMIT.</p>"
-        f'<p class="gk-nums">{_esc(recipe)}</p>'
+        f'<div class="recipe-stamp"><span class="chip-k">Recipe</span> '
+        f'<span class="chip-v">{_esc(recipe)}</span></div>'
         "<p class='help'>brain keep_expert stays keep_expert until a new dated claim. "
         "Nothing here retunes Phase 1 θ.</p>"
     )
@@ -810,7 +926,7 @@ def ops_html(*, last_run: RunRecord | None = None, checkout_is_phase1: bool = Tr
         "<h3>Last extra cycle</h3>"
         f"{last_html}"
         '<form class="row lane-form" method="get" action="/">'
-        "<fieldset><legend>Other chrome</legend>"
+        '<fieldset><legend>Lane</legend>'
         "<p class='help'>Opening 15-min Kalshi does <strong>not</strong> stop this gym's "
         "files, and does not stop PaperWatch.</p>"
         f'<button type="submit" name="{SELECTOR_FIELD}" value="{LANE_GOLF}" class="active">'
@@ -861,7 +977,10 @@ def museum_html(*, viz_wall: str, honesty_blocks: str, settle_banner: str) -> st
         f'<p class="help">{_esc(MUSEUM_HELP)}</p>'
         f"{settle_banner}"
         f"{viz_wall}"
+        '<details class="proof" id="museum-dumps">'
+        "<summary>Phase 1 dumps — ranked table, leftover, inventory, shadow, calibration</summary>"
         f'<div id="museum-ranked">{honesty_blocks}</div>'
+        "</details>"
         "</section></div>"
     )
 
@@ -874,31 +993,32 @@ def main_golf_html(
     settle_banner: str = "",
 ) -> str:
     snap = golf_kalshi_snapshot()
-    field = ""
     hunt = data_field_hunt(snap)
-    if hunt:
-        field = f'<p class="gk-nums" id="gk-field-hunt">{_esc(hunt)}</p>'
+    field = (
+        f'<p class="gk-nums" id="gk-field-hunt">{_esc(hunt)}</p>'
+        if hunt
+        else '<p class="gk-nums" id="gk-field-hunt" hidden></p>'
+    )
+    sleeves = sleeves_inner_html(snap)
+    teaser = tickets_teaser_html(snap)
     return (
         '<div id="tab-home" class="tab-panel active" data-tab-panel="home">'
         f"{cockpit_rail_html(snap)}"
-        '<section class="panel" id="golf-kalshi">'
-        "<h2>Golf (Kalshi)</h2>"
+        '<section class="panel gk-home" id="golf-kalshi">'
+        "<h2>This gym</h2>"
+        '<p class="help">Glance is Watch, open tickets, and sleeves. Catalog is Scoreboard. '
+        "No 15m ledger here.</p>"
         f"{field}"
-        '<div class="cockpit-only">'
-        "<h3>Sleeves</h3>"
-        f'<div id="gk-sleeves-slot">{sleeves_inner_html(snap)}</div>'
-        "</div>"
-        '<div class="cockpit-only">'
-        "<h3>Open tickets</h3>"
-        f'<div id="gk-tickets-home">{tickets_inner_html(snap)}</div>'
-        "</div>"
+        f'<div id="gk-sleeves-slot" class="home-sleeves">{sleeves}</div>'
+        f'<div id="gk-teaser">{teaser}</div>'
+        f'<div class="cockpit-only" id="gk-tickets-home">{tickets_inner_html(snap)}</div>'
         "</section>"
         "</div>"
         '<div id="tab-scoreboard" class="tab-panel" data-tab-panel="scoreboard">'
         '<section class="panel"><h2>Scoreboard</h2>'
-        '<p class="view-lead">Open golf Kalshi tickets and the catalog. '
+        '<p class="view-lead">Open golf Kalshi tickets, sleeves, and the catalog. '
         "Catalog is not the glance. Not 15m lineage A.</p>"
-        f'<div id="tab-scoreboard-body">{tickets_inner_html(snap)}{sleeves_inner_html(snap)}</div>'
+        f'<div id="tab-scoreboard-body">{tickets_inner_html(snap)}{sleeves}</div>'
         "<h3>Catalog</h3>"
         f"{catalog_inner_html(snap)}"
         "</section></div>"

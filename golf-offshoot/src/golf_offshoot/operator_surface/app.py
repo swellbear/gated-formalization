@@ -508,6 +508,7 @@ def render_html(surface: dict) -> str:
  form.lane-form fieldset {{ border: 1px solid #c9c2b2; padding: 8px 10px; }}
  form.lane-form legend {{ font-size: 13px; font-weight: 700; }}
  form.lane-form button.active {{ outline: 2px solid #f2e27a; }}
+ form.lane-form button {{ white-space: nowrap; }}
  label {{ font-size: 13px; display: flex; flex-direction: column; gap: 4px; }}
  input[type=text] {{ padding: 6px 8px; min-width: 180px; }}
  button {{ padding: 8px 12px; background: #1f3b4d; color: #fff; border: 0; cursor: pointer; font-size: 14px; }}
