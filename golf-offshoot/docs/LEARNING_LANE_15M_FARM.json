@@ -59,6 +59,19 @@
       "declared_at": "2026-09-10T19:34:00-04:00",
       "execution": false,
       "selects": true
+    },
+    {
+      "id": "F-CLOCK-HOUR-SECOND-HALF-30-45",
+      "kind": "CLOCK-HOUR-SECOND-HALF",
+      "params": {
+        "skip_close_minutes": [
+          30,
+          45
+        ]
+      },
+      "declared_at": "2026-09-10T20:06:00-04:00",
+      "execution": false,
+      "selects": true
     }
   ]
 }

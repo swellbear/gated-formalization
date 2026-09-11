@@ -401,6 +401,7 @@ def test_mechanism_catalog_seeds_the_kinds():
         "CLOCK-CIVIL-BOUNDARIES",
         "CLOCK-QUARTER-BOUNDARIES",
         "CLOCK-HOUR-FIRST-HALF",
+        "CLOCK-HOUR-SECOND-HALF",
         "HONER-FROZEN-CONSULT",
         "HONER-FAMILY-AMEND",
         "HONER-FROZEN-REPLACE",

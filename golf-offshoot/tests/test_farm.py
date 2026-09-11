@@ -151,6 +151,7 @@ def test_farm_module_does_not_import_honer_or_hardcode_hour_close():
         "CLOCK-CIVIL-BOUNDARIES",
         "CLOCK-QUARTER-BOUNDARIES",
         "CLOCK-HOUR-FIRST-HALF",
+        "CLOCK-HOUR-SECOND-HALF",
     )
 
 
@@ -538,6 +539,116 @@ def test_hour_first_half_unused_then_clone_after_date(tmp_path):
     )
     assert not clone_overlap(
         {"params": {"skip_close_minutes": [15, 30]}},
+        {"params": {"skip_close_minutes": [0, 30]}},
+    )
+
+
+def test_hour_second_half_unused_then_clone_after_date(tmp_path):
+    catalog = {
+        "schema": 1,
+        "lane": "learning_lane_15m",
+        "kinds": [
+            {
+                "id": "CLOCK-CLOSE-MINUTE",
+                "expected_skip_rate": 0.25,
+                "legal_now": True,
+                "params": ["skip_close_minute"],
+            },
+            {
+                "id": "CLOCK-CIVIL-BOUNDARIES",
+                "expected_skip_rate": 0.5,
+                "legal_after": "hour-close parks",
+                "params": ["skip_close_minutes"],
+            },
+            {
+                "id": "CLOCK-QUARTER-BOUNDARIES",
+                "expected_skip_rate": 0.5,
+                "legal_now": True,
+                "params": ["skip_close_minutes"],
+            },
+            {
+                "id": "CLOCK-HOUR-FIRST-HALF",
+                "expected_skip_rate": 0.5,
+                "legal_now": True,
+                "params": ["skip_close_minutes"],
+            },
+            {
+                "id": "CLOCK-HOUR-SECOND-HALF",
+                "expected_skip_rate": 0.5,
+                "legal_now": True,
+                "params": ["skip_close_minutes"],
+            },
+        ],
+    }
+    farm_notebooks = [
+        {
+            "id": f"F-CLOCK-CLOSE-MINUTE-{minute}",
+            "kind": "CLOCK-CLOSE-MINUTE",
+            "params": {"skip_close_minute": minute},
+            "declared_at": "2026-09-10T18:45:00-04:00",
+            "execution": False,
+            "selects": True,
+        }
+        for minute in (15, 30, 45)
+    ]
+    farm_notebooks.append(
+        {
+            "id": "F-CLOCK-QUARTER-BOUNDARIES-15-45",
+            "kind": "CLOCK-QUARTER-BOUNDARIES",
+            "params": {"skip_close_minutes": [15, 45]},
+            "declared_at": "2026-09-10T19:05:00-04:00",
+            "execution": False,
+            "selects": True,
+        }
+    )
+    farm_notebooks.append(
+        {
+            "id": "F-CLOCK-HOUR-FIRST-HALF-15-30",
+            "kind": "CLOCK-HOUR-FIRST-HALF",
+            "params": {"skip_close_minutes": [15, 30]},
+            "declared_at": "2026-09-10T19:34:00-04:00",
+            "execution": False,
+            "selects": True,
+        }
+    )
+    _seed(tmp_path, farm_notebooks=farm_notebooks)
+    _write_json(tmp_path / "golf-offshoot" / "docs" / "LEARNING_LANE_15M_MECHANISM_CATALOG.json", catalog)
+    unused = unused_legal_kinds(root=tmp_path)
+    assert unused == [
+        {
+            "kind": "CLOCK-HOUR-SECOND-HALF",
+            "params": {"skip_close_minutes": [30, 45]},
+            "expected_skip_rate": 0.5,
+        }
+    ]
+    added = date_notebooks(
+        unused,
+        declared_at="2026-09-10T20:06:00-04:00",
+        root=tmp_path,
+    )
+    assert len(added) == 1
+    assert added[0]["id"] == "F-CLOCK-HOUR-SECOND-HALF-30-45"
+    assert added[0]["execution"] is False
+    assert added[0]["params"]["skip_close_minutes"] == [30, 45]
+    assert unused_legal_kinds(root=tmp_path) == []
+    assert refuse_reason(
+        {
+            "kind": "CLOCK-HOUR-SECOND-HALF",
+            "params": {"skip_close_minutes": [30, 45]},
+            "expected_skip_rate": 0.5,
+        },
+        root=tmp_path,
+    ).startswith("clone")
+    assert not clone_overlap(
+        {"params": {"skip_close_minutes": [30, 45]}},
+        {"params": {"skip_close_minutes": [15, 30]}},
+    )
+    assert not clone_overlap(
+        {"params": {"skip_close_minutes": [30, 45]}},
+        {"params": {"skip_close_minutes": [15, 45]}},
+    )
+    assert not clone_overlap(
+        {"params": {"skip_close_minutes": [30, 45]}},
         {"params": {"skip_close_minutes": [0, 30]}},
     )
 
