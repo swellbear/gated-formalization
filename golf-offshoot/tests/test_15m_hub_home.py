@@ -54,8 +54,12 @@ def test_15m_chrome_is_not_golf_named(tmp_path):
     assert "Fetch KXBTC15M" in page
     assert "Paper cycle" in page
     assert "Extra cycle" in page
-    assert "Update live ranks" in golf
-    assert "PHASE 1 OBSERVATION" in golf
+    golf_header = golf[golf.index("<header") : golf.index("</header>")]
+    assert "Golf (Kalshi) paper watch" in golf_header
+    assert "PHASE 1 OBSERVATION" not in golf_header
+    assert "Golf Kalshi tick" in golf
+    assert "Update live ranks" not in golf
+    assert "Previous golf claim" in golf
 
 
 def test_glance_strip_watch_window_pending_pnl(tmp_path):
@@ -140,16 +144,15 @@ def test_15m_script_does_not_reload_on_generation(tmp_path):
         set_15m_root_override(None)
     assert "var is15 = document.body.classList.contains('lane-15m')" in page
     assert "applyHome(s.home)" in page
-    # Golf still reloads on generation; 15m patches, and full-reloads only if the hub process restarted.
-    assert "if (s.generation !== gen) location.reload()" in page
+    # Both lanes patch in place. Full reload only if the hub process restarted.
     assert "String(s.boot)" in page
     assert "normHtml" in page
-    home_idx = page.index("applyHome(s.home)")
-    golf_reload = page.index("if (s.generation !== gen) location.reload()")
-    assert home_idx < golf_reload
-    assert "return;" in page[home_idx:golf_reload]
+    assert "applyHome(s.home)" in page
+    assert "if (s.generation !== gen) location.reload()" not in page
     golf = _golf(tmp_path)
-    assert "if (lost) { location.reload(); return; }" in golf
+    assert "applyHome(s.home)" in golf
+    assert "isGolf" in golf
+    assert "if (lost) { location.reload(); return; }" not in golf
 
 
 def test_market_lock_obvious_paper_subtle(tmp_path):
@@ -381,9 +384,10 @@ def test_other_lanes_are_status_tiles_not_golf_cockpit(tmp_path):
     assert 'data-lane="golf"' in page
     end = page.index('id="role-strip"') if 'id="role-strip"' in page else page.index("<main")
     tiles = page[page.index('id="lane-tiles"') : end]
-    assert "idle ON" in tiles
-    assert "WC1 FAIL / park unproven" in tiles
-    assert "edge not established" in tiles
+    assert "Golf (Kalshi)" in tiles
+    assert "Golf Farm" in tiles
+    assert "Golf Honer" in tiles
+    assert "WC1 FAIL / park unproven" not in tiles
     assert "Update live ranks" not in tiles
     assert "Pull latest data" not in tiles
     assert "Ranked table" not in tiles
@@ -393,8 +397,10 @@ def test_other_lanes_are_status_tiles_not_golf_cockpit(tmp_path):
     assert "cockpit" not in tiles.lower()
     assert "KXBTC15M" not in tiles
     assert "ETH" not in tiles
-    assert 'id="lane-tiles"' not in golf
-    assert tiles.count('class="lane-tile"') == 1
+    assert tiles.count('class="lane-tile"') == 3
+    golf_tiles = golf[golf.index('id="lane-tiles"') : golf.index('id="role-strip"')]
+    assert "15-min Kalshi" in golf_tiles
+    assert "Golf (Kalshi) paper watch" in golf
     # Glance home still has the market lock; tiles must not become a second board.
     header = page[page.index("<header") : page.index("</header>")]
     assert 'class="lock-ticker">KXBTC15M' in header
@@ -444,7 +450,9 @@ def test_role_strip_collapsed_unless_owed(tmp_path):
     assert "for:" not in owed
     assert "role roster" not in owed_page.lower()
     assert "crew roster" not in owed_page.lower()
-    assert 'id="role-strip"' not in golf
+    assert 'id="role-strip"' in golf
+    golf_roles = golf[golf.index('id="role-strip"') : golf.index("<main")]
+    assert '<details class="role-strip-details" open>' not in golf_roles
     stack = owed_page[owed_page.index("<header") : owed_page.index("<main")]
     assert "<section" not in stack
     assert stack.count("class=\"panel\"") == 0
@@ -733,7 +741,10 @@ def test_session_strip_copies_open_book_and_folds_exceptions(tmp_path):
     assert 'class="tape-card"' in page
     assert "gpf-15m-tab" in page
     assert "paintClocks" in page
-    assert 'id="session-strip"' not in golf
+    assert 'id="session-strip"' in golf
+    golf_session = golf[golf.index('id="session-strip"') : golf.index('id="lane-now"')]
+    assert "Golf (Kalshi)" in golf_session
+    assert "KXBTC15M-26SEP111230-30" not in golf_session
     header = page[page.index("<header") : page.index("</header>")]
     assert 'class="lock-ticker">KXBTC15M' in header
     assert 'value="arm"' not in page

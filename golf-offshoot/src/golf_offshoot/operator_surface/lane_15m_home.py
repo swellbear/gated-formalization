@@ -13,7 +13,7 @@ from pathlib import Path
 from typing import Any
 
 from golf_offshoot.learning_lane_15m.paths import LANE_15M, LANE_GOLF, PRIMARY_SERIES
-from golf_offshoot.operator_surface.lanes import CANONICAL_LANES, SELECTOR_FIELD
+from golf_offshoot.operator_surface.lanes import SELECTOR_FIELD
 from golf_offshoot.operator_surface.modes import AI_NO_CASH, PAPER_ONLY
 from golf_offshoot.operator_surface.runner import RunRecord, format_run_record
 
@@ -798,22 +798,10 @@ def golf_status_tile_model(stamp_text: str | None = None) -> dict[str, str]:
 
 
 def other_lane_tiles_inner_html() -> str:
-    """Status tiles for every canonical lane except this 15m page. Not cockpits."""
-    tiles: list[str] = []
-    for lane in CANONICAL_LANES:
-        if lane == LANE_15M:
-            continue
-        if lane != LANE_GOLF:
-            continue
-        data = golf_status_tile_model()
-        tiles.append(
-            '<article class="lane-tile" data-lane="golf">'
-            '<span class="tile-name">golf</span>'
-            f'<span class="tile-status">{_esc(data["status"])}</span>'
-            f'<span class="tile-note">{_esc(data["note"])}</span>'
-            "</article>"
-        )
-    return "".join(tiles)
+    """Status tiles for Golf (Kalshi) + Farm / Honer. Not a cockpit, not WC1."""
+    from golf_offshoot.operator_surface.lane_golf_home import golf_organ_tiles_inner_html
+
+    return golf_organ_tiles_inner_html()
 
 
 def other_lane_tiles_html() -> str:
@@ -1391,9 +1379,9 @@ def ops_html(last_run: RunRecord | None = None) -> str:
         f"{last_html}"
         '<form class="row lane-form" method="get" action="/">'
         "<fieldset><legend>Other chrome</legend>"
-        "<p class='help'>Golf Phase 1 chrome is a different view. Opening it does "
+        "<p class='help'>Golf (Kalshi) chrome is a different view. Opening it does "
         "<strong>not</strong> stop PaperWatch on this hub.</p>"
-        f'<button type="submit" name="{SELECTOR_FIELD}" value="{LANE_GOLF}">Golf Phase 1 chrome</button>'
+        f'<button type="submit" name="{SELECTOR_FIELD}" value="{LANE_GOLF}">Golf (Kalshi)</button>'
         f'<button type="submit" name="{SELECTOR_FIELD}" value="{LANE_15M}" class="active">'
         "Stay on 15-min Kalshi</button>"
         "</fieldset></form>"
@@ -1561,6 +1549,15 @@ def viz_wall_15m_html() -> str:
     )
 
 
+def _golf_kalshi_mtime_root() -> Path | None:
+    try:
+        from golf_offshoot.operator_surface.lane_golf_home import golf_kalshi_root
+
+        return golf_kalshi_root()
+    except Exception:
+        return None
+
+
 def _mtime_ns(path: Path | None) -> int:
     if path is None:
         return -1
@@ -1586,6 +1583,7 @@ def _live_input_stamp(last_run: RunRecord | None) -> tuple:
         _mtime_ns(settlements_dir_15m()),
         _mtime_ns(chart_15m_path()),
         _mtime_ns(_GOLF_STAMP),
+        _mtime_ns(_golf_kalshi_mtime_root()),
         id(last_run) if last_run is not None else 0,
     )
 
@@ -1698,6 +1696,7 @@ LANE_15M_CSS = """
  .lane-now .now-sub { margin: 0 0 2px 5.5rem; font-size: 12px; color: #4a4a4a; }
  .lane-now .now-jump { margin: 6px 0 0; font-size: 12px; }
  .cockpit-only { display: none; }
+ body.density-cockpit .cockpit-only { display: block; }
  body.density-cockpit .now-more.cockpit-only { display: block; }
  body.density-cockpit .cockpit-rail.cockpit-only { display: grid; }
  body.density-cockpit .windows.cockpit-only { display: inline; }

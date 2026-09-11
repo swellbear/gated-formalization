@@ -54,7 +54,7 @@ def _selector(lane: str) -> str:
 <form class="lane-form" method="get" action="">
   <fieldset>
     <legend>Mode</legend>
-    <button type="submit" name="{SELECTOR_FIELD}" value="golf" {golf_on}>Golf Phase 1</button>
+    <button type="submit" name="{SELECTOR_FIELD}" value="golf" {golf_on}>Golf (Kalshi)</button>
     <button type="submit" name="{SELECTOR_FIELD}" value="learning_lane_15m" {m15_on}>15-min Kalshi (learning)</button>
   </fieldset>
 </form>
@@ -136,7 +136,7 @@ def render_hub(lane: str | None = None, *, query: dict | None = None) -> str:
         "(ingest, live prices, paper autobet, settle join). "
         "It is not live trading and not a golf WC1 edge."
         if active == LANE_15M
-        else "Golf Phase 1 stays observation-only. Trading is not armed."
+        else "Golf (Kalshi) stays paper observation. Trading is not armed. Previous Phase 1 claim is museum-only."
     )
     journal_html = _m15_journal_html() if active == LANE_15M else _golf_journal_html()
     return f"""<!DOCTYPE html>

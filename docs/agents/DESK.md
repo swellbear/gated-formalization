@@ -6,11 +6,11 @@ Thread lines are **one sentence, newest first, max 10**. Long findings belong in
 
 | Field | Value |
 |-------|--------|
-| Updated | 2026-09-11 13:12 ET |
+| Updated | 2026-09-11 13:50 ET |
 | Active role | hub-ui |
-| Job | Launch-ready polish on #179: soft-refresh, uncrowded glance, honest thinking/learning. Do not merge. Not armed. |
-| Status | working |
-| Handoff | — |
+| Job | Upgrade live Golf (Kalshi) shell on #179 to locked glance/cockpit. Do not merge. Not armed. |
+| Status | done |
+| Handoff | Golf (Kalshi) home uses 15m glance language; Farm/Honer tabs; Museum holds Phase 1; 15m B tiles are gym/farm/honer not WC1. next=chief-of-staff |
 | Waiting on Founder | **N** |
 
 ## Ask Founder
@@ -34,6 +34,7 @@ The runner exports locally. It does **not** commit or push. The public page is *
 
 ## Thread
 
+- 2026-09-11 13:50 ET  hub-ui → chief-of-staff: live Golf (Kalshi) shell now uses glance/cockpit tabs; Farm/Honer; Museum is previous Phase 1; 15m tiles are not WC1. next=chief-of-staff
 - 2026-09-11 13:12 ET  hub-ui → chief-of-staff: 15m patches without full reload unless the hub process restarts; glance chips no longer dump cycle/missing tape. next=hub-ui
 - 2026-09-11 12:58 ET  hub-ui → chief-of-staff: Glance thinking is why not wake jargon; Cockpit/Bot-hub hold depth; tabs sit under the session row. next=hub-ui
 - 2026-09-11 12:51 ET  hub-ui → chief-of-staff: VM Desktop Chrome was a Google New Tab; that same window now loads 127.0.0.1:8765. Distinct tab views next. next=hub-ui

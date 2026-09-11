@@ -22,7 +22,7 @@ def parse_lane(raw: Any) -> str:
 def lane_header_name(lane: str) -> str:
     if parse_lane(lane) == LANE_15M:
         return "15-min Kalshi (learning)"
-    return "Golf Phase 1"
+    return "Golf (Kalshi)"
 
 
 def lane_journal_label(lane: str) -> str:
