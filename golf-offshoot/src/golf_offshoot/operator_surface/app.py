@@ -34,6 +34,7 @@ from golf_offshoot.operator_surface.lane_15m_home import (
     other_lane_tiles_html,
     role_strip_html,
     session_strip_html,
+    tabs_nav_html,
     this_lane_now_html,
     viz_wall_15m_html as _viz_wall_15m_html,
     window_rows_15m as _window_rows_15m,
@@ -357,10 +358,12 @@ def render_html(surface: dict) -> str:
     event = html.escape(str(surface.get("event_id") or ""))
     lane = parse_lane(surface.get("lane"))
     wall_class = "mock" if walls.is_mock else "ops"
-    body_class = "lane-15m" if lane == LANE_15M else "lane-golf"
+    is_15m = lane == LANE_15M
+    body_class = "lane-15m" if is_15m else "lane-golf"
+    view_attr = ' data-view="home"' if is_15m else ""
     charts_help = (
         "KXBTC15M windows from the join files. No golf WC1 / Ill here."
-        if lane == LANE_15M
+        if is_15m
         else (
             "Illustrator boards that exist on disk. A missing chart stays not yet available and is "
             "never invented, and no edge badge is ever added. Phone alerts are notify-first; this "
@@ -374,7 +377,6 @@ def render_html(surface: dict) -> str:
     extra_css = ""
     extra_js = ""
     page_title = "golf-offshoot operator shell"
-    is_15m = lane == LANE_15M
     if is_15m:
         lane_line = f"{lane_line} — LEARNING LANE"
         viz_wall = _viz_wall_15m_html()
@@ -384,6 +386,7 @@ def render_html(surface: dict) -> str:
         settle_banner = (
             glance_strip_html()
             + session_strip_html()
+            + tabs_nav_html()
             + this_lane_now_html()
             + other_lane_tiles_html()
             + role_strip_html()
@@ -548,7 +551,7 @@ def render_html(surface: dict) -> str:
 {extra_css}
 </style>
 </head>
-<body class="{body_class}" data-lane="{html.escape(lane)}" data-market="{html.escape(PRIMARY_SERIES if is_15m else '')}">
+<body class="{body_class}" data-lane="{html.escape(lane)}" data-market="{html.escape(PRIMARY_SERIES if is_15m else '')}"{view_attr}>
 {header_block}
 {settle_banner}
 <main>

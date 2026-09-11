@@ -16,7 +16,11 @@ from golf_offshoot.operator_surface.app import (
     render_html,
 )
 from golf_offshoot.operator_surface.modes import NOT_ARMED, PAPER_ONLY
-from golf_offshoot.operator_surface.lane_15m_home import golf_status_tile_model
+from golf_offshoot.operator_surface.lane_15m_home import (
+    golf_status_tile_model,
+    _human_pending_why,
+    _window_tail,
+)
 from golf_offshoot.strategy.paper_ledger import PaperLedger
 
 
@@ -183,6 +187,9 @@ def test_thin_tabs_on_home(tmp_path):
     assert "'2':'scoreboard'" in page
     assert "setAttribute('data-view'" in page
     assert page.index('class="thin-tabs"') < page.index('class="panel chart-panel"')
+    assert page.index('id="session-strip"') < page.index('class="thin-tabs"')
+    assert page.index('class="thin-tabs"') < page.index('id="lane-now"')
+    assert 'data-view="home"' in page
     assert "cockpit-only" in page
     assert ".cockpit-only { display: none; }" in page
 
@@ -477,7 +484,8 @@ def test_doing_thinking_learning_uses_wake_when_present(tmp_path):
                 "pending": [
                     {
                         "ticker": "KXBTC15M-26SEP111215-15",
-                        "reason": "wait for Kalshi result",
+                        "kind": "awaiting_kalshi_result",
+                        "reason": "SETTLE_PENDING: can_close_early is set. Wait for the Kalshi result.",
                     }
                 ],
                 "paper_join_missing": [
@@ -505,13 +513,42 @@ def test_doing_thinking_learning_uses_wake_when_present(tmp_path):
     assert "Watch on" in now
     assert "last cycle 2026-09-11 12:00 EDT" in now
     assert "SETTLE_PENDING KXBTC15M-26SEP111215-15" in now
-    assert "wait for Kalshi result" in now
+    assert "Wait for the Kalshi result" in now
     assert "missing paper join KXBTC15M-26SEP071500-00" in now
     assert "new_settle KXBTC15M-26SEP111200-00" in now
     assert "owed digestor 4m" in now
     assert "now-sub" in now
     assert "cadence ~90s" in now
     assert "cockpit-only" in now
+    assert 'now-k">Thinking</span> <span class="now-v">waiting on Kalshi result' in now
+    think = now[now.index('now-k">Thinking') : now.index('now-k">Learning')]
+    think_glance = think.split('class="now-more cockpit-only"', 1)[0]
+    assert "can_close_early" not in think_glance
+    assert "can_close_early" in now
+    doing = now.split('now-k">Thinking', 1)[0]
+    doing_glance = doing.split('class="now-more cockpit-only"', 1)[0]
+    assert "paper tick ok" not in doing_glance
+    assert "paper tick ok" in doing
+    rail = page[page.index('id="cockpit-rail"') : page.index('id="tab-scoreboard"')]
+    assert "How it's thinking" in rail
+    assert "How it's learning" in rail
+    assert "waiting on Kalshi result" in rail
+
+
+def test_human_pending_why_and_window_tail():
+    assert (
+        _human_pending_why({"kind": "awaiting_kalshi_result"}) == "waiting on Kalshi result"
+    )
+    assert (
+        _human_pending_why(
+            {
+                "reason": "SETTLE_PENDING: can_close_early is set. Wait for the Kalshi result."
+            }
+        )
+        == "waiting on Kalshi result"
+    )
+    assert _window_tail("KXBTC15M-26SEP111215-15") == "26SEP111215-15"
+    assert _window_tail("") == ""
 
 
 def test_views_are_thin_but_real(tmp_path):
@@ -556,6 +593,8 @@ def test_views_are_thin_but_real(tmp_path):
     assert "roles owed: none" in bot
     assert "trading_armed=false" in bot
     assert 'id="cockpit-rail"' in page
+    assert "How it's thinking" in page[page.index('id="cockpit-rail"') : page.index('id="tab-scoreboard"')]
+    assert 'data-view="home"' in page
     assert 'class="tape-card"' in page
     assert 'id="session-strip"' in page
     assert 'class="lane-now home-only"' in page

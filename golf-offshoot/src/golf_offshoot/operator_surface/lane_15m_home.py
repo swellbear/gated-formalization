@@ -551,6 +551,39 @@ def _short_why(text: str, *, limit: int = 88) -> str:
     return first[: max(0, limit - 1)] + "…"
 
 
+def _window_tail(ticker: str) -> str:
+    """Short window id for glance. Full ticker stays on Cockpit / Bot-hub."""
+    text = str(ticker or "").strip()
+    if not text:
+        return ""
+    parts = text.split("-")
+    if len(parts) >= 3:
+        return "-".join(parts[-2:])
+    return text
+
+
+def _human_pending_why(row: dict[str, Any] | None) -> str:
+    """Founder-facing why. Raw wake text stays on Cockpit / Bot-hub."""
+    row = row if isinstance(row, dict) else {}
+    kind = str(row.get("kind") or "").strip().lower()
+    if kind == "awaiting_kalshi_result":
+        return "waiting on Kalshi result"
+    raw = str(row.get("reason") or "").strip()
+    low = raw.lower()
+    if "can_close_early" in low or "wait for the kalshi" in low or "wait for kalshi" in low:
+        return "waiting on Kalshi result"
+    if "disputed" in low or "under review" in low:
+        return "Kalshi disputed / under review"
+    if "no kalshi market payload" in low:
+        return "no Kalshi market payload on disk"
+    cleaned = raw
+    for prefix in ("SETTLE_PENDING:", "SETTLE_PENDING —", "SETTLE_PENDING -", "SETTLE_PENDING"):
+        if cleaned.upper().startswith(prefix.upper()):
+            cleaned = cleaned[len(prefix) :].lstrip(" :—-")
+            break
+    return _short_why(cleaned) or "waiting on Kalshi result"
+
+
 def this_lane_now_inner_html(state: dict | None = None) -> str:
     """This-lane doing / thinking / learning. Glance is a teaser; Bot-hub has the rest."""
     from golf_offshoot.learning_lane_15m.learn import _event_label
@@ -560,21 +593,19 @@ def this_lane_now_inner_html(state: dict | None = None) -> str:
     running = "on" if watch.get("running") else "off"
     cycles = watch.get("cycles")
     summary = str(watch.get("last_summary") or "").strip()
-    doing_primary = f"Watch {running}"
-    if cycles not in (None, ""):
-        doing_primary += f" · cycle {cycles}"
-    doing_primary += " · PaperWatch is the loop"
-    if summary:
-        doing_primary += f" · {summary}"
+    failed = watch.get("last_ok") is False
+    doing_primary = (
+        f"Watch {running} · last cycle failed"
+        if failed
+        else f"Watch {running} · PaperWatch is the loop"
+    )
     last_at = _fmt_when(watch.get("last_at"))
     interval = watch.get("interval_s")
     doing_extra: list[str] = []
     doing_glance = ""
     pos = _open_position_model()
-    if watch.get("last_ok") is False and watch.get("last_error"):
+    if failed and watch.get("last_error"):
         doing_glance = f"last cycle failed — {watch.get('last_error')}"
-        if last_at:
-            doing_extra.append(f"last cycle {last_at}")
     elif pos:
         mark = pos.get("mark")
         mark_txt = f"{float(mark):.3f}" if mark is not None else "not on file"
@@ -582,10 +613,14 @@ def this_lane_now_inner_html(state: dict | None = None) -> str:
             f"open paper {pos['side']} ${float(pos['stake']):.2f} @ {mark_txt} "
             "— observation fill, not an order"
         )
-        if last_at:
-            doing_extra.append(f"last cycle {last_at}")
     elif last_at:
         doing_glance = f"last cycle {last_at}"
+    if cycles not in (None, ""):
+        doing_extra.append(f"cycle {cycles}")
+    if summary:
+        doing_extra.append(summary)
+    if last_at and (not doing_glance or "last cycle" not in doing_glance):
+        doing_extra.append(f"last cycle {last_at}")
     if interval not in (None, ""):
         doing_extra.append(f"cadence ~{interval}s · extras are buttons, not the loop")
     if pos and doing_glance and "open paper" not in doing_glance:
@@ -605,7 +640,7 @@ def this_lane_now_inner_html(state: dict | None = None) -> str:
         row = pending[0]
         why = str(row.get("reason") or "wait for Kalshi result")
         ticker = str(row.get("ticker") or row.get("window_id") or "window")
-        thinking_primary = f"SETTLE_PENDING {ticker} — {_short_why(why)}"
+        thinking_primary = _human_pending_why(row)
         thinking_extra.append(f"SETTLE_PENDING {ticker} — {why}")
         if len(pending) > 1:
             thinking_extra.append(f"+{len(pending) - 1} more pending window(s) on this tree")
@@ -650,7 +685,10 @@ def this_lane_now_inner_html(state: dict | None = None) -> str:
     learning_extra: list[str] = []
     if events:
         ev = events[0]
-        learning_primary = f"{_event_label(ev)} — {ev.get('detail') or 'see wake'}"
+        tail = _window_tail(str(ev.get("ticker") or ev.get("window_id") or ""))
+        kind = str(ev.get("kind") or "learn")
+        learning_primary = f"{kind} {tail}".strip() if tail else kind
+        learning_extra.append(f"{_event_label(ev)} — {ev.get('detail') or 'see wake'}")
         when = _fmt_when(ev.get("at"))
         if when:
             learning_extra.append(f"last learn {when}")
@@ -1183,21 +1221,22 @@ def bot_inner_html() -> str:
     pending = [row for row in (scan.get("pending") or []) if isinstance(row, dict)]
     missing = [row for row in (scan.get("paper_join_missing") or []) if isinstance(row, dict)]
     think_bits: list[str] = []
+    think_raw = ""
     if pending:
         row = pending[0]
+        ticker = str(row.get("ticker") or row.get("window_id") or "window")
         think_bits.append(
-            "<li>SETTLE_PENDING "
-            f"{_esc(row.get('ticker') or row.get('window_id') or 'window')} — "
-            f"{_esc(row.get('reason') or 'wait for Kalshi result')}</li>"
+            "<li>"
+            f"{_esc(_human_pending_why(row))} · {_esc(ticker)} · SETTLE_PENDING</li>"
         )
+        think_raw = str(row.get("reason") or "").strip()
         if len(pending) > 1:
             think_bits.append(f"<li>+{len(pending) - 1} more pending window(s)</li>")
     if missing:
         row = missing[0]
         think_bits.append(
             "<li>missing paper join "
-            f"{_esc(row.get('ticker') or 'window')} — "
-            f"{_esc(row.get('reason') or 'official result / book not on this tree')} "
+            f"{_esc(row.get('ticker') or 'window')} "
             f"(+{max(0, len(missing) - 1)} more; not pending; no pnl invented)</li>"
         )
     think_html = (
@@ -1205,6 +1244,8 @@ def bot_inner_html() -> str:
         if think_bits
         else "<p class='help'>no pending window · no missing join on this tree</p>"
     )
+    if think_raw:
+        think_html += f"<p class='help'>wake: {_esc(think_raw)}</p>"
     owed_html = (
         "<ul class='exceptions'>"
         + "".join(
@@ -1371,24 +1412,59 @@ def tabs_nav_html() -> str:
 
 
 def cockpit_rail_html() -> str:
-    """Denser home extras. Hidden on glance so home is not a wall of panels."""
-    pnl, bankroll = _ledger_a()
+    """Denser home extras: how it's thinking / learning. Hidden on glance."""
+    from golf_offshoot.learning_lane_15m.learn import _event_label
+
     wake = _load_wake()
     scan = (wake or {}).get("scan") if isinstance((wake or {}).get("scan"), dict) else {}
-    pending = len([row for row in (scan.get("pending") or []) if isinstance(row, dict)])
-    missing = len([row for row in (scan.get("paper_join_missing") or []) if isinstance(row, dict)])
-    pnl_line = (
-        f"lineage A P/L ${_esc(pnl)} · bankroll ${_esc(bankroll)}"
-        if pnl
-        else "lineage A P/L not on file — none invented"
-    )
+    pending = [row for row in (scan.get("pending") or []) if isinstance(row, dict)]
+    missing = [row for row in (scan.get("paper_join_missing") or []) if isinstance(row, dict)]
+    if pending:
+        row = pending[0]
+        ticker = str(row.get("ticker") or row.get("window_id") or "window")
+        think_html = (
+            f"<p>{_esc(_human_pending_why(row))}</p>"
+            f"<p>{_esc(ticker)} · SETTLE_PENDING</p>"
+        )
+        raw = str(row.get("reason") or "").strip()
+        if raw:
+            think_html += f"<p class='help'>{_esc(raw)}</p>"
+    else:
+        think_html = "<p>no pending window on this tree</p>"
+    if missing:
+        think_html += (
+            f"<p>missing paper join {len(missing)} — not pending · "
+            '<a href="#scoreboard" data-tab="scoreboard">Scoreboard</a></p>'
+        )
+    events = [
+        ev
+        for ev in ((wake or {}).get("new_events") or (wake or {}).get("events") or [])
+        if isinstance(ev, dict)
+    ]
     owed = [
         str(entry.get("role"))
         for entry in ((wake or {}).get("roles_owed") or [])
         if isinstance(entry, dict) and entry.get("role")
     ]
     tick = _fmt_when((wake or {}).get("updated_at")) or "not recorded"
+    if events:
+        ev = events[0]
+        learn_html = (
+            f"<p>{_esc(_event_label(ev))} — {_esc(ev.get('detail') or 'see wake')}</p>"
+        )
+        when = _fmt_when(ev.get("at"))
+        if when:
+            learn_html += f"<p>last learn { _esc(when) }</p>"
+    else:
+        heartbeat = (wake or {}).get("heartbeat") if isinstance((wake or {}).get("heartbeat"), dict) else {}
+        learn_html = (
+            f"<p>{_esc(heartbeat.get('note') or 'no new settle; watch still running')}</p>"
+        )
     owed_line = ", ".join(owed) if owed else "none"
+    learn_html += (
+        f"<p>owed {_esc(owed_line)} · last tick {_esc(tick)} · "
+        '<a href="#bot-hub" data-tab="bot-hub">Bot-hub</a></p>'
+    )
     tape = _recent_join_lines(limit=3)
     if tape:
         tape_html = (
@@ -1401,14 +1477,12 @@ def cockpit_rail_html() -> str:
     return (
         '<div class="cockpit-rail cockpit-only" id="cockpit-rail">'
         "<article>"
-        '<h3><a href="#scoreboard" data-tab="scoreboard">Scoreboard</a></h3>'
-        f"<p>{pnl_line}</p>"
-        f"<p>SETTLE_PENDING {pending} · missing join {missing}</p>"
+        '<h3><a href="#bot-hub" data-tab="bot-hub">How it\'s thinking</a></h3>'
+        f"{think_html}"
         "</article>"
         "<article>"
-        '<h3><a href="#bot-hub" data-tab="bot-hub">Wake</a></h3>'
-        f"<p>owed { _esc(owed_line) }</p>"
-        f"<p>last tick { _esc(tick) }</p>"
+        '<h3><a href="#bot-hub" data-tab="bot-hub">How it\'s learning</a></h3>'
+        f"{learn_html}"
         "</article>"
         '<article class="tape-card">'
         '<h3><a href="#scoreboard" data-tab="scoreboard">Tape</a></h3>'
@@ -1467,8 +1541,8 @@ def viz_wall_15m_html() -> str:
         '<section class="viz wide" id="viz-slot-paper-window-strip">'
         f"<h3>{_esc(title)}</h3>"
         f'<div class="badge-row">{badges}</div>'
-        f'<p class="plain">{_esc(CHART_15M_PLAIN)}</p>'
-        f'<p class="sub">{_esc(CHART_15M_SUB)}</p>'
+        f'<p class="plain cockpit-only">{_esc(CHART_15M_PLAIN)}</p>'
+        f'<p class="sub cockpit-only">{_esc(CHART_15M_SUB)}</p>'
         "<figure>"
         f'<a class="zoom" href="{src}" data-viz-zoom="1" data-viz-title="{_esc(title)}" '
         f'aria-label="Enlarge {_esc(title)}">'
@@ -1524,7 +1598,6 @@ def main_15m_html(*, last_run: RunRecord | None = None, state: dict | None = Non
         rec = state["surface"].get("last_run")
     chart = viz_wall_15m_html()
     return (
-        f"{tabs_nav_html()}"
         '<div id="tab-home" class="tab-panel active" data-tab-panel="home">'
         f"{cockpit_rail_html()}"
         '<section class="panel chart-panel">'
@@ -1586,6 +1659,8 @@ LANE_15M_CSS = """
  body.density-cockpit .now-more.cockpit-only { display: block; }
  body.density-cockpit .cockpit-rail.cockpit-only { display: grid; }
  body.density-cockpit .windows.cockpit-only { display: inline; }
+ body.density-cockpit p.plain.cockpit-only,
+ body.density-cockpit p.sub.cockpit-only { display: block; }
  body.lane-15m:not([data-view="home"]) .home-only { display: none; }
  .lane-tiles { display: flex; flex-wrap: wrap; gap: 8px; padding: 6px 20px 8px; background: #eef3f6; border-bottom: 1px solid #c9c2b2; }
  .lane-tile { display: flex; flex-direction: column; gap: 2px; padding: 6px 10px; background: #fff; border: 1px solid #c9c2b2; font-size: 12px; min-width: 11rem; max-width: 16rem; }
@@ -1602,8 +1677,9 @@ LANE_15M_CSS = """
  .cockpit-rail .tape-card { grid-column: 1 / -1; }
  .cockpit-rail h3 { margin: 0 0 4px; font-size: 13px; }
  .cockpit-rail p { margin: 2px 0; }
+ .cockpit-rail .help { font-size: 12px; color: #4a4a4a; }
  .exceptions-fold summary { cursor: pointer; font-weight: 700; font-size: 16px; }
- .thin-tabs { display: flex; flex-wrap: wrap; gap: 2px; margin: 0; padding: 6px 0 0; border-bottom: 1px solid #c9c2b2; position: sticky; top: 0; z-index: 4; background: #f4f1ea; }
+ .thin-tabs { display: flex; flex-wrap: wrap; gap: 2px; margin: 0; padding: 6px 20px 0; border-bottom: 1px solid #c9c2b2; position: sticky; top: 0; z-index: 4; background: #f4f1ea; }
  .thin-tabs a { padding: 6px 12px; font-size: 13px; color: #4a4a4a; text-decoration: none; }
  .thin-tabs a.active { color: #1b1b1b; font-weight: 700; border-bottom: 2px solid #1f3b4d; }
  .thin-tabs .density-toggle { margin-left: auto; display: flex; gap: 2px; }
