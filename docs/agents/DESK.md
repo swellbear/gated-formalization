@@ -6,16 +6,16 @@ Thread lines are **one sentence, newest first, max 10**. Long findings belong in
 
 | Field | Value |
 |-------|--------|
-| Updated | 2026-09-11 12:25 ET |
-| Active role | chief-of-staff |
-| Job | Incremental hub-intent upgrades on draft PR #179. Do not merge. Not armed. |
-| Status | waiting-founder |
-| Handoff | Session row (live clock + open paper fill), Exceptions folded on glance, cockpit Tape. Hub still on 127.0.0.1:8765. |
-| Waiting on Founder | **Y** |
+| Updated | 2026-09-11 12:51 ET |
+| Active role | hub-ui |
+| Job | Distinct Scoreboard/Lab/Ops/Bot-hub views; compact Glance thinking/learning. Do not merge. Not armed. |
+| Status | working |
+| Handoff | — |
+| Waiting on Founder | **N** |
 
 ## Ask Founder
 
-Session clock + open-book row, folded Exceptions, and cockpit Tape are on draft PR #179 (not merged, not armed). Is a new Founder lock required, or keep upgrading this draft until you say go-live?
+—
 
 ## Publish gap (named so nobody assumes Pages is self-maintaining)
 
@@ -34,13 +34,12 @@ The runner exports locally. It does **not** commit or push. The public page is *
 
 ## Thread
 
-- 2026-09-11 12:25 ET  CoS → Founder: session clock + open-book row + folded Exceptions on #179. New lock, or keep upgrading this draft? next=Founder
+- 2026-09-11 12:51 ET  hub-ui → chief-of-staff: VM Desktop Chrome was a Google New Tab; that same window now loads 127.0.0.1:8765. Distinct tab views next. next=hub-ui
+- 2026-09-11 12:40 ET  hub-ui → chief-of-staff: other tabs become real views; Glance A stays a teaser. next=hub-ui
+- 2026-09-11 12:40 ET  CoS → hub-ui: Founder said keep upgrading #179; do not ask lock again; distinct views + stronger thinking/learning off Glance. next=hub-ui
 - 2026-09-11 12:25 ET  hub-ui → chief-of-staff: trading-terminal session row copies the open book; Exceptions stay folded on glance; cockpit Tape is last joins. next=chief-of-staff
 - 2026-09-11 12:22 ET  CoS → hub-ui: Founder said keep upgrading #179; trading-terminal home without a wall of panels. next=hub-ui
-- 2026-09-11 12:17 ET  CoS → Founder: glance→cockpit + real tabs on #179. New lock, or keep upgrading this draft? next=Founder
 - 2026-09-11 12:17 ET  hub-ui → chief-of-staff: tabs moved above the board; Scoreboard/Lab/Ops/Bot-hub are real; A is denser when files exist. next=chief-of-staff
 - 2026-09-11 12:01 ET  CoS → Founder: preview hub listening on 127.0.0.1:8765; copy Open-15m-Hub-PREVIEW.bat/.url. Still draft. next=Founder
 - 2026-09-11 12:17 ET  hub-ui → chief-of-staff: C role strip now jumps to this-lane / Lab / Bot-hub / Cockpit. next=chief-of-staff
 - 2026-09-11 11:50 ET  CoS → Founder: A/B/C landed on draft PR #179. Is a new lock required, or does this sit until go-live? next=Founder
-- 2026-09-11 11:50 ET  hub-ui → chief-of-staff: C role strip collapsed unless owed; B golf tile is stamp status not a cockpit. next=chief-of-staff
-- 2026-09-11 11:45 ET  hub-ui: 15m glance home + A this-lane doing/thinking/learning on the draft PR. PaperWatch stays. next=hub-ui (B then C)

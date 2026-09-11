@@ -181,6 +181,7 @@ def test_thin_tabs_on_home(tmp_path):
     assert "gpf-15m-tab" in page
     assert "'1':'home'" in page
     assert "'2':'scoreboard'" in page
+    assert "setAttribute('data-view'" in page
     assert page.index('class="thin-tabs"') < page.index('class="panel chart-panel"')
     assert "cockpit-only" in page
     assert ".cockpit-only { display: none; }" in page
@@ -540,19 +541,26 @@ def test_views_are_thin_but_real(tmp_path):
     assert "Lineage A (this tree)" in score
     assert "never added together" in score
     assert "missing paper join" in score
+    assert "board-table" in score
     assert "Fee-accurate" not in lab
     assert "RUN-ONLY" in lab
     assert "NOT owed" in lab
     assert "Honesty stamp" in lab
+    assert "<h3>Roles owed</h3>" not in lab
     assert "PaperWatch remains the loop" in ops
-    assert "Watch" in ops
+    assert "ops-grid" in ops
     assert "Fetch KXBTC15M" in ops
     assert "last tick 2026-09-11 12:01 EDT" in bot
+    assert "How it's thinking" in bot
+    assert "How it's learning" in bot
     assert "roles owed: none" in bot
     assert "trading_armed=false" in bot
     assert 'id="cockpit-rail"' in page
     assert 'class="tape-card"' in page
     assert 'id="session-strip"' in page
+    assert 'class="lane-now home-only"' in page
+    assert "data-view" in page
+    assert "now-jump" in page
     header = page[page.index("<header") : page.index("</header>")]
     assert 'class="lock-ticker">KXBTC15M' in header
     assert 'value="arm"' not in page
