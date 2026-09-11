@@ -126,6 +126,20 @@
       "declared_at": "2026-09-10T22:48:00-04:00",
       "execution": false,
       "selects": true
+    },
+    {
+      "id": "F-CLOCK-EXCEPT-FIRST-QUARTER-0-30-45",
+      "kind": "CLOCK-EXCEPT-FIRST-QUARTER",
+      "params": {
+        "skip_close_minutes": [
+          0,
+          30,
+          45
+        ]
+      },
+      "declared_at": "2026-09-10T23:36:00-04:00",
+      "execution": false,
+      "selects": true
     }
   ]
 }
