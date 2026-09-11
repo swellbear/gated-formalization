@@ -237,15 +237,71 @@ def _close_epoch(*, ticker: str, window_id: str = "", close_time: str = "") -> f
         return None
 
 
-def _next_window_chip(ticker: str, window_id: str = "", close_time: str = "") -> str:
-    epoch = _close_epoch(ticker=ticker, window_id=window_id, close_time=close_time)
+def _clock_label(epoch: float | None) -> str:
+    """Live window clock from a close epoch already on file. Not settle evidence."""
     if epoch is None:
         return "window close not on file"
     remaining = epoch - datetime.now(timezone.utc).timestamp()
     if remaining <= 0:
         return "window close passed — wait for Kalshi result"
     mins = int(remaining // 60)
-    return f"next window ~{mins}m"
+    secs = int(remaining % 60)
+    return f"{mins}:{secs:02d}"
+
+
+def _next_window_chip(ticker: str, window_id: str = "", close_time: str = "") -> str:
+    return _clock_label(
+        _close_epoch(ticker=ticker, window_id=window_id, close_time=close_time)
+    )
+
+
+def _open_position_model() -> dict[str, Any]:
+    """Open paper fill copied from this tree's book. None invented."""
+    from golf_offshoot.learning_lane_15m.paper import event_ticker_from_book, iter_books
+
+    for rec in iter_books():
+        if rec.settled_at is not None:
+            continue
+        if not rec.book.positions:
+            continue
+        pos = rec.book.positions[0]
+        name = str(pos.player_name or "")
+        side = "YES" if name.upper().startswith("YES") else (name or "paper")
+        mark = pos.fill_price if pos.fill_price is not None else pos.entry_market_p
+        return {
+            "ticker": str(pos.player_id or event_ticker_from_book(rec)),
+            "window_id": str(rec.tournament_id or ""),
+            "stake": pos.stake,
+            "mark": mark,
+            "side": side,
+            "intent": str(pos.intent or "hold"),
+        }
+    return {}
+
+
+def _last_settled_join_line() -> str:
+    from golf_offshoot.learning_lane_15m.paper import event_ticker_from_book, iter_books
+
+    settled = [rec for rec in iter_books() if rec.settled_at is not None]
+    if not settled:
+        return ""
+
+    def _when(rec: Any) -> datetime:
+        at = rec.settled_at
+        if at.tzinfo is None:
+            return at.replace(tzinfo=timezone.utc)
+        return at
+
+    rec = max(settled, key=_when)
+    tickers = [pos.player_id for pos in rec.book.positions if pos.player_id]
+    ticker = str(tickers[0] if tickers else event_ticker_from_book(rec))
+    if rec.settlement_pnl is None:
+        pnl = "no pnl on disk"
+    else:
+        pnl = f"pnl={float(rec.settlement_pnl):+.2f}"
+    when = _fmt_when(rec.settled_at)
+    extra = f" {when}" if when else ""
+    return f"last joined {ticker} {pnl}{extra} — this book's recorded number"
 
 
 def _current_window(scan: dict[str, Any], journal: list[dict[str, Any]]) -> dict[str, str]:
@@ -342,12 +398,17 @@ def glance_model(state: dict | None = None) -> dict[str, Any]:
     pending = [row for row in (scan.get("pending") or []) if isinstance(row, dict)]
     missing = [row for row in (scan.get("paper_join_missing") or []) if isinstance(row, dict)]
     pnl, bankroll = _ledger_a()
-    next_chip = (
-        _next_window_chip(
-            current.get("ticker") or "",
+    close_epoch = (
+        _close_epoch(
+            ticker=current.get("ticker") or "",
             window_id=current.get("window_id") or "",
             close_time=current.get("close_time") or "",
         )
+        if current.get("ticker")
+        else None
+    )
+    next_chip = (
+        _clock_label(close_epoch)
         if current.get("ticker")
         else "no current window on file"
     )
@@ -362,6 +423,7 @@ def glance_model(state: dict | None = None) -> dict[str, Any]:
         "lineage_a_pnl": pnl,
         "lineage_a_bankroll": bankroll,
         "next_chip": next_chip,
+        "close_epoch": close_epoch,
         "series": PRIMARY_SERIES,
     }
 
@@ -395,14 +457,64 @@ def glance_chips_html(state: dict | None = None, *, model: dict[str, Any] | None
         )
     summary = data.get("watch_summary") or ""
     summary_html = f'<span class="watch-summary">{_esc(summary)}</span>' if summary else ""
+    epoch = data.get("close_epoch")
+    if epoch is not None:
+        next_chip = (
+            f'<span class="chip next" data-kind="next">next '
+            f'<span data-close-epoch="{float(epoch):.3f}">{_esc(data["next_chip"])}</span></span>'
+        )
+    else:
+        next_chip = (
+            f'<span class="chip next" data-kind="next">{_esc(data["next_chip"])}</span>'
+        )
     return (
         f'<span class="chip watch-{_esc(watch_kind)}" data-watch="{_esc(watch_kind)}">'
         f"{_esc(data['watch_label'])}</span>"
         f'<span class="chip market" data-kind="window">{_esc(data["ticker"])}</span>'
         f"{pending_chip}{missing_chip}{pnl_chip}"
-        f'<span class="chip next" data-kind="next">{_esc(data["next_chip"])}</span>'
+        f"{next_chip}"
         f"{summary_html}"
     )
+
+
+def session_inner_html(state: dict | None = None, *, model: dict[str, Any] | None = None) -> str:
+    """One trading-terminal row: window clock + open paper fill from this tree."""
+    data = model if model is not None else glance_model(state)
+    pos = _open_position_model()
+    epoch = data.get("close_epoch")
+    ticker = data.get("ticker") or PRIMARY_SERIES
+    clock = data.get("next_chip") or "window close not on file"
+    if epoch is not None:
+        clock_html = (
+            f'<span class="sess-clock" data-close-epoch="{float(epoch):.3f}">'
+            f"{_esc(clock)}</span>"
+        )
+    else:
+        clock_html = f'<span class="sess-clock">{_esc(clock)}</span>'
+    if pos:
+        mark = pos.get("mark")
+        mark_txt = f"{float(mark):.3f}" if mark is not None else "not on file"
+        stake_txt = f"{float(pos['stake']):.2f}"
+        pos_html = (
+            f'<span class="sess-pos">open paper {_esc(pos["side"])} '
+            f"${_esc(stake_txt)} @ {_esc(mark_txt)} · not an order</span>"
+            '<span class="sess-note">copied from this tree\'s open book · '
+            "display only, not settle</span>"
+        )
+    else:
+        pos_html = (
+            '<span class="sess-pos">no open paper book on this tree</span>'
+            '<span class="sess-note">no fill invented</span>'
+        )
+    return (
+        '<span class="sess-k">Window</span>'
+        f'<span class="sess-ticker">{_esc(ticker)}</span>'
+        f"{clock_html}{pos_html}"
+    )
+
+
+def session_strip_html(state: dict | None = None) -> str:
+    return f'<div class="session" id="session-strip">{session_inner_html(state)}</div>'
 
 
 def glance_strip_html(state: dict | None = None) -> str:
@@ -449,6 +561,14 @@ def this_lane_now_inner_html(state: dict | None = None) -> str:
         doing_extra.append(f"cadence ~{interval}s · extras are buttons, not the loop")
     if watch.get("last_ok") is False and watch.get("last_error"):
         doing.append(f"last cycle failed — {watch.get('last_error')}")
+    pos = _open_position_model()
+    if pos:
+        mark = pos.get("mark")
+        mark_txt = f"{float(mark):.3f}" if mark is not None else "not on file"
+        doing.append(
+            f"open paper {pos['side']} ${float(pos['stake']):.2f} @ {mark_txt} "
+            "— observation fill, not an order"
+        )
 
     scan = (wake or {}).get("scan") if isinstance((wake or {}).get("scan"), dict) else {}
     pending = [row for row in (scan.get("pending") or []) if isinstance(row, dict)]
@@ -474,6 +594,10 @@ def this_lane_now_inner_html(state: dict | None = None) -> str:
             thinking.append(f"+{len(missing) - 1} more missing join(s) — no pnl invented")
     if not thinking:
         thinking.append("no pending window · no missing join on this tree")
+    if pos:
+        thinking.append(
+            "open-book mark is the paper fill on this tree — not a live bid/ask, not settle"
+        )
     if kept:
         row = kept[0]
         thinking_extra.append(
@@ -520,6 +644,11 @@ def this_lane_now_inner_html(state: dict | None = None) -> str:
         if reasons:
             line += f" — {reasons}"
         learning.append(line)
+        if first.get("stale"):
+            learning.append(f"{first.get('role')} is STALE — still a request, not a completion")
+    last_join = _last_settled_join_line()
+    if last_join:
+        learning.append(last_join)
     tick = _fmt_when((wake or {}).get("updated_at"))
     if tick and not any(tick in line for line in learning):
         learning_extra.append(f"wake tick {tick}")
@@ -808,9 +937,12 @@ def exceptions_inner_html(last_run: RunRecord | None = None, *, state: dict | No
 def exceptions_html(last_run: RunRecord | None = None, *, state: dict | None = None) -> str:
     return (
         '<section class="panel" id="journal-exceptions-panel">'
-        "<h2>Exceptions</h2>"
-        '<p class="help">Open book, recent joins, owed roles. Not the full dump.</p>'
+        '<details class="exceptions-fold" id="exceptions-fold">'
+        "<summary>Exceptions — open book / last joins</summary>"
+        '<p class="help">Open book, recent joins, owed roles. Not the full dump. '
+        "Folded on glance so Home stays a terminal, not a wall.</p>"
         f'<div id="journal-exceptions">{exceptions_inner_html(last_run, state=state)}</div>'
+        "</details>"
         "</section>"
     )
 
@@ -923,6 +1055,7 @@ def bot_inner_html() -> str:
             "<li>"
             + _esc(
                 f"{entry.get('role')} · owed {entry.get('age_text') or ''}"
+                + (" STALE" if entry.get("stale") else "")
                 + (
                     " — " + "; ".join(str(r) for r in (entry.get("reasons") or [])[:2] if r)
                     if entry.get("reasons")
@@ -1051,6 +1184,15 @@ def cockpit_rail_html() -> str:
     ]
     tick = _fmt_when((wake or {}).get("updated_at")) or "not recorded"
     owed_line = ", ".join(owed) if owed else "none"
+    tape = _recent_join_lines(limit=3)
+    if tape:
+        tape_html = (
+            "<ul class='exceptions'>"
+            + "".join(f"<li>{_esc(line)}</li>" for line in tape)
+            + "</ul>"
+        )
+    else:
+        tape_html = "<p>No official settle joins on file yet.</p>"
     return (
         '<div class="cockpit-rail cockpit-only" id="cockpit-rail">'
         "<article>"
@@ -1062,6 +1204,10 @@ def cockpit_rail_html() -> str:
         '<h3><a href="#bot-hub" data-tab="bot-hub">Wake</a></h3>'
         f"<p>owed { _esc(owed_line) }</p>"
         f"<p>last tick { _esc(tick) }</p>"
+        "</article>"
+        '<article class="tape-card">'
+        '<h3><a href="#scoreboard" data-tab="scoreboard">Tape</a></h3>'
+        f"{tape_html}"
         "</article>"
         "</div>"
     )
@@ -1147,6 +1293,7 @@ def live_payload(state: dict | None = None, *, last_run: RunRecord | None = None
     model = glance_model(state)
     return {
         "glance_html": glance_chips_html(state, model=model),
+        "session_html": session_inner_html(state, model=model),
         "now_html": this_lane_now_inner_html(state),
         "tiles_html": other_lane_tiles_inner_html(),
         "roles_html": role_strip_inner_html(state),
@@ -1218,6 +1365,12 @@ LANE_15M_CSS = """
  .glance .chip.quiet { color: #4a4a4a; }
  .glance .chip.pnl { font-variant-numeric: tabular-nums; }
  .glance .watch-summary { font-size: 12px; color: #4a4a4a; }
+ .session { display: flex; flex-wrap: wrap; gap: 8px 12px; align-items: baseline; padding: 6px 20px 8px; background: #0e1f29; color: #f4f1ea; border-bottom: 1px solid #c9c2b2; font-size: 13px; font-variant-numeric: tabular-nums; }
+ .session .sess-k { font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; opacity: 0.75; }
+ .session .sess-ticker { font-weight: 700; letter-spacing: 0.04em; color: #f2e27a; }
+ .session .sess-clock { font-weight: 700; font-family: Consolas, "Courier New", monospace; }
+ .session .sess-pos { color: #e8f0e8; }
+ .session .sess-note { font-size: 12px; opacity: 0.75; }
  .lane-now { padding: 8px 20px 10px; background: #e7edf1; border-bottom: 1px solid #c9c2b2; font-size: 13px; }
  .lane-now .now-row { margin: 2px 0; }
  .lane-now .now-k { display: inline-block; min-width: 5.5rem; font-weight: 700; color: #1f3b4d; }
@@ -1238,8 +1391,10 @@ LANE_15M_CSS = """
  .role-strip .role-jumps a { color: #1f3b4d; }
  .cockpit-rail { grid-template-columns: 1fr 1fr; gap: 8px; margin: 8px 0 0; }
  .cockpit-rail article { background: #fff; border: 1px solid #c9c2b2; padding: 8px 10px; font-size: 12px; }
+ .cockpit-rail .tape-card { grid-column: 1 / -1; }
  .cockpit-rail h3 { margin: 0 0 4px; font-size: 13px; }
  .cockpit-rail p { margin: 2px 0; }
+ .exceptions-fold summary { cursor: pointer; font-weight: 700; font-size: 16px; }
  .thin-tabs { display: flex; flex-wrap: wrap; gap: 2px; margin: 0; padding: 6px 0 0; border-bottom: 1px solid #c9c2b2; position: sticky; top: 0; z-index: 4; background: #f4f1ea; }
  .thin-tabs a { padding: 6px 12px; font-size: 13px; color: #4a4a4a; text-decoration: none; }
  .thin-tabs a.active { color: #1b1b1b; font-weight: 700; border-bottom: 2px solid #1f3b4d; }
@@ -1258,6 +1413,25 @@ LANE_15M_JS = """
   var nav = document.querySelector('.thin-tabs');
   if (!nav) return;
   var allowed = {home:1, scoreboard:1, lab:1, ops:1, 'bot-hub':1};
+  function paintClocks(){
+    var now = Date.now() / 1000;
+    document.querySelectorAll('[data-close-epoch]').forEach(function(el){
+      var epoch = parseFloat(el.getAttribute('data-close-epoch') || '');
+      if (!isFinite(epoch)) return;
+      var rem = epoch - now;
+      if (rem <= 0) {
+        el.textContent = 'window close passed — wait for Kalshi result';
+        return;
+      }
+      var m = Math.floor(rem / 60);
+      var s = Math.floor(rem % 60);
+      el.textContent = m + ':' + (s < 10 ? '0' : '') + s;
+    });
+  }
+  function foldExceptions(open){
+    var fold = document.getElementById('exceptions-fold');
+    if (fold) fold.open = !!open;
+  }
   function show(id){
     if (!allowed[id]) id = 'home';
     document.querySelectorAll('.tab-panel').forEach(function(p){
@@ -1266,6 +1440,7 @@ LANE_15M_JS = """
     nav.querySelectorAll('[data-tab]').forEach(function(a){
       a.classList.toggle('active', a.getAttribute('data-tab') === id);
     });
+    try { localStorage.setItem('gpf-15m-tab', id); } catch (e) {}
   }
   function setDensity(mode){
     var cockpit = mode === 'cockpit';
@@ -1275,6 +1450,7 @@ LANE_15M_JS = """
     document.querySelectorAll('[data-density]').forEach(function(a){
       a.classList.toggle('active', a.getAttribute('data-density') === (cockpit ? 'cockpit' : 'glance'));
     });
+    foldExceptions(cockpit);
   }
   document.addEventListener('click', function(ev){
     var dens = ev.target.closest ? ev.target.closest('[data-density]') : null;
@@ -1290,13 +1466,31 @@ LANE_15M_JS = """
     show(id);
     if (history.replaceState) history.replaceState(null, '', '#' + id);
   });
-  var hash = (location.hash || '#home').replace('#','');
+  document.addEventListener('keydown', function(ev){
+    if (ev.altKey || ev.metaKey || ev.ctrlKey) return;
+    var t = ev.target;
+    if (t && (t.tagName === 'INPUT' || t.tagName === 'TEXTAREA' || t.isContentEditable)) return;
+    var keys = {'1':'home','2':'scoreboard','3':'lab','4':'ops','5':'bot-hub'};
+    if (!keys[ev.key]) return;
+    ev.preventDefault();
+    show(keys[ev.key]);
+    if (history.replaceState) history.replaceState(null, '', '#' + keys[ev.key]);
+  });
+  var hash = (location.hash || '').replace('#','');
   if (hash === 'cockpit') { setDensity('cockpit'); show('home'); }
   else if (hash === 'glance') { setDensity('glance'); show('home'); }
-  else { show(hash); }
+  else if (allowed[hash]) { show(hash); }
+  else {
+    var savedTab = '';
+    try { savedTab = localStorage.getItem('gpf-15m-tab') || ''; } catch (e) {}
+    show(allowed[savedTab] ? savedTab : 'home');
+  }
   try {
     var saved = localStorage.getItem('gpf-15m-density');
     if (hash !== 'cockpit' && hash !== 'glance' && saved) setDensity(saved);
+    else if (hash !== 'cockpit' && hash !== 'glance') setDensity('glance');
   } catch (e) {}
+  setInterval(paintClocks, 1000);
+  paintClocks();
 })();
 """

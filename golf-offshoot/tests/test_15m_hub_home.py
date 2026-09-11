@@ -102,7 +102,8 @@ def test_journal_is_exceptions_not_dump(tmp_path):
         page = _page(tmp_path)
     finally:
         set_15m_root_override(None)
-    assert ">Exceptions</h2>" in page
+    assert 'id="exceptions-fold"' in page
+    assert "Exceptions — open book / last joins" in page
     assert "Full tape (not the glance)" in page
     assert "What the last run did" not in page
     assert "Last operator cycle" not in page
@@ -177,6 +178,9 @@ def test_thin_tabs_on_home(tmp_path):
     assert "tab-panel active" in page
     assert 'data-density="cockpit"' in page
     assert 'data-density="glance"' in page
+    assert "gpf-15m-tab" in page
+    assert "'1':'home'" in page
+    assert "'2':'scoreboard'" in page
     assert page.index('class="thin-tabs"') < page.index('class="panel chart-panel"')
     assert "cockpit-only" in page
     assert ".cockpit-only { display: none; }" in page
@@ -309,6 +313,7 @@ def test_api_watch_includes_15m_home_and_no_generation_bump_on_cycle(tmp_path):
         assert payload["home"]["series"] == "KXBTC15M"
         assert payload["home"]["trading_armed"] is False
         assert "glance_html" in payload["home"]
+        assert "session_html" in payload["home"]
         assert "now_html" in payload["home"]
         assert "tiles_html" in payload["home"]
         assert "roles_html" in payload["home"]
@@ -546,6 +551,95 @@ def test_views_are_thin_but_real(tmp_path):
     assert "roles owed: none" in bot
     assert "trading_armed=false" in bot
     assert 'id="cockpit-rail"' in page
+    assert 'class="tape-card"' in page
+    assert 'id="session-strip"' in page
+    header = page[page.index("<header") : page.index("</header>")]
+    assert 'class="lock-ticker">KXBTC15M' in header
+    assert 'value="arm"' not in page
+    assert 'value="deposit"' not in page
+
+
+def test_session_strip_copies_open_book_and_folds_exceptions(tmp_path):
+    from datetime import datetime, timezone
+
+    from golf_offshoot.learning_lane_15m.paper import save_book
+    from golf_offshoot.models.enums import BetType
+    from golf_offshoot.models.strategy import PortfolioState, StrategyPosition
+    from golf_offshoot.strategy.paper_book import PaperBookFile
+
+    set_15m_root_override(tmp_path)
+    try:
+        save_book(
+            PaperBookFile(
+                tournament_id="KXBTC15M-26SEP111215__2026-09-11T16:00:00Z__2026-09-11T16:15:00Z",
+                tournament_name="KXBTC15M",
+                bankroll=100.0,
+                book=PortfolioState(
+                    bankroll=100.42,
+                    positions=[
+                        StrategyPosition(
+                            position_id="paper-settled",
+                            player_id="KXBTC15M-26SEP111215-15",
+                            player_name="YES KXBTC15M-26SEP111215-15",
+                            bet_type=BetType.WIN,
+                            stake=1.0,
+                            decimal_odds=2.0,
+                            entry_edge=0.0,
+                            entry_model_p=0.5,
+                            entry_market_p=0.5,
+                            fill_price=0.5,
+                        )
+                    ],
+                ),
+                settled_at=datetime(2026, 9, 11, 16, 15, tzinfo=timezone.utc),
+                settlement_pnl=0.42,
+            )
+        )
+        save_book(
+            PaperBookFile(
+                tournament_id="KXBTC15M-26SEP111230__2026-09-11T16:15:00Z__2026-09-11T16:30:00Z",
+                tournament_name="KXBTC15M",
+                bankroll=100.0,
+                book=PortfolioState(
+                    bankroll=100.0,
+                    positions=[
+                        StrategyPosition(
+                            position_id="paper-open",
+                            player_id="KXBTC15M-26SEP111230-30",
+                            player_name="YES KXBTC15M-26SEP111230-30",
+                            bet_type=BetType.WIN,
+                            stake=1.0,
+                            decimal_odds=2.105,
+                            entry_edge=0.0,
+                            entry_model_p=0.475,
+                            entry_market_p=0.475,
+                            fill_price=0.475,
+                        )
+                    ],
+                ),
+            )
+        )
+        page = _page(tmp_path)
+        golf = _golf(tmp_path)
+    finally:
+        set_15m_root_override(None)
+    session = page[page.index('id="session-strip"') : page.index('id="lane-now"')]
+    assert "KXBTC15M-26SEP111230-30" in session
+    assert "open paper YES $1.00 @ 0.475" in session
+    assert "not an order" in session
+    assert "display only, not settle" in session
+    assert "data-close-epoch" in session
+    now = page[page.index('id="lane-now"') : page.index('id="lane-tiles"')]
+    assert "open paper YES $1.00 @ 0.475" in now
+    assert "not a live bid/ask" in now
+    assert "last joined KXBTC15M-26SEP111215-15 pnl=+0.42" in now
+    assert 'id="exceptions-fold"' in page
+    fold = page[page.index('id="exceptions-fold"') : page.index('id="tab-scoreboard"')]
+    assert " open>" not in fold
+    assert 'class="tape-card"' in page
+    assert "gpf-15m-tab" in page
+    assert "paintClocks" in page
+    assert 'id="session-strip"' not in golf
     header = page[page.index("<header") : page.index("</header>")]
     assert 'class="lock-ticker">KXBTC15M' in header
     assert 'value="arm"' not in page

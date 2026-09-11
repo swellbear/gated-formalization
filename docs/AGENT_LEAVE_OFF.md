@@ -5,7 +5,7 @@ Chat transcripts are not. A later Grok / Cursor cloud agent will not see a prior
 
 | Field | Value |
 |-------|--------|
-| Updated | 2026-09-11 12:17 EDT (draft PR #179 hub-intent upgrades; hub on 127.0.0.1:8765; not merged) |
+| Updated | 2026-09-11 12:25 EDT (draft PR #179 session row + folded Exceptions; hub on 127.0.0.1:8765; not merged) |
 | Interim operator | Cursor chat (Grok bot usage exhausted until **2026-09-13**) |
 | Repo SoT | **This fold publishes.** Validator report must hash-match the committed `manifest.json`. |
 | Local Windows tree for this interim | `C:\Users\bearh\gated-formalization-master-hub` |
@@ -38,7 +38,7 @@ Do not write branch state as if it were landed. If Pages `generated_at` is more 
 
 ## 15m hub UX draft (not on master, do not merge)
 
-Draft PR **#179** on `cursor/15m-hub-ux-6620`. Sequence landed: glance home, A this-lane, B golf status tile, C role strip. Incremental hub-intent: **Glance** default / **Cockpit** reachable; Scoreboard / Lab / Ops / Bot-hub are thin but real; doing/thinking/learning grows extra lines when files exist; C jumps to this-lane / Lab / Bot-hub / Cockpit. Preview launcher: `golf-offshoot/Open-15m-Hub-PREVIEW.bat` plus `.url`. This cloud VM serves `http://127.0.0.1:8765` for Try Live. Market/lane lock `KXBTC15M` / `learning_lane_15m`. PaperWatch stays. Trading **NOT ARMED**. Waiting on Founder: new lock, or keep upgrading this draft until go-live? Not merged.
+Draft PR **#179** on `cursor/15m-hub-ux-6620`. Sequence landed: glance home, A this-lane, B golf status tile, C role strip, Glance/Cockpit, Scoreboard / Lab / Ops / Bot-hub. Incremental hub-intent: trading-terminal **session row** (live window clock + open paper fill from this tree’s book); Exceptions folded on glance and opened in Cockpit; cockpit **Tape** of last joins; doing/thinking/learning names the open fill and last joined pnl when those files exist. Preview launcher: `golf-offshoot/Open-15m-Hub-PREVIEW.bat` plus `.url`. This cloud VM serves `http://127.0.0.1:8765` for Try Live. Market/lane lock `KXBTC15M` / `learning_lane_15m`. PaperWatch stays. Trading **NOT ARMED**. Waiting on Founder: new lock, or keep upgrading this draft until go-live? Not merged.
 
 ## What is already on master (PR #163 and earlier)
 
