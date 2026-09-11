@@ -15,6 +15,7 @@ from golf_offshoot.operator_surface.app import (
     render_html,
 )
 from golf_offshoot.operator_surface.modes import NOT_ARMED, PAPER_ONLY
+from golf_offshoot.operator_surface.lane_15m_home import golf_status_tile_model
 from golf_offshoot.strategy.paper_ledger import PaperLedger
 
 
@@ -237,12 +238,16 @@ def test_this_lane_doing_thinking_learning(tmp_path):
         page = _page(tmp_path)
     finally:
         set_15m_root_override(None)
-    assert 'id="lane-now"' in page
-    assert "Doing</span>" in page
-    assert "Thinking</span>" in page
-    assert "Learning</span>" in page
-    assert "PaperWatch is the loop" in page
-    assert "golf tile" not in page.lower()
+    start = page.index('id="lane-now"')
+    end = page.index("</div>", start) + len("</div>")
+    if 'id="lane-tiles"' in page:
+        end = page.index('id="lane-tiles"')
+    now = page[start:end]
+    assert "Doing</span>" in now
+    assert "Thinking</span>" in now
+    assert "Learning</span>" in now
+    assert "PaperWatch is the loop" in now
+    assert "golf" not in now.lower()
     assert "role roster" not in page.lower()
 
 
@@ -299,6 +304,7 @@ def test_api_watch_includes_15m_home_and_no_generation_bump_on_cycle(tmp_path):
         assert payload["home"]["trading_armed"] is False
         assert "glance_html" in payload["home"]
         assert "now_html" in payload["home"]
+        assert "tiles_html" in payload["home"]
         httpd = _HubServer(("127.0.0.1", 0), OperatorHandler)
         httpd.surface_state = state
         thread = Thread(target=httpd.serve_forever, daemon=True)
@@ -315,5 +321,51 @@ def test_api_watch_includes_15m_home_and_no_generation_bump_on_cycle(tmp_path):
         assert '"generation": 0' in body
         assert '"lane": "learning_lane_15m"' in body
         assert "glance_html" in body
+        assert "tiles_html" in body
     finally:
         set_15m_root_override(None)
+
+
+def test_golf_status_tile_copies_stamp_not_a_cockpit():
+    stamp = """
+| Operator idle until Founder GO? | **Y** (WC3+ only on a new settled week) |
+| Lab WC1 | **ADMITTED** dated record — FAIL / park unproven · edge **not established** |
+"""
+    data = golf_status_tile_model(stamp)
+    assert data["lane"] == "golf"
+    assert data["status"] == "idle ON"
+    assert "WC1 FAIL / park unproven" in data["note"]
+    assert "edge not established" in data["note"]
+    empty = golf_status_tile_model("")
+    assert empty["status"] == "stamp not on this tree"
+    assert "cockpit" in empty["note"]
+
+
+def test_other_lanes_are_status_tiles_not_golf_cockpit(tmp_path):
+    set_15m_root_override(tmp_path)
+    try:
+        page = _page(tmp_path)
+        golf = _golf(tmp_path)
+    finally:
+        set_15m_root_override(None)
+    assert 'id="lane-tiles"' in page
+    assert 'data-lane="golf"' in page
+    tiles = page[page.index('id="lane-tiles"') : page.index("<main")]
+    assert "idle ON" in tiles
+    assert "WC1 FAIL / park unproven" in tiles
+    assert "edge not established" in tiles
+    assert "Update live ranks" not in tiles
+    assert "Pull latest data" not in tiles
+    assert "Ranked table" not in tiles
+    assert "viz-slot-wc1" not in tiles
+    assert "wc1_dated_record" not in tiles
+    assert "<section" not in tiles
+    assert "cockpit" not in tiles.lower()
+    assert "KXBTC15M" not in tiles
+    assert "ETH" not in tiles
+    assert 'id="lane-tiles"' not in golf
+    assert tiles.count('class="lane-tile"') == 1
+    # Glance home still has the market lock; tiles must not become a second board.
+    header = page[page.index("<header") : page.index("</header>")]
+    assert 'class="lock-ticker">KXBTC15M' in header
+    assert 'data-market="KXBTC15M"' in page

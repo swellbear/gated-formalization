@@ -9,10 +9,11 @@ from __future__ import annotations
 import html
 import json
 from datetime import datetime, timezone
+from pathlib import Path
 from typing import Any
 
 from golf_offshoot.learning_lane_15m.paths import LANE_15M, LANE_GOLF, PRIMARY_SERIES
-from golf_offshoot.operator_surface.lanes import SELECTOR_FIELD
+from golf_offshoot.operator_surface.lanes import CANONICAL_LANES, SELECTOR_FIELD
 from golf_offshoot.operator_surface.modes import AI_NO_CASH, PAPER_ONLY
 from golf_offshoot.operator_surface.runner import RunRecord, format_run_record
 
@@ -79,6 +80,9 @@ CHART_15M_NAMED = 6
 
 _JOIN_LIMIT = 4
 _LAB_NOTE = "LEARNING_LANE_15M_OPERATOR_NOTE_PROPOSED_01.md"
+_GOLF_STAMP = (
+    Path(__file__).resolve().parents[3] / "docs" / "phase1_dryrun" / "OPERATOR_STATUS_STAMP.md"
+)
 
 
 def chart_15m_path():
@@ -448,6 +452,77 @@ def this_lane_now_html(state: dict | None = None) -> str:
     )
 
 
+def _stamp_field(text: str, label: str) -> str:
+    """Copy one markdown-table cell. Empty if the stamp does not have that row."""
+    needle = f"| {label}"
+    for line in text.splitlines():
+        if needle not in line:
+            continue
+        cells = [cell.strip() for cell in line.strip().strip("|").split("|")]
+        if len(cells) >= 2 and cells[0].startswith(label):
+            return cells[-1].replace("**", "")
+    return ""
+
+
+def golf_status_tile_model(stamp_text: str | None = None) -> dict[str, str]:
+    """Golf as a compact status tile. Copied from the Operator stamp. Not a cockpit."""
+    if stamp_text is None:
+        try:
+            stamp_text = _GOLF_STAMP.read_text(encoding="utf-8")
+        except OSError:
+            stamp_text = ""
+    if not stamp_text.strip():
+        return {
+            "lane": LANE_GOLF,
+            "status": "stamp not on this tree",
+            "note": "no golf cockpit here",
+        }
+    idle_cell = _stamp_field(text=stamp_text, label="Operator idle until Founder GO?")
+    if idle_cell.startswith("Y"):
+        status = "idle ON"
+    elif idle_cell.startswith("N"):
+        status = "idle OFF"
+    else:
+        status = "idle not on stamp"
+    wc1 = _stamp_field(text=stamp_text, label="Lab WC1")
+    if "FAIL / park unproven" in wc1:
+        note = "WC1 FAIL / park unproven"
+    elif wc1:
+        note = f"WC1 {wc1}"
+    else:
+        note = "WC1 not on stamp"
+    plain = stamp_text.replace("**", "")
+    if "edge not established" in plain.lower():
+        note += " · edge not established"
+    return {"lane": LANE_GOLF, "status": status, "note": note}
+
+
+def other_lane_tiles_inner_html() -> str:
+    """Status tiles for every canonical lane except this 15m page. Not cockpits."""
+    tiles: list[str] = []
+    for lane in CANONICAL_LANES:
+        if lane == LANE_15M:
+            continue
+        if lane != LANE_GOLF:
+            continue
+        data = golf_status_tile_model()
+        tiles.append(
+            '<article class="lane-tile" data-lane="golf">'
+            '<span class="tile-name">golf</span>'
+            f'<span class="tile-status">{_esc(data["status"])}</span>'
+            f'<span class="tile-note">{_esc(data["note"])}</span>'
+            "</article>"
+        )
+    return "".join(tiles)
+
+
+def other_lane_tiles_html() -> str:
+    inner = other_lane_tiles_inner_html()
+    if not inner:
+        return ""
+    return f'<div class="lane-tiles" id="lane-tiles">{inner}</div>'
+
+
 def _open_book_lines() -> list[str]:
     from golf_offshoot.learning_lane_15m.paper import event_ticker_from_book, iter_books
 
@@ -754,6 +829,7 @@ def live_payload(state: dict | None = None, *, last_run: RunRecord | None = None
     return {
         "glance_html": glance_chips_html(state, model=model),
         "now_html": this_lane_now_inner_html(state),
+        "tiles_html": other_lane_tiles_inner_html(),
         "exceptions_html": exceptions_inner_html(rec, state=state),
         "caption_html": chart_caption_inner_html(),
         "scoreboard_html": scoreboard_inner_html(),
@@ -823,6 +899,11 @@ LANE_15M_CSS = """
  .lane-now .now-row { margin: 2px 0; }
  .lane-now .now-k { display: inline-block; min-width: 5.5rem; font-weight: 700; color: #1f3b4d; }
  .lane-now .now-v { color: #1b1b1b; }
+ .lane-tiles { display: flex; flex-wrap: wrap; gap: 8px; padding: 6px 20px 8px; background: #eef3f6; border-bottom: 1px solid #c9c2b2; }
+ .lane-tile { display: flex; flex-direction: column; gap: 2px; padding: 6px 10px; background: #fff; border: 1px solid #c9c2b2; font-size: 12px; min-width: 11rem; max-width: 16rem; }
+ .lane-tile .tile-name { font-weight: 700; font-size: 11px; letter-spacing: 0.06em; text-transform: uppercase; }
+ .lane-tile .tile-status { font-size: 13px; }
+ .lane-tile .tile-note { color: #4a4a4a; }
  .thin-tabs { display: flex; flex-wrap: wrap; gap: 2px; margin: 8px 0 0; border-bottom: 1px solid #c9c2b2; }
  .thin-tabs a { padding: 6px 12px; font-size: 13px; color: #4a4a4a; text-decoration: none; }
  .thin-tabs a.active { color: #1b1b1b; font-weight: 700; border-bottom: 2px solid #1f3b4d; }
