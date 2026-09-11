@@ -2,7 +2,7 @@
   "schema": 1,
   "lane": "learning_lane_15m",
   "series": "KXBTC15M",
-  "updated": "2026-09-10T22:00:00-04:00",
+  "updated": "2026-09-10T22:48:00-04:00",
   "rule": "Crew-owned kind menu. Lab loads this like burned classes. Lab may add a kind by inventing if it can name a product-structure expected_skip_rate from the 15m quartet. Operator RUN-ONLY or PARK. Not a Founder permission list. Do not put future tickers here. Catalog prefers ≥ 0.25; declare_rule floor is 10/first_look_n. Do not append a third honer family until the two dated families finish exams. Consult enable is a file gate. Replacement is crew after consult has lived.",
   "kinds": [
     {
@@ -68,6 +68,14 @@
       "params": ["skip_close_minutes"],
       "legal_now": true,
       "note": "Lab invent 2026-09-10. Parameters are the three named intra-hour closes, not leftover minutes on this book. Not CLOCK-CIVIL-BOUNDARIES. Not CLOCK-QUARTER-BOUNDARIES. Not CLOCK-HOUR-FIRST-HALF. Not CLOCK-HOUR-SECOND-HALF. Not CLOCK-HOUR-OPEN. Not CLOCK-HOUR-WRAP. Not RETUNE-CLOCK-MINUTE. Not a live steal. Not AND-skip of the live chair."
+    },
+    {
+      "id": "CLOCK-EXCEPT-HALF-HOUR",
+      "expected_skip_rate": 0.75,
+      "rate_source": "the three 15m contracts that close off the civil half-hour wall (:00, :15, and :45 — not the half-hour wall :30)",
+      "params": ["skip_close_minutes"],
+      "legal_now": true,
+      "note": "Lab invent 2026-09-10. Parameters are the three named non-half-hour closes (hour wall plus both quarter-hour walls), not leftover minutes on this book. Not CLOCK-CIVIL-BOUNDARIES. Not CLOCK-QUARTER-BOUNDARIES. Not CLOCK-HOUR-FIRST-HALF. Not CLOCK-HOUR-SECOND-HALF. Not CLOCK-HOUR-OPEN. Not CLOCK-HOUR-WRAP. Not CLOCK-INTRA-HOUR. Not RETUNE-CLOCK-MINUTE. Not a live steal. Not AND-skip of the live chair."
     },
     {
       "id": "HONER-FROZEN-CONSULT",

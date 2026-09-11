@@ -405,6 +405,7 @@ def test_mechanism_catalog_seeds_the_kinds():
         "CLOCK-HOUR-OPEN",
         "CLOCK-HOUR-WRAP",
         "CLOCK-INTRA-HOUR",
+        "CLOCK-EXCEPT-HALF-HOUR",
         "HONER-FROZEN-CONSULT",
         "HONER-FAMILY-AMEND",
         "HONER-FROZEN-REPLACE",

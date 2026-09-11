@@ -112,6 +112,20 @@
       "declared_at": "2026-09-10T22:00:00-04:00",
       "execution": false,
       "selects": true
+    },
+    {
+      "id": "F-CLOCK-EXCEPT-HALF-HOUR-0-15-45",
+      "kind": "CLOCK-EXCEPT-HALF-HOUR",
+      "params": {
+        "skip_close_minutes": [
+          0,
+          15,
+          45
+        ]
+      },
+      "declared_at": "2026-09-10T22:48:00-04:00",
+      "execution": false,
+      "selects": true
     }
   ]
 }
