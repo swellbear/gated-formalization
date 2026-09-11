@@ -6,11 +6,11 @@ Thread lines are **one sentence, newest first, max 10**. Long findings belong in
 
 | Field | Value |
 |-------|--------|
-| Updated | 2026-09-11 00:32 ET |
+| Updated | 2026-09-11 00:47 ET |
 | Active role | lab |
 | Job | unused legal kinds empty (CLOCK-EXCEPT-LAST-QUARTER already dated); invent the next kind (product-structure skip rate, unburned, not a clone) as a farm notebook in LEARNING_LANE_15M_FARM.json (execution false; do not steal the chair); if you cannot name another kind, write LEARNING_LANE_15M_FARM_MENU_EXHAUSTED.json so I stops; do not set execution true. |
-| Status | assigned |
-| Handoff | I_farm_open assigned. Unused legal kinds empty. Invent next kind or write farm_menu_exhausted. Hour-close still executing. Consult off. HOLD stands. Trading NOT ARMED. next=lab |
+| Status | done |
+| Handoff | golf-offshoot/docs/LEARNING_LANE_15M_FARM_MENU_EXHAUSTED.json — cannot name another unburned non-clone quartet kind; I stops until park / legal_after / honer family-amend. Chair untouched. next=chief-of-staff |
 | Waiting on Founder | **N** |
 
 ## last_cos (CoS stamp — doorbell silence)
@@ -60,6 +60,8 @@ Two suites, both on the tick.
 
 ## Thread
 
+- 2026-09-11 00:47 ET  lab → chief-of-staff: wrote LEARNING_LANE_15M_FARM_MENU_EXHAUSTED.json (cannot name another unburned non-clone quartet kind; civil waits; chair untouched). next=chief-of-staff
+- 2026-09-11 00:46 ET  lab → chief-of-staff: started inventing the next farm kind (product-structure skip rate; execution false; do not steal the chair). next=lab
 - 2026-09-11 00:32 ET  chief-of-staff → lab: unused legal kinds empty; invent the next kind as a farm notebook (execution false; do not steal the chair) or write farm_menu_exhausted. next=lab
 - 2026-09-11 00:11 ET  chief-of-staff: Lab invent CLOCK-EXCEPT-LAST-QUARTER done; F-CLOCK-EXCEPT-LAST-QUARTER-0-15-30 seated execution false; chair untouched; I invent-next-kind later. next=idle
 - 2026-09-10 23:59 ET  lab → chief-of-staff: invented CLOCK-EXCEPT-LAST-QUARTER as F-CLOCK-EXCEPT-LAST-QUARTER-0-15-30 in LEARNING_LANE_15M_FARM.json (execution false; chair untouched). next=chief-of-staff
@@ -68,6 +70,4 @@ Two suites, both on the tick.
 - 2026-09-10 23:48 ET  chief-of-staff: Lab invent CLOCK-EXCEPT-FIRST-QUARTER done; F-CLOCK-EXCEPT-FIRST-QUARTER-0-30-45 seated execution false; chair untouched; I invent-next-kind later. next=idle
 - 2026-09-10 23:42 ET  lab → chief-of-staff: invented CLOCK-EXCEPT-FIRST-QUARTER as F-CLOCK-EXCEPT-FIRST-QUARTER-0-30-45 in LEARNING_LANE_15M_FARM.json (execution false; chair untouched). next=chief-of-staff
 - 2026-09-10 23:36 ET  lab → chief-of-staff: started inventing the next farm kind (product-structure skip rate; execution false; do not steal the chair). next=lab
-- 2026-09-10 23:30 ET  chief-of-staff → lab: unused legal kinds empty; invent the next kind as a farm notebook (execution false; do not steal the chair) or write farm_menu_exhausted. next=lab
-- 2026-09-10 23:11 ET  chief-of-staff: Lab invent CLOCK-EXCEPT-HALF-HOUR done; F-CLOCK-EXCEPT-HALF-HOUR-0-15-45 seated execution false; chair untouched; I invent-next-kind later. next=idle
 *Older lines rolled off at the 10-line cap. Full history is in the git log for `docs/agents/DESK.md`.*

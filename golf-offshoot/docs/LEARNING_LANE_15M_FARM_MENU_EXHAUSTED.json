@@ -1,0 +1,5 @@
+{
+  "exhausted": true,
+  "reason": "Unused legal kinds empty. Every proper non-empty 15m quartet skip set except CLOCK-CIVIL-BOUNDARIES {0,30} is dated (live chair skip :00; farm singles :15/:30/:45; pairs QUARTER-BOUNDARIES / HOUR-FIRST-HALF / HOUR-SECOND-HALF / HOUR-OPEN / HOUR-WRAP; triples INTRA-HOUR / EXCEPT-HALF-HOUR / EXCEPT-FIRST-QUARTER / EXCEPT-LAST-QUARTER). CLOCK-CIVIL-BOUNDARIES waits until hour-close parks. Full quartet is AND-skip fill-none. Honer kinds are not farm invents. I stops until a park, a legal_after flip, or honer family-amend becomes legal.",
+  "lane": "learning_lane_15m"
+}
