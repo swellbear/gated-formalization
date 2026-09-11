@@ -2,7 +2,7 @@
   "schema": 1,
   "lane": "learning_lane_15m",
   "series": "KXBTC15M",
-  "updated": "2026-09-10T23:36:00-04:00",
+  "updated": "2026-09-10T23:57:00-04:00",
   "rule": "Crew-owned kind menu. Lab loads this like burned classes. Lab may add a kind by inventing if it can name a product-structure expected_skip_rate from the 15m quartet. Operator RUN-ONLY or PARK. Not a Founder permission list. Do not put future tickers here. Catalog prefers ≥ 0.25; declare_rule floor is 10/first_look_n. Do not append a third honer family until the two dated families finish exams. Consult enable is a file gate. Replacement is crew after consult has lived.",
   "kinds": [
     {
@@ -84,6 +84,14 @@
       "params": ["skip_close_minutes"],
       "legal_now": true,
       "note": "Lab invent 2026-09-10. Parameters are the three named non-first-quarter closes (hour wall, half-hour wall, and last quarter), not leftover minutes on this book. Not CLOCK-CIVIL-BOUNDARIES. Not CLOCK-QUARTER-BOUNDARIES. Not CLOCK-HOUR-FIRST-HALF. Not CLOCK-HOUR-SECOND-HALF. Not CLOCK-HOUR-OPEN. Not CLOCK-HOUR-WRAP. Not CLOCK-INTRA-HOUR. Not CLOCK-EXCEPT-HALF-HOUR. Not RETUNE-CLOCK-MINUTE. Not a live steal. Not AND-skip of the live chair."
+    },
+    {
+      "id": "CLOCK-EXCEPT-LAST-QUARTER",
+      "expected_skip_rate": 0.75,
+      "rate_source": "the three 15m contracts that close off the last quarter-hour wall (:00, :15, and :30 — not the last quarter :45)",
+      "params": ["skip_close_minutes"],
+      "legal_now": true,
+      "note": "Lab invent 2026-09-10. Parameters are the three named non-last-quarter closes (hour wall, first quarter, and half-hour wall), not leftover minutes on this book. Not CLOCK-CIVIL-BOUNDARIES. Not CLOCK-QUARTER-BOUNDARIES. Not CLOCK-HOUR-FIRST-HALF. Not CLOCK-HOUR-SECOND-HALF. Not CLOCK-HOUR-OPEN. Not CLOCK-HOUR-WRAP. Not CLOCK-INTRA-HOUR. Not CLOCK-EXCEPT-HALF-HOUR. Not CLOCK-EXCEPT-FIRST-QUARTER. Not RETUNE-CLOCK-MINUTE. Not a live steal. Not AND-skip of the live chair."
     },
     {
       "id": "HONER-FROZEN-CONSULT",

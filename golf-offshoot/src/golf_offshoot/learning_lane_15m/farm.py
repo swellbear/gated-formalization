@@ -244,6 +244,15 @@ def _except_first_quarter_used(
     return _minutes_used({0, 30, 45}, root=root, registry=registry, farm=farm)
 
 
+def _except_last_quarter_used(
+    *,
+    root: Path | None = None,
+    registry: dict[str, Any] | None = None,
+    farm: dict[str, Any] | None = None,
+) -> bool:
+    return _minutes_used({0, 15, 30}, root=root, registry=registry, farm=farm)
+
+
 def _clock_singleton_executing(*, root: Path | None = None, registry: dict[str, Any] | None = None) -> bool:
     """True when a one-minute clock selection still has the chair."""
     from golf_offshoot.learning_lane_15m.rules import active_execution_rule, clock_skip_minutes
@@ -421,6 +430,19 @@ def unused_legal_kinds(
                 }
             )
             continue
+        if kid == "CLOCK-EXCEPT-LAST-QUARTER":
+            if kind.get("legal_now") is not True:
+                continue
+            if _except_last_quarter_used(root=root, registry=registry, farm=payload):
+                continue
+            out.append(
+                {
+                    "kind": kid,
+                    "params": {"skip_close_minutes": [0, 15, 30]},
+                    "expected_skip_rate": 0.75,
+                }
+            )
+            continue
         if kind.get("legal_now") is True:
             out.append({"kind": kid, "params": dict(kind.get("params") or {}), "expected_skip_rate": kind.get("expected_skip_rate")})
     return out
@@ -542,6 +564,7 @@ def product_skip_kinds(lane: str = "learning_lane_15m") -> tuple[str, ...]:
             "CLOCK-INTRA-HOUR",
             "CLOCK-EXCEPT-HALF-HOUR",
             "CLOCK-EXCEPT-FIRST-QUARTER",
+            "CLOCK-EXCEPT-LAST-QUARTER",
         )
     return ()
 

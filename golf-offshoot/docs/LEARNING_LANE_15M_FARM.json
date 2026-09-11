@@ -140,6 +140,20 @@
       "declared_at": "2026-09-10T23:36:00-04:00",
       "execution": false,
       "selects": true
+    },
+    {
+      "id": "F-CLOCK-EXCEPT-LAST-QUARTER-0-15-30",
+      "kind": "CLOCK-EXCEPT-LAST-QUARTER",
+      "params": {
+        "skip_close_minutes": [
+          0,
+          15,
+          30
+        ]
+      },
+      "declared_at": "2026-09-10T23:57:00-04:00",
+      "execution": false,
+      "selects": true
     }
   ]
 }

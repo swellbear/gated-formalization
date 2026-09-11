@@ -407,6 +407,7 @@ def test_mechanism_catalog_seeds_the_kinds():
         "CLOCK-INTRA-HOUR",
         "CLOCK-EXCEPT-HALF-HOUR",
         "CLOCK-EXCEPT-FIRST-QUARTER",
+        "CLOCK-EXCEPT-LAST-QUARTER",
         "HONER-FROZEN-CONSULT",
         "HONER-FAMILY-AMEND",
         "HONER-FROZEN-REPLACE",
