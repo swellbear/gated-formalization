@@ -523,6 +523,82 @@ def other_lane_tiles_html() -> str:
     return f'<div class="lane-tiles" id="lane-tiles">{inner}</div>'
 
 
+def _role_strip_model(state: dict | None = None) -> dict[str, Any]:
+    """Owed / idle / served + last tick from the wake. Not a crew roster."""
+    from golf_offshoot.learning_lane_15m.learn import (
+        ILLUSTRATOR_ROLE,
+        LAB_ROLE,
+        ROLE_ORDER,
+        load_wake_state,
+    )
+    from golf_offshoot.localtime import format_eastern
+
+    wake = None
+    try:
+        wake = load_wake_state()
+    except Exception:
+        wake = None
+    owed_entries = [
+        entry
+        for entry in ((wake or {}).get("roles_owed") or [])
+        if isinstance(entry, dict) and entry.get("role")
+    ]
+    owed_names = [str(entry.get("role")) for entry in owed_entries]
+    owed_set = {name.lower() for name in owed_names}
+    known = list(ROLE_ORDER) + [ILLUSTRATOR_ROLE, LAB_ROLE]
+    idle = [role for role in known if role.lower() not in owed_set]
+    served = [
+        entry
+        for entry in ((wake or {}).get("served") or [])
+        if isinstance(entry, dict) and entry.get("role")
+    ]
+    last_served = served[0] if served else None
+    last_tick = "not recorded"
+    if wake and wake.get("updated_at"):
+        last_tick = format_eastern(wake.get("updated_at"))
+    owed_bits = []
+    for entry in owed_entries:
+        age = str(entry.get("age_text") or "").strip()
+        name = str(entry.get("role"))
+        owed_bits.append(f"{name} {age}".strip() if age else name)
+    served_line = "none on this wake"
+    if last_served is not None:
+        when = format_eastern(last_served.get("served_at")) if last_served.get("served_at") else ""
+        served_line = f"{last_served.get('role')}" + (f" {when}" if when and when != "n/a" else "")
+    return {
+        "owed": owed_bits,
+        "idle": idle,
+        "served": served_line,
+        "last_tick": last_tick,
+        "open": bool(owed_bits),
+    }
+
+
+def role_strip_inner_html(state: dict | None = None) -> str:
+    data = _role_strip_model(state)
+    owed_line = ", ".join(data["owed"]) if data["owed"] else "none"
+    idle_line = ", ".join(data["idle"]) if data["idle"] else "none"
+    if data["owed"]:
+        summary = f"owed {owed_line} · last tick {data['last_tick']}"
+    else:
+        summary = f"idle · last tick {data['last_tick']}"
+    detail = (
+        f"owed: {owed_line} · idle: {idle_line} · last served: {data['served']} · "
+        f"last tick {data['last_tick']}"
+    )
+    open_attr = " open" if data["open"] else ""
+    return (
+        f'<details class="role-strip-details"{open_attr}>'
+        f"<summary>{_esc(summary)}</summary>"
+        f'<p class="role-line">{_esc(detail)}</p>'
+        "</details>"
+    )
+
+
+def role_strip_html(state: dict | None = None) -> str:
+    return f'<div class="role-strip" id="role-strip">{role_strip_inner_html(state)}</div>'
+
+
 def _open_book_lines() -> list[str]:
     from golf_offshoot.learning_lane_15m.paper import event_ticker_from_book, iter_books
 
@@ -830,6 +906,7 @@ def live_payload(state: dict | None = None, *, last_run: RunRecord | None = None
         "glance_html": glance_chips_html(state, model=model),
         "now_html": this_lane_now_inner_html(state),
         "tiles_html": other_lane_tiles_inner_html(),
+        "roles_html": role_strip_inner_html(state),
         "exceptions_html": exceptions_inner_html(rec, state=state),
         "caption_html": chart_caption_inner_html(),
         "scoreboard_html": scoreboard_inner_html(),
@@ -904,6 +981,9 @@ LANE_15M_CSS = """
  .lane-tile .tile-name { font-weight: 700; font-size: 11px; letter-spacing: 0.06em; text-transform: uppercase; }
  .lane-tile .tile-status { font-size: 13px; }
  .lane-tile .tile-note { color: #4a4a4a; }
+ .role-strip { padding: 4px 20px 8px; background: #eef3f6; border-bottom: 1px solid #c9c2b2; font-size: 12px; }
+ .role-strip summary { cursor: pointer; color: #4a4a4a; }
+ .role-strip .role-line { margin: 4px 0 0; color: #1b1b1b; }
  .thin-tabs { display: flex; flex-wrap: wrap; gap: 2px; margin: 8px 0 0; border-bottom: 1px solid #c9c2b2; }
  .thin-tabs a { padding: 6px 12px; font-size: 13px; color: #4a4a4a; text-decoration: none; }
  .thin-tabs a.active { color: #1b1b1b; font-weight: 700; border-bottom: 2px solid #1f3b4d; }

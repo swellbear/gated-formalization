@@ -5,7 +5,7 @@ Chat transcripts are not. A later Grok / Cursor cloud agent will not see a prior
 
 | Field | Value |
 |-------|--------|
-| Updated | 2026-09-11 11:45 EDT (15m hub UX draft PR — not merged; Part 0 still the last master fold) |
+| Updated | 2026-09-11 11:50 EDT (15m hub UX draft PR #179 — A/B/C landed, not merged; Part 0 still the last master fold) |
 | Interim operator | Cursor chat (Grok bot usage exhausted until **2026-09-13**) |
 | Repo SoT | **This fold publishes.** Validator report must hash-match the committed `manifest.json`. |
 | Local Windows tree for this interim | `C:\Users\bearh\gated-formalization-master-hub` |
@@ -38,7 +38,7 @@ Do not write branch state as if it were landed. If Pages `generated_at` is more 
 
 ## 15m hub UX draft (not on master, do not merge)
 
-Branch `cursor/15m-hub-ux-6620`. Founder locked sequence after 15m glance home is solid: **A** this-lane doing/thinking/learning, **then B** other existing lanes as compact status tiles (golf, not a second cockpit), **then C** compact role strip (owed/idle/served, last tick; collapsed unless owed). Home must not become a wall of panels. Market/lane lock `KXBTC15M` / `learning_lane_15m` is a veto. PaperWatch stays. Trading **NOT ARMED**. Ask Founder after C whether a new lock is required. Not go-live.
+Draft PR **#179** on `cursor/15m-hub-ux-6620`. Sequence is landed in order: 15m glance home, **A** this-lane doing/thinking/learning, **B** compact golf status tile (Operator stamp, not a cockpit), **C** compact role strip (collapsed unless owed). Home is still strips + the board, not a wall of panels. Market/lane lock `KXBTC15M` / `learning_lane_15m` is a veto. PaperWatch stays. Trading **NOT ARMED**. Waiting on Founder: is a new lock required, or does this draft sit until go-live? Not merged.
 
 ## What is already on master (PR #163 and earlier)
 

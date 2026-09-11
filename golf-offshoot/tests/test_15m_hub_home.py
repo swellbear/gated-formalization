@@ -3,6 +3,7 @@
 from http.client import HTTPConnection
 from threading import Thread
 from types import SimpleNamespace
+import json
 
 from golf_offshoot.learning_lane_15m.paper import save_ledger
 from golf_offshoot.learning_lane_15m.paths import set_15m_root_override
@@ -305,6 +306,7 @@ def test_api_watch_includes_15m_home_and_no_generation_bump_on_cycle(tmp_path):
         assert "glance_html" in payload["home"]
         assert "now_html" in payload["home"]
         assert "tiles_html" in payload["home"]
+        assert "roles_html" in payload["home"]
         httpd = _HubServer(("127.0.0.1", 0), OperatorHandler)
         httpd.surface_state = state
         thread = Thread(target=httpd.serve_forever, daemon=True)
@@ -322,6 +324,7 @@ def test_api_watch_includes_15m_home_and_no_generation_bump_on_cycle(tmp_path):
         assert '"lane": "learning_lane_15m"' in body
         assert "glance_html" in body
         assert "tiles_html" in body
+        assert "roles_html" in body
     finally:
         set_15m_root_override(None)
 
@@ -350,7 +353,8 @@ def test_other_lanes_are_status_tiles_not_golf_cockpit(tmp_path):
         set_15m_root_override(None)
     assert 'id="lane-tiles"' in page
     assert 'data-lane="golf"' in page
-    tiles = page[page.index('id="lane-tiles"') : page.index("<main")]
+    end = page.index('id="role-strip"') if 'id="role-strip"' in page else page.index("<main")
+    tiles = page[page.index('id="lane-tiles"') : end]
     assert "idle ON" in tiles
     assert "WC1 FAIL / park unproven" in tiles
     assert "edge not established" in tiles
@@ -369,3 +373,48 @@ def test_other_lanes_are_status_tiles_not_golf_cockpit(tmp_path):
     header = page[page.index("<header") : page.index("</header>")]
     assert 'class="lock-ticker">KXBTC15M' in header
     assert 'data-market="KXBTC15M"' in page
+
+
+def _write_wake(tmp_path, **payload):
+    latest = tmp_path / "latest"
+    latest.mkdir(parents=True, exist_ok=True)
+    (latest / "learning_wake.json").write_text(json.dumps(payload), encoding="utf-8")
+
+
+def test_role_strip_collapsed_unless_owed(tmp_path):
+    set_15m_root_override(tmp_path)
+    try:
+        _write_wake(
+            tmp_path,
+            roles_owed=[],
+            served=[],
+            updated_at="2026-09-11T11:00:00-04:00",
+        )
+        idle_page = _page(tmp_path)
+        _write_wake(
+            tmp_path,
+            roles_owed=[{"role": "digestor", "age_text": "12m"}],
+            served=[{"role": "systems", "served_at": "2026-09-11T10:40:00-04:00"}],
+            updated_at="2026-09-11T11:00:00-04:00",
+        )
+        owed_page = _page(tmp_path)
+        golf = _golf(tmp_path)
+    finally:
+        set_15m_root_override(None)
+    idle = idle_page[idle_page.index('id="role-strip"') : idle_page.index("<main")]
+    owed = owed_page[owed_page.index('id="role-strip"') : owed_page.index("<main")]
+    assert '<details class="role-strip-details">' in idle
+    assert '<details class="role-strip-details" open>' not in idle
+    assert "idle · last tick" in idle
+    assert "last tick 2026-09-11 11:00 EDT" in idle
+    assert '<details class="role-strip-details" open>' in owed
+    assert "owed digestor 12m" in owed
+    assert "last served: systems" in owed
+    assert "<ul" not in owed
+    assert "for:" not in owed
+    assert "role roster" not in owed_page.lower()
+    assert "crew roster" not in owed_page.lower()
+    assert 'id="role-strip"' not in golf
+    stack = owed_page[owed_page.index("<header") : owed_page.index("<main")]
+    assert "<section" not in stack
+    assert stack.count("class=\"panel\"") == 0

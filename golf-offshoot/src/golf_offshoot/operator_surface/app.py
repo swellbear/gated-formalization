@@ -32,6 +32,7 @@ from golf_offshoot.operator_surface.lane_15m_home import (
     live_payload as _15m_live_payload,
     main_15m_html,
     other_lane_tiles_html,
+    role_strip_html,
     this_lane_now_html,
     viz_wall_15m_html as _viz_wall_15m_html,
     window_rows_15m as _window_rows_15m,
@@ -379,7 +380,9 @@ def render_html(surface: dict) -> str:
         # The 15m board carries its own overlay. Deriving it from the golf viz wall
         # left this lane with no lightbox at all whenever golf had no chart on disk.
         viz_lightbox = _lightbox_html(_chart_15m_path() is not None)
-        settle_banner = glance_strip_html() + this_lane_now_html() + other_lane_tiles_html()
+        settle_banner = (
+            glance_strip_html() + this_lane_now_html() + other_lane_tiles_html() + role_strip_html()
+        )
         header_block = header_15m_html(lane_line=lane_line, wall_lines=wall_lines)
         extra_css = LANE_15M_CSS
         extra_js = LANE_15M_JS
@@ -609,6 +612,8 @@ def render_html(surface: dict) -> str:
     if (now && home.now_html) now.innerHTML = home.now_html;
     var tiles = document.getElementById('lane-tiles');
     if (tiles && home.tiles_html) tiles.innerHTML = home.tiles_html;
+    var roles = document.getElementById('role-strip');
+    if (roles && home.roles_html) roles.innerHTML = home.roles_html;
     var journal = document.getElementById('journal-exceptions');
     if (journal && home.exceptions_html) journal.innerHTML = home.exceptions_html;
     var cap = document.getElementById('chart-15m-caption');

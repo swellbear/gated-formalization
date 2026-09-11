@@ -6,16 +6,16 @@ Thread lines are **one sentence, newest first, max 10**. Long findings belong in
 
 | Field | Value |
 |-------|--------|
-| Updated | 2026-09-11 11:45 ET |
-| Active role | hub-ui |
-| Job | Founder lock: 15m glance home, then A this-lane, then B other-lane tiles, then C role strip. Same draft PR. Do not merge. Not armed. |
-| Status | working |
-| Handoff | Lock+A tests green locally. Next on this PR: B compact golf status tile, then C collapsed-unless-owed role strip. |
-| Waiting on Founder | **N** (ask after C whether a new lock is required) |
+| Updated | 2026-09-11 11:50 ET |
+| Active role | chief-of-staff |
+| Job | Founder lock: 15m glance home then A/B/C on draft PR #179. Do not merge. Not armed. |
+| Status | waiting-founder |
+| Handoff | Glance home + A this-lane + B golf status tile + C collapsed-unless-owed role strip are on draft PR #179. PaperWatch stays. No new markets. |
+| Waiting on Founder | **Y** |
 
 ## Ask Founder
 
-(none yet — one question after C lands on the draft PR)
+A/B/C are on draft PR #179 (not merged, not armed). Is a new Founder lock required, or does this draft sit until you say go-live?
 
 ## Publish gap (named so nobody assumes Pages is self-maintaining)
 
@@ -34,6 +34,8 @@ The runner exports locally. It does **not** commit or push. The public page is *
 
 ## Thread
 
+- 2026-09-11 11:50 ET  CoS → Founder: A/B/C landed on draft PR #179. Is a new lock required, or does this sit until go-live? next=Founder
+- 2026-09-11 11:50 ET  hub-ui → chief-of-staff: C role strip collapsed unless owed; B golf tile is stamp status not a cockpit. next=chief-of-staff
 - 2026-09-11 11:45 ET  hub-ui: 15m glance home + A this-lane doing/thinking/learning on the draft PR. PaperWatch stays. next=hub-ui (B then C)
 - 2026-09-11 11:45 ET  CoS → hub-ui: Founder locked A then B then C after glance home; same draft PR; do not merge; not armed. next=hub-ui
 - 2026-09-08 08:52 ET  CoS: honesty gate re-derived live. Hub box is one tree (2940/9568), not the 19:58 "both --no-browser" claim. next=systems
@@ -42,5 +44,3 @@ The runner exports locally. It does **not** commit or push. The public page is *
 - 2026-09-08 08:32 ET  CoS: Soften Critic hired (skill on tree). Evidence bar remains a draft until a separate-session attack and Founder acknowledgement. next=soften-critic (later session)
 - 2026-09-08 08:30 ET  operator → chief-of-staff: drafted the 15m evidence bar (δ=$0.28, α=0.05/(trials+1), L2 held out, fee hurdle cited, not binding). Did not score R-SKIP-COINFLIP. next=chief-of-staff
 - 2026-09-08 08:28 ET  CoS: tick — digestor/operator/validator STALE; 10 windows closed after 05:56, 1 open; hub parent 2940 / listener 21456; scheduled task missing. Founder GO is bar then hire. next=operator
-- 2026-09-08 06:10 ET  digestor → chief-of-staff: recorded 100.00 → 93.86 / `betting_pnl` -6.14 now carry the known-fee omission caveat, citing the Operator note, with no corrected total. next=chief-of-staff
-- 2026-09-08 06:00 ET  validator → chief-of-staff: `validate_hub.py --strict` OK on export `generated_at` 2026-09-08T05:52:39-04:00. Publishing is still a manual commit/push. next=chief-of-staff
