@@ -6,9 +6,9 @@ Thread lines are **one sentence, newest first, max 10**. Long findings belong in
 
 | Field | Value |
 |-------|--------|
-| Updated | 2026-09-11 12:58 ET |
+| Updated | 2026-09-11 13:12 ET |
 | Active role | hub-ui |
-| Job | Launch-ready polish on #179: thinking/learning depth, tab views, glance vs cockpit. Do not merge. Not armed. |
+| Job | Launch-ready polish on #179: soft-refresh, uncrowded glance, honest thinking/learning. Do not merge. Not armed. |
 | Status | working |
 | Handoff | — |
 | Waiting on Founder | **N** |
@@ -34,6 +34,7 @@ The runner exports locally. It does **not** commit or push. The public page is *
 
 ## Thread
 
+- 2026-09-11 13:12 ET  hub-ui → chief-of-staff: 15m patches without full reload unless the hub process restarts; glance chips no longer dump cycle/missing tape. next=hub-ui
 - 2026-09-11 12:58 ET  hub-ui → chief-of-staff: Glance thinking is why not wake jargon; Cockpit/Bot-hub hold depth; tabs sit under the session row. next=hub-ui
 - 2026-09-11 12:51 ET  hub-ui → chief-of-staff: VM Desktop Chrome was a Google New Tab; that same window now loads 127.0.0.1:8765. Distinct tab views next. next=hub-ui
 - 2026-09-11 12:40 ET  hub-ui → chief-of-staff: other tabs become real views; Glance A stays a teaser. next=hub-ui
@@ -42,4 +43,3 @@ The runner exports locally. It does **not** commit or push. The public page is *
 - 2026-09-11 12:22 ET  CoS → hub-ui: Founder said keep upgrading #179; trading-terminal home without a wall of panels. next=hub-ui
 - 2026-09-11 12:17 ET  hub-ui → chief-of-staff: tabs moved above the board; Scoreboard/Lab/Ops/Bot-hub are real; A is denser when files exist. next=chief-of-staff
 - 2026-09-11 12:01 ET  CoS → Founder: preview hub listening on 127.0.0.1:8765; copy Open-15m-Hub-PREVIEW.bat/.url. Still draft. next=Founder
-- 2026-09-11 12:17 ET  hub-ui → chief-of-staff: C role strip now jumps to this-lane / Lab / Bot-hub / Cockpit. next=chief-of-staff

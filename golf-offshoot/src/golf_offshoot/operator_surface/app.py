@@ -610,53 +610,68 @@ def render_html(surface: dict) -> str:
   // 15m watch heartbeats patch the glance/journal. Full reload is only after
   // the hub process itself went away (code re-exec).
   var gen = null;
+  var boot = null;
   var lost = false;
   var is15 = document.body.classList.contains('lane-15m');
+  function normHtml(html){{
+    return String(html || '').replace(/(data-close-epoch="[^"]*">)[^<]*/g, '$1');
+  }}
+  function setHtml(el, html){{
+    if (!el || html == null) return;
+    if (normHtml(el.innerHTML) === normHtml(html)) return;
+    var opened = [];
+    el.querySelectorAll('details').forEach(function(d){{ opened.push(d.open); }});
+    el.innerHTML = html;
+    el.querySelectorAll('details').forEach(function(d, i){{
+      if (opened[i] !== undefined) d.open = opened[i];
+    }});
+  }}
   function applyHome(home){{
     if (!home) return;
-    var glance = document.getElementById('glance-strip');
-    if (glance && home.glance_html) glance.innerHTML = home.glance_html;
-    var session = document.getElementById('session-strip');
-    if (session && home.session_html) session.innerHTML = home.session_html;
-    var now = document.getElementById('lane-now');
-    if (now && home.now_html) now.innerHTML = home.now_html;
-    var tiles = document.getElementById('lane-tiles');
-    if (tiles && home.tiles_html) tiles.innerHTML = home.tiles_html;
-    var roles = document.getElementById('role-strip');
-    if (roles && home.roles_html) roles.innerHTML = home.roles_html;
-    var journal = document.getElementById('journal-exceptions');
-    if (journal && home.exceptions_html) journal.innerHTML = home.exceptions_html;
-    var cap = document.getElementById('chart-15m-caption');
-    if (cap && home.caption_html) cap.innerHTML = home.caption_html;
+    setHtml(document.getElementById('glance-strip'), home.glance_html);
+    setHtml(document.getElementById('session-strip'), home.session_html);
+    setHtml(document.getElementById('lane-now'), home.now_html);
+    setHtml(document.getElementById('lane-tiles'), home.tiles_html);
+    setHtml(document.getElementById('role-strip'), home.roles_html);
+    setHtml(document.getElementById('journal-exceptions'), home.exceptions_html);
+    setHtml(document.getElementById('chart-15m-caption'), home.caption_html);
     var src = home.chart_src;
     if (src) {{
       document.querySelectorAll('#viz-slot-paper-window-strip img').forEach(function(img){{
+        if (img.getAttribute('src') === src) return;
         img.setAttribute('src', src);
         var zoom = img.closest('a.zoom');
         if (zoom) zoom.setAttribute('href', src);
       }});
     }}
-    var lab = document.getElementById('tab-lab-body');
-    if (lab && home.lab_html) lab.innerHTML = home.lab_html;
-    var bot = document.getElementById('tab-bot-body');
-    if (bot && home.bot_html) bot.innerHTML = home.bot_html;
-    var score = document.getElementById('tab-scoreboard-body');
-    if (score && home.scoreboard_html) score.innerHTML = home.scoreboard_html;
-    var opsWatch = document.getElementById('tab-ops-watch');
-    if (opsWatch && home.ops_watch_html) opsWatch.innerHTML = home.ops_watch_html;
+    setHtml(document.getElementById('tab-lab-body'), home.lab_html);
+    setHtml(document.getElementById('tab-bot-body'), home.bot_html);
+    setHtml(document.getElementById('tab-scoreboard-body'), home.scoreboard_html);
+    setHtml(document.getElementById('tab-ops-watch'), home.ops_watch_html);
     var rail = document.getElementById('cockpit-rail');
-    if (rail && home.cockpit_html) rail.outerHTML = home.cockpit_html;
+    if (rail && home.cockpit_html) {{
+      var box = document.createElement('div');
+      box.innerHTML = home.cockpit_html;
+      var next = box.firstElementChild;
+      if (next) setHtml(rail, next.innerHTML);
+    }}
   }}
   function tick(){{
     fetch('/api/watch', {{cache:'no-store'}}).then(function(r){{
       if (!r.ok) throw new Error('hub ' + r.status);
       return r.json();
     }}).then(function(s){{
-      if (lost) {{ location.reload(); return; }}
       if (is15) {{
+        if (lost && boot !== null && s.boot != null && String(s.boot) !== String(boot)) {{
+          location.reload();
+          return;
+        }}
+        lost = false;
+        if (s.boot != null) boot = s.boot;
         applyHome(s.home);
         return;
       }}
+      if (lost) {{ location.reload(); return; }}
       if (gen === null) {{ gen = s.generation; return; }}
       if (s.generation !== gen) location.reload();
     }}).catch(function(){{ lost = true; }});
@@ -832,6 +847,7 @@ def _watch_state(state: dict) -> dict:
         "kind": str(state.get("reload_kind") or "ok"),
         "lane": lane,
         "cycle": int(state.get("watch_cycles") or 0),
+        "boot": os.getpid(),
     }
     if lane == LANE_15M or state.get("paper_watch_keep"):
         try:

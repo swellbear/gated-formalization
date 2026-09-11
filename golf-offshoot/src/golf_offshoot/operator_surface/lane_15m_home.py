@@ -433,18 +433,33 @@ def glance_chips_html(state: dict | None = None, *, model: dict[str, Any] | None
     watch_kind = data["watch_kind"]
     pending = data["pending"]
     missing = data["missing"]
-    pending_chip = (
-        f'<span class="chip pending" data-kind="pending">'
-        f"SETTLE_PENDING · {_esc(pending[0].get('ticker') or pending[0].get('window_id') or 'window')}</span>"
-        if pending
-        else '<span class="chip quiet" data-kind="pending-none">no pending window</span>'
-    )
-    missing_chip = (
-        f'<span class="chip missing" data-kind="missing-join">'
-        f"missing paper join · {_esc(missing[0].get('ticker') or 'window')}</span>"
-        if missing
-        else '<span class="chip quiet" data-kind="missing-none">no missing join</span>'
-    )
+    window_ticker = str(data.get("ticker") or "")
+    if pending:
+        pend_ticker = str(pending[0].get("ticker") or pending[0].get("window_id") or "window")
+        if pend_ticker == window_ticker:
+            pending_chip = (
+                '<span class="chip pending" data-kind="pending">SETTLE_PENDING</span>'
+            )
+        else:
+            pending_chip = (
+                f'<span class="chip pending" data-kind="pending">'
+                f"SETTLE_PENDING · {_esc(pend_ticker)}</span>"
+            )
+    else:
+        pending_chip = '<span class="chip quiet" data-kind="pending-none">no pending window</span>'
+    missing_n = len(missing)
+    if missing_n > 1:
+        missing_chip = (
+            f'<span class="chip missing" data-kind="missing-join">'
+            f"missing paper join · {missing_n}</span>"
+        )
+    elif missing_n == 1:
+        missing_chip = (
+            f'<span class="chip missing" data-kind="missing-join">'
+            f"missing paper join · {_esc(missing[0].get('ticker') or 'window')}</span>"
+        )
+    else:
+        missing_chip = '<span class="chip quiet" data-kind="missing-none">no missing join</span>'
     if data["lineage_a_pnl"]:
         pnl_chip = (
             f'<span class="chip pnl" data-kind="lineage-a">'
@@ -455,8 +470,6 @@ def glance_chips_html(state: dict | None = None, *, model: dict[str, Any] | None
         pnl_chip = (
             '<span class="chip pnl" data-kind="lineage-a">lineage A P/L not on file — none invented</span>'
         )
-    summary = data.get("watch_summary") or ""
-    summary_html = f'<span class="watch-summary">{_esc(summary)}</span>' if summary else ""
     epoch = data.get("close_epoch")
     if epoch is not None:
         next_chip = (
@@ -473,7 +486,6 @@ def glance_chips_html(state: dict | None = None, *, model: dict[str, Any] | None
         f'<span class="chip market" data-kind="window">{_esc(data["ticker"])}</span>'
         f"{pending_chip}{missing_chip}{pnl_chip}"
         f"{next_chip}"
-        f"{summary_html}"
     )
 
 
@@ -606,15 +618,15 @@ def this_lane_now_inner_html(state: dict | None = None) -> str:
     pos = _open_position_model()
     if failed and watch.get("last_error"):
         doing_glance = f"last cycle failed — {watch.get('last_error')}"
-    elif pos:
+    elif last_at:
+        doing_glance = f"last cycle {last_at}"
+    if pos:
         mark = pos.get("mark")
         mark_txt = f"{float(mark):.3f}" if mark is not None else "not on file"
-        doing_glance = (
+        doing_extra.append(
             f"open paper {pos['side']} ${float(pos['stake']):.2f} @ {mark_txt} "
             "— observation fill, not an order"
         )
-    elif last_at:
-        doing_glance = f"last cycle {last_at}"
     if cycles not in (None, ""):
         doing_extra.append(f"cycle {cycles}")
     if summary:
@@ -623,13 +635,6 @@ def this_lane_now_inner_html(state: dict | None = None) -> str:
         doing_extra.append(f"last cycle {last_at}")
     if interval not in (None, ""):
         doing_extra.append(f"cadence ~{interval}s · extras are buttons, not the loop")
-    if pos and doing_glance and "open paper" not in doing_glance:
-        mark = pos.get("mark")
-        mark_txt = f"{float(mark):.3f}" if mark is not None else "not on file"
-        doing_extra.append(
-            f"open paper {pos['side']} ${float(pos['stake']):.2f} @ {mark_txt} "
-            "— observation fill, not an order"
-        )
 
     scan = (wake or {}).get("scan") if isinstance((wake or {}).get("scan"), dict) else {}
     pending = [row for row in (scan.get("pending") or []) if isinstance(row, dict)]
@@ -881,7 +886,7 @@ def role_strip_inner_html(state: dict | None = None) -> str:
         f"owed: {owed_line} · idle: {idle_line} · last served: {data['served']} · "
         f"last tick {data['last_tick']}"
     )
-    open_attr = " open" if data["open"] else ""
+    open_attr = ""
     return (
         f'<details class="role-strip-details"{open_attr}>'
         f"<summary>{_esc(summary)}</summary>"
@@ -1556,8 +1561,45 @@ def viz_wall_15m_html() -> str:
     )
 
 
+def _mtime_ns(path: Path | None) -> int:
+    if path is None:
+        return -1
+    try:
+        return int(path.stat().st_mtime_ns)
+    except OSError:
+        return -1
+
+
+def _live_input_stamp(last_run: RunRecord | None) -> tuple:
+    """File mtimes that feed the 15m soft-refresh payload. No figures invented."""
+    from golf_offshoot.learning_lane_15m.paths import latest_dir_15m, paper_dir_15m, settlements_dir_15m
+    from golf_offshoot.learning_lane_15m.watch import watch_status_path
+
+    latest = latest_dir_15m()
+    paper = paper_dir_15m()
+    return (
+        _mtime_ns(watch_status_path()),
+        _mtime_ns(latest / "learning_wake.json"),
+        _mtime_ns(latest / "journal.json"),
+        _mtime_ns(paper / "ledger.json"),
+        _mtime_ns(paper),
+        _mtime_ns(settlements_dir_15m()),
+        _mtime_ns(chart_15m_path()),
+        _mtime_ns(_GOLF_STAMP),
+        id(last_run) if last_run is not None else 0,
+    )
+
+
 def live_payload(state: dict | None = None, *, last_run: RunRecord | None = None) -> dict[str, Any]:
     """JSON fragments for a soft refresh. Watch heartbeats must not full-page reload."""
+    rec = last_run
+    if rec is None and state and isinstance(state.get("surface"), dict):
+        rec = state["surface"].get("last_run")
+    stamp = _live_input_stamp(rec)
+    if state is not None:
+        cached = state.get("_15m_live_cache")
+        if isinstance(cached, dict) and cached.get("stamp") == stamp and isinstance(cached.get("payload"), dict):
+            return cached["payload"]
     path = chart_15m_path()
     src = ""
     if path is not None:
@@ -1566,11 +1608,8 @@ def live_payload(state: dict | None = None, *, last_run: RunRecord | None = None
         except OSError:
             cache = 0
         src = f"/viz15/paper_window_strip.png?t={cache}"
-    rec = last_run
-    if rec is None and state and isinstance(state.get("surface"), dict):
-        rec = state["surface"].get("last_run")
     model = glance_model(state)
-    return {
+    payload = {
         "glance_html": glance_chips_html(state, model=model),
         "session_html": session_inner_html(state, model=model),
         "now_html": this_lane_now_inner_html(state),
@@ -1590,6 +1629,9 @@ def live_payload(state: dict | None = None, *, last_run: RunRecord | None = None
         "lane": LANE_15M,
         "series": PRIMARY_SERIES,
     }
+    if state is not None:
+        state["_15m_live_cache"] = {"stamp": stamp, "payload": payload}
+    return payload
 
 
 def main_15m_html(*, last_run: RunRecord | None = None, state: dict | None = None) -> str:

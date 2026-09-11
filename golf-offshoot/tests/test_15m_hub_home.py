@@ -140,12 +140,16 @@ def test_15m_script_does_not_reload_on_generation(tmp_path):
         set_15m_root_override(None)
     assert "var is15 = document.body.classList.contains('lane-15m')" in page
     assert "applyHome(s.home)" in page
-    # Golf still reloads on generation; 15m returns after the patch.
+    # Golf still reloads on generation; 15m patches, and full-reloads only if the hub process restarted.
     assert "if (s.generation !== gen) location.reload()" in page
+    assert "String(s.boot)" in page
+    assert "normHtml" in page
     home_idx = page.index("applyHome(s.home)")
     golf_reload = page.index("if (s.generation !== gen) location.reload()")
     assert home_idx < golf_reload
     assert "return;" in page[home_idx:golf_reload]
+    golf = _golf(tmp_path)
+    assert "if (lost) { location.reload(); return; }" in golf
 
 
 def test_market_lock_obvious_paper_subtle(tmp_path):
@@ -320,6 +324,8 @@ def test_api_watch_includes_15m_home_and_no_generation_bump_on_cycle(tmp_path):
         assert payload["home"]["lane"] == "learning_lane_15m"
         assert payload["home"]["series"] == "KXBTC15M"
         assert payload["home"]["trading_armed"] is False
+        assert isinstance(payload.get("boot"), int)
+        assert payload["boot"] > 0
         assert "glance_html" in payload["home"]
         assert "session_html" in payload["home"]
         assert "now_html" in payload["home"]
@@ -427,7 +433,8 @@ def test_role_strip_collapsed_unless_owed(tmp_path):
     assert '<details class="role-strip-details" open>' not in idle
     assert "idle · last tick" in idle
     assert "last tick 2026-09-11 11:00 EDT" in idle
-    assert '<details class="role-strip-details" open>' in owed
+    assert '<details class="role-strip-details" open>' not in owed
+    assert '<details class="role-strip-details">' in owed
     assert "owed digestor 12m" in owed
     assert "last served: systems" in owed
     assert 'href="#lane-now"' in owed
@@ -549,6 +556,46 @@ def test_human_pending_why_and_window_tail():
     )
     assert _window_tail("KXBTC15M-26SEP111215-15") == "26SEP111215-15"
     assert _window_tail("") == ""
+
+
+def test_glance_chips_stay_uncrowded(tmp_path):
+    set_15m_root_override(tmp_path)
+    try:
+        _write_wake(
+            tmp_path,
+            scan={
+                "pending": [
+                    {
+                        "ticker": "KXBTC15M-26SEP111215-15",
+                        "kind": "awaiting_kalshi_result",
+                    }
+                ],
+                "paper_join_missing": [
+                    {"ticker": "KXBTC15M-26SEP071500-00"},
+                    {"ticker": "KXBTC15M-26SEP071545-45"},
+                ],
+            },
+        )
+        write_watch_status(
+            {
+                "running": True,
+                "last_ok": True,
+                "cycles": 2,
+                "last_summary": "cycle=2 fills=0 settled=0 pending=1",
+            }
+        )
+        page = _page(tmp_path)
+    finally:
+        set_15m_root_override(None)
+    glance = page[page.index('id="glance-strip"') : page.index('id="session-strip"')]
+    assert "SETTLE_PENDING" in glance
+    assert "SETTLE_PENDING · KXBTC15M-26SEP111215-15" not in glance
+    assert "missing paper join · 2" in glance
+    assert "cycle=2 fills=0" not in glance
+    now = page[page.index('id="lane-now"') : page.index('id="lane-tiles"')]
+    doing_glance = now.split('now-k">Thinking', 1)[0].split('class="now-more cockpit-only"', 1)[0]
+    assert "open paper" not in doing_glance
+    assert 'data-market="KXBTC15M"' in page
 
 
 def test_views_are_thin_but_real(tmp_path):
