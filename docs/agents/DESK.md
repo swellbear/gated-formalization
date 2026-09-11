@@ -6,20 +6,20 @@ Thread lines are **one sentence, newest first, max 10**. Long findings belong in
 
 | Field | Value |
 |-------|--------|
-| Updated | 2026-09-11 00:11 ET |
-| Active role | chief-of-staff |
-| Job | — |
-| Status | idle |
-| Handoff | Lab invented F-CLOCK-EXCEPT-LAST-QUARTER-0-15-30 (execution false; chair untouched). Unused legal kinds empty. I still hungers invent-next-kind (no exhausted file) — next CoS fire. Hour-close still executing. next=idle |
+| Updated | 2026-09-11 00:32 ET |
+| Active role | lab |
+| Job | unused legal kinds empty (CLOCK-EXCEPT-LAST-QUARTER already dated); invent the next kind (product-structure skip rate, unburned, not a clone) as a farm notebook in LEARNING_LANE_15M_FARM.json (execution false; do not steal the chair); if you cannot name another kind, write LEARNING_LANE_15M_FARM_MENU_EXHAUSTED.json so I stops; do not set execution true. |
+| Status | assigned |
+| Handoff | I_farm_open assigned. Unused legal kinds empty. Invent next kind or write farm_menu_exhausted. Hour-close still executing. Consult off. HOLD stands. Trading NOT ARMED. next=lab |
 | Waiting on Founder | **N** |
 
 ## last_cos (CoS stamp — doorbell silence)
 
 | Field | Value |
 |-------|--------|
-| last_cos_at | 2026-09-11T00:11:00-04:00 |
-| last_cos_commit | a4fbaa4 |
-| handled_reason_ids | A_worker_done, E_idle_unassigned |
+| last_cos_at | 2026-09-11T00:32:00-04:00 |
+| last_cos_commit | e09e270 |
+| handled_reason_ids | E_idle_unassigned, I_farm_open |
 
 **Branch note.** Live work is `cursor/honer-15m-sibling` [#178](https://github.com/swellbear/gated-formalization/pull/178) (open; base is `cursor/part-a-clerical-trust-boundary`). [#176](https://github.com/swellbear/gated-formalization/pull/176) is still OPEN, not merged. `origin/master` is still `b063f56` (#175). Factory Turns 1–3 plus the ANSWER/CRITIC chain live on part-a / this sibling. Branching from `origin/master` would discard all of it. Do not use `C:\Users\bearh\gated-formalization` on `cursor/eia-window-job2`.
 
@@ -60,6 +60,7 @@ Two suites, both on the tick.
 
 ## Thread
 
+- 2026-09-11 00:32 ET  chief-of-staff → lab: unused legal kinds empty; invent the next kind as a farm notebook (execution false; do not steal the chair) or write farm_menu_exhausted. next=lab
 - 2026-09-11 00:11 ET  chief-of-staff: Lab invent CLOCK-EXCEPT-LAST-QUARTER done; F-CLOCK-EXCEPT-LAST-QUARTER-0-15-30 seated execution false; chair untouched; I invent-next-kind later. next=idle
 - 2026-09-10 23:59 ET  lab → chief-of-staff: invented CLOCK-EXCEPT-LAST-QUARTER as F-CLOCK-EXCEPT-LAST-QUARTER-0-15-30 in LEARNING_LANE_15M_FARM.json (execution false; chair untouched). next=chief-of-staff
 - 2026-09-10 23:57 ET  lab → chief-of-staff: started inventing the next farm kind (product-structure skip rate; execution false; do not steal the chair). next=lab
@@ -69,5 +70,4 @@ Two suites, both on the tick.
 - 2026-09-10 23:36 ET  lab → chief-of-staff: started inventing the next farm kind (product-structure skip rate; execution false; do not steal the chair). next=lab
 - 2026-09-10 23:30 ET  chief-of-staff → lab: unused legal kinds empty; invent the next kind as a farm notebook (execution false; do not steal the chair) or write farm_menu_exhausted. next=lab
 - 2026-09-10 23:11 ET  chief-of-staff: Lab invent CLOCK-EXCEPT-HALF-HOUR done; F-CLOCK-EXCEPT-HALF-HOUR-0-15-45 seated execution false; chair untouched; I invent-next-kind later. next=idle
-- 2026-09-10 22:55 ET  lab → chief-of-staff: invented CLOCK-EXCEPT-HALF-HOUR as F-CLOCK-EXCEPT-HALF-HOUR-0-15-45 in LEARNING_LANE_15M_FARM.json (execution false; chair untouched). next=chief-of-staff
 *Older lines rolled off at the 10-line cap. Full history is in the git log for `docs/agents/DESK.md`.*
