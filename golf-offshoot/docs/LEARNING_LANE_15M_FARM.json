@@ -98,6 +98,20 @@
       "declared_at": "2026-09-10T21:27:00-04:00",
       "execution": false,
       "selects": true
+    },
+    {
+      "id": "F-CLOCK-INTRA-HOUR-15-30-45",
+      "kind": "CLOCK-INTRA-HOUR",
+      "params": {
+        "skip_close_minutes": [
+          15,
+          30,
+          45
+        ]
+      },
+      "declared_at": "2026-09-10T22:00:00-04:00",
+      "execution": false,
+      "selects": true
     }
   ]
 }
