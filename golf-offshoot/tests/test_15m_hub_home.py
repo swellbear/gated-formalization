@@ -418,3 +418,25 @@ def test_role_strip_collapsed_unless_owed(tmp_path):
     stack = owed_page[owed_page.index("<header") : owed_page.index("<main")]
     assert "<section" not in stack
     assert stack.count("class=\"panel\"") == 0
+
+
+def test_preview_launcher_runs_this_checkout_not_master():
+    from golf_offshoot.operator_surface.paths import package_root
+
+    root = package_root()
+    bat = (root / "Open-15m-Hub-PREVIEW.bat").read_text(encoding="utf-8")
+    url = (root / "Open-15m-Hub-PREVIEW.url").read_text(encoding="utf-8")
+    lower = bat.lower()
+    assert "--lane learning_lane_15m" in bat
+    assert "--host 127.0.0.1" in bat
+    assert "--port 8765" in bat
+    assert "PREVIEW" in bat
+    assert "NOT ARMED" in bat
+    assert "src\\golf_offshoot" in bat
+    assert "git checkout" not in lower
+    assert "git pull" not in lower
+    assert "gated-formalization-master-hub" not in lower
+    assert "not master" in lower or "does not touch master" in lower
+    assert "InternetShortcut" in url
+    assert "http://127.0.0.1:8765" in url
+
