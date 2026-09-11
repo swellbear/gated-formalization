@@ -21,6 +21,17 @@ $Shortcut.TargetPath = $HubBat
 $Shortcut.WorkingDirectory = $OffshootRoot
 $Shortcut.WindowStyle = 1
 $Shortcut.Description = "Phase 1 observation hub. Trading NOT ARMED. PAPER OBSERVATION ONLY. AI never moves cash."
+$Py = $null
+foreach ($name in @("py", "python")) {
+    $cmd = Get-Command $name -ErrorAction SilentlyContinue
+    if ($cmd -and $cmd.Source) {
+        $Py = $cmd.Source
+        break
+    }
+}
+if ($Py) {
+    $Shortcut.IconLocation = "$Py,0"
+}
 $Shortcut.Save()
 
 Write-Host "Created Desktop shortcut:"

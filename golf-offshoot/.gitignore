@@ -19,6 +19,10 @@ data/honer_15m/exam/
 data/honer_15m/settlements/
 data/honer_15m/latest/
 data/honer_15m/cache/
+data/golf_kalshi/paper/
+data/golf_kalshi/settlements/
+data/golf_kalshi/latest/
+data/golf_kalshi/cache/
 data/quote_bus/
 data/two_brains/
 data/openings/*.json

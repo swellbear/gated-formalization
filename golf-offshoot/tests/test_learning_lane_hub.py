@@ -32,7 +32,7 @@ def test_hub_golf_default_chrome(tmp_path):
     finally:
         set_15m_root_override(None)
     assert page == golf
-    assert "Active lane: Golf Phase 1" in page
+    assert "Active lane: Golf (Kalshi)" in page
     assert 'data-lane="golf"' in page
     assert 'data-journal="golf"' in page
     assert "Journal: golf" in page
@@ -71,15 +71,15 @@ def test_hub_15m_no_golf_viz(tmp_path):
 
 
 def test_lane_header_copy():
-    assert lane_header_name("golf") == "Golf Phase 1"
+    assert lane_header_name("golf") == "Golf (Kalshi)"
     assert lane_header_name("learning_lane_15m") == "15-min Kalshi (learning)"
-    assert lane_header_name("15m") == "Golf Phase 1"
+    assert lane_header_name("15m") == "Golf (Kalshi)"
 
 
 def test_hub_cli_prints_golf_html(capsys):
     assert main(["hub"]) == 0
     out = capsys.readouterr().out
-    assert "Active lane: Golf Phase 1" in out
+    assert "Active lane: Golf (Kalshi)" in out
     assert "Trading NOT ARMED" in out
 
 
@@ -120,6 +120,10 @@ def test_desktop_shell_html_has_lane_selector_and_hides_golf_viz_on_15m(tmp_path
     finally:
         set_15m_root_override(None)
     assert 'name="lane"' in golf
+    assert golf.count('<form class="row lane-form"') == 1
+    assert golf.index('class="lane-switch"') < golf.index("<main>")
+    extras = golf[golf.index('id="extras"') :]
+    assert "lane-form" not in extras
     assert 'value="learning_lane_15m"' in golf
     assert 'value="15m"' not in golf
     assert 'value="15m"' not in page

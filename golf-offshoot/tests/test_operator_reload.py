@@ -10,6 +10,7 @@ from golf_offshoot.operator_surface.app import (
     DEFAULT_HOST,
     DEFAULT_PORT,
     _window_summary_15m,
+    apply_request_lane,
     build_surface,
     hub_url,
     maybe_open_hub_browser,
@@ -131,10 +132,13 @@ def test_hub_code_files_watch_the_lane_package(tmp_path):
     lane.mkdir()
     (lane / "runner.py").write_text("# clerical runner\n", encoding="utf-8")
     (lane / "learn.py").write_text("# wake\n", encoding="utf-8")
+    golf = pkg / "golf_kalshi"
+    golf.mkdir()
+    (golf / "loop.py").write_text("# golf kalshi\n", encoding="utf-8")
 
     names = {path.name for path in hub_code_files(pkg)}
 
-    assert {"runner.py", "learn.py", "app.py", "__main__.py"} <= names
+    assert {"runner.py", "learn.py", "loop.py", "app.py", "__main__.py"} <= names
 
 
 def test_noise_names_skip_editor_temps():
@@ -309,6 +313,21 @@ def test_is_hub_child_env():
     assert not is_hub_child({})
 
 
+def test_same_lane_query_does_not_rebuild_surface(monkeypatch):
+    rebuilt: list[int] = []
+    monkeypatch.setattr(
+        "golf_offshoot.operator_surface.app.rebuild_surface",
+        lambda state, **kwargs: rebuilt.append(1),
+    )
+    monkeypatch.setattr("golf_offshoot.operator_surface.app._sync_paper_watch", lambda state: None)
+    state = {"lane": "learning_lane_15m", "surface": {}}
+    assert apply_request_lane(state, "learning_lane_15m") is False
+    assert rebuilt == []
+    assert apply_request_lane(state, "golf") is True
+    assert rebuilt == [1]
+    assert state["lane"] == "golf"
+
+
 def test_html_includes_watch_poll_and_no_cash_controls(tmp_path):
     page = render_html(build_surface(artifact_root=tmp_path, viz_root=tmp_path / "viz"))
     assert "/api/watch" in page
@@ -469,16 +488,16 @@ def test_refresh_existing_hub_window_uses_found_window():
     assert seen == [21]
 
 
-def test_html_watch_script_reloads_same_tab_after_reconnect(tmp_path):
-    """Hub bounces -> poll fails -> poll succeeds -> this tab reloads itself."""
+def test_html_watch_script_reloads_same_tab_on_generation(tmp_path):
+    """Generation bump reloads this tab. A single /api/watch miss must not."""
     page = render_html(build_surface(artifact_root=tmp_path, viz_root=tmp_path / "viz"))
     assert "/api/watch" in page
-    # A failed poll is remembered rather than swallowed.
-    assert "catch(function(){ lost = true; })" in page
-    assert "if (lost) { location.reload(); return; }" in page
-    # A generation change still reloads even if the poll never failed.
-    assert "if (s.generation !== gen) location.reload();" in page
-    # A non-200 counts as a failure, not as valid JSON.
+    assert "if (reloading) return;" in page
+    assert "lost = true" not in page
+    assert "if (lost) { location.reload(); return; }" not in page
+    assert "if (s.generation === gen) return;" in page
+    assert "reloading = true;" in page
+    assert "location.reload();" in page
     assert "if (!r.ok) throw new Error" in page
 
 

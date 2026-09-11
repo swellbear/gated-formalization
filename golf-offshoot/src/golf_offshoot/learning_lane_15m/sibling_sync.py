@@ -10,6 +10,7 @@ from __future__ import annotations
 import json
 import os
 import subprocess
+import threading
 import time
 from pathlib import Path
 from typing import Any, Callable
@@ -26,6 +27,9 @@ CACHE_META_NAME = "origin_farm_meta.json"
 CACHE_EXHAUSTED_NAME = "origin_farm_exhausted.json"
 DEBOUNCE_S = 300.0
 FORBIDDEN_GIT_VERBS = frozenset({"push", "reset", "merge", "checkout", "rebase"})
+_last_attempt_unix: float | None = None
+_fetch_lock = threading.Lock()
+_fetch_thread: threading.Thread | None = None
 
 
 def fetch_argv() -> list[str]:
@@ -139,9 +143,71 @@ def _git(
     )
 
 
-def _write_cache(path: Path, payload: dict[str, Any]) -> None:
+def _write_cache(path: Path, payload: dict[str, Any]) -> bool:
+    """Write JSON. False when the bytes already match — do not bump mtime."""
     path.parent.mkdir(parents=True, exist_ok=True)
-    path.write_text(json.dumps(payload, indent=2) + "\n", encoding="utf-8")
+    text = json.dumps(payload, indent=2) + "\n"
+    if path.is_file():
+        try:
+            if path.read_text(encoding="utf-8") == text:
+                return False
+        except OSError:
+            pass
+    path.write_text(text, encoding="utf-8")
+    return True
+
+
+def _cache_same(payload: dict[str, Any], cached: dict[str, Any], sha: str | None, meta: dict[str, Any]) -> bool:
+    if str(meta.get("sha") or "") != str(sha or ""):
+        return False
+    return json.dumps(payload, sort_keys=True) == json.dumps(cached, sort_keys=True)
+
+
+def origin_farm_fetch_due(
+    *,
+    root: Path | None = None,
+    now: float | None = None,
+    debounce_s: float = DEBOUNCE_S,
+) -> bool:
+    """True when a live fetch may run. In-process last attempt counts even if meta was not rewritten."""
+    t = time.time() if now is None else float(now)
+    meta = load_origin_farm_meta(root=root)
+    stamps: list[float] = []
+    for raw in (_last_attempt_unix, meta.get("fetched_at_unix")):
+        if raw is None:
+            continue
+        try:
+            stamps.append(float(raw))
+        except (TypeError, ValueError):
+            continue
+    if not stamps:
+        return True
+    return (t - max(stamps)) >= float(debounce_s)
+
+
+def kick_origin_farm_fetch(*, root: Path | None = None) -> None:
+    """Schedule observe-only fetch on a daemon thread. Never blocks the 2s hub poll.
+
+    Pytest and an in-flight fetch are no-ops. Does not reset, push, or arm.
+    """
+    global _fetch_thread
+    if os.environ.get("PYTEST_CURRENT_TEST"):
+        return
+    if not origin_farm_fetch_due(root=root):
+        return
+    with _fetch_lock:
+        if _fetch_thread is not None and _fetch_thread.is_alive():
+            return
+
+        def _run() -> None:
+            try:
+                maybe_fetch_origin_farm(root=root)
+            except Exception:
+                pass
+
+        started = threading.Thread(target=_run, name="origin-farm-observe", daemon=True)
+        _fetch_thread = started
+        started.start()
 
 
 def maybe_fetch_origin_farm(
@@ -168,20 +234,17 @@ def maybe_fetch_origin_farm(
         result["ok"] = True
         result["reason"] = "pytest_skip"
         return result
+    global _last_attempt_unix
     git_root = root if root is not None and (Path(root) / ".git").exists() else repo_root()
     git_run = git_run or _git
     t = time.time() if now is None else float(now)
     meta = load_origin_farm_meta(root=root)
-    last = meta.get("fetched_at_unix")
-    if not force and last is not None:
-        try:
-            if t - float(last) < float(debounce_s):
-                result["ok"] = True
-                result["reason"] = "debounce"
-                result["sha"] = meta.get("sha")
-                return result
-        except (TypeError, ValueError):
-            pass
+    if not force and not origin_farm_fetch_due(root=root, now=t, debounce_s=debounce_s):
+        result["ok"] = True
+        result["reason"] = "debounce"
+        result["sha"] = meta.get("sha")
+        return result
+    _last_attempt_unix = t
     try:
         for argv in (fetch_argv(), show_farm_argv(), rev_parse_argv(), show_exhausted_argv()):
             refused = refuse_git_argv(argv)
@@ -206,6 +269,13 @@ def maybe_fetch_origin_farm(
             return result
         parsed = git_run(rev_parse_argv(), cwd=git_root)
         sha = (getattr(parsed, "stdout", "") or "").strip() or None
+        cached = load_origin_farm_cache(root=root)
+        if _cache_same(payload, cached, sha, meta):
+            result["ok"] = True
+            result["updated"] = False
+            result["reason"] = "unchanged"
+            result["sha"] = sha
+            return result
         _write_cache(origin_farm_cache_path(root=root), payload)
         exhausted = git_run(show_exhausted_argv(), cwd=git_root)
         if getattr(exhausted, "returncode", 1) == 0 and (getattr(exhausted, "stdout", "") or "").strip():

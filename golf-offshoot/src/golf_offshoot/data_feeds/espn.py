@@ -97,6 +97,11 @@ class EspnClient:
         url = f"{ESPN_WEB}/apis/site/v2/sports/golf/leaderboard?league=pga"
         return self.get(url, ttl=600, label="espn_current_leaderboard")
 
+    def leaderboard_for_league(self, league: str) -> dict[str, Any]:
+        token = str(league or "pga").strip().lower() or "pga"
+        url = f"{ESPN_WEB}/apis/site/v2/sports/golf/leaderboard?league={token}"
+        return self.get(url, ttl=600, label=f"espn_leaderboard_{token}")
+
     def event_leaderboard(self, event_id: str, *, live: bool = False) -> dict[str, Any]:
         url = f"{ESPN_WEB}/apis/site/v2/sports/golf/leaderboard?event={event_id}"
         ttl = 600.0 if live else None
@@ -120,8 +125,13 @@ class EspnClient:
         return self.get(url, ttl=3600, label=f"espn_athlete_{athlete_id}")
 
 
+def iter_events(payload: dict[str, Any] | None) -> list[dict[str, Any]]:
+    rows = (payload or {}).get("events") or []
+    return [e for e in rows if isinstance(e, dict)]
+
+
 def parse_event_payload(payload: dict[str, Any]) -> dict[str, Any]:
-    events = payload.get("events") or []
+    events = iter_events(payload)
     if not events:
         raise FeedError("ESPN leaderboard returned no events")
     return events[0]

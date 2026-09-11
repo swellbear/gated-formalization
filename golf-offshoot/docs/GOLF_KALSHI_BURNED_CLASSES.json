@@ -1,0 +1,31 @@
+{
+  "lane": "golf_kalshi",
+  "not_15m": true,
+  "classes": [
+    {
+      "id": "invented-player",
+      "state": "burned",
+      "why": "Unmatched Kalshi names stay unmatched. No fuzzy bet."
+    },
+    {
+      "id": "espn-only-settle",
+      "state": "burned",
+      "why": "Settle SoT is Kalshi result. ESPN finish is not enough."
+    },
+    {
+      "id": "fee-multiplier-assumed-1",
+      "state": "burned",
+      "why": "Missing fee_multiplier is a skip, not quadratic x1."
+    },
+    {
+      "id": "pnl-ranked-recipe",
+      "state": "burned",
+      "why": "Recipe promote is declared_at plus surviving exam, not richest pnl."
+    },
+    {
+      "id": "polymarket-venue",
+      "state": "burned",
+      "why": "Polymarket is not imported by golf_kalshi."
+    }
+  ]
+}

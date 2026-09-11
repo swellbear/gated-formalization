@@ -6,11 +6,11 @@ Thread lines are **one sentence, newest first, max 10**. Long findings belong in
 
 | Field | Value |
 |-------|--------|
-| Updated | 2026-09-10 19:53 ET |
+| Updated | 2026-09-11 13:15 ET |
 | Active role | lab |
 | Job | unused legal kinds empty (CLOCK-HOUR-FIRST-HALF already dated); invent the next kind (product-structure skip rate, unburned, not a clone) as a farm notebook in LEARNING_LANE_15M_FARM.json (execution false; do not steal the chair); if you cannot name another kind, write LEARNING_LANE_15M_FARM_MENU_EXHAUSTED.json so I stops; do not set execution true. |
 | Status | assigned |
-| Handoff | I_farm_open assigned. Invent next kind or write farm_menu_exhausted. Gym 8765 observes origin farm (hub fetch, no Founder pull). Hour-close still executing. next=lab |
+| Handoff | I_farm_open still assigned. Golf Kalshi mix desk is recipe v1.1 on `cursor/golf-kalshi-gym` (not #178). Do not steal the chair. Do not arm. next=lab |
 | Waiting on Founder | **N** |
 
 ## last_cos (CoS stamp — doorbell silence)
@@ -60,14 +60,14 @@ Two suites, both on the tick.
 
 ## Thread
 
+- 2026-09-11 13:15 ET  systems → chief-of-staff: Golf Kalshi mix desk v1.1 (screen, 0.25 Kelly inside $50/$100/$50, collapse/ADD/fail-clock, one-time 11-to-3). Lab chair untouched. Trading NOT ARMED. next=lab
+- 2026-09-11 11:45 ET  hub-ui → chief-of-staff: Golf Unmatched collapsed by default; rows load on open. Lab chair untouched. Trading NOT ARMED. next=lab
+- 2026-09-11 11:40 ET  systems → chief-of-staff: Golf bottlenecks: staged tick (identity vs MC) and lazy catalog series fetch. Lab chair untouched. Trading NOT ARMED. next=lab
+- 2026-09-11 11:05 ET  systems → chief-of-staff: Golf advisor hunts ESPN then Kalshi-listed names, keep_expert MC, idle Farm/Honer. Lab chair untouched. Trading NOT ARMED. next=lab
+- 2026-09-11 09:08 ET  hub-ui → chief-of-staff: Golf Catalog tour families and series start collapsed. Lab chair untouched. Trading NOT ARMED. next=lab
+- 2026-09-11 08:55 ET  systems → chief-of-staff: Golf catalog filter: Golf tag / known golf stems only; unscoped `/markets` dump refused; 8765 Catalog is golf names (no Chelsea). Lab chair untouched. Trading NOT ARMED. next=lab
+- 2026-09-11 08:30 ET  systems → chief-of-staff: Founder-directed Kalshi golf gym on `cursor/golf-kalshi-gym` (not #178): dual watch, Golf (Kalshi) board, paper `decide_golf`. Trading NOT ARMED. 15m Lab chair untouched. next=lab
+- 2026-09-10 20:52 ET  systems → chief-of-staff: hub reload loop stopped (`kick_origin_farm_fetch` daemon; unchanged SHA no cache rewrite; `/?lane=` does not rebuild; watch miss does not reload). Do not arm. next=lab
 - 2026-09-10 19:53 ET  systems → chief-of-staff: gym hub observes origin farm (`sibling_sync.maybe_fetch_origin_farm`; panel + `maybe_score_farm` read cache; no reset/push). Do not pull for 8765. Do not arm. next=lab
 - 2026-09-10 19:52 ET  chief-of-staff → lab: unused legal kinds empty; invent the next kind as a farm notebook (execution false; do not steal the chair) or write farm_menu_exhausted. next=lab
-- 2026-09-10 19:42 ET  chief-of-staff: Lab invent CLOCK-HOUR-FIRST-HALF done; F-CLOCK-HOUR-FIRST-HALF-15-30 seated execution false; chair untouched; I invent-next-kind later. next=idle
-- 2026-09-10 19:36 ET  lab → chief-of-staff: invented CLOCK-HOUR-FIRST-HALF as F-CLOCK-HOUR-FIRST-HALF-15-30 in LEARNING_LANE_15M_FARM.json (execution false; chair untouched). next=chief-of-staff
-- 2026-09-10 19:34 ET  lab → chief-of-staff: started inventing the next farm kind (product-structure skip rate; execution false; do not steal the chair). next=lab
-- 2026-09-10 19:31 ET  chief-of-staff → lab: unused legal kinds empty; invent the next kind as a farm notebook (execution false; do not steal the chair) or write farm_menu_exhausted. next=lab
-- 2026-09-10 19:11 ET  chief-of-staff: Lab invent CLOCK-QUARTER-BOUNDARIES done; F-CLOCK-QUARTER-BOUNDARIES-15-45 seated execution false; chair untouched; I invent-next-kind later. next=idle
-- 2026-09-10 19:08 ET  lab → chief-of-staff: invented CLOCK-QUARTER-BOUNDARIES as F-CLOCK-QUARTER-BOUNDARIES-15-45 in LEARNING_LANE_15M_FARM.json (execution false; chair untouched). next=chief-of-staff
-- 2026-09-10 19:05 ET  lab → chief-of-staff: started inventing the next farm kind (product-structure skip rate; execution false; do not steal the chair). next=lab
-- 2026-09-10 18:55 ET  chief-of-staff → lab: unused clock slots empty; invent the next kind as a farm notebook (execution false; do not steal the chair) or write farm_menu_exhausted. next=lab
 *Older lines rolled off at the 10-line cap. Full history is in the git log for `docs/agents/DESK.md`.*

@@ -30,6 +30,7 @@ _NOISE_SUFFIXES = (".tmp", ".temp", ".swp", ".swo", ".bak", ".orig", ".pyc", ".p
 _CODE_PKG_DIRS = (
     "operator_surface",
     "learning_lane_15m",
+    "golf_kalshi",
 )
 _CODE_RELPATHS = (
     "__main__.py",
@@ -380,10 +381,11 @@ class HubWatcher:
         return accepted
 
     def poll(self) -> ReloadDecision:
+        # Origin-farm git fetch is a daemon thread. This poll must stay fast so /api/watch answers.
         try:
-            from golf_offshoot.learning_lane_15m.sibling_sync import maybe_fetch_origin_farm
+            from golf_offshoot.learning_lane_15m.sibling_sync import kick_origin_farm_fetch
 
-            maybe_fetch_origin_farm()
+            kick_origin_farm_fetch()
         except Exception:
             pass
         return self.observe(self._snapshot_fn())

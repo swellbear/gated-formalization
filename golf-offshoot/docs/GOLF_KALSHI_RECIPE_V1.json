@@ -1,0 +1,25 @@
+{
+  "recipe_id": "golf-kalshi-recipe-v1",
+  "declared_at": "2026-09-11",
+  "seed_bankroll": 1000.0,
+  "sleeves": {
+    "fast": "round-leader / same-day; 20% of roll reserved uncommitted",
+    "week": "this event winner / make-cut / top-N",
+    "slow": "season-long; max 30% of roll"
+  },
+  "single_name_frac": 0.05,
+  "total_exposure_frac": 0.20,
+  "daily_loss_frac": 0.05,
+  "drawdown_frac": 0.08,
+  "resume_rule": "next_utc_day",
+  "player_brain": "keep_expert",
+  "live_scale": 0.1,
+  "live_scale_until_n": 10,
+  "fee_pin": {
+    "source": "founder_browser_bytes",
+    "file": "golf-offshoot/docs/kalshi-fee-schedule.pdf",
+    "sha256": "c326a69f596a11e8f8be2620402d39a8d4823920c21cc97c93a114d862699601",
+    "bytes": 281129,
+    "adjustment_function": "golf_offshoot.learning_lane_15m.evidence_bar.fee_adjust"
+  }
+}

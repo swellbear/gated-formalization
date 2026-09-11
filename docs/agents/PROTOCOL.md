@@ -100,7 +100,7 @@ Do **not** ask (CoS just does it):
 - Desk / leave-off bookkeeping
 - Chrome-only Hub UI inside existing Hard NOs
 - Gym `PUBLISH_ARMED` material hub-allowlist push (this gym PC only). Cloud CoS/worker must **not** `git push` to `master`. Factory merge of #178 is a PR merge, not that script
-- Gym 8765 observes farm notebooks from `origin/cursor/honer-15m-sibling` after a hub fetch (not a Founder pull, not a second executing SoT). Tape and the live chair stay this gym. Cloud ticks do not pull this PC.
+- Gym 8765 observes farm notebooks from `origin/cursor/honer-15m-sibling` on a background fetch (not a Founder pull, not a second executing SoT). Unchanged origin SHA does not rewrite cache or reload the tab. Tape and the live chair stay this gym. Cloud ticks do not pull this PC.
 - Do not ping Founder to stamp bind. Bind is Critic+Operator and critic-invariants; CoS assigns those roles. CoS does not set `binding: true`. Do not add a Founder stamp to bind.
 - Ask Founder to click ingest / live / loop
 

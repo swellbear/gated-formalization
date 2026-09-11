@@ -256,3 +256,71 @@ def test_maybe_score_farm_uses_origin_cache_does_not_write_local_farm(tmp_path, 
         )
     )
     assert local["notebooks"] == []
+
+
+def _git_run_origin(sha: str = "6b17dae111111"):
+    def git_run(argv, cwd=None):
+        del cwd
+        if argv[:1] == ["fetch"]:
+            return subprocess.CompletedProcess(["git", *argv], 0, "", "")
+        if argv == show_farm_argv():
+            return subprocess.CompletedProcess(["git", *argv], 0, json.dumps(ORIGIN_FARM), "")
+        if argv == rev_parse_argv():
+            return subprocess.CompletedProcess(["git", *argv], 0, sha + "\n", "")
+        return subprocess.CompletedProcess(["git", *argv], 1, "", "missing")
+
+    return git_run
+
+
+def test_same_sha_fetch_does_not_rewrite_cache(tmp_path, monkeypatch):
+    monkeypatch.setattr("golf_offshoot.learning_lane_15m.sibling_sync._last_attempt_unix", None)
+    _empty_local_farm(tmp_path)
+    (tmp_path / ".git").mkdir()
+    first = maybe_fetch_origin_farm(
+        root=tmp_path,
+        now=10_000.0,
+        git_run=_git_run_origin("6b17dae111111"),
+        force=True,
+    )
+    assert first["updated"] is True
+    farm_path = origin_farm_cache_path(root=tmp_path)
+    meta_path = origin_farm_meta_path(root=tmp_path)
+    farm_mtime = farm_path.stat().st_mtime_ns
+    meta_mtime = meta_path.stat().st_mtime_ns
+    farm_bytes = farm_path.read_bytes()
+    meta_bytes = meta_path.read_bytes()
+    second = maybe_fetch_origin_farm(
+        root=tmp_path,
+        now=10_060.0,
+        git_run=_git_run_origin("6b17dae111111"),
+        force=True,
+    )
+    assert second["ok"] is True
+    assert second["updated"] is False
+    assert second["reason"] == "unchanged"
+    assert farm_path.stat().st_mtime_ns == farm_mtime
+    assert meta_path.stat().st_mtime_ns == meta_mtime
+    assert farm_path.read_bytes() == farm_bytes
+    assert meta_path.read_bytes() == meta_bytes
+
+
+def test_kick_origin_farm_fetch_is_noop_under_pytest():
+    from golf_offshoot.learning_lane_15m.sibling_sync import kick_origin_farm_fetch
+
+    kick_origin_farm_fetch()
+
+
+def test_hub_poll_kicks_origin_farm_without_inline_fetch(monkeypatch):
+    kicks: list[int] = []
+    monkeypatch.setattr(
+        "golf_offshoot.learning_lane_15m.sibling_sync.kick_origin_farm_fetch",
+        lambda **kwargs: kicks.append(1),
+    )
+    from golf_offshoot.operator_surface.reload import HubWatcher, WatchSnapshot
+
+    snap = WatchSnapshot(git_tip="refs/heads/x@1", code=(("a.py", 1),), artifacts=(("s", 1),))
+    watcher = HubWatcher(snapshot_fn=lambda: snap)
+    watcher.seed(snap)
+    decision = watcher.poll()
+    assert kicks == [1]
+    assert decision.kind == "none"

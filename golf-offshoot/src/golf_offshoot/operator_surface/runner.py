@@ -432,6 +432,57 @@ def run_15m_loop(
     return rec
 
 
+def run_golf_kalshi_tick(
+    *,
+    command: str = "loop",
+    notify: bool = False,
+    notify_topic: str | None = None,
+    dry_run_notify: bool = False,
+    feed=None,
+    brain=None,
+    executor=None,
+) -> RunRecord:
+    """One Kalshi golf tick. Does not write Phase 1 or Polymarket ledgers."""
+    refuse_forbidden(command if command in ALLOWED_ACTIONS else "loop")
+    from golf_offshoot.golf_kalshi.loop import run_tick
+    from golf_offshoot.golf_kalshi.paper import ledger_path, load_ledger
+
+    try:
+        payload = run_tick(feed=feed, brain=brain, executor=executor)
+    except Exception as exc:
+        rec = RunRecord(
+            command=command,
+            ok=False,
+            error=str(exc),
+            extras={"lane": "golf_kalshi"},
+        )
+        rec.notice = _maybe_notify(rec, notify=notify, topic=notify_topic, dry_run=dry_run_notify)
+        return rec
+    led = load_ledger()
+    rec = RunRecord(
+        command=command,
+        ok=True,
+        summary=str(payload.get("summary") or "golf kalshi tick"),
+        table=json_summary(payload),
+        extras={
+            "lane": "golf_kalshi",
+            "fills": payload.get("fills"),
+            "skips": payload.get("skips"),
+            "consulted_decide": payload.get("consulted_decide"),
+            "ledger": str(ledger_path()),
+            "bankroll": led.get("bankroll"),
+        },
+    )
+    rec.notice = _maybe_notify(rec, notify=notify, topic=notify_topic, dry_run=dry_run_notify)
+    return rec
+
+
+def json_summary(payload: dict) -> str:
+    fills = payload.get("fills")
+    skips = payload.get("skips")
+    return f"golf kalshi fills={fills} skips={skips} decide=yes"
+
+
 def format_run_record(rec: RunRecord) -> str:
     buf = StringIO()
     buf.write(f"status={'ok' if rec.ok else 'failed'} command={rec.command}\n")

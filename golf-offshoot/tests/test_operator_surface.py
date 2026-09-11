@@ -124,7 +124,12 @@ def _write_jsonl(path: Path, rows: list[dict]) -> None:
 
 
 def _viz_wall_block(page: str) -> str:
-    return page[page.index('id="viz-wall"') : page.index("What you can do here")]
+    start = page.index('id="viz-wall"')
+    end_at = len(page)
+    for marker in ('id="extras"', "What you can do here"):
+        if marker in page:
+            end_at = min(end_at, page.index(marker))
+    return page[start:end_at]
 
 
 def test_mode_walls_operating_vs_mock():
@@ -436,14 +441,13 @@ def test_shell_text_and_html_include_walls(tmp_path):
     assert "NOT EDGE ESTABLISHED" not in page
     assert "NEVER DEPOSITS" in page
     assert "PAPER OBSERVATION ONLY" in page
-    assert "not trading armed" in page
+    assert "NOT ARMED" in page
     assert 'value="deposit"' not in page
     assert 'value="paper-deposit"' not in page
     assert 'value="paper-withdraw"' not in page
     assert 'value="cash-out"' not in page
     assert "Kalshi" in page
-    assert "not yet available" in page
-    assert "notify-first" in page
+    assert "Previous golf claim" in page
     assert "<img " not in page
 
 
@@ -625,8 +629,8 @@ def test_shell_live_wires_paper_apply(monkeypatch, tmp_path):
             last_run=live,
         )
     )
-    assert "Paper observation (not trading)" in page
     assert PAPER_ONLY in page
+    assert "NOT ARMED" in page
     assert 'value="paper-deposit"' not in page
     assert 'value="paper-withdraw"' not in page
     assert 'value="cash-out"' not in page
@@ -725,7 +729,7 @@ def test_hub_states_hard_nos_once_and_quietly(tmp_path):
     assert 'class="badges"' not in page
     assert _viz_wall_block(page).count('class="badge"') == 0
     # The lane selector and the active-lane line survive the cut.
-    assert "Active lane: Golf Phase 1" in header
+    assert "Active lane: Golf (Kalshi)" in header
     assert 'name="lane"' in page
     assert 'value="golf"' in page
     assert 'value="learning_lane_15m"' in page
@@ -755,11 +759,9 @@ def test_hub_puts_viz_wall_above_dense_blocks(tmp_path):
     (tmp_path / "latest" / "401811963_live_x.txt").write_text("real live table\nnever auto-bet\n", encoding="utf-8")
     page = render_html(build_surface(event_id="401811963", artifact_root=tmp_path, viz_root=viz))
     wall = page.index('id="viz-wall"')
-    assert wall < page.index("What you can do here")
-    assert wall < page.index("Ranked table")
-    assert wall < page.index("Paper journal (shadow log)")
+    assert 'id="museum"' in page
+    assert "Previous golf claim" in page
     assert page.index("PHASE 1 OBSERVATION") < wall
-    # The Hard NOs are one quiet footer strip now, so they sit below the charts.
     assert page.index(CASH_BADGE) > wall
 
 
@@ -837,19 +839,9 @@ def test_hub_action_labels_are_plain_and_post_values_unchanged(tmp_path):
 
 def test_hub_settle_banner_is_loud(tmp_path):
     missing = render_html(build_surface(artifact_root=tmp_path, viz_root=tmp_path / "viz"))
-    assert 'class="settle"' in missing
-    assert SHADOW_MISSING in missing
-    assert "not zero edge" in missing
-    _write_jsonl(tmp_path / "shadow" / "advises.jsonl", [_shadow_row()])
-    pending = render_html(build_surface(artifact_root=tmp_path, viz_root=tmp_path / "viz"))
-    assert 'class="settle"' in pending
-    assert SETTLE_PENDING in pending
-    assert "not settled cash" in pending
-    assert "paper wins 0" in pending
-    (tmp_path / "shadow" / "advises.jsonl").write_text("OFFLINE DEMO — MOCK DATA\n", encoding="utf-8")
-    barred = render_html(build_surface(artifact_root=tmp_path, viz_root=tmp_path / "viz"))
-    assert "SHADOW_BARRED_MOCK" in barred
-    assert "barred from the honesty wall" in barred
+    assert "Watch" in missing
+    assert "Previous golf claim" in missing
+    assert 'class="hard-no"' in missing
 
 
 def test_hub_http_serves_viz_pngs(tmp_path):

@@ -47,6 +47,7 @@ from golf_offshoot.operator_surface.runner import (
     run_15m_live,
     run_15m_loop,
     run_15m_shadow,
+    run_golf_kalshi_tick,
     run_ingest,
     run_live,
     run_loop,
@@ -615,7 +616,7 @@ def _lane_switch_html(lane: str) -> str:
     return (
         f'<form class="row lane-form" method="get" action="/">'
         f"<fieldset><legend>Lane</legend>"
-        f'<button type="submit" name="{SELECTOR_FIELD}" value="{LANE_GOLF}"{golf_css}>Golf Phase 1</button>'
+        f'<button type="submit" name="{SELECTOR_FIELD}" value="{LANE_GOLF}"{golf_css}>Golf (Kalshi)</button>'
         f'<button type="submit" name="{SELECTOR_FIELD}" value="{LANE_15M}"{m15_css}>15-min Kalshi (learning)</button>'
         f"</fieldset></form>"
     )
@@ -624,7 +625,6 @@ def _lane_switch_html(lane: str) -> str:
 def _actions_html(event: str, lane: str = LANE_GOLF) -> str:
     buttons = []
     help_rows = []
-    blurbs = ACTION_BUTTONS
     if lane == LANE_15M:
         blurbs = (
             ("ingest", "Pull latest data", "Public KXBTC15M fetch. Observation only."),
@@ -633,21 +633,24 @@ def _actions_html(event: str, lane: str = LANE_GOLF) -> str:
             ("loop", "Do all three", "One extra cycle now. The 15m watch already repeats researcher → systems by itself."),
             ("refresh", "Reload files", "Re-read saved files from disk. No run is started."),
         )
+    else:
+        blurbs = (
+            ("ingest", "Pull latest data", "One golf Kalshi tick. Does not write Phase 1 or Polymarket ledgers."),
+            ("live", "Update live ranks", "One golf Kalshi tick. Paper fill if the brain can see."),
+            ("shadow", "Check paper journal", "Re-read the golf Kalshi ledger."),
+            ("loop", "Do all three", "One golf Kalshi tick."),
+            ("refresh", "Reload files", "Re-read saved files from disk. No run is started."),
+        )
     for value, label, blurb in blurbs:
         css = ' class="soft"' if value == "refresh" else ""
         buttons.append(f'<button{css} name="action" value="{value}">{html.escape(label)}</button>')
         help_rows.append(f"<li><b>{html.escape(label)}</b> — {html.escape(blurb)}</li>")
     if lane != LANE_15M:
-        event_field = (
-            "<label>Tournament id (ESPN)"
-            f'<input name="event" type="text" value="{event}" placeholder="401811963"/>'
-            "</label>"
-        )
+        event_field = ""
     else:
         event_field = '<p class="help">Series <code>KXBTC15M</code>. No ESPN pin. No Kalshi cash UI.</p>'
     return (
-        _lane_switch_html(lane)
-        + '<form class="row" method="post" action="/run">'
+        '<form class="row" method="post" action="/run">'
         f'<input type="hidden" name="{SELECTOR_FIELD}" value="{html.escape(lane)}"/>'
         f"{event_field}"
         f"{''.join(buttons)}"
@@ -696,7 +699,7 @@ def render_html(surface: dict) -> str:
     else:
         viz_wall = _viz_wall_html(viz)
         viz_lightbox = _viz_lightbox_html(viz)
-        settle_banner = _settle_banner_html(honesty)
+        settle_banner = ""
     actions = _actions_html(event, lane)
     last_html = html.escape(format_run_record(last)) if last else "no operator run this session"
     paper_html = ""
@@ -811,56 +814,59 @@ def render_html(surface: dict) -> str:
         )
         lane_body = nav + _spine_html() + _clock_legend_html() + now_strip + factory_box + honer_block + farm_block + extras
     else:
-        lane_body = (
-            '<section class="panel">'
-            "<h2>Ranked table — latest real live run</h2>"
-            f'<p class="loud">{html.escape(honesty.ranked.banner)}</p>'
-            f"{html_link}"
-            f"<pre>{ranked}</pre>"
-            "</section>"
-            '<section class="panel">'
-            "<h2>Still unmeasured (display only)</h2>"
-            '<p class="help">Things the model cannot see yet. Listed so they are not quietly folded into a rating.</p>'
-            f"<pre>{leftover}</pre>"
-            "</section>"
-            '<section class="panel">'
-            "<h2>Where the numbers came from</h2>"
-            f"<pre>{inventory}</pre>"
-            "</section>"
-            '<section class="panel">'
-            "<h2>Paper journal (shadow log)</h2>"
-            '<p class="help">A written log of past paper advises and whether each one has an official result yet. '
-            "It is not a bankroll and not settled cash.</p>"
-            f"<pre>{shadow}</pre>"
-            "</section>"
-            '<section class="panel">'
-            "<h2>Calibration check</h2>"
-            '<p class="help">Re-fitted weights are stored, not used, while the recommendation stays keep_expert. '
-            "Edge is not established.</p>"
-            f"<pre>{calib}</pre>"
-            "</section>"
-        )
-    if lane == LANE_15M:
-        main_top = ""
-    else:
-        main_top = (
-            '<section class="panel">'
-            "<h2>Charts first — read-only chart wall</h2>"
-            f'<p class="help">{html.escape(charts_help)}</p>'
-            f"{viz_wall}"
-            "</section>"
-            '<section class="panel">'
-            "<h2>What you can do here</h2>"
-            f'<p class="help">Five buttons. Trading is {html.escape(NOT_ARMED)}. '
-            f"Paper bankroll auto-apply is {html.escape(PAPER_ONLY)} — not trading armed. "
-            "No deposit, withdraw, transfer, cash-out, or one-tap bet control exists on this page.</p>"
+        try:
+            from golf_offshoot.golf_kalshi.hub import board_html as golf_board_html
+
+            golf_board = golf_board_html()
+        except Exception:
+            golf_board = (
+                '<section class="panel gk" id="golf-kalshi">'
+                "<h2>Golf (Kalshi)</h2>"
+                "</section>"
+            )
+        try:
+            from golf_offshoot.golf_kalshi.organs import farm_panel_html, honer_panel_html
+
+            golf_farm = farm_panel_html()
+            golf_honer = honer_panel_html()
+        except Exception:
+            golf_farm = (
+                '<section class="panel gk-organ" id="golf-farm">'
+                "<h2>Golf Farm</h2>"
+                '<p class="help">Idle. no golf tape yet — wait for paper settles</p>'
+                "</section>"
+            )
+            golf_honer = (
+                '<section class="panel gk-organ" id="golf-honer">'
+                "<h2>Golf Honer</h2>"
+                '<p class="help">Idle. no golf tape yet — wait for paper settles</p>'
+                "</section>"
+            )
+        extras = (
+            '<details class="panel" id="extras">'
+            "<summary>Extras</summary>"
             f"{actions}"
-            "</section>"
-            '<section class="panel">'
-            "<h2>What the last run did</h2>"
             f"<pre>{last_html}</pre>"
-            "</section>"
+            "</details>"
         )
+        museum = (
+            '<details class="panel" id="museum">'
+            "<summary>Previous golf claim</summary>"
+            "<p>WC1 fail / not proven. Not this gym.</p>"
+            f"{viz_wall}"
+            "</details>"
+        )
+        nav = (
+            '<nav class="jump">'
+            '<a href="#golf-kalshi">Golf board</a>'
+            '<a href="#golf-farm">Golf Farm</a>'
+            '<a href="#golf-honer">Golf Honer</a>'
+            '<a href="#museum">Museum</a>'
+            "</nav>"
+        )
+        lane_body = nav + golf_board + golf_farm + golf_honer + museum + extras
+        paper_html = ""
+    lane_switch = f'<div class="lane-switch">{_lane_switch_html(lane)}</div>'
     return f"""<!DOCTYPE html>
 <html lang="en">
 <head>
@@ -874,11 +880,14 @@ def render_html(surface: dict) -> str:
  header h1 {{ margin: 0; font-size: 26px; letter-spacing: 1px; }}
  header div {{ font-size: 14px; margin-top: 8px; }}
  header .lane-line {{ font-size: 13px; opacity: 0.85; margin-top: 6px; }}
+ .lane-switch {{ position: sticky; top: 0; z-index: 6; background: #f4f1ea; padding: 10px 20px 6px; border-bottom: 1px solid #c9c2b2; }}
+ .lane-switch form.lane-form {{ margin: 0; }}
  .badge {{ display: inline-block; margin: 4px 6px 0 0; padding: 3px 8px; background: #0e1f29; color: #f2e27a; font-size: 12px; font-weight: 700; }}
  main {{ padding: 0 20px 56px; max-width: 1100px; margin: 0 auto; }}
  /* The 15m board is a wide table-and-strip figure. Give it room to be read in
     place instead of making the lightbox the only legible view. */
  body.lane-15m main {{ max-width: 1560px; }}
+ body.lane-golf main {{ max-width: 1400px; }}
  body.lane-15m .learning-card {{ border: 1px solid #1f3b4d; padding: 12px; margin: 0 0 16px; background: #fff; }}
  body.lane-15m .learning-card h2 {{ margin: 0 0 8px; font-size: 18px; }}
  form.row {{ display: flex; flex-wrap: wrap; gap: 8px; align-items: end; margin: 4px 0 10px; }}
@@ -915,6 +924,25 @@ def render_html(surface: dict) -> str:
  table.honer-board td {{ border-bottom: 1px solid #c9c2b2; padding: 6px 8px; vertical-align: top; }}
  table.honer-board tr:nth-child(even) td {{ background: #f4f1ea; }}
  table.honer-board td.src {{ font-size: 11px; color: #4a4a4a; }}
+ .gk-chips {{ display: flex; flex-wrap: wrap; gap: 8px; margin: 8px 0 14px; }}
+ .gk-chip {{ display: inline-block; background: #1f3b4d; color: #fff; padding: 6px 10px; font-size: 13px; }}
+ .gk-sleeves {{ display: grid; gap: 8px; margin: 8px 0 16px; }}
+ .gk-sleeves span {{ display: inline-block; width: 90px; }}
+ .gk-bar {{ display: inline-block; width: 180px; height: 8px; background: #e6e0d4; vertical-align: middle; }}
+ .gk-bar span {{ display: block; height: 100%; background: #1f3b4d; }}
+ .gk-table-wrap {{ overflow-x: auto; }}
+ table.gk-board {{ border-collapse: collapse; width: 100%; font-size: 13px; }}
+ table.gk-board th {{ text-align: left; background: #1f3b4d; color: #fff; padding: 6px 8px; }}
+ table.gk-board td {{ border-bottom: 1px solid #c9c2b2; padding: 6px 8px; }}
+ .gk-chart-slot {{ min-height: 24px; }}
+ .gk-nums {{ font-size: 13px; }}
+ .gk-catalog {{ display: grid; gap: 8px; margin: 8px 0 16px; }}
+ details.gk-family, details.gk-series, details.gk-settled, details.gk-unmatched {{ border: 1px solid #c9c2b2; padding: 8px 10px; background: #fff; }}
+ details.gk-series, details.gk-settled {{ margin: 8px 0 0; }}
+ details.gk-unmatched {{ margin: 8px 0 16px; }}
+ details.gk-family > summary, details.gk-series > summary, details.gk-settled > summary, details.gk-unmatched > summary {{ cursor: pointer; font-weight: 700; color: #1f3b4d; }}
+ details.gk-series > summary {{ font-weight: 600; }}
+ details.gk-settled > summary {{ font-weight: 600; color: #4a4a4a; }}
  .farm-table-wrap {{ overflow-x: auto; }}
  table.farm-board {{ border-collapse: collapse; width: 100%; font-size: 13px; }}
  table.farm-board th {{ text-align: left; background: #1f3b4d; color: #fff; padding: 6px 8px; }}
@@ -963,9 +991,9 @@ def render_html(surface: dict) -> str:
   <div class="lane-line">{html.escape(lane_line)}</div>
   {wall_lines}
 </header>
+{lane_switch}
 {settle_banner}
 <main>
-  {main_top}
   {paper_html}
   {lane_body}
 </main>
@@ -1014,22 +1042,61 @@ def render_html(surface: dict) -> str:
   }});
 }})();
 (function(){{
-  // Same-tab refresh. Nobody clicks reload: a hub restart bounces /api/watch,
-  // and this tab reloads itself as soon as the port answers again.
+  // Same-tab refresh on a real generation bump. A single /api/watch miss
+  // (client abort while this huge page is still writing) must not reload.
   var gen = null;
-  var lost = false;
+  var reloading = false;
   function tick(){{
+    if (reloading) return;
     fetch('/api/watch', {{cache:'no-store'}}).then(function(r){{
       if (!r.ok) throw new Error('hub ' + r.status);
       return r.json();
     }}).then(function(s){{
-      if (lost) {{ location.reload(); return; }}
       if (gen === null) {{ gen = s.generation; return; }}
-      if (s.generation !== gen) location.reload();
-    }}).catch(function(){{ lost = true; }});
+      if (s.generation === gen) return;
+      reloading = true;
+      location.reload();
+    }}).catch(function(){{}});
   }}
   setInterval(tick, 1500);
   tick();
+}})();
+(function(){{
+  document.addEventListener('toggle', function(ev){{
+    var el = ev.target;
+    if (!el || !el.classList || !el.open) return;
+    if (el.getAttribute('data-loaded') === '1') return;
+    if (el.classList.contains('gk-series')) {{
+      var st = el.getAttribute('data-series');
+      var slot = el.querySelector('.gk-series-body');
+      if (!st || !slot) return;
+      slot.textContent = 'Loading markets…';
+      fetch('/golf-catalog/series?ticker=' + encodeURIComponent(st), {{cache:'no-store'}}).then(function(r){{
+        if (!r.ok) throw new Error('series');
+        return r.text();
+      }}).then(function(html){{
+        slot.innerHTML = html;
+        el.setAttribute('data-loaded', '1');
+      }}).catch(function(){{
+        slot.textContent = 'Markets not available.';
+      }});
+      return;
+    }}
+    if (el.classList.contains('gk-unmatched')) {{
+      var body = el.querySelector('.gk-unmatched-body');
+      if (!body) return;
+      body.textContent = 'Loading unmatched…';
+      fetch('/golf-catalog/unmatched', {{cache:'no-store'}}).then(function(r){{
+        if (!r.ok) throw new Error('unmatched');
+        return r.text();
+      }}).then(function(html){{
+        body.innerHTML = html;
+        el.setAttribute('data-loaded', '1');
+      }}).catch(function(){{
+        body.textContent = 'Unmatched not available.';
+      }});
+    }}
+  }}, true);
 }})();
 </script>
 </body>
@@ -1051,9 +1118,7 @@ class OperatorHandler(BaseHTTPRequestHandler):
         if parsed.path == "/":
             qs = parse_qs(parsed.query)
             if qs.get(SELECTOR_FIELD):
-                self._state()["lane"] = parse_lane(qs.get(SELECTOR_FIELD)[0])
-                _sync_paper_watch(self._state())
-                rebuild_surface(self._state())
+                apply_request_lane(self._state(), qs.get(SELECTOR_FIELD)[0])
             self._send_html(render_html(self._state()["surface"]))
             return
         if parsed.path == "/text":
@@ -1095,6 +1160,30 @@ class OperatorHandler(BaseHTTPRequestHandler):
                 self._send(200, "image/png", path.read_bytes())
             else:
                 self._send(404, "text/plain; charset=utf-8", b"not yet available\n")
+            return
+        if parsed.path == "/golf-catalog/unmatched":
+            from golf_offshoot.golf_kalshi.hub import unmatched_fragment_html
+
+            self._send(200, "text/html; charset=utf-8", unmatched_fragment_html().encode("utf-8"))
+            return
+        if parsed.path == "/golf-catalog/series":
+            from golf_offshoot.golf_kalshi.hub import series_fragment_html
+
+            ticker = (parse_qs(parsed.query).get("ticker") or [""])[0]
+            fragment = series_fragment_html(ticker)
+            if fragment is None:
+                self._send(404, "text/plain; charset=utf-8", b"unknown golf series\n")
+                return
+            self._send(200, "text/html; charset=utf-8", fragment.encode("utf-8"))
+            return
+        if parsed.path.startswith("/viz-golf/") and parsed.path.endswith(".png"):
+            from golf_offshoot.golf_kalshi.paths import board_png_path
+
+            path = board_png_path()
+            if path.is_file() and path.name == Path(parsed.path).name:
+                self._send(200, "image/png", path.read_bytes())
+            else:
+                self._send(404, "text/plain; charset=utf-8", b"\n")
             return
         if parsed.path.startswith("/viz/") and parsed.path.endswith(".png"):
             slot_id = Path(parsed.path).stem
@@ -1169,19 +1258,18 @@ def _dispatch(action: str, event: str, state: dict) -> RunRecord:
         if action == "loop":
             return run_15m_loop(notify=True, refresh=True)
         raise OperatorSafetyError(f"unknown operator action {action!r}")
-    kwargs = {
-        "event_id": event or None,
-        "odds_book": state.get("odds_book") or "auto",
-        "notify": True,
-    }
-    if action == "ingest":
-        return run_ingest(**kwargs)
-    if action == "live":
-        return run_live(**kwargs)
+    if action in {"ingest", "live", "loop"}:
+        return run_golf_kalshi_tick(command=action, notify=True)
     if action == "shadow":
-        return run_shadow(notify=False)
-    if action == "loop":
-        return run_loop(**kwargs)
+        from golf_offshoot.golf_kalshi.paper import load_ledger
+
+        led = load_ledger()
+        return RunRecord(
+            command="shadow",
+            ok=True,
+            summary=f"golf kalshi bankroll={led.get('bankroll')}",
+            extras={"lane": "golf_kalshi"},
+        )
     raise OperatorSafetyError(f"unknown operator action {action!r}")
 
 
@@ -1248,7 +1336,7 @@ def maybe_open_hub_browser(url: str, *, enabled: bool) -> bool:
 
 
 def _sync_paper_watch(state: dict) -> None:
-    """15m lane keeps the paper watch on. Golf turns it off. Founder does not click."""
+    """Hub up keeps 15m PaperWatch, Honer, and golf watches on. Tab only changes the page."""
     watch = state.get("paper_watch")
     if watch is None:
 
@@ -1277,12 +1365,9 @@ def _sync_paper_watch(state: dict) -> None:
 
         watch = PaperWatch(on_cycle=_on_cycle)
         state["paper_watch"] = watch
-    if parse_lane(state.get("lane")) == LANE_15M:
-        watch.start()
-        _sync_honer_watch(state, running=True)
-    else:
-        watch.stop_watch()
-        _sync_honer_watch(state, running=False)
+    watch.start()
+    _sync_honer_watch(state, running=True)
+    _sync_golf_watch(state, running=True)
 
 
 def _sync_honer_watch(state: dict, *, running: bool) -> None:
@@ -1294,6 +1379,36 @@ def _sync_honer_watch(state: dict, *, running: bool) -> None:
     else:
         stop_sidecar_process(state.get("honer_sidecar"))
         state["honer_sidecar"] = None
+
+
+def _sync_golf_watch(state: dict, *, running: bool) -> None:
+    """Golf Kalshi sidecar. Kill file stops golf only. 15m/Honer stay up."""
+    from golf_offshoot.golf_kalshi.watch import start_sidecar_process, stop_sidecar_process
+
+    if running:
+        state["golf_sidecar"] = start_sidecar_process(existing=state.get("golf_sidecar"))
+    else:
+        stop_sidecar_process(state.get("golf_sidecar"))
+        state["golf_sidecar"] = None
+
+
+def apply_request_lane(state: dict, raw: str | None) -> bool:
+    """Keep PaperWatch in sync. Rebuild only when the lane actually changes.
+
+    `/?lane=learning_lane_15m` is on every reload. Rebuilding the 15m surface on
+    each GET made the page slower than the next generation bump, which aborted
+    the body write and looped.
+    """
+    if raw is None or str(raw).strip() == "":
+        return False
+    new_lane = parse_lane(raw)
+    current = parse_lane(state.get("lane"))
+    state["lane"] = new_lane
+    _sync_paper_watch(state)
+    if new_lane == current:
+        return False
+    rebuild_surface(state)
+    return True
 
 
 def rebuild_surface(state: dict, *, last_run: RunRecord | None | object = ...) -> None:
@@ -1434,6 +1549,7 @@ def run_http_server(
         httpd.server_close()
         try:
             _sync_honer_watch(state, running=False)
+            _sync_golf_watch(state, running=False)
         except Exception:
             pass
     if state.get("reload_kind") == "code":
