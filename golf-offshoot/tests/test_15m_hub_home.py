@@ -646,3 +646,62 @@ def test_session_strip_copies_open_book_and_folds_exceptions(tmp_path):
     assert 'value="deposit"' not in page
 
 
+def test_tape_copies_recorded_pnl_when_positions_cleared(tmp_path):
+    from datetime import datetime, timezone
+
+    from golf_offshoot.learning_lane_15m.paper import save_book
+    from golf_offshoot.learning_lane_15m.paths import settlements_dir_15m
+    from golf_offshoot.models.strategy import PortfolioState
+    from golf_offshoot.strategy.paper_book import PaperBookFile, PaperMovement
+
+    set_15m_root_override(tmp_path)
+    try:
+        save_book(
+            PaperBookFile(
+                tournament_id="KXBTC15M-26SEP111215__2026-09-11T16:00:00Z__2026-09-11T16:15:00Z",
+                tournament_name="KXBTC15M",
+                bankroll=100.42,
+                book=PortfolioState(bankroll=100.42, positions=[]),
+                movements=[
+                    PaperMovement(
+                        movement_id="mv-settled",
+                        kind="new_bet",
+                        player_id="KXBTC15M-26SEP111215-15",
+                        stake_after=1.0,
+                    )
+                ],
+                settled_at=datetime(2026, 9, 11, 16, 15, tzinfo=timezone.utc),
+                settlement_pnl=0.42,
+            )
+        )
+        (settlements_dir_15m() / "join.json").write_text(
+            json.dumps(
+                {
+                    "rows": [
+                        {
+                            "ticker": "KXBTC15M-26SEP111215-15",
+                            "window_id": (
+                                "KXBTC15M-26SEP111215__2026-09-11T16:00:00Z__"
+                                "2026-09-11T16:15:00Z"
+                            ),
+                            "settle_status": "settled",
+                            "kalshi_result": "yes",
+                        }
+                    ]
+                }
+            ),
+            encoding="utf-8",
+        )
+        page = _page(tmp_path)
+    finally:
+        set_15m_root_override(None)
+    tape = page[page.index('class="tape-card"') : page.index('id="exceptions-fold"')]
+    assert "KXBTC15M-26SEP111215-15" in tape
+    assert "pnl=+0.42" in tape
+    assert "no pnl on disk" not in tape
+    now = page[page.index('id="lane-now"') : page.index('id="lane-tiles"')]
+    assert "last joined KXBTC15M-26SEP111215-15 pnl=+0.42" in now
+    header = page[page.index("<header") : page.index("</header>")]
+    assert 'class="lock-ticker">KXBTC15M' in header
+
+

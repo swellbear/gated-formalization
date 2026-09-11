@@ -293,7 +293,7 @@ def _last_settled_join_line() -> str:
         return at
 
     rec = max(settled, key=_when)
-    tickers = [pos.player_id for pos in rec.book.positions if pos.player_id]
+    tickers = _book_tickers(rec)
     ticker = str(tickers[0] if tickers else event_ticker_from_book(rec))
     if rec.settlement_pnl is None:
         pnl = "no pnl on disk"
@@ -820,6 +820,20 @@ def role_strip_html(state: dict | None = None) -> str:
     return f'<div class="role-strip" id="role-strip">{role_strip_inner_html(state)}</div>'
 
 
+def _book_tickers(rec: Any) -> list[str]:
+    """Market tickers still on the book after settle (positions may be empty)."""
+    keys: list[str] = []
+    for pos in rec.book.positions:
+        pid = str(pos.player_id or "")
+        if pid and pid not in keys:
+            keys.append(pid)
+    for mv in rec.movements:
+        pid = str(mv.player_id or "")
+        if pid and pid not in keys:
+            keys.append(pid)
+    return keys
+
+
 def _open_book_lines() -> list[str]:
     from golf_offshoot.learning_lane_15m.paper import event_ticker_from_book, iter_books
 
@@ -841,10 +855,10 @@ def _recent_join_lines(limit: int = _JOIN_LIMIT) -> list[str]:
     books = list(iter_books())
     by_ticker: dict[str, Any] = {}
     for rec in books:
-        tickers = [pos.player_id for pos in rec.book.positions if pos.player_id]
-        if tickers:
-            by_ticker[str(tickers[0])] = rec
+        for key in _book_tickers(rec):
+            by_ticker[key] = rec
         by_ticker[event_ticker_from_book_id(str(rec.tournament_id or ""))] = rec
+        by_ticker[str(rec.tournament_id or "")] = rec
 
     rows: list[dict[str, Any]] = []
     root = settlements_dir_15m()
@@ -868,7 +882,7 @@ def _recent_join_lines(limit: int = _JOIN_LIMIT) -> list[str]:
         ticker = str(row.get("ticker") or "")
         status = str(row.get("settle_status") or "")
         result = str(row.get("kalshi_result") or "n/a")
-        rec = by_ticker.get(ticker)
+        rec = by_ticker.get(ticker) or by_ticker.get(str(row.get("window_id") or ""))
         if rec is not None and rec.settled_at is not None and rec.settlement_pnl is not None:
             pnl = f"pnl={float(rec.settlement_pnl):+.2f}"
         elif rec is None:
