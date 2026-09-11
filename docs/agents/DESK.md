@@ -6,7 +6,7 @@ Thread lines are **one sentence, newest first, max 10**. Long findings belong in
 
 | Field | Value |
 |-------|--------|
-| Updated | 2026-09-11 14:05 ET |
+| Updated | 2026-09-11 14:10 ET |
 | Active role | hub-ui |
 | Job | Professional Golf (Kalshi) terminal UX on #179 from the hub-intent lock. Do not merge. Not armed. |
 | Status | working |
@@ -34,6 +34,7 @@ The runner exports locally. It does **not** commit or push. The public page is *
 
 ## Thread
 
+- 2026-09-11 14:10 ET  hub-ui: #179 will not cleanly take over the live Windows gym; chrome is a new shell with guessed hooks, not a drop-in. next=hub-ui
 - 2026-09-11 14:05 ET  hub-ui: VM golf hub is empty because this checkout has no golf_kalshi book; Windows live gym has the 11 tickets. None invented. next=hub-ui
 - 2026-09-11 13:55 ET  hub-ui: Founder asked to keep upgrading the live Golf (Kalshi) UI/UX on #179 from the questions lock. next=hub-ui
 - 2026-09-11 13:50 ET  hub-ui → chief-of-staff: live Golf (Kalshi) shell now uses glance/cockpit tabs; Farm/Honer; Museum is previous Phase 1; 15m tiles are not WC1. next=chief-of-staff
