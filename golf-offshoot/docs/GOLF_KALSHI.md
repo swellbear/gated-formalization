@@ -37,8 +37,8 @@ The tick is staged so the advisor can see:
 
 1. **Settle** always.
 2. **Identity hunt** every open event against a tick-level ESPN league snapshot (one leaderboard read per league, in-memory title bind). Cheap. History is not loaded here.
-3. **Monte Carlo** only for the round-robin slice (`max_brain`, remaining clock). `keep_expert` in memory (`include_odds=False`). Never `run_operating`. Never write Phase 1 `data/paper/`. Re-run when the live scoreboard fingerprint moves. A clock miss is deferred, not stored as thin.
-4. **Decide** every open market from cached p. Skip is honest (`no_model_p`, unmatched, thin). Fill cap is count, not the clock.
+3. **Monte Carlo** only for the round-robin slice (`max_brain`, remaining clock). `keep_expert` in memory (`include_odds=False`). Never `run_operating`. Never write Phase 1 `data/paper/`. Re-run when the live scoreboard fingerprint moves. A clock miss is deferred, not stored as thin. Listed names stay in `field_candidates` through that defer.
+4. **Decide** every open market from cached p. Skip is honest (`no_model_p`, unmatched, `thin`, `field_deferred`). Empty `field_candidates` is `no_field`; a Kalshi-listed hunt that is only deferred or below the history floor is not. Fill cap is count, not the clock.
 
 Hunt order:
 
