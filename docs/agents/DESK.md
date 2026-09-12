@@ -6,11 +6,11 @@ Thread lines are **one sentence, newest first, max 10**. Long findings belong in
 
 | Field | Value |
 |-------|--------|
-| Updated | 2026-09-12 09:20 ET |
+| Updated | 2026-09-12 09:22 ET |
 | Active role | systems |
 | Job | gym Honer: park search when catalog_exhausted; stamp HONER-FAMILY-AMEND from files (hire #1). |
 | Status | done |
-| Handoff | Gym Honer parks search when `library.json` `catalog_exhausted` (no new fills; exam stays closed; doorbell from files, not exam pnl). No clip-grid / `iter_exam_queue`. Did not cherry-pick #191. Did not merge #178/#188/#191. Did not touch hub `app.py` or golf `decide.py`. HOLD. Trading NOT ARMED. next=chief-of-staff |
+| Handoff | Draft [#193](https://github.com/swellbear/gated-formalization/pull/193) `a800fe9` parks gym Honer search when `library.json` `catalog_exhausted` (no new fills; exam stays closed; doorbell from files, not exam pnl). No clip-grid / `iter_exam_queue`. Did not cherry-pick #191. Did not merge #178/#188/#191. Did not touch hub `app.py` or golf `decide.py`. HOLD. Trading NOT ARMED. next=chief-of-staff |
 | Waiting on Founder | **N** |
 
 ## last_cos (CoS stamp — doorbell silence)
@@ -21,7 +21,7 @@ Thread lines are **one sentence, newest first, max 10**. Long findings belong in
 | last_cos_commit | d520e3f |
 | handled_reason_ids | E_idle_unassigned, I_farm_open |
 
-**Branch note.** Live factory is `cursor/honer-15m-sibling` [#178](https://github.com/swellbear/gated-formalization/pull/178) (open; base is `cursor/part-a-clerical-trust-boundary`; look-push tip `70fa007` allowlist hour-close L1 only). [#176](https://github.com/swellbear/gated-formalization/pull/176) is still OPEN. Live golf gym is `cursor/golf-kalshi-gym` (`6f5aa6d`) plus gym Honer park-search (`cursor/gym-honer-park-search-d616`); do not merge #178 / #188 / #191; no clip-grid on gym. `origin/master` tip is `62fc9cb` ([#186](https://github.com/swellbear/gated-formalization/pull/186) revert of golf-1 [#180](https://github.com/swellbear/gated-formalization/pull/180)). 15m-0 [#182](https://github.com/swellbear/gated-formalization/pull/182) and 15m-1 (`c1c5d2f`) stay on master. [#183](https://github.com/swellbear/gated-formalization/pull/183) stays open — do not merge. Do not merge gym HEAD onto #178. Branching factory from `origin/master` would still discard part-a / sibling. Do not use `C:\Users\bearh\gated-formalization` on `cursor/eia-window-job2`.
+**Branch note.** Live factory is `cursor/honer-15m-sibling` [#178](https://github.com/swellbear/gated-formalization/pull/178) (open; base is `cursor/part-a-clerical-trust-boundary`; look-push tip `70fa007` allowlist hour-close L1 only). [#176](https://github.com/swellbear/gated-formalization/pull/176) is still OPEN. Live golf gym is `cursor/golf-kalshi-gym` (`6f5aa6d`) plus gym Honer park-search [#193](https://github.com/swellbear/gated-formalization/pull/193) (`cursor/gym-honer-park-search-d616` `a800fe9`); do not merge #178 / #188 / #191; no clip-grid on gym. `origin/master` tip is `62fc9cb` ([#186](https://github.com/swellbear/gated-formalization/pull/186) revert of golf-1 [#180](https://github.com/swellbear/gated-formalization/pull/180)). 15m-0 [#182](https://github.com/swellbear/gated-formalization/pull/182) and 15m-1 (`c1c5d2f`) stay on master. [#183](https://github.com/swellbear/gated-formalization/pull/183) stays open — do not merge. Do not merge gym HEAD onto #178. Branching factory from `origin/master` would still discard part-a / sibling. Do not use `C:\Users\bearh\gated-formalization` on `cursor/eia-window-job2`.
 
 ## Ask Founder
 
@@ -60,7 +60,7 @@ Two suites, both on the tick.
 
 ## Thread
 
-- 2026-09-12 09:20 ET  systems → chief-of-staff: gym Honer parks search when `catalog_exhausted`; `HONER-FAMILY-AMEND` from files not exam pnl; no clip-grid. HOLD. Trading NOT ARMED. next=chief-of-staff
+- 2026-09-12 09:22 ET  systems → chief-of-staff: gym Honer park-search is draft [#193](https://github.com/swellbear/gated-formalization/pull/193) `a800fe9`; no clip-grid. HOLD. Trading NOT ARMED. next=chief-of-staff
 - 2026-09-12 08:58 ET  hub-ui → chief-of-staff: 8765 leftover 7–9 (Home trial glance, disagreements folded, golf Live/entry $ / thin). Full card on Lab. PaperWatch kept. Do not merge #183. Lab chair untouched. HOLD. Trading NOT ARMED. next=operator
 - 2026-09-12 08:52 ET  gym → chief-of-staff: landed Palshi [#190](https://github.com/swellbear/gated-formalization/pull/190) `1a911ab` as `fd17cf1` (golf mix dollar cap; no re-trim); 8765/PaperWatch still up; HOLD. Trading NOT ARMED. next=operator
 - 2026-09-12 08:43 ET  gym → chief-of-staff: landed Palshi [#189](https://github.com/swellbear/gated-formalization/pull/189) `756d456` as `a2279d6`; PaperWatch/8765 still up after re-exec; `execution` unchanged; HOLD. Trading NOT ARMED. next=operator
