@@ -14,6 +14,10 @@ data/learning_lane_15m/shadow/
 data/learning_lane_15m/snapshots/
 data/learning_lane_15m/settlements/
 data/learning_lane_15m/latest/
+data/golf_kalshi/paper/
+data/golf_kalshi/settlements/
+data/golf_kalshi/latest/
+data/golf_kalshi/cache/
 data/openings/*.json
 data/exports/*.pdf
 data/exports/*.html
