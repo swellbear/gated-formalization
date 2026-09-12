@@ -25,6 +25,9 @@ from golf_offshoot.golf_kalshi.executor import LiveExecutor, PaperExecutor, Reco
 from golf_offshoot.golf_kalshi.loop import run_tick
 from golf_offshoot.golf_kalshi.paper import empty_ledger, load_ledger, save_ledger
 from golf_offshoot.golf_kalshi.paths import (
+    farm_path,
+    honer_status_path,
+    last_tick_path,
     ledger_path,
     set_golf_kalshi_root_override,
     trading_armed_path,
@@ -1694,6 +1697,146 @@ def test_golf_farm_points_at_home_tape(gk_root):
     assert "Paper tape is on Home (1 open) and Scoreboard (1 closed)" in honer
     assert "Golf Honer is not consulting" in honer
     assert "No golf Farm notebooks" in farm
+
+
+def test_three_ball_and_round_leader_are_fast():
+    assert classify_sleeve(title="Irish Open 3-ball: Scottie Scheffler") == "fast"
+    assert (
+        classify_sleeve(
+            {
+                "series_ticker": "KXDPWORLDTOUR3BALL",
+                "ticker": "KXDPWORLDTOUR3BALL-SSCHEFF",
+                "title": "Niemann vs Scheffler vs Lowry",
+                "yes_sub_title": "Scottie Scheffler",
+            }
+        )
+        == "fast"
+    )
+    assert (
+        classify_sleeve(
+            {
+                "series_ticker": "KXCHAMPTOURR1LEAD",
+                "ticker": "KXCHAMPTOURR1LEAD-MWILSON",
+                "title": "Will Mark Wilson win?",
+            }
+        )
+        == "fast"
+    )
+    assert (
+        classify_sleeve(
+            {
+                "series_ticker": "KXDPWORLDTOURR3LEAD",
+                "title": "Will Joaquin Niemann win the Amgen Irish Open?",
+            }
+        )
+        == "fast"
+    )
+    assert classify_sleeve(_market()) == "week"
+    assert classify_sleeve({"title": "2027 Ryder Cup USA captain"}) == "slow"
+
+
+def test_three_ball_fills_fast_when_week_overweight(gk_root):
+    rec = recipe_v1()
+    book = empty_ledger(rec)
+    book["tickets"] = [_ticket(stake=198.0, player_id="other")]
+    save_ledger(book)
+    three = _market(
+        ticker="KXDPWORLDTOUR3BALL-SSCHEFF",
+        series_ticker="KXDPWORLDTOUR3BALL",
+        event_ticker="KXDPWORLDTOUR3BALL-AMIO",
+        title="Niemann vs Scheffler vs Lowry",
+        yes_sub_title="Scottie Scheffler",
+    )
+    assert classify_sleeve(three) == "fast"
+    brain = StaticBrain(
+        {normalize_name("Scottie Scheffler"): "scottie"},
+        {"scottie": {"win": 0.22}},
+    )
+    out = run_tick(brain=brain, executor=PaperExecutor(), catalog={"markets": [three, _market()]})
+    led = load_ledger()
+    booked = [t for t in led["tickets"] if t.get("ticker") == "KXDPWORLDTOUR3BALL-SSCHEFF"]
+    assert booked
+    assert booked[0]["sleeve"] == "fast"
+    assert booked[0]["status"] == "open"
+    assert not any(t.get("ticker") == "KXPGA-26-SSCHEFF" and t.get("status") == "open" for t in led["tickets"])
+    assert out["fills"] >= 1
+    assert out["picked"].get("fast", 0) >= 1
+
+
+def test_organs_read_live_ledger_and_last_tick(gk_root):
+    from golf_offshoot.golf_kalshi.organs import refresh_organs
+    from golf_offshoot.golf_kalshi.paper import empty_ledger, save_ledger
+
+    book = empty_ledger()
+    book["bankroll"] = 833.694
+    book["betting_pnl"] = -166.306
+    book["sleeves"] = {"fast": 0.0, "week": 83.37, "slow": 10.93}
+    book["tickets"] = [
+        _ticket(status="SETTLE_PENDING"),
+        _ticket(ticker="T2", status="paper_lose"),
+    ]
+    save_ledger(book)
+    farm_path().write_text(
+        json.dumps(
+            {
+                "lane": "golf_kalshi",
+                "notebooks": [],
+                "idle": True,
+                "execution": False,
+                "notes": "no golf tape yet — wait for paper settles",
+            }
+        )
+        + "\n",
+        encoding="utf-8",
+    )
+    last_tick_path().write_text(
+        json.dumps(
+            {
+                "lane": "golf_kalshi",
+                "at": "2026-09-12T08:12:27-04:00",
+                "summary": "fills=0 skips=1209 worthy=9 picked=0/0/0 week overweight catch-up",
+                "worthy": 9,
+                "picked": {"fast": 0, "week": 0, "slow": 0},
+                "skip_reasons": {"no_field": 1044, "mix_event_cap": 7},
+                "week_overweight": True,
+                "in_play": True,
+                "consulted_decide": True,
+            }
+        )
+        + "\n",
+        encoding="utf-8",
+    )
+    farm, honer = refresh_organs()
+    assert "no golf tape yet" not in farm["notes"].lower()
+    assert "no golf tape yet" not in honer["notes"].lower()
+    assert farm["tape"]["n_tickets"] == 2
+    assert farm["tape"]["n_open"] == 1
+    assert farm["tape"]["n_closed"] == 1
+    assert farm["tape"]["has_tape"] is True
+    assert farm["tape"]["week_overweight"] is True
+    assert farm["tape"]["skip_reasons"]["no_field"] == 1044
+    assert farm["tape"]["last_tick_at"] == "2026-09-12T08:12:27-04:00"
+    assert farm["notebooks"] == []
+    assert farm["execution"] is False
+    assert farm["idle"] is True
+    assert honer["consults_15m"] is False
+    assert honer["consults_factory"] is False
+    written = json.loads(farm_path().read_text(encoding="utf-8"))
+    honer_written = json.loads(honer_status_path().read_text(encoding="utf-8"))
+    assert "no golf tape yet" not in json.dumps(written).lower()
+    assert written["tape"]["n_tickets"] == 2
+    assert honer_written["tape"]["worthy"] == 9
+
+
+def test_run_tick_refreshes_organs(gk_root):
+    run_tick(brain=_brain(), executor=PaperExecutor(), catalog={"markets": [_market()]})
+    farm = json.loads(farm_path().read_text(encoding="utf-8"))
+    honer = json.loads(honer_status_path().read_text(encoding="utf-8"))
+    assert "no golf tape yet" not in json.dumps(farm).lower()
+    assert farm["tape"]["last_tick_at"]
+    assert farm["tape"]["has_tape"] is True
+    assert honer["consults_15m"] is False
+    assert honer["tape"]["consulted_decide"] is True
 
 
 def test_paper_halt_expires_without_retrip(gk_root):

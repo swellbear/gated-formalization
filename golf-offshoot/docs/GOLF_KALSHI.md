@@ -52,7 +52,7 @@ The last tick writes bound / brain / deferred on the Golf board so an empty cart
 
 ## Golf Farm / Honer
 
-Idle shells on the golf tab: `data/golf_kalshi/latest/farm.json` and `data/golf_kalshi/honer/`. Empty notebooks. No golf `crew_tick`. They do not consult 15m `decide()`. The 15m Lab chair is untouched.
+Idle shells on the golf tab: `data/golf_kalshi/latest/farm.json` and `data/golf_kalshi/honer/`. They read the live golf `paper/ledger.json` and last tick on every watch tick. Empty notebooks until dated. No golf `crew_tick`. They do not consult 15m `decide()`. They do not write "no golf tape yet" when tickets exist. The 15m Lab chair is untouched.
 
 ## Unattended
 
@@ -64,7 +64,7 @@ Skip is the default when field, name, quote, fee, or edge is missing. That is th
 
 Dated `2026-09-11`. Seed paper **$1000**. `recipe_v1()` is the live loader. Tickets keep the recipe id they were filled under. The ledger stamp moves forward. Seed is not reset. v1.1 halt was next UTC day; v1.2 paper pause is 120s then continue.
 
-- **Fast** — 25% of the 20% cap (`$50`). Round-leader / same-day. Fail-clock 18/36/54 holes or +20% bid pop.
+- **Fast** — 25% of the 20% cap (`$50`). Round-leader / 3-ball / same-day. Fail-clock 18/36/54 holes or +20% bid pop.
 - **Week** — 50% (`$100`). This event winner / make-cut / top-N.
 - **Slow** — 25% (`$50`). Season-long / captain / Ryder / Presidents Cup / 2027.
 - One `event_ticker` may hold open stake up to the 5% name cap. Ticket count is not a live gate. Do not re-trim tickets already open. 5% per name.
