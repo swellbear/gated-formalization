@@ -850,7 +850,10 @@ def test_golf_hub_has_idle_farm_honer(gk_root, tmp_path, monkeypatch):
     page = render_html(build_surface(artifact_root=tmp_path, viz_root=tmp_path / "viz", lane="golf"))
     assert 'id="golf-farm"' in page
     assert 'id="golf-honer"' in page
-    assert "no golf tape yet" in page
+    assert "no golf tape yet" not in page
+    assert "No golf Farm notebooks" in page
+    assert "Home has no paper tickets yet" in page
+    assert "Golf Honer is not consulting" in page
     assert '<section class="panel farm-sandbox" id="farm">' not in page
     assert '<section class="panel honer-sandbox" id="honer">' not in page
     assert "R-SKIP-HOUR-CLOSE" not in page
@@ -1406,6 +1409,48 @@ def test_hub_shows_mix_and_cap_shares(gk_root, tmp_path):
     assert "This week 100" in page
     assert "Closed tickets" in page
     assert "no closed tickets" in page
+
+
+def test_hub_sleeve_meters_follow_sizing_bank(gk_root):
+    from golf_offshoot.golf_kalshi.hub import session_html
+    from golf_offshoot.golf_kalshi.paper import empty_ledger, save_ledger
+
+    rec = recipe_v1()
+    book = empty_ledger(rec)
+    book["bankroll"] = 833.694
+    book["betting_pnl"] = -166.306
+    save_ledger(book)
+    page = session_html()
+    live_fast = rec.sleeve_target("fast", 833.694)
+    live_week = rec.sleeve_target("week", 833.694)
+    live_slow = rec.sleeve_target("slow", 833.694)
+    assert "Fast 50" not in page
+    assert "This week 100" not in page
+    assert f"Fast {live_fast:.0f}" in page
+    assert f"This week {live_week:.0f}" in page
+    assert f"Slow {live_slow:.0f}" in page
+    assert f"{live_fast:.2f}" in page
+    assert f"{live_week:.2f}" in page
+
+
+def test_golf_farm_points_at_home_tape(gk_root):
+    from golf_offshoot.golf_kalshi.organs import farm_panel_html, honer_panel_html
+    from golf_offshoot.golf_kalshi.paper import empty_ledger, save_ledger
+
+    book = empty_ledger()
+    book["tickets"] = [
+        _ticket(status="SETTLE_PENDING"),
+        _ticket(ticker="T2", status="paper_lose"),
+    ]
+    save_ledger(book)
+    farm = farm_panel_html()
+    honer = honer_panel_html()
+    assert "no golf tape yet" not in farm
+    assert "no golf tape yet" not in honer
+    assert "Paper tape is on Home (1 open) and Scoreboard (1 closed)" in farm
+    assert "Paper tape is on Home (1 open) and Scoreboard (1 closed)" in honer
+    assert "Golf Honer is not consulting" in honer
+    assert "No golf Farm notebooks" in farm
 
 
 def test_paper_halt_expires_without_retrip(gk_root):

@@ -76,7 +76,7 @@ Dated `2026-09-11`. Seed paper **$1000**. `recipe_v1()` is the live loader. Tick
 - Path: collapse vs live ask after golf has started; sell at `yes_bid`. Missing bid, missing multiplier, or `displayed_size` too small → HOLD. Pre-tee quote drift is HOLD. Pre-tee reallocate is allowed. ADD if live edge improved 1.5pp, golf started, and the sleeve is under share. Official settle is Kalshi `result`. `paper_exit` is a path record, not a Brier label.
 - One-time trim on the v1 → v1.1 bump: per `event_ticker` with more than 3 open tickets, paper-exit the worst live `edge_after_fee` (missing mark = worst) until 3 remain. Reason `recipe_event_cap`. Does not run every tick. Bankroll is not reset.
 - In-play watch stays **45s**. Monte Carlo budget is 8s / `max_brain=2`. Held events are scored first; a cache hit does not consume a brain slot.
-- Hub mix line: `worthy N · picked F/W/S · exits E · realloc R · adds A`. Sleeve bars vs `$50/$100/$50`. Open tickets on Home. Closed tickets (result + after-fee P/L) on Scoreboard. Halt log on Scoreboard. No cash / arm / mode slider.
+- Hub mix line: `worthy N · picked F/W/S · exits E · realloc R · adds A`. Sleeve bars vs live `sizing_bank` targets (seed card is still `$50/$100/$50`). Open tickets on Home. Closed tickets (result + after-fee P/L) on Scoreboard. Halt log on Scoreboard. Golf Farm / Honer point at that tape; they do not say there is no tape. No cash / arm / mode slider.
 
 Fee pin: Founder browser bytes of `golf-offshoot/docs/kalshi-fee-schedule.pdf` (`founder_browser_bytes`, sha256 `c326a69f596a11e8f8be2620402d39a8d4823920c21cc97c93a114d862699601`, 281129 bytes). Adjustment function is `golf_offshoot.learning_lane_15m.evidence_bar.fee_adjust`.
 

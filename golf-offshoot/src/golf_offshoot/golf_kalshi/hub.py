@@ -8,7 +8,13 @@ from typing import Any
 
 from golf_offshoot.golf_kalshi.adapter import load_last_good_catalog
 from golf_offshoot.golf_kalshi.catalog_view import group_catalog
-from golf_offshoot.golf_kalshi.paper import closed_tickets, halt_remaining_text, load_ledger, open_tickets
+from golf_offshoot.golf_kalshi.paper import (
+    closed_tickets,
+    halt_remaining_text,
+    load_ledger,
+    open_tickets,
+    sizing_bank,
+)
 from golf_offshoot.golf_kalshi.paths import (
     board_png_path,
     last_tick_path,
@@ -16,7 +22,7 @@ from golf_offshoot.golf_kalshi.paths import (
     watch_kill_path,
     watch_status_path,
 )
-from golf_offshoot.golf_kalshi.recipe import recipe_public
+from golf_offshoot.golf_kalshi.recipe import recipe_public, recipe_v1
 from golf_offshoot.golf_kalshi.sleeves import classify_sleeve
 from golf_offshoot.golf_kalshi.watch import load_watch_status
 from golf_offshoot.localtime import format_eastern
@@ -76,6 +82,8 @@ def collect_board() -> dict[str, Any]:
         watch, halt=halt, killed=watch_kill_path().is_file()
     )
     bankroll = led.get("bankroll")
+    rec = recipe_v1()
+    bank = sizing_bank(led, rec)
     return {
         "watch": watch_label,
         "watch_age": format_eastern(watch.get("at") or tick.get("at")),
@@ -87,6 +95,9 @@ def collect_board() -> dict[str, Any]:
         "pnl": led.get("betting_pnl"),
         "fees_paid": led.get("fees_paid"),
         "sleeves": led.get("sleeves") or {},
+        "cap_fast": rec.sleeve_target("fast", bank),
+        "cap_week": rec.sleeve_target("week", bank),
+        "cap_slow": rec.sleeve_target("slow", bank),
         "tickets": open_tickets(led),
         "closed": closed,
         "halt_log": led.get("halt_log") or [],
@@ -244,6 +255,9 @@ def session_html(b: dict[str, Any] | None = None) -> str:
     rec = b["recipe"]
     bank = _money(b.get("bankroll"), float(rec.get("seed") or 0))
     sleeves = b.get("sleeves") or {}
+    cap_fast = _money(b.get("cap_fast"), float(rec.get("cap_fast") or 0))
+    cap_week = _money(b.get("cap_week"), float(rec.get("cap_week") or 0))
+    cap_slow = _money(b.get("cap_slow"), float(rec.get("cap_slow") or 0))
     n_open = len(b.get("tickets") or [])
     n_closed = len(b.get("closed") or [])
     halt_bits = []
@@ -270,9 +284,9 @@ def session_html(b: dict[str, Any] | None = None) -> str:
         + _chip("Closed", str(n_closed))
         + _chip("Halt", halt_val)
         + '<div class="gk-sleeves desk-meters">'
-        f'<div><span>Fast {float(rec.get("cap_fast") or 0):.0f}</span>{_bar(float(sleeves.get("fast") or 0), float(rec.get("cap_fast") or 1))}</div>'
-        f'<div><span>This week {float(rec.get("cap_week") or 0):.0f}</span>{_bar(float(sleeves.get("week") or 0), float(rec.get("cap_week") or 1))}</div>'
-        f'<div><span>Slow {float(rec.get("cap_slow") or 0):.0f}</span>{_bar(float(sleeves.get("slow") or 0), float(rec.get("cap_slow") or 1))}</div>'
+        f'<div><span>Fast {cap_fast:.0f}</span>{_bar(float(sleeves.get("fast") or 0), cap_fast or 1)}</div>'
+        f'<div><span>This week {cap_week:.0f}</span>{_bar(float(sleeves.get("week") or 0), cap_week or 1)}</div>'
+        f'<div><span>Slow {cap_slow:.0f}</span>{_bar(float(sleeves.get("slow") or 0), cap_slow or 1)}</div>'
         "</div>"
         + mix
         + "</div>"

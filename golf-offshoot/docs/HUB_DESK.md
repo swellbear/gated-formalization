@@ -24,7 +24,7 @@ Other views hide Home. View is `data-view`, stored per lane in `sessionStorage`.
 
 Slots the shell always has a place for: watch, Eastern clock, bankroll, P/L, open count, closed count, halt. A lane may add fees, meters, or a one-line mix.
 
-Golf Home also shows Fast / week / slow meters and the mix one-liner. Hunt and skip copy live in Cockpit.
+Golf Home also shows Fast / week / slow meters and the mix one-liner. Meter caps are `sizing_bank` targets for the live book, not the seed $50/$100/$50 card. Hunt and skip copy live in Cockpit. Golf Farm / Honer stay idle shells: they point at Home / Scoreboard tape and do not say the book is empty when tickets exist.
 
 15m Home is this-window + Factory standing. The paper-window PNG is Scoreboard. Spine, clock legend, and journal sit in Cockpit or Ops. 15m Farm’s first column is the notebook, parked/score-owed/collecting, skip rate and failed clauses, and n/70. Kind/params/date sit beside it. No farm pnl column.
 

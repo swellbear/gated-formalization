@@ -6,14 +6,18 @@ import html
 import json
 from typing import Any
 
+from golf_offshoot.golf_kalshi.paper import closed_tickets, load_ledger, open_tickets
 from golf_offshoot.golf_kalshi.paths import (
     assert_golf_kalshi_path,
     farm_path,
     honer_status_path,
 )
+from golf_offshoot.golf_kalshi.watch import load_watch_status
 
 LANE = "golf_kalshi"
-IDLE_NOTE = "no golf tape yet — wait for paper settles"
+FARM_IDLE = "No golf Farm notebooks."
+HONER_IDLE = "Golf Honer is not consulting."
+IDLE_NOTE = "No golf Farm notebooks. Paper tape lives on Home and Scoreboard."
 
 
 def empty_farm() -> dict[str, Any]:
@@ -57,27 +61,37 @@ def _read(path) -> dict[str, Any]:
     return payload if isinstance(payload, dict) else {}
 
 
+def _tape_line() -> str:
+    led = load_ledger()
+    n_open = len(open_tickets(led))
+    n_closed = len(closed_tickets(led))
+    watch = "on" if load_watch_status().get("running") else "off"
+    if n_open or n_closed:
+        return (
+            f"Paper tape is on Home ({n_open} open) and Scoreboard ({n_closed} closed). "
+            f"Watch {watch}."
+        )
+    return f"Home has no paper tickets yet. Watch {watch}."
+
+
 def farm_panel_html() -> str:
     ensure_idle_organs()
     payload = _read(farm_path())
-    note = str(payload.get("notes") or IDLE_NOTE)
     n = len([row for row in (payload.get("notebooks") or []) if isinstance(row, dict)])
     extra = f" {n} dated notebooks sit idle." if n else ""
     return (
         '<section class="panel gk-organ" id="golf-farm">'
         "<h2>Golf Farm</h2>"
-        f'<p class="loud">Idle. {html.escape(note)}{extra}</p>'
+        f'<p class="loud">Idle. {html.escape(FARM_IDLE)} {html.escape(_tape_line())}{html.escape(extra)}</p>'
         "</section>"
     )
 
 
 def honer_panel_html() -> str:
     ensure_idle_organs()
-    payload = _read(honer_status_path())
-    note = str(payload.get("notes") or IDLE_NOTE)
     return (
         '<section class="panel gk-organ" id="golf-honer">'
         "<h2>Golf Honer</h2>"
-        f'<p class="loud">Idle. {html.escape(note)}</p>'
+        f'<p class="loud">Idle. {html.escape(HONER_IDLE)} {html.escape(_tape_line())}</p>'
         "</section>"
     )
