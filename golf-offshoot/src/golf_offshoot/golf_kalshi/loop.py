@@ -568,4 +568,10 @@ def run_tick(
         "consulted_decide": True,
     }
     _write_json(last_tick_path(), tick)
+    try:
+        from golf_offshoot.golf_kalshi.organs import refresh_organs
+
+        refresh_organs()
+    except Exception:
+        pass
     return tick

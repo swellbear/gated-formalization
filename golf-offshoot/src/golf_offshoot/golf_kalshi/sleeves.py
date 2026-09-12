@@ -8,9 +8,11 @@ SLEEVES = ("fast", "week", "slow")
 
 _FAST_TOKENS = (
     "round leader",
+    "round-leader",
     "round 1 leader",
     "round 2 leader",
     "round 3 leader",
+    "round 4 leader",
     "end of round",
     "after round 1",
     "after round 2",
@@ -22,6 +24,14 @@ _FAST_TOKENS = (
     "r1 leader",
     "r2 leader",
     "r3 leader",
+    "r4 leader",
+    "r1lead",
+    "r2lead",
+    "r3lead",
+    "r4lead",
+    "3-ball",
+    "3 ball",
+    "3ball",
 )
 _SLOW_TOKENS = (
     "season",
@@ -43,15 +53,23 @@ _SLOW_TOKENS = (
 )
 
 
-def classify_sleeve(market: dict[str, Any] | None = None, *, title: str = "") -> str:
-    blob = " ".join(
+def _sleeve_blob(market: dict[str, Any] | None = None, *, title: str = "") -> str:
+    row = market or {}
+    return " ".join(
         [
             title,
-            str((market or {}).get("title") or ""),
-            str((market or {}).get("event_title") or ""),
-            str((market or {}).get("yes_sub_title") or ""),
+            str(row.get("title") or ""),
+            str(row.get("event_title") or ""),
+            str(row.get("yes_sub_title") or ""),
+            str(row.get("series_ticker") or ""),
+            str(row.get("ticker") or ""),
+            str(row.get("event_ticker") or ""),
         ]
     ).lower()
+
+
+def classify_sleeve(market: dict[str, Any] | None = None, *, title: str = "") -> str:
+    blob = _sleeve_blob(market, title=title)
     if any(tok in blob for tok in _SLOW_TOKENS):
         return "slow"
     if any(tok in blob for tok in _FAST_TOKENS):
