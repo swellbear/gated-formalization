@@ -510,6 +510,48 @@ def test_leftover_settle_reasons_are_dropped_from_judicial_lines():
     assert by_role["soften-critic"] == ["artifact_unreviewed evidence_bar"]
 
 
+def test_rekey_drops_hard_no_coinflip_keeps_lab_proposed_and_look():
+    """Doorbell honesty: Operator stays owed for PROPOSED 04 and a live look."""
+    from golf_offshoot.learning_lane_15m.learn import rekey_leftover_owed
+
+    leftover = [
+        {
+            "role": "operator",
+            "reasons": [
+                "lab_proposed LEARNING_LANE_15M_LAB_PROPOSED_04.md",
+                "rule_reached_n R-SKIP-COINFLIP",
+                "rule_reached_n R-SKIP-2TO1-FAVORITE",
+                "rule_reached_n R-SKIP-HOUR-CLOSE",
+                "window_sequence_gap KXBTC15M-26SEP111715-15",
+            ],
+        },
+        {
+            "role": "digestor",
+            "reasons": ["window_sequence_gap KXBTC15M-26SEP111715-15"],
+        },
+    ]
+    cleaned = rekey_leftover_owed(leftover)
+    by_role = {row["role"]: row["reasons"] for row in cleaned}
+    assert by_role["operator"] == [
+        "lab_proposed LEARNING_LANE_15M_LAB_PROPOSED_04.md",
+        "rule_reached_n R-SKIP-HOUR-CLOSE",
+        "window_sequence_gap KXBTC15M-26SEP111715-15",
+    ]
+    assert by_role["digestor"] == ["window_sequence_gap KXBTC15M-26SEP111715-15"]
+
+
+def test_rekey_drops_operator_when_only_hard_no_coinflip():
+    from golf_offshoot.learning_lane_15m.learn import rekey_leftover_owed
+
+    leftover = [
+        {
+            "role": "operator",
+            "reasons": ["rule_reached_n R-SKIP-COINFLIP"],
+        }
+    ]
+    assert rekey_leftover_owed(leftover) == []
+
+
 def test_critic_verdicts_ignore_a_clock_in_detail():
     from golf_offshoot.learning_lane_15m.runner import critic_verdicts
 

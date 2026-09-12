@@ -452,21 +452,101 @@ def test_rule_reached_n_skips_when_l1_exists(tmp_path):
         json.dumps({"looks": {"first_look_n": 70}}),
         encoding="utf-8",
     )
-    settled = {}
-    for i in range(80):
-        hour, minute = divmod(i, 60)
-        ticker = f"KXBTC15M-{i}"
-        settled[ticker] = {
-            "window_id": f"w__2026-09-12T{hour:02d}:{minute:02d}:00Z__",
-            "settlement_ts": "2026-09-12T12:00:00-04:00",
-        }
-    current = {"settled": settled}
+    current = {"settled": _n_reached_settled(80)}
     assert [e["ticker"] for e in rule_reached_n(current, root=tmp_path)] == ["R-SKIP-HOUR-CLOSE"]
     (docs / "LEARNING_LANE_15M_SCORECARD_R-SKIP-HOUR-CLOSE_L1.json").write_text(
         "{}\n",
         encoding="utf-8",
     )
     assert rule_reached_n(current, root=tmp_path) == []
+
+
+def _n_reached_settled(n: int) -> dict:
+    settled = {}
+    for i in range(n):
+        hour, minute = divmod(i, 60)
+        ticker = f"KXBTC15M-{i}"
+        settled[ticker] = {
+            "window_id": f"w__2026-09-12T{hour:02d}:{minute:02d}:00Z__",
+            "settlement_ts": "2026-09-12T12:00:00-04:00",
+        }
+    return settled
+
+
+def test_rule_reached_n_does_not_page_hard_no_coinflip(tmp_path):
+    """Hard NO: never score coinflip. The doorbell must not name it as a look."""
+    from golf_offshoot.learning_lane_15m.triggers import rule_reached_n
+
+    docs = tmp_path / "golf-offshoot" / "docs"
+    docs.mkdir(parents=True, exist_ok=True)
+    (docs / "LEARNING_LANE_15M_RULES.json").write_text(
+        json.dumps(
+            {
+                "rules": [
+                    {
+                        "id": "R-SKIP-COINFLIP",
+                        "selects": True,
+                        "execution": False,
+                        "declared_at": "2026-09-08T05:56:00-04:00",
+                    },
+                    {
+                        "id": "R-SKIP-CIVIL-BOUNDARIES",
+                        "selects": True,
+                        "execution": False,
+                        "declared_at": "2026-09-12T07:45:00-04:00",
+                    },
+                    {
+                        "id": "R-SKIP-HOUR-CLOSE",
+                        "selects": True,
+                        "execution": True,
+                        "declared_at": "2026-09-01T00:00:00-04:00",
+                    },
+                ]
+            }
+        ),
+        encoding="utf-8",
+    )
+    (docs / "LEARNING_LANE_15M_EVIDENCE_BAR.json").write_text(
+        json.dumps({"looks": {"first_look_n": 70}}),
+        encoding="utf-8",
+    )
+    current = {"settled": _n_reached_settled(80)}
+    assert [e["ticker"] for e in rule_reached_n(current, root=tmp_path)] == [
+        "R-SKIP-HOUR-CLOSE"
+    ]
+
+
+def test_rule_reached_n_does_not_page_forbidden_even_if_execution_true(tmp_path):
+    from golf_offshoot.learning_lane_15m.triggers import rule_reached_n
+
+    docs = tmp_path / "golf-offshoot" / "docs"
+    docs.mkdir(parents=True, exist_ok=True)
+    (docs / "LEARNING_LANE_15M_RULES.json").write_text(
+        json.dumps(
+            {
+                "rules": [
+                    {
+                        "id": "R-SKIP-COINFLIP",
+                        "selects": True,
+                        "execution": True,
+                        "declared_at": "2026-09-08T05:56:00-04:00",
+                    },
+                    {
+                        "id": "R-SKIP-2TO1-FAVORITE",
+                        "selects": True,
+                        "execution": True,
+                        "declared_at": "2026-09-08T16:53:00-04:00",
+                    },
+                ]
+            }
+        ),
+        encoding="utf-8",
+    )
+    (docs / "LEARNING_LANE_15M_EVIDENCE_BAR.json").write_text(
+        json.dumps({"looks": {"first_look_n": 70}}),
+        encoding="utf-8",
+    )
+    assert rule_reached_n({"settled": _n_reached_settled(80)}, root=tmp_path) == []
 
 
 def _write_honer_exam(root, *, open_exam=True, parked=False):

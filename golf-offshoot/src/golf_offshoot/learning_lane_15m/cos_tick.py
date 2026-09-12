@@ -1,8 +1,9 @@
 """CoS gate: assign only a legal next worker, or idle.
 
-Cloud CoS that only reads ``crew_tick.needed`` will assign Operator to
-score because the wake still names ``rule_reached_n`` for favorite
-(already PARK) and coinflip (Hard NO). That is the opposite of
+The wake no longer names Hard-NO ``rule_reached_n R-SKIP-COINFLIP`` (or
+PARK'd favorite) as an Operator owe — leftover reasons are rekeyed off.
+Cloud CoS that only reads ``crew_tick.needed`` must still not invent a
+score Job from a leftover name-clear line. That is the opposite of
 unattended-and-smart.
 
 Forbidden assigns (code + skill): score R-SKIP-COINFLIP, re-score

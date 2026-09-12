@@ -179,6 +179,21 @@ NON_MARKET_KINDS = frozenset(
 #: operator; lines that still carry these prefixes are the board lying.
 RETIRED_JUDICIAL_PREFIXES = ("new_settle ", "new_fill ", "pending_cleared ")
 
+
+def _hard_no_rule_reached_n_reason(text: str) -> bool:
+    """Hard-NO ``rule_reached_n`` leftovers are bookkeeping, not an Operator job.
+
+    ``R-SKIP-COINFLIP`` is never scored. PARK'd favorite is never re-scored.
+    Sitting PROPOSED 04 and an executing look without L1 still page.
+    """
+    from golf_offshoot.learning_lane_15m.clerical_score import FORBIDDEN_SCORE_IDS
+
+    low = (text or "").strip()
+    if not low.lower().startswith("rule_reached_n"):
+        return False
+    subject = low.split(" ", 1)[1].strip() if " " in low else ""
+    return subject in FORBIDDEN_SCORE_IDS
+
 #: The board may trail the live journal by the current open window. Two or more
 #: windows ahead of the PNG is a lag — Illustrator is owed, not optional.
 BOARD_LAG_WINDOWS = 1
@@ -1024,7 +1039,8 @@ def rekey_leftover_owed(
     has already written the reason, so the line is not a request for work.
 
     Does not restore every-settle triggers. Does not drop a live exception
-    class to shorten the list.
+    class to shorten the list. Hard-NO ``rule_reached_n R-SKIP-COINFLIP``
+    (and PARK'd favorite) is not a live exception — it is the doorbell lying.
     """
     out: list[dict[str, Any]] = []
     for entry in existing:
@@ -1035,6 +1051,8 @@ def rekey_leftover_owed(
             if role in {DIGESTOR_ROLE, OPERATOR_ROLE} and any(
                 text.startswith(prefix) for prefix in RETIRED_JUDICIAL_PREFIXES
             ):
+                continue
+            if role == OPERATOR_ROLE and _hard_no_rule_reached_n_reason(text):
                 continue
             if (
                 drop_disclosed_critic_failing
