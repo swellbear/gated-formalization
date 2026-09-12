@@ -52,6 +52,8 @@ def _novelty(st: dict[str, Any], pol: dict[str, Any]) -> bool:
 
 
 def freeze_ready(theta_state: dict[str, Any] | None = None) -> bool:
+    if load_library().get("catalog_exhausted"):
+        return False
     if exam_is_open():
         return False
     pol = load_policy()
@@ -100,6 +102,10 @@ def _increment_k(family: str) -> int:
 
 
 def fire_freeze() -> dict[str, Any] | None:
+    from golf_offshoot.honer_15m.library import search_is_parked
+
+    if search_is_parked():
+        return None
     if not freeze_ready():
         return None
     st = load_theta()

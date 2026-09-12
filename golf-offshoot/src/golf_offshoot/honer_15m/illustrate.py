@@ -90,12 +90,12 @@ def maybe_render(*, force: bool = False) -> Path | None:
     dest = chart_png_path()
     if not force and dest.is_file():
         try:
-            from golf_offshoot.honer_15m.paths import library_path, theta_path
+            from golf_offshoot.honer_15m.paths import family_amend_path, library_path, theta_path
             from golf_offshoot.quote_bus.paths import snapshot_path
 
             png_m = dest.stat().st_mtime
             newest = png_m
-            watched = [theta_path(), library_path(), snapshot_path()]
+            watched = [theta_path(), library_path(), family_amend_path(), snapshot_path()]
             for book in ("search", "exam"):
                 watched.append(decisions_path(book))
             for path in watched:

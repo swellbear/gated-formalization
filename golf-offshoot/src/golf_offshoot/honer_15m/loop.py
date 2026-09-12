@@ -23,6 +23,8 @@ from golf_offshoot.honer_15m.paths import (
     settlements_dir,
     watch_status_path,
 )
+from golf_offshoot.honer_15m.family_amend import stamp_family_amend
+from golf_offshoot.honer_15m.library import search_is_parked
 from golf_offshoot.honer_15m.picker import apply_search_starvation, maybe_advance
 from golf_offshoot.honer_15m.policy import FAMILY_RICH, load_policy
 from golf_offshoot.honer_15m.score import (
@@ -99,7 +101,13 @@ def _write_settle_row(market: dict[str, Any], result: str) -> None:
     )
 
 
-def _write_last_tick(*, markets: int, quote_bus_stale: bool) -> None:
+def _write_last_tick(
+    *,
+    markets: int,
+    quote_bus_stale: bool,
+    search_parked: bool = False,
+    family_amend_owed: bool = False,
+) -> None:
     path = last_tick_path()
     assert_honer_path(path)
     path.write_text(
@@ -110,6 +118,8 @@ def _write_last_tick(*, markets: int, quote_bus_stale: bool) -> None:
                 "markets": markets,
                 "quote_bus_stale": quote_bus_stale,
                 "wrote_learning_lane_15m": False,
+                "search_parked": bool(search_parked),
+                "family_amend_owed": bool(family_amend_owed),
                 "at": now().isoformat(),
             },
             indent=2,
@@ -181,6 +191,7 @@ def run_tick(markets: list[dict[str, Any]] | None = None) -> dict[str, Any]:
             stale = bool(payload.get("quote_bus_stale"))
         except (OSError, ValueError):
             stale = not rows
+    search_parked = search_is_parked()
     search = load_theta()
     search_theta = float(search["theta"])
     search_family = str(search.get("active_family") or FAMILY_RICH)
@@ -192,7 +203,8 @@ def run_tick(markets: list[dict[str, Any]] | None = None) -> dict[str, Any]:
 
     for market in rows:
         if is_paper_autobet_candidate(market):
-            _maybe_act("search", market, search_theta, family=search_family, delta=search_delta)
+            if not search_parked:
+                _maybe_act("search", market, search_theta, family=search_family, delta=search_delta)
             if frozen is not None:
                 _maybe_act("exam", market, float(frozen), family=exam_family, delta=exam_delta)
 
@@ -201,8 +213,10 @@ def run_tick(markets: list[dict[str, Any]] | None = None) -> dict[str, Any]:
         if result not in {"yes", "no"} or not ticker:
             continue
         _write_settle_row(market, result)
-        _search_row, newly_search = apply_settle("search", ticker, kalshi_result=result, step_theta=True)
-        if newly_search:
+        _search_row, newly_search = apply_settle(
+            "search", ticker, kalshi_result=result, step_theta=not search_parked
+        )
+        if newly_search and not search_parked:
             apply_search_starvation()
         if exam_is_open():
             exam_row, newly = apply_settle("exam", ticker, kalshi_result=result, step_theta=False)
@@ -236,11 +250,18 @@ def run_tick(markets: list[dict[str, Any]] | None = None) -> dict[str, Any]:
                     apply_search_starvation()
 
     maybe_advance()
-    fired = fire_freeze()
+    search_parked = search_is_parked()
+    fired = None if search_parked else fire_freeze()
+    amend = stamp_family_amend()
     from golf_offshoot.honer_15m.quality import save_quote_quality
 
     save_quote_quality()
-    _write_last_tick(markets=len(rows), quote_bus_stale=stale)
+    _write_last_tick(
+        markets=len(rows),
+        quote_bus_stale=stale,
+        search_parked=search_parked,
+        family_amend_owed=bool(amend.get("owed")),
+    )
     try:
         from golf_offshoot.honer_15m.invariants import run_invariants
 
@@ -268,4 +289,6 @@ def run_tick(markets: list[dict[str, Any]] | None = None) -> dict[str, Any]:
         "fee_omitted": bool(bar.get("fee_omitted", True)),
         "http_fetches": 0,
         "quote_bus_stale": stale,
+        "search_parked": search_parked,
+        "family_amend_owed": bool(amend.get("owed")),
     }

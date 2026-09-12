@@ -72,13 +72,14 @@ def _check_no_live_15m_writes() -> dict[str, Any]:
 def _check_picker_signatures() -> dict[str, Any]:
     banned = {"pnl", "d", "ledger"}
     found: list[str] = []
-    src = (PKG / "picker.py").read_text(encoding="utf-8")
-    tree = ast.parse(src)
-    for node in ast.walk(tree):
-        if isinstance(node, ast.FunctionDef):
-            for arg in node.args.args + node.args.kwonlyargs:
-                if arg.arg in banned:
-                    found.append(f"{node.name}.{arg.arg}")
+    for name in ("picker.py", "family_amend.py", "library.py"):
+        src = (PKG / name).read_text(encoding="utf-8")
+        tree = ast.parse(src)
+        for node in ast.walk(tree):
+            if isinstance(node, ast.FunctionDef):
+                for arg in node.args.args + node.args.kwonlyargs:
+                    if arg.arg in banned:
+                        found.append(f"{node.name}.{arg.arg}")
     ok = not found
     return _check(
         "picker_no_money_params",
@@ -304,6 +305,34 @@ def _check_catalog_file_order() -> dict[str, Any]:
     )
 
 
+def _check_family_amend_stamp() -> dict[str, Any]:
+    from golf_offshoot.honer_15m.family_amend import MONEY_KEYS as AMEND_MONEY
+    from golf_offshoot.honer_15m.paths import family_amend_path
+
+    hits: list[str] = []
+    path = family_amend_path()
+    payload: dict[str, Any] = {}
+    banned = MONEY_KEYS | AMEND_MONEY
+    if path.is_file():
+        try:
+            loaded = json.loads(path.read_text(encoding="utf-8"))
+            if isinstance(loaded, dict):
+                payload = loaded
+        except (OSError, ValueError):
+            payload = {}
+        for key in banned:
+            if key in payload:
+                hits.append(key)
+    ok = not hits
+    return _check(
+        "family_amend_stamp_no_money",
+        "Family-amend stamp has none of {pnl,d,bankroll,winner,mean_d,exam_pnl,betting_pnl}",
+        ok,
+        "doorbell from files, not exam pnl" if ok else f"money keys: {sorted(set(hits))}",
+        {"hits": sorted(set(hits)), "owed": payload.get("owed")},
+    )
+
+
 def run_invariants() -> dict[str, Any]:
     checks = [
         _check_no_live_15m_writes(),
@@ -318,6 +347,7 @@ def run_invariants() -> dict[str, Any]:
         _check_http_fetches(),
         _check_disagreement_no_money(),
         _check_catalog_file_order(),
+        _check_family_amend_stamp(),
     ]
     payload = {
         "lane": "honer_15m",

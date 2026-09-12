@@ -57,6 +57,62 @@ def save_library(payload: dict[str, Any]) -> None:
     path.write_text(json.dumps(data, indent=2), encoding="utf-8")
 
 
+def search_is_parked(lib: dict[str, Any] | None = None) -> bool:
+    """True when library.json catalog_exhausted is true. No new search fills."""
+    payload = lib if lib is not None else load_library()
+    return payload.get("catalog_exhausted") is True
+
+
+def hunts_cannot_freeze() -> bool:
+    """True when exam is closed, freeze cannot fire, and this hunt cannot continue.
+
+    Gym has no clip-grid. File labels only. A next catalog family still queued
+    (family 2 after a family-1 exam) keeps hunting. Does not read ledgers or exam d.
+    """
+    from golf_offshoot.honer_15m.catalog import next_family
+    from golf_offshoot.honer_15m.freeze import exam_is_open, freeze_ready
+    from golf_offshoot.honer_15m.theta import current_vector, load_theta
+
+    if exam_is_open():
+        return False
+    if freeze_ready():
+        return False
+    st = load_theta()
+    lib = load_library()
+    active = str(st.get("active_family") or lib.get("active_family") or FAMILY_RICH)
+    if next_family(active) is not None:
+        return False
+    vector = current_vector(st)
+    if not is_retired(vector, lib) and not is_spent(vector, lib):
+        return False
+    return True
+
+
+def mark_catalog_exhausted() -> dict[str, Any]:
+    """Stamp catalog_exhausted from files when the two-item catalog cannot hunt.
+
+    Does not date a third family. Does not peek exam pnl. Does not park while
+    family 2 is still the next file-order family.
+    """
+    from golf_offshoot.honer_15m.catalog import catalog_ids, next_family
+    from golf_offshoot.honer_15m.freeze import exam_is_open
+
+    payload = load_library()
+    if payload.get("catalog_exhausted") is True:
+        return payload
+    ids = catalog_ids()
+    last = ids[-1] if ids else ""
+    if last and next_family(last) is not None:
+        return payload
+    if exam_is_open():
+        return payload
+    if not hunts_cannot_freeze():
+        return payload
+    payload["catalog_exhausted"] = True
+    save_library(payload)
+    return payload
+
+
 def _in_set(bucket: list[Any], vector: dict[str, Any]) -> bool:
     for item in bucket:
         if isinstance(item, dict) and vectors_equal(item, vector):
@@ -125,6 +181,9 @@ def append_exam_row(
         payload["spent"] = spent
         payload["seed_theta"] = float(vector["theta"])
     save_library(payload)
+    from golf_offshoot.honer_15m.family_amend import stamp_family_amend
+
+    stamp_family_amend()
     return payload
 
 
