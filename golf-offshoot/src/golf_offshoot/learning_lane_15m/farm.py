@@ -530,7 +530,11 @@ def refuse_reason(
     farm: dict[str, Any] | None = None,
 ) -> str:
     """Why this notebook must not be dated. Empty string means legal."""
-    from golf_offshoot.learning_lane_15m.rules import expected_skip_rate, min_expected_skip_rate
+    from golf_offshoot.learning_lane_15m.rules import (
+        clock_fill_none_reason,
+        expected_skip_rate,
+        min_expected_skip_rate,
+    )
 
     kind = str(slot.get("kind") or "")
     if not kind:
@@ -539,8 +543,9 @@ def refuse_reason(
         return "honer kinds stay the skip-on-mark organ"
     if kind in burned_ids(root=root):
         return f"burned {kind}"
-    if skips_whole_quartet(slot):
-        return "fill-none: AND-skip of the whole quartet leaves no filled window"
+    fill_none = clock_fill_none_reason(slot)
+    if fill_none:
+        return fill_none
     params = slot.get("params") if isinstance(slot.get("params"), dict) else {}
     probe = notebook_as_rule(
         {
@@ -844,6 +849,9 @@ def farm_card_why(card: dict[str, Any]) -> str:
         n = card.get("n")
         if skip_count is not None and n:
             bits.append(f"skip {skip_count}/{n}")
+    if card.get("density_fail") is True or card.get("undecidable") is True:
+        bits.append("density-fail")
+        return " · ".join(bits)
     failed: list[str] = []
     passed: list[str] = []
     for key, label in _CLAUSE_FACE:

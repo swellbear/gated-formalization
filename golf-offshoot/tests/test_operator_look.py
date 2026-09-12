@@ -76,6 +76,25 @@ def test_operator_park_from_failing_card(tmp_path):
     assert card["operator_look"] == LOOK_PARK
 
 
+def test_operator_park_from_density_fail_card(tmp_path):
+    _seed(
+        tmp_path,
+        execution=True,
+        card={
+            "n": 70,
+            "skip_count": 1,
+            "density_fail": True,
+            "undecidable": True,
+            "passes_every_binding_clause": False,
+            "clause_1_paired_t_vs_floor": {"passes": None, "not_scored": "density-fail"},
+            "windows": [{"window_id": "x"}],
+        },
+    )
+    out = apply_operator_look(root=tmp_path)
+    assert out["verdict"] == LOOK_PARK
+    assert load_rules(root=tmp_path)["rules"][0]["execution"] is False
+
+
 def test_operator_continue_from_passing_card(tmp_path):
     _seed(
         tmp_path,

@@ -11,7 +11,9 @@ Three things live here besides :func:`decide`, all of them owed by the bar:
   with a log an invariant can match score notes against.
 * :func:`score_rule` — the scorer, with the bar's guards in front of it rather
   than in a comment. It refuses a non-binding bar, a failing method suite, and
-  an n below the declared first look.
+  an n below the declared first look. Lived ``skip_count`` must also clear
+  the same ``10/n`` density floor as declare; a miss is undecidable, not a
+  clause-1 miss versus δ.
 """
 
 from __future__ import annotations
@@ -57,11 +59,21 @@ class RuleTooSparse(ValueError):
     """A new selecting rule's product-structure skip rate is below the density floor."""
 
 
+class RuleFillNone(ValueError):
+    """AND-skip of three or four quartet minutes is not a skip-vs-fill look."""
+
+
 #: Four 15m close minutes. The density floor is 10 / first_look_n, not a tape count.
 QUARTET_CLOSE_MINUTES = frozenset({0, 15, 30, 45})
 QUARTET_SLOT_COUNT = 4
 MIN_EXPECTED_SKIP_COUNT = 10
 DEFAULT_FIRST_LOOK_N = 70
+FILL_NONE_QUARTET = (
+    "fill-none: AND-skip of the whole quartet leaves no filled window"
+)
+FILL_NONE_TRIPLE = (
+    "fill-none: AND-skip of a quartet triple leaves one filled window"
+)
 
 
 def registry_path(*, root: Path | None = None) -> Path:
@@ -239,6 +251,79 @@ def min_expected_skip_rate(*, root: Path | None = None) -> float:
     if n <= 0:
         n = DEFAULT_FIRST_LOOK_N
     return MIN_EXPECTED_SKIP_COUNT / float(n)
+
+
+def clock_fill_none_reason(rule: dict[str, Any]) -> str:
+    """Product-structure fill-none. Empty if two or more quartet minutes still fill.
+
+    Hire #2 refused the full quartet (zero fill minutes). A leftover triple
+    such as INTRA-HOUR ``{15, 30, 45}`` leaves one fill minute — the farm
+    card can skip every window. Density language stays off this reason.
+    """
+    minutes = clock_skip_minutes(rule)
+    if minutes is None:
+        return ""
+    skipped = {int(m) for m in minutes if int(m) in QUARTET_CLOSE_MINUTES}
+    if skipped >= QUARTET_CLOSE_MINUTES:
+        return FILL_NONE_QUARTET
+    if len(skipped) >= 3:
+        return FILL_NONE_TRIPLE
+    return ""
+
+
+def named_expected_skip_rate(rule: dict[str, Any]) -> float | None:
+    """Product-structure rate, else a stored ``expected_skip_rate`` on the row."""
+    rate = expected_skip_rate(rule)
+    if rate is not None:
+        return float(rate)
+    raw = rule.get("expected_skip_rate")
+    if raw is None:
+        return None
+    try:
+        return float(raw)
+    except (TypeError, ValueError):
+        return None
+
+
+def lived_skip_density(
+    skip_count: int,
+    n: int,
+    *,
+    expected_rate: float | None = None,
+    root: Path | None = None,
+) -> dict[str, Any]:
+    """Same ``10/n`` floor as declare, applied to lived ``skip_count``.
+
+    A look that skips fewer than 10 of n, or that fills none of the n
+    windows, is undecidable. Not a t-test versus δ.
+    """
+    skip_n = int(skip_count)
+    total = int(n)
+    floor_rate = min_expected_skip_rate(root=root)
+    floor_count = MIN_EXPECTED_SKIP_COUNT
+    reason = ""
+    if total <= 0:
+        reason = "no windows"
+    elif skip_n >= total:
+        reason = f"skip_count {skip_n}/{total} is fill-none; not a skip-vs-fill look"
+    elif skip_n < floor_count:
+        named = ""
+        if expected_rate is not None:
+            named = f" vs expected_skip_rate {expected_rate}"
+        reason = (
+            f"skip_count {skip_n}/{total} below density floor "
+            f"{floor_count}/{total}{named}"
+        )
+    return {
+        "skip_count": skip_n,
+        "n": total,
+        "expected_skip_rate": expected_rate,
+        "floor_count": floor_count,
+        "floor_rate": round(floor_rate, 6),
+        "passes": not reason,
+        "reason": reason,
+        "undecidable": bool(reason),
+    }
 
 
 def _express_selection(
@@ -613,7 +698,8 @@ def declare_rule(
     A new posted-yes selecting rule is refused if informing marks already
     exist on this tree. A close-minute class is not a skip-band. New
     selecting rows must name ``expected_skip_rate`` from the 15m quartet
-    at or above ``10 / first_look_n``. Existing rows stay; this gate is
+    at or above ``10 / first_look_n``, and must not AND-skip a quartet
+    triple or the whole quartet. Existing rows stay; this gate is
     pre-registration, not a rewrite. Do not read ``paper/`` pnl for the rate.
     """
     rule_id = str(rule.get("id") or "").strip()
@@ -631,6 +717,9 @@ def declare_rule(
             "new class or a new lane, not another skip-band here"
         )
     if row.get("selects"):
+        fill_none = clock_fill_none_reason(row)
+        if fill_none:
+            raise RuleFillNone(f"{rule_id} {fill_none}")
         rate = expected_skip_rate(row)
         floor = min_expected_skip_rate(root=root)
         if rate is None:
@@ -762,6 +851,10 @@ def score_rule(
     ``stake`` per eligible window. Every pnl is fee-adjusted through
     :func:`fee_adjust` before it is compared — the recorded book has no fee
     term, and comparing gross numbers under a fee thesis is incoherent.
+
+    Lived ``skip_count`` is checked against the same ``10/n`` density floor
+    as declare (and against fill-none). A miss is ``undecidable`` /
+    ``density_fail``: clause (1) is not scored versus δ.
     """
     look = str(look).upper()
     if look not in {"L1", "L2"}:
@@ -819,21 +912,14 @@ def score_rule(
             }
         )
 
-    d = [row["pnl_rule_fee_adj"] - row["pnl_baseline_fee_adj"] for row in rows]
-    rule_side = [row["pnl_rule_fee_adj"] for row in rows]
     n = len(rows)
-    clause_1 = paired_t_against_floor(d, delta)
-    clause_1["alpha"] = alpha
-    clause_1["passes"] = bool(clause_1["p_value"] is not None and clause_1["p_value"] < alpha)
-    mean_rule = sum(rule_side) / n
-    clause_4 = {"mean_pnl_rule_fee_adj": round(mean_rule, 6), "passes": mean_rule > 0}
-    clause_5 = matched_exposure_permutation(
-        baseline_pnl, rule_fill_pnl, skipped, alpha=alpha, draws=draws, seed=seed
-    )
-    clause_5["passes"] = bool(clause_5["exceeds_quantile"])
     skip_count = sum(1 for flag in skipped if flag)
-    passes = clause_1["passes"] and clause_4["passes"] and clause_5["passes"]
-
+    density = lived_skip_density(
+        skip_count,
+        n,
+        expected_rate=named_expected_skip_rate(rule),
+        root=root,
+    )
     card = {
         "schema": 1,
         "lane": "learning_lane_15m",
@@ -846,22 +932,59 @@ def score_rule(
         "scored_at": now_iso or isoformat_now(),
         "n": n,
         "skip_count": skip_count,
-        "skip_rate": round(skip_count / n, 6),
+        "skip_rate": round(skip_count / n, 6) if n else 0.0,
         "alpha_k": alpha,
         "trials_to_date_before": k_before,
         "delta": delta,
         "fee_adjust": "golf_offshoot.learning_lane_15m.evidence_bar.fee_adjust",
         "permutation_control": PERMUTATION_PATH,
-        "clause_1_paired_t_vs_floor": clause_1,
-        "clause_4_positive_side": clause_4,
-        "clause_5_matched_exposure": clause_5,
-        "passes_every_binding_clause": passes,
+        "density": density,
+        "density_fail": not density["passes"],
+        "undecidable": bool(density["undecidable"]),
         "cost_accounting_is_incomplete": (
             "the bid/ask spread is omitted and unmeasured; no figure here is a full "
             "cost accounting"
         ),
         "windows": rows,
     }
+    if not density["passes"]:
+        card["clause_1_paired_t_vs_floor"] = {
+            "passes": None,
+            "not_scored": f"density-fail; not a t-test vs delta={delta}",
+            "delta": delta,
+        }
+        card["clause_4_positive_side"] = {
+            "passes": None,
+            "not_scored": density["reason"] or "density-fail",
+        }
+        card["clause_5_matched_exposure"] = {
+            "passes": None,
+            "not_scored": "density-fail; permutation not run",
+        }
+        card["passes_every_binding_clause"] = False
+        card["caveat"] = (
+            "Undecidable / density-fail. Lived skip_count is below the "
+            "10/n density floor, or the look filled none. "
+            "Not a t-test vs δ. Not an ADMIT."
+        )
+        return card
+
+    d = [row["pnl_rule_fee_adj"] - row["pnl_baseline_fee_adj"] for row in rows]
+    rule_side = [row["pnl_rule_fee_adj"] for row in rows]
+    clause_1 = paired_t_against_floor(d, delta)
+    clause_1["alpha"] = alpha
+    clause_1["passes"] = bool(clause_1["p_value"] is not None and clause_1["p_value"] < alpha)
+    mean_rule = sum(rule_side) / n
+    clause_4 = {"mean_pnl_rule_fee_adj": round(mean_rule, 6), "passes": mean_rule > 0}
+    clause_5 = matched_exposure_permutation(
+        baseline_pnl, rule_fill_pnl, skipped, alpha=alpha, draws=draws, seed=seed
+    )
+    clause_5["passes"] = bool(clause_5["exceeds_quantile"])
+    passes = clause_1["passes"] and clause_4["passes"] and clause_5["passes"]
+    card["clause_1_paired_t_vs_floor"] = clause_1
+    card["clause_4_positive_side"] = clause_4
+    card["clause_5_matched_exposure"] = clause_5
+    card["passes_every_binding_clause"] = passes
     if look == "L2":
         card["trial_recorded"] = record_trial(
             rule_id, TRIAL_L2_LOOK, root=root,

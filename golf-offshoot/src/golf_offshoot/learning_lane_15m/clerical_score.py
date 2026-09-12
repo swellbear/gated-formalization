@@ -256,11 +256,19 @@ def maybe_score_executing(*, root: Path | None = None) -> dict[str, Any]:
     card["commit_sha"] = _head_commit_sha(root=root)
     card["committed_at"] = str(card.get("scored_at") or isoformat_now())
     if card.get("passes_every_binding_clause") is not True:
-        card["caveat"] = (
-            "L1 written even though a binding clause or critic δ FAIL. "
-            "Not an ADMIT. Operator PARK or CONTINUE from this card. "
-            "This write does not drop execution."
-        )
+        if card.get("density_fail") or card.get("undecidable"):
+            card["caveat"] = (
+                "L1 written as undecidable / density-fail. Lived skip_count "
+                "is below the 10/n density floor, or the look filled none. "
+                "Not a t-test vs δ. Not an ADMIT. Operator PARK "
+                "from this card. This write does not drop execution."
+            )
+        else:
+            card["caveat"] = (
+                "L1 written even though a binding clause or critic δ FAIL. "
+                "Not an ADMIT. Operator PARK or CONTINUE from this card. "
+                "This write does not drop execution."
+            )
     dest.parent.mkdir(parents=True, exist_ok=True)
     dest.write_text(json.dumps(card, indent=2) + "\n", encoding="utf-8")
     return {"wrote": True, "path": str(dest), "n": card.get("n"), "passes": card.get("passes_every_binding_clause")}

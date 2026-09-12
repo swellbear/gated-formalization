@@ -765,6 +765,28 @@ def test_and_skip_of_the_whole_quartet_is_refused_as_fill_none(tmp_path):
     assert not skips_whole_quartet(
         {"kind": "CLOCK-CLOSE-MINUTE", "params": {"skip_close_minute": 0}}
     )
+    triples = ([15, 30, 45], [0, 15, 30], [0, 15, 45], [0, 30, 45])
+    for minutes in triples:
+        triple = {
+            "kind": "CLOCK-INTRA-HOUR",
+            "params": {"skip_close_minutes": list(minutes)},
+            "expected_skip_rate": 0.75,
+        }
+        reason = refuse_reason(triple, root=tmp_path)
+        assert reason.startswith("fill-none")
+        assert "density" not in reason
+        assert date_notebooks(
+            [triple], declared_at="2026-09-12T08:00:00-04:00", root=tmp_path
+        ) == []
+    # Fill-none still outranks the density floor: a triple with expected 0.0
+    # is refused as fill-none, not as density.
+    sparse_triple = {
+        "kind": "CLOCK-INTRA-HOUR",
+        "params": {"skip_close_minutes": [15, 30, 45]},
+        "expected_skip_rate": 0.0,
+    }
+    assert refuse_reason(sparse_triple, root=tmp_path).startswith("fill-none")
+    assert "density" not in refuse_reason(sparse_triple, root=tmp_path)
 
 
 def test_menu_exhausted_stamped_when_keepers_zero_and_no_clock_slot_left(tmp_path):
@@ -950,6 +972,48 @@ def test_farm_panel_parked_why_names_clauses_not_pnl(tmp_path):
     assert "-0.016286" not in html
     assert "mean_pnl" not in html
     assert "<th>PnL</th>" not in html
+
+
+def test_farm_panel_density_fail_is_not_clause_1(tmp_path):
+    from golf_offshoot.learning_lane_15m.farm import farm_card_why
+    from golf_offshoot.learning_lane_15m.farm_hub import farm_panel_html
+
+    notebook = {
+        "id": "F-CLOCK-CLOSE-MINUTE-15",
+        "kind": "CLOCK-CLOSE-MINUTE",
+        "params": {"skip_close_minute": 15},
+        "declared_at": "2026-09-10T12:00:00-04:00",
+        "execution": False,
+        "selects": True,
+    }
+    _seed(tmp_path, farm_notebooks=[notebook])
+    _write_json(
+        farm_scorecard_path("F-CLOCK-CLOSE-MINUTE-15", root=tmp_path),
+        {
+            "n": 70,
+            "skip_count": 1,
+            "skip_rate": 0.014286,
+            "density_fail": True,
+            "undecidable": True,
+            "passes_every_binding_clause": False,
+            "clause_1_paired_t_vs_floor": {
+                "passes": None,
+                "not_scored": "density-fail; not a t-test vs delta=0.28",
+            },
+        },
+    )
+    why = farm_card_why(
+        json.loads(
+            farm_scorecard_path("F-CLOCK-CLOSE-MINUTE-15", root=tmp_path).read_text(
+                encoding="utf-8"
+            )
+        )
+    )
+    assert "density-fail" in why
+    assert "clauses" not in why
+    html = farm_panel_html(root=tmp_path)
+    assert "density-fail" in html
+    assert "clauses 1" not in html
 
 
 def test_farm_panel_collecting_stays_collecting(tmp_path, monkeypatch):
