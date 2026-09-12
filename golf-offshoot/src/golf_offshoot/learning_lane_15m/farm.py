@@ -7,6 +7,7 @@ sort keepers by pnl. Does not arm. Not an ADMIT.
 from __future__ import annotations
 
 import json
+import os
 from pathlib import Path
 from typing import Any
 
@@ -24,6 +25,7 @@ HONER_CATALOG_REL = Path("golf-offshoot") / "docs" / "HONER_15M_CATALOG.json"
 QUARTET_MINUTES = (0, 15, 30, 45)
 HONER_KIND_PREFIX = "HONER-"
 FAMILY_AMEND_KIND = "HONER-FAMILY-AMEND"
+FAMILY_AMEND_PROTOCOL = "golf-offshoot/docs/HONER_15M_CATALOG_AMEND.md"
 DATED_HONER_FAMILIES = 2
 REASON_CATALOG_EXHAUSTED = "catalog_exhausted"
 REASON_EXAM_DEAD = "completed_dead"
@@ -695,13 +697,77 @@ def maybe_stamp_menu_exhausted(
     )
 
 
+def farm_menu_state_path() -> Path:
+    """Derived 15m artifact. Not a docs file, not hub, not an ADMIT."""
+    from golf_offshoot.learning_lane_15m.paths import latest_dir_15m
+
+    return latest_dir_15m() / "farm_menu.json"
+
+
+def write_farm_menu_state(payload: dict[str, Any]) -> dict[str, Any]:
+    path = farm_menu_state_path()
+    path.parent.mkdir(parents=True, exist_ok=True)
+    path.write_text(json.dumps(payload, indent=2) + "\n", encoding="utf-8")
+    return payload
+
+
+def run_farm_menu(
+    *,
+    root: Path | None = None,
+    registry: dict[str, Any] | None = None,
+    declared_at: str | None = None,
+) -> dict[str, Any]:
+    """One farm fire that needs no seat: no desk, no CoS assign, no operator chair.
+
+    Dates the unused legal clock slots, stamps ``FARM_MENU_EXHAUSTED`` when the
+    quartet is spent with no keeper, and carries forward whatever the honer files
+    owe. Every notebook stays ``execution`` false. This never dates a honer family
+    and never opens an exam ledger, a farm card pnl, or a book.
+
+    A redirected artifact root, or a test process, is scratch tape: it reads and
+    records, but it does not date crew notebooks in the checkout.
+    """
+    from golf_offshoot.learning_lane_15m.paths import has_15m_root_override
+    from golf_offshoot.localtime import now
+
+    stamp_at = str(declared_at or now().isoformat())
+    scratch = root is None and (
+        has_15m_root_override() or bool(os.environ.get("PYTEST_CURRENT_TEST"))
+    )
+    dated = (
+        [] if scratch else date_unused_legal(declared_at=stamp_at, root=root, registry=registry)
+    )
+    amend = owed_non_farm_kinds(root=root)
+    state = {
+        "schema": 1,
+        "lane": "learning_lane_15m",
+        "scratch_lane": scratch,
+        "dated": [str(row.get("id") or "") for row in dated],
+        "menu_exhausted": menu_exhausted(root=root),
+        "clock_menu_empty": clock_menu_empty(root=root, registry=registry),
+        "family_amend_owed": bool(amend),
+        "family_amend_reasons": list(amend[0]["reasons"]) if amend else [],
+        "family_amend_protocol": FAMILY_AMEND_PROTOCOL,
+        "third_family_dated": False,
+        "execution": False,
+        "seat_required": False,
+        "framing": (
+            "Farm menu ran off files on the paper tick. No CoS seat, no desk assign, "
+            "no operator chair. Notebooks are execution false. Not live. Not an ADMIT."
+        ),
+        "updated_at": stamp_at,
+    }
+    write_farm_menu_state(state)
+    return state
+
+
 def farm_hunger(
     *,
     root: Path | None = None,
     registry: dict[str, Any] | None = None,
     farm: dict[str, Any] | None = None,
 ) -> bool:
-    """True when Lab still has farm work: unused slots, or a file-owed honer amend.
+    """True when farm work is still owed: unused slots, or a file-owed honer amend.
 
     Zero keepers with an empty clock menu is exhaustion, not hunger — another clock
     clone is not the next kind there.

@@ -675,6 +675,80 @@ def test_empty_clock_menu_with_no_keeper_is_not_hunger_until_the_amend_is_owed(t
     assert unused_legal_kinds(root=tmp_path) == []
 
 
+def test_farm_menu_fires_off_files_with_no_seat_and_never_executes(tmp_path):
+    from golf_offshoot.learning_lane_15m.farm import farm_menu_state_path, run_farm_menu
+    from golf_offshoot.learning_lane_15m.paths import set_15m_root_override
+
+    _seed(tmp_path)
+    _honer_files(tmp_path, library={"catalog_exhausted": True, "rows": []})
+    set_15m_root_override(tmp_path / "kalshi_15m")
+    try:
+        state = run_farm_menu(root=tmp_path, declared_at="2026-09-12T10:00:00-04:00")
+        written = json.loads(farm_menu_state_path().read_text(encoding="utf-8"))
+        again = run_farm_menu(root=tmp_path, declared_at="2026-09-12T10:01:30-04:00")
+    finally:
+        set_15m_root_override(None)
+
+    assert sorted(state["dated"]) == [
+        "F-CLOCK-CLOSE-MINUTE-15",
+        "F-CLOCK-CLOSE-MINUTE-30",
+        "F-CLOCK-CLOSE-MINUTE-45",
+    ]
+    assert state["seat_required"] is False
+    assert state["execution"] is False
+    assert state["family_amend_owed"] is True
+    assert state["family_amend_reasons"] == ["catalog_exhausted"]
+    assert state["third_family_dated"] is False
+    assert state["menu_exhausted"] is True
+    assert written == state
+    assert not {"pnl", "mean_d", "bankroll", "gross"} & set(written)
+    assert again["dated"] == []
+    assert again["family_amend_owed"] is True
+
+    payload = json.loads(farm_path(root=tmp_path).read_text(encoding="utf-8"))
+    assert all(row["execution"] is False for row in payload["notebooks"])
+    assert all(not str(row["kind"]).startswith("HONER-") for row in payload["notebooks"])
+    registry = json.loads(
+        (tmp_path / "golf-offshoot" / "docs" / "LEARNING_LANE_15M_RULES.json").read_text(
+            encoding="utf-8"
+        )
+    )
+    assert [row["id"] for row in registry["rules"]] == ["R-LIVE-CLOCK"]
+
+
+def test_menu_fires_even_when_the_desk_would_not_seat_lab(tmp_path):
+    from golf_offshoot.learning_lane_15m.farm import run_farm_menu
+    from golf_offshoot.learning_lane_15m.paths import set_15m_root_override
+
+    _seed(tmp_path)
+    _honer_files(tmp_path, library={"catalog_exhausted": True, "rows": []})
+    busy = (
+        _desk()
+        .replace("| Active role | chief-of-staff |", "| Active role | operator |")
+        .replace("| Job | — |", "| Job | score the hour-close L1 |")
+        .replace("| Status | idle |", "| Status | assigned |")
+    )
+    tick = compute_crew_tick(
+        {"watch": _watch(), "roles_owed": []},
+        desk_text=busy,
+        hub_ok=True,
+        live_trial_ids=["R-LIVE-CLOCK"],
+        honer_freeze_open=False,
+        root=tmp_path,
+    )
+    assert REASON_I not in tick["reason_ids"]
+
+    set_15m_root_override(tmp_path / "kalshi_15m")
+    try:
+        state = run_farm_menu(root=tmp_path, declared_at="2026-09-12T10:00:00-04:00")
+    finally:
+        set_15m_root_override(None)
+    assert state["dated"]
+    assert state["seat_required"] is False
+    assert state["family_amend_owed"] is True
+    assert state["third_family_dated"] is False
+
+
 def test_and_skip_of_the_whole_quartet_is_refused_as_fill_none(tmp_path):
     _seed(tmp_path)
     slot = {
