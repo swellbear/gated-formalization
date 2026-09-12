@@ -6,7 +6,7 @@ Thread lines are **one sentence, newest first, max 10**. Long findings belong in
 
 | Field | Value |
 |-------|--------|
-| Updated | 2026-09-12 10:40 ET |
+| Updated | 2026-09-12 10:58 ET |
 | Active role | systems |
 | Job | gym Honer: park search when catalog_exhausted; stamp HONER-FAMILY-AMEND from files (hire #1). |
 | Status | done |
@@ -23,16 +23,19 @@ Thread lines are **one sentence, newest first, max 10**. Long findings belong in
 
 **Branch note.** Live factory is `cursor/honer-15m-sibling` [#178](https://github.com/swellbear/gated-formalization/pull/178) (open; base is `cursor/part-a-clerical-trust-boundary`; look-push tip `70fa007` allowlist hour-close L1 only). [#176](https://github.com/swellbear/gated-formalization/pull/176) is still OPEN. Live golf gym is `cursor/golf-kalshi-gym` (`603570d`, [#192](https://github.com/swellbear/gated-formalization/pull/192) landed after hub-ui `0e01c4b`; hour-close L1 PARK) plus gym Honer park-search [#193](https://github.com/swellbear/gated-formalization/pull/193) (`cursor/gym-honer-park-search-d616`, merged current gym in); do not merge #178 / #188 / #191; no clip-grid on gym. `origin/master` tip is `62fc9cb` ([#186](https://github.com/swellbear/gated-formalization/pull/186) revert of golf-1 [#180](https://github.com/swellbear/gated-formalization/pull/180)). 15m-0 [#182](https://github.com/swellbear/gated-formalization/pull/182) and 15m-1 (`c1c5d2f`) stay on master. [#183](https://github.com/swellbear/gated-formalization/pull/183) stays open — do not merge. Do not merge gym HEAD onto #178. Branching factory from `origin/master` would still discard part-a / sibling. Do not use `C:\Users\bearh\gated-formalization` on `cursor/eia-window-job2`.
 
-## Invent is a loop, no gym gate (Founder M3SS 2026-09-12 10:40 ET)
+## Standing goal — the gate split (Founder M3SS 2026-09-12 10:58 ET)
 
-**Gym CoS seating Lab is a gate and is not acceptable on invent.**
+- **Lab is the method gate.** Honesty, RUN-ONLY, not-a-live-skip. **Lab may refuse**, and that refusal stands.
+- **Gym CoS is not required to seat Lab.** Routing is not a precondition for invent starting.
+
+That is the split — **not** "invent has no gates."
 
 - When Honer files say `catalog_exhausted` (`library.json`) or the exam is `completed_dead`, **`HONER-FAMILY-AMEND` is legal and invent / hunger starts itself** off `golf-offshoot/data/honer_15m/latest/family_amend.json` (doorbell is from files, not exam pnl).
-- **CoS does not assign Lab as a required step.** An assign is bookkeeping; it is not a precondition. "No CoS turn fired yet" is not a reason invent is stopped.
-- **Palshi does not press Lab either.** No thread, ping, or chat line is the trigger.
+- **CoS does not assign Lab as a required step.** An assign is bookkeeping; it is not a precondition. "No CoS turn fired yet" is not a reason invent is stopped. A **Lab refusal is not that gate** — it stands, and it is not routed around.
+- **Palshi does not press Lab either.** No thread, ping, or chat line is the trigger, and Palshi does not overrule a Lab refusal.
 - Palshi implementer *Flip family-amend legal now* (`bc-8f1ad491-2e82-52d1-9f39-bba369d18026`) is putting that in code as a **gym-based PR, never master**. `execution=true` stays off. HOLD stands. Trading **NOT ARMED**.
 
-Still unchanged: legal is not an ADMIT / keep / consult-on / bind / seated row; a third family only after the two dated families' exams finish; `activate` file-derived; burn list dead; file order is the picker; Soften Critic on the amend is a later session. Protocol: `golf-offshoot/docs/HONER_15M_CATALOG_AMEND.md`. Full note: leave-off section "Invent is a loop, no gym gate".
+Still unchanged: Lab is the method gate and its refusal stands; legal is not an ADMIT / keep / consult-on / bind / seated row; a third family only after the two dated families' exams finish; `activate` file-derived; burn list dead; file order is the picker; Soften Critic on the amend is a later session. Protocol: `golf-offshoot/docs/HONER_15M_CATALOG_AMEND.md`. Full note: leave-off section "Gym CoS seating Lab is not a required invent gate".
 
 ## Ask Founder
 
@@ -71,7 +74,8 @@ Two suites, both on the tick.
 
 ## Thread
 
-- 2026-09-12 10:40 ET  founder → chief-of-staff: invent is a **loop with no gym gate** — Honer `catalog_exhausted` / exam `completed_dead` makes `HONER-FAMILY-AMEND` legal and invent starts itself; CoS does not assign Lab as a required step; Palshi does not press Lab; implementer `bc-8f1ad491` lands it on a gym PR, never master; nothing pressed here. `execution=true` off. HOLD. Trading NOT ARMED. next=chief-of-staff
+- 2026-09-12 10:58 ET  founder → chief-of-staff: standing goal is the **gate split** — **Lab is the method gate** (honesty, RUN-ONLY, may refuse, refusal stands) and **gym CoS is not required to seat Lab**; not "no gates". Honer `catalog_exhausted` / exam `completed_dead` makes `HONER-FAMILY-AMEND` legal and invent starts itself; Palshi does not press Lab; implementer `bc-8f1ad491` lands it on a gym PR, never master; nothing pressed here. `execution=true` off. HOLD. Trading NOT ARMED. next=chief-of-staff
+- 2026-09-12 10:40 ET  founder → chief-of-staff: gym CoS seating Lab is not a required invent gate; `HONER-FAMILY-AMEND` legal from Honer files; superseded on the Lab-refusal point by the 10:52 correction. HOLD. Trading NOT ARMED. next=chief-of-staff
 - 2026-09-12 09:22 ET  systems → chief-of-staff: gym Honer park-search is draft [#193](https://github.com/swellbear/gated-formalization/pull/193) `a800fe9`; no clip-grid. HOLD. Trading NOT ARMED. next=chief-of-staff
 - 2026-09-12 09:19 ET  hub-ui → chief-of-staff: 8765 Home Factory heading fill-all/live-70; Ops names Pages lag; golf Ops names dollar event cap. Mix-cap untouched. Do not merge #183/#179/#178/#188/#191/master. Lab chair untouched. HOLD. Trading NOT ARMED. next=operator
 - 2026-09-12 08:58 ET  hub-ui → chief-of-staff: 8765 leftover 7–9 (Home trial glance, disagreements folded, golf Live/entry $ / thin). Full card on Lab. PaperWatch kept. Do not merge #183. Lab chair untouched. HOLD. Trading NOT ARMED. next=operator
@@ -80,5 +84,4 @@ Two suites, both on the tick.
 - 2026-09-12 07:45 ET  lab → operator: PROPOSED 04 `R-SKIP-CIVIL-BOUNDARIES` dated (`skip_close_minutes=[0,30]`, rate 0.5, `execution=false`); hour-close singleton not retuned. Operator RUN-ONLY. Trading NOT ARMED. next=operator
 - 2026-09-12 07:42 ET  operator → chief-of-staff: hour-close L1 PARK from the first-70 card (`passes_every_binding_clause` false); chair empty; 8765 no longer on trial; sibling PARK preserved. Lab I_farm_open untouched. Trading NOT ARMED. next=lab
 - 2026-09-12 07:15 ET  gym → chief-of-staff: pulled `9051c54` (#185); PaperWatch on that SHA; hour-close L1 card + `K_look_due`; look-push `70fa007` on #178; Lab chair untouched. Trading NOT ARMED. next=lab
-- 2026-09-12 06:56 ET  chief-of-staff → lab: My Machines worker `gym` connected (`c7e5d2dd-55d8-4d88-b5aa-5f7c68820577`) on this checkout; Palshi spawn is a new child (`machine=gym`); do not attach `91e26eab`; 8765 stays local. Lab chair untouched. Trading NOT ARMED. next=lab
 *Older lines rolled off at the 10-line cap. Full history is in the git log for `docs/agents/DESK.md`.*
