@@ -52,7 +52,7 @@ The last tick writes bound / brain / deferred on the Golf board so an empty cart
 
 ## Golf Farm / Honer
 
-Idle shells on the golf tab: `data/golf_kalshi/latest/farm.json` and `data/golf_kalshi/honer/`. They read the live golf `paper/ledger.json` and last tick on every watch tick. Empty notebooks until dated. No golf `crew_tick`. They do not consult 15m `decide()`. They do not write "no golf tape yet" when tickets exist. The 15m Lab chair is untouched.
+Idle shells on the golf tab: `data/golf_kalshi/latest/farm.json` and `data/golf_kalshi/honer/`. They read the live golf `paper/ledger.json` and last tick on every watch tick. Empty notebooks until dated. No golf `crew_tick`. They do not consult 15m `decide()`. They do not write "no golf tape yet" when tickets exist. The 15m Lab chair is untouched. Lab 2026-09-12 looked at the live paper tickets and **refused** to date a family ([`GOLF_KALSHI_LAB_NAMER.md`](GOLF_KALSHI_LAB_NAMER.md)). Empty notebooks after that look are honest. Farm/Honer do not auto-name.
 
 ## Unattended
 

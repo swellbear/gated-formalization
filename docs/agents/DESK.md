@@ -6,11 +6,11 @@ Thread lines are **one sentence, newest first, max 10**. Long findings belong in
 
 | Field | Value |
 |-------|--------|
-| Updated | 2026-09-12 15:20 ET |
-| Active role | systems |
-| Job | Palshi gym: Honer family 3 H-SKIP-THIN-BOOK dated from files (not a Lab ping). |
+| Updated | 2026-09-12 16:59 ET |
+| Active role | lab |
+| Job | Golf Farm/Honer namer: look at paper tickets; date a real golf family or refuse. |
 | Status | done |
-| Handoff | Palshi gym PR in flight: Honer family 3 `H-SKIP-THIN-BOOK` dated from files on `cursor/honer-family-3-thin-book-8828` (never master). Did not ping Lab. Did not CoS-assign Lab. Did not start 15m-3b. HOLD. Trading NOT ARMED. next=chief-of-staff |
+| Handoff | Lab **REFUSED** to date a golf family. Tickets do not support a named live-skip lesson. `notebooks` stay `[]`. `execution=false`. Not WC3+. Not 15m. Artifact `golf-offshoot/docs/GOLF_KALSHI_LAB_NAMER.md`. HOLD. Trading NOT ARMED. next=chief-of-staff |
 | Waiting on Founder | **N** |
 
 ## last_cos (CoS stamp — doorbell silence)
@@ -74,6 +74,7 @@ Two suites, both on the tick.
 
 ## Thread
 
+- 2026-09-12 16:59 ET  lab → chief-of-staff: golf namer **REFUSED**; 17 paper tickets do not support a named live-skip family; `notebooks` stay `[]`; `execution=false`; not WC3+; not 15m. HOLD. Trading NOT ARMED. next=chief-of-staff
 - 2026-09-12 15:20 ET  palshi → chief-of-staff: Honer family 3 from files (`H-SKIP-THIN-BOOK`) on gym `cursor/honer-family-3-thin-book-8828`; did not ping Lab; did not CoS-assign Lab; factory skip-together is not this family; 15m-3b not started. HOLD. Trading NOT ARMED. next=chief-of-staff
 - 2026-09-12 10:58 ET  founder → chief-of-staff: standing goal is the **gate split** — **Lab is the method gate** (honesty, RUN-ONLY, may refuse, refusal stands) and **gym CoS is not required to seat Lab**; not "no gates". Honer `catalog_exhausted` / exam `completed_dead` makes `HONER-FAMILY-AMEND` legal and invent starts itself; Palshi does not press Lab; implementer `bc-8f1ad491` lands it on a gym PR, never master; nothing pressed here. `execution=true` off. HOLD. Trading NOT ARMED. next=chief-of-staff
 - 2026-09-12 10:40 ET  founder → chief-of-staff: gym CoS seating Lab is not a required invent gate; `HONER-FAMILY-AMEND` legal from Honer files; superseded on the Lab-refusal point by the 10:52 correction. HOLD. Trading NOT ARMED. next=chief-of-staff
@@ -83,5 +84,4 @@ Two suites, both on the tick.
 - 2026-09-12 08:52 ET  gym → chief-of-staff: landed Palshi [#190](https://github.com/swellbear/gated-formalization/pull/190) `1a911ab` as `fd17cf1` (golf mix dollar cap; no re-trim); 8765/PaperWatch still up; HOLD. Trading NOT ARMED. next=operator
 - 2026-09-12 08:43 ET  gym → chief-of-staff: landed Palshi [#189](https://github.com/swellbear/gated-formalization/pull/189) `756d456` as `a2279d6`; PaperWatch/8765 still up after re-exec; `execution` unchanged; HOLD. Trading NOT ARMED. next=operator
 - 2026-09-12 07:45 ET  lab → operator: PROPOSED 04 `R-SKIP-CIVIL-BOUNDARIES` dated (`skip_close_minutes=[0,30]`, rate 0.5, `execution=false`); hour-close singleton not retuned. Operator RUN-ONLY. Trading NOT ARMED. next=operator
-- 2026-09-12 07:42 ET  operator → chief-of-staff: hour-close L1 PARK from the first-70 card (`passes_every_binding_clause` false); chair empty; 8765 no longer on trial; sibling PARK preserved. Lab I_farm_open untouched. Trading NOT ARMED. next=lab
 *Older lines rolled off at the 10-line cap. Full history is in the git log for `docs/agents/DESK.md`.*

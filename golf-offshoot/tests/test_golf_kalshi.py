@@ -2220,6 +2220,20 @@ def test_organs_read_live_ledger_and_last_tick(gk_root):
     assert honer_written["tape"]["worthy"] == 9
 
 
+def test_lab_namer_refused_empty_notebooks():
+    note = Path(__file__).resolve().parents[1] / "docs" / "GOLF_KALSHI_LAB_NAMER.md"
+    text = note.read_text(encoding="utf-8")
+    assert "**REFUSED.**" in text
+    assert "`execution=false`" in text
+    assert "notebooks" in text and "[]" in text
+    assert "H-SKIP-THIN-BOOK" in text
+    assert "learning_lane_15m" in text
+    md = Path(__file__).resolve().parents[1] / "docs" / "GOLF_KALSHI.md"
+    golf = md.read_text(encoding="utf-8")
+    assert "refused" in golf.lower()
+    assert "do not auto-name" in golf.lower()
+
+
 def test_run_tick_refreshes_organs(gk_root):
     run_tick(brain=_brain(), executor=PaperExecutor(), catalog={"markets": [_market()]})
     farm = json.loads(farm_path().read_text(encoding="utf-8"))
