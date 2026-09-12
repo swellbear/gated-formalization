@@ -181,6 +181,13 @@ def freeze_meter(
 
     qs = queue_status()
     n_hunts = int(qs.get("n_hunts") or 1)
+    from golf_offshoot.honer_15m.library import search_is_parked
+
+    if search_is_parked() and not qs.get("exam_open"):
+        return (
+            "Honer freeze: catalog exhausted — search parked, exam closed. "
+            "HONER-FAMILY-AMEND owed from files. Not a keep."
+        )
     if qs.get("exam_open") and n_hunts > 1:
         bid = str(qs.get("exam_brain_id") or "the seated hunt")
         return (
@@ -239,7 +246,7 @@ def library_english(
     del clip_streak, clip_need, quote_ok
     next_bit = "families hunt in parallel; one exam chair"
     if payload.get("catalog_exhausted"):
-        next_bit = "catalog exhausted — no new family"
+        next_bit = "catalog exhausted — search parked; family-amend owed from files; no new family"
     elif family == FAMILY_SPREAD:
         next_bit = "skip-wide-spread walking in parallel; no third family"
     elif last == "search_untestable":
@@ -559,14 +566,8 @@ def _phase_paragraph(
     trials: dict[str, Any],
 ) -> tuple[str, str]:
     moved = abs(theta_now - last_declared)
-    if exam.get("parked"):
-        reason = str(exam.get("park_reason") or "futility")
-        k = int(exam.get("k_after") or trials.get("trials_to_date") or 0)
-        n = int(exam.get("n") or 0)
-        return (
-            "exam_parked",
-            f"Exam k={k} parked at n={n}: {reason} This is still not a keep. Search continues.",
-        )
+    from golf_offshoot.honer_15m.library import search_is_parked
+
     if exam.get("open"):
         k = int(exam.get("k_after") or trials.get("trials_to_date") or 0)
         n = int(exam.get("n") or 0)
@@ -578,6 +579,21 @@ def _phase_paragraph(
             f"Exam k={k} is running{seated_bit}. For these 70 windows the cutoff is frozen at {cents(frozen)}. "
             f"Other hunts may still move their own cutoffs; that does not change this exam. "
             f"Scored **{n} of 70**. Futility check is at n=20 and n=40. One exam chair.",
+        )
+    if search_is_parked():
+        return (
+            "search_parked",
+            "Catalog exhausted. Search is parked — no new search fills. Exam stays closed. "
+            "HONER-FAMILY-AMEND is owed from files (catalog_exhausted or completed_dead). "
+            "Not a keep. This tick does not date a third family.",
+        )
+    if exam.get("parked"):
+        reason = str(exam.get("park_reason") or "futility")
+        k = int(exam.get("k_after") or trials.get("trials_to_date") or 0)
+        n = int(exam.get("n") or 0)
+        return (
+            "exam_parked",
+            f"Exam k={k} parked at n={n}: {reason} This is still not a keep. Search continues.",
         )
     if exam.get("completed"):
         k = int(exam.get("k_after") or trials.get("trials_to_date") or 0)
@@ -722,6 +738,11 @@ def collect_standing() -> HonerStanding:
         hunts_line = (
             f"Clip hunts date on the honer tick ({n_plan} slots, both families in parallel). "
             "One exam chair. Dating is not a trial. Books are not added together."
+        )
+    if lib.get("catalog_exhausted"):
+        hunts_line = (
+            "Search parked — catalog exhausted, no new search fills. Exam stays closed. "
+            "HONER-FAMILY-AMEND owed from files. Not a third family this tick. Books are not added together."
         )
     glossary = (
         "Fill = paper YES ticket at the posted price. Skip = no ticket this window. "

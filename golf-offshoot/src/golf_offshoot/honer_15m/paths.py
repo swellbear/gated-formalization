@@ -177,6 +177,11 @@ def exam_score_path() -> Path:
     return latest_dir() / "exam_score.json"
 
 
+def family_amend_path() -> Path:
+    """File doorbell that HONER-FAMILY-AMEND is owed. Not pnl. Not a third family."""
+    return latest_dir() / "family_amend.json"
+
+
 def factory_rules_path() -> Path:
     """Factory selecting registry. Honer dating must not write this."""
     return Path(__file__).resolve().parents[3] / "docs" / "LEARNING_LANE_15M_RULES.json"

@@ -397,6 +397,21 @@ def test_picker_has_no_pnl_parameters():
     assert "exam_sums" not in src
     assert "load_ledger" not in src
     assert "betting_pnl" not in src
+    from golf_offshoot.honer_15m import family_amend
+
+    for name in (
+        "exam_completed_dead_from_files",
+        "family_amend_reasons_from_files",
+        "family_amend_owed_from_files",
+        "stamp_family_amend",
+    ):
+        params = inspect.signature(getattr(family_amend, name)).parameters
+        for banned in ("d", "pnl", "ledger", "exam_pnl", "betting_pnl"):
+            assert banned not in params
+    amend_src = (PKG / "family_amend.py").read_text(encoding="utf-8")
+    assert "exam_sums" not in amend_src
+    assert "load_ledger" not in amend_src
+    assert "iter_settled" not in amend_src
 
 
 def test_catalog_skips_two_thirds():
@@ -1559,5 +1574,157 @@ def test_watch_files_include_clip_spec():
     assert "brains.py" in names
     assert "HONER_15M_SEARCH_BRAINS.json" in names
     assert "HONER_15M_CATALOG.json" in names
+
+
+def test_catalog_exhausted_parks_search_and_leaves_exam_closed(honer_tmp):
+    import json
+
+    from golf_offshoot.honer_15m.library import load_library, save_library
+    from golf_offshoot.honer_15m.paths import family_amend_path, last_tick_path
+
+    lib = load_library()
+    lib["catalog_exhausted"] = True
+    save_library(lib)
+    out = loop.run_tick([_quoted_market("KXBTC15M-PARK1")])
+    assert out["search_parked"] is True
+    assert out["froze"] is False
+    assert freeze.exam_is_open() is False
+    assert freeze.fire_freeze() is None
+    assert books.load_ledger("search")["entries"] == 0
+    assert books.load_ledger("exam")["entries"] == 0
+    tick = json.loads(last_tick_path().read_text(encoding="utf-8"))
+    assert tick["search_parked"] is True
+    assert tick["family_amend_owed"] is True
+    stamp = json.loads(family_amend_path().read_text(encoding="utf-8"))
+    assert stamp["owed"] is True
+    assert "catalog_exhausted" in stamp["reasons"]
+    assert stamp["third_family"] is False
+    assert "pnl" not in stamp
+    assert "mean_d" not in stamp
+    from golf_offshoot.honer_15m.catalog import catalog_ids
+
+    assert catalog_ids() == ["H-SKIP-RICH-YES", "H-SKIP-WIDE-SPREAD"]
+
+
+def test_catalog_exhausted_settles_existing_search_without_new_fills(honer_tmp):
+    loop.run_tick([_quoted_market("KXBTC15M-KEEP")])
+    assert books.load_ledger("search")["entries"] == 1
+    from golf_offshoot.honer_15m.library import load_library, save_library
+
+    lib = load_library()
+    lib["catalog_exhausted"] = True
+    save_library(lib)
+    loop.run_tick(
+        [_quoted_market("KXBTC15M-KEEP", result="yes"), _quoted_market("KXBTC15M-NEW")]
+    )
+    assert books.load_ledger("search")["entries"] == 1
+    assert "KXBTC15M-NEW" not in books.load_decisions("search")
+    assert books.load_decisions("search")["KXBTC15M-KEEP"]["kalshi_result"] == "yes"
+    assert int(books.load_ledger("search")["settled"] or 0) >= 1
+    assert freeze.exam_is_open() is False
+
+
+def test_family_amend_owed_from_completed_dead_not_exam_pnl(honer_tmp):
+    import json
+
+    from golf_offshoot.honer_15m.family_amend import (
+        family_amend_owed_from_files,
+        stamp_family_amend,
+    )
+    from golf_offshoot.honer_15m.library import append_exam_row
+    from golf_offshoot.honer_15m.paths import exam_score_path, family_amend_path
+    from golf_offshoot.honer_15m.policy import FAMILY_RICH, knob_vector
+
+    assert family_amend_owed_from_files() is False
+    exam_score_path().write_text(
+        json.dumps(
+            {
+                "outcome": "completed_dead",
+                "mean_d": 99.0,
+                "exam_pnl_sum": 999.0,
+                "survives": False,
+            }
+        ),
+        encoding="utf-8",
+    )
+    assert family_amend_owed_from_files() is True
+    stamp = stamp_family_amend()
+    assert stamp["owed"] is True
+    assert stamp["reasons"] == ["completed_dead"]
+    assert stamp["exam_completed_dead"] is True
+    assert stamp["catalog_exhausted"] is False
+    assert "mean_d" not in stamp
+    assert "exam_pnl_sum" not in stamp
+    assert "pnl" not in stamp
+    on_disk = json.loads(family_amend_path().read_text(encoding="utf-8"))
+    assert "mean_d" not in on_disk
+    append_exam_row(
+        k=1,
+        family=FAMILY_RICH,
+        knobs=knob_vector(family=FAMILY_RICH, theta=0.79, delta=0.02),
+        outcome="completed_dead",
+    )
+    standing = None
+    from golf_offshoot.honer_15m.board import collect_standing
+
+    standing = collect_standing()
+    assert "99" not in standing.where_it_stands
+    assert family_amend_owed_from_files() is True
+
+
+def test_mark_catalog_exhausted_from_retired_hunts_not_pnl(honer_tmp):
+    from golf_offshoot.honer_15m.library import (
+        append_exam_row,
+        hunts_cannot_freeze,
+        load_library,
+        mark_catalog_exhausted,
+    )
+    from golf_offshoot.honer_15m.picker import maybe_advance
+    from golf_offshoot.honer_15m.policy import FAMILY_RICH, knob_vector
+    from golf_offshoot.honer_15m.theta import current_vector, load_theta
+
+    st = load_theta()
+    vector = current_vector(st)
+    append_exam_row(k=1, family=FAMILY_RICH, knobs=vector, outcome="completed_dead")
+    assert hunts_cannot_freeze() is True
+    mark_catalog_exhausted()
+    assert load_library().get("catalog_exhausted") is True
+    assert maybe_advance() is None
+    out = loop.run_tick([_quoted_market("KXBTC15M-AFTER")])
+    assert out["search_parked"] is True
+    assert books.load_ledger("search")["entries"] == 0
+    assert freeze.exam_is_open() is False
+    from golf_offshoot.honer_15m.catalog import catalog_ids
+
+    assert catalog_ids() == ["H-SKIP-RICH-YES", "H-SKIP-WIDE-SPREAD"]
+
+
+def test_live_clip_grid_not_exhausted_after_one_dead_exam(honer_tmp):
+    from golf_offshoot.honer_15m.brains import date_unused_clip_slots
+    from golf_offshoot.honer_15m.library import (
+        append_exam_row,
+        hunts_cannot_freeze,
+        load_library,
+        mark_catalog_exhausted,
+    )
+    from golf_offshoot.honer_15m.policy import FAMILY_RICH, knob_vector
+
+    date_unused_clip_slots()
+    append_exam_row(
+        k=1,
+        family=FAMILY_RICH,
+        knobs=knob_vector(family=FAMILY_RICH, theta=0.79, delta=0.04),
+        outcome="completed_dead",
+    )
+    assert hunts_cannot_freeze() is False
+    mark_catalog_exhausted()
+    assert load_library().get("catalog_exhausted") is not True
+    from golf_offshoot.honer_15m.family_amend import family_amend_owed_from_files
+
+    assert family_amend_owed_from_files() is True
+    out = loop.run_tick([_quoted_market("KXBTC15M-GRID")])
+    assert out["search_parked"] is not True
+    assert books.load_ledger("search")["entries"] >= 1
+    assert freeze.load_trials()["trials_to_date"] == 0
 
 
