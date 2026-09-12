@@ -313,23 +313,35 @@ def rule_reached_n(
     *,
     root: Path | None = None,
 ) -> list[dict[str, Any]]:
-    """A declared rule has accumulated the n its falsifier named."""
+    """A declared executing rule has accumulated the n its falsifier named.
+
+    Hard-NO ids (``R-SKIP-COINFLIP``, PARK'd favorite) never page. A look is
+    the executing chair without an L1 — not a leftover never-score row.
+    ``execution=false`` does not hide a sitting Lab PROPOSED; that is
+    ``lab_proposed``. This detector does not score and does not seat a skip.
+    """
     base = root or repo_root()
     registry = _load_json(base / REGISTRY_REL)
     bar = _load_json(base / BAR_JSON_REL)
     target = (bar.get("looks") or {}).get("first_look_n")
     if not target:
         return []
-    from golf_offshoot.learning_lane_15m.clerical_score import scorecard_path
+    from golf_offshoot.learning_lane_15m.clerical_score import (
+        FORBIDDEN_SCORE_IDS,
+        scorecard_path,
+    )
 
     events = []
     for rule in registry.get("rules") or []:
         if not rule.get("selects"):
             continue
         rid = str(rule.get("id") or "")
-        # L1 file is the look. Keep paging while executing + no L1 (and leftover
-        # name-clear subjects that never scored).
-        if rid and scorecard_path(rid, root=base, look="L1").is_file():
+        if not rid or rid in FORBIDDEN_SCORE_IDS:
+            continue
+        if rule.get("execution") is not True:
+            continue
+        # L1 file is the look. Keep paging while executing + no L1.
+        if scorecard_path(rid, root=base, look="L1").is_file():
             continue
         declared = str(rule.get("declared_at") or "")
         if not declared:
