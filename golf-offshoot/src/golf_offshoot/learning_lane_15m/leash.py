@@ -16,6 +16,7 @@ def run_leash_tick() -> dict[str, Any]:
         "look_push": {},
         "sibling_execution": {},
         "farm": {},
+        "farm_menu": {},
         "consult": {},
     }
     try:
@@ -46,6 +47,12 @@ def run_leash_tick() -> dict[str, Any]:
         out["farm"] = maybe_score_farm()
     except Exception as exc:  # noqa: BLE001 — never take PaperWatch down
         out["farm"] = {"error": f"{type(exc).__name__}: {exc}"}
+    try:
+        from golf_offshoot.learning_lane_15m.farm import maybe_stamp_menu_exhausted
+
+        out["farm_menu"] = maybe_stamp_menu_exhausted() or {}
+    except Exception as exc:  # noqa: BLE001 — never take PaperWatch down
+        out["farm_menu"] = {"error": f"{type(exc).__name__}: {exc}"}
     try:
         from golf_offshoot.learning_lane_15m.consult_honer import maybe_sync_and_enable
 

@@ -18,9 +18,15 @@ REGISTRY_REL = Path("golf-offshoot") / "docs" / "LEARNING_LANE_15M_RULES.json"
 BURNED_REL = Path("golf-offshoot") / "docs" / "LEARNING_LANE_15M_BURNED_CLASSES.json"
 EXHAUSTED_REL = Path("golf-offshoot") / "docs" / "LEARNING_LANE_15M_FARM_MENU_EXHAUSTED.json"
 SCORECARD_DIR_REL = Path("golf-offshoot") / "docs"
+HONER_LATEST_REL = Path("golf-offshoot") / "data" / "honer_15m" / "latest"
+HONER_CATALOG_REL = Path("golf-offshoot") / "docs" / "HONER_15M_CATALOG.json"
 
 QUARTET_MINUTES = (0, 15, 30, 45)
 HONER_KIND_PREFIX = "HONER-"
+FAMILY_AMEND_KIND = "HONER-FAMILY-AMEND"
+DATED_HONER_FAMILIES = 2
+REASON_CATALOG_EXHAUSTED = "catalog_exhausted"
+REASON_EXAM_DEAD = "completed_dead"
 FORBIDDEN_FARM_IDS = frozenset({"R-SKIP-COINFLIP", "R-SKIP-2TO1-FAVORITE"})
 CLONE_JACCARD = 0.9
 
@@ -208,6 +214,75 @@ def _clock_singleton_executing(*, root: Path | None = None, registry: dict[str, 
 
 def _kind_is_honer(kind_id: str) -> bool:
     return str(kind_id or "").startswith(HONER_KIND_PREFIX)
+
+
+def _honer_latest(*, root: Path | None = None) -> Path:
+    return (root or repo_root()) / HONER_LATEST_REL
+
+
+def honer_family_amend_reasons(*, root: Path | None = None) -> list[str]:
+    """File labels that owe the amend: honer library and exam JSON, read as files.
+
+    ``catalog_exhausted`` off ``library.json``; ``completed_dead`` off a library row
+    or ``exam_score.json``. Catalog prose does not decide, and no ledger, exam ``d``,
+    or gross pnl is opened.
+    """
+    latest = _honer_latest(root=root)
+    library = _load_json(latest / "library.json")
+    reasons: list[str] = []
+    if library.get("catalog_exhausted") is True:
+        reasons.append(REASON_CATALOG_EXHAUSTED)
+    dead = any(
+        isinstance(row, dict) and str(row.get("outcome") or "") == REASON_EXAM_DEAD
+        for row in library.get("rows") or []
+    )
+    if not dead:
+        dead = str(_load_json(latest / "exam_score.json").get("outcome") or "") == REASON_EXAM_DEAD
+    if dead:
+        reasons.append(REASON_EXAM_DEAD)
+    return reasons
+
+
+def honer_family_amend_taken(*, root: Path | None = None) -> bool:
+    """True once a third family is dated in the honer catalog. The doorbell is answered."""
+    payload = _load_json((root or repo_root()) / HONER_CATALOG_REL)
+    items = [
+        row for row in payload.get("items") or [] if isinstance(row, dict) and row.get("id")
+    ]
+    return len(items) > DATED_HONER_FAMILIES
+
+
+def honer_family_amend_legal_now(*, root: Path | None = None) -> bool:
+    """``HONER-FAMILY-AMEND.legal_now``, off honer files rather than the catalog note."""
+    if honer_family_amend_taken(root=root):
+        return False
+    return bool(honer_family_amend_reasons(root=root))
+
+
+def owed_non_farm_kinds(
+    *,
+    root: Path | None = None,
+    catalog: dict[str, Any] | None = None,
+) -> list[dict[str, Any]]:
+    """Catalog kinds that are legal now but are never farm notebooks.
+
+    Today that is the honer family amend: Lab dates it on the honer organ, so it
+    stays out of ``unused_legal_kinds``, but it is still the named next kind.
+    """
+    cat = catalog if catalog is not None else load_catalog(root=root)
+    kinds = cat.get("kinds") if isinstance(cat.get("kinds"), list) else []
+    burned = burned_ids(root=root)
+    out: list[dict[str, Any]] = []
+    for kind in kinds:
+        if not isinstance(kind, dict) or str(kind.get("id") or "") != FAMILY_AMEND_KIND:
+            continue
+        if FAMILY_AMEND_KIND in burned:
+            continue
+        reasons = honer_family_amend_reasons(root=root)
+        if not reasons or honer_family_amend_taken(root=root):
+            continue
+        out.append({"kind": FAMILY_AMEND_KIND, "legal_now": True, "reasons": reasons})
+    return out
 
 
 def unused_legal_kinds(
@@ -433,6 +508,18 @@ def burned_ids(*, root: Path | None = None) -> set[str]:
     return out
 
 
+def skips_whole_quartet(slot: dict[str, Any]) -> bool:
+    """True when a notebook ANDs every close minute of the quartet into its skip set.
+
+    Skipping {0, 15, 30, 45} fills nothing, so the card can never be a look at a
+    skip against a fill. Product structure only; no card, no tape, no pnl.
+    """
+    minutes = _clock_minutes(slot)
+    if minutes is None:
+        return False
+    return set(minutes) >= set(QUARTET_MINUTES)
+
+
 def refuse_reason(
     slot: dict[str, Any],
     *,
@@ -450,6 +537,8 @@ def refuse_reason(
         return "honer kinds stay the skip-on-mark organ"
     if kind in burned_ids(root=root):
         return f"burned {kind}"
+    if skips_whole_quartet(slot):
+        return "fill-none: AND-skip of the whole quartet leaves no filled window"
     params = slot.get("params") if isinstance(slot.get("params"), dict) else {}
     probe = notebook_as_rule(
         {
@@ -566,7 +655,44 @@ def date_unused_legal(
     registry: dict[str, Any] | None = None,
 ) -> list[dict[str, Any]]:
     slots = unused_legal_kinds(root=root, registry=registry)
-    return date_notebooks(slots, declared_at=declared_at, root=root, registry=registry)
+    added = date_notebooks(slots, declared_at=declared_at, root=root, registry=registry)
+    maybe_stamp_menu_exhausted(root=root, registry=registry)
+    return added
+
+
+def clock_menu_empty(
+    *,
+    root: Path | None = None,
+    registry: dict[str, Any] | None = None,
+    farm: dict[str, Any] | None = None,
+) -> bool:
+    """True when no unused slot is left in any named clock family."""
+    named = set(product_skip_kinds())
+    unused = unused_legal_kinds(root=root, registry=registry, farm=farm)
+    return not any(str(slot.get("kind") or "") in named for slot in unused)
+
+
+def maybe_stamp_menu_exhausted(
+    *,
+    root: Path | None = None,
+    registry: dict[str, Any] | None = None,
+    farm: dict[str, Any] | None = None,
+) -> dict[str, Any] | None:
+    """Write ``FARM_MENU_EXHAUSTED`` when the quartet is spent and produced no keeper.
+
+    Keeper count is a binding-clause verdict off the farm cards, never a pnl rank.
+    Idempotent: an existing stamp is left alone. Returns the payload it wrote.
+    """
+    if menu_exhausted(root=root):
+        return None
+    if keeper_notebooks(root=root, farm=farm):
+        return None
+    if not clock_menu_empty(root=root, registry=registry, farm=farm):
+        return None
+    return write_menu_exhausted(
+        "keepers 0 and no unused clock slot left in the quartet menu",
+        root=root,
+    )
 
 
 def farm_hunger(
@@ -575,16 +701,22 @@ def farm_hunger(
     registry: dict[str, Any] | None = None,
     farm: dict[str, Any] | None = None,
 ) -> bool:
-    """True when Lab still has farm work: unused slots, or invent until exhausted."""
+    """True when Lab still has farm work: unused slots, or a file-owed honer amend.
+
+    Zero keepers with an empty clock menu is exhaustion, not hunger — another clock
+    clone is not the next kind there.
+    """
     unused = unused_legal_kinds(root=root, registry=registry, farm=farm)
     if unused:
         return True
     cat = load_catalog(root=root)
     if not (cat.get("kinds") or []):
         return False
+    if owed_non_farm_kinds(root=root, catalog=cat):
+        return True
     if menu_exhausted(root=root):
         return False
-    return True
+    return bool(keeper_notebooks(root=root, farm=farm))
 
 
 def notebook_window_count(notebook: dict[str, Any], *, windows: list[dict[str, Any]] | None = None) -> int:
