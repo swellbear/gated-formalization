@@ -74,7 +74,7 @@ def main(argv: list[str] | None = None) -> int:
         "command",
         nargs="?",
         default="demo",
-        choices=["demo", "board", "explain", "strategy", "ingest", "calibrate", "pressure-test", "live", "watch", "shadow", "shell", "paper-export", "paper-ledger", "paper-deposit", "paper-withdraw", "paper-settle", "paper-fill", "compare-replay", "hub", "lane-15m", "learn-15m", "learn-15m-runner", "digest-15m", "observability-export"],
+        choices=["demo", "board", "explain", "strategy", "ingest", "calibrate", "pressure-test", "live", "watch", "shadow", "shell", "paper-export", "paper-ledger", "paper-deposit", "paper-withdraw", "paper-settle", "paper-fill", "compare-replay", "hub", "lane-15m", "learn-15m", "learn-15m-runner", "digest-15m", "score-15m", "observability-export"],
     )
     parser.add_argument("--course-type", default="parkland")
     parser.add_argument("--player", default="p01")
@@ -177,7 +177,7 @@ def main(argv: list[str] | None = None) -> int:
         "--json",
         action="store_true",
         dest="as_json",
-        help="learn-15m or learn-15m-runner: print JSON instead of the readable tick",
+        help="learn-15m, learn-15m-runner, or score-15m: print JSON instead of the readable tick",
     )
     parser.add_argument(
         "--runner-mode",
@@ -308,6 +308,8 @@ def main(argv: list[str] | None = None) -> int:
         return _cmd_learn_15m_runner(args)
     if args.command == "digest-15m":
         return _cmd_digest_15m(args)
+    if args.command == "score-15m":
+        return _cmd_score_15m(args)
     if args.command == "observability-export":
         return _cmd_observability_export(args)
 
@@ -1093,6 +1095,25 @@ def _cmd_digest_15m(_args) -> int:
     path = write_digest()
     print(f"SOURCE digest figures refreshed: {path}")
     print(f"standing caveats concatenated verbatim: {caveats_path()}")
+    return 0
+
+
+def _cmd_score_15m(args) -> int:
+    """Quarantined replay score. Does not change fills or bind the bar."""
+    from golf_offshoot.learning_lane_15m.score import write_score
+
+    payload, paths = write_score()
+    print(f"quarantined replay score: {paths['json']}")
+    print(f"operator note: {paths['note']}")
+    print("binding=false. Not an ADMIT. Replay ≠ lived. Not in manifest.json.")
+    if getattr(args, "as_json", False):
+        print(json.dumps(payload, indent=2))
+        return 0
+    print(
+        f"scored={payload.get('scored')} n_eligible={payload.get('n_eligible')} "
+        f"trials_to_date={payload.get('trials_to_date')} "
+        f"(not incremented) lab_admits={payload.get('lab_admits')}"
+    )
     return 0
 
 
