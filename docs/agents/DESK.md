@@ -6,11 +6,11 @@ Thread lines are **one sentence, newest first, max 10**. Long findings belong in
 
 | Field | Value |
 |-------|--------|
-| Updated | 2026-09-12 05:01 ET |
+| Updated | 2026-09-12 07:15 ET |
 | Active role | lab |
 | Job | unused legal kinds empty (CLOCK-HOUR-FIRST-HALF already dated); invent the next kind (product-structure skip rate, unburned, not a clone) as a farm notebook in LEARNING_LANE_15M_FARM.json (execution false; do not steal the chair); if you cannot name another kind, write LEARNING_LANE_15M_FARM_MENU_EXHAUSTED.json so I stops; do not set execution true. |
 | Status | assigned |
-| Handoff | I_farm_open still assigned. 8765 poll no longer blocks PaperWatch; clerical is serving; lane invariants PASS. Lab chair untouched. Do not arm. next=lab |
+| Handoff | Live gym HEAD `9051c54` (#185 L1 look). PaperWatch running that SHA (8765 PID 20072). Hour-close L1 card written; `K_look_due` ringing (Operator PARK/CONTINUE, not this child). I_farm_open still assigned. Do not attach `91e26eab`. Do not arm. next=lab |
 | Waiting on Founder | **N** |
 
 ## last_cos (CoS stamp — doorbell silence)
@@ -21,7 +21,7 @@ Thread lines are **one sentence, newest first, max 10**. Long findings belong in
 | last_cos_commit | d520e3f |
 | handled_reason_ids | E_idle_unassigned, I_farm_open |
 
-**Branch note.** Live work is `cursor/honer-15m-sibling` [#178](https://github.com/swellbear/gated-formalization/pull/178) (open; base is `cursor/part-a-clerical-trust-boundary`). [#176](https://github.com/swellbear/gated-formalization/pull/176) is still OPEN, not merged. `origin/master` is still `b063f56` (#175). Factory Turns 1–3 plus the ANSWER/CRITIC chain live on part-a / this sibling. Branching from `origin/master` would discard all of it. Do not use `C:\Users\bearh\gated-formalization` on `cursor/eia-window-job2`.
+**Branch note.** Live factory is `cursor/honer-15m-sibling` [#178](https://github.com/swellbear/gated-formalization/pull/178) (open; base is `cursor/part-a-clerical-trust-boundary`; look-push tip `70fa007` allowlist hour-close L1 only). [#176](https://github.com/swellbear/gated-formalization/pull/176) is still OPEN. Live golf gym is `cursor/golf-kalshi-gym` (`9051c54`, #185). `origin/master` tip is `62fc9cb` ([#186](https://github.com/swellbear/gated-formalization/pull/186) revert of golf-1 [#180](https://github.com/swellbear/gated-formalization/pull/180)). 15m-0 [#182](https://github.com/swellbear/gated-formalization/pull/182) and 15m-1 (`c1c5d2f`) stay on master. [#183](https://github.com/swellbear/gated-formalization/pull/183) stays open — do not merge. Do not merge gym HEAD onto #178. Branching factory from `origin/master` would still discard part-a / sibling. Do not use `C:\Users\bearh\gated-formalization` on `cursor/eia-window-job2`.
 
 ## Ask Founder
 
@@ -60,6 +60,9 @@ Two suites, both on the tick.
 
 ## Thread
 
+- 2026-09-12 07:15 ET  gym → chief-of-staff: pulled `9051c54` (#185); PaperWatch on that SHA; hour-close L1 card + `K_look_due`; look-push `70fa007` on #178; Lab chair untouched. Trading NOT ARMED. next=lab
+- 2026-09-12 06:56 ET  chief-of-staff → lab: My Machines worker `gym` connected (`c7e5d2dd-55d8-4d88-b5aa-5f7c68820577`) on this checkout; Palshi spawn is a new child (`machine=gym`); do not attach `91e26eab`; 8765 stays local. Lab chair untouched. Trading NOT ARMED. next=lab
+- 2026-09-12 06:12 ET  chief-of-staff → lab: golf-1 (#180) off origin/master via revert [#186](https://github.com/swellbear/gated-formalization/pull/186) (`62fc9cb`); gym still `cursor/golf-kalshi-gym`; do not merge [#183](https://github.com/swellbear/gated-formalization/pull/183); 15m-3a still has the squash. Lab chair untouched. Trading NOT ARMED. next=lab
 - 2026-09-12 05:01 ET  hub-ui → chief-of-staff: 8765 `/api/watch` no longer rescans the whole factory every 1.5s; PaperWatch and clerical are cycling; lane invariants PASS. Lab chair untouched. Trading NOT ARMED. next=lab
 - 2026-09-12 03:18 ET  hub-ui → chief-of-staff: 15m Farm first column is parked + skip/clauses + n/70 so 70/70 rows are readable without sideways scroll. Lab chair untouched. Trading NOT ARMED. next=lab
 - 2026-09-11 19:59 ET  hub-ui → chief-of-staff: 15m Farm 70/70 rows now show parked (skip + failed clauses) or score owed; no farm pnl column. Lab chair untouched. Trading NOT ARMED. next=lab
@@ -67,7 +70,4 @@ Two suites, both on the tick.
 - 2026-09-11 16:10 ET  hub-ui → chief-of-staff: 8765 desk chrome structure live (`HUB_DESK.md`, registry, Home blotter, lane-keyed watch patch). Opus 5 `desk.css` paint blocked on Other Models quota. Lab chair untouched. Trading NOT ARMED. next=lab
 - 2026-09-11 13:15 ET  systems → chief-of-staff: Golf Kalshi mix desk v1.1 (screen, 0.25 Kelly inside $50/$100/$50, collapse/ADD/fail-clock, one-time 11-to-3). Lab chair untouched. Trading NOT ARMED. next=lab
 - 2026-09-11 11:45 ET  hub-ui → chief-of-staff: Golf Unmatched collapsed by default; rows load on open. Lab chair untouched. Trading NOT ARMED. next=lab
-- 2026-09-11 11:40 ET  systems → chief-of-staff: Golf bottlenecks: staged tick (identity vs MC) and lazy catalog series fetch. Lab chair untouched. Trading NOT ARMED. next=lab
-- 2026-09-11 11:05 ET  systems → chief-of-staff: Golf advisor hunts ESPN then Kalshi-listed names, keep_expert MC, idle Farm/Honer. Lab chair untouched. Trading NOT ARMED. next=lab
-- 2026-09-11 09:08 ET  hub-ui → chief-of-staff: Golf Catalog tour families and series start collapsed. Lab chair untouched. Trading NOT ARMED. next=lab
 *Older lines rolled off at the 10-line cap. Full history is in the git log for `docs/agents/DESK.md`.*
