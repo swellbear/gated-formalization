@@ -13,7 +13,7 @@ from pathlib import Path
 from typing import Any
 
 from golf_offshoot.learning_lane_15m.evidence_bar import FEE_ADJUST_PATH, fee_adjust
-from golf_offshoot.learning_lane_15m.rules import lived_skip_density
+from golf_offshoot.learning_lane_15m.rules import DEFAULT_FIRST_LOOK_N, lived_skip_density
 from golf_offshoot.localtime import isoformat_now
 from golf_offshoot.policy_family.express import ACTION_FILL, ACTION_SKIP, express
 from golf_offshoot.policy_family.library import (
@@ -256,6 +256,14 @@ def _lesson_line(card: dict[str, Any]) -> str:
             f"Healthy quote bus / missing age is untestable, not a reason to "
             f"retune 180. Not a t-test vs δ."
         )
+    if kind == "count_only":
+        n = int(card.get("n") or 0)
+        skip_count = int(card.get("skip_count") or 0)
+        return (
+            f"Count-only: n {n} < first_look_n {DEFAULT_FIRST_LOOK_N}. "
+            f"skip_count {skip_count}/{n}. Not scored. Not a t-test vs δ. "
+            f"Do not retune {ident}."
+        )
     if kind == "park_vs_fill_all":
         return (
             f"skip_count clears the 10/n floor but fee-adj selected-fill pnl "
@@ -320,6 +328,9 @@ def replay(
         card_kind = "comparison_book"
         density_fail = False
         undecidable = False
+        beats = False
+    elif n < DEFAULT_FIRST_LOOK_N:
+        card_kind = "count_only"
         beats = False
     elif ident == STALE_QUOTE_ID and skip_count == 0:
         card_kind = "untestable"

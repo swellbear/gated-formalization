@@ -161,6 +161,37 @@ def test_stale_quote_skip_never_fires_is_untestable_not_a_retune():
     assert "retune 180" in card["lesson"]
 
 
+def test_unless_cheap_040_fills_cheap_yes_only_missing_is_fill_not_thin_book():
+    """Skip unless posted YES <= 0.40. 0.40 fills, 0.41 skips. Missing posted_yes fills."""
+    policy = policy_by_id("P-SKIP-UNLESS-CHEAP-040")
+    assert express(policy, _window(posted_yes=0.40))["action"] == "fill"
+    assert express(policy, _window(posted_yes=0.0))["action"] == "fill"
+    assert express(policy, _window(posted_yes=0.41))["action"] == "skip"
+    missing = _window(posted_yes=0.50)
+    del missing["posted_yes"]
+    assert express(policy, missing)["action"] == "fill"
+    none_mark = express(policy, _window(posted_yes=None))
+    assert none_mark["action"] == "fill"
+    coin = express(policy, _window(posted_yes=0.50))
+    assert coin["action"] == "skip"
+    rich = express(policy, _window(posted_yes=0.75))
+    assert rich["action"] == "skip"
+    assert express(policy_by_id("P-SKIP-RICH-075"), _window(posted_yes=0.50))["action"] == "fill"
+    assert express(policy_by_id("P-SKIP-COINFLIP"), _window(posted_yes=0.45))["action"] == "fill"
+    assert express(policy, _window(posted_yes=0.45))["action"] == "skip"
+
+
+def test_unless_cheap_count_only_below_first_look_n():
+    policy = policy_by_id("P-SKIP-UNLESS-CHEAP-040")
+    windows = [_window(posted_yes=0.50, recorded_pnl=0.0, window_id=f"w{i}") for i in range(10)]
+    card = replay(policy, windows)
+    assert card["n"] == 10
+    assert card["skip_count"] == 10
+    assert card["card"] == "count_only"
+    assert "first_look_n" in card["lesson"]
+    assert "t-test" in card["lesson"]
+
+
 def test_rich_075_boundary():
     policy = policy_by_id("P-SKIP-RICH-075")
     assert express(policy, _window(posted_yes=0.75))["action"] == "skip"
@@ -260,6 +291,7 @@ def test_policies_are_independent_not_skip_together():
     mid = _window(posted_yes=0.50, yes_bid=0.49, yes_ask=0.51)
     assert express(policy_by_id("P-SKIP-COINFLIP"), mid)["action"] == "skip"
     assert express(policy_by_id("P-SKIP-RICH-075"), mid)["action"] == "fill"
+    assert express(policy_by_id("P-SKIP-UNLESS-CHEAP-040"), mid)["action"] == "skip"
     assert express(policy_by_id("P-SKIP-WIDE-0400"), mid)["action"] == "fill"
     cards = replay_family([mid])
     assert [c["id"] for c in cards] == list(FROZEN_IDS)
@@ -384,8 +416,9 @@ def test_picker_file_order_unused_named_not_3n(tmp_path):
         "P-SKIP-LAST-SECONDS-60",
         "P-SKIP-INELIGIBLE-CLOSED",
         "P-SKIP-STALE-QUOTE-180",
+        "P-SKIP-UNLESS-CHEAP-040",
     ]
-    assert len(unused) == 6
+    assert len(unused) == 7
     assert next_named_from_files(root=tmp_path) == "P-SKIP-COINFLIP"
     assert picker_owed_from_files(root=tmp_path) is True
     stamp = stamp_picker(root=tmp_path)
@@ -417,6 +450,7 @@ def test_picker_retires_density_fail_and_does_not_confuse_factory_coinflip(tmp_p
             {"id": "P-SKIP-LAST-SECONDS-60", "card": "density_fail"},
             {"id": "P-SKIP-INELIGIBLE-CLOSED", "card": "density_fail"},
             {"id": "P-SKIP-STALE-QUOTE-180", "card": "untestable"},
+            {"id": "P-SKIP-UNLESS-CHEAP-040", "card": "park_vs_fill_all"},
         ],
         rule_ids=["R-SKIP-COINFLIP", "R-BASELINE-FILL-ALL"],
     )
@@ -433,6 +467,7 @@ def test_picker_retires_density_fail_and_does_not_confuse_factory_coinflip(tmp_p
             {"id": "P-SKIP-LAST-SECONDS-60", "card": "density_fail"},
             {"id": "P-SKIP-INELIGIBLE-CLOSED", "card": "density_fail"},
             {"id": "P-SKIP-STALE-QUOTE-180", "card": "untestable"},
+            {"id": "P-SKIP-UNLESS-CHEAP-040", "card": "park_vs_fill_all"},
         ],
         rule_ids=["P-SKIP-COINFLIP"],
     )
@@ -449,11 +484,12 @@ def test_live_files_leave_coinflip_unused_until_exact_p_id():
     )
 
     unused = unused_named_from_files()
-    assert unused == ["P-SKIP-COINFLIP"]
+    assert unused == ["P-SKIP-COINFLIP", "P-SKIP-UNLESS-CHEAP-040"]
     assert next_named_from_files() == "P-SKIP-COINFLIP"
     assert picker_owed_from_files() is True
     retired = retired_named_from_files()
     assert "P-SKIP-COINFLIP" not in retired
+    assert "P-SKIP-UNLESS-CHEAP-040" not in retired
     assert "P-SKIP-RICH-075" in retired
     assert "P-SKIP-WIDE-0400" in retired
     assert "P-SKIP-STALE-QUOTE-180" in retired

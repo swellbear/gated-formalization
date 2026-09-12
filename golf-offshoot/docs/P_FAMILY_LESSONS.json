@@ -103,6 +103,21 @@
       "card": "untestable",
       "outcome": "untestable",
       "lesson": "Search done: skip never fired (skip_count 0/413). Healthy quote bus / missing age is untestable, not a reason to retune 180. Not a t-test vs \u03b4."
+    },
+    {
+      "id": "P-SKIP-UNLESS-CHEAP-040",
+      "declared_at": "2026-09-12T19:35:00-04:00",
+      "skip_count": 355,
+      "n": 417,
+      "density_passes": true,
+      "density_fail": false,
+      "undecidable": false,
+      "fee_adj_pnl": 4.84,
+      "fill_all_fee_adj_pnl": -42.91,
+      "beats_fill_all": true,
+      "card": "beats_fill_all",
+      "outcome": "library",
+      "lesson": "Fee-adj selected-fill pnl beats P-FILL-ALL-YES on this book. Lesson only. Lab still gates later naming / exam / seating. Do not ping Lab."
     }
   ]
 }
