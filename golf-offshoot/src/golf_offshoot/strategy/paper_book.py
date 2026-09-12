@@ -6,7 +6,7 @@ from dataclasses import dataclass
 from datetime import datetime
 from pathlib import Path
 
-from pydantic import BaseModel, Field
+from pydantic import BaseModel, ConfigDict, Field
 
 from golf_offshoot.config import (
     MIN_EDGE_TO_CONSIDER,
@@ -45,6 +45,8 @@ class EmptyFieldLockError(ValueError):
 
 class PaperMovement(BaseModel):
     """One paper lock, sell, add, or reallocate. Never a real-money fill."""
+
+    model_config = ConfigDict(extra="allow")
 
     movement_id: str
     at: datetime = Field(default_factory=now)

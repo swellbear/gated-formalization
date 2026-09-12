@@ -8,7 +8,9 @@ Trading is never armed. AI never deposit / withdraw / transfer.
 from __future__ import annotations
 
 import json
+import math
 from pathlib import Path
+from typing import Any
 
 from golf_offshoot.data_feeds.kalshi_15m import is_paper_autobet_candidate
 from golf_offshoot.learning_lane_15m.paths import (
@@ -31,8 +33,90 @@ PAPER_UNIT = 1.0
 PATH_ID = "learning_lane_15m"
 TRADING_ARMED = False
 
+# 15m-1 / PROPOSED 01 / bar draft. Stamped on new fills; not charged in settlement_pnl.
+FEE_K = 0.07
+FEE_ROUNDING = "ceil to the cent"
+FEE_FORMULA = "fee = ceil_cent(k * stake * (1 - posted_yes))"
+FEE_SCHEMA = "15m_fill_fee"
+_FEE_EXTRA_KEYS = (
+    "fee_schema",
+    "fee_usd",
+    "fee_cents",
+    "fee_k",
+    "fee_rounding",
+    "fee_formula",
+    "fee_in_settlement_pnl",
+)
+
 # Not a user deposit. Seed so the paper loop can run without a cash UI.
 _SEED_KIND = "observation_seed"
+
+
+def ceil_cent(amount: float) -> float:
+    """Round up to the cent. Same rounding as 15m-1 ``score.ceil_cent``."""
+    return math.ceil(round(float(amount) * 100.0, 9)) / 100.0
+
+
+def fee_for_fill(
+    posted_yes: float,
+    stake: float = 1.0,
+    *,
+    k: float = FEE_K,
+) -> float:
+    """Entry-side taker fee: ``ceil_cent(k * stake * (1 - posted_yes))``.
+
+    Matches 15m-1. Disk ``settlement_pnl`` stays the zero-fee book.
+    """
+    return ceil_cent(float(k) * float(stake) * (1.0 - float(posted_yes)))
+
+
+def fill_fee_metadata(
+    *,
+    posted_yes: float,
+    stake: float,
+    k: float = FEE_K,
+) -> dict[str, Any]:
+    """Per-fill fee for a new book. Not a hub / digest / ``records[]`` total."""
+    fee_usd = fee_for_fill(posted_yes, stake, k=k)
+    return {
+        "fee_schema": FEE_SCHEMA,
+        "fee_usd": fee_usd,
+        "fee_cents": int(round(fee_usd * 100.0)),
+        "fee_k": float(k),
+        "fee_rounding": FEE_ROUNDING,
+        "fee_formula": FEE_FORMULA,
+        "fee_in_settlement_pnl": False,
+        "posted_yes": float(posted_yes),
+        "stake": round(float(stake), 2),
+    }
+
+
+def fill_fee_from_movement(mv: PaperMovement) -> dict[str, Any] | None:
+    """Stamped per-fill fee. None on historical books. Does not re-derive from a note."""
+    cents = getattr(mv, "fee_cents", None)
+    if cents is not None:
+        usd = getattr(mv, "fee_usd", None)
+        return {
+            "fee_schema": getattr(mv, "fee_schema", FEE_SCHEMA),
+            "fee_usd": float(usd) if usd is not None else int(cents) / 100.0,
+            "fee_cents": int(cents),
+            "fee_k": getattr(mv, "fee_k", FEE_K),
+            "fee_rounding": getattr(mv, "fee_rounding", FEE_ROUNDING),
+            "fee_formula": getattr(mv, "fee_formula", FEE_FORMULA),
+            "fee_in_settlement_pnl": bool(getattr(mv, "fee_in_settlement_pnl", False)),
+        }
+    raw = (mv.amount_technical or "").strip()
+    if not raw:
+        return None
+    try:
+        payload = json.loads(raw)
+    except ValueError:
+        return None
+    if not isinstance(payload, dict) or "fee_cents" not in payload:
+        return None
+    if payload.get("fee_schema") not in {None, FEE_SCHEMA}:
+        return None
+    return payload
 
 
 def ledger_path() -> Path:
@@ -146,6 +230,7 @@ def _open_book(event_ticker: str, title: str, ledger: PaperLedger) -> PaperBookF
             "learning_lane_15m paper observation. No claimed edge.",
             "Trading NOT ARMED. PAPER OBSERVATION ONLY.",
             "fee_type=quadratic x1; price_level_structure=tapered_deci_cent; paper marks=public mid/last.",
+            "per-fill fee_cents on new fills; settlement_pnl stays the zero-fee book; not a hub/digest/records[] total.",
         ],
         book=PortfolioState(bankroll=ledger.bankroll, session_label=PATH_ID),
         path_id=PATH_ID,
@@ -221,6 +306,9 @@ def paper_autobet_open_markets(
     off (R-SKIP-COINFLIP execution=false), so every candidate still fills
     at the mark with entry_edge=0.0. Lived skip requires a throwaway or
     later flag flip; a skip writes no position.
+
+    New fills stamp per-fill fee cents (15m-1 ``k`` / ceil) on the movement.
+    ``settlement_pnl`` stays the zero-fee formula. Historical books are not rewritten.
     """
     if TRADING_ARMED:
         raise RuntimeError("trading NOT ARMED")
@@ -281,6 +369,8 @@ def paper_autobet_open_markets(
         rec.book = rec.book.model_copy(
             update={"positions": list(rec.book.positions) + [pos]}
         )
+        fee = fill_fee_metadata(posted_yes=yes_f, stake=stake)
+        fee_extras = {key: fee[key] for key in _FEE_EXTRA_KEYS}
         mv = PaperMovement(
             movement_id=new_id("move"),
             kind="new_bet",
@@ -304,9 +394,12 @@ def paper_autobet_open_markets(
             reason_technical=(
                 f"lane={LANE_15M} series={PRIMARY_SERIES} ticker={ticker} "
                 f"paper_mark={yes_f} fee_type=quadratic x1 "
-                f"price_level_structure=tapered_deci_cent paper_autobet observation"
+                f"price_level_structure=tapered_deci_cent paper_autobet observation "
+                f"fee_cents={fee['fee_cents']} fee_in_settlement_pnl=false"
             ),
             amount_plain=f"Paper stake ${stake:.2f} at mark {yes_f:.3f} (decimal {dec_f:.2f}).",
+            amount_technical=json.dumps(fee, separators=(",", ":")),
+            **fee_extras,
         )
         rec.movements = list(rec.movements) + [mv]
         rec.latest_advice = [mv]
@@ -322,7 +415,8 @@ def paper_autobet_open_markets(
                 player_name=ticker,
                 note=(
                     f"PAPER OBSERVATION fill position_id={pos.position_id} "
-                    f"ticker={ticker} window_id={book_id} mark={yes_f}. "
+                    f"ticker={ticker} window_id={book_id} mark={yes_f} "
+                    f"fee_cents={fee['fee_cents']} fee_in_settlement_pnl=false. "
                     "never_auto_bet. Not a deposit. Trading NOT ARMED."
                 ),
                 never_auto_bet=True,
@@ -336,6 +430,8 @@ def paper_autobet_open_markets(
                 "ticker": ticker,
                 "posted_yes": yes_f,
                 "suggested_stake": stake,
+                "fee_cents": fee["fee_cents"],
+                "fee_in_settlement_pnl": False,
                 "reason": mv.reason_plain,
             }
         )
