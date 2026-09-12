@@ -94,6 +94,7 @@ def _m15_journal_html() -> str:
   <p class="scope">Artifact root: {_esc(artifact_root_15m())}</p>
   <p>Public viewer (read-only):
   <a href="https://swellbear.github.io/gated-formalization/observability-hub/">observability-hub</a></p>
+  <p>Pages can lag this gym export. This 8765 book is the live book.</p>
   <pre>{_esc(body)}</pre>
   <h3>Shadow (15m only)</h3>
   {shadow_html}

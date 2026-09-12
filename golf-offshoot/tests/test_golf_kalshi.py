@@ -1462,6 +1462,12 @@ def test_hub_shows_mix_and_cap_shares(gk_root, tmp_path):
     assert "This week 100" in page
     assert "Closed tickets" in page
     assert "no closed tickets" in page
+    home = page[page.index("Open tickets") : page.index("Thinking")]
+    ops = page[page.index("<h3>Recipe</h3>") :]
+    assert "event dollars at 5% of bank" in ops
+    assert "ticket trim was one-time on v1" in ops
+    assert "mix_event_cap is that dollar gate" in ops
+    assert "event dollars at 5% of bank" not in home
 
 
 def test_hub_thin_quote_hides_noisy_dollar_edge(gk_root):

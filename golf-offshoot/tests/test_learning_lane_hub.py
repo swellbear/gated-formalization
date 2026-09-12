@@ -68,6 +68,8 @@ def test_hub_15m_no_golf_viz(tmp_path):
     assert "golf viz slot" not in page
     assert "Journal: golf" not in page
     assert "combined" in page.lower() or "No combined" in page
+    assert "Pages can lag this gym export" in page
+    assert "This 8765 book is the live book" in page
 
 
 def test_lane_header_copy():
@@ -170,9 +172,15 @@ def test_desktop_shell_html_has_lane_selector_and_hides_golf_viz_on_15m(tmp_path
     assert "Last thing that happened" in home_15
     assert "This book's money" in home_15
     assert "What it is / where it stands" in home_15
+    assert "Factory — fill-all baseline" in home_15
+    assert "Factory — live 70" not in home_15
     assert 'class="learning-card"' in lab_15
     assert "What is on trial (registry proof)" in lab_15
     assert 'id="trial-glance"' not in golf
+    ops_15 = page[page.index("desk-view-ops") : page.index("desk-view-farm")]
+    assert "Pages can lag this gym export" in ops_15
+    assert "This 8765 book is the live book" in ops_15
+    assert "Pages can lag this gym export" not in home_15
 
 
 def test_registry_and_miss_lane(tmp_path):

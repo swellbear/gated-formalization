@@ -364,6 +364,20 @@ def cockpit_html(b: dict[str, Any] | None = None) -> str:
     )
 
 
+def _recipe_cap_copy(rec: dict[str, Any]) -> str:
+    """Ops only. Live fill gate is event dollars, not ticket count. Does not size."""
+    try:
+        pct = f"{float(rec.get('event_cap_frac')) * 100:.0f}"
+    except (TypeError, ValueError):
+        pct = "—"
+    tickets = rec.get("max_tickets_per_event")
+    ticket_bit = str(int(tickets)) if tickets is not None else "—"
+    return (
+        f"New fills: event dollars at {pct}% of bank (one-name). "
+        f"{ticket_bit}-ticket trim was one-time on v1. mix_event_cap is that dollar gate."
+    )
+
+
 def ops_html(b: dict[str, Any] | None = None) -> str:
     b = b or collect_board()
     rec = b["recipe"]
@@ -377,6 +391,7 @@ def ops_html(b: dict[str, Any] | None = None) -> str:
         + _unmatched_html(n_unmatched)
         + "<h3>Recipe</h3>"
         f'<p class="gk-nums">{html.escape(str(rec.get("recipe")))} · {html.escape(str(rec.get("declared_at")))} · brain {html.escape(str(rec.get("player_brain")))}</p>'
+        f'<p class="help">{html.escape(_recipe_cap_copy(rec))}</p>'
         + "</section>"
     )
 
