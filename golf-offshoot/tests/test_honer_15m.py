@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import ast
+import os
 from pathlib import Path
 
 import pytest
@@ -381,7 +382,13 @@ def test_picker_has_no_pnl_parameters():
 
     from golf_offshoot.honer_15m import picker
 
-    for name in ("on_exam_close", "maybe_advance", "apply_search_starvation"):
+    for name in (
+        "on_exam_close",
+        "maybe_advance",
+        "apply_search_starvation",
+        "iter_exam_queue",
+        "next_freeze_brain",
+    ):
         params = inspect.signature(getattr(picker, name)).parameters
         for banned in ("d", "pnl", "ledger", "exam_pnl", "betting_pnl"):
             assert banned not in params
@@ -400,10 +407,10 @@ def test_catalog_skips_two_thirds():
     assert catalog_ids() == ["H-SKIP-RICH-YES", "H-SKIP-WIDE-SPREAD"]
 
 
-def test_clip_exhaust_advances_to_spread_and_keeps_seed(honer_tmp):
+def test_clip_exhaust_does_not_switch_family(honer_tmp):
     from golf_offshoot.honer_15m.library import append_exam_row
     from golf_offshoot.honer_15m.picker import maybe_advance
-    from golf_offshoot.honer_15m.policy import FAMILY_SPREAD, knob_vector
+    from golf_offshoot.honer_15m.policy import FAMILY_RICH, knob_vector
 
     append_exam_row(
         k=1,
@@ -417,13 +424,12 @@ def test_clip_exhaust_advances_to_spread_and_keeps_seed(honer_tmp):
     theta.save_theta(st)
     _seed_search_quotes(n=20, with_spread=20)
     out = maybe_advance()
-    assert out and out["advanced"] is True
-    assert out["active_family"] == FAMILY_SPREAD
+    assert out and out["advanced"] is False
+    assert out.get("parallel_families") is True
     live = theta.load_theta()
-    assert live["active_family"] == FAMILY_SPREAD
-    assert live["theta"] == pytest.approx(0.81)
-    assert live["delta"] == pytest.approx(0.04)
-    assert live["search_settled_since_freeze"] == 0
+    assert live["active_family"] == FAMILY_RICH
+    assert live["theta"] == pytest.approx(0.90)
+    assert freeze.load_trials()["trials_to_date"] == 0
 
 
 def test_ordinary_exam_close_does_not_reset_theta(honer_tmp):
@@ -442,7 +448,7 @@ def test_ordinary_exam_close_does_not_reset_theta(honer_tmp):
     assert theta.load_theta()["theta"] == pytest.approx(0.79)
 
 
-def test_spread_skip_does_not_change_mark_missing_quotes_use_theta():
+def test_missing_quotes_do_not_invent_spread():
     from golf_offshoot.honer_15m.decide import decide_ticket, posted_mark
     from golf_offshoot.honer_15m.policy import FAMILY_SPREAD
 
@@ -456,8 +462,8 @@ def test_spread_skip_does_not_change_mark_missing_quotes_use_theta():
     action2, reason2 = decide_ticket(
         0.60, 0.75, family=FAMILY_SPREAD, delta=0.04, spread=None
     )
-    assert action2 == "fill"
-    assert "theta" in reason2
+    assert action2 == "defer"
+    assert "invent" in reason2
 
 
 def test_hub_block_has_no_combined_pnl(honer_tmp):
@@ -609,8 +615,8 @@ def test_missing_quotes_spread_na_decide_richness_only(honer_tmp):
     action, reason = decide_ticket(
         0.70, 0.81, family=FAMILY_SPREAD, delta=0.04, spread=None
     )
-    assert action == "fill"
-    assert "theta" in reason
+    assert action == "defer"
+    assert "invent" in reason
 
 
 def test_clocks_and_spine_show_meter_without_restyle(honer_tmp):
@@ -701,7 +707,7 @@ def test_in_band_migrate_keeps_theta_resets_clocks(honer_tmp):
     assert got["freeze_rule"] == "in_band_v1"
 
 
-def test_thin_quotes_do_not_advance_spread_family(honer_tmp):
+def test_thin_quotes_do_not_invent_spread_or_switch_family(honer_tmp):
     from golf_offshoot.honer_15m.picker import maybe_advance
     from golf_offshoot.honer_15m.policy import FAMILY_RICH
 
@@ -710,8 +716,8 @@ def test_thin_quotes_do_not_advance_spread_family(honer_tmp):
     theta.save_theta(st)
     _seed_search_quotes(n=20, with_spread=10)
     out = maybe_advance()
-    assert out and out.get("waiting_on_quotes") is True
-    assert out.get("advanced") is False
+    assert out and out.get("advanced") is False
+    assert out.get("waiting_on_quotes") is not True
     assert theta.load_theta()["active_family"] == FAMILY_RICH
 
 
@@ -921,10 +927,13 @@ def test_honer_png_has_near_spread_wide_columns():
 
 def test_maybe_render_rebuilds_when_theta_changes(honer_tmp, monkeypatch):
     from golf_offshoot.honer_15m.illustrate import chart_png_path, maybe_render
+    from golf_offshoot.honer_15m.paths import theta_path
 
     png = chart_png_path()
     png.write_bytes(b"old-png")
     theta.save_theta(theta.load_theta())
+    later = png.stat().st_mtime + 5
+    os.utime(theta_path(), (later, later))
     called: list[int] = []
 
     def fake_render():
@@ -970,9 +979,8 @@ def test_catalog_starvation_activate_is_file_derived():
     items = [item for item in payload.get("items") or [] if isinstance(item, dict)]
     assert catalog_ids() == ["H-SKIP-RICH-YES", "H-SKIP-WIDE-SPREAD"]
     assert len(items) == 2
-    assert items[1]["activate"] == (
-        "clip_exhaustion+quote_quality_ok|search_starvation+quote_quality_ok"
-    )
+    assert items[1]["activate"] == "start"
+    assert items[0]["activate"] == "start"
     assert activate_allowed(items[1]["activate"])
     assert not activate_allowed("pnl_rank")
     assert not activate_allowed("clip_exhaustion|")
@@ -1078,9 +1086,9 @@ def test_n70_inband_19_starves_with_20_does_not(honer_tmp):
     assert theta.load_theta()["theta"] == pytest.approx(START_THETA)
 
 
-def test_second_family1_starvation_advances_when_quotes_ok(honer_tmp):
+def test_second_family1_starvation_does_not_switch_family(honer_tmp):
     from golf_offshoot.honer_15m.picker import apply_search_starvation
-    from golf_offshoot.honer_15m.policy import FAMILY_SPREAD
+    from golf_offshoot.honer_15m.policy import FAMILY_RICH
 
     st = theta.load_theta()
     st["theta"] = 0.81
@@ -1090,17 +1098,17 @@ def test_second_family1_starvation_advances_when_quotes_ok(honer_tmp):
     theta.save_theta(st)
     _seed_search_quotes(n=20, with_spread=20)
     out = apply_search_starvation()
-    assert out and out.get("advanced") is True
+    assert out and out.get("advanced") is False
     live = theta.load_theta()
-    assert live["active_family"] == FAMILY_SPREAD
+    assert live["active_family"] == FAMILY_RICH
+    assert live["theta"] == pytest.approx(START_THETA)
     assert live["advance_owed"] == ""
-    assert live["theta"] == pytest.approx(0.81)
-    assert live["search_settled_since_freeze"] == 0
+    assert freeze.load_trials()["trials_to_date"] == 0
 
 
-def test_second_starvation_quotes_wait_does_not_reset_or_spend_another_look(honer_tmp):
+def test_second_starvation_does_not_wait_on_quotes_to_start_family2(honer_tmp):
     from golf_offshoot.honer_15m.picker import apply_search_starvation, maybe_advance
-    from golf_offshoot.honer_15m.policy import ADVANCE_OWED_STARVATION, FAMILY_RICH, FAMILY_SPREAD
+    from golf_offshoot.honer_15m.policy import FAMILY_RICH
 
     st = theta.load_theta()
     st["theta"] = 0.81
@@ -1110,24 +1118,18 @@ def test_second_starvation_quotes_wait_does_not_reset_or_spend_another_look(hone
     theta.save_theta(st)
     _seed_search_quotes(n=20, with_spread=10)
     out = apply_search_starvation()
-    assert out and out.get("waiting_on_quotes") is True
+    assert out and out.get("reset") is True
+    assert out.get("waiting_on_quotes") is not True
     live = theta.load_theta()
     assert live["active_family"] == FAMILY_RICH
-    assert live["theta"] == pytest.approx(0.81)
-    assert live["advance_owed"] == ADVANCE_OWED_STARVATION
-    assert live["search_settled_since_freeze"] == 70
-    live["search_settled_since_freeze"] = 71
-    theta.save_theta(live)
-    assert apply_search_starvation() is None
-    assert theta.load_theta()["theta"] == pytest.approx(0.81)
-    _seed_search_quotes(n=20, with_spread=20)
+    assert live["theta"] == pytest.approx(START_THETA)
+    assert live["advance_owed"] == ""
     later = maybe_advance()
-    assert later and later["advanced"] is True
-    assert theta.load_theta()["active_family"] == FAMILY_SPREAD
-    assert theta.load_theta()["advance_owed"] == ""
+    assert later and later.get("advanced") is False
+    assert theta.load_theta()["active_family"] == FAMILY_RICH
 
 
-def test_family2_second_starvation_exhausts_catalog(honer_tmp):
+def test_family2_second_starvation_resets_without_incrementing_k(honer_tmp):
     from golf_offshoot.honer_15m.library import load_library
     from golf_offshoot.honer_15m.picker import apply_search_starvation
     from golf_offshoot.honer_15m.policy import FAMILY_SPREAD
@@ -1148,8 +1150,10 @@ def test_family2_second_starvation_exhausts_catalog(honer_tmp):
     live["in_band_settled"] = 0
     theta.save_theta(live)
     second = apply_search_starvation()
-    assert second and second.get("catalog_exhausted") is True
-    assert load_library()["catalog_exhausted"] is True
+    assert second and second.get("reset") is True
+    assert second.get("trials_unchanged") is True
+    assert freeze.load_trials()["trials_to_date"] == 0
+    assert load_library().get("catalog_exhausted") is not True
 
 
 def test_starvation_skips_while_exam_open_and_does_not_increment_k(honer_tmp):
@@ -1232,4 +1236,281 @@ def test_loop_search_settle_can_starve(honer_tmp):
     assert "apply_search_starvation" in src
     paper = (PKG.parent / "learning_lane_15m" / "paper.py").read_text(encoding="utf-8")
     assert "golf_offshoot.honer_15m" not in paper
+
+
+FACTORY_RULES = Path(__file__).resolve().parents[1] / "docs" / "LEARNING_LANE_15M_RULES.json"
+
+
+def _quoted_market(ticker: str, *, posted: float = 0.60, spread: float = 0.12, result: str = "") -> dict:
+    ask = posted
+    bid = round(posted - spread, 2) if spread else None
+    return {
+        "ticker": ticker,
+        "window_id": "w",
+        "paper_mark": posted,
+        "yes_ask": posted,
+        "yes_bid": bid,
+        "is_open": True,
+        "status": "active",
+        "close_time": "t",
+        "result": result,
+    }
+
+
+def test_clip_starts_cover_both_family_clips():
+    from golf_offshoot.honer_15m.brains import (
+        family1_start_thetas,
+        family2_start_deltas,
+        planned_brain_items,
+        spec_matches_clip,
+    )
+
+    f1 = family1_start_thetas()
+    f2 = family2_start_deltas()
+    assert f1[0] == pytest.approx(0.55)
+    assert f1[-1] == pytest.approx(0.90)
+    assert f2[0] == pytest.approx(0.02)
+    assert f2[-1] == pytest.approx(0.12)
+    assert len(f1) == 19
+    assert len(f2) == 11
+    items = planned_brain_items()
+    assert len(items) == 30
+    assert items[0]["id"] == "f1-start-055"
+    assert items[18]["id"] == "f1-start-090"
+    assert items[19]["id"] == "f2-start-002"
+    assert items[-1]["id"] == "f2-start-012"
+    assert spec_matches_clip()
+
+
+def test_dating_clip_does_not_increment_factory_or_honer_k(honer_tmp):
+    import json
+
+    from golf_offshoot.honer_15m.brains import date_unused_clip_slots, iter_brain_ids, planned_brain_items
+
+    factory_k = json.loads(FACTORY_RULES.read_text(encoding="utf-8"))["trials_to_date"]
+    honer_k = freeze.load_trials().get("trials_to_date") or 0
+    first = date_unused_clip_slots()
+    assert len(first["items"]) == len(planned_brain_items())
+    assert first["trials_unchanged"] is True
+    assert freeze.load_trials()["trials_to_date"] == honer_k
+    assert json.loads(FACTORY_RULES.read_text(encoding="utf-8"))["trials_to_date"] == factory_k
+    date_unused_clip_slots()
+    assert freeze.load_trials()["trials_to_date"] == honer_k
+    assert len(iter_brain_ids()) == 30
+    src = (PKG / "brains.py").read_text(encoding="utf-8")
+    assert "LEARNING_LANE_15M_RULES" not in src
+    assert "record_trial" not in src
+
+
+def test_run_tick_dates_unused_clip_slots(honer_tmp):
+    import json
+
+    factory_k = json.loads(FACTORY_RULES.read_text(encoding="utf-8"))["trials_to_date"]
+    out = loop.run_tick([])
+    from golf_offshoot.honer_15m.brains import iter_brain_ids, planned_brain_items
+
+    assert len(iter_brain_ids()) == len(planned_brain_items())
+    assert out["search_brains"] == 30
+    assert out["http_fetches"] == 0
+    assert freeze.load_trials()["trials_to_date"] == 0
+    assert json.loads(FACTORY_RULES.read_text(encoding="utf-8"))["trials_to_date"] == factory_k
+
+
+def test_two_brains_step_independently(honer_tmp):
+    from golf_offshoot.honer_15m.brains import brain_scope, date_unused_clip_slots
+
+    date_unused_clip_slots()
+    ticker = "KXBTC15M-IND"
+    open_m = {
+        "ticker": ticker,
+        "window_id": "w",
+        "paper_mark": 0.70,
+        "is_open": True,
+        "status": "active",
+        "close_time": "t",
+        "result": "",
+    }
+    loop.run_tick([open_m])
+    loop.run_tick(
+        [
+            {
+                **open_m,
+                "is_open": False,
+                "status": "determined",
+                "result": "no",
+            }
+        ]
+    )
+    with brain_scope("f1-start-065"):
+        assert theta.load_theta()["theta"] == pytest.approx(0.65)
+    with brain_scope("f1-start-075"):
+        assert theta.load_theta()["theta"] == pytest.approx(0.73)
+    with brain_scope("f1-start-085"):
+        assert theta.load_theta()["theta"] == pytest.approx(0.85)
+
+
+def test_file_order_first_ready_brain_takes_exam_chair(honer_tmp):
+    from golf_offshoot.honer_15m.brains import brain_scope, date_unused_clip_slots
+
+    date_unused_clip_slots()
+    with brain_scope("f1-start-065"):
+        st = theta.load_theta()
+        st["in_band_settled"] = 20
+        st["in_band_stable"] = 5
+        st["theta"] = 0.71
+        theta.save_theta(st)
+    exam = freeze.fire_freeze()
+    assert exam and exam["open"] is True
+    assert exam["brain_id"] == "f1-start-065"
+    assert exam["frozen_theta"] == pytest.approx(0.71)
+    assert freeze.load_trials()["trials_to_date"] == 1
+    with brain_scope("f1-start-075"):
+        assert theta.load_theta()["theta"] == pytest.approx(START_THETA)
+
+
+def test_open_exam_blocks_second_freeze_including_family2(honer_tmp):
+    from golf_offshoot.honer_15m.brains import brain_scope, date_unused_clip_slots
+    from golf_offshoot.honer_15m.invariants import run_invariants
+    from golf_offshoot.honer_15m.policy import FAMILY_SPREAD
+
+    date_unused_clip_slots()
+    with brain_scope("f1-start-065"):
+        st = theta.load_theta()
+        st["in_band_settled"] = 20
+        st["in_band_stable"] = 5
+        st["theta"] = 0.71
+        theta.save_theta(st)
+    assert freeze.fire_freeze()
+    with brain_scope("f2-start-004"):
+        st = theta.load_theta()
+        st["delta"] = 0.07
+        st["in_band_settled"] = 20
+        st["in_band_stable"] = 5
+        theta.save_theta(st)
+        assert theta.load_theta()["active_family"] == FAMILY_SPREAD
+    assert freeze.freeze_ready() is False
+    assert freeze.fire_freeze() is None
+    assert freeze.load_trials()["trials_to_date"] == 1
+    payload = run_invariants()
+    one = next(row for row in payload["checks"] if row["id"] == "one_exam_open_max")
+    assert one["state"] == "PASS"
+
+
+def test_frozen_exam_knobs_ignore_search_steps(honer_tmp):
+    from golf_offshoot.honer_15m.brains import brain_scope, date_unused_clip_slots
+
+    date_unused_clip_slots()
+    with brain_scope("f1-start-075"):
+        st = theta.load_theta()
+        st["in_band_settled"] = 20
+        st["in_band_stable"] = 5
+        st["theta"] = 0.81
+        theta.save_theta(st)
+    exam = freeze.fire_freeze()
+    assert exam["frozen_theta"] == pytest.approx(0.81)
+    with brain_scope("f1-start-065"):
+        theta.step_search_theta(action="fill", kalshi_result="no", posted_yes=0.68)
+    with brain_scope("f1-start-075"):
+        theta.step_search_theta(action="fill", kalshi_result="no", posted_yes=0.68)
+    assert freeze.load_exam_state()["frozen_theta"] == pytest.approx(0.81)
+
+
+def test_search_ledgers_not_summed_and_hub_has_no_combined(honer_tmp):
+    from golf_offshoot.honer_15m.brains import brain_scope, date_unused_clip_slots
+    from golf_offshoot.honer_15m.hub_block import sandbox_html
+    from golf_offshoot.honer_15m.paths import brains_manifest_path
+
+    date_unused_clip_slots()
+    loop.run_tick([_quoted_market("KXBTC15M-BOTH")])
+    with brain_scope("f1-start-075"):
+        a = books.load_ledger("search")["betting_pnl"]
+        n_a = books.load_ledger("search")["entries"]
+    with brain_scope("f2-start-004"):
+        b = books.load_ledger("search")["betting_pnl"]
+        n_b = books.load_ledger("search")["entries"]
+    exam_pnl = books.load_ledger("exam")["betting_pnl"]
+    assert n_a >= 1
+    assert n_b >= 1
+    assert a + b != exam_pnl or exam_pnl == 0
+    html = sandbox_html().lower()
+    assert "combined" not in html
+    assert "winner" not in html
+    text = brains_manifest_path().read_text(encoding="utf-8").lower()
+    assert "combined" not in text
+    assert "winner" not in text
+    from golf_offshoot.honer_15m import brains as brains_mod
+
+    assert not hasattr(brains_mod, "sum_search_ledgers")
+
+
+def test_both_families_search_on_one_sidecar_tick(honer_tmp):
+    from golf_offshoot.honer_15m.brains import brain_scope, date_unused_clip_slots
+    from golf_offshoot.honer_15m.policy import FAMILY_RICH, FAMILY_SPREAD
+
+    date_unused_clip_slots()
+    out = loop.run_tick([_quoted_market("KXBTC15M-PAR")])
+    assert out["http_fetches"] == 0
+    assert out["search_brains"] == 30
+    with brain_scope("f1-start-075"):
+        assert theta.load_theta()["active_family"] == FAMILY_RICH
+        assert books.load_ledger("search")["entries"] == 1
+        row = books.load_decisions("search")["KXBTC15M-PAR"]
+        assert row["action"] == "fill"
+    with brain_scope("f2-start-004"):
+        assert theta.load_theta()["active_family"] == FAMILY_SPREAD
+        assert books.load_ledger("search")["entries"] == 1
+        row = books.load_decisions("search")["KXBTC15M-PAR"]
+        assert row["action"] == "skip"
+    assert freeze.load_trials()["trials_to_date"] == 0
+
+
+def test_incomplete_quotes_skip_family2_tick(honer_tmp):
+    from golf_offshoot.honer_15m.brains import brain_scope, date_unused_clip_slots
+
+    date_unused_clip_slots()
+    market = {
+        "ticker": "KXBTC15M-NOQ",
+        "window_id": "w",
+        "paper_mark": 0.60,
+        "is_open": True,
+        "status": "active",
+        "close_time": "t",
+        "result": "",
+    }
+    loop.run_tick([market])
+    with brain_scope("f1-start-075"):
+        assert books.load_ledger("search")["entries"] == 1
+    with brain_scope("f2-start-004"):
+        assert books.load_ledger("search")["entries"] == 0
+
+
+def test_consult_armed_series_lane_hold(honer_tmp):
+    from golf_offshoot.data_feeds.kalshi_15m import (
+        ALLOWED_SERIES,
+        SeriesNotAllowedError,
+        TickerParseError,
+        parse_event,
+    )
+    from golf_offshoot.honer_15m.keep import load_bar
+    from golf_offshoot.operator_surface.lanes import parse_lane
+
+    assert loop.TRADING_ARMED is False
+    assert ALLOWED_SERIES == "KXBTC15M"
+    try:
+        parse_event(
+            {
+                "event_ticker": "KXETH15M-26SEP071400",
+                "series_ticker": "KXETH15M",
+                "ticker": "KXETH15M-26SEP071400",
+            }
+        )
+        raise AssertionError("ETH must be refused")
+    except (SeriesNotAllowedError, TickerParseError):
+        pass
+    assert parse_lane("honer_15m") == "golf"
+    assert load_bar().get("consult_enabled") is not True
+    loop.run_tick([])
+    assert LIVE_15M_NAME not in {p.name for p in honer_tmp.rglob("*")}
+    assert "kalshi_15m_exports" not in {p.name for p in honer_tmp.rglob("*")}
+
 

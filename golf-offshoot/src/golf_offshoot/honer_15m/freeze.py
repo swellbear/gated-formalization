@@ -54,8 +54,16 @@ def _novelty(st: dict[str, Any], pol: dict[str, Any]) -> bool:
 def freeze_ready(theta_state: dict[str, Any] | None = None) -> bool:
     if exam_is_open():
         return False
+    if theta_state is None:
+        from golf_offshoot.honer_15m.brains import brain_scope, iter_brain_ids
+
+        for brain_id in iter_brain_ids():
+            with brain_scope(brain_id):
+                if freeze_ready(load_theta()):
+                    return True
+        return False
     pol = load_policy()
-    st = theta_state or load_theta()
+    st = theta_state
     settled = int(st.get("in_band_settled") or 0)
     if settled < int(pol["freeze_min_search_settled"]):
         return False
@@ -100,34 +108,40 @@ def _increment_k(family: str) -> int:
 
 
 def fire_freeze() -> dict[str, Any] | None:
-    if not freeze_ready():
+    from golf_offshoot.honer_15m.brains import brain_scope
+    from golf_offshoot.honer_15m.picker import next_freeze_brain
+
+    brain_id = next_freeze_brain()
+    if brain_id is None:
         return None
-    st = load_theta()
-    family = str(st.get("active_family") or FAMILY_RICH)
-    frozen = float(st["theta"])
-    frozen_delta = float(st.get("delta") or load_policy()["start_delta"])
-    k = _increment_k(family)
-    exam = {
-        "open": True,
-        "parked": False,
-        "park_reason": "",
-        "frozen_theta": frozen,
-        "frozen_delta": frozen_delta,
-        "frozen_family": family,
-        "declared_at": now().isoformat(),
-        "n": 0,
-        "k_after": k,
-        "lane": "honer_15m",
-    }
-    save_exam_state(exam)
-    st["last_declared_theta"] = frozen
-    st["last_declared_delta"] = frozen_delta
-    st["search_settled_since_freeze"] = 0
-    st["in_band_settled"] = 0
-    st["in_band_stable"] = 0
-    st["far_settled_since_freeze"] = 0
-    st["stable_windows"] = 0
-    save_theta(st)
+    with brain_scope(brain_id):
+        st = load_theta()
+        family = str(st.get("active_family") or FAMILY_RICH)
+        frozen = float(st["theta"])
+        frozen_delta = float(st.get("delta") or load_policy()["start_delta"])
+        k = _increment_k(family)
+        exam = {
+            "open": True,
+            "parked": False,
+            "park_reason": "",
+            "frozen_theta": frozen,
+            "frozen_delta": frozen_delta,
+            "frozen_family": family,
+            "brain_id": brain_id,
+            "declared_at": now().isoformat(),
+            "n": 0,
+            "k_after": k,
+            "lane": "honer_15m",
+        }
+        save_exam_state(exam)
+        st["last_declared_theta"] = frozen
+        st["last_declared_delta"] = frozen_delta
+        st["search_settled_since_freeze"] = 0
+        st["in_band_settled"] = 0
+        st["in_band_stable"] = 0
+        st["far_settled_since_freeze"] = 0
+        st["stable_windows"] = 0
+        save_theta(st)
     log_path = freeze_log_path()
     assert_honer_path(log_path)
     log = []

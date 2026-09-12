@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+from contextvars import ContextVar, Token
 from pathlib import Path
 
 LANE = "honer_15m"
@@ -11,6 +12,7 @@ LIVE_15M_NAME = "learning_lane_15m"
 FORBIDDEN_EXPORT = Path("/workspace/kalshi_15m_exports")
 
 _ROOT_OVERRIDE: Path | None = None
+_SEARCH_BRAIN_ID: ContextVar[str | None] = ContextVar("honer_search_brain_id", default=None)
 
 
 def set_honer_root_override(path: Path | None) -> None:
@@ -40,18 +42,54 @@ def exam_dir() -> Path:
     return d
 
 
+def current_search_brain_id() -> str | None:
+    return _SEARCH_BRAIN_ID.get()
+
+
+def set_search_brain_id(brain_id: str | None) -> Token[str | None]:
+    return _SEARCH_BRAIN_ID.set(brain_id)
+
+
+def reset_search_brain_id(token: Token[str | None]) -> None:
+    _SEARCH_BRAIN_ID.reset(token)
+
+
+def canonical_brain_id() -> str:
+    from golf_offshoot.honer_15m.policy import load_policy
+
+    start = float(load_policy()["start_theta"])
+    return f"f1-start-{int(round(start * 100)):03d}"
+
+
+def is_canonical_brain(brain_id: str | None) -> bool:
+    if brain_id is None or str(brain_id).strip() == "":
+        return True
+    return str(brain_id) == canonical_brain_id()
+
+
+def search_book_root(brain_id: str | None = None) -> Path:
+    """Canonical family-1 hunt keeps search/ + latest/theta.json. Others: search/<id>/."""
+    bid = current_search_brain_id() if brain_id is None else brain_id
+    if is_canonical_brain(bid):
+        return search_dir()
+    d = search_dir() / str(bid)
+    d.mkdir(parents=True, exist_ok=True)
+    assert_honer_path(d)
+    return d
+
+
 def paper_dir(book: str) -> Path:
-    d = (search_dir() if book == "search" else exam_dir()) / "paper"
+    d = (search_book_root() if book == "search" else exam_dir()) / "paper"
     d.mkdir(parents=True, exist_ok=True)
     return d
 
 
 def ledger_path(book: str) -> Path:
-    return (search_dir() if book == "search" else exam_dir()) / "ledger.json"
+    return (search_book_root() if book == "search" else exam_dir()) / "ledger.json"
 
 
 def decisions_path(book: str) -> Path:
-    return (search_dir() if book == "search" else exam_dir()) / "decisions.json"
+    return (search_book_root() if book == "search" else exam_dir()) / "decisions.json"
 
 
 def settlements_dir() -> Path:
@@ -73,7 +111,20 @@ def cache_dir() -> Path:
 
 
 def theta_path() -> Path:
-    return latest_dir() / "theta.json"
+    bid = current_search_brain_id()
+    if is_canonical_brain(bid):
+        return latest_dir() / "theta.json"
+    path = search_book_root(bid) / "theta.json"
+    assert_honer_path(path)
+    return path
+
+
+def brains_manifest_path() -> Path:
+    return search_dir() / "brains.json"
+
+
+def search_brains_spec_path() -> Path:
+    return Path(__file__).resolve().parents[3] / "docs" / "HONER_15M_SEARCH_BRAINS.json"
 
 
 def exam_state_path() -> Path:
@@ -124,6 +175,11 @@ def invariants_path() -> Path:
 def exam_score_path() -> Path:
     """Machine exam score/park artifact. Not a keep. Never a 15m path."""
     return latest_dir() / "exam_score.json"
+
+
+def factory_rules_path() -> Path:
+    """Factory selecting registry. Honer dating must not write this."""
+    return Path(__file__).resolve().parents[3] / "docs" / "LEARNING_LANE_15M_RULES.json"
 
 
 def safe_artifact_stem(name: str, *, fallback: str = "event") -> str:

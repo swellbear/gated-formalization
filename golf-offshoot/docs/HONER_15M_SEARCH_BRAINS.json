@@ -1,0 +1,279 @@
+{
+  "schema": 1,
+  "lane": "honer_15m",
+  "series": "KXBTC15M",
+  "declared_at": "2026-09-12T12:00:00-04:00",
+  "note": "Dated clip menu. File order is the exam queue (family 1 then family 2, then clip). Not sorted by tape or pnl. Dating unused slots is not a trial. One exam chair. HOLD stands. Not a third family.",
+  "items": [
+    {
+      "id": "f1-start-055",
+      "family": "H-SKIP-RICH-YES",
+      "knob": "theta",
+      "start_theta": 0.55,
+      "start_delta": 0.04,
+      "catalog_advance": false,
+      "declared_at": "2026-09-12T12:00:00-04:00"
+    },
+    {
+      "id": "f1-start-057",
+      "family": "H-SKIP-RICH-YES",
+      "knob": "theta",
+      "start_theta": 0.57,
+      "start_delta": 0.04,
+      "catalog_advance": false,
+      "declared_at": "2026-09-12T12:00:00-04:00"
+    },
+    {
+      "id": "f1-start-059",
+      "family": "H-SKIP-RICH-YES",
+      "knob": "theta",
+      "start_theta": 0.59,
+      "start_delta": 0.04,
+      "catalog_advance": false,
+      "declared_at": "2026-09-12T12:00:00-04:00"
+    },
+    {
+      "id": "f1-start-061",
+      "family": "H-SKIP-RICH-YES",
+      "knob": "theta",
+      "start_theta": 0.61,
+      "start_delta": 0.04,
+      "catalog_advance": false,
+      "declared_at": "2026-09-12T12:00:00-04:00"
+    },
+    {
+      "id": "f1-start-063",
+      "family": "H-SKIP-RICH-YES",
+      "knob": "theta",
+      "start_theta": 0.63,
+      "start_delta": 0.04,
+      "catalog_advance": false,
+      "declared_at": "2026-09-12T12:00:00-04:00"
+    },
+    {
+      "id": "f1-start-065",
+      "family": "H-SKIP-RICH-YES",
+      "knob": "theta",
+      "start_theta": 0.65,
+      "start_delta": 0.04,
+      "catalog_advance": false,
+      "declared_at": "2026-09-12T12:00:00-04:00"
+    },
+    {
+      "id": "f1-start-067",
+      "family": "H-SKIP-RICH-YES",
+      "knob": "theta",
+      "start_theta": 0.67,
+      "start_delta": 0.04,
+      "catalog_advance": false,
+      "declared_at": "2026-09-12T12:00:00-04:00"
+    },
+    {
+      "id": "f1-start-069",
+      "family": "H-SKIP-RICH-YES",
+      "knob": "theta",
+      "start_theta": 0.69,
+      "start_delta": 0.04,
+      "catalog_advance": false,
+      "declared_at": "2026-09-12T12:00:00-04:00"
+    },
+    {
+      "id": "f1-start-071",
+      "family": "H-SKIP-RICH-YES",
+      "knob": "theta",
+      "start_theta": 0.71,
+      "start_delta": 0.04,
+      "catalog_advance": false,
+      "declared_at": "2026-09-12T12:00:00-04:00"
+    },
+    {
+      "id": "f1-start-073",
+      "family": "H-SKIP-RICH-YES",
+      "knob": "theta",
+      "start_theta": 0.73,
+      "start_delta": 0.04,
+      "catalog_advance": false,
+      "declared_at": "2026-09-12T12:00:00-04:00"
+    },
+    {
+      "id": "f1-start-075",
+      "family": "H-SKIP-RICH-YES",
+      "knob": "theta",
+      "start_theta": 0.75,
+      "start_delta": 0.04,
+      "catalog_advance": false,
+      "declared_at": "2026-09-12T12:00:00-04:00"
+    },
+    {
+      "id": "f1-start-077",
+      "family": "H-SKIP-RICH-YES",
+      "knob": "theta",
+      "start_theta": 0.77,
+      "start_delta": 0.04,
+      "catalog_advance": false,
+      "declared_at": "2026-09-12T12:00:00-04:00"
+    },
+    {
+      "id": "f1-start-079",
+      "family": "H-SKIP-RICH-YES",
+      "knob": "theta",
+      "start_theta": 0.79,
+      "start_delta": 0.04,
+      "catalog_advance": false,
+      "declared_at": "2026-09-12T12:00:00-04:00"
+    },
+    {
+      "id": "f1-start-081",
+      "family": "H-SKIP-RICH-YES",
+      "knob": "theta",
+      "start_theta": 0.81,
+      "start_delta": 0.04,
+      "catalog_advance": false,
+      "declared_at": "2026-09-12T12:00:00-04:00"
+    },
+    {
+      "id": "f1-start-083",
+      "family": "H-SKIP-RICH-YES",
+      "knob": "theta",
+      "start_theta": 0.83,
+      "start_delta": 0.04,
+      "catalog_advance": false,
+      "declared_at": "2026-09-12T12:00:00-04:00"
+    },
+    {
+      "id": "f1-start-085",
+      "family": "H-SKIP-RICH-YES",
+      "knob": "theta",
+      "start_theta": 0.85,
+      "start_delta": 0.04,
+      "catalog_advance": false,
+      "declared_at": "2026-09-12T12:00:00-04:00"
+    },
+    {
+      "id": "f1-start-087",
+      "family": "H-SKIP-RICH-YES",
+      "knob": "theta",
+      "start_theta": 0.87,
+      "start_delta": 0.04,
+      "catalog_advance": false,
+      "declared_at": "2026-09-12T12:00:00-04:00"
+    },
+    {
+      "id": "f1-start-089",
+      "family": "H-SKIP-RICH-YES",
+      "knob": "theta",
+      "start_theta": 0.89,
+      "start_delta": 0.04,
+      "catalog_advance": false,
+      "declared_at": "2026-09-12T12:00:00-04:00"
+    },
+    {
+      "id": "f1-start-090",
+      "family": "H-SKIP-RICH-YES",
+      "knob": "theta",
+      "start_theta": 0.9,
+      "start_delta": 0.04,
+      "catalog_advance": false,
+      "declared_at": "2026-09-12T12:00:00-04:00"
+    },
+    {
+      "id": "f2-start-002",
+      "family": "H-SKIP-WIDE-SPREAD",
+      "knob": "delta",
+      "start_theta": 0.75,
+      "start_delta": 0.02,
+      "catalog_advance": false,
+      "declared_at": "2026-09-12T12:00:00-04:00"
+    },
+    {
+      "id": "f2-start-003",
+      "family": "H-SKIP-WIDE-SPREAD",
+      "knob": "delta",
+      "start_theta": 0.75,
+      "start_delta": 0.03,
+      "catalog_advance": false,
+      "declared_at": "2026-09-12T12:00:00-04:00"
+    },
+    {
+      "id": "f2-start-004",
+      "family": "H-SKIP-WIDE-SPREAD",
+      "knob": "delta",
+      "start_theta": 0.75,
+      "start_delta": 0.04,
+      "catalog_advance": false,
+      "declared_at": "2026-09-12T12:00:00-04:00"
+    },
+    {
+      "id": "f2-start-005",
+      "family": "H-SKIP-WIDE-SPREAD",
+      "knob": "delta",
+      "start_theta": 0.75,
+      "start_delta": 0.05,
+      "catalog_advance": false,
+      "declared_at": "2026-09-12T12:00:00-04:00"
+    },
+    {
+      "id": "f2-start-006",
+      "family": "H-SKIP-WIDE-SPREAD",
+      "knob": "delta",
+      "start_theta": 0.75,
+      "start_delta": 0.06,
+      "catalog_advance": false,
+      "declared_at": "2026-09-12T12:00:00-04:00"
+    },
+    {
+      "id": "f2-start-007",
+      "family": "H-SKIP-WIDE-SPREAD",
+      "knob": "delta",
+      "start_theta": 0.75,
+      "start_delta": 0.07,
+      "catalog_advance": false,
+      "declared_at": "2026-09-12T12:00:00-04:00"
+    },
+    {
+      "id": "f2-start-008",
+      "family": "H-SKIP-WIDE-SPREAD",
+      "knob": "delta",
+      "start_theta": 0.75,
+      "start_delta": 0.08,
+      "catalog_advance": false,
+      "declared_at": "2026-09-12T12:00:00-04:00"
+    },
+    {
+      "id": "f2-start-009",
+      "family": "H-SKIP-WIDE-SPREAD",
+      "knob": "delta",
+      "start_theta": 0.75,
+      "start_delta": 0.09,
+      "catalog_advance": false,
+      "declared_at": "2026-09-12T12:00:00-04:00"
+    },
+    {
+      "id": "f2-start-010",
+      "family": "H-SKIP-WIDE-SPREAD",
+      "knob": "delta",
+      "start_theta": 0.75,
+      "start_delta": 0.1,
+      "catalog_advance": false,
+      "declared_at": "2026-09-12T12:00:00-04:00"
+    },
+    {
+      "id": "f2-start-011",
+      "family": "H-SKIP-WIDE-SPREAD",
+      "knob": "delta",
+      "start_theta": 0.75,
+      "start_delta": 0.11,
+      "catalog_advance": false,
+      "declared_at": "2026-09-12T12:00:00-04:00"
+    },
+    {
+      "id": "f2-start-012",
+      "family": "H-SKIP-WIDE-SPREAD",
+      "knob": "delta",
+      "start_theta": 0.75,
+      "start_delta": 0.12,
+      "catalog_advance": false,
+      "declared_at": "2026-09-12T12:00:00-04:00"
+    }
+  ]
+}

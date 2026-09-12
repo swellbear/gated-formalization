@@ -19,15 +19,26 @@ from golf_offshoot.honer_15m.policy import (
 from golf_offshoot.localtime import now
 
 
-def default_state(policy: dict[str, Any] | None = None) -> dict[str, Any]:
+def default_state(
+    policy: dict[str, Any] | None = None,
+    *,
+    start_theta: float | None = None,
+    start_delta: float | None = None,
+    active_family: str | None = None,
+    brain_id: str | None = None,
+    catalog_advance: bool = False,
+) -> dict[str, Any]:
     pol = policy or load_policy()
-    start = float(pol["start_theta"])
-    start_delta = float(pol["start_delta"])
+    start = float(start_theta if start_theta is not None else pol["start_theta"])
+    delta0 = float(start_delta if start_delta is not None else pol["start_delta"])
+    family = str(active_family or FAMILY_RICH)
     return {
         "theta": start,
         "last_declared_theta": start,
-        "delta": start_delta,
-        "last_declared_delta": start_delta,
+        "start_theta": start,
+        "delta": delta0,
+        "last_declared_delta": delta0,
+        "start_delta": delta0,
         "search_settled_since_freeze": 0,
         "in_band_settled": 0,
         "in_band_stable": 0,
@@ -39,7 +50,9 @@ def default_state(policy: dict[str, Any] | None = None) -> dict[str, Any]:
         "starvation_pending": False,
         "step_rule": STEP_RULE,
         "freeze_rule": FREEZE_RULE,
-        "active_family": FAMILY_RICH,
+        "active_family": family,
+        "brain_id": brain_id or "",
+        "catalog_advance": bool(catalog_advance),
         "updated_at": now().isoformat(),
     }
 
@@ -124,6 +137,10 @@ def load_theta() -> dict[str, Any]:
     payload.setdefault("step_rule", STEP_RULE)
     payload.setdefault("freeze_rule", FREEZE_RULE)
     payload.setdefault("active_family", FAMILY_RICH)
+    payload.setdefault("start_theta", float(payload.get("theta") or pol["start_theta"]))
+    payload.setdefault("start_delta", float(payload.get("delta") or pol["start_delta"]))
+    payload.setdefault("catalog_advance", False)
+    payload.setdefault("brain_id", "")
     return payload
 
 

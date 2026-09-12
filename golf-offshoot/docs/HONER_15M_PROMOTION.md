@@ -21,7 +21,7 @@ The factory selecting chair is empty after `R-SKIP-HOUR-CLOSE` L1 PARK (2026-09-
 
 ## Order
 
-1. **Search** — in-band freeze (`in_band_v1`). Far tickets audit, they do not count. Family 2 waits on clip exhaustion **or** second search-starvation, plus quote quality. Search starvation is a honer search give-up (`search_untestable`); it does not increment exam k and does not enable consult. No third family until Lab dates a PROPOSED after a dead exam or catalog exhaust.
+1. **Search** — in-band freeze (`in_band_v1`). Far tickets audit, they do not count. Family 1 and family 2 hunt **in parallel** (dated clip starts, one sidecar, quote bus only). File order is the exam queue. Dating unused slots is not a trial. Search starvation is a honer search give-up (`search_untestable`); it does not increment exam k and does not enable consult. No third family until Lab dates a PROPOSED after a dead exam or catalog exhaust. Incomplete quotes skip a spread hunt this tick; do not invent spread.
 2. **Exam snapshot** — freeze writes honer exam knobs with `declared_at`. Search stops mutating that exam. Freeze bytes **are** the name. Clerical copies them into `honer_consult.json` with `consult_enabled` false. Lab does not retype θ.
 3. **Dated honer fee-apply** — cites the factory `founder_browser_bytes` / `schedule_sha256` pin. Score-time `fee_adjust`. Search/exam ledgers stay gross. Keep-lock stays closed while the honer bar is unbound.
 4. **Machine score** — n=70 or futility 20/40 writes `honer_15m/latest/exam_score.json`. Dead → library park / `completed_dead`. Survive → `completed_unscored`. Not a keep. Do not score `R-SKIP-COINFLIP`. Do not re-score PARK'd favorite.

@@ -132,7 +132,8 @@ def board_html(*, extra_html: str = "") -> str:
         "<h3>The two books</h3>"
         f"<p>{html.escape(standing.two_books)}</p>"
         f"<p class=\"help\">{html.escape(standing.glossary)}</p>"
-        f'<p class="help">Cutoff trail (search): {html.escape(standing.theta_trail)}</p>'
+        f"<p class=\"help\">Cutoff trail (search): {html.escape(standing.theta_trail)}</p>"
+        f"<p class=\"help\">{html.escape(standing.hunts_line)}</p>"
         f"{keep}"
         "</div>"
         "<h3>What just happened</h3>"

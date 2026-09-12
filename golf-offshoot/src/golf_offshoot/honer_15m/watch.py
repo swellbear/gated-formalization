@@ -187,8 +187,8 @@ class HonerWatch:
                 self.cycles += 1
                 self.last_error = ""
                 self.last_summary = (
-                    f"theta={out.get('search_theta')} froze={out.get('froze')} "
-                    f"markets={out.get('markets')}"
+                    f"theta={out.get('search_theta')} brains={out.get('search_brains')} "
+                    f"froze={out.get('froze')} markets={out.get('markets')}"
                 )
                 self._persist(running=True)
             except Exception as exc:  # noqa: BLE001 — never kill 8765

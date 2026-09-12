@@ -8,18 +8,14 @@ from golf_offshoot.honer_15m.catalog import next_family
 from golf_offshoot.honer_15m.library import (
     append_exam_row,
     append_search_untestable,
-    last_unscored_seed_theta,
     load_library,
-    save_library,
 )
 from golf_offshoot.honer_15m.policy import (
-    ADVANCE_OWED_STARVATION,
     FAMILY_RICH,
     FAMILY_SPREAD,
     load_policy,
     starvation_untestable,
 )
-from golf_offshoot.honer_15m.quality import quote_quality_ok
 from golf_offshoot.honer_15m.theta import _reset_freeze_clocks, current_vector, load_theta, save_theta
 
 
@@ -28,59 +24,52 @@ def on_exam_close(*, outcome: str, family: str, knobs: dict[str, Any], k: int) -
     return append_exam_row(k=k, family=family, knobs=knobs, outcome=outcome)
 
 
+def iter_exam_queue() -> list[str]:
+    """File-order brain ids. Catalog family then clip. Not pnl."""
+    from golf_offshoot.honer_15m.brains import iter_brain_ids
+
+    return list(iter_brain_ids())
+
+
+def next_freeze_brain() -> str | None:
+    """First freeze-ready hunt in file order. One exam chair. No pnl."""
+    from golf_offshoot.honer_15m.brains import brain_scope
+    from golf_offshoot.honer_15m.freeze import exam_is_open, freeze_ready
+
+    if exam_is_open():
+        return None
+    for brain_id in iter_exam_queue():
+        with brain_scope(brain_id):
+            if freeze_ready(load_theta()):
+                return brain_id
+    return None
+
+
 def maybe_advance() -> dict[str, Any] | None:
-    """Advance on clip exhaustion or an owed search-starvation gate. Does not read ledgers or exam d."""
-    pol = load_policy()
-    need = int(pol["clip_exhaust_windows"])
-    st = load_theta()
+    """Families hunt in parallel. Sequential family-2 start is retired.
+
+    Clip/starvation does not switch a family-1 hunt onto family 2.
+    A third family is still not this build. Does not read ledgers or exam d.
+    """
     lib = load_library()
     if lib.get("catalog_exhausted"):
         return None
-    clip_ready = int(st.get("clip_streak") or 0) >= need
-    owed = str(st.get("advance_owed") or "") == ADVANCE_OWED_STARVATION
-    if not clip_ready and not owed:
-        return None
-    active = str(st.get("active_family") or lib.get("active_family") or FAMILY_RICH)
-    nxt = next_family(active)
+    nxt = next_family(FAMILY_SPREAD)
     if nxt is None:
-        lib["catalog_exhausted"] = True
-        lib["active_family"] = active
-        save_library(lib)
-        st["advance_owed"] = ""
-        st["starvation_pending"] = False
-        save_theta(st)
-        return {"advanced": False, "catalog_exhausted": True, "active_family": active}
-    if nxt == FAMILY_SPREAD and not quote_quality_ok():
-        if owed:
-            st["advance_owed"] = ADVANCE_OWED_STARVATION
-            save_theta(st)
         return {
             "advanced": False,
-            "waiting_on_quotes": True,
+            "parallel_families": True,
             "catalog_exhausted": False,
-            "active_family": active,
+            "third_family": False,
         }
-    seed = last_unscored_seed_theta(lib)
-    if seed is None:
-        seed = float(st.get("theta") or pol["start_theta"])
-    st["theta"] = float(seed)
-    st["active_family"] = nxt
-    _reset_freeze_clocks(st)
-    st["advance_owed"] = ""
-    st["starvation_pending"] = False
-    if nxt == FAMILY_SPREAD:
-        start_delta = float(pol["start_delta"])
-        st["delta"] = start_delta
-        st["last_declared_delta"] = start_delta
-    lib["active_family"] = nxt
-    lib["seed_theta"] = float(seed)
-    save_theta(st)
-    save_library(lib)
-    return {"advanced": True, "catalog_exhausted": False, "active_family": nxt, "seed_theta": float(seed)}
+    return {"advanced": False, "parallel_families": True, "catalog_exhausted": False}
 
 
 def apply_search_starvation() -> dict[str, Any] | None:
-    """Honer search-reachability look. Not an exam. Does not increment k. No pnl."""
+    """Honer search-reachability look. Not an exam. Does not increment k. No pnl.
+
+    Does not start family 2 (already hunting in parallel).
+    """
     from golf_offshoot.honer_15m.freeze import exam_is_open, load_trials
 
     pol = load_policy()
@@ -109,37 +98,25 @@ def apply_search_starvation() -> dict[str, Any] | None:
     st["family_starvations"] = counts
     st["starvation_pending"] = False
     k_before = int(load_trials().get("trials_to_date") or 0)
-    if counts[family] == 1:
-        if family == FAMILY_SPREAD:
-            start = float(pol["start_delta"])
-            st["delta"] = start
-            st["last_declared_delta"] = start
-        else:
-            start = float(pol["start_theta"])
-            st["theta"] = start
-            st["last_declared_theta"] = start
-        _reset_freeze_clocks(st)
-        save_theta(st)
-        k_after = int(load_trials().get("trials_to_date") or 0)
-        return {
-            "starved": True,
-            "reset": True,
-            "advanced": False,
-            "family": family,
-            "starvations": counts[family],
-            "trials_to_date": k_after,
-            "trials_unchanged": k_after == k_before,
-        }
-    st["advance_owed"] = ADVANCE_OWED_STARVATION
+    start_theta = float(st.get("start_theta") or pol["start_theta"])
+    start_delta = float(st.get("start_delta") or pol["start_delta"])
+    if family == FAMILY_SPREAD:
+        st["delta"] = start_delta
+        st["last_declared_delta"] = start_delta
+    else:
+        st["theta"] = start_theta
+        st["last_declared_theta"] = start_theta
+    _reset_freeze_clocks(st)
+    st["advance_owed"] = ""
     save_theta(st)
-    out = maybe_advance() or {}
     k_after = int(load_trials().get("trials_to_date") or 0)
     return {
         "starved": True,
-        "reset": False,
+        "reset": True,
+        "advanced": False,
+        "parallel_families": True,
         "family": family,
         "starvations": counts[family],
         "trials_to_date": k_after,
         "trials_unchanged": k_after == k_before,
-        **out,
     }

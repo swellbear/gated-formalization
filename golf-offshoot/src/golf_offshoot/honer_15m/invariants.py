@@ -72,13 +72,14 @@ def _check_no_live_15m_writes() -> dict[str, Any]:
 def _check_picker_signatures() -> dict[str, Any]:
     banned = {"pnl", "d", "ledger"}
     found: list[str] = []
-    src = (PKG / "picker.py").read_text(encoding="utf-8")
-    tree = ast.parse(src)
-    for node in ast.walk(tree):
-        if isinstance(node, ast.FunctionDef):
-            for arg in node.args.args + node.args.kwonlyargs:
-                if arg.arg in banned:
-                    found.append(f"{node.name}.{arg.arg}")
+    for name in ("picker.py", "brains.py"):
+        src = (PKG / name).read_text(encoding="utf-8")
+        tree = ast.parse(src)
+        for node in ast.walk(tree):
+            if isinstance(node, ast.FunctionDef):
+                for arg in node.args.args + node.args.kwonlyargs:
+                    if arg.arg in banned:
+                        found.append(f"{name}:{node.name}.{arg.arg}")
     ok = not found
     return _check(
         "picker_no_money_params",

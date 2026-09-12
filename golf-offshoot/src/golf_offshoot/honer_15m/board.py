@@ -96,6 +96,7 @@ class HonerStanding:
     current_exam: HonerRow | None = None
     library_line: str = ""
     freeze_meter: str = ""
+    hunts_line: str = ""
 
 
 def cents(value: float | None) -> str:
@@ -205,37 +206,14 @@ def library_english(
     else:
         exam_bit = "No exam yet."
     retired_n = len(list(payload.get("retired") or []))
-    owed = False
-    try:
-        from golf_offshoot.honer_15m.policy import ADVANCE_OWED_STARVATION
-
-        owed = str(load_theta().get("advance_owed") or "") == ADVANCE_OWED_STARVATION
-    except Exception:
-        owed = False
-    waiting = quote_ok is False
-    if quote_ok is None:
-        try:
-            from golf_offshoot.honer_15m.quality import quote_quality_ok
-
-            waiting = not quote_quality_ok()
-        except Exception:
-            waiting = False
-    next_bit = "θ still walking"
+    del clip_streak, clip_need, quote_ok
+    next_bit = "families hunt in parallel; one exam chair"
     if payload.get("catalog_exhausted"):
         next_bit = "catalog exhausted — no new family"
     elif family == FAMILY_SPREAD:
-        next_bit = "spread family walking; no further family after clip"
-    elif owed and waiting:
-        next_bit = "spread family waiting on quotes"
-    elif owed:
-        next_bit = "next family is skip-wide-spread"
+        next_bit = "skip-wide-spread walking in parallel; no third family"
     elif last == "search_untestable":
-        next_bit = "next untestable on this family is skip-wide-spread"
-    elif int(clip_streak) >= int(clip_need):
-        if waiting:
-            next_bit = "θ on clip; spread family waiting on quotes"
-        else:
-            next_bit = "next family is skip-wide-spread"
+        next_bit = "that cutoff is retired; skip-wide-spread already hunts in parallel"
     return (
         f"{exam_bit} {retired_n} retired snapshot(s). Next: {next_bit}. "
         f"Not a keep; {_fee_lock_phrase()}."
@@ -631,7 +609,7 @@ def collect_standing() -> HonerStanding:
     family_bit = (
         "Family is skip-a-wide-bid/ask (θ locked as a seed)."
         if family == FAMILY_SPREAD
-        else "Family is skip-rich-YES."
+        else "Family is skip-rich-YES. Skip-wide-spread hunts in parallel, not after clip/starve."
     )
     what = (
         "Honer is the discovery organ for this 15m gym — not Lineage A. Factory consult is off. "
@@ -663,6 +641,23 @@ def collect_standing() -> HonerStanding:
         f"{int(search_led.get('fills') or 0)} fill, {int(search_led.get('skips') or 0)} skips. "
         f"{exam_line} {DO_NOT_ADD}"
     )
+    try:
+        from golf_offshoot.honer_15m.brains import iter_brain_ids, planned_brain_items
+
+        n_live = len(iter_brain_ids())
+        n_plan = len(planned_brain_items())
+    except Exception:
+        n_live, n_plan = 1, 0
+    if n_live >= n_plan and n_plan:
+        hunts_line = (
+            f"{n_live} clip hunts (family 1 then family 2, file-order exam queue, not pnl). "
+            "One exam chair. Search books are not added together."
+        )
+    else:
+        hunts_line = (
+            f"Clip hunts date on the honer tick ({n_plan} slots, both families in parallel). "
+            "One exam chair. Dating is not a trial. Books are not added together."
+        )
     glossary = (
         "Fill = paper YES ticket at the posted price. Skip = no ticket this window. "
         "Cutoff θ = richness line, in cents. Only tickets within 10¢ of the line move it. "
@@ -719,6 +714,7 @@ def collect_standing() -> HonerStanding:
         current_exam=current_exam,
         library_line=library_line,
         freeze_meter=meter,
+        hunts_line=hunts_line,
     )
 
 
