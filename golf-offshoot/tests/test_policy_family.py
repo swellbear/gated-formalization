@@ -282,8 +282,14 @@ def test_run_search_on_fixture_books_does_not_write_rules(tmp_path):
 def _seed_family_docs(tmp_path, *, lessons_rows=None, rule_ids=None):
     docs = tmp_path / "golf-offshoot" / "docs"
     docs.mkdir(parents=True)
-    src = Path(__file__).resolve().parents[1] / "docs" / "POLICY_FAMILY.json"
-    (docs / "POLICY_FAMILY.json").write_text(src.read_text(encoding="utf-8"), encoding="utf-8")
+    src_docs = Path(__file__).resolve().parents[1] / "docs"
+    (docs / "POLICY_FAMILY.json").write_text(
+        (src_docs / "POLICY_FAMILY.json").read_text(encoding="utf-8"), encoding="utf-8"
+    )
+    burned = src_docs / "LEARNING_LANE_15M_BURNED_CLASSES.json"
+    (docs / "LEARNING_LANE_15M_BURNED_CLASSES.json").write_text(
+        burned.read_text(encoding="utf-8"), encoding="utf-8"
+    )
     if lessons_rows is not None:
         (docs / "P_FAMILY_LESSONS.json").write_text(
             json.dumps({"rows": lessons_rows}), encoding="utf-8"
