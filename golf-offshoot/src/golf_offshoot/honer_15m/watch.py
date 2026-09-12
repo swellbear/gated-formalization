@@ -67,7 +67,11 @@ def _write_status(payload: dict[str, Any]) -> None:
 
 def _honer_watch_files() -> list[Path]:
     files = sorted(p for p in PKG.glob("*.py") if p.is_file())
-    for name in ("HONER_15M_RULES.json", "HONER_15M_CATALOG.json"):
+    for name in (
+        "HONER_15M_RULES.json",
+        "HONER_15M_CATALOG.json",
+        "HONER_15M_SEARCH_BRAINS.json",
+    ):
         path = DOCS / name
         if path.is_file():
             files.append(path)
@@ -187,8 +191,8 @@ class HonerWatch:
                 self.cycles += 1
                 self.last_error = ""
                 self.last_summary = (
-                    f"theta={out.get('search_theta')} froze={out.get('froze')} "
-                    f"markets={out.get('markets')}"
+                    f"theta={out.get('search_theta')} brains={out.get('search_brains')} "
+                    f"froze={out.get('froze')} markets={out.get('markets')}"
                 )
                 self._persist(running=True)
             except Exception as exc:  # noqa: BLE001 — never kill 8765

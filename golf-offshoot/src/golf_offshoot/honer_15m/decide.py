@@ -46,7 +46,10 @@ def decide_ticket(
     delta: float,
     spread: float | None,
 ) -> tuple[str, str]:
-    """Spread is a skip gate only. Missing bid/ask → richness line only. Never buy NO."""
-    if str(family) == FAMILY_SPREAD and spread is not None and float(spread) >= float(delta):
-        return "skip", f"spread {spread:g} >= delta {delta:g}"
+    """Spread is a skip gate only. Missing bid/ask → defer, never invent a spread. Never buy NO."""
+    if str(family) == FAMILY_SPREAD:
+        if spread is None:
+            return "defer", "quotes incomplete — do not invent spread"
+        if float(spread) >= float(delta):
+            return "skip", f"spread {spread:g} >= delta {delta:g}"
     return decide_yes_or_skip(posted_yes, theta)

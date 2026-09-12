@@ -73,7 +73,7 @@ def load_catalog() -> dict[str, Any]:
                 {
                     "id": FAMILY_SPREAD,
                     "family": FAMILY_SPREAD,
-                    "activate": "clip_exhaustion+quote_quality_ok|search_starvation+quote_quality_ok",
+                    "activate": "start",
                 },
             ],
         }

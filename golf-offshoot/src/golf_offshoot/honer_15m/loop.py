@@ -24,7 +24,7 @@ from golf_offshoot.honer_15m.paths import (
     watch_status_path,
 )
 from golf_offshoot.honer_15m.picker import apply_search_starvation, maybe_advance
-from golf_offshoot.honer_15m.policy import FAMILY_RICH, load_policy
+from golf_offshoot.honer_15m.policy import FAMILY_RICH, FAMILY_SPREAD, load_policy
 from golf_offshoot.honer_15m.score import (
     classify_completed_exam,
     exam_sums,
@@ -127,6 +127,14 @@ def _exam_knobs(exam: dict[str, Any]) -> dict[str, Any]:
     }
 
 
+def _flush_starvation() -> None:
+    from golf_offshoot.honer_15m.brains import brain_scope, iter_brain_ids
+
+    for brain_id in iter_brain_ids():
+        with brain_scope(brain_id):
+            apply_search_starvation()
+
+
 def _close_exam_to_library(exam: dict[str, Any], *, outcome: str) -> None:
     from golf_offshoot.honer_15m.picker import on_exam_close
 
@@ -137,6 +145,7 @@ def _close_exam_to_library(exam: dict[str, Any], *, outcome: str) -> None:
         k=int(exam.get("k_after") or 0),
     )
     maybe_advance()
+    _flush_starvation()
 
 
 def _maybe_act(book: str, market: dict[str, Any], theta: float, *, family: str, delta: float) -> None:
@@ -149,7 +158,11 @@ def _maybe_act(book: str, market: dict[str, Any], theta: float, *, family: str, 
     if mark is None:
         return
     spread = market_spread(market)
+    if str(family) == FAMILY_SPREAD and spread is None:
+        return
     action, reason = decide_ticket(mark, theta, family=family, delta=delta, spread=spread)
+    if action not in {"fill", "skip"}:
+        return
     exam_k = None
     if book == "exam":
         exam_k = int(load_exam_state().get("k_after") or 0) or None
@@ -172,6 +185,9 @@ def _maybe_act(book: str, market: dict[str, Any], theta: float, *, family: str, 
 def run_tick(markets: list[dict[str, Any]] | None = None) -> dict[str, Any]:
     if TRADING_ARMED:
         raise RuntimeError("trading NOT ARMED")
+    from golf_offshoot.honer_15m.brains import brain_scope, date_unused_clip_slots, iter_brain_ids
+
+    date_unused_clip_slots()
     used_bus = markets is None
     rows = markets if markets is not None else fetch_markets()
     stale = False
@@ -181,18 +197,24 @@ def run_tick(markets: list[dict[str, Any]] | None = None) -> dict[str, Any]:
             stale = bool(payload.get("quote_bus_stale"))
         except (OSError, ValueError):
             stale = not rows
-    search = load_theta()
-    search_theta = float(search["theta"])
-    search_family = str(search.get("active_family") or FAMILY_RICH)
-    search_delta = float(search.get("delta") or load_policy()["start_delta"])
+    brain_ids = iter_brain_ids()
     exam = load_exam_state()
     frozen = exam.get("frozen_theta") if exam_is_open() else None
-    exam_family = str(exam.get("frozen_family") or search_family)
-    exam_delta = float(exam.get("frozen_delta") or search_delta)
+    exam_family = str(exam.get("frozen_family") or FAMILY_RICH)
+    exam_delta = float(exam.get("frozen_delta") or load_policy()["start_delta"])
 
     for market in rows:
         if is_paper_autobet_candidate(market):
-            _maybe_act("search", market, search_theta, family=search_family, delta=search_delta)
+            for brain_id in brain_ids:
+                with brain_scope(brain_id):
+                    search = load_theta()
+                    _maybe_act(
+                        "search",
+                        market,
+                        float(search["theta"]),
+                        family=str(search.get("active_family") or FAMILY_RICH),
+                        delta=float(search.get("delta") or load_policy()["start_delta"]),
+                    )
             if frozen is not None:
                 _maybe_act("exam", market, float(frozen), family=exam_family, delta=exam_delta)
 
@@ -201,9 +223,13 @@ def run_tick(markets: list[dict[str, Any]] | None = None) -> dict[str, Any]:
         if result not in {"yes", "no"} or not ticker:
             continue
         _write_settle_row(market, result)
-        _search_row, newly_search = apply_settle("search", ticker, kalshi_result=result, step_theta=True)
-        if newly_search:
-            apply_search_starvation()
+        for brain_id in brain_ids:
+            with brain_scope(brain_id):
+                _search_row, newly_search = apply_settle(
+                    "search", ticker, kalshi_result=result, step_theta=True
+                )
+                if newly_search:
+                    apply_search_starvation()
         if exam_is_open():
             exam_row, newly = apply_settle("exam", ticker, kalshi_result=result, step_theta=False)
             if newly and exam_row is not None:
@@ -224,7 +250,6 @@ def run_tick(markets: list[dict[str, Any]] | None = None) -> dict[str, Any]:
                         apply_factory_fee()
                         write_exam_scorecard(parked, outcome="parked")
                         _close_exam_to_library(parked, outcome="parked")
-                        apply_search_starvation()
                 elif n >= int(pol["exam_n"]):
                     completed = complete_exam()
                     from golf_offshoot.honer_15m.fee import apply_factory_fee
@@ -233,10 +258,10 @@ def run_tick(markets: list[dict[str, Any]] | None = None) -> dict[str, Any]:
                     outcome = classify_completed_exam()
                     write_exam_scorecard(completed, outcome=outcome)
                     _close_exam_to_library(completed, outcome=outcome)
-                    apply_search_starvation()
 
     maybe_advance()
     fired = fire_freeze()
+    _flush_starvation()
     from golf_offshoot.honer_15m.quality import save_quote_quality
 
     save_quote_quality()
@@ -261,8 +286,10 @@ def run_tick(markets: list[dict[str, Any]] | None = None) -> dict[str, Any]:
         "lane": "honer_15m",
         "search_theta": float(live["theta"]),
         "active_family": str(live.get("active_family") or FAMILY_RICH),
+        "search_brains": len(brain_ids),
         "exam": load_exam_state(),
         "froze": bool(fired),
+        "frozen_brain": (fired or {}).get("brain_id") if fired else None,
         "markets": len(rows),
         "trading_armed": False,
         "fee_omitted": bool(bar.get("fee_omitted", True)),
