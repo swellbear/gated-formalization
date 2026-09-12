@@ -23,6 +23,8 @@ from golf_offshoot.honer_15m.paths import (
     settlements_dir,
     watch_status_path,
 )
+from golf_offshoot.honer_15m.family_amend import stamp_family_amend
+from golf_offshoot.honer_15m.library import search_is_parked
 from golf_offshoot.honer_15m.picker import apply_search_starvation, maybe_advance
 from golf_offshoot.honer_15m.policy import FAMILY_RICH, FAMILY_SPREAD, load_policy
 from golf_offshoot.honer_15m.score import (
@@ -99,7 +101,13 @@ def _write_settle_row(market: dict[str, Any], result: str) -> None:
     )
 
 
-def _write_last_tick(*, markets: int, quote_bus_stale: bool) -> None:
+def _write_last_tick(
+    *,
+    markets: int,
+    quote_bus_stale: bool,
+    search_parked: bool = False,
+    family_amend_owed: bool = False,
+) -> None:
     path = last_tick_path()
     assert_honer_path(path)
     path.write_text(
@@ -110,6 +118,8 @@ def _write_last_tick(*, markets: int, quote_bus_stale: bool) -> None:
                 "markets": markets,
                 "quote_bus_stale": quote_bus_stale,
                 "wrote_learning_lane_15m": False,
+                "search_parked": bool(search_parked),
+                "family_amend_owed": bool(family_amend_owed),
                 "at": now().isoformat(),
             },
             indent=2,
@@ -187,7 +197,9 @@ def run_tick(markets: list[dict[str, Any]] | None = None) -> dict[str, Any]:
         raise RuntimeError("trading NOT ARMED")
     from golf_offshoot.honer_15m.brains import brain_scope, date_unused_clip_slots, iter_brain_ids
 
-    date_unused_clip_slots()
+    search_parked = search_is_parked()
+    if not search_parked:
+        date_unused_clip_slots()
     used_bus = markets is None
     rows = markets if markets is not None else fetch_markets()
     stale = False
@@ -205,16 +217,17 @@ def run_tick(markets: list[dict[str, Any]] | None = None) -> dict[str, Any]:
 
     for market in rows:
         if is_paper_autobet_candidate(market):
-            for brain_id in brain_ids:
-                with brain_scope(brain_id):
-                    search = load_theta()
-                    _maybe_act(
-                        "search",
-                        market,
-                        float(search["theta"]),
-                        family=str(search.get("active_family") or FAMILY_RICH),
-                        delta=float(search.get("delta") or load_policy()["start_delta"]),
-                    )
+            if not search_parked:
+                for brain_id in brain_ids:
+                    with brain_scope(brain_id):
+                        search = load_theta()
+                        _maybe_act(
+                            "search",
+                            market,
+                            float(search["theta"]),
+                            family=str(search.get("active_family") or FAMILY_RICH),
+                            delta=float(search.get("delta") or load_policy()["start_delta"]),
+                        )
             if frozen is not None:
                 _maybe_act("exam", market, float(frozen), family=exam_family, delta=exam_delta)
 
@@ -226,9 +239,9 @@ def run_tick(markets: list[dict[str, Any]] | None = None) -> dict[str, Any]:
         for brain_id in brain_ids:
             with brain_scope(brain_id):
                 _search_row, newly_search = apply_settle(
-                    "search", ticker, kalshi_result=result, step_theta=True
+                    "search", ticker, kalshi_result=result, step_theta=not search_parked
                 )
-                if newly_search:
+                if newly_search and not search_parked:
                     apply_search_starvation()
         if exam_is_open():
             exam_row, newly = apply_settle("exam", ticker, kalshi_result=result, step_theta=False)
@@ -244,12 +257,12 @@ def run_tick(markets: list[dict[str, Any]] | None = None) -> dict[str, Any]:
                         sums["exam_pnl_sum"],
                         exam_n=int(pol["exam_n"]),
                     ):
-                        parked = park_exam(f"futility at n={n}: remaining skips cannot pass")
+                        parked_exam = park_exam(f"futility at n={n}: remaining skips cannot pass")
                         from golf_offshoot.honer_15m.fee import apply_factory_fee
 
                         apply_factory_fee()
-                        write_exam_scorecard(parked, outcome="parked")
-                        _close_exam_to_library(parked, outcome="parked")
+                        write_exam_scorecard(parked_exam, outcome="parked")
+                        _close_exam_to_library(parked_exam, outcome="parked")
                 elif n >= int(pol["exam_n"]):
                     completed = complete_exam()
                     from golf_offshoot.honer_15m.fee import apply_factory_fee
@@ -260,12 +273,20 @@ def run_tick(markets: list[dict[str, Any]] | None = None) -> dict[str, Any]:
                     _close_exam_to_library(completed, outcome=outcome)
 
     maybe_advance()
-    fired = fire_freeze()
-    _flush_starvation()
+    search_parked = search_is_parked()
+    fired = None if search_parked else fire_freeze()
+    if not search_parked:
+        _flush_starvation()
+    amend = stamp_family_amend()
     from golf_offshoot.honer_15m.quality import save_quote_quality
 
     save_quote_quality()
-    _write_last_tick(markets=len(rows), quote_bus_stale=stale)
+    _write_last_tick(
+        markets=len(rows),
+        quote_bus_stale=stale,
+        search_parked=search_parked,
+        family_amend_owed=bool(amend.get("owed")),
+    )
     try:
         from golf_offshoot.honer_15m.invariants import run_invariants
 
@@ -295,4 +316,6 @@ def run_tick(markets: list[dict[str, Any]] | None = None) -> dict[str, Any]:
         "fee_omitted": bool(bar.get("fee_omitted", True)),
         "http_fetches": 0,
         "quote_bus_stale": stale,
+        "search_parked": search_parked,
+        "family_amend_owed": bool(amend.get("owed")),
     }

@@ -81,9 +81,18 @@ def maybe_advance() -> dict[str, Any] | None:
 
     Clip/starvation does not switch a family-1 hunt onto family 2.
     A third family is still not this build. Does not read ledgers or exam d.
+    When the two-item catalog cannot hunt, stamps catalog_exhausted from files.
     """
+    from golf_offshoot.honer_15m.family_amend import stamp_family_amend
+    from golf_offshoot.honer_15m.library import mark_catalog_exhausted, search_is_parked
+
     lib = load_library()
     if lib.get("catalog_exhausted"):
+        stamp_family_amend()
+        return None
+    mark_catalog_exhausted()
+    stamp_family_amend()
+    if search_is_parked():
         return None
     nxt = next_family(FAMILY_SPREAD)
     if nxt is None:

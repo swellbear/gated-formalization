@@ -57,6 +57,59 @@ def save_library(payload: dict[str, Any]) -> None:
     path.write_text(json.dumps(data, indent=2), encoding="utf-8")
 
 
+def search_is_parked(lib: dict[str, Any] | None = None) -> bool:
+    """True when library.json catalog_exhausted is true. No new search fills."""
+    payload = lib if lib is not None else load_library()
+    return payload.get("catalog_exhausted") is True
+
+
+def hunts_cannot_freeze() -> bool:
+    """True when exam is closed and every hunt's current vector is retired or spent.
+
+    File labels only. Does not read ledgers or exam d. A live clip start that
+    is not yet retired keeps hunting — the grid is not exhausted.
+    """
+    from golf_offshoot.honer_15m.brains import brain_scope, iter_brain_ids
+    from golf_offshoot.honer_15m.freeze import exam_is_open, freeze_ready
+    from golf_offshoot.honer_15m.theta import current_vector, load_theta
+
+    if exam_is_open():
+        return False
+    if freeze_ready():
+        return False
+    lib = load_library()
+    for brain_id in iter_brain_ids():
+        with brain_scope(brain_id):
+            vector = current_vector(load_theta())
+            if not is_retired(vector, lib) and not is_spent(vector, lib):
+                return False
+    return True
+
+
+def mark_catalog_exhausted() -> dict[str, Any]:
+    """Stamp catalog_exhausted from files when the two-item catalog cannot hunt.
+
+    Does not date a third family. Does not peek exam pnl.
+    """
+    from golf_offshoot.honer_15m.catalog import catalog_ids, next_family
+    from golf_offshoot.honer_15m.freeze import exam_is_open
+
+    payload = load_library()
+    if payload.get("catalog_exhausted") is True:
+        return payload
+    ids = catalog_ids()
+    last = ids[-1] if ids else ""
+    if last and next_family(last) is not None:
+        return payload
+    if exam_is_open():
+        return payload
+    if not hunts_cannot_freeze():
+        return payload
+    payload["catalog_exhausted"] = True
+    save_library(payload)
+    return payload
+
+
 def _in_set(bucket: list[Any], vector: dict[str, Any]) -> bool:
     for item in bucket:
         if isinstance(item, dict) and vectors_equal(item, vector):
@@ -125,6 +178,9 @@ def append_exam_row(
         payload["spent"] = spent
         payload["seed_theta"] = float(vector["theta"])
     save_library(payload)
+    from golf_offshoot.honer_15m.family_amend import stamp_family_amend
+
+    stamp_family_amend()
     return payload
 
 

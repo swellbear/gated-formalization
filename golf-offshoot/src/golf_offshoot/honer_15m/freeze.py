@@ -52,6 +52,8 @@ def _novelty(st: dict[str, Any], pol: dict[str, Any]) -> bool:
 
 
 def freeze_ready(theta_state: dict[str, Any] | None = None) -> bool:
+    if load_library().get("catalog_exhausted"):
+        return False
     if exam_is_open():
         return False
     if theta_state is None:
@@ -109,8 +111,11 @@ def _increment_k(family: str) -> int:
 
 def fire_freeze() -> dict[str, Any] | None:
     from golf_offshoot.honer_15m.brains import brain_scope
+    from golf_offshoot.honer_15m.library import search_is_parked
     from golf_offshoot.honer_15m.picker import next_freeze_brain
 
+    if search_is_parked():
+        return None
     brain_id = next_freeze_brain()
     if brain_id is None:
         return None
