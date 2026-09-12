@@ -17,6 +17,7 @@ does not enable consult unless file gates already hold.
 from __future__ import annotations
 
 from datetime import datetime
+from pathlib import Path
 from typing import Any
 
 from golf_offshoot.learning_lane_15m.crew_tick import (
@@ -25,6 +26,7 @@ from golf_offshoot.learning_lane_15m.crew_tick import (
     REASON_H,
     REASON_I,
     REASON_J,
+    REASON_K,
     WORKER_ROLES,
     compute_crew_tick,
     parse_desk,
@@ -63,12 +65,17 @@ LAB_FARM_PROMOTE_JOB = (
     "execution; do not arm; do not ADMIT; do not score; handoff operator"
 )
 
-#: Wake subjects that are name-clear bookkeeping, not a score Job.
+OPERATOR_LOOK_JOB = (
+    "PARK or CONTINUE from the L1 scorecard; never invent tape; "
+    "do not stop PaperWatch; do not arm"
+)
+
+#: Hard-NO / already-PARK'd ids whose rule_reached_n is bookkeeping without files.
+#: Hour-close (or any executing look) is NOT frozen here — name-clear is from files.
 NAME_CLEAR_SUBJECTS = frozenset(
     {
         "R-SKIP-COINFLIP",
         "R-SKIP-2TO1-FAVORITE",
-        "R-SKIP-HOUR-CLOSE",
     }
 )
 
@@ -113,18 +120,63 @@ def operator_owed_reasons(wake: dict[str, Any] | None) -> list[str]:
     return out
 
 
-def is_name_clear_reason(reason: str) -> bool:
+def is_name_clear_reason(
+    reason: str,
+    *,
+    root: Path | None = None,
+    registry: dict[str, Any] | None = None,
+) -> bool:
+    """Name-clear from files, not a frozen hour-close subject list.
+
+    Hard NO (coinflip) and PARK'd+L1 (favorite) are bookkeeping. An executing
+    selecting rule without operator_look PARK/CONTINUE is the look, not closeout.
+    """
+    from golf_offshoot.learning_lane_15m.clerical_score import (
+        FORBIDDEN_SCORE_IDS,
+        load_l1_card,
+        operator_look_stamp,
+    )
+    from golf_offshoot.learning_lane_15m.crew_tick import OPERATOR_LOOK_DONE
+
     text = (reason or "").strip()
     if not text.lower().startswith("rule_reached_n"):
         return False
     subject = text.split(" ", 1)[1].strip() if " " in text else ""
-    return subject in NAME_CLEAR_SUBJECTS
+    if not subject:
+        return False
+    row = None
+    if registry is not None:
+        for item in registry.get("rules") or []:
+            if isinstance(item, dict) and str(item.get("id") or "") == subject:
+                row = item
+                break
+    elif root is not None:
+        try:
+            from golf_offshoot.learning_lane_15m.rules import rule_by_id
+
+            row = rule_by_id(subject, root=root)
+        except Exception:  # noqa: BLE001 — missing registry is not name-clear for a live look
+            row = None
+    if row is None:
+        return subject in NAME_CLEAR_SUBJECTS or subject in FORBIDDEN_SCORE_IDS
+    card = load_l1_card(subject, root=root)
+    stamp = operator_look_stamp(card)
+    if row.get("execution") is True:
+        return stamp in OPERATOR_LOOK_DONE
+    if subject in FORBIDDEN_SCORE_IDS or subject in NAME_CLEAR_SUBJECTS:
+        return True
+    return bool(card) or stamp in OPERATOR_LOOK_DONE
 
 
-def only_name_clear_reasons(reasons: list[str]) -> bool:
+def only_name_clear_reasons(
+    reasons: list[str],
+    *,
+    root: Path | None = None,
+    registry: dict[str, Any] | None = None,
+) -> bool:
     if not reasons:
         return False
-    return all(is_name_clear_reason(r) for r in reasons)
+    return all(is_name_clear_reason(r, root=root, registry=registry) for r in reasons)
 
 
 def operator_owed_lab_proposed(wake: dict[str, Any] | None) -> bool:
@@ -257,6 +309,7 @@ def decide_cos_action(
     wake: dict[str, Any] | None = None,
     crew_tick: dict[str, Any] | None = None,
     leave_off_text: str = "",
+    root: Path | None = None,
 ) -> dict[str, Any]:
     """Return quiet / closeout / assign. Never invent A_worker_done from an empty VM."""
     desk = parse_desk(desk_text)
@@ -276,6 +329,7 @@ def decide_cos_action(
             desk_text=desk_text,
             leave_off_text=leave_off_text,
             hub_ok=True,
+            root=root,
         )
     tick = tick or {}
     reason_ids = [str(x) for x in (tick.get("reason_ids") or [])]
@@ -285,7 +339,16 @@ def decide_cos_action(
     h_owed = REASON_H in reason_ids
     i_owed = REASON_I in reason_ids
     j_owed = REASON_J in reason_ids
+    k_owed = REASON_K in reason_ids
     freeze_snap = tick.get("honer_freeze") if isinstance(tick.get("honer_freeze"), dict) else None
+
+    if k_owed and not (status == "assigned" and active == "operator"):
+        return _base(
+            action=ACTION_ASSIGN,
+            reason="look_due_operator",
+            role="operator",
+            job=OPERATOR_LOOK_JOB,
+        )
 
     if status == "assigned" and active in WORKER_ROLES:
         return _base(action=ACTION_QUIET, reason="assigned_worker_covers", role=active, job=job)
@@ -299,6 +362,7 @@ def decide_cos_action(
         and REASON_H not in reason_ids
         and REASON_I not in reason_ids
         and REASON_J not in reason_ids
+        and REASON_K not in reason_ids
     ):
         return _base(action=ACTION_QUIET, reason="quiet_or_handled")
 
@@ -325,9 +389,9 @@ def decide_cos_action(
             job=job if job and job.strip() not in {"", "—"} else "RUN-ONLY or PARK the sitting Lab PROPOSED",
         )
 
-    if only_name_clear_reasons(op_reasons):
+    if only_name_clear_reasons(op_reasons, root=root):
         uncovered_roles = [r for r in uncovered_roles if r != "operator"]
-        if not uncovered_roles and not f_owed and not h_owed and not i_owed and not j_owed:
+        if not uncovered_roles and not f_owed and not h_owed and not i_owed and not j_owed and not k_owed:
             return _base(
                 action=ACTION_CLOSEOUT,
                 reason="name_clear_not_score",
@@ -367,7 +431,7 @@ def decide_cos_action(
         return _assign_lab_honer(freeze_snap)
 
     legal = [r for r in uncovered_roles if r in LEGAL_ASSIGN_ROLES and r not in FORBIDDEN_ASSIGN_ROLES]
-    if "operator" in legal and only_name_clear_reasons(op_reasons):
+    if "operator" in legal and only_name_clear_reasons(op_reasons, root=root):
         legal = [r for r in legal if r != "operator"]
 
     if not legal:
@@ -378,4 +442,10 @@ def decide_cos_action(
     if role in FORBIDDEN_ASSIGN_ROLES:
         return _base(action=ACTION_CLOSEOUT, reason="forbidden_role")
     assign_job = LAB_INVENT_JOB if role == "lab" else job
+    if role == "operator" and any(
+        str(r).strip().lower().startswith("rule_reached_n")
+        and not is_name_clear_reason(r, root=root)
+        for r in op_reasons
+    ):
+        assign_job = OPERATOR_LOOK_JOB
     return _base(action=ACTION_ASSIGN, reason="legal_next_worker", role=role, job=assign_job)

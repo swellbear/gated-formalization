@@ -297,6 +297,26 @@ def test_mid_look_refuses_promote_four_keepers_declared_at_not_pnl(tmp_path):
         docs / "LEARNING_LANE_15M_SCORECARD_R-LIVE-CLOCK_L1.json",
         {"n": 70, "passes_every_binding_clause": True},
     )
+    assert live_look_closed(root=tmp_path) is False
+    parked = dict(LIVE_CLOCK)
+    parked["execution"] = False
+    _seed(tmp_path, executing=parked, farm_notebooks=notebooks)
+    for i, row in enumerate(notebooks):
+        _write_json(
+            farm_scorecard_path(row["id"], root=tmp_path),
+            {
+                "passes_every_binding_clause": True,
+                "n": 70,
+                "clause_4_positive_side": {
+                    "mean_pnl_rule_fee_adj": 50.0 - i,
+                    "passes": True,
+                },
+            },
+        )
+    _write_json(
+        docs / "LEARNING_LANE_15M_SCORECARD_R-LIVE-CLOCK_L1.json",
+        {"n": 70, "passes_every_binding_clause": True},
+    )
     assert live_look_closed(root=tmp_path) is True
     head = next_promote(root=tmp_path)
     assert head["id"] == "F-CLOCK-CLOSE-MINUTE-30"

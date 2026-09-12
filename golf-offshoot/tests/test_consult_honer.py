@@ -394,6 +394,18 @@ def test_leash_scores_then_enables(monkeypatch):
         order.append("score")
         return {"wrote": False}
 
+    def look_push():
+        order.append("look_push")
+        return {"pushed": False, "reason": "unarmed"}
+
+    def fetch():
+        order.append("fetch")
+        return {"ok": True}
+
+    def observe():
+        order.append("observe")
+        return {"ok": True, "dropped": []}
+
     def farm():
         order.append("farm")
         return {"wrote": False}
@@ -407,6 +419,18 @@ def test_leash_scores_then_enables(monkeypatch):
         score,
     )
     monkeypatch.setattr(
+        "golf_offshoot.learning_lane_15m.look_push.maybe_push_look",
+        look_push,
+    )
+    monkeypatch.setattr(
+        "golf_offshoot.learning_lane_15m.sibling_sync.maybe_fetch_origin_farm",
+        fetch,
+    )
+    monkeypatch.setattr(
+        "golf_offshoot.learning_lane_15m.sibling_sync.maybe_observe_sibling_execution",
+        observe,
+    )
+    monkeypatch.setattr(
         "golf_offshoot.learning_lane_15m.clerical_score.maybe_score_farm",
         farm,
     )
@@ -415,7 +439,7 @@ def test_leash_scores_then_enables(monkeypatch):
         enable,
     )
     out = run_leash_tick()
-    assert order == ["score", "farm", "enable"]
+    assert order == ["score", "look_push", "fetch", "observe", "farm", "enable"]
     assert out["clerical_score"]["wrote"] is False
     assert out["farm"]["wrote"] is False
     assert out["consult"]["consult_enabled"] is False

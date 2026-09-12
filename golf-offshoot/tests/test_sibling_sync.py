@@ -12,12 +12,14 @@ from golf_offshoot.learning_lane_15m.sibling_sync import (
     ORIGIN_SIBLING,
     fetch_argv,
     maybe_fetch_origin_farm,
+    maybe_observe_sibling_execution,
     origin_farm_cache_path,
     origin_farm_meta_path,
     refuse_git_argv,
     rev_parse_argv,
     show_exhausted_argv,
     show_farm_argv,
+    show_rules_argv,
 )
 
 SIBLING_SYNC_PY = (
@@ -84,7 +86,7 @@ def _origin_cache(root: Path, *, sha: str = "abcdef1234567890") -> None:
 
 
 def test_observe_argv_never_push_reset_master():
-    for argv in (fetch_argv(), show_farm_argv(), show_exhausted_argv(), rev_parse_argv()):
+    for argv in (fetch_argv(), show_farm_argv(), show_exhausted_argv(), rev_parse_argv(), show_rules_argv()):
         joined = " ".join(argv).lower()
         assert "push" not in argv
         assert "reset" not in argv
@@ -324,3 +326,92 @@ def test_hub_poll_kicks_origin_farm_without_inline_fetch(monkeypatch):
     decision = watcher.poll()
     assert kicks == [1]
     assert decision.kind == "none"
+
+
+def test_gym_observe_park_drops_local_execution_not_golf(tmp_path):
+    docs = tmp_path / "golf-offshoot" / "docs"
+    _write(
+        docs / "LEARNING_LANE_15M_RULES.json",
+        {
+            "schema": 1,
+            "rules": [
+                {
+                    "id": "R-SKIP-HOUR-CLOSE",
+                    "kind": "selection",
+                    "selects": True,
+                    "execution": True,
+                }
+            ],
+        },
+    )
+    golf = tmp_path / "golf-offshoot" / "data" / "golf_kalshi" / "paper" / "ledger.json"
+    _write(golf, {"bankroll": 1000, "do_not_touch": True})
+    sibling_rules = {
+        "schema": 1,
+        "rules": [
+            {
+                "id": "R-SKIP-HOUR-CLOSE",
+                "kind": "selection",
+                "selects": True,
+                "execution": False,
+            }
+        ],
+    }
+    (tmp_path / ".git").mkdir()
+
+    def git_run(argv, cwd=None):
+        del cwd
+        if argv == show_rules_argv():
+            return subprocess.CompletedProcess(["git", *argv], 0, json.dumps(sibling_rules), "")
+        return subprocess.CompletedProcess(["git", *argv], 1, "", "unused")
+
+    out = maybe_observe_sibling_execution(root=tmp_path, git_run=git_run)
+    assert out["ok"] is True
+    assert out["dropped"] == ["R-SKIP-HOUR-CLOSE"]
+    local = json.loads((docs / "LEARNING_LANE_15M_RULES.json").read_text(encoding="utf-8"))
+    assert local["rules"][0]["execution"] is False
+    golf_after = json.loads(golf.read_text(encoding="utf-8"))
+    assert golf_after["do_not_touch"] is True
+    assert golf_after["bankroll"] == 1000
+
+
+def test_gym_observe_never_sets_execution_true(tmp_path):
+    docs = tmp_path / "golf-offshoot" / "docs"
+    _write(
+        docs / "LEARNING_LANE_15M_RULES.json",
+        {
+            "schema": 1,
+            "rules": [
+                {
+                    "id": "R-SKIP-HOUR-CLOSE",
+                    "kind": "selection",
+                    "selects": True,
+                    "execution": False,
+                }
+            ],
+        },
+    )
+    sibling_rules = {
+        "schema": 1,
+        "rules": [
+            {
+                "id": "R-SKIP-HOUR-CLOSE",
+                "kind": "selection",
+                "selects": True,
+                "execution": True,
+            }
+        ],
+    }
+    (tmp_path / ".git").mkdir()
+
+    def git_run(argv, cwd=None):
+        del cwd
+        if argv == show_rules_argv():
+            return subprocess.CompletedProcess(["git", *argv], 0, json.dumps(sibling_rules), "")
+        return subprocess.CompletedProcess(["git", *argv], 1, "", "unused")
+
+    out = maybe_observe_sibling_execution(root=tmp_path, git_run=git_run)
+    assert out["ok"] is True
+    assert out["dropped"] == []
+    local = json.loads((docs / "LEARNING_LANE_15M_RULES.json").read_text(encoding="utf-8"))
+    assert local["rules"][0]["execution"] is False
