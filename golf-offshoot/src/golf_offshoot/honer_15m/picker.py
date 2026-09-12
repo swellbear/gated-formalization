@@ -45,6 +45,37 @@ def next_freeze_brain() -> str | None:
     return None
 
 
+def queue_status() -> dict[str, Any]:
+    """File-order exam-queue clocks. No pnl. Not a ranking by closeness."""
+    from golf_offshoot.honer_15m.brains import brain_scope, iter_brain_ids
+    from golf_offshoot.honer_15m.freeze import exam_is_open, freeze_ready, load_exam_state
+    from golf_offshoot.honer_15m.paths import canonical_brain_id
+
+    exam = load_exam_state()
+    ids = list(iter_brain_ids())
+    ready: list[str] = []
+    head_id: str | None = None
+    head_state: dict[str, Any] = {}
+    for brain_id in ids:
+        with brain_scope(brain_id):
+            st = dict(load_theta())
+            if head_id is None:
+                head_id = brain_id
+                head_state = st
+            if freeze_ready(st):
+                ready.append(brain_id)
+    return {
+        "n_hunts": len(ids),
+        "ready_ids": ready,
+        "n_ready": len(ready),
+        "next_ready": ready[0] if ready else None,
+        "exam_open": exam_is_open(),
+        "exam_brain_id": str(exam.get("brain_id") or "") if exam_is_open() else "",
+        "head_id": head_id or canonical_brain_id(),
+        "head_state": head_state,
+    }
+
+
 def maybe_advance() -> dict[str, Any] | None:
     """Families hunt in parallel. Sequential family-2 start is retired.
 

@@ -67,7 +67,11 @@ def _write_status(payload: dict[str, Any]) -> None:
 
 def _honer_watch_files() -> list[Path]:
     files = sorted(p for p in PKG.glob("*.py") if p.is_file())
-    for name in ("HONER_15M_RULES.json", "HONER_15M_CATALOG.json"):
+    for name in (
+        "HONER_15M_RULES.json",
+        "HONER_15M_CATALOG.json",
+        "HONER_15M_SEARCH_BRAINS.json",
+    ):
         path = DOCS / name
         if path.is_file():
             files.append(path)

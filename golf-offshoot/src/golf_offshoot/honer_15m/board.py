@@ -143,14 +143,12 @@ def family_label(family: str) -> str:
     return "skip-rich-YES"
 
 
-def freeze_meter(
-    theta_state: dict[str, Any] | None = None,
+def _clocks_line(
+    st: dict[str, Any],
     *,
     policy: dict[str, Any] | None = None,
 ) -> str:
-    """One-line freeze progress from honer files. Not a keep."""
     pol = policy or load_policy()
-    st = theta_state if theta_state is not None else load_theta()
     need_n = int(pol["freeze_min_search_settled"])
     need_delta = float(pol["freeze_abs_delta"])
     stable_need = int(pol["freeze_stable_windows"])
@@ -169,6 +167,38 @@ def freeze_meter(
         f"moved {cents(moved)} of {cents(need_delta)} · "
         f"stable {stable}/{stable_need} · line {cents(theta_now)} · {family}"
     )
+
+
+def freeze_meter(
+    theta_state: dict[str, Any] | None = None,
+    *,
+    policy: dict[str, Any] | None = None,
+) -> str:
+    """One-line freeze progress from honer files. File-order chair. Not a keep."""
+    if theta_state is not None:
+        return _clocks_line(theta_state, policy=policy)
+    from golf_offshoot.honer_15m.picker import queue_status
+
+    qs = queue_status()
+    n_hunts = int(qs.get("n_hunts") or 1)
+    if qs.get("exam_open") and n_hunts > 1:
+        bid = str(qs.get("exam_brain_id") or "the seated hunt")
+        return (
+            f"Honer freeze: exam open on {bid}. Other hunts keep searching. "
+            "Chair full. Not a keep."
+        )
+    ready = qs.get("next_ready")
+    if ready and n_hunts > 1:
+        return f"Honer freeze: ready — {ready} takes the chair next tick. Not a keep."
+    st = qs.get("head_state") if isinstance(qs.get("head_state"), dict) and qs.get("head_state") else load_theta()
+    line = _clocks_line(st, policy=policy)
+    if n_hunts > 1:
+        head = str(qs.get("head_id") or "")
+        ready_n = int(qs.get("n_ready") or 0)
+        return (
+            f"{line} · {ready_n}/{n_hunts} freeze-ready · file-order head {head}"
+        )
+    return line
 
 
 def library_english(
@@ -201,7 +231,7 @@ def library_english(
         else:
             exam_bit = (
                 "The tape did not visit the line. That cutoff is retired. "
-                "Cutoff returned to 75¢."
+                "Cutoff returned to that hunt's start."
             )
     else:
         exam_bit = "No exam yet."
@@ -541,11 +571,13 @@ def _phase_paragraph(
         k = int(exam.get("k_after") or trials.get("trials_to_date") or 0)
         n = int(exam.get("n") or 0)
         frozen = float(exam.get("frozen_theta") or 0)
+        seated = str(exam.get("brain_id") or "")
+        seated_bit = f" on {seated}" if seated else ""
         return (
             "exam_open",
-            f"Exam k={k} is running. For these 70 windows the cutoff is frozen at {cents(frozen)}. "
-            f"Search may still move its own cutoff; that does not change this exam. "
-            f"Scored **{n} of 70**. Futility check is at n=20 and n=40.",
+            f"Exam k={k} is running{seated_bit}. For these 70 windows the cutoff is frozen at {cents(frozen)}. "
+            f"Other hunts may still move their own cutoffs; that does not change this exam. "
+            f"Scored **{n} of 70**. Futility check is at n=20 and n=40. One exam chair.",
         )
     if exam.get("completed"):
         k = int(exam.get("k_after") or trials.get("trials_to_date") or 0)
@@ -554,21 +586,52 @@ def _phase_paragraph(
             "exam_complete",
             f"Exam k={k} finished {n} windows. This is still not a keep. Search continues.",
         )
-    if freeze_ready():
+    from golf_offshoot.honer_15m.picker import next_freeze_brain, queue_status
+
+    ready_id = next_freeze_brain()
+    if ready_id:
+        from golf_offshoot.honer_15m.brains import brain_scope
+
+        with brain_scope(ready_id):
+            live_ready = load_theta()
         nxt = int(trials.get("trials_to_date") or 0) + 1
+        family = str(live_ready.get("active_family") or FAMILY_RICH)
+        if family == FAMILY_SPREAD:
+            knob = f"δ={cents(float(live_ready.get('delta') or 0))}"
+        else:
+            knob = f"θ={cents(float(live_ready.get('theta') or 0))}"
         return (
             "freeze_ready",
-            f"Novelty and stability are both met. Next honer tick can start exam k={nxt} "
-            f"at frozen θ={cents(theta_now)}. This is not a keep.",
+            f"Novelty and stability are both met on {ready_id}. "
+            f"Next honer tick can start exam k={nxt} frozen at {knob}. "
+            "File order sits; not ranked by pnl. This is not a keep.",
         )
+    qs = queue_status()
+    n_hunts = int(qs.get("n_hunts") or 1)
+    head = qs.get("head_state") if isinstance(qs.get("head_state"), dict) else {}
+    if n_hunts > 1 and head:
+        theta_now = float(head.get("theta") or theta_now)
+        last_declared = float(head.get("last_declared_theta") or last_declared)
+        settled_since = int(head.get("in_band_settled") or settled_since)
+        moved = abs(theta_now - last_declared)
+        live = head
+        head_id = str(qs.get("head_id") or "")
+    else:
+        live = load_theta()
+        head_id = ""
     stable_need = int(load_policy()["freeze_stable_windows"])
-    live = load_theta()
     stable_have = int(live.get("in_band_stable") or 0)
     far = int(live.get("far_settled_since_freeze") or 0)
     total = int(live.get("search_settled_since_freeze") or 0)
+    hunt_bit = (
+        f"{n_hunts} clip hunts in parallel. {int(qs.get('n_ready') or 0)} freeze-ready. "
+        f"File-order head {head_id}. "
+        if n_hunts > 1
+        else ""
+    )
     return (
         "searching",
-        f"Right now it is **searching**. The exam book is empty on purpose. "
+        f"Right now it is **searching**. {hunt_bit}The exam book is empty on purpose. "
         f"Exam starts only after freeze: {need_n} **in-band** settled search windows, "
         f"θ moved by at least {cents(need_delta)} from the last declared cutoff, **and** "
         f"{stable_need} in-band windows with no cutoff move. Far tickets do not count. "
@@ -618,7 +681,8 @@ def collect_standing() -> HonerStanding:
         f"{family_bit} Only tickets within 10¢ of the line move the cutoff; "
         "a loss near the line tightens it, a missed YES loosens it. "
         "Freeze counts only those in-band tickets. "
-        f"Cutoff now is **{cents(theta_now)}**. Search started at {cents(start)}. Not a keep."
+        f"Canonical hunt cutoff now is **{cents(theta_now)}** (not a sum of clip hunts). "
+        f"Search started at {cents(start)}. Not a keep."
     )
     lib = load_library()
     library_line = library_english(
@@ -627,7 +691,7 @@ def collect_standing() -> HonerStanding:
         clip_streak=int(th.get("clip_streak") or 0),
         clip_need=int(pol["clip_exhaust_windows"]),
     )
-    meter = freeze_meter(th, policy=pol)
+    meter = freeze_meter()
     exam_line = "Exam (frozen cutoff, own $100): not started."
     if exam.get("open") or exam.get("completed") or exam.get("parked") or exam_rows:
         exam_line = (
@@ -636,6 +700,7 @@ def collect_standing() -> HonerStanding:
             f"{int(exam_led.get('fills') or 0)} fill, {int(exam_led.get('skips') or 0)} skips."
         )
     two = (
+        "Canonical hunt only (not a sum of clip search books). "
         f"Search (discovery, cutoff may move): bankroll {dollars(float(search_led.get('bankroll') or 0))}, "
         f"paper pnl {dollars(float(search_led.get('betting_pnl') or 0), signed=True)}, "
         f"{int(search_led.get('fills') or 0)} fill, {int(search_led.get('skips') or 0)} skips. "

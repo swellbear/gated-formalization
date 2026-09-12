@@ -139,7 +139,7 @@ def board_html(*, extra_html: str = "") -> str:
         "<h3>What just happened</h3>"
         f"<ul class=\"happened\">{happened}</ul>"
         f"{extra_html}"
-        "<h3>Search book</h3>"
+        "<h3>Search book (canonical hunt, not a sum of clip hunts)</h3>"
         f"{_search_table(standing.search_rows)}"
         "<h3>Exam book</h3>"
         f"{_exam_table(standing.exam_rows, standing)}"

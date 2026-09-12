@@ -305,6 +305,38 @@ def _check_catalog_file_order() -> dict[str, Any]:
     )
 
 
+def _check_clip_brains_file_order() -> dict[str, Any]:
+    from golf_offshoot.honer_15m.brains import planned_brain_items, spec_matches_clip
+    from golf_offshoot.honer_15m.catalog import load_catalog
+    from golf_offshoot.honer_15m.policy import FAMILY_RICH, FAMILY_SPREAD
+
+    items = planned_brain_items()
+    ids = [str(row["id"]) for row in items]
+    f1 = [row for row in items if str(row.get("family")) == FAMILY_RICH]
+    f2 = [row for row in items if str(row.get("family")) == FAMILY_SPREAD]
+    activates = [
+        str(item.get("activate") or "start")
+        for item in (load_catalog().get("items") or [])
+        if isinstance(item, dict)
+    ]
+    ok = (
+        spec_matches_clip()
+        and len(f1) == 19
+        and len(f2) == 11
+        and ids[:19] == [str(row["id"]) for row in f1]
+        and ids[19:] == [str(row["id"]) for row in f2]
+        and all(token == "start" for token in activates)
+        and "pnl" not in " ".join(ids)
+    )
+    return _check(
+        "clip_brains_file_order",
+        "Clip menu is family then clip, 19+11, both families start",
+        ok,
+        "19 family-1 + 11 family-2, spec matches, activate=start" if ok else f"ids={len(ids)}",
+        {"n": len(ids), "f1": len(f1), "f2": len(f2), "spec_ok": spec_matches_clip()},
+    )
+
+
 def run_invariants() -> dict[str, Any]:
     checks = [
         _check_no_live_15m_writes(),
@@ -319,6 +351,7 @@ def run_invariants() -> dict[str, Any]:
         _check_http_fetches(),
         _check_disagreement_no_money(),
         _check_catalog_file_order(),
+        _check_clip_brains_file_order(),
     ]
     payload = {
         "lane": "honer_15m",

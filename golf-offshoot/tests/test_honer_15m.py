@@ -388,6 +388,7 @@ def test_picker_has_no_pnl_parameters():
         "apply_search_starvation",
         "iter_exam_queue",
         "next_freeze_brain",
+        "queue_status",
     ):
         params = inspect.signature(getattr(picker, name)).parameters
         for banned in ("d", "pnl", "ledger", "exam_pnl", "betting_pnl"):
@@ -560,7 +561,7 @@ def test_library_english_has_no_registry_ids(honer_tmp):
     )
     assert "search_untestable" not in untestable
     assert "The tape did not visit the line" in untestable
-    assert "75¢" in untestable
+    assert "that hunt's start" in untestable
     assert "skip-wide-spread" in untestable
 
 
@@ -1512,5 +1513,51 @@ def test_consult_armed_series_lane_hold(honer_tmp):
     loop.run_tick([])
     assert LIVE_15M_NAME not in {p.name for p in honer_tmp.rglob("*")}
     assert "kalshi_15m_exports" not in {p.name for p in honer_tmp.rglob("*")}
+
+
+def test_freeze_meter_names_file_order_ready_brain_not_canonical(honer_tmp):
+    from golf_offshoot.honer_15m.board import collect_standing, freeze_meter
+    from golf_offshoot.honer_15m.brains import brain_scope, date_unused_clip_slots
+    from golf_offshoot.honer_15m.hub_block import sandbox_html
+    from golf_offshoot.honer_15m.picker import queue_status
+
+    date_unused_clip_slots()
+    with brain_scope("f1-start-065"):
+        st = theta.load_theta()
+        st["in_band_settled"] = 20
+        st["in_band_stable"] = 5
+        st["theta"] = 0.71
+        theta.save_theta(st)
+    with brain_scope("f1-start-075"):
+        st = theta.load_theta()
+        st["in_band_settled"] = 20
+        st["in_band_stable"] = 5
+        st["theta"] = 0.81
+        theta.save_theta(st)
+    qs = queue_status()
+    assert qs["next_ready"] == "f1-start-065"
+    assert qs["n_hunts"] == 30
+    line = freeze_meter()
+    assert "f1-start-065" in line
+    assert "f1-start-075" not in line
+    standing = collect_standing()
+    assert standing.freeze_meter == line
+    assert "f1-start-065" in standing.where_it_stands
+    assert "71¢" in standing.where_it_stands
+    assert "81¢" not in standing.where_it_stands
+    html = sandbox_html().lower()
+    assert "canonical hunt" in html
+    assert "not a sum" in html
+    assert "combined" not in html
+    assert "winner" not in html
+
+
+def test_watch_files_include_clip_spec():
+    from golf_offshoot.honer_15m.watch import _honer_watch_files
+
+    names = {path.name for path in _honer_watch_files()}
+    assert "brains.py" in names
+    assert "HONER_15M_SEARCH_BRAINS.json" in names
+    assert "HONER_15M_CATALOG.json" in names
 
 
