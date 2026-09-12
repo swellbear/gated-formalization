@@ -898,6 +898,7 @@ def exception_events(
                 T.unrecorded_cost,
                 T.park_aged,
                 T.falsifier_fired,
+                T.lab_proposed,
                 # Negative results from the clerical whitelist. Each of these
                 # roles is served on proof, so an artifact reporting its own
                 # subject matter as failing would otherwise clear the role that

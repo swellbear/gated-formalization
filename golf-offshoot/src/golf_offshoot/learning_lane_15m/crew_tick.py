@@ -77,6 +77,7 @@ _FIELD = re.compile(
     re.IGNORECASE,
 )
 _NEXT = re.compile(r"next\s*=\s*(chief-of-staff|cos)\b", re.IGNORECASE)
+_NEXT_ROLE = re.compile(r"next\s*=\s*([a-z0-9-]+)\b", re.IGNORECASE)
 _ISO = re.compile(r"^\d{4}-\d{2}-\d{2}T")
 
 
@@ -98,12 +99,22 @@ def parse_desk(text: str) -> dict[str, Any]:
         if in_thread and line.startswith("- "):
             thread.append(line)
     newest = thread[0] if thread else ""
+    handoff = fields.get("handoff") or ""
+    next_match = _NEXT_ROLE.search(newest) or _NEXT_ROLE.search(handoff)
+    next_role = (next_match.group(1).strip().lower() if next_match else "")
+    if next_role == "cos":
+        next_role = COS_ROLE
+    next_cos = next_role in {COS_ROLE, "cos"} or (
+        not next_role and bool(_NEXT.search(newest) or _NEXT.search(text or ""))
+    )
     return {
         "active_role": (fields.get("active role") or "").strip().lower(),
         "status": (fields.get("status") or "").strip().lower(),
         "job": fields.get("job") or "",
         "updated": fields.get("updated") or "",
-        "next_cos": bool(_NEXT.search(newest) or _NEXT.search(text or "")),
+        "handoff": handoff,
+        "next_role": next_role,
+        "next_cos": next_cos,
         "newest_thread": newest,
     }
 
@@ -134,14 +145,39 @@ def desk_assigned_lab(desk: dict[str, Any]) -> bool:
     return desk.get("status") == "assigned" and desk.get("active_role") == "lab"
 
 
-def unoperated_lab_proposed(wake: dict[str, Any] | None) -> bool:
-    """True when a Lab PROPOSED is sitting for Operator (not a new invent)."""
+def unoperated_lab_proposed(
+    wake: dict[str, Any] | None,
+    *,
+    root: Path | None = None,
+) -> bool:
+    """True when a Lab PROPOSED is sitting for Operator (not a new invent).
+
+    Wake reasons first. When ``root`` is set, also glob dated Lab notes
+    that still lack a matching Operator RUN-ONLY note. ``execution=false``
+    does not hide them. A detector that cannot read is not an empty chair.
+    """
     for entry in (wake or {}).get("roles_owed") or []:
         for reason in entry.get("reasons") or []:
             text = str(reason or "").strip().lower()
             if text.startswith("lab_proposed"):
                 return True
-    return False
+    if root is None:
+        return False
+    from golf_offshoot.learning_lane_15m.triggers import lab_proposed
+
+    try:
+        return bool(lab_proposed(root=root))
+    except Exception:  # noqa: BLE001 — blindness is not a license to invent
+        return True
+
+
+def desk_lab_done_owes_operator(desk: dict[str, Any]) -> bool:
+    """Lab Status=done with next=operator is Operator RUN-ONLY, not closeout."""
+    return (
+        str(desk.get("status") or "").strip().lower() == "done"
+        and str(desk.get("active_role") or "").strip().lower() == "lab"
+        and str(desk.get("next_role") or "").strip().lower() == "operator"
+    )
 
 
 def _load_json(path: Path) -> dict[str, Any]:
@@ -222,7 +258,7 @@ def gym_is_starved(
     """True when CoS should assign Lab: idle gym, no live trial, no un-operated PROPOSED."""
     if not desk_idle_for_lab(desk):
         return False
-    if unoperated_lab_proposed(wake):
+    if unoperated_lab_proposed(wake, root=root):
         return False
     if live_trial_ids is not None:
         live = list(live_trial_ids)
@@ -247,7 +283,7 @@ def farm_open_owed(
         return False
     if not desk_idle_for_lab(desk):
         return False
-    if unoperated_lab_proposed(wake):
+    if unoperated_lab_proposed(wake, root=root):
         return False
     if farm_open is True:
         return True
@@ -271,7 +307,7 @@ def farm_promote_owed(
         return False
     if not desk_idle_for_lab(desk):
         return False
-    if unoperated_lab_proposed(wake):
+    if unoperated_lab_proposed(wake, root=root):
         return False
     if farm_promote is True:
         return True

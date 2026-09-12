@@ -5,6 +5,7 @@ from golf_offshoot.learning_lane_15m.cos_tick import (
     ACTION_CLOSEOUT,
     ACTION_QUIET,
     LAB_INVENT_JOB,
+    OPERATOR_LAB_PROPOSED_JOB,
     OPERATOR_LOOK_JOB,
     decide_cos_action,
 )
@@ -19,7 +20,7 @@ from golf_offshoot.learning_lane_15m.crew_tick import (
 )
 
 
-def _desk(*, role="chief-of-staff", status="idle", job="—", thread=""):
+def _desk(*, role="chief-of-staff", status="idle", job="—", thread="", handoff="—"):
     return (
         "# Agent desk\n\n"
         "| Field | Value |\n"
@@ -27,7 +28,7 @@ def _desk(*, role="chief-of-staff", status="idle", job="—", thread=""):
         f"| Active role | {role} |\n"
         f"| Job | {job} |\n"
         f"| Status | {status} |\n"
-        "| Handoff | — |\n\n"
+        f"| Handoff | {handoff} |\n\n"
         "## Thread\n\n"
         f"{thread or '- 2026-09-10 11:00 ET  chief-of-staff: idle. next=idle'}\n"
     )
@@ -85,6 +86,50 @@ def test_status_done_is_closeout():
     assert decision["action"] == ACTION_CLOSEOUT
     assert decision["reason"] == "worker_done"
     assert decision["assign"] is False
+
+
+def test_lab_done_with_lab_proposed_assigns_operator_not_closeout():
+    wake = {
+        "roles_owed": [
+            _owed("operator", reasons=["lab_proposed LEARNING_LANE_15M_LAB_PROPOSED_04.md"])
+        ],
+        "crew_tick": {
+            "needed": True,
+            "reason_ids": [REASON_A_DONE],
+            "handled_reason_ids": [],
+        },
+    }
+    decision = decide_cos_action(
+        _desk(
+            role="lab",
+            status="done",
+            job="one 15m PROPOSED",
+            handoff="PROPOSED 04 dated. Operator RUN-ONLY. next=operator",
+            thread="- 2026-09-12 07:45 ET  lab → operator: PROPOSED 04. next=operator",
+        ),
+        wake=wake,
+        crew_tick=wake["crew_tick"],
+    )
+    assert decision["action"] == ACTION_ASSIGN
+    assert decision["role"] == "operator"
+    assert decision["reason"] == "lab_proposed_operator_first"
+    assert decision["job"] == OPERATOR_LAB_PROPOSED_JOB
+
+
+def test_lab_done_next_operator_without_wake_assigns_operator():
+    decision = decide_cos_action(
+        _desk(
+            role="lab",
+            status="done",
+            job="one 15m PROPOSED",
+            handoff="PROPOSED 04 dated. Operator RUN-ONLY. next=operator",
+            thread="- 2026-09-12 07:45 ET  lab → operator: PROPOSED 04. next=operator",
+        )
+    )
+    assert decision["action"] == ACTION_ASSIGN
+    assert decision["role"] == "operator"
+    assert decision["reason"] == "lab_proposed_operator_first"
+    assert decision["job"] == OPERATOR_LAB_PROPOSED_JOB
 
 
 def test_operator_name_clear_is_closeout_not_score():
@@ -200,6 +245,28 @@ def test_lab_proposed_operator_beats_f():
         },
     }
     decision = decide_cos_action(_desk(), wake=wake, crew_tick=wake["crew_tick"])
+    assert decision["action"] == ACTION_ASSIGN
+    assert decision["role"] == "operator"
+    assert decision["reason"] == "lab_proposed_operator_first"
+    assert decision["job"] == OPERATOR_LAB_PROPOSED_JOB
+
+
+def test_sitting_lab_file_beats_f_on_idle_desk(tmp_path):
+    docs = tmp_path / "golf-offshoot" / "docs"
+    docs.mkdir(parents=True)
+    (docs / "LEARNING_LANE_15M_LAB_PROPOSED_04.md").write_text(
+        "PROPOSED R-SKIP-CIVIL-BOUNDARIES execution=false\n",
+        encoding="utf-8",
+    )
+    wake = {
+        "roles_owed": [],
+        "crew_tick": {
+            "needed": True,
+            "reason_ids": [REASON_F],
+            "handled_reason_ids": [],
+        },
+    }
+    decision = decide_cos_action(_desk(), wake=wake, crew_tick=wake["crew_tick"], root=tmp_path)
     assert decision["action"] == ACTION_ASSIGN
     assert decision["role"] == "operator"
     assert decision["reason"] == "lab_proposed_operator_first"

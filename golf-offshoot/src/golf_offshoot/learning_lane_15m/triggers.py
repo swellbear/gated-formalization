@@ -57,6 +57,11 @@ PARK_RERULE_S = 24 * 3600
 PARK_REL = Path("golf-offshoot") / "docs" / "LEARNING_LANE_15M_METHOD_PARK.md"
 CAVEATS_REL = Path("golf-offshoot") / "docs" / "LEARNING_LANE_15M_SOURCE_DIGEST_CAVEATS.md"
 PROPOSED_GLOB = "LEARNING_LANE_15M_OPERATOR_NOTE_PROPOSED_*.md"
+LAB_PROPOSED_GLOB = "LEARNING_LANE_15M_LAB_PROPOSED_*.md"
+LAB_PROPOSED_NAME = re.compile(
+    r"^LEARNING_LANE_15M_LAB_PROPOSED_(\d+)\.md$",
+    re.IGNORECASE,
+)
 REGISTRY_REL = Path("golf-offshoot") / "docs" / "LEARNING_LANE_15M_RULES.json"
 BAR_JSON_REL = Path("golf-offshoot") / "docs" / "LEARNING_LANE_15M_EVIDENCE_BAR.json"
 MANIFEST_REL = Path("docs") / "observability-hub" / "data" / "manifest.json"
@@ -574,6 +579,36 @@ def board_render_refused(*, root: Path | None = None) -> list[dict[str, Any]]:
             "whatever was there before and illustrator cannot clear that by running",
         )
     ]
+
+
+def lab_proposed(*, root: Path | None = None) -> list[dict[str, Any]]:
+    """A dated Lab PROPOSED with no matching Operator RUN-ONLY note.
+
+    ``execution=false`` does not hide it. Operator RUN-ONLY is owed. This
+    detector does not flip ``execution`` and does not seat a skip as live.
+    """
+    base = root or repo_root()
+    docs = base / "golf-offshoot" / "docs"
+    if not docs.is_dir():
+        return []
+    events: list[dict[str, Any]] = []
+    for path in sorted(docs.glob(LAB_PROPOSED_GLOB)):
+        match = LAB_PROPOSED_NAME.match(path.name)
+        if not match:
+            continue
+        note_name = f"LEARNING_LANE_15M_OPERATOR_NOTE_PROPOSED_{match.group(1)}.md"
+        if (docs / note_name).is_file():
+            continue
+        events.append(
+            _event(
+                EVENT_LAB_PROPOSED,
+                path.name,
+                f"{path.name} is dated and has no matching Operator RUN-ONLY note "
+                f"({note_name}); Operator is owed. execution=false does not hide a "
+                "sitting PROPOSED. This detector does not seat the skip as live",
+            )
+        )
+    return events
 
 
 def falsifier_fired(*, root: Path | None = None) -> list[dict[str, Any]]:

@@ -34,7 +34,7 @@ A Lab PROPOSED goes to Operator as **RUN-ONLY** (not park) when it is determinis
 ## After a worker is done
 
 1. Read their `Handoff`.
-2. If the newest Soften Critic finding is zero UPHELD and Operator did not amend the bar — **close out** (`Status=idle`) **unless** `F_continuation`, `I_farm_open`, or `J_farm_promote` is owed or Operator is owed `lab_proposed`. Do not assign Operator to record nothing, and do not assign another attack on the same hashes. A starved gym assigns Lab. Farm hunger assigns Lab. A queued keeper assigns Lab then Operator RUN-ONLY. An open honer freeze is clerical, not a Lab invent. A sitting PROPOSED assigns Operator.
+2. If the newest Soften Critic finding is zero UPHELD and Operator did not amend the bar — **close out** (`Status=idle`) **unless** `F_continuation`, `I_farm_open`, or `J_farm_promote` is owed or Operator is owed `lab_proposed`. Lab `Status=done` with `next=operator` is **assign Operator**, not closeout. Do not assign Operator to record nothing, and do not assign another attack on the same hashes. A starved gym assigns Lab. Farm hunger assigns Lab. A queued keeper assigns Lab then Operator RUN-ONLY. An open honer freeze is clerical, not a Lab invent. A sitting PROPOSED assigns Operator.
 3. If handoff is another role and it is on the routing table — assign it.
 4. If the next step is on leave-off or inside Hard NOs — assign it. Do not ask Founder.
 5. If and only if the next step is a Protocol Founder-stop — one question, `waiting-founder`, stop.

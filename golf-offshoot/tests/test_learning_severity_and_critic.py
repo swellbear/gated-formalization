@@ -173,6 +173,48 @@ def test_a_lab_proposed_arriving_also_owes_operator():
     assert SOFTEN_CRITIC_ROLE in owed
 
 
+def test_execution_false_civil_proposed_emits_lab_proposed(tmp_path):
+    """R-SKIP-CIVIL-BOUNDARIES shape: dated Lab note, execution=false, no Operator note."""
+    docs = tmp_path / "golf-offshoot" / "docs"
+    docs.mkdir(parents=True)
+    (docs / "LEARNING_LANE_15M_LAB_PROPOSED_04.md").write_text(
+        "PROPOSED 04 R-SKIP-CIVIL-BOUNDARIES execution=false\n",
+        encoding="utf-8",
+    )
+    (docs / "LEARNING_LANE_15M_RULES.json").write_text(
+        json.dumps(
+            {
+                "rules": [
+                    {
+                        "id": "R-SKIP-CIVIL-BOUNDARIES",
+                        "kind": "selection",
+                        "selects": True,
+                        "execution": False,
+                    }
+                ]
+            }
+        ),
+        encoding="utf-8",
+    )
+    events = triggers.lab_proposed(root=tmp_path)
+    assert len(events) == 1
+    assert events[0]["kind"] == triggers.EVENT_LAB_PROPOSED
+    assert events[0]["ticker"] == "LEARNING_LANE_15M_LAB_PROPOSED_04.md"
+    assert "operator" in roles_owed_for(events[0]["kind"])
+    registry = json.loads((docs / "LEARNING_LANE_15M_RULES.json").read_text(encoding="utf-8"))
+    assert registry["rules"][0]["execution"] is False
+
+
+def test_matching_operator_note_clears_lab_proposed(tmp_path):
+    docs = tmp_path / "golf-offshoot" / "docs"
+    docs.mkdir(parents=True)
+    (docs / "LEARNING_LANE_15M_LAB_PROPOSED_03.md").write_text("PROPOSED 03\n", encoding="utf-8")
+    (docs / "LEARNING_LANE_15M_OPERATOR_NOTE_PROPOSED_03.md").write_text(
+        "RUN-ONLY\n", encoding="utf-8"
+    )
+    assert triggers.lab_proposed(root=tmp_path) == []
+
+
 def test_an_unreviewed_artifact_is_named_and_a_reviewed_one_is_not(tmp_path):
     bar = tmp_path / critic.BAR_MD_REL
     bar.parent.mkdir(parents=True, exist_ok=True)

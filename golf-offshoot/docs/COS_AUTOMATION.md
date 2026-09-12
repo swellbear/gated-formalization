@@ -27,6 +27,7 @@ ZERO-OBJECTION STOP (read this before assigning):
   If the newest Soften Critic finding is zero UPHELD and Operator did not
   amend the bar (record-only ANSWER, or no ANSWER owed): close out
   UNLESS F_continuation is owed or Operator is owed lab_proposed.
+  Lab Status=done with next=operator assigns Operator, not closeout.
   Status=idle. Job=—. Active role=chief-of-staff.
   Do not assign Operator to write another ANSWER that records nothing.
   Do not assign Soften Critic on those same hashes.
