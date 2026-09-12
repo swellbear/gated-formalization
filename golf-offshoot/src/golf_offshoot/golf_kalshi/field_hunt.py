@@ -9,6 +9,7 @@ from golf_offshoot.data_feeds.field_fallback import (
     attach_history_ids,
     history_name_ids,
     is_skip_field_name,
+    provisional_player_id,
 )
 from golf_offshoot.data_feeds.names import normalize_name
 from golf_offshoot.golf_kalshi.espn_bind import bind_espn_event, event_key_for
@@ -23,6 +24,27 @@ def history_floor_ok(n_names: int, n_recovered: int) -> bool:
         return False
     need = min(max(1, n // 2), 20)
     return recovered >= need
+
+
+def listed_name_candidates(
+    names: list[str],
+    recovered: dict[str, str] | None = None,
+) -> dict[str, str]:
+    """normalized_name -> id. Keep listed names even when history ids are thin or deferred."""
+    recovered = dict(recovered or {})
+    out: dict[str, str] = {}
+    for raw in names:
+        nm = str(raw or "").strip()
+        if not nm or is_skip_field_name(nm):
+            continue
+        key = normalize_name(nm)
+        if not key:
+            continue
+        out[key] = recovered.get(key) or provisional_player_id(nm)
+    for key, pid in recovered.items():
+        if key and pid:
+            out[str(key)] = str(pid)
+    return out
 
 
 def kalshi_listed_names(markets: list[dict[str, Any]]) -> list[str]:
@@ -41,15 +63,17 @@ def kalshi_listed_names(markets: list[dict[str, Any]]) -> list[str]:
 
 
 def _attach_listed(names: list[str], history) -> tuple[dict[str, str], int, bool]:
-    if not names or history is None:
+    if not names:
         return {}, 0, True
+    if history is None:
+        return listed_name_candidates(names), 0, False
     day = datetime.now(timezone.utc).strftime("%Y-%m-%d")
     hist_ids = history_name_ids(history, before=day)
     attached = attach_history_ids(names, hist_ids)
     recovered = {normalize_name(nm): pid for nm, pid, ok in attached if ok}
     n_recovered = len(recovered)
     thin = not history_floor_ok(len(names), n_recovered)
-    return ({} if thin else recovered), n_recovered, thin
+    return listed_name_candidates(names, recovered), n_recovered, thin
 
 
 def hunt_field(
@@ -104,9 +128,11 @@ def hunt_field(
     if history is None:
         out["awaiting_history"] = True
         out["thin"] = False
-        out["candidates"] = {}
+        out["candidates"] = listed_name_candidates(names)
+        out["listed_candidates"] = dict(out["candidates"])
         out["n_recovered"] = 0
         return out
     out["thin"] = listed_thin
     out["candidates"] = listed
+    out["listed_candidates"] = dict(listed)
     return out
