@@ -11,6 +11,7 @@ wider allow list. See golf-offshoot/docs/LEARNING_LANE_EXPANSION.md.
 from __future__ import annotations
 
 import re
+from decimal import Decimal, InvalidOperation
 from typing import Any
 
 from golf_offshoot.data_feeds.base import DataFeed, FeedError, unavailable_quality
@@ -137,6 +138,105 @@ def parse_dollar_unit(raw: Any) -> float | None:
     if p <= 0.0 or p >= 1.0:
         return None
     return p
+
+
+def quote_text(value: object | None) -> str:
+    """Print a Kalshi contract quote. Never cents. Never invent digits.
+
+    A string is Kalshi's own text and is returned stripped, unchanged.
+    A number uses Python's shortest unique decimal (``str(float)``), not
+    ``.16g`` binary dust and not rounded cents.
+    """
+    if value is None:
+        return "n/a"
+    if isinstance(value, bool):
+        return "n/a"
+    if isinstance(value, str):
+        text = value.strip()
+        return text if text else "n/a"
+    if isinstance(value, Decimal):
+        return format(value, "f")
+    try:
+        number = float(value)
+    except (TypeError, ValueError):
+        return "n/a"
+    if number != number or number in (float("inf"), float("-inf")):
+        return "n/a"
+    return format(Decimal(str(number)), "f")
+
+
+def quote_abs_diff(left: object | None, right: object | None) -> str:
+    """|left − right| from the printed decimals, not the binary difference."""
+    if left is None or right is None:
+        return "n/a"
+    try:
+        return quote_text(abs(Decimal(str(float(left))) - Decimal(str(float(right)))))
+    except (TypeError, ValueError, InvalidOperation):
+        return "n/a"
+
+
+def _frac_places(raw: str) -> int:
+    text = raw.strip()
+    if not text or "e" in text.lower():
+        return 0
+    if "." not in text:
+        return 0
+    return len(text.split(".", 1)[1])
+
+
+def dollar_quote_string(raw: Any) -> str | None:
+    """Keep Kalshi's dollar string when it is already a (0, 1) quote."""
+    if raw is None or raw == "":
+        return None
+    parsed = parse_dollar_unit(raw)
+    if parsed is None:
+        return None
+    if isinstance(raw, str):
+        text = raw.strip()
+        return text if text else None
+    return quote_text(parsed)
+
+
+def format_kalshi_mid(bid_s: str, ask_s: str) -> str:
+    """Mid of two Kalshi dollar strings. Keep source places; do not invent."""
+    mid = (Decimal(bid_s) + Decimal(ask_s)) / Decimal(2)
+    src_places = max(_frac_places(bid_s), _frac_places(ask_s))
+    if src_places <= 0:
+        return format(mid, "f")
+    quantum = Decimal(10) ** -src_places
+    quantized = mid.quantize(quantum)
+    if quantized == mid:
+        return f"{mid:.{src_places}f}"
+    return format(mid, "f")
+
+
+def paper_mark_quote(
+    *,
+    yes_bid_raw: Any = None,
+    yes_ask_raw: Any = None,
+    last_raw: Any = None,
+    mark: float | None = None,
+) -> str:
+    """Same display string Honer and paper should print for the posted mark.
+
+    When both bid and ask strings exist, the mark is their mid (same rule as
+    ``public_mid_or_last``). The mid string carries the finer quote's places
+    when that is exact, or the extra digit the mid actually needs. A last or
+    ask string is Kalshi's own text. Float fallback never invents zeros.
+    """
+    bid_s = dollar_quote_string(yes_bid_raw)
+    ask_s = dollar_quote_string(yes_ask_raw)
+    last_s = dollar_quote_string(last_raw)
+    if bid_s and ask_s:
+        try:
+            return format_kalshi_mid(bid_s, ask_s)
+        except (InvalidOperation, ValueError, ArithmeticError):
+            return quote_text(mark)
+    if last_s:
+        return last_s
+    if ask_s:
+        return ask_s
+    return quote_text(mark)
 
 
 def parse_settlement_sources(raw: Any) -> list[dict[str, str]]:
@@ -318,6 +418,12 @@ def parse_market(raw: dict[str, Any], *, event: dict[str, Any] | None = None) ->
     yes_bid = parse_dollar_unit(raw.get("yes_bid_dollars"))
     last = parse_dollar_unit(raw.get("last_price_dollars"))
     mark = public_mid_or_last(yes_bid=yes_bid, yes_ask=yes_ask, last=last)
+    mark_text = paper_mark_quote(
+        yes_bid_raw=raw.get("yes_bid_dollars"),
+        yes_ask_raw=raw.get("yes_ask_dollars"),
+        last_raw=raw.get("last_price_dollars"),
+        mark=mark,
+    )
     result = parse_kalshi_result(raw.get("result"))
     status = str(raw.get("status") or "").strip().lower()
     sources = parse_settlement_sources(
@@ -342,8 +448,12 @@ def parse_market(raw: dict[str, Any], *, event: dict[str, Any] | None = None) ->
         "yes_ask": yes_ask,
         "yes_bid": yes_bid,
         "last": last,
-        "volume": parse_optional_float(raw.get("volume_fp") or raw.get("volume")),
         "paper_mark": mark,
+        "paper_mark_text": mark_text,
+        "yes_ask_dollars": raw.get("yes_ask_dollars"),
+        "yes_bid_dollars": raw.get("yes_bid_dollars"),
+        "last_price_dollars": raw.get("last_price_dollars"),
+        "volume": parse_optional_float(raw.get("volume_fp") or raw.get("volume")),
         "implied_yes": mark,
         "decimal_odds": decimal,
         "display_only_prices": True,

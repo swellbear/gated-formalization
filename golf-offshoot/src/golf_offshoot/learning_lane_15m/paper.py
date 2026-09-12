@@ -11,7 +11,7 @@ import json
 from pathlib import Path
 from typing import Any
 
-from golf_offshoot.data_feeds.kalshi_15m import is_paper_autobet_candidate
+from golf_offshoot.data_feeds.kalshi_15m import is_paper_autobet_candidate, quote_text
 from golf_offshoot.learning_lane_15m.paths import (
     LANE_15M,
     PRIMARY_SERIES,
@@ -361,6 +361,9 @@ def paper_autobet_open_markets(
             continue
         if yes_f is None or dec_f is None or yes_f <= 0.0 or yes_f >= 1.0 or dec_f <= 1.0:
             continue
+        mark_text = str(market.get("paper_mark_text") or "").strip()
+        if not mark_text or mark_text.lower() == "n/a":
+            mark_text = quote_text(yes_f)
         verdict = consult_registry(
             active,
             posted_yes=yes_f,
@@ -378,6 +381,7 @@ def paper_autobet_open_markets(
                         "action": verdict["action"],
                         "reason": verdict["reason"],
                         "posted_yes": yes_f,
+                        "posted_yes_text": mark_text,
                         "close_at": str(market.get("close_time") or ""),
                         "at": now().isoformat(),
                         "pnl": None,
@@ -451,13 +455,13 @@ def paper_autobet_open_markets(
             ),
             reason_technical=(
                 f"lane={LANE_15M} series={PRIMARY_SERIES} ticker={ticker} "
-                f"paper_mark={yes_f} yes_bid={market.get('yes_bid')} "
+                f"paper_mark_text={mark_text} paper_mark={yes_f} yes_bid={market.get('yes_bid')} "
                 f"yes_ask={market.get('yes_ask')} fee_type=quadratic x1 "
                 f"price_level_structure=tapered_deci_cent paper_autobet observation "
                 f"rule_id={verdict.get('rule_id') or ''} "
                 f"rules.decide={verdict['action']} ({verdict['reason']})"
             ),
-            amount_plain=f"Paper stake ${stake:.2f} at mark {yes_f:.3f} (decimal {dec_f:.2f}).",
+            amount_plain=f"Paper stake ${stake:.2f} at mark {mark_text} (decimal {dec_f:.2f}).",
         )
         rec.movements = list(rec.movements) + [mv]
         rec.latest_advice = [mv]
@@ -489,6 +493,7 @@ def paper_autobet_open_markets(
                 "action": verdict["action"],
                 "reason": verdict["reason"],
                 "posted_yes": yes_f,
+                "posted_yes_text": mark_text,
                 "close_at": str(market.get("close_time") or ""),
                 "at": now().isoformat(),
                 "position_id": pos.position_id,

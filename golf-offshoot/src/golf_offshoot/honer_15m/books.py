@@ -84,6 +84,7 @@ def record_action(
     delta: float | None = None,
     gamma: float | None = None,
     spread: float | None = None,
+    posted_yes_text: str | None = None,
 ) -> dict[str, Any]:
     if has_ticket(book, ticker):
         return load_decisions(book)[ticker]
@@ -111,6 +112,9 @@ def record_action(
         "entry_edge": 0.0,
         "fee_omitted": True,
     }
+    text = str(posted_yes_text or "").strip()
+    if text:
+        row["posted_yes_text"] = text
     if book == "exam":
         if exam_k is None:
             from golf_offshoot.honer_15m.freeze import load_exam_state, load_trials

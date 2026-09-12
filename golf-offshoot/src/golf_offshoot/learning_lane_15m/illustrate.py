@@ -21,6 +21,7 @@ from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any
 
+from golf_offshoot.data_feeds.kalshi_15m import quote_text
 from golf_offshoot.learning_lane_15m.paths import (
     latest_dir_15m,
     paper_dir_15m,
@@ -144,6 +145,7 @@ class WindowRow:
     missing_join: bool = False
     #: Factory rule_decisions skip: no position, no booked pnl, not a would-have.
     skipped: bool = False
+    paper_mark_text: str = ""
 
 
 @dataclass(frozen=True)
@@ -167,6 +169,7 @@ class _PaperJoin:
     pnl: float | None
     open_position: bool
     source: str
+    mark_text: str = ""
 
 
 @dataclass(frozen=True)
@@ -219,16 +222,25 @@ def _window_bounds(window_id: str) -> tuple[datetime | None, datetime | None]:
     return (_parse_stamp(parts[1]), _parse_stamp(parts[2]))
 
 
-def _tagged_number(text: Any, key: str) -> float | None:
-    """Pull a recorded ``key=<number>`` out of a note. Absent or unparsable → None."""
+def _tagged_token(text: Any, key: str) -> str | None:
+    """Pull a recorded ``key=<token>`` out of a note. Absent → None."""
     prefix = f"{key}="
     for token in str(text or "").split():
         if token.startswith(prefix):
-            try:
-                return float(token[len(prefix) :].rstrip("."))
-            except ValueError:
-                return None
+            got = token[len(prefix) :].rstrip(".")
+            return got if got else None
     return None
+
+
+def _tagged_number(text: Any, key: str) -> float | None:
+    """Pull a recorded ``key=<number>`` out of a note. Absent or unparsable → None."""
+    token = _tagged_token(text, key)
+    if token is None:
+        return None
+    try:
+        return float(token)
+    except ValueError:
+        return None
 
 
 def _parse_signed(raw: Any) -> float | None:
@@ -314,6 +326,7 @@ def _paper_joins() -> dict[str, _PaperJoin]:
         raw_pnl = payload.get("settlement_pnl")
         pnl = float(raw_pnl) if isinstance(raw_pnl, (int, float)) else None
         marks: dict[str, float | None] = {}
+        mark_texts: dict[str, str] = {}
         sides: dict[str, str] = {}
         open_now: set[str] = set()
         for movement in payload.get("movements") or []:
@@ -323,6 +336,9 @@ def _paper_joins() -> dict[str, _PaperJoin]:
             if not ticker:
                 continue
             marks[ticker] = _tagged_number(movement.get("reason_technical"), "paper_mark")
+            stored = _tagged_token(movement.get("reason_technical"), "paper_mark_text")
+            if stored:
+                mark_texts[ticker] = stored
             sides[ticker] = _side(movement.get("player_name"))
         for position in book.get("positions") or []:
             if not isinstance(position, dict) or not position.get("player_id"):
@@ -344,6 +360,7 @@ def _paper_joins() -> dict[str, _PaperJoin]:
                 pnl=pnl,
                 open_position=ticker in open_now,
                 source=f"paper/{path.name}",
+                mark_text=mark_texts.get(ticker, ""),
             )
     return joins
 
@@ -574,6 +591,7 @@ def collect_board() -> list[Lineage]:
                 # The manifest publishes no side for its rows, so a published join has none.
                 paper_side=join.side if join else "",
                 paper_mark=join.mark if join else None,
+                paper_mark_text=(join.mark_text if join else ""),
                 open_at=open_at,
                 close_at=close_at,
                 lineage=lineage,
@@ -655,6 +673,17 @@ def _window_text(row: WindowRow, tz: Any) -> str:
     return "no bounds"
 
 
+def _mark_cell(row: WindowRow) -> str:
+    text = (row.paper_mark_text or "").strip()
+    if text:
+        return text
+    if row.paper_mark is not None:
+        return quote_text(row.paper_mark)
+    if not row.paper_join or row.missing_join:
+        return NO_PAPER
+    return "not recorded"
+
+
 def _cells(row: WindowRow, tz: Any) -> dict[str, str]:
     join = "paper join" if row.paper_join else "journal only"
     if row.skipped:
@@ -670,9 +699,7 @@ def _cells(row: WindowRow, tz: Any) -> dict[str, str]:
         "kalshi_status": row.kalshi_status or "not recorded",
         "kalshi_result": "",  # drawn as a labelled chip
         "expiry": row.expiry_value or ("n/a" if not row.kalshi_result else "not recorded"),
-        "mark": f"{row.paper_mark:.4g}"
-        if row.paper_mark is not None
-        else (NO_PAPER if not row.paper_join or row.missing_join else "not recorded"),
+        "mark": _mark_cell(row),
         # The row keeps the manifest's full sentence; the cell draws the short form because the
         # published wording is wider than this column and the footer carries the rest.
         "paper_settle": MISSING_JOIN_WORD if row.missing_join else (row.paper_settle or NO_PAPER),
@@ -708,6 +735,7 @@ def board_fingerprint(blocks: list[Lineage]) -> str:
                     "skipped": row.skipped,
                     "side": row.paper_side,
                     "mark": row.paper_mark,
+                    "mark_text": row.paper_mark_text,
                     "paper_settle": row.paper_settle,
                     "pnl": row.paper_pnl,
                     "pnl_text": row.paper_pnl_text,
