@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "lane": "learning_lane_15m",
-  "stamped_at": "2026-09-10T13:36:00-04:00",
+  "stamped_at": "2026-09-12T07:22:06-04:00",
   "framing": "honesty instrument, not a productivity metric, not progress",
   "open": {
     "total": 4,
@@ -13,7 +13,7 @@
   "closed": {
     "unreachable": 3,
     "trigger_fired_since_last_stamp": 3,
-    "closed_on_falsifier": 1,
+    "closed_on_falsifier": 2,
     "recorded_defect": 2
   },
   "run_only_executed": 3,
@@ -34,6 +34,7 @@
     "12_soften_critic_hire": "CLOSED / founder trigger fired — Soften Critic hired 2026-09-08; not an ADMIT; bar still not binding",
     "13_proposed_02": "RUN-ONLY executed — see LEARNING_LANE_15M_OPERATOR_NOTE_PROPOSED_02.md; R-SKIP-2TO1-FAVORITE L1 scored and PARK on falsifier (row 15); execution dropped 2026-09-10 so PROPOSED 03 could take the selecting seat",
     "15_favorite_l1_falsifier": "CLOSED / on a falsifier — crew; R-SKIP-2TO1-FAVORITE L1 n=70; do not retune favorite_odds; not an ADMIT",
-    "16_proposed_03": "RUN-ONLY executed — see LEARNING_LANE_15M_OPERATOR_NOTE_PROPOSED_03.md; R-SKIP-HOUR-CLOSE execution true; lab_proposed LEARNING_LANE_15M_LAB_PROPOSED_03.md; not an ADMIT"
+    "16_proposed_03": "RUN-ONLY executed — see LEARNING_LANE_15M_OPERATOR_NOTE_PROPOSED_03.md; R-SKIP-HOUR-CLOSE L1 PARK on falsifier (row 17); execution dropped 2026-09-12; not an ADMIT",
+    "17_hour_close_l1_falsifier": "CLOSED / on a falsifier — crew; R-SKIP-HOUR-CLOSE L1 n=70 skip_count=1 clauses 1/4/5 fail; do not retune skip_close_minute; execution dropped; not an ADMIT"
   }
 }

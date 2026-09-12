@@ -678,5 +678,7 @@
   "allow_nonbinding": true,
   "commit_sha": "9051c5450679ce7070de15d7706fb87eb8bd81d3",
   "committed_at": "2026-09-12T07:09:48.909611-04:00",
-  "caveat": "L1 written even though a binding clause or critic \u03b4 FAIL. Not an ADMIT. Operator PARK or CONTINUE from this card. This write does not drop execution."
+  "caveat": "L1 written even though a binding clause or critic \u03b4 FAIL. Not an ADMIT. Operator PARK or CONTINUE from this card. This write does not drop execution.",
+  "operator_look": "PARK",
+  "operator_look_at": "2026-09-12T07:22:06.040173-04:00"
 }

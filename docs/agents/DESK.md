@@ -6,11 +6,11 @@ Thread lines are **one sentence, newest first, max 10**. Long findings belong in
 
 | Field | Value |
 |-------|--------|
-| Updated | 2026-09-12 07:15 ET |
+| Updated | 2026-09-12 07:22 ET |
 | Active role | operator |
 | Job | PARK or CONTINUE from the L1 scorecard; never invent tape; do not stop PaperWatch; do not arm |
-| Status | assigned |
-| Handoff | K_look_due assigned. L1 card LEARNING_LANE_15M_SCORECARD_R-SKIP-HOUR-CLOSE_L1.json at 70fa007 has no operator_look. Operator PARK or CONTINUE from that card. Do not invent tape. Do not stop PaperWatch. Hour-close still executing. Consult off. HOLD stands. Trading NOT ARMED. next=operator |
+| Status | done |
+| Handoff | golf-offshoot/docs/LEARNING_LANE_15M_OPERATOR_NOTE_SCORE_R-SKIP-HOUR-CLOSE_L1.md — PARK on registry falsifier (n=70, skip_count=1, clauses 1/4/5 fail); execution dropped; PaperWatch not stopped. next=chief-of-staff |
 | Waiting on Founder | **N** |
 
 ## last_cos (CoS stamp — doorbell silence)
@@ -46,7 +46,7 @@ Part 3 landed. Three boxes are computed in `learning_lane_15m/honesty.py` and th
 | One hub process on `learning_lane_15m` | **PASS** — *derived* from the process table. One hub **tree**, not one OS process: `py` launcher PID **24188** over supervisor PID **24532** and listener PID **20100** holding `127.0.0.1:8765`. Watch loop pid **11160** (`watch.json` / `process_matches_disk`, 11:42). Child re-exec'd after sidecar/`app.py`. Criterion preserved as written. Do not start a second tree. |
 | No invented charts or pnl | **PASS** — *judgment, with evidence*. `digest_matches_ledger` PASS 2026-09-10T11:42:52−04:00 against the live book (82.18 / −17.82 both sides). CoS closeout stamps the current doorbell so the same A/B/E set does not re-ring. Fee-accurate totals are not on the hub, digest, manifest or `records[]`. |
 
-**Gate is open on this restamp.** Golf idle stays **ON** (15m paper PROPOSED is not golf idle-breach). Evidence bar is **binding** for scoring. `R-SKIP-2TO1-FAVORITE` L1 is **PARK** on its falsifier (Admissible completed, not Established, not an ADMIT). `R-SKIP-HOUR-CLOSE` is **RUN-ONLY** (`execution=true`, paper only). Consult **off** (no seated L1 keeper; photocopy stays dark). Honer fee applied at score time; keep closed until bind. Trading **NOT ARMED**.
+**Gate is open on this restamp.** Golf idle stays **ON** (15m paper PROPOSED is not golf idle-breach). Evidence bar is **binding** for scoring. `R-SKIP-2TO1-FAVORITE` L1 is **PARK** on its falsifier (Admissible completed, not Established, not an ADMIT). `R-SKIP-HOUR-CLOSE` L1 is **PARK** on its falsifier (`execution=false`; chair empty; baseline still fills). Consult **off**. Honer fee applied at score time; keep closed until bind. Trading **NOT ARMED**.
 
 **The fee-schedule hash is pinned from Founder browser bytes.** Source `founder_browser_bytes`, file `golf-offshoot/docs/kalshi-fee-schedule.pdf`, 281129 bytes. Last gym GET remains HTTP 429 (drift only). Do not GET the PDF every 90s. Do not spoof a browser. **Do not write a placeholder.**
 
@@ -56,10 +56,12 @@ Two suites, both on the tick.
 
 **Lane** (`latest/invariants.json`) — `digest_matches_ledger` PASS at 11:42:53 (82.18 / −17.82). `watch_is_collecting` PASS (cycle 3 after code re-exec). `clerical_roles_clear` may still fail until the runner sees the park name-clear. No prose cleared it.
 
-**Method** — 13 method checks (`consult_enabled_requires_gates` and `honer_consult_not_live_theta` added this fold; dark consult is PASS). `half_spread_profile_recorded` / `hub_autostart_registered` remain tenth and eleventh. Fee pin is `founder_browser_bytes`. `honesty_stamp_is_fresh` is a desk check and does not set `passed`. `critic_verdicts` is `{id, state}` + reviewed hashes — no `detail`. Bar is **binding**. Soften Critic of the consult enabler is a **later session**. Operator RUN-ONLY on PROPOSED 03 is done. Live trial seated. PARK is not an ADMIT and is not a Critic job.
+**Method** — 13 method checks (`consult_enabled_requires_gates` and `honer_consult_not_live_theta` added this fold; dark consult is PASS). `half_spread_profile_recorded` / `hub_autostart_registered` remain tenth and eleventh. Fee pin is `founder_browser_bytes`. `honesty_stamp_is_fresh` is a desk check and does not set `passed`. `critic_verdicts` is `{id, state}` + reviewed hashes — no `detail`. Bar is **binding**. Soften Critic of the consult enabler is a **later session**. Operator L1 PARK on hour-close is done. Selecting chair empty. PARK is not an ADMIT and is not a Critic job.
 
 ## Thread
 
+- 2026-09-12 07:22 ET  operator → chief-of-staff: PARK R-SKIP-HOUR-CLOSE L1 on registry falsifier (n=70, skip_count=1, clauses 1/4/5 fail); execution dropped; PaperWatch not stopped. next=chief-of-staff
+- 2026-09-12 07:21 ET  operator → chief-of-staff: started PARK or CONTINUE from L1 scorecard R-SKIP-HOUR-CLOSE. next=operator
 - 2026-09-12 07:15 ET  chief-of-staff → operator: PARK or CONTINUE from L1 scorecard R-SKIP-HOUR-CLOSE (70fa007); never invent tape; do not stop PaperWatch; do not arm. next=operator
 - 2026-09-11 00:54 ET  chief-of-staff: Lab farm_menu_exhausted done; unused legal kinds empty; farm_hunger false; I stops until park / legal_after / honer family-amend; chair untouched. next=idle
 - 2026-09-11 00:47 ET  lab → chief-of-staff: wrote LEARNING_LANE_15M_FARM_MENU_EXHAUSTED.json (cannot name another unburned non-clone quartet kind; civil waits; chair untouched). next=chief-of-staff
@@ -68,6 +70,4 @@ Two suites, both on the tick.
 - 2026-09-11 00:11 ET  chief-of-staff: Lab invent CLOCK-EXCEPT-LAST-QUARTER done; F-CLOCK-EXCEPT-LAST-QUARTER-0-15-30 seated execution false; chair untouched; I invent-next-kind later. next=idle
 - 2026-09-10 23:59 ET  lab → chief-of-staff: invented CLOCK-EXCEPT-LAST-QUARTER as F-CLOCK-EXCEPT-LAST-QUARTER-0-15-30 in LEARNING_LANE_15M_FARM.json (execution false; chair untouched). next=chief-of-staff
 - 2026-09-10 23:57 ET  lab → chief-of-staff: started inventing the next farm kind (product-structure skip rate; execution false; do not steal the chair). next=lab
-- 2026-09-10 23:53 ET  chief-of-staff → lab: unused legal kinds empty; invent the next kind as a farm notebook (execution false; do not steal the chair) or write farm_menu_exhausted. next=lab
-- 2026-09-10 23:48 ET  chief-of-staff: Lab invent CLOCK-EXCEPT-FIRST-QUARTER done; F-CLOCK-EXCEPT-FIRST-QUARTER-0-30-45 seated execution false; chair untouched; I invent-next-kind later. next=idle
 *Older lines rolled off at the 10-line cap. Full history is in the git log for `docs/agents/DESK.md`.*
