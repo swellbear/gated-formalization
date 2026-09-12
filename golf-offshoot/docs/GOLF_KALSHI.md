@@ -67,14 +67,14 @@ Dated `2026-09-11`. Seed paper **$1000**. `recipe_v1()` is the live loader. Tick
 - **Fast** — 25% of the 20% cap (`$50`). Round-leader / same-day. Fail-clock 18/36/54 holes or +20% bid pop.
 - **Week** — 50% (`$100`). This event winner / make-cut / top-N.
 - **Slow** — 25% (`$50`). Season-long / captain / Ryder / Presidents Cup / 2027.
-- Max 3 open tickets per `event_ticker`. 5% per name.
-- Size is 0.25 Kelly (`fractional_kelly` on listed-haircut p vs `1/ask`) inside remaining sleeve / name / displayed room. Not a richest-pnl ranker of the catalog.
+- One `event_ticker` may hold open stake up to the 5% name cap. Ticket count is not a live gate. Do not re-trim tickets already open. 5% per name.
+- Size is 0.25 Kelly (`fractional_kelly` on listed-haircut p vs `1/ask`) inside remaining sleeve / name / event-dollar / displayed room. Not a richest-pnl ranker of the catalog.
 - Screen is the complete gate (name, p, Kalshi ask, fee, after-fee edge). Gross bar 3pp then `edge_after_fee > 0`. Stake lives in `allocate`.
 - Skip reasons include `mix_sleeve_full`, `mix_event_cap`, `mix_not_picked`, `mix_rebuy_blocked`. Same-ticker rebuy is blocked until live `edge_after_fee` ≥ `min_edge`.
 - Overweight week: no net-new and no ADD in week until under share. Reallocate (swap quality) still allowed. Empty fast/slow may catch up to their shares even if total is already at 20%. Catch-up stops when week is no longer overweight.
 - Daily loss 5%. Drawdown halt 8%. **Paper** pauses **120s**, records the halt, then continues (peak ratchets so the same hole does not re-trip). Paper bankroll may go negative and still size from the seed. **Live** (`TRADING_ARMED`) keeps next-UTC-day resume and does not size a spent book. Halt skips new fills / ADD / reallocate; collapse, fail-clock, and Kalshi settle still run.
 - Path: collapse vs live ask after golf has started; sell at `yes_bid`. Missing bid, missing multiplier, or `displayed_size` too small → HOLD. Pre-tee quote drift is HOLD. Pre-tee reallocate is allowed. ADD if live edge improved 1.5pp, golf started, and the sleeve is under share. Official settle is Kalshi `result`. `paper_exit` is a path record, not a Brier label.
-- One-time trim on the v1 → v1.1 bump: per `event_ticker` with more than 3 open tickets, paper-exit the worst live `edge_after_fee` (missing mark = worst) until 3 remain. Reason `recipe_event_cap`. Does not run every tick. Bankroll is not reset.
+- One-time trim on the v1 → v1.1 bump: per `event_ticker` with more than 3 open tickets, paper-exit the worst live `edge_after_fee` (missing mark = worst) until 3 remain. Reason `recipe_event_cap`. Does not run every tick. Bankroll is not reset. The dollar event cap does not re-open that trim.
 - In-play watch stays **45s**. Monte Carlo budget is 8s / `max_brain=2`. Held events are scored first; a cache hit does not consume a brain slot.
 - Hub mix line: `worthy N · picked F/W/S · exits E · realloc R · adds A` plus last-tick skip counts. Sleeve bars vs live `sizing_bank` targets (seed card is still `$50/$100/$50`). Open tickets on Home. Closed tickets (result + after-fee P/L) on Scoreboard. Halt log on Scoreboard. `?lane=golf_kalshi` is Golf. Golf Farm / Honer point at that tape; they do not say there is no tape. No cash / arm / mode slider.
 

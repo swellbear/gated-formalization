@@ -24,6 +24,7 @@ FAST_RESERVE_FRAC = 0.20
 CAP_SHARE_FAST = 0.25
 CAP_SHARE_WEEK = 0.50
 CAP_SHARE_SLOW = 0.25
+# One-time v1 trim only. New fills cap event dollars at single_name_frac, not ticket count.
 MAX_TICKETS_PER_EVENT = 3
 KELLY_FRACTION = 0.25
 FLIP_HURDLE = 1.20
@@ -119,6 +120,7 @@ def recipe_public() -> dict[str, object]:
         "cap_slow": round(r.sleeve_target("slow", r.seed), 2),
         "total_cap": round(cap, 2),
         "max_tickets_per_event": r.max_tickets_per_event,
+        "event_cap_frac": r.single_name_frac,
         "kelly_fraction": r.kelly_fraction,
         "single_name": r.single_name_frac,
         "total_exposure": r.total_exposure_frac,
