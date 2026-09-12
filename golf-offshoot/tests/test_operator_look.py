@@ -86,3 +86,72 @@ def test_operator_continue_from_passing_card(tmp_path):
     assert out["verdict"] == LOOK_CONTINUE
     assert out["mutated"] is False
     assert load_rules(root=tmp_path)["rules"][0]["execution"] is True
+
+
+def test_already_stamped_park_finishes_execution_drop(tmp_path):
+    _seed(
+        tmp_path,
+        execution=True,
+        card={
+            "n": 70,
+            "passes_every_binding_clause": False,
+            "operator_look": LOOK_PARK,
+        },
+    )
+    out = apply_operator_look(root=tmp_path)
+    assert out["ok"] is True
+    assert out["verdict"] == LOOK_PARK
+    assert out["reason"] == "already_stamped"
+    assert out["mutated"] is True
+    assert load_rules(root=tmp_path)["rules"][0]["execution"] is False
+    card = json.loads(
+        (tmp_path / "golf-offshoot/docs/LEARNING_LANE_15M_SCORECARD_R-SKIP-HOUR-CLOSE_L1.json").read_text(
+            encoding="utf-8"
+        )
+    )
+    assert card["operator_look"] == LOOK_PARK
+
+
+def test_already_stamped_continue_does_not_drop_execution(tmp_path):
+    _seed(
+        tmp_path,
+        execution=True,
+        card={
+            "n": 70,
+            "passes_every_binding_clause": True,
+            "operator_look": LOOK_CONTINUE,
+        },
+    )
+    out = apply_operator_look(root=tmp_path)
+    assert out["reason"] == "already_stamped"
+    assert out["verdict"] == LOOK_CONTINUE
+    assert out["mutated"] is False
+    assert load_rules(root=tmp_path)["rules"][0]["execution"] is True
+
+
+def test_park_drops_execution_before_stamping(monkeypatch, tmp_path):
+    _seed(
+        tmp_path,
+        execution=True,
+        card={"n": 70, "passes_every_binding_clause": False},
+    )
+
+    def boom(*a, **k):
+        raise OSError("registry write failed")
+
+    monkeypatch.setattr(
+        "golf_offshoot.learning_lane_15m.operator_look.set_selecting_execution",
+        boom,
+    )
+    try:
+        apply_operator_look(root=tmp_path)
+        raise AssertionError("registry failure must surface")
+    except OSError:
+        pass
+    card = json.loads(
+        (tmp_path / "golf-offshoot/docs/LEARNING_LANE_15M_SCORECARD_R-SKIP-HOUR-CLOSE_L1.json").read_text(
+            encoding="utf-8"
+        )
+    )
+    assert "operator_look" not in card
+    assert load_rules(root=tmp_path)["rules"][0]["execution"] is True

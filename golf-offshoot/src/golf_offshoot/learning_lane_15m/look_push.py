@@ -7,6 +7,7 @@ fee totals. Never ``HEAD:master``. Fail-open so PaperWatch stays up.
 
 from __future__ import annotations
 
+import json
 import os
 import re
 import shutil
@@ -26,6 +27,8 @@ L1_NAME_RE = re.compile(r"^LEARNING_LANE_15M_SCORECARD_[A-Za-z0-9._-]+_L1\.json$
 L1_REL_RE = re.compile(
     r"^golf-offshoot/docs/LEARNING_LANE_15M_SCORECARD_[A-Za-z0-9._-]+_L1\.json$"
 )
+#: Cloud Operator stamps. Gym must not copy over these or CONTINUE cannot stick.
+PROTECTED_OPERATOR_STAMPS = frozenset({"PARK", "CONTINUE"})
 
 
 def sibling_push_argv() -> list[str]:
@@ -60,6 +63,45 @@ def evaluate_look_push_gates(
     if not rels:
         return {"ok": False, "push": False, "reason": "nothing_to_push"}
     return {"ok": True, "push": True, "reason": "l1_allowlist", "rels": [p.as_posix() for p in rels]}
+
+
+def sibling_l1_stamp_blocks_overwrite(dest: Path) -> bool:
+    """True when dest already has Operator PARK/CONTINUE. Do not copy over it."""
+    if not dest.is_file():
+        return False
+    try:
+        payload = json.loads(dest.read_text(encoding="utf-8"))
+    except (OSError, ValueError):
+        return False
+    if not isinstance(payload, dict):
+        return False
+    stamp = str(payload.get("operator_look") or "").strip().upper()
+    return stamp in PROTECTED_OPERATOR_STAMPS
+
+
+def copy_allowlisted_l1(
+    *,
+    src_root: Path,
+    dest_root: Path,
+    rels: list[Path],
+) -> dict[str, list[str]]:
+    """Copy gym L1 JSON onto a sibling tree. Never clobber PARK/CONTINUE."""
+    copied: list[str] = []
+    preserved: list[str] = []
+    for rel in rels:
+        if not is_l1_allowlist_rel(rel):
+            continue
+        src = src_root / rel
+        dest = dest_root / rel
+        if not src.is_file():
+            continue
+        dest.parent.mkdir(parents=True, exist_ok=True)
+        if sibling_l1_stamp_blocks_overwrite(dest):
+            preserved.append(rel.as_posix())
+            continue
+        shutil.copy2(src, dest)
+        copied.append(rel.as_posix())
+    return {"copied": copied, "preserved": preserved}
 
 
 def l1_scorecard_rels(*, root: Path | None = None) -> list[Path]:
@@ -160,17 +202,13 @@ def maybe_push_look(
             if getattr(added, "returncode", 1) != 0:
                 result["reason"] = "worktree_add_failed"
                 return result
-            copied: list[Path] = []
-            for rel in rels:
-                src = root / rel
-                dest = worktree / rel
-                if not src.is_file() or not is_l1_allowlist_rel(rel):
-                    continue
-                dest.parent.mkdir(parents=True, exist_ok=True)
-                shutil.copy2(src, dest)
-                copied.append(rel)
+            copied_info = copy_allowlisted_l1(src_root=root, dest_root=worktree, rels=rels)
+            copied = [Path(p) for p in copied_info["copied"]]
+            result["preserved"] = list(copied_info["preserved"])
             if not copied:
-                result["reason"] = "allowlist_copy_empty"
+                result["reason"] = (
+                    "stamp_preserved" if copied_info["preserved"] else "allowlist_copy_empty"
+                )
                 return result
             add = git_run(["add", *[p.as_posix() for p in copied]], cwd=worktree)
             if getattr(add, "returncode", 1) != 0:

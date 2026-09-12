@@ -17,12 +17,25 @@ from golf_offshoot.learning_lane_15m.clerical_score import (
     scorecard_path,
 )
 from golf_offshoot.learning_lane_15m.crew_tick import OPERATOR_LOOK_DONE, seated_selecting_for_look
-from golf_offshoot.learning_lane_15m.rules import set_selecting_execution
+from golf_offshoot.learning_lane_15m.rules import rule_by_id, set_selecting_execution
 from golf_offshoot.localtime import isoformat_now
 
 LOOK_PARK = "PARK"
 LOOK_CONTINUE = "CONTINUE"
 LOOK_NO_CARD = "no_card"
+
+
+def _selecting_execution_is_true(rule_id: str, *, root: Path | None) -> bool:
+    row = rule_by_id(rule_id, root=root)
+    return bool(row) and row.get("selects") is True and row.get("execution") is True
+
+
+def _drop_selecting_execution(rule_id: str, *, root: Path | None) -> bool:
+    """Drop the chair. True when a write ran. Does not invent tape."""
+    if not _selecting_execution_is_true(rule_id, root=root):
+        return False
+    set_selecting_execution(rule_id, False, root=root)
+    return True
 
 
 def apply_operator_look(
@@ -41,8 +54,6 @@ def apply_operator_look(
     }
     seated = None
     if rule_id:
-        from golf_offshoot.learning_lane_15m.rules import rule_by_id
-
         seated = rule_by_id(rule_id, root=root)
     else:
         seated = seated_selecting_for_look(root=root)
@@ -69,16 +80,19 @@ def apply_operator_look(
         result["ok"] = True
         result["verdict"] = existing
         result["reason"] = "already_stamped"
+        if existing == LOOK_PARK:
+            result["mutated"] = _drop_selecting_execution(rid, root=root)
         return result
     passes = card.get("passes_every_binding_clause") is True
     verdict = LOOK_CONTINUE if passes else LOOK_PARK
+    # PARK: drop the chair before stamping so a failed registry write cannot
+    # leave already_stamped with execution still true.
+    if verdict == LOOK_PARK:
+        result["mutated"] = _drop_selecting_execution(rid, root=root)
     card["operator_look"] = verdict
     card["operator_look_at"] = isoformat_now()
     dest.write_text(json.dumps(card, indent=2) + "\n", encoding="utf-8")
     result["verdict"] = verdict
     result["ok"] = True
     result["reason"] = verdict.lower()
-    if verdict == LOOK_PARK:
-        set_selecting_execution(rid, False, root=root)
-        result["mutated"] = True
     return result
