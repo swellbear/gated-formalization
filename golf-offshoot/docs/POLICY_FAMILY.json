@@ -1,0 +1,98 @@
+{
+  "schema": 1,
+  "lane": "learning_lane_15m",
+  "series": "KXBTC15M",
+  "family": "P-FAMILY-SEARCH",
+  "framing": "Frozen named-policy library vs fill-all after fees. Search card, not an ADMIT, not a Honer family, not factory skip-together, not a live-chair flip. File order is the picker. Zero fill-NO rows. Catalog kind P-FAMILY-SEARCH is the unused-named doorbell.",
+  "lab_admits": false,
+  "trading_armed": false,
+  "execution": false,
+  "lineage": "A",
+  "fee_adjust": "golf_offshoot.learning_lane_15m.evidence_bar.fee_adjust",
+  "density": "golf_offshoot.learning_lane_15m.rules.lived_skip_density",
+  "catalog_kind": "P-FAMILY-SEARCH",
+  "not": [
+    "H-SKIP-THIN-BOOK",
+    "gamma",
+    "skip-missing-quotes",
+    "3^N",
+    "factory skip-together",
+    "R-* execution flip"
+  ],
+  "frozen_at": "2026-09-12T16:00:00-04:00",
+  "policies": [
+    {
+      "id": "P-FILL-ALL-YES",
+      "kind": "comparison",
+      "side": "yes",
+      "skip_when": "never",
+      "else": "fill YES at posted mark",
+      "expected_skip_rate": 0,
+      "params": {},
+      "note": "Comparison book. Same gross pnl recipe as factory fill-all, then fee_adjust. Naming this is not evidence of edge."
+    },
+    {
+      "id": "P-SKIP-COINFLIP",
+      "kind": "selection",
+      "side": "yes",
+      "skip_when": "0.45 < posted_yes < 0.55",
+      "else": "fill YES at posted mark",
+      "expected_skip_rate": 0.1,
+      "params": {
+        "band_lo": 0.45,
+        "band_hi": 0.55,
+        "inclusive": false
+      },
+      "note": "Same band as factory R-SKIP-COINFLIP. Replay only. Do not flip that row's execution. Band is not verifiably pre-registered; L1 still cannot Establish."
+    },
+    {
+      "id": "P-SKIP-RICH-075",
+      "kind": "selection",
+      "side": "yes",
+      "skip_when": "posted_yes >= 0.75",
+      "else": "fill YES at posted mark",
+      "expected_skip_rate": 0.25,
+      "params": {
+        "theta": 0.75
+      },
+      "note": "Frozen Honer start theta 0.75, not the lived 0.79 search theta, not 2/3 favorite. Do not retune to a tape quantile."
+    },
+    {
+      "id": "P-SKIP-WIDE-0400",
+      "kind": "selection",
+      "side": "yes",
+      "skip_when": "quoted spread >= 0.04",
+      "else": "fill YES at posted mark",
+      "expected_skip_rate": 0.25,
+      "params": {
+        "delta": 0.04,
+        "missing_quotes": "fill"
+      },
+      "note": "Frozen Honer start delta 0.04. Missing bid/ask → fill YES (not skip). Do not name gamma. Do not skip missing quotes — that is #200 H-SKIP-THIN-BOOK."
+    },
+    {
+      "id": "P-SKIP-LAST-SECONDS-60",
+      "kind": "selection",
+      "side": "yes",
+      "skip_when": "fill timestamp is < 60s before close_at",
+      "else": "fill YES at posted mark",
+      "expected_skip_rate": 0.066667,
+      "params": {
+        "seconds_before_close": 60
+      },
+      "note": "Microstructure. 60/900 ≈ 0.067. At n=70 this is below the 10/n floor — density-fail is the expected first card, not a retune to 180s."
+    },
+    {
+      "id": "P-SKIP-INELIGIBLE-CLOSED",
+      "kind": "selection",
+      "side": "yes",
+      "skip_when": "close_at already passed at the decision stamp",
+      "else": "fill YES at posted mark",
+      "expected_skip_rate": null,
+      "params": {
+        "closed_is": "decision_at >= close_at"
+      },
+      "note": "Named hygiene; compute skip_count on replay. Factory baseline fill-all sets eligible=True even when a selecting rule would be ineligible. This names do not fill a closed window."
+    }
+  ]
+}

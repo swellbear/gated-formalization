@@ -425,6 +425,7 @@ def test_mechanism_catalog_seeds_the_kinds():
         "HONER-FROZEN-CONSULT",
         "HONER-FAMILY-AMEND",
         "HONER-FROZEN-REPLACE",
+        "P-FAMILY-SEARCH",
     ]
 
 

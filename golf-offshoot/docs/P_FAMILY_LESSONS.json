@@ -1,0 +1,93 @@
+{
+  "schema": 1,
+  "lane": "learning_lane_15m",
+  "series": "KXBTC15M",
+  "family": "P-FAMILY-SEARCH",
+  "framing": "Searcher lessons. Density-fail is a lesson. Beats fill-all on this book is a lesson, not a Lab ping and not a seated row. Not an ADMIT.",
+  "lab_admits": false,
+  "trading_armed": false,
+  "lineage": "A",
+  "n": 404,
+  "fee_adjust": "golf_offshoot.learning_lane_15m.evidence_bar.fee_adjust",
+  "updated_at": "2026-09-12T16:33:30.768305-04:00",
+  "rows": [
+    {
+      "id": "P-FILL-ALL-YES",
+      "skip_count": 0,
+      "n": 404,
+      "density_passes": true,
+      "density_fail": false,
+      "undecidable": false,
+      "fee_adj_pnl": -39.29,
+      "fill_all_fee_adj_pnl": -39.29,
+      "beats_fill_all": false,
+      "card": "comparison_book",
+      "lesson": "Comparison book. Same gross pnl recipe as factory fill-all, then fee_adjust. Not an ADMIT."
+    },
+    {
+      "id": "P-SKIP-COINFLIP",
+      "skip_count": 169,
+      "n": 404,
+      "density_passes": true,
+      "density_fail": false,
+      "undecidable": false,
+      "fee_adj_pnl": -14.3,
+      "fill_all_fee_adj_pnl": -39.29,
+      "beats_fill_all": true,
+      "card": "beats_fill_all",
+      "lesson": "Fee-adj selected-fill pnl beats P-FILL-ALL-YES on this book. Lesson only. Lab still gates later naming / exam / seating. Do not ping Lab."
+    },
+    {
+      "id": "P-SKIP-RICH-075",
+      "skip_count": 11,
+      "n": 404,
+      "density_passes": true,
+      "density_fail": false,
+      "undecidable": false,
+      "fee_adj_pnl": -39.47,
+      "fill_all_fee_adj_pnl": -39.29,
+      "beats_fill_all": false,
+      "card": "park_vs_fill_all",
+      "lesson": "skip_count clears the 10/n floor but fee-adj selected-fill pnl does not beat P-FILL-ALL-YES. Parked on this lessons file. Not a factory PARK. Not Operator."
+    },
+    {
+      "id": "P-SKIP-WIDE-0400",
+      "skip_count": 1,
+      "n": 404,
+      "density_passes": false,
+      "density_fail": true,
+      "undecidable": true,
+      "fee_adj_pnl": -38.25,
+      "fill_all_fee_adj_pnl": -39.29,
+      "beats_fill_all": false,
+      "card": "density_fail",
+      "lesson": "Search done: skip_count 1/404 below density floor 10/404 vs expected_skip_rate 0.25. Not a t-test vs \u03b4. Do not retune P-SKIP-WIDE-0400."
+    },
+    {
+      "id": "P-SKIP-LAST-SECONDS-60",
+      "skip_count": 0,
+      "n": 404,
+      "density_passes": false,
+      "density_fail": true,
+      "undecidable": true,
+      "fee_adj_pnl": -39.29,
+      "fill_all_fee_adj_pnl": -39.29,
+      "beats_fill_all": false,
+      "card": "density_fail",
+      "lesson": "Search done: skip_count 0/404 below density floor 10/404 vs expected_skip_rate 0.066667. Not a t-test vs \u03b4. Do not retune P-SKIP-LAST-SECONDS-60."
+    },
+    {
+      "id": "P-SKIP-INELIGIBLE-CLOSED",
+      "skip_count": 0,
+      "n": 404,
+      "density_passes": false,
+      "density_fail": true,
+      "undecidable": true,
+      "fee_adj_pnl": -39.29,
+      "fill_all_fee_adj_pnl": -39.29,
+      "beats_fill_all": false,
+      "card": "density_fail",
+      "lesson": "Search done: skip_count 0/404 below density floor 10/404. Not a t-test vs \u03b4. Do not retune P-SKIP-INELIGIBLE-CLOSED."
+    }
+  ]
+}
