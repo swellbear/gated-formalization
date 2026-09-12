@@ -1586,9 +1586,9 @@ def test_thin_exam_close_at_frozen_gamma_zero_retires_clip_min(honer_tmp):
     market = {
         "ticker": "KXBTC15M-EXAM0",
         "window_id": "w",
-        "paper_mark": 0.70,
-        "yes_ask": 0.70,
-        "yes_bid": 0.69,
+        "paper_mark": 0.50,
+        "yes_ask": 0.50,
+        "yes_bid": 0.495,
         "is_open": True,
         "status": "active",
         "close_time": "t",
