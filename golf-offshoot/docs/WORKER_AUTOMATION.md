@@ -1,8 +1,14 @@
-# 15m worker tick — Cursor Automation draft
+# 15m worker tick — file SoT
 
-This file is the SoT for the worker timer. CoS assigns. This timer runs
-the assigned job. It is not a second CoS, not a bind, not an arm, and
-not a new series.
+This file is SoT for **15m worker tick**
+(`a78779fc-abb9-11f1-b532-320a589b8025`). CoS assigns. This timer runs the
+assigned job. Cloud ticks checkout `cursor/honer-15m-sibling` (#178).
+There is **no** Automations paste PATCH. **This file wins** over a stale
+Automations-editor paste.
+
+Do not ask M3SS to Save. Do not create a third automation, or role-specific
+extra automations. Never `origin/master`. Never gym 8765. Never attach gym
+CoS `91e26eab-eb97-4901-80f1-ae836a17325b`. Trading **NOT ARMED**.
 
 The pair:
 
@@ -11,19 +17,14 @@ The pair:
 | **15m CoS crew tick** | `0,15,30,45 * * * *` | if `crew_tick.needed`, assign or closeout, stop |
 | **15m worker tick** | `7,22,37,52 * * * *` | if desk `Status=assigned`, become Active role, one job, stop |
 
-Offset is load-bearing. Do not collapse the two timers. Do not also
-create Operator-only or Lab-only extra automations.
-
-Founder creates this in the Agents Window / Automations editor. An agent
-cannot silently arm a cloud agent on this account.
+Offset is load-bearing. Do not collapse the two timers.
 
 | Field | Value |
 |-------|--------|
 | Name | 15m worker tick |
+| UUID | `a78779fc-abb9-11f1-b532-320a589b8025` |
 | Interval | every 15 minutes, **offset** from CoS (`7,22,37,52 * * * *`) |
-| Repo / branch | this repo, `cursor/honer-15m-sibling` — not `origin/master` until #178 merges |
-| Tools | whatever the named worker skill needs to do that one job on this branch. Commit to this branch only. No deploy, no master push, no Kalshi private, no second hub |
-| Do not also create | a second CoS timer, or role-specific extra automations |
+| Repo / branch | this repo, `cursor/honer-15m-sibling` — never `origin/master` |
 
 Gate (enforced in `golf_offshoot.learning_lane_15m.worker_tick.decide_worker_tick`
 and here):
@@ -41,22 +42,41 @@ and here):
   tidy the admit pass."
 - Persist nothing only in the gitignored wake. Done-state is the desk.
 
-Lab hard rules: `lab_admits=false`. One PROPOSED per fire. Invent contract
-in the note: kill anatomy, unburned mechanism (load burned classes +
-LEARNING_LANE_15M_MECHANISM_CATALOG.json), density floor 10/n from the 15m
-quartet, HONER-FAMILY-AMEND only after a dead honer exam or catalog exhaust
-(no third family until the two dated families finish exams), HONER-FROZEN-REPLACE
-only after consult has lived and hour-close is not the live trial (photocopy freeze
-knobs; do not retype θ), pre-reg, live falsifier. Do not retune skip_close_minute /
-RETUNE-CLOCK-MINUTE. Do not revive `R-SKIP-COINFLIP` or retune its band. Do not retune
-PARK'd `favorite_odds`. Golf idle does not stop a 15m KXBTC15M paper PROPOSED. Do
-not score. Do not self-admit. Do not set `execution:true` (Operator does
-that). Consult enable is a file gate, not this Lab job.
+**CoS-seated F/I invent — no-op.** If Active role is `lab` and the Job is
+one 15m PROPOSED because CoS seated `F_continuation` / `I_farm_open`
+invent (needles: `one 15m PROPOSED under the invent contract`,
+`continuation_assign_lab`, `starved gym`, `F_continuation`, `date every
+currently legal unused catalog slot as farm notebooks`, `I_farm_open`,
+`farm_open_assign_lab`, `invent the next kind`, `LEARNING_LANE_15M_FARM_MENU_EXHAUSTED.json so I stops`):
+do **not** write a PROPOSED, do not date a family, do not press invent.
+`Status=done`. Handoff: CoS-seated F/I invent is the gym leash / files
+(#195, gym `1c72ad0`), not this cloud fire; Lab not pressed.
+`next=chief-of-staff`. Persist that desk handoff on honer only. Do not
+push master.
+
+Still run Lab when the Job is a **method** fire already owed on the desk
+(HONER-FROZEN-REPLACE photocopy after consult has lived; Lab refusal stands).
+Dated PROPOSED hygiene is Operator, not Lab. Search park (#193) is not a
+Lab job. `family_amend.json` owed is not a cloud-worker Lab seat.
+
+Lab hard rules (when you actually run Lab): `lab_admits=false`. One
+PROPOSED per fire. Invent contract in the note: kill anatomy, unburned
+mechanism (load burned classes + LEARNING_LANE_15M_MECHANISM_CATALOG.json),
+density floor 10/n from the 15m quartet, HONER-FAMILY-AMEND only after a
+dead honer exam or catalog exhaust (no third family until the two dated
+families finish exams), HONER-FROZEN-REPLACE only after consult has lived
+and hour-close is not the live trial (photocopy freeze knobs; do not retype
+θ), pre-reg, live falsifier. Do not retune skip_close_minute /
+RETUNE-CLOCK-MINUTE. Do not revive `R-SKIP-COINFLIP` or retune its band. Do
+not retune PARK'd `favorite_odds`. Golf idle does not stop a 15m KXBTC15M
+paper **method** Job. Do not score. Do not self-admit. Do not set
+`execution:true` (Operator does that). Consult enable is a file gate, not
+this Lab job.
 
 Operator hard rules: may set `execution:true` on a surviving pre-registered
 rule (paper implementation). A falsifier PARK of an executing selection rule
 drops `execution` in that score turn. The next RUN-ONLY takes the only
-selecting seat. Must not set `binding` true or `trading_armed`. A CoS-assigned
+selecting seat. Must not set `binding` true or `trading_armed`. A
 KXBTC15M paper PROPOSED is not golf idle-breach. When the Job is PARK or
 CONTINUE from the L1 scorecard: read the pushed
 `LEARNING_LANE_15M_SCORECARD_{id}_L1.json`. Never invent tape. No card → do not
@@ -64,17 +84,28 @@ park, do not score, do not invent windows (handoff no-card). PARK drops
 execution; CONTINUE leaves it. Do not stop PaperWatch at 70. Look owner is
 Operator, not Systems.
 
-## Agent prompt (paste)
+## Thin live paste (pointer)
+
+Checkout branch cursor/honer-15m-sibling before you read the desk. Fetch and
+pull that branch first. Do not use master. Do not use origin/master. Do not
+use cursor/part-a-clerical-trust-boundary. If Cursor booted a new cursor/…
+branch, check out honer-15m-sibling; if you are not on that branch, stop.
+Write nothing. Do not commit.
+
+Read golf-offshoot/docs/WORKER_AUTOMATION.md on that checkout. Follow it. This
+file is SoT.
+
+## Agent prompt (what to do)
 
 You are the assigned worker for gated-formalization learning_lane_15m,
 or you are a no-op.
 
 SESSION START
 Read:
+  golf-offshoot/docs/WORKER_AUTOMATION.md
   docs/AGENT_LEAVE_OFF.md
   docs/agents/DESK.md
   docs/agents/PROTOCOL.md
-  golf-offshoot/docs/WORKER_AUTOMATION.md
   golf-offshoot/docs/LEARNING_LANE_15M_BURNED_CLASSES.json
   golf-offshoot/docs/LEARNING_LANE_15M_MECHANISM_CATALOG.json
 
@@ -96,8 +127,14 @@ do only that Job:
 
 If Active role is chief-of-staff or unknown: stop. CoS is the other timer.
 
+COS-SEATED F/I INVENT (when you are lab): if the Job is one 15m PROPOSED
+because CoS seated F_continuation / I_farm_open invent (needles in the
+gate section above): no-op invent. Status=done. Handoff CoS. Do not
+write a PROPOSED. Invent is the gym leash / files, not this cloud fire.
+
 Set Status=working, one thread line FROM → CoS that you started, then
-do the Job as written on the desk — no extra scope.
+do the Job as written on the desk — no extra scope. Skip working if the
+F/I invent no-op already closed the Job.
 
 When the Job is done:
   Status=done
@@ -108,9 +145,9 @@ When the Job is done:
   Do not assign the next worker. Do not stamp last_cos_*.
   Commit desk + the work on this branch if allowed. Do not push master.
 
-LAB HARD RULES (when you are lab)
+LAB HARD RULES (when you are lab and the Job is a method fire, not F/I invent)
   One PROPOSED selection rule, paper only, KXBTC15M only.
-  Golf idle ON does not stop this Job. This is not golf WC3+.
+  Golf idle ON does not stop a method Job. This is not golf WC3+.
   The PROPOSED note itself must contain:
     1. Kill anatomy — quote the last closed score/park (clauses, skip_count).
        Favorite L1: n=70, skip_count=1, clauses 1/4/5 fail. Not a favorite_odds
@@ -139,7 +176,7 @@ OPERATOR HARD RULES (when you are operator)
   implementation). Only one selecting rule may have execution:true.
   A falsifier PARK drops that row's execution. The next RUN-ONLY takes
   the only seat (dead row off, new row on).
-  A CoS-assigned KXBTC15M paper PROPOSED is not golf idle-breach.
+  A KXBTC15M paper PROPOSED is not golf idle-breach.
   When the Job is PARK or CONTINUE from an L1 card: read
   LEARNING_LANE_15M_SCORECARD_{id}_L1.json. Never invent tape. No card →
   no-card, do not park. PARK drops execution; CONTINUE leaves it. Do not
@@ -163,9 +200,6 @@ HARD NOs (every role)
   Do not add a series. Do not git push to master. Do not start/kill a hub.
   Do not score R-SKIP-COINFLIP. Do not re-score PARK'd R-SKIP-2TO1-FAVORITE.
   Naming rule_reached_n on the park without scoring is allowed bookkeeping.
-  Do not declare a rule unless you are lab and that is the Job.
+  Do not declare a rule unless you are lab and that is a method Job.
   Do not impersonate Founder on arm or HOLD. Do not add Founder read-once as a bind condition. Do not both object and answer.
-
-## Founder click
-
-Saved 2026-09-08 15:19 ET. Name **15m worker tick**, cron `7,22,37,52 * * * *`. Do not edit **15m CoS crew tick**. An unsaved draft is not a timer; this one is saved.
+  Do not land #194. Do not merge #178 or #177 onto master.
