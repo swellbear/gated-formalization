@@ -37,15 +37,15 @@ The tick is staged so the advisor can see:
 
 1. **Settle** always.
 2. **Identity hunt** every open event against a tick-level ESPN league snapshot (one leaderboard read per league, in-memory title bind). Cheap. History is not loaded here.
-3. **Monte Carlo** only for the round-robin slice (`max_brain`, remaining clock). `keep_expert` in memory (`include_odds=False`). Never `run_operating`. Never write Phase 1 `data/paper/`. Re-run when the live scoreboard fingerprint moves. A clock miss is deferred, not stored as thin. Listed names stay in `field_candidates` through that defer. Unscored listed events with `n_names > 0` take the slice after held tickets so they cannot sit `field_deferred` behind a live book.
+3. **Monte Carlo** only for the round-robin slice (`max_brain`, remaining clock). `keep_expert` in memory (`include_odds=False`). Never `run_operating`. Never write Phase 1 `data/paper/`. Re-run when the live scoreboard fingerprint moves. A clock miss is deferred, not stored as thin. Listed names stay in `field_candidates` through that defer. Unscored listed events with `n_names > 0` take the slice after held tickets so they cannot sit `field_deferred` behind a live book. That puts a pending listed hunt ahead of an unheld live in-play ESPN event.
 4. **Decide** every open market from cached p. Skip is honest (`no_model_p`, unmatched, `thin`, `field_deferred`). Empty names is `no_field`. Clock miss is `field_deferred`. A hunt that produced no p is `thin`. Recovered-id count is telemetry, not a skip. Fill cap is count, not the clock.
 
 Hunt order:
 
 1. ESPN league for that family (`pga`, `lpga`, `eur` for DP World, `champ`, `liv` if ESPN serves it). Conservative title overlap. Wrong-tour bind is worse than a miss.
 2. If ESPN has no board for that series: Kalshi open `yes_sub_title` names **are** the field. Attach ESPN athlete ids from **history** when they match; provisional ids otherwise. Never Polymarket. Never Bovada `list_provisional_names`. A listed field with `n_names > 0` hunts from those names. `n_recovered=0` is not defer-forever.
-3. History-id floor (`n_recovered` ≥ min(half the extracted names, 20), at least 1) is telemetry (`history_thin`), not a hunt park and not a fill skip. Below the floor the listed names still score. Catalog stays. No invented players.
-4. Season-long / missing MC horizon → `no_model_p`. Tote names (`the field`, `any other`) stay unmatched.
+3. History-id floor (`n_recovered` ≥ min(half the extracted names, 20), at least 1) is telemetry (`history_thin`), not a hunt park and not a fill skip. Below the floor the listed names still score when a positive name-shape check says the sub-title is a golfer. A country, date phrase, threshold ladder, or "X beats Y" match-up is not a golfer and does not get a `model_p`. Catalog stays.
+4. Season-long / missing MC horizon → `no_model_p`. A listed sub-title gets a probability only when the code decides it names a person (two or more letter tokens, no digits / `+` / connective predicates, no team/country/tie tokens). Exact-match tote strings (`the field`, `any other`) stay unmatched. Live Kalshi golf has no tote sub-titles; the gate is the name shape, not a tote denylist.
 5. Kalshi-listed fields take a tour haircut. `field_source` is stamped on tickets. Listed-name fills are observation, not promote fuel.
 
 The last tick writes bound / brain / deferred on the Golf board so an empty cart is readable.

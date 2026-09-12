@@ -12,13 +12,66 @@ _WILL_WIN = re.compile(r"will\s+(.+?)\s+win\b", re.I)
 _NAME_CUT = re.compile(r"will\s+(.+?)\s+make\s+(?:the\s+)?cut", re.I)
 _NAME_FINISH = re.compile(r"will\s+(.+?)\s+(?:finish|lead|be)\b", re.I)
 _TOP_OR_LEAD = ("top 5", "top five", "top 10", "top ten", "top 20", "top twenty", "lead")
+_CONNECTIVE = re.compile(r"\b(?:beats?|versus|vs\.?|to|and)\b", re.I)
+_NONPERSON_TOKENS = frozenset(
+    {
+        "team",
+        "tie",
+        "united",
+        "states",
+        "europe",
+        "usa",
+        "us",
+        "world",
+        "international",
+        "country",
+        "america",
+        "before",
+        "after",
+        "the",
+        "field",
+        "other",
+        "others",
+        "any",
+        "rest",
+        "yes",
+        "no",
+        "of",
+    }
+)
+
+
+def names_a_golfer(title: str) -> bool:
+    """True only when the string is a person name, not a market sub-title.
+
+    Two or more letter tokens. Digits, `+`, connective predicates (`beats`,
+    `to`, `and`, `vs`), and team/country/tie tokens fail. Exact-match tote
+    `_SKIP` is a separate filter; this is the live Kalshi golf gate.
+    """
+    text = str(title or "").strip(" ?")
+    if not text:
+        return False
+    if any(ch.isdigit() for ch in text) or "+" in text:
+        return False
+    if _CONNECTIVE.search(text):
+        return False
+    tokens = text.split()
+    if len(tokens) < 2:
+        return False
+    for tok in tokens:
+        core = tok.replace("-", "").replace("'", "").replace("’", "").replace(".", "")
+        if not core or not core.isalpha():
+            return False
+        if core.casefold() in _NONPERSON_TOKENS:
+            return False
+    return True
 
 
 def _real_name(name: str) -> str:
     text = str(name or "").strip(" ?")
     if not text or is_skip_field_name(text):
         return ""
-    if len(text.split()) < 2:
+    if not names_a_golfer(text):
         return ""
     return text
 

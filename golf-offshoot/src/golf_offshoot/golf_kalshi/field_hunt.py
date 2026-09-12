@@ -13,7 +13,7 @@ from golf_offshoot.data_feeds.field_fallback import (
 )
 from golf_offshoot.data_feeds.names import normalize_name
 from golf_offshoot.golf_kalshi.espn_bind import bind_espn_event, event_key_for
-from golf_offshoot.golf_kalshi.matcher import extract_player_name
+from golf_offshoot.golf_kalshi.matcher import extract_player_name, names_a_golfer
 
 
 def history_floor_ok(n_names: int, n_recovered: int) -> bool:
@@ -35,14 +35,14 @@ def listed_name_candidates(
     out: dict[str, str] = {}
     for raw in names:
         nm = str(raw or "").strip()
-        if not nm or is_skip_field_name(nm):
+        if not nm or is_skip_field_name(nm) or not names_a_golfer(nm):
             continue
         key = normalize_name(nm)
         if not key:
             continue
         out[key] = recovered.get(key) or provisional_player_id(nm)
     for key, pid in recovered.items():
-        if key and pid:
+        if key and pid and names_a_golfer(key):
             out[str(key)] = str(pid)
     return out
 

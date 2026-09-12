@@ -430,7 +430,6 @@ class CachedExpertBrain:
         row["probs"] = scored.get("probs") or {}
         row["candidates"] = scored.get("candidates") or listed
         row["thin"] = bool(scored.get("thin")) or not row["probs"]
-        row["fp"] = scored.get("fp") or name_fp
         row["n_players"] = scored.get("n_players") or 0
         hunt_summary["thin"] = bool(row["thin"])
         hunt_summary["scored"] = bool(row["probs"])

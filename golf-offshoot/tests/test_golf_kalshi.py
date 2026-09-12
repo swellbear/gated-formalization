@@ -956,6 +956,161 @@ def test_listed_names_hunt_when_recovered_zero(gk_root, monkeypatch):
     assert d3.model_p is not None
 
 
+def test_names_a_golfer_rejects_live_nonplayer_subtitles():
+    from golf_offshoot.golf_kalshi.field_hunt import kalshi_listed_names
+    from golf_offshoot.golf_kalshi.matcher import extract_player_name, names_a_golfer
+
+    golfers = (
+        "Scottie Scheffler",
+        "Rasmus Neergaard-Petersen",
+        "Min Woo Lee",
+        "C.T. Pan",
+        "James Morrison",
+        "Mark Wilson",
+    )
+    leaks = (
+        "United States",
+        "Before 2028",
+        "Shane Lowry beats Olesen and Li",
+        "Rasmus Neergaard-Petersen beats Reed and Sullivan",
+        "4+ golf major championship wins",
+        "6+ course records",
+        "Team USA",
+        "Team World",
+        "Tie",
+        "Yes",
+        "Europe",
+    )
+    for name in golfers:
+        assert names_a_golfer(name) is True, name
+        assert extract_player_name({"yes_sub_title": name}) == name
+    for title in leaks:
+        assert names_a_golfer(title) is False, title
+        assert extract_player_name({"yes_sub_title": title}) == ""
+    mixed = [
+        _market(yes_sub_title="Scottie Scheffler"),
+        _market(yes_sub_title="United States"),
+    ]
+    assert kalshi_listed_names(mixed) == ["Scottie Scheffler"]
+
+
+def test_score_kalshi_listed_scores_golfers_not_nonplayers(gk_root, monkeypatch):
+    """Calls the real scorer. Mixed field: golfer keeps p, country does not."""
+    import golf_offshoot.golf_kalshi.score as score_mod
+    from golf_offshoot.data_feeds.field_fallback import provisional_player_id
+    from golf_offshoot.golf_kalshi.score import score_kalshi_listed
+    from golf_offshoot.models.schemas import Player, PlayerInputs
+
+    score_mod._PLAYER_INPUTS.clear()
+
+    class FakeIngestor:
+        def load_history(self, **_k):
+            return None
+
+        def _player_inputs(self, comp, *_a, **_k):
+            athlete = (comp or {}).get("athlete") or {}
+            pid = str(athlete.get("id") or "")
+            name = str(athlete.get("displayName") or "")
+            return PlayerInputs(player=Player(player_id=pid, name=name))
+
+    class FakeBundle:
+        def p(self, _horizon):
+            return SimpleNamespace(central=0.4)
+
+    class FakeEngine:
+        def run(self, _tournament, prepared):
+            bundles = {p.player.player_id: FakeBundle() for p in prepared.players}
+            return bundles, {}, []
+
+    class FakePipeline:
+        def __init__(self, **_k):
+            pass
+
+        def prepare_field(self, _tournament, field):
+            return field
+
+    monkeypatch.setattr(score_mod, "shared_ingestor", lambda: FakeIngestor())
+    monkeypatch.setattr("golf_offshoot.operating.make_engine", lambda **_k: FakeEngine())
+    monkeypatch.setattr("golf_offshoot.pipeline.GolfOffshootPipeline", FakePipeline)
+
+    golfer = "Scottie Scheffler"
+    country = "United States"
+    golfer_id = provisional_player_id(golfer)
+    country_id = provisional_player_id(country)
+    names = [golfer, country]
+    candidates = {
+        normalize_name(golfer): golfer_id,
+        normalize_name(country): country_id,
+    }
+    scored = score_kalshi_listed(names, candidates, tour="PGA")
+    assert golfer_id in scored["probs"]
+    assert scored["probs"][golfer_id]
+    assert country_id not in scored["probs"]
+    assert all("united" not in str(pid).lower() for pid in scored["probs"])
+    assert country_id not in (scored.get("candidates") or {}).values()
+
+
+def test_listed_cache_hits_name_fp(gk_root, monkeypatch):
+    from golf_offshoot.golf_kalshi.brain import CachedExpertBrain, _hunt_fp
+
+    names = ["Scottie Scheffler", "Jon Rahm"]
+    event_key = "KXLISTEDCACHE-26"
+    listed = {normalize_name(n): f"name:{normalize_name(n).replace(' ', '-')}" for n in names}
+    hunt = {
+        "event_key": event_key,
+        "espn_id": "",
+        "espn_name": "",
+        "family": "PGA Tour",
+        "field_source": "kalshi_listed",
+        "names": names,
+        "n_names": len(names),
+        "n_recovered": 0,
+        "candidates": dict(listed),
+        "listed_candidates": dict(listed),
+        "espn_rows": [],
+        "thin": True,
+        "awaiting_history": False,
+        "tried_leagues": ["pga"],
+    }
+    calls: list[int] = []
+
+    def fake_score(score_names, candidates, **kwargs):
+        del score_names, kwargs
+        calls.append(1)
+        return {
+            "probs": {pid: {"win": 0.4} for pid in (candidates or {}).values() if pid},
+            "candidates": dict(candidates or {}),
+            "fp": "engine-fp-that-is-not-name-fp",
+            "n_players": len(candidates or {}),
+            "thin": False,
+            "field_source": "kalshi_listed",
+        }
+
+    monkeypatch.setattr("golf_offshoot.golf_kalshi.field_hunt.hunt_field", lambda *a, **k: hunt)
+    monkeypatch.setattr(
+        "golf_offshoot.golf_kalshi.score.shared_ingestor",
+        lambda: SimpleNamespace(load_history=lambda **k: []),
+    )
+    monkeypatch.setattr("golf_offshoot.golf_kalshi.score.score_kalshi_listed", fake_score)
+    markets = [
+        _market(
+            ticker=f"CACHE-{i}",
+            event_ticker=event_key,
+            series_ticker="KXLISTEDCACHE",
+            yes_sub_title=name,
+        )
+        for i, name in enumerate(names)
+    ]
+    brain = CachedExpertBrain()
+    brain.maybe_refresh(event_key, "", budget=TickBudget(seconds=30, max_fills=8, max_brain=2), markets=markets)
+    brain.maybe_refresh(event_key, "", budget=TickBudget(seconds=30, max_fills=8, max_brain=2), markets=markets)
+    assert calls == [1]
+    row = ((brain._cache.get("events") or {}).get(event_key) or {})
+    assert row.get("fp") == _hunt_fp({"names": names}, "")
+    assert row.get("fp") != "engine-fp-that-is-not-name-fp"
+    assert row.get("listed_hunt_done") is True
+
+
 def test_thin_listed_field_candidates_not_empty(gk_root):
     from golf_offshoot.golf_kalshi.brain import CachedExpertBrain
 
@@ -1653,7 +1808,7 @@ def test_held_event_is_first_in_brain_order():
     assert order[0] == "HELD"
 
 
-def test_unscored_listed_event_is_ahead_of_scored_mid():
+def test_unscored_listed_event_is_ahead_of_scored_mid(gk_root):
     from golf_offshoot.golf_kalshi.brain import CachedExpertBrain
     from golf_offshoot.golf_kalshi.loop import _brain_order, listed_hunt_pending
 
