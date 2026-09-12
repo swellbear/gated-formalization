@@ -1,8 +1,9 @@
 """Factory leash tick: executing L1, then farm notebooks, then freeze photocopy / consult.
 
 Score the seated selecting rule's first 70 before consult may join. Farm cards
-are discovery, off hub. Fail-open. Never arms. Never ADMITs. Does not steal a
-seated selecting row.
+are discovery, off hub. The farm menu runs here so the discovery loop continues
+without a CoS seat or a desk assign. Fail-open. Never arms. Never ADMITs. Does
+not steal a seated selecting row.
 """
 
 from __future__ import annotations
@@ -16,6 +17,7 @@ def run_leash_tick() -> dict[str, Any]:
         "look_push": {},
         "sibling_execution": {},
         "farm": {},
+        "farm_menu": {},
         "consult": {},
     }
     try:
@@ -46,6 +48,12 @@ def run_leash_tick() -> dict[str, Any]:
         out["farm"] = maybe_score_farm()
     except Exception as exc:  # noqa: BLE001 — never take PaperWatch down
         out["farm"] = {"error": f"{type(exc).__name__}: {exc}"}
+    try:
+        from golf_offshoot.learning_lane_15m.farm import run_farm_menu
+
+        out["farm_menu"] = run_farm_menu()
+    except Exception as exc:  # noqa: BLE001 — never take PaperWatch down
+        out["farm_menu"] = {"error": f"{type(exc).__name__}: {exc}"}
     try:
         from golf_offshoot.learning_lane_15m.consult_honer import maybe_sync_and_enable
 

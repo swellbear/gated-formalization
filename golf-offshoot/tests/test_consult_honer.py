@@ -410,6 +410,10 @@ def test_leash_scores_then_enables(monkeypatch):
         order.append("farm")
         return {"wrote": False}
 
+    def farm_menu():
+        order.append("farm_menu")
+        return {"dated": [], "seat_required": False}
+
     def enable():
         order.append("enable")
         return {"consult_enabled": False}
@@ -435,12 +439,25 @@ def test_leash_scores_then_enables(monkeypatch):
         farm,
     )
     monkeypatch.setattr(
+        "golf_offshoot.learning_lane_15m.farm.run_farm_menu",
+        farm_menu,
+    )
+    monkeypatch.setattr(
         "golf_offshoot.learning_lane_15m.consult_honer.maybe_sync_and_enable",
         enable,
     )
     out = run_leash_tick()
-    assert order == ["score", "look_push", "fetch", "observe", "farm", "enable"]
+    assert order == [
+        "score",
+        "look_push",
+        "fetch",
+        "observe",
+        "farm",
+        "farm_menu",
+        "enable",
+    ]
     assert out["clerical_score"]["wrote"] is False
     assert out["farm"]["wrote"] is False
+    assert out["farm_menu"]["seat_required"] is False
     assert out["consult"]["consult_enabled"] is False
 
