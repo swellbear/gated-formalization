@@ -214,6 +214,37 @@ def _mix_copy(tick: dict[str, Any]) -> str:
     return f'<p class="gk-nums">{html.escape(line)}</p>'
 
 
+THIN_YES_ASK = 0.02
+
+
+def _ask_float(ask: Any) -> float | None:
+    if ask is None or ask == "":
+        return None
+    try:
+        return float(ask)
+    except (TypeError, ValueError):
+        return None
+
+
+def _dollar_edge(value: Any) -> str:
+    if value is None:
+        return "—"
+    try:
+        return f"{float(value):+.2f}"
+    except (TypeError, ValueError):
+        return "—"
+
+
+def _edge_cell(*, ask: Any, live: Any, entry: Any) -> str:
+    """Dollar EV after fee, not a 3pp fraction. Tiny winner quotes stay in Quote."""
+    ask_f = _ask_float(ask)
+    if ask_f is not None and ask_f < THIN_YES_ASK:
+        return "thin"
+    if live is None and entry is None:
+        return ""
+    return f"{_dollar_edge(live)} / {_dollar_edge(entry)}"
+
+
 def _open_rows(b: dict[str, Any]) -> list[list[str]]:
     tick = b.get("last_tick") or {}
     tick_marks = tick.get("marks") if isinstance(tick.get("marks"), dict) else {}
@@ -223,12 +254,9 @@ def _open_rows(b: dict[str, Any]) -> list[list[str]]:
         mark = tick_marks.get(str(t.get("ticker") or "")) or {}
         live = mark.get("live_edge")
         entry = mark.get("entry_edge") if mark.get("entry_edge") is not None else t.get("edge_after_fee")
-        edge_bit = ""
-        if live is not None or entry is not None:
-            live_s = f"{float(live):+.3f}" if live is not None else "—"
-            entry_s = f"{float(entry):+.3f}" if entry is not None else "—"
-            edge_bit = f"{live_s} / {entry_s}"
         ask = q.get("yes_ask")
+        if ask is None:
+            ask = t.get("yes_ask")
         open_rows.append(
             [
                 t.get("player") or "",
@@ -236,7 +264,7 @@ def _open_rows(b: dict[str, Any]) -> list[list[str]]:
                 t.get("sleeve") or "",
                 f"{float(t.get('stake') or 0):.2f}",
                 "" if ask is None else ask,
-                edge_bit,
+                _edge_cell(ask=ask, live=live, entry=entry),
                 t.get("status") or "",
             ]
         )
@@ -310,7 +338,7 @@ def blotter_html(b: dict[str, Any] | None = None) -> str:
     rows = _open_rows(b)
     empty = "no open tickets"
     table = _table(
-        ["Player", "Market", "Sleeve", "Stake", "Quote", "Live/entry edge", "Status"],
+        ["Player", "Market", "Sleeve", "Stake", "Quote", "Live/entry $", "Status"],
         rows,
         empty=empty,
     )

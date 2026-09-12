@@ -12,7 +12,7 @@ Omitted `?lane=` is golf. A registered id opens that desk. `golf_kalshi` is an a
 
 ## Home
 
-At 1920×1080, Home is one header row (~40px) + one session row (~48px) + this lane’s blotter. The ticket table (or 15m this-window + Factory standing) is visible without scrolling.
+At 1920×1080, Home is one header row (~40px) + one session row (~48px) + this lane’s blotter. The ticket table (or 15m trial glance + this-window + last-thing) is visible without scrolling.
 
 - **Glance** is the default.
 - **Cockpit** is thinking / learning / tape.
@@ -26,7 +26,9 @@ Slots the shell always has a place for: watch, Eastern clock, bankroll, P/L, ope
 
 Golf Home also shows Fast / week / slow meters and the mix one-liner. Meter caps are `sizing_bank` targets for the live book, not the seed $50/$100/$50 card. The mix line includes last-tick skip counts from `last_tick.json` even when tickets are open. Full hunt copy stays in Cockpit (Scoreboard). Golf Farm / Honer stay idle shells: they point at Home / Scoreboard tape and do not say the book is empty when tickets exist.
 
-15m Home is this-window + Factory standing. This-window heading is **one clock** while `consult_enabled` is not true; Honer search/exam are labeled observation. Factory Scoreboard / Ops spine title is **fill-all baseline** when the executing row does not `selects`, and **live 70** only when a selecting rule is on the chair. The paper-window PNG is Scoreboard. Spine, clock legend, and journal sit in Cockpit or Ops. 15m Farm’s first column is the notebook, parked/score-owed/collecting, skip rate and failed clauses, and n/70. Kind/params/date sit beside it. No farm pnl column.
+15m Home is a one-line trial glance + this-window + Factory last-thing and money. Disagreements and “What it is / where it stands” fold closed. The full learning card stays on Lab — Home is not a verdict. This-window heading is **one clock** while `consult_enabled` is not true; Honer search/exam are labeled observation. Factory Scoreboard / Ops spine title is **fill-all baseline** when the executing row does not `selects`, and **live 70** only when a selecting rule is on the chair. The paper-window PNG is Scoreboard. Spine, clock legend, and journal sit in Cockpit or Ops. 15m Farm’s first column is the notebook, parked/score-owed/collecting, skip rate and failed clauses, and n/70. Kind/params/date sit beside it. No farm pnl column.
+
+Golf **Live/entry $** is dollar EV after fee (`edge_after_fee`), not a 3pp fraction. Format two decimals. Quotes under 2¢ show `thin`; the quote stays in Quote. Do not retune mark math for the column.
 
 Golf Scoreboard is the closed-ticket tape (the 15m strip analog): when, player, result, after-fee P/L. Halt log sits under it. Home blotter stays open tickets. Session Closed is the count.
 

@@ -71,8 +71,10 @@ def _disagreements_html() -> str:
                 "None yet. Factory book vs honer observation. Consult is off. Pending is not zero."
             )
         return (
-            "<h3>Last disagreements</h3>"
+            '<details class="gk-fold">'
+            "<summary>Last disagreements (0)</summary>"
             f'<p class="help">{html.escape(empty_help)}</p>'
+            "</details>"
         )
     items = []
     for row in rows:
@@ -82,18 +84,18 @@ def _disagreements_html() -> str:
         window = html.escape(str(row.get("window_et") or ""))
         items.append(f"<li><code>{ticker}</code> {window}: factory {factory} / honer search {honer}</li>")
     if consult_is_live():
-        head = "Last disagreements"
         help_bit = "Skip vs fill only. Actions only. Pending is not zero."
     else:
-        head = "Last disagreements"
         help_bit = (
             "Factory book vs honer observation. Consult is off. "
             "Skip vs fill only. Actions only. Pending is not zero."
         )
     return (
-        f"<h3>{head}</h3>"
-        f'<p class="help">{help_bit}</p>'
+        '<details class="gk-fold">'
+        f"<summary>Last disagreements ({len(rows)})</summary>"
+        f'<p class="help">{html.escape(help_bit)}</p>'
         f"<ul>{''.join(items)}</ul>"
+        "</details>"
     )
 
 

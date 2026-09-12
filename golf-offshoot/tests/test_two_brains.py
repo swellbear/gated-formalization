@@ -79,6 +79,9 @@ def test_this_window_paint_does_not_sync(tmp_path, monkeypatch):
         assert "two brains" not in html
         assert "consult is off" in html
         assert "Last disagreements" in html
+        assert 'class="gk-fold"' in html
+        assert "<details" in html
+        assert "<summary>" in html
     finally:
         set_15m_root_override(None)
         set_honer_root_override(None)
@@ -122,6 +125,7 @@ def test_this_window_html_has_no_combined(tmp_path, monkeypatch):
         assert "combined" not in html.lower()
         assert "winner" not in html.lower()
         assert "Last disagreements" in html
+        assert 'class="gk-fold"' in html
     finally:
         set_15m_root_override(None)
         set_honer_root_override(None)

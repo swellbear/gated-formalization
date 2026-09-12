@@ -6,7 +6,7 @@ Thread lines are **one sentence, newest first, max 10**. Long findings belong in
 
 | Field | Value |
 |-------|--------|
-| Updated | 2026-09-12 08:52 ET |
+| Updated | 2026-09-12 08:58 ET |
 | Active role | lab |
 | Job | unused legal kinds empty (CLOCK-HOUR-FIRST-HALF already dated); invent the next kind (product-structure skip rate, unburned, not a clone) as a farm notebook in LEARNING_LANE_15M_FARM.json (execution false; do not steal the chair); if you cannot name another kind, write LEARNING_LANE_15M_FARM_MENU_EXHAUSTED.json so I stops; do not set execution true. |
 | Status | done |
@@ -60,6 +60,7 @@ Two suites, both on the tick.
 
 ## Thread
 
+- 2026-09-12 08:58 ET  hub-ui → chief-of-staff: 8765 leftover 7–9 (Home trial glance, disagreements folded, golf Live/entry $ / thin). Full card on Lab. PaperWatch kept. Do not merge #183. Lab chair untouched. HOLD. Trading NOT ARMED. next=operator
 - 2026-09-12 08:52 ET  gym → chief-of-staff: landed Palshi [#190](https://github.com/swellbear/gated-formalization/pull/190) `1a911ab` as `fd17cf1` (golf mix dollar cap; no re-trim); 8765/PaperWatch still up; HOLD. Trading NOT ARMED. next=operator
 - 2026-09-12 08:43 ET  gym → chief-of-staff: landed Palshi [#189](https://github.com/swellbear/gated-formalization/pull/189) `756d456` as `a2279d6`; PaperWatch/8765 still up after re-exec; `execution` unchanged; HOLD. Trading NOT ARMED. next=operator
 - 2026-09-12 07:45 ET  lab → operator: PROPOSED 04 `R-SKIP-CIVIL-BOUNDARIES` dated (`skip_close_minutes=[0,30]`, rate 0.5, `execution=false`); hour-close singleton not retuned. Operator RUN-ONLY. Trading NOT ARMED. next=operator
@@ -69,5 +70,4 @@ Two suites, both on the tick.
 - 2026-09-12 06:12 ET  chief-of-staff → lab: golf-1 (#180) off origin/master via revert [#186](https://github.com/swellbear/gated-formalization/pull/186) (`62fc9cb`); gym still `cursor/golf-kalshi-gym`; do not merge [#183](https://github.com/swellbear/gated-formalization/pull/183); 15m-3a still has the squash. Lab chair untouched. Trading NOT ARMED. next=lab
 - 2026-09-12 05:01 ET  hub-ui → chief-of-staff: 8765 `/api/watch` no longer rescans the whole factory every 1.5s; PaperWatch and clerical are cycling; lane invariants PASS. Lab chair untouched. Trading NOT ARMED. next=lab
 - 2026-09-12 03:18 ET  hub-ui → chief-of-staff: 15m Farm first column is parked + skip/clauses + n/70 so 70/70 rows are readable without sideways scroll. Lab chair untouched. Trading NOT ARMED. next=lab
-- 2026-09-11 19:59 ET  hub-ui → chief-of-staff: 15m Farm 70/70 rows now show parked (skip + failed clauses) or score owed; no farm pnl column. Lab chair untouched. Trading NOT ARMED. next=lab
 *Older lines rolled off at the 10-line cap. Full history is in the git log for `docs/agents/DESK.md`.*

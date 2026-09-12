@@ -1456,11 +1456,62 @@ def test_hub_shows_mix_and_cap_shares(gk_root, tmp_path):
     )
     page = board_html()
     assert "worthy 4" in page
-    assert "Live/entry edge" in page
+    assert "Live/entry $" in page
+    assert "Live/entry edge" not in page
     assert "Fast 50" in page
     assert "This week 100" in page
     assert "Closed tickets" in page
     assert "no closed tickets" in page
+
+
+def test_hub_thin_quote_hides_noisy_dollar_edge(gk_root):
+    from golf_offshoot.golf_kalshi.hub import blotter_html
+    from golf_offshoot.golf_kalshi.paper import empty_ledger, save_ledger
+    from golf_offshoot.golf_kalshi.paths import last_tick_path
+
+    book = empty_ledger()
+    book["tickets"] = [
+        _ticket(
+            ticker="KXPGA-26-LNORRIS",
+            player="Lando Norris",
+            yes_ask=0.001,
+            edge_after_fee=788.199,
+            quote={"yes_ask": 0.001, "yes_bid": 0.0, "fee_multiplier": 1.0, "displayed_size": 10.0},
+        )
+    ]
+    save_ledger(book)
+    last_tick_path().parent.mkdir(parents=True, exist_ok=True)
+    last_tick_path().write_text(
+        json.dumps(
+            {
+                "marks": {
+                    "KXPGA-26-LNORRIS": {"live_edge": 788.199, "entry_edge": 788.199},
+                }
+            }
+        ),
+        encoding="utf-8",
+    )
+    page = blotter_html()
+    assert "Live/entry $" in page
+    assert "Live/entry edge" not in page
+    assert "788" not in page
+    assert "thin" in page
+    assert "0.001" in page
+    assert "Lando Norris" in page
+
+
+def test_hub_open_ticket_dollar_edge_two_decimals(gk_root):
+    from golf_offshoot.golf_kalshi.hub import blotter_html
+    from golf_offshoot.golf_kalshi.paper import empty_ledger, save_ledger
+
+    book = empty_ledger()
+    book["tickets"] = [_ticket(edge_after_fee=0.0512)]
+    save_ledger(book)
+    page = blotter_html()
+    assert "Live/entry $" in page
+    assert "— / +0.05" in page
+    assert "thin" not in page
+    assert "0.08" in page
 
 
 def test_hub_home_mix_shows_skips_when_tickets_open(gk_root):

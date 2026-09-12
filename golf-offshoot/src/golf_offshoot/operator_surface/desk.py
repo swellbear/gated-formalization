@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import hashlib
 import html
+import re
 from pathlib import Path
 from typing import Any
 
@@ -213,11 +214,113 @@ def session_blotter_15m() -> tuple[str, str]:
     standing = _factory_standing_html()
     blotter = (
         '<div id="desk-blotter" class="desk-blotter">'
+        + trial_glance_html()
         + this_window_html()
         + f'<section class="panel" id="factory-home"><h2>Factory</h2>{standing}</section>'
         + "</div>"
     )
     return session, blotter
+
+
+_CARD_HEADING = re.compile(r"^##\s+(.+?)\s*$")
+_TRIAL_GLANCE_SEE = "Not a verdict. Full card on Lab."
+
+
+def _card_sections(text: str) -> dict[str, str]:
+    found: dict[str, list[str]] = {}
+    current: str | None = None
+    for line in (text or "").splitlines():
+        match = _CARD_HEADING.match(line.strip())
+        if match:
+            current = match.group(1).strip().lower()
+            found[current] = []
+            continue
+        if current is not None:
+            found[current].append(line)
+    return {key: "\n".join(body).strip() for key, body in found.items()}
+
+
+def _first_quote(section: str) -> str:
+    for raw in (section or "").splitlines():
+        line = raw.strip()
+        if not line:
+            continue
+        if line.lower().startswith("source:"):
+            continue
+        if line.startswith(">"):
+            line = line.lstrip("> ").strip()
+        line = line.replace("`", "").strip()
+        if line:
+            return line
+    return ""
+
+
+def _first_file_line(text: str) -> str:
+    for raw in (text or "").splitlines():
+        line = raw.strip()
+        if not line or line.startswith("#"):
+            continue
+        return line.replace("`", "").strip()
+    return ""
+
+
+def _short_trial_quote(text: str) -> str:
+    text = (text or "").replace("`", "").strip()
+    if " — " in text:
+        return text.split(" — ", 1)[0].strip()
+    if len(text) > 88:
+        return text[:85].rstrip() + "…"
+    return text
+
+
+def trial_glance_html() -> str:
+    """One Home line from the generated card file. Does not write the card."""
+    from golf_offshoot.learning_lane_15m.learning_card import (
+        EMPTY_ON_TRIAL,
+        MISSING_HUB_COPY,
+        card_path,
+    )
+
+    def _p(line: str) -> str:
+        return (
+            '<p id="trial-glance" class="trial-glance">'
+            f"{html.escape(line)} "
+            f'<span class="help">{html.escape(_TRIAL_GLANCE_SEE)}</span>'
+            "</p>"
+        )
+
+    try:
+        path = card_path()
+    except Exception:
+        return _p(MISSING_HUB_COPY)
+    if not path.is_file():
+        return _p(MISSING_HUB_COPY)
+    try:
+        text = path.read_text(encoding="utf-8", errors="replace")
+    except OSError:
+        return _p(MISSING_HUB_COPY)
+    sections = _card_sections(text)
+    on_trial = _first_quote(sections.get("on trial", ""))
+    if on_trial == EMPTY_ON_TRIAL:
+        return _p(EMPTY_ON_TRIAL)
+    bits: list[str] = []
+    if on_trial:
+        bits.append(f"On trial {_short_trial_quote(on_trial)}")
+    else:
+        fallback = _first_file_line(text)
+        if fallback == EMPTY_ON_TRIAL:
+            return _p(EMPTY_ON_TRIAL)
+        if fallback:
+            bits.append(fallback)
+    implemented = _first_quote(sections.get("implemented?", ""))
+    if implemented:
+        bits.append(f"Implemented? {implemented}")
+    verdict = _first_quote(sections.get("verdict", ""))
+    if verdict:
+        bits.append(f"Verdict {verdict}")
+    if not bits:
+        bits.append(MISSING_HUB_COPY)
+    return _p(" · ".join(bits))
 
 
 def _factory_standing_html() -> str:
@@ -230,10 +333,13 @@ def _factory_standing_html() -> str:
     keep = f'<p class="loud">{html.escape(standing.not_a_keep)}</p>' if standing.not_a_keep else ""
     return (
         '<div class="standing">'
+        '<details class="gk-fold">'
+        "<summary>What it is / where it stands</summary>"
         "<h3>What it is</h3>"
         f"<p>{_bold_stars(standing.what_it_is)}</p>"
         "<h3>Where it stands</h3>"
         f"<p>{_bold_stars(standing.where_it_stands)}</p>"
+        "</details>"
         "<h3>Last thing that happened</h3>"
         f"<p>{_bold_stars(standing.last_happened)}</p>"
         "<h3>This book's money</h3>"

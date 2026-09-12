@@ -292,3 +292,62 @@ def test_hub_15m_missing_card_is_honest(tmp_path, monkeypatch):
     finally:
         set_15m_root_override(None)
     assert "learning card not yet available" in page
+
+
+def test_trial_glance_quotes_card_and_points_to_lab(tmp_path, monkeypatch):
+    card = tmp_path / "card.md"
+    card.write_text(
+        "# 15m learning card\n\n"
+        "## On trial\n\n"
+        "`R-SKIP-CIVIL-BOUNDARIES` — Skip the paper fill when close_at clock minute is 0 or 30.\n\n"
+        "## Verdict\n\n"
+        "not yet ruled.\n\n"
+        "## Implemented?\n\n"
+        "`execution: false`\n",
+        encoding="utf-8",
+    )
+    monkeypatch.setattr(
+        "golf_offshoot.learning_lane_15m.learning_card.card_path", lambda root=None: card
+    )
+    from golf_offshoot.operator_surface.desk import trial_glance_html
+
+    html = trial_glance_html()
+    assert 'id="trial-glance"' in html
+    assert "R-SKIP-CIVIL-BOUNDARIES" in html
+    assert "R-SKIP-CIVIL-BOUNDARIES`" not in html
+    assert "execution: false" in html
+    assert "not yet ruled" in html
+    assert "Lab" in html
+    assert "Not a verdict" in html
+    assert "<pre>" not in html
+    assert 'class="learning-card"' not in html
+    assert "Skip the paper fill" not in html
+
+
+def test_trial_glance_empty_on_trial(tmp_path, monkeypatch):
+    card = tmp_path / "card.md"
+    card.write_text(f"## On trial\n\n{EMPTY_ON_TRIAL}\n", encoding="utf-8")
+    monkeypatch.setattr(
+        "golf_offshoot.learning_lane_15m.learning_card.card_path", lambda root=None: card
+    )
+    from golf_offshoot.operator_surface.desk import trial_glance_html
+
+    html = trial_glance_html()
+    assert EMPTY_ON_TRIAL in html
+    assert "Lab" in html
+    assert 'id="trial-glance"' in html
+
+
+def test_trial_glance_fail_open_without_on_trial(tmp_path, monkeypatch):
+    card = tmp_path / "card.md"
+    card.write_text("FIXTURE-CARD-TEXT R-FIXTURE-SKIP PARK\n", encoding="utf-8")
+    monkeypatch.setattr(
+        "golf_offshoot.learning_lane_15m.learning_card.card_path", lambda root=None: card
+    )
+    from golf_offshoot.operator_surface.desk import trial_glance_html
+
+    html = trial_glance_html()
+    assert 'id="trial-glance"' in html
+    assert "FIXTURE-CARD-TEXT" in html
+    assert "Lab" in html
+    assert "<pre>" not in html

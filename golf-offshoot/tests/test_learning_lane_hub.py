@@ -159,7 +159,20 @@ def test_desktop_shell_html_has_lane_selector_and_hides_golf_viz_on_15m(tmp_path
     assert "Closed tickets" not in home
     assert "Closed tickets" in score
     assert "Player" in golf
-    assert "Live/entry edge" in golf
+    assert "Live/entry $" in golf
+    assert "Live/entry edge" not in golf
+    home_15 = page[page.index("desk-view-home") : page.index("desk-view-scoreboard")]
+    lab_15 = page[page.index("desk-view-lab") : page.index("desk-view-ops")]
+    assert 'id="trial-glance"' in home_15
+    assert 'class="learning-card"' not in home_15
+    assert "<pre>" not in home_15
+    assert 'class="gk-fold"' in home_15
+    assert "Last thing that happened" in home_15
+    assert "This book's money" in home_15
+    assert "What it is / where it stands" in home_15
+    assert 'class="learning-card"' in lab_15
+    assert "What is on trial (registry proof)" in lab_15
+    assert 'id="trial-glance"' not in golf
 
 
 def test_registry_and_miss_lane(tmp_path):
