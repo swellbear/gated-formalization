@@ -277,3 +277,138 @@ def test_run_search_on_fixture_books_does_not_write_rules(tmp_path):
         / "latest"
         / "policy_family_score.json"
     ).is_file()
+
+
+def _seed_family_docs(tmp_path, *, lessons_rows=None, rule_ids=None):
+    docs = tmp_path / "golf-offshoot" / "docs"
+    docs.mkdir(parents=True)
+    src = Path(__file__).resolve().parents[1] / "docs" / "POLICY_FAMILY.json"
+    (docs / "POLICY_FAMILY.json").write_text(src.read_text(encoding="utf-8"), encoding="utf-8")
+    if lessons_rows is not None:
+        (docs / "P_FAMILY_LESSONS.json").write_text(
+            json.dumps({"rows": lessons_rows}), encoding="utf-8"
+        )
+    if rule_ids is not None:
+        (docs / "LEARNING_LANE_15M_RULES.json").write_text(
+            json.dumps({"rules": [{"id": ident} for ident in rule_ids]}),
+            encoding="utf-8",
+        )
+
+
+def test_picker_file_order_unused_named_not_3n(tmp_path):
+    from golf_offshoot.policy_family.picker import (
+        MONEY_KEYS,
+        next_named_from_files,
+        picker_owed_from_files,
+        stamp_picker,
+        unused_named_from_files,
+    )
+
+    _seed_family_docs(tmp_path, lessons_rows=[], rule_ids=[])
+    unused = unused_named_from_files(root=tmp_path)
+    assert "P-FILL-ALL-YES" not in unused
+    assert unused[0] == "P-SKIP-COINFLIP"
+    assert unused == [
+        "P-SKIP-COINFLIP",
+        "P-SKIP-RICH-075",
+        "P-SKIP-WIDE-0400",
+        "P-SKIP-LAST-SECONDS-60",
+        "P-SKIP-INELIGIBLE-CLOSED",
+    ]
+    assert len(unused) == 5
+    assert next_named_from_files(root=tmp_path) == "P-SKIP-COINFLIP"
+    assert picker_owed_from_files(root=tmp_path) is True
+    stamp = stamp_picker(root=tmp_path)
+    assert stamp["kind"] == "P-FAMILY-SEARCH"
+    assert stamp["owed"] is True
+    assert stamp["next"] == "P-SKIP-COINFLIP"
+    assert stamp["ping_lab"] is False
+    assert stamp["lab_admits"] is False
+    assert stamp["trading_armed"] is False
+    assert stamp["reasons"] == ["unused_named"]
+    assert "third_family" not in stamp
+    for key in MONEY_KEYS:
+        assert key not in stamp
+
+
+def test_picker_retires_density_fail_and_does_not_confuse_factory_coinflip(tmp_path):
+    from golf_offshoot.policy_family.picker import (
+        next_named_from_files,
+        unused_named_from_files,
+    )
+
+    _seed_family_docs(
+        tmp_path,
+        lessons_rows=[
+            {"id": "P-FILL-ALL-YES", "card": "comparison_book"},
+            {"id": "P-SKIP-COINFLIP", "card": "beats_fill_all"},
+            {"id": "P-SKIP-RICH-075", "card": "park_vs_fill_all"},
+            {"id": "P-SKIP-WIDE-0400", "card": "density_fail"},
+            {"id": "P-SKIP-LAST-SECONDS-60", "card": "density_fail"},
+            {"id": "P-SKIP-INELIGIBLE-CLOSED", "card": "density_fail"},
+        ],
+        rule_ids=["R-SKIP-COINFLIP", "R-BASELINE-FILL-ALL"],
+    )
+    unused = unused_named_from_files(root=tmp_path)
+    assert unused == ["P-SKIP-COINFLIP"]
+    assert next_named_from_files(root=tmp_path) == "P-SKIP-COINFLIP"
+    _seed_family_docs(
+        tmp_path,
+        lessons_rows=[
+            {"id": "P-SKIP-COINFLIP", "card": "beats_fill_all"},
+            {"id": "P-SKIP-RICH-075", "card": "park_vs_fill_all"},
+        ],
+        rule_ids=["P-SKIP-COINFLIP"],
+    )
+    assert unused_named_from_files(root=tmp_path) == []
+    assert next_named_from_files(root=tmp_path) is None
+
+
+def test_live_files_leave_coinflip_unused_until_exact_p_id():
+    from golf_offshoot.policy_family.picker import (
+        next_named_from_files,
+        picker_owed_from_files,
+        retired_named_from_files,
+        unused_named_from_files,
+    )
+
+    unused = unused_named_from_files()
+    assert unused == ["P-SKIP-COINFLIP"]
+    assert next_named_from_files() == "P-SKIP-COINFLIP"
+    assert picker_owed_from_files() is True
+    retired = retired_named_from_files()
+    assert "P-SKIP-COINFLIP" not in retired
+    assert "P-SKIP-RICH-075" in retired
+    assert "P-SKIP-WIDE-0400" in retired
+    assert "P-FILL-ALL-YES" not in unused
+    assert "P-FILL-ALL-YES" not in retired
+
+
+def test_catalog_kind_is_not_a_farm_slot(tmp_path):
+    from golf_offshoot.learning_lane_15m.evidence_bar import load_mechanism_catalog
+    from golf_offshoot.learning_lane_15m.farm import unused_legal_kinds
+
+    kinds = load_mechanism_catalog()["kinds"]
+    pkind = next(row for row in kinds if row["id"] == "P-FAMILY-SEARCH")
+    assert pkind.get("legal_now") is not True
+    assert pkind.get("legal_only_when")
+    would_farm = dict(pkind)
+    would_farm["legal_now"] = True
+    docs = tmp_path / "golf-offshoot" / "docs"
+    docs.mkdir(parents=True)
+    (docs / "LEARNING_LANE_15M_MECHANISM_CATALOG.json").write_text(
+        json.dumps({"kinds": [would_farm]}), encoding="utf-8"
+    )
+    (docs / "LEARNING_LANE_15M_FARM.json").write_text('{"notebooks": []}', encoding="utf-8")
+    (docs / "LEARNING_LANE_15M_RULES.json").write_text('{"rules": []}', encoding="utf-8")
+    (docs / "LEARNING_LANE_15M_BURNED_CLASSES.json").write_text(
+        '{"classes": []}', encoding="utf-8"
+    )
+    assert unused_legal_kinds(root=tmp_path) == []
+    live_unused = unused_legal_kinds(
+        root=tmp_path,
+        catalog=load_mechanism_catalog(),
+        farm={"notebooks": []},
+        registry={"rules": []},
+    )
+    assert all(slot["kind"] != "P-FAMILY-SEARCH" for slot in live_unused)

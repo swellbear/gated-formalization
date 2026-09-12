@@ -2,8 +2,8 @@
   "schema": 1,
   "lane": "learning_lane_15m",
   "series": "KXBTC15M",
-  "updated": "2026-09-12T15:10:00-04:00",
-  "rule": "Crew-owned kind menu. Lab loads this like burned classes. Lab may add a kind by inventing if it can name a product-structure expected_skip_rate from the 15m quartet. Operator RUN-ONLY or PARK. Not a Founder permission list. Do not put future tickers here. Catalog prefers ≥ 0.25; declare_rule floor is 10/first_look_n. Honer family 3 H-SKIP-THIN-BOOK is dated from files after the two dated families finished exams. Do not append a fourth until family 3 finishes. Consult enable is a file gate. Replacement is crew after consult has lived.",
+  "updated": "2026-09-12T17:30:00-04:00",
+  "rule": "Crew-owned kind menu. Lab loads this like burned classes. Lab may add a kind by inventing if it can name a product-structure expected_skip_rate from the 15m quartet. Operator RUN-ONLY or PARK. Not a Founder permission list. Do not put future tickers here. Catalog prefers ≥ 0.25; declare_rule floor is 10/first_look_n. Honer family 3 H-SKIP-THIN-BOOK is dated from files after the two dated families finished exams. Do not append a fourth until family 3 finishes. Consult enable is a file gate. Replacement is crew after consult has lived. P-FAMILY-SEARCH is a finite unused-named P-* picker doorbell, not a farm notebook.",
   "kinds": [
     {
       "id": "CLOCK-CLOSE-MINUTE",
@@ -53,6 +53,12 @@
       "id": "HONER-FROZEN-REPLACE",
       "legal_only_when": "consult has lived and the factory executing trial is not live",
       "note": "Lab photocopies freeze family/theta/delta/declared_at as the executing registry row. Operator RUN-ONLY. Not Founder. Not ADMIT. Not arm. Skip-on-mark may still fail Established on this dirty book."
+    },
+    {
+      "id": "P-FAMILY-SEARCH",
+      "protocol": "golf-offshoot/docs/POLICY_FAMILY.json",
+      "legal_only_when": "unused named P-* remain in POLICY_FAMILY.json file order; Lab still gates seating and may refuse",
+      "note": "Finite picker doorbell, same shape as the honer file doorbell. Unused named P-* from files, not pnl, not 3^N, not clip-walk. Comparison P-FILL-ALL-YES is never a pick. Density-fail / park-vs-fill-all retires that name (do not retune). Does not date a factory row. Do not ping Lab. Not a farm notebook. Not factory skip-together."
     }
   ]
 }

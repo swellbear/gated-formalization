@@ -15,6 +15,12 @@ SCORE_REL = (
     Path("golf-offshoot") / "data" / "learning_lane_15m" / "latest" / "policy_family_score.json"
 )
 ALLOWED_SERIES = "KXBTC15M"
+CATALOG_KIND = "P-FAMILY-SEARCH"
+COMPARISON_ID = "P-FILL-ALL-YES"
+REGISTRY_REL = Path("golf-offshoot") / "docs" / "LEARNING_LANE_15M_RULES.json"
+PICKER_REL = (
+    Path("golf-offshoot") / "data" / "learning_lane_15m" / "latest" / "policy_family_picker.json"
+)
 FROZEN_IDS = (
     "P-FILL-ALL-YES",
     "P-SKIP-COINFLIP",
@@ -54,6 +60,14 @@ def lessons_path(*, root: Path | None = None) -> Path:
 
 def score_path(*, root: Path | None = None) -> Path:
     return (Path(root) if root is not None else repo_root()) / SCORE_REL
+
+
+def picker_path(*, root: Path | None = None) -> Path:
+    return (Path(root) if root is not None else repo_root()) / PICKER_REL
+
+
+def registry_path(*, root: Path | None = None) -> Path:
+    return (Path(root) if root is not None else repo_root()) / REGISTRY_REL
 
 
 def _as_upper(value: Any) -> str:

@@ -18,6 +18,7 @@ from golf_offshoot.localtime import isoformat_now
 from golf_offshoot.policy_family.express import ACTION_FILL, ACTION_SKIP, express
 from golf_offshoot.policy_family.library import (
     ALLOWED_SERIES,
+    COMPARISON_ID,
     FROZEN_IDS,
     PolicyFamilyError,
     lessons_path,
@@ -32,7 +33,6 @@ _BIDASK_RE = re.compile(
     re.IGNORECASE,
 )
 _SKIP_FILES = frozenset({"ledger.json", "rule_decisions.json"})
-COMPARISON_ID = "P-FILL-ALL-YES"
 
 
 def _load_json(path: Path) -> dict[str, Any]:
