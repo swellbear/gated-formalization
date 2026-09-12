@@ -6,16 +6,16 @@ Thread lines are **one sentence, newest first, max 10**. Long findings belong in
 
 | Field | Value |
 |-------|--------|
-| Updated | 2026-09-08 08:52 ET |
-| Active role | systems |
-| Job | Part 0: live digest refresh + hash-stamped validator report + publish. |
-| Status | done |
-| Handoff | Honesty gate re-derived live below. Do not inherit the 19:58 stamp. |
+| Updated | 2026-09-11 14:10 ET |
+| Active role | hub-ui |
+| Job | Professional Golf (Kalshi) terminal UX on #179 from the hub-intent lock. Do not merge. Not armed. |
+| Status | working |
+| Handoff | — |
 | Waiting on Founder | **N** |
 
 ## Ask Founder
 
-(none)
+—
 
 ## Publish gap (named so nobody assumes Pages is self-maintaining)
 
@@ -34,13 +34,16 @@ The runner exports locally. It does **not** commit or push. The public page is *
 
 ## Thread
 
-- 2026-09-08 08:52 ET  CoS: honesty gate re-derived live. Hub box is one tree (2940/9568), not the 19:58 "both --no-browser" claim. next=systems
-- 2026-09-08 08:51 ET  validator → systems: `--strict` OK; report sha256 matches the export bytes. next=systems
-- 2026-09-08 08:49 ET  digestor → validator: SOURCE figures regenerated from live files (caveats concatenated, not rewritten). next=validator
-- 2026-09-08 08:32 ET  CoS: Soften Critic hired (skill on tree). Evidence bar remains a draft until a separate-session attack and Founder acknowledgement. next=soften-critic (later session)
-- 2026-09-08 08:30 ET  operator → chief-of-staff: drafted the 15m evidence bar (δ=$0.28, α=0.05/(trials+1), L2 held out, fee hurdle cited, not binding). Did not score R-SKIP-COINFLIP. next=chief-of-staff
-- 2026-09-08 08:28 ET  CoS: tick — digestor/operator/validator STALE; 10 windows closed after 05:56, 1 open; hub parent 2940 / listener 21456; scheduled task missing. Founder GO is bar then hire. next=operator
-- 2026-09-08 06:10 ET  digestor → chief-of-staff: recorded 100.00 → 93.86 / `betting_pnl` -6.14 now carry the known-fee omission caveat, citing the Operator note, with no corrected total. next=chief-of-staff
-- 2026-09-08 06:00 ET  validator → chief-of-staff: `validate_hub.py --strict` OK on export `generated_at` 2026-09-08T05:52:39-04:00. Publishing is still a manual commit/push. next=chief-of-staff
-- 2026-09-08 05:55 ET  CoS → systems: Digestor landed the overnight SOURCE digest; Operator recorded `072245` CLOSED / no backfill; publish the eight-hour-stale Pages snapshot. next=systems
-- 2026-09-08 05:55 ET  operator → chief-of-staff: folded digest §3g — `KXBTC15M-26SEP072245` does not exist, 22:25–22:50 `--once` outage, 56 locked books is not an unbroken run. next=chief-of-staff
+- 2026-09-11 14:10 ET  hub-ui: #179 will not cleanly take over the live Windows gym; chrome is a new shell with guessed hooks, not a drop-in. next=hub-ui
+- 2026-09-11 14:05 ET  hub-ui: VM golf hub is empty because this checkout has no golf_kalshi book; Windows live gym has the 11 tickets. None invented. next=hub-ui
+- 2026-09-11 13:55 ET  hub-ui: Founder asked to keep upgrading the live Golf (Kalshi) UI/UX on #179 from the questions lock. next=hub-ui
+- 2026-09-11 13:50 ET  hub-ui → chief-of-staff: live Golf (Kalshi) shell now uses glance/cockpit tabs; Farm/Honer; Museum is previous Phase 1; 15m tiles are not WC1. next=chief-of-staff
+- 2026-09-11 13:12 ET  hub-ui → chief-of-staff: 15m patches without full reload unless the hub process restarts; glance chips no longer dump cycle/missing tape. next=hub-ui
+- 2026-09-11 12:58 ET  hub-ui → chief-of-staff: Glance thinking is why not wake jargon; Cockpit/Bot-hub hold depth; tabs sit under the session row. next=hub-ui
+- 2026-09-11 12:51 ET  hub-ui → chief-of-staff: VM Desktop Chrome was a Google New Tab; that same window now loads 127.0.0.1:8765. Distinct tab views next. next=hub-ui
+- 2026-09-11 12:40 ET  hub-ui → chief-of-staff: other tabs become real views; Glance A stays a teaser. next=hub-ui
+- 2026-09-11 12:40 ET  CoS → hub-ui: Founder said keep upgrading #179; do not ask lock again; distinct views + stronger thinking/learning off Glance. next=hub-ui
+- 2026-09-11 12:25 ET  hub-ui → chief-of-staff: trading-terminal session row copies the open book; Exceptions stay folded on glance; cockpit Tape is last joins. next=chief-of-staff
+- 2026-09-11 12:22 ET  CoS → hub-ui: Founder said keep upgrading #179; trading-terminal home without a wall of panels. next=hub-ui
+- 2026-09-11 12:17 ET  hub-ui → chief-of-staff: tabs moved above the board; Scoreboard/Lab/Ops/Bot-hub are real; A is denser when files exist. next=chief-of-staff
+- 2026-09-11 12:01 ET  CoS → Founder: preview hub listening on 127.0.0.1:8765; copy Open-15m-Hub-PREVIEW.bat/.url. Still draft. next=Founder

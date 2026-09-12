@@ -54,7 +54,7 @@ def _selector(lane: str) -> str:
 <form class="lane-form" method="get" action="">
   <fieldset>
     <legend>Mode</legend>
-    <button type="submit" name="{SELECTOR_FIELD}" value="golf" {golf_on}>Golf Phase 1</button>
+    <button type="submit" name="{SELECTOR_FIELD}" value="golf" {golf_on}>Golf (Kalshi)</button>
     <button type="submit" name="{SELECTOR_FIELD}" value="learning_lane_15m" {m15_on}>15-min Kalshi (learning)</button>
   </fieldset>
 </form>
@@ -107,7 +107,7 @@ def _viz_html(lane: str) -> str:
         return """
 <section class="viz" data-lane="learning_lane_15m">
   <h2>Viz wall</h2>
-  <p class="empty">not yet available — 15-min lane is observation-only. No golf WC1 / Ill charts here.</p>
+  <p class="empty">15m PNG is on the operator shell (python -m golf_offshoot shell --lane learning_lane_15m), not this sibling. Missing stays not yet available. No golf WC1 / Ill here.</p>
 </section>
 """
     slots = "\n".join(
@@ -136,7 +136,7 @@ def render_hub(lane: str | None = None, *, query: dict | None = None) -> str:
         "(ingest, live prices, paper autobet, settle join). "
         "It is not live trading and not a golf WC1 edge."
         if active == LANE_15M
-        else "Golf Phase 1 stays observation-only. Trading is not armed."
+        else "Golf (Kalshi) stays paper observation. Trading is not armed. Previous Phase 1 claim is museum-only."
     )
     journal_html = _m15_journal_html() if active == LANE_15M else _golf_journal_html()
     return f"""<!DOCTYPE html>

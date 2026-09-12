@@ -5,12 +5,12 @@ Chat transcripts are not. A later Grok / Cursor cloud agent will not see a prior
 
 | Field | Value |
 |-------|--------|
-| Updated | 2026-09-08 08:52 EDT (Part 0: live digest + validator report + publish in flight) |
+| Updated | 2026-09-11 14:05 EDT (draft PR #179; cloud golf hub has no Kalshi book; Windows live gym has the open tickets; not merged) |
 | Interim operator | Cursor chat (Grok bot usage exhausted until **2026-09-13**) |
 | Repo SoT | **This fold publishes.** Validator report must hash-match the committed `manifest.json`. |
 | Local Windows tree for this interim | `C:\Users\bearh\gated-formalization-master-hub` |
 | Do **not** treat as SoT | `C:\Users\bearh\gated-formalization` on `cursor/eia-window-job2` (stale + dirty) |
-| Active track | `learning_lane_15m` (KXBTC15M paper loop) + Phase 1 desktop hub |
+| Active track | `learning_lane_15m` (KXBTC15M paper loop) + Golf (Kalshi) desktop hub |
 | Crew | `docs/agents/` — CoS routes; desk is live board |
 | Trading | **NOT ARMED** |
 
@@ -35,6 +35,10 @@ If it is not in git on GitHub, the next bot does not have it.
 **Armed locally:** `golf-offshoot/data/learning_lane_15m/latest/RUNNER_ARMED` (gitignored). The runner still does not commit or push. The public page is **not** self-maintaining. Restart the 15m hub if the running PaperWatch predates `c6354cc`.
 
 Do not write branch state as if it were landed. If Pages `generated_at` is more than one 15-minute window behind now, the public page should say so itself.
+
+## 15m hub UX draft (not on master, do not merge)
+
+Draft PR **#179** on `cursor/15m-hub-ux-6620`. Sequence landed: glance home, A this-lane, B other-lane tiles, C role strip, Glance/Cockpit, Scoreboard / Lab / Ops / Bot-hub. Incremental: session row; folded Exceptions; cockpit Tape; tabs under the session row; other tabs hide Home A/B/C; Glance thinking is **why**; Cockpit rail is thinking/learning/tape; **`/api/watch` patches in place** (full reload only if the hub process restarts). **Golf (Kalshi)** is the golf lane (not PHASE 1 ESPN): same glance/session/tabs language, Farm + Honer tabs, Museum holds the previous Phase 1 claim, catalog stays off glance, 15m ledger is not dumped on golf Ops. 15m glance B is compact Golf (Kalshi) / Farm / Honer tiles, not WC1 FAIL. Optional-import of live golf-kalshi modules when present; this checkout stays honest if they are missing. **Not a clean live takeover.** Overlaying this branch onto the Windows gym would replace the live golf page with a new shell that only shows the 11 tickets if guessed `golf_kalshi` hooks still match. GitHub extras still run Phase 1 POST. Do **not** merge. Do not take over the live process. Preview launcher: `golf-offshoot/Open-15m-Hub-PREVIEW.bat` plus `.url`. This cloud VM serves `http://127.0.0.1:8765` in the **Desktop Chrome window**. Founder said keep upgrading this draft. Do **not** merge. 15m market lock `KXBTC15M`. PaperWatch stays. Trading **NOT ARMED**.
 
 ## What is already on master (PR #163 and earlier)
 

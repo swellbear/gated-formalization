@@ -16,7 +16,7 @@ This is a **general system learning lane**, not a golf-edge sidecar. The job is 
 
 **ingest → live → paper autobet → settle join → hub viz → dated weekly honesty**
 
-Hub viz for this lane is not yet available (empty / observation-only). Do not invent charts. Do not carry golf WC1 / Ill into this lane.
+Hub viz for this lane is the operator shell (`python -m golf_offshoot shell --lane learning_lane_15m`). The 15m PNG is shown when the Illustrator has written it; missing stays not yet available. Do not invent charts. Do not carry golf WC1 / Ill into this lane.
 
 ## Locked posture
 
@@ -124,7 +124,7 @@ A window can carry an official Kalshi result while its paper book is not on this
 ## Week-1 leftovers (PROPOSED — not Softened)
 
 1. ~~Digestor SOURCE honesty digest (hook only in this PR).~~ **Landed 2026-09-07 18:03 EDT:** [`LEARNING_LANE_15M_SOURCE_DIGEST.md`](LEARNING_LANE_15M_SOURCE_DIGEST.md) — living spine, every claim cited to a file. Conflict flag stays at [`LEARNING_LANE_15M_SOURCE_CONFLICT.md`](LEARNING_LANE_15M_SOURCE_CONFLICT.md).
-2. 15-min hub viz wall (currently `not yet available`).
+2. ~~15-min hub viz wall (currently `not yet available`).~~ Operator shell shows the Illustrator PNG when present; missing stays not yet available. Glance-home chrome is a draft PR — not go-live.
 3. Dated weekly honesty rollup for this lane.
 4. Expansion past `KXBTC15M`. **Founder HOLD 2026-09-07: not until this loop is honest.**
 5. CFB websocket observe/debug feed (never official settle).
