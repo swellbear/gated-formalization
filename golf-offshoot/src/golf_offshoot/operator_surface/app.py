@@ -308,12 +308,12 @@ def _spine_html() -> str:
         "<h2>Two boxes — two books — two counters</h2>"
         '<p class="help">Neither book is a keep. Trading NOT ARMED. Do not add bankrolls.</p>'
         '<div class="spine-grid">'
-        '<div class="spine-box">'
+        '<div class="spine-box book-factory" data-book="factory">'
         f"<h3>{html.escape(factory_title())}</h3>"
         f"<p>{html.escape(factory_spine_blurb())}</p>"
         '<p><a href="#factory">Jump to factory</a></p>'
         "</div>"
-        '<div class="spine-box">'
+        '<div class="spine-box book-honer" data-book="honer">'
         "<h3>Honer — sibling</h3>"
         "<p>Own root, own money, own k. Search may move a cutoff. "
         "Only tickets within 10¢ of the line move it. "
@@ -717,7 +717,7 @@ def render_html(surface: dict) -> str:
             honer_block = sandbox_html(extra_html=_honer_viz_html())
         except Exception:
             honer_block = (
-                '<section class="panel honer-sandbox" id="honer">'
+                '<section class="panel honer-sandbox book-honer" id="honer" data-book="honer">'
                 "<h2>honer_15m sandbox</h2>"
                 "</section>"
             )
@@ -727,7 +727,7 @@ def render_html(surface: dict) -> str:
             farm_block = farm_panel_html()
         except Exception:
             farm_block = (
-                '<section class="panel farm-sandbox" id="farm">'
+                '<section class="panel farm-sandbox book-farm" id="farm" data-book="farm">'
                 "<h2>Farm — discovery notebooks</h2>"
                 "</section>"
             )
@@ -748,14 +748,14 @@ def render_html(surface: dict) -> str:
         from golf_offshoot.operator_surface.this_window import factory_title
 
         factory_box = (
-            '<section class="panel factory-box" id="factory">'
+            '<section class="panel factory-box book-factory" id="factory" data-book="factory">'
             f"<h2>{html.escape(factory_title())}</h2>"
             '<p class="help">KXBTC15M windows from the join files. No golf WC1 / Ill here.</p>'
             f"{viz_wall}"
             "</section>"
         )
         lab = (
-            '<section class="panel" id="lab">'
+            '<section class="panel book-lab" id="lab" data-book="lab">'
             f"{_learning_card_html()}"
             "<h3>Journal</h3>"
             f"<pre>{journal_board}</pre>"
@@ -781,7 +781,7 @@ def render_html(surface: dict) -> str:
             session_html = '<div id="desk-session" class="desk-session"></div>'
             blotter_html = (
                 '<div id="desk-blotter" class="desk-blotter">'
-                '<section class="panel gk" id="golf-kalshi"><h2>Open tickets</h2></section>'
+                '<section class="panel gk book-golf" id="golf-kalshi" data-book="golf"><h2>Open tickets</h2></section>'
                 "</div>"
             )
             cockpit = ""
@@ -793,8 +793,8 @@ def render_html(surface: dict) -> str:
             golf_farm = farm_panel_html()
             golf_honer = honer_panel_html()
         except Exception:
-            golf_farm = '<section class="panel gk-organ" id="golf-farm"><h2>Golf Farm</h2></section>'
-            golf_honer = '<section class="panel gk-organ" id="golf-honer"><h2>Golf Honer</h2></section>'
+            golf_farm = '<section class="panel gk-organ book-golf" id="golf-farm" data-book="golf"><h2>Golf Farm</h2></section>'
+            golf_honer = '<section class="panel gk-organ book-honer" id="golf-honer" data-book="honer"><h2>Golf Honer</h2></section>'
         extras = (
             '<section class="panel" id="extras">'
             "<h2>Operator extras</h2>"
@@ -803,7 +803,7 @@ def render_html(surface: dict) -> str:
             "</section>"
         )
         museum = (
-            '<section class="panel" id="museum">'
+            '<section class="panel book-golf" id="museum" data-book="golf">'
             "<h2>Previous golf claim</h2>"
             "<p>WC1 fail / not proven. Not this gym.</p>"
             f"{viz_wall}"

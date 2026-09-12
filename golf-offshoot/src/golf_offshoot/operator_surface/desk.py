@@ -96,14 +96,18 @@ def render_page(
 <link rel="stylesheet" href="{asset_href('desk.css')}"/>
 </head>
 <body class="{html.escape(body_class)}" data-lane="{html.escape(lane)}" data-view="home">
+<div class="desk-chrome">
 <header class="desk-head {html.escape(wall_class)}">
   <h1>{html.escape(title)}</h1>
   <span class="desk-paper">PAPER</span>
   {lane_chip}
   {mock_lines}
 </header>
+<div class="desk-nav">
 <div class="lane-switch">{_lane_switch_html(lane)}</div>
 {_view_nav_html(spec)}
+</div>
+</div>
 <main>
   {''.join(view_blocks)}
 </main>
@@ -126,11 +130,15 @@ def render_miss(raw: str) -> str:
 <link rel="stylesheet" href="{asset_href('desk.css')}"/>
 </head>
 <body class="desk-miss" data-lane="miss" data-view="home">
+<div class="desk-chrome">
 <header class="desk-head ops">
   <h1>Lane not registered</h1>
   <span class="desk-paper">PAPER</span>
 </header>
+<div class="desk-nav">
 <div class="lane-switch">{_lane_switch_html(LANE_GOLF)}</div>
+</div>
+</div>
 <main>
   <p><code>{asked}</code> is not a registered lane. Registered: {html.escape(ids)}.</p>
 </main>
@@ -139,8 +147,24 @@ def render_miss(raw: str) -> str:
 """
 
 
-def _chip(label: str, value: str) -> str:
-    return f'<span class="gk-chip"><b>{html.escape(label)}</b> {html.escape(str(value))}</span>'
+def _chip(label: str, value: str, extra: str = "") -> str:
+    css = "gk-chip" + (f" {html.escape(extra)}" if extra else "")
+    return f'<span class="{css}"><b>{html.escape(label)}</b> {html.escape(str(value))}</span>'
+
+
+def _pnl_class(value: str) -> str:
+    raw = str(value or "").strip()
+    if raw in {"", "—"}:
+        return ""
+    try:
+        amount = float(raw)
+    except ValueError:
+        return ""
+    if amount > 0:
+        return "pnl-up"
+    if amount < 0:
+        return "pnl-down"
+    return ""
 
 
 def _bold_stars(text: str) -> str:
@@ -205,7 +229,7 @@ def session_blotter_15m() -> tuple[str, str]:
         f'<span class="desk-chip {watch_cls}"><b>Watch</b> {html.escape(watch_label)}</span>'
         + _chip("Clock", last_stamp)
         + _chip("Bankroll", bank)
-        + _chip("P/L", pnl)
+        + _chip("P/L", pnl, _pnl_class(pnl))
         + _chip("Open", open_n)
         + _chip("Closed", closed_n)
         + _chip("Halt", "no")
@@ -217,7 +241,7 @@ def session_blotter_15m() -> tuple[str, str]:
         + trial_glance_html()
         + this_window_html()
         + (
-            f'<section class="panel" id="factory-home">'
+            f'<section class="panel book-factory" id="factory-home" data-book="factory">'
             f"<h2>{html.escape(factory_title())}</h2>{standing}</section>"
         )
         + "</div>"

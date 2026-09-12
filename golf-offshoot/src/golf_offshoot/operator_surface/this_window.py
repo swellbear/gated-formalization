@@ -160,7 +160,7 @@ def this_window_html() -> str:
         honer_label = "Honer search (observation)"
         exam_label = "Honer exam (observation)"
     return (
-        '<section class="panel this-window-panel" id="this-window">'
+        '<section class="panel this-window-panel book-clock" id="this-window" data-book="clock">'
         f"<h2>{html.escape(heading)}</h2>"
         f'<p class="help">{html.escape(help_bit)}</p>'
         f"<p><strong>{html.escape(clock)}</strong> · <code>{name}</code></p>"

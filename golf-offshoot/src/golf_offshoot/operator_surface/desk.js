@@ -9,7 +9,9 @@
     if (!id) id = "home";
     body.setAttribute("data-view", id);
     views.forEach(function (btn) {
-      btn.classList.toggle("active", btn.getAttribute("data-view-id") === id);
+      var on = btn.getAttribute("data-view-id") === id;
+      btn.classList.toggle("active", on);
+      btn.setAttribute("aria-current", on ? "true" : "false");
     });
     try {
       sessionStorage.setItem(storeKey, id);

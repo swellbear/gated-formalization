@@ -147,7 +147,7 @@ def farm_panel_html() -> str:
     n = len(farm.get("notebooks") or [])
     extra = f" {n} dated notebooks sit idle." if n else ""
     return (
-        '<section class="panel gk-organ" id="golf-farm">'
+        '<section class="panel gk-organ book-golf" id="golf-farm" data-book="golf">'
         "<h2>Golf Farm</h2>"
         f'<p class="loud">Idle. {html.escape(FARM_IDLE)} {html.escape(_tape_line(farm.get("tape")))}{html.escape(extra)}</p>'
         "</section>"
@@ -157,7 +157,7 @@ def farm_panel_html() -> str:
 def honer_panel_html() -> str:
     _farm, honer = refresh_organs()
     return (
-        '<section class="panel gk-organ" id="golf-honer">'
+        '<section class="panel gk-organ book-honer" id="golf-honer" data-book="honer">'
         "<h2>Golf Honer</h2>"
         f'<p class="loud">Idle. {html.escape(HONER_IDLE)} {html.escape(_tape_line(honer.get("tape")))}</p>'
         "</section>"
