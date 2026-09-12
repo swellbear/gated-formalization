@@ -7,10 +7,10 @@ from typing import Any
 from golf_offshoot.golf_kalshi.decide import GolfDecision
 from golf_offshoot.golf_kalshi.fees import edge_after_fee, kelly_stake, quote_snapshot, taker_fee
 from golf_offshoot.golf_kalshi.paper import (
+    exposure_event,
     exposure_player,
     exposure_sleeve,
     exposure_total,
-    open_event_count,
     open_ticket_for,
     rebuy_blocked,
     sizing_bank,
@@ -84,7 +84,9 @@ def attach_stake(
         decision.stake = 0.0
         return decision
     event = str((decision.market or {}).get("event_ticker") or "")
-    if event and open_event_count(ledger, event) >= rec.max_tickets_per_event:
+    # Same 5% as the name cap. Ticket count is not a live gate. Do not close open tickets.
+    event_room = rec.single_name_frac * bank - (exposure_event(ledger, event) if event else 0.0)
+    if event and event_room <= 0:
         decision.action = "skip"
         decision.reason = "mix_event_cap"
         decision.stake = 0.0
@@ -97,6 +99,8 @@ def attach_stake(
         return decision
     unit = kelly_stake(bank, float(decision.model_p), float(decision.yes_ask), fraction=rec.kelly_fraction)
     stake = min(unit, name_room, room, rec.single_name_frac * bank)
+    if event:
+        stake = min(stake, event_room)
     liq = displayed_room(decision.market or {}, float(decision.yes_ask))
     if liq is not None:
         stake = min(stake, liq)

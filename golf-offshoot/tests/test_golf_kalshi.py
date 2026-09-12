@@ -1118,14 +1118,65 @@ def test_overweight_week_still_fills_fast(gk_root):
     assert out["fills"] >= 1
 
 
-def test_event_cap_fourth_is_mix_event_cap(gk_root):
+def test_event_cap_fourth_fills_when_event_dollars_under_name_cap(gk_root):
     rec = recipe_v1()
     book = empty_ledger(rec)
     book["tickets"] = [_ticket(ticker=f"E{i}", player_id=f"p{i}", stake=5.0) for i in range(3)]
     save_ledger(book)
     d = decide_golf(_market(ticker="FOURTH"), book, rec, _brain())
+    assert d.action == "fill"
+    bank = rec.seed
+    name_cap = rec.single_name_frac * bank
+    assert d.stake >= rec.min_stake
+    assert 15.0 + d.stake <= name_cap + 1e-9
+
+
+def test_event_cap_skips_when_event_dollars_at_name_cap(gk_root):
+    rec = recipe_v1()
+    book = empty_ledger(rec)
+    book["tickets"] = [
+        _ticket(ticker="E0", player_id="p0", stake=20.0),
+        _ticket(ticker="E1", player_id="p1", stake=20.0),
+        _ticket(ticker="E2", player_id="p2", stake=10.0),
+    ]
+    save_ledger(book)
+    d = decide_golf(_market(ticker="FOURTH"), book, rec, _brain())
     assert d.action == "skip"
     assert d.reason == "mix_event_cap"
+    assert sum(1 for t in book["tickets"] if t.get("status") == "open") == 3
+
+
+def test_event_cap_sizes_into_remaining_event_room(gk_root):
+    rec = recipe_v1()
+    book = empty_ledger(rec)
+    cap = rec.single_name_frac * rec.seed
+    book["tickets"] = [_ticket(ticker="E0", player_id="p0", stake=cap - 2.0)]
+    save_ledger(book)
+    d = decide_golf(_market(ticker="FOURTH"), book, rec, _brain())
+    assert d.action == "fill"
+    assert d.stake == pytest.approx(2.0)
+
+
+def test_dollar_event_cap_does_not_retrim_open_tickets(gk_root):
+    from golf_offshoot.golf_kalshi.mark import trim_event_caps
+
+    rec = recipe_v1()
+    book = empty_ledger(rec)
+    book["event_cap_trimmed"] = True
+    book["tickets"] = [
+        _ticket(ticker=f"E{i}", player_id=f"p{i}", stake=20.0, edge_after_fee=0.01 * i) for i in range(6)
+    ]
+    save_ledger(book)
+    markets = {f"E{i}": _market(ticker=f"E{i}", yes_bid=0.07, displayed_size=500.0) for i in range(6)}
+    exits = trim_event_caps(book, markets, _brain(), rec)
+    led = load_ledger()
+    assert exits == []
+    open_n = sum(1 for t in led["tickets"] if t.get("status") == "open")
+    assert open_n == 6
+    d = decide_golf(_market(ticker="FOURTH"), led, rec, _brain())
+    assert d.action == "skip"
+    assert d.reason == "mix_event_cap"
+    assert sum(1 for t in led["tickets"] if t.get("status") == "open") == 6
 
 
 def test_recipe_bump_trims_event_cap(gk_root):
@@ -1394,6 +1445,7 @@ def test_hub_shows_mix_and_cap_shares(gk_root, tmp_path):
     assert rec["cap_fast"] == 50.0
     assert rec["cap_week"] == 100.0
     assert rec["cap_slow"] == 50.0
+    assert rec["event_cap_frac"] == rec["single_name"]
     last_tick_path().parent.mkdir(parents=True, exist_ok=True)
     last_tick_path().write_text(
         '{"worthy": 4, "picked": {"fast": 1, "week": 0, "slow": 0}, "exits": 1, "realloc": 0, "adds": 0}\n',

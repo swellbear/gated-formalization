@@ -4,13 +4,14 @@
   "seed_bankroll": 1000.0,
   "sleeves": {
     "fast": "25% of the 20% cap; round-leader / same-day; fail-clock or +20% bid pop",
-    "week": "50% of the 20% cap; this event winner / make-cut / top-N; max 3 per event",
+    "week": "50% of the 20% cap; this event winner / make-cut / top-N; event stake up to the 5% name cap",
     "slow": "25% of the 20% cap; season-long / captain / Ryder / 2027"
   },
   "cap_share_fast": 0.25,
   "cap_share_week": 0.50,
   "cap_share_slow": 0.25,
   "max_tickets_per_event": 3,
+  "event_cap_frac": 0.05,
   "kelly_fraction": 0.25,
   "collapse_ratio": 0.30,
   "improve_abs": 0.015,
