@@ -505,26 +505,35 @@ def live_look_closed(
     root: Path | None = None,
     registry: dict[str, Any] | None = None,
 ) -> bool:
-    """True when the seated selecting look is finished (L1 file exists).
+    """True when L1 exists and the selecting chair is parked.
 
-    Mid-look (executing, no L1) is not closed. Empty chair is not a promote slot
-    (that is F_continuation).
+    An L1 file is the grade sheet, not an empty chair. Mid-look (still
+    executing) is not closed. Empty chair with no parked L1 is F_continuation.
     """
     from golf_offshoot.learning_lane_15m.clerical_score import FORBIDDEN_SCORE_IDS, scorecard_path
-    from golf_offshoot.learning_lane_15m.rules import active_execution_rule
 
-    try:
-        seated = active_execution_rule(root=root, registry=registry)
-    except (ValueError, OSError):
+    payload = registry if registry is not None else _load_json((root or repo_root()) / REGISTRY_REL)
+    selecting = [
+        row
+        for row in (payload.get("rules") or [])
+        if isinstance(row, dict)
+        and row.get("selects") is True
+        and str(row.get("kind") or "").strip().lower() == "selection"
+    ]
+    occupying = []
+    parked_l1 = False
+    for row in selecting:
+        rid = str(row.get("id") or "")
+        if not rid or rid in FORBIDDEN_SCORE_IDS:
+            continue
+        if row.get("execution") is True:
+            occupying.append(rid)
+            continue
+        if scorecard_path(rid, root=root, look="L1").is_file():
+            parked_l1 = True
+    if occupying:
         return False
-    if not seated or seated.get("selects") is not True:
-        return False
-    if seated.get("execution") is not True:
-        return False
-    rid = str(seated.get("id") or "")
-    if not rid or rid in FORBIDDEN_SCORE_IDS:
-        return False
-    return scorecard_path(rid, root=root, look="L1").is_file()
+    return parked_l1
 
 
 def promote_gates(

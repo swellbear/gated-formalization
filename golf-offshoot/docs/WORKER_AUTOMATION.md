@@ -57,7 +57,12 @@ Operator hard rules: may set `execution:true` on a surviving pre-registered
 rule (paper implementation). A falsifier PARK of an executing selection rule
 drops `execution` in that score turn. The next RUN-ONLY takes the only
 selecting seat. Must not set `binding` true or `trading_armed`. A CoS-assigned
-KXBTC15M paper PROPOSED is not golf idle-breach.
+KXBTC15M paper PROPOSED is not golf idle-breach. When the Job is PARK or
+CONTINUE from the L1 scorecard: read the pushed
+`LEARNING_LANE_15M_SCORECARD_{id}_L1.json`. Never invent tape. No card → do not
+park, do not score, do not invent windows (handoff no-card). PARK drops
+execution; CONTINUE leaves it. Do not stop PaperWatch at 70. Look owner is
+Operator, not Systems.
 
 ## Agent prompt (paste)
 
@@ -135,6 +140,10 @@ OPERATOR HARD RULES (when you are operator)
   A falsifier PARK drops that row's execution. The next RUN-ONLY takes
   the only seat (dead row off, new row on).
   A CoS-assigned KXBTC15M paper PROPOSED is not golf idle-breach.
+  When the Job is PARK or CONTINUE from an L1 card: read
+  LEARNING_LANE_15M_SCORECARD_{id}_L1.json. Never invent tape. No card →
+  no-card, do not park. PARK drops execution; CONTINUE leaves it. Do not
+  stop PaperWatch at 70.
   Do not set binding true. Do not set trading_armed.
   Do not score in the same turn you amend a bar
   you have not already attacked-answered.

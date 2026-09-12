@@ -7,6 +7,7 @@ Never an ADMIT. Does not drop execution. Does not arm.
 from __future__ import annotations
 
 import json
+import subprocess
 from pathlib import Path
 from typing import Any
 
@@ -46,6 +47,42 @@ def _load_json(path: Path) -> dict[str, Any]:
 def scorecard_path(rule_id: str, *, root: Path | None = None, look: str = "L1") -> Path:
     base = (root or repo_root()) / SCORECARD_DIR_REL
     return base / f"LEARNING_LANE_15M_SCORECARD_{rule_id}_{look}.json"
+
+
+def load_l1_card(rule_id: str, *, root: Path | None = None) -> dict[str, Any]:
+    return _load_json(scorecard_path(rule_id, root=root, look="L1"))
+
+
+def operator_look_stamp(card: dict[str, Any] | None) -> str:
+    return str((card or {}).get("operator_look") or "").strip().upper()
+
+
+def _head_commit_sha(*, root: Path | None = None) -> str:
+    git_root = root if root is not None and (Path(root) / ".git").exists() else repo_root()
+    try:
+        from golf_offshoot.operator_surface.reload import read_git_tip
+
+        tip = str(read_git_tip(git_root) or "")
+        if "@" in tip:
+            sha = tip.rsplit("@", 1)[-1].strip()
+            if sha:
+                return sha
+    except Exception:  # noqa: BLE001 — stamp empty rather than invent
+        pass
+    try:
+        proc = subprocess.run(
+            ["git", "rev-parse", "HEAD"],
+            cwd=str(git_root),
+            capture_output=True,
+            text=True,
+            timeout=10,
+            check=False,
+        )
+        if proc.returncode == 0:
+            return (proc.stdout or "").strip()
+    except Exception:  # noqa: BLE001
+        pass
+    return ""
 
 
 def _fill_all_pnl(posted_yes: float, result: str, *, stake: float = STAKE) -> float:
@@ -196,14 +233,17 @@ def maybe_score_executing(*, root: Path | None = None) -> dict[str, Any]:
     if dest.is_file():
         return {"wrote": False, "reason": "scorecard already exists", "path": str(dest)}
     windows = gather_lived_windows(rule)
+    windows.sort(key=lambda row: str(row.get("close_at") or ""))
     from golf_offshoot.learning_lane_15m.evidence_bar import load_evidence_bar
 
     bar = load_evidence_bar(root=root)
     need = int((bar.get("looks") or {}).get("first_look_n") or 70)
     if len(windows) < need:
         return {"wrote": False, "reason": f"n={len(windows)} < {need}", "n": len(windows)}
+    # Extra fills after the first 70 are not L2. L1 is the first 70 lived windows.
+    windows = windows[:need]
     try:
-        card = score_rule(rule_id, windows, look="L1", root=root)
+        card = score_rule(rule_id, windows, look="L1", root=root, allow_nonbinding=True)
     except RuleNotScorable as exc:
         return {"wrote": False, "reason": str(exc), "n": len(windows)}
     card["framing"] = (
@@ -211,7 +251,16 @@ def maybe_score_executing(*, root: Path | None = None) -> dict[str, Any]:
         "Park vs continue is the registry falsifier; this write does not drop execution."
     )
     card["clerical"] = True
+    card["allow_nonbinding"] = True
     card["scored_at"] = isoformat_now()
+    card["commit_sha"] = _head_commit_sha(root=root)
+    card["committed_at"] = str(card.get("scored_at") or isoformat_now())
+    if card.get("passes_every_binding_clause") is not True:
+        card["caveat"] = (
+            "L1 written even though a binding clause or critic δ FAIL. "
+            "Not an ADMIT. Operator PARK or CONTINUE from this card. "
+            "This write does not drop execution."
+        )
     dest.parent.mkdir(parents=True, exist_ok=True)
     dest.write_text(json.dumps(card, indent=2) + "\n", encoding="utf-8")
     return {"wrote": True, "path": str(dest), "n": card.get("n"), "passes": card.get("passes_every_binding_clause")}
