@@ -23,7 +23,7 @@ from golf_offshoot.policy_family.library import (
 
 REASON_UNUSED = "unused_named"
 MONEY_KEYS = frozenset({"pnl", "d", "bankroll", "winner", "mean_d", "exam_pnl", "betting_pnl"})
-RETIRED_CARDS = frozenset({"density_fail", "undecidable", "park_vs_fill_all"})
+RETIRED_CARDS = frozenset({"density_fail", "undecidable", "park_vs_fill_all", "untestable"})
 
 
 def _load_json(path) -> dict[str, Any]:

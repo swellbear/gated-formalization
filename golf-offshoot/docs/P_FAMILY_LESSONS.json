@@ -88,6 +88,21 @@
       "beats_fill_all": false,
       "card": "density_fail",
       "lesson": "Search done: skip_count 0/404 below density floor 10/404. Not a t-test vs \u03b4. Do not retune P-SKIP-INELIGIBLE-CLOSED."
+    },
+    {
+      "id": "P-SKIP-STALE-QUOTE-180",
+      "declared_at": "2026-09-12T18:45:00-04:00",
+      "skip_count": 0,
+      "n": 413,
+      "density_passes": false,
+      "density_fail": true,
+      "undecidable": true,
+      "fee_adj_pnl": -42.6,
+      "fill_all_fee_adj_pnl": -42.6,
+      "beats_fill_all": false,
+      "card": "untestable",
+      "outcome": "untestable",
+      "lesson": "Search done: skip never fired (skip_count 0/413). Healthy quote bus / missing age is untestable, not a reason to retune 180. Not a t-test vs \u03b4."
     }
   ]
 }
