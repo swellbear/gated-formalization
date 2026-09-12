@@ -251,6 +251,8 @@ def test_matched_name_still_writes_no_paper_fill(gk_root):
     payload = unmatched_path().read_text(encoding="utf-8")
     assert "KXPGA-26-SSCHEFF" not in payload
 
+
+def test_ingest_writes_own_root_not_15m_or_phase1(gk_root, tmp_path):
     fifteen = tmp_path / "learning_lane_15m"
     set_15m_root_override(fifteen)
     try:
