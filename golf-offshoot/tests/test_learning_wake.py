@@ -16,6 +16,7 @@ from golf_offshoot.learning_lane_15m.learn import (
     ILLUSTRATOR_ROLE,
     LAB_ROLE,
     ROLE_ORDER,
+    ROUTINE_ROLES,
     STATE_OFFICIAL_NO_BOOK,
     format_wake_line,
     format_wake_tick,
@@ -290,9 +291,12 @@ def test_new_settle_raises_the_event_with_protocol_roles(lane):
     settles = _events_of(state, EVENT_NEW_SETTLE)
     assert [e["ticker"] for e in settles] == [MARKET_RAW["ticker"]]
     assert settles[0]["detail"].startswith("official Kalshi result=yes")
-    assert settles[0]["roles_owed"] == list(ROLE_ORDER)
+    # A normally-settled window owes the clerical roles and nobody judicial.
+    assert settles[0]["roles_owed"] == list(ROUTINE_ROLES)
     assert LAB_ROLE not in settles[0]["roles_owed"]
-    assert [row["role"] for row in state["roles_owed"]] == list(ROLE_ORDER)
+    assert "operator" not in settles[0]["roles_owed"]
+    assert "digestor" not in settles[0]["roles_owed"]
+    assert [row["role"] for row in state["roles_owed"]] == list(ROUTINE_ROLES)
     assert all(row["served_at"] is None for row in state["roles_owed"])
     # The settle also takes the window off the pending list, which is its own event.
     assert _events_of(state, EVENT_PENDING_CLEARED)
@@ -306,7 +310,7 @@ def test_new_fill_raises_new_fill(lane):
 
     fills = _events_of(state, EVENT_NEW_FILL)
     assert len(fills) == 1
-    assert fills[0]["roles_owed"] == list(ROLE_ORDER)
+    assert fills[0]["roles_owed"] == list(ROUTINE_ROLES)
 
 
 def test_no_change_yields_a_heartbeat(lane):
@@ -335,7 +339,7 @@ def test_roles_owed_never_auto_clears_and_keeps_ageing(lane):
     later = record_learning_tick()
 
     assert quiet["new_events"] == []
-    assert [row["role"] for row in later["roles_owed"]] == list(ROLE_ORDER)
+    assert [row["role"] for row in later["roles_owed"]] == list(ROUTINE_ROLES)
     # An unserved wake keeps its original clock so it ages instead of resetting.
     assert {row["role"]: row["owed_since"] for row in later["roles_owed"]} == owed_since
     assert all(row["age_s"] >= 0 for row in later["roles_owed"])
@@ -348,15 +352,17 @@ def test_only_an_explicit_call_marks_a_role_served(lane):
     _settle_that_book(event)
     record_learning_tick()
 
-    served = mark_roles_served(["digestor"], by="digestor", note="posted the honesty digest")
+    served = mark_roles_served(
+        ["digest-figures"], by="digest-figures", note="posted generated figures"
+    )
 
-    assert [row["role"] for row in served["roles_owed"]] == ["operator", "systems", "validator"]
-    assert served["served"][0]["role"] == "digestor"
+    assert [row["role"] for row in served["roles_owed"]] == ["systems", "validator"]
+    assert served["served"][0]["role"] == "digest-figures"
     assert served["served"][0]["served_at"]
-    assert served["served"][0]["served_by"] == "digestor"
+    assert served["served"][0]["served_by"] == "digest-figures"
     # A later tick does not resurrect a served role and does not clear the rest.
     after = record_learning_tick()
-    assert [row["role"] for row in after["roles_owed"]] == ["operator", "systems", "validator"]
+    assert [row["role"] for row in after["roles_owed"]] == ["systems", "validator"]
 
 
 def test_official_result_without_a_paper_book_is_not_pending_and_carries_no_pnl(lane):
@@ -446,7 +452,7 @@ def test_lab_is_owed_only_with_a_passing_gate_and_an_operator_residual(lane):
 
     assert state["lab_gate"]["lab_owed"] is True
     settles = _events_of(state, EVENT_NEW_SETTLE)
-    assert settles[0]["roles_owed"] == list(ROLE_ORDER) + [LAB_ROLE]
+    assert settles[0]["roles_owed"] == list(ROUTINE_ROLES) + [LAB_ROLE]
 
 
 def test_a_missing_desk_stamp_is_not_a_pass(lane):
@@ -466,7 +472,7 @@ def test_watch_cycle_records_a_wake_and_never_serves_a_role(lane, monkeypatch):
     _settle_that_book(event)
     record_learning_tick()
     owed_before = [row["role"] for row in load_wake_state()["roles_owed"]]
-    assert owed_before == list(ROLE_ORDER)
+    assert owed_before == list(ROUTINE_ROLES)
 
     monkeypatch.setattr(
         "golf_offshoot.learning_lane_15m.loop.run_loop",
@@ -500,7 +506,7 @@ def test_wake_lines_reach_the_hub_journal_and_the_tick(lane):
     tick = format_wake_tick(state)
 
     assert "learning wake" in line
-    assert "digestor" in line
+    assert "digest-figures" in line
     assert ORPHAN_TICKER in line
     assert "none is invented" in line
     assert "roles owed" in tick
@@ -525,13 +531,13 @@ def test_manifest_carries_wake_status_and_keeps_published_paper_win(lane, monkey
     lane15 = payload["lanes"][1]
     status = lane15["learning_status"]
     assert status["status"] == "crew work owed"
-    assert [row["label"] for row in status["roles_owed"]] == list(ROLE_ORDER)
+    assert [row["label"] for row in status["roles_owed"]] == list(ROUTINE_ROLES)
     assert all(isinstance(row["value"], str) for row in status["rows"])
 
     fields = {row["label"]: row["value"] for row in lane15["last_run"]["fields"]}
     counts = {row["label"]: row["value"] for row in lane15["settle"]["counts"]}
     assert fields["Learning wake"] == "crew work owed"
-    assert "digestor" in fields["Crew roles owed"]
+    assert "digest-figures" in fields["Crew roles owed"]
     # Published lineage is not dropped and pending is not invented.
     assert fields["Settled paper fill"] == PUBLISHED_TICKER
     assert fields["paper settle_win pnl"] == "+1.67"

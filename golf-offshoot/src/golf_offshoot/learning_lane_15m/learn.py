@@ -25,7 +25,7 @@ from __future__ import annotations
 import json
 from datetime import datetime, timezone
 from pathlib import Path
-from typing import Any, Iterable, Sequence
+from typing import Any, Callable, Iterable, Sequence
 
 from golf_offshoot.learning_lane_15m.paths import (
     LANE_15M,
@@ -45,16 +45,125 @@ REL_MANIFEST = Path("docs") / "observability-hub" / "data" / "manifest.json"
 REL_DESK = Path("docs") / "agents" / "DESK.md"
 REL_PNG = Path("docs") / "observability-hub" / "data" / "charts" / "learning_lane_15m" / "paper_window_strip.png"
 
-#: Protocol order for the learning tick. Lab is not in it by default.
-ROLE_ORDER = ("digestor", "operator", "systems", "validator")
+#: Protocol order for the learning tick. Market events name the figures
+#: generator, not the human digestor. Human digestor is owed only when the
+#: caveats file itself needs a turn. Lab is not in the default list.
+ROLE_ORDER = ("digest-figures", "learning-card", "operator", "systems", "validator")
 ILLUSTRATOR_ROLE = "illustrator"
+DIGESTOR_ROLE = "digestor"
 LAB_ROLE = "lab"
-_ROLE_RANK = ROLE_ORDER + (ILLUSTRATOR_ROLE, LAB_ROLE)
+OPERATOR_ROLE = "operator"
+CRITIC_INVARIANTS_ROLE = "critic-invariants"
+SOFTEN_CRITIC_ROLE = "soften-critic"
+LEARNING_CARD_ROLE = "learning-card"
+
+#: Display order for the desk and the tick, protocol order first.
+_ROLE_RANK = (
+    "digest-figures",
+    LEARNING_CARD_ROLE,
+    DIGESTOR_ROLE,
+    OPERATOR_ROLE,
+    "systems",
+    "validator",
+    ILLUSTRATOR_ROLE,
+    CRITIC_INVARIANTS_ROLE,
+    SOFTEN_CRITIC_ROLE,
+    LAB_ROLE,
+)
+
+#: What a routine market event names. All three are clerical: the runner
+#: clears them on the next pass, so naming them on every settle costs nothing
+#: and keeps the published surface current.
+ROUTINE_ROLES = ("digest-figures", "systems", "validator")
 
 EVENT_NEW_SETTLE = "new_settle"
 EVENT_NEW_FILL = "new_fill"
 EVENT_PENDING_CLEARED = "pending_cleared"
 EVENT_BOARD_STALE = "board_stale"
+EVENT_LEARNING_CARD_STALE = "learning_card_stale"
+
+from golf_offshoot.learning_lane_15m.triggers import (  # noqa: E402
+    EVENT_ARTIFACT_UNREVIEWED,
+    EVENT_BOOK_OPEN_NO_JOIN,
+    EVENT_CRITIC_FINDINGS_FAILING,
+    EVENT_DETECTOR_BLIND,
+    EVENT_FALSIFIER_FIRED,
+    EVENT_LAB_PROPOSED,
+    EVENT_PAPER_JOIN_MISSING_GREW,
+    EVENT_PARK_AGED,
+    EVENT_RULE_REACHED_N,
+    EVENT_SETTLE_CONTRADICTS_BOOK,
+    EVENT_UNRECORDED_COST,
+    EVENT_WINDOW_SEQUENCE_GAP,
+)
+from golf_offshoot.learning_lane_15m.triggers import (  # noqa: E402
+    EVENT_DIGEST_CONTRADICTS_LEDGER,
+    EVENT_PUBLISHED_FALSEHOOD,
+    EVENT_VALIDATOR_REPORT_FAILING,
+)
+
+#: Human digestor is owed when the generated figures **cannot express what
+#: changed**. Enumerated here and in PROTOCOL.md. Not zero, not every settle —
+#: the every-settle trigger is deliberately not restored.
+DIGESTOR_TRIGGERS = frozenset(
+    {
+        EVENT_PAPER_JOIN_MISSING_GREW,
+        EVENT_BOOK_OPEN_NO_JOIN,
+        EVENT_WINDOW_SEQUENCE_GAP,
+        EVENT_SETTLE_CONTRADICTS_BOOK,
+        EVENT_UNRECORDED_COST,
+        # The figure is wrong *after* the generator had its pass, so the figures
+        # role cannot express what changed by running again.
+        EVENT_DIGEST_CONTRADICTS_LEDGER,
+    }
+)
+
+#: Operator is judicial. A normally-settled window owes it nothing. Enumerated
+#: here and in PROTOCOL.md. If an exception class is unclear, it stays on this
+#: list and Operator says why — it is never dropped to shorten the owed list.
+OPERATOR_TRIGGERS = frozenset(
+    {
+        EVENT_PARK_AGED,
+        EVENT_SETTLE_CONTRADICTS_BOOK,
+        EVENT_PAPER_JOIN_MISSING_GREW,
+        EVENT_WINDOW_SEQUENCE_GAP,
+        EVENT_FALSIFIER_FIRED,
+        EVENT_RULE_REACHED_N,
+        EVENT_LAB_PROPOSED,
+        # A failing method check may not be retired by the machine that found
+        # it. The failing checks are properties of the bar, and the bar is
+        # Operator's.
+        EVENT_CRITIC_FINDINGS_FAILING,
+        # A detector that cannot see is not a detector that saw nothing.
+        EVENT_DETECTOR_BLIND,
+        # A clerical artifact reporting its own subject matter as failing. Being
+        # served on proof retires the run, never the finding.
+        EVENT_VALIDATOR_REPORT_FAILING,
+        EVENT_PUBLISHED_FALSEHOOD,
+        EVENT_DIGEST_CONTRADICTS_LEDGER,
+    }
+)
+
+#: Repo-side. Market data is not the only thing that changes.
+CRITIC_TRIGGERS = frozenset({EVENT_ARTIFACT_UNREVIEWED})
+
+#: Kinds that are not about the market. Naming the figures roles on these is
+#: the same over-firing the severity split exists to stop: a failing method
+#: check does not need the digest regenerated.
+NON_MARKET_KINDS = frozenset(
+    {
+        EVENT_CRITIC_FINDINGS_FAILING,
+        EVENT_DETECTOR_BLIND,
+        EVENT_VALIDATOR_REPORT_FAILING,
+        EVENT_PUBLISHED_FALSEHOOD,
+        EVENT_DIGEST_CONTRADICTS_LEDGER,
+        EVENT_LEARNING_CARD_STALE,
+    }
+)
+
+#: Pre-split leftover reasons. A routine settle no longer names digestor or
+#: operator; lines that still carry these prefixes are the board lying.
+RETIRED_JUDICIAL_PREFIXES = ("new_settle ", "new_fill ", "pending_cleared ")
 
 #: The board may trail the live journal by the current open window. Two or more
 #: windows ahead of the PNG is a lag — Illustrator is owed, not optional.
@@ -99,6 +208,7 @@ CONTRACT = (
     "No win, lose or pnl is invented here. Every figure is copied from a file.",
     "A role leaves roles_owed only when an agent that really ran calls mark_roles_served().",
     "The watch loop never marks a role served.",
+    "crew_tick is a doorbell. The runner may write it. The runner is not CoS.",
 )
 
 
@@ -669,12 +779,38 @@ def roles_owed_for(
     *,
     honesty_gate_passed: bool = False,
     operator_residual_posted: bool = False,
+    also_owes: Sequence[str] = (),
 ) -> list[str]:
-    """Protocol order. Lab is added only when both gates are explicitly true."""
-    roles = list(ROLE_ORDER)
+    """Which roles this event kind owes a turn. Severity split, enumerated.
+
+    A routine settle names the three clerical roles and nobody else. Judicial
+    roles are named only by their enumerated exception kinds, so the owed list
+    is something a human can still read after ninety-six windows in a day.
+
+    Lab is added only when both gates are explicitly true.
+    """
+    kind = str(kind or "").strip()
+    if kind == EVENT_BOARD_STALE:
+        return [ILLUSTRATOR_ROLE]
+    if kind == EVENT_LEARNING_CARD_STALE:
+        return [LEARNING_CARD_ROLE]
+    if kind in CRITIC_TRIGGERS:
+        roles = {CRITIC_INVARIANTS_ROLE, SOFTEN_CRITIC_ROLE}
+        roles.update(r for r in also_owes if r)
+        return sorted(roles, key=_role_rank)
+    roles: set[str] = set() if kind in NON_MARKET_KINDS else set(ROUTINE_ROLES)
+    if kind in DIGESTOR_TRIGGERS:
+        roles.add(DIGESTOR_ROLE)
+    if kind in OPERATOR_TRIGGERS:
+        roles.add(OPERATOR_ROLE)
+    roles.update(r for r in also_owes if r)
     if honesty_gate_passed and operator_residual_posted:
-        roles.append(LAB_ROLE)
-    return roles
+        roles.add(LAB_ROLE)
+    return sorted(roles, key=_role_rank)
+
+
+def _role_rank(role: str) -> int:
+    return _ROLE_RANK.index(role) if role in _ROLE_RANK else 99
 
 
 def diff_scans(previous: dict[str, Any] | None, current: dict[str, Any]) -> list[dict[str, Any]]:
@@ -734,9 +870,190 @@ def diff_scans(previous: dict[str, Any] | None, current: dict[str, Any]) -> list
     return events
 
 
+def exception_events(
+    previous: dict[str, Any] | None,
+    current: dict[str, Any],
+) -> list[dict[str, Any]]:
+    """The enumerated exceptions that owe a judicial role.
+
+    Each detector reads files. One that cannot read what it needs raises
+    nothing rather than guessing, and a detector raising nothing is not
+    evidence that the condition is absent — it is evidence it was not seen.
+    """
+    from golf_offshoot.learning_lane_15m import triggers as T
+    from golf_offshoot.learning_lane_15m.paths import has_15m_root_override
+
+    def _as(name: str, fn: Callable[[], Any]) -> Callable[[], Any]:
+        fn.__name__ = name
+        return fn
+
+    detectors: list[Any] = [
+        _as("paper_join_missing_grew", lambda: T.paper_join_missing_grew(previous, current)),
+        _as("new_book_open_no_join", lambda: T.new_book_open_no_join(previous, current)),
+        _as("window_sequence_gaps", lambda: T.window_sequence_gaps(previous, current)),
+        _as("settles_contradicting_their_book", lambda: T.settles_contradicting_their_book(previous, current)),
+    ]
+    # Detectors below read the *repo*, not the lane data directory. Under a
+    # scratch root the repo is not the tree under test, so reading it would
+    # leak live findings into a sandbox — the same leak that let a test rewrite
+    # the published digest. This is a scope limit, not a blind detector.
+    if not has_15m_root_override():
+        detectors.extend(
+            [
+                T.unrecorded_cost,
+                T.park_aged,
+                T.falsifier_fired,
+                # Negative results from the clerical whitelist. Each of these
+                # roles is served on proof, so an artifact reporting its own
+                # subject matter as failing would otherwise clear the role that
+                # wrote it and owe nobody. ``test_serve_on_proof.py`` asserts
+                # one of these exists for every whitelisted role.
+                _as("critic_findings_failing", lambda: T.critic_findings_failing()),
+                T.validator_report_failing,
+                _as("published_falsehood", lambda: T.published_falsehood(current)),
+                _as("digest_contradicts_ledger", lambda: T.digest_contradicts_ledger(previous)),
+                T.board_render_refused,
+                _as("rule_reached_n", lambda: T.rule_reached_n(current)),
+            ]
+        )
+
+    events: list[dict[str, Any]] = []
+    for detector in detectors:
+        try:
+            events.extend(detector() or [])
+        except Exception as exc:  # noqa: BLE001 — a blind detector is not a pass
+            events.append(_blind_detector_event(detector, exc))
+    return events
+
+
+def _blind_detector_event(detector: Any, exc: BaseException) -> dict[str, Any]:
+    name = getattr(detector, "__name__", "") or "an exception detector"
+    return {
+        "kind": EVENT_DETECTOR_BLIND,
+        "ticker": name,
+        "window_id": "",
+        "detail": (
+            f"{name} failed to read its evidence ({type(exc).__name__}: {exc}); "
+            "a detector that cannot see is not a detector that saw nothing"
+        ),
+    }
+
+
+def _learning_card_input_events() -> list[dict[str, Any]]:
+    """Owe learning-card when its inputs moved. Raises if the registry is unreadable."""
+    from golf_offshoot.learning_lane_15m.learning_card import stale_events
+
+    return stale_events()
+
+
+def guarded_events(name: str, source: Callable[[], Any]) -> list[dict[str, Any]]:
+    """Run an event source; a raise becomes ``detector_blind``, never silence.
+
+    ``exception_events`` has wrapped its own detectors since #148, but
+    ``diff_scans``, ``repo_events`` and ``board_lag`` were called bare. Any of
+    the three raising would have propagated out of the tick — and a tick that
+    does not finish writes no ``roles_owed`` at all, so every clerical role on
+    the whitelist would go un-owed and nothing would say why.
+    ``test_serve_on_proof.py`` asserts this over each whitelisted role's own
+    named source.
+    """
+    try:
+        return list(source() or [])
+    except Exception as exc:  # noqa: BLE001 — a blind source is not a quiet one
+        event = _blind_detector_event(source, exc)
+        event["ticker"] = name
+        event["detail"] = (
+            f"{name} failed to read its evidence ({type(exc).__name__}: {exc}); "
+            "a detector that cannot see is not a detector that saw nothing"
+        )
+        return [event]
+
+
+def repo_events() -> list[dict[str, Any]]:
+    """Repo-side event class: an artifact changed and no Critic finding covers it.
+
+    Market data is not the only thing that changes. A bar being drafted, a rule
+    reaching its n, an invariant being added, a park being written — the Critic
+    is owed on those and no market event kind covers them.
+
+    The import is inside the ``try`` on purpose. It used to sit outside it, so
+    an ImportError propagated instead of being handled — and the bare
+    ``return []`` below it meant any runtime fault reported *no events*,
+    silently leaving the Critic un-owed. That is the same silent-pass the
+    module exists to prevent, so a failure here raises instead.
+    """
+    from golf_offshoot.learning_lane_15m.paths import has_15m_root_override
+
+    if has_15m_root_override():
+        # Scratch root: the live repo is not the tree under test.
+        return []
+    try:
+        from golf_offshoot.learning_lane_15m.critic import unreviewed
+
+        rows = unreviewed()
+    except Exception as exc:  # noqa: BLE001 — a suite that cannot run is a failure
+        return [_blind_detector_event(repo_events, exc)]
+    return [
+        {
+            "kind": EVENT_ARTIFACT_UNREVIEWED,
+            "ticker": row.get("id") or "",
+            "window_id": "",
+            "detail": (
+                f"{row.get('path')} is at sha256 {str(row.get('sha256'))[:12]}… and no "
+                "Critic finding exists for that hash"
+            ),
+            "also_owes": tuple(row.get("also_owes") or ()),
+        }
+        for row in rows
+    ]
+
+
 def _event_label(event: dict[str, Any]) -> str:
     who = _as_str(event.get("ticker")) or _as_str(event.get("window_id")) or "window"
     return f"{event.get('kind')} {who}"
+
+
+def rekey_leftover_owed(
+    existing: Iterable[dict[str, Any]],
+    *,
+    drop_disclosed_critic_failing: bool = False,
+) -> list[dict[str, Any]]:
+    """Drop pre-split every-settle reasons from judicial lines.
+
+    Human digestor is not owed for ``new_settle`` / ``new_fill`` /
+    ``pending_cleared``. Operator is not owed for those either. After this
+    pass those roles stay owed only on the exception lists already enumerated
+    in ``triggers.py`` and PROTOCOL.md. A leftover ``critic_findings_failing``
+    for a failing set the bar already names is the same class of lie: Operator
+    has already written the reason, so the line is not a request for work.
+
+    Does not restore every-settle triggers. Does not drop a live exception
+    class to shorten the list.
+    """
+    out: list[dict[str, Any]] = []
+    for entry in existing:
+        role = _as_str(entry.get("role"))
+        if role not in {DIGESTOR_ROLE, OPERATOR_ROLE}:
+            out.append(dict(entry))
+            continue
+        kept: list[Any] = []
+        for reason in entry.get("reasons") or []:
+            text = str(reason)
+            if any(text.startswith(prefix) for prefix in RETIRED_JUDICIAL_PREFIXES):
+                continue
+            if (
+                drop_disclosed_critic_failing
+                and role == OPERATOR_ROLE
+                and text.startswith("critic_findings_failing")
+            ):
+                continue
+            kept.append(reason)
+        if not kept:
+            continue
+        row = dict(entry)
+        row["reasons"] = kept
+        out.append(row)
+    return out
 
 
 def _merge_roles_owed(
@@ -774,13 +1091,16 @@ def _merge_roles_owed(
             entry["reasons"] = reasons[-MAX_REASONS:]
 
     out: list[dict[str, Any]] = []
-    for role in sorted(order, key=lambda r: _ROLE_RANK.index(r) if r in _ROLE_RANK else 99):
+    for role in sorted(order, key=_role_rank):
         entry = by_role[role]
         age = _age_s(_as_str(entry.get("owed_since")) or at, at_dt)
         entry["age_s"] = int(age)
         entry["age_text"] = _age_text(age)
         entry["stale"] = age >= STALE_AFTER_S
         entry["served_at"] = None
+        # Judicial silence as a number rather than a vibe: how many ticks this
+        # role has been named and has not answered.
+        entry["ticks_unanswered"] = int(entry.get("ticks_unanswered") or 0) + 1
         out.append(entry)
     return out
 
@@ -788,23 +1108,51 @@ def _merge_roles_owed(
 # ------------------------------------------------------------------- lab gate
 
 
-def honesty_gate_from_desk(path: Path | None = None) -> dict[str, Any]:
-    """Read the Chief of Staff honesty stamp. Never write it, never infer a PASS.
+def honesty_gate_from_desk(
+    path: Path | None = None,
+    *,
+    scan: dict[str, Any] | None = None,
+) -> dict[str, Any]:
+    """Read the honesty stamp, but derive every box that can be derived.
 
-    No stamp on the desk is not a pass. Anything short of an all-PASS table
-    leaves the gate shut, which is the only direction this read can move it.
+    Never write it, never infer a PASS. No stamp on the desk is not a pass.
+
+    Three boxes are computed from files and the **derived verdict wins** — desk
+    prose can shut one, never open one. The remaining box needs judgment, so it
+    must carry evidence (PIDs, hashes, timestamps); ``**PASS**`` alone no longer
+    opens it. A derived box missing from the desk is still evaluated, so
+    deleting a row cannot open the gate either.
+
+    The parser was not widened to accept more phrasings. It was narrowed.
     """
+    from golf_offshoot.learning_lane_15m.honesty import (
+        DERIVED_BOXES,
+        classify_box,
+        derive_boxes,
+        has_evidence,
+    )
+
     dest = path or desk_path()
+    derived = derive_boxes(scan)
     try:
         text = dest.read_text(encoding="utf-8")
     except OSError:
         return {
             "stamp_found": False,
             "passed": False,
-            "boxes": [],
+            "boxes": [
+                {
+                    "box": key,
+                    "state": "PASS" if derived[key]["ok"] else "FAIL",
+                    "source": "derived",
+                    "note": derived[key]["note"],
+                }
+                for key in DERIVED_BOXES
+            ],
             "note": "no desk file to read the Chief of Staff honesty stamp from",
         }
-    boxes: list[dict[str, str]] = []
+    boxes: list[dict[str, Any]] = []
+    seen_derived: set[str] = set()
     in_table = False
     for line in text.splitlines():
         stripped = line.strip()
@@ -818,15 +1166,68 @@ def honesty_gate_from_desk(path: Path | None = None) -> dict[str, Any]:
         cells = [c.strip() for c in stripped.strip("|").split("|")]
         if len(cells) < 2 or cells[0].lower() in {"box", ""} or set(cells[0]) <= set("- :"):
             continue
-        state = "FAIL" if "**FAIL**" in cells[1] else ("PASS" if "**PASS**" in cells[1] else "")
-        boxes.append({"box": cells[0], "state": state or "unstamped"})
+        typed = "FAIL" if "**FAIL**" in cells[1] else ("PASS" if "**PASS**" in cells[1] else "")
+        kind = classify_box(cells[0])
+        row: dict[str, Any] = {"box": cells[0], "typed": typed or "unstamped"}
+        if kind in derived:
+            seen_derived.add(kind)
+            machine = derived[kind]
+            # Fail-closed in both directions: the file decides PASS, the desk
+            # may still shut it.
+            state = "PASS" if machine["ok"] and typed != "FAIL" else "FAIL"
+            row.update(
+                {
+                    "state": state,
+                    "source": "derived",
+                    "note": machine["note"],
+                    "evidence": machine.get("evidence"),
+                }
+            )
+        else:
+            evidenced = has_evidence(cells[1])
+            row.update(
+                {
+                    "state": "PASS" if (typed == "PASS" and evidenced) else "FAIL",
+                    "source": "judgment",
+                    "has_evidence": evidenced,
+                    "note": (
+                        "stamped PASS with evidence attached"
+                        if typed == "PASS" and evidenced
+                        else (
+                            "stamped PASS with no evidence — a stamp with no PIDs, "
+                            "hashes or timestamps does not open the gate"
+                            if typed == "PASS"
+                            else f"not stamped PASS ({typed or 'unstamped'})"
+                        )
+                    ),
+                }
+            )
+        boxes.append(row)
+
+    for key in DERIVED_BOXES:
+        if key in seen_derived:
+            continue
+        machine = derived[key]
+        boxes.append(
+            {
+                "box": f"{key} (not on the desk)",
+                "typed": "absent",
+                "state": "PASS" if machine["ok"] else "FAIL",
+                "source": "derived",
+                "note": machine["note"],
+                "evidence": machine.get("evidence"),
+            }
+        )
+
     failing = [b["box"] for b in boxes if b["state"] != "PASS"]
+    stamped = any(b.get("typed") not in {None, "", "absent"} for b in boxes)
     return {
-        "stamp_found": bool(boxes),
+        "stamp_found": stamped,
         "passed": bool(boxes) and not failing,
+        "derived_boxes": list(DERIVED_BOXES),
         "boxes": boxes,
         "note": (
-            "all boxes stamped PASS"
+            "all boxes pass; derived boxes came off files, judgment boxes carry evidence"
             if boxes and not failing
             else (
                 f"not passed: {'; '.join(failing)}"
@@ -868,6 +1269,7 @@ def record_learning_tick(
     desk: Path | None = None,
     honesty_gate_passed: bool | None = None,
     operator_residual_posted: bool = False,
+    crew_hub_ok: bool | None = None,
 ) -> dict[str, Any]:
     """One wake tick: scan, diff against stored state, persist. Never marks served."""
     at_dt = now()
@@ -876,10 +1278,24 @@ def record_learning_tick(
     state = load_wake_state()
     previous = (state or {}).get("scan")
 
-    gate = honesty_gate_from_desk(desk)
+    gate = honesty_gate_from_desk(desk, scan=scan)
     passed = gate["passed"] if honesty_gate_passed is None else bool(honesty_gate_passed)
 
-    events = diff_scans(previous, scan)
+    events = guarded_events("diff_scans", lambda: diff_scans(previous, scan))
+    events.extend(guarded_events("exception_events", lambda: exception_events(previous, scan)))
+    events.extend(guarded_events("repo_events", repo_events))
+    events.extend(guarded_events("learning_card_inputs", _learning_card_input_events))
+    try:
+        lag = board_lag(scan)
+    except Exception as exc:  # noqa: BLE001 — a blind board is not a current one
+        events.append(_blind_detector_event(board_lag, exc) | {"ticker": "board_lag"})
+        lag = {"stale": False, "detail": f"board_lag failed: {exc}"}
+    already_owed = {
+        _as_str(entry.get("role")).lower()
+        for entry in ((state or {}).get("roles_owed") or [])
+    }
+    if lag.get("stale") and ILLUSTRATOR_ROLE not in already_owed:
+        events.append(_board_stale_event(lag, at=at))
     for event in events:
         event["at"] = at
         event["lane"] = LANE_15M
@@ -888,24 +1304,35 @@ def record_learning_tick(
             str(event.get("kind") or ""),
             honesty_gate_passed=passed,
             operator_residual_posted=operator_residual_posted,
+            also_owes=event.pop("also_owes", ()) or (),
         )
         event["roles_owed_is_a_request"] = True
-
-    lag = board_lag(scan)
-    already_owed = {
-        _as_str(entry.get("role")).lower()
-        for entry in ((state or {}).get("roles_owed") or [])
-    }
-    if lag["stale"] and ILLUSTRATOR_ROLE not in already_owed:
-        events.append(_board_stale_event(lag, at=at))
 
     if watch_status is None:
         from golf_offshoot.learning_lane_15m.watch import load_watch_status
 
         watch_status = load_watch_status()
 
+    drop_disclosed = False
+    try:
+        from golf_offshoot.learning_lane_15m.critic import (
+            bar_names_failing_check,
+            load_findings,
+        )
+
+        findings = load_findings()
+        failing = [str(f) for f in (findings or {}).get("failing") or []]
+        drop_disclosed = (not failing) or all(
+            bar_names_failing_check(check) for check in failing
+        )
+    except Exception:  # noqa: BLE001 — re-key still drops the retired market reasons
+        drop_disclosed = False
+
     owed = _merge_roles_owed(
-        (state or {}).get("roles_owed") or [],
+        rekey_leftover_owed(
+            (state or {}).get("roles_owed") or [],
+            drop_disclosed_critic_failing=drop_disclosed,
+        ),
         events,
         at=at,
         at_dt=at_dt,
@@ -947,8 +1374,106 @@ def record_learning_tick(
         "board": lag,
         "lab_gate": _lab_gate_block(gate, operator_residual_posted=operator_residual_posted),
     }
+    new_state["invariants"] = _run_invariants_block(new_state, watch_status)
+    if state and isinstance(state.get("crew_tick"), dict):
+        new_state["crew_tick"] = {
+            "last_cos_at": state["crew_tick"].get("last_cos_at") or "",
+            "last_cos_commit": state["crew_tick"].get("last_cos_commit") or "",
+            "handled_reason_ids": list(state["crew_tick"].get("handled_reason_ids") or []),
+        }
+    from golf_offshoot.learning_lane_15m.crew_tick import attach_crew_tick
+
+    desk_text = None
+    if desk is not None:
+        try:
+            desk_text = Path(desk).read_text(encoding="utf-8")
+        except OSError:
+            desk_text = ""
+    attach_crew_tick(
+        new_state,
+        desk_text=desk_text,
+        previous_watch=(state or {}).get("watch") if state else None,
+        hub_ok=crew_hub_ok,
+    )
     save_wake_state(new_state)
     return new_state
+
+
+def _run_invariants_block(
+    state: dict[str, Any],
+    watch_status: dict[str, Any],
+) -> dict[str, Any]:
+    """Run the invariant suite and keep a summary on the tick.
+
+    Full evidence goes to ``latest/invariants.json``. The wake carries the
+    verdicts so a failure is on the tick even if nobody opens the report. A
+    suite that cannot run is itself a failure — never a silent pass.
+    """
+    try:
+        from golf_offshoot.learning_lane_15m.invariants import (
+            run_invariants,
+            write_invariants,
+        )
+
+        report = run_invariants(state=state, watch_status=watch_status)
+        write_invariants(report)
+    except Exception as exc:  # noqa: BLE001 — the suite failing is a finding
+        return {
+            "passed": False,
+            "failing": ["invariant_suite"],
+            "checks": [
+                {
+                    "id": "invariant_suite",
+                    "title": "invariant suite runs",
+                    "state": "FAIL",
+                    "detail": f"suite raised {type(exc).__name__}: {exc}",
+                }
+            ],
+        }
+    return {
+        "ran_at": report.get("ran_at"),
+        "passed": report.get("passed"),
+        "failing": report.get("failing"),
+        "report": str(_invariants_report_path()),
+        "checks": [
+            {
+                "id": check.get("id"),
+                "title": check.get("title"),
+                "state": check.get("state"),
+                "detail": check.get("detail"),
+            }
+            for check in report.get("checks") or []
+        ],
+    }
+
+
+def _invariants_report_path() -> Path:
+    from golf_offshoot.learning_lane_15m.invariants import invariants_path
+
+    return invariants_path()
+
+
+def refresh_invariants(
+    *,
+    watch_status: dict[str, Any] | None = None,
+) -> dict[str, Any] | None:
+    """Re-run the suite against the state as it stands and store the verdicts.
+
+    Called after the clerical runner has had its pass, so a digest the runner
+    just regenerated is not reported stale. Names no role owed and marks none
+    served — this only re-reads.
+    """
+    state = load_wake_state()
+    if state is None:
+        return None
+    if watch_status is None:
+        from golf_offshoot.learning_lane_15m.watch import load_watch_status
+
+        watch_status = load_watch_status()
+    block = _run_invariants_block(state, watch_status)
+    state["invariants"] = block
+    save_wake_state(state)
+    return block
 
 
 def mark_roles_served(
@@ -971,6 +1496,7 @@ def mark_roles_served(
     if state is None:
         return None
     wanted = {str(role).strip().lower() for role in roles if str(role).strip()}
+    wanted -= {"chief-of-staff", "cos"}
     if not wanted:
         return state
     at = isoformat_now()
@@ -1090,13 +1616,28 @@ def format_wake_tick(state: dict[str, Any] | None) -> str:
             )
 
     lines.append("")
+    from golf_offshoot.learning_lane_15m.critic import format_critic, load_findings
+    from golf_offshoot.learning_lane_15m.invariants import format_invariants
+
+    lines.extend(format_invariants(state.get("invariants")))
+    lines.append("")
+    from golf_offshoot.learning_lane_15m.crew_tick import format_crew_tick
+
+    lines.extend(format_crew_tick(state.get("crew_tick")))
+    lines.append("")
+    lines.extend(format_critic(load_findings()))
+
+    lines.append("")
     owed = state.get("roles_owed") or []
     if owed:
         lines.append(f"roles owed ({len(owed)}) — a request for a turn, not a completion")
         for entry in owed:
             flag = "  STALE" if entry.get("stale") else ""
+            silent = int(entry.get("ticks_unanswered") or 0)
+            # Judicial silence is a count, not an impression.
+            quiet = f"  silent {silent} ticks" if silent > 1 else ""
             lines.append(
-                f"  {_as_str(entry.get('role')):<10} owed {entry.get('age_text')}{flag}"
+                f"  {_as_str(entry.get('role')):<10} owed {entry.get('age_text')}{quiet}{flag}"
             )
             for reason in entry.get("reasons") or []:
                 lines.append(f"    for: {reason}")
@@ -1155,7 +1696,7 @@ def format_wake_tick(state: dict[str, Any] | None) -> str:
             "thread line, and never invents a win, a lose or a pnl.",
             "A role clears its own line only after it really ran:",
             '  python -c "from golf_offshoot.learning_lane_15m.learn import '
-            "mark_roles_served; mark_roles_served(['digestor'], by='digestor', "
+            "mark_roles_served; mark_roles_served(['digest-figures'], by='digest-figures', "
             "note='posted the SOURCE honesty digest')\"",
         ]
     )

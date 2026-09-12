@@ -1,7 +1,7 @@
 # Operator — 15m method leftovers (park / CLOSED / RUN-ONLY)
 
 **Track:** `learning_lane_15m` · series `KXBTC15M` only
-**Updated:** 2026-09-08 08:30 EDT (Soften Critic hired; evidence bar drafted, not binding)
+**Updated:** 2026-09-08 17:11 EDT (PROPOSED 02 RUN-ONLY; row 9 closed on its trigger; bar still not binding)
 **State:** No dated ADMIT on this lane. No Soften. No edge claim. `lab_admits=false` · Trading **NOT ARMED**
 **Golf idle:** stays **ON**. This file does not clear it, does not touch golf θ, and does not rewrite `phase1_dryrun/OPERATOR_STATUS_STAMP.md`.
 
@@ -26,25 +26,23 @@ Numbers move while the watch runs. This file names **states and triggers**, not 
 
 ---
 
-## Park ledger (2026-09-07 21:40 EDT)
+## Park ledger (2026-09-08 17:11 EDT)
 
 | | Count |
 |---|---:|
-| Open parks | **5** |
-| Open · crew | 1 |
+| Open parks | **4** |
+| Open · crew | 0 |
 | Open · external | 1 |
 | Open · founder | 3 |
 | Open · unreachable | 0 |
 | CLOSED · unreachable | **3** |
-| CLOSED · trigger fired since last stamp | 1 |
+| CLOSED · trigger fired since last stamp | 3 |
 | CLOSED · recorded defect (no backfill) | 1 |
 | CLOSED · on a falsifier | 0 |
-| RUN-ONLY executed (not an ADMIT) | 1 |
+| RUN-ONLY executed (not an ADMIT) | 2 |
 | Dated ADMITs | 0 |
 
-Three CLOSED-unreachable rows means this file had been carrying more closed business than open business under a deferral label. That is now named.
-
-After cleanup, **3 of 5 open parks are founder** and **1 is crew** (row 9). The aging clock has one row to work on. Do not mistake that for load-bearing crew work.
+No open crew park remains. The aging clock has nothing crew-owned to work on. Three open parks are founder; one is the rotating pending window (external). Do not mistake a clean crew column for progress.
 
 ---
 
@@ -78,30 +76,28 @@ After cleanup, **3 of 5 open parks are founder** and **1 is crew** (row 9). The 
 | **Class** | `founder` |
 | **Last re-ruled** | 2026-09-07 21:40 EDT |
 | **Parked state** | **HOLD**, set by Founder 2026-09-07: no series other than `KXBTC15M` until this loop is honest |
-| **Trigger** | **Founder lifts it.** Only trigger |
+| **Trigger** | **Founder lifts it.** Only trigger. The lift checklist is [`LEARNING_LANE_EXPANSION.md`](LEARNING_LANE_EXPANSION.md) — a new lane, not a ticker on this one. |
 | **Who may lift it** | Founder. Not Operator, not CoS, not Lab, not a later bot |
 
-This fold does **not** lift the HOLD and is not evidence toward lifting it. A RUN-ONLY fee hurdle is not evidence toward lifting it.
+This fold does **not** lift the HOLD and is not evidence toward lifting it. A RUN-ONLY fee hurdle is not evidence toward lifting it. Citing the expansion file is not evidence toward lifting it.
 
 ### 8. Lab — new named horse on this lane
 
 | | |
 |---|---|
 | **Class** | `founder` |
-| **Last re-ruled** | 2026-09-07 21:40 EDT |
-| **Parked state** | **Named horse not opened.** The one cheap paper-only PROPOSED slot was used (row 10 / RUN-ONLY). A second PROPOSED is not owed |
+| **Last re-ruled** | 2026-09-08 17:11 EDT |
+| **Parked state** | **Named horse not opened.** The residual-triggered selection PROPOSED (row 9 / row 13 RUN-ONLY) used the second cheap-test slot. A third PROPOSED is not owed |
 | **Trigger** | A fresh Founder GO that names a new invent. Under golf idle, a WC3+ / new board without that GO is an idle-breach REJECT |
 
-### 9. Zero-edge fills — the observation gap (residual, not a board)
+### 9. Zero-edge fills — the observation gap (residual, not a board) — **CLOSED / trigger fired**
 
 | | |
 |---|---|
-| **Class** | `crew` |
-| **Last re-ruled** | 2026-09-07 21:40 EDT |
-| **Parked state** | `paper.py` hardcodes `entry_edge=0.0`. The model is the market. Settled win/lose measures market noise, not a method |
-| **Why it stays open** | It is still the honest reason this lane cannot produce an edge claim. RUN-ONLY of PROPOSED 01 priced the omitted fee; it did not create a selection rule |
-| **Trigger** | A later PROPOSED that actually selects, or a Founder GO that names a new invent against this residual |
-| **Not a trigger** | Restating this residual · treating the fee hurdle as a signal |
+| **Closed** | 2026-09-08 17:11 EDT |
+| **What fired** | Lab PROPOSED 02 `R-SKIP-2TO1-FAVORITE` selects. Operator **RUN-ONLY**; `execution=true` (paper only). Trigger named here: *a later PROPOSED that actually selects* |
+| **Honest state (still true)** | Fills that still happen remain `entry_edge=0.0`. Selecting is not an edge and not an ADMIT. That honesty lives in [`LEARNING_LANE_15M_OPERATOR_NOTE_PROPOSED_02.md`](LEARNING_LANE_15M_OPERATOR_NOTE_PROPOSED_02.md), not as an open park |
+| **Not a claim** | Closing this row is not Established, not a bind, and not evidence toward lifting the HOLD |
 
 ---
 
@@ -180,6 +176,19 @@ These required a machine we do not have, or a book that never existed here. They
 
 The 21:05 "park it, do not schedule" instruction is **superseded**.
 
+### 13. Lab PROPOSED 02 — skip a posted 2-to-1 YES favorite
+
+| | |
+|---|---|
+| **Verdict** | **RUN-ONLY** · Operator · 2026-09-08 17:11 EDT |
+| **Note** | [`LEARNING_LANE_15M_OPERATOR_NOTE_PROPOSED_02.md`](LEARNING_LANE_15M_OPERATOR_NOTE_PROPOSED_02.md) |
+| **Registry** | `R-SKIP-2TO1-FAVORITE` · `favorite_odds=2` · first naming `e9fab5a` · `execution=true` (paper only) |
+| **Owed for** | `lab_proposed` — CoS assigned RUN-ONLY unless a specific objection |
+| **Falsifier** | After the n the bar names (currently 70), indistinguishable from `R-BASELINE-FILL-ALL` → park; do not retune `favorite_odds` |
+| **What it is** | A paper selection rule authorized to execute. Skip posted YES ≥ 2/3; else fill at the posted mark with `entry_edge=0.0` |
+| **What it is not** | An ADMIT · an edge · a score · a dashboard figure · a revival of `R-SKIP-COINFLIP` · evidence toward lifting the HOLD |
+| **Promotion** | Would require the normal dated-record ADMIT gate, a binding bar, and a Soften Critic attack from a separate session. Accumulation of this note does not admit it |
+
 ---
 
 ## Hard NO (this park)
@@ -206,4 +215,4 @@ The 21:05 "park it, do not schedule" instruction is **superseded**.
 
 ## Handoff
 
-CoS: evidence bar is a **draft, not binding**. Soften Critic is hired. Promotion has not fired (bar is not binding). Golf idle stays **ON**. Founder HOLD stands.
+CoS: PROPOSED 02 is **RUN-ONLY** (`R-SKIP-2TO1-FAVORITE`, `execution=true`, not scored). Evidence bar is a **draft, not binding**. Soften Critic is hired. Promotion has not fired (bar is not binding). Golf idle stays **ON**. Founder HOLD stands. A third Lab PROPOSED is not owed.

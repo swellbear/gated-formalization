@@ -1,8 +1,11 @@
 """Clerical learning runner. Dry-run until Founder arms it.
 
 Reads ``roles_owed`` and may serve only a named whitelist of clerical jobs:
-Illustrator re-render, Systems publish, Digestor digest-asof. Judicial work
-(ADMIT, RUN-ONLY, closing a park, lifting the HOLD) is never on the list.
+Illustrator re-render, Systems local export, generated digest figures, and
+the hash-stamped Validator report. Judicial work (ADMIT, RUN-ONLY, closing
+a park, lifting the HOLD, human Digestor caveats, Soften Critic) is never
+on the list. Validator's presence here is a move across the trust boundary
+from ``JUDICIAL_NEVER``, not an append.
 
 Default mode is dry-run: log what would be served, serve nothing.
 
@@ -30,9 +33,10 @@ from __future__ import annotations
 import hashlib
 import json
 import os
+import re
 import time
 from pathlib import Path
-from typing import Any, Callable
+from typing import Any, Callable, NamedTuple
 
 from golf_offshoot.learning_lane_15m.learn import (
     load_wake_state,
@@ -61,12 +65,28 @@ KILL_NAME = "RUNNER_KILL"
 ARM_NAME = "RUNNER_ARMED"
 
 # Enumerate what this process may ever do. A blacklist is not acceptable.
-CLERICAL_WHITELIST = ("illustrator", "systems", "digestor")
+# Trust-boundary move (not an append): validator leaves JUDICIAL_NEVER and
+# joins the whitelist. Human digestor leaves the whitelist — its proof is
+# the caveats file, not SOURCE as a whole. A figures generator that wrote
+# SOURCE into the digestor slot would clear digestor every tick and undo #171.
+CLERICAL_WHITELIST = (
+    "illustrator",
+    "systems",
+    "digest-figures",
+    "validator",
+    # Mechanical half of the Critic: run the check suite, write the findings
+    # artifact. The adversarial turn is soften-critic and stays judicial.
+    "critic-invariants",
+    # Generated learning card. Separate from digest-figures so a SOURCE-only
+    # rewrite cannot clear a card owe (#171 lesson).
+    "learning-card",
+)
 JUDICIAL_NEVER = (
     "operator",
     "lab",
-    "validator",
+    "digestor",
     "soften-critic",
+    "chief-of-staff",
     "admit",
     "run-only",
     "park",
@@ -75,11 +95,37 @@ JUDICIAL_NEVER = (
 
 LOG_NAME = "learning_runner.jsonl"
 FP_STORE_NAME = "role_artifact_fps.json"
+BOARD_FP_NAME = "board_fingerprint.json"
+
+#: Clock fields. A report that stamps itself on every write moves its own hash
+#: on every write, and serve-on-proof then clears the role for having run.
+VOLATILE_KEYS = (
+    "ran_at",
+    "checked_at",
+    "validated_at",
+    "generated_at",
+    "stamped_at",
+    "scored_at",
+    "at",
+    "at_text",
+)
+
+#: The SOURCE digest's own as-of lines. Same defect, in markdown.
+_DIGEST_STAMP_LINE = re.compile(r"\*\*Evidence as-of:\*\*|hub `generated_at`")
 
 DIGEST_ASOF_NAME = "digest_asof.json"
 DIGEST_REL = Path("golf-offshoot") / "docs" / "LEARNING_LANE_15M_SOURCE_DIGEST.md"
+CAVEATS_REL = Path("golf-offshoot") / "docs" / "LEARNING_LANE_15M_SOURCE_DIGEST_CAVEATS.md"
 PARK_REL = Path("golf-offshoot") / "docs" / "LEARNING_LANE_15M_METHOD_PARK.md"
 MANIFEST_REL = Path("docs") / "observability-hub" / "data" / "manifest.json"
+VALIDATOR_REPORT_REL = Path("docs") / "observability-hub" / "data" / "validator_report.json"
+CRITIC_FINDINGS_REL = (
+    Path("golf-offshoot") / "docs" / "LEARNING_LANE_15M_CRITIC_FINDINGS.json"
+)
+LEARNING_CARD_REL = (
+    Path("golf-offshoot") / "docs" / "LEARNING_LANE_15M_LEARNING_CARD.md"
+)
+_CARD_STAMP_LINE = re.compile(r"^\*\*As-of:\*\*|^journal generated_at=", re.IGNORECASE)
 PNG_REL = (
     Path("docs")
     / "observability-hub"
@@ -140,7 +186,7 @@ def write_arm_file() -> Path:
     path = arm_file_path()
     path.parent.mkdir(parents=True, exist_ok=True)
     path.write_text(
-        "armed 2026-09-07\nwhitelist=illustrator,systems,digestor\n"
+        "armed 2026-09-07\nwhitelist=illustrator,systems,digest-figures,validator\n"
         "publish=local-export-only\n",
         encoding="utf-8",
     )
@@ -184,13 +230,18 @@ def _owed_roles(state: dict[str, Any] | None) -> list[str]:
 
 
 def artifact_path(role: str, *, root: Path | None = None) -> Path:
-    """What the clerical worker writes. Digestor's worker writes the as-of stamp."""
+    """What the worker writes. Human digestor writes caveats; figures write SOURCE."""
     if role == "digestor":
+        # Leftover as-of stamp. It is not the proof and does not clear caveats.
         return latest_dir_15m() / DIGEST_ASOF_NAME
     base = root or repo_root()
     rel = {
         "illustrator": PNG_REL,
         "systems": MANIFEST_REL,
+        "digest-figures": DIGEST_REL,
+        "validator": VALIDATOR_REPORT_REL,
+        "critic-invariants": CRITIC_FINDINGS_REL,
+        "learning-card": LEARNING_CARD_REL,
         "operator": PARK_REL,
     }.get(role)
     if rel is None:
@@ -201,20 +252,29 @@ def artifact_path(role: str, *, root: Path | None = None) -> Path:
 def proof_artifact_path(role: str, *, root: Path | None = None) -> Path:
     """The file whose change clears the role.
 
-    Digestor stays on the clerical whitelist so the as-of stamp can be written.
-    The SOURCE digest is the honesty obligation. An as-of rewrite must not
-    clear it.
+    Human digestor is keyed on the standing caveats file, not SOURCE as a
+    whole. A figures-only SOURCE rewrite must leave digestor owed. That is
+    the #171 mechanic one layer up: an as-of (or generated-figures) write
+    cannot clear a caveats obligation.
     """
     if role == "digestor":
-        return (root or repo_root()) / DIGEST_REL
+        return (root or repo_root()) / CAVEATS_REL
     return artifact_path(role, root=root)
 
 
 def owned_artifact_paths(role: str, *, root: Path | None = None) -> list[Path]:
-    """Files whose change proves that role ran. Validator/lab own none."""
+    """Files whose change proves that role ran. Lab owns none."""
     if role == "digestor":
         return [proof_artifact_path(role, root=root)]
-    if role in {"illustrator", "systems", "operator"}:
+    if role in {
+        "illustrator",
+        "systems",
+        "digest-figures",
+        "validator",
+        "critic-invariants",
+        "learning-card",
+        "operator",
+    }:
         return [artifact_path(role, root=root)]
     return []
 
@@ -231,23 +291,201 @@ def _systems_token(path: Path) -> str | None:
     return json.dumps(token, default=str, sort_keys=True)
 
 
-def _proof_changed(role: str, prev: Any, token: str | None) -> bool:
-    """True when the proof token moved. Digestor's old asof|source store is migrated."""
+def _legacy_digestor_source_store(prev: Any, *, root: Path | None = None) -> bool:
+    """True when prev is the old SOURCE (or asof|SOURCE) store from #171.
+
+    After the trust-boundary move, digestor proof is the caveats file. A leftover
+    SOURCE fingerprint must not look like a caveats write and false-clear.
+    """
+    if not prev or not isinstance(prev, str):
+        return False
+    source_fp = file_fingerprint((root or repo_root()) / DIGEST_REL)
+    if source_fp and (prev == source_fp or prev.endswith("|" + source_fp)):
+        return True
+    return "|" in prev
+
+
+def _proof_changed(
+    role: str,
+    prev: Any,
+    token: str | None,
+    *,
+    root: Path | None = None,
+) -> bool:
+    """True when the proof token moved. Leftover SOURCE stores never clear digestor."""
     if not prev or not token or prev == "missing":
         return False
     if prev == token:
         return False
-    if role == "digestor" and isinstance(prev, str) and "|" in prev:
-        return prev.split("|", 1)[1] != token
+    if role == "digestor" and _legacy_digestor_source_store(prev, root=root):
+        return False
     return True
+
+
+def critic_verdicts(payload: dict[str, Any] | None) -> str:
+    """The verdicts and what they cover, without the clock.
+
+    ``run_critic_invariants`` stamps ``ran_at`` and a per-row ``checked_at`` on
+    every pass, so the raw file hash moves whether or not a single verdict
+    moved — which clears ``critic-invariants`` every tick on a heartbeat.
+    Systems has ``material_publish_reasons`` for exactly this; this is the same
+    guard for the Critic's mechanical half.
+
+    ``detail`` is **not** in the token. It was, and that defeated the whole
+    guard: ``check_honesty_stamp_is_fresh`` wrote ``{int(age)}s old`` into its
+    detail, so the token moved on every ~90s pass and the role went on clearing
+    itself on a heartbeat through two rounds of fixing. Dropping it weakens no
+    check — ``detail`` is a rendering of ``state`` and ``evidence`` — and that
+    check has left the method suite anyway. ``desk_checks`` are excluded for the
+    same reason: nothing that reads a clock may sit in a proof token.
+
+    The reviewed **hash set** is part of the token, not just the checks. A run
+    that reviews a newly-changed artifact has done real work even when every
+    verdict reads the same, and leaving that unserved would deadlock the role:
+    once the hash is reviewed, ``artifact_unreviewed`` stops firing and nothing
+    would ever owe it again.
+    """
+    payload = payload or {}
+    checks = [
+        {"id": row.get("id"), "state": row.get("state")}
+        for row in (payload.get("checks") or [])
+    ]
+    reviewed = sorted(str((row or {}).get("sha256") or "") for row in payload.get("reviewed") or [])
+    return json.dumps(
+        {"passed": payload.get("passed"), "checks": checks, "reviewed": reviewed},
+        default=str,
+        sort_keys=True,
+    )
+
+
+def _stripped_json_token(path: Path, volatile: tuple[str, ...]) -> str | None:
+    """A JSON artifact's content with its clock fields removed.
+
+    A report that stamps itself on every write moves its own hash on every
+    write. Serve-on-proof then clears the role for having run, which is the
+    defect ``material_publish_reasons`` was built for. This is the same guard,
+    generalised.
+    """
+    payload = _load_json(path)
+    if payload is None:
+        return file_fingerprint(path)
+
+    def _strip(node: Any) -> Any:
+        if isinstance(node, dict):
+            return {k: _strip(v) for k, v in sorted(node.items()) if k not in volatile}
+        if isinstance(node, list):
+            return [_strip(v) for v in node]
+        return node
+
+    return json.dumps(_strip(payload), default=str, sort_keys=True)
+
+
+def _validator_token(path: Path) -> str | None:
+    return _stripped_json_token(path, VOLATILE_KEYS)
+
+
+def _digest_token(path: Path) -> str | None:
+    """The SOURCE digest minus its own as-of lines.
+
+    Regenerating the digest with no book movement rewrites its stamp, so the
+    file hash moves and ``digest-figures`` clears on a heartbeat exactly the way
+    the Critic did.
+    """
+    if not path.is_file():
+        return None
+    text = path.read_text(encoding="utf-8", errors="replace")
+    kept = [
+        line
+        for line in text.splitlines()
+        if not _DIGEST_STAMP_LINE.search(line)
+    ]
+    return hashlib.sha256("\n".join(kept).encode("utf-8")).hexdigest()
+
+
+def _card_token(path: Path) -> str | None:
+    """The learning card minus its as-of line. Same heartbeat guard as SOURCE."""
+    if not path.is_file():
+        return None
+    kept = [
+        line
+        for line in path.read_text(encoding="utf-8", errors="replace").splitlines()
+        if not _CARD_STAMP_LINE.search(line)
+    ]
+    return hashlib.sha256("\n".join(kept).encode("utf-8")).hexdigest()
+
+
+def _critic_token(path: Path) -> str | None:
+    payload = _load_json(path)
+    if payload is None:
+        return file_fingerprint(path)
+    return critic_verdicts(payload)
+
+
+def board_fingerprint_path() -> Path:
+    return latest_dir_15m() / BOARD_FP_NAME
+
+
+def _illustrator_token(path: Path) -> str | None:
+    """The board's *content* fingerprint, written by the renderer, not the PNG bytes.
+
+    ``illustrate.py`` stamps the render time into the PNG's metadata, so every
+    re-render moves the file hash whether or not a single drawn row moved. The
+    renderer writes a sidecar naming what it actually drew; that is the proof.
+    No sidecar means no proof, so the role stays owed.
+    """
+    if not path.is_file():
+        return None
+    sidecar = _load_json(board_fingerprint_path())
+    if not isinstance(sidecar, dict):
+        return None
+    drawn = sidecar.get("drawn")
+    if not drawn:
+        return None
+    return json.dumps({"png": True, "drawn": drawn}, default=str, sort_keys=True)
+
+
+class ClericalContract(NamedTuple):
+    """What must be true before this role may be served by a machine.
+
+    ``token`` must ignore clocks: a timestamp-only rewrite may not clear the
+    role. ``negative_event`` is the event kind a *failing* artifact raises, so a
+    ``passed: false`` result cannot be the end of it. ``event_source`` is the
+    detector whose silence would otherwise leave the role un-owed, and which
+    therefore has to report its own blindness. ``test_serve_on_proof.py``
+    enforces all three over the whole whitelist; a role added here without them
+    is a red build.
+    """
+
+    token: Callable[[Path], str | None]
+    negative_event: str
+    event_source: str
+
+
+CLERICAL_CONTRACTS: dict[str, ClericalContract] = {
+    "illustrator": ClericalContract(_illustrator_token, "detector_blind", "board_lag"),
+    "systems": ClericalContract(_systems_token, "published_falsehood", "diff_scans"),
+    "digest-figures": ClericalContract(
+        _digest_token, "digest_contradicts_ledger", "diff_scans"
+    ),
+    "validator": ClericalContract(
+        _validator_token, "validator_report_failing", "diff_scans"
+    ),
+    "critic-invariants": ClericalContract(
+        _critic_token, "critic_findings_failing", "repo_events"
+    ),
+    "learning-card": ClericalContract(
+        _card_token, "detector_blind", "learning_card_inputs"
+    ),
+}
 
 
 def role_proof_token(role: str, *, root: Path | None = None) -> str | None:
     paths = owned_artifact_paths(role, root=root)
     if not paths:
         return None
-    if role == "systems":
-        return _systems_token(paths[0])
+    contract = CLERICAL_CONTRACTS.get(role)
+    if contract is not None:
+        return contract.token(paths[0])
     parts = [file_fingerprint(path) for path in paths]
     if any(part is None for part in parts):
         return None
@@ -309,7 +547,41 @@ def _default_do_systems() -> dict[str, str]:
     return write_observability_exports()
 
 
+def _default_do_digest_figures() -> Path:
+    from golf_offshoot.learning_lane_15m.digest import write_digest
+
+    return write_digest()
+
+
+def _default_do_learning_card() -> Path:
+    from golf_offshoot.learning_lane_15m.learning_card import write_learning_card
+
+    return write_learning_card()
+
+
+def _default_do_critic_invariants() -> Path:
+    from golf_offshoot.learning_lane_15m.critic import write_critic_findings
+
+    return write_critic_findings()
+
+
+def _default_do_validator() -> Path:
+    import subprocess
+    import sys
+
+    dest = artifact_path("validator")
+    manifest = repo_root() / MANIFEST_REL
+    script = repo_root() / "docs" / "observability-hub" / "validate_hub.py"
+    dest.parent.mkdir(parents=True, exist_ok=True)
+    subprocess.run(
+        [sys.executable, str(script), str(manifest), "--write-report", str(dest)],
+        check=False,
+    )
+    return dest
+
+
 def _default_do_digestor() -> Path:
+    """Leftover as-of writer. Not on the whitelist; kept so hooks stay importable."""
     path = artifact_path("digestor")
     path.parent.mkdir(parents=True, exist_ok=True)
     path.write_text(json.dumps(_digest_asof_payload(), indent=2) + "\n", encoding="utf-8")
@@ -350,14 +622,16 @@ def serve_role(
     proof_path = proof_artifact_path(role, root=root)
     result["artifact"] = str(work_path)
     result["proof"] = str(proof_path)
-    before = file_fingerprint(proof_path)
-    before_work = file_fingerprint(work_path)
-    before_manifest = _load_json(work_path) if role == "systems" else None
+    before = role_proof_token(role, root=root)
+    before_raw = file_fingerprint(proof_path)
     result["before"] = before
     workers = {
         "illustrator": _default_do_illustrator,
         "systems": _default_do_systems,
-        "digestor": _default_do_digestor,
+        "digest-figures": _default_do_digest_figures,
+        "validator": _default_do_validator,
+        "critic-invariants": _default_do_critic_invariants,
+        "learning-card": _default_do_learning_card,
     }
     worker = do_work or workers[role]
     try:
@@ -365,32 +639,21 @@ def serve_role(
     except Exception as exc:  # noqa: BLE001 — failure stays owed
         result["reason"] = f"work raised {type(exc).__name__}: {exc}"
         return result
-    after = file_fingerprint(proof_path)
-    after_work = file_fingerprint(work_path)
+    after = role_proof_token(role, root=root)
+    after_raw = file_fingerprint(proof_path)
     result["after"] = after
-    if role == "digestor":
-        if after is None or after == before:
-            wrote = after_work is not None and after_work != before_work
-            result["reason"] = (
-                "as-of stamp wrote; SOURCE digest unchanged; role stays owed"
-                if wrote
-                else "SOURCE digest unchanged; role stays owed"
-            )
-            return result
-    elif after is None:
-        result["reason"] = "artifact missing after work"
+    if after is None:
+        wrote = after_raw is not None and after_raw != before_raw
+        result["reason"] = (
+            "worker wrote a non-proof file; role stays owed"
+            if wrote
+            else "artifact missing after work"
+        )
         return result
-    elif after == before:
-        result["reason"] = "artifact hash unchanged; role stays owed"
+    if before is not None and after == before:
+        result["reason"] = "heartbeat; proof token unchanged; role stays owed"
         return result
-    if role == "systems":
-        after_manifest = _load_json(work_path)
-        reasons = material_publish_reasons(before_manifest, after_manifest or {})
-        result["material"] = reasons
-        if not reasons:
-            result["reason"] = "export was a heartbeat; role stays owed"
-            return result
-    note = f"artifact hash changed {before} -> {after}"
+    note = f"proof token changed {before} -> {after}"
     mark_roles_served([role], by="runner", note=note, served_kind="auto")
     result["ok"] = True
     result["marked"] = True
@@ -399,13 +662,86 @@ def serve_role(
     return result
 
 
+def operator_write_addresses_owed(
+    state: dict[str, Any] | None,
+    *,
+    root: Path | None = None,
+) -> dict[str, Any]:
+    """Does this park write address what Operator was actually owed for?
+
+    Operator used to clear whenever the method park changed, whoever changed it
+    and for whatever reason. #174 edited the park to reconcile the Soften Critic
+    Hard NO lists and cleared an Operator line raised by settles on 080745
+    through 080830. Nothing had ruled on those windows.
+
+    Shaped like ``material_publish_reasons``, which already prevents exactly
+    this for Systems: the write clears Operator only when the new text names
+    what Operator was owed for. **If it is unclear, Operator stays owed** — an
+    exception class is never silently dropped to shorten the list.
+    """
+    entry = next(
+        (
+            row
+            for row in ((state or {}).get("roles_owed") or [])
+            if str(row.get("role") or "").strip().lower() == "operator"
+        ),
+        None,
+    )
+    reasons = [str(r) for r in ((entry or {}).get("reasons") or []) if str(r).strip()]
+    if not reasons:
+        return {
+            "material": False,
+            "why": (
+                "park changed but the Operator owed line names no reason to match "
+                "against; staying owed rather than clearing on an unrelated write"
+            ),
+            "matched": [],
+            "reasons": [],
+        }
+    path = artifact_path("operator", root=root)
+    try:
+        text = path.read_text(encoding="utf-8", errors="replace")
+    except OSError:
+        return {
+            "material": False,
+            "why": "park file could not be read; Operator stays owed",
+            "matched": [],
+            "reasons": reasons,
+        }
+    # A reason reads like "new_settle KXBTC15M-26SEP080745-45" or
+    # "park_aged R-SKIP-COINFLIP". The subject is what must appear.
+    matched = []
+    for reason in reasons:
+        subject = reason.split(" ", 1)[1].strip() if " " in reason else reason.strip()
+        if subject and subject in text:
+            matched.append(reason)
+    if matched:
+        return {
+            "material": True,
+            "why": f"park write names {len(matched)} of {len(reasons)} owed reason(s)",
+            "matched": matched,
+            "reasons": reasons,
+        }
+    return {
+        "material": False,
+        "why": (
+            "park changed but the new text names none of the "
+            f"{len(reasons)} thing(s) Operator was owed for "
+            f"({'; '.join(reasons[:3])}); nothing has ruled on them, so Operator stays owed"
+        ),
+        "matched": [],
+        "reasons": reasons,
+    }
+
+
 def reconcile_owed_from_disk(*, root: Path | None = None) -> list[dict[str, Any]]:
     """Clear owed roles whose owned artifact changed, whoever changed it.
 
     First sight of a token is stored and does not clear. A later change marks
     ``served_kind=human`` unless the role is already gone (auto-served this pass).
-    Roles with no owned artifact (validator, lab) stay owed.
-    Digestor proof is the SOURCE digest only. The as-of stamp never clears it.
+    Roles with no owned artifact (lab) stay owed.
+    Human digestor proof is the caveats file only. A SOURCE / figures write
+    never clears it. Validator proof is the hash-stamped report.
     """
     if has_15m_root_override() and root is None:
         return []
@@ -422,13 +758,34 @@ def reconcile_owed_from_disk(*, root: Path | None = None) -> list[dict[str, Any]
     }
     current: dict[str, str] = {}
     marked: list[dict[str, Any]] = []
-    roles = ("illustrator", "systems", "digestor", "operator")
+    roles = (
+        "illustrator",
+        "systems",
+        "digest-figures",
+        "validator",
+        "critic-invariants",
+        "learning-card",
+        "digestor",
+        "operator",
+    )
     for role in roles:
         token = role_proof_token(role, root=root)
         if token:
             current[role] = token
         prev = previous.get(role)
-        if role in owed and _proof_changed(role, prev, token):
+        if role in owed and _proof_changed(role, prev, token, root=root):
+            if role == "operator":
+                verdict = operator_write_addresses_owed(state, root=root)
+                if not verdict["material"]:
+                    marked.append(
+                        {
+                            "role": role,
+                            "served_kind": None,
+                            "held": True,
+                            "note": verdict["why"],
+                        }
+                    )
+                    continue
             note = f"owned artifact changed on disk ({prev[:24]} -> {token[:24]})"
             mark_roles_served([role], by="artifact-proof", note=note, served_kind="human")
             marked.append({"role": role, "served_kind": "human", "note": note})

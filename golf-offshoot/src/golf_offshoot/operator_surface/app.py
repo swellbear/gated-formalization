@@ -325,6 +325,26 @@ def _window_summary_15m(rows: list, *, limit: int = CHART_15M_NAMED) -> tuple[st
     return (counts, "Windows: " + "; ".join(named) + tail)
 
 
+def _learning_card_html() -> str:
+    """Generated card above the strip. Missing stays missing — no invented fallback."""
+    from golf_offshoot.learning_lane_15m.learning_card import (
+        MISSING_HUB_COPY,
+        card_path,
+    )
+
+    path = card_path()
+    if not path.is_file():
+        body = f'<p class="missing">{html.escape(MISSING_HUB_COPY)}</p>'
+    else:
+        body = f"<pre>{html.escape(path.read_text(encoding='utf-8', errors='replace'))}</pre>"
+    return (
+        '<section class="learning-card">'
+        "<h2>What is on trial</h2>"
+        f"{body}"
+        "</section>"
+    )
+
+
 def _viz_wall_15m_html() -> str:
     """The 15m board as a labelled figure. Missing stays 'not yet available'."""
     path = _chart_15m_path()
@@ -479,7 +499,7 @@ def render_html(surface: dict) -> str:
     lane_line = f"Active lane: {lane_header_name(lane)}"
     if lane == LANE_15M:
         lane_line = f"{lane_line} — LEARNING LANE"
-        viz_wall = _viz_wall_15m_html()
+        viz_wall = _learning_card_html() + _viz_wall_15m_html()
         # The 15m board carries its own overlay. Deriving it from the golf viz wall
         # left this lane with no lightbox at all whenever golf had no chart on disk.
         viz_lightbox = _lightbox_html(_chart_15m_path() is not None)
@@ -606,6 +626,8 @@ def render_html(surface: dict) -> str:
  /* The 15m board is a wide table-and-strip figure. Give it room to be read in
     place instead of making the lightbox the only legible view. */
  body.lane-15m main {{ max-width: 1560px; }}
+ body.lane-15m .learning-card {{ border: 1px solid #1f3b4d; padding: 12px; margin: 0 0 16px; background: #fff; }}
+ body.lane-15m .learning-card h2 {{ margin: 0 0 8px; font-size: 18px; }}
  form.row {{ display: flex; flex-wrap: wrap; gap: 8px; align-items: end; margin: 4px 0 10px; }}
  form.lane-form fieldset {{ border: 1px solid #c9c2b2; padding: 8px 10px; }}
  form.lane-form legend {{ font-size: 13px; font-weight: 700; }}

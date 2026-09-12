@@ -102,9 +102,30 @@ def _m15_journal_html() -> str:
 """
 
 
+def _learning_card_html() -> str:
+    """Render the generated card. Missing stays missing — no invented fallback."""
+    from golf_offshoot.learning_lane_15m.learning_card import (
+        MISSING_HUB_COPY,
+        card_path,
+    )
+
+    path = card_path()
+    if not path.is_file():
+        body = f'<p class="empty">{_esc(MISSING_HUB_COPY)}</p>'
+    else:
+        body = f"<pre>{_esc(path.read_text(encoding='utf-8', errors='replace'))}</pre>"
+    return f"""
+<section class="learning-card">
+  <h2>What is on trial</h2>
+  {body}
+</section>
+"""
+
+
 def _viz_html(lane: str) -> str:
     if lane == LANE_15M:
-        return """
+        return f"""
+{_learning_card_html()}
 <section class="viz" data-lane="learning_lane_15m">
   <h2>Viz wall</h2>
   <p class="empty">not yet available — 15-min lane is observation-only. No golf WC1 / Ill charts here.</p>
@@ -154,6 +175,7 @@ def render_hub(lane: str | None = None, *, query: dict | None = None) -> str:
     .lane-btn {{ margin-right: 0.4rem; padding: 0.45rem 0.8rem; }}
     .lane-btn.active {{ background: #c9a227; color: #111; font-weight: 700; }}
     .empty {{ border: 1px dashed #888; padding: 0.8rem; }}
+    .learning-card {{ border: 1px solid #7ec8e3; padding: 0.8rem; margin: 0.8rem 0; }}
     .slot {{ border: 1px solid #444; padding: 0.6rem; margin: 0.4rem 0; }}
     pre {{ white-space: pre-wrap; }}
   </style>

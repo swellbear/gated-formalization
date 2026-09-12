@@ -6,7 +6,17 @@
   "lab_admits": false,
   "trading_armed": false,
   "opened_at": "2026-09-08T05:56:00-04:00",
-  "trials_to_date": 0,
+  "trials_to_date": 1,
+  "trials_before_mechanism": 0,
+  "trials_log": [
+    {
+      "subject": "R-SKIP-2TO1-FAVORITE",
+      "kind": "declaration",
+      "at": "2026-09-08T16:53:00-04:00",
+      "note": "selection rule declared",
+      "trials_to_date_after": 1
+    }
+  ],
   "evidence_bar": {
     "path": "golf-offshoot/docs/LEARNING_LANE_15M_EVIDENCE_BAR.json",
     "binding": false
@@ -29,8 +39,37 @@
       "execution": false,
       "selects": true,
       "rule": "Skip the paper fill when posted_yes is strictly inside (0.45, 0.55). Otherwise fill at the posted mark with entry_edge=0.0.",
-      "falsifier": "After 40 eligible windows, if selected-fill settlement_pnl cannot be distinguished from R-BASELINE-FILL-ALL on those same windows, park this rule. Do not retune the band.",
-      "note": "Band chosen before looking at overnight marks. execution=false until paper.py honors rules.decide(). OOS still accumulates from declared_at by replay; replayed results are not lived results."
+      "falsifier": "After the n named by the evidence bar in force (currently looks.first_look_n = 70), if selected-fill settlement_pnl cannot be distinguished from R-BASELINE-FILL-ALL on those same windows, park this rule. Do not retune the band. The bar is the governing source.",
+      "note": "The (0.45, 0.55) band is not verifiably pre-registered — see the bar Pre-registration section. A note field asserting blind choice is not proof. execution=false (not flipped this turn). paper.py now consults decide() but this rule is not the executing rule. OOS still accumulates from declared_at by replay; replayed results are not lived results. L1 cannot support Established."
+    },
+    {
+      "id": "R-SKIP-2TO1-FAVORITE",
+      "kind": "selection",
+      "class": "SKIP-2TO1-FAVORITE",
+      "execution": true,
+      "selects": true,
+      "rule": "Skip the paper fill when posted_yes is a 2-to-1 or better favorite (favorite_odds=2 => p = odds/(1+odds) = 2/3). Otherwise fill at the posted mark with entry_edge=0.0.",
+      "falsifier": "After the n named by the evidence bar in force (currently looks.first_look_n = 70), if selected-fill settlement_pnl cannot be distinguished from R-BASELINE-FILL-ALL on those same windows, park this rule. Do not retune favorite_odds. Do not replace 2/3 with a tape quantile. The bar is the governing source.",
+      "params": {
+        "favorite_odds": 2
+      },
+      "expression": {
+        "skip_if": "posted_yes_ge_favorite_odds",
+        "threshold_source": "favorite_odds=2; p=odds/(1+odds)",
+        "derived_threshold": 0.6666666666666666
+      },
+      "note": "PROPOSED 02 RUN-ONLY by Operator 2026-09-08T17:11:00-04:00. The free parameter is the integer prior favorite_odds=2. A note asserting no window mark informed it is not proof — see the bar preregistration.rules row (verifiably_preregistered false; 2/24 published marks ≥ 2/3 sat on this tree 19h 06m before e9fab5a). execution=true (paper only). Lived paper begins at the flip, not at declared_at. Not a revival of R-SKIP-COINFLIP and not a retune of (0.45, 0.55). lab_admits=false. Not scored. Not an ADMIT.",
+      "declared_at": "2026-09-08T16:53:00-04:00",
+      "first_named_in_commit": "e9fab5a",
+      "execution_flipped_at": "2026-09-08T17:11:00-04:00",
+      "execution_flip_commit": "0daae90",
+      "lived_paper_begins_at": "2026-09-08T17:11:00-04:00",
+      "lived_paper_begins_commit": "0daae90",
+      "replay_close_after": "2026-09-08T16:53:00-04:00",
+      "replay_close_at_or_before": "2026-09-08T17:11:00-04:00",
+      "replay_interval_note": "score_rule rejects a window in (replay_close_after, replay_close_at_or_before] as in the replay clock interval. window_is_oos remains closed > declared_at (decide expression). The scorecard token evidence=lived means window_is_lived (OOS and not in a named replay interval). That reduces to closed > lived_paper_begins_at only when that field or the explicit pair exists. When no interval is named it reduces to closed > declared_at. It does not mean the loop honoured decide(). A selecting row with no replay_close_* / lived_paper_begins_at has every OOS close stamped that clock token (closed > declared_at). The scorer enforces the replay clock, not the table's Lived cell.",
+      "lived_replay_fields_are_prose_only": false,
+      "lived_replay_enforced_by_scorer": false
     }
   ]
 }

@@ -9,6 +9,8 @@ from golf_offshoot.data_feeds.http import package_data_dir
 LANE_GOLF = "golf"
 LANE_15M = "learning_lane_15m"
 LANE_NAME = "learning_lane_15m"
+#: One series. A second ticker is a new lane, not a second value here.
+#: See golf-offshoot/docs/LEARNING_LANE_EXPANSION.md.
 PRIMARY_SERIES = "KXBTC15M"
 
 # External default for this lane only. Golf paper/shadow stay under golf-offshoot/data/.

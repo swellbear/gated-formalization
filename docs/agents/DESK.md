@@ -6,12 +6,22 @@ Thread lines are **one sentence, newest first, max 10**. Long findings belong in
 
 | Field | Value |
 |-------|--------|
-| Updated | 2026-09-08 08:52 ET |
-| Active role | systems |
-| Job | Part 0: live digest refresh + hash-stamped validator report + publish. |
-| Status | done |
-| Handoff | Honesty gate re-derived live below. Do not inherit the 19:58 stamp. |
+| Updated | 2026-09-09 11:48 ET |
+| Active role | chief-of-staff |
+| Job | — |
+| Status | idle |
+| Handoff | CRITIC 13 zero UPHELD on ANSWER 12 hashes; ANSWER 13 is not owed (would record nothing). Zero-objection stop: Status=idle. Do not assign Operator or Soften Critic on those same hashes. Book runs `R-SKIP-2TO1-FAVORITE` (`execution: true`, not scored). |
 | Waiting on Founder | **N** |
+
+## last_cos (CoS stamp — doorbell silence)
+
+| Field | Value |
+|-------|--------|
+| last_cos_at | 2026-09-09T11:48:00-04:00 |
+| last_cos_commit | 70edb6c |
+| handled_reason_ids | A_worker_done, E_idle_unassigned |
+
+**Branch note.** `origin/master` is still `b063f56` (#175). Factory Turns 1–3 plus ANSWER 03 plus CRITIC 04 plus ANSWER 04 plus CRITIC 05 plus ANSWER 05 plus CRITIC 06 plus ANSWER 06 plus CRITIC 07 plus ANSWER 07 plus CRITIC 08 plus ANSWER 08 plus CRITIC 09 plus ANSWER 09 plus CRITIC 10 plus Systems wiring plus CRITIC 11 plus ANSWER 11 plus CRITIC 12 plus ANSWER 12 plus CRITIC 13 live only on `cursor/part-a-clerical-trust-boundary` (CRITIC 02 `4090983` → Systems `0a480d4` → Operator `5dc4f24` → ANSWER 03 `9fb75e2` → CRITIC 04 `5e0216a` → ANSWER 04 `1ea689e` → CoS assign `dec64f6` → CRITIC 05 `fbde608` → CoS assign `bd18e9a` → ANSWER 05 `0b2f5e9` → CoS assign `c8226b8` → CRITIC 06 `4f8d37d` → CoS assign `d71e289` → ANSWER 06 `de8ec95` → CoS assign `c19bb30` → CRITIC 07 `49d17a7` → CoS assign `d8a7789` → ANSWER 07 `f8da6d0` → CoS assign `be8a5a8` → CRITIC 08 `20dd670` → CoS assign `15ba3f7` → ANSWER 08 `78db2cc` → CoS assign `c2f3b06` → CRITIC 09 `09077f4` → CoS assign `8edbaa6` → ANSWER 09 `818e268` → CoS assign `5881980` → CRITIC 10 `4797a12` → Systems `3c89a7f` → CoS assign `400fb37` → CRITIC 11 `3e030b0` → CoS assign `273615e` → ANSWER 11 `f6b28ac` → CoS assign `9b34308` → CRITIC 12 `ab13a09` → CoS assign `e2a6ae8` → ANSWER 12 `04548ad` → CoS assign `de606eb` → CRITIC 13 `70edb6c`). Branching from `origin/master` would discard all of it. Work continues on this branch; [#176](https://github.com/swellbear/gated-formalization/pull/176) is OPEN and MERGEABLE.
 
 ## Ask Founder
 
@@ -21,26 +31,40 @@ Thread lines are **one sentence, newest first, max 10**. Long findings belong in
 
 The runner exports locally. It does **not** commit or push. The public page is **not** self-maintaining. That is the same defect that left Pages stale for six hours tonight. A local export is not a publish. Systems still owns the manual tick step: material export → `--strict` → commit → push to `master`.
 
-## Honesty checklist (CoS re-derived 2026-09-08 08:42 ET — not inherited)
+## Honesty checklist 2026-09-08 14:18 ET (three boxes now derived, not typed)
+
+Part 3 landed. Three boxes are computed in `learning_lane_15m/honesty.py` and the **derived verdict wins** — prose here can shut one, never open one, and deleting a row does not open the gate. The fourth is judgment and now needs a PID, a hash or a timestamp; `**PASS**` alone no longer opens it. The parser was narrowed, not widened.
 
 | Box | State |
 |-----|-------|
-| Lineage story readable, dual lineage labeled not merged | **PASS** — lineage A is the live `paper/ledger.json` book; lineage B remains the published `071445-45` `+1.67`. Digest caveats and the export both forbid summing. |
-| `KXBTC15M-26SEP071500-00` honestly joined or pending with a true reason | **PASS** — no paper book and no settle file on this tree. The rolling journal no longer holds its official row (forgotten, not resolved). Manifest still names it as a missing paper join, not `SETTLE_PENDING`. No pnl invented. |
-| No invented charts or pnl | **PASS** — generated digest copies ledger figures only; a window with no book still has no pnl. Fee-accurate totals are not on the hub. |
-| One hub process on `learning_lane_15m` | **PASS as one hub tree, not one OS process.** Live 08:42: supervisor PID 2940 (no `--no-browser`) parent of listener PID 9568 (`--no-browser`) on `127.0.0.1:8765`. The inherited 19:58 line ("both `--no-browser`") is **false**. Not two independent hubs. Do not kill the listener. |
+| Lineage story readable, dual lineage labeled not merged | **PASS** — *derived*. Lineage A is the live ledger (`bankroll` 90.98 / `betting_pnl` −9.02). Lineage B remains the published `KXBTC15M-26SEP071445-45`. No combined-bankroll field on the scan. |
+| `KXBTC15M-26SEP071500-00` honestly joined or pending with a true reason | **PASS** — *derived*. It is on `paper_join_missing`, is **not** on the pending list, and no missing-join row carries a pnl. |
+| One hub process on `learning_lane_15m` | **PASS** — *derived* from the process table. One hub **tree**, not one OS process: root PID 14704 over supervisor PID 2940 and listener PID **24300** holding `127.0.0.1:8765`. Criterion preserved as written. Do not kill any of the three. |
+| No invented charts or pnl | **PASS** — *judgment, with evidence*. `digest_matches_ledger` PASS 2026-09-08T14:42:33−04:00 against the live book (90.98 / −9.02 both sides). Live `crew_tick.needed=true` (A idle uncovered judicial, B new judicial, E idle unassigned). Fee-accurate totals are not on the hub, digest, manifest or `records[]`. |
 
-**Gate is open on this live restamp.** The 19:58 stamp is retired. Golf idle stays **ON**. Evidence bar remains **not binding**.
+**Gate is open on this restamp.** Golf idle stays **ON**. Evidence bar remains **not binding**. Standing method blocker is the unpinned fee hash. Operator **RUN-ONLY**'d PROPOSED 02 (`R-SKIP-2TO1-FAVORITE`, `execution=true`, not scored). Systems 2026-09-09 wired lived/replay into `score_rule`. Soften Critic **CRITIC 11** filed (two UPHELD). Operator **ANSWER 11** (two SUSTAINED): scorer enforces the replay clock, not Lived; missing-fields default disclosed. Soften Critic **CRITIC 12** filed (one UPHELD). Operator **ANSWER 12** (one SUSTAINED): token named `window_is_lived`; reduces to `closed > lived_paper_begins_at` only when that field or the pair exists, else `closed > declared_at`. Soften Critic **CRITIC 13** filed (zero UPHELD). CoS **closed** — ANSWER 13 is not owed; Status=idle. Lab does not bring a third PROPOSED.
+
+**The fee-schedule hash is still unpinned.** Last real fetch: **HTTP 429** at 2026-09-08T13:42:26-04:00 (`LEARNING_LANE_15M_FEE_SCHEDULE_PROBE.json`). `schedule_sha256` left empty. **Do not write a placeholder.**
+
+## Invariants (live, machine-checked)
+
+Two suites, both on the tick.
+
+**Lane** (`latest/invariants.json`) — all four PASS at 11:12:43. `digest_matches_ledger` caught the real 08:51-vs-live drift at 10:37 and cleared only when `digest-figures` regenerated the file at 10:46:59. No prose cleared it.
+
+**Method** (findings `14:06:01`) — 6 of 7 PASS. Only `fee_schedule_hash_recorded` FAIL (empty sha256 after HTTP 429 at 13:42). Named-function checks PASS after Turn 3 named them. `honesty_stamp_is_fresh` is a desk check and does not set `passed`. `critic_verdicts` is `{id, state}` + reviewed hashes — no `detail`. X7: critic-invariants last cleared because the reviewed hash set moved, not because a clock ticked; it is not on `roles_owed` between heartbeats.
 
 ## Thread
 
-- 2026-09-08 08:52 ET  CoS: honesty gate re-derived live. Hub box is one tree (2940/9568), not the 19:58 "both --no-browser" claim. next=systems
-- 2026-09-08 08:51 ET  validator → systems: `--strict` OK; report sha256 matches the export bytes. next=systems
-- 2026-09-08 08:49 ET  digestor → validator: SOURCE figures regenerated from live files (caveats concatenated, not rewritten). next=validator
-- 2026-09-08 08:32 ET  CoS: Soften Critic hired (skill on tree). Evidence bar remains a draft until a separate-session attack and Founder acknowledgement. next=soften-critic (later session)
-- 2026-09-08 08:30 ET  operator → chief-of-staff: drafted the 15m evidence bar (δ=$0.28, α=0.05/(trials+1), L2 held out, fee hurdle cited, not binding). Did not score R-SKIP-COINFLIP. next=chief-of-staff
-- 2026-09-08 08:28 ET  CoS: tick — digestor/operator/validator STALE; 10 windows closed after 05:56, 1 open; hub parent 2940 / listener 21456; scheduled task missing. Founder GO is bar then hire. next=operator
-- 2026-09-08 06:10 ET  digestor → chief-of-staff: recorded 100.00 → 93.86 / `betting_pnl` -6.14 now carry the known-fee omission caveat, citing the Operator note, with no corrected total. next=chief-of-staff
-- 2026-09-08 06:00 ET  validator → chief-of-staff: `validate_hub.py --strict` OK on export `generated_at` 2026-09-08T05:52:39-04:00. Publishing is still a manual commit/push. next=chief-of-staff
-- 2026-09-08 05:55 ET  CoS → systems: Digestor landed the overnight SOURCE digest; Operator recorded `072245` CLOSED / no backfill; publish the eight-hour-stale Pages snapshot. next=systems
-- 2026-09-08 05:55 ET  operator → chief-of-staff: folded digest §3g — `KXBTC15M-26SEP072245` does not exist, 22:25–22:50 `--once` outage, 56 locked books is not an unbroken run. next=chief-of-staff
+- 2026-09-09 11:48 ET  chief-of-staff → desk: closed after CRITIC 13 (zero UPHELD on ANSWER 12 hashes); ANSWER 13 is not owed; Status=idle; do not assign Operator or Soften Critic on those same hashes. next=idle
+- 2026-09-09 11:48 ET  soften-critic → chief-of-staff: CRITIC 13 filed — zero UPHELD on ANSWER 12 amended hashes (token named window_is_lived; demanded reduction is on these bytes); bar not edited; not scored; not bound. next=chief-of-staff
+- 2026-09-09 11:37 ET  soften-critic → chief-of-staff: started the assigned Job — attack ANSWER 12 amended bar hashes + registry after Operator answered CRITIC 12 (one SUSTAINED; token named window_is_lived; reduces to closed > lived_paper_begins_at only when that field or the pair exists, else closed > declared_at); written objections only; will not edit, score, propose, ADMIT, park, bind, or revive R-SKIP-COINFLIP.
+- 2026-09-09 11:31 ET  chief-of-staff → soften-critic: attack ANSWER 12 amended bar hashes + registry after Operator answered CRITIC 12 (one SUSTAINED; token named window_is_lived; condition 1 unmet on the amended bytes); written objections only; do not edit, score, propose, ADMIT, park, bind, or revive R-SKIP-COINFLIP. next=soften-critic
+- 2026-09-09 11:30 ET  operator → chief-of-staff: ANSWER 12 filed — one SUSTAINED on CRITIC 12; token named window_is_lived (OOS and not in a named replay interval); reduces to closed > lived_paper_begins_at only when that field or the pair exists, else closed > declared_at; not scored; not bound. next=chief-of-staff
+- 2026-09-09 11:23 ET  operator → chief-of-staff: started the assigned Job — answer CRITIC 12 on ANSWER 11 amended hashes + registry; record each objection (one UPHELD); will not bind, score, revive R-SKIP-COINFLIP, or arm.
+- 2026-09-09 11:16 ET  chief-of-staff → operator: answer CRITIC 12 on ANSWER 11 amended hashes + registry; record each objection (one UPHELD); do not bind, score, revive R-SKIP-COINFLIP, or arm. next=operator
+- 2026-09-09 10:58 ET  soften-critic → chief-of-staff: CRITIC 12 filed — one UPHELD on ANSWER 11 amended hashes (clock token defined as closed > lived_paper_begins_at on the disclosed missing-fields default); bar not edited; not scored; not bound. next=chief-of-staff
+- 2026-09-09 10:37 ET  soften-critic → chief-of-staff: started the assigned Job — attack ANSWER 11 amended bar hashes + registry after Operator answered CRITIC 11 (two SUSTAINED; scorer named as replay-clock interval not Lived; missing-fields default disclosed); written objections only; will not edit, score, propose, ADMIT, park, bind, or revive R-SKIP-COINFLIP.
+- 2026-09-09 10:36 ET  chief-of-staff → soften-critic: attack ANSWER 11 amended bar hashes + registry after Operator answered CRITIC 11 (two SUSTAINED; condition 1 unmet on the amended bytes); written objections only; do not edit, score, propose, ADMIT, park, bind, or revive R-SKIP-COINFLIP. next=soften-critic
+*Older lines rolled off at the 10-line cap. Full history is in the git log for `docs/agents/DESK.md`.*
+

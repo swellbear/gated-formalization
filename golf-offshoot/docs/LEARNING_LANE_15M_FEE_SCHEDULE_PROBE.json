@@ -1,0 +1,9 @@
+{
+  "url": "https://kalshi.com/docs/kalshi-fee-schedule.pdf",
+  "checked_at": "2026-09-08T13:42:26.682102-04:00",
+  "status": 429,
+  "sha256": "",
+  "bytes": 0,
+  "error": "HTTP 429 Too Many Requests",
+  "note": "Real fetch. schedule_sha256 on the bar is left empty. No placeholder was written."
+}

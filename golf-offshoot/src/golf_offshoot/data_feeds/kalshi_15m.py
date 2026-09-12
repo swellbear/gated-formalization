@@ -3,6 +3,9 @@
 Live API: https://api.elections.kalshi.com/trade-api/v2/ (events/markets only).
 No trade keys. No order placement. No private account endpoints.
 Settlement SOURCE is CF Benchmarks as documented on event settlement_sources.
+
+The forbid list stands. Expansion is a new adapter and a new lane, not a
+wider allow list. See golf-offshoot/docs/LEARNING_LANE_EXPANSION.md.
 """
 
 from __future__ import annotations

@@ -19,6 +19,7 @@ from golf_offshoot.learning_lane_15m.paths import (
     safe_artifact_stem,
     shadow_dir_15m,
 )
+from golf_offshoot.learning_lane_15m.rules import active_execution_rule, decide
 from golf_offshoot.localtime import now
 from golf_offshoot.models.enums import BetType
 from golf_offshoot.models.strategy import PortfolioState, StrategyPosition, new_id
@@ -29,6 +30,12 @@ PAPER_OBSERVATION_SEED = 100.0
 PAPER_UNIT = 1.0
 PATH_ID = "learning_lane_15m"
 TRADING_ARMED = False
+
+#: One row per window, written whether the registry said fill or skip. A skip
+#: leaves no position and no ledger entry, so without this the loop would have
+#: no record that it consulted anything — and "the registry is honoured" would
+#: be a claim rather than an artifact.
+DECISIONS_NAME = "rule_decisions.json"
 
 # Not a user deposit. Seed so the paper loop can run without a cash UI.
 _SEED_KIND = "observation_seed"
@@ -82,13 +89,60 @@ def save_book(record: PaperBookFile) -> Path:
     return path
 
 
+def decisions_path() -> Path:
+    path = paper_dir_15m() / DECISIONS_NAME
+    assert_not_golf_path(path)
+    return path
+
+
+def load_decisions() -> dict[str, dict]:
+    path = decisions_path()
+    if not path.is_file():
+        return {}
+    try:
+        payload = json.loads(path.read_text(encoding="utf-8"))
+    except (OSError, ValueError):
+        return {}
+    rows = payload.get("decisions") if isinstance(payload, dict) else None
+    return rows if isinstance(rows, dict) else {}
+
+
+def record_decision(ticker: str, row: dict) -> dict:
+    """One decision per ticker, first one wins. The loop re-reads every ~90s."""
+    rows = load_decisions()
+    if ticker in rows:
+        return rows[ticker]
+    rows[ticker] = row
+    path = decisions_path()
+    path.parent.mkdir(parents=True, exist_ok=True)
+    path.write_text(
+        json.dumps(
+            {
+                "lane": LANE_15M,
+                "series": PRIMARY_SERIES,
+                "framing": (
+                    "What rules.decide() said for each window. A skip has no book, "
+                    "no position and no pnl; this is the only place it is recorded."
+                ),
+                "trading_armed": TRADING_ARMED,
+                "decisions": rows,
+            },
+            indent=2,
+            default=str,
+        )
+        + "\n",
+        encoding="utf-8",
+    )
+    return row
+
+
 def iter_books() -> list[PaperBookFile]:
     out: list[PaperBookFile] = []
     root = paper_dir_15m()
     if not root.is_dir():
         return out
     for path in sorted(root.glob("*.json")):
-        if path.name.lower() == "ledger.json":
+        if path.name.lower() in {"ledger.json", DECISIONS_NAME.lower()}:
             continue
         try:
             rec = PaperBookFile.model_validate_json(path.read_text(encoding="utf-8"))
@@ -173,19 +227,59 @@ def append_shadow_advise(row: dict[str, object]) -> None:
         fh.write(json.dumps(payload, default=str) + "\n")
 
 
+def consult_registry(
+    rule: dict | None,
+    *,
+    posted_yes: float,
+    close_at: str,
+) -> dict:
+    """What the executing rule says about this window. Never a fill by default.
+
+    The loop used to fill every candidate window and never open the registry,
+    which is why ``Established`` was unreachable: no rule selected anything, so
+    no lived L2 could exist. A registry with no executing rule fills nothing —
+    an unnamed default is how "always fill" got in here in the first place.
+    """
+    if rule is None:
+        return {
+            "rule_id": "",
+            "action": "no_rule",
+            "reason": "no rule in the registry carries execution=true; nothing fills",
+            "eligible": False,
+            "execution": False,
+        }
+    try:
+        return decide(rule, posted_yes=posted_yes, close_at=close_at)
+    except ValueError as exc:
+        return {
+            "rule_id": rule.get("id"),
+            "action": "undecidable",
+            "reason": f"cannot establish OOS for this window ({exc}); not filling",
+            "eligible": False,
+            "execution": bool(rule.get("execution")),
+        }
+
+
 def paper_autobet_open_markets(
     markets: list[dict],
     *,
     unit: float = PAPER_UNIT,
+    rule: dict | None = None,
 ) -> list[PaperMovement]:
     """Mechanical paper YES at posted ask for each open KXBTC15M window.
 
     Observation probe of the ops loop. Does not invent an edge. Skips
     already-booked tickers and missing/untradable asks.
+
+    Every candidate now goes through ``rules.decide()`` on the rule the
+    registry marks ``execution: true``. A skip writes no position, no ledger
+    entry and no pnl — only a decision row saying which rule skipped it and
+    why.
     """
     if TRADING_ARMED:
         raise RuntimeError("trading NOT ARMED")
     ledger = ensure_observation_seed()
+    active = rule if rule is not None else active_execution_rule()
     applied: list[PaperMovement] = []
     for market in markets:
         ticker = str(market.get("ticker") or "")
@@ -205,6 +299,38 @@ def paper_autobet_open_markets(
         except (TypeError, ValueError):
             continue
         if yes_f is None or dec_f is None or yes_f <= 0.0 or yes_f >= 1.0 or dec_f <= 1.0:
+            continue
+        verdict = consult_registry(
+            active, posted_yes=yes_f, close_at=str(market.get("close_time") or "")
+        )
+        if verdict["action"] != "fill":
+            if ticker not in load_decisions():
+                record_decision(
+                    ticker,
+                    {
+                        "ticker": ticker,
+                        "window_id": book_id,
+                        "rule_id": verdict.get("rule_id") or "",
+                        "action": verdict["action"],
+                        "reason": verdict["reason"],
+                        "posted_yes": yes_f,
+                        "close_at": str(market.get("close_time") or ""),
+                        "at": now().isoformat(),
+                        "pnl": None,
+                        "note": "no fill, no position, no pnl; a skip is not a loss",
+                    },
+                )
+                append_shadow_advise(
+                    {
+                        "action_kind": verdict["action"],
+                        "event_ticker": event_ticker,
+                        "ticker": ticker,
+                        "posted_yes": yes_f,
+                        "suggested_stake": 0.0,
+                        "rule_id": verdict.get("rule_id") or "",
+                        "reason": verdict["reason"],
+                    }
+                )
             continue
         rec = _open_book(
             book_id,
@@ -262,7 +388,9 @@ def paper_autobet_open_markets(
             reason_technical=(
                 f"lane={LANE_15M} series={PRIMARY_SERIES} ticker={ticker} "
                 f"paper_mark={yes_f} fee_type=quadratic x1 "
-                f"price_level_structure=tapered_deci_cent paper_autobet observation"
+                f"price_level_structure=tapered_deci_cent paper_autobet observation "
+                f"rule_id={verdict.get('rule_id') or ''} "
+                f"rules.decide={verdict['action']} ({verdict['reason']})"
             ),
             amount_plain=f"Paper stake ${stake:.2f} at mark {yes_f:.3f} (decimal {dec_f:.2f}).",
         )
@@ -287,6 +415,21 @@ def paper_autobet_open_markets(
             )
         )
         save_ledger(ledger)
+        record_decision(
+            ticker,
+            {
+                "ticker": ticker,
+                "window_id": book_id,
+                "rule_id": verdict.get("rule_id") or "",
+                "action": verdict["action"],
+                "reason": verdict["reason"],
+                "posted_yes": yes_f,
+                "close_at": str(market.get("close_time") or ""),
+                "at": now().isoformat(),
+                "position_id": pos.position_id,
+                "stake": stake,
+            },
+        )
         append_shadow_advise(
             {
                 "action_kind": "new_bet",
@@ -294,6 +437,7 @@ def paper_autobet_open_markets(
                 "ticker": ticker,
                 "posted_yes": yes_f,
                 "suggested_stake": stake,
+                "rule_id": verdict.get("rule_id") or "",
                 "reason": mv.reason_plain,
             }
         )

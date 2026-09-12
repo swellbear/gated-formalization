@@ -3,7 +3,7 @@
 **Lane:** `learning_lane_15m` · series `KXBTC15M` only
 **Opened:** 2026-09-08 05:56 EDT
 **Admit?** N · **Soften?** N · **lab_admits?** false · Trading **NOT ARMED**
-**Evidence bar:** draft at [`LEARNING_LANE_15M_EVIDENCE_BAR.md`](LEARNING_LANE_15M_EVIDENCE_BAR.md) — **not binding**. `trials_to_date` starts at 0.
+**Evidence bar:** draft at [`LEARNING_LANE_15M_EVIDENCE_BAR.md`](LEARNING_LANE_15M_EVIDENCE_BAR.md) — **not binding**. `trials_to_date` started at 0 and is now **1** (declaration of `R-SKIP-2TO1-FAVORITE`).
 
 A rule that is not dated before its windows close cannot use those windows as a clean out-of-sample test. Every hour collected before a declaration is an hour that cannot serve that rule. This file is the mechanic. The dated rows live in [`LEARNING_LANE_15M_RULES.json`](LEARNING_LANE_15M_RULES.json).
 
@@ -32,6 +32,7 @@ See the JSON. Two rows were dated 2026-09-08 05:56 EDT:
 
 - `R-BASELINE-FILL-ALL` — names the mechanical fill that has been running. Not a tested edge. Overnight 56 locked books are **not** OOS for a later-declared selection rule, and they are not an unbroken run (`072245` gap).
 - `R-SKIP-COINFLIP` — first selection rule: skip when posted YES is inside `(0.45, 0.55)`. `execution=false` until the paper loop is wired to honor it. Windows that close after `declared_at` are the clean OOS set. Do not retune the band from last night's tape. Do not score it in the session that drafted the bar. The numeric form of its 40-window falsifier lives in the bar draft.
+- `R-SKIP-2TO1-FAVORITE` — second selection rule (PROPOSED 02, 2026-09-08 16:53 EDT): skip when posted YES is a 2-to-1 or better favorite (`favorite_odds=2` ⇒ `p=2/3`). **RUN-ONLY** by Operator 2026-09-08 17:11 EDT; `execution=true` (paper only). Lived paper begins at that flip (`0daae90`), not at `declared_at`. Windows whose `close` is strictly after 16:53:00 and at or before 17:11:00 are replay for this rule. `favorite_odds=2` is **not verifiably pre-registered** (bar row: 2/24 published marks ≥ 2/3 sat on this tree 19h 06m before `e9fab5a`). Do not score it in the proposing, authorizing, or CRITIC-03-answer turn. Do not retune `favorite_odds` from the tape. Not an ADMIT.
 
 ## Hard NOs
 
