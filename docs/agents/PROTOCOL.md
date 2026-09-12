@@ -169,7 +169,7 @@ Judicial roles are named only by their **enumerated** exception kinds, in `learn
 | `park_aged` | operator | a **crew** park past its ~1 day re-rule window |
 | `falsifier_fired` | operator | a falsifier fired and has not been ruled |
 | `rule_reached_n` | operator | a declared rule has accumulated the n its falsifier named |
-| `lab_proposed` | operator | a Lab PROPOSED arrived |
+| `lab_proposed` | operator | a Lab PROPOSED arrived (dated `LEARNING_LANE_15M_LAB_PROPOSED_*.md` with no matching Operator RUN-ONLY note; `execution=false` does not hide it) |
 | `artifact_unreviewed` | critic-invariants + soften-critic | a watched method artifact changed and no Critic finding covers that hash |
 
 Human `digestor` is owed when the **generated figures cannot express what changed** — not zero, and not every settle. The every-settle trigger is deliberately not restored.

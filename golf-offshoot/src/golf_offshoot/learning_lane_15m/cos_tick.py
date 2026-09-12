@@ -29,6 +29,7 @@ from golf_offshoot.learning_lane_15m.crew_tick import (
     REASON_K,
     WORKER_ROLES,
     compute_crew_tick,
+    desk_lab_done_owes_operator,
     parse_desk,
 )
 
@@ -68,6 +69,10 @@ LAB_FARM_PROMOTE_JOB = (
 OPERATOR_LOOK_JOB = (
     "PARK or CONTINUE from the L1 scorecard; never invent tape; "
     "do not stop PaperWatch; do not arm"
+)
+
+OPERATOR_LAB_PROPOSED_JOB = (
+    "RUN-ONLY the sitting Lab PROPOSED; do not ADMIT; do not arm; do not score"
 )
 
 #: Hard-NO / already-PARK'd ids whose rule_reached_n is bookkeeping without files.
@@ -179,11 +184,22 @@ def only_name_clear_reasons(
     return all(is_name_clear_reason(r, root=root, registry=registry) for r in reasons)
 
 
-def operator_owed_lab_proposed(wake: dict[str, Any] | None) -> bool:
+def operator_owed_lab_proposed(
+    wake: dict[str, Any] | None,
+    *,
+    root: Path | None = None,
+) -> bool:
     for reason in operator_owed_reasons(wake):
         if str(reason).strip().lower().startswith("lab_proposed"):
             return True
-    return False
+    if root is None:
+        return False
+    from golf_offshoot.learning_lane_15m.triggers import lab_proposed
+
+    try:
+        return bool(lab_proposed(root=root))
+    except Exception:  # noqa: BLE001 — blindness still owes Operator, not invent
+        return True
 
 
 def _parse_iso(value: Any) -> datetime | None:
@@ -285,6 +301,15 @@ def _assign_lab_farm_promote() -> dict[str, Any]:
     )
 
 
+def _assign_operator_lab_proposed() -> dict[str, Any]:
+    return _base(
+        action=ACTION_ASSIGN,
+        reason="lab_proposed_operator_first",
+        role="operator",
+        job=OPERATOR_LAB_PROPOSED_JOB,
+    )
+
+
 def lab_honer_freeze_job(snap: dict[str, Any] | None) -> str:
     """Deprecated: H is clerical. Kept so old tests can import the name."""
     snap = snap or {}
@@ -318,6 +343,8 @@ def decide_cos_action(
     job = desk["job"]
 
     if wake is None and crew_tick is None:
+        if desk_lab_done_owes_operator(desk):
+            return _assign_operator_lab_proposed()
         if status == "done":
             return _base(action=ACTION_CLOSEOUT, reason="worker_done")
         return _base(action=ACTION_QUIET, reason="no_wake_do_not_invent")
@@ -353,6 +380,10 @@ def decide_cos_action(
     if status == "assigned" and active in WORKER_ROLES:
         return _base(action=ACTION_QUIET, reason="assigned_worker_covers", role=active, job=job)
 
+    sitting = operator_owed_lab_proposed(wake, root=root) or desk_lab_done_owes_operator(desk)
+    if sitting:
+        return _assign_operator_lab_proposed()
+
     if not needed:
         return _base(action=ACTION_QUIET, reason="quiet_or_handled")
     if (
@@ -380,14 +411,6 @@ def decide_cos_action(
     # Wake may name Lab by mistake; invent is F_continuation, not a Lab owe.
     if "lab" in uncovered_roles:
         uncovered_roles = [r for r in uncovered_roles if r != "lab"]
-
-    if operator_owed_lab_proposed(wake):
-        return _base(
-            action=ACTION_ASSIGN,
-            reason="lab_proposed_operator_first",
-            role="operator",
-            job=job if job and job.strip() not in {"", "—"} else "RUN-ONLY or PARK the sitting Lab PROPOSED",
-        )
 
     if only_name_clear_reasons(op_reasons, root=root):
         uncovered_roles = [r for r in uncovered_roles if r != "operator"]

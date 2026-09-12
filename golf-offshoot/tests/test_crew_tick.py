@@ -277,6 +277,26 @@ def test_unoperated_proposed_does_not_ring_f():
     assert REASON_F not in tick["reason_ids"]
 
 
+def test_sitting_lab_file_silences_f_even_when_execution_false(tmp_path):
+    docs = tmp_path / "golf-offshoot" / "docs"
+    docs.mkdir(parents=True)
+    (docs / "LEARNING_LANE_15M_LAB_PROPOSED_04.md").write_text(
+        "PROPOSED R-SKIP-CIVIL-BOUNDARIES execution=false\n",
+        encoding="utf-8",
+    )
+    tick = compute_crew_tick(
+        {"watch": _watch(), "roles_owed": []},
+        desk_text=_idle_blank_desk(),
+        hub_ok=True,
+        live_trial_ids=[],
+        honer_freeze_open=False,
+        farm_open=False,
+        farm_promote=False,
+        root=tmp_path,
+    )
+    assert REASON_F not in tick["reason_ids"]
+
+
 def test_live_trial_does_not_ring_f():
     tick = compute_crew_tick(
         {"watch": _watch(), "roles_owed": []},
