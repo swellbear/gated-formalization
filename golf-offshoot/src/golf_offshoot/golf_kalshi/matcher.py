@@ -42,11 +42,11 @@ _NONPERSON_TOKENS = frozenset(
 
 
 def names_a_golfer(title: str) -> bool:
-    """True only when the string is a person name, not a market sub-title.
+    """True only when this string itself is a person name.
 
-    Two or more letter tokens. Digits, `+`, connective predicates (`beats`,
-    `to`, `and`, `vs`), and team/country/tie tokens fail. Exact-match tote
-    `_SKIP` is a separate filter; this is the live Kalshi golf gate.
+    Positive: two or more letter tokens, no digits, no `+`, no connective
+    predicate (`beats` / `to` / `and` / `vs`). Closed-class team/country/tie
+    tokens are not person names. Exact-match tote `_SKIP` is separate.
     """
     text = str(title or "").strip(" ?")
     if not text:
@@ -77,10 +77,15 @@ def _real_name(name: str) -> str:
 
 
 def extract_player_name(market: dict[str, Any] | None = None, *, title: str = "") -> str:
+    """Listed identity is the yes_sub_title when that string names a golfer.
+
+    A present sub-title that fails the shape check is unmatched. The title
+    regex does not re-admit a player. Title fallback is only for rows with no
+    sub-title (ESPN-style "Will X win …").
+    """
     sub = str((market or {}).get("yes_sub_title") or "").strip()
-    real_sub = _real_name(sub)
-    if real_sub:
-        return real_sub
+    if sub:
+        return _real_name(sub)
     blob = title or str((market or {}).get("title") or "")
     low = blob.lower()
     m = _WILL_WIN.search(blob) or _NAME_CUT.search(blob)
@@ -101,8 +106,15 @@ def match_market_player(
     market: dict[str, Any],
     candidates: dict[str, str],
 ) -> str | None:
-    """candidates: normalized_name -> player_id. None means quarantine, not a fill."""
+    """candidates: normalized_name -> player_id. None means quarantine, not a fill.
+
+    A market whose yes_sub_title fails names_a_golfer does not match, even if
+    the title names a golfer who is in the candidate map.
+    """
     if not candidates:
+        return None
+    sub = str((market or {}).get("yes_sub_title") or "").strip()
+    if sub and not names_a_golfer(sub):
         return None
     name = extract_player_name(market)
     if not name or is_skip_field_name(name):

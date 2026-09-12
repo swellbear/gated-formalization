@@ -987,11 +987,91 @@ def test_names_a_golfer_rejects_live_nonplayer_subtitles():
     for title in leaks:
         assert names_a_golfer(title) is False, title
         assert extract_player_name({"yes_sub_title": title}) == ""
+        assert (
+            extract_player_name(
+                {
+                    "yes_sub_title": title,
+                    "title": "Will Scottie Scheffler win the grand slam before 2028?",
+                }
+            )
+            == ""
+        )
     mixed = [
         _market(yes_sub_title="Scottie Scheffler"),
         _market(yes_sub_title="United States"),
     ]
     assert kalshi_listed_names(mixed) == ["Scottie Scheffler"]
+    assert extract_player_name(
+        {"yes_sub_title": "", "title": "Will Scottie Scheffler win the Masters?"}
+    ) == "Scottie Scheffler"
+
+
+def test_rejected_subtitle_does_not_take_player_from_title(gk_root, monkeypatch):
+    """Live Scottie-slam shape: sub-title fails, title names a golfer. No model_p."""
+    from golf_offshoot.golf_kalshi.field_hunt import hunt_field, kalshi_listed_names
+    from golf_offshoot.golf_kalshi.matcher import extract_player_name, match_market_player
+
+    market = _market(
+        ticker="KXSCOTTIESLAM-28-B2028",
+        event_ticker="KXSCOTTIESLAM-28",
+        series_ticker="KXSCOTTIESLAM",
+        yes_sub_title="Before 2028",
+        title="Will Scottie Scheffler win the grand slam before 2028?",
+        yes_ask=0.05,
+    )
+    candidates = {normalize_name("Scottie Scheffler"): "9478"}
+    assert extract_player_name(market) == ""
+    assert match_market_player(market, candidates) is None
+    assert kalshi_listed_names([market]) == []
+
+    monkeypatch.setattr(
+        "golf_offshoot.golf_kalshi.espn_bind.bind_espn_event",
+        lambda *a, **k: {
+            "espn_id": "",
+            "espn_name": "",
+            "league": "",
+            "family": "PGA Tour",
+            "espn_rows": [],
+            "candidates": {},
+            "tried_leagues": ["pga"],
+        },
+    )
+    hunt = hunt_field("KXSCOTTIESLAM-28", [market], history=None)
+    assert hunt["n_names"] == 0
+    assert hunt["field_source"] == "miss"
+
+    brain = StaticBrain(
+        candidates,
+        {"9478": {"win": 0.5}},
+        field_source="kalshi_listed",
+    )
+    d = decide_golf(market, empty_ledger(), recipe_v1(), brain)
+    assert d.model_p is None
+    assert d.action == "skip"
+    assert d.reason == "unmatched"
+
+    ladder = _market(
+        ticker="KXPGAFUTURE-36JKOI-4",
+        event_ticker="KXPGAFUTURE-36JKOI",
+        series_ticker="KXPGAFUTURE",
+        yes_sub_title="4+ golf major championship wins",
+        title="Will Jackson Koivun have 4+ golf major championship wins?",
+        yes_ask=0.05,
+    )
+    assert extract_player_name(ladder) == ""
+    assert match_market_player(ladder, {normalize_name("Jackson Koivun"): "5215013"}) is None
+
+    three = _market(
+        ticker="KXDPWT3BALL-1",
+        event_ticker="KXDPWT3BALL-AMIO26R3JOLESLOWHLI",
+        series_ticker="KXDPWT3BALL",
+        yes_sub_title="Shane Lowry beats Olesen and Li",
+        title="Will Shane Lowry win the 3-ball against Olesen and Li?",
+        yes_ask=0.05,
+    )
+    assert extract_player_name(three) == ""
+    assert match_market_player(three, {normalize_name("Shane Lowry"): "4587"}) is None
+    assert kalshi_listed_names([ladder, three]) == []
 
 
 def test_score_kalshi_listed_scores_golfers_not_nonplayers(gk_root, monkeypatch):

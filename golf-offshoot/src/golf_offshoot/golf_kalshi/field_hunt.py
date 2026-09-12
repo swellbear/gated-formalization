@@ -13,7 +13,7 @@ from golf_offshoot.data_feeds.field_fallback import (
 )
 from golf_offshoot.data_feeds.names import normalize_name
 from golf_offshoot.golf_kalshi.espn_bind import bind_espn_event, event_key_for
-from golf_offshoot.golf_kalshi.matcher import extract_player_name, names_a_golfer
+from golf_offshoot.golf_kalshi.matcher import names_a_golfer
 
 
 def history_floor_ok(n_names: int, n_recovered: int) -> bool:
@@ -48,17 +48,22 @@ def listed_name_candidates(
 
 
 def kalshi_listed_names(markets: list[dict[str, Any]]) -> list[str]:
+    """Listed field members are yes_sub_title strings that name a golfer.
+
+    Title text is not a second name source. A rejected sub-title does not
+    contribute a player extracted from "Will X win …".
+    """
     seen: set[str] = set()
     names: list[str] = []
     for market in markets:
-        name = extract_player_name(market)
-        if not name or is_skip_field_name(name):
+        sub = str((market or {}).get("yes_sub_title") or "").strip()
+        if not names_a_golfer(sub) or is_skip_field_name(sub):
             continue
-        key = normalize_name(name)
+        key = normalize_name(sub)
         if not key or key in seen:
             continue
         seen.add(key)
-        names.append(name.strip())
+        names.append(sub)
     return names
 
 
