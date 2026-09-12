@@ -85,7 +85,10 @@ def hunt_field(
     bind: dict[str, Any] | None = None,
     boards=None,
 ) -> dict[str, Any]:
-    """ESPN bind if titles match. Else Kalshi open names + history ids. No invented players."""
+    """ESPN bind if titles match. Else Kalshi-listed names are the field.
+
+    History ids attach when they match. Provisional ids fill the rest. No invented players.
+    """
     rows = [m for m in markets if event_key_for(m) == event_key]
     sample = rows[0] if rows else {"series_ticker": event_key, "event_ticker": event_key}
     bind = (

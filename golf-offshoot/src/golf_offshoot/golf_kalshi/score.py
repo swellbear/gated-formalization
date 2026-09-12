@@ -150,20 +150,19 @@ def score_kalshi_listed(
     *,
     tour: str = "PGA",
 ) -> dict[str, Any]:
-    """History-id field only. No live thru. keep_expert MC. Skip tote / unrecovered ids."""
-    from golf_offshoot.data_feeds.field_fallback import is_provisional_player_id, stub_competitor
+    """Listed names are the field. History ids when they match, provisional otherwise.
+
+    No live thru. keep_expert MC. Skip tote / empty ids. Unrecovered history is not a miss.
+    """
+    from golf_offshoot.data_feeds.field_fallback import stub_competitor
     from golf_offshoot.data_feeds.names import normalize_name
     from golf_offshoot.models.enums import CourseType
     from golf_offshoot.models.schemas import Course, FieldSnapshot, Tournament
     from golf_offshoot.operating import make_engine
     from golf_offshoot.pipeline import GolfOffshootPipeline
 
-    recovered = [
-        (name, pid)
-        for name, pid in (candidates or {}).items()
-        if pid and not is_provisional_player_id(pid)
-    ]
-    if not recovered:
+    field = [(name, pid) for name, pid in (candidates or {}).items() if pid]
+    if not field:
         return {
             "probs": {},
             "candidates": dict(candidates or {}),
@@ -189,7 +188,7 @@ def score_kalshi_listed(
     ingestor = shared_ingestor()
     history = ingestor.load_history(include_in_progress=False)
     players = []
-    for _norm, pid in recovered:
+    for _norm, pid in field:
         cached = _PLAYER_INPUTS.get(pid)
         if cached is not None:
             players.append(cached)

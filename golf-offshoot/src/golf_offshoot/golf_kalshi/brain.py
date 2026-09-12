@@ -160,7 +160,7 @@ def _hunt_fp(hunt: dict[str, Any], fingerprint: str) -> str:
     rows = list(hunt.get("espn_rows") or [])
     if rows:
         return fingerprint_scores(rows)
-    names = list(hunt.get("names") or [])
+    names = sorted(str(n) for n in (hunt.get("names") or []) if n)
     if names:
         return fingerprint_scores([{"name": n} for n in names])
     return fingerprint or ""
@@ -216,6 +216,7 @@ class CachedExpertBrain:
         if row.get("identity_fp") != identity_fp:
             row.pop("probs", None)
             row.pop("fp", None)
+            row.pop("listed_hunt_done", None)
         row["identity_fp"] = identity_fp
         row["espn_id"] = hunt.get("espn_id") or ""
         row["espn_name"] = hunt.get("espn_name") or ""
@@ -250,7 +251,11 @@ class CachedExpertBrain:
         return str(cached.get("field_source") or "")
 
     def field_gate(self, event_key: str) -> str:
-        """Honest skip when a listed field is only deferred or thin, not empty."""
+        """Honest skip when a listed field has not produced p yet.
+
+        Clock miss → field_deferred. Hunt that produced no p → thin.
+        Empty names stay no_field at decide. Recovered-id count is not a skip.
+        """
         if self.inner is not None:
             if hasattr(self.inner, "field_gate"):
                 return str(self.inner.field_gate(event_key) or "")
@@ -265,7 +270,7 @@ class CachedExpertBrain:
         listed = src == "kalshi_listed" or (bool(names) and not espn_id)
         if not listed or (not names and not cands):
             return ""
-        if cached.get("thin"):
+        if cached.get("thin") or (cached.get("listed_hunt_done") and not cached.get("probs")):
             return "thin"
         return "field_deferred"
 
@@ -379,7 +384,7 @@ class CachedExpertBrain:
             self._store_event(event_key, row, hunt_summary)
             return
         name_fp = _hunt_fp({"names": names}, fingerprint)
-        if cached.get("probs") and cached.get("fp") == name_fp:
+        if cached.get("fp") == name_fp and (cached.get("probs") or cached.get("listed_hunt_done")):
             self.hunts_this_tick.append({**hunt_summary, "cached": True})
             return
         if budget is not None and (not budget.can_brain() or budget.remaining() < 1.5):
@@ -397,30 +402,38 @@ class CachedExpertBrain:
         history = shared_ingestor().load_history(include_in_progress=False)
         hunt = hunt_field(event_key, list(markets or []), history=history, boards=self._boards)
         listed = _listed_candidates(cached, hunt)
-        hunt_summary["n_recovered"] = hunt.get("n_recovered") or 0
+        n_names = int(hunt.get("n_names") or len(names))
+        n_recovered = int(hunt.get("n_recovered") or 0)
+        history_thin = not history_floor_ok(n_names, n_recovered)
+        hunt_summary["n_recovered"] = n_recovered
         hunt_summary["field_source"] = "kalshi_listed"
+        hunt_summary["history_thin"] = history_thin
         row = dict(cached)
         row["brain_version"] = BRAIN_VERSION
         row["awaiting_history"] = False
         row["deferred"] = False
-        row["n_recovered"] = hunt.get("n_recovered") or 0
-        if hunt.get("thin") or not history_floor_ok(int(hunt.get("n_names") or len(names)), int(hunt.get("n_recovered") or 0)):
+        row["n_recovered"] = n_recovered
+        row["n_names"] = n_names
+        row["candidates"] = listed
+        row["field_source"] = "kalshi_listed"
+        row["history_thin"] = history_thin
+        row["listed_hunt_done"] = True
+        row["fp"] = name_fp
+        if not listed:
             row["probs"] = {}
-            row["candidates"] = listed
-            row["field_source"] = "kalshi_listed"
             row["thin"] = True
             hunt_summary["thin"] = True
+            hunt_summary["scored"] = False
             self._store_event(event_key, row, hunt_summary)
             return
         scored = score_kalshi_listed(names, listed, tour=str(hunt.get("family") or cached.get("family") or "PGA"))
         row["probs"] = scored.get("probs") or {}
         row["candidates"] = scored.get("candidates") or listed
-        row["field_source"] = "kalshi_listed"
         row["thin"] = bool(scored.get("thin")) or not row["probs"]
         row["fp"] = scored.get("fp") or name_fp
         row["n_players"] = scored.get("n_players") or 0
         hunt_summary["thin"] = bool(row["thin"])
-        hunt_summary["scored"] = True
+        hunt_summary["scored"] = bool(row["probs"])
         self._store_event(event_key, row, hunt_summary)
 
     def _store_event(self, event_key: str, row: dict[str, Any], hunt_summary: dict[str, Any]) -> None:

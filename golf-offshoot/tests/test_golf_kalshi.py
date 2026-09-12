@@ -81,6 +81,23 @@ def _brain() -> StaticBrain:
     )
 
 
+def _listed_score_ok(names, candidates, **_k):
+    del names
+    probs = {
+        str(pid): {"win": 0.4, "win_after_r1": 0.4, "win_after_r3": 0.4}
+        for pid in (candidates or {}).values()
+        if pid
+    }
+    return {
+        "probs": probs,
+        "candidates": dict(candidates or {}),
+        "fp": "listed-fp",
+        "n_players": len(probs),
+        "thin": False,
+        "field_source": "kalshi_listed",
+    }
+
+
 def test_15m_allowlist_unchanged():
     assert ALLOWED_SERIES == "KXBTC15M"
 
@@ -744,7 +761,7 @@ def test_espn_miss_uses_kalshi_listed_names(gk_root, monkeypatch):
     assert hunt["n_recovered"] >= 2
 
 
-def test_history_id_floor_blocks_paper_fill(gk_root, monkeypatch):
+def test_history_id_floor_does_not_park_listed_hunt(gk_root, monkeypatch):
     from golf_offshoot.golf_kalshi.brain import CachedExpertBrain
     from golf_offshoot.golf_kalshi.field_hunt import history_floor_ok, hunt_field
 
@@ -783,12 +800,18 @@ def test_history_id_floor_blocks_paper_fill(gk_root, monkeypatch):
         "golf_offshoot.golf_kalshi.score.shared_ingestor",
         lambda: SimpleNamespace(load_history=lambda **k: Hist()),
     )
+    monkeypatch.setattr("golf_offshoot.golf_kalshi.score.score_kalshi_listed", _listed_score_ok)
     brain = CachedExpertBrain()
     brain.maybe_refresh("KXLIV-1", "", markets=markets)
     d = decide_golf(markets[0], empty_ledger(), recipe_v1(), brain)
-    assert d.action == "skip"
-    assert d.reason == "thin"
+    assert d.reason != "thin"
+    assert d.reason != "field_deferred"
     assert d.reason != "no_field"
+    assert d.model_p is not None
+    row = ((brain._cache.get("events") or {}).get("KXLIV-1") or {})
+    assert row.get("listed_hunt_done") is True
+    assert row.get("history_thin") is True
+    assert row.get("n_recovered") == 1
 
 
 def test_deferred_listed_keeps_candidates_not_no_field(gk_root, monkeypatch):
@@ -843,6 +866,94 @@ def test_deferred_listed_keeps_candidates_not_no_field(gk_root, monkeypatch):
     assert d.action == "skip"
     assert d.reason == "field_deferred"
     assert d.reason != "no_field"
+
+
+def test_listed_names_hunt_when_recovered_zero(gk_root, monkeypatch):
+    """Proof shape: KXCHAMPTOURR1LEAD-SAI26 / KXDPWORLDTOURR3LEAD-AMIO26.
+
+    n_names > 0 and n_recovered=0 must still score from listed names. Transferable
+    to any listed-field Kalshi series, not a golf mix-cap integer.
+    """
+    from golf_offshoot.data_feeds.field_fallback import is_provisional_player_id
+    from golf_offshoot.golf_kalshi.brain import CachedExpertBrain
+
+    names = ["Alpha Player", "Bravo Player", "Charlie Player"]
+    event_key = "KXCHAMPTOURR1LEAD-SAI26"
+    hunt = {
+        "event_key": event_key,
+        "espn_id": "",
+        "espn_name": "",
+        "family": "Champions",
+        "field_source": "kalshi_listed",
+        "names": names,
+        "n_names": len(names),
+        "n_recovered": 0,
+        "candidates": {},
+        "listed_candidates": {},
+        "espn_rows": [],
+        "thin": True,
+        "awaiting_history": False,
+        "tried_leagues": ["champ"],
+    }
+    scored_with: list[dict[str, str]] = []
+
+    def fake_score(score_names, candidates, **kwargs):
+        del score_names, kwargs
+        scored_with.append(dict(candidates or {}))
+        return _listed_score_ok(names, candidates)
+
+    monkeypatch.setattr("golf_offshoot.golf_kalshi.field_hunt.hunt_field", lambda *a, **k: hunt)
+    monkeypatch.setattr(
+        "golf_offshoot.golf_kalshi.score.shared_ingestor",
+        lambda: SimpleNamespace(load_history=lambda **k: []),
+    )
+    monkeypatch.setattr("golf_offshoot.golf_kalshi.score.score_kalshi_listed", fake_score)
+    markets = [
+        _market(
+            ticker=f"SAI-{i}",
+            event_ticker=event_key,
+            series_ticker="KXCHAMPTOURR1LEAD",
+            yes_sub_title=name,
+            title=f"Will {name} lead after round 1?",
+        )
+        for i, name in enumerate(names)
+    ]
+    brain = CachedExpertBrain()
+    room = TickBudget(seconds=30, max_fills=8, max_brain=2)
+    brain.maybe_refresh(event_key, "", budget=room, markets=markets)
+    row = ((brain._cache.get("events") or {}).get(event_key) or {})
+    assert row.get("deferred") is not True
+    assert row.get("listed_hunt_done") is True
+    assert row.get("n_recovered") == 0
+    assert row.get("history_thin") is True
+    assert row.get("probs")
+    assert scored_with and any(is_provisional_player_id(pid) for pid in scored_with[0].values())
+    d = decide_golf(markets[0], empty_ledger(), recipe_v1(), brain)
+    assert d.reason != "field_deferred"
+    assert d.reason != "thin"
+    assert d.reason != "no_field"
+    assert d.model_p is not None
+
+    r3 = "KXDPWORLDTOURR3LEAD-AMIO26"
+    hunt_r3 = dict(hunt)
+    hunt_r3["event_key"] = r3
+    hunt_r3["family"] = "DP World"
+    hunt_r3["tried_leagues"] = ["eur"]
+    monkeypatch.setattr("golf_offshoot.golf_kalshi.field_hunt.hunt_field", lambda *a, **k: hunt_r3)
+    markets_r3 = [
+        _market(
+            ticker=f"AMIO-{i}",
+            event_ticker=r3,
+            series_ticker="KXDPWORLDTOURR3LEAD",
+            yes_sub_title=name,
+            title=f"Will {name} lead after round 3?",
+        )
+        for i, name in enumerate(names)
+    ]
+    brain.maybe_refresh(r3, "", budget=TickBudget(seconds=30, max_fills=8, max_brain=2), markets=markets_r3)
+    d3 = decide_golf(markets_r3[0], empty_ledger(), recipe_v1(), brain)
+    assert d3.reason != "field_deferred"
+    assert d3.model_p is not None
 
 
 def test_thin_listed_field_candidates_not_empty(gk_root):
@@ -1082,9 +1193,14 @@ def test_budget_miss_does_not_poison_listed_cache(gk_root, monkeypatch):
     kept = brain.field_candidates("KXLIV-1")
     assert normalize_name("Alpha Player") in kept
     assert normalize_name("Bravo Player") in kept
+    monkeypatch.setattr("golf_offshoot.golf_kalshi.score.score_kalshi_listed", _listed_score_ok)
     room = TickBudget(seconds=30, max_fills=8, max_brain=2)
     brain.maybe_refresh("KXLIV-1", "", budget=room, markets=[_market(series_ticker="KXLIV")])
     assert history_calls == [1]
+    row = ((brain._cache.get("events") or {}).get("KXLIV-1") or {})
+    assert row.get("listed_hunt_done") is True
+    assert row.get("deferred") is False
+    assert row.get("probs")
 
 
 def test_espn_boards_read_each_league_once():
@@ -1535,6 +1651,47 @@ def test_held_event_is_first_in_brain_order():
     }
     order, _rr = _brain_order(groups, 0, held_keys=["HELD"])
     assert order[0] == "HELD"
+
+
+def test_unscored_listed_event_is_ahead_of_scored_mid():
+    from golf_offshoot.golf_kalshi.brain import CachedExpertBrain
+    from golf_offshoot.golf_kalshi.loop import _brain_order, listed_hunt_pending
+
+    pending_key = "KXCHAMPTOURR1LEAD-SAI26"
+    scored_key = "KXDPWTTOP10-AMIO26"
+    brain = CachedExpertBrain()
+    brain._cache = {
+        "events": {
+            scored_key: {
+                "names": ["Held Player"],
+                "n_names": 1,
+                "field_source": "kalshi_listed",
+                "espn_id": "",
+                "probs": {"pid": {"win": 0.2}},
+                "listed_hunt_done": True,
+            },
+            pending_key: {
+                "names": ["Alpha Player"] * 84,
+                "n_names": 84,
+                "n_recovered": 0,
+                "field_source": "kalshi_listed",
+                "espn_id": "",
+            },
+        }
+    }
+    groups = {
+        scored_key: [_market(ticker="T1", event_ticker=scored_key, series_ticker="KXDPWTTOP10")],
+        pending_key: [
+            _market(ticker="T2", event_ticker=pending_key, series_ticker="KXCHAMPTOURR1LEAD")
+        ],
+    }
+    assert listed_hunt_pending(brain, pending_key) is True
+    assert listed_hunt_pending(brain, scored_key) is False
+    order, _rr = _brain_order(groups, 0, brain)
+    assert order[0] == pending_key
+    held_first, _rr = _brain_order(groups, 0, brain, held_keys=[scored_key])
+    assert held_first[0] == scored_key
+    assert pending_key in held_first
 
 
 def test_hub_shows_mix_and_cap_shares(gk_root, tmp_path):
