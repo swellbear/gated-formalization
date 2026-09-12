@@ -135,6 +135,13 @@ def load_policy() -> dict[str, Any]:
     return out
 
 
+def float_field(payload: dict[str, Any], key: str, default: float) -> float:
+    """Keep 0.0. Only missing/null uses default."""
+    if key not in payload or payload.get(key) is None:
+        return float(default)
+    return float(payload[key])
+
+
 def clip_theta(theta: float, *, policy: dict[str, Any] | None = None) -> float:
     pol = policy or load_policy()
     lo = float(pol["theta_min"])
@@ -163,11 +170,12 @@ def knob_vector(
     delta: float,
     gamma: float = 0.0,
 ) -> dict[str, Any]:
+    fam = str(family)
     return {
-        "family": str(family),
+        "family": fam,
         "theta": round(float(theta), 4),
         "delta": round(float(delta), 4),
-        "gamma": round(float(gamma), 4),
+        "gamma": round(float(gamma), 4) if fam == FAMILY_THIN else 0.0,
     }
 
 
@@ -201,10 +209,10 @@ def vectors_equal(left: dict[str, Any], right: dict[str, Any]) -> bool:
         family=str(left.get("family") or ""),
         theta=float(left.get("theta") or 0.0),
         delta=float(left.get("delta") or 0.0),
-        gamma=float(left.get("gamma") or 0.0),
+        gamma=float_field(left, "gamma", 0.0),
     ) == knob_vector(
         family=str(right.get("family") or ""),
         theta=float(right.get("theta") or 0.0),
         delta=float(right.get("delta") or 0.0),
-        gamma=float(right.get("gamma") or 0.0),
+        gamma=float_field(right, "gamma", 0.0),
     )

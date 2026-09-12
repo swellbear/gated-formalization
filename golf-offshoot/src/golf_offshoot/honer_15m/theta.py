@@ -15,6 +15,7 @@ from golf_offshoot.honer_15m.policy import (
     clip_delta,
     clip_gamma,
     clip_theta,
+    float_field,
     knob_vector,
     load_policy,
 )
@@ -75,7 +76,7 @@ def migrate_v2(payload: dict[str, Any], *, policy: dict[str, Any] | None = None)
     state.setdefault("last_declared_theta", float(pol["start_theta"]))
     state["delta"] = clip_delta(float(state.get("delta", pol["start_delta"])), policy=pol)
     state.setdefault("last_declared_delta", float(pol["start_delta"]))
-    state["gamma"] = clip_gamma(float(state.get("gamma", pol["start_gamma"])), policy=pol)
+    state["gamma"] = clip_gamma(float_field(state, "gamma", pol["start_gamma"]), policy=pol)
     state.setdefault("last_declared_gamma", float(pol["start_gamma"]))
     state["step_rule"] = STEP_RULE
     state.setdefault("active_family", FAMILY_RICH)
@@ -92,7 +93,7 @@ def migrate_in_band_v1(payload: dict[str, Any], *, policy: dict[str, Any] | None
     state.setdefault("last_declared_theta", float(pol["start_theta"]))
     state["delta"] = clip_delta(float(state.get("delta", pol["start_delta"])), policy=pol)
     state.setdefault("last_declared_delta", float(pol["start_delta"]))
-    state["gamma"] = clip_gamma(float(state.get("gamma", pol["start_gamma"])), policy=pol)
+    state["gamma"] = clip_gamma(float_field(state, "gamma", pol["start_gamma"]), policy=pol)
     state.setdefault("last_declared_gamma", float(pol["start_gamma"]))
     state.setdefault("step_rule", STEP_RULE)
     state.setdefault("active_family", FAMILY_RICH)
@@ -121,7 +122,7 @@ def load_theta() -> dict[str, Any]:
     payload.setdefault("last_declared_theta", float(pol["start_theta"]))
     payload["delta"] = clip_delta(float(payload.get("delta", pol["start_delta"])), policy=pol)
     payload.setdefault("last_declared_delta", float(pol["start_delta"]))
-    payload["gamma"] = clip_gamma(float(payload.get("gamma", pol["start_gamma"])), policy=pol)
+    payload["gamma"] = clip_gamma(float_field(payload, "gamma", pol["start_gamma"]), policy=pol)
     payload.setdefault("last_declared_gamma", float(pol["start_gamma"]))
     payload.setdefault("search_settled_since_freeze", 0)
     payload.setdefault("in_band_settled", 0)
@@ -154,7 +155,7 @@ def current_vector(state: dict[str, Any] | None = None) -> dict[str, Any]:
         family=str(st.get("active_family") or FAMILY_RICH),
         theta=float(st.get("theta") or pol["start_theta"]),
         delta=float(st.get("delta") or pol["start_delta"]),
-        gamma=float(st.get("gamma") or pol["start_gamma"]),
+        gamma=float_field(st, "gamma", pol["start_gamma"]),
     )
 
 
@@ -201,7 +202,7 @@ def step_search_theta(
         lo, hi = float(pol["delta_min"]), float(pol["delta_max"])
         at_clip = _at_clip(float(state["delta"]), lo, hi)
     elif family == FAMILY_THIN:
-        center = float(state.get("gamma") or pol["start_gamma"])
+        center = float_field(state, "gamma", pol["start_gamma"])
         step = float(pol["gamma_step"])
         band = float(pol["spread_band"])
         near = _in_band(spread, center, band)

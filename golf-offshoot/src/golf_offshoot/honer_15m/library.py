@@ -9,6 +9,7 @@ from golf_offshoot.honer_15m.paths import assert_honer_path, library_path
 from golf_offshoot.honer_15m.policy import (
     FAMILY_RICH,
     STEP_RULE,
+    float_field,
     knob_vector,
     vectors_equal,
 )
@@ -158,7 +159,7 @@ def append_exam_row(
         family=str(knobs.get("family") or family),
         theta=float(knobs.get("theta") or 0.0),
         delta=float(knobs.get("delta") or 0.0),
-        gamma=float(knobs.get("gamma") or 0.0),
+        gamma=float_field(knobs, "gamma", 0.0),
     )
     payload["rows"] = list(payload.get("rows") or [])
     payload["rows"].append(

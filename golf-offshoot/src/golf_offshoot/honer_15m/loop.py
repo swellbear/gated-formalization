@@ -26,7 +26,7 @@ from golf_offshoot.honer_15m.paths import (
 from golf_offshoot.honer_15m.family_amend import stamp_family_amend
 from golf_offshoot.honer_15m.library import search_is_parked
 from golf_offshoot.honer_15m.picker import apply_search_starvation, maybe_advance
-from golf_offshoot.honer_15m.policy import FAMILY_RICH, load_policy
+from golf_offshoot.honer_15m.policy import FAMILY_RICH, float_field, load_policy
 from golf_offshoot.honer_15m.score import (
     classify_completed_exam,
     exam_sums,
@@ -209,7 +209,7 @@ def run_tick(markets: list[dict[str, Any]] | None = None) -> dict[str, Any]:
     search_theta = float(search["theta"])
     search_family = str(search.get("active_family") or FAMILY_RICH)
     search_delta = float(search.get("delta") or load_policy()["start_delta"])
-    search_gamma = float(search.get("gamma") or load_policy()["start_gamma"])
+    search_gamma = float_field(search, "gamma", load_policy()["start_gamma"])
     exam = load_exam_state()
     frozen = exam.get("frozen_theta") if exam_is_open() else None
     exam_family = str(exam.get("frozen_family") or search_family)

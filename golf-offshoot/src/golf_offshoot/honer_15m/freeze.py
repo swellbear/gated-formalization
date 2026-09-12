@@ -12,7 +12,7 @@ from golf_offshoot.honer_15m.paths import (
     freeze_log_path,
     trials_path,
 )
-from golf_offshoot.honer_15m.policy import FAMILY_RICH, FAMILY_SPREAD, FAMILY_THIN, load_policy
+from golf_offshoot.honer_15m.policy import FAMILY_RICH, FAMILY_SPREAD, FAMILY_THIN, float_field, load_policy
 from golf_offshoot.honer_15m.theta import current_vector, load_theta, save_theta
 from golf_offshoot.localtime import now
 
@@ -49,7 +49,9 @@ def _novelty(st: dict[str, Any], pol: dict[str, Any]) -> bool:
         moved = abs(float(st.get("delta") or 0.0) - float(st.get("last_declared_delta") or pol["start_delta"]))
         return moved >= float(pol["freeze_abs_delta_spread"])
     if family == FAMILY_THIN:
-        moved = abs(float(st.get("gamma") or 0.0) - float(st.get("last_declared_gamma") or pol["start_gamma"]))
+        moved = abs(
+            float_field(st, "gamma", 0.0) - float_field(st, "last_declared_gamma", pol["start_gamma"])
+        )
         return moved >= float(pol["freeze_abs_delta_spread"])
     moved = abs(float(st["theta"]) - float(st.get("last_declared_theta", pol["start_theta"])))
     return moved >= float(pol["freeze_abs_delta"])
@@ -116,7 +118,7 @@ def fire_freeze() -> dict[str, Any] | None:
     family = str(st.get("active_family") or FAMILY_RICH)
     frozen = float(st["theta"])
     frozen_delta = float(st.get("delta") or load_policy()["start_delta"])
-    frozen_gamma = float(st.get("gamma") or load_policy()["start_gamma"])
+    frozen_gamma = float_field(st, "gamma", load_policy()["start_gamma"])
     k = _increment_k(family)
     exam = {
         "open": True,
