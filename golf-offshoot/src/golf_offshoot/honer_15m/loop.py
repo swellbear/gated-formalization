@@ -134,7 +134,7 @@ def _exam_knobs(exam: dict[str, Any]) -> dict[str, Any]:
         "family": str(exam.get("frozen_family") or FAMILY_RICH),
         "theta": float(exam.get("frozen_theta") or pol["start_theta"]),
         "delta": float(exam.get("frozen_delta") or pol["start_delta"]),
-        "gamma": float(exam.get("frozen_gamma") or pol["start_gamma"]),
+        "gamma": float_field(exam, "frozen_gamma", pol["start_gamma"]),
     }
 
 
@@ -214,7 +214,7 @@ def run_tick(markets: list[dict[str, Any]] | None = None) -> dict[str, Any]:
     frozen = exam.get("frozen_theta") if exam_is_open() else None
     exam_family = str(exam.get("frozen_family") or search_family)
     exam_delta = float(exam.get("frozen_delta") or search_delta)
-    exam_gamma = float(exam.get("frozen_gamma") or search_gamma)
+    exam_gamma = float_field(exam, "frozen_gamma", search_gamma)
 
     for market in rows:
         if is_paper_autobet_candidate(market):

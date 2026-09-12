@@ -1555,6 +1555,84 @@ def test_thin_spread_above_gamma_uses_richness():
     assert "theta" in reason
 
 
+def test_thin_exam_close_at_frozen_gamma_zero_retires_clip_min(honer_tmp):
+    """FAMILY_THIN exam close at clip-min must retire {gamma: 0.0}, not start 0.01."""
+    from golf_offshoot.honer_15m.freeze import save_exam_state
+    from golf_offshoot.honer_15m.library import is_retired, load_library
+    from golf_offshoot.honer_15m.policy import FAMILY_THIN, knob_vector
+    from golf_offshoot.honer_15m.theta import current_vector
+
+    st = theta.load_theta()
+    st["active_family"] = FAMILY_THIN
+    st["gamma"] = 0.01
+    st["last_declared_gamma"] = 0.02
+    st["theta"] = 0.81
+    st["delta"] = 0.04
+    st["in_band_settled"] = 20
+    st["in_band_stable"] = 5
+    theta.save_theta(st)
+    save_exam_state(
+        {
+            "open": True,
+            "parked": False,
+            "n": 1,
+            "k_after": 1,
+            "frozen_theta": 0.81,
+            "frozen_delta": 0.04,
+            "frozen_gamma": 0.0,
+            "frozen_family": FAMILY_THIN,
+        }
+    )
+    market = {
+        "ticker": "KXBTC15M-EXAM0",
+        "window_id": "w",
+        "paper_mark": 0.70,
+        "yes_ask": 0.70,
+        "yes_bid": 0.69,
+        "is_open": True,
+        "status": "active",
+        "close_time": "t",
+        "result": "",
+    }
+    loop.run_tick([market])
+    search_row = books.load_decisions("search")["KXBTC15M-EXAM0"]
+    assert search_row["gamma"] == pytest.approx(0.01)
+    assert search_row["action"] == "skip"
+    exam_row = books.load_decisions("exam")["KXBTC15M-EXAM0"]
+    assert exam_row["gamma"] == pytest.approx(0.0)
+    assert exam_row["action"] == "fill"
+    exam = {
+        "frozen_family": FAMILY_THIN,
+        "frozen_theta": 0.81,
+        "frozen_delta": 0.04,
+        "frozen_gamma": 0.0,
+        "k_after": 1,
+    }
+    knobs = loop._exam_knobs(exam)
+    assert knobs["gamma"] == pytest.approx(0.0)
+    save_exam_state({"open": False, "parked": False, "n": 1, "k_after": 1})
+    from golf_offshoot.honer_15m.picker import on_exam_close
+
+    on_exam_close(outcome="completed_dead", family=FAMILY_THIN, knobs=knobs, k=1)
+    st = theta.load_theta()
+    st["active_family"] = FAMILY_THIN
+    st["gamma"] = 0.0
+    st["last_declared_gamma"] = 0.02
+    st["theta"] = 0.81
+    st["delta"] = 0.04
+    st["in_band_settled"] = 20
+    st["in_band_stable"] = 5
+    theta.save_theta(st)
+    expected = knob_vector(family=FAMILY_THIN, theta=0.81, delta=0.04, gamma=0.0)
+    lib = load_library()
+    assert lib["retired"][-1]["gamma"] == pytest.approx(0.0)
+    live = current_vector()
+    assert live["gamma"] == pytest.approx(0.0)
+    assert is_retired(live, lib)
+    assert live == expected
+    assert freeze.freeze_ready() is False
+
+
 def test_exhausted_stamp_unparks_when_next_family_exists(honer_tmp):
     from golf_offshoot.honer_15m.library import load_library, save_library
     from golf_offshoot.honer_15m.picker import maybe_advance

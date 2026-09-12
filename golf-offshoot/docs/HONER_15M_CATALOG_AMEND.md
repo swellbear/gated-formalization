@@ -8,7 +8,7 @@ A new family is not a tape sort, a pnl rank, or a Founder-free append.
 
 ## Order
 
-1. **Files** — `library.json` `catalog_exhausted` and/or exam `completed_dead` make `HONER-FAMILY-AMEND` legal. The catalog dates the next family in file order (`H-SKIP-THIN-BOOK` is that third item). `latest/family_amend.json` stamps `owed` until the catalog has more than the original two items (`kind=taken` once dated).
+1. **Files** — `library.json` `catalog_exhausted` and/or exam `completed_dead` make `HONER-FAMILY-AMEND` legal. The catalog dates the next family in file order (`H-SKIP-THIN-BOOK` is that third item). `latest/family_amend.json` stamps `owed` until the catalog has more than the original two items (`owed` is false and `third_family` is true once dated).
 2. **Operator** — RUN-ONLY on a later note if one is written. Does not ADMIT. Does not bind. Does not score.
 3. **Soften Critic** — a **later** session from the author of the amend. Not this implement session. Not on the factory clerical whitelist.
 
