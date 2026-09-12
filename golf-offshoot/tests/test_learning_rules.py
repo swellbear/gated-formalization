@@ -33,9 +33,10 @@ def test_registry_has_dated_first_rules():
         "R-SKIP-COINFLIP",
         "R-SKIP-2TO1-FAVORITE",
         "R-SKIP-HOUR-CLOSE",
+        "R-SKIP-CIVIL-BOUNDARIES",
     ]
     assert payload["lab_admits"] is False
-    assert payload["trials_to_date"] == 2
+    assert payload["trials_to_date"] == 3
     assert payload["evidence_bar"]["binding"] is False
     skip = next(row for row in payload["rules"] if row["id"] == "R-SKIP-COINFLIP")
     assert skip["declared_at"] == "2026-09-08T05:56:00-04:00"
@@ -45,16 +46,24 @@ def test_registry_has_dated_first_rules():
     assert fav["selects"] is True
     assert fav["params"]["favorite_odds"] == 2
     hour = next(row for row in payload["rules"] if row["id"] == "R-SKIP-HOUR-CLOSE")
-    assert hour["execution"] is True
+    assert hour["execution"] is False
     assert hour["selects"] is True
     assert hour["params"]["skip_close_minute"] == 0
     assert hour["declared_at"] == "2026-09-10T13:25:00-04:00"
+    civil = next(row for row in payload["rules"] if row["id"] == "R-SKIP-CIVIL-BOUNDARIES")
+    assert civil["execution"] is False
+    assert civil["selects"] is True
+    assert civil["params"]["skip_close_minutes"] == [0, 30]
+    assert civil["expected_skip_rate"] == 0.5
+    assert civil["declared_at"] == "2026-09-12T07:45:00-04:00"
     log = payload["trials_log"]
-    assert len(log) == 2
+    assert len(log) == 3
     assert log[0]["subject"] == "R-SKIP-2TO1-FAVORITE"
     assert log[0]["kind"] == "declaration"
     assert log[1]["subject"] == "R-SKIP-HOUR-CLOSE"
     assert log[1]["kind"] == "declaration"
+    assert log[2]["subject"] == "R-SKIP-CIVIL-BOUNDARIES"
+    assert log[2]["kind"] == "declaration"
 
 
 def test_predeclaration_window_is_not_oos():
@@ -143,8 +152,8 @@ def test_two_to_one_favorite_is_burned_after_l1_falsifier():
     assert class_is_burned("R-SKIP-2TO1-FAVORITE") is True
     assert class_is_burned("RETUNE-COINFLIP-BAND") is True
     assert class_is_burned("FEE-AS-SIGNAL") is True
-    assert class_is_burned("SKIP-HOUR-CLOSE") is False
-    assert class_is_burned("R-SKIP-HOUR-CLOSE") is False
+    assert class_is_burned("SKIP-HOUR-CLOSE") is True
+    assert class_is_burned("R-SKIP-HOUR-CLOSE") is True
     assert class_is_burned("RETUNE-CLOCK-MINUTE") is True
     assert class_is_burned("retune-skip-close-minute") is True
     assert class_is_burned("SEAS-DIR") is True

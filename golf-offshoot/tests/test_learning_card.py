@@ -113,6 +113,47 @@ def test_parked_selection_proposed_quotes_id_falsifier_and_park(tmp_path):
     assert "The book never selects anything." in text
 
 
+def test_burned_parked_class_is_not_on_trial(tmp_path):
+    extra = {
+        "id": "R-FIXTURE-SKIP",
+        "kind": "selection",
+        "execution": False,
+        "selects": True,
+        "rule": "Skip when the posted mark is a coin flip.",
+        "falsifier": "Park. Do not retune.",
+    }
+    root = _tree(
+        tmp_path,
+        registry=_registry(extra=extra),
+        proposed=(
+            "LEARNING_LANE_15M_LAB_PROPOSED_99.md",
+            "# Lab\n\nkind: selection\n\nThis proposes R-FIXTURE-SKIP.\n",
+        ),
+        note=(
+            "LEARNING_LANE_15M_OPERATOR_NOTE_PROPOSED_99.md",
+            "**Verdict:** **PARK** · Operator\n",
+        ),
+    )
+    (root / "golf-offshoot" / "docs" / "LEARNING_LANE_15M_BURNED_CLASSES.json").write_text(
+        json.dumps(
+            {
+                "schema": 1,
+                "classes": [
+                    {
+                        "id": "SKIP-FIXTURE",
+                        "aliases": ["R-FIXTURE-SKIP"],
+                        "burned": True,
+                    }
+                ],
+            }
+        ),
+        encoding="utf-8",
+    )
+    text = build_card(root=root)
+    assert EMPTY_ON_TRIAL in text
+    assert "No selection rule has `execution: true`" in text
+
+
 def test_execution_true_skip_count_says_book_followed(tmp_path):
     extra = {
         "id": "R-FIXTURE-SKIP",

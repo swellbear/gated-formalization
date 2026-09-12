@@ -336,7 +336,7 @@ def test_stamping_f_without_assigning_lab_does_not_silence():
 
 
 def test_this_tree_favorite_park_is_not_a_live_trial():
-    assert live_selecting_rule_ids() == ["R-SKIP-HOUR-CLOSE"]
+    assert live_selecting_rule_ids() == []
 
 
 def test_chair_stays_occupied_with_l1_until_parked(tmp_path):

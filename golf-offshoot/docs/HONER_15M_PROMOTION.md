@@ -8,7 +8,7 @@ Trading is **NOT ARMED**. HOLD stands. `consult_enabled` is a **file gate**: tru
 
 ## Seat shape
 
-One factory executing selection rule still expresses fill-or-skip (`R-SKIP-HOUR-CLOSE` today). A compositor in the factory package ([`consult_honer.py`](../src/golf_offshoot/learning_lane_15m/consult_honer.py)) may add a skip from a **dated frozen snapshot** (`learning_lane_15m/latest/honer_consult.json`).
+The factory selecting chair is empty after `R-SKIP-HOUR-CLOSE` L1 PARK (2026-09-12). Baseline `R-BASELINE-FILL-ALL` still fills. A compositor in the factory package ([`consult_honer.py`](../src/golf_offshoot/learning_lane_15m/consult_honer.py)) may add a skip from a **dated frozen snapshot** (`learning_lane_15m/latest/honer_consult.json`).
 
 - Factory skip stays skip.
 - Factory fill + honer skip → skip.

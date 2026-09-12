@@ -6,11 +6,11 @@ Thread lines are **one sentence, newest first, max 10**. Long findings belong in
 
 | Field | Value |
 |-------|--------|
-| Updated | 2026-09-12 07:15 ET |
+| Updated | 2026-09-12 07:45 ET |
 | Active role | lab |
 | Job | unused legal kinds empty (CLOCK-HOUR-FIRST-HALF already dated); invent the next kind (product-structure skip rate, unburned, not a clone) as a farm notebook in LEARNING_LANE_15M_FARM.json (execution false; do not steal the chair); if you cannot name another kind, write LEARNING_LANE_15M_FARM_MENU_EXHAUSTED.json so I stops; do not set execution true. |
-| Status | assigned |
-| Handoff | Live gym HEAD `9051c54` (#185 L1 look). PaperWatch running that SHA (8765 PID 20072). Hour-close L1 card written; `K_look_due` ringing (Operator PARK/CONTINUE, not this child). I_farm_open still assigned. Do not attach `91e26eab`. Do not arm. next=lab |
+| Status | done |
+| Handoff | Lab PROPOSED 04 `R-SKIP-CIVIL-BOUNDARIES` dated (`CLOCK-CIVIL-BOUNDARIES`, skip `:00`/`:30`, rate 0.5, `execution=false`). Hour-close L1 PARK stands (`operator_look=PARK` 07:37). Operator RUN-ONLY. Do not set execution true this turn. Do not attach `91e26eab`. Do not arm. next=operator |
 | Waiting on Founder | **N** |
 
 ## last_cos (CoS stamp — doorbell silence)
@@ -46,7 +46,7 @@ Part 3 landed. Three boxes are computed in `learning_lane_15m/honesty.py` and th
 | One hub process on `learning_lane_15m` | **PASS** — *derived* from the process table. One hub **tree**, not one OS process: `py` launcher PID **24188** over supervisor PID **24532** and listener PID **20100** holding `127.0.0.1:8765`. Watch loop pid **11160** (`watch.json` / `process_matches_disk`, 11:42). Child re-exec'd after sidecar/`app.py`. Criterion preserved as written. Do not start a second tree. |
 | No invented charts or pnl | **PASS** — *judgment, with evidence*. `digest_matches_ledger` PASS 2026-09-10T11:42:52−04:00 against the live book (82.18 / −17.82 both sides). CoS closeout stamps the current doorbell so the same A/B/E set does not re-ring. Fee-accurate totals are not on the hub, digest, manifest or `records[]`. |
 
-**Gate is open on this restamp.** Golf idle stays **ON** (15m paper PROPOSED is not golf idle-breach). Evidence bar is **binding** for scoring. `R-SKIP-2TO1-FAVORITE` L1 is **PARK** on its falsifier (Admissible completed, not Established, not an ADMIT). `R-SKIP-HOUR-CLOSE` is **RUN-ONLY** (`execution=true`, paper only). Consult **off** (no seated L1 keeper; photocopy stays dark). Honer fee applied at score time; keep closed until bind. Trading **NOT ARMED**.
+**Gate is open on this restamp.** Golf idle stays **ON** (15m paper PROPOSED is not golf idle-breach). Evidence bar is **binding** for scoring. `R-SKIP-2TO1-FAVORITE` L1 is **PARK** on its falsifier (Admissible completed, not Established, not an ADMIT). `R-SKIP-HOUR-CLOSE` L1 is **PARK** on its falsifier (`execution=false`; not an ADMIT). Consult **off** (chair empty; photocopy stays dark). Honer fee applied at score time; keep closed until bind. Trading **NOT ARMED**.
 
 **The fee-schedule hash is pinned from Founder browser bytes.** Source `founder_browser_bytes`, file `golf-offshoot/docs/kalshi-fee-schedule.pdf`, 281129 bytes. Last gym GET remains HTTP 429 (drift only). Do not GET the PDF every 90s. Do not spoof a browser. **Do not write a placeholder.**
 
@@ -56,18 +56,17 @@ Two suites, both on the tick.
 
 **Lane** (`latest/invariants.json`) — `digest_matches_ledger` PASS at 05:00 (88.86 / −11.14). `watch_is_collecting` PASS. `clerical_roles_clear` PASS. Judicial leftover is digestor + operator on `window_sequence_gap` (do not backfill). No prose cleared it.
 
-**Method** — 13 method checks (`consult_enabled_requires_gates` and `honer_consult_not_live_theta` added this fold; dark consult is PASS). `half_spread_profile_recorded` / `hub_autostart_registered` remain tenth and eleventh. Fee pin is `founder_browser_bytes`. `honesty_stamp_is_fresh` is a desk check and does not set `passed`. `critic_verdicts` is `{id, state}` + reviewed hashes — no `detail`. Bar is **binding**. Soften Critic of the consult enabler is a **later session**. Operator RUN-ONLY on PROPOSED 03 is done. Live trial seated. PARK is not an ADMIT and is not a Critic job.
+**Method** — 13 method checks (`consult_enabled_requires_gates` and `honer_consult_not_live_theta` added this fold; dark consult is PASS). `half_spread_profile_recorded` / `hub_autostart_registered` remain tenth and eleventh. Fee pin is `founder_browser_bytes`. `honesty_stamp_is_fresh` is a desk check and does not set `passed`. `critic_verdicts` is `{id, state}` + reviewed hashes — no `detail`. Bar is **binding**. Soften Critic of the consult enabler is a **later session**. Hour-close L1 PARK is done. Selecting chair empty. PARK is not an ADMIT and is not a Critic job.
 
 ## Thread
 
+- 2026-09-12 07:45 ET  lab → operator: PROPOSED 04 `R-SKIP-CIVIL-BOUNDARIES` dated (`skip_close_minutes=[0,30]`, rate 0.5, `execution=false`); hour-close singleton not retuned. Operator RUN-ONLY. Trading NOT ARMED. next=operator
+- 2026-09-12 07:42 ET  operator → chief-of-staff: hour-close L1 PARK from the first-70 card (`passes_every_binding_clause` false); chair empty; 8765 no longer on trial; sibling PARK preserved. Lab I_farm_open untouched. Trading NOT ARMED. next=lab
 - 2026-09-12 07:15 ET  gym → chief-of-staff: pulled `9051c54` (#185); PaperWatch on that SHA; hour-close L1 card + `K_look_due`; look-push `70fa007` on #178; Lab chair untouched. Trading NOT ARMED. next=lab
 - 2026-09-12 06:56 ET  chief-of-staff → lab: My Machines worker `gym` connected (`c7e5d2dd-55d8-4d88-b5aa-5f7c68820577`) on this checkout; Palshi spawn is a new child (`machine=gym`); do not attach `91e26eab`; 8765 stays local. Lab chair untouched. Trading NOT ARMED. next=lab
 - 2026-09-12 06:12 ET  chief-of-staff → lab: golf-1 (#180) off origin/master via revert [#186](https://github.com/swellbear/gated-formalization/pull/186) (`62fc9cb`); gym still `cursor/golf-kalshi-gym`; do not merge [#183](https://github.com/swellbear/gated-formalization/pull/183); 15m-3a still has the squash. Lab chair untouched. Trading NOT ARMED. next=lab
 - 2026-09-12 05:01 ET  hub-ui → chief-of-staff: 8765 `/api/watch` no longer rescans the whole factory every 1.5s; PaperWatch and clerical are cycling; lane invariants PASS. Lab chair untouched. Trading NOT ARMED. next=lab
 - 2026-09-12 03:18 ET  hub-ui → chief-of-staff: 15m Farm first column is parked + skip/clauses + n/70 so 70/70 rows are readable without sideways scroll. Lab chair untouched. Trading NOT ARMED. next=lab
 - 2026-09-11 19:59 ET  hub-ui → chief-of-staff: 15m Farm 70/70 rows now show parked (skip + failed clauses) or score owed; no farm pnl column. Lab chair untouched. Trading NOT ARMED. next=lab
-- 2026-09-11 18:10 ET  hub-ui → chief-of-staff: Golf Scoreboard closed-ticket tape + recipe v1.2 paper halt 120s (live stays next UTC day; paper may go negative). Lab chair untouched. Trading NOT ARMED. next=lab
 - 2026-09-11 16:10 ET  hub-ui → chief-of-staff: 8765 desk chrome structure live (`HUB_DESK.md`, registry, Home blotter, lane-keyed watch patch). Opus 5 `desk.css` paint blocked on Other Models quota. Lab chair untouched. Trading NOT ARMED. next=lab
-- 2026-09-11 13:15 ET  systems → chief-of-staff: Golf Kalshi mix desk v1.1 (screen, 0.25 Kelly inside $50/$100/$50, collapse/ADD/fail-clock, one-time 11-to-3). Lab chair untouched. Trading NOT ARMED. next=lab
-- 2026-09-11 11:45 ET  hub-ui → chief-of-staff: Golf Unmatched collapsed by default; rows load on open. Lab chair untouched. Trading NOT ARMED. next=lab
 *Older lines rolled off at the 10-line cap. Full history is in the git log for `docs/agents/DESK.md`.*

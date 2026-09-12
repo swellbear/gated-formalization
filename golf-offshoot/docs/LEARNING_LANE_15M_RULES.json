@@ -6,7 +6,7 @@
   "lab_admits": false,
   "trading_armed": false,
   "opened_at": "2026-09-08T05:56:00-04:00",
-  "trials_to_date": 2,
+  "trials_to_date": 3,
   "trials_before_mechanism": 0,
   "trials_log": [
     {
@@ -22,6 +22,13 @@
       "at": "2026-09-10T13:25:00-04:00",
       "note": "selection rule declared",
       "trials_to_date_after": 2
+    },
+    {
+      "subject": "R-SKIP-CIVIL-BOUNDARIES",
+      "kind": "declaration",
+      "at": "2026-09-12T07:45:00-04:00",
+      "note": "selection rule declared",
+      "trials_to_date_after": 3
     }
   ],
   "evidence_bar": {
@@ -47,7 +54,7 @@
       "selects": true,
       "rule": "Skip the paper fill when posted_yes is strictly inside (0.45, 0.55). Otherwise fill at the posted mark with entry_edge=0.0.",
       "falsifier": "After the n named by the evidence bar in force (currently looks.first_look_n = 70), if selected-fill settlement_pnl cannot be distinguished from R-BASELINE-FILL-ALL on those same windows, park this rule. Do not retune the band. The bar is the governing source.",
-      "note": "The (0.45, 0.55) band is not verifiably pre-registered — see the bar Pre-registration section. A note field asserting blind choice is not proof. execution=false (not flipped this turn). paper.py now consults decide() but this rule is not the executing rule. OOS still accumulates from declared_at by replay; replayed results are not lived results. L1 cannot support Established."
+      "note": "The (0.45, 0.55) band is not verifiably pre-registered \u2014 see the bar Pre-registration section. A note field asserting blind choice is not proof. execution=false (not flipped this turn). paper.py now consults decide() but this rule is not the executing rule. OOS still accumulates from declared_at by replay; replayed results are not lived results. L1 cannot support Established."
     },
     {
       "id": "R-SKIP-2TO1-FAVORITE",
@@ -65,7 +72,7 @@
         "threshold_source": "favorite_odds=2; p=odds/(1+odds)",
         "derived_threshold": 0.6666666666666666
       },
-      "note": "PROPOSED 02 RUN-ONLY by Operator 2026-09-08T17:11:00-04:00; L1 PARK on the registry falsifier 2026-09-10. execution dropped 2026-09-10T13:36:00-04:00 so PROPOSED 03 could take the only selecting seat. Do not retune favorite_odds. Do not re-score. The free parameter is the integer prior favorite_odds=2. A note asserting no window mark informed it is not proof — see the bar preregistration.rules row (verifiably_preregistered false; 2/24 published marks ≥ 2/3 sat on this tree 19h 06m before e9fab5a). Not a revival of R-SKIP-COINFLIP and not a retune of (0.45, 0.55). lab_admits=false. Not an ADMIT.",
+      "note": "PROPOSED 02 RUN-ONLY by Operator 2026-09-08T17:11:00-04:00; L1 PARK on the registry falsifier 2026-09-10. execution dropped 2026-09-10T13:36:00-04:00 so PROPOSED 03 could take the only selecting seat. Do not retune favorite_odds. Do not re-score. The free parameter is the integer prior favorite_odds=2. A note asserting no window mark informed it is not proof \u2014 see the bar preregistration.rules row (verifiably_preregistered false; 2/24 published marks \u2265 2/3 sat on this tree 19h 06m before e9fab5a). Not a revival of R-SKIP-COINFLIP and not a retune of (0.45, 0.55). lab_admits=false. Not an ADMIT.",
       "declared_at": "2026-09-08T16:53:00-04:00",
       "first_named_in_commit": "e9fab5a",
       "execution_flipped_at": "2026-09-08T17:11:00-04:00",
@@ -82,7 +89,7 @@
       "id": "R-SKIP-HOUR-CLOSE",
       "kind": "selection",
       "class": "SKIP-HOUR-CLOSE",
-      "execution": true,
+      "execution": false,
       "selects": true,
       "rule": "Skip the paper fill when close_at clock minute equals 0 (hour-ending slot; skip_close_minute=0). Otherwise fill at the posted mark with entry_edge=0.0.",
       "falsifier": "After the n named by the evidence bar in force (currently looks.first_look_n = 70), if selected-fill settlement_pnl cannot be distinguished from R-BASELINE-FILL-ALL on those same windows, park this rule. Do not retune skip_close_minute. Do not replace 0 with a tape-chosen slot. The bar is the governing source.",
@@ -94,10 +101,36 @@
         "threshold_source": "skip_close_minute=0; civil-clock hour-ending close",
         "derived_threshold": 0
       },
-      "note": "PROPOSED 03 RUN-ONLY by Operator 2026-09-10T13:36:00-04:00. The free parameter is the integer prior skip_close_minute=0. A note asserting no window mark informed it is not proof — the commit record is. First naming c917e56. execution=true (paper only; this turn). Not a posted-yes cut. Not a revival of R-SKIP-COINFLIP and not a retune of favorite_odds. lab_admits=false. Not scored this turn. Not an ADMIT.",
+      "note": "PROPOSED 03 RUN-ONLY by Operator 2026-09-10T13:36:00-04:00; L1 PARK on the registry falsifier 2026-09-12. execution dropped (observe-park / apply_operator_look); gym operator_look=PARK at 2026-09-12T07:37:17-04:00. Do not retune skip_close_minute. Do not re-score. The free parameter is the integer prior skip_close_minute=0. First naming c917e56. Not a posted-yes cut. Not a revival of R-SKIP-COINFLIP and not a retune of favorite_odds. lab_admits=false. Not an ADMIT.",
       "declared_at": "2026-09-10T13:25:00-04:00",
       "first_named_in_commit": "c917e56",
       "execution_flipped_at": "2026-09-10T13:36:00-04:00"
+    },
+    {
+      "id": "R-SKIP-CIVIL-BOUNDARIES",
+      "kind": "selection",
+      "class": "SKIP-CIVIL-BOUNDARIES",
+      "execution": false,
+      "selects": true,
+      "rule": "Skip the paper fill when close_at clock minute is 0 or 30 (civil hour and half-hour walls; skip_close_minutes=[0, 30]). Otherwise fill at the posted mark with entry_edge=0.0.",
+      "falsifier": "After the n named by the evidence bar in force (currently looks.first_look_n = 70), if selected-fill settlement_pnl cannot be distinguished from R-BASELINE-FILL-ALL on those same windows, park this rule. Do not retune skip_close_minutes. Do not replace {0, 30} with a tape-chosen pair. The bar is the governing source.",
+      "params": {
+        "skip_close_minutes": [
+          0,
+          30
+        ]
+      },
+      "expression": {
+        "skip_if": "close_minute_in",
+        "threshold_source": "skip_close_minutes=[0, 30]; civil hour and half-hour walls",
+        "minutes": [
+          0,
+          30
+        ]
+      },
+      "note": "PROPOSED 04. execution=false this turn \u2014 Operator RUN-ONLY flips if it survives. Catalog CLOCK-CIVIL-BOUNDARIES after hour-close L1 PARK. Not a retune of skip_close_minute. Not CLOCK-CLOSE-MINUTE. lab_admits=false. Not scored. Not an ADMIT.",
+      "expected_skip_rate": 0.5,
+      "declared_at": "2026-09-12T07:45:00-04:00"
     }
   ]
 }

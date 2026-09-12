@@ -137,8 +137,24 @@ def _first_sentences(text: str, n: int = 2) -> str:
     return " ".join(parts[:n]).strip()
 
 
-def _is_selection_proposed(text: str, registry: dict[str, Any]) -> bool:
+def _class_burned(name: str, *, root: Path | None = None) -> bool:
+    if not name:
+        return False
+    try:
+        from golf_offshoot.learning_lane_15m.evidence_bar import class_is_burned
+
+        return bool(class_is_burned(name, root=root))
+    except Exception:  # noqa: BLE001 — a blind burn file is not a silent trial
+        return False
+
+
+def _is_selection_proposed(
+    text: str, registry: dict[str, Any], *, root: Path | None = None
+) -> bool:
     if _NAMED_HORSE_NO.search(text or ""):
+        return False
+    rid = _trial_rule_id(text, registry)
+    if rid and _class_burned(rid, root=root):
         return False
     if re.search(r"(?im)^(?:kind|selects)\s*[:=]\s*(selection|true)\b", text or ""):
         return True
@@ -156,7 +172,7 @@ def latest_selection_proposed(
     *, root: Path | None = None, registry: dict[str, Any]
 ) -> Path | None:
     for path in reversed(_proposed_files(root=root)):
-        if _is_selection_proposed(_read(path), registry):
+        if _is_selection_proposed(_read(path), registry, root=root):
             return path
     return None
 

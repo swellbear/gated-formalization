@@ -1,7 +1,7 @@
 # Operator — 15m method leftovers (park / CLOSED / RUN-ONLY)
 
 **Track:** `learning_lane_15m` · series `KXBTC15M` only
-**Updated:** 2026-09-10 13:36 EDT (row 16: RUN-ONLY Lab PROPOSED 03 `R-SKIP-HOUR-CLOSE`; `lab_proposed LEARNING_LANE_15M_LAB_PROPOSED_03.md`)
+**Updated:** 2026-09-12 07:37 EDT (row 17: `R-SKIP-HOUR-CLOSE` L1 PARK on the registry falsifier; gym card stamped; chair empty)
 **State:** No dated ADMIT on this lane. No Soften. No edge claim. `lab_admits=false` · Trading **NOT ARMED**
 **Golf idle:** stays **ON**. This file does not clear it, does not touch golf θ, and does not rewrite `phase1_dryrun/OPERATOR_STATUS_STAMP.md`.
 
@@ -38,11 +38,11 @@ Numbers move while the watch runs. This file names **states and triggers**, not 
 | CLOSED · unreachable | **3** |
 | CLOSED · trigger fired since last stamp | 3 |
 | CLOSED · recorded defect (no backfill) | **2** |
-| CLOSED · on a falsifier | **1** |
+| CLOSED · on a falsifier | **2** |
 | RUN-ONLY executed (not an ADMIT) | 3 |
 | Dated ADMITs | 0 |
 
-No open crew park remains. Row 15 is **CLOSED / on a falsifier** (crew stamp). Three open parks are founder; one is the rotating pending window (external). Two recorded defects (`072245`, overnight `100315`–`100500`) mean the locked count is not an unbroken run.
+No open crew park remains. Rows 15 and 17 are **CLOSED / on a falsifier** (crew stamp). Three open parks are founder; one is the rotating pending window (external). Two recorded defects (`072245`, overnight `100315`–`100500`) mean the locked count is not an unbroken run. The selecting chair is empty; baseline still fills.
 
 ---
 
@@ -115,6 +115,19 @@ This fold does **not** lift the HOLD and is not evidence toward lifting it. A RU
 | **Honest state** | Admissible test completed. Not Established (`favorite_odds=2` not verifiably pre-registered). Not an ADMIT. `R-SKIP-COINFLIP` was not scored. |
 | **Wake name-clear** | `rule_reached_n R-SKIP-COINFLIP` (do not score) · `rule_reached_n R-SKIP-2TO1-FAVORITE` (L1 already PARK; do not re-score). Bookkeeping only so the wake can drop Operator. Not a new test. |
 | **Forbidden** | Retune `favorite_odds` · replace 2/3 with a tape quantile · treat this PARK as an ADMIT · copy fee-accurate totals onto the hub / digest / `manifest.json` / `records[]` · score `R-SKIP-COINFLIP` · re-score this PARK |
+
+### 17. `R-SKIP-HOUR-CLOSE` L1 — **CLOSED / on a falsifier**
+
+| | |
+|---|---|
+| **Class** | `crew` |
+| **Closed** | 2026-09-12 07:37 EDT (gym stamp; sibling look 07:22) |
+| **What fired** | Registry falsifier at `looks.first_look_n=70`. Card `passes_every_binding_clause=false` (clauses (1), (4), (5) all fail). Park; do not retune `skip_close_minute`. |
+| **Note** | [`LEARNING_LANE_15M_OPERATOR_NOTE_SCORE_R-SKIP-HOUR-CLOSE_L1.md`](LEARNING_LANE_15M_OPERATOR_NOTE_SCORE_R-SKIP-HOUR-CLOSE_L1.md) |
+| **Scorecard** | [`LEARNING_LANE_15M_SCORECARD_R-SKIP-HOUR-CLOSE_L1.json`](LEARNING_LANE_15M_SCORECARD_R-SKIP-HOUR-CLOSE_L1.json) · gym `operator_look=PARK` at `2026-09-12T07:37:17-04:00` |
+| **Honest state** | Admissible test completed. Not Established. Not an ADMIT. Execution dropped. PaperWatch not stopped. Baseline still fills. `R-SKIP-COINFLIP` was not scored. Favorite L1 was not re-scored. |
+| **Wake name-clear** | `rule_reached_n R-SKIP-HOUR-CLOSE` (L1 already PARK; do not re-score). Bookkeeping only so the wake can drop Operator. Not a new test. |
+| **Forbidden** | Retune `skip_close_minute` · replace 0 with a tape-chosen slot · treat this PARK as an ADMIT · copy fee-accurate totals onto the hub / digest / `manifest.json` / `records[]` · score `R-SKIP-COINFLIP` · re-score this PARK or favorite |
 
 ---
 
@@ -225,11 +238,11 @@ The 21:05 "park it, do not schedule" instruction is **superseded**.
 |---|---|
 | **Verdict** | **RUN-ONLY** · Operator · 2026-09-10 13:36 EDT |
 | **Note** | [`LEARNING_LANE_15M_OPERATOR_NOTE_PROPOSED_03.md`](LEARNING_LANE_15M_OPERATOR_NOTE_PROPOSED_03.md) |
-| **Registry** | `R-SKIP-HOUR-CLOSE` · `skip_close_minute=0` · first naming `c917e56` · `execution=true` (paper only) |
+| **Registry** | `R-SKIP-HOUR-CLOSE` · `skip_close_minute=0` · first naming `c917e56` · `execution` dropped so the dead skip does not own the next trial |
 | **Owed for** | `lab_proposed LEARNING_LANE_15M_LAB_PROPOSED_03.md` — CoS assigned RUN-ONLY unless a specific objection |
 | **Falsifier** | After the n the bar names (currently 70), indistinguishable from `R-BASELINE-FILL-ALL` → park; do not retune `skip_close_minute` |
 | **What it is** | A paper selection rule authorized to execute. Skip when `close_at.minute == 0`; else fill at the posted mark with `entry_edge=0.0` |
-| **What it is not** | An ADMIT · an edge · a dashboard figure · a revival of `R-SKIP-COINFLIP` · a retune of `favorite_odds` · evidence toward lifting the HOLD |
+| **What it is not** | An ADMIT · an edge · a dashboard figure · a revival of `R-SKIP-COINFLIP` · a retune of `favorite_odds` · evidence toward lifting the HOLD. L1 was later scored; the falsifier fired (row 17). |
 | **Promotion** | Would require the normal dated-record ADMIT gate, a binding bar, and a Soften Critic attack from a separate session. Accumulation of this note does not admit it |
 
 ---
@@ -245,6 +258,7 @@ The 21:05 "park it, do not schedule" instruction is **superseded**.
 - Put a fee-accurate figure on the hub or in `records[]` without a later ADMIT
 - Relist CLOSED-unreachable rows as open parks
 - Retune `favorite_odds` after row 15's falsifier
+- Retune `skip_close_minute` after row 17's falsifier
 
 ## CLOSED — founder trigger fired
 
@@ -259,4 +273,4 @@ The 21:05 "park it, do not schedule" instruction is **superseded**.
 
 ## Handoff
 
-CoS: Lab PROPOSED 03 `R-SKIP-HOUR-CLOSE` is **RUN-ONLY** (row 16). `execution=true` (paper only). Favorite L1 PARK stands (row 15); that dead row is off the selecting seat. Not an ADMIT. Not scored. `R-SKIP-COINFLIP` still **not scored**, `execution` false. Binding unchanged. Consult off. Golf idle stays **ON**. Founder HOLD stands. Trading **NOT ARMED**.
+CoS: `R-SKIP-HOUR-CLOSE` L1 is **PARK** on the registry falsifier (row 17). `execution` dropped. Favorite L1 PARK stands (row 15). Selecting chair empty; baseline still fills. PaperWatch not stopped. Not an ADMIT. `R-SKIP-COINFLIP` still **not scored**, `execution` false. Binding unchanged. Consult off. Golf idle stays **ON**. Founder HOLD stands. Trading **NOT ARMED**. next=chief-of-staff
