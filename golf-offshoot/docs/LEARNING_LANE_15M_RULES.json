@@ -6,7 +6,7 @@
   "lab_admits": false,
   "trading_armed": false,
   "opened_at": "2026-09-08T05:56:00-04:00",
-  "trials_to_date": 2,
+  "trials_to_date": 3,
   "trials_before_mechanism": 0,
   "trials_log": [
     {
@@ -22,6 +22,13 @@
       "at": "2026-09-10T13:25:00-04:00",
       "note": "selection rule declared",
       "trials_to_date_after": 2
+    },
+    {
+      "subject": "R-SKIP-CIVIL-BOUNDARIES",
+      "kind": "declaration",
+      "at": "2026-09-12T07:52:00-04:00",
+      "note": "selection rule declared",
+      "trials_to_date_after": 3
     }
   ],
   "evidence_bar": {
@@ -98,6 +105,32 @@
       "declared_at": "2026-09-10T13:25:00-04:00",
       "first_named_in_commit": "c917e56",
       "execution_flipped_at": "2026-09-10T13:36:00-04:00"
+    },
+    {
+      "id": "R-SKIP-CIVIL-BOUNDARIES",
+      "kind": "selection",
+      "class": "SKIP-CIVIL-BOUNDARIES",
+      "execution": false,
+      "selects": true,
+      "rule": "Skip the paper fill when close_at clock minute is in {0, 30} (civil hour and half-hour walls; skip_close_minutes=[0, 30]). Otherwise fill at the posted mark with entry_edge=0.0.",
+      "falsifier": "After the n named by the evidence bar in force (currently looks.first_look_n = 70), if selected-fill settlement_pnl cannot be distinguished from R-BASELINE-FILL-ALL on those same windows, park this rule. Do not retune skip_close_minutes. Do not replace {0, 30} with a tape-chosen pair. The bar is the governing source.",
+      "params": {
+        "skip_close_minutes": [
+          0,
+          30
+        ]
+      },
+      "expression": {
+        "skip_if": "close_minute_in",
+        "threshold_source": "skip_close_minutes=[0, 30]; civil-clock hour and half-hour walls",
+        "derived_threshold": [
+          0,
+          30
+        ]
+      },
+      "note": "PROPOSED 04 by Lab 2026-09-12T07:52:00-04:00. execution=false this turn. Do not retune skip_close_minutes. Not a retune of skip_close_minute=0. Not a posted-yes cut. Not a revival of R-SKIP-COINFLIP and not a retune of favorite_odds. lab_admits=false. Not an ADMIT.",
+      "expected_skip_rate": 0.5,
+      "declared_at": "2026-09-12T07:52:00-04:00"
     }
   ]
 }
