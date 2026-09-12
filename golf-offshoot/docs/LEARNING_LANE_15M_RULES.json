@@ -110,7 +110,7 @@
       "id": "R-SKIP-CIVIL-BOUNDARIES",
       "kind": "selection",
       "class": "SKIP-CIVIL-BOUNDARIES",
-      "execution": false,
+      "execution": true,
       "selects": true,
       "rule": "Skip the paper fill when close_at clock minute is in {0, 30} (civil hour and half-hour walls; skip_close_minutes=[0, 30]). Otherwise fill at the posted mark with entry_edge=0.0.",
       "falsifier": "After the n named by the evidence bar in force (currently looks.first_look_n = 70), if selected-fill settlement_pnl cannot be distinguished from R-BASELINE-FILL-ALL on those same windows, park this rule. Do not retune skip_close_minutes. Do not replace {0, 30} with a tape-chosen pair. The bar is the governing source.",
@@ -128,9 +128,11 @@
           30
         ]
       },
-      "note": "PROPOSED 04 by Lab 2026-09-12T07:52:00-04:00. execution=false this turn. Do not retune skip_close_minutes. Not a retune of skip_close_minute=0. Not a posted-yes cut. Not a revival of R-SKIP-COINFLIP and not a retune of favorite_odds. lab_admits=false. Not an ADMIT.",
+      "note": "PROPOSED 04 RUN-ONLY by Operator 2026-09-12T08:12:00-04:00. execution flipped this turn. Do not retune skip_close_minutes. Not a retune of skip_close_minute=0. Not a posted-yes cut. Not a revival of R-SKIP-COINFLIP and not a retune of favorite_odds. lab_admits=false. Not an ADMIT.",
       "expected_skip_rate": 0.5,
-      "declared_at": "2026-09-12T07:52:00-04:00"
+      "declared_at": "2026-09-12T07:52:00-04:00",
+      "first_named_in_commit": "f688e82",
+      "execution_flipped_at": "2026-09-12T08:12:00-04:00"
     }
   ]
 }

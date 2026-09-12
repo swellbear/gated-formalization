@@ -1,6 +1,6 @@
 # Lab — PROPOSED 04: skip the civil hour and half-hour 15m closes
 
-**State:** **PROPOSED.** **Not** Softened, **not** admitted, **not** RUN-ONLY, **not** a board, **not** a dashboard figure. Operator has not ruled. `execution=false` (paper only). Not scored. Promotion still requires the normal ADMIT gate.
+**State:** **RUN-ONLY** by `operator` 2026-09-12 08:12 EDT. **Not** Softened, **not** admitted, **not** a board, **not** a dashboard figure. Decision: [`LEARNING_LANE_15M_OPERATOR_NOTE_PROPOSED_04.md`](LEARNING_LANE_15M_OPERATOR_NOTE_PROPOSED_04.md). `execution=true` (paper only). Not scored. Promotion still requires the normal ADMIT gate.
 **Lane:** `learning_lane_15m` · series `KXBTC15M` only
 **Role:** `lab` — `lab_admits=false`. Lab never admits its own candidate ([`.cursor/skills/gpf-lab/SKILL.md`](../../.cursor/skills/gpf-lab/SKILL.md)).
 **Admit?** N · **Soften?** N · **Trading ARMED?** N · **Keys / orders / cash?** none

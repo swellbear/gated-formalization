@@ -51,7 +51,7 @@ def test_registry_has_dated_first_rules():
     assert hour["params"]["skip_close_minute"] == 0
     assert hour["declared_at"] == "2026-09-10T13:25:00-04:00"
     civil = next(row for row in payload["rules"] if row["id"] == "R-SKIP-CIVIL-BOUNDARIES")
-    assert civil["execution"] is False
+    assert civil["execution"] is True
     assert civil["selects"] is True
     assert civil["params"]["skip_close_minutes"] == [0, 30]
     assert civil["declared_at"] == "2026-09-12T07:52:00-04:00"

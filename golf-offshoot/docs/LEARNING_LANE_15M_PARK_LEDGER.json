@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "lane": "learning_lane_15m",
-  "stamped_at": "2026-09-12T07:22:06-04:00",
+  "stamped_at": "2026-09-12T08:12:00-04:00",
   "framing": "honesty instrument, not a productivity metric, not progress",
   "open": {
     "total": 4,
@@ -16,7 +16,7 @@
     "closed_on_falsifier": 2,
     "recorded_defect": 2
   },
-  "run_only_executed": 3,
+  "run_only_executed": 4,
   "admits": 0,
   "rows": {
     "1_true_pending": "open / external",
@@ -26,7 +26,7 @@
     "5_stale_display_wording": "CLOSED / trigger fired — Pages 21:28:39-04:00 missing-paper-join wording is live",
     "6_weekly_rollup": "open / founder",
     "7_series_hold": "open / founder",
-    "8_named_horse": "open / founder — fourth PROPOSED not owed; F_continuation after favorite L1 PARK used the third slot (row 16)",
+    "8_named_horse": "open / founder — fifth PROPOSED not owed; F_continuation after hour-close L1 PARK used the fourth slot (row 18)",
     "9_zero_edge_residual": "CLOSED / trigger fired — PROPOSED 02 selects; RUN-ONLY execution true; not an ADMIT",
     "10_proposed_01": "RUN-ONLY executed — see LEARNING_LANE_15M_OPERATOR_NOTE_PROPOSED_01.md",
     "11_072245_outage_gap": "CLOSED / recorded defect — window does not exist; do not backfill",
@@ -35,6 +35,7 @@
     "13_proposed_02": "RUN-ONLY executed — see LEARNING_LANE_15M_OPERATOR_NOTE_PROPOSED_02.md; R-SKIP-2TO1-FAVORITE L1 scored and PARK on falsifier (row 15); execution dropped 2026-09-10 so PROPOSED 03 could take the selecting seat",
     "15_favorite_l1_falsifier": "CLOSED / on a falsifier — crew; R-SKIP-2TO1-FAVORITE L1 n=70; do not retune favorite_odds; not an ADMIT",
     "16_proposed_03": "RUN-ONLY executed — see LEARNING_LANE_15M_OPERATOR_NOTE_PROPOSED_03.md; R-SKIP-HOUR-CLOSE L1 PARK on falsifier (row 17); execution dropped 2026-09-12; not an ADMIT",
-    "17_hour_close_l1_falsifier": "CLOSED / on a falsifier — crew; R-SKIP-HOUR-CLOSE L1 n=70 skip_count=1 clauses 1/4/5 fail; do not retune skip_close_minute; execution dropped; not an ADMIT"
+    "17_hour_close_l1_falsifier": "CLOSED / on a falsifier — crew; R-SKIP-HOUR-CLOSE L1 n=70 skip_count=1 clauses 1/4/5 fail; do not retune skip_close_minute; execution dropped; not an ADMIT",
+    "18_proposed_04": "RUN-ONLY executed — see LEARNING_LANE_15M_OPERATOR_NOTE_PROPOSED_04.md; R-SKIP-CIVIL-BOUNDARIES execution true; skip_close_minutes=[0, 30]; not an ADMIT"
   }
 }
