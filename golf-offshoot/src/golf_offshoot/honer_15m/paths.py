@@ -126,6 +126,11 @@ def exam_score_path() -> Path:
     return latest_dir() / "exam_score.json"
 
 
+def family_amend_path() -> Path:
+    """File doorbell that HONER-FAMILY-AMEND is owed. Not pnl. Not a third family."""
+    return latest_dir() / "family_amend.json"
+
+
 def safe_artifact_stem(name: str, *, fallback: str = "event") -> str:
     safe = "".join(ch if ch.isalnum() or ch in "-_" else "-" for ch in str(name or ""))
     return safe.strip("-") or fallback

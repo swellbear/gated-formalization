@@ -12,12 +12,14 @@ from datetime import datetime
 from typing import Any
 
 from golf_offshoot.honer_15m.books import load_decisions, load_ledger
-from golf_offshoot.honer_15m.freeze import freeze_ready, load_exam_state, load_trials
+from golf_offshoot.honer_15m.freeze import exam_is_open, freeze_ready, load_exam_state, load_trials
 from golf_offshoot.honer_15m.paths import (
     decisions_path,
     exam_state_path,
+    family_amend_path,
     freeze_log_path,
     latest_dir,
+    library_path,
     paper_dir,
     settlements_dir,
     theta_path,
@@ -163,6 +165,13 @@ def freeze_meter(
     far = int(st.get("far_settled_since_freeze") or 0)
     stable = int(st.get("in_band_stable") or 0)
     family = family_label(str(st.get("active_family") or FAMILY_RICH))
+    from golf_offshoot.honer_15m.library import search_is_parked
+
+    if search_is_parked() and not exam_is_open():
+        return (
+            "Honer freeze: catalog exhausted — search parked, exam closed. "
+            "HONER-FAMILY-AMEND owed from files. Not a keep."
+        )
     if freeze_ready(st):
         return "Honer freeze: ready — next tick can open exam. Not a keep."
     moved = abs(theta_now - last_declared)
@@ -226,7 +235,7 @@ def library_english(
             waiting = False
     next_bit = "θ still walking"
     if payload.get("catalog_exhausted"):
-        next_bit = "catalog exhausted — no new family"
+        next_bit = "catalog exhausted — search parked; family-amend owed from files; no new family"
     elif family == FAMILY_SPREAD:
         next_bit = "spread family walking; no further family after clip"
     elif owed and waiting:
@@ -555,14 +564,8 @@ def _phase_paragraph(
     trials: dict[str, Any],
 ) -> tuple[str, str]:
     moved = abs(theta_now - last_declared)
-    if exam.get("parked"):
-        reason = str(exam.get("park_reason") or "futility")
-        k = int(exam.get("k_after") or trials.get("trials_to_date") or 0)
-        n = int(exam.get("n") or 0)
-        return (
-            "exam_parked",
-            f"Exam k={k} parked at n={n}: {reason} This is still not a keep. Search continues.",
-        )
+    from golf_offshoot.honer_15m.library import search_is_parked
+
     if exam.get("open"):
         k = int(exam.get("k_after") or trials.get("trials_to_date") or 0)
         n = int(exam.get("n") or 0)
@@ -572,6 +575,21 @@ def _phase_paragraph(
             f"Exam k={k} is running. For these 70 windows the cutoff is frozen at {cents(frozen)}. "
             f"Search may still move its own cutoff; that does not change this exam. "
             f"Scored **{n} of 70**. Futility check is at n=20 and n=40.",
+        )
+    if search_is_parked():
+        return (
+            "search_parked",
+            "Catalog exhausted. Search is parked — no new search fills. Exam stays closed. "
+            "HONER-FAMILY-AMEND is owed from files (catalog_exhausted or completed_dead). "
+            "Not a keep. This tick does not date a third family.",
+        )
+    if exam.get("parked"):
+        reason = str(exam.get("park_reason") or "futility")
+        k = int(exam.get("k_after") or trials.get("trials_to_date") or 0)
+        n = int(exam.get("n") or 0)
+        return (
+            "exam_parked",
+            f"Exam k={k} parked at n={n}: {reason} This is still not a keep. Search continues.",
         )
     if exam.get("completed"):
         k = int(exam.get("k_after") or trials.get("trials_to_date") or 0)
@@ -745,6 +763,8 @@ def _honer_standing_cache_key() -> tuple[Any, ...]:
         _honer_file_mtime(exam_state_path()),
         _honer_file_mtime(trials_path()),
         _honer_file_mtime(freeze_log_path()),
+        _honer_file_mtime(library_path()),
+        _honer_file_mtime(family_amend_path()),
     )
 
 

@@ -40,3 +40,5 @@ Every item: `declared_at`, `id`, and `activate` (the first item may omit `activa
 ## This build
 
 Does **not** add a third item. Does not score, bind, or arm. Search starvation is honer-only; it does not become a factory selection rule.
+
+When `library.json` `catalog_exhausted` is true, the sidecar **parks search** (no new search fills) and leaves the exam closed. `latest/family_amend.json` stamps `HONER-FAMILY-AMEND` owed from those files (`catalog_exhausted` or exam `completed_dead`). The doorbell does not read exam pnl. Lab dating a third family is a later session. Gym Honer has no clip-grid / `iter_exam_queue`.

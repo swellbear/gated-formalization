@@ -29,16 +29,25 @@ def on_exam_close(*, outcome: str, family: str, knobs: dict[str, Any], k: int) -
 
 
 def maybe_advance() -> dict[str, Any] | None:
-    """Advance on clip exhaustion or an owed search-starvation gate. Does not read ledgers or exam d."""
+    """Advance on clip exhaustion or an owed search-starvation gate. Does not read ledgers or exam d.
+
+    When the two-item catalog cannot hunt, stamps catalog_exhausted from files.
+    """
+    from golf_offshoot.honer_15m.family_amend import stamp_family_amend
+    from golf_offshoot.honer_15m.library import mark_catalog_exhausted
+
     pol = load_policy()
     need = int(pol["clip_exhaust_windows"])
     st = load_theta()
     lib = load_library()
     if lib.get("catalog_exhausted"):
+        stamp_family_amend()
         return None
     clip_ready = int(st.get("clip_streak") or 0) >= need
     owed = str(st.get("advance_owed") or "") == ADVANCE_OWED_STARVATION
     if not clip_ready and not owed:
+        mark_catalog_exhausted()
+        stamp_family_amend()
         return None
     active = str(st.get("active_family") or lib.get("active_family") or FAMILY_RICH)
     nxt = next_family(active)
@@ -49,6 +58,7 @@ def maybe_advance() -> dict[str, Any] | None:
         st["advance_owed"] = ""
         st["starvation_pending"] = False
         save_theta(st)
+        stamp_family_amend()
         return {"advanced": False, "catalog_exhausted": True, "active_family": active}
     if nxt == FAMILY_SPREAD and not quote_quality_ok():
         if owed:
