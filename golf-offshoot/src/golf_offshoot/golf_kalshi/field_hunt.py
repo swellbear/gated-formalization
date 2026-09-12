@@ -13,7 +13,7 @@ from golf_offshoot.data_feeds.field_fallback import (
 )
 from golf_offshoot.data_feeds.names import normalize_name
 from golf_offshoot.golf_kalshi.espn_bind import bind_espn_event, event_key_for
-from golf_offshoot.golf_kalshi.matcher import extract_player_name
+from golf_offshoot.golf_kalshi.matcher import names_a_golfer
 
 
 def history_floor_ok(n_names: int, n_recovered: int) -> bool:
@@ -35,30 +35,35 @@ def listed_name_candidates(
     out: dict[str, str] = {}
     for raw in names:
         nm = str(raw or "").strip()
-        if not nm or is_skip_field_name(nm):
+        if not nm or is_skip_field_name(nm) or not names_a_golfer(nm):
             continue
         key = normalize_name(nm)
         if not key:
             continue
         out[key] = recovered.get(key) or provisional_player_id(nm)
     for key, pid in recovered.items():
-        if key and pid:
+        if key and pid and names_a_golfer(key):
             out[str(key)] = str(pid)
     return out
 
 
 def kalshi_listed_names(markets: list[dict[str, Any]]) -> list[str]:
+    """Listed field members are yes_sub_title strings that name a golfer.
+
+    Title text is not a second name source. A rejected sub-title does not
+    contribute a player extracted from "Will X win …".
+    """
     seen: set[str] = set()
     names: list[str] = []
     for market in markets:
-        name = extract_player_name(market)
-        if not name or is_skip_field_name(name):
+        sub = str((market or {}).get("yes_sub_title") or "").strip()
+        if not names_a_golfer(sub) or is_skip_field_name(sub):
             continue
-        key = normalize_name(name)
+        key = normalize_name(sub)
         if not key or key in seen:
             continue
         seen.add(key)
-        names.append(name.strip())
+        names.append(sub)
     return names
 
 
@@ -85,7 +90,10 @@ def hunt_field(
     bind: dict[str, Any] | None = None,
     boards=None,
 ) -> dict[str, Any]:
-    """ESPN bind if titles match. Else Kalshi open names + history ids. No invented players."""
+    """ESPN bind if titles match. Else Kalshi-listed names are the field.
+
+    History ids attach when they match. Provisional ids fill the rest. No invented players.
+    """
     rows = [m for m in markets if event_key_for(m) == event_key]
     sample = rows[0] if rows else {"series_ticker": event_key, "event_ticker": event_key}
     bind = (

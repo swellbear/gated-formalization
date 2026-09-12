@@ -81,6 +81,23 @@ def _brain() -> StaticBrain:
     )
 
 
+def _listed_score_ok(names, candidates, **_k):
+    del names
+    probs = {
+        str(pid): {"win": 0.4, "win_after_r1": 0.4, "win_after_r3": 0.4}
+        for pid in (candidates or {}).values()
+        if pid
+    }
+    return {
+        "probs": probs,
+        "candidates": dict(candidates or {}),
+        "fp": "listed-fp",
+        "n_players": len(probs),
+        "thin": False,
+        "field_source": "kalshi_listed",
+    }
+
+
 def test_15m_allowlist_unchanged():
     assert ALLOWED_SERIES == "KXBTC15M"
 
@@ -744,7 +761,7 @@ def test_espn_miss_uses_kalshi_listed_names(gk_root, monkeypatch):
     assert hunt["n_recovered"] >= 2
 
 
-def test_history_id_floor_blocks_paper_fill(gk_root, monkeypatch):
+def test_history_id_floor_does_not_park_listed_hunt(gk_root, monkeypatch):
     from golf_offshoot.golf_kalshi.brain import CachedExpertBrain
     from golf_offshoot.golf_kalshi.field_hunt import history_floor_ok, hunt_field
 
@@ -783,12 +800,18 @@ def test_history_id_floor_blocks_paper_fill(gk_root, monkeypatch):
         "golf_offshoot.golf_kalshi.score.shared_ingestor",
         lambda: SimpleNamespace(load_history=lambda **k: Hist()),
     )
+    monkeypatch.setattr("golf_offshoot.golf_kalshi.score.score_kalshi_listed", _listed_score_ok)
     brain = CachedExpertBrain()
     brain.maybe_refresh("KXLIV-1", "", markets=markets)
     d = decide_golf(markets[0], empty_ledger(), recipe_v1(), brain)
-    assert d.action == "skip"
-    assert d.reason == "thin"
+    assert d.reason != "thin"
+    assert d.reason != "field_deferred"
     assert d.reason != "no_field"
+    assert d.model_p is not None
+    row = ((brain._cache.get("events") or {}).get("KXLIV-1") or {})
+    assert row.get("listed_hunt_done") is True
+    assert row.get("history_thin") is True
+    assert row.get("n_recovered") == 1
 
 
 def test_deferred_listed_keeps_candidates_not_no_field(gk_root, monkeypatch):
@@ -843,6 +866,329 @@ def test_deferred_listed_keeps_candidates_not_no_field(gk_root, monkeypatch):
     assert d.action == "skip"
     assert d.reason == "field_deferred"
     assert d.reason != "no_field"
+
+
+def test_listed_names_hunt_when_recovered_zero(gk_root, monkeypatch):
+    """Proof shape: KXCHAMPTOURR1LEAD-SAI26 / KXDPWORLDTOURR3LEAD-AMIO26.
+
+    n_names > 0 and n_recovered=0 must still score from listed names. Transferable
+    to any listed-field Kalshi series, not a golf mix-cap integer.
+    """
+    from golf_offshoot.data_feeds.field_fallback import is_provisional_player_id
+    from golf_offshoot.golf_kalshi.brain import CachedExpertBrain
+
+    names = ["Alpha Player", "Bravo Player", "Charlie Player"]
+    event_key = "KXCHAMPTOURR1LEAD-SAI26"
+    hunt = {
+        "event_key": event_key,
+        "espn_id": "",
+        "espn_name": "",
+        "family": "Champions",
+        "field_source": "kalshi_listed",
+        "names": names,
+        "n_names": len(names),
+        "n_recovered": 0,
+        "candidates": {},
+        "listed_candidates": {},
+        "espn_rows": [],
+        "thin": True,
+        "awaiting_history": False,
+        "tried_leagues": ["champ"],
+    }
+    scored_with: list[dict[str, str]] = []
+
+    def fake_score(score_names, candidates, **kwargs):
+        del score_names, kwargs
+        scored_with.append(dict(candidates or {}))
+        return _listed_score_ok(names, candidates)
+
+    monkeypatch.setattr("golf_offshoot.golf_kalshi.field_hunt.hunt_field", lambda *a, **k: hunt)
+    monkeypatch.setattr(
+        "golf_offshoot.golf_kalshi.score.shared_ingestor",
+        lambda: SimpleNamespace(load_history=lambda **k: []),
+    )
+    monkeypatch.setattr("golf_offshoot.golf_kalshi.score.score_kalshi_listed", fake_score)
+    markets = [
+        _market(
+            ticker=f"SAI-{i}",
+            event_ticker=event_key,
+            series_ticker="KXCHAMPTOURR1LEAD",
+            yes_sub_title=name,
+            title=f"Will {name} lead after round 1?",
+        )
+        for i, name in enumerate(names)
+    ]
+    brain = CachedExpertBrain()
+    room = TickBudget(seconds=30, max_fills=8, max_brain=2)
+    brain.maybe_refresh(event_key, "", budget=room, markets=markets)
+    row = ((brain._cache.get("events") or {}).get(event_key) or {})
+    assert row.get("deferred") is not True
+    assert row.get("listed_hunt_done") is True
+    assert row.get("n_recovered") == 0
+    assert row.get("history_thin") is True
+    assert row.get("probs")
+    assert scored_with and any(is_provisional_player_id(pid) for pid in scored_with[0].values())
+    d = decide_golf(markets[0], empty_ledger(), recipe_v1(), brain)
+    assert d.reason != "field_deferred"
+    assert d.reason != "thin"
+    assert d.reason != "no_field"
+    assert d.model_p is not None
+
+    r3 = "KXDPWORLDTOURR3LEAD-AMIO26"
+    hunt_r3 = dict(hunt)
+    hunt_r3["event_key"] = r3
+    hunt_r3["family"] = "DP World"
+    hunt_r3["tried_leagues"] = ["eur"]
+    monkeypatch.setattr("golf_offshoot.golf_kalshi.field_hunt.hunt_field", lambda *a, **k: hunt_r3)
+    markets_r3 = [
+        _market(
+            ticker=f"AMIO-{i}",
+            event_ticker=r3,
+            series_ticker="KXDPWORLDTOURR3LEAD",
+            yes_sub_title=name,
+            title=f"Will {name} lead after round 3?",
+        )
+        for i, name in enumerate(names)
+    ]
+    brain.maybe_refresh(r3, "", budget=TickBudget(seconds=30, max_fills=8, max_brain=2), markets=markets_r3)
+    d3 = decide_golf(markets_r3[0], empty_ledger(), recipe_v1(), brain)
+    assert d3.reason != "field_deferred"
+    assert d3.model_p is not None
+
+
+def test_names_a_golfer_rejects_live_nonplayer_subtitles():
+    from golf_offshoot.golf_kalshi.field_hunt import kalshi_listed_names
+    from golf_offshoot.golf_kalshi.matcher import extract_player_name, names_a_golfer
+
+    golfers = (
+        "Scottie Scheffler",
+        "Rasmus Neergaard-Petersen",
+        "Min Woo Lee",
+        "C.T. Pan",
+        "James Morrison",
+        "Mark Wilson",
+    )
+    leaks = (
+        "United States",
+        "Before 2028",
+        "Shane Lowry beats Olesen and Li",
+        "Rasmus Neergaard-Petersen beats Reed and Sullivan",
+        "4+ golf major championship wins",
+        "6+ course records",
+        "Team USA",
+        "Team World",
+        "Tie",
+        "Yes",
+        "Europe",
+    )
+    for name in golfers:
+        assert names_a_golfer(name) is True, name
+        assert extract_player_name({"yes_sub_title": name}) == name
+    for title in leaks:
+        assert names_a_golfer(title) is False, title
+        assert extract_player_name({"yes_sub_title": title}) == ""
+        assert (
+            extract_player_name(
+                {
+                    "yes_sub_title": title,
+                    "title": "Will Scottie Scheffler win the grand slam before 2028?",
+                }
+            )
+            == ""
+        )
+    mixed = [
+        _market(yes_sub_title="Scottie Scheffler"),
+        _market(yes_sub_title="United States"),
+    ]
+    assert kalshi_listed_names(mixed) == ["Scottie Scheffler"]
+    assert extract_player_name(
+        {"yes_sub_title": "", "title": "Will Scottie Scheffler win the Masters?"}
+    ) == "Scottie Scheffler"
+
+
+def test_rejected_subtitle_does_not_take_player_from_title(gk_root, monkeypatch):
+    """Live Scottie-slam shape: sub-title fails, title names a golfer. No model_p."""
+    from golf_offshoot.golf_kalshi.field_hunt import hunt_field, kalshi_listed_names
+    from golf_offshoot.golf_kalshi.matcher import extract_player_name, match_market_player
+
+    market = _market(
+        ticker="KXSCOTTIESLAM-28-B2028",
+        event_ticker="KXSCOTTIESLAM-28",
+        series_ticker="KXSCOTTIESLAM",
+        yes_sub_title="Before 2028",
+        title="Will Scottie Scheffler win the grand slam before 2028?",
+        yes_ask=0.05,
+    )
+    candidates = {normalize_name("Scottie Scheffler"): "9478"}
+    assert extract_player_name(market) == ""
+    assert match_market_player(market, candidates) is None
+    assert kalshi_listed_names([market]) == []
+
+    monkeypatch.setattr(
+        "golf_offshoot.golf_kalshi.espn_bind.bind_espn_event",
+        lambda *a, **k: {
+            "espn_id": "",
+            "espn_name": "",
+            "league": "",
+            "family": "PGA Tour",
+            "espn_rows": [],
+            "candidates": {},
+            "tried_leagues": ["pga"],
+        },
+    )
+    hunt = hunt_field("KXSCOTTIESLAM-28", [market], history=None)
+    assert hunt["n_names"] == 0
+    assert hunt["field_source"] == "miss"
+
+    brain = StaticBrain(
+        candidates,
+        {"9478": {"win": 0.5}},
+        field_source="kalshi_listed",
+    )
+    d = decide_golf(market, empty_ledger(), recipe_v1(), brain)
+    assert d.model_p is None
+    assert d.action == "skip"
+    assert d.reason == "unmatched"
+
+    ladder = _market(
+        ticker="KXPGAFUTURE-36JKOI-4",
+        event_ticker="KXPGAFUTURE-36JKOI",
+        series_ticker="KXPGAFUTURE",
+        yes_sub_title="4+ golf major championship wins",
+        title="Will Jackson Koivun have 4+ golf major championship wins?",
+        yes_ask=0.05,
+    )
+    assert extract_player_name(ladder) == ""
+    assert match_market_player(ladder, {normalize_name("Jackson Koivun"): "5215013"}) is None
+
+    three = _market(
+        ticker="KXDPWT3BALL-1",
+        event_ticker="KXDPWT3BALL-AMIO26R3JOLESLOWHLI",
+        series_ticker="KXDPWT3BALL",
+        yes_sub_title="Shane Lowry beats Olesen and Li",
+        title="Will Shane Lowry win the 3-ball against Olesen and Li?",
+        yes_ask=0.05,
+    )
+    assert extract_player_name(three) == ""
+    assert match_market_player(three, {normalize_name("Shane Lowry"): "4587"}) is None
+    assert kalshi_listed_names([ladder, three]) == []
+
+
+def test_score_kalshi_listed_scores_golfers_not_nonplayers(gk_root, monkeypatch):
+    """Calls the real scorer. Mixed field: golfer keeps p, country does not."""
+    import golf_offshoot.golf_kalshi.score as score_mod
+    from golf_offshoot.data_feeds.field_fallback import provisional_player_id
+    from golf_offshoot.golf_kalshi.score import score_kalshi_listed
+    from golf_offshoot.models.schemas import Player, PlayerInputs
+
+    score_mod._PLAYER_INPUTS.clear()
+
+    class FakeIngestor:
+        def load_history(self, **_k):
+            return None
+
+        def _player_inputs(self, comp, *_a, **_k):
+            athlete = (comp or {}).get("athlete") or {}
+            pid = str(athlete.get("id") or "")
+            name = str(athlete.get("displayName") or "")
+            return PlayerInputs(player=Player(player_id=pid, name=name))
+
+    class FakeBundle:
+        def p(self, _horizon):
+            return SimpleNamespace(central=0.4)
+
+    class FakeEngine:
+        def run(self, _tournament, prepared):
+            bundles = {p.player.player_id: FakeBundle() for p in prepared.players}
+            return bundles, {}, []
+
+    class FakePipeline:
+        def __init__(self, **_k):
+            pass
+
+        def prepare_field(self, _tournament, field):
+            return field
+
+    monkeypatch.setattr(score_mod, "shared_ingestor", lambda: FakeIngestor())
+    monkeypatch.setattr("golf_offshoot.operating.make_engine", lambda **_k: FakeEngine())
+    monkeypatch.setattr("golf_offshoot.pipeline.GolfOffshootPipeline", FakePipeline)
+
+    golfer = "Scottie Scheffler"
+    country = "United States"
+    golfer_id = provisional_player_id(golfer)
+    country_id = provisional_player_id(country)
+    names = [golfer, country]
+    candidates = {
+        normalize_name(golfer): golfer_id,
+        normalize_name(country): country_id,
+    }
+    scored = score_kalshi_listed(names, candidates, tour="PGA")
+    assert golfer_id in scored["probs"]
+    assert scored["probs"][golfer_id]
+    assert country_id not in scored["probs"]
+    assert all("united" not in str(pid).lower() for pid in scored["probs"])
+    assert country_id not in (scored.get("candidates") or {}).values()
+
+
+def test_listed_cache_hits_name_fp(gk_root, monkeypatch):
+    from golf_offshoot.golf_kalshi.brain import CachedExpertBrain, _hunt_fp
+
+    names = ["Scottie Scheffler", "Jon Rahm"]
+    event_key = "KXLISTEDCACHE-26"
+    listed = {normalize_name(n): f"name:{normalize_name(n).replace(' ', '-')}" for n in names}
+    hunt = {
+        "event_key": event_key,
+        "espn_id": "",
+        "espn_name": "",
+        "family": "PGA Tour",
+        "field_source": "kalshi_listed",
+        "names": names,
+        "n_names": len(names),
+        "n_recovered": 0,
+        "candidates": dict(listed),
+        "listed_candidates": dict(listed),
+        "espn_rows": [],
+        "thin": True,
+        "awaiting_history": False,
+        "tried_leagues": ["pga"],
+    }
+    calls: list[int] = []
+
+    def fake_score(score_names, candidates, **kwargs):
+        del score_names, kwargs
+        calls.append(1)
+        return {
+            "probs": {pid: {"win": 0.4} for pid in (candidates or {}).values() if pid},
+            "candidates": dict(candidates or {}),
+            "fp": "engine-fp-that-is-not-name-fp",
+            "n_players": len(candidates or {}),
+            "thin": False,
+            "field_source": "kalshi_listed",
+        }
+
+    monkeypatch.setattr("golf_offshoot.golf_kalshi.field_hunt.hunt_field", lambda *a, **k: hunt)
+    monkeypatch.setattr(
+        "golf_offshoot.golf_kalshi.score.shared_ingestor",
+        lambda: SimpleNamespace(load_history=lambda **k: []),
+    )
+    monkeypatch.setattr("golf_offshoot.golf_kalshi.score.score_kalshi_listed", fake_score)
+    markets = [
+        _market(
+            ticker=f"CACHE-{i}",
+            event_ticker=event_key,
+            series_ticker="KXLISTEDCACHE",
+            yes_sub_title=name,
+        )
+        for i, name in enumerate(names)
+    ]
+    brain = CachedExpertBrain()
+    brain.maybe_refresh(event_key, "", budget=TickBudget(seconds=30, max_fills=8, max_brain=2), markets=markets)
+    brain.maybe_refresh(event_key, "", budget=TickBudget(seconds=30, max_fills=8, max_brain=2), markets=markets)
+    assert calls == [1]
+    row = ((brain._cache.get("events") or {}).get(event_key) or {})
+    assert row.get("fp") == _hunt_fp({"names": names}, "")
+    assert row.get("fp") != "engine-fp-that-is-not-name-fp"
+    assert row.get("listed_hunt_done") is True
 
 
 def test_thin_listed_field_candidates_not_empty(gk_root):
@@ -1082,9 +1428,14 @@ def test_budget_miss_does_not_poison_listed_cache(gk_root, monkeypatch):
     kept = brain.field_candidates("KXLIV-1")
     assert normalize_name("Alpha Player") in kept
     assert normalize_name("Bravo Player") in kept
+    monkeypatch.setattr("golf_offshoot.golf_kalshi.score.score_kalshi_listed", _listed_score_ok)
     room = TickBudget(seconds=30, max_fills=8, max_brain=2)
     brain.maybe_refresh("KXLIV-1", "", budget=room, markets=[_market(series_ticker="KXLIV")])
     assert history_calls == [1]
+    row = ((brain._cache.get("events") or {}).get("KXLIV-1") or {})
+    assert row.get("listed_hunt_done") is True
+    assert row.get("deferred") is False
+    assert row.get("probs")
 
 
 def test_espn_boards_read_each_league_once():
@@ -1535,6 +1886,47 @@ def test_held_event_is_first_in_brain_order():
     }
     order, _rr = _brain_order(groups, 0, held_keys=["HELD"])
     assert order[0] == "HELD"
+
+
+def test_unscored_listed_event_is_ahead_of_scored_mid(gk_root):
+    from golf_offshoot.golf_kalshi.brain import CachedExpertBrain
+    from golf_offshoot.golf_kalshi.loop import _brain_order, listed_hunt_pending
+
+    pending_key = "KXCHAMPTOURR1LEAD-SAI26"
+    scored_key = "KXDPWTTOP10-AMIO26"
+    brain = CachedExpertBrain()
+    brain._cache = {
+        "events": {
+            scored_key: {
+                "names": ["Held Player"],
+                "n_names": 1,
+                "field_source": "kalshi_listed",
+                "espn_id": "",
+                "probs": {"pid": {"win": 0.2}},
+                "listed_hunt_done": True,
+            },
+            pending_key: {
+                "names": ["Alpha Player"] * 84,
+                "n_names": 84,
+                "n_recovered": 0,
+                "field_source": "kalshi_listed",
+                "espn_id": "",
+            },
+        }
+    }
+    groups = {
+        scored_key: [_market(ticker="T1", event_ticker=scored_key, series_ticker="KXDPWTTOP10")],
+        pending_key: [
+            _market(ticker="T2", event_ticker=pending_key, series_ticker="KXCHAMPTOURR1LEAD")
+        ],
+    }
+    assert listed_hunt_pending(brain, pending_key) is True
+    assert listed_hunt_pending(brain, scored_key) is False
+    order, _rr = _brain_order(groups, 0, brain)
+    assert order[0] == pending_key
+    held_first, _rr = _brain_order(groups, 0, brain, held_keys=[scored_key])
+    assert held_first[0] == scored_key
+    assert pending_key in held_first
 
 
 def test_hub_shows_mix_and_cap_shares(gk_root, tmp_path):

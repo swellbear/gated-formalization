@@ -188,18 +188,38 @@ def _slow_only(rows: list[dict[str, Any]]) -> bool:
     return (not _in_play(rows)) and all(classify_sleeve(m) == "slow" for m in rows)
 
 
+def _event_cache(brain: PlayerBrain | None, event_key: str) -> dict[str, Any]:
+    if brain is None or not hasattr(brain, "_cache"):
+        return {}
+    try:
+        row = ((brain._cache.get("events") or {}).get(event_key) or {})  # noqa: SLF001
+    except Exception:
+        return {}
+    return dict(row) if isinstance(row, dict) else {}
+
+
 def _espn_bound_live(brain: PlayerBrain | None, event_key: str) -> bool:
     if brain is None or not hasattr(brain, "field_source"):
         return False
     try:
         if str(brain.field_source(event_key) or "") != "espn":
             return False
-        cached = {}
-        if hasattr(brain, "_cache"):
-            cached = ((brain._cache.get("events") or {}).get(event_key) or {})  # noqa: SLF001
+        cached = _event_cache(brain, event_key)
         return int(cached.get("live_competitors") or 0) > 0
     except Exception:
         return False
+
+
+def listed_hunt_pending(brain: PlayerBrain | None, event_key: str) -> bool:
+    """Listed names extracted, p not produced yet. ESPN-bound rows use the live path."""
+    cached = _event_cache(brain, event_key)
+    if cached.get("espn_id"):
+        return False
+    if cached.get("probs") or cached.get("listed_hunt_done"):
+        return False
+    if int(cached.get("n_names") or 0) > 0:
+        return True
+    return bool(cached.get("names"))
 
 
 def _brain_order(
@@ -246,10 +266,12 @@ def _brain_order(
             ordered = rest[start:] + rest[:start]
         else:
             ordered = []
-    if held_keys:
-        front = [k for k in held_keys if k in groups]
-        rest = [k for k in ordered if k not in set(front)]
-        ordered = front + rest
+    held_front = [k for k in (held_keys or []) if k in groups]
+    held_set = set(held_front)
+    pending = [k for k in ordered if k not in held_set and listed_hunt_pending(brain, k)]
+    pending_set = set(pending)
+    rest = [k for k in ordered if k not in held_set and k not in pending_set]
+    ordered = held_front + pending + rest
     return ordered, next_rr
 
 
