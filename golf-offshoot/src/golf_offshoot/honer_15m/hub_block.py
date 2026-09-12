@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import html
 
+from golf_offshoot.data_feeds.kalshi_15m import quote_text
 from golf_offshoot.honer_15m.board import HonerRow, HonerStanding, collect_standing
 
 
@@ -27,8 +28,8 @@ def _search_table(rows: list[HonerRow]) -> str:
     body = ["<tbody>"]
     for row in rows:
         kalshi = "still waiting on Kalshi" if row.pending else (row.kalshi_result.upper() or "n/a")
-        posted = f"{round(row.posted_yes * 100):.0f}¢" if row.posted_yes is not None else "n/a"
-        cutoff = f"{round(row.theta * 100):.0f}¢" if row.theta is not None else "n/a"
+        posted = row.posted_display()
+        cutoff = quote_text(row.theta)
         body.append(
             "<tr>"
             f"<td><code>{html.escape(row.ticker)}</code></td>"
@@ -66,8 +67,8 @@ def _exam_table(rows: list[HonerRow], standing: HonerStanding) -> str:
     body = ["<tbody>"]
     for row in rows:
         kalshi = "still waiting on Kalshi" if row.pending else (row.kalshi_result.upper() or "n/a")
-        posted = f"{round(row.posted_yes * 100):.0f}¢" if row.posted_yes is not None else "n/a"
-        cutoff = f"{round(row.theta * 100):.0f}¢" if row.theta is not None else "n/a"
+        posted = row.posted_display()
+        cutoff = quote_text(row.theta)
         always = row.fill_all_text or ("n/a" if row.pending else "")
         d = row.d_text or ("n/a" if row.pending else "")
         k = str(row.exam_k) if row.exam_k is not None else "n/a"

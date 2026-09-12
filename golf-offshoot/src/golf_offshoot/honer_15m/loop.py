@@ -5,7 +5,7 @@ from __future__ import annotations
 import json
 from typing import Any
 
-from golf_offshoot.data_feeds.kalshi_15m import is_paper_autobet_candidate
+from golf_offshoot.data_feeds.kalshi_15m import is_paper_autobet_candidate, quote_text
 from golf_offshoot.honer_15m.books import apply_settle, has_ticket, record_action
 from golf_offshoot.honer_15m.decide import decide_ticket, market_spread, posted_mark
 from golf_offshoot.honer_15m.freeze import (
@@ -174,6 +174,9 @@ def _maybe_act(
     exam_k = None
     if book == "exam":
         exam_k = int(load_exam_state().get("k_after") or 0) or None
+    mark_text = str(market.get("paper_mark_text") or "").strip()
+    if not mark_text or mark_text.lower() == "n/a":
+        mark_text = quote_text(mark)
     record_action(
         book,
         ticker=ticker,
@@ -181,6 +184,7 @@ def _maybe_act(
         action=action,
         reason=reason,
         posted_yes=mark,
+        posted_yes_text=mark_text,
         theta=theta,
         close_at=str(market.get("close_time") or ""),
         exam_k=exam_k,

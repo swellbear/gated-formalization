@@ -6,6 +6,7 @@ from datetime import datetime
 from pathlib import Path
 from typing import Any
 
+from golf_offshoot.data_feeds.kalshi_15m import quote_text
 from golf_offshoot.honer_15m.board import HonerRow, HonerStanding, collect_standing
 from golf_offshoot.honer_15m.books import load_ledger
 from golf_offshoot.honer_15m.paths import assert_honer_path, board_png_path, decisions_path
@@ -268,8 +269,8 @@ def render_honer_window_strip() -> Path | None:
             cells = {
                 "window": row.window_et,
                 "action": row.action_label,
-                "posted": f"{round(row.posted_yes * 100):.0f}¢" if row.posted_yes is not None else "n/a",
-                "cutoff": f"{round(row.theta * 100):.0f}¢" if row.theta is not None else "n/a",
+                "posted": row.posted_display(),
+                "cutoff": quote_text(row.theta),
                 "near": row.near_line_text,
                 "spread": row.spread_text,
                 "wide": row.delta_text,

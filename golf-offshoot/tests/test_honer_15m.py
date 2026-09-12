@@ -514,8 +514,8 @@ def test_freeze_meter_matches_theta(honer_tmp):
     assert line == (
         "Honer freeze: 3/20 in-band · 1 far ignored · "
         "40: need a visit · 70: need 20 in-band · "
-        "moved 6¢ of 5¢ · "
-        "stable 2/5 · line 81¢ · skip-rich-YES"
+        "moved 0.06 of 0.05 · "
+        "stable 2/5 · line 0.81 · skip-rich-YES"
     )
     standing = collect_standing()
     assert standing.freeze_meter == line
@@ -575,7 +575,7 @@ def test_library_english_has_no_registry_ids(honer_tmp):
     )
     assert "search_untestable" not in untestable
     assert "The tape did not visit the line" in untestable
-    assert "75¢" in untestable
+    assert "0.75" in untestable
     assert "skip-wide-spread" in untestable
 
 
@@ -597,13 +597,43 @@ def test_near_line_48_vs_81_is_no(honer_tmp):
     assert row.near_line is False
     assert row.near_line_text == "no"
     phrase = current_search_action()["phrase"]
-    assert "not near the 81¢ line" in phrase
-    assert "48¢" in phrase
+    assert "not near the 0.81 line" in phrase
+    assert "0.48" in phrase
     html = sandbox_html()
     assert "Near line" in html
     assert "Spread" in html
     assert "Wide-book" in html
     assert "+0.00" not in row.pnl_text
+
+
+def test_honer_table_prints_full_kalshi_quote_not_cents(honer_tmp):
+    from golf_offshoot.honer_15m.board import collect_standing
+    from golf_offshoot.honer_15m.hub_block import sandbox_html
+
+    books.record_action(
+        "search",
+        ticker="KXBTC15M-26SEP091430-30",
+        window_id="w",
+        action="fill",
+        reason="posted_yes below theta 0.79",
+        posted_yes=0.36,
+        posted_yes_text="0.3600",
+        theta=0.79,
+        close_at="2026-09-09T18:30:00Z",
+        spread=0.01,
+        delta=0.04,
+        gamma=0.02,
+    )
+    row = collect_standing().search_rows[0]
+    assert row.posted_display() == "0.3600"
+    html = sandbox_html()
+    assert "0.3600" in html
+    assert "0.79" in html
+    assert "0.01" in html
+    assert "36¢" not in html
+    assert "79¢" not in html
+    assert "1¢" not in html
+    assert "¢" not in html
 
 
 def test_missing_quotes_spread_na_decide_richness_only(honer_tmp):
@@ -626,7 +656,7 @@ def test_missing_quotes_spread_na_decide_richness_only(honer_tmp):
     row = collect_standing().search_rows[0]
     assert row.spread is None
     assert row.spread_text == "n/a"
-    assert row.delta_text == "4¢"
+    assert row.delta_text == "0.04"
     action, reason = decide_ticket(
         0.70, 0.81, family=FAMILY_SPREAD, delta=0.04, spread=None
     )
@@ -648,10 +678,10 @@ def test_clocks_and_spine_show_meter_without_restyle(honer_tmp):
     clocks = _clock_legend_html()
     assert "Honer freeze: 3/20 in-band" in clocks
     assert "1 far ignored" in clocks
-    assert "moved 6¢ of 5¢" in clocks
+    assert "moved 0.06 of 0.05" in clocks
     assert "Quote bus:" in clocks
     spine = _spine_html()
-    assert "Only tickets within 10¢ of the line move it." in spine
+    assert "Only tickets within 0.10 of the line move it." in spine
     assert "Freeze counts only in-band tickets." in spine
     assert "Factory — fill-all baseline" in spine
     assert "Factory — live 70" not in spine
@@ -667,7 +697,7 @@ def test_clocks_and_spine_show_meter_without_restyle(honer_tmp):
         close_at="t",
     )
     now_html = this_window_html()
-    assert "not near the 81¢ line" in now_html
+    assert "not near the 0.81 line" in now_html
     assert "$" not in now_html or "Actions only" in now_html
     assert "combined" not in now_html.lower()
 

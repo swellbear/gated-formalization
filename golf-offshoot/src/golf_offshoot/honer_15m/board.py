@@ -11,6 +11,7 @@ from dataclasses import dataclass, field
 from datetime import datetime
 from typing import Any
 
+from golf_offshoot.data_feeds.kalshi_15m import quote_abs_diff, quote_text
 from golf_offshoot.honer_15m.books import load_decisions, load_ledger
 from golf_offshoot.honer_15m.freeze import exam_is_open, freeze_ready, load_exam_state, load_trials
 from golf_offshoot.honer_15m.paths import (
@@ -80,6 +81,13 @@ class HonerRow:
     delta_text: str = "n/a"
     gamma: float | None = None
     gamma_text: str = "n/a"
+    posted_yes_text: str = ""
+
+    def posted_display(self) -> str:
+        text = (self.posted_yes_text or "").strip()
+        if text:
+            return text
+        return quote_text(self.posted_yes)
 
 
 @dataclass
@@ -107,9 +115,8 @@ class HonerStanding:
 
 
 def cents(value: float | None) -> str:
-    if value is None:
-        return "n/a"
-    return f"{round(float(value) * 100):.0f}¢"
+    """Contract-price display. Never rounded cents. Never invented digits."""
+    return quote_text(value)
 
 
 def dollars(value: float | None, *, signed: bool = False) -> str:
@@ -178,11 +185,10 @@ def freeze_meter(
         )
     if freeze_ready(st):
         return "Honer freeze: ready — next tick can open exam. Not a keep."
-    moved = abs(theta_now - last_declared)
     return (
         f"Honer freeze: {settled}/{need_n} in-band · {far} far ignored · "
         f"40: need a visit · 70: need {need_n} in-band · "
-        f"moved {cents(moved)} of {cents(need_delta)} · "
+        f"moved {quote_abs_diff(theta_now, last_declared)} of {cents(need_delta)} · "
         f"stable {stable}/{stable_need} · line {cents(theta_now)} · {family}"
     )
 
@@ -222,7 +228,7 @@ def library_english(
         else:
             exam_bit = (
                 "The tape did not visit the line. That cutoff is retired. "
-                "Cutoff returned to 75¢."
+                "Cutoff returned to 0.75."
             )
     else:
         exam_bit = "No exam yet."
@@ -315,7 +321,9 @@ def why_sentence(row: dict[str, Any], *, book: str, step: float, band: float = 0
     action = str(row.get("action") or "")
     posted = row.get("posted_yes")
     theta = row.get("theta")
-    posted_s = cents(float(posted) if posted is not None else None)
+    posted_s = str(row.get("posted_yes_text") or "").strip() or cents(
+        float(posted) if posted is not None else None
+    )
     cutoff_s = cents(float(theta) if theta is not None else None)
     reason = str(row.get("reason") or "")
     if action == "skip" and reason.startswith("thin"):
@@ -509,6 +517,7 @@ def _row_from_decision(book: str, row: dict[str, Any], *, step: float) -> HonerR
         delta_text=cents(delta_f) if delta_f is not None else "n/a",
         gamma=gamma_f,
         gamma_text=cents(gamma_f) if gamma_f is not None else "n/a",
+        posted_yes_text=str(row.get("posted_yes_text") or "").strip(),
     )
 
 
@@ -529,7 +538,7 @@ def collect_rows(book: str) -> list[HonerRow]:
 def _window_story(row: HonerRow, *, book: str, step: float) -> str:
     if row.pending:
         return (
-            f"{row.window_et} — {row.action_label.lower()} at {cents(row.posted_yes)}; "
+            f"{row.window_et} — {row.action_label.lower()} at {row.posted_display()}; "
             f"{WAITING}."
         )
     kalshi = row.kalshi_result.upper() if row.kalshi_result else "n/a"
@@ -548,13 +557,13 @@ def _last_happened(search_rows: list[HonerRow], *, step: float) -> str:
     if pending and not settled:
         return (
             f"This window is still open. Honer already decided **{pending.action_label.lower()} "
-            f"at {cents(pending.posted_yes)}** (cutoff {cents(pending.theta)}). "
+            f"at {pending.posted_display()}** (cutoff {cents(pending.theta)}). "
             f"Kalshi has not posted an official result. Paper pnl is not known yet — not zero."
         )
     if pending:
         open_line = (
             f"This window is still open. Honer already decided **{pending.action_label.lower()} "
-            f"at {cents(pending.posted_yes)}** (cutoff {cents(pending.theta)}). "
+            f"at {pending.posted_display()}** (cutoff {cents(pending.theta)}). "
             f"Kalshi has not posted an official result. Paper pnl is not known yet — not zero."
         )
     else:
@@ -564,14 +573,14 @@ def _last_happened(search_rows: list[HonerRow], *, step: float) -> str:
     result = settled.kalshi_result.upper()
     if settled.action == "skip":
         body = (
-            f"Last settled window **{settled.window_et}**: the market's YES was **{cents(settled.posted_yes)}**. "
+            f"Last settled window **{settled.window_et}**: the market's YES was **{settled.posted_display()}**. "
             f"Cutoff was **{cents(settled.theta)}**, so honer **skipped** — the ticket looked too expensive. "
             f"Kalshi later said **{result}**. Search had no ticket, so paper pnl is **$0**. "
             f"{theta_step_clause(settled.action, settled.kalshi_result, step=step, posted_yes=settled.posted_yes, theta=settled.theta, band=float(load_policy()['step_band']))}"
         ).strip()
     else:
         body = (
-            f"Last settled window **{settled.window_et}**: the market's YES was **{cents(settled.posted_yes)}**. "
+            f"Last settled window **{settled.window_et}**: the market's YES was **{settled.posted_display()}**. "
             f"Cutoff was **{cents(settled.theta)}**, so honer **filled YES**. "
             f"Kalshi later said **{result}**. Search paper pnl is **{settled.pnl_text}**. "
             f"{theta_step_clause(settled.action, settled.kalshi_result, step=step, posted_yes=settled.posted_yes, theta=settled.theta, band=float(load_policy()['step_band']))}"
@@ -591,7 +600,6 @@ def _phase_paragraph(
     exam: dict[str, Any],
     trials: dict[str, Any],
 ) -> tuple[str, str]:
-    moved = abs(theta_now - last_declared)
     from golf_offshoot.honer_15m.library import search_is_parked
 
     if exam.get("open"):
@@ -647,7 +655,7 @@ def _phase_paragraph(
         f"In-band so far: **{settled_since} of {need_n}**. Far ignored: **{far}**. "
         f"Search settles this episode: **{total}**. Look clocks: at 40 need a visit; "
         f"at 70 need {need_n} in-band. "
-        f"θ has moved **{cents(moved)}** from {cents(last_declared)}. "
+        f"θ has moved **{quote_abs_diff(theta_now, last_declared)}** from {cents(last_declared)}. "
         f"In-band stable: **{stable_have} of {stable_need}**. Freeze is not ready.",
     )
 
@@ -691,7 +699,7 @@ def collect_standing() -> HonerStanding:
         "Honer is the discovery organ for this 15m gym — not Lineage A. Factory consult is off. "
         "Honer is not predicting up or down. Each 15-minute window it either takes a paper YES "
         "ticket at the market's posted price, or it skips. It never buys NO. "
-        f"{family_bit} Only tickets within 10¢ of the line move the cutoff; "
+        f"{family_bit} Only tickets within 0.10 of the line move the cutoff; "
         "a loss near the line tightens it, a missed YES loosens it. "
         "Freeze counts only those in-band tickets. "
         f"Cutoff now is **{cents(theta_now)}**. Search started at {cents(start)}. Not a keep."
@@ -719,7 +727,7 @@ def collect_standing() -> HonerStanding:
     )
     glossary = (
         "Fill = paper YES ticket at the posted price. Skip = no ticket this window. "
-        "Cutoff θ = richness line, in cents. Only tickets within 10¢ of the line move it. "
+        "Cutoff θ = richness line. Only tickets within 0.10 of the line move it. "
         "Exam = a later frozen test, not a keep. Library labels are not scores."
     )
     not_keep = f"Not a keep; {_fee_lock_phrase()}. can_keep is false on this bar."
@@ -822,7 +830,7 @@ def current_search_action(standing: HonerStanding | None = None) -> dict[str, An
             "kalshi": "n/a",
         }
     kalshi = WAITING if row.pending else (row.kalshi_result.upper() if row.kalshi_result else "n/a")
-    posted = cents(row.posted_yes)
+    posted = row.posted_display()
     cutoff = cents(row.theta)
     if row.near_line is False:
         phrase = f"{row.action_label.lower()} at {posted}, not near the {cutoff} line"
@@ -853,7 +861,7 @@ def current_exam_action(standing: HonerStanding | None = None) -> dict[str, Any]
     return {
         "ticker": row.ticker,
         "phrase": (
-            f"{row.action_label.lower()} ({cents(row.posted_yes)} vs frozen {cents(row.theta)})"
+            f"{row.action_label.lower()} ({row.posted_display()} vs frozen {cents(row.theta)})"
         ),
         "action": row.action,
     }

@@ -204,6 +204,7 @@ def test_parse_open_and_settled_market():
     assert open_m["is_open"] is True
     assert open_m["yes_ask"] == 0.52
     assert open_m["paper_mark"] == 0.50
+    assert open_m["paper_mark_text"] == "0.5000"
     assert abs(open_m["decimal_odds"] - 2.0) < 1e-9
     assert open_m["result"] == ""
     assert open_m["trading_armed"] is False

@@ -316,7 +316,7 @@ def _spine_html() -> str:
         '<div class="spine-box book-honer" data-book="honer">'
         "<h3>Honer — sibling</h3>"
         "<p>Own root, own money, own k. Search may move a cutoff. "
-        "Only tickets within 10¢ of the line move it. "
+        "Only tickets within 0.10 of the line move it. "
         "Freeze counts only in-band tickets. "
         "Exam is a later frozen test. Never a keep. Do not add to factory.</p>"
         '<p><a href="#honer">Jump to honer</a></p>'
