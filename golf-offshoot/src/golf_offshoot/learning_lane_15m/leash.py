@@ -11,13 +11,35 @@ from typing import Any
 
 
 def run_leash_tick() -> dict[str, Any]:
-    out: dict[str, Any] = {"clerical_score": {}, "farm": {}, "consult": {}}
+    out: dict[str, Any] = {
+        "clerical_score": {},
+        "look_push": {},
+        "sibling_execution": {},
+        "farm": {},
+        "consult": {},
+    }
     try:
         from golf_offshoot.learning_lane_15m.clerical_score import maybe_score_executing
 
         out["clerical_score"] = maybe_score_executing()
     except Exception as exc:  # noqa: BLE001 — never take PaperWatch down
         out["clerical_score"] = {"error": f"{type(exc).__name__}: {exc}"}
+    try:
+        from golf_offshoot.learning_lane_15m.look_push import maybe_push_look
+
+        out["look_push"] = maybe_push_look()
+    except Exception as exc:  # noqa: BLE001 — never take PaperWatch down
+        out["look_push"] = {"error": f"{type(exc).__name__}: {exc}"}
+    try:
+        from golf_offshoot.learning_lane_15m.sibling_sync import (
+            maybe_fetch_origin_farm,
+            maybe_observe_sibling_execution,
+        )
+
+        maybe_fetch_origin_farm()
+        out["sibling_execution"] = maybe_observe_sibling_execution()
+    except Exception as ext:  # noqa: BLE001 — never take PaperWatch down
+        out["sibling_execution"] = {"error": f"{type(ext).__name__}: {ext}"}
     try:
         from golf_offshoot.learning_lane_15m.clerical_score import maybe_score_farm
 

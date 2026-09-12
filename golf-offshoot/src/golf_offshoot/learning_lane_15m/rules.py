@@ -348,6 +348,41 @@ def active_execution_rule(
     return live[0] if live else None
 
 
+def set_selecting_execution(
+    rule_id: str,
+    execution: bool,
+    *,
+    root: Path | None = None,
+) -> dict[str, Any]:
+    """Flip one selecting row's execution flag. Never writes golf_kalshi.
+
+    Cloud PARK uses this to drop the chair. Observe-park uses it so this
+    PC's book stops. Does not arm. Does not invent tape.
+    """
+    path = registry_path(root=root)
+    posix = path.as_posix().replace("\\", "/")
+    if "golf_kalshi" in posix.split("/"):
+        raise ValueError("refusing to write golf_kalshi from a 15m execution flip")
+    reg = json.loads(path.read_text(encoding="utf-8"))
+    if not isinstance(reg, dict):
+        raise ValueError("rule registry must be an object")
+    found = False
+    for row in reg.get("rules") or []:
+        if not isinstance(row, dict):
+            continue
+        if str(row.get("id") or "") != str(rule_id):
+            continue
+        if row.get("selects") is not True:
+            raise ValueError(f"{rule_id} is not a selecting rule")
+        row["execution"] = bool(execution)
+        found = True
+        break
+    if not found:
+        raise ValueError(f"{rule_id} is not in the registry")
+    path.write_text(json.dumps(reg, indent=2) + "\n", encoding="utf-8")
+    return {"id": str(rule_id), "execution": bool(execution), "path": str(path)}
+
+
 # ------------------------------------------------------- clause (2): alpha_k
 
 

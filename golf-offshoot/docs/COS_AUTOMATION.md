@@ -41,9 +41,11 @@ ZERO-OBJECTION STOP (read this before assigning):
 Forbidden assigns: score R-SKIP-COINFLIP,
 re-score PARK'd R-SKIP-2TO1-FAVORITE, arm,
 bind, git push to master. Lab is legal when decide_cos_action returns
-lab. CoS does not author the PROPOSED. Consult enable is a file gate. Operator owed
-only rule_reached_n on coinflip, parked favorite, or hour-close is closeout unless F
-is owed (then assign Lab). H is clerical, not a Lab invent. Replacement after consult
+lab. CoS does not author the PROPOSED. Consult enable is a file gate. Name-clear
+from files: Operator owed only rule_reached_n on coinflip or PARK'd+L1 favorite
+is closeout unless F/I/J/K is owed. Executing look (hour-close without L1, or
+L1 without PARK/CONTINUE) is K_look_due → Operator, even if Lab is assigned or
+farm covering. H is clerical, not a Lab invent. Replacement after consult
 has lived is Lab HONER-FROZEN-REPLACE, not Founder.
 
 If action is assign or closeout (and the stop rule does not apply): do

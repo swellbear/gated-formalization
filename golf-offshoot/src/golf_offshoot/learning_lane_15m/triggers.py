@@ -315,9 +315,16 @@ def rule_reached_n(
     target = (bar.get("looks") or {}).get("first_look_n")
     if not target:
         return []
+    from golf_offshoot.learning_lane_15m.clerical_score import scorecard_path
+
     events = []
     for rule in registry.get("rules") or []:
         if not rule.get("selects"):
+            continue
+        rid = str(rule.get("id") or "")
+        # L1 file is the look. Keep paging while executing + no L1 (and leftover
+        # name-clear subjects that never scored).
+        if rid and scorecard_path(rid, root=base, look="L1").is_file():
             continue
         declared = str(rule.get("declared_at") or "")
         if not declared:
@@ -340,7 +347,7 @@ def rule_reached_n(
             events.append(
                 _event(
                     EVENT_RULE_REACHED_N,
-                    str(rule.get("id") or ""),
+                    rid,
                     f"{eligible} eligible windows since declared_at {declared}, at or "
                     f"past the declared n={target}; the falsifier is now rulable",
                 )

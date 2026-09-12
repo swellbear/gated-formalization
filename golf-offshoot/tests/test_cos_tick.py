@@ -5,6 +5,7 @@ from golf_offshoot.learning_lane_15m.cos_tick import (
     ACTION_CLOSEOUT,
     ACTION_QUIET,
     LAB_INVENT_JOB,
+    OPERATOR_LOOK_JOB,
     decide_cos_action,
 )
 from golf_offshoot.learning_lane_15m.crew_tick import (
@@ -13,6 +14,8 @@ from golf_offshoot.learning_lane_15m.crew_tick import (
     REASON_B,
     REASON_F,
     REASON_H,
+    REASON_I,
+    REASON_K,
 )
 
 
@@ -85,6 +88,7 @@ def test_status_done_is_closeout():
 
 
 def test_operator_name_clear_is_closeout_not_score():
+    """Flipped lock: hour-close executing without L1 is the look, not closeout."""
     wake = {
         "roles_owed": [
             _owed(
@@ -103,10 +107,70 @@ def test_operator_name_clear_is_closeout_not_score():
         },
     }
     decision = decide_cos_action(_desk(), wake=wake, crew_tick=wake["crew_tick"])
+    assert decision["action"] == ACTION_ASSIGN
+    assert decision["role"] == "operator"
+    assert decision["assign"] is True
+    assert decision["job"] == OPERATOR_LOOK_JOB
+
+
+def test_coinflip_and_favorite_name_clear_still_closeout():
+    wake = {
+        "roles_owed": [
+            _owed(
+                "operator",
+                reasons=[
+                    "rule_reached_n R-SKIP-COINFLIP",
+                    "rule_reached_n R-SKIP-2TO1-FAVORITE",
+                ],
+            )
+        ],
+        "crew_tick": {
+            "needed": True,
+            "reason_ids": [REASON_A_IDLE, REASON_B],
+            "handled_reason_ids": [],
+        },
+    }
+    decision = decide_cos_action(_desk(), wake=wake, crew_tick=wake["crew_tick"])
     assert decision["action"] == ACTION_CLOSEOUT
     assert decision["reason"] == "name_clear_not_score"
     assert decision["role"] is None
     assert decision["assign"] is False
+
+
+def test_look_due_beats_lab_farm():
+    wake = {
+        "roles_owed": [],
+        "crew_tick": {
+            "needed": True,
+            "reason_ids": [REASON_K, REASON_I],
+            "handled_reason_ids": [],
+        },
+    }
+    decision = decide_cos_action(_desk(), wake=wake, crew_tick=wake["crew_tick"])
+    assert decision["action"] == ACTION_ASSIGN
+    assert decision["role"] == "operator"
+    assert decision["reason"] == "look_due_operator"
+    assert decision["job"] == OPERATOR_LOOK_JOB
+
+
+def test_look_due_beats_assigned_lab():
+    wake = {
+        "roles_owed": [],
+        "crew_tick": {
+            "needed": True,
+            "reason_ids": [REASON_K, REASON_I],
+            "handled_reason_ids": [],
+        },
+    }
+    decision = decide_cos_action(
+        _desk(role="lab", status="assigned", job="invent next farm kind"),
+        wake=wake,
+        crew_tick=wake["crew_tick"],
+    )
+    assert decision["action"] == ACTION_ASSIGN
+    assert decision["role"] == "operator"
+    assert decision["reason"] == "look_due_operator"
+    assert decision["job"] == OPERATOR_LOOK_JOB
 
 
 def test_starved_empty_owed_assigns_lab():

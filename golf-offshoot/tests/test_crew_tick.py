@@ -13,6 +13,7 @@ from golf_offshoot.learning_lane_15m.crew_tick import (
     REASON_E,
     REASON_F,
     REASON_H,
+    REASON_K,
     compute_crew_tick,
     live_selecting_rule_ids,
     stamp_cos_closeout,
@@ -336,6 +337,116 @@ def test_stamping_f_without_assigning_lab_does_not_silence():
 
 def test_this_tree_favorite_park_is_not_a_live_trial():
     assert live_selecting_rule_ids() == ["R-SKIP-HOUR-CLOSE"]
+
+
+def test_chair_stays_occupied_with_l1_until_parked(tmp_path):
+    docs = tmp_path / "golf-offshoot" / "docs"
+    docs.mkdir(parents=True, exist_ok=True)
+    (docs / "LEARNING_LANE_15M_RULES.json").write_text(
+        json.dumps(
+            {
+                "rules": [
+                    {
+                        "id": "R-LIVE-CLOCK",
+                        "kind": "selection",
+                        "selects": True,
+                        "execution": True,
+                    }
+                ]
+            }
+        ),
+        encoding="utf-8",
+    )
+    (docs / "LEARNING_LANE_15M_BURNED_CLASSES.json").write_text(
+        json.dumps({"classes": []}),
+        encoding="utf-8",
+    )
+    (docs / "LEARNING_LANE_15M_SCORECARD_R-LIVE-CLOCK_L1.json").write_text(
+        json.dumps({"n": 70, "passes_every_binding_clause": False}),
+        encoding="utf-8",
+    )
+    assert live_selecting_rule_ids(root=tmp_path) == ["R-LIVE-CLOCK"]
+    from golf_offshoot.learning_lane_15m.farm import live_look_closed
+
+    assert live_look_closed(root=tmp_path) is False
+
+
+def test_look_due_rings_when_lab_assigned(tmp_path):
+    docs = tmp_path / "golf-offshoot" / "docs"
+    docs.mkdir(parents=True, exist_ok=True)
+    (docs / "LEARNING_LANE_15M_RULES.json").write_text(
+        json.dumps(
+            {
+                "rules": [
+                    {
+                        "id": "R-LIVE-CLOCK",
+                        "kind": "selection",
+                        "selects": True,
+                        "execution": True,
+                    }
+                ]
+            }
+        ),
+        encoding="utf-8",
+    )
+    (docs / "LEARNING_LANE_15M_SCORECARD_R-LIVE-CLOCK_L1.json").write_text(
+        json.dumps({"n": 70, "passes_every_binding_clause": False}),
+        encoding="utf-8",
+    )
+    tick = compute_crew_tick(
+        {"watch": _watch(), "roles_owed": []},
+        desk_text=_desk(role="lab", status="assigned", job="invent next farm kind"),
+        hub_ok=True,
+        live_trial_ids=["R-LIVE-CLOCK"],
+        honer_freeze_open=False,
+        farm_open=True,
+        farm_promote=False,
+        root=tmp_path,
+    )
+    assert REASON_K in tick["reason_ids"]
+    assert tick["needed"] is True
+    assert REASON_F not in tick["reason_ids"]
+
+
+def test_rule_reached_n_skips_when_l1_exists(tmp_path):
+    from golf_offshoot.learning_lane_15m.triggers import rule_reached_n
+
+    docs = tmp_path / "golf-offshoot" / "docs"
+    docs.mkdir(parents=True, exist_ok=True)
+    (docs / "LEARNING_LANE_15M_RULES.json").write_text(
+        json.dumps(
+            {
+                "rules": [
+                    {
+                        "id": "R-SKIP-HOUR-CLOSE",
+                        "selects": True,
+                        "execution": True,
+                        "declared_at": "2026-09-01T00:00:00-04:00",
+                    }
+                ]
+            }
+        ),
+        encoding="utf-8",
+    )
+    (docs / "LEARNING_LANE_15M_EVIDENCE_BAR.json").write_text(
+        json.dumps({"looks": {"first_look_n": 70}}),
+        encoding="utf-8",
+    )
+    settled = {}
+    for i in range(80):
+        hour, minute = divmod(i, 60)
+        ticker = f"KXBTC15M-{i}"
+        settled[ticker] = {
+            "window_id": f"w__2026-09-12T{hour:02d}:{minute:02d}:00Z__",
+            "settlement_ts": "2026-09-12T12:00:00-04:00",
+        }
+    current = {"settled": settled}
+    assert [e["ticker"] for e in rule_reached_n(current, root=tmp_path)] == ["R-SKIP-HOUR-CLOSE"]
+    (docs / "LEARNING_LANE_15M_SCORECARD_R-SKIP-HOUR-CLOSE_L1.json").write_text(
+        "{}\n",
+        encoding="utf-8",
+    )
+    assert rule_reached_n(current, root=tmp_path) == []
 
 
 def _write_honer_exam(root, *, open_exam=True, parked=False):

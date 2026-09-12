@@ -4,12 +4,12 @@ The wake already names ``roles_owed``. This block only answers whether a
 Chief of Staff turn is owed. It is not a second SoT. The runner may write
 it; the runner may not become CoS, open a chat, ADMIT, invent, or push.
 
-needed is true when at least one of A–J holds. If unsure, needed stays true
+needed is true when at least one of A–K holds. If unsure, needed stays true
 and the reason says why. Same reason-id set after a CoS closeout stamp is a
 heartbeat, not a doorbell. F_continuation / I_farm_open / J_farm_promote are
 not silenced by that stamp unless the desk is Status=assigned / lab.
 H_honer_freeze is not silenced by the stamp; it clears when honer_consult.json
-photocopies the freeze.
+photocopies the freeze. K_look_due is not silenced until PARK or CONTINUE.
 """
 
 from __future__ import annotations
@@ -56,10 +56,10 @@ REASON_F = "F_continuation"
 REASON_H = "H_honer_freeze"
 REASON_I = "I_farm_open"
 REASON_J = "J_farm_promote"
+REASON_K = "K_look_due"
 
 REGISTRY_REL = Path("golf-offshoot") / "docs" / "LEARNING_LANE_15M_RULES.json"
 BURNED_REL = Path("golf-offshoot") / "docs" / "LEARNING_LANE_15M_BURNED_CLASSES.json"
-SCORECARD_DIR_REL = Path("golf-offshoot") / "docs"
 HONER_LATEST_REL = Path("golf-offshoot") / "data" / "honer_15m" / "latest"
 CONSULT_SNAPSHOT_REL = (
     Path("golf-offshoot") / "data" / "learning_lane_15m" / "latest" / "honer_consult.json"
@@ -168,20 +168,17 @@ def _burned_class_ids(*, root: Path | None = None) -> set[str]:
     return out
 
 
-def _l1_scorecard_exists(rule_id: str, *, root: Path | None = None) -> bool:
-    docs = (root or repo_root()) / SCORECARD_DIR_REL
-    return (docs / f"LEARNING_LANE_15M_SCORECARD_{rule_id}_L1.json").is_file()
-
-
 def live_selecting_rule_ids(
     *,
     root: Path | None = None,
     registry: dict[str, Any] | None = None,
 ) -> list[str]:
-    """Executing selection rules that are still on trial (unscored, unburned).
+    """Executing selection rules still occupying the chair.
 
-    Favorite L1 PARK is dead: it has an L1 scorecard and its class is burned.
-    ``R-SKIP-COINFLIP`` ``execution: false`` is not live.
+    An L1 file is the grade sheet, not an empty chair. The chair stays
+    occupied until ``execution`` is false. Favorite L1 PARK is dead because
+    its execution is false (and its class is burned). ``R-SKIP-COINFLIP``
+    ``execution: false`` is not live.
     """
     payload = registry if registry is not None else _load_json((root or repo_root()) / REGISTRY_REL)
     burned = _burned_class_ids(root=root)
@@ -198,8 +195,6 @@ def live_selecting_rule_ids(
             continue
         class_id = str(row.get("class") or "").strip()
         if rid in burned or class_id in burned:
-            continue
-        if _l1_scorecard_exists(rid, root=root):
             continue
         live.append(rid)
     return live
@@ -285,6 +280,73 @@ def farm_promote_owed(
     try:
         return promote_ready(root=root, registry=registry)
     except Exception:  # noqa: BLE001 — missing tmp registry is not a promote
+        return False
+
+
+OPERATOR_LOOK_DONE = frozenset({"PARK", "CONTINUE"})
+
+
+def seated_selecting_for_look(
+    *,
+    root: Path | None = None,
+    registry: dict[str, Any] | None = None,
+) -> dict[str, Any] | None:
+    """The executing selecting row that can still owe an L1 look."""
+    from golf_offshoot.learning_lane_15m.clerical_score import FORBIDDEN_SCORE_IDS
+    from golf_offshoot.learning_lane_15m.rules import active_execution_rule
+
+    try:
+        seated = active_execution_rule(root=root, registry=registry)
+    except (ValueError, OSError):
+        return None
+    if not seated or seated.get("selects") is not True:
+        return None
+    if seated.get("execution") is not True:
+        return None
+    rid = str(seated.get("id") or "")
+    if not rid or rid in FORBIDDEN_SCORE_IDS:
+        return None
+    return seated
+
+
+def look_owed(
+    *,
+    root: Path | None = None,
+    registry: dict[str, Any] | None = None,
+    look_open: bool | None = None,
+) -> bool:
+    """True when Operator still owes PARK/CONTINUE, or n is hit with no L1.
+
+    Rings even if Lab is assigned / farm covering. Stamp K only after PARK or CONTINUE.
+    """
+    seated = seated_selecting_for_look(root=root, registry=registry)
+    if not seated:
+        return False
+    rid = str(seated.get("id") or "")
+    from golf_offshoot.learning_lane_15m.clerical_score import load_l1_card, operator_look_stamp
+
+    card = load_l1_card(rid, root=root)
+    if operator_look_stamp(card) in OPERATOR_LOOK_DONE:
+        return False
+    if look_open is False:
+        return False
+    if card:
+        return True
+    if look_open is True:
+        return True
+    import os
+
+    from golf_offshoot.learning_lane_15m.paths import has_15m_root_override
+
+    if os.environ.get("PYTEST_CURRENT_TEST") and not has_15m_root_override() and look_open is not True:
+        return False
+    try:
+        from golf_offshoot.learning_lane_15m.clerical_score import gather_lived_windows
+        from golf_offshoot.learning_lane_15m.evidence_bar import load_evidence_bar
+
+        need = int((load_evidence_bar(root=root).get("looks") or {}).get("first_look_n") or 70)
+        return len(gather_lived_windows(seated)) >= need
+    except Exception:  # noqa: BLE001 — blindness is not a look-due doorbell
         return False
 
 
@@ -445,6 +507,7 @@ def compute_crew_tick(
     honer_freeze_snapshot: dict[str, Any] | None = None,
     farm_open: bool | None = None,
     farm_promote: bool | None = None,
+    look_open: bool | None = None,
 ) -> dict[str, Any]:
     """Derive ``crew_tick`` from the wake, the desk, and the last CoS stamp.
 
@@ -628,6 +691,17 @@ def compute_crew_tick(
             )
         )
 
+    k_owed = look_owed(root=root, registry=registry, look_open=look_open)
+    if k_owed:
+        reasons.append(
+            _reason(
+                REASON_K,
+                "L1 look due: leash writes the first-70 card; Operator PARK or CONTINUE "
+                "from that card. Not Systems. Do not stop PaperWatch. Rings even if "
+                "Lab is assigned or farm covering.",
+            )
+        )
+
     # Dedup by id, keep first detail.
     seen: set[str] = set()
     unique: list[dict[str, str]] = []
@@ -666,6 +740,8 @@ def compute_crew_tick(
             for x in handled_quiet
             if x not in {REASON_F, REASON_H, REASON_I, REASON_J}
         ]
+    if k_owed:
+        handled_quiet = [x for x in handled_quiet if x != REASON_K]
 
     if reason_ids and handled_quiet and set(reason_ids) <= set(handled_quiet):
         # Same why, or a subset after the stamp itself retired B. Not a new doorbell.
@@ -772,6 +848,8 @@ def stamp_cos_closeout(
     desk = parse_desk(read_desk_text(root=root))
     if not desk_assigned_lab(desk):
         handled = [x for x in handled if x not in {REASON_F, REASON_H, REASON_I, REASON_J}]
+    if look_owed(root=root):
+        handled = [x for x in handled if x != REASON_K]
     carried = {
         "last_cos_at": at or isoformat_now(),
         "last_cos_commit": str(commit or ""),

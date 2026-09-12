@@ -301,3 +301,85 @@ def maybe_fetch_origin_farm(
     except Exception as exc:  # noqa: BLE001 — fail-open, keep last cache
         result["reason"] = f"{type(exc).__name__}: {exc}"
         return result
+
+
+RULES_BLOB = "golf-offshoot/docs/LEARNING_LANE_15M_RULES.json"
+GOLF_OVERWRITE_NEEDLES = ("golf_kalshi",)
+
+
+def show_rules_argv() -> list[str]:
+    return ["show", f"{ORIGIN_SIBLING}:{RULES_BLOB}"]
+
+
+def maybe_observe_sibling_execution(
+    *,
+    root: Path | None = None,
+    git_run: Callable[..., subprocess.CompletedProcess[str]] | None = None,
+) -> dict[str, Any]:
+    """Drop local selecting execution when the sibling already parked.
+
+    Fail-open. Never sets execution true. Never writes golf_kalshi.
+    """
+    result: dict[str, Any] = {
+        "ok": False,
+        "dropped": [],
+        "reason": "",
+        "show_argv": show_rules_argv(),
+    }
+    try:
+        from golf_offshoot.learning_lane_15m.rules import registry_path, set_selecting_execution
+
+        if git_run is None and os.environ.get("PYTEST_CURRENT_TEST"):
+            result["ok"] = True
+            result["reason"] = "pytest_skip"
+            return result
+        git_root = root if root is not None and (Path(root) / ".git").exists() else repo_root()
+        local_path = registry_path(root=root)
+        posix = local_path.as_posix().replace("\\", "/")
+        if any(n in posix for n in GOLF_OVERWRITE_NEEDLES):
+            result["reason"] = "golf_path"
+            return result
+        git_run = git_run or _git
+        refused = refuse_git_argv(show_rules_argv())
+        if refused:
+            result["reason"] = refused
+            return result
+        shown = git_run(show_rules_argv(), cwd=git_root)
+        if getattr(shown, "returncode", 1) != 0 or not (getattr(shown, "stdout", "") or "").strip():
+            result["reason"] = "rules_blob_unreadable"
+            return result
+        try:
+            sibling = json.loads(shown.stdout)
+        except ValueError:
+            result["reason"] = "rules_blob_not_json"
+            return result
+        if not isinstance(sibling, dict):
+            result["reason"] = "rules_blob_not_object"
+            return result
+        sibling_by_id = {
+            str(row.get("id") or ""): row
+            for row in (sibling.get("rules") or [])
+            if isinstance(row, dict) and str(row.get("id") or "")
+        }
+        local = _load_json(local_path)
+        dropped: list[str] = []
+        for row in local.get("rules") or []:
+            if not isinstance(row, dict) or row.get("selects") is not True:
+                continue
+            rid = str(row.get("id") or "")
+            if not rid or row.get("execution") is not True:
+                continue
+            sib = sibling_by_id.get(rid)
+            if not sib:
+                continue
+            if sib.get("execution") is True:
+                continue
+            set_selecting_execution(rid, False, root=root)
+            dropped.append(rid)
+        result["ok"] = True
+        result["dropped"] = dropped
+        result["reason"] = "dropped" if dropped else "unchanged"
+        return result
+    except Exception as exc:  # noqa: BLE001 — fail-open, keep this PC's book
+        result["reason"] = f"fail_open:{type(exc).__name__}:{exc}"
+        return result

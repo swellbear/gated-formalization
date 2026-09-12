@@ -31,6 +31,7 @@ Read [PROTOCOL.md](../../../docs/agents/PROTOCOL.md) and [docs/OPERATOR_SOFTEN_F
 - Elevate / skill-met / productize / banked-edge
 - Soften a REJECTED idle-breach to “keep moving”
 - Score `R-SKIP-COINFLIP`. Do not re-score PARK'd `R-SKIP-2TO1-FAVORITE`. Naming `rule_reached_n` on the park without scoring is allowed bookkeeping so the wake can clear.
+- Invent tape for an L1 look. If CoS assigned PARK or CONTINUE from the L1 card, read `LEARNING_LANE_15M_SCORECARD_{id}_L1.json` (or call `apply_operator_look`). No card → no-card, do not park, do not score. Do not stop PaperWatch at 70.
 
 ## Done
 
