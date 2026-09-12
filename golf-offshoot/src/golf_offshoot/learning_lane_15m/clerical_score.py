@@ -259,8 +259,8 @@ def maybe_score_executing(*, root: Path | None = None) -> dict[str, Any]:
         if card.get("density_fail") or card.get("undecidable"):
             card["caveat"] = (
                 "L1 written as undecidable / density-fail. Lived skip_count "
-                "is far below expected_skip_rate (floor 10/n), or the look "
-                "filled none. Not a t-test vs δ. Not an ADMIT. Operator PARK "
+                "is below the 10/n density floor, or the look filled none. "
+                "Not a t-test vs δ. Not an ADMIT. Operator PARK "
                 "from this card. This write does not drop execution."
             )
         else:

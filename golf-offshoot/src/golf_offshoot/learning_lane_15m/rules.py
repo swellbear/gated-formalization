@@ -963,8 +963,8 @@ def score_rule(
         }
         card["passes_every_binding_clause"] = False
         card["caveat"] = (
-            "Undecidable / density-fail. Lived skip_count is far below "
-            "expected_skip_rate (floor 10/n), or the look filled none. "
+            "Undecidable / density-fail. Lived skip_count is below the "
+            "10/n density floor, or the look filled none. "
             "Not a t-test vs δ. Not an ADMIT."
         )
         return card
