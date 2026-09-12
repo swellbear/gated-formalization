@@ -35,7 +35,7 @@ NEG = "#8d2b2b"
 SANS = "DejaVu Sans"
 MONO = "DejaVu Sans Mono"
 
-FIG_W = 24.8
+FIG_W = 25.9
 DPI = 100
 ROW_IN = 0.40
 HEADER_IN = 3.20
@@ -53,12 +53,13 @@ COLUMNS: tuple[tuple[str, float, str], ...] = (
     ("near", 7.08, "NEAR LINE"),
     ("spread", 8.28, "SPREAD"),
     ("wide", 9.38, "WIDE-BOOK"),
-    ("kalshi", 10.62, "KALSHI RESULT"),
-    ("pnl", 12.28, "PAPER PNL"),
-    ("why", 14.10, "WHY"),
-    ("source", 20.55, "SOURCE FILE(S)"),
+    ("thin", 10.48, "THIN-BOOK"),
+    ("kalshi", 11.72, "KALSHI RESULT"),
+    ("pnl", 13.38, "PAPER PNL"),
+    ("why", 15.20, "WHY"),
+    ("source", 21.65, "SOURCE FILE(S)"),
 )
-PNL_AX_X = 17.95
+PNL_AX_X = 19.05
 PNL_AX_W = 2.20
 
 
@@ -272,6 +273,7 @@ def render_honer_window_strip() -> Path | None:
                 "near": row.near_line_text,
                 "spread": row.spread_text,
                 "wide": row.delta_text,
+                "thin": row.gamma_text,
                 "pnl": row.pnl_text,
                 "why": why,
                 "source": row.source,

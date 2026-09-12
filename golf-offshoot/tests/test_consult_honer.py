@@ -82,6 +82,39 @@ def test_spread_family_skips_wide_book():
     assert action == "fill"
 
 
+def test_thin_book_consult_skip_when_enabled_snapshot():
+    snap = {
+        "consult_enabled": True,
+        "family": "H-SKIP-THIN-BOOK",
+        "theta": 0.90,
+        "delta": 0.04,
+        "gamma": 0.01,
+    }
+    missing = compose_and_skip(dict(FACTORY_FILL), posted_yes=0.40, spread=None, snapshot=snap)
+    assert missing["action"] == "skip"
+    assert "thin quotes" in missing["reason"]
+    tight = compose_and_skip(dict(FACTORY_FILL), posted_yes=0.40, spread=0.00, snapshot=snap)
+    assert tight["action"] == "skip"
+    assert "gamma" in tight["reason"]
+    action, _reason = express_frozen_honer(snap, posted_yes=0.40, spread=0.05)
+    assert action == "fill"
+
+
+def test_freeze_hash_omits_gamma_when_absent():
+    from golf_offshoot.learning_lane_15m.consult_honer import freeze_hash
+
+    family1 = {
+        "frozen_family": "H-SKIP-RICH-YES",
+        "frozen_theta": 0.81,
+        "declared_at": "2026-09-09T15:44:00-04:00",
+    }
+    assert "gamma" not in family1
+    assert freeze_hash(family1) == freeze_hash(dict(family1))
+    with_gamma = dict(family1)
+    with_gamma["frozen_gamma"] = 0.01
+    assert freeze_hash(with_gamma) != freeze_hash(family1)
+
+
 def test_consult_registry_dark_matches_decide(tmp_path):
     set_15m_root_override(tmp_path / "kalshi_15m")
     try:

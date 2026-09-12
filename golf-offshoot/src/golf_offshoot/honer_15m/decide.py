@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 
-from golf_offshoot.honer_15m.policy import FAMILY_SPREAD
+from golf_offshoot.honer_15m.policy import FAMILY_SPREAD, FAMILY_THIN
 
 
 def posted_mark(market: dict) -> float | None:
@@ -45,8 +45,15 @@ def decide_ticket(
     family: str,
     delta: float,
     spread: float | None,
+    gamma: float = 0.0,
 ) -> tuple[str, str]:
-    """Spread is a skip gate only. Missing bid/ask → richness line only. Never buy NO."""
+    """Skip gates are family-named. Missing bid/ask is thin-book, not a wide-spread skip. Never buy NO."""
+    if str(family) == FAMILY_THIN:
+        if spread is None:
+            return "skip", "thin quotes missing bid/ask"
+        if float(spread) <= float(gamma):
+            return "skip", f"spread {spread:g} <= gamma {gamma:g}"
+        return decide_yes_or_skip(posted_yes, theta)
     if str(family) == FAMILY_SPREAD and spread is not None and float(spread) >= float(delta):
         return "skip", f"spread {spread:g} >= delta {delta:g}"
     return decide_yes_or_skip(posted_yes, theta)

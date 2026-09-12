@@ -749,6 +749,30 @@ def test_menu_fires_even_when_the_desk_would_not_seat_lab(tmp_path):
     assert state["third_family_dated"] is False
 
 
+def test_farm_menu_quiets_amend_once_tmp_catalog_dates_family_3(tmp_path):
+    from golf_offshoot.learning_lane_15m.farm import run_farm_menu
+    from golf_offshoot.learning_lane_15m.paths import set_15m_root_override
+
+    _seed(tmp_path)
+    _honer_files(
+        tmp_path,
+        library={"catalog_exhausted": True, "rows": []},
+        catalog_items=[
+            {"id": "H-SKIP-RICH-YES"},
+            {"id": "H-SKIP-WIDE-SPREAD"},
+            {"id": "H-SKIP-THIN-BOOK"},
+        ],
+    )
+    set_15m_root_override(tmp_path / "kalshi_15m")
+    try:
+        state = run_farm_menu(root=tmp_path, declared_at="2026-09-12T15:10:00-04:00")
+    finally:
+        set_15m_root_override(None)
+    assert state["third_family_dated"] is True
+    assert state["family_amend_owed"] is False
+    assert state["family_amend_reasons"] == []
+
+
 def test_and_skip_of_the_whole_quartet_is_refused_as_fill_none(tmp_path):
     _seed(tmp_path)
     slot = {

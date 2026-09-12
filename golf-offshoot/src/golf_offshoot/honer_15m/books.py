@@ -82,6 +82,7 @@ def record_action(
     exam_k: int | None = None,
     family: str | None = None,
     delta: float | None = None,
+    gamma: float | None = None,
     spread: float | None = None,
 ) -> dict[str, Any]:
     if has_ticket(book, ticker):
@@ -95,6 +96,7 @@ def record_action(
         "theta": theta,
         "family": family,
         "delta": delta,
+        "gamma": gamma,
         "spread": spread,
         "stake": STAKE if action == "fill" else 0.0,
         "close_at": close_at,

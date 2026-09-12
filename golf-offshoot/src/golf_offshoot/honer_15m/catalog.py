@@ -1,4 +1,4 @@
-"""Dated two-item catalog. File order is the picker. Never sorted from tape."""
+"""Dated catalog. File order is the picker. Never sorted from tape."""
 
 from __future__ import annotations
 
@@ -6,9 +6,11 @@ import json
 from typing import Any
 
 from golf_offshoot.honer_15m.paths import catalog_path
-from golf_offshoot.honer_15m.policy import FAMILY_RICH, FAMILY_SPREAD
+from golf_offshoot.honer_15m.policy import FAMILY_RICH, FAMILY_SPREAD, FAMILY_THIN
 
-CATALOG_IDS = (FAMILY_RICH, FAMILY_SPREAD)
+CATALOG_IDS = (FAMILY_RICH, FAMILY_SPREAD, FAMILY_THIN)
+#: Doorbell ``HONER-FAMILY-AMEND`` is taken once items exceed the original two.
+ORIGINAL_DATED_FAMILIES = 2
 BURNED_IDS = frozenset(
     {
         "FLIP",
@@ -34,6 +36,8 @@ ALLOWED_ACTIVATE = frozenset(
         "search_starvation+quote_quality_ok",
     }
 )
+FAMILY2_ACTIVATE = "clip_exhaustion+quote_quality_ok|search_starvation+quote_quality_ok"
+FAMILY3_ACTIVATE = "clip_exhaustion+quote_quality_ok|search_starvation+quote_quality_ok"
 
 
 class CatalogError(ValueError):
@@ -50,6 +54,10 @@ def activate_allowed(activate: str) -> bool:
     return bool(parts) and all(p in ALLOWED_ACTIVATE and p not in {"", "start"} for p in parts)
 
 
+def activate_needs_quotes(activate: str) -> bool:
+    return "quote_quality_ok" in str(activate or "")
+
+
 def _validate_item(item: dict[str, Any], *, index: int) -> None:
     ident = str(item.get("id") or "")
     if not ident:
@@ -63,20 +71,29 @@ def _validate_item(item: dict[str, Any], *, index: int) -> None:
         raise CatalogError(f"catalog item {ident} activate {activate!r} is not file-derived")
 
 
+def _default_catalog() -> dict[str, Any]:
+    return {
+        "schema": 1,
+        "items": [
+            {"id": FAMILY_RICH, "family": FAMILY_RICH, "activate": "start"},
+            {
+                "id": FAMILY_SPREAD,
+                "family": FAMILY_SPREAD,
+                "activate": FAMILY2_ACTIVATE,
+            },
+            {
+                "id": FAMILY_THIN,
+                "family": FAMILY_THIN,
+                "activate": FAMILY3_ACTIVATE,
+            },
+        ],
+    }
+
+
 def load_catalog() -> dict[str, Any]:
     path = catalog_path()
     if not path.is_file():
-        return {
-            "schema": 1,
-            "items": [
-                {"id": FAMILY_RICH, "family": FAMILY_RICH, "activate": "start"},
-                {
-                    "id": FAMILY_SPREAD,
-                    "family": FAMILY_SPREAD,
-                    "activate": "clip_exhaustion+quote_quality_ok|search_starvation+quote_quality_ok",
-                },
-            ],
-        }
+        return _default_catalog()
     payload = json.loads(path.read_text(encoding="utf-8"))
     items = list(payload.get("items") or [])
     for i, item in enumerate(items):
@@ -92,6 +109,26 @@ def catalog_ids() -> list[str]:
         if isinstance(item, dict) and item.get("id"):
             ids.append(str(item["id"]))
     return ids or list(CATALOG_IDS)
+
+
+def catalog_item(ident: str) -> dict[str, Any] | None:
+    payload = load_catalog()
+    for item in payload.get("items") or []:
+        if isinstance(item, dict) and str(item.get("id") or "") == str(ident):
+            return item
+    return None
+
+
+def item_activate(ident: str) -> str:
+    item = catalog_item(ident)
+    if not item:
+        return ""
+    return str(item.get("activate") or "")
+
+
+def third_family_dated() -> bool:
+    """True once a third catalog item exists. Answers HONER-FAMILY-AMEND."""
+    return len(catalog_ids()) > ORIGINAL_DATED_FAMILIES
 
 
 def next_family(active: str) -> str | None:

@@ -33,6 +33,10 @@
     "delta_min": 0.02,
     "delta_max": 0.12,
     "delta_step": 0.01,
+    "start_gamma": 0.01,
+    "gamma_min": 0.00,
+    "gamma_max": 0.03,
+    "gamma_step": 0.01,
     "exam_n": 70,
     "futility_looks": [20, 40],
     "search_starvation_looks": [40, 70],
@@ -41,6 +45,6 @@
     "search_starvation_declared_at": "2026-09-09T17:27:00-04:00",
     "declared_at": "2026-09-09T13:40:00-04:00",
     "permutation_seed": 20260909,
-    "note": "Search knobs move on discovery only. local_regret_v2: step only near the line; fill+NO tightens; skip+YES loosens. Freeze in_band_v1 counts only in-band settles. Search starvation (honer only): at n=40 starve if zero in-band visits; at n=70 starve if in-band < freeze_min_search_settled. Not an exam score and does not increment honer k. Not a retune of R-SKIP-2TO1-FAVORITE. Not a keep."
+    "note": "Search knobs move on discovery only. local_regret_v2: step only near the line; fill+NO tightens; skip+YES loosens. Freeze in_band_v1 counts only in-band settles. Search starvation (honer only): at n=40 starve if zero in-band visits; at n=70 starve if in-band < freeze_min_search_settled. Not an exam score and does not increment honer k. Not a retune of R-SKIP-2TO1-FAVORITE. Not a keep. Family 3 H-SKIP-THIN-BOOK walks gamma (thin quotes or spread <= gamma). Consult stays off."
   }
 }

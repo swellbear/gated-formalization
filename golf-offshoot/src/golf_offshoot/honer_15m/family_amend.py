@@ -1,10 +1,11 @@
-"""HONER-FAMILY-AMEND doorbell from files. Not exam pnl. Not a third family."""
+"""HONER-FAMILY-AMEND doorbell from files. Not exam pnl."""
 
 from __future__ import annotations
 
 import json
 from typing import Any
 
+from golf_offshoot.honer_15m.catalog import third_family_dated
 from golf_offshoot.honer_15m.library import load_library, search_is_parked
 from golf_offshoot.honer_15m.paths import assert_honer_path, exam_score_path, family_amend_path
 from golf_offshoot.localtime import now
@@ -48,22 +49,30 @@ def family_amend_owed_from_files() -> bool:
 
 
 def stamp_family_amend() -> dict[str, Any]:
-    """Write latest/family_amend.json. Does not date a third family. No money keys."""
+    """Write latest/family_amend.json. No money keys. third_family from catalog files."""
     reasons = family_amend_reasons_from_files()
     exhausted = search_is_parked()
     dead = exam_completed_dead_from_files()
+    dated = third_family_dated()
     payload = {
         "schema": 1,
         "lane": "honer_15m",
         "kind": KIND,
-        "owed": bool(reasons),
+        "owed": bool(reasons) and not dated,
         "reasons": reasons,
         "catalog_exhausted": exhausted,
         "exam_completed_dead": dead,
-        "third_family": False,
+        "third_family": dated,
         "framing": (
             "Doorbell from files (library catalog_exhausted or exam completed_dead). "
-            "Not exam pnl. This sidecar does not date a third family."
+            "Not exam pnl. Third family is dated from Honer files when the catalog "
+            "has a third item; this sidecar does not ping Lab."
+            if dated
+            else (
+                "Doorbell from files (library catalog_exhausted or exam completed_dead). "
+                "Not exam pnl. Third family is legal from those files and is dated "
+                "from the catalog, not by pinging Lab."
+            )
         ),
         "updated_at": now().isoformat(),
     }

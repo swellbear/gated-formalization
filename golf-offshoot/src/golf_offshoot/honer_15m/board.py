@@ -26,7 +26,7 @@ from golf_offshoot.honer_15m.paths import (
     trials_path,
 )
 from golf_offshoot.honer_15m.library import load_library
-from golf_offshoot.honer_15m.policy import FAMILY_RICH, FAMILY_SPREAD, load_policy
+from golf_offshoot.honer_15m.policy import FAMILY_RICH, FAMILY_SPREAD, FAMILY_THIN, load_policy
 from golf_offshoot.honer_15m.theta import load_theta
 from golf_offshoot.honer_15m.watch import load_watch_status
 from golf_offshoot.localtime import format_eastern, now, to_eastern
@@ -78,6 +78,8 @@ class HonerRow:
     delta: float | None = None
     spread_text: str = "n/a"
     delta_text: str = "n/a"
+    gamma: float | None = None
+    gamma_text: str = "n/a"
 
 
 @dataclass
@@ -145,6 +147,8 @@ def window_et_label(*, ticker: str = "", close_at: str = "", window_id: str = ""
 def family_label(family: str) -> str:
     if str(family) == FAMILY_SPREAD:
         return "skip-wide-spread"
+    if str(family) == FAMILY_THIN:
+        return "skip-thin-book"
     return "skip-rich-YES"
 
 
@@ -210,6 +214,11 @@ def library_english(
                 "The tape did not visit the line. That cutoff is retired. "
                 "Spread cutoff returned to its start."
             )
+        elif family == FAMILY_THIN:
+            exam_bit = (
+                "The tape did not visit the line. That cutoff is retired. "
+                "Thin-book cutoff returned to its start."
+            )
         else:
             exam_bit = (
                 "The tape did not visit the line. That cutoff is retired. "
@@ -233,22 +242,30 @@ def library_english(
             waiting = not quote_quality_ok()
         except Exception:
             waiting = False
+    from golf_offshoot.honer_15m.catalog import next_family, third_family_dated
+
+    nxt = next_family(family)
+    nxt_label = family_label(nxt) if nxt else ""
     next_bit = "θ still walking"
     if payload.get("catalog_exhausted"):
-        next_bit = "catalog exhausted — search parked; family-amend owed from files; no new family"
-    elif family == FAMILY_SPREAD:
-        next_bit = "spread family walking; no further family after clip"
-    elif owed and waiting:
-        next_bit = "spread family waiting on quotes"
-    elif owed:
-        next_bit = "next family is skip-wide-spread"
-    elif last == "search_untestable":
-        next_bit = "next untestable on this family is skip-wide-spread"
-    elif int(clip_streak) >= int(clip_need):
-        if waiting:
-            next_bit = "θ on clip; spread family waiting on quotes"
+        if third_family_dated() and nxt is None:
+            next_bit = "catalog exhausted — search parked; no further family after thin-book"
+        elif third_family_dated():
+            next_bit = "catalog exhausted stamp is stale; next family is already dated from files"
         else:
-            next_bit = "next family is skip-wide-spread"
+            next_bit = "catalog exhausted — search parked; family-amend owed from files; no new family"
+    elif nxt:
+        if owed and waiting:
+            next_bit = f"{nxt_label} waiting on quotes"
+        elif owed or last == "search_untestable" or int(clip_streak) >= int(clip_need):
+            if waiting and int(clip_streak) >= int(clip_need):
+                next_bit = f"θ on clip; {nxt_label} waiting on quotes"
+            else:
+                next_bit = f"next family is {nxt_label}"
+        else:
+            next_bit = f"{family_label(family)} walking"
+    else:
+        next_bit = f"{family_label(family)} walking; no further family after clip"
     return (
         f"{exam_bit} {retired_n} retired snapshot(s). Next: {next_bit}. "
         f"Not a keep; {_fee_lock_phrase()}."
@@ -301,7 +318,15 @@ def why_sentence(row: dict[str, Any], *, book: str, step: float, band: float = 0
     posted_s = cents(float(posted) if posted is not None else None)
     cutoff_s = cents(float(theta) if theta is not None else None)
     reason = str(row.get("reason") or "")
-    if action == "skip" and reason.startswith("spread"):
+    if action == "skip" and reason.startswith("thin"):
+        spread_s = cents(float(row["spread"]) if row.get("spread") is not None else None)
+        gamma_s = cents(float(row["gamma"]) if row.get("gamma") is not None else None)
+        core = (
+            f"Skipped: quoted book was thin (missing bid/ask, or spread {spread_s} "
+            f"at or below the {gamma_s} thin-book line)."
+        )
+        short = f"skipped thin book {spread_s} vs {gamma_s}"
+    elif action == "skip" and reason.startswith("spread"):
         spread_s = cents(float(row["spread"]) if row.get("spread") is not None else None)
         delta_s = cents(float(row["delta"]) if row.get("delta") is not None else None)
         core = (
@@ -444,6 +469,7 @@ def _row_from_decision(book: str, row: dict[str, Any], *, step: float) -> HonerR
     near = _in_band(posted_f, theta_f, band) if posted_f is not None and theta_f is not None else None
     spread_f = float(row["spread"]) if row.get("spread") is not None else None
     delta_f = float(row["delta"]) if row.get("delta") is not None else None
+    gamma_f = float(row["gamma"]) if row.get("gamma") is not None else None
     return HonerRow(
         ticker=ticker,
         window_id=str(row.get("window_id") or ""),
@@ -481,6 +507,8 @@ def _row_from_decision(book: str, row: dict[str, Any], *, step: float) -> HonerR
         delta=delta_f,
         spread_text=cents(spread_f) if spread_f is not None else "n/a",
         delta_text=cents(delta_f) if delta_f is not None else "n/a",
+        gamma=gamma_f,
+        gamma_text=cents(gamma_f) if gamma_f is not None else "n/a",
     )
 
 
@@ -580,8 +608,8 @@ def _phase_paragraph(
         return (
             "search_parked",
             "Catalog exhausted. Search is parked — no new search fills. Exam stays closed. "
-            "HONER-FAMILY-AMEND is owed from files (catalog_exhausted or completed_dead). "
-            "Not a keep. This tick does not date a third family.",
+            "HONER-FAMILY-AMEND doorbell is from files (catalog_exhausted or completed_dead). "
+            "Not a keep. Dating a next family is from the catalog, not a Lab ping.",
         )
     if exam.get("parked"):
         reason = str(exam.get("park_reason") or "futility")
@@ -653,7 +681,11 @@ def collect_standing() -> HonerStanding:
     family_bit = (
         "Family is skip-a-wide-bid/ask (θ locked as a seed)."
         if family == FAMILY_SPREAD
-        else "Family is skip-rich-YES."
+        else (
+            "Family is skip-a-thin-book (missing quotes or spread at or below γ)."
+            if family == FAMILY_THIN
+            else "Family is skip-rich-YES."
+        )
     )
     what = (
         "Honer is the discovery organ for this 15m gym — not Lineage A. Factory consult is off. "

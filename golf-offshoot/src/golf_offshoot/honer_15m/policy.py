@@ -27,6 +27,10 @@ START_DELTA = 0.04
 DELTA_MIN = 0.02
 DELTA_MAX = 0.12
 DELTA_STEP = 0.01
+START_GAMMA = 0.01
+GAMMA_MIN = 0.00
+GAMMA_MAX = 0.03
+GAMMA_STEP = 0.01
 EXAM_N = 70
 FUTILITY_LOOKS = (20, 40)
 SEARCH_STARVATION_LOOKS = (40, 70)
@@ -41,6 +45,7 @@ DECLARED_AT = "2026-09-09T13:40:00-04:00"
 RULE_ID = "H-SKIP-RICH-YES"
 FAMILY_RICH = "H-SKIP-RICH-YES"
 FAMILY_SPREAD = "H-SKIP-WIDE-SPREAD"
+FAMILY_THIN = "H-SKIP-THIN-BOOK"
 
 
 def load_policy() -> dict[str, Any]:
@@ -65,6 +70,10 @@ def load_policy() -> dict[str, Any]:
         "delta_min": DELTA_MIN,
         "delta_max": DELTA_MAX,
         "delta_step": DELTA_STEP,
+        "start_gamma": START_GAMMA,
+        "gamma_min": GAMMA_MIN,
+        "gamma_max": GAMMA_MAX,
+        "gamma_step": GAMMA_STEP,
         "exam_n": EXAM_N,
         "futility_looks": list(FUTILITY_LOOKS),
         "search_starvation_looks": list(SEARCH_STARVATION_LOOKS),
@@ -101,6 +110,10 @@ def load_policy() -> dict[str, Any]:
     out["delta_min"] = float(pol.get("delta_min", DELTA_MIN))
     out["delta_max"] = float(pol.get("delta_max", DELTA_MAX))
     out["delta_step"] = float(pol.get("delta_step", DELTA_STEP))
+    out["start_gamma"] = float(pol.get("start_gamma", START_GAMMA))
+    out["gamma_min"] = float(pol.get("gamma_min", GAMMA_MIN))
+    out["gamma_max"] = float(pol.get("gamma_max", GAMMA_MAX))
+    out["gamma_step"] = float(pol.get("gamma_step", GAMMA_STEP))
     out["exam_n"] = int(pol.get("exam_n", EXAM_N))
     out["futility_looks"] = [int(x) for x in (pol.get("futility_looks") or FUTILITY_LOOKS)]
     out["search_starvation_looks"] = [
@@ -122,6 +135,13 @@ def load_policy() -> dict[str, Any]:
     return out
 
 
+def float_field(payload: dict[str, Any], key: str, default: float) -> float:
+    """Keep 0.0. Only missing/null uses default."""
+    if key not in payload or payload.get(key) is None:
+        return float(default)
+    return float(payload[key])
+
+
 def clip_theta(theta: float, *, policy: dict[str, Any] | None = None) -> float:
     pol = policy or load_policy()
     lo = float(pol["theta_min"])
@@ -136,11 +156,26 @@ def clip_delta(delta: float, *, policy: dict[str, Any] | None = None) -> float:
     return min(hi, max(lo, float(delta)))
 
 
-def knob_vector(*, family: str, theta: float, delta: float) -> dict[str, Any]:
+def clip_gamma(gamma: float, *, policy: dict[str, Any] | None = None) -> float:
+    pol = policy or load_policy()
+    lo = float(pol["gamma_min"])
+    hi = float(pol["gamma_max"])
+    return min(hi, max(lo, float(gamma)))
+
+
+def knob_vector(
+    *,
+    family: str,
+    theta: float,
+    delta: float,
+    gamma: float = 0.0,
+) -> dict[str, Any]:
+    fam = str(family)
     return {
-        "family": str(family),
+        "family": fam,
         "theta": round(float(theta), 4),
         "delta": round(float(delta), 4),
+        "gamma": round(float(gamma), 4) if fam == FAMILY_THIN else 0.0,
     }
 
 
@@ -174,8 +209,10 @@ def vectors_equal(left: dict[str, Any], right: dict[str, Any]) -> bool:
         family=str(left.get("family") or ""),
         theta=float(left.get("theta") or 0.0),
         delta=float(left.get("delta") or 0.0),
+        gamma=float_field(left, "gamma", 0.0),
     ) == knob_vector(
         family=str(right.get("family") or ""),
         theta=float(right.get("theta") or 0.0),
         delta=float(right.get("delta") or 0.0),
+        gamma=float_field(right, "gamma", 0.0),
     )

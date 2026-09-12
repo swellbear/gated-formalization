@@ -18,6 +18,7 @@ from golf_offshoot.learning_lane_15m.paths import latest_dir_15m
 SNAPSHOT_NAME = "honer_consult.json"
 FAMILY_RICH = "H-SKIP-RICH-YES"
 FAMILY_SPREAD = "H-SKIP-WIDE-SPREAD"
+FAMILY_THIN = "H-SKIP-THIN-BOOK"
 _UNSET: Any = object()
 
 
@@ -73,6 +74,18 @@ def express_frozen_honer(
         delta = float(snapshot.get("delta") or 0.0)
     except (TypeError, ValueError):
         delta = 0.0
+    try:
+        gamma = float(snapshot.get("gamma") or 0.0)
+    except (TypeError, ValueError):
+        gamma = 0.0
+    if family == FAMILY_THIN:
+        if spread is None:
+            return "skip", "honer consult: thin quotes missing bid/ask"
+        if float(spread) <= gamma:
+            return "skip", f"honer consult: spread {spread:g} <= gamma {gamma:g}"
+        if float(posted_yes) >= theta:
+            return "skip", f"honer consult: posted_yes >= theta {theta:g}"
+        return "fill", f"honer consult: posted_yes below theta {theta:g}"
     if family == FAMILY_SPREAD and spread is not None and float(spread) >= delta:
         return "skip", f"honer consult: spread {spread:g} >= delta {delta:g}"
     if float(posted_yes) >= theta:
@@ -142,16 +155,16 @@ def load_honer_exam_score() -> dict[str, Any]:
 def freeze_hash(exam: dict[str, Any]) -> str:
     import hashlib
 
-    blob = json.dumps(
-        {
-            "family": exam.get("frozen_family") or exam.get("family"),
-            "theta": exam.get("frozen_theta") if exam.get("frozen_theta") is not None else exam.get("theta"),
-            "delta": exam.get("frozen_delta") if exam.get("frozen_delta") is not None else exam.get("delta"),
-            "declared_at": exam.get("declared_at"),
-        },
-        sort_keys=True,
-        separators=(",", ":"),
-    )
+    payload = {
+        "family": exam.get("frozen_family") or exam.get("family"),
+        "theta": exam.get("frozen_theta") if exam.get("frozen_theta") is not None else exam.get("theta"),
+        "delta": exam.get("frozen_delta") if exam.get("frozen_delta") is not None else exam.get("delta"),
+        "declared_at": exam.get("declared_at"),
+    }
+    gamma = exam.get("frozen_gamma") if exam.get("frozen_gamma") is not None else exam.get("gamma")
+    if gamma is not None:
+        payload["gamma"] = gamma
+    blob = json.dumps(payload, sort_keys=True, separators=(",", ":"))
     return hashlib.sha256(blob.encode("utf-8")).hexdigest()
 
 
@@ -165,10 +178,15 @@ def knobs_from_exam(exam: dict[str, Any]) -> dict[str, Any]:
         delta = float(exam.get("frozen_delta") if exam.get("frozen_delta") is not None else exam.get("delta") or 0.0)
     except (TypeError, ValueError):
         delta = 0.0
+    try:
+        gamma = float(exam.get("frozen_gamma") if exam.get("frozen_gamma") is not None else exam.get("gamma") or 0.0)
+    except (TypeError, ValueError):
+        gamma = 0.0
     return {
         "family": family,
         "theta": theta,
         "delta": delta,
+        "gamma": gamma,
         "declared_at": str(exam.get("declared_at") or ""),
         "freeze_hash": freeze_hash(exam),
     }
@@ -209,6 +227,7 @@ def write_consult_candidate(
         "family": knobs["family"],
         "theta": knobs["theta"],
         "delta": knobs["delta"],
+        "gamma": knobs["gamma"],
         "declared_at": knobs["declared_at"],
         "freeze_hash": knobs["freeze_hash"],
         "consult_enabled": bool(consult_enabled) and consult_enabled is True,

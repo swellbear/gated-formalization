@@ -26,7 +26,7 @@ from golf_offshoot.honer_15m.paths import (
 from golf_offshoot.honer_15m.family_amend import stamp_family_amend
 from golf_offshoot.honer_15m.library import search_is_parked
 from golf_offshoot.honer_15m.picker import apply_search_starvation, maybe_advance
-from golf_offshoot.honer_15m.policy import FAMILY_RICH, load_policy
+from golf_offshoot.honer_15m.policy import FAMILY_RICH, float_field, load_policy
 from golf_offshoot.honer_15m.score import (
     classify_completed_exam,
     exam_sums,
@@ -134,6 +134,7 @@ def _exam_knobs(exam: dict[str, Any]) -> dict[str, Any]:
         "family": str(exam.get("frozen_family") or FAMILY_RICH),
         "theta": float(exam.get("frozen_theta") or pol["start_theta"]),
         "delta": float(exam.get("frozen_delta") or pol["start_delta"]),
+        "gamma": float_field(exam, "frozen_gamma", pol["start_gamma"]),
     }
 
 
@@ -149,7 +150,15 @@ def _close_exam_to_library(exam: dict[str, Any], *, outcome: str) -> None:
     maybe_advance()
 
 
-def _maybe_act(book: str, market: dict[str, Any], theta: float, *, family: str, delta: float) -> None:
+def _maybe_act(
+    book: str,
+    market: dict[str, Any],
+    theta: float,
+    *,
+    family: str,
+    delta: float,
+    gamma: float = 0.0,
+) -> None:
     ticker = str(market.get("ticker") or "")
     if not ticker or has_ticket(book, ticker):
         return
@@ -159,7 +168,9 @@ def _maybe_act(book: str, market: dict[str, Any], theta: float, *, family: str, 
     if mark is None:
         return
     spread = market_spread(market)
-    action, reason = decide_ticket(mark, theta, family=family, delta=delta, spread=spread)
+    action, reason = decide_ticket(
+        mark, theta, family=family, delta=delta, spread=spread, gamma=gamma
+    )
     exam_k = None
     if book == "exam":
         exam_k = int(load_exam_state().get("k_after") or 0) or None
@@ -175,6 +186,7 @@ def _maybe_act(book: str, market: dict[str, Any], theta: float, *, family: str, 
         exam_k=exam_k,
         family=family,
         delta=delta,
+        gamma=gamma,
         spread=spread,
     )
 
@@ -191,22 +203,39 @@ def run_tick(markets: list[dict[str, Any]] | None = None) -> dict[str, Any]:
             stale = bool(payload.get("quote_bus_stale"))
         except (OSError, ValueError):
             stale = not rows
+    maybe_advance()
     search_parked = search_is_parked()
     search = load_theta()
     search_theta = float(search["theta"])
     search_family = str(search.get("active_family") or FAMILY_RICH)
     search_delta = float(search.get("delta") or load_policy()["start_delta"])
+    search_gamma = float_field(search, "gamma", load_policy()["start_gamma"])
     exam = load_exam_state()
     frozen = exam.get("frozen_theta") if exam_is_open() else None
     exam_family = str(exam.get("frozen_family") or search_family)
     exam_delta = float(exam.get("frozen_delta") or search_delta)
+    exam_gamma = float_field(exam, "frozen_gamma", search_gamma)
 
     for market in rows:
         if is_paper_autobet_candidate(market):
             if not search_parked:
-                _maybe_act("search", market, search_theta, family=search_family, delta=search_delta)
+                _maybe_act(
+                    "search",
+                    market,
+                    search_theta,
+                    family=search_family,
+                    delta=search_delta,
+                    gamma=search_gamma,
+                )
             if frozen is not None:
-                _maybe_act("exam", market, float(frozen), family=exam_family, delta=exam_delta)
+                _maybe_act(
+                    "exam",
+                    market,
+                    float(frozen),
+                    family=exam_family,
+                    delta=exam_delta,
+                    gamma=exam_gamma,
+                )
 
         result = str(market.get("result") or "").strip().lower()
         ticker = str(market.get("ticker") or "")

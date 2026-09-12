@@ -3,7 +3,7 @@
   "lane": "honer_15m",
   "series": "KXBTC15M",
   "declared_at": "2026-09-09T15:08:00-04:00",
-  "note": "Dated order. Picker does not sort this file from tape or pnl. Two families only. Family 2 activate is clip exhaustion or second search-starvation, still with quote quality.",
+  "note": "Dated order. Picker does not sort this file from tape or pnl. Three families. Family 3 is skip-thin-book, dated from files after family 1-2 finished (catalog_exhausted and exam completed_dead). Not factory civil skip. Not a Lab ping.",
   "items": [
     {
       "id": "H-SKIP-RICH-YES",
@@ -26,6 +26,17 @@
       "step": 0.01,
       "activate": "clip_exhaustion+quote_quality_ok|search_starvation+quote_quality_ok",
       "declared_at": "2026-09-09T15:44:00-04:00"
+    },
+    {
+      "id": "H-SKIP-THIN-BOOK",
+      "family": "H-SKIP-THIN-BOOK",
+      "knob": "gamma",
+      "start_gamma": 0.01,
+      "gamma_min": 0.00,
+      "gamma_max": 0.03,
+      "step": 0.01,
+      "activate": "clip_exhaustion+quote_quality_ok|search_starvation+quote_quality_ok",
+      "declared_at": "2026-09-12T15:10:00-04:00"
     }
   ]
 }
