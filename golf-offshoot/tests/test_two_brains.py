@@ -75,7 +75,35 @@ def test_this_window_paint_does_not_sync(tmp_path, monkeypatch):
 
         html = this_window_html()
         assert "This window" in html
+        assert "This window — one clock" in html
+        assert "two brains" not in html
+        assert "consult is off" in html
         assert "Last disagreements" in html
+    finally:
+        set_15m_root_override(None)
+        set_honer_root_override(None)
+        set_two_brains_root_override(None)
+
+
+def test_this_window_two_brains_when_consult_live(tmp_path, monkeypatch):
+    monkeypatch.setattr("golf_offshoot.strategy.paper_book.package_data_dir", lambda: tmp_path / "golf")
+    set_15m_root_override(tmp_path / "kalshi_15m")
+    set_honer_root_override(tmp_path / "honer_15m")
+    set_two_brains_root_override(tmp_path / "two_brains")
+    monkeypatch.setattr(
+        "golf_offshoot.operator_surface.this_window.consult_is_live", lambda: True
+    )
+    monkeypatch.setattr(
+        "golf_offshoot.operator_surface.this_window.factory_chair_selects", lambda: True
+    )
+    try:
+        from golf_offshoot.operator_surface.this_window import factory_title, this_window_html
+
+        assert factory_title() == "Factory — live 70"
+        html = this_window_html()
+        assert "This window — two brains, one clock" in html
+        assert "consult is off" not in html
+        assert "Honer search (observation)" not in html
     finally:
         set_15m_root_override(None)
         set_honer_root_override(None)

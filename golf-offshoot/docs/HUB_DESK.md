@@ -26,7 +26,7 @@ Slots the shell always has a place for: watch, Eastern clock, bankroll, P/L, ope
 
 Golf Home also shows Fast / week / slow meters and the mix one-liner. Meter caps are `sizing_bank` targets for the live book, not the seed $50/$100/$50 card. The mix line includes last-tick skip counts from `last_tick.json` even when tickets are open. Full hunt copy stays in Cockpit (Scoreboard). Golf Farm / Honer stay idle shells: they point at Home / Scoreboard tape and do not say the book is empty when tickets exist.
 
-15m Home is this-window + Factory standing. The paper-window PNG is Scoreboard. Spine, clock legend, and journal sit in Cockpit or Ops. 15m Farm’s first column is the notebook, parked/score-owed/collecting, skip rate and failed clauses, and n/70. Kind/params/date sit beside it. No farm pnl column.
+15m Home is this-window + Factory standing. This-window heading is **one clock** while `consult_enabled` is not true; Honer search/exam are labeled observation. Factory Scoreboard / Ops spine title is **fill-all baseline** when the executing row does not `selects`, and **live 70** only when a selecting rule is on the chair. The paper-window PNG is Scoreboard. Spine, clock legend, and journal sit in Cockpit or Ops. 15m Farm’s first column is the notebook, parked/score-owed/collecting, skip rate and failed clauses, and n/70. Kind/params/date sit beside it. No farm pnl column.
 
 Golf Scoreboard is the closed-ticket tape (the 15m strip analog): when, player, result, after-fee P/L. Halt log sits under it. Home blotter stays open tickets. Session Closed is the count.
 

@@ -301,16 +301,16 @@ def _bold_stars(text: str) -> str:
 
 
 def _spine_html() -> str:
+    from golf_offshoot.operator_surface.this_window import factory_spine_blurb, factory_title
+
     return (
         '<section class="panel spine" id="spine">'
         "<h2>Two boxes — two books — two counters</h2>"
         '<p class="help">Neither book is a keep. Trading NOT ARMED. Do not add bankrolls.</p>'
         '<div class="spine-grid">'
         '<div class="spine-box">'
-        "<h3>Factory — live 70</h3>"
-        "<p>Paper diary of YES tickets under the executing selection rule. "
-        "Named baseline is the comparison, not a second live brain. "
-        "Not scored. Not bound. Not a keep.</p>"
+        f"<h3>{html.escape(factory_title())}</h3>"
+        f"<p>{html.escape(factory_spine_blurb())}</p>"
         '<p><a href="#factory">Jump to factory</a></p>'
         "</div>"
         '<div class="spine-box">'
@@ -744,9 +744,11 @@ def render_html(surface: dict) -> str:
             "Public observability hub</a></p>"
             "</section>"
         )
+        from golf_offshoot.operator_surface.this_window import factory_title
+
         factory_box = (
             '<section class="panel factory-box" id="factory">'
-            "<h2>Factory — live 70</h2>"
+            f"<h2>{html.escape(factory_title())}</h2>"
             '<p class="help">KXBTC15M windows from the join files. No golf WC1 / Ill here.</p>'
             f"{viz_wall}"
             "</section>"

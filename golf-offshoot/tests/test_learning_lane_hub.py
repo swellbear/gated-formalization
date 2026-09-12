@@ -132,7 +132,11 @@ def test_desktop_shell_html_has_lane_selector_and_hides_golf_viz_on_15m(tmp_path
     assert "paper autobet" in page.lower()
     assert "No golf WC1" in page
     assert "Two boxes" in page
-    assert "Factory — live 70" in page
+    assert "Factory — fill-all baseline" in page
+    assert "Factory — live 70" not in page
+    assert "This window — one clock" in page
+    assert "two brains" not in page
+    assert "consult is off" in page
     assert 'id="honer"' in page
     assert 'id="farm"' in page
     assert "This window" in page

@@ -632,7 +632,8 @@ def test_clocks_and_spine_show_meter_without_restyle(honer_tmp):
     spine = _spine_html()
     assert "Only tickets within 10¢ of the line move it." in spine
     assert "Freeze counts only in-band tickets." in spine
-    assert "Factory — live 70" in spine
+    assert "Factory — fill-all baseline" in spine
+    assert "Factory — live 70" not in spine
     assert "Search may move a cutoff." in spine
     books.record_action(
         "search",
