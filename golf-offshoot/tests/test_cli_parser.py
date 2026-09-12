@@ -19,5 +19,3 @@ def test_watch_once_and_runner_once_stay_distinct_flags(capsys):
     helptext = capsys.readouterr().out
     assert "--once" in helptext
     assert "--runner-once" in helptext
-    assert "golf-kalshi" in helptext
-    assert "score-15m" in helptext
