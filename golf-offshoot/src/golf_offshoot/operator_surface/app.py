@@ -9,6 +9,7 @@ import os
 import sys
 import threading
 import webbrowser
+from datetime import datetime, timezone
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 from pathlib import Path
 from urllib.parse import parse_qs, urlparse
@@ -262,6 +263,16 @@ CHART_15M_MISSING = (
 #: How many windows the caption names before it falls back to a count.
 CHART_15M_NAMED = 6
 
+#: 15m glance residual wording. Copied from files on this tree. Never invented.
+GLANCE_NO_PNL = "no pnl on disk"
+GLANCE_ROLES_REQUEST = (
+    "roles_owed is a request for a turn, not a record that a role ran"
+)
+GLANCE_NEVER_SUMMED = (
+    "Lineage A (this tree) and lineage B (published Pages) are two paper books. "
+    "Their pnl figures are never summed."
+)
+
 
 def _chart_15m_path() -> Path | None:
     """The Illustrator's 15m PNG, when it is actually on disk."""
@@ -365,6 +376,214 @@ def _viz_wall_15m_html() -> str:
         f'<figcaption>{"".join(caption_bits)}</figcaption>'
         "</figure>"
         "</section>"
+        "</div>"
+    )
+
+
+def _book_tickers_15m(rec) -> list[str]:
+    """Tickers still named on a window book after settle (positions may be empty)."""
+    keys: list[str] = []
+    for pos in rec.book.positions:
+        pid = str(pos.player_id or "")
+        if pid and pid not in keys:
+            keys.append(pid)
+    for mv in rec.movements:
+        pid = str(mv.player_id or "")
+        if pid and pid not in keys:
+            keys.append(pid)
+    return keys
+
+
+def _settled_at_key(rec) -> datetime:
+    at = rec.settled_at
+    if at is None:
+        return datetime.min.replace(tzinfo=timezone.utc)
+    if at.tzinfo is None:
+        return at.replace(tzinfo=timezone.utc)
+    return at
+
+
+def _last_joined_15m() -> tuple[str, str]:
+    """Latest settled book on this tree: (ticker, pnl text).
+
+    ``settlement_pnl`` is copied off that file. None stays ``no pnl on disk``, never 0.
+    Lineage B is not read here.
+    """
+    from golf_offshoot.learning_lane_15m.paper import event_ticker_from_book, iter_books
+
+    settled = [rec for rec in iter_books() if rec.settled_at is not None]
+    if not settled:
+        return ("", GLANCE_NO_PNL)
+    rec = max(settled, key=_settled_at_key)
+    tickers = _book_tickers_15m(rec)
+    ticker = str(tickers[0] if tickers else event_ticker_from_book(rec))
+    if rec.settlement_pnl is None:
+        return (ticker, GLANCE_NO_PNL)
+    return (ticker, f"{float(rec.settlement_pnl):+.2f}")
+
+
+def _wake_scan_15m() -> tuple[dict, dict]:
+    """Wake already on disk. Display only — does not run a tick or scan Pages."""
+    from golf_offshoot.learning_lane_15m.learn import load_wake_state
+
+    try:
+        wake = load_wake_state()
+    except Exception:
+        wake = None
+    if not isinstance(wake, dict):
+        wake = {}
+    scan = wake.get("scan") if isinstance(wake.get("scan"), dict) else {}
+    return wake, scan
+
+
+def _open_pending_from_books_15m() -> list[dict[str, str]]:
+    """Open local books when the wake has not named a pending window yet."""
+    from golf_offshoot.learning_lane_15m.paper import event_ticker_from_book, iter_books
+
+    rows: list[dict[str, str]] = []
+    for rec in iter_books():
+        if rec.settled_at is not None:
+            continue
+        tickers = _book_tickers_15m(rec)
+        ticker = str(tickers[0] if tickers else event_ticker_from_book(rec))
+        if not ticker:
+            continue
+        rows.append(
+            {
+                "ticker": ticker,
+                "window_id": str(rec.tournament_id or ""),
+                "kind": "open_book",
+            }
+        )
+    return rows
+
+
+def _glance_15m_html() -> str:
+    """Above-the-fold 15m facts. Server-rendered escaped text; wake JSON is not injected."""
+    from golf_offshoot.learning_lane_15m.learn import MISSING_JOIN_BANNER
+
+    watch = load_watch_status()
+    running = bool(watch.get("running"))
+    last_ok = watch.get("last_ok", True)
+    if running and last_ok is False:
+        watch_kind = "fail"
+        watch_bit = "WATCH ON — last cycle failed"
+    elif running:
+        watch_kind = "on"
+        watch_bit = "WATCH ON"
+    else:
+        watch_kind = "off"
+        watch_bit = "WATCH OFF"
+    summary = str(watch.get("last_summary") or "").strip()
+    summary_html = (
+        f'<span class="watch-summary">{html.escape(summary)}</span>' if summary else ""
+    )
+
+    wake, scan = _wake_scan_15m()
+    pending = [row for row in (scan.get("pending") or []) if isinstance(row, dict)]
+    missing = [row for row in (scan.get("paper_join_missing") or []) if isinstance(row, dict)]
+    kept = [row for row in (scan.get("published_only") or []) if isinstance(row, dict)]
+    if not pending:
+        pending = _open_pending_from_books_15m()
+
+    if pending:
+        pend_ticker = str(pending[0].get("ticker") or pending[0].get("window_id") or "window")
+        pending_chip = '<span class="chip pending" data-kind="pending">SETTLE_PENDING</span>'
+        pending_block = (
+            f'<div class="glance-residual" data-kind="pending">'
+            f"<strong>SETTLE_PENDING</strong> — {html.escape(pend_ticker)} — "
+            "waiting on a Kalshi result. Not a missing paper join."
+            "</div>"
+        )
+    else:
+        pending_chip = (
+            '<span class="chip quiet" data-kind="pending-none">no pending window</span>'
+        )
+        pending_block = (
+            '<div class="glance-residual" data-kind="pending-none">'
+            "no SETTLE_PENDING window on this tree"
+            "</div>"
+        )
+
+    if missing:
+        miss_ticker = str(missing[0].get("ticker") or missing[0].get("window_id") or "window")
+        missing_chip = (
+            f'<span class="chip missing" data-kind="missing-join">'
+            f"missing paper join · {html.escape(miss_ticker)}</span>"
+        )
+        missing_block = (
+            f'<div class="glance-residual" data-kind="missing-join">'
+            f"<strong>{html.escape(MISSING_JOIN_BANNER)}</strong> — "
+            f"{html.escape(miss_ticker)} — not a pending window. "
+            f"{html.escape(GLANCE_NO_PNL)}; none is invented."
+            "</div>"
+        )
+    else:
+        missing_chip = (
+            '<span class="chip quiet" data-kind="missing-none">no missing paper join</span>'
+        )
+        missing_block = (
+            '<div class="glance-residual" data-kind="missing-none">'
+            "no missing paper join named on this tree"
+            "</div>"
+        )
+
+    ticker, pnl = _last_joined_15m()
+    if ticker and pnl != GLANCE_NO_PNL:
+        join_line = f"last joined {ticker} pnl={pnl} — copied from that book only"
+        pnl_chip_text = f"last joined {ticker} {pnl}"
+    elif ticker:
+        join_line = f"last joined {ticker} — {GLANCE_NO_PNL}"
+        pnl_chip_text = f"last joined {ticker} · {GLANCE_NO_PNL}"
+    else:
+        join_line = GLANCE_NO_PNL
+        pnl_chip_text = GLANCE_NO_PNL
+    join_block = (
+        f'<div class="glance-join" data-kind="last-joined">{html.escape(join_line)}</div>'
+    )
+    pnl_chip = (
+        f'<span class="chip pnl" data-kind="last-joined-chip">{html.escape(pnl_chip_text)}</span>'
+    )
+
+    owed = [
+        str(row.get("role"))
+        for row in (wake.get("roles_owed") or [])
+        if isinstance(row, dict) and row.get("role")
+    ]
+    if owed:
+        roles_line = f"roles owed: {', '.join(owed)} — {GLANCE_ROLES_REQUEST}"
+    else:
+        roles_line = f"roles owed: none — {GLANCE_ROLES_REQUEST}"
+    roles_block = (
+        f'<p class="glance-roles" data-kind="roles-owed">{html.escape(roles_line)}</p>'
+    )
+
+    lineage_bits = [GLANCE_NEVER_SUMMED]
+    if kept:
+        row = kept[0]
+        bits = [
+            str(row.get("ticker") or "window"),
+            str(row.get("paper_outcome") or "").strip(),
+            str(row.get("published_paper_pnl") or "").strip(),
+        ]
+        lineage_bits.append(
+            "Lineage B kept "
+            + " ".join(b for b in bits if b)
+            + " — not summed into last joined."
+        )
+    lineage_block = (
+        f'<p class="glance-lineage" data-kind="lineage">{html.escape(" ".join(lineage_bits))}</p>'
+    )
+
+    return (
+        '<div class="glance" id="glance-15m">'
+        '<div class="glance-chips">'
+        f'<span class="chip watch-{html.escape(watch_kind)}" data-watch="{html.escape(watch_kind)}">'
+        f"{html.escape(watch_bit)}</span>"
+        f'<span class="chip market">{html.escape(PRIMARY_SERIES)}</span>'
+        f"{pending_chip}{missing_chip}{pnl_chip}{summary_html}"
+        "</div>"
+        f"{pending_block}{missing_block}{join_block}{roles_block}{lineage_block}"
         "</div>"
     )
 
@@ -483,14 +702,7 @@ def render_html(surface: dict) -> str:
         # The 15m board carries its own overlay. Deriving it from the golf viz wall
         # left this lane with no lightbox at all whenever golf had no chart on disk.
         viz_lightbox = _lightbox_html(_chart_15m_path() is not None)
-        watch = load_watch_status()
-        watch_bit = "WATCH ON" if watch.get("running") else "WATCH OFF"
-        settle_banner = (
-            f'<div class="settle">'
-            f"<strong>{watch_bit}</strong> — settle when Kalshi posts result. "
-            f"{html.escape(str(watch.get('last_summary') or ''))}"
-            "</div>"
-        )
+        settle_banner = _glance_15m_html()
     else:
         viz_wall = _viz_wall_html(viz)
         viz_lightbox = _viz_lightbox_html(viz)
@@ -606,6 +818,22 @@ def render_html(surface: dict) -> str:
  /* The 15m board is a wide table-and-strip figure. Give it room to be read in
     place instead of making the lightbox the only legible view. */
  body.lane-15m main {{ max-width: 1560px; }}
+ .glance {{ padding: 12px 20px 14px; background: #eef3f6; border-bottom: 1px solid #c9c2b2; }}
+ .glance .glance-chips {{ display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }}
+ .glance .chip {{ display: inline-block; padding: 4px 10px; border-radius: 4px; font-size: 13px; background: #fff; border: 1px solid #c9c2b2; }}
+ .glance .chip.watch-on {{ background: #1f5c3a; color: #fff; border-color: #1f5c3a; }}
+ .glance .chip.watch-off {{ background: #55606b; color: #fff; border-color: #55606b; }}
+ .glance .chip.watch-fail {{ background: #7a0c0c; color: #fff; border-color: #7a0c0c; }}
+ .glance .chip.market {{ background: #0e1f29; color: #f2e27a; font-weight: 700; }}
+ .glance .chip.pending {{ background: #9a7a10; color: #fff; border-color: #9a7a10; }}
+ .glance .chip.missing {{ background: #d3ccbd; color: #171717; }}
+ .glance .chip.quiet {{ color: #4a4a4a; }}
+ .glance .chip.pnl {{ font-variant-numeric: tabular-nums; font-weight: 700; }}
+ .glance .watch-summary {{ font-size: 12px; color: #4a4a4a; }}
+ .glance .glance-residual {{ margin: 8px 0 0; font-size: 13px; line-height: 1.45; }}
+ .glance .glance-residual[data-kind="pending"] {{ color: #7a5a00; }}
+ .glance .glance-join, .glance .glance-roles, .glance .glance-lineage {{ margin: 6px 0 0; font-size: 13px; line-height: 1.45; }}
+ .glance .glance-lineage {{ color: #4a4a4a; }}
  form.row {{ display: flex; flex-wrap: wrap; gap: 8px; align-items: end; margin: 4px 0 10px; }}
  form.lane-form fieldset {{ border: 1px solid #c9c2b2; padding: 8px 10px; }}
  form.lane-form legend {{ font-size: 13px; font-weight: 700; }}
