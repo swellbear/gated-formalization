@@ -741,7 +741,8 @@ def render_html(surface: dict) -> str:
             f"{last_block}"
             '<p class="help">'
             '<a href="https://swellbear.github.io/gated-formalization/observability-hub/">'
-            "Public observability hub</a></p>"
+            "Public observability hub</a>"
+            " — Pages can lag this gym export. This 8765 book is the live book.</p>"
             "</section>"
         )
         from golf_offshoot.operator_surface.this_window import factory_title

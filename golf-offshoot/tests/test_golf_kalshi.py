@@ -264,6 +264,15 @@ def test_unmatched_and_no_field_skip(gk_root):
     d = decide_golf(_market(), book, recipe_v1(), StaticBrain({}, {}))
     assert d.action == "skip"
     assert d.reason == "no_field"
+    deferred = decide_golf(
+        _market(),
+        book,
+        recipe_v1(),
+        StaticBrain({normalize_name("Scottie Scheffler"): "scottie"}, {}, field_gate="field_deferred"),
+    )
+    assert deferred.action == "skip"
+    assert deferred.reason == "field_deferred"
+    assert deferred.reason != "no_field"
     d2 = decide_golf(_market(), book, recipe_v1(), StaticBrain({normalize_name("rory mcilroy"): "rory"}, {}))
     assert d2.action == "skip"
     assert d2.reason == "unmatched"
@@ -766,7 +775,9 @@ def test_history_id_floor_blocks_paper_fill(gk_root, monkeypatch):
     ]
     hunt = hunt_field("KXLIV-1", markets, history=Hist())
     assert hunt["thin"] is True
-    assert hunt["candidates"] == {}
+    assert hunt["n_recovered"] == 1
+    assert normalize_name("Alpha Player") in hunt["candidates"]
+    assert len(hunt["candidates"]) == 4
     monkeypatch.setattr("golf_offshoot.golf_kalshi.field_hunt.hunt_field", lambda *a, **k: hunt)
     monkeypatch.setattr(
         "golf_offshoot.golf_kalshi.score.shared_ingestor",
@@ -776,7 +787,90 @@ def test_history_id_floor_blocks_paper_fill(gk_root, monkeypatch):
     brain.maybe_refresh("KXLIV-1", "", markets=markets)
     d = decide_golf(markets[0], empty_ledger(), recipe_v1(), brain)
     assert d.action == "skip"
-    assert d.reason == "no_field"
+    assert d.reason == "thin"
+    assert d.reason != "no_field"
+
+
+def test_deferred_listed_keeps_candidates_not_no_field(gk_root, monkeypatch):
+    from golf_offshoot.golf_kalshi.brain import CachedExpertBrain
+
+    names = [
+        "Alpha Player",
+        "Bravo Player",
+        "Charlie Player",
+    ]
+    hunt = {
+        "event_key": "KXCHAMPIONSSAI-26",
+        "espn_id": "",
+        "espn_name": "",
+        "family": "Champions",
+        "field_source": "kalshi_listed",
+        "names": names,
+        "n_names": len(names),
+        "n_recovered": 0,
+        "candidates": {},
+        "listed_candidates": {},
+        "espn_rows": [],
+        "thin": False,
+        "awaiting_history": True,
+        "tried_leagues": ["champ"],
+    }
+    monkeypatch.setattr("golf_offshoot.golf_kalshi.field_hunt.hunt_field", lambda *a, **k: hunt)
+    monkeypatch.setattr(
+        "golf_offshoot.golf_kalshi.score.shared_ingestor",
+        lambda: SimpleNamespace(load_history=lambda **k: (_ for _ in ()).throw(AssertionError("history"))),
+    )
+    markets = [
+        _market(
+            ticker=f"SAI-{i}",
+            event_ticker="KXCHAMPIONSSAI-26",
+            series_ticker="KXCHAMPIONSSAI",
+            yes_sub_title=name,
+            title=f"Will {name} win the Senior i?",
+        )
+        for i, name in enumerate(names)
+    ]
+    brain = CachedExpertBrain()
+    spent = TickBudget(seconds=0.0, max_fills=8, max_brain=2)
+    brain.maybe_refresh("KXCHAMPIONSSAI-26", "", budget=spent, markets=markets)
+    row = ((brain._cache.get("events") or {}).get("KXCHAMPIONSSAI-26") or {})
+    assert row.get("deferred") is True
+    assert row.get("thin") is not True
+    kept = brain.field_candidates("KXCHAMPIONSSAI-26")
+    assert len(kept) == 3
+    assert normalize_name("Alpha Player") in kept
+    d = decide_golf(markets[0], empty_ledger(), recipe_v1(), brain)
+    assert d.action == "skip"
+    assert d.reason == "field_deferred"
+    assert d.reason != "no_field"
+
+
+def test_thin_listed_field_candidates_not_empty(gk_root):
+    from golf_offshoot.golf_kalshi.brain import CachedExpertBrain
+
+    brain = CachedExpertBrain()
+    brain._cache = {
+        "events": {
+            "SAI26": {
+                "names": ["Alpha Player", "Bravo Player"],
+                "n_names": 2,
+                "candidates": {},
+                "thin": True,
+                "probs": {},
+                "field_source": "kalshi_listed",
+            }
+        }
+    }
+    kept = brain.field_candidates("SAI26")
+    assert normalize_name("Alpha Player") in kept
+    d = decide_golf(
+        _market(event_ticker="SAI26", series_ticker="SAI26", yes_sub_title="Alpha Player"),
+        empty_ledger(),
+        recipe_v1(),
+        brain,
+    )
+    assert d.reason == "thin"
+    assert d.reason != "no_field"
 
 
 def test_tick_writes_skip_reason_counts_not_per_market_files(gk_root):
@@ -983,7 +1077,11 @@ def test_budget_miss_does_not_poison_listed_cache(gk_root, monkeypatch):
     row = ((brain._cache.get("events") or {}).get("KXLIV-1") or {})
     assert row.get("awaiting_history") is True
     assert row.get("thin") is False
+    assert row.get("deferred") is True
     assert not row.get("probs")
+    kept = brain.field_candidates("KXLIV-1")
+    assert normalize_name("Alpha Player") in kept
+    assert normalize_name("Bravo Player") in kept
     room = TickBudget(seconds=30, max_fills=8, max_brain=2)
     brain.maybe_refresh("KXLIV-1", "", budget=room, markets=[_market(series_ticker="KXLIV")])
     assert history_calls == [1]
@@ -1462,6 +1560,12 @@ def test_hub_shows_mix_and_cap_shares(gk_root, tmp_path):
     assert "This week 100" in page
     assert "Closed tickets" in page
     assert "no closed tickets" in page
+    home = page[page.index("Open tickets") : page.index("Thinking")]
+    ops = page[page.index("<h3>Recipe</h3>") :]
+    assert "event dollars at 5% of bank" in ops
+    assert "ticket trim was one-time on v1" in ops
+    assert "mix_event_cap is that dollar gate" in ops
+    assert "event dollars at 5% of bank" not in home
 
 
 def test_hub_thin_quote_hides_noisy_dollar_edge(gk_root):

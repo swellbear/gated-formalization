@@ -155,7 +155,7 @@ def session_blotter_15m() -> tuple[str, str]:
 
     from golf_offshoot.learning_lane_15m.watch import load_watch_status
     from golf_offshoot.localtime import format_eastern, now, to_eastern
-    from golf_offshoot.operator_surface.this_window import this_window_html
+    from golf_offshoot.operator_surface.this_window import factory_title, this_window_html
 
     watch = load_watch_status()
     running = bool(watch.get("running"))
@@ -216,7 +216,10 @@ def session_blotter_15m() -> tuple[str, str]:
         '<div id="desk-blotter" class="desk-blotter">'
         + trial_glance_html()
         + this_window_html()
-        + f'<section class="panel" id="factory-home"><h2>Factory</h2>{standing}</section>'
+        + (
+            f'<section class="panel" id="factory-home">'
+            f"<h2>{html.escape(factory_title())}</h2>{standing}</section>"
+        )
         + "</div>"
     )
     return session, blotter

@@ -132,6 +132,15 @@ def screen_golf(
     from golf_offshoot.golf_kalshi.espn_bind import event_key_for
 
     event_key = event_key_for(market)
+    gate = ""
+    if hasattr(brain, "field_gate"):
+        try:
+            gate = str(brain.field_gate(event_key) or "")
+        except Exception:
+            gate = ""
+    if gate:
+        q = quarantine_row(market, reason=gate)
+        return _skip(gate, market, sleeve=sleeve, yes_ask=yes_f, quarantine=q, field_source=src)
     candidates = brain.field_candidates(event_key)
     if not candidates:
         q = quarantine_row(market, reason="no_field")

@@ -49,7 +49,7 @@ class TickBudget:
 
 class PlayerBrain(Protocol):
     def field_candidates(self, event_key: str) -> dict[str, str]:
-        """normalized_name -> player_id. Empty means the brain cannot see the field."""
+        """normalized_name -> player_id. Empty means no listed/ESPN names, not a deferred hunt."""
 
     def model_p(self, player_id: str, horizon: str, *, event_key: str = "") -> float | None: ...
 
@@ -77,6 +77,7 @@ class StaticBrain:
         field_source: str = "espn",
         holes: dict[str, int] | None = None,
         event_started: bool = False,
+        field_gate: str = "",
     ) -> None:
         self._candidates = dict(candidates or {})
         self._probs = {k: dict(v) for k, v in (probs or {}).items()}
@@ -84,6 +85,7 @@ class StaticBrain:
         self._field_source = field_source
         self._holes = dict(holes or {})
         self._event_started = bool(event_started)
+        self._field_gate = str(field_gate or "")
 
     def player_holes(self, player_id: str, event_key: str = "") -> int | None:
         del event_key
@@ -112,6 +114,10 @@ class StaticBrain:
     def field_source(self, event_key: str) -> str:
         del event_key
         return self._field_source
+
+    def field_gate(self, event_key: str) -> str:
+        del event_key
+        return self._field_gate
 
     def maybe_refresh(
         self,
@@ -158,6 +164,17 @@ def _hunt_fp(hunt: dict[str, Any], fingerprint: str) -> str:
     if names:
         return fingerprint_scores([{"name": n} for n in names])
     return fingerprint or ""
+
+
+def _listed_candidates(cached: dict[str, Any], hunt: dict[str, Any] | None = None) -> dict[str, str]:
+    from golf_offshoot.golf_kalshi.field_hunt import listed_name_candidates
+
+    blob = hunt or cached
+    listed = blob.get("listed_candidates") or blob.get("candidates") or {}
+    if isinstance(listed, dict) and listed:
+        return {str(k): str(v) for k, v in listed.items()}
+    names = list(blob.get("names") or cached.get("names") or [])
+    return listed_name_candidates(names)
 
 
 class CachedExpertBrain:
@@ -217,10 +234,10 @@ class CachedExpertBrain:
             row["thin"] = False
             row["field_source"] = "espn"
         elif hunt.get("awaiting_history"):
-            row["candidates"] = {}
+            row["candidates"] = _listed_candidates(row, hunt)
             row["thin"] = False
         else:
-            row["candidates"] = dict(hunt.get("candidates") or {})
+            row["candidates"] = _listed_candidates(row, hunt)
             row["thin"] = bool(hunt.get("thin"))
         self._cache.setdefault("events", {})[event_key] = row
         self._dirty = True
@@ -232,15 +249,38 @@ class CachedExpertBrain:
         cached = (self._cache.get("events") or {}).get(event_key) or {}
         return str(cached.get("field_source") or "")
 
+    def field_gate(self, event_key: str) -> str:
+        """Honest skip when a listed field is only deferred or thin, not empty."""
+        if self.inner is not None:
+            if hasattr(self.inner, "field_gate"):
+                return str(self.inner.field_gate(event_key) or "")
+            return ""
+        cached = (self._cache.get("events") or {}).get(event_key) or {}
+        if cached.get("probs"):
+            return ""
+        src = str(cached.get("field_source") or "")
+        espn_id = str(cached.get("espn_id") or "")
+        names = list(cached.get("names") or [])
+        cands = cached.get("candidates") if isinstance(cached.get("candidates"), dict) else {}
+        listed = src == "kalshi_listed" or (bool(names) and not espn_id)
+        if not listed or (not names and not cands):
+            return ""
+        if cached.get("thin"):
+            return "thin"
+        return "field_deferred"
+
     def field_candidates(self, event_key: str) -> dict[str, str]:
         if self.inner is not None:
             return self.inner.field_candidates(event_key)
         cached = (self._cache.get("events") or {}).get(event_key) or {}
-        if cached.get("thin") and not cached.get("probs"):
-            return {}
         names = cached.get("candidates") or {}
         if isinstance(names, dict) and names:
             return {str(k): str(v) for k, v in names.items()}
+        listed = list(cached.get("names") or [])
+        if listed:
+            from golf_offshoot.golf_kalshi.field_hunt import listed_name_candidates
+
+            return listed_name_candidates(listed)
         return {}
 
     def model_p(self, player_id: str, horizon: str, *, event_key: str = "") -> float | None:
@@ -317,6 +357,7 @@ class CachedExpertBrain:
                 row["candidates"] = scored.get("candidates") or cached.get("candidates") or {}
                 row["field_source"] = "espn"
                 row["thin"] = False
+                row["deferred"] = False
                 row["fp"] = scored.get("fp") or live_fp
                 row["n_players"] = scored.get("n_players") or 0
                 hunt_summary["field_source"] = "espn"
@@ -344,22 +385,28 @@ class CachedExpertBrain:
         if budget is not None and (not budget.can_brain() or budget.remaining() < 1.5):
             hunt_summary["deferred"] = True
             hunt_summary["field_source"] = "kalshi_listed"
-            self.hunts_this_tick.append(hunt_summary)
+            row = dict(cached)
+            row["deferred"] = True
+            row["field_source"] = "kalshi_listed"
+            row["candidates"] = _listed_candidates(row)
+            hunt_summary["n_names"] = row.get("n_names") or len(names)
+            self._store_event(event_key, row, hunt_summary)
             return
         if budget is not None:
             budget.note_brain()
         history = shared_ingestor().load_history(include_in_progress=False)
         hunt = hunt_field(event_key, list(markets or []), history=history, boards=self._boards)
-        listed = hunt.get("listed_candidates") or hunt.get("candidates") or {}
+        listed = _listed_candidates(cached, hunt)
         hunt_summary["n_recovered"] = hunt.get("n_recovered") or 0
         hunt_summary["field_source"] = "kalshi_listed"
         row = dict(cached)
         row["brain_version"] = BRAIN_VERSION
         row["awaiting_history"] = False
+        row["deferred"] = False
         row["n_recovered"] = hunt.get("n_recovered") or 0
-        if hunt.get("thin") or not listed or not history_floor_ok(int(hunt.get("n_names") or 0), int(hunt.get("n_recovered") or 0)):
+        if hunt.get("thin") or not history_floor_ok(int(hunt.get("n_names") or len(names)), int(hunt.get("n_recovered") or 0)):
             row["probs"] = {}
-            row["candidates"] = {}
+            row["candidates"] = listed
             row["field_source"] = "kalshi_listed"
             row["thin"] = True
             hunt_summary["thin"] = True
