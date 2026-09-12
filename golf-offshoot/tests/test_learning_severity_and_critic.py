@@ -44,6 +44,15 @@ def test_each_operator_exception_names_operator():
         assert "operator" in roles_owed_for(kind), kind
 
 
+def test_a_window_hole_does_not_owe_clerical_figures():
+    owed = roles_owed_for(triggers.EVENT_WINDOW_SEQUENCE_GAP)
+    assert "digestor" in owed
+    assert "operator" in owed
+    assert "digest-figures" not in owed
+    assert "systems" not in owed
+    assert "validator" not in owed
+
+
 # --------------------------------- Part 2: human digestor has triggers again
 
 

@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import json
 import os
 from pathlib import Path
 from types import SimpleNamespace
@@ -39,6 +40,8 @@ from golf_offshoot.operator_surface.reload import (
     read_git_tip,
     supervise_hub_child,
 )
+
+_DESK_JS = Path(__file__).resolve().parents[1] / "src" / "golf_offshoot" / "operator_surface" / "desk.js"
 
 
 def _git_repo(root: Path, *, ref: str = "refs/heads/master", sha: str = "aaa111") -> Path:
@@ -139,6 +142,12 @@ def test_hub_code_files_watch_the_lane_package(tmp_path):
     names = {path.name for path in hub_code_files(pkg)}
 
     assert {"runner.py", "learn.py", "loop.py", "app.py", "__main__.py"} <= names
+
+
+def test_hub_code_files_watch_desk_assets():
+    names = {path.name for path in hub_code_files()}
+    assert "desk.css" in names
+    assert "desk.js" in names
 
 
 def test_noise_names_skip_editor_temps():
@@ -259,7 +268,7 @@ def test_artifact_watch_skips_tmp(tmp_path):
     assert "401811963_live_x.txt.tmp" not in names
 
 
-def test_rebuild_surface_bumps_generation_trigger(tmp_path):
+def test_rebuild_surface_does_not_bump_generation(tmp_path):
     (tmp_path / "latest").mkdir()
     live = tmp_path / "latest" / "401811963_live_x.txt"
     live.write_text("first live table\nnever auto-bet\n", encoding="utf-8")
@@ -274,10 +283,9 @@ def test_rebuild_surface_bumps_generation_trigger(tmp_path):
     assert "first live table" in state["surface"]["honesty"].ranked.text
     live.write_text("second live table after pull\nnever auto-bet\n", encoding="utf-8")
     rebuild_surface(state)
-    state["generation"] = int(state["generation"]) + 1
     state["reload_kind"] = "artifacts"
     assert "second live table after pull" in state["surface"]["honesty"].ranked.text
-    assert state["generation"] == 1
+    assert state["generation"] == 0
 
 
 def test_hub_child_command_windows_module_form():
@@ -330,8 +338,10 @@ def test_same_lane_query_does_not_rebuild_surface(monkeypatch):
 
 def test_html_includes_watch_poll_and_no_cash_controls(tmp_path):
     page = render_html(build_surface(artifact_root=tmp_path, viz_root=tmp_path / "viz"))
-    assert "/api/watch" in page
-    assert "location.reload" in page
+    js = _DESK_JS.read_text(encoding="utf-8")
+    assert "/desk.js" in page
+    assert "/api/watch" in js
+    assert "location.reload" in js
     assert 'value="paper-deposit"' not in page
     assert 'value="cash-out"' not in page
 
@@ -491,14 +501,16 @@ def test_refresh_existing_hub_window_uses_found_window():
 def test_html_watch_script_reloads_same_tab_on_generation(tmp_path):
     """Generation bump reloads this tab. A single /api/watch miss must not."""
     page = render_html(build_surface(artifact_root=tmp_path, viz_root=tmp_path / "viz"))
-    assert "/api/watch" in page
-    assert "if (reloading) return;" in page
-    assert "lost = true" not in page
-    assert "if (lost) { location.reload(); return; }" not in page
-    assert "if (s.generation === gen) return;" in page
-    assert "reloading = true;" in page
-    assert "location.reload();" in page
-    assert "if (!r.ok) throw new Error" in page
+    js = _DESK_JS.read_text(encoding="utf-8")
+    assert "/desk.js" in page
+    assert "/api/watch" in js
+    assert "if (reloading) return;" in js
+    assert "lost = true" not in js
+    assert "if (lost) { location.reload(); return; }" not in js
+    assert "s.generation !== gen" in js
+    assert "reloading = true;" in js
+    assert "location.reload();" in js
+    assert "if (!r.ok) throw new Error" in js
 
 
 # --- 15m board chrome ---------------------------------------------------------
@@ -605,17 +617,28 @@ def test_api_watch_generation_and_soft_reload(tmp_path):
     try:
         host, port = httpd.server_address[:2]
         conn = HTTPConnection(host, port, timeout=5)
-        conn.request("GET", "/api/watch")
+        conn.request("GET", "/api/watch?lane=golf")
         payload = conn.getresponse().read().decode("utf-8")
         assert '"generation": 0' in payload
+        first = json.loads(payload)
         (tmp_path / "latest" / "401811963_live_x.txt").write_text("v2 after pull\nnever auto-bet\n", encoding="utf-8")
         rebuild_surface(state)
-        state["generation"] = 1
         state["reload_kind"] = "artifacts"
-        conn.request("GET", "/api/watch")
+        conn.request("GET", "/api/watch?lane=golf")
         later = conn.getresponse().read().decode("utf-8")
-        assert '"generation": 1' in later
-        assert "artifacts" in later
+        second = json.loads(later)
+        assert second["generation"] == 0
+        assert second["kind"] == "artifacts"
+        assert "hash" in second
+        conn.request("GET", "/text")
+        body = conn.getresponse().read().decode("utf-8")
+        assert "v2 after pull" in body
+        state["generation"] = 1
+        state["reload_kind"] = "code"
+        conn.request("GET", "/api/watch?lane=golf")
+        code = json.loads(conn.getresponse().read().decode("utf-8"))
+        assert code["generation"] == 1
+        assert code["kind"] == "code"
         conn.request("GET", "/text")
         body = conn.getresponse().read().decode("utf-8")
         assert "v2 after pull" in body
@@ -623,3 +646,63 @@ def test_api_watch_generation_and_soft_reload(tmp_path):
     finally:
         httpd.shutdown()
         httpd.server_close()
+
+
+def test_watch_payload_hash_changes_when_golf_ticket_would(monkeypatch):
+    from golf_offshoot.operator_surface.desk import watch_payload
+
+    def _board(tickets):
+        return {
+            "watch": "on",
+            "watch_age": "3:00p",
+            "cycles": 1,
+            "halt_reason": "",
+            "bankroll": 200.0,
+            "pnl": 0.0,
+            "fees_paid": 0.0,
+            "sleeves": {"fast": 0, "week": 0, "slow": 0},
+            "tickets": tickets,
+            "catalog": [],
+            "series": [],
+            "unmatched": [],
+            "recipe": {
+                "seed": 200,
+                "cap_fast": 50,
+                "cap_week": 100,
+                "cap_slow": 50,
+                "recipe": "v1.1",
+                "declared_at": "",
+                "player_brain": "x",
+            },
+            "png": False,
+            "png_name": "",
+            "last_tick": {},
+            "booked_tickers": set(),
+        }
+
+    current = {"board": _board([])}
+    monkeypatch.setattr("golf_offshoot.golf_kalshi.hub.collect_board", lambda: current["board"])
+    first = watch_payload(generation=0, kind="ok", lane="golf")
+    current["board"] = _board(
+        [
+            {
+                "player": "Rory",
+                "title": "Rory top 10",
+                "sleeve": "week",
+                "stake": 10,
+                "quote": {"yes_ask": "0.40"},
+                "status": "open",
+                "ticker": "KX-1",
+            }
+        ]
+    )
+    second = watch_payload(generation=0, kind="ok", lane="golf")
+    assert first["generation"] == 0
+    assert first["lane"] == "golf"
+    assert first["hash"] != second["hash"]
+    assert "no open tickets" in first["blotter_html"]
+    assert "Rory" in second["blotter_html"]
+    assert "Player" in first["blotter_html"]
+    fifteen = watch_payload(generation=0, kind="ok", lane="learning_lane_15m")
+    assert fifteen["lane"] == "learning_lane_15m"
+    assert "Rory" not in fifteen["blotter_html"]

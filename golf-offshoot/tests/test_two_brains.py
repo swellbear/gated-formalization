@@ -60,6 +60,28 @@ def test_skip_vs_fill_disagreement_has_no_money(tmp_path, monkeypatch):
         set_two_brains_root_override(None)
 
 
+def test_this_window_paint_does_not_sync(tmp_path, monkeypatch):
+    monkeypatch.setattr("golf_offshoot.strategy.paper_book.package_data_dir", lambda: tmp_path / "golf")
+    set_15m_root_override(tmp_path / "kalshi_15m")
+    set_honer_root_override(tmp_path / "honer_15m")
+    set_two_brains_root_override(tmp_path / "two_brains")
+
+    def boom(*args, **kwargs):
+        raise AssertionError("hub paint must not rewrite the two-brains journal")
+
+    monkeypatch.setattr("golf_offshoot.two_brains.journal.sync", boom)
+    try:
+        from golf_offshoot.operator_surface.this_window import this_window_html
+
+        html = this_window_html()
+        assert "This window" in html
+        assert "Last disagreements" in html
+    finally:
+        set_15m_root_override(None)
+        set_honer_root_override(None)
+        set_two_brains_root_override(None)
+
+
 def test_this_window_html_has_no_combined(tmp_path, monkeypatch):
     monkeypatch.setattr("golf_offshoot.strategy.paper_book.package_data_dir", lambda: tmp_path / "golf")
     set_15m_root_override(tmp_path / "kalshi_15m")

@@ -34,5 +34,10 @@ def save_wake_state(state: dict[str, Any]) -> Path:
     dest = wake_state_path()
     dest.parent.mkdir(parents=True, exist_ok=True)
     assert_not_golf_path(dest)
-    dest.write_text(json.dumps(state, indent=2) + "\n", encoding="utf-8")
+    tmp = dest.with_name(dest.name + ".tmp")
+    tmp.write_text(
+        json.dumps(state, separators=(",", ":"), ensure_ascii=True) + "\n",
+        encoding="utf-8",
+    )
+    tmp.replace(dest)
     return dest

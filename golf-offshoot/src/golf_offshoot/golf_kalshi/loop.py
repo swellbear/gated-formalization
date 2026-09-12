@@ -281,9 +281,9 @@ def run_tick(
     save_ledger(led)
     halted, halt_why = halt_new_fills(led, rec)
     if halted and not led.get("halted"):
-        led = engage_halt(led, halt_why, resume_rule=rec.resume_rule)
-        save_ledger(led)
+        led = engage_halt(led, halt_why, recipe=rec)
         _notify_halt(halt_why)
+    save_ledger(led)
     if settle.get("joined"):
         _notify_settle(int(settle["joined"]))
         try:

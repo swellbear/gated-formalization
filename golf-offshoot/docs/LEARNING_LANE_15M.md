@@ -143,7 +143,7 @@ This PR implements **`KXBTC15M` only**.
 ## Commands
 
 ```bash
-python -m golf_offshoot hub                              # default Golf Phase 1
+python -m golf_offshoot hub                              # default Golf (Kalshi)
 python -m golf_offshoot hub --lane learning_lane_15m
 python -m golf_offshoot lane-15m                         # ingest → live → paper autobet → settle join
 python -m golf_offshoot lane-15m --watch                 # keep the paper loop repeating; prints the wake each cycle

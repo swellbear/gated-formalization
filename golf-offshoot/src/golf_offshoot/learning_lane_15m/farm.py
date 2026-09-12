@@ -614,6 +614,80 @@ def settled_n(notebook: dict[str, Any], *, root: Path | None = None) -> int:
         return 0
 
 
+_CLAUSE_FACE = (
+    ("clause_1_paired_t_vs_floor", "1"),
+    ("clause_4_positive_side", "4"),
+    ("clause_5_matched_exposure", "5"),
+)
+
+
+def farm_card_why(card: dict[str, Any]) -> str:
+    """Skip rate and which binding clauses failed. No farm pnl figures."""
+    if not card:
+        return ""
+    bits: list[str] = []
+    try:
+        rate = float(card.get("skip_rate"))
+    except (TypeError, ValueError):
+        rate = None
+    if rate is not None:
+        bits.append(f"skip {round(rate * 100)}%")
+    else:
+        skip_count = card.get("skip_count")
+        n = card.get("n")
+        if skip_count is not None and n:
+            bits.append(f"skip {skip_count}/{n}")
+    failed: list[str] = []
+    passed: list[str] = []
+    for key, label in _CLAUSE_FACE:
+        row = card.get(key)
+        if not isinstance(row, dict) or "passes" not in row:
+            continue
+        if row.get("passes") is True:
+            passed.append(label)
+        elif row.get("passes") is False:
+            failed.append(label)
+    if failed:
+        bits.append("clauses " + ",".join(failed) + " fail")
+    elif passed:
+        bits.append("clauses pass")
+    return " · ".join(bits)
+
+
+def _join_why(*parts: str) -> str:
+    return " · ".join(part for part in parts if part)
+
+
+def notebook_face(
+    notebook: dict[str, Any],
+    *,
+    root: Path | None = None,
+    farm: dict[str, Any] | None = None,
+    need: int | None = None,
+    n: int | None = None,
+) -> tuple[str, str]:
+    """Status plus one-line why. Collecting / score owed / parked / keeper / queued. Not live."""
+    rid = str(notebook.get("id") or "")
+    card = load_farm_scorecard(rid, root=root) if rid else {}
+    need_n = int(need if need is not None else first_look_n(root=root))
+    bar = farm_card_why(card)
+    if card.get("passes_every_binding_clause") is True:
+        keepers = keeper_notebooks(root=root, farm=farm)
+        head = keepers[0] if keepers else None
+        if head and str(head.get("id") or "") == rid:
+            return "keeper", _join_why(bar, "eligible · not live")
+        return "queued", _join_why(bar, "eligible · not live")
+    if card and card.get("passes_every_binding_clause") is False:
+        return "parked", _join_why(bar, "not a keeper")
+    if n is None:
+        n = settled_n(notebook, root=root)
+    if n >= need_n and not card:
+        return "score owed", f"{need_n} reached · farm card not written"
+    if n >= need_n and card:
+        return "waiting", bar or "farm card present"
+    return "collecting", ""
+
+
 def notebook_status(
     notebook: dict[str, Any],
     *,
@@ -621,19 +695,6 @@ def notebook_status(
     farm: dict[str, Any] | None = None,
     need: int | None = None,
 ) -> str:
-    """waiting / keeper / queued / parked. Not live."""
-    rid = str(notebook.get("id") or "")
-    card = load_farm_scorecard(rid, root=root) if rid else {}
-    n = settled_n(notebook, root=root)
-    need_n = int(need if need is not None else first_look_n(root=root))
-    if card.get("passes_every_binding_clause") is True:
-        keepers = keeper_notebooks(root=root, farm=farm)
-        head = keepers[0] if keepers else None
-        if head and str(head.get("id") or "") == rid:
-            return "keeper"
-        return "queued"
-    if card and card.get("passes_every_binding_clause") is False:
-        return "parked"
-    if n >= need_n and not card:
-        return "waiting"
-    return "waiting"
+    """collecting / score owed / keeper / queued / parked. Not live."""
+    status, _why = notebook_face(notebook, root=root, farm=farm, need=need)
+    return status

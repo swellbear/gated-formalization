@@ -27,6 +27,8 @@ from golf_offshoot.learning_lane_15m.farm import (
     keeper_notebooks,
     live_look_closed,
     next_promote,
+    notebook_face,
+    notebook_status,
     product_skip_kinds,
     promote_ready,
     refuse_reason,
@@ -633,4 +635,106 @@ def test_farm_panel_empty_and_meter(tmp_path):
     assert "12/70" in html
     assert "Not live" in html
     assert "<th>PnL</th>" not in html
-    assert "parked" in html
+    assert "farm-status-parked" in html
+    assert "not a keeper" in html
+    assert "farm-status-collecting" not in html
+    assert "farm-status-score-owed" not in html
+
+
+def test_farm_panel_score_owed_is_not_collecting(tmp_path, monkeypatch):
+    from golf_offshoot.learning_lane_15m.farm_hub import farm_panel_html
+
+    notebook = {
+        "id": "F-CLOCK-HOUR-FIRST-HALF-15-30",
+        "kind": "CLOCK-HOUR-FIRST-HALF",
+        "params": {"skip_close_minutes": [15, 30]},
+        "declared_at": "2026-09-10T19:34:00-04:00",
+        "execution": False,
+        "selects": True,
+    }
+    _seed(tmp_path, farm_notebooks=[notebook])
+    monkeypatch.setattr(
+        "golf_offshoot.learning_lane_15m.farm.settled_n",
+        lambda *a, **k: 70,
+    )
+    monkeypatch.setattr(
+        "golf_offshoot.learning_lane_15m.farm_hub.settled_n",
+        lambda *a, **k: 70,
+    )
+    status, why = notebook_face(notebook, root=tmp_path, need=70)
+    assert status == "score owed"
+    assert notebook_status(notebook, root=tmp_path, need=70) == "score owed"
+    assert "farm card not written" in why
+    html = farm_panel_html(root=tmp_path)
+    assert "70/70" in html
+    assert "farm-status-score-owed" in html
+    assert "farm card not written" in html
+    assert "farm-status-collecting" not in html
+    assert "<th>PnL</th>" not in html
+
+
+def test_farm_panel_parked_why_names_clauses_not_pnl(tmp_path):
+    from golf_offshoot.learning_lane_15m.farm_hub import farm_panel_html
+
+    notebook = {
+        "id": "F-CLOCK-CLOSE-MINUTE-15",
+        "kind": "CLOCK-CLOSE-MINUTE",
+        "params": {"skip_close_minute": 15},
+        "declared_at": "2026-09-10T12:00:00-04:00",
+        "execution": False,
+        "selects": True,
+    }
+    _seed(tmp_path, farm_notebooks=[notebook])
+    _write_json(
+        farm_scorecard_path("F-CLOCK-CLOSE-MINUTE-15", root=tmp_path),
+        {
+            "n": 70,
+            "skip_count": 24,
+            "skip_rate": 0.342857,
+            "passes_every_binding_clause": False,
+            "clause_1_paired_t_vs_floor": {"passes": False},
+            "clause_4_positive_side": {
+                "passes": False,
+                "mean_pnl_rule_fee_adj": -0.016286,
+            },
+            "clause_5_matched_exposure": {"passes": False},
+        },
+    )
+    html = farm_panel_html(root=tmp_path)
+    assert "70/70" in html
+    assert "farm-status-parked" in html
+    assert "skip 34%" in html
+    assert "clauses 1,4,5 fail" in html
+    assert "not a keeper" in html
+    assert "</code><div class=\"farm-status" in html
+    assert "-0.016286" not in html
+    assert "mean_pnl" not in html
+    assert "<th>PnL</th>" not in html
+
+
+def test_farm_panel_collecting_stays_collecting(tmp_path, monkeypatch):
+    from golf_offshoot.learning_lane_15m.farm_hub import farm_panel_html
+
+    notebook = {
+        "id": "F-CLOCK-CLOSE-MINUTE-30",
+        "kind": "CLOCK-CLOSE-MINUTE",
+        "params": {"skip_close_minute": 30},
+        "declared_at": "2026-09-10T12:00:00-04:00",
+        "execution": False,
+        "selects": True,
+    }
+    _seed(tmp_path, farm_notebooks=[notebook])
+    monkeypatch.setattr(
+        "golf_offshoot.learning_lane_15m.farm.settled_n",
+        lambda *a, **k: 12,
+    )
+    monkeypatch.setattr(
+        "golf_offshoot.learning_lane_15m.farm_hub.settled_n",
+        lambda *a, **k: 12,
+    )
+    assert notebook_status(notebook, root=tmp_path, need=70) == "collecting"
+    html = farm_panel_html(root=tmp_path)
+    assert "12/70" in html
+    assert "farm-status-collecting" in html
+    assert "farm-status-score-owed" not in html
+    assert "farm-status-parked" not in html

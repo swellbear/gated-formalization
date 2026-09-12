@@ -204,6 +204,11 @@ def hub_code_files(pkg: Path | None = None) -> list[Path]:
         for path in sorted(folder.glob("*.py")):
             if not is_noise_name(path.name):
                 files.append(path)
+        if pkg_name == "operator_surface":
+            for extra in ("desk.css", "desk.js"):
+                extra_path = folder / extra
+                if extra_path.is_file():
+                    files.append(extra_path)
     for rel in _CODE_RELPATHS:
         path = base / rel
         if path.is_file():

@@ -245,7 +245,7 @@ def test_lane_switch_is_at_top_not_in_extras(gk_root, tmp_path):
         extras = html_page[html_page.index('id="extras"') :]
         assert "lane-form" not in extras
     assert golf.index('class="lane-switch"') < golf.index('id="golf-kalshi"')
-    assert "Paper ledger has no fills" in golf
+    assert "no open tickets" in golf
     assert "Catalog Open markets are not paper tickets" in golf
     assert page.index('class="lane-switch"') < page.index("Operator extras")
 
@@ -461,13 +461,16 @@ def test_golf_html_is_observation_board(gk_root, tmp_path):
     page = render_html(build_surface(artifact_root=tmp_path, viz_root=tmp_path / "viz", lane="golf"))
     assert "Golf (Kalshi)" in page
     assert "Watch" in page
+    assert "Clock" in page
     assert "Bankroll" in page
     assert "Open tickets" in page
     assert "Paper tickets" in page
+    assert "Closed" in page
+    assert "Closed tickets" in page
     assert "Previous golf claim" in page
     assert "Ranked table — latest real live run" not in page
     assert "Still unmeasured" not in page
-    assert page.count('class="hard-no"') == 1
+    assert page.count('class="hard-no"') == 0
     assert "never_auto_bet" not in page
     assert 'value="paper-deposit"' not in page
     assert 'value="place"' not in page
@@ -848,13 +851,12 @@ def test_golf_hub_has_idle_farm_honer(gk_root, tmp_path, monkeypatch):
     assert 'id="golf-farm"' in page
     assert 'id="golf-honer"' in page
     assert "no golf tape yet" in page
-    assert 'id="farm"' not in page
-    assert 'id="honer"' not in page
+    assert '<section class="panel farm-sandbox" id="farm">' not in page
+    assert '<section class="panel honer-sandbox" id="honer">' not in page
     assert "R-SKIP-HOUR-CLOSE" not in page
     assert "R-SKIP-2TO1" not in page
     assert "R-SKIP-COINFLIP" not in page
     assert "Field hunt:" in page
-    assert "Does not consult 15m" in page
 
 
 def test_golf_tick_does_not_write_phase1_paper(gk_root, monkeypatch):
@@ -1402,3 +1404,133 @@ def test_hub_shows_mix_and_cap_shares(gk_root, tmp_path):
     assert "Live/entry edge" in page
     assert "Fast 50" in page
     assert "This week 100" in page
+    assert "Closed tickets" in page
+    assert "no closed tickets" in page
+
+
+def test_paper_halt_expires_without_retrip(gk_root):
+    from datetime import datetime, timedelta, timezone
+
+    from golf_offshoot.golf_kalshi.paper import engage_halt, halt_new_fills
+
+    rec = recipe_v1()
+    book = empty_ledger(rec)
+    book["bankroll"] = 833.0
+    book["peak_bankroll"] = 1000.0
+    halted, why = halt_new_fills(book, rec)
+    assert halted is True
+    assert why == "drawdown"
+    led = engage_halt(book, why, recipe=rec)
+    assert led["halted"] is True
+    assert led["halt_log"]
+    assert led["halt_log"][-1]["mode"] == "paper"
+    assert led["halt_log"][-1]["seconds"] == 120
+    still, _ = halt_new_fills(led, rec)
+    assert still is True
+    past = datetime.now(timezone.utc) - timedelta(seconds=1)
+    led["halt_until"] = past.isoformat()
+    after, _ = halt_new_fills(led, rec)
+    assert after is False
+    assert led["halted"] is False
+    assert led["peak_bankroll"] == pytest.approx(833.0)
+    again, _ = halt_new_fills(led, rec)
+    assert again is False
+
+
+def test_recipe_bump_releases_old_next_day_halt(gk_root):
+    from golf_offshoot.golf_kalshi.paper import bump_recipe, halt_new_fills
+
+    rec = recipe_v1()
+    book = empty_ledger(rec)
+    book["recipe_id"] = "golf-kalshi-recipe-v1.1"
+    book["halted"] = True
+    book["halt_reason"] = "drawdown"
+    book["halt_until"] = "2026-09-12"
+    book["bankroll"] = 833.0
+    book["peak_bankroll"] = 1000.0
+    book["day_settled_pnl"] = -166.0
+    out = bump_recipe(book, rec)
+    assert out["recipe_id"] == rec.recipe_id
+    assert out["halted"] is False
+    assert out["peak_bankroll"] == pytest.approx(833.0)
+    halted, _ = halt_new_fills(out, rec)
+    assert halted is False
+
+
+def test_negative_paper_bankroll_still_fills(gk_root):
+    rec = recipe_v1()
+    book = empty_ledger(rec)
+    book["bankroll"] = -50.0
+    book["peak_bankroll"] = 1000.0
+    book["day_settled_pnl"] = -1050.0
+    save_ledger(book)
+    from golf_offshoot.golf_kalshi.paper import halt_new_fills
+
+    halted, _ = halt_new_fills(book, rec)
+    assert halted is False
+    d = decide_golf(_market(), book, rec, _brain())
+    assert d.action == "fill"
+    assert d.stake >= rec.min_stake
+
+
+def test_live_halt_is_next_utc_day(gk_root):
+    from datetime import datetime, timedelta, timezone
+
+    from golf_offshoot.golf_kalshi.paper import engage_halt, halt_new_fills
+
+    trading_armed_path().write_text("1\n", encoding="utf-8")
+    rec = recipe_v1()
+    book = empty_ledger(rec)
+    book["bankroll"] = 833.0
+    book["peak_bankroll"] = 1000.0
+    halted, why = halt_new_fills(book, rec)
+    assert halted is True
+    led = engage_halt(book, why, recipe=rec)
+    assert led["halt_log"][-1]["mode"] == "live"
+    expect = (datetime.now(timezone.utc).date() + timedelta(days=1)).isoformat()
+    assert led["halt_until"] == expect
+    still, _ = halt_new_fills(led, rec)
+    assert still is True
+    assert led["peak_bankroll"] == pytest.approx(1000.0)
+
+
+def test_golf_watch_label_stale_only_while_running():
+    from golf_offshoot.golf_kalshi.hub import golf_watch_label
+    from golf_offshoot.localtime import now
+
+    assert golf_watch_label({"running": False, "at": "2020-01-01T00:00:00-04:00"}) == "off"
+    assert (
+        golf_watch_label(
+            {"running": True, "at": "2020-01-01T00:00:00-04:00", "interval_s": 120}
+        )
+        == "stale"
+    )
+    assert golf_watch_label({"running": True, "at": ""}) == "stale"
+    assert golf_watch_label({"running": True, "at": now().isoformat(), "interval_s": 120}) == "on"
+    assert golf_watch_label({"running": True, "at": now().isoformat()}, halt=True) == "halt"
+
+
+def test_closed_tickets_on_scoreboard_not_home(gk_root, tmp_path):
+    rec = recipe_v1()
+    book = empty_ledger(rec)
+    book["tickets"] = [
+        _ticket(
+            ticker="LOSE-1",
+            player="Antoine Rozner",
+            status="paper_lose",
+            pnl_after_fee=-26.74,
+            settled_at="2026-09-11T16:06:57.409702-04:00",
+        )
+    ]
+    save_ledger(book)
+    page = render_html(build_surface(artifact_root=tmp_path, viz_root=tmp_path / "viz", lane="golf"))
+    home = page[page.index("desk-view-home") : page.index("desk-view-scoreboard")]
+    score = page[page.index("desk-view-scoreboard") : page.index("desk-view-ops")]
+    assert "Open tickets" in home
+    assert "Closed tickets" not in home
+    assert ">Closed<" in home or "<b>Closed</b>" in home
+    assert "Antoine Rozner" not in home
+    assert "Closed tickets" in score
+    assert "Antoine Rozner" in score
+    assert "lose" in score
+    assert "-26.74" in score

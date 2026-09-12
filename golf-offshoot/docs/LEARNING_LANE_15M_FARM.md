@@ -27,14 +27,14 @@ Farm L1 pass means eligible for the queue or a later named stack. The next live 
 - `golf-offshoot/docs/LEARNING_LANE_15M_SCORECARD_{id}_FARM.json` — notebook cards
 - Code: `golf_offshoot.learning_lane_15m.farm` (never imports `honer_15m`)
 
-Watch it on `127.0.0.1:8765` next to honer. **What is on trial** stays the live chair. The Farm block is labeled not live. Each row has a file-derived n/70 meter.
+Watch it on `127.0.0.1:8765` next to honer. **What is on trial** stays the live chair. The Farm block is labeled not live. Each row has a file-derived n/70 meter. Status is collecting, score owed, parked, keeper, or queued. Parked rows name skip rate and failed clauses from the farm card. Do not add farm pnl.
 
 ## Observation SoT (gym hub, not a Founder pull)
 
 Three sources, named so they cannot be merged:
 
 - **Gym tape** — paper, watch, ledger, fills, n/70 meters. This PC’s 15m data directory. One chair, one book.
-- **Factory farm declarations** — `LEARNING_LANE_15M_FARM.json` Lab dates on `cursor/honer-15m-sibling`. The already-running hub `git fetch`es that branch (every 5 minutes, fail-open) and shows notebooks from `origin/cursor/honer-15m-sibling`. Cache is gitignored (`latest/origin_farm.json`). The hub does not `reset`, `merge`, `checkout`, or `push`, and does not write origin bytes into this tree’s `FARM.json`. Founder does not pull for 8765. Not gated on `RUNNER_ARMED`.
+- **Factory farm declarations** — `LEARNING_LANE_15M_FARM.json` Lab dates on `cursor/honer-15m-sibling`. The already-running hub `git fetch`es that branch on a **background thread** (every 5 minutes, fail-open) and shows notebooks from `origin/cursor/honer-15m-sibling`. An unchanged origin SHA does **not** rewrite the cache or reload the tab. Cache is gitignored (`latest/origin_farm.json`). The hub does not `reset`, `merge`, `checkout`, or `push`, and does not write origin bytes into this tree’s `FARM.json`. Founder does not pull for 8765. Not gated on `RUNNER_ARMED`.
 - **Executing registry** — local `LEARNING_LANE_15M_RULES.json`. `decide()` and What is on trial do not follow a cloud Operator row this gym is not filling.
 
 Farm cards still stay off Pages, the digest, `manifest.json`, and `records[]`. Cloud CoS/worker ticks already fetch *their* clone; they do not pull this PC.

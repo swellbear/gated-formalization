@@ -12,11 +12,17 @@ Display only. Systems owns `manifest.json` numbers.
 
 ## Start
 
-Read [PROTOCOL.md](../../../docs/agents/PROTOCOL.md). Post START on the desk.
+Read [PROTOCOL.md](../../../docs/agents/PROTOCOL.md). Read [golf-offshoot/docs/HUB_DESK.md](../../../golf-offshoot/docs/HUB_DESK.md) first — that file is the desk lock. Post START on the desk.
 
 ## You may touch
 
 - `golf-offshoot/src/golf_offshoot/operator_surface/app.py` (render/copy/layout)
+- `golf-offshoot/src/golf_offshoot/operator_surface/desk.py`
+- `golf-offshoot/src/golf_offshoot/operator_surface/desk.css`
+- `golf-offshoot/src/golf_offshoot/operator_surface/desk.js`
+- `golf-offshoot/src/golf_offshoot/operator_surface/lanes.py`
+- `golf-offshoot/src/golf_offshoot/golf_kalshi/hub.py` (display regions)
+- `golf-offshoot/src/golf_offshoot/golf_kalshi/organs.py` (drawer wrap)
 - `docs/observability-hub/index.html`
 - `docs/observability-hub/assets/`
 - Hub READMEs that describe chrome (not settle figures)

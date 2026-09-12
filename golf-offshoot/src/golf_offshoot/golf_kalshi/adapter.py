@@ -297,6 +297,13 @@ def load_last_good_catalog() -> dict[str, Any]:
     if not path.is_file():
         return {"lane": LANE, "series": [], "markets": []}
     try:
+        mtime = int(path.stat().st_mtime_ns)
+    except OSError:
+        mtime = 0
+    cached = getattr(load_last_good_catalog, "_cache", None)
+    if isinstance(cached, tuple) and cached[0] == mtime:
+        return cached[1]
+    try:
         payload = json.loads(path.read_text(encoding="utf-8"))
     except (OSError, ValueError):
         return {"lane": LANE, "series": [], "markets": []}
@@ -306,6 +313,11 @@ def load_last_good_catalog() -> dict[str, Any]:
     raw_n = len(payload.get("series") or []) + len(payload.get("markets") or [])
     if raw_n != len(cleaned["series"]) + len(cleaned["markets"]):
         save_catalog(cleaned)
+        try:
+            mtime = int(path.stat().st_mtime_ns)
+        except OSError:
+            mtime = 0
+    load_last_good_catalog._cache = (mtime, cleaned)  # type: ignore[attr-defined]
     return cleaned
 
 

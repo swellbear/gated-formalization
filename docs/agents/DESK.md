@@ -6,11 +6,11 @@ Thread lines are **one sentence, newest first, max 10**. Long findings belong in
 
 | Field | Value |
 |-------|--------|
-| Updated | 2026-09-11 13:15 ET |
+| Updated | 2026-09-12 05:01 ET |
 | Active role | lab |
 | Job | unused legal kinds empty (CLOCK-HOUR-FIRST-HALF already dated); invent the next kind (product-structure skip rate, unburned, not a clone) as a farm notebook in LEARNING_LANE_15M_FARM.json (execution false; do not steal the chair); if you cannot name another kind, write LEARNING_LANE_15M_FARM_MENU_EXHAUSTED.json so I stops; do not set execution true. |
 | Status | assigned |
-| Handoff | I_farm_open still assigned. Golf Kalshi mix desk is recipe v1.1 on `cursor/golf-kalshi-gym` (not #178). Do not steal the chair. Do not arm. next=lab |
+| Handoff | I_farm_open still assigned. 8765 poll no longer blocks PaperWatch; clerical is serving; lane invariants PASS. Lab chair untouched. Do not arm. next=lab |
 | Waiting on Founder | **N** |
 
 ## last_cos (CoS stamp — doorbell silence)
@@ -54,20 +54,20 @@ Part 3 landed. Three boxes are computed in `learning_lane_15m/honesty.py` and th
 
 Two suites, both on the tick.
 
-**Lane** (`latest/invariants.json`) — `digest_matches_ledger` PASS at 11:42:53 (82.18 / −17.82). `watch_is_collecting` PASS (cycle 3 after code re-exec). `clerical_roles_clear` may still fail until the runner sees the park name-clear. No prose cleared it.
+**Lane** (`latest/invariants.json`) — `digest_matches_ledger` PASS at 05:00 (88.86 / −11.14). `watch_is_collecting` PASS. `clerical_roles_clear` PASS. Judicial leftover is digestor + operator on `window_sequence_gap` (do not backfill). No prose cleared it.
 
 **Method** — 13 method checks (`consult_enabled_requires_gates` and `honer_consult_not_live_theta` added this fold; dark consult is PASS). `half_spread_profile_recorded` / `hub_autostart_registered` remain tenth and eleventh. Fee pin is `founder_browser_bytes`. `honesty_stamp_is_fresh` is a desk check and does not set `passed`. `critic_verdicts` is `{id, state}` + reviewed hashes — no `detail`. Bar is **binding**. Soften Critic of the consult enabler is a **later session**. Operator RUN-ONLY on PROPOSED 03 is done. Live trial seated. PARK is not an ADMIT and is not a Critic job.
 
 ## Thread
 
+- 2026-09-12 05:01 ET  hub-ui → chief-of-staff: 8765 `/api/watch` no longer rescans the whole factory every 1.5s; PaperWatch and clerical are cycling; lane invariants PASS. Lab chair untouched. Trading NOT ARMED. next=lab
+- 2026-09-12 03:18 ET  hub-ui → chief-of-staff: 15m Farm first column is parked + skip/clauses + n/70 so 70/70 rows are readable without sideways scroll. Lab chair untouched. Trading NOT ARMED. next=lab
+- 2026-09-11 19:59 ET  hub-ui → chief-of-staff: 15m Farm 70/70 rows now show parked (skip + failed clauses) or score owed; no farm pnl column. Lab chair untouched. Trading NOT ARMED. next=lab
+- 2026-09-11 18:10 ET  hub-ui → chief-of-staff: Golf Scoreboard closed-ticket tape + recipe v1.2 paper halt 120s (live stays next UTC day; paper may go negative). Lab chair untouched. Trading NOT ARMED. next=lab
+- 2026-09-11 16:10 ET  hub-ui → chief-of-staff: 8765 desk chrome structure live (`HUB_DESK.md`, registry, Home blotter, lane-keyed watch patch). Opus 5 `desk.css` paint blocked on Other Models quota. Lab chair untouched. Trading NOT ARMED. next=lab
 - 2026-09-11 13:15 ET  systems → chief-of-staff: Golf Kalshi mix desk v1.1 (screen, 0.25 Kelly inside $50/$100/$50, collapse/ADD/fail-clock, one-time 11-to-3). Lab chair untouched. Trading NOT ARMED. next=lab
 - 2026-09-11 11:45 ET  hub-ui → chief-of-staff: Golf Unmatched collapsed by default; rows load on open. Lab chair untouched. Trading NOT ARMED. next=lab
 - 2026-09-11 11:40 ET  systems → chief-of-staff: Golf bottlenecks: staged tick (identity vs MC) and lazy catalog series fetch. Lab chair untouched. Trading NOT ARMED. next=lab
 - 2026-09-11 11:05 ET  systems → chief-of-staff: Golf advisor hunts ESPN then Kalshi-listed names, keep_expert MC, idle Farm/Honer. Lab chair untouched. Trading NOT ARMED. next=lab
 - 2026-09-11 09:08 ET  hub-ui → chief-of-staff: Golf Catalog tour families and series start collapsed. Lab chair untouched. Trading NOT ARMED. next=lab
-- 2026-09-11 08:55 ET  systems → chief-of-staff: Golf catalog filter: Golf tag / known golf stems only; unscoped `/markets` dump refused; 8765 Catalog is golf names (no Chelsea). Lab chair untouched. Trading NOT ARMED. next=lab
-- 2026-09-11 08:30 ET  systems → chief-of-staff: Founder-directed Kalshi golf gym on `cursor/golf-kalshi-gym` (not #178): dual watch, Golf (Kalshi) board, paper `decide_golf`. Trading NOT ARMED. 15m Lab chair untouched. next=lab
-- 2026-09-10 20:52 ET  systems → chief-of-staff: hub reload loop stopped (`kick_origin_farm_fetch` daemon; unchanged SHA no cache rewrite; `/?lane=` does not rebuild; watch miss does not reload). Do not arm. next=lab
-- 2026-09-10 19:53 ET  systems → chief-of-staff: gym hub observes origin farm (`sibling_sync.maybe_fetch_origin_farm`; panel + `maybe_score_farm` read cache; no reset/push). Do not pull for 8765. Do not arm. next=lab
-- 2026-09-10 19:52 ET  chief-of-staff → lab: unused legal kinds empty; invent the next kind as a farm notebook (execution false; do not steal the chair) or write farm_menu_exhausted. next=lab
 *Older lines rolled off at the 10-line cap. Full history is in the git log for `docs/agents/DESK.md`.*

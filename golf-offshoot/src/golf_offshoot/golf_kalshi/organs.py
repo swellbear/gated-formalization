@@ -66,8 +66,6 @@ def farm_panel_html() -> str:
     return (
         '<section class="panel gk-organ" id="golf-farm">'
         "<h2>Golf Farm</h2>"
-        '<p class="help">Discovery notebooks for this gym later (sleeve mix, tour haircut, unmatched rate). '
-        "Not live. Not hour-close. Not 2-to-1. Not coinflip. Lab chair for 15m farm stays on 15m.</p>"
         f'<p class="loud">Idle. {html.escape(note)}{extra}</p>'
         "</section>"
     )
@@ -80,7 +78,6 @@ def honer_panel_html() -> str:
     return (
         '<section class="panel gk-organ" id="golf-honer">'
         "<h2>Golf Honer</h2>"
-        '<p class="help">Own sandbox. Does not consult 15m decide(). No combined bankroll. No Lineage A.</p>'
         f'<p class="loud">Idle. {html.escape(note)}</p>'
         "</section>"
     )

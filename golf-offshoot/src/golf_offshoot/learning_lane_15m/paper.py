@@ -9,6 +9,7 @@ from __future__ import annotations
 
 import json
 from pathlib import Path
+from typing import Any
 
 from golf_offshoot.data_feeds.kalshi_15m import is_paper_autobet_candidate
 from golf_offshoot.learning_lane_15m.paths import (
@@ -94,6 +95,50 @@ def decisions_path() -> Path:
     path = paper_dir_15m() / DECISIONS_NAME
     assert_not_golf_path(path)
     return path
+
+
+_SESSION_COUNTS: tuple[tuple[int, int], dict[str, Any]] | None = None
+
+
+def paper_session_counts() -> dict[str, Any]:
+    """Open/closed/bankroll for the hub strip. Not a pydantic walk of every book."""
+    global _SESSION_COUNTS
+    root = paper_dir_15m()
+    led_path = ledger_path()
+    try:
+        dir_m = int(root.stat().st_mtime_ns)
+    except OSError:
+        dir_m = 0
+    try:
+        led_m = int(led_path.stat().st_mtime_ns)
+    except OSError:
+        led_m = 0
+    key = (dir_m, led_m)
+    if _SESSION_COUNTS is not None and _SESSION_COUNTS[0] == key:
+        return dict(_SESSION_COUNTS[1])
+    led = load_ledger()
+    bank = float(getattr(led, "bankroll", 0) or 0)
+    pnl = float(getattr(led, "betting_pnl", 0) or 0)
+    open_n = 0
+    closed_n = 0
+    if root.is_dir():
+        skip = {"ledger.json", DECISIONS_NAME.lower()}
+        for path in root.glob("*.json"):
+            if path.name.lower() in skip:
+                continue
+            try:
+                payload = json.loads(path.read_text(encoding="utf-8"))
+            except (OSError, ValueError):
+                continue
+            if not isinstance(payload, dict):
+                continue
+            if payload.get("settled_at"):
+                closed_n += 1
+            else:
+                open_n += 1
+    out = {"open": open_n, "closed": closed_n, "bankroll": bank, "pnl": pnl}
+    _SESSION_COUNTS = (key, out)
+    return dict(out)
 
 
 def load_decisions() -> dict[str, dict]:

@@ -1,4 +1,4 @@
-"""8765 golf observation board. Numbers, not a briefing. Hard NOs live in the hub footer."""
+"""8765 golf observation board. Numbers, not a briefing."""
 
 from __future__ import annotations
 
@@ -8,7 +8,7 @@ from typing import Any
 
 from golf_offshoot.golf_kalshi.adapter import load_last_good_catalog
 from golf_offshoot.golf_kalshi.catalog_view import group_catalog
-from golf_offshoot.golf_kalshi.paper import load_ledger, open_tickets
+from golf_offshoot.golf_kalshi.paper import closed_tickets, halt_remaining_text, load_ledger, open_tickets
 from golf_offshoot.golf_kalshi.paths import (
     board_png_path,
     last_tick_path,
@@ -32,32 +32,64 @@ def _read(path) -> dict[str, Any]:
     return payload if isinstance(payload, dict) else {}
 
 
+def golf_watch_label(watch: dict[str, Any], *, halt: bool = False, killed: bool = False) -> str:
+    """on / off / stale / halt / killed from the sidecar file. Stale only while running."""
+    if killed:
+        return "killed"
+    if halt:
+        return "halt"
+    running = bool(watch.get("running"))
+    at = str(watch.get("at") or "")
+    stale = False
+    if running:
+        if not at:
+            stale = True
+        else:
+            try:
+                from datetime import datetime
+
+                from golf_offshoot.golf_kalshi.watch import DEFAULT_INTERVAL_S
+                from golf_offshoot.localtime import now, to_eastern
+
+                text = at[:-1] + "+00:00" if at.endswith("Z") else at
+                stamped = to_eastern(datetime.fromisoformat(text))
+                interval = float(watch.get("interval_s") or DEFAULT_INTERVAL_S)
+                stale = (now() - stamped).total_seconds() > max(interval, 1.0) * 3
+            except ValueError:
+                stale = True
+    if stale:
+        return "stale"
+    return "on" if running else "off"
+
+
 def collect_board() -> dict[str, Any]:
     watch = load_watch_status()
     tick = _read(last_tick_path())
-    catalog = load_last_good_catalog()
     unmatched = _read(unmatched_path())
     led = load_ledger()
+    catalog = load_last_good_catalog()
     png = board_png_path()
+    closed = closed_tickets(led)
     halt = bool(led.get("halted") or tick.get("halted"))
-    if watch_kill_path().is_file():
-        watch_label = "killed"
-    elif halt:
-        watch_label = "halt"
-    elif watch.get("running"):
-        watch_label = "on"
-    else:
-        watch_label = "off"
+    remaining = halt_remaining_text(str(led.get("halt_until") or "")) if halt else ""
+    watch_label = golf_watch_label(
+        watch, halt=halt, killed=watch_kill_path().is_file()
+    )
+    bankroll = led.get("bankroll")
     return {
         "watch": watch_label,
         "watch_age": format_eastern(watch.get("at") or tick.get("at")),
         "cycles": watch.get("cycles") or 0,
         "halt_reason": led.get("halt_reason") or "",
-        "bankroll": led.get("bankroll"),
+        "halt_until": led.get("halt_until") or "",
+        "halt_remaining": remaining,
+        "bankroll": bankroll,
         "pnl": led.get("betting_pnl"),
         "fees_paid": led.get("fees_paid"),
         "sleeves": led.get("sleeves") or {},
         "tickets": open_tickets(led),
+        "closed": closed,
+        "halt_log": led.get("halt_log") or [],
         "catalog": catalog.get("markets") or [],
         "series": catalog.get("series") or [],
         "unmatched": unmatched.get("rows") or [],
@@ -159,12 +191,7 @@ def _mix_copy(tick: dict[str, Any]) -> str:
     return f'<p class="gk-nums">{html.escape(line)}</p>'
 
 
-def board_html() -> str:
-    b = collect_board()
-    rec = b["recipe"]
-    bank = float(b.get("bankroll") or rec.get("seed") or 0)
-    sleeves = b.get("sleeves") or {}
-    booked = b.get("booked_tickers") or set()
+def _open_rows(b: dict[str, Any]) -> list[list[str]]:
     tick = b.get("last_tick") or {}
     tick_marks = tick.get("marks") if isinstance(tick.get("marks"), dict) else {}
     open_rows = []
@@ -178,62 +205,214 @@ def board_html() -> str:
             live_s = f"{float(live):+.3f}" if live is not None else "—"
             entry_s = f"{float(entry):+.3f}" if entry is not None else "—"
             edge_bit = f"{live_s} / {entry_s}"
+        ask = q.get("yes_ask")
         open_rows.append(
             [
                 t.get("player") or "",
                 t.get("title") or t.get("ticker") or "",
                 t.get("sleeve") or "",
                 f"{float(t.get('stake') or 0):.2f}",
-                f"{q.get('yes_ask') if q.get('yes_ask') is not None else ''}",
+                "" if ask is None else ask,
                 edge_bit,
                 t.get("status") or "",
             ]
         )
+    return open_rows
+
+
+def _money(value: Any, default: float = 0.0) -> float:
+    if value is None or value == "":
+        return float(default)
+    return float(value)
+
+
+def _closed_result(ticket: dict[str, Any]) -> str:
+    status = str(ticket.get("status") or "")
+    if status == "paper_win":
+        return "win"
+    if status == "paper_lose":
+        return "lose"
+    if status == "void":
+        return "void"
+    if status == "paper_exit":
+        return str(ticket.get("exit_reason") or "exit").replace("_", " ")
+    return status or "—"
+
+
+def session_html(b: dict[str, Any] | None = None) -> str:
+    b = b or collect_board()
+    rec = b["recipe"]
+    bank = _money(b.get("bankroll"), float(rec.get("seed") or 0))
+    sleeves = b.get("sleeves") or {}
+    n_open = len(b.get("tickets") or [])
+    n_closed = len(b.get("closed") or [])
+    halt_bits = []
+    if b.get("halt_reason"):
+        halt_bits.append(str(b.get("halt_reason")))
+    if b.get("halt_remaining"):
+        halt_bits.append(str(b.get("halt_remaining")))
+    halt_val = ("yes " + " ".join(halt_bits)).strip() if b["watch"] == "halt" else "no"
+    if b["watch"] in {"halt", "stale"}:
+        watch_cls = "desk-watch-halt"
+    elif b["watch"] == "on":
+        watch_cls = "desk-watch-on"
+    else:
+        watch_cls = "desk-watch-off"
+    mix = _mix_copy(b.get("last_tick") or {})
+    return (
+        '<div id="desk-session" class="desk-session">'
+        f'<span class="desk-chip {watch_cls}"><b>Watch</b> {html.escape(str(b["watch"]))}</span>'
+        + _chip("Clock", str(b.get("watch_age") or "—"))
+        + _chip("Bankroll", f"{bank:.2f}")
+        + _chip("P/L", f"{_money(b.get('pnl')):+.2f}")
+        + _chip("Fees", f"{_money(b.get('fees_paid')):.2f}")
+        + _chip("Paper tickets", str(n_open))
+        + _chip("Closed", str(n_closed))
+        + _chip("Halt", halt_val)
+        + '<div class="gk-sleeves desk-meters">'
+        f'<div><span>Fast {float(rec.get("cap_fast") or 0):.0f}</span>{_bar(float(sleeves.get("fast") or 0), float(rec.get("cap_fast") or 1))}</div>'
+        f'<div><span>This week {float(rec.get("cap_week") or 0):.0f}</span>{_bar(float(sleeves.get("week") or 0), float(rec.get("cap_week") or 1))}</div>'
+        f'<div><span>Slow {float(rec.get("cap_slow") or 0):.0f}</span>{_bar(float(sleeves.get("slow") or 0), float(rec.get("cap_slow") or 1))}</div>'
+        "</div>"
+        + mix
+        + "</div>"
+    )
+
+
+def blotter_html(b: dict[str, Any] | None = None) -> str:
+    b = b or collect_board()
+    rows = _open_rows(b)
+    empty = "no open tickets"
+    table = _table(
+        ["Player", "Market", "Sleeve", "Stake", "Quote", "Live/entry edge", "Status"],
+        rows,
+        empty=empty,
+    )
+    return (
+        '<div id="desk-blotter" class="desk-blotter" data-golf-kalshi="1">'
+        '<section class="panel gk" id="golf-kalshi">'
+        "<h2>Open tickets</h2>"
+        + table
+        + "</section></div>"
+    )
+
+
+def cockpit_html(b: dict[str, Any] | None = None) -> str:
+    b = b or collect_board()
+    tick = b.get("last_tick") or {}
+    n_open = len(b.get("tickets") or [])
+    return (
+        '<section class="panel desk-cockpit">'
+        "<h2>Thinking</h2>"
+        + _hunt_copy(tick)
+        + _ticket_skip_copy(tick, n_open)
+        + "</section>"
+    )
+
+
+def ops_html(b: dict[str, Any] | None = None) -> str:
+    b = b or collect_board()
+    rec = b["recipe"]
+    booked = b.get("booked_tickers") or set()
     tree = group_catalog(list(b.get("series") or []), list(b.get("catalog") or []), booked, include_markets=False)
     n_unmatched = len(b["unmatched"])
-    png = ""
+    return (
+        '<section class="panel gk-ops">'
+        "<h3>Catalog</h3>"
+        + _catalog_html(tree, booked)
+        + _unmatched_html(n_unmatched)
+        + "<h3>Recipe</h3>"
+        f'<p class="gk-nums">{html.escape(str(rec.get("recipe")))} · {html.escape(str(rec.get("declared_at")))} · brain {html.escape(str(rec.get("player_brain")))}</p>'
+        + "</section>"
+    )
+
+
+def scoreboard_html(b: dict[str, Any] | None = None) -> str:
+    b = b or collect_board()
+    closed = list(b.get("closed") or [])
+    wins = sum(1 for t in closed if t.get("status") == "paper_win")
+    losses = sum(1 for t in closed if t.get("status") == "paper_lose")
+    exits = sum(1 for t in closed if t.get("status") == "paper_exit")
+    voids = sum(1 for t in closed if t.get("status") == "void")
+    closed_pnl = sum(float(t.get("pnl_after_fee") or 0) for t in closed)
+    body = []
+    for t in closed:
+        pnl = float(t.get("pnl_after_fee") or 0)
+        cls = "pnl-up" if pnl > 0 else "pnl-down" if pnl < 0 else ""
+        when = t.get("exited_at") or t.get("settled_at") or t.get("decision_at") or ""
+        tds = [
+            format_eastern(when) if when else "—",
+            t.get("player") or "",
+            t.get("title") or t.get("ticker") or "",
+            t.get("sleeve") or "",
+            f"{float(t.get('stake') or 0):.2f}",
+            _closed_result(t),
+        ]
+        cells = "".join(f"<td>{html.escape(str(c))}</td>" for c in tds)
+        pnl_td = f'<td class="{cls}">{pnl:+.2f}</td>'
+        body.append(f"<tr>{cells}{pnl_td}</tr>")
+    if not body:
+        body.append('<tr><td colspan="7">no closed tickets</td></tr>')
+    head = "".join(
+        f"<th>{html.escape(h)}</th>"
+        for h in ("When", "Player", "Market", "Sleeve", "Stake", "Result", "P/L")
+    )
+    tally = (
+        f"win {wins} · lose {losses} · exit {exits}"
+        + (f" · void {voids}" if voids else "")
+        + f" · closed P/L {closed_pnl:+.2f}"
+    )
+    chart = ""
     if b.get("png"):
-        png = (
+        chart = (
             '<figure class="gk-chart">'
             f'<img src="/viz-golf/{html.escape(str(b["png_name"]))}?t=1" alt="Golf Kalshi" width="1200"/>'
             "</figure>"
         )
     else:
-        png = '<div class="gk-chart-slot" aria-hidden="true"></div>'
-    halt = f" {html.escape(str(b.get('halt_reason') or ''))}" if b.get("halt_reason") else ""
-    return (
-        '<section class="panel gk" id="golf-kalshi">'
-        "<h2>Golf (Kalshi)</h2>"
-        '<div class="gk-chips">'
-        + _chip("Watch", f"{b['watch']} · {b['watch_age']}")
-        + _chip("Bankroll", f"{bank:.2f}")
-        + _chip("P/L", f"{float(b.get('pnl') or 0):+.2f}")
-        + _chip("Fees", f"{float(b.get('fees_paid') or 0):.2f}")
-        + _chip("Paper tickets", str(len(open_rows)))
-        + _chip("Halt", "yes" + halt if b["watch"] == "halt" else "no")
-        + "</div>"
-        + _hunt_copy(tick)
-        + _mix_copy(tick)
-        + "<h3>Sleeves</h3>"
-        '<div class="gk-sleeves">'
-        f'<div><span>Fast {float(rec.get("cap_fast") or 0):.0f}</span>{_bar(float(sleeves.get("fast") or 0), float(rec.get("cap_fast") or 1))}</div>'
-        f'<div><span>This week {float(rec.get("cap_week") or 0):.0f}</span>{_bar(float(sleeves.get("week") or 0), float(rec.get("cap_week") or 1))}</div>'
-        f'<div><span>Slow {float(rec.get("cap_slow") or 0):.0f}</span>{_bar(float(sleeves.get("slow") or 0), float(rec.get("cap_slow") or 1))}</div>'
-        "</div>"
-        "<h3>Open tickets</h3>"
-        + _ticket_skip_copy(tick, len(open_rows))
-        + _table(
-            ["Player", "Market", "Sleeve", "Stake", "Quote", "Live/entry edge", "Status"],
-            open_rows,
-            empty="None. Paper ledger has no fills.",
+        chart = '<div class="gk-chart-slot" aria-hidden="true"></div>'
+    halt_rows = []
+    for row in list(b.get("halt_log") or [])[-8:][::-1]:
+        pause = row.get("seconds")
+        pause_s = f"{int(pause)}s" if pause else str(row.get("mode") or "")
+        halt_rows.append(
+            [
+                format_eastern(row.get("at")),
+                row.get("reason") or "",
+                f"{float(row.get('bankroll') or 0):.2f}",
+                pause_s,
+                format_eastern(row.get("until")) if row.get("until") else str(row.get("until") or ""),
+            ]
         )
-        + "<h3>Catalog</h3>"
-        + _catalog_html(tree, booked)
-        + _unmatched_html(n_unmatched)
-        + "<h3>Recipe</h3>"
-        f'<p class="gk-nums">{html.escape(str(rec.get("recipe")))} · {html.escape(str(rec.get("declared_at")))} · brain {html.escape(str(rec.get("player_brain")))}</p>'
-        + png
-        + "</section>"
+    halt_bit = ""
+    if halt_rows:
+        halt_bit = (
+            '<section class="panel gk-halts">'
+            "<h2>Halts</h2>"
+            '<p class="gk-nums">Paper pause is two minutes then the gym continues. Live uses the next UTC day.</p>'
+            + _table(["When", "Reason", "Bankroll", "Pause", "Until"], halt_rows)
+            + "</section>"
+        )
+    return (
+        chart
+        + '<section class="panel gk-closed" id="golf-closed">'
+        "<h2>Closed tickets</h2>"
+        f'<p class="gk-nums">{html.escape(tally)}</p>'
+        '<div class="gk-table-wrap"><table class="gk-board gk-closed">'
+        f"<thead><tr>{head}</tr></thead><tbody>{''.join(body)}</tbody></table></div>"
+        "</section>"
+        + halt_bit
+    )
+
+
+def board_html() -> str:
+    b = collect_board()
+    return (
+        session_html(b)
+        + blotter_html(b)
+        + cockpit_html(b)
+        + ops_html(b)
+        + scoreboard_html(b)
     )
 
 

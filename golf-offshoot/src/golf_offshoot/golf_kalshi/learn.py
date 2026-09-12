@@ -41,7 +41,7 @@ def recipe_exam(*, new_only: bool = True) -> dict[str, Any]:
         "not_pnl_ranked": True,
         "next_recipe": None,
         "n_paper_exit": sum(1 for t in (load_ledger().get("tickets") or []) if str(t.get("status") or "") == "paper_exit"),
-        "notes": "live mix stays v1.1 until a later dated recipe survives this exam; paper_exit is path not a Brier label",
+        "notes": "live mix stays v1.2 paper pause until a later dated recipe survives this exam; paper_exit is path not a Brier label",
     }
     if new_only and n == 0:
         payload["notes"] = "no new settles yet"

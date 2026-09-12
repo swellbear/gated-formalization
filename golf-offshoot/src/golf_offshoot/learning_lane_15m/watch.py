@@ -72,6 +72,8 @@ class PaperWatch:
         self.on_cycle = on_cycle
         self.stop = threading.Event()
         self.lock = threading.Lock()
+        self._clerical_lock = threading.Lock()
+        self._clerical_stragglers: list[threading.Thread] = []
         self.thread: threading.Thread | None = None
         self.cycles = 0
         self.last_ok = True
@@ -221,20 +223,80 @@ class PaperWatch:
             payload["report"] = format_loop_report(payload)
             payload["fee"] = self._fee_tick(payload)
             self._persist()
-            payload["learning_wake"] = self._learning_tick()
-            payload["learning_runner"] = self._runner_tick()
-            payload["leash"] = self._leash_tick()
-            payload["hub_publish"] = self._hub_publish_tick()
-            # The wake names roles, then the runner serves them. Invariants
-            # read after both, or every settle reports a stale digest that the
-            # same cycle already repaired — and a check that cries wolf on a
-            # schedule is a check nobody reads.
-            payload["learning_invariants"] = self._invariants_tick()
-            payload["spread_profile"] = self._spread_tick(payload)
-            payload["ops_alerts"] = self._ops_alerts_tick(payload)
+        self._spawn_clerical(payload)
+
+    def _spawn_clerical(self, payload: dict[str, Any]) -> None:
+        """Wake, runner, leash, publish, invariants. Never blocks the next paper cycle."""
+        if not self._clerical_lock.acquire(blocking=False):
+            self.last_runner_error = "prior clerical still running; paper cycle not blocked"
             self._persist()
-            if self.on_cycle is not None:
-                self.on_cycle(payload)
+            return
+
+        def run() -> None:
+            try:
+                payload["learning_wake"] = self._timed_tick(
+                    "wake", self._learning_tick, 25.0
+                )
+                payload["learning_runner"] = self._timed_tick(
+                    "runner", self._runner_tick, 120.0
+                )
+                payload["leash"] = self._timed_tick("leash", self._leash_tick, 15.0)
+                payload["hub_publish"] = self._timed_tick(
+                    "hub_publish", self._hub_publish_tick, 20.0
+                )
+                payload["learning_invariants"] = self._timed_tick(
+                    "invariants", self._invariants_tick, 15.0
+                )
+                payload["spread_profile"] = self._spread_tick(payload)
+                payload["ops_alerts"] = self._ops_alerts_tick(payload)
+                self._persist()
+                if self.on_cycle is not None:
+                    self.on_cycle(payload)
+            except Exception as exc:  # noqa: BLE001 — paper last_at already stamped
+                self.last_runner_error = str(exc)
+                self._persist()
+            finally:
+                for leftover in list(self._clerical_stragglers):
+                    leftover.join(timeout=180.0)
+                self._clerical_stragglers.clear()
+                self._clerical_lock.release()
+
+        threading.Thread(target=run, daemon=True, name="lane-15m-clerical").start()
+
+    def _timed_tick(
+        self, name: str, fn: Callable[[], Any], budget_s: float
+    ) -> Any:
+        """Run one clerical step with a budget. A hung wake must not skip the runner."""
+        box: dict[str, Any] = {}
+
+        def inner() -> None:
+            try:
+                box["v"] = fn()
+            except Exception as exc:  # noqa: BLE001 — recorded on the watch
+                box["e"] = exc
+
+        t = threading.Thread(target=inner, daemon=True, name=f"lane-15m-{name}")
+        t.start()
+        t.join(max(5.0, float(budget_s)))
+        if t.is_alive():
+            self._clerical_stragglers.append(t)
+            msg = f"{name} exceeded {budget_s:.0f}s"
+            if name == "runner":
+                self.last_runner_error = msg
+            elif name == "wake":
+                self.last_wake_error = msg
+            elif name == "hub_publish":
+                self.last_hub_publish_error = msg
+            elif name == "invariants":
+                self.last_invariants_error = msg
+            return None
+        if "e" in box:
+            if name == "runner":
+                self.last_runner_error = str(box["e"])
+            elif name == "wake":
+                self.last_wake_error = str(box["e"])
+            return None
+        return box.get("v")
 
     def _fee_tick(self, payload: dict[str, Any]) -> dict[str, Any] | None:
         """Gym fee pin + series M snapshot. Never takes the paper loop down."""

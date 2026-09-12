@@ -14,10 +14,14 @@ from typing import Any
 from golf_offshoot.honer_15m.books import load_decisions, load_ledger
 from golf_offshoot.honer_15m.freeze import freeze_ready, load_exam_state, load_trials
 from golf_offshoot.honer_15m.paths import (
+    decisions_path,
+    exam_state_path,
     freeze_log_path,
     latest_dir,
     paper_dir,
     settlements_dir,
+    theta_path,
+    trials_path,
 )
 from golf_offshoot.honer_15m.library import load_library
 from golf_offshoot.honer_15m.policy import FAMILY_RICH, FAMILY_SPREAD, load_policy
@@ -722,8 +726,41 @@ def collect_standing() -> HonerStanding:
     )
 
 
-def current_search_action() -> dict[str, Any]:
+_HONER_STANDING_CACHE: tuple[tuple[Any, ...], HonerStanding] | None = None
+
+
+def _honer_file_mtime(path) -> int:
+    try:
+        return int(path.stat().st_mtime_ns)
+    except OSError:
+        return 0
+
+
+def _honer_standing_cache_key() -> tuple[Any, ...]:
+    return (
+        str(latest_dir()),
+        _honer_file_mtime(theta_path()),
+        _honer_file_mtime(decisions_path("search")),
+        _honer_file_mtime(decisions_path("exam")),
+        _honer_file_mtime(exam_state_path()),
+        _honer_file_mtime(trials_path()),
+        _honer_file_mtime(freeze_log_path()),
+    )
+
+
+def cached_honer_standing() -> HonerStanding:
+    """Hub paint. Recomputes when honer decision/theta files move."""
+    global _HONER_STANDING_CACHE
+    key = _honer_standing_cache_key()
+    if _HONER_STANDING_CACHE is not None and _HONER_STANDING_CACHE[0] == key:
+        return _HONER_STANDING_CACHE[1]
     standing = collect_standing()
+    _HONER_STANDING_CACHE = (key, standing)
+    return standing
+
+
+def current_search_action(standing: HonerStanding | None = None) -> dict[str, Any]:
+    standing = standing if standing is not None else collect_standing()
     row = standing.current_search
     if row is None:
         return {
@@ -753,11 +790,11 @@ def current_search_action() -> dict[str, Any]:
     }
 
 
-def current_exam_action() -> dict[str, Any]:
+def current_exam_action(standing: HonerStanding | None = None) -> dict[str, Any]:
     exam = load_exam_state()
     if not exam.get("open") and not exam.get("completed"):
         return {"ticker": "", "phrase": "not started", "action": ""}
-    standing = collect_standing()
+    standing = standing if standing is not None else collect_standing()
     row = standing.current_exam
     if row is None:
         return {"ticker": "", "phrase": "no exam decision this window", "action": ""}

@@ -14,7 +14,7 @@ from golf_offshoot.config import (
     STRATEGY_MAX_TOTAL_EXPOSURE_FRAC,
 )
 
-RECIPE_ID = "golf-kalshi-recipe-v1.1"
+RECIPE_ID = "golf-kalshi-recipe-v1.2"
 PREVIOUS_RECIPE_ID = "golf-kalshi-recipe-v1"
 DECLARED_AT = "2026-09-11"
 PLAYER_BRAIN_VERSION = "keep_expert"
@@ -42,7 +42,10 @@ FAIL_HOLES = {
 }
 LIVE_SCALE = 0.10
 LIVE_SCALE_UNTIL_N = 10
-RESUME_RULE = "next_utc_day"
+PAPER_HALT_SECONDS = 120
+PAPER_RESUME_RULE = "paper_pause"
+LIVE_RESUME_RULE = "next_utc_day"
+RESUME_RULE = PAPER_RESUME_RULE
 MIN_STAKE = 1.0
 LISTED_HAIRCUT = 0.5
 
@@ -72,6 +75,9 @@ class WalletRecipe:
     min_edge: float = MIN_EDGE_TO_CONSIDER
     live_scale: float = LIVE_SCALE
     live_scale_until_n: int = LIVE_SCALE_UNTIL_N
+    paper_halt_seconds: int = PAPER_HALT_SECONDS
+    paper_resume_rule: str = PAPER_RESUME_RULE
+    live_resume_rule: str = LIVE_RESUME_RULE
     resume_rule: str = RESUME_RULE
     min_stake: float = MIN_STAKE
     listed_haircut: float = LISTED_HAIRCUT
@@ -118,7 +124,9 @@ def recipe_public() -> dict[str, object]:
         "total_exposure": r.total_exposure_frac,
         "daily_loss": r.daily_loss_frac,
         "drawdown": r.drawdown_frac,
-        "resume": r.resume_rule,
+        "resume": r.paper_resume_rule,
+        "paper_halt_seconds": r.paper_halt_seconds,
+        "live_resume": r.live_resume_rule,
     }
 
 

@@ -5,7 +5,7 @@ Chat transcripts are not. A later Grok / Cursor cloud agent will not see a prior
 
 | Field | Value |
 |-------|--------|
-| Updated | 2026-09-11 13:15 EDT (Golf Kalshi mix desk v1.1: screen / 0.25 Kelly inside $50/$100/$50 / collapse / ADD / fail-clock / one-time 11-to-3. Still `cursor/golf-kalshi-gym`, not #178. 15m Lab `I_farm_open` still assigned. Trading NOT ARMED. next=lab) |
+| Updated | 2026-09-12 05:01 EDT (8765 hub poll unblocked; PaperWatch + clerical cycling; lane invariants PASS. Still `cursor/golf-kalshi-gym`. 15m Lab `I_farm_open` still assigned. Trading NOT ARMED. next=lab) |
 | Interim operator | Cursor chat (Grok bot usage exhausted until **2026-09-13**) |
 | Repo SoT | **Live work is PR [#178](https://github.com/swellbear/gated-formalization/pull/178)** (`cursor/honer-15m-sibling`). [#176](https://github.com/swellbear/gated-formalization/pull/176) is still OPEN, not merged (`cursor/part-a-clerical-trust-boundary`). `origin/master` is still `b063f56` (#175). Do not branch from `origin/master`. |
 | Local Windows tree for this interim | `C:\Users\bearh\gated-formalization-master-hub` |

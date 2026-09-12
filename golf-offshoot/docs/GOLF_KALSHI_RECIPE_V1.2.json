@@ -1,0 +1,38 @@
+{
+  "recipe_id": "golf-kalshi-recipe-v1.2",
+  "declared_at": "2026-09-11",
+  "seed_bankroll": 1000.0,
+  "sleeves": {
+    "fast": "25% of the 20% cap; round-leader / same-day; fail-clock or +20% bid pop",
+    "week": "50% of the 20% cap; this event winner / make-cut / top-N; max 3 per event",
+    "slow": "25% of the 20% cap; season-long / captain / Ryder / 2027"
+  },
+  "cap_share_fast": 0.25,
+  "cap_share_week": 0.50,
+  "cap_share_slow": 0.25,
+  "max_tickets_per_event": 3,
+  "kelly_fraction": 0.25,
+  "collapse_ratio": 0.30,
+  "improve_abs": 0.015,
+  "flip_hurdle": 1.20,
+  "fail_holes": {"win_after_r1": 18, "win_after_r2": 36, "win_after_r3": 54},
+  "max_reallocates_per_tick": 2,
+  "max_adds_per_tick": 2,
+  "single_name_frac": 0.05,
+  "total_exposure_frac": 0.20,
+  "daily_loss_frac": 0.05,
+  "drawdown_frac": 0.08,
+  "paper_halt_seconds": 120,
+  "resume_rule": "paper_pause",
+  "live_resume_rule": "next_utc_day",
+  "player_brain": "keep_expert",
+  "live_scale": 0.1,
+  "live_scale_until_n": 10,
+  "fee_pin": {
+    "source": "founder_browser_bytes",
+    "file": "golf-offshoot/docs/kalshi-fee-schedule.pdf",
+    "sha256": "c326a69f596a11e8f8be2620402d39a8d4823920c21cc97c93a114d862699601",
+    "bytes": 281129,
+    "adjustment_function": "golf_offshoot.learning_lane_15m.evidence_bar.fee_adjust"
+  }
+}

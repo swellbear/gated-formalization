@@ -3,7 +3,7 @@
 **Lane:** `learning_lane_15m` · series `KXBTC15M` only
 **Role:** `digestor` — honesty owner. Never Soften / Harden / Kill / ADMIT.
 **Admit?** N · **Soften?** N · **Trading ARMED?** N
-**Evidence as-of:** 2026-09-10 07:42 EDT (`latest/journal.json` `generated_at`)
+**Evidence as-of:** 2026-09-12 05:16 EDT (`latest/journal.json` `generated_at`)
 **Figures:** generated from files. **Caveats:** concatenated verbatim from [`LEARNING_LANE_15M_SOURCE_DIGEST_CAVEATS.md`](LEARNING_LANE_15M_SOURCE_DIGEST_CAVEATS.md). The generator may not write that file.
 
 Truth on disk, in the order this digest trusts it:
@@ -25,19 +25,19 @@ Cited to the file that recorded them. No default, no zero-fill, no pnl a file do
 
 ### Lineage A — `paper/ledger.json`
 
-- `starting_bankroll` 100.0 → `bankroll` 87.33 · `betting_pnl` -12.67 · `deposits` 0.0 · `withdrawals` 0.0
-- entries 458 (1 `observation_seed`, 229 `paper_fill`, 121 `settle_loss`, 107 `settle_win`)
-- events 228
-- paper books on this tree: 229 (228 with `settled_at`, 1 open: `KXBTC15M-26SEP100745`)
-- settle files on this tree: 229
+- `starting_bankroll` 100.0 → `bankroll` 90.39 · `betting_pnl` -9.61 · `deposits` 0.0 · `withdrawals` 0.0
+- entries 724 (1 `observation_seed`, 362 `paper_fill`, 184 `settle_loss`, 177 `settle_win`)
+- events 361
+- paper books on this tree: 362 (361 with `settled_at`, 1 open: `KXBTC15M-26SEP120530`)
+- settle files on this tree: 362
 - first event `event_name`: `BTC price up in next 15 mins?`
-- last event `event_name`: `BTC price up in next 15 mins?` · `settled_at` `2026-09-10T07:15:58.172221-04:00` · last-row ticket `pnl` +1.30 · `bankroll_after` 87.33
+- last event `event_name`: `BTC price up in next 15 mins?` · `settled_at` `2026-09-12T05:15:59.887964-04:00` · last-row ticket `pnl` +1.53 · `bankroll_after` 90.39
 
 Recorded book. The standing caveats say these figures omit the known fee.
 
 ### Pending on the current journal tape
 
-`KXBTC15M-26SEP100745-45` · journal `status` `active` · `result` "" · `window_id` `KXBTC15M-26SEP100745__2026-09-10T11:30:00Z__2026-09-10T11:45:00Z`
+`KXBTC15M-26SEP120530-30` · journal `status` `active` · `result` "" · `window_id` `KXBTC15M-26SEP120530__2026-09-12T09:15:00Z__2026-09-12T09:30:00Z`
 
 ### Absences (recorded as absence, not as zero)
 
@@ -47,7 +47,7 @@ Recorded book. The standing caveats say these figures omit the known fee.
 
 ### Lineage B — `docs/observability-hub/data/manifest.json`
 
-- hub `generated_at` `2026-09-10T07:42:16.378625-04:00` (local export; a local rewrite is not a publish)
+- hub `generated_at` `2026-09-12T05:16:57.330715-04:00` (local export; a local rewrite is not a publish)
 - `$.lanes[1].records` length: 0
 - published history kept: `KXBTC15M-26SEP071445-45` `paper_win` `+1.67` — cited to the manifest, never re-derived here, never added to lineage A
 

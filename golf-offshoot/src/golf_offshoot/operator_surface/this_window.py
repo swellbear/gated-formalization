@@ -7,9 +7,8 @@ import html
 
 def _disagreements_html() -> str:
     try:
-        from golf_offshoot.two_brains import last_disagreements, sync
+        from golf_offshoot.two_brains import last_disagreements
 
-        sync()
         rows = last_disagreements(8)
     except Exception:
         return ""
@@ -40,9 +39,13 @@ def this_window_html() -> str:
     window_et = ""
     kalshi = "n/a"
     try:
-        from golf_offshoot.learning_lane_15m.standing import current_factory_action
+        from golf_offshoot.learning_lane_15m.standing import (
+            cached_factory_standing,
+            current_factory_action,
+        )
 
-        factory = current_factory_action()
+        factory_standing = cached_factory_standing()
+        factory = current_factory_action(standing=factory_standing)
         factory_phrase = str(factory.get("phrase") or "no decision yet")
         ticker = str(factory.get("ticker") or "")
         window_et = str(factory.get("window_et") or "")
@@ -50,10 +53,15 @@ def this_window_html() -> str:
     except Exception:
         factory_phrase = "factory standing unavailable"
     try:
-        from golf_offshoot.honer_15m.board import current_exam_action, current_search_action
+        from golf_offshoot.honer_15m.board import (
+            cached_honer_standing,
+            current_exam_action,
+            current_search_action,
+        )
 
-        honer = current_search_action()
-        exam = current_exam_action()
+        honer_standing = cached_honer_standing()
+        honer = current_search_action(standing=honer_standing)
+        exam = current_exam_action(standing=honer_standing)
         honer_phrase = str(honer.get("phrase") or "no decision yet")
         if not ticker:
             ticker = str(honer.get("ticker") or "")

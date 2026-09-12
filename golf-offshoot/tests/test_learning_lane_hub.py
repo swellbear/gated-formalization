@@ -139,6 +139,81 @@ def test_desktop_shell_html_has_lane_selector_and_hides_golf_viz_on_15m(tmp_path
     assert 'name="deposit"' not in page
     assert 'name="withdraw"' not in page
     assert "lane=learning_lane_15m" in text
+    assert 'id="desk-session"' in golf and 'id="desk-blotter"' in golf
+    assert 'id="desk-session"' in page and 'id="desk-blotter"' in page
+    assert 'id="golf-kalshi"' not in page
+    assert "Open tickets" not in page
+    assert 'data-view-id="lab"' in page
+    assert 'data-view-id="museum"' in golf
+    assert 'data-view-id="museum"' not in page
+    home = golf[golf.index("desk-view-home") : golf.index("desk-view-scoreboard")]
+    score = golf[golf.index("desk-view-scoreboard") : golf.index("desk-view-ops")]
+    assert "gk-series" not in home
+    assert 'data-view-id="ops"' in golf
+    assert 'id="golf-kalshi"' in golf
+    assert "Open tickets" in golf
+    assert "Closed tickets" not in home
+    assert "Closed tickets" in score
+    assert "Player" in golf
+    assert "Live/entry edge" in golf
+
+
+def test_registry_and_miss_lane(tmp_path):
+    from golf_offshoot.operator_surface.desk import render_miss
+    from golf_offshoot.operator_surface.lanes import desk_lane_from_query, registered_lanes
+
+    ids = [spec.id for spec in registered_lanes()]
+    assert ids == ["golf", "learning_lane_15m"]
+    assert desk_lane_from_query("") == "golf"
+    assert desk_lane_from_query("golf") == "golf"
+    assert desk_lane_from_query("learning_lane_15m") == "learning_lane_15m"
+    assert desk_lane_from_query("honer_15m") is None
+    assert desk_lane_from_query("15m") is None
+    miss = render_miss("honer_15m")
+    assert "Lane not registered" in miss
+    assert "honer_15m" in miss
+    assert "golf" in miss
+
+
+def test_omitted_lane_paints_golf_and_junk_is_miss(tmp_path, monkeypatch):
+    from http.client import HTTPConnection
+    from http.server import ThreadingHTTPServer
+    from threading import Thread
+
+    from golf_offshoot.operator_surface.app import OperatorHandler, build_surface
+
+    monkeypatch.setattr("golf_offshoot.operator_surface.app._sync_paper_watch", lambda state: None)
+    monkeypatch.setattr("golf_offshoot.operator_surface.app.rebuild_surface", lambda state, **kwargs: None)
+
+    state = {
+        "event_id": "",
+        "artifact_root": tmp_path,
+        "viz_root": tmp_path / "viz",
+        "odds_book": "auto",
+        "generation": 0,
+        "reload_kind": "ok",
+        "lane": "learning_lane_15m",
+        "surface": build_surface(artifact_root=tmp_path, viz_root=tmp_path / "viz", lane="learning_lane_15m"),
+    }
+    httpd = ThreadingHTTPServer(("127.0.0.1", 0), OperatorHandler)
+    httpd.surface_state = state
+    thread = Thread(target=httpd.serve_forever, daemon=True)
+    thread.start()
+    try:
+        host, port = httpd.server_address[:2]
+        conn = HTTPConnection(host, port, timeout=5)
+        conn.request("GET", "/")
+        golf = conn.getresponse().read().decode("utf-8")
+        assert 'data-lane="golf"' in golf
+        assert "Golf (Kalshi)" in golf
+        conn.request("GET", "/?lane=honer_15m")
+        miss = conn.getresponse().read().decode("utf-8")
+        assert "Lane not registered" in miss
+        assert "honer_15m" in miss
+        conn.close()
+    finally:
+        httpd.shutdown()
+        httpd.server_close()
 
 
 def test_desktop_15m_loop_notifies_once_and_keeps_paper_settle(tmp_path, monkeypatch):
@@ -193,7 +268,7 @@ def test_desktop_15m_loop_notifies_once_and_keeps_paper_settle(tmp_path, monkeyp
         set_15m_root_override(None)
     assert rec.ok
     assert rec.extras["lane"] == "learning_lane_15m"
-    assert rec.extras["paper_fills"] == 1
+    assert rec.extras["paper_fills"] == 0
     assert rec.notice is not None
     assert rec.notice.sent is True
     assert len(calls) == 1

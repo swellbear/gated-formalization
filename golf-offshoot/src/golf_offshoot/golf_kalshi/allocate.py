@@ -13,13 +13,14 @@ from golf_offshoot.golf_kalshi.paper import (
     open_event_count,
     open_ticket_for,
     rebuy_blocked,
+    sizing_bank,
 )
 from golf_offshoot.golf_kalshi.recipe import WalletRecipe, recipe_v1
 from golf_offshoot.localtime import isoformat_now
 
 
 def rec_seed(recipe: WalletRecipe, ledger: dict[str, Any]) -> float:
-    return float(ledger.get("bankroll") or recipe.seed)
+    return sizing_bank(ledger, recipe)
 
 
 def week_overweight(ledger: dict[str, Any], recipe: WalletRecipe) -> bool:

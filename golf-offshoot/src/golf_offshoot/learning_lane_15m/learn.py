@@ -164,6 +164,14 @@ NON_MARKET_KINDS = frozenset(
         EVENT_PUBLISHED_FALSEHOOD,
         EVENT_DIGEST_CONTRADICTS_LEDGER,
         EVENT_LEARNING_CARD_STALE,
+        # Judicial exceptions. Figures cannot invent a missing window or a
+        # park/score event; naming digest-figures here heartbeat-owed the
+        # runner until clerical_roles_clear failed.
+        EVENT_WINDOW_SEQUENCE_GAP,
+        EVENT_RULE_REACHED_N,
+        EVENT_PARK_AGED,
+        EVENT_FALSIFIER_FIRED,
+        EVENT_LAB_PROPOSED,
     }
 )
 
@@ -1020,13 +1028,12 @@ def rekey_leftover_owed(
     out: list[dict[str, Any]] = []
     for entry in existing:
         role = _as_str(entry.get("role"))
-        if role not in {DIGESTOR_ROLE, OPERATOR_ROLE}:
-            out.append(dict(entry))
-            continue
         kept: list[Any] = []
         for reason in entry.get("reasons") or []:
             text = str(reason)
-            if any(text.startswith(prefix) for prefix in RETIRED_JUDICIAL_PREFIXES):
+            if role in {DIGESTOR_ROLE, OPERATOR_ROLE} and any(
+                text.startswith(prefix) for prefix in RETIRED_JUDICIAL_PREFIXES
+            ):
                 continue
             if (
                 drop_disclosed_critic_failing
@@ -1034,7 +1041,14 @@ def rekey_leftover_owed(
                 and text.startswith("critic_findings_failing")
             ):
                 continue
+            if role in ROUTINE_ROLES and any(
+                text.startswith(kind) for kind in NON_MARKET_KINDS
+            ):
+                continue
             kept.append(reason)
+        if role not in {DIGESTOR_ROLE, OPERATOR_ROLE} and role not in ROUTINE_ROLES:
+            out.append(dict(entry))
+            continue
         if not kept:
             continue
         row = dict(entry)

@@ -2,11 +2,15 @@
   "schema": 1,
   "lane": "learning_lane_15m",
   "role": "critic-invariants",
-  "ran_at": "2026-09-10T10:18:22.874508-04:00",
+  "ran_at": "2026-09-10T16:50:31.694147-04:00",
   "framing": "Deterministic checks over method artifacts. This is the mechanical half of the Critic. It objects to nothing, scores nothing, admits nothing and parks nothing. A written attack is soften-critic's turn and is never auto-served.",
-  "passed": true,
-  "failing": [],
-  "failing_named_on_bar": [],
+  "passed": false,
+  "failing": [
+    "delta_above_detection_floor"
+  ],
+  "failing_named_on_bar": [
+    "delta_above_detection_floor"
+  ],
   "failing_not_named_on_bar": [],
   "checks": [
     {
@@ -27,25 +31,31 @@
     {
       "id": "delta_above_detection_floor",
       "title": "the effect floor is checked against the null the bar declares",
-      "state": "PASS",
-      "detail": "null is floor (h0 'mean(d) <= delta'); at n=70, sd=0.784, alpha_k=0.00833333 (k=2) the test rejects above 0.5043. delta 0.28 is 0.555 of that threshold, so power at delta is alpha by construction. 50% power at 0.5043/window, 80% at 0.5832. Against a zero null the MDE would be 0.2243 (ratio 1.248), which is not the null in force.",
+      "state": "FAIL",
+      "detail": "null is floor (h0 'mean(d) <= delta'); at n=70, sd=0.784, alpha_k=0.00416667 (k=3) the test rejects above 0.5272. delta 0.28 is 0.531 of that threshold, so power at delta is alpha by construction. 50% power at 0.5272/window, 80% at 0.6061. Against a zero null the MDE would be 0.2472 (ratio 1.133), which is not the null in force.  DISAGREEMENTS: mde says 0.2243, recomputes to 0.2472; reject_if_mean_d_exceeds says 0.504, recomputes to 0.5272; next_look_alpha says 0.008333, recomputes to 0.0042; power.effect_at_50pct_power says 0.504, recomputes to 0.5272; power.effect_at_80pct_power says 0.583, recomputes to 0.6061",
       "evidence": {
         "h0": "mean(d) <= delta",
         "null_kind": "floor",
         "delta": 0.28,
         "n": 70,
         "sd_used": 0.784,
-        "alpha_k": 0.008333333333333333,
+        "alpha_k": 0.004166666666666667,
         "alpha_first_term": 0.025,
-        "trials_to_date": 1,
+        "trials_to_date": 2,
         "se": 0.093706,
-        "mde_zero_null": 0.22433,
-        "reject_above": 0.50433,
-        "delta_over_reject_threshold": 0.555192,
-        "delta_over_zero_null_mde": 1.248161,
-        "effect_at_50pct_power": 0.50433,
-        "effect_at_80pct_power": 0.583195,
-        "disagreements": []
+        "mde_zero_null": 0.24722,
+        "reject_above": 0.52722,
+        "delta_over_reject_threshold": 0.531087,
+        "delta_over_zero_null_mde": 1.132593,
+        "effect_at_50pct_power": 0.52722,
+        "effect_at_80pct_power": 0.606085,
+        "disagreements": [
+          "mde says 0.2243, recomputes to 0.2472",
+          "reject_if_mean_d_exceeds says 0.504, recomputes to 0.5272",
+          "next_look_alpha says 0.008333, recomputes to 0.0042",
+          "power.effect_at_50pct_power says 0.504, recomputes to 0.5272",
+          "power.effect_at_80pct_power says 0.583, recomputes to 0.6061"
+        ]
       }
     },
     {
@@ -84,23 +94,23 @@
       "id": "declared_at_precedes_scored_windows",
       "title": "no rule is scored on a window that predates its declaration",
       "state": "PASS",
-      "detail": "no scored window in 0 scorecard(s) or the registry closes at or before its rule's declared_at",
+      "detail": "no scored window in 1 scorecard(s) or the registry closes at or before its rule's declared_at",
       "evidence": {
         "violations": [],
-        "scorecards": 0
+        "scorecards": 1
       }
     },
     {
       "id": "trials_counter_is_consistent",
       "title": "trials_to_date is mechanical and accounts for every look",
       "state": "PASS",
-      "detail": "trials_to_date=1 equals 0 pre-mechanism + 1 logged increment(s); 0 score note(s) all match",
+      "detail": "trials_to_date=2 equals 0 pre-mechanism + 2 logged increment(s); 1 score note(s) all match",
       "evidence": {
-        "trials_to_date": 1,
+        "trials_to_date": 2,
         "trials_before_mechanism": 0,
-        "logged": 1,
+        "logged": 2,
         "l2_logged": 0,
-        "score_notes": 0,
+        "score_notes": 1,
         "writer": "golf_offshoot.learning_lane_15m.rules.record_trial"
       }
     },
@@ -167,17 +177,33 @@
         "name": "GatedFormalization-15mLearningHub",
         "returncode": 0
       }
+    },
+    {
+      "id": "consult_enabled_requires_gates",
+      "title": "consult stays dark unless freeze/score/fee gates hold",
+      "state": "PASS",
+      "detail": "consult_enabled is not exactly true",
+      "evidence": {
+        "consult_enabled": false
+      }
+    },
+    {
+      "id": "honer_consult_not_live_theta",
+      "title": "honer consult snapshot is a freeze photocopy, never live theta",
+      "state": "PASS",
+      "detail": "no consult snapshot",
+      "evidence": {}
     }
   ],
   "desk_checks": [
     {
       "id": "honesty_stamp_is_fresh",
       "title": "the honesty stamp is inside one window",
-      "state": "PASS",
-      "detail": "stamped 2026-09-10 10:08, 622s old, inside one 900s window",
+      "state": "FAIL",
+      "detail": "stamped 2026-09-10 11:46, 18271s old \u2014 older than one 900s window, so its boxes are being reported from a stale reading",
       "evidence": {
-        "stamped": "2026-09-10 10:08",
-        "age_s": 622,
+        "stamped": "2026-09-10 11:46",
+        "age_s": 18271,
         "window_s": 900.0
       }
     }
@@ -189,49 +215,49 @@
       "path": "golf-offshoot/docs/LEARNING_LANE_15M_EVIDENCE_BAR.md",
       "sha256": "6490a3307a1acb73897acfa2bb8c4439e834d7ba52266bb96aa2ad51005503e8",
       "present": true,
-      "checked_at": "2026-09-10T10:18:22.874508-04:00"
+      "checked_at": "2026-09-10T16:50:31.694147-04:00"
     },
     {
       "id": "evidence_bar_json",
       "path": "golf-offshoot/docs/LEARNING_LANE_15M_EVIDENCE_BAR.json",
       "sha256": "1f36a807bb789126ee66f82ad466d5bf841b3fe8296ce6358de18d8005d9fba6",
       "present": true,
-      "checked_at": "2026-09-10T10:18:22.874508-04:00"
+      "checked_at": "2026-09-10T16:50:31.694147-04:00"
     },
     {
       "id": "rule_registry",
       "path": "golf-offshoot/docs/LEARNING_LANE_15M_RULES.json",
-      "sha256": "bbd87e52ee6fc1e5f797c676ea6038f4c77404dde7f29e21128bd75bf4b802d0",
+      "sha256": "bfd4f8336e556da7f5f30bc81d0518ad159b333adaff295fd82836db40b5c1e1",
       "present": true,
-      "checked_at": "2026-09-10T10:18:22.874508-04:00"
+      "checked_at": "2026-09-10T16:50:31.694147-04:00"
     },
     {
       "id": "lab_proposed",
       "path": "golf-offshoot/docs/LEARNING_LANE_15M_OPERATOR_NOTE_PROPOSED_01.md",
       "sha256": "83d4463b4bb55d327485e3874a4bf3daa54727d7ed37f56c124c6e8913daf0b4",
       "present": true,
-      "checked_at": "2026-09-10T10:18:22.874508-04:00"
+      "checked_at": "2026-09-10T16:50:31.694147-04:00"
     },
     {
       "id": "lab_proposed_02",
       "path": "golf-offshoot/docs/LEARNING_LANE_15M_OPERATOR_NOTE_PROPOSED_02.md",
       "sha256": "1071b9f7402ea0807147f64731456b80030310ed9fb2f6ff5ecd3009cc303119",
       "present": true,
-      "checked_at": "2026-09-10T10:18:22.874508-04:00"
+      "checked_at": "2026-09-10T16:50:31.694147-04:00"
     },
     {
       "id": "lab_lab_proposed_02",
       "path": "golf-offshoot/docs/LEARNING_LANE_15M_LAB_PROPOSED_02.md",
       "sha256": "460f59a369241e107f7fd48a22898f24d4456338618a7927d73d7aebdc0368e2",
       "present": true,
-      "checked_at": "2026-09-10T10:18:22.874508-04:00"
+      "checked_at": "2026-09-10T16:50:31.694147-04:00"
     },
     {
       "id": "honesty_stamp",
       "path": "docs/agents/DESK.md",
-      "sha256": "5ffb770f63911a5429eba83468a669bd388bd7c864a786dc9fde312e5c73a32c",
+      "sha256": "af1ba66c27cd6479ec30102d24858c441a574668875ea331fe10c68507cccccc",
       "present": true,
-      "checked_at": "2026-09-10T10:18:22.874508-04:00"
+      "checked_at": "2026-09-10T16:50:31.694147-04:00"
     }
   ]
 }

@@ -17,7 +17,8 @@ from golf_offshoot.learning_lane_15m.paths import LANE_15M, LANE_GOLF, PRIMARY_S
 from golf_offshoot.learning_lane_15m.watch import PaperWatch, load_watch_status
 from golf_offshoot.operator_surface.artifacts import HonestyBundle, load_honesty
 from golf_offshoot.operator_surface.hub_browser import refresh_existing_hub_window
-from golf_offshoot.operator_surface.lanes import SELECTOR_FIELD, lane_header_name, parse_lane
+from golf_offshoot.operator_surface.lanes import SELECTOR_FIELD, lane_header_name, parse_lane, desk_lane_from_query
+from golf_offshoot.operator_surface.desk import DESK_CSS, DESK_JS, render_miss, watch_payload
 from golf_offshoot.operator_surface.modes import (
     AI_NO_CASH,
     CASH_BADGE,
@@ -238,7 +239,6 @@ def _lightbox_html(has_chart: bool) -> str:
         '<div class="lightbox-bar">'
         '<span class="lightbox-title" id="viz-lightbox-title"></span>'
         f'<span class="lightbox-hint" id="viz-lightbox-hint">{html.escape(ZOOM_HINT_FIT)}</span>'
-        f'<span class="badge">{html.escape(CASH_BADGE)}</span>'
         '<button type="button" class="lightbox-close" id="viz-lightbox-close">Close (Esc)</button>'
         "</div>"
         '<img id="viz-lightbox-img" src="" alt=""/>'
@@ -349,7 +349,7 @@ def _clock_legend_html() -> str:
             f"{clock.get('at') or 'n/a'}"
         )
         journal_bit = f"Factory journal: {clock.get('journal_at') or 'n/a'}"
-        factory_png = f"Lineage A PNG: {clock.get('png_mtime') or 'n/a'} (one open window of trail is allowed)"
+        factory_png = f"Lineage A PNG: {clock.get('png_mtime') or 'n/a'} · {clock.get('png_note') or 'n/a'}"
     except Exception:
         pass
     try:
@@ -547,15 +547,10 @@ def _viz_wall_15m_html() -> str:
     caption_bits.append(
         '<span class="src">Source: learning_lane_15m join files · click the board to enlarge</span>'
     )
-    badges = "".join(
-        f'<span class="badge">{html.escape(text)}</span>'
-        for text in ("LEARNING LANE", PAPER_ONLY, AI_NO_CASH)
-    )
     return (
         '<div class="viz-wall" id="viz-wall">'
         '<section class="viz wide" id="viz-slot-paper-window-strip">'
         f"<h3>{html.escape(title)}</h3>"
-        f'<div class="badge-row">{badges}</div>'
         f'<p class="plain">{html.escape(CHART_15M_PLAIN)}</p>'
         f'<p class="sub">{html.escape(CHART_15M_SUB)}</p>'
         "<figure>"
@@ -660,83 +655,53 @@ def _actions_html(event: str, lane: str = LANE_GOLF) -> str:
 
 
 def render_html(surface: dict) -> str:
+    from golf_offshoot.golf_kalshi.hub import (
+        blotter_html as golf_blotter_html,
+        cockpit_html as golf_cockpit_html,
+        ops_html as golf_ops_html,
+        scoreboard_html as golf_scoreboard_html,
+        session_html as golf_session_html,
+    )
+    from golf_offshoot.operator_surface.desk import render_page, session_blotter_15m
+    from golf_offshoot.operator_surface.lanes import lookup_lane
+
     walls = surface["walls"]
     honesty: HonestyBundle = surface["honesty"]
     viz: VizWall = surface["viz"]
     last: RunRecord | None = surface.get("last_run")
     event = html.escape(str(surface.get("event_id") or ""))
     lane = parse_lane(surface.get("lane"))
+    spec = lookup_lane(lane)
+    if spec is None:
+        spec = lookup_lane(LANE_GOLF)
     wall_class = "mock" if walls.is_mock else "ops"
     body_class = "lane-15m" if lane == LANE_15M else "lane-golf"
-    charts_help = (
-        "KXBTC15M windows from the join files. No golf WC1 / Ill here."
-        if lane == LANE_15M
-        else (
-            "Illustrator boards that exist on disk. A missing chart stays not yet available and is "
-            "never invented, and no edge badge is ever added. Phone alerts are notify-first; this "
-            "hub stays local."
+    mock_lines = ""
+    if walls.is_mock:
+        mock_lines = "".join(
+            f"<div>{html.escape(line)}</div>" for line in (walls.title,) + walls.lines
         )
-    )
-    # A barred MOCK/DEMO path still states itself in full. The operating path does not:
-    # it is an observation page, and the standing Hard NOs are the one footer strip.
-    wall_lines = "".join(f"<div>{html.escape(line)}</div>" for line in walls.lines) if walls.is_mock else ""
-    lane_line = f"Active lane: {lane_header_name(lane)}"
-    if lane == LANE_15M:
-        lane_line = f"{lane_line} — LEARNING LANE"
-        viz_wall = _viz_wall_15m_html()
-        # Lightbox if either factory or honer PNG exists.
-        viz_lightbox = _lightbox_html(
-            _chart_15m_path() is not None or _chart_honer_path() is not None
-        )
-        watch = load_watch_status()
-        watch_bit = "WATCH ON" if watch.get("running") else "WATCH OFF"
-        settle_banner = (
-            f'<div class="settle">'
-            f"<strong>{watch_bit}</strong> — settle when Kalshi posts result. "
-            f"{html.escape(str(watch.get('last_summary') or ''))}"
-            "</div>"
-        )
-    else:
-        viz_wall = _viz_wall_html(viz)
-        viz_lightbox = _viz_lightbox_html(viz)
-        settle_banner = ""
     actions = _actions_html(event, lane)
     last_html = html.escape(format_run_record(last)) if last else "no operator run this session"
-    paper_html = ""
-    if last is not None and last.paper:
-        paper_html = (
-            '<section class="panel">'
-            "<h2>Paper observation (not trading)</h2>"
-            '<p class="help">A pretend bankroll kept so the model can be scored later. '
-            "No ticket is placed, no money moves, and nothing here needs approval.</p>"
-            f'<p class="loud">{html.escape(PAPER_ONLY)} · Trading {html.escape(NOT_ARMED)} · '
-            f"{html.escape(CASH_BADGE)}</p>"
-            '<p class="help">Paper bankroll auto-apply is paper observation only — it is '
-            "not trading armed. No deposit, withdraw, transfer, cash-out, or one-tap bet control exists here.</p>"
-            f"<pre>{html.escape(last.paper)}</pre>"
-            "</section>"
-        )
-    ranked = html.escape(honesty.ranked.text)
-    leftover = html.escape(honesty.leftover.text)
-    inventory = html.escape(honesty.inventory.text)
-    shadow = html.escape(honesty.shadow.text)
-    calib = html.escape(honesty.calibration.text)
-    html_link = ""
-    if honesty.ranked.html_path:
-        html_link = (
-            f'<p>Full export: <a href="/export/html">{html.escape(str(honesty.ranked.html_path))}</a></p>'
-        )
+    last_block = (
+        f"<h3>Last operator cycle</h3><pre>{last_html}</pre>"
+        if last
+        else "<p class=\"help\">No operator cycle in this shell session yet. Journal is from disk.</p>"
+    )
+
     if lane == LANE_15M:
         from golf_offshoot.learning_lane_15m.learn import format_wake_line, load_wake_state
         from golf_offshoot.learning_lane_15m.paper import format_15m_observation_board
 
+        viz_wall = _viz_wall_15m_html()
+        viz_lightbox = _lightbox_html(
+            _chart_15m_path() is not None or _chart_honer_path() is not None
+        )
         watch = load_watch_status()
         watch_line = (
             f"watch running={watch.get('running')} interval_s={watch.get('interval_s')} "
             f"cycles={watch.get('cycles')} last={watch.get('last_summary') or 'none'}"
         )
-        # The observation surface, not chrome: whether crew work is owed belongs
-        # beside the journal the founder already reads.
         journal_board = html.escape(
             "\n\n".join(
                 (
@@ -746,27 +711,16 @@ def render_html(surface: dict) -> str:
                 )
             )
         )
-        last_block = (
-            f"<h3>Last operator cycle</h3><pre>{last_html}</pre>"
-            if last
-            else "<p class=\"help\">No operator cycle in this shell session yet. Journal is from disk.</p>"
-        )
-        paper_html = ""
         try:
             from golf_offshoot.honer_15m.hub_block import sandbox_html
-            from golf_offshoot.operator_surface.this_window import this_window_html
 
             honer_block = sandbox_html(extra_html=_honer_viz_html())
-            now_strip = this_window_html()
         except Exception:
             honer_block = (
                 '<section class="panel honer-sandbox" id="honer">'
                 "<h2>honer_15m sandbox</h2>"
-                '<p class="help">honer_15m sandbox unavailable this render. Live 15m journal is unchanged. '
-                "Do not add honer bankrolls to Lineage A.</p>"
                 "</section>"
             )
-            now_strip = ""
         try:
             from golf_offshoot.learning_lane_15m.farm_hub import farm_panel_html
 
@@ -775,23 +729,9 @@ def render_html(surface: dict) -> str:
             farm_block = (
                 '<section class="panel farm-sandbox" id="farm">'
                 "<h2>Farm — discovery notebooks</h2>"
-                '<p class="help">Farm panel unavailable this render. Not live. No invented rows.</p>'
                 "</section>"
             )
-        factory_box = (
-            '<section class="panel factory-box" id="factory">'
-            "<h2>Factory — live 70</h2>"
-            f'<p class="help">{html.escape(charts_help)}</p>'
-            f"{_factory_standing_html()}"
-            f"{viz_wall}"
-            "<details class=\"proof\">"
-            "<summary>Registry and source log</summary>"
-            f"{_learning_card_html()}"
-            "<h3>Journal</h3>"
-            f"<pre>{journal_board}</pre>"
-            "</details>"
-            "</section>"
-        )
+        session_html, blotter_html = session_blotter_15m()
         extras = (
             '<section class="panel" id="extras">'
             "<h2>Operator extras</h2>"
@@ -804,304 +744,88 @@ def render_html(surface: dict) -> str:
             "Public observability hub</a></p>"
             "</section>"
         )
-        nav = (
-            '<nav class="jump">'
-            '<a href="#factory">Factory</a>'
-            '<a href="#honer">Honer</a>'
-            '<a href="#farm">Farm</a>'
-            '<a href="#extras">Extras</a>'
-            "</nav>"
+        factory_box = (
+            '<section class="panel factory-box" id="factory">'
+            "<h2>Factory — live 70</h2>"
+            '<p class="help">KXBTC15M windows from the join files. No golf WC1 / Ill here.</p>'
+            f"{viz_wall}"
+            "</section>"
         )
-        lane_body = nav + _spine_html() + _clock_legend_html() + now_strip + factory_box + honer_block + farm_block + extras
+        lab = (
+            '<section class="panel" id="lab">'
+            f"{_learning_card_html()}"
+            "<h3>Journal</h3>"
+            f"<pre>{journal_board}</pre>"
+            "</section>"
+        )
+        views = {
+            "scoreboard": factory_box,
+            "lab": lab,
+            "ops": _spine_html() + _clock_legend_html() + extras,
+            "farm": farm_block,
+            "honer": honer_block,
+        }
     else:
+        viz_wall = _viz_wall_html(viz)
+        viz_lightbox = _viz_lightbox_html(viz)
         try:
-            from golf_offshoot.golf_kalshi.hub import board_html as golf_board_html
-
-            golf_board = golf_board_html()
+            session_html = golf_session_html()
+            blotter_html = golf_blotter_html()
+            cockpit = golf_cockpit_html()
+            ops_cat = golf_ops_html()
+            score = golf_scoreboard_html()
         except Exception:
-            golf_board = (
-                '<section class="panel gk" id="golf-kalshi">'
-                "<h2>Golf (Kalshi)</h2>"
-                "</section>"
+            session_html = '<div id="desk-session" class="desk-session"></div>'
+            blotter_html = (
+                '<div id="desk-blotter" class="desk-blotter">'
+                '<section class="panel gk" id="golf-kalshi"><h2>Open tickets</h2></section>'
+                "</div>"
             )
+            cockpit = ""
+            ops_cat = ""
+            score = ""
         try:
             from golf_offshoot.golf_kalshi.organs import farm_panel_html, honer_panel_html
 
             golf_farm = farm_panel_html()
             golf_honer = honer_panel_html()
         except Exception:
-            golf_farm = (
-                '<section class="panel gk-organ" id="golf-farm">'
-                "<h2>Golf Farm</h2>"
-                '<p class="help">Idle. no golf tape yet — wait for paper settles</p>'
-                "</section>"
-            )
-            golf_honer = (
-                '<section class="panel gk-organ" id="golf-honer">'
-                "<h2>Golf Honer</h2>"
-                '<p class="help">Idle. no golf tape yet — wait for paper settles</p>'
-                "</section>"
-            )
+            golf_farm = '<section class="panel gk-organ" id="golf-farm"><h2>Golf Farm</h2></section>'
+            golf_honer = '<section class="panel gk-organ" id="golf-honer"><h2>Golf Honer</h2></section>'
         extras = (
-            '<details class="panel" id="extras">'
-            "<summary>Extras</summary>"
+            '<section class="panel" id="extras">'
+            "<h2>Operator extras</h2>"
             f"{actions}"
             f"<pre>{last_html}</pre>"
-            "</details>"
+            "</section>"
         )
         museum = (
-            '<details class="panel" id="museum">'
-            "<summary>Previous golf claim</summary>"
+            '<section class="panel" id="museum">'
+            "<h2>Previous golf claim</h2>"
             "<p>WC1 fail / not proven. Not this gym.</p>"
             f"{viz_wall}"
-            "</details>"
+            "</section>"
         )
-        nav = (
-            '<nav class="jump">'
-            '<a href="#golf-kalshi">Golf board</a>'
-            '<a href="#golf-farm">Golf Farm</a>'
-            '<a href="#golf-honer">Golf Honer</a>'
-            '<a href="#museum">Museum</a>'
-            "</nav>"
-        )
-        lane_body = nav + golf_board + golf_farm + golf_honer + museum + extras
-        paper_html = ""
-    lane_switch = f'<div class="lane-switch">{_lane_switch_html(lane)}</div>'
-    return f"""<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="utf-8"/>
-<meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>golf-offshoot operator shell</title>
-<style>
- body {{ font-family: Segoe UI, Helvetica, Arial, sans-serif; margin: 0; background: #f4f1ea; color: #1b1b1b; }}
- header.ops {{ background: #1f3b4d; color: #fff; padding: 16px 20px; }}
- header.mock {{ background: #7a0c0c; color: #fff; padding: 16px 20px; }}
- header h1 {{ margin: 0; font-size: 26px; letter-spacing: 1px; }}
- header div {{ font-size: 14px; margin-top: 8px; }}
- header .lane-line {{ font-size: 13px; opacity: 0.85; margin-top: 6px; }}
- .lane-switch {{ position: sticky; top: 0; z-index: 6; background: #f4f1ea; padding: 10px 20px 6px; border-bottom: 1px solid #c9c2b2; }}
- .lane-switch form.lane-form {{ margin: 0; }}
- .badge {{ display: inline-block; margin: 4px 6px 0 0; padding: 3px 8px; background: #0e1f29; color: #f2e27a; font-size: 12px; font-weight: 700; }}
- main {{ padding: 0 20px 56px; max-width: 1100px; margin: 0 auto; }}
- /* The 15m board is a wide table-and-strip figure. Give it room to be read in
-    place instead of making the lightbox the only legible view. */
- body.lane-15m main {{ max-width: 1560px; }}
- body.lane-golf main {{ max-width: 1400px; }}
- body.lane-15m .learning-card {{ border: 1px solid #1f3b4d; padding: 12px; margin: 0 0 16px; background: #fff; }}
- body.lane-15m .learning-card h2 {{ margin: 0 0 8px; font-size: 18px; }}
- form.row {{ display: flex; flex-wrap: wrap; gap: 8px; align-items: end; margin: 4px 0 10px; }}
- form.lane-form fieldset {{ border: 1px solid #c9c2b2; padding: 8px 10px; }}
- form.lane-form legend {{ font-size: 13px; font-weight: 700; }}
- form.lane-form button.active {{ outline: 2px solid #f2e27a; }}
- label {{ font-size: 13px; display: flex; flex-direction: column; gap: 4px; }}
- input[type=text] {{ padding: 6px 8px; min-width: 180px; }}
- button {{ padding: 8px 12px; background: #1f3b4d; color: #fff; border: 0; cursor: pointer; font-size: 14px; }}
- button.soft {{ background: #55606b; }}
- button.warn {{ background: #7a0c0c; }}
- pre {{ white-space: pre-wrap; background: #fff; border: 1px solid #c9c2b2; padding: 12px; font-size: 13px; }}
- .missing {{ background: #f8e0a0; padding: 10px; border: 1px solid #c9a227; }}
- .hard-no {{ position: sticky; bottom: 0; background: #1b1b1b; color: #d8d2c2; padding: 6px 16px; font-size: 12px; }}
- .settle {{ background: #7a0c0c; color: #fff; padding: 12px 20px; font-size: 15px; }}
- .settle.clear {{ background: #14532d; }}
- .settle .tally {{ display: block; margin-top: 4px; font-size: 13px; opacity: 0.9; }}
- .panel {{ background: #fff; border: 1px solid #c9c2b2; padding: 14px 16px; margin: 18px 0; }}
- .panel h2 {{ margin: 0; font-size: 20px; }}
- .panel .help {{ font-size: 13px; color: #4a4a4a; margin: 6px 0 10px; }}
- ul.help {{ font-size: 13px; color: #4a4a4a; margin: 6px 0 0; padding-left: 20px; }}
- .loud {{ font-weight: 700; margin: 6px 0; }}
- nav.jump {{ display: flex; gap: 16px; margin: 12px 0 0; font-size: 14px; }}
- nav.jump a {{ color: #1f3b4d; font-weight: 700; }}
- .spine-grid {{ display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }}
- .spine-box {{ border: 1px solid #1f3b4d; padding: 10px 12px; background: #f4f1ea; }}
- .spine-box h3 {{ margin: 0 0 6px; font-size: 16px; }}
- .standing h3 {{ margin: 12px 0 4px; font-size: 16px; color: #1f3b4d; }}
- .standing p {{ font-size: 15px; line-height: 1.45; margin: 0 0 8px; }}
- ul.happened {{ font-size: 14px; line-height: 1.45; }}
- .honer-table-wrap {{ overflow-x: auto; }}
- table.honer-board {{ border-collapse: collapse; width: 100%; font-size: 13px; }}
- table.honer-board th {{ text-align: left; background: #1f3b4d; color: #fff; padding: 6px 8px; }}
- table.honer-board td {{ border-bottom: 1px solid #c9c2b2; padding: 6px 8px; vertical-align: top; }}
- table.honer-board tr:nth-child(even) td {{ background: #f4f1ea; }}
- table.honer-board td.src {{ font-size: 11px; color: #4a4a4a; }}
- .gk-chips {{ display: flex; flex-wrap: wrap; gap: 8px; margin: 8px 0 14px; }}
- .gk-chip {{ display: inline-block; background: #1f3b4d; color: #fff; padding: 6px 10px; font-size: 13px; }}
- .gk-sleeves {{ display: grid; gap: 8px; margin: 8px 0 16px; }}
- .gk-sleeves span {{ display: inline-block; width: 90px; }}
- .gk-bar {{ display: inline-block; width: 180px; height: 8px; background: #e6e0d4; vertical-align: middle; }}
- .gk-bar span {{ display: block; height: 100%; background: #1f3b4d; }}
- .gk-table-wrap {{ overflow-x: auto; }}
- table.gk-board {{ border-collapse: collapse; width: 100%; font-size: 13px; }}
- table.gk-board th {{ text-align: left; background: #1f3b4d; color: #fff; padding: 6px 8px; }}
- table.gk-board td {{ border-bottom: 1px solid #c9c2b2; padding: 6px 8px; }}
- .gk-chart-slot {{ min-height: 24px; }}
- .gk-nums {{ font-size: 13px; }}
- .gk-catalog {{ display: grid; gap: 8px; margin: 8px 0 16px; }}
- details.gk-family, details.gk-series, details.gk-settled, details.gk-unmatched {{ border: 1px solid #c9c2b2; padding: 8px 10px; background: #fff; }}
- details.gk-series, details.gk-settled {{ margin: 8px 0 0; }}
- details.gk-unmatched {{ margin: 8px 0 16px; }}
- details.gk-family > summary, details.gk-series > summary, details.gk-settled > summary, details.gk-unmatched > summary {{ cursor: pointer; font-weight: 700; color: #1f3b4d; }}
- details.gk-series > summary {{ font-weight: 600; }}
- details.gk-settled > summary {{ font-weight: 600; color: #4a4a4a; }}
- .farm-table-wrap {{ overflow-x: auto; }}
- table.farm-board {{ border-collapse: collapse; width: 100%; font-size: 13px; }}
- table.farm-board th {{ text-align: left; background: #1f3b4d; color: #fff; padding: 6px 8px; }}
- table.farm-board td {{ border-bottom: 1px solid #c9c2b2; padding: 6px 8px; vertical-align: top; }}
- table.farm-board tr:nth-child(even) td {{ background: #f4f1ea; }}
- .farm-meter {{ display: inline-block; width: 120px; height: 10px; margin-right: 8px; background: #e6e0d4; border: 1px solid #c9c2b2; vertical-align: middle; }}
- .farm-meter-fill {{ display: block; height: 100%; background: #1f3b4d; }}
- details.proof {{ margin-top: 14px; border: 1px solid #c9c2b2; padding: 8px 10px; }}
- details.proof summary {{ cursor: pointer; font-weight: 700; color: #1f3b4d; }}
- .this-window {{ font-size: 14px; }}
- .this-window-panel ul {{ font-size: 15px; line-height: 1.5; }}
- @media (max-width: 800px) {{ .spine-grid {{ grid-template-columns: 1fr; }} }}
- .viz-wall {{ display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 16px; }}
- .viz {{ margin: 0; padding: 12px; background: #fff; border: 1px solid #c9c2b2; }}
- .viz h3 {{ margin: 0 0 6px; font-size: 17px; }}
- .viz .plain {{ font-size: 13px; color: #333; margin: 0 0 6px; }}
- .viz .sub {{ font-size: 12px; color: #4a4a4a; margin: 0 0 8px; }}
- .viz img {{ display: block; width: 100%; max-width: 100%; height: auto; border: 1px solid #c9c2b2; background: #111; }}
- .viz.wide {{ grid-column: 1 / -1; }}
- .viz .badge-row {{ margin: 0 0 8px; }}
- .viz figure {{ margin: 0; }}
- .viz figcaption {{ margin-top: 8px; font-size: 12px; color: #4a4a4a; line-height: 1.55; }}
- .viz figcaption span {{ display: block; }}
- .viz figcaption .counts {{ margin-bottom: 4px; font-size: 13px; font-weight: 700; color: #1b1b1b; }}
- .viz figcaption .windows {{ margin-bottom: 4px; font-family: Consolas, "Courier New", monospace; color: #333; }}
- .viz figcaption .src {{ font-style: italic; }}
- .viz a.zoom {{ display: block; cursor: zoom-in; color: inherit; text-decoration: none; }}
- .viz a.zoom:focus-visible {{ outline: 3px solid #1f3b4d; outline-offset: 2px; }}
- .viz .zoom-hint {{ display: block; margin-top: 6px; font-size: 12px; color: #4a4a4a; }}
- .viz a.zoom:hover .zoom-hint, .viz a.zoom:focus .zoom-hint {{ color: #1f3b4d; text-decoration: underline; }}
- .lightbox {{ position: fixed; top: 0; right: 0; bottom: 0; left: 0; z-index: 100; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 10px; padding: 0 14px 14px; overflow: hidden; background: rgba(12, 14, 16, 0.94); }}
- .lightbox[hidden] {{ display: none; }}
- .lightbox.full {{ justify-content: flex-start; overflow: auto; }}
- .lightbox-bar {{ position: sticky; top: 0; z-index: 1; display: flex; flex-wrap: wrap; gap: 12px; align-items: center; justify-content: space-between; width: 100%; padding: 10px 0; background: rgba(12, 14, 16, 0.94); color: #f4f1ea; font-size: 14px; }}
- .lightbox-title {{ font-weight: 700; }}
- .lightbox-hint {{ font-size: 12px; opacity: 0.85; }}
- .lightbox-close {{ background: #55606b; }}
- .lightbox img {{ max-width: 100%; max-height: 86vh; width: auto; height: auto; cursor: zoom-in; border: 1px solid #c9c2b2; background: #111; }}
- .lightbox.full img {{ width: 100%; max-width: 100%; max-height: none; height: auto; cursor: zoom-out; }}
- body.viz-zoomed {{ overflow: hidden; }}
-</style>
-</head>
-<body class="{body_class}">
-<header class="{wall_class}">
-  <h1>{html.escape(walls.title)}</h1>
-  <div class="lane-line">{html.escape(lane_line)}</div>
-  {wall_lines}
-</header>
-{lane_switch}
-{settle_banner}
-<main>
-  {paper_html}
-  {lane_body}
-</main>
-<div class="hard-no">{html.escape(HARD_NO_STRIP)}</div>
-{viz_lightbox}
-<script>
-(function(){{
-  var box = document.getElementById('viz-lightbox');
-  if (!box) return;
-  var shown = document.getElementById('viz-lightbox-img');
-  var caption = document.getElementById('viz-lightbox-title');
-  var hint = document.getElementById('viz-lightbox-hint');
-  function setFull(on){{
-    box.classList.toggle('full', on);
-    hint.textContent = on ? {json.dumps(ZOOM_HINT_FULL)} : {json.dumps(ZOOM_HINT_FIT)};
-    box.scrollTop = 0;
-  }}
-  function openBox(href, title){{
-    shown.setAttribute('src', href);
-    shown.setAttribute('alt', title);
-    caption.textContent = title;
-    setFull(false);
-    box.hidden = false;
-    document.body.classList.add('viz-zoomed');
-  }}
-  function closeBox(){{
-    if (box.hidden) return;
-    box.hidden = true;
-    shown.setAttribute('src', '');
-    document.body.classList.remove('viz-zoomed');
-  }}
-  document.addEventListener('click', function(ev){{
-    if (!box.hidden) {{
-      if (ev.target === shown) setFull(!box.classList.contains('full'));
-      else closeBox();
-      return;
-    }}
-    if (ev.button || ev.metaKey || ev.ctrlKey || ev.shiftKey || ev.altKey) return;
-    var link = ev.target && ev.target.closest ? ev.target.closest('a.zoom') : null;
-    if (!link) return;
-    ev.preventDefault();
-    openBox(link.getAttribute('href'), link.getAttribute('data-viz-title') || '');
-  }});
-  document.addEventListener('keydown', function(ev){{
-    if (ev.key === 'Escape' || ev.key === 'Esc') closeBox();
-  }});
-}})();
-(function(){{
-  // Same-tab refresh on a real generation bump. A single /api/watch miss
-  // (client abort while this huge page is still writing) must not reload.
-  var gen = null;
-  var reloading = false;
-  function tick(){{
-    if (reloading) return;
-    fetch('/api/watch', {{cache:'no-store'}}).then(function(r){{
-      if (!r.ok) throw new Error('hub ' + r.status);
-      return r.json();
-    }}).then(function(s){{
-      if (gen === null) {{ gen = s.generation; return; }}
-      if (s.generation === gen) return;
-      reloading = true;
-      location.reload();
-    }}).catch(function(){{}});
-  }}
-  setInterval(tick, 1500);
-  tick();
-}})();
-(function(){{
-  document.addEventListener('toggle', function(ev){{
-    var el = ev.target;
-    if (!el || !el.classList || !el.open) return;
-    if (el.getAttribute('data-loaded') === '1') return;
-    if (el.classList.contains('gk-series')) {{
-      var st = el.getAttribute('data-series');
-      var slot = el.querySelector('.gk-series-body');
-      if (!st || !slot) return;
-      slot.textContent = 'Loading markets…';
-      fetch('/golf-catalog/series?ticker=' + encodeURIComponent(st), {{cache:'no-store'}}).then(function(r){{
-        if (!r.ok) throw new Error('series');
-        return r.text();
-      }}).then(function(html){{
-        slot.innerHTML = html;
-        el.setAttribute('data-loaded', '1');
-      }}).catch(function(){{
-        slot.textContent = 'Markets not available.';
-      }});
-      return;
-    }}
-    if (el.classList.contains('gk-unmatched')) {{
-      var body = el.querySelector('.gk-unmatched-body');
-      if (!body) return;
-      body.textContent = 'Loading unmatched…';
-      fetch('/golf-catalog/unmatched', {{cache:'no-store'}}).then(function(r){{
-        if (!r.ok) throw new Error('unmatched');
-        return r.text();
-      }}).then(function(html){{
-        body.innerHTML = html;
-        el.setAttribute('data-loaded', '1');
-      }}).catch(function(){{
-        body.textContent = 'Unmatched not available.';
-      }});
-    }}
-  }}, true);
-}})();
-</script>
-</body>
-</html>
-"""
+        views = {
+            "scoreboard": score + cockpit,
+            "ops": ops_cat + extras,
+            "farm": golf_farm,
+            "honer": golf_honer,
+            "museum": museum,
+        }
+
+    return render_page(
+        lane=lane,
+        spec=spec,
+        body_class=body_class,
+        wall_class=wall_class,
+        mock_lines=mock_lines,
+        session_html=session_html,
+        blotter_html=blotter_html,
+        views=views,
+        lightbox=viz_lightbox,
+    )
+
 
 
 class OperatorHandler(BaseHTTPRequestHandler):
@@ -1117,9 +841,19 @@ class OperatorHandler(BaseHTTPRequestHandler):
         parsed = urlparse(self.path)
         if parsed.path == "/":
             qs = parse_qs(parsed.query)
-            if qs.get(SELECTOR_FIELD):
-                apply_request_lane(self._state(), qs.get(SELECTOR_FIELD)[0])
-            self._send_html(render_html(self._state()["surface"]))
+            raw_values = qs.get(SELECTOR_FIELD)
+            if raw_values:
+                raw_lane = raw_values[0]
+                desk_id = desk_lane_from_query(raw_lane)
+                if desk_id is None:
+                    self._send_html(render_miss(raw_lane))
+                    return
+                apply_request_lane(self._state(), desk_id)
+            else:
+                desk_id = LANE_GOLF
+            surface = dict(self._state()["surface"])
+            surface["lane"] = desk_id
+            self._send_html(render_html(surface))
             return
         if parsed.path == "/text":
             body = render_text(self._state()["surface"]).encode("utf-8")
@@ -1129,7 +863,24 @@ class OperatorHandler(BaseHTTPRequestHandler):
             self._send(200, "application/json", json.dumps(_public_state(self._state()["surface"])).encode("utf-8"))
             return
         if parsed.path == "/api/watch":
-            self._send(200, "application/json", json.dumps(_watch_state(self._state())).encode("utf-8"))
+            qs = parse_qs(parsed.query)
+            raw_lane = (qs.get(SELECTOR_FIELD) or [self._state().get("lane") or LANE_GOLF])[0]
+            desk_id = desk_lane_from_query(raw_lane) or parse_lane(raw_lane)
+            self._send(
+                200,
+                "application/json",
+                json.dumps(watch_payload(
+                    generation=int(self._state().get("generation") or 0),
+                    kind=str(self._state().get("reload_kind") or "ok"),
+                    lane=desk_id,
+                )).encode("utf-8"),
+            )
+            return
+        if parsed.path == "/desk.css":
+            self._send(200, "text/css; charset=utf-8", DESK_CSS.read_bytes())
+            return
+        if parsed.path == "/desk.js":
+            self._send(200, "text/javascript; charset=utf-8", DESK_JS.read_bytes())
             return
         if parsed.path == "/export/html":
             honesty: HonestyBundle = self._state()["surface"]["honesty"]
@@ -1361,7 +1112,6 @@ def _sync_paper_watch(state: dict) -> None:
             )
             rebuild_surface(state, last_run=rec)
             state["reload_kind"] = "artifacts"
-            state["generation"] = int(state.get("generation") or 0) + 1
 
         watch = PaperWatch(on_cycle=_on_cycle)
         state["paper_watch"] = watch
@@ -1459,8 +1209,7 @@ def _watch_loop(httpd: ThreadingHTTPServer, state: dict, stop: threading.Event) 
         if decision.should_soft_reload:
             rebuild_surface(state)
             state["reload_kind"] = "artifacts"
-            state["generation"] = int(state.get("generation") or 0) + 1
-            sys.stderr.write("shell: artifacts updated; UI will refresh\n")
+            sys.stderr.write("shell: artifacts updated; UI will patch\n")
 
 
 def serve(

@@ -16,6 +16,8 @@ from golf_offshoot.learning_lane_15m.paper import load_book, load_decisions, loa
 from golf_offshoot.learning_lane_15m.paths import latest_dir_15m, settlements_dir_15m
 from golf_offshoot.learning_lane_15m.rules import (
     active_execution_rule,
+    clock_skip_minutes,
+    close_minute,
     favorite_threshold,
     load_rules,
 )
@@ -72,32 +74,107 @@ def _window_et(ticker: str, close_at: str = "", window_id: str = "") -> str:
     return "window ET unknown"
 
 
-def _cutoff(rule: dict[str, Any] | None) -> float:
+def _cutoff(rule: dict[str, Any] | None) -> float | None:
+    """Posted-yes skip line, or None when this book is not a price-cut rule."""
     if rule is None:
-        return TWO_TO_ONE
+        return None
     params = rule.get("params") or {}
     if params.get("favorite_odds") is not None:
         try:
             return favorite_threshold(float(params["favorite_odds"]))
         except ValueError:
             return TWO_TO_ONE
+    if clock_skip_minutes(rule) is not None:
+        return None
     return TWO_TO_ONE
 
 
-def _journal_result(ticker: str) -> str:
+def _clock_slots(rule: dict[str, Any] | None) -> list[int] | None:
+    if rule is None:
+        return None
+    mins = clock_skip_minutes(rule)
+    return None if mins is None else list(mins)
+
+
+def _slot_text(minutes: list[int]) -> str:
+    return ",".join(f":{int(m):02d}" for m in minutes)
+
+
+def _row_close_slot(row: dict[str, Any]) -> str:
+    close_at = str(row.get("close_at") or "")
+    if not close_at:
+        return "close n/a"
+    try:
+        return f":{close_minute(close_at):02d}"
+    except (TypeError, ValueError):
+        return "close n/a"
+
+
+def _file_mtime(path: Path) -> int:
+    try:
+        return int(path.stat().st_mtime_ns)
+    except OSError:
+        return 0
+
+
+def _journal_result_map() -> dict[str, str]:
     path = latest_dir_15m() / "journal.json"
     if not path.is_file():
-        return ""
+        return {}
     try:
         payload = json.loads(path.read_text(encoding="utf-8"))
     except (OSError, ValueError):
-        return ""
+        return {}
+    out: dict[str, str] = {}
     for window in payload.get("windows") or []:
-        if isinstance(window, dict) and str(window.get("ticker") or "") == ticker:
-            got = str(window.get("result") or "").strip().lower()
+        if not isinstance(window, dict):
+            continue
+        ticker = str(window.get("ticker") or "")
+        got = str(window.get("result") or "").strip().lower()
+        if ticker and got in {"yes", "no"}:
+            out[ticker] = got
+    return out
+
+
+def _journal_result(ticker: str) -> str:
+    return _journal_result_map().get(ticker, "")
+
+
+def _settle_result_map() -> dict[str, str]:
+    from golf_offshoot.learning_lane_15m.paths import safe_artifact_stem
+
+    root = settlements_dir_15m()
+    out: dict[str, str] = {}
+    if not root.is_dir():
+        return out
+    for dest in root.glob("*.json"):
+        try:
+            payload = json.loads(dest.read_text(encoding="utf-8"))
+        except (OSError, ValueError):
+            continue
+        if not isinstance(payload, dict):
+            continue
+        ticker = ""
+        got = ""
+        for row in payload.get("rows") or []:
+            if not isinstance(row, dict):
+                continue
+            ticker = str(row.get("ticker") or ticker)
+            got = str(row.get("kalshi_result") or "").strip().lower()
             if got in {"yes", "no"}:
-                return got
-    return ""
+                break
+        if got not in {"yes", "no"}:
+            got = str(payload.get("kalshi_result") or "").strip().lower()
+        if got in {"yes", "no"}:
+            if not ticker:
+                ticker = dest.stem.replace("_", "-")
+            out[ticker] = got
+            out[dest.stem] = got
+            try:
+                out[safe_artifact_stem(ticker)] = got
+            except Exception:
+                pass
+    return out
 
 
 def _settle_result(ticker: str) -> str:
@@ -137,7 +214,12 @@ def _sorted_decisions() -> list[tuple[str, dict[str, Any]]]:
     return sorted(rows, key=lambda item: item[0], reverse=True)
 
 
-def _lived_count(rule: dict[str, Any] | None) -> int:
+def _lived_count(
+    rule: dict[str, Any] | None,
+    *,
+    settle_map: dict[str, str] | None = None,
+    journal_map: dict[str, str] | None = None,
+) -> int:
     """Settled factory decisions on this tree. A count, not a score."""
     begins = ""
     if rule is not None:
@@ -149,6 +231,8 @@ def _lived_count(rule: dict[str, Any] | None) -> int:
             begin_dt = to_eastern(datetime.fromisoformat(text))
         except ValueError:
             begin_dt = None
+    settles = settle_map if settle_map is not None else _settle_result_map()
+    journal = journal_map if journal_map is not None else _journal_result_map()
     n = 0
     for ticker, row in load_decisions().items():
         if not isinstance(row, dict):
@@ -163,12 +247,8 @@ def _lived_count(rule: dict[str, Any] | None) -> int:
                     continue
             except ValueError:
                 pass
-        result = _settle_result(ticker) or _journal_result(ticker)
-        if row.get("action") == "skip":
-            if result in {"yes", "no"}:
-                n += 1
-            continue
-        if _paper_pnl(ticker) is not None or result in {"yes", "no"}:
+        result = settles.get(ticker) or journal.get(ticker, "")
+        if result in {"yes", "no"}:
             n += 1
     return n
 
@@ -179,18 +259,28 @@ def collect_factory_standing() -> FactoryStanding:
     except ValueError:
         rule = None
     cutoff = _cutoff(rule)
+    clock_mins = _clock_slots(rule)
     rule_id = str((rule or {}).get("id") or "no executing selection rule")
     selects = bool((rule or {}).get("selects"))
-    what = (
-        "Factory is not predicting up or down. Each window it either takes a paper YES at the "
-        "posted price or skips because that price is too rich "
-        f"(2-to-1 favorite: posted YES at or above {_cents(cutoff)}). It never buys NO. "
-        "The model is the market (entry_edge=0)."
-    )
     if not selects:
         what = (
             "Factory is not predicting up or down. The executing row is the named fill-all baseline: "
             "every candidate window gets a paper YES at the posted price. It never buys NO. "
+            "The model is the market (entry_edge=0)."
+        )
+    elif clock_mins is not None:
+        slots = _slot_text(clock_mins)
+        hour_bit = " (hour-ending slot)" if clock_mins == [0] else ""
+        what = (
+            "Factory is not predicting up or down. Each window it either takes a paper YES at the "
+            f"posted price or skips the {slots} close{hour_bit}. It never buys NO. "
+            "The model is the market (entry_edge=0)."
+        )
+    else:
+        what = (
+            "Factory is not predicting up or down. Each window it either takes a paper YES at the "
+            "posted price or skips because that price is too rich "
+            f"(2-to-1 favorite: posted YES at or above {_cents(cutoff)}). It never buys NO. "
             "The model is the market (entry_edge=0)."
         )
     n = _lived_count(rule)
@@ -233,7 +323,16 @@ def collect_factory_standing() -> FactoryStanding:
         pnl = _paper_pnl(ticker)
         pending = result not in {"yes", "no"} and pnl is None
         current_kalshi = WAITING if pending else (result.upper() if result else "n/a")
-        if action == "skip":
+        if clock_mins is not None:
+            skip_slots = _slot_text(clock_mins)
+            slot = _row_close_slot(row)
+            if action == "skip":
+                current_phrase = f"skipped ({slot} is a skip close {skip_slots})"
+            elif action == "fill":
+                current_phrase = f"filled YES ({slot}; skips {skip_slots})"
+            else:
+                current_phrase = f"{action or 'no decision'} (posted {_cents(posted_f)})"
+        elif action == "skip":
             current_phrase = (
                 f"skipped ({_cents(posted_f)} at or above the {_cents(cutoff)} 2-to-1 line)"
             )
@@ -249,19 +348,34 @@ def collect_factory_standing() -> FactoryStanding:
                 f"Kalshi has not posted an official result. Paper pnl is not known yet — not zero."
             )
         elif action == "skip":
-            last = (
-                f"Last settled window **{current_et}**: the market's YES was **{_cents(posted_f)}**. "
-                f"The 2-to-1 line is **{_cents(cutoff)}**, so factory **skipped**. "
-                f"Kalshi later said **{result.upper()}**. No ticket, so paper pnl is **$0** "
-                "(a skip is not a loss)."
-            )
+            if clock_mins is not None:
+                last = (
+                    f"Last settled window **{current_et}**: close **{_row_close_slot(row)}**. "
+                    f"Factory skips **{_slot_text(clock_mins)}**, so it **skipped**. "
+                    f"Kalshi later said **{result.upper()}**. No ticket, so paper pnl is **$0** "
+                    "(a skip is not a loss)."
+                )
+            else:
+                last = (
+                    f"Last settled window **{current_et}**: the market's YES was **{_cents(posted_f)}**. "
+                    f"The 2-to-1 line is **{_cents(cutoff)}**, so factory **skipped**. "
+                    f"Kalshi later said **{result.upper()}**. No ticket, so paper pnl is **$0** "
+                    "(a skip is not a loss)."
+                )
         else:
             money = _dollars(pnl, signed=True) if pnl is not None else WAITING
-            last = (
-                f"Last settled window **{current_et}**: the market's YES was **{_cents(posted_f)}**. "
-                f"The 2-to-1 line is **{_cents(cutoff)}**, so factory **filled YES**. "
-                f"Kalshi later said **{(result or 'n/a').upper()}**. This book's paper pnl is **{money}**."
-            )
+            if clock_mins is not None:
+                last = (
+                    f"Last settled window **{current_et}**: close **{_row_close_slot(row)}**. "
+                    f"Factory skips **{_slot_text(clock_mins)}**, so it **filled YES**. "
+                    f"Kalshi later said **{(result or 'n/a').upper()}**. This book's paper pnl is **{money}**."
+                )
+            else:
+                last = (
+                    f"Last settled window **{current_et}**: the market's YES was **{_cents(posted_f)}**. "
+                    f"The 2-to-1 line is **{_cents(cutoff)}**, so factory **filled YES**. "
+                    f"Kalshi later said **{(result or 'n/a').upper()}**. This book's paper pnl is **{money}**."
+                )
         # If newest is pending, also name last settled when one exists.
         if pending:
             for other_ticker, other in decisions[1:]:
@@ -277,10 +391,16 @@ def collect_factory_standing() -> FactoryStanding:
                 other_posted = other.get("posted_yes")
                 other_action = str(other.get("action") or "")
                 if other_action == "skip":
-                    last += (
-                        f" Last settled window **{other_et}**: skipped at {_cents(float(other_posted) if other_posted is not None else None)} "
-                        f"vs {_cents(cutoff)}; Kalshi {(other_result or 'n/a').upper()}; no ticket."
-                    )
+                    if clock_mins is not None:
+                        last += (
+                            f" Last settled window **{other_et}**: skipped at {_row_close_slot(other)} "
+                            f"(skip {_slot_text(clock_mins)}); Kalshi {(other_result or 'n/a').upper()}; no ticket."
+                        )
+                    else:
+                        last += (
+                            f" Last settled window **{other_et}**: skipped at {_cents(float(other_posted) if other_posted is not None else None)} "
+                            f"vs {_cents(cutoff)}; Kalshi {(other_result or 'n/a').upper()}; no ticket."
+                        )
                 else:
                     last += (
                         f" Last settled window **{other_et}**: filled YES at {_cents(float(other_posted) if other_posted is not None else None)}; "
@@ -311,8 +431,35 @@ def collect_factory_standing() -> FactoryStanding:
     )
 
 
-def current_factory_action() -> dict[str, Any]:
+_STANDING_CACHE: tuple[tuple[int, ...], FactoryStanding] | None = None
+
+
+def _standing_cache_key() -> tuple[int, ...]:
+    from golf_offshoot.learning_lane_15m.paper import decisions_path, ledger_path
+    from golf_offshoot.learning_lane_15m.rules import registry_path
+
+    return (
+        _file_mtime(decisions_path()),
+        _file_mtime(ledger_path()),
+        _file_mtime(latest_dir_15m() / "journal.json"),
+        _file_mtime(registry_path()),
+        _file_mtime(settlements_dir_15m()),
+    )
+
+
+def cached_factory_standing() -> FactoryStanding:
+    """Hub paint. Recomputes when the decision/ledger/journal files move."""
+    global _STANDING_CACHE
+    key = _standing_cache_key()
+    if _STANDING_CACHE is not None and _STANDING_CACHE[0] == key:
+        return _STANDING_CACHE[1]
     standing = collect_factory_standing()
+    _STANDING_CACHE = (key, standing)
+    return standing
+
+
+def current_factory_action(standing: FactoryStanding | None = None) -> dict[str, Any]:
+    standing = standing if standing is not None else collect_factory_standing()
     return {
         "ticker": standing.current_ticker,
         "window_et": standing.current_window_et,
@@ -357,14 +504,32 @@ def factory_watch_clock() -> dict[str, Any]:
 
     watch = load_watch_status()
     at = str(watch.get("last_at") or watch.get("at") or "")
-    stale = not bool(watch.get("running"))
-    if at and not stale:
-        text = at[:-1] + "+00:00" if at.endswith("Z") else at
-        try:
-            stamped = to_eastern(datetime.fromisoformat(text))
-            stale = (now() - stamped).total_seconds() > 180
-        except ValueError:
+    running = bool(watch.get("running"))
+    interval = float(watch.get("interval_s") or 90.0)
+    stale = False
+    if running:
+        if not at:
             stale = True
+        else:
+            text = at[:-1] + "+00:00" if at.endswith("Z") else at
+            try:
+                stamped = to_eastern(datetime.fromisoformat(text))
+                stale = (now() - stamped).total_seconds() > max(interval, 1.0) * 2
+            except ValueError:
+                stale = True
+    png_note = "one open window of trail is allowed"
+    png_stale = False
+    png_lag = 0
+    try:
+        from golf_offshoot.learning_lane_15m.learn import load_wake_state
+
+        board = ((load_wake_state() or {}).get("board") or {})
+        if board:
+            png_note = str(board.get("note") or png_note)
+            png_stale = bool(board.get("stale"))
+            png_lag = int(board.get("lag_windows") or 0)
+    except Exception:  # noqa: BLE001 — clock still paints without a lag scan
+        pass
     return {
         "running": bool(watch.get("running")),
         "cycles": int(watch.get("cycles") or 0),
@@ -372,5 +537,8 @@ def factory_watch_clock() -> dict[str, Any]:
         "at": format_eastern(at) if at else "n/a",
         "stale": stale,
         "png_mtime": factory_png_mtime(),
+        "png_note": png_note,
+        "png_stale": png_stale,
+        "png_lag": png_lag,
         "journal_at": journal_generated_at(),
     }

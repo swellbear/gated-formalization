@@ -10,7 +10,7 @@ from golf_offshoot.learning_lane_15m.farm import (
     farm_path,
     first_look_n,
     keeper_notebooks,
-    notebook_status,
+    notebook_face,
     progress_meter,
     progress_pct,
     settled_n,
@@ -46,6 +46,8 @@ def farm_panel_html(*, root: Path | None = None) -> str:
     notebooks = [row for row in (payload.get("notebooks") or []) if isinstance(row, dict)]
     help_txt = (
         "Discovery notebooks on the shared tape. Not live. Not an ADMIT. "
+        "Status is collecting, score owed, parked, keeper, or queued. "
+        "Parked rows name skip rate and failed clauses from the farm card. "
         "One chair stays What is on trial. Do not add farm pnl to Lineage A."
     )
     origin_line = _origin_label(meta)
@@ -89,21 +91,28 @@ def farm_panel_html(*, root: Path | None = None) -> str:
         n = settled_n(row, root=root)
         meter = progress_meter(n, need)
         pct = progress_pct(n, need)
-        status = notebook_status(row, root=root, farm=payload, need=need)
+        status, why = notebook_face(row, root=root, farm=payload, need=need, n=n)
         next_line = "next-in-line" if rid and rid == head_id else ""
+        slug = status.replace(" ", "-")
+        why_html = (
+            f'<div class="farm-status-why">{html.escape(why)}</div>' if why else ""
+        )
         body.append(
             "<tr>"
-            f"<td><code>{html.escape(rid)}</code></td>"
-            f"<td>{html.escape(str(row.get('kind') or ''))}</td>"
-            f"<td>{_params_text(row.get('params') or {})}</td>"
-            f"<td>{html.escape(str(row.get('declared_at') or ''))}</td>"
             "<td>"
+            f"<code>{html.escape(rid)}</code>"
+            f'<div class="farm-status farm-status-{html.escape(slug)}">'
+            f'<div class="farm-status-label">{html.escape(status)}</div>'
+            f"{why_html}"
+            "</div>"
             f'<div class="farm-meter" aria-label="{html.escape(meter)}">'
             f'<span class="farm-meter-fill" style="width:{pct}%"></span>'
             "</div>"
-            f"<span>{html.escape(meter)}</span>"
+            f'<span class="farm-meter-n">{html.escape(meter)}</span>'
             "</td>"
-            f"<td>{html.escape(status)}</td>"
+            f"<td>{html.escape(str(row.get('kind') or ''))}</td>"
+            f"<td>{_params_text(row.get('params') or {})}</td>"
+            f"<td>{html.escape(str(row.get('declared_at') or ''))}</td>"
             f"<td>{html.escape(next_line)}</td>"
             "</tr>"
         )
@@ -111,10 +120,10 @@ def farm_panel_html(*, root: Path | None = None) -> str:
     head_row = (
         "<thead><tr>"
         "<th>Notebook</th><th>Kind</th><th>Params</th><th>declared_at</th>"
-        "<th>Progress</th><th>Status</th><th>Queue</th>"
+        "<th>Queue</th>"
         "</tr></thead>"
     )
-    return (
+    html_out = (
         '<section class="panel farm-sandbox" id="farm">'
         "<h2>Farm — discovery notebooks</h2>"
         f'<p class="help">{html.escape(help_txt)}</p>'
@@ -124,3 +133,4 @@ def farm_panel_html(*, root: Path | None = None) -> str:
         "</div>"
         "</section>"
     )
+    return html_out

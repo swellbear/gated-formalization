@@ -98,6 +98,9 @@ JUDICIAL_NEVER = (
 LOG_NAME = "learning_runner.jsonl"
 FP_STORE_NAME = "role_artifact_fps.json"
 BOARD_FP_NAME = "board_fingerprint.json"
+MAX_RUNNER_LOG_BYTES = 1 * 1024 * 1024
+RUNNER_LOG_KEEP_LINES = 80
+RUNNER_LOG_TAIL_BYTES = 256 * 1024
 
 #: Clock fields. A report that stamps itself on every write moves its own hash
 #: on every write, and serve-on-proof then clears the role for having run.
@@ -212,11 +215,64 @@ def assert_scratch_execute(*, root: Path | None) -> None:
         raise RuntimeError("execute=True cannot serve the real repo unarmed")
 
 
+def _trim_runner_log(path: Path, *, keep: int = RUNNER_LOG_KEEP_LINES) -> None:
+    """Keep a small tail. Never scan the whole file — that hung PaperWatch."""
+    try:
+        size = path.stat().st_size
+    except OSError:
+        return
+    if size <= MAX_RUNNER_LOG_BYTES:
+        return
+    keep = max(int(keep), 1)
+    cap = min(RUNNER_LOG_TAIL_BYTES, size)
+    try:
+        with path.open("rb") as fh:
+            fh.seek(-cap, 2)
+            block = fh.read()
+        lines = block.splitlines(True)
+        if len(lines) >= 2:
+            lines = lines[1:]
+        lines = lines[-keep:]
+        if not lines:
+            path.write_bytes(b"")
+            return
+        if not lines[-1].endswith(b"\n"):
+            lines.append(b"\n")
+        path.write_bytes(b"".join(lines))
+    except OSError:
+        return
+
+
+def _compact_log_entry(entry: dict[str, Any]) -> dict[str, Any]:
+    out = dict(entry)
+    results = out.get("results")
+    if not isinstance(results, list):
+        return out
+    compact = []
+    for row in results:
+        if not isinstance(row, dict):
+            continue
+        reason = str(row.get("reason") or "")
+        if len(reason) > 180:
+            reason = reason[:180] + "…"
+        compact.append(
+            {
+                "role": row.get("role"),
+                "ok": row.get("ok"),
+                "marked": row.get("marked"),
+                "reason": reason,
+            }
+        )
+    out["results"] = compact
+    return out
+
+
 def _append_log(entry: dict[str, Any]) -> Path:
     path = runner_log_path()
     path.parent.mkdir(parents=True, exist_ok=True)
     with path.open("a", encoding="utf-8") as fh:
-        fh.write(json.dumps(entry, ensure_ascii=True) + "\n")
+        fh.write(json.dumps(_compact_log_entry(entry), ensure_ascii=True) + "\n")
+    _trim_runner_log(path)
     return path
 
 

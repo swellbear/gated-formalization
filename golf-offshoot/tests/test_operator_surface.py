@@ -125,10 +125,9 @@ def _write_jsonl(path: Path, rows: list[dict]) -> None:
 
 def _viz_wall_block(page: str) -> str:
     start = page.index('id="viz-wall"')
-    end_at = len(page)
-    for marker in ('id="extras"', "What you can do here"):
-        if marker in page:
-            end_at = min(end_at, page.index(marker))
+    end_at = page.find('id="viz-lightbox"', start)
+    if end_at < 0:
+        end_at = len(page)
     return page[start:end_at]
 
 
@@ -439,9 +438,11 @@ def test_shell_text_and_html_include_walls(tmp_path):
     assert "WC1 dated record" in page
     assert "FAIL / park unproven · NOT edge" in page
     assert "NOT EDGE ESTABLISHED" not in page
-    assert "NEVER DEPOSITS" in page
-    assert "PAPER OBSERVATION ONLY" in page
-    assert "NOT ARMED" in page
+    assert "PAPER" in page
+    assert "Golf (Kalshi)" in page
+    assert "NEVER DEPOSITS" in text
+    assert "PAPER OBSERVATION ONLY" in text
+    assert "NOT ARMED" in text
     assert 'value="deposit"' not in page
     assert 'value="paper-deposit"' not in page
     assert 'value="paper-withdraw"' not in page
@@ -706,9 +707,9 @@ def test_hub_html_renders_viz_pngs_when_present(tmp_path):
     assert "WC1 dated record" in page
     assert "FAIL / park unproven · NOT edge" in page
     assert "NOT EDGE ESTABLISHED" not in page
-    assert "PHASE 1 OBSERVATION" in page
-    assert "AI: NO CASH IN/OUT" in page
-    assert "PAPER OBSERVATION ONLY" in page
+    assert "Golf (Kalshi)" in page
+    assert "PAPER" in page
+    assert "PAPER OBSERVATION ONLY" in render_text(build_surface(artifact_root=tmp_path, viz_root=viz))
 
 
 def test_hub_states_hard_nos_once_and_quietly(tmp_path):
@@ -718,18 +719,16 @@ def test_hub_states_hard_nos_once_and_quietly(tmp_path):
     (viz / "calibration_weather.png").write_bytes(b"\x89PNG\r\n\x1a\n")
     page = render_html(build_surface(artifact_root=tmp_path, viz_root=viz))
     header = page[page.index("<header") : page.index("</header>")]
-    assert "PHASE 1 OBSERVATION" in header
+    assert "Golf (Kalshi)" in header
+    assert "PAPER" in header
+    assert "PHASE 1 OBSERVATION" not in header
     assert "Operating path. Rankings are observation" not in header
-    assert "badge" not in header
-    assert page.count('class="hard-no"') == 1
-    assert HARD_NO_STRIP in page
+    assert page.count('class="hard-no"') == 0
+    assert HARD_NO_STRIP not in page
     for hard_no in ("NOT ARMED", PAPER_ONLY, "AI: NO CASH IN/OUT", CASH_BADGE, "Kalshi"):
         assert hard_no in HARD_NO_STRIP
-    # No badge chip restates the Hard NOs on every chart card.
     assert 'class="badges"' not in page
     assert _viz_wall_block(page).count('class="badge"') == 0
-    # The lane selector and the active-lane line survive the cut.
-    assert "Active lane: Golf (Kalshi)" in header
     assert 'name="lane"' in page
     assert 'value="golf"' in page
     assert 'value="learning_lane_15m"' in page
@@ -761,8 +760,8 @@ def test_hub_puts_viz_wall_above_dense_blocks(tmp_path):
     wall = page.index('id="viz-wall"')
     assert 'id="museum"' in page
     assert "Previous golf claim" in page
-    assert page.index("PHASE 1 OBSERVATION") < wall
-    assert page.index(CASH_BADGE) > wall
+    assert page.index('id="museum"') < wall
+    assert "/viz/shadow_honesty_strip.png" in page
 
 
 def test_hub_viz_wall_anchors_are_display_only(tmp_path):
@@ -801,14 +800,20 @@ def test_hub_charts_are_click_to_enlarge(tmp_path):
     assert 'id="viz-lightbox"' in page
     assert 'id="viz-lightbox-img"' in page
     assert "Close (Esc)" in page
-    assert "cursor: zoom-in" in page
+    css = (Path(__file__).resolve().parents[1] / "src" / "golf_offshoot" / "operator_surface" / "desk.css").read_text(
+        encoding="utf-8"
+    )
+    js = (Path(__file__).resolve().parents[1] / "src" / "golf_offshoot" / "operator_surface" / "desk.js").read_text(
+        encoding="utf-8"
+    )
+    assert "cursor: zoom-in" in css
     assert page.index('id="viz-wall"') < page.index('id="viz-lightbox"')
     assert 'value="paper-deposit"' not in page
-    assert CASH_BADGE in page
-    # Fit-on-screen is only an overview for these tall charts, so full size must be reachable.
+    assert CASH_BADGE in HARD_NO_STRIP
+    assert CASH_BADGE not in page
     assert ZOOM_HINT_FIT in page
-    assert json.dumps(ZOOM_HINT_FULL) in page
-    assert ".lightbox.full img" in page
+    assert ZOOM_HINT_FULL in js
+    assert ".lightbox.full img" in css
 
 
 def test_hub_missing_charts_are_not_clickable(tmp_path):
@@ -841,7 +846,8 @@ def test_hub_settle_banner_is_loud(tmp_path):
     missing = render_html(build_surface(artifact_root=tmp_path, viz_root=tmp_path / "viz"))
     assert "Watch" in missing
     assert "Previous golf claim" in missing
-    assert 'class="hard-no"' in missing
+    assert 'class="hard-no"' not in missing
+    assert "PAPER" in missing
 
 
 def test_hub_http_serves_viz_pngs(tmp_path):
