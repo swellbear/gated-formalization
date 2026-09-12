@@ -112,8 +112,24 @@ def collect_board() -> dict[str, Any]:
     }
 
 
-def _chip(label: str, value: str) -> str:
-    return f'<span class="gk-chip"><b>{html.escape(label)}</b> {html.escape(str(value))}</span>'
+def _chip(label: str, value: str, extra: str = "") -> str:
+    css = "gk-chip" + (f" {html.escape(extra)}" if extra else "")
+    return f'<span class="{css}"><b>{html.escape(label)}</b> {html.escape(str(value))}</span>'
+
+
+def _pnl_class(value: str) -> str:
+    raw = str(value or "").strip()
+    if raw in {"", "—"}:
+        return ""
+    try:
+        amount = float(raw)
+    except ValueError:
+        return ""
+    if amount > 0:
+        return "pnl-up"
+    if amount < 0:
+        return "pnl-down"
+    return ""
 
 
 def _bar(used: float, cap: float) -> str:
@@ -300,6 +316,7 @@ def session_html(b: dict[str, Any] | None = None) -> str:
     cap_slow = _money(b.get("cap_slow"), float(rec.get("cap_slow") or 0))
     n_open = len(b.get("tickets") or [])
     n_closed = len(b.get("closed") or [])
+    pnl_s = f"{_money(b.get('pnl')):+.2f}"
     halt_bits = []
     if b.get("halt_reason"):
         halt_bits.append(str(b.get("halt_reason")))
@@ -318,7 +335,7 @@ def session_html(b: dict[str, Any] | None = None) -> str:
         f'<span class="desk-chip {watch_cls}"><b>Watch</b> {html.escape(str(b["watch"]))}</span>'
         + _chip("Clock", str(b.get("watch_age") or "—"))
         + _chip("Bankroll", f"{bank:.2f}")
-        + _chip("P/L", f"{_money(b.get('pnl')):+.2f}")
+        + _chip("P/L", pnl_s, _pnl_class(pnl_s))
         + _chip("Fees", f"{_money(b.get('fees_paid')):.2f}")
         + _chip("Paper tickets", str(n_open))
         + _chip("Closed", str(n_closed))
@@ -344,7 +361,7 @@ def blotter_html(b: dict[str, Any] | None = None) -> str:
     )
     return (
         '<div id="desk-blotter" class="desk-blotter" data-golf-kalshi="1">'
-        '<section class="panel gk" id="golf-kalshi">'
+        '<section class="panel gk book-golf" id="golf-kalshi" data-book="golf">'
         "<h2>Open tickets</h2>"
         + table
         + "</section></div>"
@@ -385,7 +402,7 @@ def ops_html(b: dict[str, Any] | None = None) -> str:
     tree = group_catalog(list(b.get("series") or []), list(b.get("catalog") or []), booked, include_markets=False)
     n_unmatched = len(b["unmatched"])
     return (
-        '<section class="panel gk-ops">'
+        '<section class="panel gk-ops book-golf" data-book="golf">'
         "<h3>Catalog</h3>"
         + _catalog_html(tree, booked)
         + _unmatched_html(n_unmatched)
@@ -456,7 +473,7 @@ def scoreboard_html(b: dict[str, Any] | None = None) -> str:
     halt_bit = ""
     if halt_rows:
         halt_bit = (
-            '<section class="panel gk-halts">'
+            '<section class="panel gk-halts book-golf" data-book="golf">'
             "<h2>Halts</h2>"
             '<p class="gk-nums">Paper pause is two minutes then the gym continues. Live uses the next UTC day.</p>'
             + _table(["When", "Reason", "Bankroll", "Pause", "Until"], halt_rows)
@@ -464,7 +481,7 @@ def scoreboard_html(b: dict[str, Any] | None = None) -> str:
         )
     return (
         chart
-        + '<section class="panel gk-closed" id="golf-closed">'
+        + '<section class="panel gk-closed book-golf" id="golf-closed" data-book="golf">'
         "<h2>Closed tickets</h2>"
         f'<p class="gk-nums">{html.escape(tally)}</p>'
         '<div class="gk-table-wrap"><table class="gk-board gk-closed">'

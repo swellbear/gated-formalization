@@ -56,7 +56,7 @@ def farm_panel_html(*, root: Path | None = None) -> str:
         loud = f"Not live. {origin_line}"
     if not notebooks and not path.is_file() and str(meta.get("source") or "") != "origin":
         return (
-            '<section class="panel farm-sandbox" id="farm">'
+            '<section class="panel farm-sandbox book-farm" id="farm" data-book="farm">'
             "<h2>Farm — discovery notebooks</h2>"
             f'<p class="help">{html.escape(help_txt)}</p>'
             f'<p class="loud">{html.escape(loud)}</p>'
@@ -65,7 +65,7 @@ def farm_panel_html(*, root: Path | None = None) -> str:
         )
     if not notebooks:
         idle = (
-            '<section class="panel farm-sandbox" id="farm">'
+            '<section class="panel farm-sandbox book-farm" id="farm" data-book="farm">'
             "<h2>Farm — discovery notebooks</h2>"
             f'<p class="help">{html.escape(help_txt)}</p>'
             f'<p class="loud">{html.escape(loud)}</p>'
@@ -124,7 +124,7 @@ def farm_panel_html(*, root: Path | None = None) -> str:
         "</tr></thead>"
     )
     html_out = (
-        '<section class="panel farm-sandbox" id="farm">'
+        '<section class="panel farm-sandbox book-farm" id="farm" data-book="farm">'
         "<h2>Farm — discovery notebooks</h2>"
         f'<p class="help">{html.escape(help_txt)}</p>'
         f'<p class="loud">{html.escape(loud)}</p>'

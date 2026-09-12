@@ -117,7 +117,7 @@ def board_html(*, extra_html: str = "") -> str:
         happened = "<li>Honer has not taken a window yet.</li>"
     keep = f"<p class=\"loud\">{html.escape(standing.not_a_keep)}</p>" if standing.not_a_keep else ""
     return (
-        '<section class="panel honer-sandbox" id="honer">'
+        '<section class="panel honer-sandbox book-honer" id="honer" data-book="honer">'
         "<h2>Honer — sibling search and exam</h2>"
         '<p class="help">Discovery organ for this gym. Factory AND-skip consult is off. '
         "Freeze still in-band. Not Lineage A, not a keep, books do not merge, zero-fee. "
@@ -155,7 +155,7 @@ def sandbox_html(*, extra_html: str = "") -> str:
         return board_html(extra_html=extra_html)
     except Exception:
         return (
-            '<section class="panel honer-sandbox" id="honer">'
+            '<section class="panel honer-sandbox book-honer" id="honer" data-book="honer">'
             "<h2>honer_15m sandbox</h2>"
             '<p class="help">honer_15m sandbox unavailable this render. Live 15m journal is unchanged. '
             "Do not add honer bankrolls to Lineage A. Books do not merge.</p>"
