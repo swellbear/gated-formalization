@@ -10,6 +10,8 @@ from golf_offshoot.learning_lane_15m.paths import LANE_15M, LANE_GOLF
 DEFAULT_LANE = LANE_GOLF
 SELECTOR_FIELD = "lane"
 CANONICAL_LANES = (LANE_GOLF, LANE_15M)
+#: Folder / organ name. Not a third tab. Bare `15m` stays a miss.
+LANE_ALIASES = {"golf_kalshi": LANE_GOLF}
 
 
 @dataclass(frozen=True)
@@ -59,7 +61,7 @@ def registered_lanes() -> tuple[LaneSpec, ...]:
 
 
 def lookup_lane(lane_id: str) -> LaneSpec | None:
-    key = str(lane_id or "").strip()
+    key = LANE_ALIASES.get(str(lane_id or "").strip(), str(lane_id or "").strip())
     for spec in LANE_REGISTRY:
         if spec.id == key:
             return spec
@@ -73,7 +75,8 @@ def registered_ids() -> frozenset[str]:
 def desk_lane_from_query(raw: Any) -> str | None:
     """Registered desk id, or None for an explicit unknown id.
 
-    Omitted/blank is not this helper — callers default to golf. Watches still use parse_lane.
+    Omitted/blank is golf. `golf_kalshi` aliases to golf. Watches still use parse_lane
+    for unknown ids (unknown → golf).
     """
     key = str(raw or "").strip()
     if not key:

@@ -166,6 +166,7 @@ def test_registry_and_miss_lane(tmp_path):
     assert ids == ["golf", "learning_lane_15m"]
     assert desk_lane_from_query("") == "golf"
     assert desk_lane_from_query("golf") == "golf"
+    assert desk_lane_from_query("golf_kalshi") == "golf"
     assert desk_lane_from_query("learning_lane_15m") == "learning_lane_15m"
     assert desk_lane_from_query("honer_15m") is None
     assert desk_lane_from_query("15m") is None
@@ -206,6 +207,11 @@ def test_omitted_lane_paints_golf_and_junk_is_miss(tmp_path, monkeypatch):
         golf = conn.getresponse().read().decode("utf-8")
         assert 'data-lane="golf"' in golf
         assert "Golf (Kalshi)" in golf
+        conn.request("GET", "/?lane=golf_kalshi")
+        alias = conn.getresponse().read().decode("utf-8")
+        assert "Lane not registered" not in alias
+        assert 'data-lane="golf"' in alias
+        assert "Golf (Kalshi)" in alias
         conn.request("GET", "/?lane=honer_15m")
         miss = conn.getresponse().read().decode("utf-8")
         assert "Lane not registered" in miss

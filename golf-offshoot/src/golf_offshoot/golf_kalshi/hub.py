@@ -164,26 +164,35 @@ def _hunt_copy(tick: dict[str, Any]) -> str:
     )
 
 
-def _ticket_skip_copy(tick: dict[str, Any], n_open: int) -> str:
-    if n_open:
-        return (
-            '<p class="gk-nums">Paper fills from decide_golf. Catalog Open markets are Kalshi contracts, not this table.</p>'
-        )
+def _skip_bits(tick: dict[str, Any], *, max_reasons: int | None = None) -> str:
     reasons = tick.get("skip_reasons") if isinstance(tick.get("skip_reasons"), dict) else {}
     bits = [
         f"{key} {int(val)}"
         for key, val in sorted(reasons.items(), key=lambda kv: (-int(kv[1] or 0), str(kv[0])))
         if key
     ]
+    if not bits:
+        return ""
+    shown = bits if max_reasons is None else bits[:max_reasons]
+    extra = " · …" if max_reasons is not None and len(bits) > max_reasons else ""
+    return (
+        f"fills={tick.get('fills') or 0} skips={tick.get('skips') or 0} "
+        f"({' · '.join(shown)}{extra})"
+    )
+
+
+def _ticket_skip_copy(tick: dict[str, Any], n_open: int) -> str:
+    skip = _skip_bits(tick)
     summary = str(tick.get("summary") or "")
-    if bits:
-        detail = f"Last tick fills={tick.get('fills') or 0} skips={tick.get('skips') or 0} ({' · '.join(bits)})."
+    if skip:
+        detail = f"Last tick {skip}."
     elif summary:
         detail = f"Last tick {summary}."
     else:
         detail = "No finished golf tick with skip counts yet."
+    open_bit = " Open tickets on Home are the book, not a skip." if n_open else ""
     return (
-        f'<p class="gk-nums">{html.escape(detail)} '
+        f'<p class="gk-nums">{html.escape(detail)}{html.escape(open_bit)} '
         "Catalog Open markets are not paper tickets. Skip when the brain cannot see is recorded, not a fill.</p>"
     )
 
@@ -199,6 +208,9 @@ def _mix_copy(tick: dict[str, Any]) -> str:
     )
     if tick.get("week_overweight"):
         line += " · week overweight catch-up"
+    skip = _skip_bits(tick, max_reasons=4)
+    if skip:
+        line += f" · {skip}"
     return f'<p class="gk-nums">{html.escape(line)}</p>'
 
 

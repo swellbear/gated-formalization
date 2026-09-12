@@ -8,7 +8,7 @@ One hub process, many Kalshi lanes, `?lane=<id>`. Golf and 15-min Kalshi are the
 
 Shared chrome: tokens, header, session strip, blotter region, Glance vs Cockpit, in-place watch patch. Each lane brings its own book, session fields, blotter columns, optional meters, and optional organs.
 
-Omitted `?lane=` is golf. A registered id opens that desk. An explicit unknown id is a miss slot.
+Omitted `?lane=` is golf. A registered id opens that desk. `golf_kalshi` is an alias for golf (the data folder name). An explicit unknown id is a miss slot.
 
 ## Home
 
@@ -24,7 +24,7 @@ Other views hide Home. View is `data-view`, stored per lane in `sessionStorage`.
 
 Slots the shell always has a place for: watch, Eastern clock, bankroll, P/L, open count, closed count, halt. A lane may add fees, meters, or a one-line mix.
 
-Golf Home also shows Fast / week / slow meters and the mix one-liner. Meter caps are `sizing_bank` targets for the live book, not the seed $50/$100/$50 card. Hunt and skip copy live in Cockpit. Golf Farm / Honer stay idle shells: they point at Home / Scoreboard tape and do not say the book is empty when tickets exist.
+Golf Home also shows Fast / week / slow meters and the mix one-liner. Meter caps are `sizing_bank` targets for the live book, not the seed $50/$100/$50 card. The mix line includes last-tick skip counts from `last_tick.json` even when tickets are open. Full hunt copy stays in Cockpit (Scoreboard). Golf Farm / Honer stay idle shells: they point at Home / Scoreboard tape and do not say the book is empty when tickets exist.
 
 15m Home is this-window + Factory standing. The paper-window PNG is Scoreboard. Spine, clock legend, and journal sit in Cockpit or Ops. 15m Farm’s first column is the notebook, parked/score-owed/collecting, skip rate and failed clauses, and n/70. Kind/params/date sit beside it. No farm pnl column.
 

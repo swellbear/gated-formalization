@@ -1411,6 +1411,42 @@ def test_hub_shows_mix_and_cap_shares(gk_root, tmp_path):
     assert "no closed tickets" in page
 
 
+def test_hub_home_mix_shows_skips_when_tickets_open(gk_root):
+    from golf_offshoot.golf_kalshi.hub import cockpit_html, session_html
+    from golf_offshoot.golf_kalshi.paper import empty_ledger, save_ledger
+    from golf_offshoot.golf_kalshi.paths import last_tick_path
+
+    book = empty_ledger()
+    book["tickets"] = [_ticket(status="SETTLE_PENDING")]
+    save_ledger(book)
+    last_tick_path().parent.mkdir(parents=True, exist_ok=True)
+    last_tick_path().write_text(
+        json.dumps(
+            {
+                "worthy": 8,
+                "picked": {"fast": 0, "week": 0, "slow": 0},
+                "exits": 0,
+                "realloc": 0,
+                "adds": 0,
+                "fills": 0,
+                "skips": 12,
+                "skip_reasons": {"no_field": 9, "mix_event_cap": 3},
+            }
+        )
+        + "\n",
+        encoding="utf-8",
+    )
+    home = session_html()
+    think = cockpit_html()
+    assert "worthy 8" in home
+    assert "picked 0/0/0" in home
+    assert "fills=0 skips=12" in home
+    assert "no_field 9" in home
+    assert "Paper fills from decide_golf" not in think
+    assert "Last tick fills=0 skips=12" in think
+    assert "Open tickets on Home are the book" in think
+
+
 def test_hub_sleeve_meters_follow_sizing_bank(gk_root):
     from golf_offshoot.golf_kalshi.hub import session_html
     from golf_offshoot.golf_kalshi.paper import empty_ledger, save_ledger
