@@ -28,7 +28,9 @@ FROZEN_IDS = (
     "P-SKIP-WIDE-0400",
     "P-SKIP-LAST-SECONDS-60",
     "P-SKIP-INELIGIBLE-CLOSED",
+    "P-SKIP-STALE-QUOTE-180",
 )
+STALE_QUOTE_ID = "P-SKIP-STALE-QUOTE-180"
 #: Honer burned ids, copied so this package never imports honer_15m.
 BURNED_HONER_IDS = frozenset(
     {
@@ -47,7 +49,7 @@ BURNED_HONER_IDS = frozenset(
 
 
 class PolicyFamilyError(ValueError):
-    """Library is malformed, burned, or not the six frozen names."""
+    """Library is malformed, burned, or not the frozen file-order names."""
 
 
 def library_path(*, root: Path | None = None) -> Path:

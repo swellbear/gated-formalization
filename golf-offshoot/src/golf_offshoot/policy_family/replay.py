@@ -21,6 +21,7 @@ from golf_offshoot.policy_family.library import (
     COMPARISON_ID,
     FROZEN_IDS,
     PolicyFamilyError,
+    STALE_QUOTE_ID,
     lessons_path,
     load_library,
     policy_by_id,
@@ -183,6 +184,21 @@ def gather_lineage_a_windows(
         stake = decided.get("stake")
         if not isinstance(stake, (int, float)):
             stake = move.get("stake_after") or 1.0
+        quote_age = decided.get("quote_age_s")
+        if quote_age is None:
+            quote_age = decided.get("quote_bus_age_s")
+        if quote_age is None:
+            quote_age = payload.get("quote_age_s")
+        quote_fetched = (
+            decided.get("quote_fetched_at")
+            or decided.get("quote_snapshot_at")
+            or payload.get("quote_fetched_at")
+        )
+        bus = decided.get("quote_bus") or payload.get("quote_bus")
+        if quote_fetched is None and isinstance(bus, dict):
+            quote_fetched = bus.get("fetched_at") or bus.get("quote_fetched_at")
+        if quote_age is None and isinstance(bus, dict):
+            quote_age = bus.get("quote_age_s") or bus.get("age_s")
         windows.append(
             {
                 "window_id": window_id,
@@ -197,6 +213,9 @@ def gather_lineage_a_windows(
                 "stake": float(stake or 1.0),
                 "kalshi_result": result,
                 "settled_at": str(payload.get("settled_at") or ""),
+                "quote_age_s": quote_age,
+                "quote_fetched_at": quote_fetched,
+                "quote_bus": bus if isinstance(bus, dict) else None,
             }
         )
     windows.sort(key=lambda row: (str(row.get("close_at") or ""), str(row.get("ticker") or "")))
@@ -228,6 +247,14 @@ def _lesson_line(card: dict[str, Any]) -> str:
         reason = str(density.get("reason") or "density-fail")
         return (
             f"Search done: {reason}. Not a t-test vs δ. Do not retune {ident}."
+        )
+    if kind == "untestable":
+        n = int(card.get("n") or 0)
+        skip_count = int(card.get("skip_count") or 0)
+        return (
+            f"Search done: skip never fired (skip_count {skip_count}/{n}). "
+            f"Healthy quote bus / missing age is untestable, not a reason to "
+            f"retune 180. Not a t-test vs δ."
         )
     if kind == "park_vs_fill_all":
         return (
@@ -294,6 +321,9 @@ def replay(
         density_fail = False
         undecidable = False
         beats = False
+    elif ident == STALE_QUOTE_ID and skip_count == 0:
+        card_kind = "untestable"
+        beats = False
     elif density_fail or undecidable:
         card_kind = "density_fail" if density_fail else "undecidable"
         beats = False
@@ -330,7 +360,7 @@ def replay_family(
     *,
     root: Path | None = None,
 ) -> list[dict[str, Any]]:
-    """Six independent cards in file order. Not skip-together. Not 3^N."""
+    """Independent cards in file order. Not skip-together. Not 3^N."""
     load_library(root=root)
     cards = []
     for ident in FROZEN_IDS:
@@ -416,7 +446,7 @@ def run_search(
     score_dest: Path | None = None,
     write: bool = True,
 ) -> dict[str, Any]:
-    """Replay the six names on lineage-A books. Does not flip execution. Does not ping Lab."""
+    """Replay frozen P-* names on lineage-A books. Does not flip execution. Does not ping Lab."""
     windows = gather_lineage_a_windows(paper_dir, settlements_dir=settlements_dir)
     cards = replay_family(windows, root=root)
     out: dict[str, Any] = {

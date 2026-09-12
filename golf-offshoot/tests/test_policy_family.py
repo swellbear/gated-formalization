@@ -31,8 +31,33 @@ def _window(
     yes_bid=None,
     yes_ask=None,
     spread=None,
+    quote_age_s=None,
+    quote_fetched_at=None,
+    quote_snapshot=None,
     window_id: str = "w",
 ) -> dict:
+    row = {
+        "window_id": window_id,
+        "posted_yes": posted_yes,
+        "close_at": close_at,
+        "fill_at": fill_at,
+        "decision_at": fill_at,
+        "recorded_pnl": recorded_pnl,
+        "stake": stake,
+    }
+    if yes_bid is not None:
+        row["yes_bid"] = yes_bid
+    if yes_ask is not None:
+        row["yes_ask"] = yes_ask
+    if spread is not None:
+        row["spread"] = spread
+    if quote_age_s is not None:
+        row["quote_age_s"] = quote_age_s
+    if quote_fetched_at is not None:
+        row["quote_fetched_at"] = quote_fetched_at
+    if quote_snapshot is not None:
+        row["quote_snapshot"] = quote_snapshot
+    return row
     row = {
         "window_id": window_id,
         "posted_yes": posted_yes,
@@ -51,7 +76,7 @@ def _window(
     return row
 
 
-def test_library_loads_six_ids_in_file_order():
+def test_library_loads_frozen_ids_in_file_order():
     ids = policy_ids()
     assert ids == FROZEN_IDS
     payload = load_library()
@@ -96,6 +121,44 @@ def test_wide_spread_skip_and_fill():
     assert fill["action"] == "fill"
     assert express(policy, _window(spread=0.05))["action"] == "skip"
     assert express(policy, _window(spread=0.03))["action"] == "fill"
+
+
+def test_stale_quote_180_skip_fill_missing_is_fill_not_thin_book():
+    """Skip iff quote age > 180s. Missing age/snapshot fills. Not #200 thin-book."""
+    policy = policy_by_id("P-SKIP-STALE-QUOTE-180")
+    fill_at = "2026-09-12T16:01:00-04:00"
+    assert express(policy, _window(quote_age_s=181, fill_at=fill_at))["action"] == "skip"
+    assert express(policy, _window(quote_age_s=180, fill_at=fill_at))["action"] == "fill"
+    assert express(policy, _window(quote_age_s=0, fill_at=fill_at))["action"] == "fill"
+    assert express(policy, _window(fill_at=fill_at))["action"] == "fill"
+    assert express(policy, _window(quote_snapshot={}, fill_at=fill_at))["action"] == "fill"
+    missing_sides = express(
+        policy, _window(quote_age_s=1, fill_at=fill_at, yes_bid=None, yes_ask=None)
+    )
+    assert missing_sides["action"] == "fill"
+    assert (
+        express(
+            policy,
+            _window(quote_fetched_at="2026-09-12T15:57:59-04:00", fill_at=fill_at),
+        )["action"]
+        == "skip"
+    )
+    assert (
+        express(
+            policy,
+            _window(quote_fetched_at="2026-09-12T16:00:00-04:00", fill_at=fill_at),
+        )["action"]
+        == "fill"
+    )
+
+
+def test_stale_quote_skip_never_fires_is_untestable_not_a_retune():
+    policy = policy_by_id("P-SKIP-STALE-QUOTE-180")
+    windows = [_window(posted_yes=0.60, recorded_pnl=0.0, window_id=f"w{i}") for i in range(70)]
+    card = replay(policy, windows)
+    assert card["skip_count"] == 0
+    assert card["card"] == "untestable"
+    assert "retune 180" in card["lesson"]
 
 
 def test_rich_075_boundary():
@@ -200,7 +263,7 @@ def test_policies_are_independent_not_skip_together():
     assert express(policy_by_id("P-SKIP-WIDE-0400"), mid)["action"] == "fill"
     cards = replay_family([mid])
     assert [c["id"] for c in cards] == list(FROZEN_IDS)
-    assert len(cards) == 6
+    assert len(cards) == len(FROZEN_IDS)
 
 
 def test_lessons_write_density_fail_row(tmp_path):
@@ -263,7 +326,7 @@ def test_run_search_on_fixture_books_does_not_write_rules(tmp_path):
     ).read_text(encoding="utf-8")
     out = run_search(paper_dir=paper, dest_root=tmp_path, write=True)
     assert out["n"] == 1
-    assert len(out["cards"]) == 6
+    assert len(out["cards"]) == len(FROZEN_IDS)
     after = (
         Path(__file__).resolve().parents[1] / "docs" / "LEARNING_LANE_15M_RULES.json"
     ).read_text(encoding="utf-8")
@@ -320,8 +383,9 @@ def test_picker_file_order_unused_named_not_3n(tmp_path):
         "P-SKIP-WIDE-0400",
         "P-SKIP-LAST-SECONDS-60",
         "P-SKIP-INELIGIBLE-CLOSED",
+        "P-SKIP-STALE-QUOTE-180",
     ]
-    assert len(unused) == 5
+    assert len(unused) == 6
     assert next_named_from_files(root=tmp_path) == "P-SKIP-COINFLIP"
     assert picker_owed_from_files(root=tmp_path) is True
     stamp = stamp_picker(root=tmp_path)
@@ -352,6 +416,7 @@ def test_picker_retires_density_fail_and_does_not_confuse_factory_coinflip(tmp_p
             {"id": "P-SKIP-WIDE-0400", "card": "density_fail"},
             {"id": "P-SKIP-LAST-SECONDS-60", "card": "density_fail"},
             {"id": "P-SKIP-INELIGIBLE-CLOSED", "card": "density_fail"},
+            {"id": "P-SKIP-STALE-QUOTE-180", "card": "untestable"},
         ],
         rule_ids=["R-SKIP-COINFLIP", "R-BASELINE-FILL-ALL"],
     )
@@ -367,6 +432,7 @@ def test_picker_retires_density_fail_and_does_not_confuse_factory_coinflip(tmp_p
             {"id": "P-SKIP-WIDE-0400", "card": "density_fail"},
             {"id": "P-SKIP-LAST-SECONDS-60", "card": "density_fail"},
             {"id": "P-SKIP-INELIGIBLE-CLOSED", "card": "density_fail"},
+            {"id": "P-SKIP-STALE-QUOTE-180", "card": "untestable"},
         ],
         rule_ids=["P-SKIP-COINFLIP"],
     )
@@ -390,6 +456,7 @@ def test_live_files_leave_coinflip_unused_until_exact_p_id():
     assert "P-SKIP-COINFLIP" not in retired
     assert "P-SKIP-RICH-075" in retired
     assert "P-SKIP-WIDE-0400" in retired
+    assert "P-SKIP-STALE-QUOTE-180" in retired
     assert "P-FILL-ALL-YES" not in unused
     assert "P-FILL-ALL-YES" not in retired
 

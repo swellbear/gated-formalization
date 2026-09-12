@@ -15,6 +15,9 @@ WIDE_DELTA = 0.04
 COINFLIP_LO = 0.45
 COINFLIP_HI = 0.55
 LAST_SECONDS = 60.0
+#: Honer quote-bus stale cutoff. Named from that contract, not a tape walk.
+STALE_QUOTE_S = 180.0
+STALE_QUOTE_ID = "P-SKIP-STALE-QUOTE-180"
 
 
 def _parse_dt(value: Any) -> datetime | None:
@@ -71,6 +74,29 @@ def _fill_stamp(window: dict[str, Any]) -> datetime | None:
     return None
 
 
+def quote_age_seconds(window: dict[str, Any]) -> float | None:
+    """Age of the quote snapshot used at decision. Missing → None (fill, not skip)."""
+    for key in ("quote_age_s", "quote_bus_age_s"):
+        age = _float_or_none(window.get(key))
+        if age is not None:
+            return age
+    fetched = None
+    for key in ("quote_fetched_at", "quote_snapshot_at", "quote_at"):
+        fetched = _parse_dt(window.get(key))
+        if fetched is not None:
+            break
+    snapshot = window.get("quote_snapshot") or window.get("quote_bus")
+    if fetched is None and isinstance(snapshot, dict):
+        for key in ("fetched_at", "quote_fetched_at", "at"):
+            fetched = _parse_dt(snapshot.get(key))
+            if fetched is not None:
+                break
+    decision = _fill_stamp(window)
+    if fetched is None or decision is None:
+        return None
+    return (decision - fetched).total_seconds()
+
+
 def _verdict(policy_id: str, action: str, reason: str) -> dict[str, str]:
     if action not in {ACTION_FILL, ACTION_SKIP}:
         raise PolicyFamilyError(f"{policy_id} expressed {action!r}; only fill or skip")
@@ -122,4 +148,11 @@ def express(policy: dict[str, Any], window: dict[str, Any]) -> dict[str, str]:
         if decision_at >= close_at:
             return _verdict(ident, ACTION_SKIP, "close_at already passed at decision stamp")
         return _verdict(ident, ACTION_FILL, "decision stamp is before close_at")
+    if ident == STALE_QUOTE_ID:
+        age = quote_age_seconds(window)
+        if age is None:
+            return _verdict(ident, ACTION_FILL, "missing quote age/snapshot; fill YES")
+        if age > STALE_QUOTE_S:
+            return _verdict(ident, ACTION_SKIP, f"quote age {age:g}s > 180s")
+        return _verdict(ident, ACTION_FILL, f"quote age {age:g}s <= 180s")
     raise PolicyFamilyError(f"no expression for {ident}")
