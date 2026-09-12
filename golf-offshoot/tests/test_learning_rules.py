@@ -7,14 +7,17 @@ from golf_offshoot.learning_lane_15m.paper import load_decisions, paper_autobet_
 from golf_offshoot.learning_lane_15m.paths import set_15m_root_override
 from golf_offshoot.learning_lane_15m.rules import (
     RuleAlreadyInformed,
+    RuleFillNone,
     RuleNotScorable,
     RuleSkipRateUnnamed,
     RuleTooSparse,
+    clock_fill_none_reason,
     close_minute,
     decide,
     declare_rule,
     expected_skip_rate,
     favorite_threshold,
+    lived_skip_density,
     load_rules,
     min_expected_skip_rate,
     score_rule,
@@ -275,6 +278,15 @@ def test_score_rule_accepts_post_flip_windows_and_labels_lived():
     assert card["n"] == 70
     assert all(row["evidence"] == "lived" for row in card["windows"])
     assert card["look"] == "L1"
+    # posted_yes=0.50 never hits the 2-to-1 skip; lived skip_count=0 is
+    # density-fail, not a clause-1 miss versus δ=0.28.
+    assert card["skip_count"] == 0
+    assert card["density_fail"] is True
+    assert card["undecidable"] is True
+    assert card["passes_every_binding_clause"] is False
+    assert card["clause_1_paired_t_vs_floor"].get("passes") is None
+    assert "t-test vs delta" in card["clause_1_paired_t_vs_floor"]["not_scored"]
+    assert card["clause_1_paired_t_vs_floor"].get("p_value") is None
 
 
 def test_declare_rule_refuses_a_selecting_rule_when_marks_exist(tmp_path):
@@ -423,3 +435,167 @@ def test_existing_registry_rows_are_grandfathered():
     assert "expected_skip_rate" not in fav
     hour = next(row for row in payload["rules"] if row["id"] == "R-SKIP-HOUR-CLOSE")
     assert hour["params"]["skip_close_minute"] == 0
+
+
+_HOUR_DENSITY = {
+    "id": "R-SKIP-HOUR-DENSITY",
+    "declared_at": "2026-09-08T00:00:00-04:00",
+    "kind": "selection",
+    "selects": True,
+    "execution": False,
+    "params": {"skip_close_minute": 0},
+}
+
+
+def _windows_at_minute(n: int, minute: int, *, posted_yes: float = 0.50) -> list[dict]:
+    out = []
+    for i in range(n):
+        hour = i % 24
+        day = 9 + (i // 24)
+        out.append(
+            {
+                "window_id": f"M{minute}-{i}",
+                "close_at": f"2026-09-{day:02d}T{hour:02d}:{minute:02d}:00-04:00",
+                "posted_yes": posted_yes,
+                "recorded_pnl": 0.0,
+                "stake": 1.0,
+            }
+        )
+    return out
+
+
+def _score_hour(windows, **kwargs):
+    synth = {"rules": [_HOUR_DENSITY], "trials_to_date": 0}
+    return score_rule(
+        "R-SKIP-HOUR-DENSITY",
+        windows,
+        allow_nonbinding=True,
+        registry=synth,
+        **kwargs,
+    )
+
+
+def test_clock_fill_none_reason_names_quartet_and_triples():
+    quartet = {"params": {"skip_close_minutes": [0, 15, 30, 45]}}
+    intra = {"params": {"skip_close_minutes": [15, 30, 45]}}
+    pair = {"params": {"skip_close_minutes": [0, 30]}}
+    singleton = {"params": {"skip_close_minute": 0}}
+    assert clock_fill_none_reason(quartet).startswith("fill-none")
+    assert "whole quartet" in clock_fill_none_reason(quartet)
+    assert "density" not in clock_fill_none_reason(quartet)
+    assert clock_fill_none_reason(intra).startswith("fill-none")
+    assert "triple" in clock_fill_none_reason(intra)
+    assert "density" not in clock_fill_none_reason(intra)
+    assert clock_fill_none_reason(pair) == ""
+    assert clock_fill_none_reason(singleton) == ""
+    assert clock_fill_none_reason({"params": {"favorite_odds": 2}}) == ""
+
+
+def test_lived_skip_1_of_70_is_density_fail_not_clause_1(monkeypatch):
+    def boom(*_a, **_k):
+        raise AssertionError("clause arithmetic must not run on a density-fail look")
+
+    monkeypatch.setattr(
+        "golf_offshoot.learning_lane_15m.rules.matched_exposure_permutation",
+        boom,
+    )
+    monkeypatch.setattr(
+        "golf_offshoot.learning_lane_15m.rules.paired_t_against_floor",
+        boom,
+    )
+    windows = _windows_at_minute(1, 0) + _windows_at_minute(69, 15)
+    card = _score_hour(windows)
+    assert card["skip_count"] == 1
+    assert card["n"] == 70
+    assert card["density"]["expected_skip_rate"] == 0.25
+    assert card["density_fail"] is True
+    assert card["undecidable"] is True
+    assert card["passes_every_binding_clause"] is False
+    assert card["clause_1_paired_t_vs_floor"].get("passes") is None
+    assert "delta=0.28" in card["clause_1_paired_t_vs_floor"]["not_scored"]
+    assert "1/70" in card["density"]["reason"]
+    assert "expected_skip_rate 0.25" in card["density"]["reason"]
+
+
+def test_lived_fill_none_is_density_fail(monkeypatch):
+    def boom(*_a, **_k):
+        raise AssertionError("clause arithmetic must not run on fill-none")
+
+    monkeypatch.setattr(
+        "golf_offshoot.learning_lane_15m.rules.matched_exposure_permutation",
+        boom,
+    )
+    windows = _windows_at_minute(70, 0)
+    card = _score_hour(windows)
+    assert card["skip_count"] == 70
+    assert card["density_fail"] is True
+    assert card["undecidable"] is True
+    assert "fill-none" in card["density"]["reason"]
+    assert card["clause_1_paired_t_vs_floor"].get("passes") is None
+
+
+def test_lived_clock_skip_at_named_rate_scores_clause_1():
+    windows = _synthetic_lived_windows(70)
+    card = _score_hour(windows)
+    assert card["skip_count"] >= 10
+    assert card["skip_count"] < 70
+    assert card["density_fail"] is False
+    assert card["undecidable"] is False
+    assert card["clause_1_paired_t_vs_floor"].get("p_value") is not None
+    assert isinstance(card["clause_1_paired_t_vs_floor"]["passes"], bool)
+
+
+def test_declare_rule_refuses_an_intra_hour_triple(tmp_path):
+    set_15m_root_override(tmp_path / "kalshi_15m")
+    try:
+        docs = tmp_path / "golf-offshoot" / "docs"
+        docs.mkdir(parents=True)
+        (docs / "LEARNING_LANE_15M_RULES.json").write_text(
+            json.dumps({"rules": [], "trials_to_date": 0, "trials_log": []}),
+            encoding="utf-8",
+        )
+        with pytest.raises(RuleFillNone, match="fill-none"):
+            declare_rule(
+                {
+                    "id": "R-SKIP-INTRA-HOUR",
+                    "kind": "selection",
+                    "selects": True,
+                    "params": {"skip_close_minutes": [15, 30, 45]},
+                },
+                root=tmp_path,
+            )
+        with pytest.raises(RuleFillNone, match="fill-none"):
+            declare_rule(
+                {
+                    "id": "R-SKIP-EVERY-CLOSE",
+                    "kind": "selection",
+                    "selects": True,
+                    "params": {"skip_close_minutes": [0, 15, 30, 45]},
+                },
+                root=tmp_path,
+            )
+        pair = declare_rule(
+            {
+                "id": "R-SKIP-CIVIL-PAIR",
+                "kind": "selection",
+                "selects": True,
+                "params": {"skip_close_minutes": [0, 30]},
+            },
+            root=tmp_path,
+            now_iso="2026-09-12T12:00:00-04:00",
+        )
+        assert pair["expected_skip_rate"] == 0.5
+    finally:
+        set_15m_root_override(None)
+
+
+def test_lived_skip_density_floor_is_ten():
+    thin = lived_skip_density(1, 70, expected_rate=0.25)
+    assert thin["passes"] is False
+    assert thin["undecidable"] is True
+    assert thin["floor_count"] == 10
+    ok = lived_skip_density(18, 70, expected_rate=0.25)
+    assert ok["passes"] is True
+    none = lived_skip_density(70, 70, expected_rate=0.75)
+    assert none["passes"] is False
+    assert "fill-none" in none["reason"]
