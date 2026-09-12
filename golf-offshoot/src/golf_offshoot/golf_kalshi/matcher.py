@@ -38,7 +38,7 @@ def extract_player_name(market: dict[str, Any] | None = None, *, title: str = ""
     if any(tok in low for tok in _TOP_OR_LEAD):
         m2 = _NAME_FINISH.search(blob)
         if m2:
-            hit = _real_name(m.group(1))
+            hit = _real_name(m2.group(1))
             if hit:
                 return hit
     return ""

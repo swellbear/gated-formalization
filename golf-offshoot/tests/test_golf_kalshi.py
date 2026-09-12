@@ -240,6 +240,22 @@ def test_unmatched_tickers_stay_unmatched(gk_root):
     assert "player_id" not in payload
 
 
+def test_title_only_top_n_ingest_stays_unmatched(gk_root):
+    raw = _market_raw(
+        ticker="KXPGA-26-SSCHEFF-T10",
+        yes_sub_title="",
+        title="Will Scottie Scheffler finish top 10?",
+    )
+    assert extract_player_name(raw) == "Scottie Scheffler"
+    catalog = golf_only_catalog({"series": [_series_golf()], "markets": [raw]})
+    out = run_ingest(catalog=catalog, candidates={})
+    assert out["unmatched"] >= 1
+    payload = unmatched_path().read_text(encoding="utf-8")
+    assert "KXPGA-26-SSCHEFF-T10" in payload
+    assert "Scottie Scheffler" in payload
+    assert "player_id" not in payload
+
+
 def test_matched_name_still_writes_no_paper_fill(gk_root):
     catalog = golf_only_catalog({"series": [_series_golf()], "markets": [_market_raw()]})
     out = run_ingest(
