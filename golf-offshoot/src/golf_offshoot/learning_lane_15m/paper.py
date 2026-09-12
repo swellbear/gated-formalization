@@ -19,6 +19,7 @@ from golf_offshoot.learning_lane_15m.paths import (
     safe_artifact_stem,
     shadow_dir_15m,
 )
+from golf_offshoot.learning_lane_15m.rules import decide, load_rules
 from golf_offshoot.localtime import now
 from golf_offshoot.models.enums import BetType
 from golf_offshoot.models.strategy import PortfolioState, StrategyPosition, new_id
@@ -173,19 +174,58 @@ def append_shadow_advise(row: dict[str, object]) -> None:
         fh.write(json.dumps(payload, default=str) + "\n")
 
 
+def _close_at(market: dict) -> str:
+    close = str(market.get("close_time") or "").strip()
+    if close:
+        return close
+    parts = str(market.get("window_id") or "").split("__")
+    if len(parts) >= 3 and parts[-1].strip():
+        return parts[-1].strip()
+    return ""
+
+
+def _skip_lived_fill(registry: dict, *, posted_yes: float, close_at: str) -> bool:
+    """Lived skip only when an execution=true rule's decide() says skip.
+
+    Consults every registry row. execution=false selection (live
+    R-SKIP-COINFLIP) does not change booked YES $1. Ineligible windows
+    (closed at or before declared_at) fill like baseline. A skip is not
+    a $0 fill.
+    """
+    if not close_at:
+        return False
+    for rule in registry.get("rules") or []:
+        if not isinstance(rule, dict):
+            continue
+        try:
+            verdict = decide(rule, posted_yes=posted_yes, close_at=close_at)
+        except (TypeError, ValueError):
+            continue
+        if verdict.get("execution") and verdict.get("action") == "skip":
+            return True
+    return False
+
+
 def paper_autobet_open_markets(
     markets: list[dict],
     *,
     unit: float = PAPER_UNIT,
+    rules_root: Path | None = None,
 ) -> list[PaperMovement]:
     """Mechanical paper YES at posted ask for each open KXBTC15M window.
 
     Observation probe of the ops loop. Does not invent an edge. Skips
     already-booked tickers and missing/untradable asks.
+
+    Calls ``rules.decide()``. With the current registry, selection stays
+    off (R-SKIP-COINFLIP execution=false), so every candidate still fills
+    at the mark with entry_edge=0.0. Lived skip requires a throwaway or
+    later flag flip; a skip writes no position.
     """
     if TRADING_ARMED:
         raise RuntimeError("trading NOT ARMED")
     ledger = ensure_observation_seed()
+    registry = load_rules(root=rules_root)
     applied: list[PaperMovement] = []
     for market in markets:
         ticker = str(market.get("ticker") or "")
@@ -205,6 +245,8 @@ def paper_autobet_open_markets(
         except (TypeError, ValueError):
             continue
         if yes_f is None or dec_f is None or yes_f <= 0.0 or yes_f >= 1.0 or dec_f <= 1.0:
+            continue
+        if _skip_lived_fill(registry, posted_yes=yes_f, close_at=_close_at(market)):
             continue
         rec = _open_book(
             book_id,
