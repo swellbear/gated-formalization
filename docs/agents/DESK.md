@@ -6,20 +6,20 @@ Thread lines are **one sentence, newest first, max 10**. Long findings belong in
 
 | Field | Value |
 |-------|--------|
-| Updated | 2026-09-11 00:54 ET |
-| Active role | chief-of-staff |
-| Job | — |
-| Status | idle |
-| Handoff | Lab wrote LEARNING_LANE_15M_FARM_MENU_EXHAUSTED.json (cannot name another unburned non-clone quartet kind; civil waits). farm_hunger false. I stops. Hour-close still executing. next=idle |
+| Updated | 2026-09-12 07:15 ET |
+| Active role | operator |
+| Job | PARK or CONTINUE from the L1 scorecard; never invent tape; do not stop PaperWatch; do not arm |
+| Status | assigned |
+| Handoff | K_look_due assigned. L1 card LEARNING_LANE_15M_SCORECARD_R-SKIP-HOUR-CLOSE_L1.json at 70fa007 has no operator_look. Operator PARK or CONTINUE from that card. Do not invent tape. Do not stop PaperWatch. Hour-close still executing. Consult off. HOLD stands. Trading NOT ARMED. next=operator |
 | Waiting on Founder | **N** |
 
 ## last_cos (CoS stamp — doorbell silence)
 
 | Field | Value |
 |-------|--------|
-| last_cos_at | 2026-09-11T00:54:00-04:00 |
-| last_cos_commit | 859f7de |
-| handled_reason_ids | A_worker_done, E_idle_unassigned |
+| last_cos_at | 2026-09-12T07:15:00-04:00 |
+| last_cos_commit | 70fa007 |
+| handled_reason_ids | E_idle_unassigned |
 
 **Branch note.** Live work is `cursor/honer-15m-sibling` [#178](https://github.com/swellbear/gated-formalization/pull/178) (open; base is `cursor/part-a-clerical-trust-boundary`). [#176](https://github.com/swellbear/gated-formalization/pull/176) is still OPEN, not merged. `origin/master` is still `b063f56` (#175). Factory Turns 1–3 plus the ANSWER/CRITIC chain live on part-a / this sibling. Branching from `origin/master` would discard all of it. Do not use `C:\Users\bearh\gated-formalization` on `cursor/eia-window-job2`.
 
@@ -60,6 +60,7 @@ Two suites, both on the tick.
 
 ## Thread
 
+- 2026-09-12 07:15 ET  chief-of-staff → operator: PARK or CONTINUE from L1 scorecard R-SKIP-HOUR-CLOSE (70fa007); never invent tape; do not stop PaperWatch; do not arm. next=operator
 - 2026-09-11 00:54 ET  chief-of-staff: Lab farm_menu_exhausted done; unused legal kinds empty; farm_hunger false; I stops until park / legal_after / honer family-amend; chair untouched. next=idle
 - 2026-09-11 00:47 ET  lab → chief-of-staff: wrote LEARNING_LANE_15M_FARM_MENU_EXHAUSTED.json (cannot name another unburned non-clone quartet kind; civil waits; chair untouched). next=chief-of-staff
 - 2026-09-11 00:46 ET  lab → chief-of-staff: started inventing the next farm kind (product-structure skip rate; execution false; do not steal the chair). next=lab
@@ -69,5 +70,4 @@ Two suites, both on the tick.
 - 2026-09-10 23:57 ET  lab → chief-of-staff: started inventing the next farm kind (product-structure skip rate; execution false; do not steal the chair). next=lab
 - 2026-09-10 23:53 ET  chief-of-staff → lab: unused legal kinds empty; invent the next kind as a farm notebook (execution false; do not steal the chair) or write farm_menu_exhausted. next=lab
 - 2026-09-10 23:48 ET  chief-of-staff: Lab invent CLOCK-EXCEPT-FIRST-QUARTER done; F-CLOCK-EXCEPT-FIRST-QUARTER-0-30-45 seated execution false; chair untouched; I invent-next-kind later. next=idle
-- 2026-09-10 23:42 ET  lab → chief-of-staff: invented CLOCK-EXCEPT-FIRST-QUARTER as F-CLOCK-EXCEPT-FIRST-QUARTER-0-30-45 in LEARNING_LANE_15M_FARM.json (execution false; chair untouched). next=chief-of-staff
 *Older lines rolled off at the 10-line cap. Full history is in the git log for `docs/agents/DESK.md`.*
