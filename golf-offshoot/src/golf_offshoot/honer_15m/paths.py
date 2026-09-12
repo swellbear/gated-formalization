@@ -127,7 +127,7 @@ def exam_score_path() -> Path:
 
 
 def family_amend_path() -> Path:
-    """File doorbell that HONER-FAMILY-AMEND is owed. Not pnl. Not a third family."""
+    """File doorbell that HONER-FAMILY-AMEND is owed. Not pnl. Taken once family 3 is dated."""
     return latest_dir() / "family_amend.json"
 
 

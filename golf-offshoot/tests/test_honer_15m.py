@@ -418,7 +418,7 @@ def test_catalog_skips_two_thirds():
     text = str(load_catalog())
     assert "0.666" not in text
     assert "2/3" not in text
-    assert catalog_ids() == ["H-SKIP-RICH-YES", "H-SKIP-WIDE-SPREAD"]
+    assert catalog_ids() == ["H-SKIP-RICH-YES", "H-SKIP-WIDE-SPREAD", "H-SKIP-THIN-BOOK"]
 
 
 def test_clip_exhaust_advances_to_spread_and_keeps_seed(honer_tmp):
@@ -913,7 +913,8 @@ def test_can_keep_false_and_exam_label_is_not_keep():
 def test_catalog_next_none_and_burned_id_rejected():
     from golf_offshoot.honer_15m.catalog import CatalogError, _validate_item, next_family
 
-    assert next_family("H-SKIP-WIDE-SPREAD") is None
+    assert next_family("H-SKIP-WIDE-SPREAD") == "H-SKIP-THIN-BOOK"
+    assert next_family("H-SKIP-THIN-BOOK") is None
     with pytest.raises(CatalogError):
         _validate_item({"id": "FLIP", "declared_at": "2026-09-09T15:44:00-04:00", "activate": "start"}, index=1)
 
@@ -939,6 +940,7 @@ def test_honer_png_has_near_spread_wide_columns():
     assert any("near line" in label for label in labels)
     assert any(label == "spread" for label in labels)
     assert any("wide-book" in label for label in labels)
+    assert any("thin-book" in label for label in labels)
 
 
 def test_maybe_render_rebuilds_when_theta_changes(honer_tmp, monkeypatch):
@@ -993,12 +995,17 @@ def test_catalog_starvation_activate_is_file_derived():
 
     payload = load_catalog()
     items = [item for item in payload.get("items") or [] if isinstance(item, dict)]
-    assert catalog_ids() == ["H-SKIP-RICH-YES", "H-SKIP-WIDE-SPREAD"]
-    assert len(items) == 2
+    assert catalog_ids() == ["H-SKIP-RICH-YES", "H-SKIP-WIDE-SPREAD", "H-SKIP-THIN-BOOK"]
+    assert len(items) == 3
     assert items[1]["activate"] == (
         "clip_exhaustion+quote_quality_ok|search_starvation+quote_quality_ok"
     )
+    assert items[2]["id"] == "H-SKIP-THIN-BOOK"
+    assert items[2]["activate"] == (
+        "clip_exhaustion+quote_quality_ok|search_starvation+quote_quality_ok"
+    )
     assert activate_allowed(items[1]["activate"])
+    assert activate_allowed(items[2]["activate"])
     assert not activate_allowed("pnl_rank")
     assert not activate_allowed("clip_exhaustion|")
     try:
@@ -1152,10 +1159,10 @@ def test_second_starvation_quotes_wait_does_not_reset_or_spend_another_look(hone
     assert theta.load_theta()["advance_owed"] == ""
 
 
-def test_family2_second_starvation_exhausts_catalog(honer_tmp):
+def test_family2_second_starvation_advances_to_thin_book(honer_tmp):
     from golf_offshoot.honer_15m.library import load_library
     from golf_offshoot.honer_15m.picker import apply_search_starvation
-    from golf_offshoot.honer_15m.policy import FAMILY_SPREAD
+    from golf_offshoot.honer_15m.policy import FAMILY_SPREAD, FAMILY_THIN
 
     st = theta.load_theta()
     st["active_family"] = FAMILY_SPREAD
@@ -1169,6 +1176,35 @@ def test_family2_second_starvation_exhausts_catalog(honer_tmp):
     live = theta.load_theta()
     assert live["delta"] == pytest.approx(0.04)
     assert live["active_family"] == FAMILY_SPREAD
+    live["search_settled_since_freeze"] = 40
+    live["in_band_settled"] = 0
+    theta.save_theta(live)
+    _seed_search_quotes(n=20, with_spread=20)
+    second = apply_search_starvation()
+    assert second and second.get("advanced") is True
+    assert second.get("catalog_exhausted") is not True
+    assert theta.load_theta()["active_family"] == FAMILY_THIN
+    assert theta.load_theta()["gamma"] == pytest.approx(0.01)
+    assert load_library().get("catalog_exhausted") is not True
+
+
+def test_family3_second_starvation_exhausts_catalog(honer_tmp):
+    from golf_offshoot.honer_15m.library import load_library
+    from golf_offshoot.honer_15m.picker import apply_search_starvation
+    from golf_offshoot.honer_15m.policy import FAMILY_THIN
+
+    st = theta.load_theta()
+    st["active_family"] = FAMILY_THIN
+    st["gamma"] = 0.03
+    st["last_declared_gamma"] = 0.01
+    st["search_settled_since_freeze"] = 40
+    st["in_band_settled"] = 0
+    theta.save_theta(st)
+    first = apply_search_starvation()
+    assert first and first["reset"] is True
+    live = theta.load_theta()
+    assert live["gamma"] == pytest.approx(0.01)
+    assert live["active_family"] == FAMILY_THIN
     live["search_settled_since_freeze"] = 40
     live["in_band_settled"] = 0
     theta.save_theta(live)
@@ -1283,15 +1319,28 @@ def _quoted_market(
     }
 
 
+def _park_last_family() -> str:
+    from golf_offshoot.honer_15m.catalog import catalog_ids
+    from golf_offshoot.honer_15m.library import load_library, save_library
+
+    last = catalog_ids()[-1]
+    lib = load_library()
+    lib["catalog_exhausted"] = True
+    lib["active_family"] = last
+    save_library(lib)
+    st = theta.load_theta()
+    st["active_family"] = last
+    theta.save_theta(st)
+    return last
+
+
 def test_catalog_exhausted_parks_search_and_leaves_exam_closed(honer_tmp):
     import json
 
-    from golf_offshoot.honer_15m.library import load_library, save_library
+    from golf_offshoot.honer_15m.library import load_library
     from golf_offshoot.honer_15m.paths import family_amend_path, last_tick_path
 
-    lib = load_library()
-    lib["catalog_exhausted"] = True
-    save_library(lib)
+    last = _park_last_family()
     out = loop.run_tick([_quoted_market("KXBTC15M-PARK1")])
     assert out["search_parked"] is True
     assert out["froze"] is False
@@ -1301,28 +1350,25 @@ def test_catalog_exhausted_parks_search_and_leaves_exam_closed(honer_tmp):
     assert books.load_ledger("exam")["entries"] == 0
     tick = json.loads(last_tick_path().read_text(encoding="utf-8"))
     assert tick["search_parked"] is True
-    assert tick["family_amend_owed"] is True
+    assert tick["family_amend_owed"] is False
     stamp = json.loads(family_amend_path().read_text(encoding="utf-8"))
-    assert stamp["owed"] is True
+    assert stamp["owed"] is False
     assert "catalog_exhausted" in stamp["reasons"]
-    assert stamp["third_family"] is False
+    assert stamp["third_family"] is True
     assert "pnl" not in stamp
     assert "mean_d" not in stamp
     from golf_offshoot.honer_15m.catalog import catalog_ids
 
-    assert catalog_ids() == ["H-SKIP-RICH-YES", "H-SKIP-WIDE-SPREAD"]
+    assert catalog_ids()[-1] == last
+    assert load_library()["active_family"] == last
     assert not (PKG / "brains.py").is_file()
 
 
 def test_catalog_exhausted_settles_existing_search_without_new_fills(honer_tmp):
     loop.run_tick([_quoted_market("KXBTC15M-KEEP")])
     assert books.load_ledger("search")["entries"] == 1
-    from golf_offshoot.honer_15m.library import load_library, save_library
-
     before = theta.load_theta()["theta"]
-    lib = load_library()
-    lib["catalog_exhausted"] = True
-    save_library(lib)
+    _park_last_family()
     loop.run_tick(
         [_quoted_market("KXBTC15M-KEEP", result="yes"), _quoted_market("KXBTC15M-NEW")]
     )
@@ -1359,7 +1405,8 @@ def test_family_amend_owed_from_completed_dead_not_exam_pnl(honer_tmp):
     )
     assert family_amend_owed_from_files() is True
     stamp = stamp_family_amend()
-    assert stamp["owed"] is True
+    assert stamp["owed"] is False
+    assert stamp["third_family"] is True
     assert stamp["reasons"] == ["completed_dead"]
     assert stamp["exam_completed_dead"] is True
     assert stamp["catalog_exhausted"] is False
@@ -1381,7 +1428,7 @@ def test_family_amend_owed_from_completed_dead_not_exam_pnl(honer_tmp):
     assert family_amend_owed_from_files() is True
 
 
-def test_mark_catalog_exhausted_from_retired_hunts_not_pnl(honer_tmp):
+def test_retired_family2_does_not_exhaust_when_thin_book_is_dated(honer_tmp):
     from golf_offshoot.honer_15m.library import (
         append_exam_row,
         hunts_cannot_freeze,
@@ -1390,7 +1437,7 @@ def test_mark_catalog_exhausted_from_retired_hunts_not_pnl(honer_tmp):
         save_library,
     )
     from golf_offshoot.honer_15m.picker import maybe_advance
-    from golf_offshoot.honer_15m.policy import FAMILY_SPREAD
+    from golf_offshoot.honer_15m.policy import FAMILY_SPREAD, FAMILY_THIN
     from golf_offshoot.honer_15m.theta import current_vector, load_theta
 
     st = load_theta()
@@ -1401,6 +1448,43 @@ def test_mark_catalog_exhausted_from_retired_hunts_not_pnl(honer_tmp):
     save_library(lib)
     vector = current_vector(load_theta())
     append_exam_row(k=1, family=FAMILY_SPREAD, knobs=vector, outcome="completed_dead")
+    assert hunts_cannot_freeze() is False
+    mark_catalog_exhausted()
+    assert load_library().get("catalog_exhausted") is not True
+    st = load_theta()
+    st["clip_streak"] = 20
+    theta.save_theta(st)
+    _seed_search_quotes(n=20, with_spread=20)
+    out = maybe_advance()
+    assert out and out["advanced"] is True
+    assert out["active_family"] == FAMILY_THIN
+    assert load_library().get("catalog_exhausted") is not True
+    filled = loop.run_tick([_quoted_market("KXBTC15M-AFTER")])
+    assert filled["search_parked"] is not True
+    assert books.load_ledger("search")["entries"] >= 1
+
+
+def test_mark_catalog_exhausted_from_retired_last_family_not_pnl(honer_tmp):
+    from golf_offshoot.honer_15m.catalog import catalog_ids
+    from golf_offshoot.honer_15m.library import (
+        append_exam_row,
+        hunts_cannot_freeze,
+        load_library,
+        mark_catalog_exhausted,
+        save_library,
+    )
+    from golf_offshoot.honer_15m.picker import maybe_advance
+    from golf_offshoot.honer_15m.theta import current_vector, load_theta
+
+    last = catalog_ids()[-1]
+    st = load_theta()
+    st["active_family"] = last
+    theta.save_theta(st)
+    lib = load_library()
+    lib["active_family"] = last
+    save_library(lib)
+    vector = current_vector(load_theta())
+    append_exam_row(k=1, family=last, knobs=vector, outcome="completed_dead")
     assert hunts_cannot_freeze() is True
     mark_catalog_exhausted()
     assert load_library().get("catalog_exhausted") is True
@@ -1409,9 +1493,7 @@ def test_mark_catalog_exhausted_from_retired_hunts_not_pnl(honer_tmp):
     assert out["search_parked"] is True
     assert books.load_ledger("search")["entries"] == 0
     assert freeze.exam_is_open() is False
-    from golf_offshoot.honer_15m.catalog import catalog_ids
-
-    assert catalog_ids() == ["H-SKIP-RICH-YES", "H-SKIP-WIDE-SPREAD"]
+    assert catalog_ids() == ["H-SKIP-RICH-YES", "H-SKIP-WIDE-SPREAD", "H-SKIP-THIN-BOOK"]
 
 
 def test_one_dead_family1_exam_does_not_park_search(honer_tmp):
@@ -1438,5 +1520,59 @@ def test_one_dead_family1_exam_does_not_park_search(honer_tmp):
     assert not (PKG / "brains.py").is_file()
     assert "iter_exam_queue" not in (PKG / "picker.py").read_text(encoding="utf-8")
     assert "next_freeze_brain" not in (PKG / "picker.py").read_text(encoding="utf-8")
+
+
+def test_thin_missing_quotes_skip():
+    from golf_offshoot.honer_15m.decide import decide_ticket
+    from golf_offshoot.honer_15m.policy import FAMILY_THIN
+
+    action, reason = decide_ticket(
+        0.70, 0.81, family=FAMILY_THIN, delta=0.04, spread=None, gamma=0.01
+    )
+    assert action == "skip"
+    assert "thin quotes" in reason
+
+
+def test_thin_spread_at_or_below_gamma_skips():
+    from golf_offshoot.honer_15m.decide import decide_ticket
+    from golf_offshoot.honer_15m.policy import FAMILY_THIN
+
+    action, reason = decide_ticket(
+        0.70, 0.81, family=FAMILY_THIN, delta=0.04, spread=0.01, gamma=0.01
+    )
+    assert action == "skip"
+    assert "gamma" in reason
+
+
+def test_thin_spread_above_gamma_uses_richness():
+    from golf_offshoot.honer_15m.decide import decide_ticket
+    from golf_offshoot.honer_15m.policy import FAMILY_THIN
+
+    action, reason = decide_ticket(
+        0.70, 0.81, family=FAMILY_THIN, delta=0.04, spread=0.04, gamma=0.01
+    )
+    assert action == "fill"
+    assert "theta" in reason
+
+
+def test_exhausted_stamp_unparks_when_next_family_exists(honer_tmp):
+    from golf_offshoot.honer_15m.library import load_library, save_library
+    from golf_offshoot.honer_15m.picker import maybe_advance
+    from golf_offshoot.honer_15m.policy import FAMILY_SPREAD, FAMILY_THIN
+
+    st = theta.load_theta()
+    st["active_family"] = FAMILY_SPREAD
+    st["clip_streak"] = 20
+    theta.save_theta(st)
+    lib = load_library()
+    lib["catalog_exhausted"] = True
+    lib["active_family"] = FAMILY_SPREAD
+    save_library(lib)
+    _seed_search_quotes(n=20, with_spread=20)
+    out = maybe_advance()
+    assert out and out["advanced"] is True
+    assert out["active_family"] == FAMILY_THIN
+    assert load_library().get("catalog_exhausted") is not True
+    assert theta.load_theta()["gamma"] == pytest.approx(0.01)
 
 

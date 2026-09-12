@@ -20,7 +20,7 @@ def _search_table(rows: list[HonerRow]) -> str:
     head = (
         "<thead><tr>"
         "<th>Ticker</th><th>Window ET</th><th>Action</th><th>Posted YES</th>"
-        "<th>Cutoff</th><th>Near line</th><th>Spread</th><th>Wide-book</th>"
+        "<th>Cutoff</th><th>Near line</th><th>Spread</th><th>Wide-book</th><th>Thin-book</th>"
         "<th>Kalshi</th><th>Paper pnl</th><th>Why</th><th>Source</th>"
         "</tr></thead>"
     )
@@ -39,6 +39,7 @@ def _search_table(rows: list[HonerRow]) -> str:
             f"<td>{html.escape(row.near_line_text)}</td>"
             f"<td>{html.escape(row.spread_text)}</td>"
             f"<td>{html.escape(row.delta_text)}</td>"
+            f"<td>{html.escape(row.gamma_text)}</td>"
             f"<td>{html.escape(kalshi)}</td>"
             f"<td>{html.escape(row.pnl_text)}</td>"
             f"<td>{html.escape(row.why)}</td>"
@@ -57,7 +58,7 @@ def _exam_table(rows: list[HonerRow], standing: HonerStanding) -> str:
     head = (
         "<thead><tr>"
         "<th>Ticker</th><th>Window ET</th><th>Action</th><th>Posted YES</th>"
-        "<th>Frozen cutoff</th><th>Near line</th><th>Spread</th><th>Wide-book</th>"
+        "<th>Frozen cutoff</th><th>Near line</th><th>Spread</th><th>Wide-book</th><th>Thin-book</th>"
         "<th>Exam k</th><th>Kalshi</th><th>Exam pnl</th>"
         "<th>Always-buy</th><th>d</th><th>Why</th><th>Source</th>"
         "</tr></thead>"
@@ -80,6 +81,7 @@ def _exam_table(rows: list[HonerRow], standing: HonerStanding) -> str:
             f"<td>{html.escape(row.near_line_text)}</td>"
             f"<td>{html.escape(row.spread_text)}</td>"
             f"<td>{html.escape(row.delta_text)}</td>"
+            f"<td>{html.escape(row.gamma_text)}</td>"
             f"<td>{html.escape(k)}</td>"
             f"<td>{html.escape(kalshi)}</td>"
             f"<td>{html.escape(row.pnl_text)}</td>"

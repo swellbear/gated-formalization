@@ -268,8 +268,9 @@ def owed_non_farm_kinds(
 ) -> list[dict[str, Any]]:
     """Catalog kinds that are legal now but are never farm notebooks.
 
-    Today that is the honer family amend: Lab dates it on the honer organ, so it
-    stays out of ``unused_legal_kinds``, but it is still the named next kind.
+    Today that is the honer family amend: it is dated from honer files, so it
+    stays out of ``unused_legal_kinds``, but it is still the named next kind
+    until a third catalog item exists.
     """
     cat = catalog if catalog is not None else load_catalog(root=root)
     kinds = cat.get("kinds") if isinstance(cat.get("kinds"), list) else []
@@ -727,7 +728,7 @@ def run_farm_menu(
     Dates the unused legal clock slots, stamps ``FARM_MENU_EXHAUSTED`` when the
     quartet is spent with no keeper, and carries forward whatever the honer files
     owe. Every notebook stays ``execution`` false. This never dates a honer family
-    and never opens an exam ledger, a farm card pnl, or a book.
+    itself — the honer catalog dates family 3 — and never opens an exam ledger, a farm card pnl, or a book.
 
     A redirected artifact root, or a test process, is scratch tape: it reads and
     records, but it does not date crew notebooks in the checkout.
@@ -753,7 +754,7 @@ def run_farm_menu(
         "family_amend_owed": bool(amend),
         "family_amend_reasons": list(amend[0]["reasons"]) if amend else [],
         "family_amend_protocol": FAMILY_AMEND_PROTOCOL,
-        "third_family_dated": False,
+        "third_family_dated": honer_family_amend_taken(root=root),
         "execution": False,
         "seat_required": False,
         "framing": (

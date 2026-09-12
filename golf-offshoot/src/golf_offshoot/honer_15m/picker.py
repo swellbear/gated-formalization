@@ -4,7 +4,7 @@ from __future__ import annotations
 
 from typing import Any
 
-from golf_offshoot.honer_15m.catalog import next_family
+from golf_offshoot.honer_15m.catalog import activate_needs_quotes, item_activate, next_family
 from golf_offshoot.honer_15m.library import (
     append_exam_row,
     append_search_untestable,
@@ -16,6 +16,7 @@ from golf_offshoot.honer_15m.policy import (
     ADVANCE_OWED_STARVATION,
     FAMILY_RICH,
     FAMILY_SPREAD,
+    FAMILY_THIN,
     load_policy,
     starvation_untestable,
 )
@@ -31,7 +32,8 @@ def on_exam_close(*, outcome: str, family: str, knobs: dict[str, Any], k: int) -
 def maybe_advance() -> dict[str, Any] | None:
     """Advance on clip exhaustion or an owed search-starvation gate. Does not read ledgers or exam d.
 
-    When the two-item catalog cannot hunt, stamps catalog_exhausted from files.
+    When the catalog cannot hunt, stamps catalog_exhausted from files.
+    A later-dated next family unparks that stamp and continues file order.
     """
     from golf_offshoot.honer_15m.family_amend import stamp_family_amend
     from golf_offshoot.honer_15m.library import mark_catalog_exhausted
@@ -40,16 +42,19 @@ def maybe_advance() -> dict[str, Any] | None:
     need = int(pol["clip_exhaust_windows"])
     st = load_theta()
     lib = load_library()
+    active = str(st.get("active_family") or lib.get("active_family") or FAMILY_RICH)
     if lib.get("catalog_exhausted"):
-        stamp_family_amend()
-        return None
+        if next_family(active) is None:
+            stamp_family_amend()
+            return None
+        lib["catalog_exhausted"] = False
+        save_library(lib)
     clip_ready = int(st.get("clip_streak") or 0) >= need
     owed = str(st.get("advance_owed") or "") == ADVANCE_OWED_STARVATION
     if not clip_ready and not owed:
         mark_catalog_exhausted()
         stamp_family_amend()
         return None
-    active = str(st.get("active_family") or lib.get("active_family") or FAMILY_RICH)
     nxt = next_family(active)
     if nxt is None:
         lib["catalog_exhausted"] = True
@@ -60,7 +65,7 @@ def maybe_advance() -> dict[str, Any] | None:
         save_theta(st)
         stamp_family_amend()
         return {"advanced": False, "catalog_exhausted": True, "active_family": active}
-    if nxt == FAMILY_SPREAD and not quote_quality_ok():
+    if activate_needs_quotes(item_activate(nxt)) and not quote_quality_ok():
         if owed:
             st["advance_owed"] = ADVANCE_OWED_STARVATION
             save_theta(st)
@@ -82,6 +87,10 @@ def maybe_advance() -> dict[str, Any] | None:
         start_delta = float(pol["start_delta"])
         st["delta"] = start_delta
         st["last_declared_delta"] = start_delta
+    if nxt == FAMILY_THIN:
+        start_gamma = float(pol["start_gamma"])
+        st["gamma"] = start_gamma
+        st["last_declared_gamma"] = start_gamma
     lib["active_family"] = nxt
     lib["seed_theta"] = float(seed)
     save_theta(st)
@@ -124,6 +133,10 @@ def apply_search_starvation() -> dict[str, Any] | None:
             start = float(pol["start_delta"])
             st["delta"] = start
             st["last_declared_delta"] = start
+        elif family == FAMILY_THIN:
+            start = float(pol["start_gamma"])
+            st["gamma"] = start
+            st["last_declared_gamma"] = start
         else:
             start = float(pol["start_theta"])
             st["theta"] = start

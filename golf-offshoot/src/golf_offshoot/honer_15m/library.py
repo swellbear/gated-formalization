@@ -67,7 +67,7 @@ def hunts_cannot_freeze() -> bool:
     """True when exam is closed, freeze cannot fire, and this hunt cannot continue.
 
     Gym has no clip-grid. File labels only. A next catalog family still queued
-    (family 2 after a family-1 exam) keeps hunting. Does not read ledgers or exam d.
+    (family 3 after a family-2 exam) keeps hunting. Does not read ledgers or exam d.
     """
     from golf_offshoot.honer_15m.catalog import next_family
     from golf_offshoot.honer_15m.freeze import exam_is_open, freeze_ready
@@ -89,10 +89,10 @@ def hunts_cannot_freeze() -> bool:
 
 
 def mark_catalog_exhausted() -> dict[str, Any]:
-    """Stamp catalog_exhausted from files when the two-item catalog cannot hunt.
+    """Stamp catalog_exhausted from files when the dated catalog cannot hunt.
 
-    Does not date a third family. Does not peek exam pnl. Does not park while
-    family 2 is still the next file-order family.
+    Does not peek exam pnl. Does not park while a next catalog family is still
+    queued in file order.
     """
     from golf_offshoot.honer_15m.catalog import catalog_ids, next_family
     from golf_offshoot.honer_15m.freeze import exam_is_open
@@ -158,6 +158,7 @@ def append_exam_row(
         family=str(knobs.get("family") or family),
         theta=float(knobs.get("theta") or 0.0),
         delta=float(knobs.get("delta") or 0.0),
+        gamma=float(knobs.get("gamma") or 0.0),
     )
     payload["rows"] = list(payload.get("rows") or [])
     payload["rows"].append(
