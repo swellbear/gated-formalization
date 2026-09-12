@@ -74,7 +74,7 @@ def main(argv: list[str] | None = None) -> int:
         "command",
         nargs="?",
         default="demo",
-        choices=["demo", "board", "explain", "strategy", "ingest", "calibrate", "pressure-test", "live", "watch", "shadow", "shell", "paper-export", "paper-ledger", "paper-deposit", "paper-withdraw", "paper-settle", "paper-fill", "compare-replay", "hub", "lane-15m", "learn-15m", "learn-15m-runner", "digest-15m", "score-15m", "observability-export", "golf-kalshi"],
+        choices=["demo", "board", "explain", "strategy", "ingest", "calibrate", "pressure-test", "live", "watch", "shadow", "shell", "paper-export", "paper-ledger", "paper-deposit", "paper-withdraw", "paper-settle", "paper-fill", "compare-replay", "hub", "lane-15m", "learn-15m", "learn-15m-runner", "digest-15m", "score-15m", "observability-export"],
     )
     parser.add_argument("--course-type", default="parkland")
     parser.add_argument("--player", default="p01")
@@ -177,7 +177,7 @@ def main(argv: list[str] | None = None) -> int:
         "--json",
         action="store_true",
         dest="as_json",
-        help="learn-15m, learn-15m-runner, score-15m, or golf-kalshi: print JSON instead of the readable tick",
+        help="learn-15m, learn-15m-runner, or score-15m: print JSON instead of the readable tick",
     )
     parser.add_argument(
         "--runner-mode",
@@ -312,8 +312,6 @@ def main(argv: list[str] | None = None) -> int:
         return _cmd_score_15m(args)
     if args.command == "observability-export":
         return _cmd_observability_export(args)
-    if args.command == "golf-kalshi":
-        return _cmd_golf_kalshi(args)
 
     print(DEMO_BANNER)
     ct = CourseType(args.course_type)
@@ -1126,21 +1124,6 @@ def _cmd_observability_export(_args) -> int:
     print("shareable observability export (Hub UI manifest; read-only; no controls)")
     for key, path in paths.items():
         print(f"  {key}: {path}")
-    return 0
-
-
-def _cmd_golf_kalshi(args) -> int:
-    """One-shot Kalshi golf catalog ingest. Does not start 15m PaperWatch."""
-    if getattr(args, "watch", False):
-        print("golf-kalshi --watch is out of scope (golf-3). One-shot ingest only. Trading NOT ARMED.")
-        return 2
-    from golf_offshoot.golf_kalshi.ingest import format_ingest, run_ingest
-
-    result = run_ingest(refresh=bool(getattr(args, "refresh", False)))
-    if getattr(args, "as_json", False):
-        print(json.dumps(result, indent=2, default=str))
-        return 0
-    print(format_ingest(result))
     return 0
 
 
