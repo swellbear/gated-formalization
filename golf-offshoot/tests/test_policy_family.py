@@ -361,8 +361,12 @@ def test_picker_retires_density_fail_and_does_not_confuse_factory_coinflip(tmp_p
     _seed_family_docs(
         tmp_path,
         lessons_rows=[
+            {"id": "P-FILL-ALL-YES", "card": "comparison_book"},
             {"id": "P-SKIP-COINFLIP", "card": "beats_fill_all"},
             {"id": "P-SKIP-RICH-075", "card": "park_vs_fill_all"},
+            {"id": "P-SKIP-WIDE-0400", "card": "density_fail"},
+            {"id": "P-SKIP-LAST-SECONDS-60", "card": "density_fail"},
+            {"id": "P-SKIP-INELIGIBLE-CLOSED", "card": "density_fail"},
         ],
         rule_ids=["P-SKIP-COINFLIP"],
     )
