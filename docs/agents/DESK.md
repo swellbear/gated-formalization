@@ -6,20 +6,20 @@ Thread lines are **one sentence, newest first, max 10**. Long findings belong in
 
 | Field | Value |
 |-------|--------|
-| Updated | 2026-09-12 07:30 ET |
-| Active role | chief-of-staff |
-| Job | — |
-| Status | idle |
-| Handoff | Operator PARK of R-SKIP-HOUR-CLOSE L1 closed (`decide_cos_action` closeout `worker_done`). Chair empty. farm_hunger true (CLOCK-CIVIL-BOUNDARIES unused). Did not assign Lab this fire. next=idle |
+| Updated | 2026-09-12 07:45 ET |
+| Active role | lab |
+| Job | one 15m PROPOSED under the invent contract (mechanism catalog, density floor 10/n, kill anatomy, unburned including RETUNE-CLOCK-MINUTE, HONER-FAMILY-AMEND only after a dead honer exam or catalog exhaust — do not append a third family until the two dated families finish exams; HONER-FROZEN-REPLACE only after consult has lived and hour-close is not the live trial; do not retype freeze theta; pre-reg, live falsifier); handoff operator |
+| Status | assigned |
+| Handoff | CoS assigned Lab `F_continuation` (`decide_cos_action` `continuation_assign_lab`). Chair empty after hour-close PARK. `CLOCK-CIVIL-BOUNDARIES` unused is I later. next=lab |
 | Waiting on Founder | **N** |
 
 ## last_cos (CoS stamp — doorbell silence)
 
 | Field | Value |
 |-------|--------|
-| last_cos_at | 2026-09-12T07:30:00-04:00 |
-| last_cos_commit | 64af71d |
-| handled_reason_ids | A_worker_done |
+| last_cos_at | 2026-09-12T07:45:00-04:00 |
+| last_cos_commit | eef5539 |
+| handled_reason_ids | E_idle_unassigned, F_continuation |
 
 **Branch note.** Live work is `cursor/honer-15m-sibling` [#178](https://github.com/swellbear/gated-formalization/pull/178) (open; base is `cursor/part-a-clerical-trust-boundary`). [#176](https://github.com/swellbear/gated-formalization/pull/176) is still OPEN, not merged. `origin/master` is still `b063f56` (#175). Factory Turns 1–3 plus the ANSWER/CRITIC chain live on part-a / this sibling. Branching from `origin/master` would discard all of it. Do not use `C:\Users\bearh\gated-formalization` on `cursor/eia-window-job2`.
 
@@ -46,7 +46,7 @@ Part 3 landed. Three boxes are computed in `learning_lane_15m/honesty.py` and th
 | One hub process on `learning_lane_15m` | **PASS** — *derived* from the process table. One hub **tree**, not one OS process: `py` launcher PID **24188** over supervisor PID **24532** and listener PID **20100** holding `127.0.0.1:8765`. Watch loop pid **11160** (`watch.json` / `process_matches_disk`, 11:42). Child re-exec'd after sidecar/`app.py`. Criterion preserved as written. Do not start a second tree. |
 | No invented charts or pnl | **PASS** — *judgment, with evidence*. `digest_matches_ledger` PASS 2026-09-10T11:42:52−04:00 against the live book (82.18 / −17.82 both sides). CoS closeout stamps the current doorbell so the same A/B/E set does not re-ring. Fee-accurate totals are not on the hub, digest, manifest or `records[]`. |
 
-**Gate is open on this restamp.** Golf idle stays **ON** (15m paper PROPOSED is not golf idle-breach). Evidence bar is **binding** for scoring. `R-SKIP-2TO1-FAVORITE` L1 is **PARK** on its falsifier (Admissible completed, not Established, not an ADMIT). `R-SKIP-HOUR-CLOSE` L1 is **PARK** on its falsifier (`execution=false`; chair empty; baseline still fills). CoS 07:30 ET closed Operator `worker_done`; did not assign Lab. Consult **off**. Honer fee applied at score time; keep closed until bind. Trading **NOT ARMED**.
+**Gate is open on this restamp.** Golf idle stays **ON** (15m paper PROPOSED is not golf idle-breach). Evidence bar is **binding** for scoring. `R-SKIP-2TO1-FAVORITE` L1 is **PARK** on its falsifier (Admissible completed, not Established, not an ADMIT). `R-SKIP-HOUR-CLOSE` L1 is **PARK** on its falsifier (`execution=false`; chair empty; baseline still fills). CoS 07:45 ET assigned Lab `F_continuation` (empty chair beats I farm fill). Consult **off**. Honer fee applied at score time; keep closed until bind. Trading **NOT ARMED**.
 
 **The fee-schedule hash is pinned from Founder browser bytes.** Source `founder_browser_bytes`, file `golf-offshoot/docs/kalshi-fee-schedule.pdf`, 281129 bytes. Last gym GET remains HTTP 429 (drift only). Do not GET the PDF every 90s. Do not spoof a browser. **Do not write a placeholder.**
 
@@ -60,6 +60,7 @@ Two suites, both on the tick.
 
 ## Thread
 
+- 2026-09-12 07:45 ET  chief-of-staff → lab: one 15m PROPOSED under the invent contract (F_continuation; chair empty after hour-close PARK; CLOCK-CIVIL-BOUNDARIES unused is I later). next=lab
 - 2026-09-12 07:30 ET  chief-of-staff: Operator PARK R-SKIP-HOUR-CLOSE L1 closed (64af71d); chair empty; farm_hunger true (CLOCK-CIVIL-BOUNDARIES); did not assign Lab. next=idle
 - 2026-09-12 07:22 ET  operator → chief-of-staff: PARK R-SKIP-HOUR-CLOSE L1 on registry falsifier (n=70, skip_count=1, clauses 1/4/5 fail); execution dropped; PaperWatch not stopped. next=chief-of-staff
 - 2026-09-12 07:21 ET  operator → chief-of-staff: started PARK or CONTINUE from L1 scorecard R-SKIP-HOUR-CLOSE. next=operator
@@ -69,5 +70,4 @@ Two suites, both on the tick.
 - 2026-09-11 00:46 ET  lab → chief-of-staff: started inventing the next farm kind (product-structure skip rate; execution false; do not steal the chair). next=lab
 - 2026-09-11 00:32 ET  chief-of-staff → lab: unused legal kinds empty; invent the next kind as a farm notebook (execution false; do not steal the chair) or write farm_menu_exhausted. next=lab
 - 2026-09-11 00:11 ET  chief-of-staff: Lab invent CLOCK-EXCEPT-LAST-QUARTER done; F-CLOCK-EXCEPT-LAST-QUARTER-0-15-30 seated execution false; chair untouched; I invent-next-kind later. next=idle
-- 2026-09-10 23:59 ET  lab → chief-of-staff: invented CLOCK-EXCEPT-LAST-QUARTER as F-CLOCK-EXCEPT-LAST-QUARTER-0-15-30 in LEARNING_LANE_15M_FARM.json (execution false; chair untouched). next=chief-of-staff
 *Older lines rolled off at the 10-line cap. Full history is in the git log for `docs/agents/DESK.md`.*
