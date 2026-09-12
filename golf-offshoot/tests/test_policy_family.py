@@ -281,7 +281,7 @@ def test_run_search_on_fixture_books_does_not_write_rules(tmp_path):
 
 def _seed_family_docs(tmp_path, *, lessons_rows=None, rule_ids=None):
     docs = tmp_path / "golf-offshoot" / "docs"
-    docs.mkdir(parents=True)
+    docs.mkdir(parents=True, exist_ok=True)
     src_docs = Path(__file__).resolve().parents[1] / "docs"
     (docs / "POLICY_FAMILY.json").write_text(
         (src_docs / "POLICY_FAMILY.json").read_text(encoding="utf-8"), encoding="utf-8"
