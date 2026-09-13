@@ -11,7 +11,7 @@ from dataclasses import dataclass, field
 from datetime import datetime
 from typing import Any
 
-from golf_offshoot.data_feeds.kalshi_15m import quote_abs_diff, quote_text
+from golf_offshoot.data_feeds.kalshi_15m import TRIAL_BOOK_N, quote_abs_diff, quote_text
 from golf_offshoot.honer_15m.books import load_decisions, load_ledger
 from golf_offshoot.honer_15m.freeze import exam_is_open, freeze_ready, load_exam_state, load_trials
 from golf_offshoot.honer_15m.paths import (
@@ -43,8 +43,7 @@ def _fee_lock_phrase() -> str:
     if load_bar().get("fee_omitted", True):
         return "fee omitted"
     return "fee applied at score time; keep closed until bind"
-MAX_HTML_SEARCH = 48
-MAX_PNG_ROWS = 24
+MAX_PNG_ROWS = TRIAL_BOOK_N
 MAX_HAPPENED = 8
 MAX_THETA_TRAIL = 12
 
@@ -788,7 +787,7 @@ def collect_standing() -> HonerStanding:
         happened=happened,
         theta_trail=trail,
         phase=phase,
-        search_rows=search_rows[:MAX_HTML_SEARCH],
+        search_rows=search_rows,
         exam_rows=exam_rows,
         png_search_rows=png_search,
         png_exam_rows=png_exam,

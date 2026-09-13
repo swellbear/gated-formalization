@@ -639,7 +639,7 @@ def test_honer_table_prints_full_kalshi_quote_not_cents(honer_tmp):
 def test_honer_table_keeps_ieee_residue_out_of_quote_columns(honer_tmp):
     from golf_offshoot.honer_15m.board import collect_standing
     from golf_offshoot.honer_15m.hub_block import sandbox_html
-    from golf_offshoot.honer_15m.illustrate import QUOTE_KEYS, fit_column_text
+    from golf_offshoot.honer_15m.illustrate import QUOTE_KEYS, fit_column_text, why_cell_text
 
     dirty_spread = 0.47 - 0.46
     dirty_posted = "0.46499999999999997"
@@ -675,11 +675,18 @@ def test_honer_table_keeps_ieee_residue_out_of_quote_columns(honer_tmp):
     sheet = css.read_text(encoding="utf-8")
     assert "table.honer-board td.quote" in sheet
     assert "word-break: break-all" in sheet
+    assert "table.honer-board td.why" in sheet
+    assert "overflow-wrap: anywhere" in sheet
     wrapped = fit_column_text("0.010000000000000009", "spread", fontsize=9.2)
     assert "\n" in wrapped or len(wrapped) < len("0.010000000000000009")
     for key in QUOTE_KEYS:
         assert "\n" not in fit_column_text("0.6150", key, fontsize=9.2)
         assert fit_column_text("0.123456", key, fontsize=9.2) == "0.123456"
+    long_why = "Filled YES: market YES 0.46500 was below the 0.79000 cutoff. " * 4
+    wrapped_why = fit_column_text(long_why, "why", fontsize=8.6, max_lines=None)
+    assert "…" not in wrapped_why
+    assert long_why.replace(" ", "") in wrapped_why.replace("\n", "").replace(" ", "")
+    assert "…" not in why_cell_text(row)
 
 
 def test_honer_loop_stores_decimal_spread_not_ieee_float(honer_tmp):
@@ -1756,5 +1763,43 @@ def test_exhausted_stamp_unparks_when_next_family_exists(honer_tmp):
     assert out["active_family"] == FAMILY_THIN
     assert load_library().get("catalog_exhausted") is not True
     assert theta.load_theta()["gamma"] == pytest.approx(0.01)
+
+
+def test_honer_books_page_at_trial_n(honer_tmp):
+    from golf_offshoot.data_feeds.kalshi_15m import book_quote_text, trial_book_page_n
+    from golf_offshoot.honer_15m.board import MAX_PNG_ROWS, collect_standing
+    from golf_offshoot.honer_15m.hub_block import sandbox_html
+
+    n = trial_book_page_n()
+    assert n == 24
+    assert MAX_PNG_ROWS == n
+    rows = {}
+    for i in range(30):
+        ticker = f"KXBTC15M-26SEP09{i:04d}-00"
+        rows[ticker] = {
+            "ticker": ticker,
+            "window_id": "w",
+            "action": "fill",
+            "posted_yes": 0.46,
+            "posted_yes_text": "0.4600",
+            "theta": 0.79,
+            "at": f"2026-09-09T00:{i:02d}:00-04:00",
+        }
+    books.save_decisions("search", rows)
+    standing = collect_standing()
+    assert len(standing.search_rows) == 30
+    assert len(standing.png_search_rows) == n
+    html = sandbox_html()
+    assert 'class="book-pager"' in html
+    assert 'data-page-size="24"' in html
+    assert html.count('class="book-row"') == 30
+    assert html.count(" hidden") >= 6
+    assert 'class="why"' in html
+    assert book_quote_text("0.4600") == "0.46000"
+    assert "0.46000" in html
+    assert "0.79000" in html
+    js = Path(__file__).resolve().parents[1] / "src" / "golf_offshoot" / "operator_surface" / "desk.js"
+    assert "book-page-next" in js.read_text(encoding="utf-8")
+    assert "book-page-prev" in js.read_text(encoding="utf-8")
 
 

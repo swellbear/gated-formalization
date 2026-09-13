@@ -190,6 +190,45 @@ def _as_quote_decimal(value: object) -> Decimal:
     return Decimal(_quote_number(number))
 
 
+#: Hub book page size. Scoring ``exam_n`` in Honer rules is not this.
+#: Live Honer JSON (library / theta / HONER_15M_RULES) names no display n.
+TRIAL_BOOK_N = 24
+BOOK_QUOTE_PLACES = 5
+
+
+def trial_book_page_n() -> int:
+    """Honer + factory paper-trial display window.
+
+    24 unless a later live Honer file names a display page size. Do not
+    treat scoring ``exam_n`` (70) as the hub window.
+    """
+    return TRIAL_BOOK_N
+
+
+def book_quote_text(value: object | None) -> str:
+    """Book-cell quote display: at least 5 fractional digits.
+
+    ``quote_text`` stays Kalshi's own string (no invented zeros there).
+    Book tables/PNG pad short quotes to 5 places so Founder is not stuck
+    on 2-place cutoff/spread. Extra Kalshi digits past 5 stay and wrap
+    in-column (#207). Never cents.
+    """
+    raw = quote_text(value)
+    if raw == "n/a":
+        return raw
+    try:
+        d = _as_quote_decimal(raw)
+    except (TypeError, ValueError, InvalidOperation, ArithmeticError):
+        return raw
+    if _frac_places(raw) >= BOOK_QUOTE_PLACES:
+        return raw
+    quantum = Decimal(10) ** -BOOK_QUOTE_PLACES
+    try:
+        return format(d.quantize(quantum), "f")
+    except (InvalidOperation, ValueError, ArithmeticError):
+        return raw
+
+
 def quote_text(value: object | None) -> str:
     """Print a Kalshi contract quote. Never cents. Never invent digits.
 

@@ -1,6 +1,6 @@
 """Kalshi quote display: full source string, never cents, never invented digits."""
 
-from golf_offshoot.data_feeds.kalshi_15m import paper_mark_quote, parse_market, quote_abs_diff, quote_text
+from golf_offshoot.data_feeds.kalshi_15m import book_quote_text, paper_mark_quote, parse_market, quote_abs_diff, quote_text, trial_book_page_n
 from golf_offshoot.learning_lane_15m.illustrate import WindowRow, _mark_cell
 
 
@@ -136,5 +136,17 @@ def test_honer_and_paper_print_the_same_kalshi_string():
         paper_mark_text=text,
     )
     assert honer.posted_display() == text
-    assert _mark_cell(paper) == text
-    assert honer.posted_display() == _mark_cell(paper)
+    assert _mark_cell(paper) == book_quote_text(text)
+    assert book_quote_text(honer.posted_display()) == _mark_cell(paper)
+    assert _mark_cell(paper) == "0.61500"
+
+
+def test_book_quote_text_five_places_keeps_extra():
+    assert trial_book_page_n() == 24
+    assert book_quote_text("0.52") == "0.52000"
+    assert book_quote_text("0.6150") == "0.61500"
+    assert book_quote_text(0.79) == "0.79000"
+    assert book_quote_text("0.123456") == "0.123456"
+    assert book_quote_text("n/a") == "n/a"
+    assert quote_text("0.6150") == "0.6150"
+    assert quote_text(0.79) == "0.79"
