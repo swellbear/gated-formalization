@@ -31,10 +31,13 @@ FROZEN_IDS = (
     "P-SKIP-STALE-QUOTE-180",
     "P-SKIP-UNLESS-CHEAP-040",
     "P-SKIP-LAST-VS-MID-0200",
+    "P-SKIP-CLOSE-MINUTES-0-15",
 )
 STALE_QUOTE_ID = "P-SKIP-STALE-QUOTE-180"
 UNLESS_CHEAP_ID = "P-SKIP-UNLESS-CHEAP-040"
 LAST_VS_MID_ID = "P-SKIP-LAST-VS-MID-0200"
+CLOSE_MINUTES_ID = "P-SKIP-CLOSE-MINUTES-0-15"
+CLOSE_MINUTES_SKIP = [0, 15]
 #: Honer burned ids, copied so this package never imports honer_15m.
 BURNED_HONER_IDS = frozenset(
     {
@@ -130,6 +133,12 @@ def _validate_row(row: dict[str, Any], *, index: int, root: Path | None = None) 
             raise PolicyFamilyError("P-SKIP-LAST-VS-MID-0200 missing last must fill YES")
         if str(params.get("missing_mid") or "fill") != "fill":
             raise PolicyFamilyError("P-SKIP-LAST-VS-MID-0200 missing mid must fill YES")
+    if ident == CLOSE_MINUTES_ID:
+        if str(params.get("missing_close_at") or "fill") != "fill":
+            raise PolicyFamilyError("P-SKIP-CLOSE-MINUTES-0-15 missing close_at must fill YES")
+        minutes = params.get("skip_close_minutes")
+        if list(minutes or []) != CLOSE_MINUTES_SKIP:
+            raise PolicyFamilyError("P-SKIP-CLOSE-MINUTES-0-15 skip set is frozen {0, 15}")
 
 
 def load_library(*, root: Path | None = None) -> dict[str, Any]:

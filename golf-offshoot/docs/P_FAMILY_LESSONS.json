@@ -133,6 +133,21 @@
       "card": "untestable",
       "outcome": "untestable",
       "lesson": "Search done: skip never fired (skip_count 0/421). Missing last or missing mid fills; skip 0 is untestable, not a reason to retune 0.02. Not a t-test vs \u03b4."
+    },
+    {
+      "id": "P-SKIP-CLOSE-MINUTES-0-15",
+      "declared_at": "2026-09-12T21:39:00-04:00",
+      "skip_count": 193,
+      "n": 425,
+      "density_passes": true,
+      "density_fail": false,
+      "undecidable": false,
+      "fee_adj_pnl": -31.94,
+      "fill_all_fee_adj_pnl": -43.4,
+      "beats_fill_all": true,
+      "card": "beats_fill_all",
+      "outcome": "library",
+      "lesson": "Fee-adj selected-fill pnl beats P-FILL-ALL-YES on this book. Lesson only. Lab still gates later naming / exam / seating. Do not ping Lab."
     }
   ]
 }

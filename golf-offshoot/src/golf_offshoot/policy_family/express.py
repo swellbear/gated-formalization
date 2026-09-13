@@ -5,6 +5,7 @@ from __future__ import annotations
 from datetime import datetime
 from typing import Any
 
+from golf_offshoot.learning_lane_15m.rules import close_minute
 from golf_offshoot.localtime import to_eastern
 from golf_offshoot.policy_family.library import PolicyFamilyError
 
@@ -24,6 +25,9 @@ UNLESS_CHEAP_ID = "P-SKIP-UNLESS-CHEAP-040"
 #: Skip iff |last − mid| ≥ 0.02. Frozen 2¢, not a 1¢/3¢/5¢ walk.
 LAST_VS_MID_DELTA = 0.02
 LAST_VS_MID_ID = "P-SKIP-LAST-VS-MID-0200"
+#: Skip iff close_at clock minute is 0 or 15. Frozen {0,15}, not civil {0,30}.
+CLOSE_MINUTES_SKIP = frozenset({0, 15})
+CLOSE_MINUTES_ID = "P-SKIP-CLOSE-MINUTES-0-15"
 _LAST_KEYS = ("last", "last_price", "last_price_dollars")
 
 
@@ -204,4 +208,15 @@ def express(policy: dict[str, Any], window: dict[str, Any]) -> dict[str, str]:
         if gap >= LAST_VS_MID_DELTA:
             return _verdict(ident, ACTION_SKIP, f"|last-mid| {gap:g} >= 0.02")
         return _verdict(ident, ACTION_FILL, f"|last-mid| {gap:g} < 0.02")
+    if ident == CLOSE_MINUTES_ID:
+        raw = window.get("close_at")
+        if raw is None or str(raw).strip() == "":
+            return _verdict(ident, ACTION_FILL, "missing close_at; fill YES")
+        try:
+            minute = close_minute(str(raw))
+        except (ValueError, TypeError):
+            return _verdict(ident, ACTION_FILL, "missing close_at; fill YES")
+        if minute in CLOSE_MINUTES_SKIP:
+            return _verdict(ident, ACTION_SKIP, f"close_minute {minute} in {{0, 15}}")
+        return _verdict(ident, ACTION_FILL, f"close_minute {minute} not in {{0, 15}}")
     raise PolicyFamilyError(f"no expression for {ident}")

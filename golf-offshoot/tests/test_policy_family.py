@@ -257,13 +257,73 @@ def test_last_vs_mid_skip_never_fires_is_untestable_not_a_retune():
     assert "retune 180" not in card["lesson"]
 
 
-def test_q1_q2_still_on_the_tree_q3_is_file_order_after_q2():
+def test_close_minutes_0_15_skip_fill_missing_is_fill_not_thin_book():
+    """Skip iff close_at minute is 0 or 15. :30/:45 fill. Missing close_at fills. Never fill NO."""
+    policy = policy_by_id("P-SKIP-CLOSE-MINUTES-0-15")
+    hour = express(policy, _window(close_at="2026-09-12T16:00:00-04:00"))
+    assert hour["action"] == "skip"
+    quarter = express(policy, _window(close_at="2026-09-12T16:15:00-04:00"))
+    assert quarter["action"] == "skip"
+    half = express(policy, _window(close_at="2026-09-12T16:30:00-04:00"))
+    assert half["action"] == "fill"
+    last_q = express(policy, _window(close_at="2026-09-12T16:45:00-04:00"))
+    assert last_q["action"] == "fill"
+    utc_hour = express(policy, _window(close_at="2026-09-12T20:00:00Z"))
+    assert utc_hour["action"] == "skip"
+    utc_quarter = express(policy, _window(close_at="2026-09-12T20:15:00Z"))
+    assert utc_quarter["action"] == "skip"
+    utc_half = express(policy, _window(close_at="2026-09-12T20:30:00Z"))
+    assert utc_half["action"] == "fill"
+    missing = _window()
+    del missing["close_at"]
+    miss = express(policy, missing)
+    assert miss["action"] == "fill"
+    assert "missing close_at" in miss["reason"]
+    empty = express(policy, _window(close_at=""))
+    assert empty["action"] == "fill"
+    for row in (hour, quarter, half, last_q, utc_hour, utc_quarter, utc_half, miss, empty):
+        assert row["action"] in {"fill", "skip"}
+        assert row["action"] != "fill_no"
+
+
+def test_close_minutes_not_last_seconds():
+    """Distinct from P-SKIP-LAST-SECONDS-60. Minute-of-hour, not seconds-to-close."""
+    close_minutes = policy_by_id("P-SKIP-CLOSE-MINUTES-0-15")
+    last_seconds = policy_by_id("P-SKIP-LAST-SECONDS-60")
+    near_half = _window(
+        close_at="2026-09-12T16:30:00-04:00",
+        fill_at="2026-09-12T16:29:01-04:00",
+    )
+    assert express(last_seconds, near_half)["action"] == "skip"
+    assert express(close_minutes, near_half)["action"] == "fill"
+    early_hour = _window(
+        close_at="2026-09-12T16:00:00-04:00",
+        fill_at="2026-09-12T15:46:00-04:00",
+    )
+    assert express(last_seconds, early_hour)["action"] == "fill"
+    assert express(close_minutes, early_hour)["action"] == "skip"
+
+
+def test_close_minutes_not_civil_0_30():
+    """Distinct from factory civil {0,30}. This skip-set is frozen {0,15}; :30 fills."""
+    policy = policy_by_id("P-SKIP-CLOSE-MINUTES-0-15")
+    assert express(policy, _window(close_at="2026-09-12T16:00:00-04:00"))["action"] == "skip"
+    assert express(policy, _window(close_at="2026-09-12T16:15:00-04:00"))["action"] == "skip"
+    assert express(policy, _window(close_at="2026-09-12T16:30:00-04:00"))["action"] == "fill"
+    assert express(policy, _window(close_at="2026-09-12T16:45:00-04:00"))["action"] == "fill"
+    assert policy["params"]["skip_close_minutes"] == [0, 15]
+    assert policy["params"]["skip_close_minutes"] != [0, 30]
+    assert policy["expected_skip_rate"] == 0.5
+    assert policy["side"] == "yes"
+
+
+def test_q1_q2_q3_still_on_the_tree_q4_is_file_order_after_q3():
     ids = policy_ids()
     assert ids == FROZEN_IDS
     assert "P-SKIP-STALE-QUOTE-180" in ids
     assert "P-SKIP-UNLESS-CHEAP-040" in ids
-    assert ids[-1] == "P-SKIP-LAST-VS-MID-0200"
-    assert ids[-2] == "P-SKIP-UNLESS-CHEAP-040"
+    assert ids[-1] == "P-SKIP-CLOSE-MINUTES-0-15"
+    assert ids[-2] == "P-SKIP-LAST-VS-MID-0200"
     q1 = policy_by_id("P-SKIP-STALE-QUOTE-180")
     assert q1["params"]["max_age_s"] == 180
     q2 = policy_by_id("P-SKIP-UNLESS-CHEAP-040")
@@ -272,6 +332,12 @@ def test_q1_q2_still_on_the_tree_q3_is_file_order_after_q2():
     assert q3["params"]["delta"] == 0.02
     assert q3["side"] == "yes"
     assert q3["declared_at"] == "2026-09-12T20:40:00-04:00"
+    q4 = policy_by_id("P-SKIP-CLOSE-MINUTES-0-15")
+    assert q4["params"]["skip_close_minutes"] == [0, 15]
+    assert q4["params"]["missing_close_at"] == "fill"
+    assert q4["side"] == "yes"
+    assert q4["declared_at"] == "2026-09-12T21:39:00-04:00"
+    assert q4["expected_skip_rate"] == 0.5
 
 
 def test_rich_075_boundary():
@@ -377,6 +443,8 @@ def test_policies_are_independent_not_skip_together():
     assert express(policy_by_id("P-SKIP-WIDE-0400"), mid)["action"] == "fill"
     near = _window(posted_yes=0.50, yes_bid=0.49, yes_ask=0.51, last=0.50)
     assert express(policy_by_id("P-SKIP-LAST-VS-MID-0200"), near)["action"] == "fill"
+    civil_half = _window(close_at="2026-09-12T16:30:00-04:00")
+    assert express(policy_by_id("P-SKIP-CLOSE-MINUTES-0-15"), civil_half)["action"] == "fill"
     cards = replay_family([mid])
     assert [c["id"] for c in cards] == list(FROZEN_IDS)
     assert len(cards) == len(FROZEN_IDS)
@@ -554,8 +622,9 @@ def test_picker_file_order_unused_named_not_3n(tmp_path):
         "P-SKIP-STALE-QUOTE-180",
         "P-SKIP-UNLESS-CHEAP-040",
         "P-SKIP-LAST-VS-MID-0200",
+        "P-SKIP-CLOSE-MINUTES-0-15",
     ]
-    assert len(unused) == 8
+    assert len(unused) == 9
     assert next_named_from_files(root=tmp_path) == "P-SKIP-COINFLIP"
     assert picker_owed_from_files(root=tmp_path) is True
     stamp = stamp_picker(root=tmp_path)
@@ -589,6 +658,7 @@ def test_picker_retires_density_fail_and_does_not_confuse_factory_coinflip(tmp_p
             {"id": "P-SKIP-STALE-QUOTE-180", "card": "untestable"},
             {"id": "P-SKIP-UNLESS-CHEAP-040", "card": "park_vs_fill_all"},
             {"id": "P-SKIP-LAST-VS-MID-0200", "card": "untestable"},
+            {"id": "P-SKIP-CLOSE-MINUTES-0-15", "card": "park_vs_fill_all"},
         ],
         rule_ids=["R-SKIP-COINFLIP", "R-BASELINE-FILL-ALL"],
     )
@@ -607,6 +677,7 @@ def test_picker_retires_density_fail_and_does_not_confuse_factory_coinflip(tmp_p
             {"id": "P-SKIP-STALE-QUOTE-180", "card": "untestable"},
             {"id": "P-SKIP-UNLESS-CHEAP-040", "card": "park_vs_fill_all"},
             {"id": "P-SKIP-LAST-VS-MID-0200", "card": "untestable"},
+            {"id": "P-SKIP-CLOSE-MINUTES-0-15", "card": "park_vs_fill_all"},
         ],
         rule_ids=["P-SKIP-COINFLIP"],
     )
@@ -623,12 +694,17 @@ def test_live_files_leave_coinflip_unused_until_exact_p_id():
     )
 
     unused = unused_named_from_files()
-    assert unused == ["P-SKIP-COINFLIP", "P-SKIP-UNLESS-CHEAP-040"]
+    assert unused == [
+        "P-SKIP-COINFLIP",
+        "P-SKIP-UNLESS-CHEAP-040",
+        "P-SKIP-CLOSE-MINUTES-0-15",
+    ]
     assert next_named_from_files() == "P-SKIP-COINFLIP"
     assert picker_owed_from_files() is True
     retired = retired_named_from_files()
     assert "P-SKIP-COINFLIP" not in retired
     assert "P-SKIP-UNLESS-CHEAP-040" not in retired
+    assert "P-SKIP-CLOSE-MINUTES-0-15" not in retired
     assert "P-SKIP-LAST-VS-MID-0200" in retired
     assert "P-SKIP-RICH-075" in retired
     assert "P-SKIP-WIDE-0400" in retired
