@@ -28,11 +28,14 @@ LAST_VS_MID_ID = "P-SKIP-LAST-VS-MID-0200"
 #: Skip iff close_at clock minute is 0 or 15. Frozen {0,15}, not civil {0,30}.
 CLOSE_MINUTES_SKIP = frozenset({0, 15})
 CLOSE_MINUTES_ID = "P-SKIP-CLOSE-MINUTES-0-15"
-#: Q5 WRAP. Frozen {0,45}. Do not retune Q4 {0,15}. Do not implement Q6 {30,45}.
+#: Q5 WRAP. Frozen {0,45}. Do not retune Q4 {0,15}. Q6 is CLOSE_MINUTES_SECOND_HALF_ID.
 CLOSE_MINUTES_WRAP_ID = "P-SKIP-CLOSE-MINUTES-0-45"
+#: Q6 SECOND-HALF. Frozen {30,45}. Do not retune Q4 {0,15} or Q5 {0,45}.
+CLOSE_MINUTES_SECOND_HALF_ID = "P-SKIP-CLOSE-MINUTES-30-45"
 CLOSE_MINUTES_SKIP_BY_ID = {
     CLOSE_MINUTES_ID: frozenset({0, 15}),
     CLOSE_MINUTES_WRAP_ID: frozenset({0, 45}),
+    CLOSE_MINUTES_SECOND_HALF_ID: frozenset({30, 45}),
 }
 _LAST_KEYS = ("last", "last_price", "last_price_dollars")
 

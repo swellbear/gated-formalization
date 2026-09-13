@@ -164,7 +164,21 @@
         "skip_close_minutes": [0, 45],
         "missing_close_at": "fill"
       },
-      "note": "Skip iff close_at clock minute is 0 or 45 (:00 or :45). :15 and :30 fill. Missing close_at → fill YES (not thin-book; not a skip). Never fill NO. Same skip-set as leftover gym-legal farm id CLOCK-HOUR-WRAP. This is a P-* replay vs fill-all, not a farm notebook and not a factory execution row. Do not farm-date CLOCK-HOUR-WRAP. Distinct from Q4 P-SKIP-CLOSE-MINUTES-0-15 {0,15} (that fills :45 and skips :15), factory skip-together / civil {0,30} / 15m-3b, burned hour-close {0}, P-SKIP-LAST-SECONDS-60 (seconds-to-close), and Q6 {30,45} (do not implement). Do not retune {0,45}. Do not retune Q4 {0,15}, Q3 0.02, Q2 0.40, or Q1 180. Product-structure expected skip 2/4 = 0.50. Count on search."
+      "note": "Skip iff close_at clock minute is 0 or 45 (:00 or :45). :15 and :30 fill. Missing close_at → fill YES (not thin-book; not a skip). Never fill NO. Same skip-set as leftover gym-legal farm id CLOCK-HOUR-WRAP. This is a P-* replay vs fill-all, not a farm notebook and not a factory execution row. Do not farm-date CLOCK-HOUR-WRAP. Distinct from Q4 P-SKIP-CLOSE-MINUTES-0-15 {0,15} (that fills :45 and skips :15), factory skip-together / civil {0,30} / 15m-3b, burned hour-close {0}, P-SKIP-LAST-SECONDS-60 (seconds-to-close). Q6 is now P-SKIP-CLOSE-MINUTES-30-45. Do not retune {0,45}. Do not retune Q4 {0,15}, Q3 0.02, Q2 0.40, or Q1 180. Product-structure expected skip 2/4 = 0.50. Count on search."
+    },
+    {
+      "id": "P-SKIP-CLOSE-MINUTES-30-45",
+      "kind": "selection",
+      "side": "yes",
+      "declared_at": "2026-09-13T01:35:00-04:00",
+      "skip_when": "close_at clock minute is 30 or 45",
+      "else": "fill YES at posted mark",
+      "expected_skip_rate": 0.5,
+      "params": {
+        "skip_close_minutes": [30, 45],
+        "missing_close_at": "fill"
+      },
+      "note": "Skip iff close_at clock minute is 30 or 45 (:30 or :45). :00 and :15 fill. Missing close_at → fill YES (not thin-book; not a skip). Never fill NO. Same skip-set as leftover gym-legal farm id CLOCK-HOUR-SECOND-HALF. This is a P-* replay vs fill-all, not a farm notebook and not a factory execution row. Do not farm-date CLOCK-HOUR-SECOND-HALF. Distinct from Q5 P-SKIP-CLOSE-MINUTES-0-45 {0,45} (that skips :00 and fills :30), Q4 P-SKIP-CLOSE-MINUTES-0-15 {0,15} (that fills :30 and :45), factory skip-together / civil {0,30} / 15m-3b, burned hour-close {0}, and P-SKIP-LAST-SECONDS-60 (seconds-to-close). Do not retune {30,45}. Do not retune Q5 {0,45}, Q4 {0,15}, Q3 0.02, Q2 0.40, or Q1 180. Product-structure expected skip 2/4 = 0.50. Count on search."
     }
   ]
 }
