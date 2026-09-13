@@ -6,7 +6,7 @@
 
 This is a Founder-authorized sibling. Lineage A, PaperWatch, `LEARNING_LANE_15M_RULES.json`, and `trials_to_date` stay sole owners of the live 70. Isolation is a **staging wall** so evidence stays clean, not a claim honer stays a toy. Destination: search → freeze photocopy → exam → machine score vs fill-all after fees → park dead or file-gate consult. Protocol: [`HONER_15M_PROMOTION.md`](HONER_15M_PROMOTION.md). Consult is **off** until freeze hash, dated fee-apply, surviving exam score, and honer invariants hold on **that** snapshot (`maybe_sync_and_enable`). Freeze bytes are the name. Lab does not retype θ. Replacement of the executing factory row is crew after consult has lived, not Founder. Founder is arm, cash, keys, HOLD lift, and golf C2/C4/WC3+.
 
-**Paper is the exam.** Honer search and exam books are this market’s paper. `lived=false` is not a wait. Lab may refuse a **named idea**. Refuse of the **medium** is a hole. This catalog is `KXBTC15M` only; do not copy `H-SKIP-*` onto another market. Palshi does not hire a one-off namer.
+**Paper is the exam.** Honer search and exam books are this market’s paper. `lived=false` is not a wait. Lab may refuse a **named idea**. Refuse of the **medium** is a hole. This catalog is `KXBTC15M` only; do not copy `H-SKIP-*` onto another market. Palshi does not hire a one-off namer. Factory skip `F-SKIP-FOREIGN-HORIZON` is **not** a Honer family. Not Q7. Not a fourth catalog item.
 
 ## What it is
 

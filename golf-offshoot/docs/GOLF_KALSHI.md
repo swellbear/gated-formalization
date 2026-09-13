@@ -56,6 +56,8 @@ The last tick writes bound / brain / deferred on the Golf board so an empty cart
 
 Golf paper tickets are one instance. 15-minute paper windows are another. A later series gets the same overlay when that market opens.
 
+Frozen factory skip `F-SKIP-FOREIGN-HORIZON` (`golf-offshoot/docs/FACTORY_OVERLAY.json`): skip iff this contract’s settlement horizon is not the in-play class of the working paper book, else fill YES. Missing horizon fills. Never fill NO. Golf spelling: skip `slow` sleeve or `season` horizon (fast + week stay in-play). 15m spelling: `KXBTC15M` is the in-play class (always fill on this book); a leaked foreign series skips. `execution=false`. Not seated. Not golf-only `G-SKIP-SLOW-SLEEVE`. Not Q7. Keep Farm `notebooks: []`. Lab still gates exam/seat.
+
 ## Golf Farm / Honer
 
 Idle shells on the golf tab: `data/golf_kalshi/latest/farm.json` and `data/golf_kalshi/honer/`. They read the live golf `paper/ledger.json` and last tick on every watch tick. Empty notebooks until dated. No golf `crew_tick`. They do not consult 15m `decide()`. They do not write "no golf tape yet" when tickets exist. They do not write "wait for lived." Organs stamp `paper_is_exam`. The 15m Lab chair is untouched. Lab 2026-09-12 **refused named ideas** ([`GOLF_KALSHI_LAB_NAMER.md`](GOLF_KALSHI_LAB_NAMER.md)). Those refusals stand. The same look treated `lived=false` as a reason to wait — that piece is a hole, not a park. Farm/Honer do not auto-name.

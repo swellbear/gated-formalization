@@ -2,7 +2,7 @@
   "schema": 1,
   "lane": "learning_lane_15m",
   "series": "KXBTC15M",
-  "note": "Discovery farm. Notebooks are execution false. Not live. Not an ADMIT. Lab dates rows. Operator RUN-ONLY to seat one. Do not add farm pnl to Lineage A. Paper is the exam. 15m paper windows are this market's working set. Lab may refuse a named idea; refusing the medium is a hole. Palshi does not hire a one-off namer.",
+  "note": "Discovery farm. Notebooks are execution false. Not live. Not an ADMIT. Lab dates rows. Operator RUN-ONLY to seat one. Do not add farm pnl to Lineage A. Paper is the exam. 15m paper windows are this market's working set. Lab may refuse a named idea; refusing the medium is a hole. Palshi does not hire a one-off namer. F-SKIP-FOREIGN-HORIZON is factory overlay, not a CLOCK notebook and not Q7. Do not append it here.",
   "notebooks": [
     {
       "id": "F-CLOCK-CLOSE-MINUTE-15",

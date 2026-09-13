@@ -1,0 +1,48 @@
+{
+  "schema": 1,
+  "kind": "FACTORY_OVERLAY",
+  "lane": "factory",
+  "framing": "Frozen named factory skip vs fill-all after fees. Transferable overlay on every opened Kalshi market. Paper is the exam. Not a P-* row. Not a Honer family. Not golf-only G-SKIP-*. Not Q7. Search card, not an ADMIT. Lab still gates exam and seat.",
+  "lab_admits": false,
+  "trading_armed": false,
+  "execution": false,
+  "catalog_kind": "F-SKIP-FOREIGN-HORIZON",
+  "not": [
+    "G-SKIP-SLOW-SLEEVE",
+    "G-SKIP-*",
+    "Q7",
+    "P-SKIP-LAST-SECONDS-60",
+    "P-SKIP-INELIGIBLE-CLOSED",
+    "P-SKIP-CLOSE-MINUTES-15-30",
+    "P-SKIP-CLOSE-MINUTES-15-45",
+    "H-SKIP-THIN-BOOK",
+    "H-SKIP-RICH-YES",
+    "H-SKIP-WIDE-SPREAD",
+    "factory skip-together",
+    "CLOCK farm notebook",
+    "3^N"
+  ],
+  "queued_next": [
+    "F-SKIP-NON-PRIMARY-CONTRACT"
+  ],
+  "policies": [
+    {
+      "id": "F-SKIP-FOREIGN-HORIZON",
+      "kind": "selection",
+      "side": "yes",
+      "declared_at": "2026-09-13T09:16:00-04:00",
+      "skip_when": "settlement horizon is not the in-play class of that market's working paper book",
+      "else": "fill YES at posted mark",
+      "expected_skip_rate": null,
+      "params": {
+        "missing_horizon": "fill",
+        "missing_series": "fill",
+        "missing_sleeve": "fill",
+        "fifteen_m_in_play_series": "KXBTC15M",
+        "golf_foreign_sleeve": "slow",
+        "golf_foreign_horizon": "season"
+      },
+      "note": "One named horizon class, not a leftover-clock search and not a 3^N lottery. 15m: KXBTC15M windows are the in-play class (always fill on this book); missing series fills; a leaked foreign series skips. Golf: skip iff sleeve is slow or market_horizon is season; missing sleeve and missing horizon fills. Never fill NO. execution false. Not seated. Not G-SKIP-SLOW-SLEEVE. Do not farm-date as a golf notebook."
+    }
+  ]
+}

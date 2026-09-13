@@ -2,8 +2,8 @@
   "schema": 1,
   "lane": "learning_lane_15m",
   "series": "KXBTC15M",
-  "updated": "2026-09-12T17:30:00-04:00",
-  "rule": "Crew-owned kind menu. Lab loads this like burned classes. Lab may add a kind by inventing if it can name a product-structure expected_skip_rate from the 15m quartet. Operator RUN-ONLY or PARK. Not a Founder permission list. Do not put future tickers here. Catalog prefers ≥ 0.25; declare_rule floor is 10/first_look_n. Honer family 3 H-SKIP-THIN-BOOK is dated from files after the two dated families finished exams. Do not append a fourth until family 3 finishes. Consult enable is a file gate. Replacement is crew after consult has lived. P-FAMILY-SEARCH is a finite unused-named P-* picker doorbell, not a farm notebook. Paper is the exam: 15m paper windows are this market's working set. Lab may refuse a named idea; refusing the medium (not real money / wait for lived) is a hole. Do not copy H-SKIP-* onto another market. Palshi does not hire a one-off namer.",
+  "updated": "2026-09-13T09:16:00-04:00",
+  "rule": "Crew-owned kind menu. Lab loads this like burned classes. Lab may add a kind by inventing if it can name a product-structure expected_skip_rate from the 15m quartet. Operator RUN-ONLY or PARK. Not a Founder permission list. Do not put future tickers here. Catalog prefers ≥ 0.25; declare_rule floor is 10/first_look_n. Honer family 3 H-SKIP-THIN-BOOK is dated from files after the two dated families finished exams. Do not append a fourth until family 3 finishes. Consult enable is a file gate. Replacement is crew after consult has lived. P-FAMILY-SEARCH is a finite unused-named P-* picker doorbell, not a farm notebook. Paper is the exam: 15m paper windows are this market's working set. Lab may refuse a named idea; refusing the medium (not real money / wait for lived) is a hole. Do not copy H-SKIP-* onto another market. Palshi does not hire a one-off namer. F-SKIP-FOREIGN-HORIZON is factory overlay (FACTORY_OVERLAY.json), not a CLOCK farm notebook and not Q7.",
   "kinds": [
     {
       "id": "CLOCK-CLOSE-MINUTE",
@@ -59,6 +59,12 @@
       "protocol": "golf-offshoot/docs/POLICY_FAMILY.json",
       "legal_only_when": "unused named P-* remain in POLICY_FAMILY.json file order; Lab still gates seating and may refuse",
       "note": "Finite picker doorbell, same shape as the honer file doorbell. Unused named P-* from files, not pnl, not 3^N, not clip-walk. Comparison P-FILL-ALL-YES is never a pick. Density-fail / park-vs-fill-all retires that name (do not retune). Does not date a factory row. Do not ping Lab. Not a farm notebook. Not factory skip-together."
+    },
+    {
+      "id": "F-SKIP-FOREIGN-HORIZON",
+      "protocol": "golf-offshoot/docs/FACTORY_OVERLAY.json",
+      "legal_only_when": "factory overlay catalog; Lab still gates exam and seat; execution stays false",
+      "note": "Frozen named skip. Skip iff settlement horizon is not the in-play class of that market's working paper book. Missing horizon fills. Never fill NO. On KXBTC15M the kind idles (always fill). Not a P-* row. Not Q7. Not golf-only G-SKIP-*. Not a CLOCK farm notebook. Do not retune last-seconds-60 or ineligible-closed."
     }
   ]
 }
