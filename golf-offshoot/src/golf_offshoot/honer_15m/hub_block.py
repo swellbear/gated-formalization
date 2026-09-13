@@ -8,6 +8,11 @@ from golf_offshoot.data_feeds.kalshi_15m import quote_text
 from golf_offshoot.honer_15m.board import HonerRow, HonerStanding, collect_standing
 
 
+def _td(text: str, *, css: str = "") -> str:
+    cls = f' class="{css}"' if css else ""
+    return f"<td{cls}>{html.escape(text)}</td>"
+
+
 def _bold_stars(text: str) -> str:
     out = html.escape(text)
     while "**" in out:
@@ -20,8 +25,9 @@ def _search_table(rows: list[HonerRow]) -> str:
         return "<p class=\"help\">Honer has not taken a search window yet.</p>"
     head = (
         "<thead><tr>"
-        "<th>Ticker</th><th>Window ET</th><th>Action</th><th>Posted YES</th>"
-        "<th>Cutoff</th><th>Near line</th><th>Spread</th><th>Wide-book</th><th>Thin-book</th>"
+        "<th>Ticker</th><th>Window ET</th><th>Action</th><th class=\"quote\">Posted YES</th>"
+        "<th class=\"quote\">Cutoff</th><th>Near line</th><th class=\"quote\">Spread</th>"
+        "<th class=\"quote\">Wide-book</th><th class=\"quote\">Thin-book</th>"
         "<th>Kalshi</th><th>Paper pnl</th><th>Why</th><th>Source</th>"
         "</tr></thead>"
     )
@@ -35,12 +41,12 @@ def _search_table(rows: list[HonerRow]) -> str:
             f"<td><code>{html.escape(row.ticker)}</code></td>"
             f"<td>{html.escape(row.window_et)}</td>"
             f"<td>{html.escape(row.action_label)}</td>"
-            f"<td>{html.escape(posted)}</td>"
-            f"<td>{html.escape(cutoff)}</td>"
+            f"{_td(posted, css='quote')}"
+            f"{_td(cutoff, css='quote')}"
             f"<td>{html.escape(row.near_line_text)}</td>"
-            f"<td>{html.escape(row.spread_text)}</td>"
-            f"<td>{html.escape(row.delta_text)}</td>"
-            f"<td>{html.escape(row.gamma_text)}</td>"
+            f"{_td(row.spread_text, css='quote')}"
+            f"{_td(row.delta_text, css='quote')}"
+            f"{_td(row.gamma_text, css='quote')}"
             f"<td>{html.escape(kalshi)}</td>"
             f"<td>{html.escape(row.pnl_text)}</td>"
             f"<td>{html.escape(row.why)}</td>"
@@ -58,8 +64,9 @@ def _exam_table(rows: list[HonerRow], standing: HonerStanding) -> str:
         return f'<p class="help">Exam idle. {html.escape(standing.freeze_meter)}</p>'
     head = (
         "<thead><tr>"
-        "<th>Ticker</th><th>Window ET</th><th>Action</th><th>Posted YES</th>"
-        "<th>Frozen cutoff</th><th>Near line</th><th>Spread</th><th>Wide-book</th><th>Thin-book</th>"
+        "<th>Ticker</th><th>Window ET</th><th>Action</th><th class=\"quote\">Posted YES</th>"
+        "<th class=\"quote\">Frozen cutoff</th><th>Near line</th><th class=\"quote\">Spread</th>"
+        "<th class=\"quote\">Wide-book</th><th class=\"quote\">Thin-book</th>"
         "<th>Exam k</th><th>Kalshi</th><th>Exam pnl</th>"
         "<th>Always-buy</th><th>d</th><th>Why</th><th>Source</th>"
         "</tr></thead>"
@@ -77,12 +84,12 @@ def _exam_table(rows: list[HonerRow], standing: HonerStanding) -> str:
             f"<td><code>{html.escape(row.ticker)}</code></td>"
             f"<td>{html.escape(row.window_et)}</td>"
             f"<td>{html.escape(row.action_label)}</td>"
-            f"<td>{html.escape(posted)}</td>"
-            f"<td>{html.escape(cutoff)}</td>"
+            f"{_td(posted, css='quote')}"
+            f"{_td(cutoff, css='quote')}"
             f"<td>{html.escape(row.near_line_text)}</td>"
-            f"<td>{html.escape(row.spread_text)}</td>"
-            f"<td>{html.escape(row.delta_text)}</td>"
-            f"<td>{html.escape(row.gamma_text)}</td>"
+            f"{_td(row.spread_text, css='quote')}"
+            f"{_td(row.delta_text, css='quote')}"
+            f"{_td(row.gamma_text, css='quote')}"
             f"<td>{html.escape(k)}</td>"
             f"<td>{html.escape(kalshi)}</td>"
             f"<td>{html.escape(row.pnl_text)}</td>"

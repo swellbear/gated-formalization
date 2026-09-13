@@ -304,6 +304,21 @@ table.farm-board {
   width: 100%;
   font-size: 13px;
 }
+table.honer-board {
+  table-layout: fixed;
+  width: max(100%, 78rem);
+  font-variant-numeric: tabular-nums;
+}
+table.honer-board th.quote,
+table.honer-board td.quote {
+  font-family: var(--mono);
+  font-variant-numeric: tabular-nums;
+  white-space: normal;
+  overflow-wrap: anywhere;
+  word-break: break-all;
+  line-height: 1.25;
+  width: 6.6%;
+}
 table.honer-board th,
 table.gk-board th,
 table.farm-board th {

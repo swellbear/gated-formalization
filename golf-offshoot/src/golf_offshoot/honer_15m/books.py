@@ -85,6 +85,9 @@ def record_action(
     gamma: float | None = None,
     spread: float | None = None,
     posted_yes_text: str | None = None,
+    spread_text: str | None = None,
+    delta_text: str | None = None,
+    gamma_text: str | None = None,
 ) -> dict[str, Any]:
     if has_ticket(book, ticker):
         return load_decisions(book)[ticker]
@@ -115,6 +118,15 @@ def record_action(
     text = str(posted_yes_text or "").strip()
     if text:
         row["posted_yes_text"] = text
+    spread_s = str(spread_text or "").strip()
+    if spread_s:
+        row["spread_text"] = spread_s
+    delta_s = str(delta_text or "").strip()
+    if delta_s:
+        row["delta_text"] = delta_s
+    gamma_s = str(gamma_text or "").strip()
+    if gamma_s:
+        row["gamma_text"] = gamma_s
     if book == "exam":
         if exam_k is None:
             from golf_offshoot.honer_15m.freeze import load_exam_state, load_trials

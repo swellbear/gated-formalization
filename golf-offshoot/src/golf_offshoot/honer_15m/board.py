@@ -86,7 +86,7 @@ class HonerRow:
     def posted_display(self) -> str:
         text = (self.posted_yes_text or "").strip()
         if text:
-            return text
+            return quote_text(text)
         return quote_text(self.posted_yes)
 
 
@@ -117,6 +117,16 @@ class HonerStanding:
 def cents(value: float | None) -> str:
     """Contract-price display. Never rounded cents. Never invented digits."""
     return quote_text(value)
+
+
+def _stored_quote(row: dict[str, Any], key: str, value: float | None) -> str:
+    """Prefer a stored display string; never dump IEEE from a computed float."""
+    text = str(row.get(key) or "").strip()
+    if text:
+        return quote_text(text)
+    if value is None:
+        return "n/a"
+    return cents(value)
 
 
 def dollars(value: float | None, *, signed: bool = False) -> str:
@@ -321,22 +331,30 @@ def why_sentence(row: dict[str, Any], *, book: str, step: float, band: float = 0
     action = str(row.get("action") or "")
     posted = row.get("posted_yes")
     theta = row.get("theta")
-    posted_s = str(row.get("posted_yes_text") or "").strip() or cents(
-        float(posted) if posted is not None else None
+    posted_s = _stored_quote(
+        row, "posted_yes_text", float(posted) if posted is not None else None
     )
     cutoff_s = cents(float(theta) if theta is not None else None)
     reason = str(row.get("reason") or "")
     if action == "skip" and reason.startswith("thin"):
-        spread_s = cents(float(row["spread"]) if row.get("spread") is not None else None)
-        gamma_s = cents(float(row["gamma"]) if row.get("gamma") is not None else None)
+        spread_s = _stored_quote(
+            row, "spread_text", float(row["spread"]) if row.get("spread") is not None else None
+        )
+        gamma_s = _stored_quote(
+            row, "gamma_text", float(row["gamma"]) if row.get("gamma") is not None else None
+        )
         core = (
             f"Skipped: quoted book was thin (missing bid/ask, or spread {spread_s} "
             f"at or below the {gamma_s} thin-book line)."
         )
         short = f"skipped thin book {spread_s} vs {gamma_s}"
     elif action == "skip" and reason.startswith("spread"):
-        spread_s = cents(float(row["spread"]) if row.get("spread") is not None else None)
-        delta_s = cents(float(row["delta"]) if row.get("delta") is not None else None)
+        spread_s = _stored_quote(
+            row, "spread_text", float(row["spread"]) if row.get("spread") is not None else None
+        )
+        delta_s = _stored_quote(
+            row, "delta_text", float(row["delta"]) if row.get("delta") is not None else None
+        )
         core = (
             f"Skipped: bid/ask spread {spread_s} was at or above the {delta_s} wide-book line."
         )
@@ -513,10 +531,10 @@ def _row_from_decision(book: str, row: dict[str, Any], *, step: float) -> HonerR
         near_line_text="yes" if near is True else ("no" if near is False else "n/a"),
         spread=spread_f,
         delta=delta_f,
-        spread_text=cents(spread_f) if spread_f is not None else "n/a",
-        delta_text=cents(delta_f) if delta_f is not None else "n/a",
+        spread_text=_stored_quote(row, "spread_text", spread_f),
+        delta_text=_stored_quote(row, "delta_text", delta_f),
         gamma=gamma_f,
-        gamma_text=cents(gamma_f) if gamma_f is not None else "n/a",
+        gamma_text=_stored_quote(row, "gamma_text", gamma_f),
         posted_yes_text=str(row.get("posted_yes_text") or "").strip(),
     )
 

@@ -30,7 +30,7 @@ Golf Home also shows Fast / week / slow meters and the mix one-liner. Meter caps
 
 Golf **Live/entry $** is dollar EV after fee (`edge_after_fee`), not a 3pp fraction. Format two decimals. Quotes under 2¢ show `thin`; the quote stays in Quote. Do not retune mark math for the column.
 
-Honer Posted YES / cutoff / spread and the 15m paper-window MARK cell print Kalshi’s full quote string (same helper). Never rounded cents. Never truncated to 3 places. Never invented digits. Honer and paper show the same string Kalshi provided.
+Honer Posted YES / cutoff / spread and the 15m paper-window MARK cell print Kalshi’s full quote string (same helper). Never rounded cents. Never truncated to 3 places. Never invented digits. Honer and paper show the same string Kalshi provided. Computed spread / wide-book / thin-book print the Decimal difference of those quotes, not an IEEE float dump. Quote cells keep their digits in-column (HTML wrap; PNG clip).
 
 Golf Ops Recipe names the live fill gate: event dollars at the one-name fraction of bank. The ticket-count trim is labeled one-time. Home mix still prints skip counts; it does not retune `allocate`.
 

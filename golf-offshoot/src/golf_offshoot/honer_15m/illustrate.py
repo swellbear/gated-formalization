@@ -36,7 +36,7 @@ NEG = "#8d2b2b"
 SANS = "DejaVu Sans"
 MONO = "DejaVu Sans Mono"
 
-FIG_W = 25.9
+FIG_W = 26.6
 DPI = 100
 ROW_IN = 0.40
 HEADER_IN = 3.20
@@ -50,18 +50,42 @@ COLUMNS: tuple[tuple[str, float, str], ...] = (
     ("window", 2.50, "WINDOW (ET)"),
     ("action", 3.72, "ACTION"),
     ("posted", 4.88, "POSTED YES"),
-    ("cutoff", 5.98, "CUTOFF"),
-    ("near", 7.08, "NEAR LINE"),
-    ("spread", 8.28, "SPREAD"),
-    ("wide", 9.38, "WIDE-BOOK"),
-    ("thin", 10.48, "THIN-BOOK"),
-    ("kalshi", 11.72, "KALSHI RESULT"),
-    ("pnl", 13.38, "PAPER PNL"),
-    ("why", 15.20, "WHY"),
-    ("source", 21.65, "SOURCE FILE(S)"),
+    ("cutoff", 6.22, "CUTOFF"),
+    ("near", 7.42, "NEAR LINE"),
+    ("spread", 8.62, "SPREAD"),
+    ("wide", 9.92, "WIDE-BOOK"),
+    ("thin", 11.22, "THIN-BOOK"),
+    ("kalshi", 12.62, "KALSHI RESULT"),
+    ("pnl", 14.28, "PAPER PNL"),
+    ("why", 16.10, "WHY"),
+    ("source", 22.20, "SOURCE FILE(S)"),
 )
-PNL_AX_X = 19.05
+PNL_AX_X = 19.70
 PNL_AX_W = 2.20
+QUOTE_KEYS = frozenset({"posted", "cutoff", "spread", "wide", "thin"})
+
+
+def column_width_in(key: str) -> float:
+    """Inches from this column's x to the next, minus a gutter."""
+    xs = [(k, x) for k, x, _ in COLUMNS]
+    for index, (k, x_in) in enumerate(xs):
+        if k != key:
+            continue
+        if index + 1 < len(xs):
+            return max(0.40, xs[index + 1][1] - x_in - 0.10)
+        return max(0.40, FIG_W - MARGIN_IN - x_in)
+    return 1.0
+
+
+def fit_column_text(text: str, key: str, *, fontsize: float) -> str:
+    """Keep digits inside this column. Wrap; do not paint into the next."""
+    raw = str(text or "")
+    char_in = (fontsize * 0.62) / 72.0
+    n = max(4, int(column_width_in(key) / char_in))
+    if len(raw) <= n:
+        return raw
+    chunks = [raw[i : i + n] for i in range(0, len(raw), n)][:2]
+    return "\n".join(chunks)
 
 
 def chart_png_path() -> Path:
@@ -299,14 +323,15 @@ def render_honer_window_strip() -> Path | None:
                     )
                     continue
                 is_pnl = key == "pnl" and row.pnl is not None
+                fontsize = 8.6 if key in {"why", "source"} else 9.2
                 fig.text(
                     fx(x_in),
                     centre,
-                    cells[key],
-                    fontsize=8.6 if key in {"why", "source"} else 9.2,
+                    fit_column_text(cells[key], key, fontsize=fontsize),
+                    fontsize=fontsize,
                     color=(POS if (row.pnl or 0) >= 0 else NEG) if is_pnl else (FAINT if key == "source" else INK),
                     fontweight="bold" if is_pnl or key == "action" else "normal",
-                    family=MONO if key in {"window", "posted", "cutoff", "pnl", "source"} else SANS,
+                    family=MONO if key in {"window", "posted", "cutoff", "spread", "wide", "thin", "pnl", "source"} else SANS,
                     va="center",
                 )
         if any(row.pnl is not None for row in draw_rows):

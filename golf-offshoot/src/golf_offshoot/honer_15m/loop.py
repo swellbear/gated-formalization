@@ -5,7 +5,7 @@ from __future__ import annotations
 import json
 from typing import Any
 
-from golf_offshoot.data_feeds.kalshi_15m import is_paper_autobet_candidate, quote_text
+from golf_offshoot.data_feeds.kalshi_15m import is_paper_autobet_candidate, quote_abs_diff, quote_text
 from golf_offshoot.honer_15m.books import apply_settle, has_ticket, record_action
 from golf_offshoot.honer_15m.decide import decide_ticket, market_spread, posted_mark
 from golf_offshoot.honer_15m.freeze import (
@@ -177,6 +177,13 @@ def _maybe_act(
     mark_text = str(market.get("paper_mark_text") or "").strip()
     if not mark_text or mark_text.lower() == "n/a":
         mark_text = quote_text(mark)
+    ask_raw = market.get("yes_ask_dollars")
+    if ask_raw is None or ask_raw == "":
+        ask_raw = market.get("yes_ask")
+    bid_raw = market.get("yes_bid_dollars")
+    if bid_raw is None or bid_raw == "":
+        bid_raw = market.get("yes_bid")
+    spread_text = quote_abs_diff(ask_raw, bid_raw) if spread is not None else ""
     record_action(
         book,
         ticker=ticker,
@@ -192,6 +199,9 @@ def _maybe_act(
         delta=delta,
         gamma=gamma,
         spread=spread,
+        spread_text=spread_text,
+        delta_text=quote_text(delta),
+        gamma_text=quote_text(gamma),
     )
 
 
