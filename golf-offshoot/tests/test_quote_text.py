@@ -51,13 +51,13 @@ def test_quote_abs_diff_uses_printed_decimals():
 def test_quote_text_does_not_dump_ieee_float_residue():
     dirty_spread = 0.47 - 0.46
     dirty_mid = 0.93 - 0.465
-    assert str(dirty_spread) == "0.010000000000000009"
-    assert str(dirty_mid) == "0.46499999999999997"
     assert quote_text(dirty_spread) == "0.01"
     assert quote_text(dirty_mid) == "0.465"
     assert quote_text("0.010000000000000009") == "0.01"
+    assert quote_text("0.009999999999999953") == "0.01"
     assert quote_text("0.46499999999999997") == "0.465"
     assert "0.010000000000000009" not in quote_text(dirty_spread)
+    assert "0.009999999999999953" not in quote_text(dirty_spread)
     assert "0.46499999999999997" not in quote_text(dirty_mid)
     assert quote_text("0.6150") == "0.6150"
     assert quote_text("0.123456") == "0.123456"
