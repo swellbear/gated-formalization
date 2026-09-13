@@ -34,6 +34,10 @@ def _window(
     quote_age_s=None,
     quote_fetched_at=None,
     quote_snapshot=None,
+    last=None,
+    last_price=None,
+    last_price_dollars=None,
+    quote_bus=None,
     window_id: str = "w",
 ) -> dict:
     row = {
@@ -57,22 +61,14 @@ def _window(
         row["quote_fetched_at"] = quote_fetched_at
     if quote_snapshot is not None:
         row["quote_snapshot"] = quote_snapshot
-    return row
-    row = {
-        "window_id": window_id,
-        "posted_yes": posted_yes,
-        "close_at": close_at,
-        "fill_at": fill_at,
-        "decision_at": fill_at,
-        "recorded_pnl": recorded_pnl,
-        "stake": stake,
-    }
-    if yes_bid is not None:
-        row["yes_bid"] = yes_bid
-    if yes_ask is not None:
-        row["yes_ask"] = yes_ask
-    if spread is not None:
-        row["spread"] = spread
+    if last is not None:
+        row["last"] = last
+    if last_price is not None:
+        row["last_price"] = last_price
+    if last_price_dollars is not None:
+        row["last_price_dollars"] = last_price_dollars
+    if quote_bus is not None:
+        row["quote_bus"] = quote_bus
     return row
 
 
@@ -192,6 +188,92 @@ def test_unless_cheap_count_only_below_first_look_n():
     assert "t-test" in card["lesson"]
 
 
+def test_last_vs_mid_0200_skip_fill_missing_is_fill_not_thin_book():
+    """Skip iff |last-mid| >= 0.02. Missing last or mid fills. Never posted_yes as last."""
+    policy = policy_by_id("P-SKIP-LAST-VS-MID-0200")
+    assert express(policy, _window(last=0.52, yes_bid=0.50, yes_ask=0.50))["action"] == "skip"
+    assert express(policy, _window(last=0.519, yes_bid=0.50, yes_ask=0.50))["action"] == "fill"
+    missing_last = express(policy, _window(yes_bid=0.50, yes_ask=0.52, posted_yes=0.90))
+    assert missing_last["action"] == "fill"
+    assert "missing last" in missing_last["reason"]
+    missing_mid = express(policy, _window(last=0.40, posted_yes=0.90))
+    assert missing_mid["action"] == "fill"
+    assert "missing mid" in missing_mid["reason"]
+    only_bid = express(policy, _window(last=0.40, yes_bid=0.50))
+    assert only_bid["action"] == "fill"
+    dollars = express(
+        policy, _window(last_price_dollars=0.54, yes_bid=0.50, yes_ask=0.50)
+    )
+    assert dollars["action"] == "skip"
+    nested = express(
+        policy,
+        _window(yes_bid=0.50, yes_ask=0.50, quote_bus={"last": 0.52}),
+    )
+    assert nested["action"] == "skip"
+    bait = _window(posted_yes=0.90, yes_bid=0.50, yes_ask=0.52)
+    assert "last" not in bait
+    assert express(policy, bait)["action"] == "fill"
+    for row in (
+        _window(last=0.52, yes_bid=0.50, yes_ask=0.50),
+        _window(last=0.50, yes_bid=0.50, yes_ask=0.50),
+        bait,
+    ):
+        assert express(policy, row)["action"] in {"fill", "skip"}
+        assert express(policy, row)["action"] != "fill_no"
+
+
+def test_last_vs_mid_wide_spread_last_near_mid_fills_this_policy():
+    """Distinct from P-SKIP-WIDE-0400. Last≈mid fills even when the spread is wide."""
+    last_vs_mid = policy_by_id("P-SKIP-LAST-VS-MID-0200")
+    wide = policy_by_id("P-SKIP-WIDE-0400")
+    window = _window(posted_yes=0.525, yes_bid=0.50, yes_ask=0.55, last=0.525)
+    assert express(wide, window)["action"] == "skip"
+    assert express(last_vs_mid, window)["action"] == "fill"
+
+
+def test_last_vs_mid_last_seconds_window_is_independent():
+    """Distinct from P-SKIP-LAST-SECONDS-60. Time-to-close does not skip last-vs-mid."""
+    last_vs_mid = policy_by_id("P-SKIP-LAST-VS-MID-0200")
+    last_seconds = policy_by_id("P-SKIP-LAST-SECONDS-60")
+    close = "2026-09-12T16:15:00-04:00"
+    window = _window(
+        close_at=close,
+        fill_at="2026-09-12T16:14:01-04:00",
+        last=0.50,
+        yes_bid=0.50,
+        yes_ask=0.50,
+    )
+    assert express(last_seconds, window)["action"] == "skip"
+    assert express(last_vs_mid, window)["action"] == "fill"
+
+
+def test_last_vs_mid_skip_never_fires_is_untestable_not_a_retune():
+    policy = policy_by_id("P-SKIP-LAST-VS-MID-0200")
+    windows = [_window(posted_yes=0.60, recorded_pnl=0.0, window_id=f"w{i}") for i in range(70)]
+    card = replay(policy, windows)
+    assert card["skip_count"] == 0
+    assert card["card"] == "untestable"
+    assert "retune 0.02" in card["lesson"]
+    assert "retune 180" not in card["lesson"]
+
+
+def test_q1_q2_still_on_the_tree_q3_is_file_order_after_q2():
+    ids = policy_ids()
+    assert ids == FROZEN_IDS
+    assert "P-SKIP-STALE-QUOTE-180" in ids
+    assert "P-SKIP-UNLESS-CHEAP-040" in ids
+    assert ids[-1] == "P-SKIP-LAST-VS-MID-0200"
+    assert ids[-2] == "P-SKIP-UNLESS-CHEAP-040"
+    q1 = policy_by_id("P-SKIP-STALE-QUOTE-180")
+    assert q1["params"]["max_age_s"] == 180
+    q2 = policy_by_id("P-SKIP-UNLESS-CHEAP-040")
+    assert q2["params"]["theta"] == 0.4
+    q3 = policy_by_id("P-SKIP-LAST-VS-MID-0200")
+    assert q3["params"]["delta"] == 0.02
+    assert q3["side"] == "yes"
+    assert q3["declared_at"] == "2026-09-12T20:40:00-04:00"
+
+
 def test_rich_075_boundary():
     policy = policy_by_id("P-SKIP-RICH-075")
     assert express(policy, _window(posted_yes=0.75))["action"] == "skip"
@@ -293,6 +375,8 @@ def test_policies_are_independent_not_skip_together():
     assert express(policy_by_id("P-SKIP-RICH-075"), mid)["action"] == "fill"
     assert express(policy_by_id("P-SKIP-UNLESS-CHEAP-040"), mid)["action"] == "skip"
     assert express(policy_by_id("P-SKIP-WIDE-0400"), mid)["action"] == "fill"
+    near = _window(posted_yes=0.50, yes_bid=0.49, yes_ask=0.51, last=0.50)
+    assert express(policy_by_id("P-SKIP-LAST-VS-MID-0200"), near)["action"] == "fill"
     cards = replay_family([mid])
     assert [c["id"] for c in cards] == list(FROZEN_IDS)
     assert len(cards) == len(FROZEN_IDS)
@@ -374,6 +458,58 @@ def test_run_search_on_fixture_books_does_not_write_rules(tmp_path):
     ).is_file()
 
 
+def test_gather_carries_last_from_existing_fields_never_posted_yes(tmp_path):
+    from golf_offshoot.policy_family.replay import gather_lineage_a_windows
+
+    paper = tmp_path / "paper"
+    paper.mkdir()
+    book = {
+        "tournament_id": "KXBTC15M-26SEP121600__2026-09-12T19:45:00Z__2026-09-12T20:00:00Z",
+        "settled_at": "2026-09-12T16:01:00-04:00",
+        "settlement_pnl": 0.5,
+        "settlement_winner": "kalshi:yes",
+        "book": {
+            "positions": [
+                {
+                    "player_id": "KXBTC15M-26SEP121600-00",
+                    "entry_market_p": 0.60,
+                }
+            ]
+        },
+        "movements": [
+            {
+                "kind": "new_bet",
+                "at": "2026-09-12T15:46:00-04:00",
+                "player_id": "KXBTC15M-26SEP121600-00",
+                "stake_after": 1.0,
+                "model_win": 0.60,
+                "reason_technical": "paper_mark=0.60 yes_bid=0.59 yes_ask=0.61 last=0.40",
+            }
+        ],
+    }
+    (
+        paper
+        / "KXBTC15M-26SEP121600__2026-09-12T19-45-00Z__2026-09-12T20-00-00Z.json"
+    ).write_text(json.dumps(book), encoding="utf-8")
+    windows = gather_lineage_a_windows(paper)
+    assert len(windows) == 1
+    assert windows[0]["posted_yes"] == 0.60
+    assert windows[0]["last"] == 0.40
+    assert windows[0]["yes_bid"] == 0.59
+    assert windows[0]["yes_ask"] == 0.61
+    policy = policy_by_id("P-SKIP-LAST-VS-MID-0200")
+    assert express(policy, windows[0])["action"] == "skip"
+    book["movements"][0]["reason_technical"] = "paper_mark=0.60 yes_bid=0.59 yes_ask=0.61"
+    (
+        paper
+        / "KXBTC15M-26SEP121600__2026-09-12T19-45-00Z__2026-09-12T20-00-00Z.json"
+    ).write_text(json.dumps(book), encoding="utf-8")
+    missing = gather_lineage_a_windows(paper)
+    assert missing[0]["last"] is None
+    assert missing[0]["posted_yes"] == 0.60
+    assert express(policy, missing[0])["action"] == "fill"
+
+
 def _seed_family_docs(tmp_path, *, lessons_rows=None, rule_ids=None):
     docs = tmp_path / "golf-offshoot" / "docs"
     docs.mkdir(parents=True, exist_ok=True)
@@ -417,8 +553,9 @@ def test_picker_file_order_unused_named_not_3n(tmp_path):
         "P-SKIP-INELIGIBLE-CLOSED",
         "P-SKIP-STALE-QUOTE-180",
         "P-SKIP-UNLESS-CHEAP-040",
+        "P-SKIP-LAST-VS-MID-0200",
     ]
-    assert len(unused) == 7
+    assert len(unused) == 8
     assert next_named_from_files(root=tmp_path) == "P-SKIP-COINFLIP"
     assert picker_owed_from_files(root=tmp_path) is True
     stamp = stamp_picker(root=tmp_path)
@@ -451,6 +588,7 @@ def test_picker_retires_density_fail_and_does_not_confuse_factory_coinflip(tmp_p
             {"id": "P-SKIP-INELIGIBLE-CLOSED", "card": "density_fail"},
             {"id": "P-SKIP-STALE-QUOTE-180", "card": "untestable"},
             {"id": "P-SKIP-UNLESS-CHEAP-040", "card": "park_vs_fill_all"},
+            {"id": "P-SKIP-LAST-VS-MID-0200", "card": "untestable"},
         ],
         rule_ids=["R-SKIP-COINFLIP", "R-BASELINE-FILL-ALL"],
     )
@@ -468,6 +606,7 @@ def test_picker_retires_density_fail_and_does_not_confuse_factory_coinflip(tmp_p
             {"id": "P-SKIP-INELIGIBLE-CLOSED", "card": "density_fail"},
             {"id": "P-SKIP-STALE-QUOTE-180", "card": "untestable"},
             {"id": "P-SKIP-UNLESS-CHEAP-040", "card": "park_vs_fill_all"},
+            {"id": "P-SKIP-LAST-VS-MID-0200", "card": "untestable"},
         ],
         rule_ids=["P-SKIP-COINFLIP"],
     )
@@ -490,6 +629,7 @@ def test_live_files_leave_coinflip_unused_until_exact_p_id():
     retired = retired_named_from_files()
     assert "P-SKIP-COINFLIP" not in retired
     assert "P-SKIP-UNLESS-CHEAP-040" not in retired
+    assert "P-SKIP-LAST-VS-MID-0200" in retired
     assert "P-SKIP-RICH-075" in retired
     assert "P-SKIP-WIDE-0400" in retired
     assert "P-SKIP-STALE-QUOTE-180" in retired

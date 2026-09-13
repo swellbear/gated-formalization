@@ -122,6 +122,21 @@
         "missing_posted_yes": "fill"
       },
       "note": "Default-skip; fill cheap YES only (posted YES <= 0.40). Never fill NO. Missing posted_yes → fill YES (not thin-book). Boundary: 0.40 fills, 0.41 skips. Not P-SKIP-RICH-075 (that still fills coin and cheap). Not coinflip. Do not retune 0.40. Do not walk 0.35/0.45. Expected skip is 1 minus mass(YES <= 0.40); count on search."
+    },
+    {
+      "id": "P-SKIP-LAST-VS-MID-0200",
+      "kind": "selection",
+      "side": "yes",
+      "declared_at": "2026-09-12T20:40:00-04:00",
+      "skip_when": "last and mid both exist AND |last - mid| >= 0.02",
+      "else": "fill YES at posted mark",
+      "expected_skip_rate": null,
+      "params": {
+        "delta": 0.02,
+        "missing_last": "fill",
+        "missing_mid": "fill"
+      },
+      "note": "Skip iff last and mid both exist and |last-mid| >= 0.02. Missing last or missing mid → fill YES (not thin-book; not a skip). Boundary: 0.02 skips, below 0.02 fills. Never fill NO. Last is Kalshi last / last_price_dollars, not posted_yes. Mid is (yes_bid + yes_ask)/2 when both sides exist. Distinct from P-SKIP-WIDE-0400 (bid-ask width) and P-SKIP-LAST-SECONDS-60 (time-to-close). Do not retune 0.02. Do not walk 1¢/3¢/5¢. Do not retune Q2 0.40 or Q1 180."
     }
   ]
 }

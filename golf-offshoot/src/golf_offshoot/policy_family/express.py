@@ -21,6 +21,10 @@ STALE_QUOTE_ID = "P-SKIP-STALE-QUOTE-180"
 #: Fill cheap YES only. Frozen 0.40, not a 0.35/0.45 walk.
 UNLESS_CHEAP_THETA = 0.40
 UNLESS_CHEAP_ID = "P-SKIP-UNLESS-CHEAP-040"
+#: Skip iff |last − mid| ≥ 0.02. Frozen 2¢, not a 1¢/3¢/5¢ walk.
+LAST_VS_MID_DELTA = 0.02
+LAST_VS_MID_ID = "P-SKIP-LAST-VS-MID-0200"
+_LAST_KEYS = ("last", "last_price", "last_price_dollars")
 
 
 def _parse_dt(value: Any) -> datetime | None:
@@ -49,6 +53,30 @@ def _float_or_none(value: Any) -> float | None:
 
 def posted_yes(window: dict[str, Any]) -> float | None:
     return _float_or_none(window.get("posted_yes"))
+
+
+def last_price(window: dict[str, Any]) -> float | None:
+    """Kalshi last / last_price_dollars. Never posted_yes / paper_mark."""
+    for key in _LAST_KEYS:
+        value = _float_or_none(window.get(key))
+        if value is not None:
+            return value
+    snapshot = window.get("quote_snapshot") or window.get("quote_bus")
+    if isinstance(snapshot, dict):
+        for key in _LAST_KEYS:
+            value = _float_or_none(snapshot.get(key))
+            if value is not None:
+                return value
+    return None
+
+
+def quoted_mid(window: dict[str, Any]) -> float | None:
+    """(yes_bid + yes_ask) / 2 when both sides exist. Not posted_yes."""
+    bid = _float_or_none(window.get("yes_bid"))
+    ask = _float_or_none(window.get("yes_ask"))
+    if bid is None or ask is None:
+        return None
+    return (bid + ask) / 2.0
 
 
 def quoted_spread(window: dict[str, Any]) -> float | None:
@@ -165,4 +193,15 @@ def express(policy: dict[str, Any], window: dict[str, Any]) -> dict[str, str]:
         if mark <= UNLESS_CHEAP_THETA:
             return _verdict(ident, ACTION_FILL, "posted_yes <= 0.40; cheap YES")
         return _verdict(ident, ACTION_SKIP, "posted_yes > 0.40; skip unless cheap")
+    if ident == LAST_VS_MID_ID:
+        last = last_price(window)
+        mid = quoted_mid(window)
+        if last is None:
+            return _verdict(ident, ACTION_FILL, "missing last; fill YES")
+        if mid is None:
+            return _verdict(ident, ACTION_FILL, "missing mid; fill YES")
+        gap = abs(last - mid)
+        if gap >= LAST_VS_MID_DELTA:
+            return _verdict(ident, ACTION_SKIP, f"|last-mid| {gap:g} >= 0.02")
+        return _verdict(ident, ACTION_FILL, f"|last-mid| {gap:g} < 0.02")
     raise PolicyFamilyError(f"no expression for {ident}")

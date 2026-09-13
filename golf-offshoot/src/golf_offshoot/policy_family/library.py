@@ -30,9 +30,11 @@ FROZEN_IDS = (
     "P-SKIP-INELIGIBLE-CLOSED",
     "P-SKIP-STALE-QUOTE-180",
     "P-SKIP-UNLESS-CHEAP-040",
+    "P-SKIP-LAST-VS-MID-0200",
 )
 STALE_QUOTE_ID = "P-SKIP-STALE-QUOTE-180"
 UNLESS_CHEAP_ID = "P-SKIP-UNLESS-CHEAP-040"
+LAST_VS_MID_ID = "P-SKIP-LAST-VS-MID-0200"
 #: Honer burned ids, copied so this package never imports honer_15m.
 BURNED_HONER_IDS = frozenset(
     {
@@ -123,6 +125,11 @@ def _validate_row(row: dict[str, Any], *, index: int, root: Path | None = None) 
         raise PolicyFamilyError(f"{ident} must fill missing quotes, not skip them")
     if ident == "P-SKIP-WIDE-0400" and str(params.get("missing_quotes") or "fill") != "fill":
         raise PolicyFamilyError("P-SKIP-WIDE-0400 missing bid/ask must fill YES")
+    if ident == LAST_VS_MID_ID:
+        if str(params.get("missing_last") or "fill") != "fill":
+            raise PolicyFamilyError("P-SKIP-LAST-VS-MID-0200 missing last must fill YES")
+        if str(params.get("missing_mid") or "fill") != "fill":
+            raise PolicyFamilyError("P-SKIP-LAST-VS-MID-0200 missing mid must fill YES")
 
 
 def load_library(*, root: Path | None = None) -> dict[str, Any]:

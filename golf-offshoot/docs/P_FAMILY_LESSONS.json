@@ -118,6 +118,21 @@
       "card": "beats_fill_all",
       "outcome": "library",
       "lesson": "Fee-adj selected-fill pnl beats P-FILL-ALL-YES on this book. Lesson only. Lab still gates later naming / exam / seating. Do not ping Lab."
+    },
+    {
+      "id": "P-SKIP-LAST-VS-MID-0200",
+      "declared_at": "2026-09-12T20:40:00-04:00",
+      "skip_count": 0,
+      "n": 421,
+      "density_passes": false,
+      "density_fail": true,
+      "undecidable": true,
+      "fee_adj_pnl": -45.28,
+      "fill_all_fee_adj_pnl": -45.28,
+      "beats_fill_all": false,
+      "card": "untestable",
+      "outcome": "untestable",
+      "lesson": "Search done: skip never fired (skip_count 0/421). Missing last or missing mid fills; skip 0 is untestable, not a reason to retune 0.02. Not a t-test vs \u03b4."
     }
   ]
 }
