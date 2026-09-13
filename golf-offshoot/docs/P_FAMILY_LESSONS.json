@@ -148,6 +148,21 @@
       "card": "beats_fill_all",
       "outcome": "library",
       "lesson": "Fee-adj selected-fill pnl beats P-FILL-ALL-YES on this book. Lesson only. Lab still gates later naming / exam / seating. Do not ping Lab."
+    },
+    {
+      "id": "P-SKIP-CLOSE-MINUTES-0-45",
+      "declared_at": "2026-09-13T00:20:00-04:00",
+      "skip_count": 199,
+      "n": 436,
+      "density_passes": true,
+      "density_fail": false,
+      "undecidable": false,
+      "fee_adj_pnl": -17.6,
+      "fill_all_fee_adj_pnl": -45.58,
+      "beats_fill_all": true,
+      "card": "beats_fill_all",
+      "outcome": "library",
+      "lesson": "Fee-adj selected-fill pnl beats P-FILL-ALL-YES on this book. Lesson only. Lab still gates later naming / exam / seating. Do not ping Lab."
     }
   ]
 }
