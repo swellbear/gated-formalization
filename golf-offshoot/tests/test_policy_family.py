@@ -623,17 +623,13 @@ def test_live_files_leave_coinflip_unused_until_exact_p_id():
     )
 
     unused = unused_named_from_files()
-    assert unused == [
-        "P-SKIP-COINFLIP",
-        "P-SKIP-UNLESS-CHEAP-040",
-        "P-SKIP-LAST-VS-MID-0200",
-    ]
+    assert unused == ["P-SKIP-COINFLIP", "P-SKIP-UNLESS-CHEAP-040"]
     assert next_named_from_files() == "P-SKIP-COINFLIP"
     assert picker_owed_from_files() is True
     retired = retired_named_from_files()
     assert "P-SKIP-COINFLIP" not in retired
     assert "P-SKIP-UNLESS-CHEAP-040" not in retired
-    assert "P-SKIP-LAST-VS-MID-0200" not in retired
+    assert "P-SKIP-LAST-VS-MID-0200" in retired
     assert "P-SKIP-RICH-075" in retired
     assert "P-SKIP-WIDE-0400" in retired
     assert "P-SKIP-STALE-QUOTE-180" in retired
