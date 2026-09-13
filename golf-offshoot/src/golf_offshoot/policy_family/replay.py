@@ -20,6 +20,7 @@ from golf_offshoot.policy_family.library import (
     ALLOWED_SERIES,
     COMPARISON_ID,
     FROZEN_IDS,
+    LAST_VS_MID_ID,
     PolicyFamilyError,
     STALE_QUOTE_ID,
     lessons_path,
@@ -33,6 +34,11 @@ _BIDASK_RE = re.compile(
     r"yes_bid=(?P<bid>\S+)\s+yes_ask=(?P<ask>\S+)",
     re.IGNORECASE,
 )
+_LAST_RE = re.compile(
+    r"(?:^|\s)(?:last_price_dollars|last_price|last)=(?P<last>\S+)",
+    re.IGNORECASE,
+)
+_LAST_KEYS = ("last", "last_price", "last_price_dollars")
 _SKIP_FILES = frozenset({"ledger.json", "rule_decisions.json"})
 
 
@@ -66,6 +72,61 @@ def _parse_bid_ask(text: str) -> tuple[float | None, float | None]:
             return None
 
     return _one(match.group("bid")), _one(match.group("ask"))
+
+
+def _last_from_mapping(blob: Any) -> float | None:
+    """Last from fields already present. Never posted_yes / paper_mark."""
+    if not isinstance(blob, dict):
+        return None
+    for key in _LAST_KEYS:
+        raw = blob.get(key)
+        if raw is None or raw == "":
+            continue
+        token = str(raw).strip()
+        if token.lower() in {"none", "null", "n/a"}:
+            continue
+        try:
+            return float(token)
+        except (TypeError, ValueError):
+            continue
+    return None
+
+
+def _last_from_reason(text: str) -> float | None:
+    match = _LAST_RE.search(str(text or ""))
+    if not match:
+        return None
+    token = str(match.group("last") or "").strip()
+    if token.lower() in {"none", "null", "n/a", ""}:
+        return None
+    try:
+        return float(token)
+    except (TypeError, ValueError):
+        return None
+
+
+def _carry_last(
+    *,
+    decided: dict[str, Any],
+    payload: dict[str, Any],
+    move: dict[str, Any],
+    bus: Any,
+) -> float | None:
+    """Last already on this book's decision / quote_bus / reason. Do not invent."""
+    blobs: list[Any] = [decided, payload, move]
+    if isinstance(bus, dict):
+        blobs.append(bus)
+    for blob in blobs:
+        found = _last_from_mapping(blob)
+        if found is not None:
+            return found
+        if not isinstance(blob, dict):
+            continue
+        for nested_key in ("quote_bus", "quote_snapshot"):
+            found = _last_from_mapping(blob.get(nested_key))
+            if found is not None:
+                return found
+    return _last_from_reason(str(move.get("reason_technical") or ""))
 
 
 def _kalshi_from_winner(raw: Any) -> str:
@@ -199,6 +260,7 @@ def gather_lineage_a_windows(
             quote_fetched = bus.get("fetched_at") or bus.get("quote_fetched_at")
         if quote_age is None and isinstance(bus, dict):
             quote_age = bus.get("quote_age_s") or bus.get("age_s")
+        last = _carry_last(decided=decided, payload=payload, move=move, bus=bus)
         windows.append(
             {
                 "window_id": window_id,
@@ -209,6 +271,7 @@ def gather_lineage_a_windows(
                 "posted_yes": posted_f,
                 "yes_bid": bid,
                 "yes_ask": ask,
+                "last": last,
                 "recorded_pnl": float(raw_pnl),
                 "stake": float(stake or 1.0),
                 "kalshi_result": result,
@@ -251,6 +314,12 @@ def _lesson_line(card: dict[str, Any]) -> str:
     if kind == "untestable":
         n = int(card.get("n") or 0)
         skip_count = int(card.get("skip_count") or 0)
+        if ident == LAST_VS_MID_ID:
+            return (
+                f"Search done: skip never fired (skip_count {skip_count}/{n}). "
+                "Missing last or missing mid fills; skip 0 is untestable, not a "
+                "reason to retune 0.02. Not a t-test vs δ."
+            )
         return (
             f"Search done: skip never fired (skip_count {skip_count}/{n}). "
             f"Healthy quote bus / missing age is untestable, not a reason to "
@@ -332,7 +401,7 @@ def replay(
     elif n < DEFAULT_FIRST_LOOK_N:
         card_kind = "count_only"
         beats = False
-    elif ident == STALE_QUOTE_ID and skip_count == 0:
+    elif ident in {STALE_QUOTE_ID, LAST_VS_MID_ID} and skip_count == 0:
         card_kind = "untestable"
         beats = False
     elif density_fail or undecidable:
