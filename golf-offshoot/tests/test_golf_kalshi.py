@@ -2085,6 +2085,8 @@ def test_golf_farm_points_at_home_tape(gk_root):
     honer = honer_panel_html()
     assert "no golf tape yet" not in farm
     assert "no golf tape yet" not in honer
+    assert "Paper is the exam" in farm
+    assert "Paper is the exam" in honer
     assert "Paper tape is on Home (1 open) and Scoreboard (1 closed)" in farm
     assert "Paper tape is on Home (1 open) and Scoreboard (1 closed)" in honer
     assert "Golf Honer is not consulting" in honer
@@ -2201,6 +2203,8 @@ def test_organs_read_live_ledger_and_last_tick(gk_root):
     farm, honer = refresh_organs()
     assert "no golf tape yet" not in farm["notes"].lower()
     assert "no golf tape yet" not in honer["notes"].lower()
+    assert farm["paper_is_exam"] is True
+    assert honer["paper_is_exam"] is True
     assert farm["tape"]["n_tickets"] == 2
     assert farm["tape"]["n_open"] == 1
     assert farm["tape"]["n_closed"] == 1
@@ -2228,10 +2232,41 @@ def test_lab_namer_refused_empty_notebooks():
     assert "notebooks" in text and "[]" in text
     assert "H-SKIP-THIN-BOOK" in text
     assert "learning_lane_15m" in text
+    assert "Paper is the exam" in text
+    assert "Refuse of the medium does not stand" in text
     md = Path(__file__).resolve().parents[1] / "docs" / "GOLF_KALSHI.md"
     golf = md.read_text(encoding="utf-8")
     assert "refused" in golf.lower()
     assert "do not auto-name" in golf.lower()
+    assert "paper is the exam" in golf.lower()
+    assert "do not copy" in golf.lower() and "h-skip" in golf.lower()
+
+
+def test_paper_is_exam_factory_overlay(gk_root):
+    from golf_offshoot.golf_kalshi.organs import (
+        MEDIUM_REFUSE_PHRASES,
+        PAPER_IS_EXAM,
+        refresh_organs,
+    )
+
+    docs = Path(__file__).resolve().parents[1] / "docs"
+    golf = (docs / "GOLF_KALSHI.md").read_text(encoding="utf-8")
+    farm_md = (docs / "LEARNING_LANE_15M_FARM.md").read_text(encoding="utf-8")
+    honer_md = (docs / "HONER_15M.md").read_text(encoding="utf-8")
+    catalog = (docs / "LEARNING_LANE_15M_MECHANISM_CATALOG.json").read_text(encoding="utf-8")
+    for blob in (golf, farm_md, honer_md, catalog):
+        assert "paper is the exam" in blob.lower()
+        assert "hires the next namer" not in blob.lower()
+        assert "hires a golf" not in blob.lower()
+    farm_json, honer_json = refresh_organs()
+    assert farm_json["paper_is_exam"] is True
+    assert honer_json["paper_is_exam"] is True
+    assert farm_json["execution"] is False
+    assert PAPER_IS_EXAM in farm_json["notes"]
+    assert PAPER_IS_EXAM in honer_json["notes"]
+    blob = json.dumps({"farm": farm_json, "honer": honer_json}).lower()
+    for phrase in MEDIUM_REFUSE_PHRASES:
+        assert phrase not in blob
 
 
 def test_run_tick_refreshes_organs(gk_root):

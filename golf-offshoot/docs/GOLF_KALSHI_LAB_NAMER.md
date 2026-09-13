@@ -65,6 +65,14 @@ Refused names (do not date these from this book):
 - WC1 dated FAIL / park unproven. WC2 PARKED/REJECTED. Idle ON for WC3+.
 - 15m chair, farm menu, and Honer family 3 are untouched by this note.
 
-A later golf family is legal only when a **golf-native** product-structure skip can be named without this tree's marks, with a live falsifier, still `execution=false`. Palshi does not auto-date. Farm/Honer do not auto-name. Lab may refuse again.
+A later family on this market is legal only when a **this-market** product-structure skip can be named without this tree's marks, with a live falsifier, still `execution=false`. Palshi does not auto-date. Palshi does not hire a golf-only namer. Farm/Honer do not auto-name. Lab may refuse a named idea again.
+
+---
+
+## Factory overlay restamp (2026-09-13)
+
+This note stays Lab’s dated look. **Named-idea** refusals in the table above **stand** (copy `H-SKIP-*`, tape θ from this book’s 1¢ losses, tour buckets as a family).
+
+**Refuse of the medium does not stand.** Point 1 (“No lived skip to name” / every ticket `lived=false`) is not a reason to wait. Paper is the exam on every opened Kalshi market. Golf paper tickets are one instance. Overlay + Palshi occupancy re-fire via `GOLF_KALSHI.md` and golf organs (`paper_is_exam`). Palshi does not name from this file.
 
 Trading **NOT ARMED**.

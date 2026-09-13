@@ -23,6 +23,7 @@ Hub viz for this lane is not yet available (empty / observation-only). Do not in
 - Trading NOT ARMED. No Kalshi API keys. No cash scopes. No order placement.
 - AI never deposit / withdraw / transfer. There is no 15-min cash UI.
 - Paper money only. `PAPER OBSERVATION ONLY`.
+- **Paper is the exam.** 15-minute paper windows are this market’s working set. Invent, score, date, or refuse from paper. Lab may refuse a **named idea**. Refuse of the **medium** (not real money, wait for lived, wait for a better tape) is a hole. Palshi does not hire a one-off namer. Do not copy `H-SKIP-*` onto another market.
 - Do **not** retune golf θ from 15-min.
 - Do **not** widen past `KXBTC15M`. Expansion is a new lane, not a wider allow-list. Procedure: [`LEARNING_LANE_EXPANSION.md`](LEARNING_LANE_EXPANSION.md).
 - Destination: this tape is the **gym**. `honer_15m` is the discovery organ. A surviving exam may earn a dated AND-skip consult inside `consult_registry`. Consult stays off until exam + score + later Critic exist and CoS assigns Systems to enable **that** snapshot. Protocol: [`HONER_15M_PROMOTION.md`](HONER_15M_PROMOTION.md). Books do not merge.

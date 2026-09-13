@@ -1,4 +1,10 @@
-"""Golf Farm and Honer shells. Read the live golf tape. Empty notebooks until dated. Not 15m."""
+"""Golf Farm and Honer shells — one market's factory overlay.
+
+Paper is the exam on every opened Kalshi market. This ledger is golf's
+paper book, not a wait-for-lived gate. Empty notebooks until dated.
+Farm/Honer do not auto-name. Not 15m. Do not copy H-SKIP-* from another
+market.
+"""
 
 from __future__ import annotations
 
@@ -18,7 +24,19 @@ from golf_offshoot.golf_kalshi.watch import load_watch_status
 LANE = "golf_kalshi"
 FARM_IDLE = "No golf Farm notebooks."
 HONER_IDLE = "Golf Honer is not consulting."
-IDLE_NOTE = "No golf Farm notebooks. Paper tape lives on Home and Scoreboard."
+PAPER_IS_EXAM = (
+    "Paper is the exam. lived=false is not a wait. "
+    "Refuse a named idea; do not refuse the medium."
+)
+IDLE_NOTE = "No golf Farm notebooks. Paper is the exam. Paper tape lives on Home and Scoreboard."
+MEDIUM_REFUSE_PHRASES = (
+    "wait for lived",
+    "not real money",
+    "wait for a better tape",
+    "paper isn't good enough",
+    "paper isnt good enough",
+    "no golf tape yet",
+)
 
 
 def _read(path) -> dict[str, Any]:
@@ -38,7 +56,7 @@ def _write(path, payload: dict[str, Any]) -> None:
 
 
 def tape_snapshot() -> dict[str, Any]:
-    """Live golf ledger + last tick. Not 15m. Not an invented notebook."""
+    """Live golf ledger + last tick. Not 15m. Not an invented notebook. Paper is the exam."""
     led = load_ledger()
     tick = _read(last_tick_path())
     watch = load_watch_status()
@@ -70,6 +88,7 @@ def tape_snapshot() -> dict[str, Any]:
         "in_play": bool(tick.get("in_play")),
         "consulted_decide": bool(tick.get("consulted_decide")),
         "has_tape": bool(n_tickets or last_at or watch.get("running")),
+        "paper_is_exam": True,
     }
 
 
@@ -88,11 +107,11 @@ def _tape_line(tape: dict[str, Any] | None = None) -> str:
 
 def _farm_notes(tape: dict[str, Any], notebooks: list[dict[str, Any]]) -> str:
     extra = f" {len(notebooks)} dated notebooks sit idle." if notebooks else ""
-    return f"{FARM_IDLE} {_tape_line(tape)}{extra}"
+    return f"{FARM_IDLE} {PAPER_IS_EXAM} {_tape_line(tape)}{extra}"
 
 
 def _honer_notes(tape: dict[str, Any]) -> str:
-    return f"{HONER_IDLE} {_tape_line(tape)}"
+    return f"{HONER_IDLE} {PAPER_IS_EXAM} {_tape_line(tape)}"
 
 
 def live_farm(*, existing: dict[str, Any] | None = None) -> dict[str, Any]:
@@ -104,6 +123,7 @@ def live_farm(*, existing: dict[str, Any] | None = None) -> dict[str, Any]:
         "notebooks": notebooks,
         "idle": True,
         "execution": False,
+        "paper_is_exam": True,
         "notes": _farm_notes(tape, notebooks),
         "tape": tape,
     }
@@ -116,6 +136,7 @@ def live_honer() -> dict[str, Any]:
         "idle": True,
         "consults_15m": False,
         "consults_factory": False,
+        "paper_is_exam": True,
         "notes": _honer_notes(tape),
         "tape": tape,
     }
@@ -130,7 +151,11 @@ def empty_honer() -> dict[str, Any]:
 
 
 def refresh_organs() -> tuple[dict[str, Any], dict[str, Any]]:
-    """Always rewrite farm/honer JSON from live ledger + last tick. Never 'no golf tape yet'."""
+    """Rewrite farm/honer JSON from live ledger + last tick.
+
+    Paper is the exam. Never 'no golf tape yet'. Never wait-for-lived /
+    not-real-money as a park. Farm/Honer do not auto-name.
+    """
     farm = live_farm(existing=_read(farm_path()))
     honer = live_honer()
     _write(farm_path(), farm)
@@ -149,7 +174,8 @@ def farm_panel_html() -> str:
     return (
         '<section class="panel gk-organ book-golf" id="golf-farm" data-book="golf">'
         "<h2>Golf Farm</h2>"
-        f'<p class="loud">Idle. {html.escape(FARM_IDLE)} {html.escape(_tape_line(farm.get("tape")))}{html.escape(extra)}</p>'
+        f'<p class="loud">Idle. {html.escape(FARM_IDLE)} {html.escape(PAPER_IS_EXAM)} '
+        f"{html.escape(_tape_line(farm.get('tape')))}{html.escape(extra)}</p>"
         "</section>"
     )
 
@@ -159,6 +185,7 @@ def honer_panel_html() -> str:
     return (
         '<section class="panel gk-organ book-honer" id="golf-honer" data-book="honer">'
         "<h2>Golf Honer</h2>"
-        f'<p class="loud">Idle. {html.escape(HONER_IDLE)} {html.escape(_tape_line(honer.get("tape")))}</p>'
+        f'<p class="loud">Idle. {html.escape(HONER_IDLE)} {html.escape(PAPER_IS_EXAM)} '
+        f"{html.escape(_tape_line(honer.get('tape')))}</p>"
         "</section>"
     )

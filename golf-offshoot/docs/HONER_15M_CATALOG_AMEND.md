@@ -6,6 +6,8 @@ This is **not** the factory 15m-3b skip-together idea (civil `:00` and `:30` tog
 
 A new family is not a tape sort, a pnl rank, or a Founder-free append.
 
+**Paper is the exam.** `HONER-FAMILY-AMEND` is a file doorbell on this market’s paper search/exam, not a wait for real money. Lab may refuse a **named idea**; refuse of the **medium** is a hole. Do not copy these `H-SKIP-*` ids onto another market. Palshi does not hire a one-off namer.
+
 ## Order
 
 1. **Files** — `library.json` `catalog_exhausted` and/or exam `completed_dead` make `HONER-FAMILY-AMEND` legal. The catalog dates the next family in file order (`H-SKIP-THIN-BOOK` is that third item). `latest/family_amend.json` stamps `owed` until the catalog has more than the original two items (`owed` is false and `third_family` is true once dated).
