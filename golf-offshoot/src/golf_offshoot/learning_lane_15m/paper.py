@@ -11,7 +11,11 @@ import json
 from pathlib import Path
 from typing import Any
 
-from golf_offshoot.data_feeds.kalshi_15m import is_paper_autobet_candidate, quote_text
+from golf_offshoot.data_feeds.kalshi_15m import (
+    is_paper_autobet_candidate,
+    quote_text,
+    trial_book_page_n,
+)
 from golf_offshoot.learning_lane_15m.paths import (
     LANE_15M,
     PRIMARY_SERIES,
@@ -519,11 +523,23 @@ def format_15m_observation_board() -> str:
     """Desktop journal: paper fills and official joins already on disk. No invented result."""
     from golf_offshoot.learning_lane_15m.paths import latest_dir_15m, settlements_dir_15m
 
-    lines = [format_15m_ledger(), "", "Paper books"]
     books = list(iter_books())
-    if not books:
+    n = trial_book_page_n()
+    total = len(books)
+    if total > n:
+        books.sort(
+            key=lambda rec: (str(rec.locked_at or ""), rec.tournament_id),
+            reverse=True,
+        )
+        shown = books[:n]
+        heading = f"Paper books (newest {n} of {total}; pile stays on disk)"
+    else:
+        shown = books
+        heading = "Paper books"
+    lines = [format_15m_ledger(), "", heading]
+    if not shown:
         lines.append("  none yet")
-    for rec in books:
+    for rec in shown:
         status = "settled" if rec.settled_at is not None else "open / SETTLE_PENDING"
         tickers = [pos.player_id for pos in rec.book.positions]
         label = tickers[0] if tickers else event_ticker_from_book(rec)

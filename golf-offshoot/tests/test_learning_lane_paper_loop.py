@@ -316,3 +316,38 @@ def test_settlement_top_level_event_ticker_not_window_id(tmp_path, monkeypatch):
         assert ":" not in files[0].name
     finally:
         set_15m_root_override(None)
+
+
+def test_observation_board_caps_paper_books_to_honer_n(tmp_path, monkeypatch):
+    from datetime import datetime, timedelta, timezone
+
+    from golf_offshoot.data_feeds.kalshi_15m import trial_book_page_n
+    from golf_offshoot.learning_lane_15m.paper import format_15m_observation_board, save_book
+    from golf_offshoot.models.strategy import PortfolioState
+    from golf_offshoot.strategy.paper_book import PaperBookFile
+
+    monkeypatch.setattr("golf_offshoot.strategy.paper_book.package_data_dir", lambda: tmp_path / "golf")
+    set_15m_root_override(tmp_path / "kalshi_15m")
+    try:
+        n = trial_book_page_n()
+        assert n == 24
+        base = datetime(2026, 9, 1, tzinfo=timezone.utc)
+        for i in range(30):
+            ticker = f"KXBTC15M-26SEP13{i:04d}"
+            save_book(
+                PaperBookFile(
+                    tournament_id=ticker,
+                    tournament_name="t",
+                    bankroll=100.0,
+                    locked_at=base + timedelta(minutes=i),
+                    book=PortfolioState(bankroll=100.0),
+                )
+            )
+        text = format_15m_observation_board()
+        assert f"Paper books (newest {n} of 30; pile stays on disk)" in text
+        assert "KXBTC15M-26SEP130029" in text
+        assert "KXBTC15M-26SEP130000" not in text
+        listed = [ln for ln in text.splitlines() if ln.startswith("  KXBTC15M-26SEP13")]
+        assert len(listed) == n
+    finally:
+        set_15m_root_override(None)

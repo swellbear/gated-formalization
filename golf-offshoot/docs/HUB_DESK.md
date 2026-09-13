@@ -32,7 +32,7 @@ Golf **Live/entry $** is dollar EV after fee (`edge_after_fee`), not a 3pp fract
 
 Honer Posted YES / cutoff / spread and the 15m paper-window MARK cell print through `quote_text` then book-display `book_quote_text` (5 fractional digits on the book; extra Kalshi digits stay and wrap). Never rounded cents. Never truncated to 3 places. `quote_text` itself does not invent zeros. Honer and paper show the same Kalshi string, then the same 5-place book cell. Computed spread / wide-book / thin-book print the Decimal difference of those quotes, not an IEEE float dump. Quote cells keep their digits in-column (HTML wrap; PNG wrap).
 
-Honer Search / Exam books page at `trial_book_page_n()` (24 unless a live Honer file names a display n — scoring `exam_n` is not that). Prev/next walks the pile. Factory Lineage A paper-window strip caps to that same n. WHY wraps inside the Why column.
+Honer Search / Exam books page at `trial_book_page_n()` (24 unless a live Honer file names a display n — scoring `exam_n` is not that). Prev/next walks the pile. Factory Lineage A paper-window strip caps to that same n. Lab journal Paper books lists that same n (newest). The pile stays on disk. WHY wraps inside the Why column.
 
 **This seat seeks** layout / readability / paging / density every pass and ships it. Founder is not the doorbell. Do not wait for a chat list of hub nits.
 
