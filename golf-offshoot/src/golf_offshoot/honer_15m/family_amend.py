@@ -1,4 +1,9 @@
-"""HONER-FAMILY-AMEND doorbell from files. Not exam pnl."""
+"""HONER-FAMILY-AMEND doorbell from files. Not exam pnl.
+
+Paper is the exam. lived=false / not-real-money is not a wait.
+Refuse a named idea; do not refuse the medium. Do not copy H-SKIP-*
+onto another market. Palshi does not hire a one-off namer.
+"""
 
 from __future__ import annotations
 

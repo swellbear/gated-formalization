@@ -3,7 +3,7 @@
   "lane": "honer_15m",
   "series": "KXBTC15M",
   "declared_at": "2026-09-09T15:08:00-04:00",
-  "note": "Dated order. Picker does not sort this file from tape or pnl. Three families. Family 3 is skip-thin-book, dated from files after family 1-2 finished (catalog_exhausted and exam completed_dead). Not factory civil skip. Not a Lab ping.",
+  "note": "Dated order. Picker does not sort this file from tape or pnl. Three families. Family 3 is skip-thin-book, dated from files after family 1-2 finished (catalog_exhausted and exam completed_dead). Not factory civil skip. Not a Lab ping. Paper is the exam. Do not copy H-SKIP-* onto another market.",
   "items": [
     {
       "id": "H-SKIP-RICH-YES",

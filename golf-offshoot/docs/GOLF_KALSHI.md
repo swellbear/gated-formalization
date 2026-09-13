@@ -50,9 +50,15 @@ Hunt order:
 
 The last tick writes bound / brain / deferred on the Golf board so an empty cart is readable.
 
+## Factory overlay (this market is one exam)
+
+**Paper is the exam** on every opened Kalshi market. Farm, Honer, and the namer treat this market’s paper book as the working set. `lived=false` is not a wait. Lab may refuse a **named idea** (peeking already-lost marks, copying another market’s family, a 3^N lottery). Refuse of the **medium** (not real money, wait for lived, wait for a better tape, paper isn’t good enough) is a hole. Overlay + Palshi occupancy re-fire that hole in these files. Palshi does **not** hire a golf-only namer. Do not copy `H-SKIP-*` from another market. Farm/Honer do not auto-name.
+
+Golf paper tickets are one instance. 15-minute paper windows are another. A later series gets the same overlay when that market opens.
+
 ## Golf Farm / Honer
 
-Idle shells on the golf tab: `data/golf_kalshi/latest/farm.json` and `data/golf_kalshi/honer/`. They read the live golf `paper/ledger.json` and last tick on every watch tick. Empty notebooks until dated. No golf `crew_tick`. They do not consult 15m `decide()`. They do not write "no golf tape yet" when tickets exist. The 15m Lab chair is untouched. Lab 2026-09-12 looked at the live paper tickets and **refused** to date a family ([`GOLF_KALSHI_LAB_NAMER.md`](GOLF_KALSHI_LAB_NAMER.md)). Empty notebooks after that look are honest. Farm/Honer do not auto-name.
+Idle shells on the golf tab: `data/golf_kalshi/latest/farm.json` and `data/golf_kalshi/honer/`. They read the live golf `paper/ledger.json` and last tick on every watch tick. Empty notebooks until dated. No golf `crew_tick`. They do not consult 15m `decide()`. They do not write "no golf tape yet" when tickets exist. They do not write "wait for lived." Organs stamp `paper_is_exam`. The 15m Lab chair is untouched. Lab 2026-09-12 **refused named ideas** ([`GOLF_KALSHI_LAB_NAMER.md`](GOLF_KALSHI_LAB_NAMER.md)). Those refusals stand. The same look treated `lived=false` as a reason to wait — that piece is a hole, not a park. Farm/Honer do not auto-name.
 
 ## Unattended
 

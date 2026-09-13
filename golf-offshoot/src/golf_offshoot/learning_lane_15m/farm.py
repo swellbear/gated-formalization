@@ -1,5 +1,10 @@
 """Discovery farm: isolated notebooks on the shared tape.
 
+Paper is the exam. 15-minute paper windows are this market's working
+set. Lab may refuse a named idea. Refuse of the medium (not real
+money, wait for lived) is a hole. Palshi does not hire a one-off
+namer.
+
 Never imports honer_15m. Does not steal the selecting chair. Does not
 sort keepers by pnl. Does not arm. Not an ADMIT.
 """
@@ -599,7 +604,7 @@ def save_farm(payload: dict[str, Any], *, root: Path | None = None) -> dict[str,
         "series": str(payload.get("series") or "KXBTC15M"),
         "note": str(
             payload.get("note")
-            or "Discovery farm. Notebooks are execution false. Not live. Not an ADMIT."
+            or "Discovery farm. Notebooks are execution false. Not live. Not an ADMIT. Paper is the exam."
         ),
         "notebooks": notebooks,
     }
