@@ -2406,3 +2406,39 @@ def test_closed_tickets_on_scoreboard_not_home(gk_root, tmp_path):
     assert "Antoine Rozner" in score
     assert "lose" in score
     assert "-26.74" in score
+    assert 'class="book-row"' in score
+    assert 'class="book-pager"' not in score
+    assert "1 ticket" in score
+
+
+def test_golf_closed_tape_pages_at_trial_n(gk_root, tmp_path):
+    from golf_offshoot.data_feeds.kalshi_15m import trial_book_page_n
+    from golf_offshoot.golf_kalshi.hub import scoreboard_html
+
+    n = trial_book_page_n()
+    rec = recipe_v1()
+    book = empty_ledger(rec)
+    book["tickets"] = [
+        _ticket(
+            ticker=f"LOSE-{i}",
+            player=f"Player {i}",
+            status="paper_lose",
+            pnl_after_fee=-1.0,
+            settled_at=f"2026-09-11T16:{i:02d}:00-04:00",
+        )
+        for i in range(30)
+    ]
+    save_ledger(book)
+    html = scoreboard_html()
+    assert 'class="book-pager"' in html
+    assert f'data-page-size="{n}"' in html
+    assert 'data-book="golf-closed"' in html
+    assert html.count('class="book-row"') == 30
+    assert html.count(" hidden") >= 6
+    js = Path(__file__).resolve().parents[1] / "src" / "golf_offshoot" / "operator_surface" / "desk.js"
+    assert "book-page-next" in js.read_text(encoding="utf-8")
+    page = render_html(build_surface(artifact_root=tmp_path, viz_root=tmp_path / "viz", lane="golf"))
+    score = page[page.index("desk-view-scoreboard") : page.index("desk-view-ops")]
+    assert 'class="book-pager"' in score
+    home = page[page.index("desk-view-home") : page.index("desk-view-scoreboard")]
+    assert 'class="book-pager"' not in home

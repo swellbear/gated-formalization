@@ -33,7 +33,10 @@ def test_paint_chrome_is_sticky_and_quiet(tmp_path):
     assert "--book-honer" in css
     assert "cursor: zoom-in" in css
     assert ".lightbox.full img" in css
+    assert "th.src" in css
+    assert "learning-card-fold" in css
     assert 'aria-current' in js
+    assert "bindBookPagers" in js
     assert HARD_NO_STRIP not in golf
     assert HARD_NO_STRIP not in page
 
@@ -54,6 +57,7 @@ def test_paint_keeps_three_books_separate(tmp_path):
     assert 'data-book="factory"' in score_15
     assert 'data-book="lab"' in lab_15
     assert 'class="learning-card"' in lab_15
+    assert "learning-card-fold" in lab_15
     assert 'data-book="honer"' in honer_15
     assert "Do not add bankrolls" in page
     assert "books do not merge" in honer_15.lower() or "Do not add these bankrolls" in honer_15

@@ -1795,6 +1795,7 @@ def test_honer_books_page_at_trial_n(honer_tmp):
     assert html.count('class="book-row"') == 30
     assert html.count(" hidden") >= 6
     assert 'class="why"' in html
+    assert 'class="src">Source' in html
     assert book_quote_text("0.4600") == "0.46000"
     assert "0.46000" in html
     assert "0.79000" in html

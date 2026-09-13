@@ -276,6 +276,7 @@ def test_hub_15m_shows_fixture_card_golf_does_not(tmp_path, monkeypatch):
     assert 'class="learning-card"' in page_15
     assert "What is on trial" in page_15
     assert "FIXTURE-CARD-TEXT R-FIXTURE-SKIP PARK" in page_15
+    assert "learning-card-fold" in page_15
     assert 'class="learning-card"' not in page_golf
     assert "FIXTURE-CARD-TEXT" not in page_golf
 

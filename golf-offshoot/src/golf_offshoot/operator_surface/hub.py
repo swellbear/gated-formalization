@@ -114,7 +114,12 @@ def _learning_card_html() -> str:
     if not path.is_file():
         body = f'<p class="empty">{_esc(MISSING_HUB_COPY)}</p>'
     else:
-        body = f"<pre>{_esc(path.read_text(encoding='utf-8', errors='replace'))}</pre>"
+        body = (
+            '<details class="gk-fold learning-card-fold">'
+            "<summary>Generated card (full file)</summary>"
+            f"<pre>{_esc(path.read_text(encoding='utf-8', errors='replace'))}</pre>"
+            "</details>"
+        )
     return f"""
 <section class="learning-card">
   <h2>What is on trial</h2>
