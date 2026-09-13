@@ -426,6 +426,7 @@ def test_mechanism_catalog_seeds_the_kinds():
         "HONER-FAMILY-AMEND",
         "HONER-FROZEN-REPLACE",
         "P-FAMILY-SEARCH",
+        "F-SKIP-FOREIGN-HORIZON",
     ]
 
 

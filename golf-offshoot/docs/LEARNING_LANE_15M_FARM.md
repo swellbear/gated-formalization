@@ -4,7 +4,7 @@
 
 The farm dates **legal unused kinds** as isolated notebooks on the shared tape. Each notebook has its own `declared_at` and scorecard. `execution` stays false. There is **one live chair**. Promote only **between** looks, when the seated selecting L1 is closed.
 
-**Paper is the exam.** 15-minute paper windows are this market’s working set — one instance of the factory overlay on every opened Kalshi market. Lab may refuse a **named idea**. Refuse of the **medium** (not real money, wait for lived, wait for a better tape) is a hole. Palshi does not hire a one-off namer. Farm does not auto-name. Do not copy `H-SKIP-*` onto this farm.
+**Paper is the exam.** 15-minute paper windows are this market’s working set — one instance of the factory overlay on every opened Kalshi market. Lab may refuse a **named idea**. Refuse of the **medium** (not real money, wait for lived, wait for a better tape) is a hole. Palshi does not hire a one-off namer. Farm does not auto-name. Do not copy `H-SKIP-*` onto this farm. Factory skip `F-SKIP-FOREIGN-HORIZON` is not a CLOCK farm notebook and not Q7. Do not append it here. On this 15m book it idles (always fill). `execution=false`.
 
 Trading is **NOT ARMED**. HOLD stands. Farm cards do not go on Pages, the digest, `manifest.json`, or `records[]`.
 

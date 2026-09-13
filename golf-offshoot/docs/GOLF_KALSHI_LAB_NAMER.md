@@ -73,6 +73,6 @@ A later family on this market is legal only when a **this-market** product-struc
 
 This note stays Lab’s dated look. **Named-idea** refusals in the table above **stand** (copy `H-SKIP-*`, tape θ from this book’s 1¢ losses, tour buckets as a family).
 
-**Refuse of the medium does not stand.** Point 1 (“No lived skip to name” / every ticket `lived=false`) is not a reason to wait. Paper is the exam on every opened Kalshi market. Golf paper tickets are one instance. Overlay + Palshi occupancy re-fire via `GOLF_KALSHI.md` and golf organs (`paper_is_exam`). Palshi does not name from this file.
+**Refuse of the medium does not stand.** Point 1 (“No lived skip to name” / every ticket `lived=false`) is not a reason to wait. Paper is the exam on every opened Kalshi market. Golf paper tickets are one instance. Overlay + Palshi occupancy re-fire via `GOLF_KALSHI.md` and golf organs (`paper_is_exam`). Palshi does not name from this file. Factory skip `F-SKIP-FOREIGN-HORIZON` is overlay occupancy, not a golf-only `G-SKIP-*` and not a notebook. Named-idea refuse stands. Not Q7.
 
 Trading **NOT ARMED**.
