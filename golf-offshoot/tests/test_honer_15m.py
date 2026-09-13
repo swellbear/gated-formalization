@@ -636,6 +636,80 @@ def test_honer_table_prints_full_kalshi_quote_not_cents(honer_tmp):
     assert "¢" not in html
 
 
+def test_honer_table_keeps_ieee_residue_out_of_quote_columns(honer_tmp):
+    from golf_offshoot.honer_15m.board import collect_standing
+    from golf_offshoot.honer_15m.hub_block import sandbox_html
+    from golf_offshoot.honer_15m.illustrate import QUOTE_KEYS, fit_column_text
+
+    dirty_spread = 0.47 - 0.46
+    dirty_posted = "0.46499999999999997"
+    books.record_action(
+        "search",
+        ticker="KXBTC15M-26SEP091445-45",
+        window_id="w",
+        action="fill",
+        reason="posted_yes below theta 0.79",
+        posted_yes=0.465,
+        posted_yes_text=dirty_posted,
+        theta=0.79,
+        close_at="2026-09-09T18:45:00Z",
+        spread=dirty_spread,
+        delta=0.04,
+        gamma=0.02,
+    )
+    row = collect_standing().search_rows[0]
+    html = sandbox_html()
+    ieee = ("0.010000000000000009", "0.46499999999999997")
+    for blob in ieee:
+        assert blob not in row.posted_display()
+        assert blob not in row.spread_text
+        assert blob not in row.delta_text
+        assert blob not in row.gamma_text
+        assert blob not in html
+        assert blob not in row.why
+    assert row.posted_display() == "0.465"
+    assert row.spread_text == "0.01"
+    assert row.delta_text == "0.04"
+    assert 'class="quote"' in html
+    css = Path(__file__).resolve().parents[1] / "src" / "golf_offshoot" / "operator_surface" / "desk.css"
+    sheet = css.read_text(encoding="utf-8")
+    assert "table.honer-board td.quote" in sheet
+    assert "word-break: break-all" in sheet
+    wrapped = fit_column_text("0.010000000000000009", "spread", fontsize=9.2)
+    assert "\n" in wrapped or len(wrapped) < len("0.010000000000000009")
+    for key in QUOTE_KEYS:
+        assert "\n" not in fit_column_text("0.6150", key, fontsize=9.2)
+        assert fit_column_text("0.123456", key, fontsize=9.2) == "0.123456"
+
+
+def test_honer_loop_stores_decimal_spread_not_ieee_float(honer_tmp):
+    market = {
+        "ticker": "KXBTC15M-26SEP091500-00",
+        "window_id": "w",
+        "close_time": "2026-09-09T19:00:00Z",
+        "status": "active",
+        "is_open": True,
+        "paper_mark": 0.50,
+        "paper_mark_text": "0.5000",
+        "yes_bid": 0.46,
+        "yes_ask": 0.47,
+        "yes_bid_dollars": "0.46",
+        "yes_ask_dollars": "0.47",
+    }
+    loop._maybe_act(
+        "search",
+        market,
+        0.81,
+        family="H-SKIP-WIDE-SPREAD",
+        delta=0.04,
+        gamma=0.02,
+    )
+    row = books.load_decisions("search")["KXBTC15M-26SEP091500-00"]
+    assert row["spread_text"] == "0.01"
+    assert "0.010000000000000009" not in str(row.get("spread_text"))
+    assert row["posted_yes_text"] == "0.5000"
+
+
 def test_missing_quotes_spread_na_decide_richness_only(honer_tmp):
     from golf_offshoot.honer_15m.board import collect_standing
     from golf_offshoot.honer_15m.decide import decide_ticket

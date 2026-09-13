@@ -140,12 +140,64 @@ def parse_dollar_unit(raw: Any) -> float | None:
     return p
 
 
+_IEEE_DUMP_RE = re.compile(r"^[+-]?(?:\d+)\.(?:\d*000000\d*|\d*999999\d*)$")
+
+
+def _looks_like_ieee_dump(text: str) -> bool:
+    """True when a decimal string is binary-float residue, not a quote."""
+    token = str(text or "").strip()
+    if not token or "e" in token.lower() or "." not in token:
+        return False
+    frac = token.split(".", 1)[1]
+    if len(frac) < 10:
+        return False
+    return bool(_IEEE_DUMP_RE.match(token))
+
+
+def _quote_number(number: float) -> str:
+    """Print a computed contract-price. Never cents. Never IEEE residue.
+
+    ``round(..., 12)`` is only for strings that already look like binary
+    dust. It is not a 3-place cutoff and it does not pad zeros.
+    """
+    if number != number or number in (float("inf"), float("-inf")):
+        return "n/a"
+    printed = str(number)
+    if _looks_like_ieee_dump(printed):
+        return str(round(number, 12))
+    return format(Decimal(printed), "f")
+
+
+def _as_quote_decimal(value: object) -> Decimal:
+    """Decimal of a printed quote, not the binary difference of two floats."""
+    if isinstance(value, bool):
+        raise TypeError("bool is not a quote")
+    if isinstance(value, Decimal):
+        text = format(value, "f")
+        if _looks_like_ieee_dump(text):
+            return Decimal(_quote_number(float(value)))
+        return value
+    if isinstance(value, str):
+        text = value.strip()
+        if not text:
+            raise InvalidOperation("empty quote")
+        if _looks_like_ieee_dump(text):
+            return Decimal(_quote_number(float(text)))
+        return Decimal(text)
+    number = float(value)
+    if number != number or number in (float("inf"), float("-inf")):
+        raise InvalidOperation("non-finite quote")
+    return Decimal(_quote_number(number))
+
+
 def quote_text(value: object | None) -> str:
     """Print a Kalshi contract quote. Never cents. Never invent digits.
 
-    A string is Kalshi's own text and is returned stripped, unchanged.
-    A number uses Python's shortest unique decimal (``str(float)``), not
-    ``.16g`` binary dust and not rounded cents.
+    A string is Kalshi's own text and is returned stripped, unchanged,
+    unless it is binary-float residue (not a quote Kalshi sends).
+    A number uses the printed decimal, not ``.16g`` dust and not cents.
+    Computed |ask−bid| must go through ``quote_abs_diff`` / this cleaner,
+    never ``str(float_diff)``.
     """
     if value is None:
         return "n/a"
@@ -153,16 +205,27 @@ def quote_text(value: object | None) -> str:
         return "n/a"
     if isinstance(value, str):
         text = value.strip()
-        return text if text else "n/a"
+        if not text:
+            return "n/a"
+        if _looks_like_ieee_dump(text):
+            try:
+                return _quote_number(float(text))
+            except (TypeError, ValueError):
+                return text
+        return text
     if isinstance(value, Decimal):
-        return format(value, "f")
+        text = format(value, "f")
+        if _looks_like_ieee_dump(text):
+            try:
+                return _quote_number(float(value))
+            except (TypeError, ValueError, InvalidOperation, OverflowError):
+                return text
+        return text
     try:
         number = float(value)
     except (TypeError, ValueError):
         return "n/a"
-    if number != number or number in (float("inf"), float("-inf")):
-        return "n/a"
-    return format(Decimal(str(number)), "f")
+    return _quote_number(number)
 
 
 def quote_abs_diff(left: object | None, right: object | None) -> str:
@@ -170,8 +233,15 @@ def quote_abs_diff(left: object | None, right: object | None) -> str:
     if left is None or right is None:
         return "n/a"
     try:
-        return quote_text(abs(Decimal(str(float(left))) - Decimal(str(float(right)))))
-    except (TypeError, ValueError, InvalidOperation):
+        diff = abs(_as_quote_decimal(left) - _as_quote_decimal(right))
+        if diff == 0:
+            return "0.00"
+        text = quote_text(diff)
+        if "." in text and not _looks_like_ieee_dump(text):
+            stripped = text.rstrip("0").rstrip(".")
+            return stripped if stripped else "0"
+        return text
+    except (TypeError, ValueError, InvalidOperation, ArithmeticError):
         return "n/a"
 
 

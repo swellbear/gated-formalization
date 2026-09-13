@@ -26,6 +26,7 @@ def test_quote_text_keeps_kalshi_string():
     assert quote_text("0.6150") == "0.6150"
     assert quote_text("0.6100") == "0.6100"
     assert quote_text("0.123456") == "0.123456"
+    assert quote_text("0.123456789") == "0.123456789"
     assert quote_text(" 0.36 ") == "0.36"
     assert quote_text("") == "n/a"
     assert quote_text(None) == "n/a"
@@ -43,6 +44,25 @@ def test_quote_text_float_is_round_trip_not_cents():
 def test_quote_abs_diff_uses_printed_decimals():
     assert quote_abs_diff(0.81, 0.75) == "0.06"
     assert quote_abs_diff(0.81, 0.81) == "0.00"
+    assert quote_abs_diff("0.47", "0.46") == "0.01"
+    assert quote_abs_diff("0.5200", "0.4800") == "0.04"
+
+
+def test_quote_text_does_not_dump_ieee_float_residue():
+    dirty_spread = 0.47 - 0.46
+    dirty_mid = 0.93 - 0.465
+    assert quote_text(dirty_spread) == "0.01"
+    assert quote_text(dirty_mid) == "0.465"
+    assert quote_text("0.010000000000000009") == "0.01"
+    assert quote_text("0.009999999999999953") == "0.01"
+    assert quote_text("0.46499999999999997") == "0.465"
+    assert "0.010000000000000009" not in quote_text(dirty_spread)
+    assert "0.009999999999999953" not in quote_text(dirty_spread)
+    assert "0.46499999999999997" not in quote_text(dirty_mid)
+    assert quote_text("0.6150") == "0.6150"
+    assert quote_text("0.123456") == "0.123456"
+    assert quote_text(0.615) != "0.6150"
+    assert "¢" not in quote_text(dirty_spread)
 
 
 def test_paper_mark_quote_mid_keeps_source_places():
