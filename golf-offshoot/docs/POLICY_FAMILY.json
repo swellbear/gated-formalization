@@ -108,6 +108,20 @@
         "missing_snapshot": "fill"
       },
       "note": "Named from the Honer quote-bus stale cutoff (MAX_AGE_S=180), not from last night's winners. Skip iff age > 180s. Age <= 180s fills. Missing age or missing snapshot → fill YES (not thin-book; not a skip). Do not walk 90/120/240. Healthy bus / skip never fires is untestable, not a retune of 180."
+    },
+    {
+      "id": "P-SKIP-UNLESS-CHEAP-040",
+      "kind": "selection",
+      "side": "yes",
+      "declared_at": "2026-09-12T19:35:00-04:00",
+      "skip_when": "unless posted YES <= 0.40",
+      "else": "fill YES at posted mark",
+      "expected_skip_rate": null,
+      "params": {
+        "theta": 0.4,
+        "missing_posted_yes": "fill"
+      },
+      "note": "Default-skip; fill cheap YES only (posted YES <= 0.40). Never fill NO. Missing posted_yes → fill YES (not thin-book). Boundary: 0.40 fills, 0.41 skips. Not P-SKIP-RICH-075 (that still fills coin and cheap). Not coinflip. Do not retune 0.40. Do not walk 0.35/0.45. Expected skip is 1 minus mass(YES <= 0.40); count on search."
     }
   ]
 }

@@ -29,8 +29,10 @@ FROZEN_IDS = (
     "P-SKIP-LAST-SECONDS-60",
     "P-SKIP-INELIGIBLE-CLOSED",
     "P-SKIP-STALE-QUOTE-180",
+    "P-SKIP-UNLESS-CHEAP-040",
 )
 STALE_QUOTE_ID = "P-SKIP-STALE-QUOTE-180"
+UNLESS_CHEAP_ID = "P-SKIP-UNLESS-CHEAP-040"
 #: Honer burned ids, copied so this package never imports honer_15m.
 BURNED_HONER_IDS = frozenset(
     {

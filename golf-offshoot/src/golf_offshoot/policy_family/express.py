@@ -18,6 +18,9 @@ LAST_SECONDS = 60.0
 #: Honer quote-bus stale cutoff. Named from that contract, not a tape walk.
 STALE_QUOTE_S = 180.0
 STALE_QUOTE_ID = "P-SKIP-STALE-QUOTE-180"
+#: Fill cheap YES only. Frozen 0.40, not a 0.35/0.45 walk.
+UNLESS_CHEAP_THETA = 0.40
+UNLESS_CHEAP_ID = "P-SKIP-UNLESS-CHEAP-040"
 
 
 def _parse_dt(value: Any) -> datetime | None:
@@ -155,4 +158,11 @@ def express(policy: dict[str, Any], window: dict[str, Any]) -> dict[str, str]:
         if age > STALE_QUOTE_S:
             return _verdict(ident, ACTION_SKIP, f"quote age {age:g}s > 180s")
         return _verdict(ident, ACTION_FILL, f"quote age {age:g}s <= 180s")
+    if ident == UNLESS_CHEAP_ID:
+        mark = posted_yes(window)
+        if mark is None:
+            return _verdict(ident, ACTION_FILL, "no posted_yes; fill YES")
+        if mark <= UNLESS_CHEAP_THETA:
+            return _verdict(ident, ACTION_FILL, "posted_yes <= 0.40; cheap YES")
+        return _verdict(ident, ACTION_SKIP, "posted_yes > 0.40; skip unless cheap")
     raise PolicyFamilyError(f"no expression for {ident}")
