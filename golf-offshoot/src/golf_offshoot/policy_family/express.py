@@ -28,6 +28,12 @@ LAST_VS_MID_ID = "P-SKIP-LAST-VS-MID-0200"
 #: Skip iff close_at clock minute is 0 or 15. Frozen {0,15}, not civil {0,30}.
 CLOSE_MINUTES_SKIP = frozenset({0, 15})
 CLOSE_MINUTES_ID = "P-SKIP-CLOSE-MINUTES-0-15"
+#: Q5 WRAP. Frozen {0,45}. Do not retune Q4 {0,15}. Do not implement Q6 {30,45}.
+CLOSE_MINUTES_WRAP_ID = "P-SKIP-CLOSE-MINUTES-0-45"
+CLOSE_MINUTES_SKIP_BY_ID = {
+    CLOSE_MINUTES_ID: frozenset({0, 15}),
+    CLOSE_MINUTES_WRAP_ID: frozenset({0, 45}),
+}
 _LAST_KEYS = ("last", "last_price", "last_price_dollars")
 
 
@@ -208,7 +214,8 @@ def express(policy: dict[str, Any], window: dict[str, Any]) -> dict[str, str]:
         if gap >= LAST_VS_MID_DELTA:
             return _verdict(ident, ACTION_SKIP, f"|last-mid| {gap:g} >= 0.02")
         return _verdict(ident, ACTION_FILL, f"|last-mid| {gap:g} < 0.02")
-    if ident == CLOSE_MINUTES_ID:
+    skip_set = CLOSE_MINUTES_SKIP_BY_ID.get(ident)
+    if skip_set is not None:
         raw = window.get("close_at")
         if raw is None or str(raw).strip() == "":
             return _verdict(ident, ACTION_FILL, "missing close_at; fill YES")
@@ -216,7 +223,8 @@ def express(policy: dict[str, Any], window: dict[str, Any]) -> dict[str, str]:
             minute = close_minute(str(raw))
         except (ValueError, TypeError):
             return _verdict(ident, ACTION_FILL, "missing close_at; fill YES")
-        if minute in CLOSE_MINUTES_SKIP:
-            return _verdict(ident, ACTION_SKIP, f"close_minute {minute} in {{0, 15}}")
-        return _verdict(ident, ACTION_FILL, f"close_minute {minute} not in {{0, 15}}")
+        pretty = "{" + ", ".join(str(m) for m in sorted(skip_set)) + "}"
+        if minute in skip_set:
+            return _verdict(ident, ACTION_SKIP, f"close_minute {minute} in {pretty}")
+        return _verdict(ident, ACTION_FILL, f"close_minute {minute} not in {pretty}")
     raise PolicyFamilyError(f"no expression for {ident}")
