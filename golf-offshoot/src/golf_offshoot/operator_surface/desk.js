@@ -158,3 +158,46 @@
     true
   );
 })();
+
+(function () {
+  function bindPager(pager) {
+    var wrap = pager.nextElementSibling;
+    if (!wrap) return;
+    var status = pager.querySelector(".book-page-status");
+    var prev = pager.querySelector(".book-page-prev");
+    var next = pager.querySelector(".book-page-next");
+    function show(page) {
+      var size = parseInt(pager.getAttribute("data-page-size") || "24", 10) || 24;
+      var rows = wrap.querySelectorAll("tbody tr.book-row");
+      var total = rows.length;
+      if (!total) return;
+      var pages = Math.max(1, Math.ceil(total / size));
+      if (page < 0) page = 0;
+      if (page > pages - 1) page = pages - 1;
+      pager.setAttribute("data-page", String(page));
+      rows.forEach(function (row, i) {
+        row.hidden = i < page * size || i >= (page + 1) * size;
+      });
+      var start = page * size + 1;
+      var end = Math.min(total, (page + 1) * size);
+      if (status) {
+        status.textContent = "Page " + (page + 1) + " of " + pages + " · " + start + "–" + end + " of " + total;
+      }
+      if (prev) prev.disabled = page === 0;
+      if (next) next.disabled = page >= pages - 1;
+    }
+    pager._showBookPage = show;
+    if (prev) {
+      prev.addEventListener("click", function () {
+        show((parseInt(pager.getAttribute("data-page") || "0", 10) || 0) - 1);
+      });
+    }
+    if (next) {
+      next.addEventListener("click", function () {
+        show((parseInt(pager.getAttribute("data-page") || "0", 10) || 0) + 1);
+      });
+    }
+    show(parseInt(pager.getAttribute("data-page") || "0", 10) || 0);
+  }
+  document.querySelectorAll(".book-pager").forEach(bindPager);
+})();

@@ -309,6 +309,30 @@ table.honer-board {
   width: max(100%, 78rem);
   font-variant-numeric: tabular-nums;
 }
+.book-pager {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+  margin: 0 0 8px;
+  font-size: 13px;
+}
+.book-pager button {
+  font-family: var(--sans);
+  font-size: 13px;
+  padding: 4px 10px;
+  background: var(--panel);
+  color: var(--ink);
+  border: 1px solid var(--line);
+  border-radius: 4px;
+  cursor: pointer;
+}
+.book-pager button:disabled {
+  opacity: 0.45;
+  cursor: default;
+}
+.book-page-status { color: var(--muted); margin: 0 0 8px; }
+
 table.honer-board th.quote,
 table.honer-board td.quote {
   font-family: var(--mono);
@@ -318,6 +342,14 @@ table.honer-board td.quote {
   word-break: break-all;
   line-height: 1.25;
   width: 6.6%;
+}
+table.honer-board th.why,
+table.honer-board td.why {
+  white-space: normal;
+  overflow-wrap: anywhere;
+  word-break: break-word;
+  line-height: 1.3;
+  width: 16%;
 }
 table.honer-board th,
 table.gk-board th,

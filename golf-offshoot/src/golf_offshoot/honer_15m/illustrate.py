@@ -6,7 +6,7 @@ from datetime import datetime
 from pathlib import Path
 from typing import Any
 
-from golf_offshoot.data_feeds.kalshi_15m import quote_text
+from golf_offshoot.data_feeds.kalshi_15m import book_quote_text
 from golf_offshoot.honer_15m.board import HonerRow, HonerStanding, collect_standing
 from golf_offshoot.honer_15m.books import load_ledger
 from golf_offshoot.honer_15m.paths import assert_honer_path, board_png_path, decisions_path
@@ -77,15 +77,32 @@ def column_width_in(key: str) -> float:
     return 1.0
 
 
-def fit_column_text(text: str, key: str, *, fontsize: float) -> str:
-    """Keep digits inside this column. Wrap; do not paint into the next."""
+def fit_column_text(text: str, key: str, *, fontsize: float, max_lines: int | None = 2) -> str:
+    """Keep digits inside this column. Wrap; do not paint into the next.
+
+    WHY uses ``max_lines=None`` so the sentence stays in-column instead of
+    clipping to 64 characters.
+    """
     raw = str(text or "")
     char_in = (fontsize * 0.62) / 72.0
     n = max(4, int(column_width_in(key) / char_in))
     if len(raw) <= n:
         return raw
-    chunks = [raw[i : i + n] for i in range(0, len(raw), n)][:2]
+    chunks = [raw[i : i + n] for i in range(0, len(raw), n)]
+    if max_lines is not None:
+        chunks = chunks[:max_lines]
     return "\n".join(chunks)
+
+
+def why_cell_text(row: HonerRow) -> str:
+    """Full WHY in the given column. No ellipsis clip."""
+    return str(row.why or row.why_short or "")
+
+
+def row_height_in(row: HonerRow) -> float:
+    wrapped = fit_column_text(why_cell_text(row), "why", fontsize=8.6, max_lines=None)
+    lines = wrapped.count("\n") + 1 if wrapped else 1
+    return max(ROW_IN, 0.17 * lines + 0.12)
 
 
 def chart_png_path() -> Path:
@@ -173,9 +190,12 @@ def render_honer_window_strip() -> Path | None:
     ]
 
     body_in = 0.0
+    block_row_h: list[float] = []
     for _title, _lines, rows, _total in blocks:
-        count = max(1, len(rows))
-        body_in += BLOCK_HEAD_IN + ROW_IN * count
+        heights = [row_height_in(row) for row in rows] or [ROW_IN]
+        row_h = max(heights)
+        block_row_h.append(row_h)
+        body_in += BLOCK_HEAD_IN + row_h * max(1, len(rows))
     body_in += BLOCK_GAP_IN
     fig_h = HEADER_IN + body_in + FOOTER_IN
 
@@ -194,7 +214,8 @@ def render_honer_window_strip() -> Path | None:
     cursor_in = fig_h - HEADER_IN
     for index, (title, book_lines, rows, total) in enumerate(blocks):
         draw_rows = rows or []
-        panel_h = ROW_IN * max(1, len(draw_rows))
+        row_h = block_row_h[index]
+        panel_h = row_h * max(1, len(draw_rows))
         bottom_in = cursor_in - BLOCK_HEAD_IN - panel_h
         top_in = bottom_in + panel_h
         count = f"({len(draw_rows)} window{'s' if len(draw_rows) != 1 else ''})"
@@ -264,14 +285,14 @@ def render_honer_window_strip() -> Path | None:
                 va="center",
             )
         for row_index, row in enumerate(draw_rows):
-            row_top = top_in - row_index * ROW_IN
-            centre = fy(row_top - ROW_IN / 2)
+            row_top = top_in - row_index * row_h
+            centre = fy(row_top - row_h / 2)
             if row_index % 2 == 0:
                 fig.add_artist(
                     Rectangle(
-                        (fx(MARGIN_IN - 0.12), fy(row_top - ROW_IN)),
+                        (fx(MARGIN_IN - 0.12), fy(row_top - row_h)),
                         fx(FIG_W - 2 * MARGIN_IN + 0.24),
-                        fy(ROW_IN),
+                        fy(row_h),
                         transform=fig.transFigure,
                         facecolor=BAND,
                         edgecolor="none",
@@ -289,18 +310,17 @@ def render_honer_window_strip() -> Path | None:
                 va="center",
             )
             label, text_color, fill = _chip(row)
-            why = row.why_short[:64] + ("…" if len(row.why_short) > 64 else "")
             cells = {
                 "window": row.window_et,
                 "action": row.action_label,
-                "posted": row.posted_display(),
-                "cutoff": quote_text(row.theta),
+                "posted": book_quote_text(row.posted_display()),
+                "cutoff": book_quote_text(row.theta),
                 "near": row.near_line_text,
-                "spread": row.spread_text,
-                "wide": row.delta_text,
-                "thin": row.gamma_text,
+                "spread": book_quote_text(row.spread_text),
+                "wide": book_quote_text(row.delta_text),
+                "thin": book_quote_text(row.gamma_text),
                 "pnl": row.pnl_text,
-                "why": why,
+                "why": why_cell_text(row),
                 "source": row.source,
             }
             for key, x_in, _label in COLUMNS[1:]:
@@ -324,10 +344,11 @@ def render_honer_window_strip() -> Path | None:
                     continue
                 is_pnl = key == "pnl" and row.pnl is not None
                 fontsize = 8.6 if key in {"why", "source"} else 9.2
+                wrap_lines = None if key == "why" else 2
                 fig.text(
                     fx(x_in),
                     centre,
-                    fit_column_text(cells[key], key, fontsize=fontsize),
+                    fit_column_text(cells[key], key, fontsize=fontsize, max_lines=wrap_lines),
                     fontsize=fontsize,
                     color=(POS if (row.pnl or 0) >= 0 else NEG) if is_pnl else (FAINT if key == "source" else INK),
                     fontweight="bold" if is_pnl or key == "action" else "normal",

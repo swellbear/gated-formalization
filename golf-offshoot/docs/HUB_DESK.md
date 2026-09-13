@@ -30,7 +30,11 @@ Golf Home also shows Fast / week / slow meters and the mix one-liner. Meter caps
 
 Golf **Live/entry $** is dollar EV after fee (`edge_after_fee`), not a 3pp fraction. Format two decimals. Quotes under 2¢ show `thin`; the quote stays in Quote. Do not retune mark math for the column.
 
-Honer Posted YES / cutoff / spread and the 15m paper-window MARK cell print Kalshi’s full quote string (same helper). Never rounded cents. Never truncated to 3 places. Never invented digits. Honer and paper show the same string Kalshi provided. Computed spread / wide-book / thin-book print the Decimal difference of those quotes, not an IEEE float dump. Quote cells keep their digits in-column (HTML wrap; PNG clip).
+Honer Posted YES / cutoff / spread and the 15m paper-window MARK cell print through `quote_text` then book-display `book_quote_text` (5 fractional digits on the book; extra Kalshi digits stay and wrap). Never rounded cents. Never truncated to 3 places. `quote_text` itself does not invent zeros. Honer and paper show the same Kalshi string, then the same 5-place book cell. Computed spread / wide-book / thin-book print the Decimal difference of those quotes, not an IEEE float dump. Quote cells keep their digits in-column (HTML wrap; PNG wrap).
+
+Honer Search / Exam books page at `trial_book_page_n()` (24 unless a live Honer file names a display n — scoring `exam_n` is not that). Prev/next walks the pile. Factory Lineage A paper-window strip caps to that same n. WHY wraps inside the Why column.
+
+**This seat seeks** layout / readability / paging / density every pass and ships it. Founder is not the doorbell. Do not wait for a chat list of hub nits.
 
 Golf Ops Recipe names the live fill gate: event dollars at the one-name fraction of bank. The ticket-count trim is labeled one-time. Home mix still prints skip counts; it does not retune `allocate`.
 

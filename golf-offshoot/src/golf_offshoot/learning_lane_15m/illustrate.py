@@ -21,7 +21,7 @@ from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any
 
-from golf_offshoot.data_feeds.kalshi_15m import quote_text
+from golf_offshoot.data_feeds.kalshi_15m import book_quote_text, trial_book_page_n
 from golf_offshoot.learning_lane_15m.paths import (
     latest_dir_15m,
     paper_dir_15m,
@@ -57,8 +57,9 @@ SEPARATE_BOOKS_NOTE = (
 # paper_dir_15m() also holds the ledger and the notify watch file. Neither is a window book.
 _NON_BOOK_FILES = frozenset({"ledger.json", "watch_learning_lane_15m.json", "watch.json"})
 
-# Paper joins are the subject of this board so they are never dropped. The Kalshi-only tape keeps
-# growing, so it is trimmed to the newest windows and the block header says it was trimmed.
+# Paper joins stay on disk. The drawn Lineage A block matches Honer's exam
+# window (trial_book_page_n). The Kalshi-only tape keeps growing, so it is
+# trimmed to the newest windows and the block header says it was trimmed.
 MAX_TAPE_ROWS = 16
 
 NO_PNL = "no pnl on disk"
@@ -610,8 +611,16 @@ def collect_board() -> list[Lineage]:
         rows.sort(key=lambda r: (r.open_at or floor, r.ticker), reverse=True)
 
     tape_total = len(buckets[LINEAGE_TAPE])
+    local_rows = buckets[LINEAGE_LOCAL]
+    local_n = trial_book_page_n()
     blocks = (
-        Lineage(LINEAGE_LOCAL, LOCAL_TITLE, _ledger_book_lines(), buckets[LINEAGE_LOCAL], len(buckets[LINEAGE_LOCAL])),
+        Lineage(
+            LINEAGE_LOCAL,
+            LOCAL_TITLE,
+            _ledger_book_lines(),
+            local_rows[:local_n],
+            len(local_rows),
+        ),
         Lineage(
             LINEAGE_PUBLISHED,
             PUBLISHED_TITLE,
@@ -676,9 +685,9 @@ def _window_text(row: WindowRow, tz: Any) -> str:
 def _mark_cell(row: WindowRow) -> str:
     text = (row.paper_mark_text or "").strip()
     if text:
-        return text
+        return book_quote_text(text)
     if row.paper_mark is not None:
-        return quote_text(row.paper_mark)
+        return book_quote_text(row.paper_mark)
     if not row.paper_join or row.missing_join:
         return NO_PAPER
     return "not recorded"

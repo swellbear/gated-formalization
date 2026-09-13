@@ -319,3 +319,26 @@ def test_board_carries_no_golf_lane_language():
     ).lower()
     for banned in ("wc1", "calibration weather", "shadow honesty", "edge established", "banked"):
         assert banned not in blob
+
+
+def test_lineage_a_caps_to_honer_exam_window(lane):
+    from golf_offshoot.data_feeds.kalshi_15m import trial_book_page_n
+
+    n = trial_book_page_n()
+    assert n == 24
+    root = paper_dir_15m()
+    for i in range(30):
+        ticker = f"KXBTC15M-26SEP08{i:04d}-00"
+        wid = _window_id(f"KXBTC15M-26SEP08{i:04d}", "00:00", "00:15")
+        (root / f"extra{i:02d}.json").write_text(
+            json.dumps(_paper_book(wid, ticker, mark=0.505, pnl=0.1, winner="kalshi:yes")),
+            encoding="utf-8",
+        )
+    blocks = {block.key: block for block in collect_board()}
+    local = blocks[LINEAGE_LOCAL]
+    assert local.total >= 30
+    assert len(local.rows) == n
+    assert local.total > len(local.rows)
+    published = {row.ticker for row in blocks[LINEAGE_PUBLISHED].rows}
+    assert PUBLISHED_WIN in published
+    assert PUBLISHED_PENDING in published

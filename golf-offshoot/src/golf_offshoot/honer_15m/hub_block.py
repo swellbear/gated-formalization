@@ -4,7 +4,7 @@ from __future__ import annotations
 
 import html
 
-from golf_offshoot.data_feeds.kalshi_15m import quote_text
+from golf_offshoot.data_feeds.kalshi_15m import book_quote_text, trial_book_page_n
 from golf_offshoot.honer_15m.board import HonerRow, HonerStanding, collect_standing
 
 
@@ -20,6 +20,33 @@ def _bold_stars(text: str) -> str:
     return out
 
 
+def _book_pager(book: str, total: int) -> str:
+    n = trial_book_page_n()
+    if total <= 0:
+        return ""
+    if total <= n:
+        label = "window" if total == 1 else "windows"
+        return f'<p class="book-page-status">{total} {label}</p>'
+    pages = (total + n - 1) // n
+    end = min(n, total)
+    return (
+        f'<div class="book-pager" data-book="{html.escape(book)}" '
+        f'data-page-size="{n}" data-page="0">'
+        '<button type="button" class="book-page-prev" disabled>Prev</button>'
+        f'<span class="book-page-status">Page 1 of {pages} · 1–{end} of {total}</span>'
+        '<button type="button" class="book-page-next">Next</button>'
+        "</div>"
+    )
+
+
+def _row_hidden(index: int) -> str:
+    return " hidden" if index >= trial_book_page_n() else ""
+
+
+def _quote_td(text: str) -> str:
+    return _td(book_quote_text(text), css="quote")
+
+
 def _search_table(rows: list[HonerRow]) -> str:
     if not rows:
         return "<p class=\"help\">Honer has not taken a search window yet.</p>"
@@ -28,33 +55,36 @@ def _search_table(rows: list[HonerRow]) -> str:
         "<th>Ticker</th><th>Window ET</th><th>Action</th><th class=\"quote\">Posted YES</th>"
         "<th class=\"quote\">Cutoff</th><th>Near line</th><th class=\"quote\">Spread</th>"
         "<th class=\"quote\">Wide-book</th><th class=\"quote\">Thin-book</th>"
-        "<th>Kalshi</th><th>Paper pnl</th><th>Why</th><th>Source</th>"
+        "<th>Kalshi</th><th>Paper pnl</th><th class=\"why\">Why</th><th>Source</th>"
         "</tr></thead>"
     )
     body = ["<tbody>"]
-    for row in rows:
+    for index, row in enumerate(rows):
         kalshi = "still waiting on Kalshi" if row.pending else (row.kalshi_result.upper() or "n/a")
-        posted = row.posted_display()
-        cutoff = quote_text(row.theta)
+        posted = book_quote_text(row.posted_display())
+        cutoff = book_quote_text(row.theta)
         body.append(
-            "<tr>"
+            f'<tr class="book-row"{_row_hidden(index)}>'
             f"<td><code>{html.escape(row.ticker)}</code></td>"
             f"<td>{html.escape(row.window_et)}</td>"
             f"<td>{html.escape(row.action_label)}</td>"
             f"{_td(posted, css='quote')}"
             f"{_td(cutoff, css='quote')}"
             f"<td>{html.escape(row.near_line_text)}</td>"
-            f"{_td(row.spread_text, css='quote')}"
-            f"{_td(row.delta_text, css='quote')}"
-            f"{_td(row.gamma_text, css='quote')}"
+            f"{_quote_td(row.spread_text)}"
+            f"{_quote_td(row.delta_text)}"
+            f"{_quote_td(row.gamma_text)}"
             f"<td>{html.escape(kalshi)}</td>"
             f"<td>{html.escape(row.pnl_text)}</td>"
-            f"<td>{html.escape(row.why)}</td>"
+            f"{_td(row.why, css='why')}"
             f"<td class=\"src\">{html.escape(row.source)}</td>"
             "</tr>"
         )
     body.append("</tbody>")
-    return f'<div class="honer-table-wrap"><table class="honer-board">{head}{"".join(body)}</table></div>'
+    return (
+        f"{_book_pager('search', len(rows))}"
+        f'<div class="honer-table-wrap"><table class="honer-board">{head}{"".join(body)}</table></div>'
+    )
 
 
 def _exam_table(rows: list[HonerRow], standing: HonerStanding) -> str:
@@ -68,39 +98,42 @@ def _exam_table(rows: list[HonerRow], standing: HonerStanding) -> str:
         "<th class=\"quote\">Frozen cutoff</th><th>Near line</th><th class=\"quote\">Spread</th>"
         "<th class=\"quote\">Wide-book</th><th class=\"quote\">Thin-book</th>"
         "<th>Exam k</th><th>Kalshi</th><th>Exam pnl</th>"
-        "<th>Always-buy</th><th>d</th><th>Why</th><th>Source</th>"
+        "<th>Always-buy</th><th>d</th><th class=\"why\">Why</th><th>Source</th>"
         "</tr></thead>"
     )
     body = ["<tbody>"]
-    for row in rows:
+    for index, row in enumerate(rows):
         kalshi = "still waiting on Kalshi" if row.pending else (row.kalshi_result.upper() or "n/a")
-        posted = row.posted_display()
-        cutoff = quote_text(row.theta)
+        posted = book_quote_text(row.posted_display())
+        cutoff = book_quote_text(row.theta)
         always = row.fill_all_text or ("n/a" if row.pending else "")
         d = row.d_text or ("n/a" if row.pending else "")
         k = str(row.exam_k) if row.exam_k is not None else "n/a"
         body.append(
-            "<tr>"
+            f'<tr class="book-row"{_row_hidden(index)}>'
             f"<td><code>{html.escape(row.ticker)}</code></td>"
             f"<td>{html.escape(row.window_et)}</td>"
             f"<td>{html.escape(row.action_label)}</td>"
             f"{_td(posted, css='quote')}"
             f"{_td(cutoff, css='quote')}"
             f"<td>{html.escape(row.near_line_text)}</td>"
-            f"{_td(row.spread_text, css='quote')}"
-            f"{_td(row.delta_text, css='quote')}"
-            f"{_td(row.gamma_text, css='quote')}"
+            f"{_quote_td(row.spread_text)}"
+            f"{_quote_td(row.delta_text)}"
+            f"{_quote_td(row.gamma_text)}"
             f"<td>{html.escape(k)}</td>"
             f"<td>{html.escape(kalshi)}</td>"
             f"<td>{html.escape(row.pnl_text)}</td>"
             f"<td>{html.escape(always)}</td>"
             f"<td>{html.escape(d)}</td>"
-            f"<td>{html.escape(row.why)}</td>"
+            f"{_td(row.why, css='why')}"
             f"<td class=\"src\">{html.escape(row.source)}</td>"
             "</tr>"
         )
     body.append("</tbody>")
-    return f'<div class="honer-table-wrap"><table class="honer-board">{head}{"".join(body)}</table></div>'
+    return (
+        f"{_book_pager('exam', len(rows))}"
+        f'<div class="honer-table-wrap"><table class="honer-board">{head}{"".join(body)}</table></div>'
+    )
 
 
 def _exam_action_strip(standing: HonerStanding) -> str:
