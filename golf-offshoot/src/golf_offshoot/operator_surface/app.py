@@ -758,7 +758,8 @@ def render_html(surface: dict) -> str:
             '<section class="panel book-lab" id="lab" data-book="lab">'
             f"{_learning_card_html()}"
             "<h3>Journal</h3>"
-            f"<pre>{journal_board}</pre>"
+            '<p class="help">Paper books here are the newest Honer n. The rest of the pile stays on disk.</p>'
+            f'<pre class="lab-journal">{journal_board}</pre>'
             "</section>"
         )
         views = {
