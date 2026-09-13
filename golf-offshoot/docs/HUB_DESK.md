@@ -32,13 +32,13 @@ Golf **Live/entry $** is dollar EV after fee (`edge_after_fee`), not a 3pp fract
 
 Honer Posted YES / cutoff / spread and the 15m paper-window MARK cell print through `quote_text` then book-display `book_quote_text` (5 fractional digits on the book; extra Kalshi digits stay and wrap). Never rounded cents. Never truncated to 3 places. `quote_text` itself does not invent zeros. Honer and paper show the same Kalshi string, then the same 5-place book cell. Computed spread / wide-book / thin-book print the Decimal difference of those quotes, not an IEEE float dump. Quote cells keep their digits in-column (HTML wrap; PNG wrap).
 
-Honer Search / Exam books page at `trial_book_page_n()` (24 unless a live Honer file names a display n — scoring `exam_n` is not that). Prev/next walks the pile. Factory Lineage A paper-window strip caps to that same n. WHY wraps inside the Why column.
+Honer Search / Exam books page at `trial_book_page_n()` (24 unless a live Honer file names a display n — scoring `exam_n` is not that). Prev/next walks the pile. Factory Lineage A paper-window strip caps to that same n. WHY wraps inside the Why column. Source wraps in-column (`td.src`). Golf Scoreboard closed-ticket tape reuses the same `.book-pager` at that n. Lab “What is on trial” folds the generated card (`details.learning-card-fold`); wrap, do not dump the wall.
 
 **This seat seeks** layout / readability / paging / density every pass and ships it. Founder is not the doorbell. Do not wait for a chat list of hub nits.
 
 Golf Ops Recipe names the live fill gate: event dollars at the one-name fraction of bank. The ticket-count trim is labeled one-time. Home mix still prints skip counts; it does not retune `allocate`.
 
-Golf Scoreboard is the closed-ticket tape (the 15m strip analog): when, player, result, after-fee P/L. Halt log sits under it. Home blotter stays open tickets. Session Closed is the count.
+Golf Scoreboard is the closed-ticket tape (the 15m strip analog): when, player, result, after-fee P/L. Newest first. When the pile is larger than `trial_book_page_n()`, Prev/next walks it (same `.book-pager` as Honer). Halt log sits under it. Home blotter stays open tickets. Session Closed is the count.
 
 ## Numbers
 

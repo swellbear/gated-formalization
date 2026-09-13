@@ -413,6 +413,34 @@ def ops_html(b: dict[str, Any] | None = None) -> str:
     )
 
 
+def _closed_row_hidden(index: int) -> str:
+    from golf_offshoot.data_feeds.kalshi_15m import trial_book_page_n
+
+    return " hidden" if index >= trial_book_page_n() else ""
+
+
+def _closed_pager(total: int) -> str:
+    """Same .book-pager contract as Honer. Do not fork a second pager in desk.js."""
+    from golf_offshoot.data_feeds.kalshi_15m import trial_book_page_n
+
+    n = trial_book_page_n()
+    if total <= 0:
+        return ""
+    if total <= n:
+        label = "ticket" if total == 1 else "tickets"
+        return f'<p class="book-page-status">{total} {label}</p>'
+    pages = (total + n - 1) // n
+    end = min(n, total)
+    return (
+        f'<div class="book-pager" data-book="golf-closed" '
+        f'data-page-size="{n}" data-page="0">'
+        '<button type="button" class="book-page-prev" disabled>Prev</button>'
+        f'<span class="book-page-status">Page 1 of {pages} · 1–{end} of {total}</span>'
+        '<button type="button" class="book-page-next">Next</button>'
+        "</div>"
+    )
+
+
 def scoreboard_html(b: dict[str, Any] | None = None) -> str:
     b = b or collect_board()
     closed = list(b.get("closed") or [])
@@ -422,7 +450,7 @@ def scoreboard_html(b: dict[str, Any] | None = None) -> str:
     voids = sum(1 for t in closed if t.get("status") == "void")
     closed_pnl = sum(float(t.get("pnl_after_fee") or 0) for t in closed)
     body = []
-    for t in closed:
+    for index, t in enumerate(closed):
         pnl = float(t.get("pnl_after_fee") or 0)
         cls = "pnl-up" if pnl > 0 else "pnl-down" if pnl < 0 else ""
         when = t.get("exited_at") or t.get("settled_at") or t.get("decision_at") or ""
@@ -436,7 +464,7 @@ def scoreboard_html(b: dict[str, Any] | None = None) -> str:
         ]
         cells = "".join(f"<td>{html.escape(str(c))}</td>" for c in tds)
         pnl_td = f'<td class="{cls}">{pnl:+.2f}</td>'
-        body.append(f"<tr>{cells}{pnl_td}</tr>")
+        body.append(f'<tr class="book-row"{_closed_row_hidden(index)}>{cells}{pnl_td}</tr>')
     if not body:
         body.append('<tr><td colspan="7">no closed tickets</td></tr>')
     head = "".join(
@@ -484,7 +512,8 @@ def scoreboard_html(b: dict[str, Any] | None = None) -> str:
         + '<section class="panel gk-closed book-golf" id="golf-closed" data-book="golf">'
         "<h2>Closed tickets</h2>"
         f'<p class="gk-nums">{html.escape(tally)}</p>'
-        '<div class="gk-table-wrap"><table class="gk-board gk-closed">'
+        + _closed_pager(len(closed))
+        + '<div class="gk-table-wrap"><table class="gk-board gk-closed">'
         f"<thead><tr>{head}</tr></thead><tbody>{''.join(body)}</tbody></table></div>"
         "</section>"
         + halt_bit

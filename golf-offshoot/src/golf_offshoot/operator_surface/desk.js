@@ -59,6 +59,7 @@
           var blot = document.getElementById("desk-blotter");
           if (sess && s.session_html) sess.outerHTML = s.session_html;
           if (blot && s.blotter_html) blot.outerHTML = s.blotter_html;
+          if (window.bindBookPagers) window.bindBookPagers();
         }
       })
       .catch(function () {});
@@ -161,6 +162,7 @@
 
 (function () {
   function bindPager(pager) {
+    if (pager._showBookPage) return;
     var wrap = pager.nextElementSibling;
     if (!wrap) return;
     var status = pager.querySelector(".book-page-status");
@@ -199,5 +201,9 @@
     }
     show(parseInt(pager.getAttribute("data-page") || "0", 10) || 0);
   }
-  document.querySelectorAll(".book-pager").forEach(bindPager);
+  function bindBookPagers() {
+    document.querySelectorAll(".book-pager").forEach(bindPager);
+  }
+  window.bindBookPagers = bindBookPagers;
+  bindBookPagers();
 })();

@@ -55,7 +55,7 @@ def _search_table(rows: list[HonerRow]) -> str:
         "<th>Ticker</th><th>Window ET</th><th>Action</th><th class=\"quote\">Posted YES</th>"
         "<th class=\"quote\">Cutoff</th><th>Near line</th><th class=\"quote\">Spread</th>"
         "<th class=\"quote\">Wide-book</th><th class=\"quote\">Thin-book</th>"
-        "<th>Kalshi</th><th>Paper pnl</th><th class=\"why\">Why</th><th>Source</th>"
+        "<th>Kalshi</th><th>Paper pnl</th><th class=\"why\">Why</th><th class=\"src\">Source</th>"
         "</tr></thead>"
     )
     body = ["<tbody>"]
@@ -98,7 +98,7 @@ def _exam_table(rows: list[HonerRow], standing: HonerStanding) -> str:
         "<th class=\"quote\">Frozen cutoff</th><th>Near line</th><th class=\"quote\">Spread</th>"
         "<th class=\"quote\">Wide-book</th><th class=\"quote\">Thin-book</th>"
         "<th>Exam k</th><th>Kalshi</th><th>Exam pnl</th>"
-        "<th>Always-buy</th><th>d</th><th class=\"why\">Why</th><th>Source</th>"
+        "<th>Always-buy</th><th>d</th><th class=\"why\">Why</th><th class=\"src\">Source</th>"
         "</tr></thead>"
     )
     body = ["<tbody>"]

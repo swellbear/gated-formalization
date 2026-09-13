@@ -176,6 +176,7 @@ def test_desktop_shell_html_has_lane_selector_and_hides_golf_viz_on_15m(tmp_path
     assert "Factory — live 70" not in home_15
     assert 'class="learning-card"' in lab_15
     assert "What is on trial (registry proof)" in lab_15
+    assert "learning-card-fold" in lab_15
     assert 'id="trial-glance"' not in golf
     ops_15 = page[page.index("desk-view-ops") : page.index("desk-view-farm")]
     assert "Pages can lag this gym export" in ops_15
