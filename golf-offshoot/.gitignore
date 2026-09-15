@@ -14,6 +14,12 @@ data/learning_lane_15m/shadow/
 data/learning_lane_15m/snapshots/
 data/learning_lane_15m/settlements/
 data/learning_lane_15m/latest/
+data/arm_hub/paper/fills/*.json
+data/arm_hub/paper/settlements/*.json
+data/arm_hub/latest/KILL
+data/arm_hub/latest/ARM.flag
+data/arm_hub/latest/watch.pid
+data/arm_hub/audit/*.jsonl
 data/openings/*.json
 data/exports/*.pdf
 data/exports/*.html

@@ -1,0 +1,16 @@
+# ARM hub defaults. Trading NOT ARMED.
+# The watch loop reads this file. It never asks a bot.
+
+hub_id: arm_hub
+trading_armed: false
+paper_mode: true
+paper_bankroll_open: 500.0
+series: KXBTC15M
+interval_s: 30
+quotes_source: replay
+max_step_pct_bankroll: 0.10
+max_step_abs_usd: 50.0
+peak_dd_brake_pct: 0.20
+daily_kill_usd: 75.0
+promote_bar_only_when_live: true
+prefer_keep_only: true

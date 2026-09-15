@@ -1,0 +1,77 @@
+{
+  "schema": "leftover_hunt.shortlist_v1",
+  "lane": "B",
+  "window": "+96",
+  "active_n": 30,
+  "note": "Sample pin for CI. Replace from leftover_hunt_exam/shortlist_grow_freeze/shortlist_v1.json",
+  "rows": [
+    {
+      "id": "KEEP-PATH-01",
+      "claim": "Cheap YES late in the window when the mark is not a coinflip.",
+      "dsl": "fill YES if secs_to_expiry in [90, 420] and yes in [0.20, 0.45]",
+      "mode": "promote-bar",
+      "pack": "lane_b_keepers",
+      "idea": "fade the expensive last minutes on a discounted YES",
+      "why_short": "Lane B +96 Path Rank 1 KEEP",
+      "path_rank": 1,
+      "recommended": {
+        "secs_to_expiry_min": 90,
+        "secs_to_expiry_max": 420,
+        "yes_price_min": 0.20,
+        "yes_price_max": 0.45,
+        "side": "yes",
+        "size_pct_bankroll": 0.02,
+        "weight": 1.2
+      }
+    },
+    {
+      "id": "KEEP-PATH-02",
+      "claim": "Expensive YES only in the last three minutes.",
+      "dsl": "fill YES if secs_to_expiry in [60, 180] and yes in [0.70, 0.85]",
+      "mode": "promote-bar",
+      "pack": "lane_b_keepers",
+      "idea": "late confirmation band",
+      "why_short": "Lane B +96 Path Rank 2 KEEP",
+      "path_rank": 2,
+      "promote_bar": "pass",
+      "recommended": {
+        "secs_to_expiry_min": 60,
+        "secs_to_expiry_max": 180,
+        "yes_price_min": 0.70,
+        "yes_price_max": 0.85,
+        "side": "yes",
+        "size_pct_bankroll": 0.02,
+        "weight": 1.0
+      }
+    },
+    {
+      "id": "DEAD-PATH-09",
+      "claim": "Retired keeper. Must not fire.",
+      "dsl": "never",
+      "mode": "parked",
+      "pack": "lane_b_keepers",
+      "idea": "dead on shelf",
+      "why_short": "DEAD living label",
+      "path_rank": 9
+    },
+    {
+      "id": "INVENT-PACK-99",
+      "claim": "Lab invent. Live intake refused.",
+      "dsl": "must not arm",
+      "mode": "invent",
+      "pack": "invent_lab",
+      "idea": "invent pack fixture",
+      "why_short": "Hard NO live intake",
+      "path_rank": 99,
+      "recommended": {
+        "invent": true,
+        "secs_to_expiry_min": 1,
+        "secs_to_expiry_max": 900,
+        "yes_price_min": 0.01,
+        "yes_price_max": 0.99,
+        "side": "yes",
+        "size_pct_bankroll": 0.02
+      }
+    }
+  ]
+}

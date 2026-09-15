@@ -1,0 +1,14 @@
+{
+  "bankroll": 500.0,
+  "starting_bankroll": 500.0,
+  "peak_bankroll": 500.0,
+  "deposits": 0.0,
+  "withdrawals": 0.0,
+  "betting_pnl": 0.0,
+  "fees_paid": 0.0,
+  "entries": [],
+  "daily_realized_pnl": {},
+  "never_daily_reset": true,
+  "paper_observation_only": true,
+  "trading_armed": false
+}

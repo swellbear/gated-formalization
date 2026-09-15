@@ -69,12 +69,17 @@ def main(argv: list[str] | None = None) -> int:
 
     _configure_stdio()
     load_local_env()
+    argv_list = list(sys.argv[1:] if argv is None else argv)
+    if argv_list and argv_list[0] == "arm-hub":
+        from golf_offshoot.arm_hub.cli import main as arm_hub_main
+
+        return arm_hub_main(argv_list[1:])
     parser = argparse.ArgumentParser(description="Golf Betting Offshoot (never auto-bets)")
     parser.add_argument(
         "command",
         nargs="?",
         default="demo",
-        choices=["demo", "board", "explain", "strategy", "ingest", "calibrate", "pressure-test", "live", "watch", "shadow", "shell", "paper-export", "paper-ledger", "paper-deposit", "paper-withdraw", "paper-settle", "paper-fill", "compare-replay", "hub", "lane-15m", "learn-15m", "learn-15m-runner", "digest-15m", "score-15m", "observability-export"],
+        choices=["demo", "board", "explain", "strategy", "ingest", "calibrate", "pressure-test", "live", "watch", "shadow", "shell", "paper-export", "paper-ledger", "paper-deposit", "paper-withdraw", "paper-settle", "paper-fill", "compare-replay", "hub", "lane-15m", "learn-15m", "learn-15m-runner", "digest-15m", "score-15m", "observability-export", "arm-hub"],
     )
     parser.add_argument("--course-type", default="parkland")
     parser.add_argument("--player", default="p01")
