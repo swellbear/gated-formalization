@@ -1,0 +1,86 @@
+{
+  "policy_version": "arm-hub-policy-20260915T122236Z",
+  "generated_at": "2026-09-15T12:22:36.120174+00:00",
+  "series": "KXBTC15M",
+  "source_note": "pinned shortlist_v1 \u2a1d SHORTLIST_SHELF.per_id (KEEP preferred)",
+  "apply_requires_go": true,
+  "unattended_loop_must_not_regenerate": true,
+  "rules": [
+    {
+      "id": "KEEP-PATH-01",
+      "verdict": "KEEP",
+      "path_rank": 1,
+      "promote_bar": "below",
+      "shelf_label": "KEEP",
+      "claim": "Cheap YES late in the window when the mark is not a coinflip.",
+      "dsl": "fill YES if secs_to_expiry in [90, 420] and yes in [0.20, 0.45]",
+      "mode": "promote-bar",
+      "pack": "lane_b_keepers",
+      "idea": "fade the expensive last minutes on a discounted YES",
+      "why_short": "Lane B +96 Path Rank 1 KEEP",
+      "url": "",
+      "digestor_label": "",
+      "fill_to_30": null,
+      "stamp_binding": "",
+      "lab_admits": false,
+      "trading_armed": false,
+      "hub_untouched": true,
+      "size_hint": "",
+      "guardrails": {
+        "require_plus96_keep": true,
+        "require_path_rank_keeper": true,
+        "require_size": true,
+        "forbid_invent_pack": true
+      },
+      "invent_pack": false,
+      "when": {
+        "secs_to_expiry_min": 90,
+        "secs_to_expiry_max": 420,
+        "yes_price_min": 0.2,
+        "yes_price_max": 0.45
+      },
+      "side": "yes",
+      "size_pct_bankroll": 0.02,
+      "weight": 1.2,
+      "enabled": true
+    },
+    {
+      "id": "KEEP-PATH-02",
+      "verdict": "KEEP",
+      "path_rank": 2,
+      "promote_bar": "pass",
+      "shelf_label": "KEEP",
+      "claim": "Expensive YES only in the last three minutes.",
+      "dsl": "fill YES if secs_to_expiry in [60, 180] and yes in [0.70, 0.85]",
+      "mode": "promote-bar",
+      "pack": "lane_b_keepers",
+      "idea": "late confirmation band",
+      "why_short": "Lane B +96 Path Rank 2 KEEP",
+      "url": "",
+      "digestor_label": "",
+      "fill_to_30": null,
+      "stamp_binding": "",
+      "lab_admits": false,
+      "trading_armed": false,
+      "hub_untouched": true,
+      "size_hint": "",
+      "guardrails": {
+        "require_plus96_keep": true,
+        "require_path_rank_keeper": true,
+        "require_size": true,
+        "forbid_invent_pack": true
+      },
+      "invent_pack": false,
+      "when": {
+        "secs_to_expiry_min": 60,
+        "secs_to_expiry_max": 180,
+        "yes_price_min": 0.7,
+        "yes_price_max": 0.85
+      },
+      "side": "yes",
+      "size_pct_bankroll": 0.02,
+      "weight": 1.0,
+      "enabled": true
+    }
+  ]
+}

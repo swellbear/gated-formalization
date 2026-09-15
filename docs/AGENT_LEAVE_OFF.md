@@ -5,14 +5,28 @@ Chat transcripts are not. A later Grok / Cursor cloud agent will not see a prior
 
 | Field | Value |
 |-------|--------|
-| Updated | 2026-09-08 08:52 EDT (Part 0: live digest + validator report + publish in flight) |
-| Interim operator | Cursor chat (Grok bot usage exhausted until **2026-09-13**) |
-| Repo SoT | **This fold publishes.** Validator report must hash-match the committed `manifest.json`. |
+| Updated | 2026-09-15 08:23 EDT (ARM hub paper scaffold — PR #217, tests green, 15m hub untouched) |
+| Interim operator | Cursor cloud (Founder GO: separate ARM hub) |
+| Repo SoT | **`origin/master` remains the public 15m hub.** This fold does **not** publish Pages. |
 | Local Windows tree for this interim | `C:\Users\bearh\gated-formalization-master-hub` |
 | Do **not** treat as SoT | `C:\Users\bearh\gated-formalization` on `cursor/eia-window-job2` (stale + dirty) |
-| Active track | `learning_lane_15m` (KXBTC15M paper loop) + Phase 1 desktop hub |
+| Active track | **ARM hub** (separate paper-live sim) beside `learning_lane_15m` — do not mix trees |
 | Crew | `docs/agents/` — CoS routes; desk is live board |
 | Trading | **NOT ARMED** |
+
+## ARM hub (this fold — `cursor/arm-hub-paper-scaffold-d19e`)
+
+Separate Kalshi ARM-candidate hub. **Not** the sacred learning-lane / leftover-hunt paper hub.
+
+- Code: `golf-offshoot/src/golf_offshoot/arm_hub/`
+- Data: `golf-offshoot/data/arm_hub/` (`paper/ledger.json` seed **$500**, accumulates; `latest/ARM.flag` absent = PAPER)
+- CLI: `python -m golf_offshoot arm-hub` / `--watch` / `--kill`
+- Unattended deterministic Python. No bot in the hot path. Never port 8765.
+- Keepers: pin `shortlist_v1` ⨝ `SHORTLIST_SHELF` from `C:\Users\bearh\leftover_hunt_exam\shortlist_grow_freeze\` into `data/arm_hub/strategies/`. CI uses the sample pins.
+- Live later: same executor; needs `ARM.flag` **and** `KALSHI_ARM_API_KEY_ID` + `KALSHI_ARM_PRIVATE_KEY_PATH`. Host `https://external-api.kalshi.com/trade-api/v2`.
+- Hard NO: `data/learning_lane_15m/**`, learning-lane collectors, grow-freeze watcher membership.
+
+README: `golf-offshoot/src/golf_offshoot/arm_hub/README.md`.
 
 ## Required closeout (every session)
 

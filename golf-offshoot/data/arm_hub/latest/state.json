@@ -1,0 +1,11 @@
+{
+  "hub_id": "arm_hub",
+  "trading_armed": false,
+  "mode": "paper",
+  "paper_bankroll_open": 500.0,
+  "paper_bankroll_now": 500.0,
+  "open_positions": [],
+  "policy_version": "",
+  "hub_untouched_note": "Separate from learning_lane_15m. Do not share paper paths or grow-freeze watcher membership.",
+  "unattended": true
+}

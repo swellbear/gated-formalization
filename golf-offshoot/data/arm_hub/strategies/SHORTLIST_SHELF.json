@@ -1,0 +1,26 @@
+{
+  "schema": "leftover_hunt.SHORTLIST_SHELF",
+  "note": "Sample pin. Replace from leftover_hunt_exam/shortlist_grow_freeze/SHORTLIST_SHELF.json",
+  "per_id": {
+    "KEEP-PATH-01": {
+      "shelf_label": "KEEP",
+      "living": true,
+      "promote_bar": "below"
+    },
+    "KEEP-PATH-02": {
+      "shelf_label": "KEEP",
+      "living": true,
+      "promote_bar": "pass"
+    },
+    "DEAD-PATH-09": {
+      "shelf_label": "DEAD",
+      "living": false,
+      "promote_bar": "below"
+    },
+    "INVENT-PACK-99": {
+      "shelf_label": "KEEP",
+      "living": true,
+      "promote_bar": "below"
+    }
+  }
+}

@@ -17,6 +17,7 @@ dev = ["pytest>=8.0"]
 
 [project.scripts]
 golf-offshoot = "golf_offshoot.__main__:main"
+arm-hub = "golf_offshoot.arm_hub.cli:main"
 
 [build-system]
 requires = ["setuptools>=68"]
