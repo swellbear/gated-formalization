@@ -124,9 +124,14 @@ def test_strategy_join_prefers_keep(hub):
     assert "KEEP-PATH-02" in ids
     assert "DEAD-PATH-09" not in ids
     policy = load_or_build_policy(hub, rebuild=True)
-    invent = next(r for r in policy["rules"] if r["id"] == "INVENT-PACK-99")
-    assert invent["invent_pack"] is True
-    assert invent["enabled"] is False
+    ids_policy = {r["id"] for r in policy["rules"]}
+    assert "INVENT-PACK-99" not in ids_policy
+    jsonl = (hub / "strategies" / "strategy_bridge_keepers.jsonl").read_text(encoding="utf-8")
+    assert "KEEP-PATH-01" in jsonl
+    assert "INVENT-PACK-99" not in jsonl
+    assert all(r.get("lab_admits") is False for r in policy["rules"])
+    assert all(r.get("trading_armed") is False for r in policy["rules"])
+    assert all(r.get("hub_untouched") is True for r in policy["rules"])
 
 
 def test_paper_replay_accumulates_from_500(hub):
@@ -203,12 +208,13 @@ def test_golf_offshoot_arm_hub_cli(hub):
     assert rc == 0
 
 
-def test_cli_help_lists_arm_hub():
+def test_cli_help_lists_arm_hub(capsys):
     from golf_offshoot.__main__ import main
 
     with pytest.raises(SystemExit) as exc:
         main(["--help"])
     assert exc.value.code == 0
+    assert "arm-hub" in capsys.readouterr().out
 
 
 def test_refuses_port_8765(hub):

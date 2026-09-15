@@ -47,7 +47,7 @@ Operator machine source (not on this git tree):
 - `SHORTLIST_SHELF.json` (KEEP / DEAD)
 - latest lean under `out/`
 
-Join shape: `shortlist_v1` ⨝ `SHORTLIST_SHELF.per_id` — see `data/arm_hub/strategies/STRATEGY_BRIDGE_EXPORT_SHAPE.md`.
+Join shape: `shortlist_v1` ⨝ `SHORTLIST_SHELF.per_id` — see `data/arm_hub/strategies/STRATEGY_BRIDGE_EXPORT_SHAPE.md`. Offline pin also writes `strategies/strategy_bridge_keepers.jsonl` (one KEEP row per line).
 
 Pin into `data/arm_hub/strategies/` so Lane B churn cannot retune mid-run:
 

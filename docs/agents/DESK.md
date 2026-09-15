@@ -6,11 +6,11 @@ Thread lines are **one sentence, newest first, max 10**. Long findings belong in
 
 | Field | Value |
 |-------|--------|
-| Updated | 2026-09-15 08:21 ET |
-| Active role | systems |
+| Updated | 2026-09-15 08:23 ET |
+| Active role | chief-of-staff |
 | Job | Founder GO: separate ARM hub paper scaffold (NOT ARMED). Do not touch learning_lane_15m. |
-| Status | working |
-| Handoff | Package + data tree + CLI wired on `cursor/arm-hub-paper-scaffold-d19e`. Tests next. |
+| Status | done |
+| Handoff | PR #217 undrafted. `pytest tests/test_arm_hub.py` 20 passed. Trading NOT ARMED. |
 | Waiting on Founder | **N** |
 
 ## Ask Founder
@@ -27,6 +27,7 @@ The runner exports locally. It does **not** commit or push. The public page is *
 
 ## Thread
 
+- 2026-09-15 08:23 ET  systems → chief-of-staff: ARM hub PR #217 green (20 tests); path guards + PAPER + --kill + live refuse. next=chief-of-staff
 - 2026-09-15 08:21 ET  systems → chief-of-staff: ARM hub scaffold written to locked layout; learning_lane trees untouched. next=systems
 - 2026-09-15 08:17 ET  CoS → systems: Founder GO — separate paper ARM hub, one executor, `--watch` unattended, NOT ARMED. next=systems
 - 2026-09-08 08:52 ET  CoS: honesty gate re-derived live. Hub box is one tree (2940/9568), not the 19:58 "both --no-browser" claim. next=systems
@@ -36,4 +37,3 @@ The runner exports locally. It does **not** commit or push. The public page is *
 - 2026-09-08 08:30 ET  operator → chief-of-staff: drafted the 15m evidence bar (δ=$0.28, α=0.05/(trials+1), L2 held out, fee hurdle cited, not binding). Did not score R-SKIP-COINFLIP. next=chief-of-staff
 - 2026-09-08 08:28 ET  CoS: tick — digestor/operator/validator STALE; 10 windows closed after 05:56, 1 open; hub parent 2940 / listener 21456; scheduled task missing. Founder GO is bar then hire. next=operator
 - 2026-09-08 06:10 ET  digestor → chief-of-staff: recorded 100.00 → 93.86 / `betting_pnl` -6.14 now carry the known-fee omission caveat, citing the Operator note, with no corrected total. next=chief-of-staff
-- 2026-09-08 06:00 ET  validator → chief-of-staff: `validate_hub.py --strict` OK on export `generated_at` 2026-09-08T05:52:39-04:00. Publishing is still a manual commit/push. next=chief-of-staff

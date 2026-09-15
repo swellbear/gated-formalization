@@ -5,7 +5,7 @@ Chat transcripts are not. A later Grok / Cursor cloud agent will not see a prior
 
 | Field | Value |
 |-------|--------|
-| Updated | 2026-09-15 08:21 EDT (ARM hub paper scaffold on branch — 15m hub untouched) |
+| Updated | 2026-09-15 08:23 EDT (ARM hub paper scaffold — PR #217, tests green, 15m hub untouched) |
 | Interim operator | Cursor cloud (Founder GO: separate ARM hub) |
 | Repo SoT | **`origin/master` remains the public 15m hub.** This fold does **not** publish Pages. |
 | Local Windows tree for this interim | `C:\Users\bearh\gated-formalization-master-hub` |

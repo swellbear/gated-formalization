@@ -29,6 +29,8 @@ from golf_offshoot.arm_hub.paths import (
 
 POLICY_VERSION_PREFIX = "arm-hub-policy"
 INVENT_MARKERS = ("invent", "lab_invent", "proposed_invent")
+DEAD_LABELS = frozenset({"DEAD", "LIKELY_DEAD", "STRUCTURAL_DEAD"})
+KEEP_ALIASES = {"KEEP": "KEEP", "KEEP_WATCH": "KEEP"}
 
 
 class InventPackRefused(RuntimeError):
@@ -67,19 +69,38 @@ def pin_from_operator_dir(src: Path, *, root: Path | None = None) -> dict[str, P
     return copied
 
 
+def _normalize_shelf_label(raw: str) -> str:
+    token = str(raw or "").strip().upper().replace(" ", "_")
+    if token in KEEP_ALIASES:
+        return KEEP_ALIASES[token]
+    return token
+
+
+def _shortlist_items(shortlist: dict[str, Any]) -> list[Any]:
+    for key in ("rows", "items", "keepers", "active"):
+        rows = shortlist.get(key)
+        if isinstance(rows, list):
+            return rows
+    return []
+
+
 def join_shortlist_shelf(
     shortlist: dict[str, Any],
     shelf: dict[str, Any],
     *,
     prefer_keep_only: bool = True,
+    require_dsl: bool = True,
+    drop_invent: bool = True,
 ) -> list[dict[str, Any]]:
-    """``shortlist_v1`` rows ⨝ ``SHORTLIST_SHELF.per_id``."""
+    """``shortlist_v1`` items ⨝ ``SHORTLIST_SHELF.per_id[id]``.
+
+    Pull filter: KEEP only (``KEEP_WATCH`` maps to KEEP); drop DEAD /
+    LIKELY_DEAD / STRUCTURAL_DEAD; require ``dsl``; invent packs out.
+    """
     per_id = shelf.get("per_id")
     if not isinstance(per_id, dict):
         per_id = {}
-    rows = shortlist.get("rows") or shortlist.get("keepers") or shortlist.get("active") or []
-    if not isinstance(rows, list):
-        raise ValueError("shortlist_v1 rows must be a list")
+    rows = _shortlist_items(shortlist)
     joined: list[dict[str, Any]] = []
     for row in rows:
         if not isinstance(row, dict):
@@ -88,34 +109,40 @@ def join_shortlist_shelf(
         if not kid:
             continue
         shelf_row = per_id.get(kid) if isinstance(per_id.get(kid), dict) else {}
-        label = str(shelf_row.get("shelf_label") or row.get("shelf_label") or "").upper()
+        label = _normalize_shelf_label(
+            str(shelf_row.get("shelf_label") or row.get("shelf_label") or "")
+        )
         living = bool(shelf_row.get("living", True))
+        if label in DEAD_LABELS or living is False:
+            continue
         if prefer_keep_only and label != "KEEP":
             continue
-        if label == "DEAD" or living is False:
+        dsl = str(row.get("dsl") or shelf_row.get("dsl") or "").strip()
+        if require_dsl and not dsl:
             continue
         rec = row.get("recommended") if isinstance(row.get("recommended"), dict) else {}
         if isinstance(shelf_row.get("recommended"), dict):
             rec = {**rec, **shelf_row["recommended"]}
-        joined.append(
-            {
-                "id": kid,
-                "claim": row.get("claim") or shelf_row.get("claim") or "",
-                "dsl": row.get("dsl") or shelf_row.get("dsl") or "",
-                "mode": row.get("mode") or shelf_row.get("mode") or "",
-                "pack": row.get("pack") or shelf_row.get("pack") or "",
-                "idea": row.get("idea") or shelf_row.get("idea") or "",
-                "why_short": row.get("why_short") or shelf_row.get("why_short") or "",
-                "shelf_label": label or "KEEP",
-                "living": living,
-                "path_rank": int(row.get("path_rank") or shelf_row.get("path_rank") or 99),
-                "promote_bar": str(
-                    shelf_row.get("promote_bar") or row.get("promote_bar") or "below"
-                ),
-                "recommended": rec,
-                "verdict": "KEEP",
-            }
-        )
+        packed = {
+            "id": kid,
+            "claim": row.get("claim") or shelf_row.get("claim") or "",
+            "dsl": dsl,
+            "mode": row.get("mode") or shelf_row.get("mode") or "",
+            "pack": row.get("pack") or shelf_row.get("pack") or "",
+            "idea": row.get("idea") or shelf_row.get("idea") or "",
+            "why_short": row.get("why_short") or shelf_row.get("why_short") or "",
+            "shelf_label": label or "KEEP",
+            "living": living,
+            "path_rank": int(row.get("path_rank") or shelf_row.get("path_rank") or 99),
+            "promote_bar": str(
+                shelf_row.get("promote_bar") or row.get("promote_bar") or "below"
+            ),
+            "recommended": rec,
+            "verdict": "KEEP",
+        }
+        if drop_invent and _is_invent_pack(packed):
+            continue
+        joined.append(packed)
     joined.sort(key=lambda r: (int(r["path_rank"]), r["id"]))
     return joined
 
@@ -130,8 +157,21 @@ def _is_invent_pack(row: dict[str, Any]) -> bool:
     return any(m in blob for m in INVENT_MARKERS)
 
 
+def keepers_jsonl_path(root: Path | None = None) -> Path:
+    return strategies_dir(root) / "strategy_bridge_keepers.jsonl"
+
+
+def write_keepers_jsonl(keepers: list[dict[str, Any]], root: Path | None = None) -> Path:
+    dest = keepers_jsonl_path(root)
+    assert_not_learning_lane_path(dest)
+    lines = [json.dumps(row, ensure_ascii=False) for row in keepers]
+    dest.write_text(("\n".join(lines) + ("\n" if lines else "")), encoding="utf-8")
+    return dest
+
+
 def rule_from_keeper(row: dict[str, Any]) -> dict[str, Any]:
     rec = row.get("recommended") if isinstance(row.get("recommended"), dict) else {}
+    guard = rec.get("guardrails") if isinstance(rec.get("guardrails"), dict) else {}
     return {
         "id": row["id"],
         "verdict": "KEEP",
@@ -144,6 +184,20 @@ def rule_from_keeper(row: dict[str, Any]) -> dict[str, Any]:
         "pack": row.get("pack", ""),
         "idea": row.get("idea", ""),
         "why_short": row.get("why_short", ""),
+        "url": rec.get("url") or row.get("url") or "",
+        "digestor_label": rec.get("digestor_label") or row.get("digestor_label") or "",
+        "fill_to_30": rec.get("fill_to_30"),
+        "stamp_binding": rec.get("stamp_binding") or row.get("stamp_binding") or "",
+        "lab_admits": False,
+        "trading_armed": False,
+        "hub_untouched": True,
+        "size_hint": rec.get("size_hint") or row.get("size_hint") or "",
+        "guardrails": {
+            "require_plus96_keep": bool(guard.get("require_plus96_keep", True)),
+            "require_path_rank_keeper": bool(guard.get("require_path_rank_keeper", True)),
+            "require_size": bool(guard.get("require_size", True)),
+            "forbid_invent_pack": bool(guard.get("forbid_invent_pack", True)),
+        },
         "invent_pack": _is_invent_pack(row),
         "when": {
             "secs_to_expiry_min": int(rec.get("secs_to_expiry_min", 60)),
@@ -199,6 +253,7 @@ def load_or_build_policy(
         return _read_json(dest)
     shortlist, shelf = load_pins(root)
     keepers = join_shortlist_shelf(shortlist, shelf, prefer_keep_only=prefer_keep_only)
+    write_keepers_jsonl(keepers, root)
     policy = build_policy(
         keepers,
         source_note="pinned shortlist_v1 ⨝ SHORTLIST_SHELF.per_id (KEEP preferred)",

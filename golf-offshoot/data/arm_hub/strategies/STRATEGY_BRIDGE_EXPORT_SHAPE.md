@@ -23,7 +23,16 @@ Operator source:
 | `why_short` | shortlist | Why it is on the +96 shortlist |
 | `shelf_label` | shelf | `KEEP` or `DEAD` (living) |
 | `living` | shelf | `false` or `DEAD` drops the row |
-| `recommended` | either | Contextual when / size flags |
+| `recommended` | either | Contextual when / size flags + optional url, digestor_label, fill_to_30, stamp_binding, size_hint, guardrails |
+
+Pull filter:
+
+1. `shelf_label == KEEP` (`KEEP_WATCH` maps to KEEP). Drop `DEAD` / `LIKELY_DEAD` / `STRUCTURAL_DEAD`.
+2. `dsl` must be present.
+3. Invent packs are not a strategy source (live or paper pin).
+4. Emit `strategies/strategy_bridge_keepers.jsonl` (one row per keeper) plus the JSON pins.
+
+Pinned records also stamp `lab_admits=false`, `trading_armed=false`, `hub_untouched=true`.
 
 Prefer **KEEP** only. Pin copies under this directory so Lane B churn cannot
 retune a running paper book. The watch loop never re-joins; it only reads
